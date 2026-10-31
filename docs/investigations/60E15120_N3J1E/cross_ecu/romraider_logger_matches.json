@@ -1,0 +1,476 @@
+[
+  {
+    "name": "Coolant Temp",
+    "request": "220005",
+    "did": "0005",
+    "handler": "00056940",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "units": "C",
+        "expr": "x-40",
+        "format": "0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      },
+      {
+        "units": "F",
+        "expr": "32+9*(x-40)/5",
+        "format": "0",
+        "gauge_min": "0",
+        "gauge_max": "240",
+        "gauge_step": "30"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "OL Status",
+    "request": "220003",
+    "did": "0003",
+    "handler": "000568ca",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "units": "raw",
+        "expr": "x",
+        "format": "0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "1"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Tire Size",
+    "request": "2216f0",
+    "did": "16f0",
+    "handler": "00057004",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "Rev/Mile",
+        "expr": "x",
+        "format": "0",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Knock Retard",
+    "request": "221746",
+    "did": "1746",
+    "handler": "0005707a",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "deg",
+        "expr": "x*0.3515625",
+        "format": "0.00",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Injector Pulse Time",
+    "request": "221410",
+    "did": "1410",
+    "handler": "00056f6c",
+    "response_bytes": 2,
+    "conflicts": [
+      "Throttle Pedal Position"
+    ],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "us",
+        "expr": "x*8",
+        "format": "0.000",
+        "gauge_max": "500"
+      },
+      {
+        "storagetype": "uint16",
+        "units": "ms",
+        "expr": "(x*8)*0.001",
+        "format": "0.000",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      }
+    ],
+    "status": "conflicting_definition"
+  },
+  {
+    "name": "Throttle Pedal Position",
+    "request": "221410",
+    "did": "1410",
+    "handler": "00056f6c",
+    "response_bytes": 2,
+    "conflicts": [
+      "Injector Pulse Time"
+    ],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "%",
+        "expr": "x*0.3921568",
+        "format": "0.0",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "conflicting_definition"
+  },
+  {
+    "name": "Engine Speed",
+    "request": "22000c",
+    "did": "000c",
+    "handler": "00056982",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "RPM",
+        "expr": "x*.25",
+        "format": "0",
+        "gauge_min": "0",
+        "gauge_max": "10000",
+        "gauge_step": "1"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Vehicle Speed",
+    "request": "22000d",
+    "did": "000d",
+    "handler": "00056998",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "units": "kph",
+        "expr": "x",
+        "format": "0.0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "1"
+      },
+      {
+        "units": "mph",
+        "expr": "x*0.621371",
+        "format": "0.0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "1"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Leading Ignition Timing",
+    "request": "22000e",
+    "did": "000e",
+    "handler": "000569ae",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "deg",
+        "expr": "(x*0.5)-64",
+        "format": "0.00",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Trailing Ignition Timing",
+    "request": "220904",
+    "did": "0904",
+    "handler": "00056cc8",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "deg",
+        "expr": "(x*0.5)-64",
+        "format": "0.00",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Intake Air Temperature",
+    "request": "22000f",
+    "did": "000f",
+    "handler": "000569c4",
+    "response_bytes": 1,
+    "conflicts": [],
+    "conversions": [
+      {
+        "units": "C",
+        "expr": "x-40",
+        "format": "0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      },
+      {
+        "units": "F",
+        "expr": "32+9*(x-40)/5",
+        "format": "0",
+        "gauge_min": "0",
+        "gauge_max": "240",
+        "gauge_step": "30"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Ethanol Content",
+    "request": "220555",
+    "did": "0555",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "%",
+        "expr": "x",
+        "format": "0",
+        "gauge_min": "0",
+        "gauge_max": "100",
+        "gauge_step": "5"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Flex Cranking Multiplier",
+    "request": "22055c",
+    "did": "055c",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "mult",
+        "expr": "x*0.01",
+        "format": "0.00",
+        "gauge_min": "1",
+        "gauge_max": "4",
+        "gauge_step": ".01"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Flex Fuel Timing Multiplier",
+    "request": "22022b",
+    "did": "022b",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "mult",
+        "expr": "x*0.0005",
+        "format": "0.000",
+        "gauge_min": "0",
+        "gauge_max": "11",
+        "gauge_step": ".125"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Flex Leading Ignition Timing Adder",
+    "request": "220557",
+    "did": "0557",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "deg",
+        "expr": "(x*0.5)-50",
+        "format": "0.00",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Flex Trailing Ignition Timing Adder",
+    "request": "220558",
+    "did": "0558",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "deg",
+        "expr": "(x*0.5)-50",
+        "format": "0.00",
+        "gauge_max": "500"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Engine Load",
+    "request": "220043",
+    "did": "0043",
+    "handler": "00056b8a",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "mult",
+        "expr": "x*0.003921568",
+        "format": "0.00",
+        "gauge_min": "0",
+        "gauge_max": "11",
+        "gauge_step": ".125"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Lambda Target",
+    "request": "220044",
+    "did": "0044",
+    "handler": "00056b9e",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "mult",
+        "expr": "x*0.00003051758",
+        "format": "0.000",
+        "gauge_min": "0",
+        "gauge_max": "2",
+        "gauge_step": ".001"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "OL Fueling Final",
+    "request": "22055a",
+    "did": "055a",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "mult",
+        "expr": "x*0.00003051758",
+        "format": "0.000",
+        "gauge_min": "0",
+        "gauge_max": "2",
+        "gauge_step": ".001"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Flex Sensor Fault Status",
+    "request": "22055b",
+    "did": "055b",
+    "handler": "",
+    "response_bytes": null,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint8",
+        "units": "bool",
+        "expr": "x*1",
+        "format": "0",
+        "gauge_min": "0",
+        "gauge_max": "2",
+        "gauge_step": ".001"
+      }
+    ],
+    "status": "not_in_recovered_dispatch"
+  },
+  {
+    "name": "Mass Air Flow",
+    "request": "220010",
+    "did": "0010",
+    "handler": "000569da",
+    "response_bytes": 2,
+    "conflicts": [],
+    "conversions": [
+      {
+        "units": "g/sec",
+        "expr": "x*0.01",
+        "format": "0.0",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  },
+  {
+    "name": "Air Fuel Ratio",
+    "request": "220034",
+    "did": "0034",
+    "handler": "00056b22",
+    "response_bytes": 4,
+    "conflicts": [],
+    "conversions": [
+      {
+        "storagetype": "uint16",
+        "units": "lambda",
+        "expr": "x*0.000030517578",
+        "format": "0.000",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      },
+      {
+        "storagetype": "uint16",
+        "units": "AFR (Gasoline)",
+        "expr": "(x*0.000030517578)*14.7",
+        "format": "0.00",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      },
+      {
+        "storagetype": "uint16",
+        "units": "AFR (E85)",
+        "expr": "(x*0.000030517578)*9.8",
+        "format": "0.00",
+        "gauge_min": "120",
+        "gauge_max": "-20",
+        "gauge_step": "20"
+      }
+    ],
+    "status": "dispatch_identifier_match"
+  }
+]

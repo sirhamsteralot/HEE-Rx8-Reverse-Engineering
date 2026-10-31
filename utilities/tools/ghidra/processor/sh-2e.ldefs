@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language_definitions>
+  <language processor="SuperH" endian="big" size="32" variant="SH-2E" version="1.0"
+    slafile="sh-2e.sla" processorspec="superh.pspec" id="SuperH:BE:32:SH-2E">
+    <description>SH-2 with FPU for RX8 SH7055 analysis (local configuration)</description>
+    <compiler name="default" spec="superh2a.cspec" id="default"/>
+  </language>
+</language_definitions>

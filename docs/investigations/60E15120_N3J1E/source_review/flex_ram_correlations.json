@@ -1,0 +1,197 @@
+[
+  {
+    "name": "engine_speed_rpm",
+    "reference_address": "ffffb594",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "coolant_temp_degC",
+    "reference_address": "ffffa9fc",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "engine_load_g_rev",
+    "reference_address": "ffffc0d8",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "baro_compensated_actual_lambda",
+    "reference_address": "ffffaad0",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "relative_manifold_pressure2_kPa",
+    "reference_address": "ffffbe24",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "coolant_temp_post_fault_detection_degC",
+    "reference_address": "ffffa9fc",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "ignition_leading_base_final_deg",
+    "reference_address": "ffffa5ec",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "ignition_trailing_base_final_deg",
+    "reference_address": "ffffa5f0",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "engine_running_bool",
+    "reference_address": "ffffa428",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "primary_fuel_injector_pulse_cranking",
+    "reference_address": "ffffbea8",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "secondary_fuel_injector_pulse_cranking",
+    "reference_address": "ffffbeac",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can216rx_byte0",
+    "reference_address": "ffffbb0c",
+    "target_candidates": [
+      "ffffbad4"
+    ],
+    "evidence": {
+      "ffffbad4": [
+        {
+          "reference_function": "00029738",
+          "target_function": "00028d90",
+          "instruction_offset": 8,
+          "reference_literal": "00029830",
+          "target_literal": "00028e88"
+        },
+        {
+          "reference_function": "0002979a",
+          "target_function": "00028df2",
+          "instruction_offset": 4,
+          "reference_literal": "00029830",
+          "target_literal": "00028e88"
+        },
+        {
+          "reference_function": "00029860",
+          "target_function": "00028eb8",
+          "instruction_offset": 8,
+          "reference_literal": "00029974",
+          "target_literal": "00028fcc"
+        }
+      ]
+    }
+  },
+  {
+    "name": "can216rx_byte1",
+    "reference_address": "ffffbb0d",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can216rx_byte2",
+    "reference_address": "ffffbb0e",
+    "target_candidates": [
+      "ffffbad6"
+    ],
+    "evidence": {
+      "ffffbad6": [
+        {
+          "reference_function": "00029738",
+          "target_function": "00028d90",
+          "instruction_offset": 12,
+          "reference_literal": "00029834",
+          "target_literal": "00028e8c"
+        },
+        {
+          "reference_function": "00029860",
+          "target_function": "00028eb8",
+          "instruction_offset": 34,
+          "reference_literal": "00029978",
+          "target_literal": "00028fd0"
+        }
+      ]
+    }
+  },
+  {
+    "name": "can216rx_byte3",
+    "reference_address": "ffffbb0f",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can216rx_byte4",
+    "reference_address": "ffffbb10",
+    "target_candidates": [
+      "ffffbad8"
+    ],
+    "evidence": {
+      "ffffbad8": [
+        {
+          "reference_function": "00029860",
+          "target_function": "00028eb8",
+          "instruction_offset": 20,
+          "reference_literal": "0002997c",
+          "target_literal": "00028fd4"
+        }
+      ]
+    }
+  },
+  {
+    "name": "can216rx_byte5",
+    "reference_address": "ffffbb11",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can216rx_byte6",
+    "reference_address": "ffffbb12",
+    "target_candidates": [
+      "ffffbada"
+    ],
+    "evidence": {
+      "ffffbada": [
+        {
+          "reference_function": "00029860",
+          "target_function": "00028eb8",
+          "instruction_offset": 56,
+          "reference_literal": "00029980",
+          "target_literal": "00028fd8"
+        }
+      ]
+    }
+  },
+  {
+    "name": "can216rx_byte7",
+    "reference_address": "ffffbb13",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can216_rx_fault",
+    "reference_address": "ffffa402",
+    "target_candidates": [],
+    "evidence": {}
+  },
+  {
+    "name": "can_216_rx_timer",
+    "reference_address": "ffffbaf8",
+    "target_candidates": [],
+    "evidence": {}
+  }
+]

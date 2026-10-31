@@ -1,0 +1,15 @@
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): DAT_ffffb074 * 100.0; decode = raw * 0.7812999487 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* ROM address: 0x000555ac; body bytes: 30; decompiled */
+
+undefined4 FUN_000555ac(void)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = rx8_encode_u8_affine_saturate(DAT_ffffb074 * 100.0,0x3f480346,0xc2c80000);
+  return uVar1;
+}
+
+

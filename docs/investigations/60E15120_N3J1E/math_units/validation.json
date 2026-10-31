@@ -1,0 +1,8 @@
+{
+  "helper_names": 15,
+  "annotated_functions": 84,
+  "affine_calls_decoded": 70,
+  "affine_calls_with_signal_units": 12,
+  "canonical_function_bodies_verified": 3355,
+  "library_origin_proven": false
+}

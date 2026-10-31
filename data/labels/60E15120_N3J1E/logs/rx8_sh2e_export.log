@@ -1,0 +1,108 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
+INFO  Using log config file: jar:file:/tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /tmp/ghidra_user/.config/ghidra/ghidra_12.1.3_PUBLIC/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /tmp/ghidra_user/.config/ghidra/ghidra_12.1.3_PUBLIC/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (682 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1542 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/Base/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/FunctionID/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/Decompiler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/PIC/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/PyGhidra/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Debug/Debugger/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/DATA/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/8051/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/PDB/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/BytePatterns/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/FileFormats/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/VersionTracking/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/Atmel/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/BSim/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/JVM/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/ghidra_project/RX8_SH2E (HeadlessAnalyzer)  
+INFO  Opening project: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/ghidra_project/RX8_SH2E (HeadlessProject)  
+INFO  REPORT: Processing project file: /60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: RecoverDispatch.java '/home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/metadata'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/scripts/RecoverDispatch.java (HeadlessAnalyzer)  
+INFO  RecoverDispatch.java> Recovered 25 dispatch handlers (GhidraScript)  
+INFO  ANALYZING all memory and code: /60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  Packed database cache: /tmp/yannick-ghidra/packed-db-cache (PackedDatabaseCache)  
+INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ASCII Strings                              0.249 secs
+    Apply Data Archives                        0.489 secs
+    Basic Constant Reference Analyzer          2.935 secs
+    Call Convention ID                         0.016 secs
+    Call-Fixup Installer                       0.015 secs
+    Create Address Tables                      0.271 secs
+    Create Function                            0.001 secs
+    Data Reference                             0.570 secs
+    Decompiler Switch Analysis                 1.338 secs
+    Demangler GNU                              0.179 secs
+    Disassemble Entry Points                   0.188 secs
+    Embedded Media                             0.017 secs
+    External Entry References                  0.001 secs
+    Function ID                                0.013 secs
+    Non-Returning Functions - Discovered       0.510 secs
+    Reference                                  0.624 secs
+    Shared Return Calls                        0.310 secs
+    Stack                                      0.509 secs
+    Subroutine References                      0.429 secs
+-----------------------------------------------------
+     Total Time   8 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: /60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: ExportTarget.java '/home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/decompiled'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/scripts/ExportTarget.java (HeadlessAnalyzer)  
+WARN  Decompiling 000033b6, pcode error at 000033b8: Unable to resolve constructor at 000033b8 (DecompileCallback)  
+INFO  ExportTarget.java> Exported 250 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 500 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 750 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 1000 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 1250 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 1500 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 1750 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 2000 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 2250 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 2500 functions (GhidraScript)  
+WARN  Decompiling 00054d90: Unable to read bytes at ram:02000000 (DecompileCallback)  
+WARN  Decompiling 00055a7c: Unable to read bytes at ram:02000000 (DecompileCallback)  
+INFO  ExportTarget.java> Exported 2750 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 3000 functions (GhidraScript)  
+INFO  ExportTarget.java> Exported 3250 functions (GhidraScript)  
+INFO  ExportTarget.java> {
+  "functions": 3355,
+  "decompiled": 3355,
+  "failed": 0,
+  "with_warnings": 154,
+  "instruction_bytes": 337184,
+  "function_body_bytes": 333546,
+  "rom_bytes": 524288
+}
+ (GhidraScript)  
+INFO  ANALYZING changes made by post scripts: /60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  REPORT: Post-analysis succeeded for file: /60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  REPORT: Save succeeded for processed file: /60E15120_N3J1E.bin (HeadlessAnalyzer)  

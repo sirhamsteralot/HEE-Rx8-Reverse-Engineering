@@ -1,0 +1,13 @@
+{
+  "descriptor_matches": 478,
+  "descriptively_named_matches": 128,
+  "logger_parameters": 22,
+  "logger_dispatch_matches": 15,
+  "logger_conflicts": 2,
+  "source_sha256": {
+    "RX8Defs/RomRaider/rx8_defs.xml": "6245602ead00e80c313676da743042bc0dd0a2e50fd89135797895c010ffdebc",
+    "RX8Defs/RomRaider/logger_rx8_defs.xml": "2c492360743b8fb697755f1fb9ebcd51bc02b82dfd9e44fa1b9339f20f15d411"
+  },
+  "inheritance_note": "Rx8Base resolved case-insensitively to RX8Base",
+  "semantic_equivalence_verified": false
+}

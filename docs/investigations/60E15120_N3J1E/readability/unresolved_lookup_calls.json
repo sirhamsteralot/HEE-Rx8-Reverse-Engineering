@@ -1,0 +1,163 @@
+[
+  {
+    "function": "0000c486",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&tbl_knock_voltage_to_magnitude_0006b250)"
+  },
+  {
+    "function": "000135b4",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar2)"
+  },
+  {
+    "function": "000136e4",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar2)"
+  },
+  {
+    "function": "00014100",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&DAT_00069208)"
+  },
+  {
+    "function": "00014100",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar1)"
+  },
+  {
+    "function": "000148c4",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&tbl_table_2d_114_0006a100)"
+  },
+  {
+    "function": "00016432",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa990)"
+  },
+  {
+    "function": "00016748",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&tbl_table_2d_46_00069530)"
+  },
+  {
+    "function": "00016900",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar2)"
+  },
+  {
+    "function": "00016900",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar2)"
+  },
+  {
+    "function": "0001ce6c",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 2,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,puVar4)"
+  },
+  {
+    "function": "0001d8dc",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&tbl_table_2d_79_00069bcc)"
+  },
+  {
+    "function": "00021a80",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 2,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,&tbl_throttle_position_to_torque_0006a180)"
+  },
+  {
+    "function": "00025c6c",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(&tbl_table_2d_154_0006a59c)"
+  },
+  {
+    "function": "0002853c",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar3)"
+  },
+  {
+    "function": "00028648",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar3)"
+  },
+  {
+    "function": "00029d4c",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 2,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(DAT_ffffbb50,puVar3)"
+  },
+  {
+    "function": "0002ca8e",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(puVar1)"
+  },
+  {
+    "function": "0002d638",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(puVar7)"
+  },
+  {
+    "function": "000306e8",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 2,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_fuel_injection_engine_load_compensation_0006ac88)"
+  },
+  {
+    "function": "00030f5c",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c)"
+  },
+  {
+    "function": "00030f5c",
+    "callee": "lookup_2d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 2,
+    "raw_call": "lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c)"
+  },
+  {
+    "function": "00042d6e",
+    "callee": "lookup_3d_descriptor_scaled",
+    "observed_arity": 1,
+    "expected_arity": 3,
+    "raw_call": "lookup_3d_descriptor_scaled(ppuVar3)"
+  }
+]

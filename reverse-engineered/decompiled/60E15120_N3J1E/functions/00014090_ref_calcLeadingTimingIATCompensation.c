@@ -1,0 +1,35 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a0d8: Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006a0ec: Table 2D - 113 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* ROM address: 0x00014090; body bytes: 82; decompiled_with_warnings */
+
+/* WARNING: Removing unreachable block (ram,0x000140b6) */
+/* Unique exact-byte match to related 60E0FC00 function at 00013ff4 (82 bytes). Names prefixed ref_
+   are inherited hypotheses. */
+
+uint ref_calcLeadingTimingIATCompensation(void)
+
+{
+  uint uVar1;
+  undefined *puVar2;
+  undefined4 extraout_fr0;
+  
+  if (DAT_ffffaa62 == 1) {
+    puVar2 = &tbl_table_2d_113_0006a0ec;
+  }
+  else {
+    if (engine_load_ffffc0b4 < 0.5) {
+      DAT_ffffa778 = 0;
+      DAT_ffffa77c = 0;
+      return (uint)DAT_ffffaa62;
+    }
+    puVar2 = &tbl_ignition_leading_trailing_intake_air_temperature_compensation_on_throttle_0006a0d8;
+  }
+  uVar1 = lookup_2d_descriptor_scaled(intake_air_temperature_ffffaddc,puVar2);
+  DAT_ffffa778 = extraout_fr0;
+  DAT_ffffa77c = extraout_fr0;
+  return uVar1;
+}
+
+

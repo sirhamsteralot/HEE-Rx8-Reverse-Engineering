@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<logger version="370">
+    <protocols>
+        <protocol id="MAZDA" baud="500000" databits="8" stopbits="1" parity="0" connect_timeout="4000" send_timeout="55">
+            <transports>
+                <transport id="iso15765" name="CAN bus" desc="CAN bus logging ~MY2007+.">
+                    <module id="ecu" address="0x000007E8" desc="Engine Control Unit" tester="0x000007E0" fastpoll="true" />
+                    <module id="tcu" address="0x000007E9" desc="Transmission Control Unit" tester="0x000007E1" />
+                </transport>
+            </transports>
+            <parameters>
+                <parameter id="RX8_60E15120_0005" name="Coolant Temp" desc="Coolant Temp; Reviewed for stock 60E15120 only. Handler 0x00056940. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220005</address>
+                    <conversions>
+                        <conversion units="C" expr="x-40" format="0" gauge_min="-20" gauge_max="120" gauge_step="20" storagetype="uint8" />
+                        <conversion units="F" expr="32+9*(x-40)/5" format="0" gauge_min="0" gauge_max="240" gauge_step="30" storagetype="uint8" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0003" name="OL Status" desc="OL Status; Reviewed for stock 60E15120 only. Handler 0x000568ca. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220003</address>
+                    <conversions>
+                        <conversion units="raw" expr="x" format="0" gauge_min="-20" gauge_max="120" gauge_step="1" storagetype="uint16" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_16F0" name="Tire Size" desc="Tire Size; Reviewed for stock 60E15120 only. Handler 0x00057004. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x2216F0</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="Rev/Mile" expr="x" format="0" gauge_max="500" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_1746" name="Knock Retard" desc="Knock Retard; Reviewed for stock 60E15120 only. Handler 0x0005707a. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x221746</address>
+                    <conversions>
+                        <conversion storagetype="uint8" units="deg" expr="x*0.3515625" format="0.00" gauge_max="500" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_000C" name="Engine Speed" desc="Engine Speed; Reviewed for stock 60E15120 only. Handler 0x00056982. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x22000C</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="RPM" expr="x*.25" format="0" gauge_min="0" gauge_max="10000" gauge_step="1" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_000D" name="Vehicle Speed" desc="Vehicle Speed; Reviewed for stock 60E15120 only. Handler 0x00056998. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x22000D</address>
+                    <conversions>
+                        <conversion units="kph" expr="x" format="0.0" gauge_min="-20" gauge_max="120" gauge_step="1" storagetype="uint8" />
+                        <conversion units="mph" expr="x*0.621371" format="0.0" gauge_min="-20" gauge_max="120" gauge_step="1" storagetype="uint8" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_000E" name="Leading Ignition Timing" desc="Leading Ignition Timing; Reviewed for stock 60E15120 only. Handler 0x000569ae. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x22000E</address>
+                    <conversions>
+                        <conversion storagetype="uint8" units="deg" expr="(x*0.5)-64" format="0.00" gauge_max="500" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0904" name="Trailing Ignition Timing" desc="Trailing Ignition Timing; Reviewed for stock 60E15120 only. Handler 0x00056cc8. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220904</address>
+                    <conversions>
+                        <conversion storagetype="uint8" units="deg" expr="(x*0.5)-64" format="0.00" gauge_max="500" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_000F" name="Intake Air Temperature" desc="Intake Air Temperature; Reviewed for stock 60E15120 only. Handler 0x000569c4. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x22000f</address>
+                    <conversions>
+                        <conversion units="C" expr="x-40" format="0" gauge_min="-20" gauge_max="120" gauge_step="20" storagetype="uint8" />
+                        <conversion units="F" expr="32+9*(x-40)/5" format="0" gauge_min="0" gauge_max="240" gauge_step="30" storagetype="uint8" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0043" name="Engine Load" desc="Engine Load; Reviewed for stock 60E15120 only. Handler 0x00056b8a. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220043</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="mult" expr="x*0.003921568" format="0.00" gauge_min="0" gauge_max="11" gauge_step=".125" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0044" name="Lambda Target" desc="Lambda Target; Reviewed for stock 60E15120 only. Handler 0x00056b9e. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220044</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="mult" expr="x*0.00003051758" format="0.000" gauge_min="0" gauge_max="2" gauge_step=".001" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0010" name="Mass Air Flow" desc="Mass Air Flow; Reviewed for stock 60E15120 only. Handler 0x000569da. Meaning from RX8Defs, correlated with firmware dispatch.">
+                    <address>0x220010</address>
+                    <conversions>
+                        <conversion units="g/sec" expr="x*0.01" format="0.0" gauge_min="-20" gauge_max="120" gauge_step="20" storagetype="uint16" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_0042" name="Control Module Voltage (candidate)" desc="60E15120 only. Dispatch 0x56b76 -&gt; 0x55732 -&gt; RAM 0xffffb590; uint16 scaling approximately 0.001. Battery-voltage meaning corroborated by injector-latency axes; candidate until vehicle logging validates it.">
+                    <address>0x220042</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="V" expr="x*0.001" format="0.000" />
+                    </conversions>
+                </parameter>
+                <parameter id="RX8_60E15120_1410_RAW" name="Identifier 1410 - raw (meaning unresolved)" desc="60E15120 only. Handler 0x56f6c emits uint16 from RAM 0xffffbe24 using step 8. Existing injector/throttle interpretations conflict; no physical unit assigned here.">
+                    <address>0x221410</address>
+                    <conversions>
+                        <conversion storagetype="uint16" units="raw" expr="x" format="0.000" />
+                    </conversions>
+                </parameter>
+            </parameters>
+        </protocol>
+    </protocols>
+</logger>

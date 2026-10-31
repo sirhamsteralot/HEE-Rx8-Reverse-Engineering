@@ -1,0 +1,490 @@
+{
+  "functions": 3355,
+  "direct_edges": 6977,
+  "leaf_functions": 1041,
+  "never_called": 366,
+  "thunks": 51,
+  "dispatch_handlers": 99,
+  "vectors": {
+    "vector_Power_Reset": "000008b8",
+    "vector_Poweron_Reset": "000008b8",
+    "vector_Manual_Reset": "000008b8",
+    "vector_Illegal_instr": "000008b4",
+    "vector_Slot_illegal": "000008b4",
+    "vector_CPUaddr_error": "000008b4",
+    "vector_DMACaddr_error": "000008b4",
+    "vector_NMI": "000008b4",
+    "vector_usr_break": "000008b4",
+    "vector_FPU_excep": "000008b4",
+    "vector_INT_ATU101_CMI10B": "0000803e",
+    "vector_INT_ATU102_IMI10AG": "000009fc"
+  },
+  "boot_reachable_from_reset": 22,
+  "task_table": {
+    "base": "0x4998",
+    "record_bytes": 16,
+    "records": 18,
+    "entries": [
+      {
+        "record": "00004998",
+        "entry": "000062a0",
+        "entry_name": "FUN_000062a0",
+        "mask": "0x01000000",
+        "param": "0x04000400",
+        "stack": "0xffff7410"
+      },
+      {
+        "record": "000049a8",
+        "entry": "0000969e",
+        "entry_name": "FUN_0000969e",
+        "mask": "0x0a000000",
+        "param": "0x04000300",
+        "stack": "0xffff7418"
+      },
+      {
+        "record": "000049b8",
+        "entry": "000096be",
+        "entry_name": "FUN_000096be",
+        "mask": "0x0a000000",
+        "param": "0x04000200",
+        "stack": "0xffff7420"
+      },
+      {
+        "record": "000049c8",
+        "entry": "000096de",
+        "entry_name": "FUN_000096de",
+        "mask": "0x1e000000",
+        "param": "0x04000100",
+        "stack": "0xffff7428"
+      },
+      {
+        "record": "000049d8",
+        "entry": "000096fe",
+        "entry_name": "FUN_000096fe",
+        "mask": "0x64000000",
+        "param": "0x04000400",
+        "stack": "0xffff7430"
+      },
+      {
+        "record": "000049e8",
+        "entry": "000065f6",
+        "entry_name": "ref_task1_",
+        "mask": "0x02000000",
+        "param": "0x04000200",
+        "stack": "0xffff7438"
+      },
+      {
+        "record": "000049f8",
+        "entry": "0000661e",
+        "entry_name": "ref_task2_",
+        "mask": "0x02000000",
+        "param": "0x04000300",
+        "stack": "0xffff7440"
+      },
+      {
+        "record": "00004a08",
+        "entry": "000063f0",
+        "entry_name": "ref_interruptSetup___",
+        "mask": "0x02000000",
+        "param": "0x04000200",
+        "stack": "0xffff7448"
+      },
+      {
+        "record": "00004a18",
+        "entry": "0000648e",
+        "entry_name": "FUN_0000648e",
+        "mask": "0x02000000",
+        "param": "0x04000200",
+        "stack": "0xffff7450"
+      },
+      {
+        "record": "00004a28",
+        "entry": "000064ba",
+        "entry_name": "candidate_knock_sensor_fault_task",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7458"
+      },
+      {
+        "record": "00004a38",
+        "entry": "000064f6",
+        "entry_name": "FUN_000064f6",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7460"
+      },
+      {
+        "record": "00004a48",
+        "entry": "00006584",
+        "entry_name": "FUN_00006584",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7468"
+      },
+      {
+        "record": "00004a58",
+        "entry": "00006592",
+        "entry_name": "FUN_00006592",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7470"
+      },
+      {
+        "record": "00004a68",
+        "entry": "000065b2",
+        "entry_name": "FUN_000065b2",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7478"
+      },
+      {
+        "record": "00004a78",
+        "entry": "000065cc",
+        "entry_name": "FUN_000065cc",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7480"
+      },
+      {
+        "record": "00004a88",
+        "entry": "000065da",
+        "entry_name": "FUN_000065da",
+        "mask": "0x02000000",
+        "param": "0x04000100",
+        "stack": "0xffff7488"
+      },
+      {
+        "record": "00004a98",
+        "entry": "000065e8",
+        "entry_name": "FUN_000065e8",
+        "mask": "0x02000000",
+        "param": "0x04000400",
+        "stack": "0xffff7490"
+      },
+      {
+        "record": "00004aa8",
+        "entry": "000060c8",
+        "entry_name": "ref_getSensorStuff__",
+        "mask": "0x01000000",
+        "param": "0x04000100",
+        "stack": "0xffff7498"
+      }
+    ]
+  },
+  "fan_in_top": [
+    {
+      "address": "00003934",
+      "name": "ref_setSR",
+      "callers": 184
+    },
+    {
+      "address": "00003920",
+      "name": "sh_raise_interrupt_mask_return_previous",
+      "callers": 184
+    },
+    {
+      "address": "00002068",
+      "name": "lookup_2d_descriptor_scaled",
+      "callers": 174
+    },
+    {
+      "address": "00002460",
+      "name": "rx8_add_u16_saturate",
+      "callers": 169
+    },
+    {
+      "address": "0003dc70",
+      "name": "ref_updateMemoryAtAddress_8bit_ADDR_VAL",
+      "callers": 135
+    },
+    {
+      "address": "0003db54",
+      "name": "ref_readValue_8bit_ADDRESS_VAL",
+      "callers": 121
+    },
+    {
+      "address": "00005348",
+      "name": "FUN_00005348",
+      "callers": 99
+    },
+    {
+      "address": "0003dc22",
+      "name": "ref_readValue_float_DEFAULTVAL_ADDRESS",
+      "callers": 92
+    },
+    {
+      "address": "00002054",
+      "name": "ref_setSR_PARAM",
+      "callers": 80
+    },
+    {
+      "address": "00066a00",
+      "name": "ref_getFaultStatus__",
+      "callers": 80
+    },
+    {
+      "address": "000023e4",
+      "name": "rx8_max_float",
+      "callers": 78
+    },
+    {
+      "address": "00002064",
+      "name": "FUN_00002064",
+      "callers": 76
+    },
+    {
+      "address": "00002404",
+      "name": "rx8_clamp_float",
+      "callers": 73
+    },
+    {
+      "address": "0005fd38",
+      "name": "FUN_0005fd38",
+      "callers": 71
+    },
+    {
+      "address": "000023b0",
+      "name": "rx8_first_order_filter",
+      "callers": 67
+    },
+    {
+      "address": "00002478",
+      "name": "rx8_add_u8_saturate",
+      "callers": 65
+    },
+    {
+      "address": "00002440",
+      "name": "rx8_is_outside_tolerance_band",
+      "callers": 64
+    },
+    {
+      "address": "0003dcd0",
+      "name": "ref_updateMemoryAtAddress_float_VAL_ADDR",
+      "callers": 61
+    },
+    {
+      "address": "000020dc",
+      "name": "lookup_3d_descriptor_scaled",
+      "callers": 60
+    },
+    {
+      "address": "00057a2e",
+      "name": "diag_append_u8",
+      "callers": 59
+    }
+  ],
+  "fan_out_top": [
+    {
+      "address": "0003957c",
+      "name": "FUN_0003957c",
+      "callees": 161
+    },
+    {
+      "address": "000390fc",
+      "name": "FUN_000390fc",
+      "callees": 98
+    },
+    {
+      "address": "0001102a",
+      "name": "FUN_0001102a",
+      "callees": 85
+    },
+    {
+      "address": "00038a18",
+      "name": "FUN_00038a18",
+      "callees": 75
+    },
+    {
+      "address": "000142a4",
+      "name": "ignition_timing_main_task",
+      "callees": 66
+    },
+    {
+      "address": "00020e40",
+      "name": "fueling_main_task",
+      "callees": 49
+    },
+    {
+      "address": "00019640",
+      "name": "FUN_00019640",
+      "callees": 47
+    },
+    {
+      "address": "000287aa",
+      "name": "FUN_000287aa",
+      "callees": 45
+    },
+    {
+      "address": "00054d90",
+      "name": "FUN_00054d90",
+      "callees": 41
+    },
+    {
+      "address": "0003de70",
+      "name": "FUN_0003de70",
+      "callees": 38
+    }
+  ],
+  "fan_in_histogram": {
+    "0": 366,
+    "1": 2421,
+    "2": 325,
+    "3": 76,
+    "4": 38,
+    "5": 17,
+    "6": 16,
+    "7": 11,
+    "8": 10,
+    "9": 8,
+    "10": 3,
+    "11": 2,
+    "12": 6,
+    "13": 3,
+    "14": 6,
+    "15": 2,
+    "16": 1,
+    "17": 1,
+    "18": 2,
+    "20": 1,
+    "21": 2,
+    "22": 1,
+    "26": 1,
+    "30": 1,
+    "31": 1,
+    "32": 1,
+    "33": 1,
+    "34": 1,
+    "36": 1,
+    "38": 1,
+    "39": 2,
+    "40": 1,
+    "43": 1,
+    "45": 1,
+    "56": 2,
+    "58": 2,
+    "59": 1,
+    "60": 1,
+    "61": 1,
+    "64": 1,
+    "65": 1,
+    "67": 1,
+    "71": 1,
+    "73": 1,
+    "76": 1,
+    "78": 1,
+    "80": 2,
+    "92": 1,
+    "99": 1,
+    "121": 1,
+    "135": 1,
+    "169": 1,
+    "174": 1,
+    "184": 2
+  },
+  "code_bands": {
+    "0x00000": 39,
+    "0x01000": 41,
+    "0x02000": 42,
+    "0x03000": 35,
+    "0x04000": 35,
+    "0x05000": 140,
+    "0x06000": 45,
+    "0x07000": 48,
+    "0x08000": 29,
+    "0x09000": 47,
+    "0x0a000": 50,
+    "0x0b000": 28,
+    "0x0c000": 37,
+    "0x0d000": 38,
+    "0x0e000": 28,
+    "0x0f000": 30,
+    "0x10000": 29,
+    "0x11000": 27,
+    "0x12000": 24,
+    "0x13000": 28,
+    "0x14000": 28,
+    "0x15000": 11,
+    "0x16000": 34,
+    "0x17000": 20,
+    "0x18000": 28,
+    "0x19000": 28,
+    "0x1a000": 27,
+    "0x1b000": 21,
+    "0x1c000": 11,
+    "0x1d000": 11,
+    "0x1e000": 16,
+    "0x1f000": 5,
+    "0x20000": 19,
+    "0x21000": 35,
+    "0x22000": 19,
+    "0x23000": 19,
+    "0x24000": 15,
+    "0x25000": 40,
+    "0x26000": 33,
+    "0x27000": 19,
+    "0x28000": 50,
+    "0x29000": 56,
+    "0x2a000": 23,
+    "0x2b000": 49,
+    "0x2c000": 45,
+    "0x2d000": 13,
+    "0x2e000": 22,
+    "0x2f000": 32,
+    "0x30000": 16,
+    "0x31000": 21,
+    "0x32000": 38,
+    "0x33000": 28,
+    "0x34000": 29,
+    "0x35000": 20,
+    "0x36000": 26,
+    "0x37000": 18,
+    "0x38000": 34,
+    "0x39000": 12,
+    "0x3a000": 24,
+    "0x3b000": 23,
+    "0x3c000": 27,
+    "0x3d000": 38,
+    "0x3e000": 33,
+    "0x3f000": 15,
+    "0x41000": 13,
+    "0x42000": 27,
+    "0x43000": 35,
+    "0x44000": 29,
+    "0x45000": 33,
+    "0x46000": 37,
+    "0x47000": 15,
+    "0x48000": 21,
+    "0x49000": 31,
+    "0x4a000": 35,
+    "0x4b000": 41,
+    "0x4c000": 16,
+    "0x4d000": 10,
+    "0x4e000": 37,
+    "0x4f000": 28,
+    "0x50000": 18,
+    "0x51000": 27,
+    "0x52000": 25,
+    "0x53000": 57,
+    "0x54000": 49,
+    "0x55000": 67,
+    "0x56000": 81,
+    "0x57000": 53,
+    "0x58000": 66,
+    "0x59000": 34,
+    "0x5a000": 25,
+    "0x5b000": 39,
+    "0x5c000": 18,
+    "0x5d000": 30,
+    "0x5e000": 23,
+    "0x5f000": 39,
+    "0x60000": 47,
+    "0x61000": 21,
+    "0x62000": 35,
+    "0x63000": 35,
+    "0x64000": 36,
+    "0x65000": 30,
+    "0x66000": 36,
+    "0x67000": 54,
+    "0x68000": 51
+  }
+}

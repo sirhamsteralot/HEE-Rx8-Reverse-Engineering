@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-30",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "reports": {
+    "fueling_control_report.md": {
+      "fn_checked": 29,
+      "ram_checked": 21,
+      "rom_refs": 50,
+      "rom_claims": 0
+    },
+    "intake_solenoids_report.md": {
+      "fn_checked": 20,
+      "ram_checked": 13,
+      "rom_refs": 33,
+      "rom_claims": 0
+    },
+    "knock_control_report.md": {
+      "fn_checked": 48,
+      "ram_checked": 56,
+      "rom_refs": 131,
+      "rom_claims": 0
+    }
+  },
+  "failures": [],
+  "result": "PASS"
+}

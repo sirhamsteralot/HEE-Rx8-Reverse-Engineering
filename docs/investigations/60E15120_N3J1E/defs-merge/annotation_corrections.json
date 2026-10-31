@@ -1,0 +1,948 @@
+[
+  {
+    "table": "Table 2D - 288 Check DataType",
+    "descriptor": "00068f5c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 289 Check DataType",
+    "descriptor": "00068f68",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 290 Check DataType",
+    "descriptor": "00068f74",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "CLT Sensor Scaling",
+    "descriptor": "0006977c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "MAF Scaling",
+    "descriptor": "00069788",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 295 Check DataType",
+    "descriptor": "000697c8",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 296 Check DataType",
+    "descriptor": "000697d4",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Lamda Sensor Barometric Pressure Compensation",
+    "descriptor": "000697e0",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Lambda Sensor Scaling",
+    "descriptor": "000697ec",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 299 Check DataType",
+    "descriptor": "000697f8",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 300 Check DataType",
+    "descriptor": "00069804",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "IAT Sensor Scaling",
+    "descriptor": "00069824",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 304 Check DataType",
+    "descriptor": "0006990c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 305",
+    "descriptor": "0006992c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 306",
+    "descriptor": "00069938",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 307",
+    "descriptor": "00069944",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 308",
+    "descriptor": "00069950",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 309",
+    "descriptor": "0006995c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 310",
+    "descriptor": "00069968",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 311",
+    "descriptor": "00069974",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 312 Engine Speed",
+    "descriptor": "00069bc0",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 313 Check DataType",
+    "descriptor": "00069c1c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 314 Check DataType",
+    "descriptor": "00069c28",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 315 Check DataType",
+    "descriptor": "00069c34",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 316",
+    "descriptor": "00069c54",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 317",
+    "descriptor": "00069c88",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 318 Check DataType",
+    "descriptor": "00069c94",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 319 Check DataType",
+    "descriptor": "00069ca0",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 320 Check DataType",
+    "descriptor": "00069e14",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 321 Check DataType",
+    "descriptor": "00069e20",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 322 Check DataType",
+    "descriptor": "00069e2c",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 323 Check DataType",
+    "descriptor": "00069e38",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 324 Check DataType",
+    "descriptor": "00069e44",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 325 Check DataType",
+    "descriptor": "00069e50",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 326 Check DataType",
+    "descriptor": "00069e5c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 327 Check DataType",
+    "descriptor": "00069e68",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 328 Check DataType",
+    "descriptor": "00069e74",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 329 Check DataType",
+    "descriptor": "00069f60",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 330",
+    "descriptor": "0006a290",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 331",
+    "descriptor": "0006a518",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 332 Check DataType",
+    "descriptor": "0006a694",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 333 Check DataType",
+    "descriptor": "0006a6a0",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 334 Check DataType",
+    "descriptor": "0006a6cc",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 335 Check DataType",
+    "descriptor": "0006a844",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 336 Check DataType",
+    "descriptor": "0006a850",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 337 Check DataType",
+    "descriptor": "0006a85c",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 338 Check DataType",
+    "descriptor": "0006a868",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 339 Check DataType",
+    "descriptor": "0006a874",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 340 Check DataType",
+    "descriptor": "0006a880",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 341 Check DataType",
+    "descriptor": "0006a88c",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 342 Check DataType",
+    "descriptor": "0006a898",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 343 Check DataType",
+    "descriptor": "0006a8a4",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 2D - 344 Check DataType",
+    "descriptor": "0006a8b0",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Engine On Time Threshold",
+    "descriptor": "0006a95c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 347 Check DataType",
+    "descriptor": "0006ab98",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 350 Check DataType",
+    "descriptor": "0006abc8",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Secondary Air Pump On Time",
+    "descriptor": "0006ad94",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "First Start Oil Injection Timer",
+    "descriptor": "0006adf4",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Ignition Timing Threshold A - Knock Retard Reset Off",
+    "descriptor": "0006b270",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Ignition Timing Threshold B - Knock Retard Reset Off",
+    "descriptor": "0006b288",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Knock Related",
+    "descriptor": "0006b2a0",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Knock Related 3",
+    "descriptor": "0006b2ac",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 364 Check DataType",
+    "descriptor": "0006b3a4",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 365 Check DataType",
+    "descriptor": "0006b3b0",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 366 Check DataType",
+    "descriptor": "0006b3bc",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 367 Check DataType",
+    "descriptor": "0006b4a4",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 368 Check DataType",
+    "descriptor": "0006b4b0",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 369 Check DataType",
+    "descriptor": "0006b520",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 370 Check DataType",
+    "descriptor": "0006b52c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 371 Check DataType",
+    "descriptor": "0006b54c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 372 Check DataType",
+    "descriptor": "0006b5a8",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 373 Check DataType",
+    "descriptor": "0006b5b4",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 374 Check DataType",
+    "descriptor": "0006b5c0",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 375 Check DataType",
+    "descriptor": "0006b610",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 376 Check DataType",
+    "descriptor": "0006b704",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 377 Check DataType",
+    "descriptor": "0006b710",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 378 Check DataType",
+    "descriptor": "0006b96c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 379 Check DataType",
+    "descriptor": "0006b978",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Load Limit A",
+    "descriptor": "0006ba0c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Load Limit B",
+    "descriptor": "0006ba18",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 382 Check DataType",
+    "descriptor": "0006ba44",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 383 Check DataType",
+    "descriptor": "0006ba50",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 384 Check DataType",
+    "descriptor": "0006ba5c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 385 Check DataType",
+    "descriptor": "0006baa4",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Primary Fuel Injector Cranking Pulse Decay Time",
+    "descriptor": "0006bab0",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 387 Check DataType",
+    "descriptor": "0006babc",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 2D - 388 Check DataType",
+    "descriptor": "0006bac8",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 389 Check DataType",
+    "descriptor": "0006bad4",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 390 Check DataType",
+    "descriptor": "0006bb1c",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 2D - 391 Check DataType",
+    "descriptor": "0006bbe0",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 392 Check DataType",
+    "descriptor": "0006bbec",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 393 Check DataType",
+    "descriptor": "0006bbf8",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 394 Check DataType",
+    "descriptor": "0006bc04",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 395 Check DataType",
+    "descriptor": "0006bc10",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 396 Check DataType",
+    "descriptor": "0006bc1c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 397 Check DataType",
+    "descriptor": "0006bc28",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 398 Check DataType",
+    "descriptor": "0006bc34",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 399 Check DataType",
+    "descriptor": "0006bc40",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 400 Check DataType",
+    "descriptor": "0006bc4c",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 401 Check DataType",
+    "descriptor": "0006bc58",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 402 Check DataType",
+    "descriptor": "0006bc64",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 2D - 403 Check DataType",
+    "descriptor": "0006bc70",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 103 ",
+    "descriptor": "00068f94",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Counter Lookup Unknown",
+    "descriptor": "00069608",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 3D - 108 ",
+    "descriptor": "00069af8",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 109 ",
+    "descriptor": "0006a340",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 3D - 110 ",
+    "descriptor": "0006a700",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 3D - 111 ",
+    "descriptor": "0006a8bc",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 112 ",
+    "descriptor": "0006a8d0",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 113 ",
+    "descriptor": "0006a8e4",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 114 ",
+    "descriptor": "0006a8f8",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 115 ",
+    "descriptor": "0006a90c",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 116 ",
+    "descriptor": "0006a920",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Oil Metering By Load",
+    "descriptor": "0006ae00",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Oil Metering By Throttle",
+    "descriptor": "0006ae14",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 3D - 120 ",
+    "descriptor": "0006b3c8",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 3D - 121 ",
+    "descriptor": "0006b3dc",
+    "lookup_modes": [],
+    "effective_storage": null
+  },
+  {
+    "table": "Table 3D - 122 ",
+    "descriptor": "0006b658",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 3D - 123 ",
+    "descriptor": "0006b66c",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Table 3D - 124 ",
+    "descriptor": "0006b984",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u8"
+    ],
+    "effective_storage": "uint8"
+  },
+  {
+    "table": "Table 3D - 125 ",
+    "descriptor": "0006b998",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 126 ",
+    "descriptor": "0006b9ac",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "effective_storage": "float"
+  },
+  {
+    "table": "Table 3D - 127 ",
+    "descriptor": "0006b9e0",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  },
+  {
+    "table": "Ignition Dwell Time ",
+    "descriptor": "0006bbcc",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "effective_storage": "uint16"
+  }
+]

@@ -1,0 +1,1587 @@
+[
+  {
+    "rom": "RX8Base",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max Safe Mode",
+    "count": 2
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0G500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FC00",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max",
+    "count": 2
+  },
+  {
+    "rom": "60E0FC00",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max Safe Mode",
+    "count": 2
+  },
+  {
+    "rom": "60E0FC00",
+    "issue": "duplicate table name",
+    "name": "Max Load - Intake Temperature Compensation",
+    "count": 2
+  },
+  {
+    "rom": "60E0FC00",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "duplicate table name",
+    "name": "Normal Rev Limit",
+    "count": 2
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max",
+    "count": 2
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max Safe Mode",
+    "count": 2
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "duplicate table name",
+    "name": "Max Load - Intake Temperature Compensation",
+    "count": 2
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Ethanol Sensor CAN ID"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Cold Enrichment - Coolant Temperature Threshold"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Cold Enrichment - Intake Air Temperature Threshold"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Cold Enrichment - Cold Enrichment"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Cold Enrichment - Cold Enrichment Decay"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Table 3D - Timing Ethanol Adder - Leading"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Table 3D - Timing Ethanol Adder - Trailing"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Stoich Fuel Ratio"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Timing Multiplier"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Table 3D - Cranking Fuel Multiplier"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Ethanol Content Sample Threshold - Engine Speed"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "Ethanol Content Sample Threshold - Engine Load"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "G-ROM_FLEX",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #3"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1D400",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A500",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1A300",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E1B900",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "duplicate table name",
+    "name": "Table 2D - 85 ",
+    "count": 2
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Normal Rev Limit Normal"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control Enable Engine Speed"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control Enable Engine Load"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control Enable Coolant Temp"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Increment #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Increment #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Increment #3"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Decrement #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Decrement #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Knock Control - Retard Decrement #3"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Unknown_69158"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - LoadA"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - LoadB"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - LoadC"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - LoadD"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Uknown_69408"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Uknown_693f4"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Uknown_693cc"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Uknown_693b8"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Unknown_693e0"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Table 2D - Unknown_67824"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Ignition Timing Leading Intake Air Temperature Compensation - On Throttle"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Ignition Timing Leading Idle Load Compensation"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Ignition Timing Leading - Low Engine Load Adder"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Trans Requested Torque To Throttle Plate Position"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Cruise Control Max Speed - High Value"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "Cruise Control Max Speed - Low Value"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0FB00",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max",
+    "count": 2
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "duplicate table name",
+    "name": "Ignition Leading - Ignition Base Max Safe Mode",
+    "count": 2
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "duplicate table name",
+    "name": "Max Load - Intake Temperature Compensation",
+    "count": 2
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 2
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #1"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c073 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c121 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c155 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #2"
+  },
+  {
+    "rom": "60E09L0N",
+    "issue": "unresolved inherited table",
+    "name": "DTC c167 Enable/Disable #3"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 3
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E600",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #1",
+    "count": 2
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "duplicate table name",
+    "name": "DTC 0300 Enable/Disable #2",
+    "count": 3
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "Alternator Diagnostic Voltage Delta to DC"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "Manifold Pressure Based Oil Injection Amount Check DataType"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #1"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0128 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  },
+  {
+    "rom": "60E0E700",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2406 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0116 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0134 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0137 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0411 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 050A Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #1"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0116 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0134 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0137 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 0411 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 050A Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1574 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 1577 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2008 Enable/Disable #2"
+  },
+  {
+    "rom": "60E32000",
+    "issue": "unresolved inherited table",
+    "name": "DTC 2101 Enable/Disable #2"
+  }
+]

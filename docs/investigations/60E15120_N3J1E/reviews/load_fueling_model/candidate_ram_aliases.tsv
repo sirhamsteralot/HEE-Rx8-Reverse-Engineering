@@ -1,0 +1,48 @@
+address	candidate_alias	type	reader(s)	evidence
+ffff9eea	maf_adc_raw	uint16	00007438 00019f4e 0001a086	ADDR3H from the 0x6884 sweep; volts = x5/65536 in both 0x7438 (then tbl 0x69788) and 0x19f4e.
+ffff9f78	maf_scaled_g_s	float	00007438 00019f4e	Output of the RX8Defs "MAF Scaling" table lookup; propagated to a9e8 when plausibility passes.
+ffff9f7c	maf_range_status	uint8	00007438	0 normal / 1 raw>=0xfae2 / 2 raw<0xac0 in 0x7438.
+ffffa9e4	maf_volts_validated	float	0003b214 00019f4e	raw x 5/65536, debounced copy gate in 0x19f4e; 0.64 V and 4.9 V fault checks in 0x3b214.
+ffffa9e8	maf_g_s_validated	float	00019f4e 00019f40 0001a086	Debounced copy of 0xffff9f78; input to the smoothing chain.
+ffffaa2c	maf_volts_instant	float	00019f4e	rx8_decode_u16_affine(5/65536,0) of raw; copied to a9e4 on gate.
+ffffaa35	maf_excursion_high_count	uint8	00019f4e	Saturating count of raw >= 0xf852 samples; >=3 propagates values.
+ffffaa36	maf_excursion_low_count	uint8	00019f4e	Saturating count of raw < 0x7ae samples; >=3 propagates values.
+ffffaa28	maf_fault_airflow_fallback	float	0001a13c 0001a086	((x*0.04+0.26)*RPM)/60; used as mass_air_flow when c590 set.
+ffffc590	maf_fallback_active	uint8	0003b214 0001a086	Set by fault manager; selects fallback model in 0x1a086.
+ffffc593	maf_voltage_low_cond	uint8	0003b214	a9e4 < 0.64.
+ffffc594	maf_voltage_high_cond	uint8	0003b214	a9e4 > 4.9.
+ffffa9ec	mass_air_flow	float	0001a418 00021efc	Buffer-averaged, density-capped MAF (g/s candidate); load model input.
+ffffa9f0	maf_density_cap	float	0001a086	f(RPM;0x69794) x 293.0/(IAT+273) x baro/101.33299.
+ffffa9f8	maf_buffer_prev	float[6]	0001a086	Circular buffer previous-sample slots.
+ffffaa10	maf_buffer_new	float[6]	0001a086	Circular buffer current-sample slots.
+ffffaa34	maf_buffer_index	uint8	0001a086	0..5 circular index.
+ffffaa4c	maf_use_raw_transient_flag	uint8	0001a1dc 0001a418	1 during transients/startup: raw MAF used instead of filtered.
+ffffaa48	maf_filtered	float	0001a418	First-order filter of mass_air_flow, coeff from tbl 0x697b4.
+ffffaa54	maf_filter_coeff	float	0001a418	lookup2d(RPM; 0x697b4).
+ffffaa3c	airflow_per_revolution_index	float	00033a6c	min(MAF x 60/RPM, 5.0); g/rev candidate; capped.
+ffffaa38	airflow_per_revolution_snap	float	0001a418	Snap-filtered variant of the same product; consumer untraced.
+ffffc0b0	load_unfiltered	float	00033ad2 00012cd6	aa3c x 0.6345 (ROM 0x7a088).
+ffffc0b4	engine_load	float	many	Filtered/capped load; 0.525 during crank/injectors-off; the value used by all fuelling/timing tables.
+ffffc0b8	load_max_cap	float	00033ad2	c0bc x c0c0 x f(RPM; 0x6b1ec).
+ffffc0bc	load_max_iat_comp	float	00033ab0	lookup2d(IAT; 0x6b200).
+ffffc0c0	load_max_baro_comp	float	00033ab0	lookup2d(baro; 0x6b214).
+ffffc0c4	load_filter_snap_countdown	uint8	00033a58 00033a7c 00033ad2	Set to 25 by 0x33a58; >0 selects snap coefficient 1.0 in the load filter.
+ffffbe00	manifold_pressure_estimated	float	0002fe00 0002fdb0	f(RPM,load;0x6aa48) x (IAT+273) x be1c / 300.
+ffffbe04	manifold_relative_pressure_a	float	0002fe00 0002fe1e	baro - be00.
+ffffbe08	manifold_relative_pressure_b	float	0002fe00 0002ff78 00021efc	baro - be00 (second copy).
+ffffbe1c	map_estimate_scale_factor	float	0002fdb0	Untraced writer; candidate VE-type factor.
+ffffbe18	map_lookup_result	float	0002fdb0	lookup3d(RPM, load; 0x6aa48).
+ffffad14	inferred_barometric_pressure	float	many	raw x 25.325 + 0.0182 via 0xd144/0x1ad54; forced 101.3 when c5d7.
+ffffa3dc	baro_sensor_kpa	float	0001ad54	Output of 0xd144.
+ffffbed0	load_to_fuel_scale	float	000306e8	load x 0.07196 (ROM 0x78170).
+ffffbed4	base_fuel_map_multiplier	float	000306e8	lookup3d(RPM, load; 0x6ac88); inputs verified in disassembly.
+ffffadec	fuel_target_multiplier_lambda_command	float	000306e8 000307e0 0001c880 0003ec88	1.0 default; closed-loop trim clamped [b048,b044]; multiplies fuel volume request; (x-1)*100 -> 0xffffd0d8.
+ffffbf14	fuel_volume_request_pre_trim	float	000306e8	Enrichment sum x a dec x bed4 before diagnostic adder.
+ffffbeac	fuel_volume_request_trimmed	float	000306e8	Output of diagnostic trim adder 0x5c024.
+ffffbeb0	fuel_volume_request	float	many	beac x bed0; consumed by decel-cut base and per-rotation timers.
+ffffbde4	primary_injector_mult	float	00030030 00030948	lookup3d(weighted temp, load; 0x6a9a4).
+ffffbde8	secondary1_injector_mult	float	00030030 00030948	lookup3d(weighted temp, load; 0x6a9c0).
+ffffbdec	secondary2_injector_mult	float	00030030 00030948	lookup3d(weighted temp, load; 0x6a9dc).
+ffffbe44	injector_latency_primary	float	0002fea8 00030948	lookup3d(MAP-est, battery; 0x6aa80).
+ffffa094	injector_latency_per_channel	uint16[?]	0008814 0008a68 0008814	Per-channel latency written by ref_setFuelInjectorLatency.
+ffffbdc0	decel_cut_fuel_base	float	0002f9d0	filter(RPM x beb0 x 0.12, coeff 0.75).

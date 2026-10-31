@@ -1,0 +1,9 @@
+{
+  "reconstructed_functions": 18,
+  "dispatch_tables_verified_from_rom": 2,
+  "function_bodies_consistent": 3355,
+  "host_tests": "401 axis samples, NaN endpoint behavior, one-element axis/zero-fraction boundary, five signed/unsigned/float interpolation variants passed",
+  "sanitizers": "unavailable: linker cannot find libasan.so.8.0.0",
+  "remaining_inventory": 2787,
+  "exact_target_fpu_equivalence": false
+}

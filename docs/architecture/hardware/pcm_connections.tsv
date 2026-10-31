@@ -1,0 +1,35 @@
+component	pcm_terminals	component_connector	page	variant	confidence_scope	wire_colour
+Ignition trailing front	2AD	B1-08 A	10	as drawn	Documented harness connection; firmware channel index unresolved
+Ignition leading rear	2Z	B1-09 A	10	as drawn	Documented harness connection; firmware channel index unresolved
+Ignition trailing rear	2AC	B1-10 A	10	as drawn	Documented harness connection; firmware channel index unresolved
+Coolant level switch	4T	B1-11 A	10	as drawn	Documented harness connection
+Clutch pedal position switch	4F	B1-12	10	MT only	Documented harness connection
+Brake switch	4P	F3-07	10	as drawn	Documented harness connection
+Accelerator pedal sensor	4X;5AE;5C;4Y;5AB;5F	B1-14 A;B;C;D;E;F respectively	12	as drawn	Documented harness connections; individual signal roles not assigned
+Variable fresh air duct solenoid	5Z	B1-15	12	high power only	Documented harness connection	5Z=– ³
+MAF assembly	5U;5N;5K;4U	B1-16 B;C;D;E respectively	12	as drawn	Documented harness connections; assembly signal roles not assigned
+Barometric pressure sensor	4K;5S;4U	B1-17 B;A;C respectively	12	as drawn	Documented reference;signal;ground connections
+Throttle body	1B;1C;2F;1M;1Q;1J	B1-19 A;B;C;D;E;F respectively	14	as drawn	Documented harness connections; individual sensor roles not assigned
+Knock sensor	1F;1T;1G	B1-20 signal pair;shield	14	as drawn	Documented harness connections
+SSV solenoid (FSM: "SSV control")	1L	B1-21	14	as drawn	Documented harness connection; candidate firmware GPIO separate FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	1L=L/Y
+Purge solenoid valve (FSM: "Purge solenoid valve control")	2P	B1-22	14	as drawn	Documented harness connection FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	2P=R/Y *
+AIR solenoid valve (FSM: "AIR control")	1O	B1-23	14	as drawn	Documented harness connection FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	1O=G
+Metering oil pump windings	2W;2V;2AB;2Y	B1-24	14	as drawn	Documented four control wires; firmware phase ordering unresolved
+VDI solenoid (FSM: "VDI control")	1W	B1-25	14	as drawn	Documented harness connection; candidate firmware GPIO separate FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	1W=L/B
+Eccentric shaft position sensor	2U;2X	B1-27	14	as drawn	Documented harness connection
+Fuel injector Front Primary 1 (FSM) 	2M	B1-29	16	as drawn	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	2M=LG/R
+Fuel injector Rear Primary 1 (FSM) 	2J	B1-30	16	as drawn	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	2J=LG/B
+Fuel injector Front Secondary (FSM) 	2G	B1-31	16	as drawn	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	2G=G/R
+Fuel injector Rear Secondary (FSM, color read conflict †) 	2D	B1-32	16	as drawn	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	2D=L/B
+Fuel injector Front Primary 2 (FSM, high-power only ³) 	3A	B1-33	16	high power only	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	3A=L/B ³
+Fuel injector Rear Primary 2 (FSM, high-power only ³) 	3D	B1-34	16	high power only	Documented harness connection; firmware channel -> SH7055F pkg pin resolved (reviews/fueling/injector_pin_mapping.md: ch0/3/1/4/2/5 -> pins 195/197/198/199/200/201); chip-pin -> terminal routing unresolved FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	3D=W/G ³
+Metering oil pump switch	2N	B1-35	16-17	as drawn	Documented switch; fully-open learning-position indication
+Coolant temperature sensor	2K	B1-36	16	as drawn	Documented harness connection
+APV motor control (-)/(+) (FSM, high-power only ³) 	3J;3G	B1-37 B;D respectively	16	high power only	Documented motor wires; per-GPIO polarity unproven FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	3J=L/R, 3G=G/B ³
+APV opening angle (FSM, high-power only ³) 	3B	B1-37 A	16	high power only	Documented signal wire; position-feedback interpretation inferred FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	3B=R/G
+APV position sensor power (FSM) 	1S	B1-37 E	16	high power only	Documented Vref connection FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	1S=R/W
+APV sensor return	1U	B1-37 C via shared sensor ground	16	high power only	Documented return connection
+SSV switch (FSM) 	1D	B1-42	16-17	as drawn	Documented harness connection FSM pinout PDF cross-check (mazda-rx-8-pcm-pinout-series-1.pdf): terminal function confirmed; chip-pin->terminal routing still unresolved (board)	1D=L
+Neutral switch	2O	B1-38	18-19	MT only	Documented switch; open in neutral
+Oil pressure switch	2E	B1-39	18-19	as drawn	Documented switch; closes on low pressure
+Oil level switch	2R	B1-40	18	as drawn	Documented harness connection

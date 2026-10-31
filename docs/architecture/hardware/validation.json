@@ -1,0 +1,8 @@
+{
+  "annotated_function_files_verified": 16,
+  "combined_annotations_verified": 16,
+  "period_literal_verified": 96,
+  "scale_literal_verified": 7.62939453125e-05,
+  "host_c_test": "passed; strict C11; 201-command sweep plus endpoint and sample checks",
+  "hardware_execution_verified": false
+}

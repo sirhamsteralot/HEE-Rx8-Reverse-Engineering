@@ -1,0 +1,455 @@
+{
+  "date": "2026-10-29",
+  "duplicate_names": {
+    "ref_resetWatchdog_": [
+      {
+        "address": "00000572",
+        "new_name": "ref_resetWatchdog_00000572"
+      },
+      {
+        "address": "00001364",
+        "new_name": "ref_resetWatchdog_00001364"
+      }
+    ],
+    "ref_writeWatchdog_disable_": [
+      {
+        "address": "00005024",
+        "new_name": "ref_writeWatchdog_disable_00005024"
+      },
+      {
+        "address": "00005032",
+        "new_name": "ref_writeWatchdog_disable_00005032"
+      }
+    ],
+    "ref_callsFlash__": [
+      {
+        "address": "0000527e",
+        "new_name": "ref_callsFlash_0000527e"
+      },
+      {
+        "address": "0000528e",
+        "new_name": "ref_callsFlash_0000528e"
+      }
+    ],
+    "thunk_FUN_00009c86": [
+      {
+        "address": "00005e78",
+        "new_name": "thunk_FUN_00009c86_00005e78"
+      },
+      {
+        "address": "00005eee",
+        "new_name": "thunk_FUN_00009c86_00005eee"
+      }
+    ],
+    "thunk_FUN_00011492": [
+      {
+        "address": "00006360",
+        "new_name": "thunk_FUN_00011492_00006360"
+      },
+      {
+        "address": "00009f4c",
+        "new_name": "thunk_FUN_00011492_00009f4c"
+      }
+    ],
+    "thunk_FUN_000113b8": [
+      {
+        "address": "00006366",
+        "new_name": "thunk_FUN_000113b8_00006366"
+      },
+      {
+        "address": "00009f52",
+        "new_name": "thunk_FUN_000113b8_00009f52"
+      }
+    ],
+    "thunk_FUN_0000abfa": [
+      {
+        "address": "0000636c",
+        "new_name": "thunk_FUN_0000abfa_0000636c"
+      },
+      {
+        "address": "00009f58",
+        "new_name": "thunk_FUN_0000abfa_00009f58"
+      }
+    ],
+    "ref_injectorPulseSet_": [
+      {
+        "address": "00008340",
+        "new_name": "ref_injectorPulseSet_00008340"
+      },
+      {
+        "address": "00008a68",
+        "new_name": "ref_injectorPulseSet_00008a68"
+      }
+    ],
+    "ref_getIgnitionDwellTime": [
+      {
+        "address": "00009110",
+        "new_name": "ref_getIgnitionDwellTime_00009110"
+      },
+      {
+        "address": "00009490",
+        "new_name": "ref_getIgnitionDwellTime_00009490"
+      }
+    ],
+    "ref_setAPVDC_": [
+      {
+        "address": "0000aa90",
+        "new_name": "ref_setAPVDC_0000aa90"
+      },
+      {
+        "address": "00031bec",
+        "new_name": "ref_setAPVDC_00031bec"
+      }
+    ],
+    "ref_UnknownFueling1": [
+      {
+        "address": "0000e440",
+        "new_name": "ref_UnknownFueling1_0000e440"
+      },
+      {
+        "address": "0000e454",
+        "new_name": "ref_UnknownFueling1_0000e454"
+      }
+    ],
+    "ref_ssvControl__": [
+      {
+        "address": "00021760",
+        "new_name": "ref_ssvControl_00021760"
+      },
+      {
+        "address": "0002178c",
+        "new_name": "ref_ssvControl_0002178c"
+      }
+    ],
+    "ref_setValues": [
+      {
+        "address": "00025290",
+        "new_name": "ref_setValues_00025290"
+      },
+      {
+        "address": "000253ac",
+        "new_name": "ref_setValues_000253ac"
+      }
+    ],
+    "ref_alternatorControlMain": [
+      {
+        "address": "000267c6",
+        "new_name": "ref_alternatorControlMain_000267c6"
+      },
+      {
+        "address": "00026868",
+        "new_name": "ref_alternatorControlMain_00026868"
+      }
+    ],
+    "ref_initFanControl": [
+      {
+        "address": "0002f188",
+        "new_name": "ref_initFanControl_0002f188"
+      },
+      {
+        "address": "0002f260",
+        "new_name": "ref_initFanControl_0002f260"
+      }
+    ],
+    "ref_VDIControl": [
+      {
+        "address": "00034844",
+        "new_name": "ref_VDIControl_00034844"
+      },
+      {
+        "address": "000348e4",
+        "new_name": "ref_VDIControl_000348e4"
+      }
+    ],
+    "ref_vfadControl_": [
+      {
+        "address": "00034910",
+        "new_name": "ref_vfadControl_00034910"
+      },
+      {
+        "address": "0003493c",
+        "new_name": "ref_vfadControl_0003493c"
+      }
+    ],
+    "ref_calcSpeedBasedIATCompensation__": [
+      {
+        "address": "0004910e",
+        "new_name": "ref_calcSpeedBasedIATCompensation_0004910e"
+      },
+      {
+        "address": "000491d8",
+        "new_name": "ref_calcSpeedBasedIATCompensation_000491d8"
+      }
+    ],
+    "thunk_FUN_00060c7a": [
+      {
+        "address": "00064004",
+        "new_name": "thunk_FUN_00060c7a_00064004"
+      },
+      {
+        "address": "00064912",
+        "new_name": "thunk_FUN_00060c7a_00064912"
+      }
+    ]
+  },
+  "call_sites_updated": {
+    "000004e0": {
+      "ref_resetWatchdog_": "ref_resetWatchdog_00000572"
+    },
+    "00001038": {
+      "ref_resetWatchdog_": "ref_resetWatchdog_00001364"
+    },
+    "00004c80": {
+      "ref_writeWatchdog_disable_": "ref_writeWatchdog_disable_00005024",
+      "ref_callsFlash__": "ref_callsFlash_0000527e"
+    },
+    "00004cb6": {
+      "ref_callsFlash__": "ref_callsFlash_0000528e",
+      "ref_writeWatchdog_disable_": "ref_writeWatchdog_disable_00005032"
+    },
+    "000059a4": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "000059b2": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "000059c0": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "000059ce": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "000059dc": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "000059ea": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008340"
+    },
+    "0000661e": {
+      "ref_getIgnitionDwellTime": "ref_getIgnitionDwellTime_00009110"
+    },
+    "00008340": {
+      "ref_injectorPulseSet_": "ref_injectorPulseSet_00008a68"
+    },
+    "00008f2a": {
+      "ref_getIgnitionDwellTime": "ref_getIgnitionDwellTime_00009490"
+    },
+    "00009110": {
+      "ref_getIgnitionDwellTime": "ref_getIgnitionDwellTime_00009490"
+    },
+    "00009f4c": {
+      "thunk_FUN_00011492": "thunk_FUN_00011492_00006360"
+    },
+    "00009f52": {
+      "thunk_FUN_000113b8": "thunk_FUN_000113b8_00006366"
+    },
+    "00009f58": {
+      "thunk_FUN_0000abfa": "thunk_FUN_0000abfa_0000636c"
+    },
+    "0000d408": {
+      "thunk_FUN_0000abfa": "thunk_FUN_0000abfa_00009f58",
+      "thunk_FUN_00011492": "thunk_FUN_00011492_00009f4c"
+    },
+    "0000d44c": {
+      "thunk_FUN_000113b8": "thunk_FUN_000113b8_00009f52"
+    },
+    "0000e440": {
+      "ref_UnknownFueling1": "ref_UnknownFueling1_0000e454"
+    },
+    "0001102a": {
+      "ref_initFanControl": "ref_initFanControl_0002f260",
+      "ref_VDIControl": "ref_VDIControl_000348e4",
+      "ref_setValues": "ref_setValues_000253ac",
+      "ref_vfadControl_": "ref_vfadControl_00034910",
+      "ref_ssvControl__": "ref_ssvControl_00021760"
+    },
+    "000114d0": {
+      "ref_alternatorControlMain": "ref_alternatorControlMain_000267c6"
+    },
+    "00011adc": {
+      "ref_alternatorControlMain": "ref_alternatorControlMain_00026868"
+    },
+    "00019ae8": {
+      "ref_calcSpeedBasedIATCompensation__": "ref_calcSpeedBasedIATCompensation_0004910e"
+    },
+    "00020d68": {
+      "ref_UnknownFueling1": "ref_UnknownFueling1_0000e440"
+    },
+    "00020e40": {
+      "ref_UnknownFueling1": "ref_UnknownFueling1_0000e454"
+    },
+    "00021760": {
+      "ref_ssvControl__": "ref_ssvControl_0002178c"
+    },
+    "00021766": {
+      "ref_ssvControl__": "ref_ssvControl_0002178c"
+    },
+    "000253ac": {
+      "ref_setValues": "ref_setValues_00025290"
+    },
+    "0002f260": {
+      "ref_initFanControl": "ref_initFanControl_0002f188"
+    },
+    "00031bec": {
+      "ref_setAPVDC_": "ref_setAPVDC_0000aa90"
+    },
+    "00031c20": {
+      "ref_setAPVDC_": "ref_setAPVDC_00031bec"
+    },
+    "000348e4": {
+      "ref_VDIControl": "ref_VDIControl_00034844"
+    },
+    "000348ea": {
+      "ref_VDIControl": "ref_VDIControl_00034844"
+    },
+    "00034910": {
+      "ref_vfadControl_": "ref_vfadControl_0003493c"
+    },
+    "00034916": {
+      "ref_vfadControl_": "ref_vfadControl_0003493c"
+    }
+  },
+  "ordered_call_site_resolution": {
+    "00061092": {
+      "thunk_FUN_00060c7a": {
+        "sequence": [
+          "thunk_FUN_00060c7a_00064912",
+          "thunk_FUN_00060c7a_00064004"
+        ],
+        "evidence": "jsr at 0x61132 loads ROM32[0x61254]=0x64912; jsr at 0x61146 loads ROM32[0x61258]=0x64004"
+      }
+    }
+  },
+  "jump_site_annotations": [
+    "00000040",
+    "00001090",
+    "0000375c",
+    "0000420c",
+    "00004218",
+    "000043c8",
+    "000044e0",
+    "00061092"
+  ],
+  "recovered_jump_tables": {
+    "000043c8": {
+      "site": "0x43e6",
+      "cases": "r1 0x00-0x1f",
+      "index_bytes": "0x43a8-0x43c7",
+      "base": "0x4446",
+      "sled": "shar r0 at ROM 0x4414-0x4442, outside this export's decoded instructions"
+    },
+    "000044e0": {
+      "site": "0x44f6",
+      "cases": "r1 0x00-0x1f",
+      "index_bytes": "0x44c0-0x44df",
+      "base": "0x450a",
+      "sled": "shlr r0; all 32 targets decoded (0x450a-0x4576)"
+    }
+  },
+  "decompiler_issues": {
+    "rows_reclassified": 154,
+    "warning_counts": {
+      "jumptable_not_recovered": 7,
+      "indirect_jump_as_call": 7,
+      "infinite_loop_block": 15,
+      "unreachable_ram_block_removed": 244,
+      "overlapping_symbol_labels": 42,
+      "bad_instruction_data": 1,
+      "control_flow_truncated": 1,
+      "type_propagation_unsettled": 1,
+      "heritage_after_dead_removal": 2,
+      "decompiler_restart_space": 3,
+      "jumptable_truncated": 2,
+      "switch_variable_unmatched": 2
+    }
+  },
+  "parameter_renames": {
+    "UNRECOVERED_JUMPTABLE": {
+      "functions": [
+        "00000040",
+        "00001090"
+      ],
+      "new_name": "indirect_target"
+    }
+  },
+  "functions_changed": [
+    "00000040",
+    "000004e0",
+    "00000572",
+    "00001038",
+    "00001090",
+    "00001364",
+    "0000375c",
+    "0000420c",
+    "00004218",
+    "000043c8",
+    "000044e0",
+    "00004c80",
+    "00004cb6",
+    "00005024",
+    "00005032",
+    "0000527e",
+    "0000528e",
+    "000059a4",
+    "000059b2",
+    "000059c0",
+    "000059ce",
+    "000059dc",
+    "000059ea",
+    "00005e78",
+    "00005eee",
+    "00006360",
+    "00006366",
+    "0000636c",
+    "0000661e",
+    "00008340",
+    "00008a68",
+    "00008f2a",
+    "00009110",
+    "00009490",
+    "00009f4c",
+    "00009f52",
+    "00009f58",
+    "0000aa90",
+    "0000d408",
+    "0000d44c",
+    "0000e440",
+    "0000e454",
+    "0001102a",
+    "000114d0",
+    "00011adc",
+    "00019ae8",
+    "00020d68",
+    "00020e40",
+    "00021760",
+    "00021766",
+    "0002178c",
+    "00025290",
+    "000253ac",
+    "000267c6",
+    "00026868",
+    "0002f188",
+    "0002f260",
+    "00031bec",
+    "00031c20",
+    "00034844",
+    "000348e4",
+    "000348ea",
+    "00034910",
+    "00034916",
+    "0003493c",
+    "0004910e",
+    "000491d8",
+    "00061092",
+    "00064004",
+    "00064912"
+  ],
+  "ghidra_database_updated": false,
+  "validation": {
+    "index_names_unique": true,
+    "index_matches_files": true,
+    "all_bodies_in_combined_listing": true,
+    "callgraph_names_consistent": true,
+    "old_duplicate_identifiers_absent_from_code": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-30",
+  "function_annotations": 115,
+  "ram_aliases": 271,
+  "ghidra_database_updated": false,
+  "sources": [
+    {
+      "url": "https://github.com/equinox311/RX8_FlexFuel",
+      "commit": "15dd340c3ef94a7d9cb4a38d61e0328a4bab8884",
+      "files": {
+        "G_ROM_FlexFuel/RomAddresses.s": "374bf3c242c7884e85c48d8317dd11d594f25cbe4aad89c8f0496be8b27b983c",
+        "G_ROM_FlexFuel/vars.h": "0766e945289c4401297768780d90f876cfa6f66043a945bc7281466dcb7fabcc",
+        "G_ROM_FlexFuel/pid_handler.h": "4bc8be55ea86cf68b57fd2739262bed777b22afa676705f21025728a0498db62"
+      }
+    },
+    {
+      "url": "https://github.com/rnd-ash/rx8-reverse-engineering",
+      "commit": "e15c53a8f6376f219b01020dc6a90d4a60132338",
+      "files": {
+        "rx8.dbc": "1aef4f4192974c55f0670704bbe06e643fa043186a3cc416f524d92b26dea8b1"
+      }
+    }
+  ]
+}

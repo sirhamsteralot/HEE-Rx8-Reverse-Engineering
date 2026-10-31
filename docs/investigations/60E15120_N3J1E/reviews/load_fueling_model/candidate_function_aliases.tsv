@@ -1,0 +1,20 @@
+address	candidate_alias	confidence	evidence
+00019f4e	maf_plausibility_gate_and_propagate	high	Raw-window counters aa35/aa36 with saturating debounce; copy gate verified in disassembly 0x19fa8-0x19fe8 (copy when counter>=3 or raw in [0x7ae,0xf852)); a9e4=volts, a9e8=g/s propagation.
+0003b214	maf_fault_manager_and_fallback_select	high	a9e4 <0.64 / >4.9 V checks with battery and RPM windows, 4-count debounces, fault slots 10/11, sets c590 fallback flag consumed by 0x1a086.
+0001a13c	maf_fault_throttle_airflow_fallback	medium	aa28 = ((x*0.04+0.26)*RPM)/60 consumed as mass_air_flow when c590 set; input DAT_ffffad48 writer untraced, units unresolved.
+0001a086	maf_buffer_average_and_density_cap	high	6-slot buffer, 2-sample average, cap = f(RPM;0x69794) x 293.0/(IAT+273) x baro/101.33299; literals verified from ROM (293.0 @0x1a198, 101.33299 @0x1a1a0).
+00019f40	maf_direct_passthrough_reset	medium	a9ec = a9e8 direct copy; consistent with init/reset path of the smoothing chain.
+0001a1dc	maf_transient_detection	high	Sets aa4c raw-MAF select on throttle/RPM deltas vs tbl 0x697a0 thresholds; event flags and noise-reset markers.
+0001a418	airflow_per_revolution_index	high	aa3c = min(selected MAF x 60.0/RPM, 5.0); literals 60.0 @0x1a4e8 and 5.0 @0x1a4f4 verified; filter coeff from tbl 0x697b4; fr15/fr14 argument wiring verified in disassembly.
+00033a6c	(keep ref_airPerStroke)	high	c0b0 = aa3c x 0.6345; ROM literal 0.6345 at 0x7a088 via pointer @0x33b70. Constant's physical meaning unresolved.
+00033a58	load_filter_snap_counter_set	medium	Sets c0c4 = 25 (snap countdown for engine-load filter in 0x33ad2); caller 0x19640 context untraced.
+0002fdb0	estimate_manifold_pressure	high	be00 = lookup3d(RPM,load;0x6aa48) x (IAT+273) x be1c / 300.0; RX8Defs table name corroborates; be1c writer untraced.
+0002fe00	manifold_relative_pressure_from_estimate	high	relative = baro - be00 into be04/be08; consumed by vacuum multipliers and latency table.
+000306e8	(keep ref_calcFuelVolumeRequest)	high	bed0 = load x 0.07196 (literal @0x78170); bed4 = lookup3d(RPM, load; 0x6ac88) with load verified in fr5 at the call; x fuel-target multiplier a dec x enrichment sum.
+0005c024	diagnostic_fuel_trim_adder	medium	Adds u8 affine (1/256, -0.5) offset to fuel request only when diagnostic id 0x17e0 command 7 active; proportional service-trim pathway is a candidate.
+0001c880	closed_loop_fuel_target_update	high	Clamps a dec trim into [max(2D-65, 3D-22, 2D-66), 2D-67] bounds; sets entry hysteresis flags speed>=5, RPM>=1500, load>0.3; zeroes trims when inactive.
+0002ff78	(keep ref_getFuelInectorLatencyCals)	high	Latency lookup3d(MAP-est, battery; 0x6aa80) -> per-channel a094 via ref_setFuelInjectorLatency.
+00030030	per_channel_pulse_clamp	high	be4c clamped [1024, f(RPM;0x6aa9c)], be50/be54 clamped [0, same max]; inputs from per-injector multiplier chain.
+0002fd3e	(keep ref_getInjectorTempBasedMultiplierLookups)	high	Primary/secondary1/secondary2 3D lookups (0x6a9a4/0x6a9c0/0x6a9dc) by weighted temp and load.
+00030948	(keep ref_calculateFuelAmountPerRotationMinMax)	high	Window bounds with 6e7 and 369.472/475.93 constants; timer-unit interpretation remains candidate.
+0002f9d0	(keep ref_filterFuelVolumeRequest)	high	decel-cut base bdc0 = filter(RPM x beb0 x 0.12, coeff 0.75).

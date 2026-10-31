@@ -1,0 +1,14 @@
+/* ROM address: 0x000058ee; body bytes: 14; decompiled */
+
+/* Unique exact-byte match to related 60E0FC00 function at 000058ee (14 bytes). Names prefixed ref_
+   are inherited hypotheses. */
+
+void FUN_000058ee(void)
+
+{
+  ATUII_TSR3_W = 0x5fff;
+  FUN_00005348(0x8b);
+  return;
+}
+
+

@@ -16,6 +16,14 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 - Treat everything here as untrusted input: verify hashes, provenance, and licensing
   before relying on it.
 
+## Status
+
+`Tuning-merged/` (union of `Tuning-29-10-2026` + `Tuning-30-10-2026`, newer wins —
+see its `MERGE_NOTES.md`) was promoted into the tracked folders on 2026-10-31.
+What intentionally **stayed here only**: the RomRaider install, `Rx8Man/`, the
+`RX8Defs`/`RX8Defs_Copy` clones, live Ghidra `.gpr/.rep` projects, and the duplicate
+`Data_binaries/60E0FC00.bin`. See `../docs/references/README.md`.
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —

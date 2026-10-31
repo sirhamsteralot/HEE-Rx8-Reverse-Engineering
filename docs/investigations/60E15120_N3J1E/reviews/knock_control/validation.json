@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-29",
+  "review": "knock_control",
+  "function_aliases_added": 39,
+  "function_aliases_high_confidence": 33,
+  "function_aliases_medium_confidence_candidate_prefixed": 6,
+  "ram_aliases_added": 84,
+  "lookup_table_rows_added": 15,
+  "export_bug_fixes": {
+    "00013bd2": {
+      "applied": true,
+      "views": [
+        "decompiled/functions/00013bd2_FUN_00013bd2.c",
+        "decompiled/firmware_decompiled.c",
+        "named/firmware_named.c"
+      ],
+      "change": "void -> float return of rx8_clamp_float(param_1,arg1,arg2)"
+    }
+  },
+  "snapshot_local_renames": {
+    "addresses": 8,
+    "occurrences": 192
+  },
+  "misnomer_corrections": [
+    {
+      "address": "0001ee30",
+      "old": "ref_setClosedLoopBool",
+      "new": "set_open_loop_flag"
+    },
+    {
+      "address": "0000c116",
+      "old": "ref_enableDisableCruiseControl__",
+      "new": "reset_knock_state_on_mode_change"
+    }
+  ],
+  "polarity_correction": "0xffffb12a/0xffffb12c are the OPEN-loop flag (1 = open loop), not closed-loop",
+  "open_loop_answer": "knock control applies in open loop too; no knock-chain function reads the loop-mode flags",
+  "pipeline_scripts": [
+    "scripts/review_knock_loop_labels.py",
+    "scripts/merge_reviewed_lookup_aliases.py",
+    "scripts/review_knock_loop_labels_apply.py"
+  ],
+  "idempotent": true,
+  "validators": {
+    "validate_export": "pass (ROM SHA-256 verified, 3355 function files, 168592 instructions byte-verified, 1833 reference matches)",
+    "verify_readability": "pass (3355 function bodies consistent)",
+    "verify_math_units": "pass",
+    "design_graph_stats": "pass (all 6 checks true)"
+  },
+  "rereview_2026_10_29": {
+    "scope": "independent sceptical re-check of knock_control_report.md and README.md against the ROM bytes, disassembly, canonical export and both def sets (rx8_defs.xml ROM block lines 26245-28033; logger_rx8_defs.xml)",
+    "verdict": "report substantially accurate; 18 discrepancies found, all corrected in the analysis output; 3 def-side issues documented without touching the upstream def repos",
+    "addendum": "reviews/knock_control/REVIEW_NOTES.md",
+    "corrections": [
+      "transient c060 = 0.1875 (was 0.15625; ROM 0x7a234 = 0x3e400000)",
+      "c064 = 0.1253 (was ~0.1289; 0x3e004ea5, calm and transient)",
+      "calm c068 = 0.03125 (was 0.0078125; ROM 0x7a248 = 0x3d000000)",
+      "knock level default = 3.6875 (was 3.5; 0x406c0000 seeded by 0xc1f8)",
+      "cd60 polarity: alt threshold tables selected when cd60 is SET (README prose was inverted)",
+      "threshold command base = clamp(a34c + a328*a360, 64, 255); a34c is an addend, 64 the clamp floor (was '64 + a328*a360')",
+      "noise filter uses hardcoded literal 0.0625, not c060 (ignores transient 0.1875)",
+      "PID 0x1746 encoding spans [0, +89.7] deg; with knock_retard in [-10, 0] the raw value is always 0 (PID always reports 0.00)",
+      "def 'Knock Retard Max - Knock Sensor Faulted' (5 cells) does not exist in this ROM; 0x6afa4 is a different 15-cell table",
+      "DTC 0x23/0x24 are firmware-inferred; no DTC 0023/0024 tables in this ROM's def block",
+      "a5e0/a5e4/a5dc idle/base terms have no identified writer; the b118 blend lands in a5e8/a5ec, not a5e0",
+      "0xc3ce called from task[6] 0x661e (not the 0x65f6 chain); 0xc276 called from 0xc8dc and 0x5a4c (not 0xc338)",
+      "0x142a4 does not call 0x13b40/0x13bd2 (0x13b40 only from 0x145c8; 0x13bd2 from 0x13a60/0x13b40/0x139c4)",
+      "fault thresholds 51249/16121 are u16 values at ROM 0x6c17e/0x6c17c, not ROM addresses",
+      "rough corrections a6ac/a6b0 and coolant derates a750/a754 are leading/trailing, not per-rotor",
+      "0x33970 reads raw u16 c090 directly (not a37e; same value via 0x336c4 -> 0xc0f0)",
+      "threshold A/B relabelled 'raw u16 vs RPM' ('2D' referred to the lookup engine, not dimensionality)",
+      "0xc1f8 is ref_knockRelatedInit (ref_knockFunctionInit is 0xc14c)"
+    ],
+    "def_side_issues_documented_not_fixed": [
+      "logger_rx8_defs.xml PIDTEST3 'Knock Retard': desc=\"Tire Size\" (copy-paste), gauge_max=500 despite degenerate encoding",
+      "base def 'Knock Retard Max - Knock Sensor Faulted' absent from this ROM",
+      "DTC 0x23/0x24 have no def corroboration"
+    ],
+    "files_touched": [
+      "knock_control_report.md",
+      "reviews/knock_control/README.md",
+      "reviews/knock_control/REVIEW_NOTES.md (new)",
+      "source_review/accepted_ram_aliases.tsv",
+      "source_review/accepted_function_aliases.tsv",
+      "decompiled/functions/0000c486_FUN_0000c486.c",
+      "decompiled/functions/00033632_FUN_00033632.c",
+      "decompiled/functions/000064ba_FUN_000064ba.c",
+      "decompiled/functions/00049fac_FUN_00049fac.c",
+      "decompiled/functions/000125bc_FUN_000125bc.c",
+      "decompiled/functions/000125f6_FUN_000125f6.c",
+      "decompiled/functions/0000c276_FUN_0000c276.c",
+      "decompiled/functions/0000c3ce_FUN_0000c3ce.c",
+      "decompiled/functions/0000c7ba_ref_setupCoilOutputs.c",
+      "decompiled/functions/000142a4_FUN_000142a4.c",
+      "decompiled/functions/00033970_FUN_00033970.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c"
+    ],
+    "change_kind": "comments and documentation only; no function bodies, names, addresses or ROM bytes changed",
+    "validators_rerun": {
+      "validate_export": "pass (input_sha256_verified: true, 3355 function files, 168592 instructions byte-verified, 1833 reference matches)",
+      "verify_readability": "pass (function_bodies_consistent: 3355)",
+      "verify_math_units": "pass"
+    },
+    "rom_modified": false
+  },
+  "metadata_record": "metadata/knock_loop_labels.json",
+  "backup": "backups/pre_knock_loop_labels.zip",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "ghidra_database_updated": false,
+  "hardware_execution_performed": false
+}

@@ -1,0 +1,11 @@
+{
+  "rom": "60E15120",
+  "tables_annotated": 478,
+  "axis_labels_added": 103,
+  "reviewed_logger_parameters": 14,
+  "editor_addresses_scaling_shapes_and_states_unchanged": true,
+  "other_rom_blocks_unchanged": true,
+  "xml_parse_passed": true,
+  "logger_ids_unique": true,
+  "live_RomRaider_load_tested": false
+}

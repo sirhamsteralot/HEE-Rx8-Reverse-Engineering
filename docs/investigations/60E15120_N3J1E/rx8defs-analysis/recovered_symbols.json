@@ -1,0 +1,408 @@
+[
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "0000031c",
+    "proposed_alias": "service_wdt_overflow_and_toggle_pb15",
+    "confidence": "behavior_verified_role_candidate",
+    "comment": "On WDT status bit 0x80, writes keyed value 0xa53c then toggles PBDR bit15. Matches external-watchdog heartbeat idiom documented by npkern; external chip/pin routing remains unverified. Boot-path evidence, not yet the running-engine heartbeat."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "000011cc",
+    "proposed_alias": "service_wdt_overflow_toggle_pb15_and_count",
+    "confidence": "behavior_verified_role_candidate",
+    "comment": "Same PB15 toggle with a saturating event counter. Existing name checkWatchdogForOverflowandReset overstates reset behavior: the visible action is servicing/toggling, not issuing a reset."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "00003920",
+    "proposed_alias": "sh_raise_interrupt_mask_return_previous",
+    "confidence": "assembly_verified",
+    "comment": "0x3922 reads SR; saves SR&0xf0; if requested mask is greater, delay-slot instruction 0x392c loads argument into SR. Raw C omits this side effect. This is not a pure function despite the exported C body."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "00004c14",
+    "proposed_alias": "sh_delay_20_nops",
+    "confidence": "assembly_verified",
+    "comment": "20 NOP instructions before RTS, plus one delay-slot NOP. Raw C returns immediately because timing has no C-level side effect; preserve this distinction when analyzing peripheral timing."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "00007188",
+    "proposed_alias": "sci0_configure_sync_and_exchange_command",
+    "confidence": "register_dataflow_verified",
+    "comment": "Sets SCI_SMR0=0x80, BRR0=4, adjusts SCR0 and pin configuration, exchanges combined RAM command bytes via 0x71ea, restores SR through tail jump. Calls 0x3920 with 0xb0, so transfer can run with mask raised to interrupt level 11. Endpoint purpose is not confirmed."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "000071ea",
+    "proposed_alias": "sci0_exchange_byte_blocking",
+    "confidence": "assembly_verified",
+    "comment": "SCI0 transmit/receive with GPIO select at 0xfffff764 bit0. At 0x721e..0x7226 waits for SCI_SSR0 bit0x40 with no software timeout or watchdog service inside the loop. Clock-synchronous configuration comes from caller 0x7188. Not proof of the reported reset; missing external response alone need not prevent internally clocked receive completion."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "0000ca7e",
+    "proposed_alias": "update_serial_command_bits_3_to_5_and_send",
+    "confidence": "assembly_and_dataflow_verified",
+    "comment": "Replaces command bits under mask 0x38, then calls 0x7188. Supersedes the inherited interpretation ignitionCoilPulse as a descriptive alias: this routine sends a serial command, not a direct coil pulse. Knock-front-end association is a hypothesis, not established chip identity."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "00002068",
+    "proposed_alias": "lookup_2d_descriptor_scaled",
+    "confidence": "layout_correlated",
+    "comment": "Descriptor access matches ScoobyRom Denso layout: type byte +2, optional scale +12 and offset +16; this ROM uses indirect interpolation dispatch. Raw signature/register-derived temporaries remain unresolved. Layout compatibility does not transfer Subaru table names or units."
+  },
+  {
+    "source": "cross_ecu/symbol_aliases.tsv",
+    "address": "000020dc",
+    "proposed_alias": "lookup_3d_descriptor_scaled",
+    "confidence": "layout_correlated",
+    "comment": "Descriptor access matches ScoobyRom Denso layout: type byte +16, optional scale +20 and offset +24. This is structural evidence, not proof of calibration meaning or complete ABI recovery."
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffb548",
+    "proposed_alias": "engine_speed_rpm",
+    "reader": "00055484",
+    "diagnostic_handler": "00056982",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffff9f70",
+    "proposed_alias": "coolant_temperature",
+    "reader": "0005542a",
+    "diagnostic_handler": "00056940",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffbbb4",
+    "proposed_alias": "vehicle_speed",
+    "reader": "0005549a",
+    "diagnostic_handler": "00056998",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffa630",
+    "proposed_alias": "leading_ignition_timing",
+    "reader": "000554ae",
+    "diagnostic_handler": "000569ae",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffa638",
+    "proposed_alias": "trailing_ignition_timing",
+    "reader": "00056cc8",
+    "diagnostic_handler": "00056cc8",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffff9f60",
+    "proposed_alias": "intake_air_temperature",
+    "reader": "000554c6",
+    "diagnostic_handler": "000569c4",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffa734",
+    "proposed_alias": "knock_retard",
+    "reader": "0005707a",
+    "diagnostic_handler": "0005707a",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffc0b4",
+    "proposed_alias": "engine_load",
+    "reader": "00055748",
+    "diagnostic_handler": "00056b8a",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffadfc",
+    "proposed_alias": "lambda_target",
+    "reader": "0005575e",
+    "diagnostic_handler": "00056b9e",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffa9ec",
+    "proposed_alias": "mass_air_flow",
+    "reader": "00055528",
+    "diagnostic_handler": "000569da",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "cross_ecu/romraider_ram_candidates.tsv",
+    "address": "ffffd380",
+    "proposed_alias": "tire_revolutions_per_mile",
+    "reader": "00057004",
+    "diagnostic_handler": "00057004",
+    "confidence": "logger_identifier_plus_C_dataflow_candidate"
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00057a0c",
+    "alias": "diag_append_u16_be",
+    "confidence": "high",
+    "evidence": "G-ROM 0x55ecc matches after masking PC-relative literal displacement; C explicitly emits high then low byte and appends length 2."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00057a2e",
+    "alias": "diag_append_u8",
+    "confidence": "high",
+    "evidence": "G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00057858",
+    "alias": "diag22_append_positive_response_header",
+    "confidence": "high",
+    "evidence": "G-ROM 0x55d24 match plus explicit bytes 0x62 and current identifier RAM 0xffffd1ea."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "0005774c",
+    "alias": "diag22_find_and_dispatch_identifier",
+    "confidence": "high",
+    "evidence": "Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "000567e8",
+    "alias": "diag22_accept_identifier_request",
+    "confidence": "medium",
+    "evidence": "Service 0x22 reads two request bytes into 0xffffd1ea and updates request state. Decompiled phase parameter comparison remains suspect; name describes visible path."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00029340",
+    "alias": "can201_prepare_rpm_with_conditional_filter",
+    "confidence": "high",
+    "evidence": "Reads confirmed RPM 0xffffb548, conditionally filters into 0xffffbb04 and stores previous input at 0xffffbb08. Exact conditions include unresolved status flags."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00029236",
+    "alias": "can201_encode_rpm_u16",
+    "confidence": "high",
+    "evidence": "Reads 0xffffbb04, quantizes at 0.25 RPM/count into 0xffffbafc; fault produces 0xffff, normal output capped at 0xfffe. Conversion 0x2490 divides by scalar."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "0002927c",
+    "alias": "can201_encode_vehicle_speed_u16",
+    "confidence": "high",
+    "evidence": "Reads diagnostic-correlated speed 0xffffbbb4; quantization is (speed+100)/0.01 rounded and bounded to 40000, or 0xffff on fault. Result 0xffffbb00 is packed at payload bytes 4 and 5."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "000291dc",
+    "alias": "can201_pack_and_queue_payload",
+    "confidence": "high",
+    "evidence": "Descriptor 0x4df1c contains ID 0x201, DLC 8 and RAM pointer 0xffffbaf4. Packs RPM at bytes 0..1 and speed at bytes 4..5."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "00028eb8",
+    "alias": "can216_unpack_mixed_width_fields",
+    "confidence": "high",
+    "evidence": "Unique exact reference match and relocated literal operands map G-ROM names to 16-bit words at 0xffffbad4, bad6, bada; bytes at bad8 and badc. G-ROM byteN names are not accurate widths or a contiguous raw payload."
+  },
+  {
+    "source": "source_review/accepted_function_aliases.tsv",
+    "address": "000071ea",
+    "alias": "sci0_exchange_byte_wait_rdrf",
+    "confidence": "high",
+    "evidence": "Renesas SH7055 app note section 2.20 confirms SSR mask 0x40 is receive-data-full (RDRF), the condition polled here; no timeout inside the loop. This idiom also occurs in vendor sample code and is not itself evidence of a bug."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffd1ea",
+    "alias": "diag22_current_identifier",
+    "type": "uint16",
+    "reader": "00057858",
+    "evidence": "Read from request by 0x567e8, matched by 0x5774c, echoed in 0x62 header."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbb04",
+    "alias": "can201_prepared_engine_rpm",
+    "type": "float",
+    "reader": "00029340",
+    "evidence": "Conditional filtered RPM; input from 0xffffb548."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbb08",
+    "alias": "can201_previous_engine_rpm",
+    "type": "float",
+    "reader": "00029340",
+    "evidence": "Previous unfiltered input saved each call."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbafc",
+    "alias": "can201_encoded_rpm",
+    "type": "uint16",
+    "reader": "00029236",
+    "evidence": "0.25 RPM/count; 0xffff fault sentinel."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbb00",
+    "alias": "can201_encoded_vehicle_speed",
+    "type": "uint16",
+    "reader": "0002927c",
+    "evidence": "(speed+100)/0.01, normal cap 40000."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbaf4",
+    "alias": "can201_tx_payload",
+    "type": "uint8[8]",
+    "reader": "000291dc",
+    "evidence": "Descriptor-confirmed 8-byte buffer."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbad4",
+    "alias": "can216_unpacked_field_0",
+    "type": "uint16",
+    "reader": "00028eb8",
+    "evidence": "Source raw bytes 0..1 at bab8/bab9."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbad6",
+    "alias": "can216_unpacked_field_1",
+    "type": "uint16",
+    "reader": "00028eb8",
+    "evidence": "Source raw bytes 2..3."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbad8",
+    "alias": "can216_unpacked_field_2",
+    "type": "uint8",
+    "reader": "00028eb8",
+    "evidence": "Source raw byte 4."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbada",
+    "alias": "can216_unpacked_field_3",
+    "type": "uint16",
+    "reader": "00028eb8",
+    "evidence": "Source raw bytes 5..6."
+  },
+  {
+    "source": "source_review/accepted_ram_aliases.tsv",
+    "address": "ffffbadc",
+    "alias": "can216_unpacked_field_4",
+    "type": "uint8",
+    "reader": "00028eb8",
+    "evidence": "Source raw byte 7."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "0000231c",
+    "alias": "rx8_mul_s32_shift16_saturate",
+    "evidence": "DMULS.L forms signed 64-bit product; 16 SHAR/ROTCR pairs perform arithmetic >>16; range check clamps to INT32_MIN/MAX. Equivalent to saturate_s32(floor((int64)a*b/65536)). Compatible with Q16.16 multiplication if both inputs use that format; actual operand units depend on callers. Not GCC __mulsi3, which returns an ordinary integer product."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "0000239c",
+    "alias": "sh_busy_wait_count_times_8",
+    "evidence": "Unsigned loop bound is input bits shifted left three modulo 2^32. No elapsed-time unit is established; do not call this delay_us without clock and instruction timing evidence."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002420",
+    "alias": "rx8_pack_u8_with_complement",
+    "evidence": "Returns ((x & 255)<<8) | ((~x)&255). Redundant value/complement encoding, not byte swapping or a CRC."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002430",
+    "alias": "rx8_pack_u16_with_complement",
+    "evidence": "Returns ((uint32)(uint16)x<<16) | (uint16)~x. Redundant value/complement encoding; raw signed return type can obscure bit-pattern semantics."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002440",
+    "alias": "rx8_is_outside_tolerance_band",
+    "evidence": "Returns value < center-tolerance || value > center+tolerance. Inclusive endpoints are inside. Strict comparisons can both be false for NaN. Existing divide-by-zero-related name is too narrow: this helper itself performs no division."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002460",
+    "alias": "rx8_add_u16_saturate",
+    "evidence": "Inputs are truncated to uint16 before addition; output min(a+b,65535). Saturation, not ordinary wrapping unsigned-short arithmetic."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002478",
+    "alias": "rx8_add_u8_saturate",
+    "evidence": "Inputs are truncated to uint8 before addition; output min(a+b,255)."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002490",
+    "alias": "rx8_encode_u16_affine_saturate",
+    "evidence": "For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..65535. Physical decode is raw*step+offset. Step is units/count, not an encode multiplier. NaN, zero step and out-of-range FTRC require SH-specific analysis; do not model by an unrestricted C float-to-int cast. Not roundf: that has a signed floating result and halfway-away-from-zero rules."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "000024d0",
+    "alias": "rx8_encode_u8_affine_saturate",
+    "evidence": "For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..255. Decode is raw*step+offset. Exceptional FTRC behavior is not established by raw C."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "000024c0",
+    "alias": "rx8_decode_u16_affine",
+    "evidence": "Returns offset+(uint16 raw)*step. Float args are scale,offset; integer arg is raw. This is affine scaling, not evidence of a specific sensor unit."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002500",
+    "alias": "rx8_decode_u8_affine",
+    "evidence": "Returns offset+(uint8 raw)*step. Float args are scale,offset; integer arg is raw."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "00002510",
+    "alias": "rx8_blend_s32_u16_weight_over_256",
+    "evidence": "Returns a+trunc((1-weight/256)*(float(b)-float(a))). weight is uint16, not restricted to 0..256; values above 256 extrapolate. Floating arithmetic and truncation matter; not generic integer lerp with unrestricted overflow guarantees."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "0003db24",
+    "alias": "rx8_divide_with_zero_fallback",
+    "evidence": "For denominator zero: 0/0 returns +0; nonzero numerator selects a signed large finite fallback about 3.4028229e38. Denominator negative zero does not reverse fallback sign. Other inputs use division. Not IEEE division or a normal libm function; the fallback is not asserted to equal FLT_MAX."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "000042b0",
+    "alias": "sh_copy_bytes_forward_r0_r1_r2",
+    "evidence": "Assembly ABI: R0=count, R1=destination, R2=source. Forward byte copy unrolled four times; zero count returns. Does not return original destination in R0 (R0 receives byte loads), so not a standard memcpy signature. No overlap-aware backwards path; do not call memmove. Looks like a runtime copy primitive, but compiler/library provenance is unproven."
+  },
+  {
+    "source": "math_units/helper_aliases.tsv",
+    "address": "0006689e",
+    "alias": "rx8_insertion_sort_u16_key_u8_payload",
+    "evidence": "Sorts records at stride 4 by ascending uint16 key, carrying a byte at offset 2. Strict-less comparison preserves equal-key order. Padding byte is not copied by the visible routine. Specialized insertion sort, not a proven qsort implementation."
+  }
+]

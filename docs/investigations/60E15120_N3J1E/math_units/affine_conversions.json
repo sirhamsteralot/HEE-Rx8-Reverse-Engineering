@@ -1,0 +1,702 @@
+[
+  {
+    "function": "0001ae5c",
+    "signal": "DAT_ffffa3e4",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000237cc",
+    "signal": "0x41a00000",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "DAT_ffffb40c",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "-DAT_ffffb414",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "DAT_ffffb414",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "DAT_ffffb594",
+    "bits": 16,
+    "step": 0.00030517578125,
+    "offset": 0.0,
+    "step_literal": "0x39a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "uVar3",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "uVar3",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "uVar3",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "DAT_ffffb38c",
+    "bits": 16,
+    "step": 0.030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3cfa0000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "uVar3",
+    "bits": 16,
+    "step": 0.00390625,
+    "offset": 0.0,
+    "step_literal": "0x3b800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000244bc",
+    "signal": "engine_speed_rpm_ffffb548",
+    "bits": 16,
+    "step": 0.1953125,
+    "offset": 0.0,
+    "step_literal": "0x3e480000",
+    "offset_literal": "0",
+    "units": "RPM"
+  },
+  {
+    "function": "00029236",
+    "signal": "can201_prepared_engine_rpm_ffffbb04",
+    "bits": 16,
+    "step": 0.25,
+    "offset": 0.0,
+    "step_literal": "0x3e800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0002927c",
+    "signal": "vehicle_speed_ffffbbb4",
+    "bits": 16,
+    "step": 0.009999999776482582,
+    "offset": -100.0,
+    "step_literal": "0x3c23d70a",
+    "offset_literal": "0xc2c80000",
+    "units": "km/h"
+  },
+  {
+    "function": "000292f8",
+    "signal": "DAT_ffffa9bc",
+    "bits": 8,
+    "step": 0.5,
+    "offset": 0.0,
+    "step_literal": "0x3f000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00029b48",
+    "signal": "0x41980000",
+    "bits": 8,
+    "step": 1.0,
+    "offset": 0.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0002c90c",
+    "signal": "0x40800000",
+    "bits": 8,
+    "step": 1.0,
+    "offset": 0.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00044dc8",
+    "signal": "DAT_ffffb558",
+    "bits": 16,
+    "step": 0.003999999724328518,
+    "offset": 0.0,
+    "step_literal": "0x3b83126e",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0004b534",
+    "signal": "DAT_ffffce28",
+    "bits": 8,
+    "step": 0.00039246465894393623,
+    "offset": 0.0,
+    "step_literal": "0x39cdc3b7",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005542a",
+    "signal": "coolant_temperature_ffff9f70",
+    "bits": 8,
+    "step": 1.0,
+    "offset": -40.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0xc2200000",
+    "units": "degC"
+  },
+  {
+    "function": "00055466",
+    "signal": "DAT_ffffb0d0 * 100.0",
+    "bits": 8,
+    "step": 0.78125,
+    "offset": -100.0,
+    "step_literal": "0x3f480000",
+    "offset_literal": "0xc2c80000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00055484",
+    "signal": "engine_speed_rpm_ffffb548",
+    "bits": 16,
+    "step": 0.25,
+    "offset": 0.0,
+    "step_literal": "0x3e800000",
+    "offset_literal": "0",
+    "units": "RPM"
+  },
+  {
+    "function": "0005549a",
+    "signal": "vehicle_speed_ffffbbb4",
+    "bits": 8,
+    "step": 1.0,
+    "offset": 0.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0",
+    "units": "km/h"
+  },
+  {
+    "function": "000554ae",
+    "signal": "leading_ignition_timing_ffffa630",
+    "bits": 8,
+    "step": 0.5,
+    "offset": -64.0,
+    "step_literal": "0x3f000000",
+    "offset_literal": "0xc2800000",
+    "units": "degrees"
+  },
+  {
+    "function": "000554c6",
+    "signal": "intake_air_temperature_ffff9f60",
+    "bits": 8,
+    "step": 1.0,
+    "offset": -40.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0xc2200000",
+    "units": "degC"
+  },
+  {
+    "function": "00055528",
+    "signal": "mass_air_flow_ffffa9ec",
+    "bits": 16,
+    "step": 0.009999999776482582,
+    "offset": 0.0,
+    "step_literal": "0x3c23d70a",
+    "offset_literal": "0",
+    "units": "g/s"
+  },
+  {
+    "function": "000555ac",
+    "signal": "DAT_ffffb074 * 100.0",
+    "bits": 8,
+    "step": 0.7812999486923218,
+    "offset": -100.0,
+    "step_literal": "0x3f480346",
+    "offset_literal": "0xc2c80000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00055616",
+    "signal": "DAT_ffffb2f0",
+    "bits": 8,
+    "step": 0.39215683937072754,
+    "offset": 0.0,
+    "step_literal": "0x3ec8c8c8",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000556ce",
+    "signal": "DAT_ffffad10 * 25.325 + 0.0182",
+    "bits": 8,
+    "step": 1.0,
+    "offset": 0.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000556ec",
+    "signal": "diag_afr_word_a_ffffaa6c",
+    "bits": 16,
+    "step": 3.0517578125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00055702",
+    "signal": "diag_afr_word_b_ffffaa7c",
+    "bits": 16,
+    "step": 0.00390625,
+    "offset": -128.0,
+    "step_literal": "0x3b800000",
+    "offset_literal": "0xc3000000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005571a",
+    "signal": "DAT_ffffc644",
+    "bits": 16,
+    "step": 0.09999999403953552,
+    "offset": -40.0,
+    "step_literal": "0x3dcccccc",
+    "offset_literal": "0xc2200000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00055732",
+    "signal": "inferred_battery_voltage_ffffb590",
+    "bits": 16,
+    "step": 0.0009999999310821295,
+    "offset": 0.0,
+    "step_literal": "0x3a83126e",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00055748",
+    "signal": "engine_load_ffffc0b4",
+    "bits": 16,
+    "step": 0.003921568393707275,
+    "offset": 0.0,
+    "step_literal": "0x3b808080",
+    "offset_literal": "0",
+    "units": "logger-defined load units"
+  },
+  {
+    "function": "0005575e",
+    "signal": "lambda_target_ffffadfc",
+    "bits": 16,
+    "step": 3.0517578125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38000000",
+    "offset_literal": "0",
+    "units": "dimensionless lambda"
+  },
+  {
+    "function": "00055774",
+    "signal": "DAT_ffffad48",
+    "bits": 8,
+    "step": 0.39215683937072754,
+    "offset": 0.0,
+    "step_literal": "0x3ec8c8c8",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056cc8",
+    "signal": "trailing_ignition_timing_ffffa638",
+    "bits": 8,
+    "step": 0.5,
+    "offset": -64.0,
+    "step_literal": "0x3f000000",
+    "offset_literal": "0xc2800000",
+    "units": "degrees"
+  },
+  {
+    "function": "00056de6",
+    "signal": "DAT_ffffb410",
+    "bits": 16,
+    "step": 0.001953125,
+    "offset": 0.0,
+    "step_literal": "0x3b000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e04",
+    "signal": "inferred_throttle_position_ffffad44",
+    "bits": 16,
+    "step": 0.001953125,
+    "offset": 0.0,
+    "step_literal": "0x3b000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e22",
+    "signal": "DAT_ffffa7ac",
+    "bits": 16,
+    "step": 0.25,
+    "offset": 0.0,
+    "step_literal": "0x3e800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e40",
+    "signal": "DAT_ffffb59c",
+    "bits": 16,
+    "step": 0.00048828125,
+    "offset": 0.0,
+    "step_literal": "0x3a000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e5e",
+    "signal": "DAT_ffffadd4",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e7c",
+    "signal": "DAT_ffffa984",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056e9a",
+    "signal": "DAT_ffffa834",
+    "bits": 16,
+    "step": 3.0517578125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056f30",
+    "signal": "maf_voltage_latched_ffffa9e4",
+    "bits": 16,
+    "step": 0.000244140625,
+    "offset": 0.0,
+    "step_literal": "0x39800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056f4e",
+    "signal": "DAT_ffffa9bc",
+    "bits": 8,
+    "step": 0.39215683937072754,
+    "offset": 0.0,
+    "step_literal": "0x3ec8c8c8",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056f6c",
+    "signal": "injector_pulse_time_ffffbe24",
+    "bits": 16,
+    "step": 8.0,
+    "offset": 0.0,
+    "step_literal": "0x41000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056faa",
+    "signal": "DAT_ffffad10",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056fc8",
+    "signal": "DAT_ffffb5ac",
+    "bits": 16,
+    "step": 0.0030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3b480000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00056fe6",
+    "signal": "DAT_ffffb654",
+    "bits": 16,
+    "step": 0.125,
+    "offset": 0.0,
+    "step_literal": "0x3e000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005705c",
+    "signal": "DAT_ffffbc30",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005707a",
+    "signal": "knock_retard_ffffa734",
+    "bits": 8,
+    "step": 0.3515625,
+    "offset": 0.0,
+    "step_literal": "0x3eb40000",
+    "offset_literal": "0",
+    "units": "degrees"
+  },
+  {
+    "function": "00057098",
+    "signal": "DAT_ffffc6ac",
+    "bits": 16,
+    "step": 7.62939453125e-05,
+    "offset": 0.0,
+    "step_literal": "0x38a00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000570ee",
+    "signal": "DAT_ffffc4c8",
+    "bits": 8,
+    "step": 1.0,
+    "offset": -40.0,
+    "step_literal": "0x3f800000",
+    "offset_literal": "0xc2200000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005711a",
+    "signal": "apv_position_voltage_ffffcab0",
+    "bits": 8,
+    "step": 0.01953125,
+    "offset": 0.0,
+    "step_literal": "0x3ca00000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00057594",
+    "signal": "uVar4",
+    "bits": 8,
+    "step": 0.1953125,
+    "offset": -25.0,
+    "step_literal": "0x3e480000",
+    "offset_literal": "0xc1c80000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058262",
+    "signal": "DAT_ffffc6f0",
+    "bits": 16,
+    "step": 0.0039061999414116144,
+    "offset": 0.0,
+    "step_literal": "0x3b7fff29",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005831c",
+    "signal": "DAT_ffffc6f4",
+    "bits": 16,
+    "step": 0.0039061999414116144,
+    "offset": 0.0,
+    "step_literal": "0x3b7fff29",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058440",
+    "signal": "DAT_ffffb078 * 1000.0",
+    "bits": 16,
+    "step": 0.12199999392032623,
+    "offset": 0.0,
+    "step_literal": "0x3df9db22",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "000584ae",
+    "signal": "0x43960000",
+    "bits": 16,
+    "step": 0.12199999392032623,
+    "offset": 0.0,
+    "step_literal": "0x3df9db22",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005851c",
+    "signal": "0x43c80000",
+    "bits": 16,
+    "step": 0.12199999392032623,
+    "offset": 0.0,
+    "step_literal": "0x3df9db22",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058700",
+    "signal": "DAT_ffffcac4 * 24.0",
+    "bits": 16,
+    "step": 0.0039061999414116144,
+    "offset": 0.0,
+    "step_literal": "0x3b7fff29",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058bf4",
+    "signal": "DAT_ffffd0e0 * 1000.0",
+    "bits": 16,
+    "step": 0.00390625,
+    "offset": 0.0,
+    "step_literal": "0x3b800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058ea2",
+    "signal": "DAT_ffffc4e4 / 100.0",
+    "bits": 16,
+    "step": 0.0039061999414116144,
+    "offset": 0.0,
+    "step_literal": "0x3b7fff29",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "00058f70",
+    "signal": "DAT_ffffc5f0",
+    "bits": 16,
+    "step": 0.09999999403953552,
+    "offset": -40.0,
+    "step_literal": "0x3dcccccc",
+    "offset_literal": "0xc2200000",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005c0f0",
+    "signal": "param_1",
+    "bits": 16,
+    "step": 0.0030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3b480000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005c800",
+    "signal": "param_1",
+    "bits": 16,
+    "step": 0.0030517578125,
+    "offset": 0.0,
+    "step_literal": "0x3b480000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005ca94",
+    "signal": "param_1",
+    "bits": 16,
+    "step": 0.25,
+    "offset": 0.0,
+    "step_literal": "0x3e800000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005cba4",
+    "signal": "param_1",
+    "bits": 16,
+    "step": 0.00048828125,
+    "offset": 0.0,
+    "step_literal": "0x3a000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  },
+  {
+    "function": "0005ccb4",
+    "signal": "param_1",
+    "bits": 16,
+    "step": 0.001953125,
+    "offset": 0.0,
+    "step_literal": "0x3b000000",
+    "offset_literal": "0",
+    "units": "unassigned units"
+  }
+]

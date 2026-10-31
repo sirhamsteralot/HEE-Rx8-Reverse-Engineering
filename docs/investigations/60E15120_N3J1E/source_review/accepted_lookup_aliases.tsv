@@ -1,0 +1,17 @@
+original	alias	basis	evidence
+DAT_0006af54	tbl_knock_enable_load_floor_0006af54	source_review_knock_loop	12 u8 cells, all 0x32 x mult 0.01 = 0.5 flat load floor; RPM axis 0x795e8 (800-9600); used by knock_enable_gate 0x13826.
+PTR_DAT_0006af68	tbl_knock_retard_clamp_min_0006af68	source_review_knock_loop	u8 cells 0x6c(108) -> -10 deg ... 0x80 -> 0 vs RPM 2000-5000 (axis 0x79624); retard clamp minimum in knock_retard_clamp 0x13bd2.
+PTR_DAT_0006af7c	tbl_knock_retard_clamp_min_alt_0006af7c	source_review_knock_loop	u8 cells -10/-7.5/-5/-5/-5/-5/0 vs RPM (axis 0x79648); alternative minimum selected when b534==1 && 4<bc3d (0x13bd2).
+DAT_0006af90	tbl_knock_retard_clamp_max_0006af90	source_review_knock_loop	15 u8 cells all 0x80 -> 0.0 deg vs RPM 800-6400 (axis 0x7966c); retard clamp maximum (retard is <= 0).
+DAT_0006afa4	tbl_knock_recovery_target_0006afa4	source_review_knock_loop	u8 cells -10 x9, -8, -6, -4, -2, 0, 0 vs RPM 500-5500 (axis 0x796b8); recovery target when knock sensors unhealthy (0x13a60).
+DAT_0006afb8	tbl_knock_learned_retard_scale_0006afb8	source_review_knock_loop	13 u8 cells all 0x80 -> 0.0; axis 0x79704 = learned EEPROM retard -8.4..+8.4 deg; activation-edge target (0x13a60).
+PTR_DAT_0006b264	tbl_knock_transient_hold_0006b264	source_review_knock_loop	{count=1, type=0}; data byte 0x0a -> raw_u8 lookup << 1 = 20-cycle transient hold counter (0x336c4).
+PTR_DAT_0006b27c	tbl_ignition_timing_threshold_a_alt_0006b27c	source_review_knock_loop	Raw u16 2D threshold A alternative selected when cd60 set (0x336c4); pair with 0x6b270.
+PTR_DAT_0006b294	tbl_ignition_timing_threshold_b_alt_0006b294	source_review_knock_loop	Raw u16 2D threshold B alternative selected when cd60 set (0x336c4); pair with 0x6b288.
+DAT_0006b2b8	tbl_knock_level_3d_a_0006b2b8	source_review_knock_loop	3D 20x12 scaled (type 0x0c, mult 0.05) knock level vs load/RPM; -> a328 (0x336c4).
+DAT_0006b2d4	tbl_knock_level_3d_b_0006b2d4	source_review_knock_loop	3D 20x12 scaled knock level table B (0x336c4).
+DAT_0006b2f0	tbl_knock_level_3d_c_0006b2f0	source_review_knock_loop	3D 1x1 raw knock level table C (0x336c4).
+DAT_0006b304	tbl_knock_level_3d_d_0006b304	source_review_knock_loop	3D 1x1 raw knock level table D (0x336c4).
+DAT_0006990c	tbl_closed_loop_warmup_time_0006990c	source_review_knock_loop	Raw u16 2D, 15 cells vs catalyst-temp-model axis 0x6f7e0 (data 0x6f81c); engine warmup time before closed loop is allowed (0x1c13c). Overrides the generated RX8Defs descriptor alias on rebuild.
+tbl_table_2d_304_check_datatype_0006990c	tbl_closed_loop_warmup_time_0006990c	source_review_knock_loop	Chained rename of the auto RX8Defs descriptor name already integrated into current exports; same table as the row above.
+DAT_0006ac38	tbl_fuel_coolant_compensation_0006ac38	source_review_fueling	2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis.

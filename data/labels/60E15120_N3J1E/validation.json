@@ -1,0 +1,8 @@
+{
+  "input_sha256_verified": true,
+  "function_files_verified": 3355,
+  "instructions_byte_verified": 168592,
+  "instruction_bytes_verified": 337184,
+  "exact_reference_matches_verified": 1833,
+  "semantic_equivalence_verified": false
+}

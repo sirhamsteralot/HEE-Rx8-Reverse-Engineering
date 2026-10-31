@@ -1,0 +1,60 @@
+[
+  {
+    "address": "0x69dd8",
+    "dimension": 2,
+    "count": 18,
+    "type_code": 4,
+    "axis_address": "0x716bc",
+    "data_address": "0x71704",
+    "multiplier": 0.004999999888241291,
+    "offset": 0.0,
+    "axis_values": [
+      500.0,
+      1000.0,
+      1500.0,
+      2000.0,
+      2500.0,
+      3000.0,
+      3500.0,
+      4000.0,
+      4500.0,
+      5000.0,
+      5500.0,
+      6000.0,
+      6500.0,
+      7000.0,
+      7500.0,
+      8000.0,
+      8500.0,
+      9000.0
+    ],
+    "semantic_name": "unassigned"
+  },
+  {
+    "address": "0x69dec",
+    "dimension": 2,
+    "count": 1,
+    "type_code": 4,
+    "axis_address": "0x71718",
+    "data_address": "0x7171c",
+    "multiplier": 0.004999999888241291,
+    "offset": 0.0,
+    "axis_values": [
+      500.0
+    ],
+    "semantic_name": "unassigned"
+  },
+  {
+    "address": "0x68fa8",
+    "dimension": 3,
+    "count_x": 16,
+    "count_y": 6,
+    "type_code": 4,
+    "axis_x_address": "0x6c454",
+    "axis_y_address": "0x6c494",
+    "data_address": "0x6c4ac",
+    "multiplier": 25.0,
+    "offset": 0.0,
+    "semantic_name": "unassigned"
+  }
+]

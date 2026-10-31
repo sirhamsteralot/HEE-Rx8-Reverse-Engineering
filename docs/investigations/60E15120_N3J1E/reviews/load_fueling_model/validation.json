@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-29",
+  "review": "load_fueling_model",
+  "scope": "MAF acquisition/validation, engine load calculation, manifold pressure estimation, fuel volume request, per-injector split (static review only)",
+  "inputs": {
+    "rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+    "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+    "export": "decompiled/ (3,355 function files, 168,592 instructions validated by scripts/validate_export.py)",
+    "descriptor_matches": "cross_ecu/romraider_descriptor_matches.json",
+    "callgraph": "decompiled/callgraph.tsv"
+  },
+  "rom_literal_checks": {
+    "method": "big-endian float32 read directly from the untouched ROM",
+    "0x7a088": 0.6345,
+    "0x7a088_note": "referenced by ref_airPerStroke via literal pointer at 0x33b70",
+    "0x78170": 0.07196,
+    "0x78170_note": "referenced by ref_calcFuelVolumeRequest via literal pointer at 0x30830",
+    "0x1a4e8": 60.0,
+    "0x1a4f4": 5.0,
+    "0x1a194": 273.0,
+    "0x1a198": 293.0,
+    "0x1a1a0": 101.33299255371094,
+    "0x43960000_as_literal": 300.0,
+    "0x43b8bc6a_as_literal": 369.47198486328125,
+    "0x43edf70a_as_literal": 475.92999267578125
+  },
+  "disassembly_checks": {
+    "00019f4e_gate": "copy gate at 0x19fa8-0x19fe8 verified: (aa35>=3) OR (aa36>=3) OR raw in [0x7ae,0xf852) refreshes a9e4/a9e8",
+    "0001a418_args": "first jsr takes fr4=RPM (0xffffb548) with table 0x697b4; second call filter arg fr4=0xffffa9ec; literals 60.0/5.0 in pool",
+    "000306e8_args": "lookup_3d at 0x3070a receives RPM via delay-slot fmov from 0xffffb548; engine_load remains in fr5 from the bed0 multiply; table pointer 0x6ac88 from pool 0x3083c; function 0x20dc"
+  },
+  "export_doc_fixes": {
+    "293K_correction": {
+      "applied": true,
+      "change": "'Kelvin conversion 295/(x+273)' -> 'Kelvin conversion 293.0/(x+273) (ROM literal 0x43928000 @0x1a198; earlier notes said 295, corrected 2026-10-29 load/fuelling review)'",
+      "views": [
+        "decompiled/functions/0001a086_FUN_0001a086.c",
+        "decompiled/firmware_decompiled.c",
+        "named/firmware_named.c",
+        "source_review/accepted_ram_aliases.tsv"
+      ],
+      "change_kind": "comments and documentation only; no function bodies, names, addresses or ROM bytes changed"
+    }
+  },
+  "names_integrated_into_export": false,
+  "artifacts": {
+    "candidate_function_aliases": "reviews/load_fueling_model/candidate_function_aliases.tsv",
+    "candidate_ram_aliases": "reviews/load_fueling_model/candidate_ram_aliases.tsv",
+    "notes": "reviews/load_fueling_model/REVIEW_NOTES.md",
+    "readme": "reviews/load_fueling_model/README.md"
+  },
+  "validators_rerun": {
+    "validate_export": "pass (input_sha256_verified: true, 3355 function files, 168592 instructions byte-verified, 1833 exact reference matches). Note: run from a faithful copy of scripts/validate_export.py with only the ROM path localized to this machine (metadata/input.json 'file' records the original author's /home path); the script's metadata/validation.json write was identical.",
+    "verify_readability": "pass (function_bodies_consistent: 3355)",
+    "verify_math_units": "pass (16 shift pairs, 10007 fixed-point cases, 70 constant pairs)"
+  },
+  "coverage_limits": "Static analysis only. No hardware execution, no semantic equivalence claim, no function-boundary proof beyond the export's own validation. Unit interpretations for 0.6345, 0.07196, 369.472/475.93, and the fallback affine are candidates. DAT_ffffbe1c, DAT_ffffad48, 0x19640 caller context and baro sensor channel remain untraced.",
+  "rom_modified": false,
+  "ghidra_database_updated": false,
+  "hardware_execution_performed": false
+}

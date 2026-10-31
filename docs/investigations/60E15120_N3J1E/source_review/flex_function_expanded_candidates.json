@@ -1,0 +1,127 @@
+[
+  {
+    "name": "Lookup3d",
+    "reference_address": "000020dc",
+    "target_address": "000020dc"
+  },
+  {
+    "name": "Lookup2d",
+    "reference_address": "00002068",
+    "target_address": "00002068"
+  },
+  {
+    "name": "Lookup2d_unsigned",
+    "reference_address": "00002068",
+    "target_address": "00002068"
+  },
+  {
+    "name": "calculateTrailingTimingBase",
+    "reference_address": "0001202a",
+    "target_address": null
+  },
+  {
+    "name": "calculateLeadingTimingBase",
+    "reference_address": "00011f78",
+    "target_address": null
+  },
+  {
+    "name": "highLevelInit",
+    "reference_address": "0001107a",
+    "target_address": null
+  },
+  {
+    "name": "engineControlGetFueling",
+    "reference_address": "000217b2",
+    "target_address": null
+  },
+  {
+    "name": "fixedPointToFloat_8bit_MULT_OFF_SIG",
+    "reference_address": "00002500",
+    "target_address": "00002500"
+  },
+  {
+    "name": "floatToInt_SIGNAL_MULT_OFFSET",
+    "reference_address": "000024d0",
+    "target_address": "000024d0"
+  },
+  {
+    "name": "floatToFP_16bit_NUMBER_SCALAR_OFFSET",
+    "reference_address": "00002490",
+    "target_address": "00002490"
+  },
+  {
+    "name": "can216RXParse",
+    "reference_address": "000298a4",
+    "target_address": null
+  },
+  {
+    "name": "calculateGearRPMbased",
+    "reference_address": "0002cadc",
+    "target_address": "0002c324"
+  },
+  {
+    "name": "intToUDS_SERVICE_DATA",
+    "reference_address": "00055ecc",
+    "target_address": "00057a0c"
+  },
+  {
+    "name": "byteToUDS_SERVICE_DATA",
+    "reference_address": "00055eee",
+    "target_address": "00057a2e"
+  },
+  {
+    "name": "unknownMode22Func",
+    "reference_address": "00066aaa",
+    "target_address": "000681ba"
+  },
+  {
+    "name": "mode22Hanlder",
+    "reference_address": "00054b72",
+    "target_address": null
+  },
+  {
+    "name": "firstOrderFilter_SIG_SIGPREV_MIN_FF",
+    "reference_address": "000023b0",
+    "target_address": "000023b0"
+  },
+  {
+    "name": "saturate_SIGNAL_LOWER_UPPER",
+    "reference_address": "00002404",
+    "target_address": "00002404"
+  },
+  {
+    "name": "getMode22PID",
+    "reference_address": "00055c14",
+    "target_address": null
+  },
+  {
+    "name": "udsErrorResponse",
+    "reference_address": "00052a5a",
+    "target_address": "0005496e"
+  },
+  {
+    "name": "extendUDSDataReponse",
+    "reference_address": "00055d24",
+    "target_address": "00057858"
+  },
+  {
+    "name": "txCAN_EventBased",
+    "reference_address": "000099b0",
+    "target_address": "000099b0"
+  },
+  {
+    "name": "getMode22EngineLoad",
+    "reference_address": "00053a3a",
+    "target_address": null
+  },
+  {
+    "name": "oemInjectorCrankingPWTable",
+    "reference_address": "00068fcc",
+    "target_address": null
+  },
+  {
+    "name": "subtractAbsolute",
+    "reference_address": "000023dc",
+    "target_address": null
+  }
+]

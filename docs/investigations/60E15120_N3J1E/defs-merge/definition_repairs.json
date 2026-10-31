@@ -1,0 +1,991 @@
+[
+  {
+    "table": "Alternator Duty Cycle Max",
+    "field": "sizey",
+    "old": "7",
+    "new": "11",
+    "descriptor": "0x6a54c",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Table 2D - 172 ",
+    "field": "sizey",
+    "old": "5",
+    "new": "6",
+    "descriptor": "0x6aad8",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Max Load - Intake Temperature Compensation",
+    "field": "sizey",
+    "old": "8",
+    "new": "9",
+    "descriptor": "0x6ada0",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Table 2D - 215 ",
+    "field": "sizey",
+    "old": "2",
+    "new": "14",
+    "descriptor": "0x6b044",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Table 2D - 283 ",
+    "field": "sizey",
+    "old": "10",
+    "new": "12",
+    "descriptor": "0x6baf4",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Table 3D - 76 ",
+    "field": "sizex",
+    "old": "6",
+    "new": "10",
+    "descriptor": "0x6b058",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "Table 3D - 76 ",
+    "field": "sizey",
+    "old": "7",
+    "new": "8",
+    "descriptor": "0x6b058",
+    "basis": "unique ROM data and axis pointer match"
+  },
+  {
+    "table": "DTC 0300 Enable/Disable #1 [additional site 0x7e679]",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 0128 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 1574 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 1577 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 2008 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 2101 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC 2406 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC c073 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC c101 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC c121 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC c155 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "DTC c167 Enable/Disable #1",
+    "basis": "self-contained upstream DTC byte template; distinct name for duplicate site"
+  },
+  {
+    "table": "Alternator Diagnostic Voltage Delta to DC",
+    "basis": "missing base template recovered from unique ROM descriptor",
+    "descriptor": "0x6a560",
+    "count": 13,
+    "scale": 0.009999999776482582,
+    "offset": 0.0
+  },
+  {
+    "table": "Table 2D - 299 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "000697f8",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0001aa98"
+    ]
+  },
+  {
+    "table": "Table 2D - 300 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "00069804",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0001aa98"
+    ]
+  },
+  {
+    "table": "Table 2D - 304 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006990c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001c13c",
+      "0003cd06"
+    ]
+  },
+  {
+    "table": "Table 2D - 305",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006992c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001ce6c"
+    ]
+  },
+  {
+    "table": "Table 2D - 312 Engine Speed",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069bc0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001d6b4"
+    ]
+  },
+  {
+    "table": "Table 2D - 313 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "00069c1c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0001d8dc"
+    ]
+  },
+  {
+    "table": "Table 2D - 314 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "00069c28",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0001d8dc"
+    ]
+  },
+  {
+    "table": "Table 2D - 315 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "00069c34",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0001d8dc"
+    ]
+  },
+  {
+    "table": "Table 2D - 318 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069c94",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001e99c"
+    ]
+  },
+  {
+    "table": "Table 2D - 319 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069ca0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001eae0"
+    ]
+  },
+  {
+    "table": "Table 2D - 324 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069e44",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001fb4c"
+    ]
+  },
+  {
+    "table": "Table 2D - 325 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069e50",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001fb4c"
+    ]
+  },
+  {
+    "table": "Table 2D - 326 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069e5c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001fd48"
+    ]
+  },
+  {
+    "table": "Table 2D - 327 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069e68",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001f0c4"
+    ]
+  },
+  {
+    "table": "Table 2D - 328 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069e74",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0001f0c4"
+    ]
+  },
+  {
+    "table": "Table 2D - 329 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "00069f60",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0002048c"
+    ]
+  },
+  {
+    "table": "Table 2D - 330",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006a290",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00022294",
+      "000223b4"
+    ]
+  },
+  {
+    "table": "Table 2D - 364 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b3a4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00038628"
+    ]
+  },
+  {
+    "table": "Table 2D - 365 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b3b0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "000387d4"
+    ]
+  },
+  {
+    "table": "Table 2D - 366 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b3bc",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0004e398",
+      "0004f1f8"
+    ]
+  },
+  {
+    "table": "Table 2D - 367 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b4a4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "000500b0",
+      "00050308",
+      "000505c0",
+      "00050668"
+    ]
+  },
+  {
+    "table": "Table 2D - 368 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b4b0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00050018",
+      "000500b0",
+      "00050308"
+    ]
+  },
+  {
+    "table": "Table 2D - 369 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b520",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0005104a"
+    ]
+  },
+  {
+    "table": "Table 2D - 370 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b52c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0005104a"
+    ]
+  },
+  {
+    "table": "Table 2D - 372 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b5a8",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0005356e"
+    ]
+  },
+  {
+    "table": "Table 2D - 373 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b5b4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0005356e"
+    ]
+  },
+  {
+    "table": "Table 2D - 374 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b5c0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0005104a"
+    ]
+  },
+  {
+    "table": "Table 2D - 375 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b610",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0003d010"
+    ]
+  },
+  {
+    "table": "Table 2D - 376 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b704",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "00041d20"
+    ]
+  },
+  {
+    "table": "Table 2D - 377 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b710",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "00041fb8"
+    ]
+  },
+  {
+    "table": "Table 2D - 378 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b96c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "00043e64"
+    ]
+  },
+  {
+    "table": "Table 2D - 379 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b978",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "00043e64"
+    ]
+  },
+  {
+    "table": "Table 2D - 382 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006ba44",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00046404"
+    ]
+  },
+  {
+    "table": "Table 2D - 383 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006ba50",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00046404"
+    ]
+  },
+  {
+    "table": "Table 2D - 384 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006ba5c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "00046404"
+    ]
+  },
+  {
+    "table": "Table 2D - 385 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006baa4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "0004910e",
+      "000491d8"
+    ]
+  },
+  {
+    "table": "Table 2D - 387 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006babc",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_2d_raw_u16"
+    ],
+    "functions": [
+      "00049964"
+    ]
+  },
+  {
+    "table": "Table 2D - 388 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bac8",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004a770"
+    ]
+  },
+  {
+    "table": "Table 2D - 389 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bad4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004a770"
+    ]
+  },
+  {
+    "table": "Table 2D - 391 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bbe0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d4a6"
+    ]
+  },
+  {
+    "table": "Table 2D - 392 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bbec",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d700"
+    ]
+  },
+  {
+    "table": "Table 2D - 393 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bbf8",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d4a6"
+    ]
+  },
+  {
+    "table": "Table 2D - 394 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc04",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d700"
+    ]
+  },
+  {
+    "table": "Table 2D - 395 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc10",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d4a6"
+    ]
+  },
+  {
+    "table": "Table 2D - 396 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc1c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d700"
+    ]
+  },
+  {
+    "table": "Table 2D - 397 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc28",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d4a6"
+    ]
+  },
+  {
+    "table": "Table 2D - 398 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc34",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004d700"
+    ]
+  },
+  {
+    "table": "Table 2D - 399 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc40",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004ca7e"
+    ]
+  },
+  {
+    "table": "Table 2D - 400 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc4c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004ca7e"
+    ]
+  },
+  {
+    "table": "Table 2D - 401 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc58",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004ca7e"
+    ]
+  },
+  {
+    "table": "Table 2D - 402 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc64",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004ca7e"
+    ]
+  },
+  {
+    "table": "Table 2D - 403 Check DataType",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006bc70",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_2d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004ca7e"
+    ]
+  },
+  {
+    "table": "Table 3D - 109 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006a340",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "functions": [
+      "00022574"
+    ]
+  },
+  {
+    "table": "Table 3D - 111 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a8bc",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d638"
+    ]
+  },
+  {
+    "table": "Table 3D - 112 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a8d0",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d83c"
+    ]
+  },
+  {
+    "table": "Table 3D - 113 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a8e4",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d83c"
+    ]
+  },
+  {
+    "table": "Table 3D - 114 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a8f8",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d83c"
+    ]
+  },
+  {
+    "table": "Table 3D - 115 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a90c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d83c"
+    ]
+  },
+  {
+    "table": "Table 3D - 116 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006a920",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0002d83c"
+    ]
+  },
+  {
+    "table": "Table 3D - 123 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "uint16",
+    "descriptor": "0006b66c",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "rx8_lookup_3d_raw_u16"
+    ],
+    "functions": [
+      "0003fb9e"
+    ]
+  },
+  {
+    "table": "Table 3D - 125 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b998",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "00043e64"
+    ]
+  },
+  {
+    "table": "Table 3D - 126 ",
+    "field": "storagetype",
+    "old": "uint8",
+    "new": "float",
+    "descriptor": "0006b9ac",
+    "basis": "direct lookup wrapper and ROM descriptor",
+    "lookup_modes": [
+      "lookup_3d_descriptor_scaled"
+    ],
+    "functions": [
+      "0004441e"
+    ]
+  }
+]

@@ -1,0 +1,90 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
+INFO  Using log config file: jar:file:/tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /tmp/ghidra_user/.config/ghidra/ghidra_12.1.3_PUBLIC/application.log (LoggingInitialization)  
+INFO  Loading user preferences: /tmp/ghidra_user/.config/ghidra/ghidra_12.1.3_PUBLIC/preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (696 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (1906 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/Base/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/FunctionID/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/Decompiler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/PIC/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/PyGhidra/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Debug/Debugger/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/DATA/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/8051/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/PDB/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/BytePatterns/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/FileFormats/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/VersionTracking/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/Atmel/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Features/BSim/ghidra_scripts
+    /tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Processors/JVM/ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Creating project: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/ghidra_project/RX8_SH2E (HeadlessAnalyzer)  
+INFO  Creating project: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/ghidra_project/RX8_SH2E (DefaultProject)  
+INFO  REPORT: Processing input files:  (HeadlessAnalyzer)  
+INFO       project: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/ghidra_project/RX8_SH2E (HeadlessAnalyzer)  
+INFO  IMPORTING: file:///home/yannick/Documents/Tuning/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  Using Loader: Raw Binary (ProgramLoader)  
+INFO  Using Language/Compiler: SuperH:BE:32:SH-2E:default (ProgramLoader)  
+INFO  Using Library Search Path: [., /bin, /lib, /lib64, /lib/x86_64-linux-gnu, /lib/aarch64-linux-gnu, /usr/bin, /usr/lib, /usr/X11R6/bin, /usr/X11R6/lib, /usr/java/packages/lib, /usr/lib64] (ProgramLoader)  
+INFO  IMPORTING: Loaded 0 additional files (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: SetupTarget.java '/home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E'  (HeadlessAnalyzer)  
+INFO  SCRIPT: /home/yannick/Documents/Tuning/reverse_engineered/60E15120_N3J1E/scripts/SetupTarget.java (HeadlessAnalyzer)  
+INFO  SetupTarget.java> Seeded 1833 matched functions (GhidraScript)  
+INFO  ANALYZING all memory and code: file:///home/yannick/Documents/Tuning/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (HeadlessAnalyzer)  
+WARN  Decompiling 00055a7c: Unable to read bytes at ram:02000000 (DecompileCallback)  
+WARN  Decompiling 00054d90: Unable to read bytes at ram:02000000 (DecompileCallback)  
+INFO  Packed database cache: /tmp/yannick-ghidra/packed-db-cache (PackedDatabaseCache)  
+INFO  Applied data type archive: generic_clib (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ASCII Strings                              0.222 secs
+    Apply Data Archives                        0.493 secs
+    Basic Constant Reference Analyzer          4.650 secs
+    Call Convention ID                         0.055 secs
+    Call-Fixup Installer                       0.015 secs
+    Create Address Tables                      0.079 secs
+    Create Address Tables - One Time           0.185 secs
+    Create Function                            0.305 secs
+    Data Reference                             0.551 secs
+    Decompiler Switch Analysis                 2.399 secs
+    Demangler GNU                              0.168 secs
+    Disassemble Entry Points                   0.049 secs
+    Embedded Media                             0.017 secs
+    External Entry References                  0.000 secs
+    Function ID                                0.013 secs
+    Non-Returning Functions - Discovered       0.133 secs
+    Reference                                  0.889 secs
+    Shared Return Calls                        0.208 secs
+    Stack                                      2.260 secs
+    Subroutine References                      0.139 secs
+    Subroutine References - One Time           0.005 secs
+-----------------------------------------------------
+     Total Time   12 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: file:///home/yannick/Documents/Tuning/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (HeadlessAnalyzer)  
+INFO  /60E15120_N3J1E.bin: file created (yannick) (LocalFileSystem)  
+INFO  REPORT: Save succeeded for: /60E15120_N3J1E.bin (RX8_SH2E:/60E15120_N3J1E.bin) (HeadlessAnalyzer)  
+INFO  REPORT: Import succeeded (HeadlessAnalyzer)  

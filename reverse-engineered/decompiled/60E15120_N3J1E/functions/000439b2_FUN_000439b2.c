@@ -1,0 +1,41 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006b644: Ignition Trailing - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* ROM address: 0x000439b2; body bytes: 126; decompiled */
+
+uint FUN_000439b2(void)
+
+{
+  byte snapshot_DAT_ffffb53c;
+  uint uVar2;
+  uint extraout_r0;
+  float fVar3;
+  float extraout_fr0;
+  
+  snapshot_DAT_ffffb53c = DAT_ffffb53c;
+  uVar2 = (uint)DAT_ffffaa62;
+  if ((uVar2 == 1) && (uVar2 = (uint)DAT_ffffb53c, uVar2 == 1)) {
+    DAT_ffffcaa8 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_ignition_trailing_cranking_timing_advance_0006b644);
+    if (DAT_ffffcaad == '\0') {
+      fVar3 = rx8_min_float(1.0,1.0);
+      uVar2 = rx8_divide_with_zero_fallback(DAT_ffffcaa8,fVar3);
+      DAT_ffffcaa0 = extraout_fr0;
+    }
+    else {
+      DAT_ffffcaa0 = rx8_first_order_filter(DAT_ffffcaa8,DAT_ffffcaa0,1.0,1e-05);
+      uVar2 = extraout_r0;
+    }
+  }
+  else {
+    DAT_ffffcaa8 = 0.0;
+    DAT_ffffcaa0 = 0.0;
+  }
+  DAT_ffffcaad = snapshot_DAT_ffffb53c;
+  return uVar2;
+}
+
+

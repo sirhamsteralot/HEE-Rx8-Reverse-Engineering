@@ -1,18 +1,25 @@
 # data/
 
-Machine-readable artifacts extracted from the HEE binaries. Data lives here, not
-buried in prose, so it can be diffed, graphed, and consumed by utilities.
+Machine-readable artifacts extracted from (or describing) HEE binaries.
 
-## Suggested layout
+## Layout
 
-- `maps/` — fuel, ignition, boost, and other lookup tables (CSV/JSON + axis definitions).
-- `tables/` — DTC lists, PID/UDS service IDs, routine IDs, scaling formulas.
-- `strings/` — extracted string tables with addresses.
-- `checksums/` — checksum/CRC parameters and seed-key algorithm constants discovered.
+- `definitions/` — ECU tuning definitions:
+  - `ecuflash/` — ECUFlash XML definitions (upstream).
+  - `romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs.
+  - `romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.
+  - `romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
+- `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
+  `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
+  (ROM hash/IDs), `validation.json` records, export logs.
 
 ## Rules
 
-- One artifact per file, `kebab-case`, with a short header comment (or sidecar
-  `<name>.meta.md`) stating source binary SHA-256, address range, and extraction method.
-- Prefer JSON or CSV; keep values exact (no rounding) and note units.
-- Never include personal data (VINs etc.); redact and document the redaction.
+- Definition edits must cite evidence (unique ROM data/axis-pointer match, descriptor
+  dispatch/wrapper calls); repairs target one ROM — never generalize across
+  calibration blocks. XML defs are editor metadata; ROM addresses/bytes are never
+  changed by definition work.
+- One artifact per file, `kebab-case`, with a header comment or sidecar meta file
+  stating source binary SHA-256 (from `binaries/manifest.csv`), address range, and
+  extraction method. Exact values, units noted.
+- No personal data (VINs); redact and document.

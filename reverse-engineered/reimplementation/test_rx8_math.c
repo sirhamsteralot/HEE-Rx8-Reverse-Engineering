@@ -1,0 +1,25 @@
+#include "rx8_math.h"
+#include <assert.h>
+#include <math.h>
+int main(void)
+{
+    assert(rx8_first_order_filter(10, 2, 0.25f, 0) == 4);
+    assert(rx8_first_order_filter(10, 2, 0, 0) == 2);
+    assert(rx8_first_order_filter(10, 2, 1, 0) == 10);
+    assert(rx8_first_order_filter(10, NAN, 0.5f, 0) == 10);
+    assert(rx8_first_order_filter(10, INFINITY, 0.5f, 0) == 10);
+    assert(rx8_first_order_filter(10, 9, 0.5f, 0.6f) == 10);
+    assert(rx8_first_order_filter(10, 9, 0.5f, 0.5f) == 9.5f);
+    assert(rx8_absolute_difference(-3, 4) == 7);
+    assert(rx8_clamp_float(5, 0, 10) == 5);
+    assert(rx8_clamp_float(-5, 0, 10) == 0);
+    assert(rx8_clamp_float(15, 0, 10) == 10);
+    assert(rx8_clamp_float(NAN, 0, 10) == 0);
+    assert(rx8_max_float(NAN, 4) == 4);
+    assert(isnan(rx8_max_float(4, NAN)));
+    assert(rx8_min_float(NAN, 4) == 4);
+    assert(isnan(rx8_min_float(4, NAN)));
+    assert(signbit(rx8_max_float(0.0f, -0.0f)));
+    assert(signbit(rx8_min_float(0.0f, -0.0f)));
+    return 0;
+}

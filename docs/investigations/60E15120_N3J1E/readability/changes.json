@@ -1,0 +1,2926 @@
+[
+  {
+    "address": "00002068",
+    "actions": [
+      {
+        "local_names": {
+          "extraout_r3": "unresolved_type_dispatch_result",
+          "in_fr2": "unresolved_interpolated_value"
+        }
+      },
+      {
+        "signature": "FR4 axis/X; FR5 Y for 3D; R4 descriptor; FR0 result. Verified at 0x2068/0x2658. Internal interpolators still have implicit register ABI; explicit inputs are documented but their use remains hidden in raw helper bodies."
+      }
+    ]
+  },
+  {
+    "address": "000020dc",
+    "actions": [
+      {
+        "local_names": {
+          "iVar1": "type_code",
+          "in_fr2": "unresolved_interpolated_value"
+        }
+      },
+      {
+        "signature": "FR4 axis/X; FR5 Y for 3D; R4 descriptor; FR0 result. Verified at 0x2068/0x2658. Internal interpolators still have implicit register ABI; explicit inputs are documented but their use remains hidden in raw helper bodies."
+      }
+    ]
+  },
+  {
+    "address": "0000231c",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "multiplicand",
+          "param_2": "multiplier"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0000239c",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "delay_count"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000023b0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "filtered",
+          "arg0": "current",
+          "arg1": "previous",
+          "arg2": "coefficient",
+          "arg3": "snap_threshold"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000023dc",
+    "actions": [
+      {
+        "local_names": {
+          "arg0": "left",
+          "arg1": "right"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000023e4",
+    "actions": [
+      {
+        "local_names": {
+          "arg0": "left",
+          "arg1": "right"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000023f4",
+    "actions": [
+      {
+        "local_names": {
+          "arg0": "left",
+          "arg1": "right"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002404",
+    "actions": [
+      {
+        "local_names": {
+          "arg0": "value",
+          "arg1": "lower",
+          "arg2": "upper"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002420",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "value"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002430",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "value"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002440",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "outside_band",
+          "param_1": "value",
+          "param_2": "center",
+          "param_3": "tolerance"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002460",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "sum",
+          "param_1": "left",
+          "param_2": "right"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002478",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "sum",
+          "param_1": "left",
+          "param_2": "right"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002490",
+    "actions": [
+      {
+        "local_names": {
+          "iVar1": "encoded_value",
+          "iVar2": "rounded_counts",
+          "param_1": "signal",
+          "param_2": "units_per_count",
+          "param_3": "offset"
+        }
+      },
+      {
+        "constant": "encoded saturation limit"
+      }
+    ]
+  },
+  {
+    "address": "000024c0",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "units_per_count",
+          "param_2": "offset",
+          "param_3": "raw_value"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000024d0",
+    "actions": [
+      {
+        "local_names": {
+          "iVar1": "encoded_value",
+          "iVar2": "rounded_counts",
+          "param_1": "signal",
+          "param_2": "units_per_count",
+          "param_3": "offset"
+        }
+      },
+      {
+        "constant": "encoded saturation limit"
+      }
+    ]
+  },
+  {
+    "address": "00002500",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "units_per_count",
+          "param_2": "offset",
+          "param_3": "raw_value"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00002510",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "endpoint_a",
+          "param_2": "endpoint_b",
+          "param_3": "weight_256"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00003490",
+    "actions": [
+      {
+        "local_names": {
+          "iVar2": "snapshot_DAT_ffff764c",
+          "iVar3": "snapshot_DAT_ffff7650"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000071ea",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "serial_status",
+          "cVar2": "received_byte",
+          "param_1": "transmit_byte"
+        }
+      },
+      {
+        "bitfield": "SCI RDRF status mask"
+      },
+      {
+        "signature": "byte transmit argument; signed receive return preserved"
+      }
+    ]
+  },
+  {
+    "address": "00007438",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffff9eea"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00007eca",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffff9fa0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0000871c",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffff9f88"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000099b0",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "pending_bits",
+          "bVar2": "already_pending",
+          "uVar3": "saved_interrupt_mask",
+          "puVar4": "pending_register",
+          "uVar6": "mailbox_mask",
+          "puVar5": "control_register",
+          "uVar7": "request_mask"
+        }
+      },
+      {
+        "structure": "CAN descriptor; only observed offsets assigned roles."
+      }
+    ]
+  },
+  {
+    "address": "0000c3ce",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffff9f80"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0000c486",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_DAT_ffff9f80"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0000e560",
+    "actions": [
+      {
+        "local_names": {
+          "bVar3": "snapshot_DAT_ffffbf3c",
+          "uVar7": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar8": "snapshot_inferred_predicted_engine_speed_ffffb55c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0000e910",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_engine_load_ffffc0b4",
+          "fVar3": "snapshot_DAT_ffffb41c",
+          "bVar2": "snapshot_DAT_ffffaa62",
+          "uVar1": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar12": "snapshot_DAT_ffffa448",
+          "fVar13": "snapshot_inferred_predicted_engine_speed_ffffb55c",
+          "fVar14": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00011f00",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffb118",
+          "uVar4": "snapshot_engine_load_ffffc0b4",
+          "uVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001206c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffb118",
+          "uVar4": "snapshot_engine_load_ffffc0b4",
+          "uVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000121fc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00012300",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00012630",
+    "actions": [
+      {
+        "local_names": {
+          "uVar7": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar8": "snapshot_engine_load_ffffc0b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00012754",
+    "actions": [
+      {
+        "local_names": {
+          "uVar7": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar8": "snapshot_engine_load_ffffc0b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00013034",
+    "actions": [
+      {
+        "local_names": {
+          "uVar10": "snapshot_engine_load_ffffc0b4",
+          "uVar8": "snapshot_inferred_barometric_pressure_ffffad14",
+          "uVar11": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "uVar9": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00013210",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_DAT_ffffa6ac"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000135b4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_load_ffffc0b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000136e4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_load_ffffc0b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00013826",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00013bd2",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00014944",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffb53a",
+          "fVar7": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00014d10",
+    "actions": [
+      {
+        "local_names": {
+          "fVar7": "snapshot_DAT_ffffa838"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001506c",
+    "actions": [
+      {
+        "local_names": {
+          "uVar14": "snapshot_inferred_coolant_temperature_ffffa990"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00015818",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffa6b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00015a9a",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffa7ac",
+          "uVar5": "snapshot_inferred_coolant_temperature_ffffa990",
+          "fVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00015ffc",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa7b4",
+          "fVar6": "snapshot_DAT_ffffa838"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00016432",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffaddc",
+          "fVar5": "snapshot_inferred_coolant_temperature_ffffa990"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00016672",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffa8a4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001722e",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffa8e8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00017bec",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa8f4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001805c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffa934"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001815c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffbca8",
+          "fVar2": "snapshot_DAT_ffffbc98",
+          "fVar9": "snapshot_DAT_ffffbc90",
+          "uVar12": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000183a0",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa959"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00018aea",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffcc91"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00018fe8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar9": "snapshot_DAT_ffffa9a8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00019ef8",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffa9e8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00019f20",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffa9e8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00019f4e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffff9eea"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001a1dc",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffaa4e"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001a418",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001a7b4",
+    "actions": [
+      {
+        "local_names": {
+          "uVar9": "snapshot_DAT_ffffaa8c",
+          "uVar10": "snapshot_DAT_ffffaa90"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001aa98",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_mass_air_flow_ffffa9ec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001b166",
+    "actions": [
+      {
+        "local_names": {
+          "bVar3": "snapshot_DAT_ffffccbc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001b6fc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar8": "snapshot_DAT_ffffad70"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001ba20",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffccb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001c384",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "uVar8": "snapshot_mass_air_flow_ffffa9ec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001c880",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_DAT_ffffb220",
+          "fVar2": "snapshot_DAT_ffffb21c",
+          "uVar1": "snapshot_DAT_ffffaa78",
+          "fVar14": "snapshot_engine_load_ffffc0b4",
+          "fVar15": "snapshot_DAT_ffffb0d0",
+          "fVar16": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001dccc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_mass_air_flow_ffffa9ec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001e134",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_lambda_target_ffffadfc",
+          "bVar2": "snapshot_DAT_ffffaa62",
+          "fVar1": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar10": "snapshot_DAT_ffffc150",
+          "fVar11": "snapshot_mass_air_flow_ffffa9ec",
+          "fVar12": "snapshot_engine_load_ffffc0b4",
+          "fVar13": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001e448",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb0da"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001e99c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffadf4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001ee4a",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffb11c",
+          "uVar1": "snapshot_inferred_throttle_position_ffffad44",
+          "fVar7": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "uVar5": "snapshot_engine_load_ffffc0b4",
+          "uVar8": "snapshot_inferred_barometric_pressure_ffffad14",
+          "uVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001f0c4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffc644",
+          "bVar2": "snapshot_DAT_ffffbecc",
+          "fVar1": "snapshot_inferred_throttle_position_ffffad44",
+          "fVar8": "snapshot_DAT_ffffbeb0",
+          "fVar9": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar11": "snapshot_engine_load_ffffc0b4",
+          "fVar13": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001f6ae",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_throttle_position_ffffad44",
+          "fVar5": "snapshot_engine_load_ffffc0b4",
+          "fVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001fb4c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar7": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001fd48",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbecc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0001ff38",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar4": "snapshot_engine_load_ffffc0b4",
+          "fVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00020298",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_DAT_ffffbeb8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002048c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_DAT_ffffbdfc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002090a",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffaa62"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000216f8",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_inferred_coolant_temperature_ffffa990"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000218c4",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffb38c",
+          "uVar3": "snapshot_engine_speed_rpm_ffffb548",
+          "fVar4": "snapshot_inferred_desired_torque_ffffbbd4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00021970",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffbac8",
+          "uVar3": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00021efc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar7": "snapshot_DAT_ffffbe00",
+          "uVar6": "snapshot_mass_air_flow_ffffa9ec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00022294",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_inferred_battery_voltage_ffffb590",
+          "fVar3": "snapshot_engine_load_ffffc0b4",
+          "fVar4": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000223b4",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffa422"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00022574",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_battery_voltage_ffffb590",
+          "fVar5": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00022630",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffaa78"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00022a14",
+    "actions": [
+      {
+        "local_names": {
+          "uVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00022db4",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffccbc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000233ec",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_DAT_ffffaddc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00025c6c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002635c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_DAT_ffffb654"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00026624",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_DAT_ffffb5e0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00026c3c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00026d70",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002711a",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_load_ffffc0b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000271b0",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffb6c4",
+          "fVar9": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00027520",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_engine_speed_rpm_ffffb548",
+          "fVar5": "snapshot_DAT_ffffb2f0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00028198",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffb6c4",
+          "fVar11": "snapshot_DAT_ffffb668",
+          "fVar12": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002aa88",
+    "actions": [
+      {
+        "local_names": {
+          "fVar7": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002bc34",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002be40",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffbfa0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002c9ca",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffbca8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002cf6a",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbbcf",
+          "bVar1": "snapshot_DAT_ffffad18"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002d07e",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbbcf",
+          "bVar1": "snapshot_DAT_ffffad18"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002d638",
+    "actions": [
+      {
+        "local_names": {
+          "uVar11": "snapshot_DAT_ffffcf1c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002d83c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar3": "snapshot_DAT_ffffbbc9",
+          "bVar2": "snapshot_DAT_ffffbbc8",
+          "fVar22": "snapshot_DAT_ffffa9b4",
+          "fVar23": "snapshot_DAT_ffffbfa0",
+          "fVar24": "snapshot_DAT_ffffbcf8",
+          "uVar25": "snapshot_DAT_ffffcf1c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002e3dc",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffbfb5",
+          "fVar6": "snapshot_DAT_ffffbfa4",
+          "fVar7": "snapshot_DAT_ffffbccc",
+          "fVar8": "snapshot_DAT_ffffbfa0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002e9a4",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa42c",
+          "fVar5": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002eb1c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_inferred_throttle_position_ffffad44"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002ebda",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_inferred_throttle_position_ffffad44",
+          "fVar9": "snapshot_DAT_ffffa7ac",
+          "fVar11": "snapshot_vehicle_speed_ffffbbb4",
+          "fVar12": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar13": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002f9fc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_inferred_battery_voltage_ffffb590",
+          "fVar4": "snapshot_DAT_ffffaddc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0002fdb0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_DAT_ffffbe00"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030126",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa42c",
+          "fVar3": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030274",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030468",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa42c",
+          "fVar7": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030948",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffbe14",
+          "fVar1": "snapshot_DAT_ffffbe10",
+          "fVar8": "snapshot_DAT_ffffbe44",
+          "uVar9": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030b08",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffbee4",
+          "bVar2": "snapshot_DAT_ffffbece",
+          "fVar9": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar10": "snapshot_DAT_ffffbeb0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00030f5c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbf0c",
+          "uVar1": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003133c",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "uVar6": "snapshot_inferred_barometric_pressure_ffffad14"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000317a8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00031a24",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffaddc",
+          "fVar6": "snapshot_engine_load_ffffc0b4",
+          "fVar7": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00031c6c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_mass_air_flow_ffffa9ec",
+          "fVar3": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar4": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00032614",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffbfa4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00032e08",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998",
+          "uVar6": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00032ee4",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffade0",
+          "fVar3": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00033138",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbbc9",
+          "bVar1": "snapshot_DAT_ffffbbc8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003337c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffbaec",
+          "fVar7": "snapshot_inferred_coolant_temperature_ffffa990",
+          "fVar8": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000336c4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar10": "snapshot_DAT_ffffa750",
+          "fVar11": "snapshot_DAT_ffffa754"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00033ba4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffc158"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00033c10",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffc15c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00033cd0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffc164"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00033ec4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffc158"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00034050",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffc15c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00034126",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffc164"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003432a",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb0ca"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00034364",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00034650",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_coolant_temperature_ffffa990",
+          "fVar6": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00034a74",
+    "actions": [
+      {
+        "local_names": {
+          "iVar1": "snapshot_DAT_ffffc270"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00035258",
+    "actions": [
+      {
+        "local_names": {
+          "iVar1": "snapshot_DAT_ffffc208"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003587c",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_DAT_ffff9f1e",
+          "uVar2": "snapshot_DAT_ffff9f1c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003840c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffc4f0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003856c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa42c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00038628",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffc4e4",
+          "fVar5": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000387d4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003af10",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffb2f0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003b214",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003b6a0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffcf90"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003b906",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffcf8c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003bbc4",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_DAT_ffffcf90"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003c2ac",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffad10"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003c3c4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffad10"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003c5a0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffadd4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003c6c8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffadd4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003c9e4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffa984"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003cafc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffa984"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003d010",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003d1b2",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffc614",
+          "uVar6": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003db24",
+    "actions": [
+      {
+        "local_names": {
+          "param_1": "numerator",
+          "param_2": "denominator"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003e39e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_engine_load_ffffc0b4",
+          "uVar3": "snapshot_engine_speed_rpm_ffffb548",
+          "uVar4": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003e560",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffc538",
+          "fVar6": "snapshot_DAT_ffffaa6c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003ec88",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_mass_air_flow_ffffa9ec",
+          "fVar4": "snapshot_DAT_ffffad20",
+          "fVar5": "snapshot_DAT_ffffb0d0",
+          "fVar6": "snapshot_DAT_ffffadec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003eefc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_DAT_ffffc6cc",
+          "uVar3": "snapshot_DAT_ffffc6ca",
+          "uVar2": "snapshot_DAT_ffffc6c8",
+          "fVar1": "snapshot_engine_speed_rpm_ffffb548",
+          "fVar8": "snapshot_DAT_ffffaddc",
+          "fVar9": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar10": "snapshot_vehicle_speed_ffffbbb4",
+          "fVar11": "snapshot_DAT_ffffb334"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f210",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_mass_air_flow_ffffa9ec"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f288",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_engine_speed_rpm_ffffb548",
+          "fVar1": "snapshot_DAT_ffffaa78",
+          "fVar10": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar11": "snapshot_mass_air_flow_ffffa9ec",
+          "fVar12": "snapshot_DAT_ffffb074",
+          "fVar13": "snapshot_DAT_ffffad20"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f510",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffad20",
+          "fVar6": "snapshot_DAT_ffffb074"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f5e0",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffad20",
+          "fVar6": "snapshot_DAT_ffffb074"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f684",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffaa70"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003f756",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffaa70"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0003fb9e",
+    "actions": [
+      {
+        "local_names": {
+          "fVar10": "snapshot_DAT_ffffc714",
+          "fVar9": "snapshot_DAT_ffffc710",
+          "fVar8": "snapshot_DAT_ffffc70c",
+          "fVar7": "snapshot_DAT_ffffc708"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004128e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_engine_load_ffffc0b4",
+          "uVar4": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004162e",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffb354"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00041964",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd1c5",
+          "fVar8": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00041d20",
+    "actions": [
+      {
+        "local_names": {
+          "fVar8": "snapshot_DAT_ffffc928"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00041fb8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar8": "snapshot_DAT_ffffc928"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042578",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb358"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004281c",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_inferred_battery_voltage_ffffb590",
+          "fVar4": "snapshot_DAT_ffffb330"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000429fc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffa9bc"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042afc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffa9bc",
+          "fVar5": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042d00",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_DAT_ffffca30"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042d6e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar5": "snapshot_DAT_ffffca28"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042eb6",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffc9e8",
+          "uVar2": "snapshot_DAT_ffffca24"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00042f84",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffca24"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004301e",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_engine_speed_rpm_ffffb548",
+          "fVar3": "snapshot_DAT_ffffca24"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00043100",
+    "actions": [
+      {
+        "local_names": {
+          "fVar1": "snapshot_DAT_ffffca00"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00043934",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb53c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000439b2",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb53c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00043b2c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffb07c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00043c08",
+    "actions": [
+      {
+        "local_names": {
+          "fVar9": "snapshot_DAT_ffffcad0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000449e4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00044a78",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00044a9e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000455bc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffcbe6"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00046626",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffade0",
+          "fVar3": "snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000470d0",
+    "actions": [
+      {
+        "local_names": {
+          "bVar4": "snapshot_DAT_ffffcc91",
+          "uVar2": "snapshot_DAT_ffffad5e",
+          "uVar1": "snapshot_DAT_ffffad5c",
+          "fVar9": "snapshot_engine_load_ffffc0b4",
+          "fVar10": "snapshot_vehicle_speed_ffffbbb4",
+          "fVar11": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00048558",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffcc92"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00048670",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffb4b0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000487d6",
+    "actions": [
+      {
+        "local_names": {
+          "fVar13": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000490f8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_coolant_temperature_ffffa990"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004910e",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00049112",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_inferred_coolant_temperature_ffffa990"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000491d8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000498da",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar3": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00049964",
+    "actions": [
+      {
+        "local_names": {
+          "fVar5": "snapshot_DAT_ffffad20"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00049c5a",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar3": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00049cd6",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffad20"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004a1fa",
+    "actions": [
+      {
+        "local_names": {
+          "fVar6": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004a770",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffcd78"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004a964",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffa415"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004af14",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_engine_speed_rpm_ffffb548"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004afd6",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffa445"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004b9a8",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffce49"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004ba86",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffce49"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004ca7e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar17": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004d4a6",
+    "actions": [
+      {
+        "local_names": {
+          "uVar4": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004d700",
+    "actions": [
+      {
+        "local_names": {
+          "bVar8": "snapshot_DAT_ffffcf5b",
+          "uVar18": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004e4e8",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd26b"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004f730",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffcfaa",
+          "uVar1": "snapshot_DAT_ffffcfa8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0004f79e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffcfaa"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00050018",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffcfaa"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000500b0",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffcfaa",
+          "bVar2": "snapshot_DAT_ffffd040"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00050308",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffcfaa",
+          "bVar2": "snapshot_DAT_ffffd040"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005104a",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd0a4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000516ba",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffcfaa"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00051a08",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd0f5",
+          "bVar1": "snapshot_DAT_ffffd0f4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00051eae",
+    "actions": [
+      {
+        "local_names": {
+          "fVar4": "snapshot_DAT_ffffcfec",
+          "fVar5": "snapshot_DAT_ffffcff0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00052090",
+    "actions": [
+      {
+        "local_names": {
+          "bVar3": "snapshot_DAT_ffffd10c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00052476",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffcfaa",
+          "uVar1": "snapshot_DAT_ffffcfa8",
+          "fVar7": "snapshot_DAT_ffffcfe0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000526d8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffcfe4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000529fc",
+    "actions": [
+      {
+        "local_names": {
+          "uVar3": "snapshot_DAT_ffffcfaa",
+          "uVar2": "snapshot_DAT_ffffcfa8",
+          "fVar12": "snapshot_DAT_ffffcff4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00053054",
+    "actions": [
+      {
+        "local_names": {
+          "uVar2": "snapshot_DAT_ffffcfaa",
+          "uVar1": "snapshot_DAT_ffffcfa8",
+          "fVar8": "snapshot_DAT_ffffcfe0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00053cf2",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd1a0"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000553dc",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_engine_load_ffffc0b4",
+          "fVar4": "snapshot_DAT_ffffc0b8"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00056428",
+    "actions": [
+      {
+        "local_names": {
+          "fVar3": "snapshot_inferred_coolant_temperature_ffffa98c",
+          "fVar4": "snapshot_inferred_battery_voltage_ffffb590"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00056508",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000565e8",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000567e8",
+    "actions": [
+      {
+        "constants": "diagnostic service, response and identifier rejection codes"
+      }
+    ]
+  },
+  {
+    "address": "0005774c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "identifier_found",
+          "bVar2": "record_index",
+          "unaff_r11": "unresolved_response_result"
+        }
+      },
+      {
+        "structure": "12-byte diagnostic records; unknown state/result paths preserved."
+      },
+      {
+        "constants": "diagnostic service, response and identifier rejection codes"
+      }
+    ]
+  },
+  {
+    "address": "00057858",
+    "actions": [
+      {
+        "constants": "diagnostic service, response and identifier rejection codes"
+      }
+    ]
+  },
+  {
+    "address": "00057a0c",
+    "actions": [
+      {
+        "local_names": {
+          "local_c": "high_byte",
+          "uStack_b": "low_byte",
+          "param_1": "service",
+          "param_2": "value"
+        }
+      },
+      {
+        "signature": "32-bit service/value containers; only low 16 value bits serialized"
+      }
+    ]
+  },
+  {
+    "address": "00057a2e",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "append_result",
+          "local_5": "response_byte_storage",
+          "param_1": "service",
+          "param_2": "value"
+        }
+      },
+      {
+        "signature": "32-bit service container and byte value; return meaning unresolved"
+      }
+    ]
+  },
+  {
+    "address": "00057db0",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005820e",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd230"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000583a6",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd231"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005866e",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd232"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00058790",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd234",
+          "bVar1": "snapshot_DAT_ffffd233"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000588ce",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd236",
+          "bVar1": "snapshot_DAT_ffffd235"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00058a16",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd238",
+          "bVar1": "snapshot_DAT_ffffd237"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00058b52",
+    "actions": [
+      {
+        "local_names": {
+          "bVar2": "snapshot_DAT_ffffd23a",
+          "bVar1": "snapshot_DAT_ffffd239"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00058c8a",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd23b"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00058dc0",
+    "actions": [
+      {
+        "local_names": {
+          "bVar4": "snapshot_DAT_ffffd23f",
+          "bVar3": "snapshot_DAT_ffffd23e"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00059190",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00059938",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd251"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00059af4",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd252"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005a802",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_vehicle_speed_ffffbbb4",
+          "fVar3": "snapshot_DAT_ffffd160"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005b9f6",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005be6c",
+    "actions": [
+      {
+        "local_names": {
+          "bVar6": "snapshot_DAT_ffffd31a",
+          "bVar5": "snapshot_DAT_ffffd319",
+          "uVar4": "snapshot_DAT_ffffd314"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005dc44",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffffd3b4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005e3ae",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_vehicle_speed_ffffbbb4"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005e3d8",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_inferred_coolant_temperature_ffffa98c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005e4b2",
+    "actions": [
+      {
+        "local_names": {
+          "bVar3": "snapshot_DAT_ffffd389",
+          "bVar2": "snapshot_DAT_ffffd388"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0005e5f4",
+    "actions": [
+      {
+        "local_names": {
+          "fVar2": "snapshot_DAT_ffffad20"
+        }
+      }
+    ]
+  },
+  {
+    "address": "00061eb0",
+    "actions": [
+      {
+        "local_names": {
+          "bVar1": "snapshot_DAT_ffffd6c3"
+        }
+      }
+    ]
+  },
+  {
+    "address": "000627a0",
+    "actions": [
+      {
+        "local_names": {
+          "uVar1": "snapshot_DAT_ffff879c"
+        }
+      }
+    ]
+  },
+  {
+    "address": "0006689e",
+    "actions": [
+      {
+        "signature": "typed key/payload record pointer; uint32 count masked to low 16 bits"
+      },
+      {
+        "structure": "insertion sort rewritten with named record fields; padding preserved"
+      },
+      {
+        "local_names": {
+          "uVar1": "pending_key",
+          "uVar2": "pending_payload",
+          "iVar4": "insertion_index",
+          "iVar3": "destination_index"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,2582 @@
+[
+  {
+    "table": "Fuel Injector - Unknown - Max Injection Angle1???",
+    "descriptor": "00068ef8",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injector - Unknown - Max Injection Angle2???",
+    "descriptor": "00068f0c",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injector - Unknown - Max Injection Angle3???",
+    "descriptor": "00068f20",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 3 ",
+    "descriptor": "00068f34",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - Engine Startup Base",
+    "descriptor": "00068f48",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold",
+    "descriptor": "00068f80",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 10 ",
+    "descriptor": "00069244",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 11 ",
+    "descriptor": "00069258",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 12 ",
+    "descriptor": "0006926c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 13 ",
+    "descriptor": "00069280",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 14 ",
+    "descriptor": "00069294",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 15 ",
+    "descriptor": "000692a8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 16 ",
+    "descriptor": "000692bc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 17 ",
+    "descriptor": "000692d0",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 18 ",
+    "descriptor": "000692e4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 19 ",
+    "descriptor": "000692f8",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 20 ",
+    "descriptor": "0006930c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 21 ",
+    "descriptor": "00069320",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 22 ",
+    "descriptor": "00069334",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 23 ",
+    "descriptor": "00069348",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target Filter Factor",
+    "descriptor": "0006935c",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target - Base",
+    "descriptor": "00069370",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target Minimum - Open Loop Conditonal",
+    "descriptor": "00069384",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target Minimum - Closed Loop Conditonal",
+    "descriptor": "00069398",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target Minimum - Reset Value",
+    "descriptor": "000693ac",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target E",
+    "descriptor": "000693c0",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Idle Target F",
+    "descriptor": "000693d4",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target G",
+    "descriptor": "000693e8",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target H",
+    "descriptor": "000693fc",
+    "axes_added": []
+  },
+  {
+    "table": "Idle Target - Vehicle Moving - Automatic Transmission Related 1",
+    "descriptor": "00069410",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 34 ",
+    "descriptor": "00069440",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 35 ",
+    "descriptor": "00069454",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 37 ",
+    "descriptor": "0006947c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 38 ",
+    "descriptor": "00069490",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 39 ",
+    "descriptor": "000694a4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 40 ",
+    "descriptor": "000694b8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 41 ",
+    "descriptor": "000694cc",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 42 ",
+    "descriptor": "000694e0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 43 ",
+    "descriptor": "000694f4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 44 ",
+    "descriptor": "00069508",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 45 ",
+    "descriptor": "0006951c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 46 ",
+    "descriptor": "00069530",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 4",
+    "descriptor": "00069630",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 5",
+    "descriptor": "00069644",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 6",
+    "descriptor": "00069658",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 7",
+    "descriptor": "0006966c",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 8",
+    "descriptor": "00069680",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 9",
+    "descriptor": "00069694",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 10",
+    "descriptor": "000696a8",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 11",
+    "descriptor": "000696bc",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 12",
+    "descriptor": "000696d0",
+    "axes_added": [
+      "Y Axis: Coolant temperature catalyst temp model (inferred)"
+    ]
+  },
+  {
+    "table": "Ignition 13",
+    "descriptor": "000696e4",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 ",
+    "descriptor": "00069768",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold9 ",
+    "descriptor": "00069810",
+    "axes_added": [
+      "Y Axis: Coolant temperature catalyst temp model (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 60 ",
+    "descriptor": "00069830",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 61 ",
+    "descriptor": "00069844",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 62 ",
+    "descriptor": "00069858",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 63 ",
+    "descriptor": "0006986c",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 64 ",
+    "descriptor": "00069880",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 65 ",
+    "descriptor": "000698bc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 66 ",
+    "descriptor": "000698d0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 67 ",
+    "descriptor": "000698e4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 68 ",
+    "descriptor": "000698f8",
+    "axes_added": [
+      "Y Axis: Coolant temperature catalyst temp model (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 69 ",
+    "descriptor": "00069918",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 70 ",
+    "descriptor": "00069b0c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 71 ",
+    "descriptor": "00069b20",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 72 ",
+    "descriptor": "00069b34",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 73 ",
+    "descriptor": "00069b48",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 74 ",
+    "descriptor": "00069b5c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 75 ",
+    "descriptor": "00069b70",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 76 ",
+    "descriptor": "00069b84",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 77 ",
+    "descriptor": "00069b98",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 78 ",
+    "descriptor": "00069bac",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 79 ",
+    "descriptor": "00069bcc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 80 ",
+    "descriptor": "00069be0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 81 ",
+    "descriptor": "00069bf4",
+    "axes_added": [
+      "Y Axis: Vehicle speed (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 82 ",
+    "descriptor": "00069c08",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 83 ",
+    "descriptor": "00069c40",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 84 ",
+    "descriptor": "00069c60",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 85 ",
+    "descriptor": "00069c74",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Fuelling Base Correction (Throttle) - Safe Mode",
+    "descriptor": "00069cac",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Open Loop Fuelling Base Correction (Throttle)",
+    "descriptor": "00069cc0",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Open Loop Target - Coolant Temperature Correction",
+    "descriptor": "00069cd4",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Fuelling Rich Limit - Safe Mode",
+    "descriptor": "00069ce8",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Fuelling Rich Limit",
+    "descriptor": "00069cfc",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Temperature Correction #B",
+    "descriptor": "00069d10",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop Fuelling Threshold (Engine Load A)",
+    "descriptor": "00069d24",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop Fuelling Threshold (Engine Load B)",
+    "descriptor": "00069d38",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop Fuelling Threshold (Engine Load C)",
+    "descriptor": "00069d4c",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop Fuelling Threshold (Unknown A)",
+    "descriptor": "00069d60",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop Fuelling Threshold (Throttle Position) ",
+    "descriptor": "00069d74",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 97 ",
+    "descriptor": "00069d88",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 98 ",
+    "descriptor": "00069d9c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 99 ",
+    "descriptor": "00069db0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 100 ",
+    "descriptor": "00069dc4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 101 ",
+    "descriptor": "00069dd8",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 102 ",
+    "descriptor": "00069dec",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Changeover Enrichment",
+    "descriptor": "00069e00",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 105 ",
+    "descriptor": "0006a038",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Leading - Idle Error Timing Correction - Unknown Bool False",
+    "descriptor": "0006a060",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Leading - Idle Error Timing Correction - Unknown Bool True",
+    "descriptor": "0006a074",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool False",
+    "descriptor": "0006a088",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool True",
+    "descriptor": "0006a09c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 110 ",
+    "descriptor": "0006a0b0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 111 ",
+    "descriptor": "0006a0c4",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle",
+    "descriptor": "0006a0d8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 113 ",
+    "descriptor": "0006a0ec",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 114 ",
+    "descriptor": "0006a100",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 115 ",
+    "descriptor": "0006a114",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 116 ",
+    "descriptor": "0006a128",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 117 ",
+    "descriptor": "0006a13c",
+    "axes_added": []
+  },
+  {
+    "table": "DSC Mode C - Max Throttle Plate Opening Allowed",
+    "descriptor": "0006a150",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 119 ",
+    "descriptor": "0006a19c",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 120 ",
+    "descriptor": "0006a1b0",
+    "axes_added": [
+      "Y Axis: Manifold relative pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 121 ",
+    "descriptor": "0006a218",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 122 ",
+    "descriptor": "0006a22c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 123 ",
+    "descriptor": "0006a240",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 124 ",
+    "descriptor": "0006a254",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 125 ",
+    "descriptor": "0006a268",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 126 ",
+    "descriptor": "0006a27c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 127 ",
+    "descriptor": "0006a29c",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 128 ",
+    "descriptor": "0006a2cc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 129 ",
+    "descriptor": "0006a2e0",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 130 ",
+    "descriptor": "0006a2f4",
+    "axes_added": []
+  },
+  {
+    "table": "Throttle Pedal Percent Decreasing Filter Factor",
+    "descriptor": "0006a354",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 132 ",
+    "descriptor": "0006a368",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 133 ",
+    "descriptor": "0006a37c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 134 ",
+    "descriptor": "0006a390",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 135 ",
+    "descriptor": "0006a3a4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 136 ",
+    "descriptor": "0006a3b8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 137 ",
+    "descriptor": "0006a3cc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 138 ",
+    "descriptor": "0006a3e0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 139 ",
+    "descriptor": "0006a3f4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 140 ",
+    "descriptor": "0006a408",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 141 ",
+    "descriptor": "0006a41c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 142 ",
+    "descriptor": "0006a430",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 143 ",
+    "descriptor": "0006a444",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 144 ",
+    "descriptor": "0006a4c8",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 145 ",
+    "descriptor": "0006a4dc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 146 ",
+    "descriptor": "0006a4f0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 147 ",
+    "descriptor": "0006a504",
+    "axes_added": []
+  },
+  {
+    "table": "Battery Temperature Model - Decay Amount",
+    "descriptor": "0006a524",
+    "axes_added": []
+  },
+  {
+    "table": "Desired Charge Voltage",
+    "descriptor": "0006a538",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 152 ",
+    "descriptor": "0006a574",
+    "axes_added": [
+      "Y Axis: Estimated battery temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 153 ",
+    "descriptor": "0006a588",
+    "axes_added": [
+      "Y Axis: Estimated battery temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 154 ",
+    "descriptor": "0006a59c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 155 ",
+    "descriptor": "0006a5b0",
+    "axes_added": [
+      "Y Axis: Estimated battery temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 156 ",
+    "descriptor": "0006a608",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 157 ",
+    "descriptor": "0006a680",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Rotor 1 Ignition Dwell",
+    "descriptor": "0006a6d8",
+    "axes_added": []
+  },
+  {
+    "table": "Rotor 2 Ignition Dwell",
+    "descriptor": "0006a6ec",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 160 ",
+    "descriptor": "0006a768",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 161 ",
+    "descriptor": "0006a77c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 162 ",
+    "descriptor": "0006a790",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 163 ",
+    "descriptor": "0006a830",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 164 ",
+    "descriptor": "0006a934",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 165 ",
+    "descriptor": "0006a948",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 166 ",
+    "descriptor": "0006a968",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 167 ",
+    "descriptor": "0006a97c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 168 ",
+    "descriptor": "0006a990",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 169 ",
+    "descriptor": "0006a9f8",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Injector Manifold Vacuum Multiplier",
+    "descriptor": "0006aa0c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 171 ",
+    "descriptor": "0006aac4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 175 ",
+    "descriptor": "0006ab34",
+    "axes_added": []
+  },
+  {
+    "table": "Primary Fuel Injector Cranking Pulse Width",
+    "descriptor": "0006ab48",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 177 Might be Primary/Secondary Ratio",
+    "descriptor": "0006ab70",
+    "axes_added": []
+  },
+  {
+    "table": "Primary Injector Max Barometric Pressure Correction",
+    "descriptor": "0006ab84",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 179 Injector Ratio Poss Min Sec PW #2",
+    "descriptor": "0006abd4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 180 Injector Ratio Poss Min Sec PW #1",
+    "descriptor": "0006abe8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 182 ",
+    "descriptor": "0006ac4c",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Secondary Injectors Allowed Threshold - Coolant Temperature Based",
+    "descriptor": "0006ac60",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 184 ",
+    "descriptor": "0006aca4",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 185 ",
+    "descriptor": "0006acb8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 186 ",
+    "descriptor": "0006accc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 187 ",
+    "descriptor": "0006ace0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 188 ",
+    "descriptor": "0006acf4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 189 ",
+    "descriptor": "0006ad08",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 190 ",
+    "descriptor": "0006ad1c",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 191 ",
+    "descriptor": "0006ad30",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 192 ",
+    "descriptor": "0006ad44",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 193 ",
+    "descriptor": "0006ad58",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 194 ",
+    "descriptor": "0006ad6c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 195 ",
+    "descriptor": "0006ad80",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Engine Torque Max - Barometric Pressure Compensation",
+    "descriptor": "0006adb4",
+    "axes_added": []
+  },
+  {
+    "table": "Load Based Oil Injection Temperature Correction",
+    "descriptor": "0006ade0",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injection - Warmup Fueling - Load Based Multiplier",
+    "descriptor": "0006ae28",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 200 ",
+    "descriptor": "0006ae90",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 201 ",
+    "descriptor": "0006aea4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 202 ",
+    "descriptor": "0006aef0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 203 ",
+    "descriptor": "0006af04",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 204 ",
+    "descriptor": "0006af18",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Ignition Leading - Cranking Timing Advance",
+    "descriptor": "0006af2c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 206 ",
+    "descriptor": "0006af40",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 214 ",
+    "descriptor": "0006b030",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 216 ",
+    "descriptor": "0006b0c0",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 217 ",
+    "descriptor": "0006b0d4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 218 ",
+    "descriptor": "0006b110",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 219 ",
+    "descriptor": "0006b124",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 220 ",
+    "descriptor": "0006b138",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 221 ",
+    "descriptor": "0006b14c",
+    "axes_added": []
+  },
+  {
+    "table": "RPM Based Max Engine Load",
+    "descriptor": "0006b1ec",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 223 ",
+    "descriptor": "0006b200",
+    "axes_added": []
+  },
+  {
+    "table": "Max Load - Barometric Pressure Compensation",
+    "descriptor": "0006b214",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 225 ",
+    "descriptor": "0006b228",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 226 ",
+    "descriptor": "0006b23c",
+    "axes_added": []
+  },
+  {
+    "table": "Knock Voltage To Magnitude",
+    "descriptor": "0006b250",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 228 ",
+    "descriptor": "0006b318",
+    "axes_added": [
+      "Y Axis: Vehicle speed (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 229 ",
+    "descriptor": "0006b32c",
+    "axes_added": []
+  },
+  {
+    "table": "Airflow Or Load Related",
+    "descriptor": "0006b340",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 231 (Airflow Related)",
+    "descriptor": "0006b354",
+    "axes_added": [
+      "Y Axis: Vehicle speed (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 232 ",
+    "descriptor": "0006b368",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 233 ",
+    "descriptor": "0006b37c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 234 ",
+    "descriptor": "0006b390",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 235 ",
+    "descriptor": "0006b3f0",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 236 ",
+    "descriptor": "0006b404",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 237 ",
+    "descriptor": "0006b418",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 238 ",
+    "descriptor": "0006b42c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 239 ",
+    "descriptor": "0006b440",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 240 ",
+    "descriptor": "0006b454",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 241 ",
+    "descriptor": "0006b468",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 242 ",
+    "descriptor": "0006b47c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 243 ",
+    "descriptor": "0006b490",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 244 ",
+    "descriptor": "0006b4bc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 245 ",
+    "descriptor": "0006b4d0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 246 ",
+    "descriptor": "0006b4e4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 247 ",
+    "descriptor": "0006b4f8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 248 ",
+    "descriptor": "0006b50c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 249 ",
+    "descriptor": "0006b538",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 250 ",
+    "descriptor": "0006b558",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 251 ",
+    "descriptor": "0006b56c",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 252 ",
+    "descriptor": "0006b580",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 253 ",
+    "descriptor": "0006b594",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 254 ",
+    "descriptor": "0006b5cc",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Compensated Barometric Pressure",
+    "descriptor": "0006b5e0",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 256 ",
+    "descriptor": "0006b61c",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Leading Timing Realted",
+    "descriptor": "0006b630",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Trailing - Cranking Timing Advance",
+    "descriptor": "0006b644",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 259 ",
+    "descriptor": "0006b6f0",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Injection Angle Related AFR Input",
+    "descriptor": "0006b71c",
+    "axes_added": []
+  },
+  {
+    "table": "Unknown Lambda Input",
+    "descriptor": "0006b730",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 262 ",
+    "descriptor": "0006b744",
+    "axes_added": []
+  },
+  {
+    "table": "AirFlow Inj Angle Related",
+    "descriptor": "0006b758",
+    "axes_added": [
+      "Y Axis: Mass air flow (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 264 ",
+    "descriptor": "0006b76c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 265 ",
+    "descriptor": "0006b780",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 266 ",
+    "descriptor": "0006b794",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 267 ",
+    "descriptor": "0006b7a8",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 268 ",
+    "descriptor": "0006b7bc",
+    "axes_added": [
+      "Y Axis: Mass air flow (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 269 ",
+    "descriptor": "0006b7d0",
+    "axes_added": [
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 270 ",
+    "descriptor": "0006b800",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 271 ",
+    "descriptor": "0006b814",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 272 ",
+    "descriptor": "0006b828",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 273 ",
+    "descriptor": "0006b83c",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 274 ",
+    "descriptor": "0006b850",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 275 ",
+    "descriptor": "0006b864",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 276 ",
+    "descriptor": "0006b878",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 277 ",
+    "descriptor": "0006b9cc",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Load Limit C",
+    "descriptor": "0006ba30",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 279 ",
+    "descriptor": "0006ba68",
+    "axes_added": [
+      "Y Axis: Vehicle speed (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 280 ",
+    "descriptor": "0006ba7c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 281 ",
+    "descriptor": "0006ba90",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 282 ",
+    "descriptor": "0006bae0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 284 ",
+    "descriptor": "0006bb28",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 285 ",
+    "descriptor": "0006bb3c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 286 ",
+    "descriptor": "0006bb88",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 287 ",
+    "descriptor": "0006bb9c",
+    "axes_added": [
+      "Y Axis: Battery voltage (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 288 Check DataType",
+    "descriptor": "00068f5c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 289 Check DataType",
+    "descriptor": "00068f68",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 290 Check DataType",
+    "descriptor": "00068f74",
+    "axes_added": []
+  },
+  {
+    "table": "CLT Sensor Scaling",
+    "descriptor": "0006977c",
+    "axes_added": []
+  },
+  {
+    "table": "MAF Scaling",
+    "descriptor": "00069788",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 295 Check DataType",
+    "descriptor": "000697c8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 296 Check DataType",
+    "descriptor": "000697d4",
+    "axes_added": []
+  },
+  {
+    "table": "Lamda Sensor Barometric Pressure Compensation",
+    "descriptor": "000697e0",
+    "axes_added": [
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Lambda Sensor Scaling",
+    "descriptor": "000697ec",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 299 Check DataType",
+    "descriptor": "000697f8",
+    "axes_added": [
+      "Y Axis: Mass air flow (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 300 Check DataType",
+    "descriptor": "00069804",
+    "axes_added": []
+  },
+  {
+    "table": "IAT Sensor Scaling",
+    "descriptor": "00069824",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 304 Check DataType",
+    "descriptor": "0006990c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 305",
+    "descriptor": "0006992c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 306",
+    "descriptor": "00069938",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 307",
+    "descriptor": "00069944",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 308",
+    "descriptor": "00069950",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 309",
+    "descriptor": "0006995c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 310",
+    "descriptor": "00069968",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 311",
+    "descriptor": "00069974",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 312 Engine Speed",
+    "descriptor": "00069bc0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 313 Check DataType",
+    "descriptor": "00069c1c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 314 Check DataType",
+    "descriptor": "00069c28",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 315 Check DataType",
+    "descriptor": "00069c34",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 316",
+    "descriptor": "00069c54",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 317",
+    "descriptor": "00069c88",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 318 Check DataType",
+    "descriptor": "00069c94",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 319 Check DataType",
+    "descriptor": "00069ca0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 320 Check DataType",
+    "descriptor": "00069e14",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 321 Check DataType",
+    "descriptor": "00069e20",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 322 Check DataType",
+    "descriptor": "00069e2c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 323 Check DataType",
+    "descriptor": "00069e38",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 324 Check DataType",
+    "descriptor": "00069e44",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 325 Check DataType",
+    "descriptor": "00069e50",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 326 Check DataType",
+    "descriptor": "00069e5c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 327 Check DataType",
+    "descriptor": "00069e68",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 328 Check DataType",
+    "descriptor": "00069e74",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 329 Check DataType",
+    "descriptor": "00069f60",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 330",
+    "descriptor": "0006a290",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 331",
+    "descriptor": "0006a518",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 332 Check DataType",
+    "descriptor": "0006a694",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 333 Check DataType",
+    "descriptor": "0006a6a0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 334 Check DataType",
+    "descriptor": "0006a6cc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 335 Check DataType",
+    "descriptor": "0006a844",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 336 Check DataType",
+    "descriptor": "0006a850",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 337 Check DataType",
+    "descriptor": "0006a85c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 338 Check DataType",
+    "descriptor": "0006a868",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 339 Check DataType",
+    "descriptor": "0006a874",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 340 Check DataType",
+    "descriptor": "0006a880",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 341 Check DataType",
+    "descriptor": "0006a88c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 342 Check DataType",
+    "descriptor": "0006a898",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 343 Check DataType",
+    "descriptor": "0006a8a4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 344 Check DataType",
+    "descriptor": "0006a8b0",
+    "axes_added": []
+  },
+  {
+    "table": "Engine On Time Threshold",
+    "descriptor": "0006a95c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 347 Check DataType",
+    "descriptor": "0006ab98",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 350 Check DataType",
+    "descriptor": "0006abc8",
+    "axes_added": []
+  },
+  {
+    "table": "Secondary Air Pump On Time",
+    "descriptor": "0006ad94",
+    "axes_added": []
+  },
+  {
+    "table": "First Start Oil Injection Timer",
+    "descriptor": "0006adf4",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Threshold A - Knock Retard Reset Off",
+    "descriptor": "0006b270",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Threshold B - Knock Retard Reset Off",
+    "descriptor": "0006b288",
+    "axes_added": []
+  },
+  {
+    "table": "Knock Related",
+    "descriptor": "0006b2a0",
+    "axes_added": []
+  },
+  {
+    "table": "Knock Related 3",
+    "descriptor": "0006b2ac",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 364 Check DataType",
+    "descriptor": "0006b3a4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 365 Check DataType",
+    "descriptor": "0006b3b0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 366 Check DataType",
+    "descriptor": "0006b3bc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 367 Check DataType",
+    "descriptor": "0006b4a4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 368 Check DataType",
+    "descriptor": "0006b4b0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 369 Check DataType",
+    "descriptor": "0006b520",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 370 Check DataType",
+    "descriptor": "0006b52c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 371 Check DataType",
+    "descriptor": "0006b54c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 372 Check DataType",
+    "descriptor": "0006b5a8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 373 Check DataType",
+    "descriptor": "0006b5b4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 374 Check DataType",
+    "descriptor": "0006b5c0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 375 Check DataType",
+    "descriptor": "0006b610",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 376 Check DataType",
+    "descriptor": "0006b704",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 377 Check DataType",
+    "descriptor": "0006b710",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 378 Check DataType",
+    "descriptor": "0006b96c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 379 Check DataType",
+    "descriptor": "0006b978",
+    "axes_added": []
+  },
+  {
+    "table": "Load Limit A",
+    "descriptor": "0006ba0c",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Load Limit B",
+    "descriptor": "0006ba18",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 382 Check DataType",
+    "descriptor": "0006ba44",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 383 Check DataType",
+    "descriptor": "0006ba50",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 384 Check DataType",
+    "descriptor": "0006ba5c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 385 Check DataType",
+    "descriptor": "0006baa4",
+    "axes_added": []
+  },
+  {
+    "table": "Primary Fuel Injector Cranking Pulse Decay Time",
+    "descriptor": "0006bab0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 387 Check DataType",
+    "descriptor": "0006babc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 388 Check DataType",
+    "descriptor": "0006bac8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 389 Check DataType",
+    "descriptor": "0006bad4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 390 Check DataType",
+    "descriptor": "0006bb1c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 391 Check DataType",
+    "descriptor": "0006bbe0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 392 Check DataType",
+    "descriptor": "0006bbec",
+    "axes_added": [
+      "Y Axis: Vehicle speed (inferred)"
+    ]
+  },
+  {
+    "table": "Table 2D - 393 Check DataType",
+    "descriptor": "0006bbf8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 394 Check DataType",
+    "descriptor": "0006bc04",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 395 Check DataType",
+    "descriptor": "0006bc10",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 396 Check DataType",
+    "descriptor": "0006bc1c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 397 Check DataType",
+    "descriptor": "0006bc28",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 398 Check DataType",
+    "descriptor": "0006bc34",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 399 Check DataType",
+    "descriptor": "0006bc40",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 400 Check DataType",
+    "descriptor": "0006bc4c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 401 Check DataType",
+    "descriptor": "0006bc58",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 402 Check DataType",
+    "descriptor": "0006bc64",
+    "axes_added": []
+  },
+  {
+    "table": "Table 2D - 403 Check DataType",
+    "descriptor": "0006bc70",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - In Gear Threshold",
+    "descriptor": "00068fa8",
+    "axes_added": []
+  },
+  {
+    "table": "Off Throttle Fuel Cut - Fuel Resume - NOTUSED",
+    "descriptor": "00068fc4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 2 ",
+    "descriptor": "00068fe0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 3 ",
+    "descriptor": "00068ffc",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Leading - Base Timing",
+    "descriptor": "00069078",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Leading Advance",
+    "descriptor": "000690cc",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Trailing Base",
+    "descriptor": "00069120",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Trailing Advance",
+    "descriptor": "00069174",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 12 ",
+    "descriptor": "00069424",
+    "axes_added": [
+      "X Axis: Coolant temperature (inferred)",
+      "Y Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 13 ",
+    "descriptor": "00069544",
+    "axes_added": [
+      "X Axis: Coolant temperature (inferred)",
+      "Y Axis: Coolant temperature catalyst temp model (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 14 ",
+    "descriptor": "00069560",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Igntion Leading Timing - DSC Mode A - Map 4",
+    "descriptor": "0006957c",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 14",
+    "descriptor": "000696f8",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 15",
+    "descriptor": "00069714",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 16",
+    "descriptor": "00069730",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition 17",
+    "descriptor": "0006974c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 22 ",
+    "descriptor": "0006999c",
+    "axes_added": []
+  },
+  {
+    "table": "Closed Loop WOT Enrichment??",
+    "descriptor": "000699b8",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Throttle position (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 24 ",
+    "descriptor": "000699d4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 25 ",
+    "descriptor": "000699f0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 26 ",
+    "descriptor": "00069a0c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 27 ",
+    "descriptor": "00069a28",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 28 ",
+    "descriptor": "00069a44",
+    "axes_added": [
+      "X Axis: Coolant temperature (inferred)",
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 29",
+    "descriptor": "00069a60",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 30 ",
+    "descriptor": "00069a7c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 32 ",
+    "descriptor": "00069adc",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Throttle Tip In",
+    "descriptor": "00069e80",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target",
+    "descriptor": "00069e9c",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Throttle Tip In (Safe Mode)",
+    "descriptor": "00069eb8",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target (Safe Mode)",
+    "descriptor": "00069ed4",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible B",
+    "descriptor": "00069ef0",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Coolant Temp Implausible - Gear 5-6",
+    "descriptor": "00069f0c",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible A",
+    "descriptor": "00069f28",
+    "axes_added": []
+  },
+  {
+    "table": "Open Loop Target - Coolant Temp Implausible - Gear 1-4",
+    "descriptor": "00069f44",
+    "axes_added": []
+  },
+  {
+    "table": "Trans Requested Torque To Throttle Plate Position Position",
+    "descriptor": "0006a164",
+    "axes_added": []
+  },
+  {
+    "table": "Throttle Position To Torque",
+    "descriptor": "0006a180",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 43 ",
+    "descriptor": "0006a1c4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 44 ",
+    "descriptor": "0006a1e0",
+    "axes_added": [
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 45 ",
+    "descriptor": "0006a1fc",
+    "axes_added": [
+      "X Axis: Manifold relative pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 46 ",
+    "descriptor": "0006a2b0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 47 ",
+    "descriptor": "0006a308",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 48 ",
+    "descriptor": "0006a324",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Throttle Pedal to Throttle Plate Request - Gear 1/2",
+    "descriptor": "0006a458",
+    "axes_added": []
+  },
+  {
+    "table": "Throttle Pedal to Throttle Plate Request - Gear Neutral",
+    "descriptor": "0006a474",
+    "axes_added": []
+  },
+  {
+    "table": "Throttle Pedal to Throttle Plate Request - Gear 5/6",
+    "descriptor": "0006a490",
+    "axes_added": []
+  },
+  {
+    "table": "Throttle Pedal to Throttle Plate Request - Gear 3/4",
+    "descriptor": "0006a4ac",
+    "axes_added": []
+  },
+  {
+    "table": "Alternator Voltage Delta - Diagnostic Request",
+    "descriptor": "0006a5c4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 56 ",
+    "descriptor": "0006a714",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 57 ",
+    "descriptor": "0006a730",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 58 ",
+    "descriptor": "0006a74c",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Timing Leading - DSC Mode A - Base",
+    "descriptor": "0006a7a4",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 60 ",
+    "descriptor": "0006a7c0",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Engine Torque",
+    "descriptor": "0006a7dc",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 62 ",
+    "descriptor": "0006a7f8",
+    "axes_added": [
+      "X Axis: Coolant temperature (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 63 ",
+    "descriptor": "0006a814",
+    "axes_added": [
+      "X Axis: Barometric pressure (inferred)"
+    ]
+  },
+  {
+    "table": "Primary Injector Weighted Engine Temp Multiplier",
+    "descriptor": "0006a9a4",
+    "axes_added": []
+  },
+  {
+    "table": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+    "descriptor": "0006a9c0",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+    "descriptor": "0006a9dc",
+    "axes_added": [
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Estimated Manifold Pressure",
+    "descriptor": "0006aa48",
+    "axes_added": []
+  },
+  {
+    "table": "Injector Latency Secondary",
+    "descriptor": "0006aa64",
+    "axes_added": []
+  },
+  {
+    "table": "Injector Latency Primary",
+    "descriptor": "0006aa80",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injection - Engine Load Compensation",
+    "descriptor": "0006ac88",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injection - Warmup Fueling",
+    "descriptor": "0006ae3c",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injection - Warmup Fueling - Engine Speed Based",
+    "descriptor": "0006ae58",
+    "axes_added": []
+  },
+  {
+    "table": "Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)",
+    "descriptor": "0006ae74",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 74 ",
+    "descriptor": "0006aeb8",
+    "axes_added": [
+      "X Axis: Coolant temperature catalyst temp model (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 75 ",
+    "descriptor": "0006aed4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 79 ",
+    "descriptor": "0006b160",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 80 ",
+    "descriptor": "0006b17c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 81 ",
+    "descriptor": "0006b198",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 82 ",
+    "descriptor": "0006b1b4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 83 ",
+    "descriptor": "0006b1d0",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Coolant temperature (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 86 ",
+    "descriptor": "0006b5f4",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 87 ",
+    "descriptor": "0006b680",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 88 ",
+    "descriptor": "0006b69c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 89 ",
+    "descriptor": "0006b6b8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 90 ",
+    "descriptor": "0006b6d4",
+    "axes_added": []
+  },
+  {
+    "table": "Injection Angle",
+    "descriptor": "0006b7e4",
+    "axes_added": [
+      "X Axis: Engine speed rpm (inferred)",
+      "Y Axis: Engine load (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 92 ",
+    "descriptor": "0006b88c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 93 ",
+    "descriptor": "0006b8a8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 94 ",
+    "descriptor": "0006b8c4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 95 ",
+    "descriptor": "0006b8e0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 96 ",
+    "descriptor": "0006b8fc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 97 ",
+    "descriptor": "0006b918",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 98 ",
+    "descriptor": "0006b934",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 99 ",
+    "descriptor": "0006b950",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 100 ",
+    "descriptor": "0006bb50",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 101 ",
+    "descriptor": "0006bb6c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 102 ",
+    "descriptor": "0006bbb0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 103 ",
+    "descriptor": "00068f94",
+    "axes_added": []
+  },
+  {
+    "table": "Counter Lookup Unknown",
+    "descriptor": "00069608",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 108 ",
+    "descriptor": "00069af8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 109 ",
+    "descriptor": "0006a340",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 110 ",
+    "descriptor": "0006a700",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 111 ",
+    "descriptor": "0006a8bc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 112 ",
+    "descriptor": "0006a8d0",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 113 ",
+    "descriptor": "0006a8e4",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 114 ",
+    "descriptor": "0006a8f8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 115 ",
+    "descriptor": "0006a90c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 116 ",
+    "descriptor": "0006a920",
+    "axes_added": []
+  },
+  {
+    "table": "Oil Metering By Load",
+    "descriptor": "0006ae00",
+    "axes_added": []
+  },
+  {
+    "table": "Oil Metering By Throttle",
+    "descriptor": "0006ae14",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 120 ",
+    "descriptor": "0006b3c8",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 121 ",
+    "descriptor": "0006b3dc",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 122 ",
+    "descriptor": "0006b658",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 123 ",
+    "descriptor": "0006b66c",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 124 ",
+    "descriptor": "0006b984",
+    "axes_added": []
+  },
+  {
+    "table": "Table 3D - 125 ",
+    "descriptor": "0006b998",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 126 ",
+    "descriptor": "0006b9ac",
+    "axes_added": [
+      "X Axis: Engine load (inferred)",
+      "Y Axis: Engine speed rpm (inferred)"
+    ]
+  },
+  {
+    "table": "Table 3D - 127 ",
+    "descriptor": "0006b9e0",
+    "axes_added": []
+  },
+  {
+    "table": "Ignition Dwell Time ",
+    "descriptor": "0006bbcc",
+    "axes_added": []
+  }
+]

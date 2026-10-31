@@ -12,6 +12,8 @@ venv/
 
 # Local tooling / scratch
 *.log
+# pipeline export logs under data/labels are tracked artifacts
+!data/labels/**/*.log
 scratch/
 
 # Binary dumps (*.bin, *.ori, *.dump, *.bak) are handled by .gitattributes via Git LFS.

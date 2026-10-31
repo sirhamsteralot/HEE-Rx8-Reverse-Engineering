@@ -1,0 +1,5 @@
+# SH-2 integer decoder with the bundled single-precision FPU decoder enabled.
+# Reuses Ghidra 12.1.3 SuperH semantics; no new instruction semantics are added.
+@define SH_VERSION "2"
+@define FPU "1"
+@include "superh.sinc"

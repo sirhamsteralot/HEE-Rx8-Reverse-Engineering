@@ -1,0 +1,18 @@
+{
+  "source": "/home/yannick/Downloads/13Electrical.pdf",
+  "sha256": "c2acd5e528b6af329ec1f4efa437815ef4cc90374c2d36c6cdd144059fccb8df",
+  "pages": 148,
+  "visually_reviewed_pages": [
+    10,
+    12,
+    14,
+    16,
+    17,
+    18,
+    19
+  ],
+  "working_variant": "Series-1 13B-MSP; six-port likely per user; year market transmission unknown",
+  "connection_records": 35,
+  "function_annotations": 16,
+  "board_routing_verified": false
+}

@@ -1,18 +1,20 @@
 # docs/
 
-Documentation and investigations for the HEE reverse-engineering effort.
+Documentation, investigations, architecture maps, and references.
 
-| Subfolder | Contents |
+| Path | Contents |
 |---|---|
-| `investigations/` | Dated writeups, one per question/subsystem, started from `TEMPLATE.md`. |
-| `architecture/` | High-level maps: memory map, interrupt vectors, pinouts, CAN/UDS catalogs, clock tree. |
-| `references/` | External datasheets, service-manual excerpts, forum threads, with URL + access date. |
+| `investigations/` | One folder per ROM ID (e.g. `60E15120_N3J1E/`): subsystem `*_report.md` files, `reviews/`, `backups/`, evidence folders (`cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`), README. See `investigations/README.md`. |
+| `architecture/` | `hardware/` (pinout, `pcm_connections.tsv`, wiring review, provenance), `design/` (firmware design doc + graph stats), plus memory maps. |
+| `references/` | Reference PDFs with trust notes, upstream repository links, prior-effort workspace docs. See `references/README.md`. |
+| `learnings.md` | Session log: SH-2E encoding facts, pipeline pitfalls, patcher patterns, report format lessons. Read before starting analysis. |
 
 ## Rules
 
-- Investigations are named `YYYY-MM-DD-<topic>.md` and must follow `TEMPLATE.md`:
-  goal, method, findings, evidence, open questions.
-- Reference external material by link (with access date) rather than committing large
-  PDFs; commit only short excerpts where licensing allows.
-- Keep a `docs/architecture/` page per major subsystem (ECU core, CAN gateway,
-  immobilizer, etc.) and link to the detailed investigations from it.
+- Investigations are organized per ROM (`docs/investigations/<rom-id>/`); within a
+  ROM, follow the prior effort's per-folder READMEs. New ROMs get a new folder.
+- Subsystem reports follow the 10-section format with mandatory function/RAM address
+  tables (template: `investigations/60E15120_N3J1E/knock_control_report.md`).
+- Reference external material by link + access date; commit PDFs only in
+  `references/` with a trust note; quote them by table/section in reports.
+- Keep `learnings.md` updated with dated, artifact-backed lessons.

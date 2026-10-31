@@ -1,0 +1,7 @@
+from pathlib import Path
+import json
+b=Path(__file__).resolve().parents[1];p=next((b/'decompiled/functions').glob('0006689e_*'));old=p.read_text();start=old.index('void rx8_insertion_sort_u16_key_u8_payload(');new=old[:start]+'/* [SORT RECORD RECONSTRUCTION] Typed equivalent for ordinary RAM records.\n * Four-byte stride, strict key comparison, low-16-bit count and untouched padding.\n * Volatile memory/interruption behavior is outside this reconstruction. */\n'+(b/'readability/sort_record_body.c.txt').read_text()+'\n'
+if '[SORT RECORD RECONSTRUCTION]' not in old:
+ combined=b/'decompiled/firmware_decompiled.c';s=combined.read_text();tail=old[old.index('/* ROM address:'):].strip();assert s.count(tail)==1;s=s.replace(tail,new[new.index('/* ROM address:'):].strip(),1);combined.write_text(s);p.write_text(new)
+ (b/'named/firmware_named.c').write_text(s.replace('#include "rx8_analysis_types.h"','#include "../decompiled/rx8_analysis_types.h"',1))
+ cs=json.loads((b/'readability/changes.json').read_text());cs.append({'address':'0006689e','actions':[{'signature':'typed key/payload record pointer; uint32 count masked to low 16 bits'},{'structure':'insertion sort rewritten with named record fields; padding preserved'},{'local_names':{'uVar1':'pending_key','uVar2':'pending_payload','iVar4':'insertion_index','iVar3':'destination_index'}}]});(b/'readability/changes.json').write_text(json.dumps(cs,indent=2)+'\n')

@@ -1,0 +1,9 @@
+/* ROM address: 0x00061d14; body bytes: 6; decompiled */
+
+int FUN_00061d14(void)
+
+{
+  return (int)DAT_ffff8788._0_2_;
+}
+
+

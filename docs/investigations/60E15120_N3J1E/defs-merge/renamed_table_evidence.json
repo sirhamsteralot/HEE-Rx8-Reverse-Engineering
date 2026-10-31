@@ -1,0 +1,223 @@
+[
+  {
+    "name": "Throttle Plate Enrichment Minimum",
+    "data": "0x6f858",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "00069918",
+        "counts": [
+          7
+        ],
+        "axes": [
+          "0x6f83c"
+        ],
+        "type_code": 8,
+        "lookup_modes": [
+          "lookup_2d_descriptor_scaled"
+        ],
+        "rom_type": "uint16",
+        "xml_type": "uint16",
+        "type_matches": true,
+        "rom_scale": 9.999999747378752e-05,
+        "rom_offset": -1.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "0001ce6c"
+        ],
+        "xml_offset": -1.0,
+        "xml_scale": 9.999999999998899e-05,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 69 "
+  },
+  {
+    "name": "Throttle Plate Request Decreasing Filter Factor",
+    "data": "0x73778",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a354",
+        "counts": [
+          8
+        ],
+        "axes": [
+          "0x73758"
+        ],
+        "type_code": 4,
+        "lookup_modes": [],
+        "rom_type": "uint8",
+        "xml_type": "uint8",
+        "type_matches": true,
+        "rom_scale": 0.0078125,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "00022a14"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.007812,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Throttle Pedal Percent Decreasing Filter Factor"
+  },
+  {
+    "name": "Throttle Plate Request Max Value For Filter - In Gear",
+    "data": "0x7386c",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a3cc",
+        "counts": [
+          11
+        ],
+        "axes": [
+          "0x73840"
+        ],
+        "type_code": 4,
+        "lookup_modes": [],
+        "rom_type": "uint8",
+        "xml_type": "uint8",
+        "type_matches": true,
+        "rom_scale": 0.5,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "00022a14"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.5,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 137 "
+  },
+  {
+    "name": "Throttle Plate Request Max Value For Filter - In Neutral",
+    "data": "0x738a4",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a3e0",
+        "counts": [
+          11
+        ],
+        "axes": [
+          "0x73878"
+        ],
+        "type_code": 4,
+        "lookup_modes": [],
+        "rom_type": "uint8",
+        "xml_type": "uint8",
+        "type_matches": true,
+        "rom_scale": 0.5,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "00022a14"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.5,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 138 "
+  },
+  {
+    "name": "Throttle Plate Request Increasing Filter Factor - In Gear",
+    "data": "0x738d0",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a3f4",
+        "counts": [
+          8
+        ],
+        "axes": [
+          "0x738b0"
+        ],
+        "type_code": 4,
+        "lookup_modes": [],
+        "rom_type": "uint8",
+        "xml_type": "uint8",
+        "type_matches": true,
+        "rom_scale": 0.004999999888241291,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "00022a14"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.005,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 139 "
+  },
+  {
+    "name": "Throttle Plate Request Increasing Filter Factor - In Neutral",
+    "data": "0x738f8",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a408",
+        "counts": [
+          8
+        ],
+        "axes": [
+          "0x738d8"
+        ],
+        "type_code": 4,
+        "lookup_modes": [],
+        "rom_type": "uint8",
+        "xml_type": "uint8",
+        "type_matches": true,
+        "rom_scale": 0.004999999888241291,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "00022a14"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.005,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 140 "
+  },
+  {
+    "name": "Alternator Max Torque",
+    "data": "0x75cc8",
+    "status": "descriptor_verified",
+    "matches": [
+      {
+        "descriptor": "0006a790",
+        "counts": [
+          5
+        ],
+        "axes": [
+          "0x75cb4"
+        ],
+        "type_code": 8,
+        "lookup_modes": [
+          "lookup_2d_descriptor_scaled"
+        ],
+        "rom_type": "uint16",
+        "xml_type": "uint16",
+        "type_matches": true,
+        "rom_scale": 0.0078125,
+        "rom_offset": 0.0,
+        "data_in_bounds": true,
+        "referencing_functions": [
+          "0002ce18"
+        ],
+        "xml_offset": 0.0,
+        "xml_scale": 0.007812,
+        "scale_matches_within_0_01_percent": true
+      }
+    ],
+    "old_name": "Table 2D - 162 "
+  }
+]

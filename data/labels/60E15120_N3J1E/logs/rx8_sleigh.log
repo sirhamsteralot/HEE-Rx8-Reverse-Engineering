@@ -1,0 +1,9 @@
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+Picked up JAVA_TOOL_OPTIONS: -Duser.home=/tmp/ghidra_user
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
+INFO  Using log config file: jar:file:/tmp/ghidra_runtime/ghidra_12.1.3_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: /tmp/ghidra_user/.config/ghidra/ghidra_12.1.3_PUBLIC/application.log (LoggingInitialization)  

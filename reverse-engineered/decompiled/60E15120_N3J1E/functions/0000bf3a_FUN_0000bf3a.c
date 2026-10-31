@@ -1,0 +1,28 @@
+/* ROM address: 0x0000bf3a; body bytes: 102; decompiled */
+
+/* Unique exact-byte match to related 60E0FC00 function at 0000bf3a (102 bytes). Names prefixed ref_
+   are inherited hypotheses. */
+
+void FUN_0000bf3a(void)
+
+{
+  ushort uVar1;
+  undefined4 local_18;
+  undefined4 auStack_14 [2];
+  
+  ref_setSR_PARAM(auStack_14,0xe0);
+  uVar1 = PLIR_W;
+  PLIR_W = uVar1 & 0xfdff;
+  uVar1 = PBCRH_W;
+  PBCRH_W = uVar1 & 0xffcf;
+  ref_setRegister_REG_BIT_VAL(0xfffff738,0x400,0);
+  ref_setSR_PARAM(&local_18,0xe0);
+  ref_setRegister_REG_BIT_VAL(0xfffff74e,0x400,1);
+  FUN_00002064(local_18);
+  uVar1 = PBCRH_W;
+  PBCRH_W = uVar1 & 0xffcf | 0x10;
+  FUN_00002064(auStack_14[0]);
+  return;
+}
+
+

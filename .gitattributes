@@ -1,5 +1,12 @@
-# Route large binaries through Git LFS
+# Route binary blobs through Git LFS (git-lfs required to clone/checkout these)
 *.bin linguist-generated=true filter=lfs diff=lfs merge=lfs -text
 *.ori linguist-generated=true filter=lfs diff=lfs merge=lfs -text
 *.dump linguist-generated=true filter=lfs diff=lfs merge=lfs -text
 *.bak linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.gar linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.zip linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.jar linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.exe linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.dll linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.so linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.pdf linguist-generated=true filter=lfs diff=lfs merge=lfs -text

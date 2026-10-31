@@ -1,0 +1,13 @@
+{
+  "comments_only": true,
+  "changed_files": [
+    "decompiled/firmware_decompiled.c",
+    "named/firmware_named.c",
+    "decompiled/functions/00022a14_FUN_00022a14.c",
+    "decompiled/functions/0001ce6c_FUN_0001ce6c.c",
+    "decompiled/functions/0002ce18_FUN_0002ce18.c",
+    "decompiled/functions/000618f8_FUN_000618f8.c"
+  ],
+  "findings": 4,
+  "ghidra_database_changed": false
+}

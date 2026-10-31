@@ -1,0 +1,10 @@
+{
+  "functions_changed": 267,
+  "local_identifiers_named": 484,
+  "signature_or_ABI_refinements": 6,
+  "structure_definitions": 5,
+  "unresolved_lookup_calls": 23,
+  "function_bodies_consistent": 3355,
+  "ghidra_database_updated": false,
+  "whole_firmware_compilable": false
+}

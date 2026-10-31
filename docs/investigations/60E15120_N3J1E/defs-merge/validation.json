@@ -1,0 +1,35 @@
+{
+  "upstream_commit": "ff5ab4f8a99ef9d2816db39872bc68ac116919d3",
+  "copy_base_commit": "944062ebe9de1a33cac6e56e62c3ead25591f586",
+  "commits_reviewed": [
+    "ff5ab4f Fat fingered an extra 0 in defs",
+    "978f881 Added immo delete for 60E32000",
+    "593b95b Update README.md",
+    "7224561 Added more DTC mappings",
+    "182524d Updated DTC mappings for a few ROMs, more still needs to be done.",
+    "0c8ac90 Merge pull request #3 from jfoster/master",
+    "d9a75b6 Updated some throttle and torque control tables for more clarity on functionality",
+    "04971dc Updated for devel",
+    "944062e Fixed a naming error",
+    "0f21c54 Added defs in some roms for off throttle fuel cut"
+  ],
+  "source_sha256": {
+    "RX8Defs/RomRaider/rx8_defs.xml": "514814ca00c7b97e7fa42830843761a35b75d73882e78a7f551a14e8a3077cbd",
+    "RX8Defs_Copy/RomRaider/rx8_defs.xml": "a506bba37084ea1a0db8dc8b048ab8b88d247aa7494b0d8ec0c0f8b953acb005",
+    "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1"
+  },
+  "prior_storage_annotations_corrected": 124,
+  "local_tables_merged": 478,
+  "local_axes_retained": 103,
+  "axis_conflicts": 0,
+  "target_tables": 637,
+  "descriptor_verified": 462,
+  "lookup_tables_needing_review": 32,
+  "renamed_tables": 7,
+  "inheritance_issues": 311,
+  "xml_parse_passed": true,
+  "calibration_changes_limited_to_recorded_target_repairs": true,
+  "target_repairs": 82,
+  "other_rom_blocks_byte_identical_to_upstream": true,
+  "live_RomRaider_tested": false
+}

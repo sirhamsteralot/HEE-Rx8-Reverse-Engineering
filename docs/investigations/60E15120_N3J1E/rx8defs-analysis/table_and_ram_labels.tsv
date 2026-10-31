@@ -1,0 +1,471 @@
+original	alias	basis	evidence
+DAT_00068ef8	tbl_fuel_injector_unknown_max_injection_angle1_00068ef8	RX8Defs_descriptor_match	Fuel Injector - Unknown - Max Injection Angle1???
+DAT_00068f0c	tbl_fuel_injector_unknown_max_injection_angle2_00068f0c	RX8Defs_descriptor_match	Fuel Injector - Unknown - Max Injection Angle2???
+DAT_00068f20	tbl_fuel_injector_unknown_max_injection_angle3_00068f20	RX8Defs_descriptor_match	Fuel Injector - Unknown - Max Injection Angle3???
+DAT_00068f34	tbl_table_2d_3_00068f34	RX8Defs_descriptor_match	Table 2D - 3
+DAT_00068f48	tbl_off_throttle_fuel_cut_fuel_resume_engine_startup_base_00068f48	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - Engine Startup Base
+DAT_00068f80	tbl_off_throttle_fuel_cut_fuel_resume_in_neutral_threshold_00068f80	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold
+DAT_00069244	tbl_table_2d_10_00069244	RX8Defs_descriptor_match	Table 2D - 10
+DAT_00069258	tbl_table_2d_11_00069258	RX8Defs_descriptor_match	Table 2D - 11
+DAT_0006926c	tbl_table_2d_12_0006926c	RX8Defs_descriptor_match	Table 2D - 12
+DAT_00069280	tbl_table_2d_13_00069280	RX8Defs_descriptor_match	Table 2D - 13
+DAT_00069294	tbl_table_2d_14_00069294	RX8Defs_descriptor_match	Table 2D - 14
+DAT_000692a8	tbl_table_2d_15_000692a8	RX8Defs_descriptor_match	Table 2D - 15
+DAT_000692bc	tbl_table_2d_16_000692bc	RX8Defs_descriptor_match	Table 2D - 16
+PTR_DAT_000692d0	tbl_table_2d_17_000692d0	RX8Defs_descriptor_match	Table 2D - 17
+PTR_DAT_000692e4	tbl_table_2d_18_000692e4	RX8Defs_descriptor_match	Table 2D - 18
+PTR_DAT_000692f8	tbl_table_2d_19_000692f8	RX8Defs_descriptor_match	Table 2D - 19
+PTR_DAT_0006930c	tbl_table_2d_20_0006930c	RX8Defs_descriptor_match	Table 2D - 20
+PTR_DAT_00069320	tbl_table_2d_21_00069320	RX8Defs_descriptor_match	Table 2D - 21
+PTR_DAT_00069334	tbl_table_2d_22_00069334	RX8Defs_descriptor_match	Table 2D - 22
+DAT_00069348	tbl_table_2d_23_00069348	RX8Defs_descriptor_match	Table 2D - 23
+DAT_0006935c	tbl_idle_target_filter_factor_0006935c	RX8Defs_descriptor_match	Idle Target Filter Factor
+PTR_DAT_00069370	tbl_idle_target_base_00069370	RX8Defs_descriptor_match	Idle Target - Base
+DAT_00069384	tbl_idle_target_minimum_open_loop_conditonal_00069384	RX8Defs_descriptor_match	Idle Target Minimum - Open Loop Conditonal
+DAT_00069398	tbl_idle_target_minimum_closed_loop_conditonal_00069398	RX8Defs_descriptor_match	Idle Target Minimum - Closed Loop Conditonal
+DAT_000693ac	tbl_idle_target_minimum_reset_value_000693ac	RX8Defs_descriptor_match	Idle Target Minimum - Reset Value
+DAT_000693c0	tbl_idle_target_e_000693c0	RX8Defs_descriptor_match	Idle Target E
+PTR_DAT_000693d4	tbl_idle_target_f_000693d4	RX8Defs_descriptor_match	Idle Target F
+PTR_DAT_000693e8	tbl_idle_target_g_000693e8	RX8Defs_descriptor_match	Idle Target G
+PTR_DAT_000693fc	tbl_idle_target_h_000693fc	RX8Defs_descriptor_match	Idle Target H
+PTR_DAT_00069410	tbl_idle_target_vehicle_moving_automatic_transmission_related_1_00069410	RX8Defs_descriptor_match	Idle Target - Vehicle Moving - Automatic Transmission Related 1
+DAT_00069440	tbl_table_2d_34_00069440	RX8Defs_descriptor_match	Table 2D - 34
+DAT_00069454	tbl_table_2d_35_00069454	RX8Defs_descriptor_match	Table 2D - 35
+DAT_0006947c	tbl_table_2d_37_0006947c	RX8Defs_descriptor_match	Table 2D - 37
+DAT_00069490	tbl_table_2d_38_00069490	RX8Defs_descriptor_match	Table 2D - 38
+DAT_000694a4	tbl_table_2d_39_000694a4	RX8Defs_descriptor_match	Table 2D - 39
+DAT_000694b8	tbl_table_2d_40_000694b8	RX8Defs_descriptor_match	Table 2D - 40
+DAT_000694cc	tbl_table_2d_41_000694cc	RX8Defs_descriptor_match	Table 2D - 41
+DAT_00069508	tbl_table_2d_44_00069508	RX8Defs_descriptor_match	Table 2D - 44
+PTR_DAT_0006951c	tbl_table_2d_45_0006951c	RX8Defs_descriptor_match	Table 2D - 45
+DAT_00069530	tbl_table_2d_46_00069530	RX8Defs_descriptor_match	Table 2D - 46
+DAT_00069630	tbl_ignition_4_00069630	RX8Defs_descriptor_match	Ignition 4
+DAT_00069644	tbl_ignition_5_00069644	RX8Defs_descriptor_match	Ignition 5
+DAT_00069658	tbl_ignition_6_00069658	RX8Defs_descriptor_match	Ignition 6
+DAT_0006966c	tbl_ignition_7_0006966c	RX8Defs_descriptor_match	Ignition 7
+DAT_00069680	tbl_ignition_8_00069680	RX8Defs_descriptor_match	Ignition 8
+DAT_00069694	tbl_ignition_9_00069694	RX8Defs_descriptor_match	Ignition 9
+DAT_000696a8	tbl_ignition_10_000696a8	RX8Defs_descriptor_match	Ignition 10
+DAT_000696bc	tbl_ignition_11_000696bc	RX8Defs_descriptor_match	Ignition 11
+DAT_000696d0	tbl_ignition_12_000696d0	RX8Defs_descriptor_match	Ignition 12
+DAT_000696e4	tbl_ignition_13_000696e4	RX8Defs_descriptor_match	Ignition 13
+DAT_00069768	tbl_off_throttle_fuel_cut_fuel_resume_in_neutral_threshold7_00069768	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7
+DAT_00069810	tbl_off_throttle_fuel_cut_fuel_resume_in_neutral_threshold9_00069810	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold9
+DAT_00069830	tbl_table_2d_60_00069830	RX8Defs_descriptor_match	Table 2D - 60
+DAT_00069844	tbl_table_2d_61_00069844	RX8Defs_descriptor_match	Table 2D - 61
+DAT_00069858	tbl_table_2d_62_00069858	RX8Defs_descriptor_match	Table 2D - 62
+DAT_0006986c	tbl_table_2d_63_0006986c	RX8Defs_descriptor_match	Table 2D - 63
+DAT_00069880	tbl_table_2d_64_00069880	RX8Defs_descriptor_match	Table 2D - 64
+DAT_000698bc	tbl_table_2d_65_000698bc	RX8Defs_descriptor_match	Table 2D - 65
+DAT_000698d0	tbl_table_2d_66_000698d0	RX8Defs_descriptor_match	Table 2D - 66
+DAT_000698e4	tbl_table_2d_67_000698e4	RX8Defs_descriptor_match	Table 2D - 67
+DAT_000698f8	tbl_table_2d_68_000698f8	RX8Defs_descriptor_match	Table 2D - 68
+PTR_DAT_00069918	tbl_table_2d_69_00069918	RX8Defs_descriptor_match	Table 2D - 69
+DAT_00069b0c	tbl_table_2d_70_00069b0c	RX8Defs_descriptor_match	Table 2D - 70
+DAT_00069b20	tbl_table_2d_71_00069b20	RX8Defs_descriptor_match	Table 2D - 71
+DAT_00069b34	tbl_table_2d_72_00069b34	RX8Defs_descriptor_match	Table 2D - 72
+DAT_00069b48	tbl_table_2d_73_00069b48	RX8Defs_descriptor_match	Table 2D - 73
+DAT_00069b5c	tbl_table_2d_74_00069b5c	RX8Defs_descriptor_match	Table 2D - 74
+DAT_00069b70	tbl_table_2d_75_00069b70	RX8Defs_descriptor_match	Table 2D - 75
+DAT_00069b84	tbl_table_2d_76_00069b84	RX8Defs_descriptor_match	Table 2D - 76
+DAT_00069b98	tbl_table_2d_77_00069b98	RX8Defs_descriptor_match	Table 2D - 77
+DAT_00069bac	tbl_table_2d_78_00069bac	RX8Defs_descriptor_match	Table 2D - 78
+DAT_00069bcc	tbl_table_2d_79_00069bcc	RX8Defs_descriptor_match	Table 2D - 79
+DAT_00069be0	tbl_table_2d_80_00069be0	RX8Defs_descriptor_match	Table 2D - 80
+DAT_00069bf4	tbl_table_2d_81_00069bf4	RX8Defs_descriptor_match	Table 2D - 81
+DAT_00069c08	tbl_table_2d_82_00069c08	RX8Defs_descriptor_match	Table 2D - 82
+DAT_00069c40	tbl_table_2d_83_00069c40	RX8Defs_descriptor_match	Table 2D - 83
+DAT_00069c60	tbl_table_2d_84_00069c60	RX8Defs_descriptor_match	Table 2D - 84
+DAT_00069c74	tbl_table_2d_85_00069c74	RX8Defs_descriptor_match	Table 2D - 85
+DAT_00069cac	tbl_open_loop_fuelling_base_correction_throttle_safe_mode_00069cac	RX8Defs_descriptor_match	Open Loop Fuelling Base Correction (Throttle) - Safe Mode
+DAT_00069cc0	tbl_open_loop_fuelling_base_correction_throttle_00069cc0	RX8Defs_descriptor_match	Open Loop Fuelling Base Correction (Throttle)
+PTR_DAT_00069cd4	tbl_open_loop_target_coolant_temperature_correction_00069cd4	RX8Defs_descriptor_match	Open Loop Target - Coolant Temperature Correction
+DAT_00069ce8	tbl_open_loop_fuelling_rich_limit_safe_mode_00069ce8	RX8Defs_descriptor_match	Open Loop Fuelling Rich Limit - Safe Mode
+DAT_00069cfc	tbl_open_loop_fuelling_rich_limit_00069cfc	RX8Defs_descriptor_match	Open Loop Fuelling Rich Limit
+PTR_DAT_00069d10	tbl_open_loop_temperature_correction_b_00069d10	RX8Defs_descriptor_match	Open Loop Temperature Correction #B
+DAT_00069d24	tbl_closed_loop_fuelling_threshold_engine_load_a_00069d24	RX8Defs_descriptor_match	Closed Loop Fuelling Threshold (Engine Load A)
+DAT_00069d38	tbl_closed_loop_fuelling_threshold_engine_load_b_00069d38	RX8Defs_descriptor_match	Closed Loop Fuelling Threshold (Engine Load B)
+DAT_00069d4c	tbl_closed_loop_fuelling_threshold_engine_load_c_00069d4c	RX8Defs_descriptor_match	Closed Loop Fuelling Threshold (Engine Load C)
+DAT_00069d60	tbl_closed_loop_fuelling_threshold_unknown_a_00069d60	RX8Defs_descriptor_match	Closed Loop Fuelling Threshold (Unknown A)
+DAT_00069d74	tbl_closed_loop_fuelling_threshold_throttle_position_00069d74	RX8Defs_descriptor_match	Closed Loop Fuelling Threshold (Throttle Position)
+DAT_00069d88	tbl_table_2d_97_00069d88	RX8Defs_descriptor_match	Table 2D - 97
+DAT_00069d9c	tbl_table_2d_98_00069d9c	RX8Defs_descriptor_match	Table 2D - 98
+DAT_00069db0	tbl_table_2d_99_00069db0	RX8Defs_descriptor_match	Table 2D - 99
+DAT_00069dc4	tbl_table_2d_100_00069dc4	RX8Defs_descriptor_match	Table 2D - 100
+DAT_00069dd8	tbl_table_2d_101_00069dd8	RX8Defs_descriptor_match	Table 2D - 101
+DAT_00069dec	tbl_table_2d_102_00069dec	RX8Defs_descriptor_match	Table 2D - 102
+PTR_DAT_00069e00	tbl_open_loop_changeover_enrichment_00069e00	RX8Defs_descriptor_match	Open Loop Changeover Enrichment
+DAT_0006a038	tbl_table_2d_105_0006a038	RX8Defs_descriptor_match	Table 2D - 105
+DAT_0006a060	tbl_ignition_leading_idle_error_timing_correction_unknown_bool_false_0006a060	RX8Defs_descriptor_match	Ignition Leading - Idle Error Timing Correction - Unknown Bool False
+DAT_0006a074	tbl_ignition_leading_idle_error_timing_correction_unknown_bool_true_0006a074	RX8Defs_descriptor_match	Ignition Leading - Idle Error Timing Correction - Unknown Bool True
+DAT_0006a088	tbl_ignition_trailing_idle_error_timing_correction_unknown_bool_false_0006a088	RX8Defs_descriptor_match	Ignition Trailing - Idle Error Timing Correction - Unknown Bool False
+DAT_0006a09c	tbl_ignition_trailing_idle_error_timing_correction_unknown_bool_true_0006a09c	RX8Defs_descriptor_match	Ignition Trailing - Idle Error Timing Correction - Unknown Bool True
+DAT_0006a0d8	tbl_ignition_leading_trailing_intake_air_temperature_compensation_on_throttle_0006a0d8	RX8Defs_descriptor_match	Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle
+DAT_0006a0ec	tbl_table_2d_113_0006a0ec	RX8Defs_descriptor_match	Table 2D - 113
+PTR_DAT_0006a100	tbl_table_2d_114_0006a100	RX8Defs_descriptor_match	Table 2D - 114
+PTR_DAT_0006a114	tbl_table_2d_115_0006a114	RX8Defs_descriptor_match	Table 2D - 115
+PTR_DAT_0006a128	tbl_table_2d_116_0006a128	RX8Defs_descriptor_match	Table 2D - 116
+DAT_0006a13c	tbl_table_2d_117_0006a13c	RX8Defs_descriptor_match	Table 2D - 117
+DAT_0006a150	tbl_dsc_mode_c_max_throttle_plate_opening_allowed_0006a150	RX8Defs_descriptor_match	DSC Mode C - Max Throttle Plate Opening Allowed
+DAT_0006a19c	tbl_table_2d_119_0006a19c	RX8Defs_descriptor_match	Table 2D - 119
+DAT_0006a1b0	tbl_table_2d_120_0006a1b0	RX8Defs_descriptor_match	Table 2D - 120
+DAT_0006a218	tbl_table_2d_121_0006a218	RX8Defs_descriptor_match	Table 2D - 121
+DAT_0006a22c	tbl_table_2d_122_0006a22c	RX8Defs_descriptor_match	Table 2D - 122
+DAT_0006a240	tbl_table_2d_123_0006a240	RX8Defs_descriptor_match	Table 2D - 123
+DAT_0006a254	tbl_table_2d_124_0006a254	RX8Defs_descriptor_match	Table 2D - 124
+DAT_0006a268	tbl_table_2d_125_0006a268	RX8Defs_descriptor_match	Table 2D - 125
+DAT_0006a27c	tbl_table_2d_126_0006a27c	RX8Defs_descriptor_match	Table 2D - 126
+DAT_0006a29c	tbl_table_2d_127_0006a29c	RX8Defs_descriptor_match	Table 2D - 127
+DAT_0006a2cc	tbl_table_2d_128_0006a2cc	RX8Defs_descriptor_match	Table 2D - 128
+DAT_0006a2e0	tbl_table_2d_129_0006a2e0	RX8Defs_descriptor_match	Table 2D - 129
+DAT_0006a2f4	tbl_table_2d_130_0006a2f4	RX8Defs_descriptor_match	Table 2D - 130
+DAT_0006a354	tbl_throttle_pedal_percent_decreasing_filter_factor_0006a354	RX8Defs_descriptor_match	Throttle Pedal Percent Decreasing Filter Factor
+DAT_0006a368	tbl_table_2d_132_0006a368	RX8Defs_descriptor_match	Table 2D - 132
+DAT_0006a37c	tbl_table_2d_133_0006a37c	RX8Defs_descriptor_match	Table 2D - 133
+DAT_0006a390	tbl_table_2d_134_0006a390	RX8Defs_descriptor_match	Table 2D - 134
+PTR_DAT_0006a3a4	tbl_table_2d_135_0006a3a4	RX8Defs_descriptor_match	Table 2D - 135
+PTR_DAT_0006a3b8	tbl_table_2d_136_0006a3b8	RX8Defs_descriptor_match	Table 2D - 136
+DAT_0006a3cc	tbl_table_2d_137_0006a3cc	RX8Defs_descriptor_match	Table 2D - 137
+DAT_0006a3e0	tbl_table_2d_138_0006a3e0	RX8Defs_descriptor_match	Table 2D - 138
+DAT_0006a3f4	tbl_table_2d_139_0006a3f4	RX8Defs_descriptor_match	Table 2D - 139
+DAT_0006a408	tbl_table_2d_140_0006a408	RX8Defs_descriptor_match	Table 2D - 140
+DAT_0006a41c	tbl_table_2d_141_0006a41c	RX8Defs_descriptor_match	Table 2D - 141
+DAT_0006a430	tbl_table_2d_142_0006a430	RX8Defs_descriptor_match	Table 2D - 142
+PTR_DAT_0006a444	tbl_table_2d_143_0006a444	RX8Defs_descriptor_match	Table 2D - 143
+DAT_0006a4c8	tbl_table_2d_144_0006a4c8	RX8Defs_descriptor_match	Table 2D - 144
+DAT_0006a4dc	tbl_table_2d_145_0006a4dc	RX8Defs_descriptor_match	Table 2D - 145
+DAT_0006a4f0	tbl_table_2d_146_0006a4f0	RX8Defs_descriptor_match	Table 2D - 146
+DAT_0006a504	tbl_table_2d_147_0006a504	RX8Defs_descriptor_match	Table 2D - 147
+PTR_DAT_0006a524	tbl_battery_temperature_model_decay_amount_0006a524	RX8Defs_descriptor_match	Battery Temperature Model - Decay Amount
+DAT_0006a538	tbl_desired_charge_voltage_0006a538	RX8Defs_descriptor_match	Desired Charge Voltage
+DAT_0006a574	tbl_table_2d_152_0006a574	RX8Defs_descriptor_match	Table 2D - 152
+DAT_0006a588	tbl_table_2d_153_0006a588	RX8Defs_descriptor_match	Table 2D - 153
+DAT_0006a59c	tbl_table_2d_154_0006a59c	RX8Defs_descriptor_match	Table 2D - 154
+DAT_0006a5b0	tbl_table_2d_155_0006a5b0	RX8Defs_descriptor_match	Table 2D - 155
+DAT_0006a608	tbl_table_2d_156_0006a608	RX8Defs_descriptor_match	Table 2D - 156
+DAT_0006a680	tbl_table_2d_157_0006a680	RX8Defs_descriptor_match	Table 2D - 157
+DAT_0006a6d8	tbl_rotor_1_ignition_dwell_0006a6d8	RX8Defs_descriptor_match	Rotor 1 Ignition Dwell
+DAT_0006a6ec	tbl_rotor_2_ignition_dwell_0006a6ec	RX8Defs_descriptor_match	Rotor 2 Ignition Dwell
+DAT_0006a768	tbl_table_2d_160_0006a768	RX8Defs_descriptor_match	Table 2D - 160
+DAT_0006a77c	tbl_table_2d_161_0006a77c	RX8Defs_descriptor_match	Table 2D - 161
+PTR_DAT_0006a790	tbl_table_2d_162_0006a790	RX8Defs_descriptor_match	Table 2D - 162
+DAT_0006a830	tbl_table_2d_163_0006a830	RX8Defs_descriptor_match	Table 2D - 163
+DAT_0006a934	tbl_table_2d_164_0006a934	RX8Defs_descriptor_match	Table 2D - 164
+DAT_0006a948	tbl_table_2d_165_0006a948	RX8Defs_descriptor_match	Table 2D - 165
+DAT_0006a968	tbl_table_2d_166_0006a968	RX8Defs_descriptor_match	Table 2D - 166
+PTR_DAT_0006a97c	tbl_table_2d_167_0006a97c	RX8Defs_descriptor_match	Table 2D - 167
+PTR_DAT_0006a990	tbl_table_2d_168_0006a990	RX8Defs_descriptor_match	Table 2D - 168
+DAT_0006a9f8	tbl_table_2d_169_0006a9f8	RX8Defs_descriptor_match	Table 2D - 169
+DAT_0006aa0c	tbl_injector_manifold_vacuum_multiplier_0006aa0c	RX8Defs_descriptor_match	Injector Manifold Vacuum Multiplier
+DAT_0006aac4	tbl_table_2d_171_0006aac4	RX8Defs_descriptor_match	Table 2D - 171
+DAT_0006ab34	tbl_table_2d_175_0006ab34	RX8Defs_descriptor_match	Table 2D - 175
+DAT_0006ab48	tbl_primary_fuel_injector_cranking_pulse_width_0006ab48	RX8Defs_descriptor_match	Primary Fuel Injector Cranking Pulse Width
+DAT_0006ab70	tbl_table_2d_177_might_be_primary_secondary_ratio_0006ab70	RX8Defs_descriptor_match	Table 2D - 177 Might be Primary/Secondary Ratio
+DAT_0006ab84	tbl_primary_injector_max_barometric_pressure_correction_0006ab84	RX8Defs_descriptor_match	Primary Injector Max Barometric Pressure Correction
+DAT_0006ac4c	tbl_table_2d_182_0006ac4c	RX8Defs_descriptor_match	Table 2D - 182
+DAT_0006ac60	tbl_secondary_injectors_allowed_threshold_coolant_temperature_based_0006ac60	RX8Defs_descriptor_match	Secondary Injectors Allowed Threshold - Coolant Temperature Based
+DAT_0006aca4	tbl_table_2d_184_0006aca4	RX8Defs_descriptor_match	Table 2D - 184
+DAT_0006acb8	tbl_table_2d_185_0006acb8	RX8Defs_descriptor_match	Table 2D - 185
+DAT_0006accc	tbl_table_2d_186_0006accc	RX8Defs_descriptor_match	Table 2D - 186
+DAT_0006ace0	tbl_table_2d_187_0006ace0	RX8Defs_descriptor_match	Table 2D - 187
+DAT_0006acf4	tbl_table_2d_188_0006acf4	RX8Defs_descriptor_match	Table 2D - 188
+DAT_0006ad08	tbl_table_2d_189_0006ad08	RX8Defs_descriptor_match	Table 2D - 189
+DAT_0006ad1c	tbl_table_2d_190_0006ad1c	RX8Defs_descriptor_match	Table 2D - 190
+DAT_0006ad30	tbl_table_2d_191_0006ad30	RX8Defs_descriptor_match	Table 2D - 191
+DAT_0006ad44	tbl_table_2d_192_0006ad44	RX8Defs_descriptor_match	Table 2D - 192
+DAT_0006ad58	tbl_table_2d_193_0006ad58	RX8Defs_descriptor_match	Table 2D - 193
+PTR_DAT_0006ad6c	tbl_table_2d_194_0006ad6c	RX8Defs_descriptor_match	Table 2D - 194
+DAT_0006ad80	tbl_table_2d_195_0006ad80	RX8Defs_descriptor_match	Table 2D - 195
+DAT_0006adb4	tbl_engine_torque_max_barometric_pressure_compensation_0006adb4	RX8Defs_descriptor_match	Engine Torque Max - Barometric Pressure Compensation
+PTR_DAT_0006ade0	tbl_load_based_oil_injection_temperature_correction_0006ade0	RX8Defs_descriptor_match	Load Based Oil Injection Temperature Correction
+DAT_0006ae28	tbl_fuel_injection_warmup_fueling_load_based_multiplier_0006ae28	RX8Defs_descriptor_match	Fuel Injection - Warmup Fueling - Load Based Multiplier
+DAT_0006ae90	tbl_table_2d_200_0006ae90	RX8Defs_descriptor_match	Table 2D - 200
+DAT_0006aea4	tbl_table_2d_201_0006aea4	RX8Defs_descriptor_match	Table 2D - 201
+DAT_0006aef0	tbl_table_2d_202_0006aef0	RX8Defs_descriptor_match	Table 2D - 202
+DAT_0006af04	tbl_table_2d_203_0006af04	RX8Defs_descriptor_match	Table 2D - 203
+DAT_0006af18	tbl_table_2d_204_0006af18	RX8Defs_descriptor_match	Table 2D - 204
+DAT_0006af2c	tbl_ignition_leading_cranking_timing_advance_0006af2c	RX8Defs_descriptor_match	Ignition Leading - Cranking Timing Advance
+DAT_0006af40	tbl_table_2d_206_0006af40	RX8Defs_descriptor_match	Table 2D - 206
+DAT_0006b030	tbl_table_2d_214_0006b030	RX8Defs_descriptor_match	Table 2D - 214
+DAT_0006b0c0	tbl_table_2d_216_0006b0c0	RX8Defs_descriptor_match	Table 2D - 216
+DAT_0006b0d4	tbl_table_2d_217_0006b0d4	RX8Defs_descriptor_match	Table 2D - 217
+DAT_0006b110	tbl_table_2d_218_0006b110	RX8Defs_descriptor_match	Table 2D - 218
+DAT_0006b124	tbl_table_2d_219_0006b124	RX8Defs_descriptor_match	Table 2D - 219
+DAT_0006b138	tbl_table_2d_220_0006b138	RX8Defs_descriptor_match	Table 2D - 220
+DAT_0006b14c	tbl_table_2d_221_0006b14c	RX8Defs_descriptor_match	Table 2D - 221
+DAT_0006b1ec	tbl_rpm_based_max_engine_load_0006b1ec	RX8Defs_descriptor_match	RPM Based Max Engine Load
+DAT_0006b200	tbl_table_2d_223_0006b200	RX8Defs_descriptor_match	Table 2D - 223
+DAT_0006b214	tbl_max_load_barometric_pressure_compensation_0006b214	RX8Defs_descriptor_match	Max Load - Barometric Pressure Compensation
+DAT_0006b228	tbl_table_2d_225_0006b228	RX8Defs_descriptor_match	Table 2D - 225
+DAT_0006b23c	tbl_table_2d_226_0006b23c	RX8Defs_descriptor_match	Table 2D - 226
+DAT_0006b250	tbl_knock_voltage_to_magnitude_0006b250	RX8Defs_descriptor_match	Knock Voltage To Magnitude
+PTR_DAT_0006b318	tbl_table_2d_228_0006b318	RX8Defs_descriptor_match	Table 2D - 228
+DAT_0006b32c	tbl_table_2d_229_0006b32c	RX8Defs_descriptor_match	Table 2D - 229
+DAT_0006b340	tbl_airflow_or_load_related_0006b340	RX8Defs_descriptor_match	Airflow Or Load Related
+DAT_0006b354	tbl_table_2d_231_airflow_related_0006b354	RX8Defs_descriptor_match	Table 2D - 231 (Airflow Related)
+DAT_0006b368	tbl_table_2d_232_0006b368	RX8Defs_descriptor_match	Table 2D - 232
+DAT_0006b37c	tbl_table_2d_233_0006b37c	RX8Defs_descriptor_match	Table 2D - 233
+DAT_0006b390	tbl_table_2d_234_0006b390	RX8Defs_descriptor_match	Table 2D - 234
+DAT_0006b3f0	tbl_table_2d_235_0006b3f0	RX8Defs_descriptor_match	Table 2D - 235
+DAT_0006b404	tbl_table_2d_236_0006b404	RX8Defs_descriptor_match	Table 2D - 236
+DAT_0006b418	tbl_table_2d_237_0006b418	RX8Defs_descriptor_match	Table 2D - 237
+DAT_0006b42c	tbl_table_2d_238_0006b42c	RX8Defs_descriptor_match	Table 2D - 238
+DAT_0006b440	tbl_table_2d_239_0006b440	RX8Defs_descriptor_match	Table 2D - 239
+DAT_0006b454	tbl_table_2d_240_0006b454	RX8Defs_descriptor_match	Table 2D - 240
+DAT_0006b468	tbl_table_2d_241_0006b468	RX8Defs_descriptor_match	Table 2D - 241
+DAT_0006b47c	tbl_table_2d_242_0006b47c	RX8Defs_descriptor_match	Table 2D - 242
+DAT_0006b490	tbl_table_2d_243_0006b490	RX8Defs_descriptor_match	Table 2D - 243
+DAT_0006b4bc	tbl_table_2d_244_0006b4bc	RX8Defs_descriptor_match	Table 2D - 244
+DAT_0006b4d0	tbl_table_2d_245_0006b4d0	RX8Defs_descriptor_match	Table 2D - 245
+DAT_0006b4e4	tbl_table_2d_246_0006b4e4	RX8Defs_descriptor_match	Table 2D - 246
+DAT_0006b4f8	tbl_table_2d_247_0006b4f8	RX8Defs_descriptor_match	Table 2D - 247
+DAT_0006b50c	tbl_table_2d_248_0006b50c	RX8Defs_descriptor_match	Table 2D - 248
+DAT_0006b538	tbl_table_2d_249_0006b538	RX8Defs_descriptor_match	Table 2D - 249
+DAT_0006b558	tbl_table_2d_250_0006b558	RX8Defs_descriptor_match	Table 2D - 250
+DAT_0006b56c	tbl_table_2d_251_0006b56c	RX8Defs_descriptor_match	Table 2D - 251
+DAT_0006b580	tbl_table_2d_252_0006b580	RX8Defs_descriptor_match	Table 2D - 252
+DAT_0006b594	tbl_table_2d_253_0006b594	RX8Defs_descriptor_match	Table 2D - 253
+DAT_0006b5cc	tbl_table_2d_254_0006b5cc	RX8Defs_descriptor_match	Table 2D - 254
+DAT_0006b5e0	tbl_compensated_barometric_pressure_0006b5e0	RX8Defs_descriptor_match	Compensated Barometric Pressure
+PTR_DAT_0006b61c	tbl_table_2d_256_0006b61c	RX8Defs_descriptor_match	Table 2D - 256
+DAT_0006b630	tbl_off_throttle_leading_timing_realted_0006b630	RX8Defs_descriptor_match	Off Throttle Leading Timing Realted
+DAT_0006b644	tbl_ignition_trailing_cranking_timing_advance_0006b644	RX8Defs_descriptor_match	Ignition Trailing - Cranking Timing Advance
+DAT_0006b6f0	tbl_table_2d_259_0006b6f0	RX8Defs_descriptor_match	Table 2D - 259
+DAT_0006b71c	tbl_injection_angle_related_afr_input_0006b71c	RX8Defs_descriptor_match	Injection Angle Related AFR Input
+DAT_0006b730	tbl_unknown_lambda_input_0006b730	RX8Defs_descriptor_match	Unknown Lambda Input
+DAT_0006b744	tbl_table_2d_262_0006b744	RX8Defs_descriptor_match	Table 2D - 262
+DAT_0006b758	tbl_airflow_inj_angle_related_0006b758	RX8Defs_descriptor_match	AirFlow Inj Angle Related
+DAT_0006b76c	tbl_table_2d_264_0006b76c	RX8Defs_descriptor_match	Table 2D - 264
+DAT_0006b780	tbl_table_2d_265_0006b780	RX8Defs_descriptor_match	Table 2D - 265
+DAT_0006b794	tbl_table_2d_266_0006b794	RX8Defs_descriptor_match	Table 2D - 266
+DAT_0006b7a8	tbl_table_2d_267_0006b7a8	RX8Defs_descriptor_match	Table 2D - 267
+DAT_0006b7bc	tbl_table_2d_268_0006b7bc	RX8Defs_descriptor_match	Table 2D - 268
+DAT_0006b7d0	tbl_table_2d_269_0006b7d0	RX8Defs_descriptor_match	Table 2D - 269
+DAT_0006b800	tbl_table_2d_270_0006b800	RX8Defs_descriptor_match	Table 2D - 270
+DAT_0006b814	tbl_table_2d_271_0006b814	RX8Defs_descriptor_match	Table 2D - 271
+DAT_0006b828	tbl_table_2d_272_0006b828	RX8Defs_descriptor_match	Table 2D - 272
+DAT_0006b83c	tbl_table_2d_273_0006b83c	RX8Defs_descriptor_match	Table 2D - 273
+DAT_0006b850	tbl_table_2d_274_0006b850	RX8Defs_descriptor_match	Table 2D - 274
+DAT_0006b864	tbl_table_2d_275_0006b864	RX8Defs_descriptor_match	Table 2D - 275
+DAT_0006b878	tbl_table_2d_276_0006b878	RX8Defs_descriptor_match	Table 2D - 276
+DAT_0006b9cc	tbl_table_2d_277_0006b9cc	RX8Defs_descriptor_match	Table 2D - 277
+DAT_0006ba30	tbl_load_limit_c_0006ba30	RX8Defs_descriptor_match	Load Limit C
+DAT_0006ba68	tbl_table_2d_279_0006ba68	RX8Defs_descriptor_match	Table 2D - 279
+DAT_0006ba7c	tbl_table_2d_280_0006ba7c	RX8Defs_descriptor_match	Table 2D - 280
+DAT_0006ba90	tbl_table_2d_281_0006ba90	RX8Defs_descriptor_match	Table 2D - 281
+PTR_DAT_0006bae0	tbl_table_2d_282_0006bae0	RX8Defs_descriptor_match	Table 2D - 282
+DAT_0006bb28	tbl_table_2d_284_0006bb28	RX8Defs_descriptor_match	Table 2D - 284
+DAT_0006bb3c	tbl_table_2d_285_0006bb3c	RX8Defs_descriptor_match	Table 2D - 285
+DAT_0006bb88	tbl_table_2d_286_0006bb88	RX8Defs_descriptor_match	Table 2D - 286
+DAT_0006bb9c	tbl_table_2d_287_0006bb9c	RX8Defs_descriptor_match	Table 2D - 287
+DAT_00068f5c	tbl_table_2d_288_check_datatype_00068f5c	RX8Defs_descriptor_match	Table 2D - 288 Check DataType
+DAT_00068f68	tbl_table_2d_289_check_datatype_00068f68	RX8Defs_descriptor_match	Table 2D - 289 Check DataType
+DAT_00068f74	tbl_table_2d_290_check_datatype_00068f74	RX8Defs_descriptor_match	Table 2D - 290 Check DataType
+DAT_0006977c	tbl_clt_sensor_scaling_0006977c	RX8Defs_descriptor_match	CLT Sensor Scaling
+DAT_00069788	tbl_maf_scaling_00069788	RX8Defs_descriptor_match	MAF Scaling
+DAT_000697e0	tbl_lamda_sensor_barometric_pressure_compensation_000697e0	RX8Defs_descriptor_match	Lamda Sensor Barometric Pressure Compensation
+DAT_000697ec	tbl_lambda_sensor_scaling_000697ec	RX8Defs_descriptor_match	Lambda Sensor Scaling
+DAT_000697f8	tbl_table_2d_299_check_datatype_000697f8	RX8Defs_descriptor_match	Table 2D - 299 Check DataType
+DAT_00069804	tbl_table_2d_300_check_datatype_00069804	RX8Defs_descriptor_match	Table 2D - 300 Check DataType
+DAT_00069824	tbl_iat_sensor_scaling_00069824	RX8Defs_descriptor_match	IAT Sensor Scaling
+DAT_0006990c	tbl_table_2d_304_check_datatype_0006990c	RX8Defs_descriptor_match	Table 2D - 304 Check DataType
+DAT_0006992c	tbl_table_2d_305_0006992c	RX8Defs_descriptor_match	Table 2D - 305
+DAT_00069938	tbl_table_2d_306_00069938	RX8Defs_descriptor_match	Table 2D - 306
+DAT_00069944	tbl_table_2d_307_00069944	RX8Defs_descriptor_match	Table 2D - 307
+DAT_00069950	tbl_table_2d_308_00069950	RX8Defs_descriptor_match	Table 2D - 308
+DAT_0006995c	tbl_table_2d_309_0006995c	RX8Defs_descriptor_match	Table 2D - 309
+DAT_00069968	tbl_table_2d_310_00069968	RX8Defs_descriptor_match	Table 2D - 310
+DAT_00069974	tbl_table_2d_311_00069974	RX8Defs_descriptor_match	Table 2D - 311
+DAT_00069bc0	tbl_table_2d_312_engine_speed_00069bc0	RX8Defs_descriptor_match	Table 2D - 312 Engine Speed
+DAT_00069c1c	tbl_table_2d_313_check_datatype_00069c1c	RX8Defs_descriptor_match	Table 2D - 313 Check DataType
+DAT_00069c28	tbl_table_2d_314_check_datatype_00069c28	RX8Defs_descriptor_match	Table 2D - 314 Check DataType
+DAT_00069c34	tbl_table_2d_315_check_datatype_00069c34	RX8Defs_descriptor_match	Table 2D - 315 Check DataType
+DAT_00069c88	tbl_table_2d_317_00069c88	RX8Defs_descriptor_match	Table 2D - 317
+DAT_00069c94	tbl_table_2d_318_check_datatype_00069c94	RX8Defs_descriptor_match	Table 2D - 318 Check DataType
+DAT_00069ca0	tbl_table_2d_319_check_datatype_00069ca0	RX8Defs_descriptor_match	Table 2D - 319 Check DataType
+DAT_00069e14	tbl_table_2d_320_check_datatype_00069e14	RX8Defs_descriptor_match	Table 2D - 320 Check DataType
+PTR_DAT_00069e20	tbl_table_2d_321_check_datatype_00069e20	RX8Defs_descriptor_match	Table 2D - 321 Check DataType
+DAT_00069e2c	tbl_table_2d_322_check_datatype_00069e2c	RX8Defs_descriptor_match	Table 2D - 322 Check DataType
+DAT_00069e38	tbl_table_2d_323_check_datatype_00069e38	RX8Defs_descriptor_match	Table 2D - 323 Check DataType
+DAT_00069f60	tbl_table_2d_329_check_datatype_00069f60	RX8Defs_descriptor_match	Table 2D - 329 Check DataType
+DAT_0006a694	tbl_table_2d_332_check_datatype_0006a694	RX8Defs_descriptor_match	Table 2D - 332 Check DataType
+DAT_0006a6a0	tbl_table_2d_333_check_datatype_0006a6a0	RX8Defs_descriptor_match	Table 2D - 333 Check DataType
+DAT_0006a6cc	tbl_table_2d_334_check_datatype_0006a6cc	RX8Defs_descriptor_match	Table 2D - 334 Check DataType
+DAT_0006a844	tbl_table_2d_335_check_datatype_0006a844	RX8Defs_descriptor_match	Table 2D - 335 Check DataType
+DAT_0006a850	tbl_table_2d_336_check_datatype_0006a850	RX8Defs_descriptor_match	Table 2D - 336 Check DataType
+DAT_0006a85c	tbl_table_2d_337_check_datatype_0006a85c	RX8Defs_descriptor_match	Table 2D - 337 Check DataType
+DAT_0006a868	tbl_table_2d_338_check_datatype_0006a868	RX8Defs_descriptor_match	Table 2D - 338 Check DataType
+DAT_0006a874	tbl_table_2d_339_check_datatype_0006a874	RX8Defs_descriptor_match	Table 2D - 339 Check DataType
+DAT_0006a880	tbl_table_2d_340_check_datatype_0006a880	RX8Defs_descriptor_match	Table 2D - 340 Check DataType
+DAT_0006a88c	tbl_table_2d_341_check_datatype_0006a88c	RX8Defs_descriptor_match	Table 2D - 341 Check DataType
+DAT_0006a898	tbl_table_2d_342_check_datatype_0006a898	RX8Defs_descriptor_match	Table 2D - 342 Check DataType
+DAT_0006a8a4	tbl_table_2d_343_check_datatype_0006a8a4	RX8Defs_descriptor_match	Table 2D - 343 Check DataType
+DAT_0006a8b0	tbl_table_2d_344_check_datatype_0006a8b0	RX8Defs_descriptor_match	Table 2D - 344 Check DataType
+DAT_0006a95c	tbl_engine_on_time_threshold_0006a95c	RX8Defs_descriptor_match	Engine On Time Threshold
+DAT_0006ab98	tbl_table_2d_347_check_datatype_0006ab98	RX8Defs_descriptor_match	Table 2D - 347 Check DataType
+DAT_0006abc8	tbl_table_2d_350_check_datatype_0006abc8	RX8Defs_descriptor_match	Table 2D - 350 Check DataType
+DAT_0006adf4	tbl_first_start_oil_injection_timer_0006adf4	RX8Defs_descriptor_match	First Start Oil Injection Timer
+DAT_0006b270	tbl_ignition_timing_threshold_a_knock_retard_reset_off_0006b270	RX8Defs_descriptor_match	Ignition Timing Threshold A - Knock Retard Reset Off
+DAT_0006b288	tbl_ignition_timing_threshold_b_knock_retard_reset_off_0006b288	RX8Defs_descriptor_match	Ignition Timing Threshold B - Knock Retard Reset Off
+PTR_DAT_0006b2a0	tbl_knock_related_0006b2a0	RX8Defs_descriptor_match	Knock Related
+PTR_DAT_0006b2ac	tbl_knock_related_3_0006b2ac	RX8Defs_descriptor_match	Knock Related 3
+DAT_0006b3a4	tbl_table_2d_364_check_datatype_0006b3a4	RX8Defs_descriptor_match	Table 2D - 364 Check DataType
+DAT_0006b3b0	tbl_table_2d_365_check_datatype_0006b3b0	RX8Defs_descriptor_match	Table 2D - 365 Check DataType
+DAT_0006b3bc	tbl_table_2d_366_check_datatype_0006b3bc	RX8Defs_descriptor_match	Table 2D - 366 Check DataType
+DAT_0006b4a4	tbl_table_2d_367_check_datatype_0006b4a4	RX8Defs_descriptor_match	Table 2D - 367 Check DataType
+DAT_0006b4b0	tbl_table_2d_368_check_datatype_0006b4b0	RX8Defs_descriptor_match	Table 2D - 368 Check DataType
+DAT_0006b520	tbl_table_2d_369_check_datatype_0006b520	RX8Defs_descriptor_match	Table 2D - 369 Check DataType
+DAT_0006b52c	tbl_table_2d_370_check_datatype_0006b52c	RX8Defs_descriptor_match	Table 2D - 370 Check DataType
+DAT_0006b54c	tbl_table_2d_371_check_datatype_0006b54c	RX8Defs_descriptor_match	Table 2D - 371 Check DataType
+DAT_0006b5a8	tbl_table_2d_372_check_datatype_0006b5a8	RX8Defs_descriptor_match	Table 2D - 372 Check DataType
+DAT_0006b5b4	tbl_table_2d_373_check_datatype_0006b5b4	RX8Defs_descriptor_match	Table 2D - 373 Check DataType
+DAT_0006b5c0	tbl_table_2d_374_check_datatype_0006b5c0	RX8Defs_descriptor_match	Table 2D - 374 Check DataType
+PTR_DAT_0006b704	tbl_table_2d_376_check_datatype_0006b704	RX8Defs_descriptor_match	Table 2D - 376 Check DataType
+PTR_DAT_0006b710	tbl_table_2d_377_check_datatype_0006b710	RX8Defs_descriptor_match	Table 2D - 377 Check DataType
+DAT_0006ba0c	tbl_load_limit_a_0006ba0c	RX8Defs_descriptor_match	Load Limit A
+DAT_0006ba18	tbl_load_limit_b_0006ba18	RX8Defs_descriptor_match	Load Limit B
+DAT_0006ba44	tbl_table_2d_382_check_datatype_0006ba44	RX8Defs_descriptor_match	Table 2D - 382 Check DataType
+DAT_0006ba50	tbl_table_2d_383_check_datatype_0006ba50	RX8Defs_descriptor_match	Table 2D - 383 Check DataType
+DAT_0006ba5c	tbl_table_2d_384_check_datatype_0006ba5c	RX8Defs_descriptor_match	Table 2D - 384 Check DataType
+DAT_0006baa4	tbl_table_2d_385_check_datatype_0006baa4	RX8Defs_descriptor_match	Table 2D - 385 Check DataType
+DAT_0006bab0	tbl_primary_fuel_injector_cranking_pulse_decay_time_0006bab0	RX8Defs_descriptor_match	Primary Fuel Injector Cranking Pulse Decay Time
+DAT_0006babc	tbl_table_2d_387_check_datatype_0006babc	RX8Defs_descriptor_match	Table 2D - 387 Check DataType
+DAT_0006bb1c	tbl_table_2d_390_check_datatype_0006bb1c	RX8Defs_descriptor_match	Table 2D - 390 Check DataType
+DAT_0006bbe0	tbl_table_2d_391_check_datatype_0006bbe0	RX8Defs_descriptor_match	Table 2D - 391 Check DataType
+DAT_0006bbec	tbl_table_2d_392_check_datatype_0006bbec	RX8Defs_descriptor_match	Table 2D - 392 Check DataType
+DAT_0006bbf8	tbl_table_2d_393_check_datatype_0006bbf8	RX8Defs_descriptor_match	Table 2D - 393 Check DataType
+DAT_0006bc04	tbl_table_2d_394_check_datatype_0006bc04	RX8Defs_descriptor_match	Table 2D - 394 Check DataType
+DAT_0006bc10	tbl_table_2d_395_check_datatype_0006bc10	RX8Defs_descriptor_match	Table 2D - 395 Check DataType
+DAT_0006bc1c	tbl_table_2d_396_check_datatype_0006bc1c	RX8Defs_descriptor_match	Table 2D - 396 Check DataType
+DAT_0006bc28	tbl_table_2d_397_check_datatype_0006bc28	RX8Defs_descriptor_match	Table 2D - 397 Check DataType
+DAT_0006bc34	tbl_table_2d_398_check_datatype_0006bc34	RX8Defs_descriptor_match	Table 2D - 398 Check DataType
+DAT_0006bc40	tbl_table_2d_399_check_datatype_0006bc40	RX8Defs_descriptor_match	Table 2D - 399 Check DataType
+DAT_0006bc4c	tbl_table_2d_400_check_datatype_0006bc4c	RX8Defs_descriptor_match	Table 2D - 400 Check DataType
+DAT_0006bc58	tbl_table_2d_401_check_datatype_0006bc58	RX8Defs_descriptor_match	Table 2D - 401 Check DataType
+DAT_0006bc64	tbl_table_2d_402_check_datatype_0006bc64	RX8Defs_descriptor_match	Table 2D - 402 Check DataType
+DAT_0006bc70	tbl_table_2d_403_check_datatype_0006bc70	RX8Defs_descriptor_match	Table 2D - 403 Check DataType
+DAT_00068fa8	tbl_off_throttle_fuel_cut_fuel_resume_in_gear_threshold_00068fa8	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - In Gear Threshold
+DAT_00068fc4	tbl_off_throttle_fuel_cut_fuel_resume_notused_00068fc4	RX8Defs_descriptor_match	Off Throttle Fuel Cut - Fuel Resume - NOTUSED
+DAT_00068fe0	tbl_table_3d_2_00068fe0	RX8Defs_descriptor_match	Table 3D - 2
+DAT_00068ffc	tbl_table_3d_3_00068ffc	RX8Defs_descriptor_match	Table 3D - 3
+DAT_00069078	tbl_ignition_leading_base_timing_00069078	RX8Defs_descriptor_match	Ignition Leading - Base Timing
+DAT_000690cc	tbl_ignition_timing_leading_advance_000690cc	RX8Defs_descriptor_match	Ignition Timing Leading Advance
+DAT_00069120	tbl_ignition_timing_trailing_base_00069120	RX8Defs_descriptor_match	Ignition Timing Trailing Base
+DAT_00069174	tbl_ignition_timing_trailing_advance_00069174	RX8Defs_descriptor_match	Ignition Timing Trailing Advance
+PTR_DAT_00069424	tbl_table_3d_12_00069424	RX8Defs_descriptor_match	Table 3D - 12
+DAT_00069544	tbl_table_3d_13_00069544	RX8Defs_descriptor_match	Table 3D - 13
+DAT_00069560	tbl_table_3d_14_00069560	RX8Defs_descriptor_match	Table 3D - 14
+DAT_0006957c	tbl_igntion_leading_timing_dsc_mode_a_map_4_0006957c	RX8Defs_descriptor_match	Igntion Leading Timing - DSC Mode A - Map 4
+DAT_000696f8	tbl_ignition_14_000696f8	RX8Defs_descriptor_match	Ignition 14
+DAT_00069714	tbl_ignition_15_00069714	RX8Defs_descriptor_match	Ignition 15
+DAT_00069730	tbl_ignition_16_00069730	RX8Defs_descriptor_match	Ignition 16
+DAT_0006974c	tbl_ignition_17_0006974c	RX8Defs_descriptor_match	Ignition 17
+DAT_0006999c	tbl_table_3d_22_0006999c	RX8Defs_descriptor_match	Table 3D - 22
+DAT_000699b8	tbl_closed_loop_wot_enrichment_000699b8	RX8Defs_descriptor_match	Closed Loop WOT Enrichment??
+DAT_000699d4	tbl_table_3d_24_000699d4	RX8Defs_descriptor_match	Table 3D - 24
+DAT_000699f0	tbl_table_3d_25_000699f0	RX8Defs_descriptor_match	Table 3D - 25
+DAT_00069a0c	tbl_table_3d_26_00069a0c	RX8Defs_descriptor_match	Table 3D - 26
+DAT_00069a28	tbl_table_3d_27_00069a28	RX8Defs_descriptor_match	Table 3D - 27
+DAT_00069a44	tbl_table_3d_28_00069a44	RX8Defs_descriptor_match	Table 3D - 28
+DAT_00069a60	tbl_table_3d_29_00069a60	RX8Defs_descriptor_match	Table 3D - 29
+DAT_00069a7c	tbl_table_3d_30_00069a7c	RX8Defs_descriptor_match	Table 3D - 30
+DAT_00069adc	tbl_table_3d_32_00069adc	RX8Defs_descriptor_match	Table 3D - 32
+DAT_00069e80	tbl_open_loop_target_throttle_tip_in_00069e80	RX8Defs_descriptor_match	Open Loop Target - Throttle Tip In
+DAT_00069e9c	tbl_open_loop_target_00069e9c	RX8Defs_descriptor_match	Open Loop Target
+DAT_00069eb8	tbl_open_loop_target_throttle_tip_in_safe_mode_00069eb8	RX8Defs_descriptor_match	Open Loop Target - Throttle Tip In (Safe Mode)
+DAT_00069ed4	tbl_open_loop_target_safe_mode_00069ed4	RX8Defs_descriptor_match	Open Loop Target (Safe Mode)
+DAT_00069ef0	tbl_open_loop_target_throttle_tip_in_coolant_temp_implausible_b_00069ef0	RX8Defs_descriptor_match	Open Loop Target - Throttle Tip in - Coolant Temp Implausible B
+DAT_00069f0c	tbl_open_loop_target_coolant_temp_implausible_gear_5_6_00069f0c	RX8Defs_descriptor_match	Open Loop Target - Coolant Temp Implausible - Gear 5-6
+DAT_00069f28	tbl_open_loop_target_throttle_tip_in_coolant_temp_implausible_a_00069f28	RX8Defs_descriptor_match	Open Loop Target - Throttle Tip in - Coolant Temp Implausible A
+DAT_00069f44	tbl_open_loop_target_coolant_temp_implausible_gear_1_4_00069f44	RX8Defs_descriptor_match	Open Loop Target - Coolant Temp Implausible - Gear 1-4
+DAT_0006a164	tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164	RX8Defs_descriptor_match	Trans Requested Torque To Throttle Plate Position Position
+DAT_0006a180	tbl_throttle_position_to_torque_0006a180	RX8Defs_descriptor_match	Throttle Position To Torque
+PTR_DAT_0006a1c4	tbl_table_3d_43_0006a1c4	RX8Defs_descriptor_match	Table 3D - 43
+DAT_0006a1e0	tbl_table_3d_44_0006a1e0	RX8Defs_descriptor_match	Table 3D - 44
+DAT_0006a1fc	tbl_table_3d_45_0006a1fc	RX8Defs_descriptor_match	Table 3D - 45
+DAT_0006a324	tbl_table_3d_48_0006a324	RX8Defs_descriptor_match	Table 3D - 48
+DAT_0006a458	tbl_throttle_pedal_to_throttle_plate_request_gear_1_2_0006a458	RX8Defs_descriptor_match	Throttle Pedal to Throttle Plate Request - Gear 1/2
+DAT_0006a474	tbl_throttle_pedal_to_throttle_plate_request_gear_neutral_0006a474	RX8Defs_descriptor_match	Throttle Pedal to Throttle Plate Request - Gear Neutral
+DAT_0006a490	tbl_throttle_pedal_to_throttle_plate_request_gear_5_6_0006a490	RX8Defs_descriptor_match	Throttle Pedal to Throttle Plate Request - Gear 5/6
+DAT_0006a4ac	tbl_throttle_pedal_to_throttle_plate_request_gear_3_4_0006a4ac	RX8Defs_descriptor_match	Throttle Pedal to Throttle Plate Request - Gear 3/4
+DAT_0006a714	tbl_table_3d_56_0006a714	RX8Defs_descriptor_match	Table 3D - 56
+DAT_0006a730	tbl_table_3d_57_0006a730	RX8Defs_descriptor_match	Table 3D - 57
+DAT_0006a74c	tbl_table_3d_58_0006a74c	RX8Defs_descriptor_match	Table 3D - 58
+DAT_0006a7a4	tbl_ignition_timing_leading_dsc_mode_a_base_0006a7a4	RX8Defs_descriptor_match	Ignition Timing Leading - DSC Mode A - Base
+DAT_0006a7c0	tbl_table_3d_60_0006a7c0	RX8Defs_descriptor_match	Table 3D - 60
+DAT_0006a7dc	tbl_engine_torque_0006a7dc	RX8Defs_descriptor_match	Engine Torque
+DAT_0006a7f8	tbl_table_3d_62_0006a7f8	RX8Defs_descriptor_match	Table 3D - 62
+DAT_0006a814	tbl_table_3d_63_0006a814	RX8Defs_descriptor_match	Table 3D - 63
+DAT_0006a9a4	tbl_primary_injector_weighted_engine_temp_multiplier_0006a9a4	RX8Defs_descriptor_match	Primary Injector Weighted Engine Temp Multiplier
+DAT_0006a9c0	tbl_secondary_1_injector_weighted_engine_temp_multiplier_0006a9c0	RX8Defs_descriptor_match	Secondary 1 Injector Weighted Engine Temp Multiplier
+DAT_0006a9dc	tbl_secondary_2_injector_weighted_engine_temp_multiplier_0006a9dc	RX8Defs_descriptor_match	Secondary 2 Injector Weighted Engine Temp Multiplier
+DAT_0006aa48	tbl_estimated_manifold_pressure_0006aa48	RX8Defs_descriptor_match	Estimated Manifold Pressure
+DAT_0006aa64	tbl_injector_latency_secondary_0006aa64	RX8Defs_descriptor_match	Injector Latency Secondary
+DAT_0006aa80	tbl_injector_latency_primary_0006aa80	RX8Defs_descriptor_match	Injector Latency Primary
+DAT_0006ac88	tbl_fuel_injection_engine_load_compensation_0006ac88	RX8Defs_descriptor_match	Fuel Injection - Engine Load Compensation
+DAT_0006ae3c	tbl_fuel_injection_warmup_fueling_0006ae3c	RX8Defs_descriptor_match	Fuel Injection - Warmup Fueling
+DAT_0006ae58	tbl_fuel_injection_warmup_fueling_engine_speed_based_0006ae58	RX8Defs_descriptor_match	Fuel Injection - Warmup Fueling - Engine Speed Based
+PTR_DAT_0006ae74	tbl_fuel_injection_warmup_fueling_engine_speed_based_coolant_temp_fault_0006ae74	RX8Defs_descriptor_match	Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)
+DAT_0006aeb8	tbl_table_3d_74_0006aeb8	RX8Defs_descriptor_match	Table 3D - 74
+DAT_0006aed4	tbl_table_3d_75_0006aed4	RX8Defs_descriptor_match	Table 3D - 75
+DAT_0006b160	tbl_table_3d_79_0006b160	RX8Defs_descriptor_match	Table 3D - 79
+DAT_0006b17c	tbl_table_3d_80_0006b17c	RX8Defs_descriptor_match	Table 3D - 80
+DAT_0006b198	tbl_table_3d_81_0006b198	RX8Defs_descriptor_match	Table 3D - 81
+DAT_0006b1b4	tbl_table_3d_82_0006b1b4	RX8Defs_descriptor_match	Table 3D - 82
+DAT_0006b1d0	tbl_table_3d_83_0006b1d0	RX8Defs_descriptor_match	Table 3D - 83
+DAT_0006b5f4	tbl_table_3d_86_0006b5f4	RX8Defs_descriptor_match	Table 3D - 86
+DAT_0006b680	tbl_table_3d_87_0006b680	RX8Defs_descriptor_match	Table 3D - 87
+DAT_0006b69c	tbl_table_3d_88_0006b69c	RX8Defs_descriptor_match	Table 3D - 88
+DAT_0006b6b8	tbl_table_3d_89_0006b6b8	RX8Defs_descriptor_match	Table 3D - 89
+DAT_0006b6d4	tbl_table_3d_90_0006b6d4	RX8Defs_descriptor_match	Table 3D - 90
+DAT_0006b7e4	tbl_injection_angle_0006b7e4	RX8Defs_descriptor_match	Injection Angle
+PTR_DAT_0006b88c	tbl_table_3d_92_0006b88c	RX8Defs_descriptor_match	Table 3D - 92
+PTR_DAT_0006b8a8	tbl_table_3d_93_0006b8a8	RX8Defs_descriptor_match	Table 3D - 93
+PTR_DAT_0006b8c4	tbl_table_3d_94_0006b8c4	RX8Defs_descriptor_match	Table 3D - 94
+PTR_DAT_0006b8e0	tbl_table_3d_95_0006b8e0	RX8Defs_descriptor_match	Table 3D - 95
+PTR_DAT_0006b8fc	tbl_table_3d_96_0006b8fc	RX8Defs_descriptor_match	Table 3D - 96
+DAT_0006b918	tbl_table_3d_97_0006b918	RX8Defs_descriptor_match	Table 3D - 97
+DAT_0006b934	tbl_table_3d_98_0006b934	RX8Defs_descriptor_match	Table 3D - 98
+DAT_0006b950	tbl_table_3d_99_0006b950	RX8Defs_descriptor_match	Table 3D - 99
+DAT_0006bb50	tbl_table_3d_100_0006bb50	RX8Defs_descriptor_match	Table 3D - 100
+DAT_0006bb6c	tbl_table_3d_101_0006bb6c	RX8Defs_descriptor_match	Table 3D - 101
+DAT_0006bbb0	tbl_table_3d_102_0006bbb0	RX8Defs_descriptor_match	Table 3D - 102
+DAT_00068f94	tbl_table_3d_103_00068f94	RX8Defs_descriptor_match	Table 3D - 103
+DAT_00069608	tbl_counter_lookup_unknown_00069608	RX8Defs_descriptor_match	Counter Lookup Unknown
+DAT_00069af8	tbl_table_3d_108_00069af8	RX8Defs_descriptor_match	Table 3D - 108
+DAT_0006a340	tbl_table_3d_109_0006a340	RX8Defs_descriptor_match	Table 3D - 109
+DAT_0006a8bc	tbl_table_3d_111_0006a8bc	RX8Defs_descriptor_match	Table 3D - 111
+DAT_0006a8d0	tbl_table_3d_112_0006a8d0	RX8Defs_descriptor_match	Table 3D - 112
+DAT_0006a8e4	tbl_table_3d_113_0006a8e4	RX8Defs_descriptor_match	Table 3D - 113
+DAT_0006a8f8	tbl_table_3d_114_0006a8f8	RX8Defs_descriptor_match	Table 3D - 114
+DAT_0006a90c	tbl_table_3d_115_0006a90c	RX8Defs_descriptor_match	Table 3D - 115
+DAT_0006a920	tbl_table_3d_116_0006a920	RX8Defs_descriptor_match	Table 3D - 116
+DAT_0006ae00	tbl_oil_metering_by_load_0006ae00	RX8Defs_descriptor_match	Oil Metering By Load
+DAT_0006ae14	tbl_oil_metering_by_throttle_0006ae14	RX8Defs_descriptor_match	Oil Metering By Throttle
+DAT_0006b3c8	tbl_table_3d_120_0006b3c8	RX8Defs_descriptor_match	Table 3D - 120
+DAT_0006b3dc	tbl_table_3d_121_0006b3dc	RX8Defs_descriptor_match	Table 3D - 121
+DAT_0006b658	tbl_table_3d_122_0006b658	RX8Defs_descriptor_match	Table 3D - 122
+DAT_0006b66c	tbl_table_3d_123_0006b66c	RX8Defs_descriptor_match	Table 3D - 123
+DAT_0006b984	tbl_table_3d_124_0006b984	RX8Defs_descriptor_match	Table 3D - 124
+DAT_0006b998	tbl_table_3d_125_0006b998	RX8Defs_descriptor_match	Table 3D - 125
+DAT_0006b9ac	tbl_table_3d_126_0006b9ac	RX8Defs_descriptor_match	Table 3D - 126
+DAT_0006b9e0	tbl_table_3d_127_0006b9e0	RX8Defs_descriptor_match	Table 3D - 127
+DAT_0006bbcc	tbl_ignition_dwell_time_0006bbcc	RX8Defs_descriptor_match	Ignition Dwell Time
+DAT_ffffb548	engine_speed_rpm_ffffb548	prior_diagnostic_dataflow_and_lookup_axis	"[{""axis"": ""Engine Speed"", ""descriptor"": ""00068ef8"", ""table"": ""Fuel Injector - Unknown - Max Injection Angle1???"", ""function"": ""0000e48e""}, {""axis"": ""Engine Speed"", ""descriptor"": ""00068f0c"", ""table"": ""Fuel Injector - Unknown - Max Injection Angle2???"", ""function"": ""0000e48e""}, {""axis"": ""Engine Speed"", ""descriptor"": ""00068f20"", ""table"": ""Fuel Injector - Unknown - Max Injection Angle3???"", ""function"": ""0000e48e""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006a164"", ""table"": ""Trans Requested Torque To Throttle Plate Position Position"", ""function"": ""000218c4""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006a180"", ""table"": ""Throttle Position To Torque"", ""function"": ""00021970""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006a180"", ""table"": ""Throttle Position To Torque"", ""function"": ""00021ae8""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006a6d8"", ""table"": ""Rotor 1 Ignition Dwell"", ""function"": ""0002bc34""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006aa48"", ""table"": ""Estimated Manifold Pressure"", ""function"": ""0002fdb0""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006b1ec"", ""table"": ""RPM Based Max Engine Load"", ""function"": ""00033a7c""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006b850"", ""table"": ""Table 2D - 274"", ""function"": ""000429fc""}, {""axis"": ""Engine Speed"", ""descriptor"": ""0006b850"", ""table"": ""Table 2D - 274"", ""function"": ""00042afc""}]"
+DAT_ffffb55c	inferred_predicted_engine_speed_ffffb55c	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Predicted Engine Speed"", ""descriptor"": ""0006a4dc"", ""table"": ""Table 2D - 145"", ""function"": ""0000e910""}, {""axis"": ""Predicted Engine Speed"", ""descriptor"": ""0006a4dc"", ""table"": ""Table 2D - 145"", ""function"": ""00020656""}, {""axis"": ""Predicted Engine Speed"", ""descriptor"": ""0006a4dc"", ""table"": ""Table 2D - 145"", ""function"": ""000207b2""}, {""axis"": ""Predicted Engine Speed"", ""descriptor"": ""0006a4dc"", ""table"": ""Table 2D - 145"", ""function"": ""000233ec""}]"
+DAT_ffffa9ec	mass_air_flow_ffffa9ec	prior_diagnostic_dataflow_and_lookup_axis	"[{""axis"": ""Barometric Pressure"", ""descriptor"": ""00069be0"", ""table"": ""Table 2D - 80"", ""function"": ""0001d8dc""}]"
+DAT_ffffbbd4	inferred_desired_torque_ffffbbd4	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Desired Torque"", ""descriptor"": ""0006a164"", ""table"": ""Trans Requested Torque To Throttle Plate Position Position"", ""function"": ""000218c4""}]"
+DAT_ffffb2d4	inferred_throttle_position_ffffb2d4	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Throttle Position"", ""descriptor"": ""0006a180"", ""table"": ""Throttle Position To Torque"", ""function"": ""00021970""}]"
+DAT_ffffad44	inferred_throttle_position_ffffad44	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Throttle Position"", ""descriptor"": ""0006a180"", ""table"": ""Throttle Position To Torque"", ""function"": ""00021ae8""}]"
+DAT_ffffad14	inferred_barometric_pressure_ffffad14	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Barometric Pressure"", ""descriptor"": ""0006a1c4"", ""table"": ""Table 3D - 43"", ""function"": ""00021efc""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006adb4"", ""table"": ""Engine Torque Max - Barometric Pressure Compensation"", ""function"": ""00029768""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006adb4"", ""table"": ""Engine Torque Max - Barometric Pressure Compensation"", ""function"": ""00029942""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006adb4"", ""table"": ""Engine Torque Max - Barometric Pressure Compensation"", ""function"": ""0002b480""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006adb4"", ""table"": ""Engine Torque Max - Barometric Pressure Compensation"", ""function"": ""0002b496""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006ab84"", ""table"": ""Primary Injector Max Barometric Pressure Correction"", ""function"": ""00030b08""}, {""axis"": ""Barometric Pressure"", ""descriptor"": ""0006b214"", ""table"": ""Max Load - Barometric Pressure Compensation"", ""function"": ""00033ab0""}]"
+DAT_ffffbbb4	vehicle_speed_ffffbbb4	prior_diagnostic_dataflow_and_lookup_axis	"[{""axis"": ""Vehicle Speed"", ""descriptor"": ""0006a524"", ""table"": ""Battery Temperature Model - Decay Amount"", ""function"": ""00025ba4""}]"
+DAT_ffffb5c4	inferred_estimated_battery_temperature_ffffb5c4	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Estimated Battery Temperature"", ""descriptor"": ""0006a538"", ""table"": ""Desired Charge Voltage"", ""function"": ""00025c6c""}]"
+DAT_ffffb598	inferred_alternator_speed_ffffb598	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Alternator Speed"", ""descriptor"": ""0006a790"", ""table"": ""Table 2D - 162"", ""function"": ""0002ce18""}]"
+DAT_ffffbdf0	inferred_weighted_engine_temperature_ffffbdf0	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Weighted Engine Temperature"", ""descriptor"": ""0006a9a4"", ""table"": ""Primary Injector Weighted Engine Temp Multiplier"", ""function"": ""0002fd3e""}]"
+DAT_ffffc0b4	engine_load_ffffc0b4	prior_diagnostic_dataflow_and_lookup_axis	"[{""axis"": ""Engine Load"", ""descriptor"": ""0006a9a4"", ""table"": ""Primary Injector Weighted Engine Temp Multiplier"", ""function"": ""0002fd3e""}, {""axis"": ""Engine Load"", ""descriptor"": ""0006aa48"", ""table"": ""Estimated Manifold Pressure"", ""function"": ""0002fdb0""}, {""axis"": ""Engine Load"", ""descriptor"": ""0006ae28"", ""table"": ""Fuel Injection - Warmup Fueling - Load Based Multiplier"", ""function"": ""00032e08""}, {""axis"": ""Engine Load"", ""descriptor"": ""0006bae0"", ""table"": ""Table 2D - 282"", ""function"": ""0004b190""}]"
+DAT_ffffbe04	inferred_manifold_relative_pressure_ffffbe04	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Manifold Relative Pressure"", ""descriptor"": ""0006aa0c"", ""table"": ""Injector Manifold Vacuum Multiplier"", ""function"": ""0002fe1e""}, {""axis"": ""Manifold Relative Pressure"", ""descriptor"": ""0006aa64"", ""table"": ""Injector Latency Secondary"", ""function"": ""0002ff78""}]"
+DAT_ffffb590	inferred_battery_voltage_ffffb590	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Battery Voltage"", ""descriptor"": ""0006aa64"", ""table"": ""Injector Latency Secondary"", ""function"": ""0002ff78""}, {""axis"": ""Battery Voltage"", ""descriptor"": ""0006aa80"", ""table"": ""Injector Latency Primary"", ""function"": ""0002ff78""}]"
+DAT_ffffbe08	inferred_manifold_relative_pressure_ffffbe08	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Manifold Relative Pressure"", ""descriptor"": ""0006aa80"", ""table"": ""Injector Latency Primary"", ""function"": ""0002ff78""}]"
+DAT_ffffa98c	inferred_coolant_temperature_ffffa98c	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Coolant Temperature"", ""descriptor"": ""0006ab48"", ""table"": ""Primary Fuel Injector Cranking Pulse Width"", ""function"": ""00030274""}, {""axis"": ""Coolant Temperature"", ""descriptor"": ""0006ad6c"", ""table"": ""Table 2D - 194"", ""function"": ""00031a24""}, {""axis"": ""Coolant Temperature"", ""descriptor"": ""0006b630"", ""table"": ""Off Throttle Leading Timing Realted"", ""function"": ""00043934""}, {""axis"": ""Coolant Temperature"", ""descriptor"": ""0006b644"", ""table"": ""Ignition Trailing - Cranking Timing Advance"", ""function"": ""000439b2""}]"
+DAT_ffffa998	inferred_coolant_temperature_catalyst_temp_model_ffffa998	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Coolant Temperature (Catalyst Temp Model)"", ""descriptor"": ""0006ae3c"", ""table"": ""Fuel Injection - Warmup Fueling"", ""function"": ""00032e08""}]"
+DAT_ffffa990	inferred_coolant_temperature_ffffa990	explicit_lookup_argument_and_definition_axis_candidate	"[{""axis"": ""Coolant Temperature"", ""descriptor"": ""0006af2c"", ""table"": ""Ignition Leading - Cranking Timing Advance"", ""function"": ""0003337c""}]"

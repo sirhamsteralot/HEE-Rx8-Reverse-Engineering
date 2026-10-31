@@ -1,0 +1,36 @@
+/* ROM address: 0x0002837c; body bytes: 124; decompiled */
+
+/* Unique exact-byte match to related 60E0FC00 function at 00028cc4 (124 bytes). Names prefixed ref_
+   are inherited hypotheses. */
+
+void FUN_0002837c(void)
+
+{
+  float *pfVar1;
+  float arg0;
+  
+  arg0 = 0.0;
+  if ((DAT_ffffb660 & 1) == 0) {
+    pfVar1 = &DAT_ffffba34;
+    if (DAT_ffffb6c6 == '\x01') {
+      DAT_ffffba34 = rx8_first_order_filter(DAT_ffffba30,DAT_ffffba34,0.125,1e-05);
+    }
+    else {
+      DAT_ffffba34 = 0.0;
+    }
+  }
+  else {
+    pfVar1 = &DAT_ffffba38;
+    if (DAT_ffffb6c6 == '\x01') {
+      DAT_ffffba38 = rx8_first_order_filter(DAT_ffffba30,DAT_ffffba38,0.125,1e-05);
+    }
+    else {
+      DAT_ffffba38 = 0.0;
+    }
+  }
+  DAT_ffffba3c = *pfVar1;
+  DAT_ffffba40 = rx8_max_float(arg0,DAT_ffffba3c);
+  return;
+}
+
+

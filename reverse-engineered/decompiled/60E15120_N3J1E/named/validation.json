@@ -1,0 +1,11 @@
+{
+  "descriptor_addresses_named": 452,
+  "ram_addresses_named": 18,
+  "axis_derived_candidates": 14,
+  "conflicting_ram_addresses": 0,
+  "matched_lookup_calls": 350,
+  "calls_with_missing_or_extra_arguments": 7,
+  "raw_export_changed": false,
+  "ghidra_database_updated": false,
+  "token_only_transformation_verified": true
+}

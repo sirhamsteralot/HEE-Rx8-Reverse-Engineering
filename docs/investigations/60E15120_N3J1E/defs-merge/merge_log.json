@@ -1,0 +1,3950 @@
+[
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injector - Unknown - Max Injection Angle1???",
+    "new_name": "Fuel Injector - Unknown - Max Injection Angle1???",
+    "data": "0x6c1e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injector - Unknown - Max Injection Angle2???",
+    "new_name": "Fuel Injector - Unknown - Max Injection Angle2???",
+    "data": "0x6c234",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injector - Unknown - Max Injection Angle3???",
+    "new_name": "Fuel Injector - Unknown - Max Injection Angle3???",
+    "data": "0x6c284",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 3 ",
+    "new_name": "Table 2D - 3 ",
+    "data": "0x6c314",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - Engine Startup Base",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - Engine Startup Base",
+    "data": "0x6c338",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold",
+    "data": "0x6c3e0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 10 ",
+    "new_name": "Table 2D - 10 ",
+    "data": "0x6d94c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 11 ",
+    "new_name": "Table 2D - 11 ",
+    "data": "0x6d970",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 12 ",
+    "new_name": "Table 2D - 12 ",
+    "data": "0x6d994",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 13 ",
+    "new_name": "Table 2D - 13 ",
+    "data": "0x6d9b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 14 ",
+    "new_name": "Table 2D - 14 ",
+    "data": "0x6d9dc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 15 ",
+    "new_name": "Table 2D - 15 ",
+    "data": "0x6da00",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 16 ",
+    "new_name": "Table 2D - 16 ",
+    "data": "0x6da4c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 17 ",
+    "new_name": "Table 2D - 17 ",
+    "data": "0x6db80",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 18 ",
+    "new_name": "Table 2D - 18 ",
+    "data": "0x6dba4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 19 ",
+    "new_name": "Table 2D - 19 ",
+    "data": "0x6dbc8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 20 ",
+    "new_name": "Table 2D - 20 ",
+    "data": "0x6dbec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 21 ",
+    "new_name": "Table 2D - 21 ",
+    "data": "0x6dc10",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 22 ",
+    "new_name": "Table 2D - 22 ",
+    "data": "0x6dc34",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 23 ",
+    "new_name": "Table 2D - 23 ",
+    "data": "0x6dc88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target Filter Factor",
+    "new_name": "Idle Target Filter Factor",
+    "data": "0x6dcdc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target - Base",
+    "new_name": "Idle Target - Base",
+    "data": "0x6dd10",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target Minimum - Open Loop Conditonal",
+    "new_name": "Idle Target Minimum - Open Loop Conditonal",
+    "data": "0x6dd50",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target Minimum - Closed Loop Conditonal",
+    "new_name": "Idle Target Minimum - Closed Loop Conditonal",
+    "data": "0x6dd98",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target Minimum - Reset Value",
+    "new_name": "Idle Target Minimum - Reset Value",
+    "data": "0x6dde0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target E",
+    "new_name": "Idle Target E",
+    "data": "0x6de28",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target F",
+    "new_name": "Idle Target F",
+    "data": "0x6de5c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target G",
+    "new_name": "Idle Target G",
+    "data": "0x6de88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target H",
+    "new_name": "Idle Target H",
+    "data": "0x6deb4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Idle Target - Vehicle Moving - Automatic Transmission Related 1",
+    "new_name": "Idle Target - Vehicle Moving - Automatic Transmission Related 1",
+    "data": "0x6dee0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 34 ",
+    "new_name": "Table 2D - 34 ",
+    "data": "0x6df88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 35 ",
+    "new_name": "Table 2D - 35 ",
+    "data": "0x6dfb8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 37 ",
+    "new_name": "Table 2D - 37 ",
+    "data": "0x6e018",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 38 ",
+    "new_name": "Table 2D - 38 ",
+    "data": "0x6e038",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 39 ",
+    "new_name": "Table 2D - 39 ",
+    "data": "0x6e058",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 40 ",
+    "new_name": "Table 2D - 40 ",
+    "data": "0x6e098",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 41 ",
+    "new_name": "Table 2D - 41 ",
+    "data": "0x6e0d4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 42 ",
+    "new_name": "Table 2D - 42 ",
+    "data": "0x6e100",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 43 ",
+    "new_name": "Table 2D - 43 ",
+    "data": "0x6e138",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 44 ",
+    "new_name": "Table 2D - 44 ",
+    "data": "0x6e170",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 45 ",
+    "new_name": "Table 2D - 45 ",
+    "data": "0x6e198",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 46 ",
+    "new_name": "Table 2D - 46 ",
+    "data": "0x6e1cc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 4",
+    "new_name": "Ignition 4",
+    "data": "0x6ec3c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 5",
+    "new_name": "Ignition 5",
+    "data": "0x6ec4c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 6",
+    "new_name": "Ignition 6",
+    "data": "0x6ec80",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 7",
+    "new_name": "Ignition 7",
+    "data": "0x6ec90",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 8",
+    "new_name": "Ignition 8",
+    "data": "0x6ec98",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 9",
+    "new_name": "Ignition 9",
+    "data": "0x6eca0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 10",
+    "new_name": "Ignition 10",
+    "data": "0x6eca8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 11",
+    "new_name": "Ignition 11",
+    "data": "0x6ecb0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 12",
+    "new_name": "Ignition 12",
+    "data": "0x6ecb8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature catalyst temp model (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 13",
+    "new_name": "Ignition 13",
+    "data": "0x6ecc0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 ",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 ",
+    "data": "0x6ed28",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold9 ",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold9 ",
+    "data": "0x6f3c4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature catalyst temp model (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 60 ",
+    "new_name": "Table 2D - 60 ",
+    "data": "0x6f564",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 61 ",
+    "new_name": "Table 2D - 61 ",
+    "data": "0x6f590",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 62 ",
+    "new_name": "Table 2D - 62 ",
+    "data": "0x6f5c0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 63 ",
+    "new_name": "Table 2D - 63 ",
+    "data": "0x6f5f0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 64 ",
+    "new_name": "Table 2D - 64 ",
+    "data": "0x6f704",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 65 ",
+    "new_name": "Table 2D - 65 ",
+    "data": "0x6f748",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 66 ",
+    "new_name": "Table 2D - 66 ",
+    "data": "0x6f760",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 67 ",
+    "new_name": "Table 2D - 67 ",
+    "data": "0x6f788",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 68 ",
+    "new_name": "Table 2D - 68 ",
+    "data": "0x6f7d0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature catalyst temp model (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 69 ",
+    "new_name": "Throttle Plate Enrichment Minimum",
+    "data": "0x6f858",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 70 ",
+    "new_name": "Table 2D - 70 ",
+    "data": "0x70c74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 71 ",
+    "new_name": "Table 2D - 71 ",
+    "data": "0x70cb0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 72 ",
+    "new_name": "Table 2D - 72 ",
+    "data": "0x70cec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 73 ",
+    "new_name": "Table 2D - 73 ",
+    "data": "0x70d1c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 74 ",
+    "new_name": "Table 2D - 74 ",
+    "data": "0x70d4c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 75 ",
+    "new_name": "Table 2D - 75 ",
+    "data": "0x70d7c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 76 ",
+    "new_name": "Table 2D - 76 ",
+    "data": "0x70dac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 77 ",
+    "new_name": "Table 2D - 77 ",
+    "data": "0x70ddc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 78 ",
+    "new_name": "Table 2D - 78 ",
+    "data": "0x70e0c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 79 ",
+    "new_name": "Table 2D - 79 ",
+    "data": "0x70e74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 80 ",
+    "new_name": "Table 2D - 80 ",
+    "data": "0x70eac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 81 ",
+    "new_name": "Table 2D - 81 ",
+    "data": "0x70ee0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Vehicle speed (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 82 ",
+    "new_name": "Table 2D - 82 ",
+    "data": "0x70f20",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 83 ",
+    "new_name": "Table 2D - 83 ",
+    "data": "0x71130",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 84 ",
+    "new_name": "Table 2D - 84 ",
+    "data": "0x71184",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 85 ",
+    "new_name": "Table 2D - 85 ",
+    "data": "0x711c0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Fuelling Base Correction (Throttle) - Safe Mode",
+    "new_name": "Open Loop Fuelling Base Correction (Throttle) - Safe Mode",
+    "data": "0x71388",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Fuelling Base Correction (Throttle)",
+    "new_name": "Open Loop Fuelling Base Correction (Throttle)",
+    "data": "0x71398",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Coolant Temperature Correction",
+    "new_name": "Open Loop Target - Coolant Temperature Correction",
+    "data": "0x713b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Fuelling Rich Limit - Safe Mode",
+    "new_name": "Open Loop Fuelling Rich Limit - Safe Mode",
+    "data": "0x713e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Fuelling Rich Limit",
+    "new_name": "Open Loop Fuelling Rich Limit",
+    "data": "0x71414",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Temperature Correction #B",
+    "new_name": "Open Loop Temperature Correction #B",
+    "data": "0x7143c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop Fuelling Threshold (Engine Load A)",
+    "new_name": "Closed Loop Fuelling Threshold (Engine Load A)",
+    "data": "0x7148c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop Fuelling Threshold (Engine Load B)",
+    "new_name": "Closed Loop Fuelling Threshold (Engine Load B)",
+    "data": "0x714e8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop Fuelling Threshold (Engine Load C)",
+    "new_name": "Closed Loop Fuelling Threshold (Engine Load C)",
+    "data": "0x71544",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop Fuelling Threshold (Unknown A)",
+    "new_name": "Closed Loop Fuelling Threshold (Unknown A)",
+    "data": "0x71588",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop Fuelling Threshold (Throttle Position) ",
+    "new_name": "Closed Loop Fuelling Threshold (Throttle Position) ",
+    "data": "0x715e0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 97 ",
+    "new_name": "Table 2D - 97 ",
+    "data": "0x7163c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 98 ",
+    "new_name": "Table 2D - 98 ",
+    "data": "0x71654",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 99 ",
+    "new_name": "Table 2D - 99 ",
+    "data": "0x716a0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 100 ",
+    "new_name": "Table 2D - 100 ",
+    "data": "0x716b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 101 ",
+    "new_name": "Table 2D - 101 ",
+    "data": "0x71704",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 102 ",
+    "new_name": "Table 2D - 102 ",
+    "data": "0x7171c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Changeover Enrichment",
+    "new_name": "Open Loop Changeover Enrichment",
+    "data": "0x7173c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 105 ",
+    "new_name": "Table 2D - 105 ",
+    "data": "0x72408",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Leading - Idle Error Timing Correction - Unknown Bool False",
+    "new_name": "Ignition Leading - Idle Error Timing Correction - Unknown Bool False",
+    "data": "0x7246c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Leading - Idle Error Timing Correction - Unknown Bool True",
+    "new_name": "Ignition Leading - Idle Error Timing Correction - Unknown Bool True",
+    "data": "0x7249c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool False",
+    "new_name": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool False",
+    "data": "0x724cc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool True",
+    "new_name": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool True",
+    "data": "0x724fc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 110 ",
+    "new_name": "Table 2D - 110 ",
+    "data": "0x72590",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 111 ",
+    "new_name": "Table 2D - 111 ",
+    "data": "0x72600",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle",
+    "new_name": "Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle",
+    "data": "0x72644",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 113 ",
+    "new_name": "Table 2D - 113 ",
+    "data": "0x72674",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 114 ",
+    "new_name": "Table 2D - 114 ",
+    "data": "0x7269c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 115 ",
+    "new_name": "Table 2D - 115 ",
+    "data": "0x726c8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 116 ",
+    "new_name": "Table 2D - 116 ",
+    "data": "0x726f4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 117 ",
+    "new_name": "Table 2D - 117 ",
+    "data": "0x72724",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "DSC Mode C - Max Throttle Plate Opening Allowed",
+    "new_name": "DSC Mode C - Max Throttle Plate Opening Allowed",
+    "data": "0x72788",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 119 ",
+    "new_name": "Table 2D - 119 ",
+    "data": "0x72f38",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 120 ",
+    "new_name": "Table 2D - 120 ",
+    "data": "0x72f7c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Manifold relative pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 121 ",
+    "new_name": "Table 2D - 121 ",
+    "data": "0x73330",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 122 ",
+    "new_name": "Table 2D - 122 ",
+    "data": "0x7337c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 123 ",
+    "new_name": "Table 2D - 123 ",
+    "data": "0x733c0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 124 ",
+    "new_name": "Table 2D - 124 ",
+    "data": "0x73410",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 125 ",
+    "new_name": "Table 2D - 125 ",
+    "data": "0x73448",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 126 ",
+    "new_name": "Table 2D - 126 ",
+    "data": "0x73480",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 127 ",
+    "new_name": "Table 2D - 127 ",
+    "data": "0x734e8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 128 ",
+    "new_name": "Table 2D - 128 ",
+    "data": "0x73574",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 129 ",
+    "new_name": "Table 2D - 129 ",
+    "data": "0x73590",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 130 ",
+    "new_name": "Table 2D - 130 ",
+    "data": "0x735ac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Pedal Percent Decreasing Filter Factor",
+    "new_name": "Throttle Plate Request Decreasing Filter Factor",
+    "data": "0x73778",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 132 ",
+    "new_name": "Table 2D - 132 ",
+    "data": "0x737a0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 133 ",
+    "new_name": "Table 2D - 133 ",
+    "data": "0x737c8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 134 ",
+    "new_name": "Table 2D - 134 ",
+    "data": "0x737f0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 135 ",
+    "new_name": "Table 2D - 135 ",
+    "data": "0x73814",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 136 ",
+    "new_name": "Table 2D - 136 ",
+    "data": "0x73838",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 137 ",
+    "new_name": "Throttle Plate Request Max Value For Filter - In Gear",
+    "data": "0x7386c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 138 ",
+    "new_name": "Throttle Plate Request Max Value For Filter - In Neutral",
+    "data": "0x738a4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 139 ",
+    "new_name": "Throttle Plate Request Increasing Filter Factor - In Gear",
+    "data": "0x738d0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 140 ",
+    "new_name": "Throttle Plate Request Increasing Filter Factor - In Neutral",
+    "data": "0x738f8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 141 ",
+    "new_name": "Table 2D - 141 ",
+    "data": "0x73920",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 142 ",
+    "new_name": "Table 2D - 142 ",
+    "data": "0x73948",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 143 ",
+    "new_name": "Table 2D - 143 ",
+    "data": "0x7396c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 144 ",
+    "new_name": "Table 2D - 144 ",
+    "data": "0x74814",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 145 ",
+    "new_name": "Table 2D - 145 ",
+    "data": "0x74870",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 146 ",
+    "new_name": "Table 2D - 146 ",
+    "data": "0x748b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 147 ",
+    "new_name": "Table 2D - 147 ",
+    "data": "0x748f0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Battery Temperature Model - Decay Amount",
+    "new_name": "Battery Temperature Model - Decay Amount",
+    "data": "0x74aa0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Desired Charge Voltage",
+    "new_name": "Desired Charge Voltage",
+    "data": "0x74acc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 152 ",
+    "new_name": "Table 2D - 152 ",
+    "data": "0x74b98",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Estimated battery temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 153 ",
+    "new_name": "Table 2D - 153 ",
+    "data": "0x74bd0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Estimated battery temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 154 ",
+    "new_name": "Table 2D - 154 ",
+    "data": "0x74c08",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 155 ",
+    "new_name": "Table 2D - 155 ",
+    "data": "0x74c40",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Estimated battery temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 156 ",
+    "new_name": "Table 2D - 156 ",
+    "data": "0x74dd4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 157 ",
+    "new_name": "Table 2D - 157 ",
+    "data": "0x75578",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Rotor 1 Ignition Dwell",
+    "new_name": "Rotor 1 Ignition Dwell",
+    "data": "0x7581c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Rotor 2 Ignition Dwell",
+    "new_name": "Rotor 2 Ignition Dwell",
+    "data": "0x7586c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 160 ",
+    "new_name": "Table 2D - 160 ",
+    "data": "0x75c58",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 161 ",
+    "new_name": "Table 2D - 161 ",
+    "data": "0x75ca0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 162 ",
+    "new_name": "Alternator Max Torque",
+    "data": "0x75cc8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 163 ",
+    "new_name": "Table 2D - 163 ",
+    "data": "0x7674c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 164 ",
+    "new_name": "Table 2D - 164 ",
+    "data": "0x77514",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 165 ",
+    "new_name": "Table 2D - 165 ",
+    "data": "0x7751c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 166 ",
+    "new_name": "Table 2D - 166 ",
+    "data": "0x775fc",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 167 ",
+    "new_name": "Table 2D - 167 ",
+    "data": "0x77620",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 168 ",
+    "new_name": "Table 2D - 168 ",
+    "data": "0x7764c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 169 ",
+    "new_name": "Table 2D - 169 ",
+    "data": "0x77768",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Injector Manifold Vacuum Multiplier",
+    "new_name": "Injector Manifold Vacuum Multiplier",
+    "data": "0x777b4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 171 ",
+    "new_name": "Table 2D - 171 ",
+    "data": "0x77fc0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 175 ",
+    "new_name": "Table 2D - 175 ",
+    "data": "0x780b0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Primary Fuel Injector Cranking Pulse Width",
+    "new_name": "Primary Fuel Injector Cranking Pulse Width",
+    "data": "0x780fc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 177 Might be Primary/Secondary Ratio",
+    "new_name": "Table 2D - 177 Might be Primary/Secondary Ratio",
+    "data": "0x78230",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Primary Injector Max Barometric Pressure Correction",
+    "new_name": "Primary Injector Max Barometric Pressure Correction",
+    "data": "0x78264",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 179 Injector Ratio Poss Min Sec PW #2",
+    "new_name": "Table 2D - 179 Injector Ratio Poss Min Sec PW #2",
+    "data": "0x78380",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 180 Injector Ratio Poss Min Sec PW #1",
+    "new_name": "Table 2D - 180 Injector Ratio Poss Min Sec PW #1",
+    "data": "0x783b0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 182 ",
+    "new_name": "Table 2D - 182 ",
+    "data": "0x784c8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Secondary Injectors Allowed Threshold - Coolant Temperature Based",
+    "new_name": "Secondary Injectors Allowed Threshold - Coolant Temperature Based",
+    "data": "0x78510",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 184 ",
+    "new_name": "Table 2D - 184 ",
+    "data": "0x7890c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 185 ",
+    "new_name": "Table 2D - 185 ",
+    "data": "0x7893c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 186 ",
+    "new_name": "Table 2D - 186 ",
+    "data": "0x78978",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 187 ",
+    "new_name": "Table 2D - 187 ",
+    "data": "0x789a8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 188 ",
+    "new_name": "Table 2D - 188 ",
+    "data": "0x789e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 189 ",
+    "new_name": "Table 2D - 189 ",
+    "data": "0x78a14",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 190 ",
+    "new_name": "Table 2D - 190 ",
+    "data": "0x78a44",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 191 ",
+    "new_name": "Table 2D - 191 ",
+    "data": "0x78a74",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 192 ",
+    "new_name": "Table 2D - 192 ",
+    "data": "0x78aac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 193 ",
+    "new_name": "Table 2D - 193 ",
+    "data": "0x78af4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 194 ",
+    "new_name": "Table 2D - 194 ",
+    "data": "0x78b74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 195 ",
+    "new_name": "Table 2D - 195 ",
+    "data": "0x78b80",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Engine Torque Max - Barometric Pressure Compensation",
+    "new_name": "Engine Torque Max - Barometric Pressure Compensation",
+    "data": "0x78d04",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Load Based Oil Injection Temperature Correction",
+    "new_name": "Load Based Oil Injection Temperature Correction",
+    "data": "0x78db8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injection - Warmup Fueling - Load Based Multiplier",
+    "new_name": "Fuel Injection - Warmup Fueling - Load Based Multiplier",
+    "data": "0x79098",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 200 ",
+    "new_name": "Table 2D - 200 ",
+    "data": "0x79214",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 201 ",
+    "new_name": "Table 2D - 201 ",
+    "data": "0x79274",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 202 ",
+    "new_name": "Table 2D - 202 ",
+    "data": "0x7944c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 203 ",
+    "new_name": "Table 2D - 203 ",
+    "data": "0x7948c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 204 ",
+    "new_name": "Table 2D - 204 ",
+    "data": "0x794f4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Leading - Cranking Timing Advance",
+    "new_name": "Ignition Leading - Cranking Timing Advance",
+    "data": "0x7952c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 206 ",
+    "new_name": "Table 2D - 206 ",
+    "data": "0x79578",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 214 ",
+    "new_name": "Table 2D - 214 ",
+    "data": "0x798b4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 216 ",
+    "new_name": "Table 2D - 216 ",
+    "data": "0x79c58",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 217 ",
+    "new_name": "Table 2D - 217 ",
+    "data": "0x79c88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 218 ",
+    "new_name": "Table 2D - 218 ",
+    "data": "0x79d1c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 219 ",
+    "new_name": "Table 2D - 219 ",
+    "data": "0x79d5c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 220 ",
+    "new_name": "Table 2D - 220 ",
+    "data": "0x79db0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 221 ",
+    "new_name": "Table 2D - 221 ",
+    "data": "0x79e04",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "RPM Based Max Engine Load",
+    "new_name": "RPM Based Max Engine Load",
+    "data": "0x7a118",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 223 ",
+    "new_name": "Table 2D - 223 ",
+    "data": "0x7a15c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Max Load - Barometric Pressure Compensation",
+    "new_name": "Max Load - Barometric Pressure Compensation",
+    "data": "0x7a18c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 225 ",
+    "new_name": "Table 2D - 225 ",
+    "data": "0x7a1c0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 226 ",
+    "new_name": "Table 2D - 226 ",
+    "data": "0x7a1f8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Knock Voltage To Magnitude",
+    "new_name": "Knock Voltage To Magnitude",
+    "data": "0x7a34c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 228 ",
+    "new_name": "Table 2D - 228 ",
+    "data": "0x7a78c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Vehicle speed (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 229 ",
+    "new_name": "Table 2D - 229 ",
+    "data": "0x7a7c4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Airflow Or Load Related",
+    "new_name": "Airflow Or Load Related",
+    "data": "0x7a860",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 231 (Airflow Related)",
+    "new_name": "Table 2D - 231 (Airflow Related)",
+    "data": "0x7a894",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Vehicle speed (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 232 ",
+    "new_name": "Table 2D - 232 ",
+    "data": "0x7a8d0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 233 ",
+    "new_name": "Table 2D - 233 ",
+    "data": "0x7a914",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 234 ",
+    "new_name": "Table 2D - 234 ",
+    "data": "0x7a958",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 235 ",
+    "new_name": "Table 2D - 235 ",
+    "data": "0x7d6a8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 236 ",
+    "new_name": "Table 2D - 236 ",
+    "data": "0x7d714",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 237 ",
+    "new_name": "Table 2D - 237 ",
+    "data": "0x7d74c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 238 ",
+    "new_name": "Table 2D - 238 ",
+    "data": "0x7d784",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 239 ",
+    "new_name": "Table 2D - 239 ",
+    "data": "0x7d7bc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 240 ",
+    "new_name": "Table 2D - 240 ",
+    "data": "0x7d7f4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 241 ",
+    "new_name": "Table 2D - 241 ",
+    "data": "0x7d82c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 242 ",
+    "new_name": "Table 2D - 242 ",
+    "data": "0x7d864",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 243 ",
+    "new_name": "Table 2D - 243 ",
+    "data": "0x7d89c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 244 ",
+    "new_name": "Table 2D - 244 ",
+    "data": "0x7d960",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 245 ",
+    "new_name": "Table 2D - 245 ",
+    "data": "0x7d9ac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 246 ",
+    "new_name": "Table 2D - 246 ",
+    "data": "0x7d9f8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 247 ",
+    "new_name": "Table 2D - 247 ",
+    "data": "0x7da3c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 248 ",
+    "new_name": "Table 2D - 248 ",
+    "data": "0x7da74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 249 ",
+    "new_name": "Table 2D - 249 ",
+    "data": "0x7db5c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 250 ",
+    "new_name": "Table 2D - 250 ",
+    "data": "0x7dbd0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 251 ",
+    "new_name": "Table 2D - 251 ",
+    "data": "0x7dc00",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 252 ",
+    "new_name": "Table 2D - 252 ",
+    "data": "0x7dc50",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 253 ",
+    "new_name": "Table 2D - 253 ",
+    "data": "0x7dc88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 254 ",
+    "new_name": "Table 2D - 254 ",
+    "data": "0x7aa28",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Compensated Barometric Pressure",
+    "new_name": "Compensated Barometric Pressure",
+    "data": "0x7aa44",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 256 ",
+    "new_name": "Table 2D - 256 ",
+    "data": "0x7ab30",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Leading Timing Realted",
+    "new_name": "Off Throttle Leading Timing Realted",
+    "data": "0x7ac30",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Trailing - Cranking Timing Advance",
+    "new_name": "Ignition Trailing - Cranking Timing Advance",
+    "data": "0x7ac60",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 259 ",
+    "new_name": "Table 2D - 259 ",
+    "data": "0x7b0b4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Injection Angle Related AFR Input",
+    "new_name": "Injection Angle Related AFR Input",
+    "data": "0x7b180",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Unknown Lambda Input",
+    "new_name": "Unknown Lambda Input",
+    "data": "0x7b1ac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 262 ",
+    "new_name": "Table 2D - 262 ",
+    "data": "0x7b1d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "AirFlow Inj Angle Related",
+    "new_name": "AirFlow Inj Angle Related",
+    "data": "0x7b240",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Mass air flow (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 264 ",
+    "new_name": "Table 2D - 264 ",
+    "data": "0x7b294",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 265 ",
+    "new_name": "Table 2D - 265 ",
+    "data": "0x7b308",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 266 ",
+    "new_name": "Table 2D - 266 ",
+    "data": "0x7b3a0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 267 ",
+    "new_name": "Table 2D - 267 ",
+    "data": "0x7b3f4",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 268 ",
+    "new_name": "Table 2D - 268 ",
+    "data": "0x7b43c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Mass air flow (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 269 ",
+    "new_name": "Table 2D - 269 ",
+    "data": "0x7b478",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 270 ",
+    "new_name": "Table 2D - 270 ",
+    "data": "0x7b792",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 271 ",
+    "new_name": "Table 2D - 271 ",
+    "data": "0x7b69c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 272 ",
+    "new_name": "Table 2D - 272 ",
+    "data": "0x7b6d8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 273 ",
+    "new_name": "Table 2D - 273 ",
+    "data": "0x7b710",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 274 ",
+    "new_name": "Table 2D - 274 ",
+    "data": "0x7b748",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 275 ",
+    "new_name": "Table 2D - 275 ",
+    "data": "0x7b76c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 276 ",
+    "new_name": "Table 2D - 276 ",
+    "data": "0x7b78c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 277 ",
+    "new_name": "Table 2D - 277 ",
+    "data": "0x7c344",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Load Limit C",
+    "new_name": "Load Limit C",
+    "data": "0x7c758",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 279 ",
+    "new_name": "Table 2D - 279 ",
+    "data": "0x7c8b8",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Vehicle speed (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 280 ",
+    "new_name": "Table 2D - 280 ",
+    "data": "0x7c8ec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 281 ",
+    "new_name": "Table 2D - 281 ",
+    "data": "0x7c920",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 282 ",
+    "new_name": "Table 2D - 282 ",
+    "data": "0x7cad8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 284 ",
+    "new_name": "Table 2D - 284 ",
+    "data": "0x7cb88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 285 ",
+    "new_name": "Table 2D - 285 ",
+    "data": "0x7cbb8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 286 ",
+    "new_name": "Table 2D - 286 ",
+    "data": "0x7cd24",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 287 ",
+    "new_name": "Table 2D - 287 ",
+    "data": "0x7cd58",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Battery voltage (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 288 Check DataType",
+    "new_name": "Table 2D - 288 Check DataType",
+    "data": "0x6c358",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 289 Check DataType",
+    "new_name": "Table 2D - 289 Check DataType",
+    "data": "0x6c378",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 290 Check DataType",
+    "new_name": "Table 2D - 290 Check DataType",
+    "data": "0x6c398",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "CLT Sensor Scaling",
+    "new_name": "CLT Sensor Scaling",
+    "data": "0x6ee1c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "MAF Scaling",
+    "new_name": "MAF Scaling",
+    "data": "0x6f010",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 295 Check DataType",
+    "new_name": "Table 2D - 295 Check DataType",
+    "data": "0x6f1d8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 296 Check DataType",
+    "new_name": "Table 2D - 296 Check DataType",
+    "data": "0x6f200",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Lamda Sensor Barometric Pressure Compensation",
+    "new_name": "Lamda Sensor Barometric Pressure Compensation",
+    "data": "0x6f218",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Lambda Sensor Scaling",
+    "new_name": "Lambda Sensor Scaling",
+    "data": "0x6f254",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 299 Check DataType",
+    "new_name": "Table 2D - 299 Check DataType",
+    "data": "0x6f2c0",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Mass air flow (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 300 Check DataType",
+    "new_name": "Table 2D - 300 Check DataType",
+    "data": "0x6f340",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "IAT Sensor Scaling",
+    "new_name": "IAT Sensor Scaling",
+    "data": "0x6f4c8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 304 Check DataType",
+    "new_name": "Table 2D - 304 Check DataType",
+    "data": "0x6f81c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 305",
+    "new_name": "Table 2D - 305",
+    "data": "0x6f880",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 306",
+    "new_name": "Table 2D - 306",
+    "data": "0x6f8b0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 307",
+    "new_name": "Table 2D - 307",
+    "data": "0x6f904",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 308",
+    "new_name": "Table 2D - 308",
+    "data": "0x6f9a0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 309",
+    "new_name": "Table 2D - 309",
+    "data": "0x6fa98",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 310",
+    "new_name": "Table 2D - 310",
+    "data": "0x6fb90",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 311",
+    "new_name": "Table 2D - 311",
+    "data": "0x6fc88",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 312 Engine Speed",
+    "new_name": "Table 2D - 312 Engine Speed",
+    "data": "0x70e3c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 313 Check DataType",
+    "new_name": "Table 2D - 313 Check DataType",
+    "data": "0x70f68",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 314 Check DataType",
+    "new_name": "Table 2D - 314 Check DataType",
+    "data": "0x70fc8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 315 Check DataType",
+    "new_name": "Table 2D - 315 Check DataType",
+    "data": "0x71028",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 316",
+    "new_name": "Table 2D - 316",
+    "data": "0x71150",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 317",
+    "new_name": "Table 2D - 317",
+    "data": "0x711fc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 318 Check DataType",
+    "new_name": "Table 2D - 318 Check DataType",
+    "data": "0x71228",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 319 Check DataType",
+    "new_name": "Table 2D - 319 Check DataType",
+    "data": "0x7124c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 320 Check DataType",
+    "new_name": "Table 2D - 320 Check DataType",
+    "data": "0x71774",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 321 Check DataType",
+    "new_name": "Table 2D - 321 Check DataType",
+    "data": "0x71790",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 322 Check DataType",
+    "new_name": "Table 2D - 322 Check DataType",
+    "data": "0x717c4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 323 Check DataType",
+    "new_name": "Table 2D - 323 Check DataType",
+    "data": "0x7180c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 324 Check DataType",
+    "new_name": "Table 2D - 324 Check DataType",
+    "data": "0x71840",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 325 Check DataType",
+    "new_name": "Table 2D - 325 Check DataType",
+    "data": "0x7186c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 326 Check DataType",
+    "new_name": "Table 2D - 326 Check DataType",
+    "data": "0x71890",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 327 Check DataType",
+    "new_name": "Table 2D - 327 Check DataType",
+    "data": "0x718b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 328 Check DataType",
+    "new_name": "Table 2D - 328 Check DataType",
+    "data": "0x718e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 329 Check DataType",
+    "new_name": "Table 2D - 329 Check DataType",
+    "data": "0x7221c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 330",
+    "new_name": "Table 2D - 330",
+    "data": "0x734a8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 331",
+    "new_name": "Table 2D - 331",
+    "data": "0x74918",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 332 Check DataType",
+    "new_name": "Table 2D - 332 Check DataType",
+    "data": "0x75620",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 333 Check DataType",
+    "new_name": "Table 2D - 333 Check DataType",
+    "data": "0x75688",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 334 Check DataType",
+    "new_name": "Table 2D - 334 Check DataType",
+    "data": "0x757e0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 335 Check DataType",
+    "new_name": "Table 2D - 335 Check DataType",
+    "data": "0x76850",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 336 Check DataType",
+    "new_name": "Table 2D - 336 Check DataType",
+    "data": "0x76918",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 337 Check DataType",
+    "new_name": "Table 2D - 337 Check DataType",
+    "data": "0x769e0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 338 Check DataType",
+    "new_name": "Table 2D - 338 Check DataType",
+    "data": "0x76aa8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 339 Check DataType",
+    "new_name": "Table 2D - 339 Check DataType",
+    "data": "0x76b70",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 340 Check DataType",
+    "new_name": "Table 2D - 340 Check DataType",
+    "data": "0x76c50",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 341 Check DataType",
+    "new_name": "Table 2D - 341 Check DataType",
+    "data": "0x76d48",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 342 Check DataType",
+    "new_name": "Table 2D - 342 Check DataType",
+    "data": "0x76e40",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 343 Check DataType",
+    "new_name": "Table 2D - 343 Check DataType",
+    "data": "0x76f38",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 344 Check DataType",
+    "new_name": "Table 2D - 344 Check DataType",
+    "data": "0x77030",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Engine On Time Threshold",
+    "new_name": "Engine On Time Threshold",
+    "data": "0x77544",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 347 Check DataType",
+    "new_name": "Table 2D - 347 Check DataType",
+    "data": "0x78290",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 350 Check DataType",
+    "new_name": "Table 2D - 350 Check DataType",
+    "data": "0x78350",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Secondary Air Pump On Time",
+    "new_name": "Secondary Air Pump On Time",
+    "data": "0x78ba0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "First Start Oil Injection Timer",
+    "new_name": "First Start Oil Injection Timer",
+    "data": "0x78dd8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Threshold A - Knock Retard Reset Off",
+    "new_name": "Ignition Timing Threshold A - Knock Retard Reset Off",
+    "data": "0x7a3c8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Threshold B - Knock Retard Reset Off",
+    "new_name": "Ignition Timing Threshold B - Knock Retard Reset Off",
+    "data": "0x7a424",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Knock Related",
+    "new_name": "Knock Related",
+    "data": "0x7a44c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Knock Related 3",
+    "new_name": "Knock Related 3",
+    "data": "0x7a454",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 364 Check DataType",
+    "new_name": "Table 2D - 364 Check DataType",
+    "data": "0x7a99c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 365 Check DataType",
+    "new_name": "Table 2D - 365 Check DataType",
+    "data": "0x7a9dc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 366 Check DataType",
+    "new_name": "Table 2D - 366 Check DataType",
+    "data": "0x7d528",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 367 Check DataType",
+    "new_name": "Table 2D - 367 Check DataType",
+    "data": "0x7d8d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 368 Check DataType",
+    "new_name": "Table 2D - 368 Check DataType",
+    "data": "0x7d90c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 369 Check DataType",
+    "new_name": "Table 2D - 369 Check DataType",
+    "data": "0x7daac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 370 Check DataType",
+    "new_name": "Table 2D - 370 Check DataType",
+    "data": "0x7dae4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 371 Check DataType",
+    "new_name": "Table 2D - 371 Check DataType",
+    "data": "0x7dba4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 372 Check DataType",
+    "new_name": "Table 2D - 372 Check DataType",
+    "data": "0x7dcd0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 373 Check DataType",
+    "new_name": "Table 2D - 373 Check DataType",
+    "data": "0x7dd18",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 374 Check DataType",
+    "new_name": "Table 2D - 374 Check DataType",
+    "data": "0x7dd60",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 375 Check DataType",
+    "new_name": "Table 2D - 375 Check DataType",
+    "data": "0x7ab04",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 376 Check DataType",
+    "new_name": "Table 2D - 376 Check DataType",
+    "data": "0x7b0cc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 377 Check DataType",
+    "new_name": "Table 2D - 377 Check DataType",
+    "data": "0x7b0d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 378 Check DataType",
+    "new_name": "Table 2D - 378 Check DataType",
+    "data": "0x7bce8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 379 Check DataType",
+    "new_name": "Table 2D - 379 Check DataType",
+    "data": "0x7bd18",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Load Limit A",
+    "new_name": "Load Limit A",
+    "data": "0x7c52c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Load Limit B",
+    "new_name": "Load Limit B",
+    "data": "0x7c58c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 382 Check DataType",
+    "new_name": "Table 2D - 382 Check DataType",
+    "data": "0x7c7c8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 383 Check DataType",
+    "new_name": "Table 2D - 383 Check DataType",
+    "data": "0x7c7e0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 384 Check DataType",
+    "new_name": "Table 2D - 384 Check DataType",
+    "data": "0x7c7f8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 385 Check DataType",
+    "new_name": "Table 2D - 385 Check DataType",
+    "data": "0x7c954",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Primary Fuel Injector Cranking Pulse Decay Time",
+    "new_name": "Primary Fuel Injector Cranking Pulse Decay Time",
+    "data": "0x7c98c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 387 Check DataType",
+    "new_name": "Table 2D - 387 Check DataType",
+    "data": "0x7ca20",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 388 Check DataType",
+    "new_name": "Table 2D - 388 Check DataType",
+    "data": "0x7ca7c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 389 Check DataType",
+    "new_name": "Table 2D - 389 Check DataType",
+    "data": "0x7caa4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 390 Check DataType",
+    "new_name": "Table 2D - 390 Check DataType",
+    "data": "0x7cb68",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 391 Check DataType",
+    "new_name": "Table 2D - 391 Check DataType",
+    "data": "0x7d110",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 392 Check DataType",
+    "new_name": "Table 2D - 392 Check DataType",
+    "data": "0x7d160",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Vehicle speed (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 393 Check DataType",
+    "new_name": "Table 2D - 393 Check DataType",
+    "data": "0x7d1b0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 394 Check DataType",
+    "new_name": "Table 2D - 394 Check DataType",
+    "data": "0x7d200",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 395 Check DataType",
+    "new_name": "Table 2D - 395 Check DataType",
+    "data": "0x7d250",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 396 Check DataType",
+    "new_name": "Table 2D - 396 Check DataType",
+    "data": "0x7d2a0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 397 Check DataType",
+    "new_name": "Table 2D - 397 Check DataType",
+    "data": "0x7d2f0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 398 Check DataType",
+    "new_name": "Table 2D - 398 Check DataType",
+    "data": "0x7d340",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 399 Check DataType",
+    "new_name": "Table 2D - 399 Check DataType",
+    "data": "0x7d390",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 400 Check DataType",
+    "new_name": "Table 2D - 400 Check DataType",
+    "data": "0x7d3e0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 401 Check DataType",
+    "new_name": "Table 2D - 401 Check DataType",
+    "data": "0x7d430",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 402 Check DataType",
+    "new_name": "Table 2D - 402 Check DataType",
+    "data": "0x7d480",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 2D - 403 Check DataType",
+    "new_name": "Table 2D - 403 Check DataType",
+    "data": "0x7d4d0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - In Gear Threshold",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - In Gear Threshold",
+    "data": "0x6c4ac",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Off Throttle Fuel Cut - Fuel Resume - NOTUSED",
+    "new_name": "Off Throttle Fuel Cut - Fuel Resume - NOTUSED",
+    "data": "0x6c564",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 2 ",
+    "new_name": "Table 3D - 2 ",
+    "data": "0x6c61c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 3 ",
+    "new_name": "Table 3D - 3 ",
+    "data": "0x6c6d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Leading - Base Timing",
+    "new_name": "Ignition Leading - Base Timing",
+    "data": "0x6ca28",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Leading Advance",
+    "new_name": "Ignition Timing Leading Advance",
+    "data": "0x6ce34",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Trailing Base",
+    "new_name": "Ignition Timing Trailing Base",
+    "data": "0x6d1e8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Trailing Advance",
+    "new_name": "Ignition Timing Trailing Advance",
+    "data": "0x6d5f4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 12 ",
+    "new_name": "Table 3D - 12 ",
+    "data": "0x6df18",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 13 ",
+    "new_name": "Table 3D - 13 ",
+    "data": "0x6e208",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature catalyst temp model (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 14 ",
+    "new_name": "Table 3D - 14 ",
+    "data": "0x6e280",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Igntion Leading Timing - DSC Mode A - Map 4",
+    "new_name": "Igntion Leading Timing - DSC Mode A - Map 4",
+    "data": "0x6e378",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 14",
+    "new_name": "Ignition 14",
+    "data": "0x6eccc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 15",
+    "new_name": "Ignition 15",
+    "data": "0x6ecd8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 16",
+    "new_name": "Ignition 16",
+    "data": "0x6ece4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition 17",
+    "new_name": "Ignition 17",
+    "data": "0x6ecf0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 22 ",
+    "new_name": "Table 3D - 22 ",
+    "data": "0x6fd50",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Closed Loop WOT Enrichment??",
+    "new_name": "Closed Loop WOT Enrichment??",
+    "data": "0x6fdcc",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Throttle position (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 24 ",
+    "new_name": "Table 3D - 24 ",
+    "data": "0x6fe40",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 25 ",
+    "new_name": "Table 3D - 25 ",
+    "data": "0x6ff48",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 26 ",
+    "new_name": "Table 3D - 26 ",
+    "data": "0x70044",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 27 ",
+    "new_name": "Table 3D - 27 ",
+    "data": "0x70118",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 28 ",
+    "new_name": "Table 3D - 28 ",
+    "data": "0x701ec",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 29",
+    "new_name": "Table 3D - 29",
+    "data": "0x702ec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 30 ",
+    "new_name": "Table 3D - 30 ",
+    "data": "0x704dc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 32 ",
+    "new_name": "Table 3D - 32 ",
+    "data": "0x709c4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Throttle Tip In",
+    "new_name": "Open Loop Target - Throttle Tip In",
+    "data": "0x71944",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target",
+    "new_name": "Open Loop Target",
+    "data": "0x71a44",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Throttle Tip In (Safe Mode)",
+    "new_name": "Open Loop Target - Throttle Tip In (Safe Mode)",
+    "data": "0x71bdc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target (Safe Mode)",
+    "new_name": "Open Loop Target (Safe Mode)",
+    "data": "0x71be8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible B",
+    "new_name": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible B",
+    "data": "0x71c3c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Coolant Temp Implausible - Gear 5-6",
+    "new_name": "Open Loop Target - Coolant Temp Implausible - Gear 5-6",
+    "data": "0x71d3c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible A",
+    "new_name": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible A",
+    "data": "0x71f1c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Open Loop Target - Coolant Temp Implausible - Gear 1-4",
+    "new_name": "Open Loop Target - Coolant Temp Implausible - Gear 1-4",
+    "data": "0x7201c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Trans Requested Torque To Throttle Plate Position Position",
+    "new_name": "Trans Requested Torque To Throttle Plate Position Position",
+    "data": "0x72850",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Position To Torque",
+    "new_name": "Throttle Position To Torque",
+    "data": "0x72cb4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 43 ",
+    "new_name": "Table 3D - 43 ",
+    "data": "0x72fc8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 44 ",
+    "new_name": "Table 3D - 44 ",
+    "data": "0x7302c",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 45 ",
+    "new_name": "Table 3D - 45 ",
+    "data": "0x730fc",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Manifold relative pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 46 ",
+    "new_name": "Table 3D - 46 ",
+    "data": "0x73524",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 47 ",
+    "new_name": "Table 3D - 47 ",
+    "data": "0x735fc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 48 ",
+    "new_name": "Table 3D - 48 ",
+    "data": "0x7367c",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Pedal to Throttle Plate Request - Gear 1/2",
+    "new_name": "Throttle Pedal to Throttle Plate Request - Gear 1/2",
+    "data": "0x73a10",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Pedal to Throttle Plate Request - Gear Neutral",
+    "new_name": "Throttle Pedal to Throttle Plate Request - Gear Neutral",
+    "data": "0x73da0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Pedal to Throttle Plate Request - Gear 5/6",
+    "new_name": "Throttle Pedal to Throttle Plate Request - Gear 5/6",
+    "data": "0x74130",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Throttle Pedal to Throttle Plate Request - Gear 3/4",
+    "new_name": "Throttle Pedal to Throttle Plate Request - Gear 3/4",
+    "data": "0x744c0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Alternator Voltage Delta - Diagnostic Request",
+    "new_name": "Alternator Voltage Delta - Diagnostic Request",
+    "data": "0x74cb0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 56 ",
+    "new_name": "Table 3D - 56 ",
+    "data": "0x75a34",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 57 ",
+    "new_name": "Table 3D - 57 ",
+    "data": "0x75aec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 58 ",
+    "new_name": "Table 3D - 58 ",
+    "data": "0x75ba4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Timing Leading - DSC Mode A - Base",
+    "new_name": "Ignition Timing Leading - DSC Mode A - Base",
+    "data": "0x75d68",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 60 ",
+    "new_name": "Table 3D - 60 ",
+    "data": "0x75f54",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Engine Torque",
+    "new_name": "Engine Torque",
+    "data": "0x76294",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 62 ",
+    "new_name": "Table 3D - 62 ",
+    "data": "0x765ac",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 63 ",
+    "new_name": "Table 3D - 63 ",
+    "data": "0x766fc",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Barometric pressure (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Primary Injector Weighted Engine Temp Multiplier",
+    "new_name": "Primary Injector Weighted Engine Temp Multiplier",
+    "data": "0x776c0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+    "new_name": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+    "data": "0x77744",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+    "new_name": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+    "data": "0x77750",
+    "axes": [
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Estimated Manifold Pressure",
+    "new_name": "Estimated Manifold Pressure",
+    "data": "0x7793c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Injector Latency Secondary",
+    "new_name": "Injector Latency Secondary",
+    "data": "0x77c4c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Injector Latency Primary",
+    "new_name": "Injector Latency Primary",
+    "data": "0x77de8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injection - Engine Load Compensation",
+    "new_name": "Fuel Injection - Engine Load Compensation",
+    "data": "0x785f4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injection - Warmup Fueling",
+    "new_name": "Fuel Injection - Warmup Fueling",
+    "data": "0x790f0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injection - Warmup Fueling - Engine Speed Based",
+    "new_name": "Fuel Injection - Warmup Fueling - Engine Speed Based",
+    "data": "0x79148",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)",
+    "new_name": "Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)",
+    "data": "0x79198",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 74 ",
+    "new_name": "Table 3D - 74 ",
+    "data": "0x792e8",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Coolant temperature catalyst temp model (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 75 ",
+    "new_name": "Table 3D - 75 ",
+    "data": "0x7938c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 79 ",
+    "new_name": "Table 3D - 79 ",
+    "data": "0x79e54",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 80 ",
+    "new_name": "Table 3D - 80 ",
+    "data": "0x79ed8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 81 ",
+    "new_name": "Table 3D - 81 ",
+    "data": "0x79f54",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 82 ",
+    "new_name": "Table 3D - 82 ",
+    "data": "0x79fd4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 83 ",
+    "new_name": "Table 3D - 83 ",
+    "data": "0x7a03c",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Coolant temperature (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 86 ",
+    "new_name": "Table 3D - 86 ",
+    "data": "0x7aa70",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 87 ",
+    "new_name": "Table 3D - 87 ",
+    "data": "0x7ae7c",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 88 ",
+    "new_name": "Table 3D - 88 ",
+    "data": "0x7af68",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 89 ",
+    "new_name": "Table 3D - 89 ",
+    "data": "0x7b014",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 90 ",
+    "new_name": "Table 3D - 90 ",
+    "data": "0x7b020",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Injection Angle",
+    "new_name": "Injection Angle",
+    "data": "0x7b4f0",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 92 ",
+    "new_name": "Table 3D - 92 ",
+    "data": "0x7b7d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 93 ",
+    "new_name": "Table 3D - 93 ",
+    "data": "0x7b838",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 94 ",
+    "new_name": "Table 3D - 94 ",
+    "data": "0x7b89c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 95 ",
+    "new_name": "Table 3D - 95 ",
+    "data": "0x7b900",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 96 ",
+    "new_name": "Table 3D - 96 ",
+    "data": "0x7b964",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 97 ",
+    "new_name": "Table 3D - 97 ",
+    "data": "0x7b9e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 98 ",
+    "new_name": "Table 3D - 98 ",
+    "data": "0x7bacc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 99 ",
+    "new_name": "Table 3D - 99 ",
+    "data": "0x7bbb4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 100 ",
+    "new_name": "Table 3D - 100 ",
+    "data": "0x7cc08",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 101 ",
+    "new_name": "Table 3D - 101 ",
+    "data": "0x7cc7c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 102 ",
+    "new_name": "Table 3D - 102 ",
+    "data": "0x7cdec",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 103 ",
+    "new_name": "Table 3D - 103 ",
+    "data": "0x6c430",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Counter Lookup Unknown",
+    "new_name": "Counter Lookup Unknown",
+    "data": "0x6e970",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 108 ",
+    "new_name": "Table 3D - 108 ",
+    "data": "0x70ac0",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 109 ",
+    "new_name": "Table 3D - 109 ",
+    "data": "0x736d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 110 ",
+    "new_name": "Table 3D - 110 ",
+    "data": "0x75980",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 111 ",
+    "new_name": "Table 3D - 111 ",
+    "data": "0x770e4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 112 ",
+    "new_name": "Table 3D - 112 ",
+    "data": "0x771d4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 113 ",
+    "new_name": "Table 3D - 113 ",
+    "data": "0x772b8",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 114 ",
+    "new_name": "Table 3D - 114 ",
+    "data": "0x772fc",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 115 ",
+    "new_name": "Table 3D - 115 ",
+    "data": "0x7735c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 116 ",
+    "new_name": "Table 3D - 116 ",
+    "data": "0x77438",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Oil Metering By Load",
+    "new_name": "Oil Metering By Load",
+    "data": "0x78e74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Oil Metering By Throttle",
+    "new_name": "Oil Metering By Throttle",
+    "data": "0x79014",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 120 ",
+    "new_name": "Table 3D - 120 ",
+    "data": "0x7d584",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 121 ",
+    "new_name": "Table 3D - 121 ",
+    "data": "0x7d61c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 122 ",
+    "new_name": "Table 3D - 122 ",
+    "data": "0x7acf4",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 123 ",
+    "new_name": "Table 3D - 123 ",
+    "data": "0x7ad90",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 124 ",
+    "new_name": "Table 3D - 124 ",
+    "data": "0x7bd74",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 125 ",
+    "new_name": "Table 3D - 125 ",
+    "data": "0x7be10",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 126 ",
+    "new_name": "Table 3D - 126 ",
+    "data": "0x7bfcc",
+    "axes": [
+      {
+        "axis": "X Axis",
+        "name": "Engine load (inferred)",
+        "decision": "local inference retained"
+      },
+      {
+        "axis": "Y Axis",
+        "name": "Engine speed rpm (inferred)",
+        "decision": "local inference retained"
+      }
+    ]
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Table 3D - 127 ",
+    "new_name": "Table 3D - 127 ",
+    "data": "0x7c39c",
+    "axes": []
+  },
+  {
+    "rom": "60E15120",
+    "old_name": "Ignition Dwell Time ",
+    "new_name": "Ignition Dwell Time ",
+    "data": "0x7cf58",
+    "axes": []
+  }
+]

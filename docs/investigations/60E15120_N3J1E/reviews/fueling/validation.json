@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-30",
+  "pass": "fueling_chain_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_readability": {
+    "function_bodies_consistent": 3355,
+    "whole_firmware_compilable": false
+  },
+  "verify_math_units": "pass (16 shift pairs, 10007 fixed-point boundary/random cases, 70 constant pairs)",
+  "labels_applied": {
+    "functions": 39,
+    "ram": 151,
+    "lookup_tables": 1,
+    "snapshot_local_renames": 234,
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "metadata/integrated_names.json"
+    ]
+  },
+  "pipeline_script": "scripts/review_fueling_labels.py (idempotent; wired into scripts/rebuild.sh after review_knock_loop_labels.py)",
+  "record": "metadata/fueling_labels.json",
+  "backup": "backups/pre_fueling_labels.zip",
+  "ghidra_database_updated": false,
+  "limits": "Static analysis only: byte/linkage validation proves artifact consistency, not semantic equivalence or hardware behavior. candidate_ names are unproven hypotheses.",
+  "binary_level_verification": {
+    "date": "2026-10-30",
+    "instruction_words_rechecked_against_rom": {
+      "count": 168592,
+      "mismatches": 0
+    },
+    "ram_aliases_reader_pool_check": {
+      "count": 150,
+      "failures": 0,
+      "note": "direct literal or base+offset (indexed arrays: a094+4*ch, a0ac+4*ch, a004+0x18*ch struct)"
+    },
+    "function_aliases_index_check": {
+      "count": 39,
+      "failures": 0
+    },
+    "descriptors_reparsed_from_rom": {
+      "count": 21,
+      "mismatches": 0,
+      "unmatched_but_valid": [
+        "0006ac38"
+      ]
+    },
+    "dispatch_records_rom_vs_tsv": {
+      "pids": [
+        "0034",
+        "0043",
+        "0044",
+        "1410",
+        "1746"
+      ],
+      "mismatches": 0
+    },
+    "task_table_entries_rom": {
+      "task5": "65f6",
+      "task6": "661e",
+      "task10": "64f6",
+      "task11": "6584",
+      "verified": true
+    },
+    "correction_found": "0x8a68 pulse = (latency + fuel_request) >> 4 (shift applies to the sum; four shar at 0x8a96-0x8a9e); evidence text fixed in TSVs/script/record/docs"
+  },
+  "injector_pin_mapping_review": "reviews/fueling/injector_pin_mapping.md \u2014 fw ch -> ATU-II 8x/1x verified from ROM (table 0xd7d4, wrappers 0x59a4-0x59ea, TSR8 0xfffff66a, rotor blocks ROM 0x4e2c8); package-pin->connector routing remains unresolved (board-level); updated 2026-10-30 with staging/rotor resolution (per-rotor blocks, PID 0x1410 = primary pulse, ch0/ch3 flagged primary-1 candidates)",
+  "fsm_pinout_crosscheck": "mazda-rx-8-pcm-pinout-series-1.pdf (13B electrical/FSM-derived): terminal->function confirmed for injectors 2M/2J/2G/2D/3A/3D and solenoids/APV 1L/1D/1O/1W/5Z/2P/3B/3G/3J/1S; scepticism markers kept (\u00b3 HP-only, \u2020 conflict, * provisional, connector-3 illegible); PDF contains no chip-pin data, so package-pin->terminal remains board routing (unresolved)"
+}

@@ -1,0 +1,737 @@
+[
+  {
+    "address": "00004c14",
+    "reference_address": "00004c14",
+    "size": "44",
+    "name": "FUN_00004c14",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00010320",
+    "reference_address": "0001031c",
+    "size": "106",
+    "name": "FUN_0001031c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00010ea2",
+    "reference_address": "00010ee6",
+    "size": "30",
+    "name": "getEngineCrankingStatus?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00011534",
+    "reference_address": "000115aa",
+    "size": "176",
+    "name": "FUN_000115aa",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00011880",
+    "reference_address": "000118fe",
+    "size": "80",
+    "name": "cruiseControl?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000118d0",
+    "reference_address": "0001194e",
+    "size": "158",
+    "name": "bunchOFuncs",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000121d8",
+    "reference_address": "00012180",
+    "size": "18",
+    "name": "getIgnitionTimingInit",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000121ea",
+    "reference_address": "00012192",
+    "size": "18",
+    "name": "getInitalLeadingTrailingAdvance?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000125bc",
+    "reference_address": "0001253c",
+    "size": "58",
+    "name": "calculateLeadingDerateRetard",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000125f6",
+    "reference_address": "00012576",
+    "size": "58",
+    "name": "calculateTrailingDerateRetard",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0001288e",
+    "reference_address": "000127d6",
+    "size": "18",
+    "name": "FUN_000127d6",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0001388a",
+    "reference_address": "000136d6",
+    "size": "40",
+    "name": "getKnockSensorFaultedStatus?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000138b2",
+    "reference_address": "000136fe",
+    "size": "40",
+    "name": "getKnockControlActive",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00014442",
+    "reference_address": "0001439a",
+    "size": "32",
+    "name": "FUN_0001439a",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00019d24",
+    "reference_address": "00014520",
+    "size": "102",
+    "name": "FUN_00014520",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000288be",
+    "reference_address": "00014586",
+    "size": "54",
+    "name": "torqueModelRealted",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00039d50",
+    "reference_address": "00014604",
+    "size": "16",
+    "name": "FUN_00014604",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000171f2",
+    "reference_address": "00017d3e",
+    "size": "30",
+    "name": "FUN_00017d3e",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00019574",
+    "reference_address": "0001a29e",
+    "size": "26",
+    "name": "FUN_0001a29e",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00019640",
+    "reference_address": "0001a35c",
+    "size": "284",
+    "name": "getIOUpdates?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00019794",
+    "reference_address": "0001a4bc",
+    "size": "42",
+    "name": "FUN_0001a4bc",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000394ee",
+    "reference_address": "0001a4e6",
+    "size": "78",
+    "name": "engineControlGetAir",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00019950",
+    "reference_address": "0001a68c",
+    "size": "132",
+    "name": "initOrNewLoopMAYBE",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002a30e",
+    "reference_address": "0001aa1e",
+    "size": "102",
+    "name": "sensorStuff",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0001a02c",
+    "reference_address": "0001ad8c",
+    "size": "90",
+    "name": "FUN_0001ad8c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0001c31c",
+    "reference_address": "0001cdcc",
+    "size": "104",
+    "name": "secondaryAirRequestStuff",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002680e",
+    "reference_address": "00021ab6",
+    "size": "66",
+    "name": "DSCThrottleStuff?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00025a22",
+    "reference_address": "00026298",
+    "size": "26",
+    "name": "getAlternatorFaultStatus",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00025a3c",
+    "reference_address": "000262dc",
+    "size": "44",
+    "name": "calculateECMOverVolt",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00025a68",
+    "reference_address": "00026308",
+    "size": "56",
+    "name": "getAlternatorSpeedConditonal",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026a10",
+    "reference_address": "00027334",
+    "size": "50",
+    "name": "FUN_00027334",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026b98",
+    "reference_address": "00027550",
+    "size": "24",
+    "name": "FUN_00027550",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026bb0",
+    "reference_address": "00027568",
+    "size": "42",
+    "name": "FUN_00027568",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026c3c",
+    "reference_address": "000275cc",
+    "size": "64",
+    "name": "calculateEngineSpeedDelta",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026ce0",
+    "reference_address": "0002760c",
+    "size": "36",
+    "name": "FUN_0002760c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026d5c",
+    "reference_address": "000276ec",
+    "size": "20",
+    "name": "FUN_000276ec",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026f9e",
+    "reference_address": "0002792e",
+    "size": "34",
+    "name": "FUN_0002792e",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00026fc0",
+    "reference_address": "00027950",
+    "size": "50",
+    "name": "FUN_00027950",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00027306",
+    "reference_address": "00027c82",
+    "size": "34",
+    "name": "FUN_00027c82",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000273d4",
+    "reference_address": "00027d38",
+    "size": "112",
+    "name": "FUN_00027d38",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00014628",
+    "reference_address": "00029248",
+    "size": "54",
+    "name": "FUN_00029248",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00028ae4",
+    "reference_address": "00029474",
+    "size": "44",
+    "name": "FUN_00029474",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00028b50",
+    "reference_address": "000294f0",
+    "size": "70",
+    "name": "FUN_000294f0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002941a",
+    "reference_address": "00029dc2",
+    "size": "42",
+    "name": "can203TX_getAndPack",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002944c",
+    "reference_address": "00029df4",
+    "size": "52",
+    "name": "can203pack",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00029a6e",
+    "reference_address": "0002a2ce",
+    "size": "78",
+    "name": "FUN_0002a2ce",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00029abc",
+    "reference_address": "0002a31c",
+    "size": "86",
+    "name": "FUN_0002a31c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00029c26",
+    "reference_address": "0002a372",
+    "size": "52",
+    "name": "FUN_0002a372",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002bc34",
+    "reference_address": "0002c388",
+    "size": "38",
+    "name": "getIgnitionRelatedCalsForSomething",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002c654",
+    "reference_address": "0002ce0c",
+    "size": "24",
+    "name": "dscDerateInit?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002cb08",
+    "reference_address": "0002d1c0",
+    "size": "58",
+    "name": "arbitrateDSCFuelCut?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002d5e4",
+    "reference_address": "0002dc88",
+    "size": "84",
+    "name": "FUN_0002dc88",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002fe00",
+    "reference_address": "000302b8",
+    "size": "30",
+    "name": "calcRelativePressure",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00030228",
+    "reference_address": "000306b4",
+    "size": "76",
+    "name": "calcInjectorCrankingTime??",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000335e4",
+    "reference_address": "0003390c",
+    "size": "78",
+    "name": "cruiseControlInit",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00033632",
+    "reference_address": "0003395a",
+    "size": "32",
+    "name": "knockMultiplierInit",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0003365a",
+    "reference_address": "0003399e",
+    "size": "44",
+    "name": "FUN_0003399e",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0003419c",
+    "reference_address": "000348cc",
+    "size": "34",
+    "name": "getEngineStartupEnrichValue",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000341be",
+    "reference_address": "000348ee",
+    "size": "38",
+    "name": "derateEngineStartupEnrich",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000342b0",
+    "reference_address": "000349d8",
+    "size": "22",
+    "name": "resetStartupEnrich??",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002680e",
+    "reference_address": "0003905a",
+    "size": "66",
+    "name": "dealsWithFuelCutSetting",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002e692",
+    "reference_address": "00039342",
+    "size": "90",
+    "name": "FUN_00039342",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0002e692",
+    "reference_address": "0003a10a",
+    "size": "90",
+    "name": "FUN_0003a10a",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00039d50",
+    "reference_address": "0003a164",
+    "size": "16",
+    "name": "FUN_0003a164",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000113b8",
+    "reference_address": "0003a384",
+    "size": "218",
+    "name": "MPUCall?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0003add6",
+    "reference_address": "0003b236",
+    "size": "44",
+    "name": "FUN_0003b236",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0003cf4c",
+    "reference_address": "0003d4d0",
+    "size": "50",
+    "name": "FUN_0003d4d0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0003d328",
+    "reference_address": "0003dcfc",
+    "size": "44",
+    "name": "FUN_0003dcfc",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004458a",
+    "reference_address": "00043dbe",
+    "size": "48",
+    "name": "FUN_00043dbe",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00044b16",
+    "reference_address": "0004431e",
+    "size": "48",
+    "name": "FUN_0004431e",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00044cec",
+    "reference_address": "000444c4",
+    "size": "98",
+    "name": "obdFaultRelated?",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004b4ac",
+    "reference_address": "0004a5a4",
+    "size": "28",
+    "name": "FUN_0004a5a4",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004c3a0",
+    "reference_address": "0004b568",
+    "size": "120",
+    "name": "updateCounters",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004e7aa",
+    "reference_address": "0004c262",
+    "size": "48",
+    "name": "FUN_0004c262",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004e7da",
+    "reference_address": "0004c292",
+    "size": "40",
+    "name": "FUN_0004c292",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004ed3c",
+    "reference_address": "0004c7fc",
+    "size": "68",
+    "name": "FUN_0004c7fc",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004f1f8",
+    "reference_address": "0004cd74",
+    "size": "54",
+    "name": "FUN_0004cd74",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0004f268",
+    "reference_address": "0004cde4",
+    "size": "34",
+    "name": "FUN_0004cde4",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00050c4c",
+    "reference_address": "0004e8d0",
+    "size": "64",
+    "name": "FUN_0004e8d0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0005187c",
+    "reference_address": "0004f5f0",
+    "size": "24",
+    "name": "FUN_0004f5f0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00051c28",
+    "reference_address": "0004f984",
+    "size": "86",
+    "name": "FUN_0004f984",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00051c7e",
+    "reference_address": "0004f9da",
+    "size": "40",
+    "name": "FUN_0004f9da",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000538e0",
+    "reference_address": "000518b4",
+    "size": "164",
+    "name": "FUN_000518b4",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00053c26",
+    "reference_address": "00051acc",
+    "size": "30",
+    "name": "FUN_00051acc",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00053f8c",
+    "reference_address": "000520a0",
+    "size": "64",
+    "name": "FUN_000520a0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00053fcc",
+    "reference_address": "000520e0",
+    "size": "64",
+    "name": "FUN_000520e0",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000540c0",
+    "reference_address": "000521d8",
+    "size": "18",
+    "name": "FUN_000521d8",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000545a6",
+    "reference_address": "0005266c",
+    "size": "22",
+    "name": "updateSUBSYSTEMSomethingFault",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000547d8",
+    "reference_address": "00052682",
+    "size": "22",
+    "name": "FUN_00052682",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00054590",
+    "reference_address": "00052698",
+    "size": "22",
+    "name": "setAlternatorFault",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000546aa",
+    "reference_address": "0005278a",
+    "size": "40",
+    "name": "FUN_0005278a",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000546f8",
+    "reference_address": "000527dc",
+    "size": "120",
+    "name": "FUN_000527dc",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0005556a",
+    "reference_address": "000536e2",
+    "size": "22",
+    "name": "getSecondaryAirPumpRequestForMode22",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000555d0",
+    "reference_address": "00053748",
+    "size": "40",
+    "name": "FUN_00053748",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00055838",
+    "reference_address": "00053b54",
+    "size": "44",
+    "name": "FUN_00053b54",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00055864",
+    "reference_address": "00053b80",
+    "size": "38",
+    "name": "FUN_00053b80",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00057858",
+    "reference_address": "00055d24",
+    "size": "44",
+    "name": "UDSPositiveResponse_16bit",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000579a8",
+    "reference_address": "00055e68",
+    "size": "100",
+    "name": "readMemorySomething",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00057a0c",
+    "reference_address": "00055ecc",
+    "size": "34",
+    "name": "intToUDS_SERVICE_DATA",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00057a2e",
+    "reference_address": "00055eee",
+    "size": "28",
+    "name": "byteToUDS_SERVICE_DATA",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0005877e",
+    "reference_address": "000575fe",
+    "size": "18",
+    "name": "FUN_000575fe",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "00059164",
+    "reference_address": "000578fe",
+    "size": "22",
+    "name": "FUN_000578fe",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000592b0",
+    "reference_address": "00057a4c",
+    "size": "80",
+    "name": "FUN_00057a4c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "000593e8",
+    "reference_address": "00057b98",
+    "size": "32",
+    "name": "FUN_00057b98",
+    "method": "unique_target_PC_literal_displacement_masked"
+  },
+  {
+    "address": "0006028c",
+    "reference_address": "0005e93c",
+    "size": "24",
+    "name": "FUN_0005e93c",
+    "method": "unique_target_PC_literal_displacement_masked"
+  }
+]

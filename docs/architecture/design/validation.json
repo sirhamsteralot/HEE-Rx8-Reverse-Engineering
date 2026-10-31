@@ -1,0 +1,8 @@
+{
+  "functions_match_summary": true,
+  "edges_match_callgraph_rows": true,
+  "task_table_records_valid": true,
+  "dispatch_handlers_all_in_index": true,
+  "vectors_resolve": true,
+  "leaf_plus_called_equals_total": true
+}

@@ -1,0 +1,15 @@
+/* ROM address: 0x0005752c; body bytes: 26; decompiled */
+
+/* Function candidate recovered from ROM pointer at 5f504 and register-save prologue. Heuristic
+   boundary; inspect disassembly. */
+
+void FUN_0005752c(undefined4 param_1)
+
+{
+  diag_append_u8(param_1,0x38);
+  diag_append_u8(param_1,0x38);
+  diag_append_u8(param_1,0x31);
+  return;
+}
+
+

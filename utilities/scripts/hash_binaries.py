@@ -5,9 +5,10 @@ Usage:
     python utilities/scripts/hash_binaries.py           # rewrite manifest.csv
     python utilities/scripts/hash_binaries.py --check   # verify manifest matches files
 
-Scans binaries/ for files (skipping README.md and manifest.csv itself) and records
-filename, size, sha256, plus optional source/acquired_with/date columns which you can
-fill in manually afterwards -- the script preserves existing values for known files.
+Scans binaries/ recursively (skipping README.md and manifest.csv) and records
+relative path, size, sha256, plus optional source/acquired_with/date columns which
+you can fill in manually afterwards -- the script preserves existing values for
+known files.
 """
 import csv
 import hashlib
@@ -38,13 +39,17 @@ def existing_rows() -> dict:
 def main() -> int:
     check_only = "--check" in sys.argv[1:]
     old = existing_rows()
-    files = sorted(p for p in BINARIES_DIR.iterdir() if p.is_file() and p.name not in SKIP)
+    files = sorted(
+        (p for p in BINARIES_DIR.rglob("*") if p.is_file() and p.name not in SKIP),
+        key=lambda p: p.relative_to(BINARIES_DIR).as_posix(),
+    )
 
     rows = []
     for p in files:
-        prev = old.get(p.name, {})
+        rel = p.relative_to(BINARIES_DIR).as_posix()
+        prev = old.get(rel, {})
         rows.append({
-            "filename": p.name,
+            "filename": rel,
             "size_bytes": p.stat().st_size,
             "sha256": sha256_of(p),
             "source": prev.get("source", ""),
