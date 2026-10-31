@@ -16,7 +16,7 @@
     "000121fc": {
       "alias": "leading_final_timing_clamp_output",
       "confidence": "high",
-      "evidence": "a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c=-24.0. Output RAM leading_ignition_timing_ffffa630."
+      "evidence": "a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630."
     },
     "00012300": {
       "alias": "trailing_final_timing_clamp_output",
@@ -26,7 +26,7 @@
     "00012630": {
       "alias": "min_advance_clamp_select",
       "confidence": "high",
-      "evidence": "Selects leading min-advance clamp a64c: cranking+clean -> -24.0 (0xc1c80000); (cVar4==0 && cVar2==0) or load-high -> -44.0 (0xc26a0000); else lookup_2d(ECT, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(ECT, tbl 0x691a4). Also sets load-high flag a66a (load > 0.5)."
+      "evidence": "Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45)."
     },
     "00014100": {
       "alias": "idle_base_timing_select",

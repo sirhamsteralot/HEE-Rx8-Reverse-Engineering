@@ -94,7 +94,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
   verified dynamically.
 - DSC derate confirmed **leading-rotor only** (0x1815c writes a91c; no trailing reader
   exists; torque-loss calc 0x2cc5c/0x2cc7c uses (bc94 − actual)² × bc90).
-- 0x121fc/0x12300 clamp bounds: min from 0x12630 (−24/−44 fixed or coolant table),
+- 0x121fc/0x12300 clamp bounds: min from 0x12630 (−25.0/−58.5 fixed or coolant table; constants ROM-verified: 0xc1c80000, 0xc26a0000),
   max from rpm tables 0x69190/0x691cc (65° at 3000 rpm observed in emulator).
 
 ## 6. Files
@@ -112,7 +112,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
 - ROM bytes untouched (`rom_unchanged`); every aliased address present in function_index.tsv.
 - Dynamic (emulator, `tests/test_phase1_dynamic.py`): blend 0x123da/0x124d6 bit-exact
   (25.775 / 36.5 / 18.115 deg for scripted inputs, both cranking states, both rotors);
-  add 0x123ba exact (21.5); clamp 0x121fc exact (65.0 max @3000 rpm, −24.0 min);
+  add 0x123ba exact (21.5); clamp 0x121fc exact (65.0 max @3000 rpm via tbl 0x69190; min-bound passthrough exact with a64c=−24.0)
   base calc 0x11f00 runs (a5e8=−11° @ load 0.8/rpm 3000, cap 80°).
 - `python -m pytest tests/` 38/38; pipeline validators run from repo root and PASS
   (validate_export, validate_reports incl. this report, verify_readability,
@@ -148,3 +148,31 @@ a66c/a670 trim; bc94 DSC base; a91c DSC derate. Tables: section 3.
   calc reads bc94; flag if a reader appears in later passes.
 
 ## 10. Update — 2026-10-31 (initial record of this pass)
+
+### Re-verification pass (2026-10-31, binary level)
+
+Re-checked the pass against raw ROM bytes + disassembly (literal pools resolved;
+note this disassembly prints the *computed* EA in `@(disp,pc)`, and `mov.w
+@(disp,pc)` **sign-extends** on this core, so 16-bit literals like 0xa5e8 are
+RAM 0xffffa5e8):
+
+- Blend 0x123da/0x124d6: `fmac` at 0x124c2/0x125a8 confirmed bit-for-bit:
+  `a640 = a5e8*a644 + (a718+a5f0+ca9c)*(1-a644) + a780 - a778` (trailing mirrors
+  into a650). Constants at 0x6d778=10000.0, 0x6d77c=100.0, 0x6d764=0.05,
+  0x6d768=1.0; 0x23e4=max, 0x23f4=min → cranking mult update
+  `max(a644-0.05,0)` / `min(a644+1,1)` exactly as documented.
+- Clamp 0x121fc/0x12300: `a630 = clamp(corrected, a64c, lookup(b548, 0x69190))`
+  via 0x2404 (3-arg clamp); 2000.0 rpm gate (mova 0x122e4), aa62/ce1c/bbce
+  conditions, helper 0x2440 = out-of-band detector (|x|>tol). Confirmed.
+- Lookup 0x2068 on tbl 0x69190 (axis 800..7200 step 800 @0x6d7a0) returns
+  **65.0 deg at 3000 rpm** in the emulator (also 65.0 across 0..9000 rpm —
+  flat-topped table after the descriptor's 0.5/-40 affine map). Confirmed.
+- **Correction:** min-advance fixed constants in 0x12630/0x12754 are
+  **-25.0** (0xc1c80000 @0x6d76c/0x6d794) and **-58.5** (0xc26a0000
+  @0x6d770/0x6d774), not -24/-44 as first recorded. Branch structure confirmed
+  in emulator: cranking(aa62==1) && a66c in band -> -25.0; cranking && a66c
+  out of band -> lookup(a98c, 0x691a4); else if a750,c9a0 in band or
+  load-high a66a -> -58.5; else lookup(a98c, 0x691b8). a66a hysteresis:
+  set when c0b4 > 0.5, cleared at <= 0.45 (0x6d780=0.5, 0x6d784=0.05).
+  All prose (report, labels JSON, accepted_*.tsv, decompiled comments) updated.
+- Base calc 0x11f00 cap constant 80.0 (0x42a00000 @0x6c758/0x6c76c) confirmed.
