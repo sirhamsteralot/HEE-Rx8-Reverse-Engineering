@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json,csv
-base=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 s=json.loads((base/'decompiled/analysis_summary.json').read_text())
 v=json.loads((base/'metadata/validation.json').read_text())
 i=json.loads((base/'metadata/input.json').read_text())

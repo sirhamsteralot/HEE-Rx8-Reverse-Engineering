@@ -1,6 +1,7 @@
 from pathlib import Path
 import csv,json,re,collections
-b=Path(__file__).resolve().parents[1];s=(b/'decompiled/firmware_decompiled.c').read_text();changes=json.loads((b/'readability/changes.json').read_text());idx=list(csv.DictReader((b/'decompiled/function_index.tsv').open(),delimiter='\t'))
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+s=(b/'decompiled/firmware_decompiled.c').read_text();changes=json.loads((b/'readability/changes.json').read_text());idx=list(csv.DictReader((b/'decompiled/function_index.tsv').open(),delimiter='\t'))
 for r in idx:
  t=(b/'decompiled'/r['file']).read_text();marker='/* ROM address: 0x'+r['address']+';';assert t[t.index(marker):].strip() in s
 for c in changes:

@@ -2,7 +2,7 @@
 """Integrate reviewed names into canonical C; retain address-based identity and provenance."""
 from pathlib import Path
 import csv,json,re,zipfile,hashlib
-b=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 def rows(p):return list(csv.DictReader((b/p).open(),delimiter='\t'))
 def write(p,rs):
  with (b/p).open('w') as f:

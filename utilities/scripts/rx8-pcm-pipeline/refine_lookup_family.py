@@ -1,13 +1,14 @@
 from pathlib import Path
 import re,csv,json,struct,zipfile
-b=Path(__file__).resolve().parents[1];out=b/'lookup_family';out.mkdir(exist_ok=True)
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+out=b/'lookup_family';out.mkdir(exist_ok=True)
 index=list(csv.DictReader((b/'decompiled/function_index.tsv').open(),delimiter='\t'));by={r['address']:r for r in index}
 combined=b/'decompiled/firmware_decompiled.c'
 if '[LOOKUP FAMILY RECONSTRUCTION]' in combined.read_text():print('Already applied');raise SystemExit(0)
 with zipfile.ZipFile(b/'backups/pre_lookup_family.zip','w',zipfile.ZIP_DEFLATED) as z:
  for p in (b/'decompiled').rglob('*'):
   if p.is_file():z.write(p,str(p.relative_to(b)))
-rom=Path(json.loads((b/'metadata/input.json').read_text())['file']).read_bytes()
+rom=rom_file().read_bytes()
 assert struct.unpack_from('>5I',rom,0x2098)==(0x2678,0x26b0,0x26d0,0x26f4,0x2690)
 assert struct.unpack_from('>5I',rom,0x210c)==(0x253c,0x25c8,0x25f4,0x256c,0x2598)
 bodies={};names={};reasons={}

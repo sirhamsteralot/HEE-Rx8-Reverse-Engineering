@@ -6,7 +6,7 @@
 void ref_Manual_Reset(void)
 
 {
-  FUN_000008cc();
+  boot_wait_nmi_pin_high();
   FUN_000008f6();
   ref_resetHandler_(0);
   do {

@@ -2,9 +2,9 @@
 """Check artifact consistency and instruction bytes, not semantic equivalence."""
 from pathlib import Path
 import csv, hashlib, json
-base=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 info=json.loads((base/'metadata/input.json').read_text())
-rom=Path(info['file']).read_bytes()
+rom=rom_file().read_bytes()
 assert len(rom)==info['size']
 assert hashlib.sha256(rom).hexdigest()==info['sha256']
 def rows(path): return list(csv.DictReader(path.open(),delimiter='\t'))

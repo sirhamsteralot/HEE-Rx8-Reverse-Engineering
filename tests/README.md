@@ -20,11 +20,14 @@ Verification that reimplemented/derived behavior matches the original binaries.
   Host tests do **not** validate SH-2E FPU rounding/exception behavior.
 - `docs/investigations/60E15120_N3J1E/lookup_family/test_lookup_family.c` — lookup
   interpolation family test from the prior effort.
-- Pipeline validators (run with the legacy workspace in `input/Tuning-merged`):
+- Pipeline validators run from the **repo root** (paths resolve via
+  `utilities/scripts/rx8-pcm-pipeline/paths.py` to the promoted layout; the
+  legacy `input/Tuning-merged` tree is not needed):
   `utilities/scripts/rx8-pcm-pipeline/validate_export.py` (ROM hash, instruction
   bytes, matches, linkage), `validate_reports.py` (report sections, ROM hash, every
   address in report memory maps vs index/TSVs/ROM), `verify_readability.py`,
-  `verify_math_units.py`.
+  `verify_math_units.py`. All four PASS as of 2026-10-31. Ghidra-dependent steps
+  in `rebuild.sh` additionally need `GHIDRA_HOME` + JDK.
 
 ## Rules
 

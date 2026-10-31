@@ -12,9 +12,13 @@ verifying HEE artifacts.
   60E15120_N3J1E --cycles 100000`. Tests: `python -m pytest tests/test_emu.py`.
 - `scripts/rx8-pcm-pipeline/` — the Ghidra export/annotation pipeline
   (`rebuild.sh NEW_PROJECT_NAME`, `prepare_metadata.py`, `validate_export.py`,
-  `validate_reports.py`, review passes, …). **These scripts encode the legacy
-  workspace layout** (`../..` = `input/Tuning-merged`); run them with that tree
-  present. Requires Ghidra 12.1.3 (`GHIDRA_HOME`), JDK 21+, Python 3, a C compiler.
+  `validate_reports.py`, review passes, …). Paths resolve through `paths.py`
+  to this repo's promoted layout (`reverse-engineered/`, `docs/investigations/`,
+  `data/labels/`, `submodules/` for ROMs/upstream repos) — the legacy
+  `input/Tuning-merged` tree is no longer needed. Pure-python validators run
+  from the repo root; the Ghidra steps in `rebuild.sh` need Ghidra 12.1.3
+  (`GHIDRA_HOME`), JDK 21+, Python 3; project DBs go to `${GHIDRA_WORK:-input/ghidra-work}`
+  and are not committed. See `scripts/rx8-pcm-pipeline/README.md`.
 - `scripts/patchers/` — ROM patchers + docs (`patch_intake_rpm_window.py`,
   `patch_limiter_behavior.py`, `PATCHER_*.md`). They write
   **new** output `.bin` files with JSON reports; input SHA-256 is asserted unchanged.

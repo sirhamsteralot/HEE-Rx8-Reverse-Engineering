@@ -114,8 +114,12 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
   0x6884 ADC sweep lands channels in RAM (test_adc_read_path_dynamic);
   boot to idle 0x3dac with zero overrides (test_nmi_pin_replaces_guessed_override).
 - `python -m pytest tests/` — 36/36 pass (decode corpus unaffected; names are cosmetic).
-- Pipeline validators (`validate_export.py` etc.) expect the legacy `input/Tuning-merged`
-  layout and need Ghidra — not runnable here; noted as not-run rather than claimed.
+- Pipeline validators now run from the repo root via
+  `utilities/scripts/rx8-pcm-pipeline/paths.py` (no legacy `input/Tuning-merged`
+  needed): `validate_export.py`, `validate_reports.py` (this report included),
+  `verify_readability.py`, `verify_math_units.py` all PASS as of 2026-10-31.
+  Ghidra-dependent `rebuild.sh` steps still need `GHIDRA_HOME` + JDK and were
+  not run here.
 
 ## 8. Memory map for validation
 

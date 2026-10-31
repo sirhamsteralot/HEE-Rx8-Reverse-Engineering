@@ -177,7 +177,7 @@ calibration area 0x0006c000–0x0007ffff.
 
 | Address | Name | Role |
 |---|---|---|
-| 0x0000803e | `ref_INT_ATU101_IMI10AG` (ISR) | crank period sum → raw RPM 0xffff9f80 |
+| 0x0000803e | `crank_isr_compute_rpm` (ISR; renamed 2026-10-31 from `ref_INT_ATU101_IMI10AG` — see §10) | crank period sum → raw RPM 0xffff9f80 |
 | 0x0000c276 | `knock_reference_adc_read` | reference-channel ADC → 0xffffa326; called from 0xc8dc and 0x5a4c |
 | 0x0000c290 | `ref_knockSensorADCFault` | knock ref ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c → fault status |
 | 0x0000c3ce | `knock_voltage_sample` | knock ADC sample/filter (200–2000 RPM window), 10k flag; called from 0x661e (task[6]) |
@@ -379,6 +379,10 @@ canonical C carries the newest names. The ROM was not modified.
 ---
 
 ## 10. Update — 2026-10-30 (later passes, this file left as the 2026-10-29 record)
+
+2026-10-31 addendum: 0x803e was renamed `crank_isr_compute_rpm` (emulator-verified CMI10B
+handler, IVT 0x2c8 at VBR 0x7fc50) in the 2026-10-31 OS/CAN/IVT labeling pass
+(`os_scheduler_can_ivt_report.md`); the memory-map row above carries the new name.
 
 Subsequent passes built on this review: the **fueling chain** is now labeled
 (`fueling_control_report.md`, `reviews/fueling/`) and resolves this report's open

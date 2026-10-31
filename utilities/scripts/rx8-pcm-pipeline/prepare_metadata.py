@@ -2,8 +2,7 @@
 """Generate labels and conservative function seeds from local evidence."""
 from pathlib import Path
 import csv, hashlib, json, re, struct, xml.etree.ElementTree as ET
-root=Path(__file__).resolve().parents[3]
-out=Path(__file__).resolve().parents[1]
+from paths import ROOT as root, b as out, LABELS  # legacy-layout shim (paths.py)
 rom=root/'Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin'
 b=rom.read_bytes()
 meta=out/'metadata'

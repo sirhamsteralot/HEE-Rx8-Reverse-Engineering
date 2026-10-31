@@ -8,9 +8,9 @@ entry mechanisms and are listed explicitly."""
 from pathlib import Path
 import csv,json,struct
 from collections import Counter,defaultdict
-b=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 out=b/'design';out.mkdir(exist_ok=True)
-rom=Path(json.loads((b/'metadata/input.json').read_text())['file']).read_bytes()
+rom=rom_file().read_bytes()
 idx=list(csv.DictReader((b/'decompiled/function_index.tsv').open(),delimiter='\t'))
 calls=list(csv.DictReader((b/'decompiled/callgraph.tsv').open(),delimiter='\t'))
 syms=list(csv.DictReader((b/'decompiled/symbols.tsv').open(),delimiter='\t'))

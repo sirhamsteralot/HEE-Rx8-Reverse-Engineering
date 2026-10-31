@@ -7,7 +7,7 @@ void ref_setSR(int param_1)
 
 {
   if ((param_1 == 0) && (*(char *)(DAT_ffff7650 + 1) != '\x01')) {
-    FUN_00003db0();
+    os_wake_check_context_switch();
     return;
   }
   return;

@@ -10,7 +10,7 @@ last row wins in the integrator, so appended rows override generated ones.
 from pathlib import Path
 import csv, json
 
-b = Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 FIELDS = ['original', 'alias', 'basis', 'evidence']
 
 

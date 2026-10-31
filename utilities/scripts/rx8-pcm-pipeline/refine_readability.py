@@ -2,7 +2,7 @@
 """Apply bounded, evidence-backed readability changes to canonical analysis C."""
 from pathlib import Path
 import re,json,csv,zipfile
-b=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 if '[READABILITY RECONSTRUCTION]' in (b/'decompiled/firmware_decompiled.c').read_text():
  print('Readability pass already applied; rerun only after a fresh export.');raise SystemExit(0)
 out=b/'readability';out.mkdir(exist_ok=True)

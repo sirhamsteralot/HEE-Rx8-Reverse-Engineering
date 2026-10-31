@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import csv,json,re,struct,math
-b=Path(__file__).resolve().parents[1];d=b/'math_units'
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+d=b/'math_units'
 def read(p):return list(csv.DictReader((b/p).open(),delimiter='\t'))
 def write(p,rs):
  with (b/p).open('w') as f:

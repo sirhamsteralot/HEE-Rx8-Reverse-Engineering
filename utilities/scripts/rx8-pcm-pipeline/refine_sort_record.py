@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
-b=Path(__file__).resolve().parents[1];p=next((b/'decompiled/functions').glob('0006689e_*'));old=p.read_text();start=old.index('void rx8_insertion_sort_u16_key_u8_payload(');new=old[:start]+'/* [SORT RECORD RECONSTRUCTION] Typed equivalent for ordinary RAM records.\n * Four-byte stride, strict key comparison, low-16-bit count and untouched padding.\n * Volatile memory/interruption behavior is outside this reconstruction. */\n'+(b/'readability/sort_record_body.c.txt').read_text()+'\n'
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+p=next((b/'decompiled/functions').glob('0006689e_*'));old=p.read_text();start=old.index('void rx8_insertion_sort_u16_key_u8_payload(');new=old[:start]+'/* [SORT RECORD RECONSTRUCTION] Typed equivalent for ordinary RAM records.\n * Four-byte stride, strict key comparison, low-16-bit count and untouched padding.\n * Volatile memory/interruption behavior is outside this reconstruction. */\n'+(b/'readability/sort_record_body.c.txt').read_text()+'\n'
 if '[SORT RECORD RECONSTRUCTION]' not in old:
  combined=b/'decompiled/firmware_decompiled.c';s=combined.read_text();tail=old[old.index('/* ROM address:'):].strip();assert s.count(tail)==1;s=s.replace(tail,new[new.index('/* ROM address:'):].strip(),1);combined.write_text(s);p.write_text(new)
  (b/'named/firmware_named.c').write_text(s.replace('#include "rx8_analysis_types.h"','#include "../decompiled/rx8_analysis_types.h"',1))

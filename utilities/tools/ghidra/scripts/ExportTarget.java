@@ -8,10 +8,11 @@ import java.nio.file.*;
 public class ExportTarget extends GhidraScript {
  public void run() throws Exception {
   File out=new File(getScriptArgs()[0]);out.mkdirs();File funcs=new File(out,"functions");funcs.mkdirs();
+  File dasm=new File(getScriptArgs().length>1?getScriptArgs()[1]:getScriptArgs()[0]);dasm.mkdirs(); // disassembly outputs
   for(File old:funcs.listFiles()) if(old.getName().matches("[0-9a-f]{8}_.*\\.c")) Files.delete(old.toPath());
   DecompInterface decomp=new DecompInterface();DecompileOptions options=new DecompileOptions();options.grabFromProgram(currentProgram);decomp.setOptions(options);decomp.openProgram(currentProgram);
   int count=0,ok=0,failed=0,warnings=0;AddressSet covered=new AddressSet();AddressSet functionBodies=new AddressSet();
-  try(PrintWriter all=new PrintWriter(new File(out,"firmware_decompiled.c"));PrintWriter index=new PrintWriter(new File(out,"function_index.tsv"));PrintWriter calls=new PrintWriter(new File(out,"callgraph.tsv"));PrintWriter bad=new PrintWriter(new File(out,"decompiler_issues.tsv"));PrintWriter asm=new PrintWriter(new File(out,"firmware_disassembly.asm"));PrintWriter sym=new PrintWriter(new File(out,"symbols.tsv"))) {
+  try(PrintWriter all=new PrintWriter(new File(out,"firmware_decompiled.c"));PrintWriter index=new PrintWriter(new File(out,"function_index.tsv"));PrintWriter calls=new PrintWriter(new File(out,"callgraph.tsv"));PrintWriter bad=new PrintWriter(new File(dasm,"decompiler_issues.tsv"));PrintWriter asm=new PrintWriter(new File(dasm,"firmware_disassembly.asm"));PrintWriter sym=new PrintWriter(new File(out,"symbols.tsv"))) {
    all.println("/* Decompiled from 60E15120_N3J1E.bin using Ghidra.\n * Analysis C: not original source and not a buildable replacement firmware.\n * ref_ names are inferred from unique exact-byte matches to 60E0FC00.\n * CAL_ labels come from local RX8Defs; see metadata and README.\n */\n");
    index.println("address\tname\tbody_bytes\tstatus\tfile");calls.println("caller\tcallee\tcallee_name");bad.println("address\tname\tissue");sym.println("address\tname\ttype\tsource");
    for(Symbol s:currentProgram.getSymbolTable().getAllSymbols(true)) sym.println(s.getAddress()+"\t"+s.getName()+"\t"+s.getSymbolType()+"\t"+s.getSource());
@@ -35,7 +36,7 @@ public class ExportTarget extends GhidraScript {
    }
   } finally {decomp.dispose();}
   AddressSet unknown=new AddressSet(toAddr(0),toAddr(0x7ffff));unknown=unknown.subtract(covered);
-  try(PrintWriter w=new PrintWriter(new File(out,"non_instruction_ranges.tsv"))){w.println("start\tend\tbytes");for(AddressRange r:unknown)w.println(r.getMinAddress()+"\t"+r.getMaxAddress()+"\t"+r.getLength());}
+  try(PrintWriter w=new PrintWriter(new File(dasm,"non_instruction_ranges.tsv"))){w.println("start\tend\tbytes");for(AddressRange r:unknown)w.println(r.getMinAddress()+"\t"+r.getMaxAddress()+"\t"+r.getLength());}
   String report="{\n  \"functions\": "+count+",\n  \"decompiled\": "+ok+",\n  \"failed\": "+failed+",\n  \"with_warnings\": "+warnings+",\n  \"instruction_bytes\": "+covered.getNumAddresses()+",\n  \"function_body_bytes\": "+functionBodies.getNumAddresses()+",\n  \"rom_bytes\": 524288\n}\n";
   Files.writeString(new File(out,"analysis_summary.json").toPath(),report);println(report);
  }

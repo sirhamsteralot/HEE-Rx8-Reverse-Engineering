@@ -10,7 +10,7 @@ void FUN_000075f4(void)
   if (DAT_ffff9fa5 == '\0') {
     FUN_00007f22();
     FUN_00007b90();
-    FUN_000077f0();
+    crank_capture_poll();
     FUN_00007be4();
   }
   FUN_00007b58();

@@ -1,7 +1,8 @@
 from pathlib import Path
 import csv,re,struct,json
 import sys
-b=Path(__file__).resolve().parents[1];s=Path(sys.argv[1])/'G_ROM_FlexFuel'
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+s=Path(sys.argv[1])/'G_ROM_FlexFuel'
 rows=list(csv.DictReader((b/'metadata/matched_functions.tsv').open(),delimiter='\t')); ref=(b.parents[1]/'Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FC00.bin').read_bytes();dst=(b.parents[1]/'Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin').read_bytes()
 idx=list(csv.DictReader((b/'decompiled/function_index.tsv').open(),delimiter='\t'));rf=list(csv.DictReader((b/'metadata/reference_functions.tsv').open(),delimiter='\t'))
 

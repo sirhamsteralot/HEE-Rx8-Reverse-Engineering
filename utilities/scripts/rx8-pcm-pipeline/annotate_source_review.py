@@ -2,7 +2,8 @@
 """Reapply reviewed source-based comments after a fresh export; no symbol renaming."""
 from pathlib import Path
 import csv,re
-b=Path(__file__).resolve().parents[1];d=b/'source_review'
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+d=b/'source_review'
 def rows(n):return list(csv.DictReader((d/n).open(),delimiter='\t'))
 notes={r['address']:[r['alias']+' ['+r['confidence']+']: '+r['evidence']] for r in rows('accepted_function_aliases.tsv')}
 for r in rows('accepted_ram_aliases.tsv'):notes.setdefault(r['reader'],[]).append('RAM 0x'+r['address']+' '+r['alias']+' ('+r['type']+'): '+r['evidence'])

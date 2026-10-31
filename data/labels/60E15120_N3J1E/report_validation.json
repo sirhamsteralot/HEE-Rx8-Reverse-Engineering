@@ -19,6 +19,18 @@
       "ram_checked": 56,
       "rom_refs": 131,
       "rom_claims": 0
+    },
+    "load_fueling_report.md": {
+      "fn_checked": 0,
+      "ram_checked": 0,
+      "rom_refs": 0,
+      "rom_claims": 0
+    },
+    "os_scheduler_can_ivt_report.md": {
+      "fn_checked": 0,
+      "ram_checked": 0,
+      "rom_refs": 0,
+      "rom_claims": 0
     }
   },
   "failures": [],

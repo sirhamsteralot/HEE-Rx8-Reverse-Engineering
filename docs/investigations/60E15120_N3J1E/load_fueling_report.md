@@ -222,3 +222,26 @@ input, the 0x19640 snap-trigger caller, the baro sensor's ADC channel, and
 the output-timer-channel-to-physical-injector mapping. Candidate aliases are
 not factory symbols; they must not be presented as verified names until the
 integration pass and its validators pass.
+
+## 10. Labeling applied (2026-10-30 pass, recorded 2026-10-31 for the report validator)
+
+The 2026-10-30 fueling-chain labeling pass integrated **39 function aliases,
+150 RAM aliases and lookup aliases** into the synchronized views
+(`data/labels/60E15120_N3J1E/fueling_labels.json`;
+`source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`;
+`integrated_names.json`; evidence in `reviews/load_fueling_model/` incl.
+`REVIEW_NOTES.md` + `validation.json`; backup
+`backups/pre_fueling_labels.zip`). Key named rows: `calculate_engine_load`
+(RAM 0xffffc0b4), injector pulse path 0x8a68/0x30948/0x2fea8, MAF scaling
+0x69788, latency tables 0x6aa80/0x6aa64, warmup family 0x6ae28-0x6ae74.
+
+## 11. Memory map
+
+Function and RAM addresses for this subsystem are enumerated in
+`data/labels/60E15120_N3J1E/fueling_labels.json` (function_aliases/ram_aliases
+with per-item evidence) and in the canonical index
+`reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv` +
+`symbols.tsv`; the cal-table addresses are in section 4 above. The report
+validator (`utilities/scripts/rx8-pcm-pipeline/validate_reports.py`, run from
+the repo root) checks every address here against those indexes and the ROM
+SHA-256.

@@ -14,15 +14,15 @@ void ref_doSomethingIfByteIs1InCANSetup(int param_1)
   undefined2 uVar6;
   
   uVar2 = sh_raise_interrupt_mask_return_previous(0x90);
-  puVar3 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_TXPR_W);
+  puVar3 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_TXPR_W);
   uVar1 = *puVar3;
-  uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   if ((uVar5 & uVar1) != 0) {
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_ABACK_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_ABACK_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_TXCR_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_TXCR_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
   }
   ref_setSR(uVar2);

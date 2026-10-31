@@ -18,13 +18,14 @@ Writes metadata/report_validation.json; exits non-zero on any failure.
 from pathlib import Path
 import csv, json, re, struct, sys, hashlib
 
-b = Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT, INV  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 WS = b.parents[1]
 ROM_PATH = WS / 'Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin'
 ROM = ROM_PATH.read_bytes()
 ROM_SHA = hashlib.sha256(ROM).hexdigest()
 
-REPORTS = sorted(p.name for p in b.glob('*_report.md'))
+REPORTS_DIR = INV  # reports live in docs/investigations/<rom-id>/ in this repo
+REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md'))
 REQUIRED_SECTIONS = ['Executive summary', 'pseudocode', 'Labeling applied', 'Corrections',
                      'Files', 'Validation', 'Memory map', 'Limits']
 
@@ -41,7 +42,7 @@ failures = []
 report_stats = {}
 
 for rep in REPORTS:
-    p = b / rep
+    p = REPORTS_DIR / rep
     text = p.read_text()
     stats = {'fn_checked': 0, 'ram_checked': 0, 'rom_refs': 0, 'rom_claims': 0}
     for sec in REQUIRED_SECTIONS:

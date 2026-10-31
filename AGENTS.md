@@ -19,7 +19,7 @@ and session log (`docs/learnings.md`).
 - `docs/learnings.md` — accumulated session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (upstream vs reviewed vs merged, provenance in README).
 - `data/labels/<rom-id>/` — label/alias TSVs, rename maps, `validation.json` records, provenance (`input.json`).
-- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; expects legacy layout under `input/Tuning-merged`), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `emu/` (config-driven SH-2E emulator; one JSON profile per ROM/market/model in `emu/profiles/`).
+- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; paths resolve via its `paths.py` shim to this repo's promoted layout — `reverse-engineered/`, `docs/investigations/`, `data/labels/` — no legacy `input/Tuning-merged` tree needed; Ghidra project DBs go to `${GHIDRA_WORK:-input/ghidra-work}` and are not committed), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `emu/` (config-driven SH-2E emulator; one JSON profile per ROM/market/model in `emu/profiles/`).
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
 - `tests/` — repo-level harnesses; host unit tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
 
@@ -132,3 +132,10 @@ dumping it at the root.
   `cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off reverse-engineered/reimplementation/rx8_math.c reverse-engineered/reimplementation/test_rx8_math.c -lm -o /tmp/t && /tmp/t`
   (same pattern for `rx8_apv.c`). Host tests do not validate SH FPU rounding.
 - `python -m pytest tests/` for repo-level harnesses.
+- Pipeline validators run from the **repo root** (paths resolve via
+  `utilities/scripts/rx8-pcm-pipeline/paths.py`): `python
+  utilities/scripts/rx8-pcm-pipeline/validate_export.py` (ROM hash + instruction
+  bytes + matches), `validate_reports.py` (report sections, ROM hash, every
+  address in report memory maps vs index/TSVs/ROM), `verify_readability.py`,
+  `verify_math_units.py`. The Ghidra-dependent steps in `rebuild.sh` still need
+  `GHIDRA_HOME` (Ghidra 12.1.3) and a JDK; project DBs are not committed.

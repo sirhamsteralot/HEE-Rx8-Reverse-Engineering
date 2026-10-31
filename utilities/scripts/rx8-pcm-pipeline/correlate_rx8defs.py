@@ -3,8 +3,9 @@
 from pathlib import Path
 import xml.etree.ElementTree as E
 import struct,csv,json,re,hashlib
-base=Path(__file__).resolve().parents[1]; workspace=base.parents[1]
-rom=Path(json.loads((base/'metadata/input.json').read_text())['file']).read_bytes()
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+workspace=base.parents[1]
+rom=rom_file().read_bytes()
 xml=workspace/'RX8Defs/RomRaider/rx8_defs.xml'; logger=xml.with_name('logger_rx8_defs.xml')
 r=E.parse(xml).getroot(); target=next(x for x in r.findall('rom') if x.findtext('romid/xmlid')=='60E15120')
 parent=next(x for x in r.findall('rom') if x.findtext('romid/xmlid','').casefold()==target.get('base').casefold())

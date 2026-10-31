@@ -8,7 +8,7 @@ byte FUN_0000cd10(byte param_1,byte param_2)
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MC0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MC0_1__B);
   *(byte *)(iVar1 + (param_1 & 0xf) * 8) = param_2 & 0xf;
   return param_2 & 0xf;
 }

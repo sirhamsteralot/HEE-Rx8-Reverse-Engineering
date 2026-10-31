@@ -1,6 +1,7 @@
 from pathlib import Path
 import json,random,struct
-b=Path(__file__).resolve().parents[1];asm=(b/'decompiled/firmware_disassembly.asm').read_text();section=asm[asm.index('0000231c '):asm.index('0000239c ')]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+asm=(b/'decompiled/firmware_disassembly.asm').read_text();section=asm[asm.index('0000231c '):asm.index('0000239c ')]
 assert section.count('shar r4')==16 and section.count('rotcr r5')==16 and 'dmuls.l r4,r5' in section
 rng=random.Random(231);cases=[(-2147483648,-2147483648),(2147483647,2147483647),(-1,1),(-1,65535),(-65536,65536),(65536,65536),(0,123)]
 cases += [(rng.randrange(-2**31,2**31),rng.randrange(-2**31,2**31)) for _ in range(10000)]

@@ -9,7 +9,7 @@ an existing row with the same key but a different alias aborts the pass.
 from pathlib import Path
 import csv, json, sys
 
-b = Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 
 FUNCTIONS = [
     # address, alias, confidence, evidence

@@ -10,7 +10,7 @@ aborts the pass. Also writes metadata/fueling_labels.json recording the pass.
 from pathlib import Path
 import csv, json, sys
 
-b = Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 BASIS = 'source_review_fueling'
 
 FUNCTIONS = [

@@ -9,7 +9,7 @@ bodies, callgraph and symbols are updated."""
 from pathlib import Path
 import csv,json,re,zipfile
 from collections import Counter
-b=Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 combined_path=b/'decompiled/firmware_decompiled.c'
 if '[EXPORT CLEANUP]' in combined_path.read_text():
  raise SystemExit('Export cleanup already applied; rerun only after a fresh export.')

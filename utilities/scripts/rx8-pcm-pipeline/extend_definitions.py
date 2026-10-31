@@ -1,7 +1,8 @@
 from pathlib import Path
 import xml.etree.ElementTree as E
 import json,csv,re,hashlib,zipfile
-b=Path(__file__).resolve().parents[1];w=b.parents[1];defs=w/'RX8Defs';out=defs/'Analysis/60E15120';out.mkdir(parents=True,exist_ok=True)
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+w=b.parents[1];defs=w/'RX8Defs';out=defs/'Analysis/60E15120';out.mkdir(parents=True,exist_ok=True)
 p=defs/'RomRaider/rx8_defs.xml';raw=p.read_text(encoding='utf-8-sig')
 if '[60E15120 analysis 2026-09-18]' in raw:
  print('Definitions already extended; restore the backup before regenerating.');raise SystemExit(0)
@@ -53,7 +54,7 @@ def add(id,name,addr,units,expr,desc):
  x=E.SubElement(params,'parameter',id=id,name=name,desc=desc);E.SubElement(x,'address').text=addr;cs=E.SubElement(x,'conversions');E.SubElement(cs,'conversion',storagetype='uint16',units=units,expr=expr,format='0.000')
 add('RX8_60E15120_0042','Control Module Voltage (candidate)','0x220042','V','x*0.001','60E15120 only. Dispatch 0x56b76 -> 0x55732 -> RAM 0xffffb590; uint16 scaling approximately 0.001. Battery-voltage meaning corroborated by injector-latency axes; candidate until vehicle logging validates it.')
 add('RX8_60E15120_1410_RAW','Identifier 1410 - raw (meaning unresolved)','0x221410','raw','x','60E15120 only. Handler 0x56f6c emits uint16 from RAM 0xffffbe24 using step 8. Existing injector/throttle interpretations conflict; no physical unit assigned here.')
-E.indent(log,space='    ');dest=defs/'RomRaider/logger_60E15120_reviewed.xml';E.ElementTree(log).write(dest,encoding='utf-8',xml_declaration=True)
+E.indent(log,space='    ');dest=ROOT/'data/definitions/romraider/logger_60E15120_reviewed.xml';E.ElementTree(log).write(dest,encoding='utf-8',xml_declaration=True)  # submodule stays read-only
 # Consolidate non-calibration information in a supported sidecar instead of fake editor tables.
 symbols=[]
 for rel in ['cross_ecu/symbol_aliases.tsv','cross_ecu/romraider_ram_candidates.tsv','source_review/accepted_function_aliases.tsv','source_review/accepted_ram_aliases.tsv','math_units/helper_aliases.tsv']:

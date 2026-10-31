@@ -22,6 +22,11 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 was promoted into the tracked folders on 2026-10-31 and later removed from `input/`.
 The upstream git repositories now live as **read-only submodules** under
 `../submodules/` (see `../docs/references/README.md`).
+2026-10-31: the pipeline (`../utilities/scripts/rx8-pcm-pipeline/`) no longer needs
+`input/Tuning-merged` — its `paths.py` shim resolves the old workspace keys to the
+promoted tracked layout (`../reverse-engineered/`, `../docs/investigations/`,
+`../data/labels/`, `../submodules/`). Ghidra project DBs (never committed) go to
+`input/ghidra-work/` via `GHIDRA_WORK`.
 
 2026-10-31: `mazda-rx-8-pcm-pinout-series-1.md` (text PCM pinout derived from
 `13Electrical.pdf`, which remains ground truth) was promoted to

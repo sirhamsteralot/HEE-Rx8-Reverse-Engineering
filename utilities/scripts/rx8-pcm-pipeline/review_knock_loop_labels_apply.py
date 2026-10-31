@@ -19,7 +19,7 @@ scripts/rebuild.sh, because refine_readability.py would re-introduce the
 from pathlib import Path
 import csv, json, re
 
-b = Path(__file__).resolve().parents[1]
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 
 
 def fn_file():

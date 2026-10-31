@@ -2,7 +2,8 @@
 """Produce a named analysis-C view; retain raw export and per-alias evidence."""
 from pathlib import Path
 import re,json,csv,collections
-b=Path(__file__).resolve().parents[1];out=b/'named';out.mkdir(exist_ok=True)
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+out=b/'named';out.mkdir(exist_ok=True)
 ds=json.loads((b/'cross_ecu/romraider_descriptor_matches.json').read_text());tables={d['descriptor']:d for d in ds}
 def slug(s):return re.sub('[^a-z0-9]+','_',s.lower()).strip('_')
 def split_args(s):

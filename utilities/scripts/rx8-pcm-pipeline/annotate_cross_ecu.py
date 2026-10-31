@@ -2,7 +2,8 @@
 """Apply review comments to exported C, retaining original identities and Ghidra database."""
 from pathlib import Path
 import csv,json,re
-b=Path(__file__).resolve().parents[1]; c=b/'cross_ecu'
+from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
+c=b/'cross_ecu'
 rows=list(csv.DictReader((c/'symbol_aliases.tsv').open(),delimiter='\t'))
 notes={r['address']:[r['proposed_alias']+' ['+r['confidence']+']: '+r['comment']] for r in rows}
 logger=json.loads((c/'romraider_logger_matches.json').read_text()); aliases=[]
