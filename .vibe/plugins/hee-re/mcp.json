@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "hee-re": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["${PLUGIN_ROOT}/mcp_server.py"],
+      "cwd": "."
+    }
+  }
+}

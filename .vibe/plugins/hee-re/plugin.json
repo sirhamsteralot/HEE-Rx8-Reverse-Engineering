@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "hee-re",
+  "version": "1.0.0",
+  "description": "Agent tools for the HEE RX-8 PCM reverse-engineering repo: SH-2E emulator (boot/run/sensors/replay), debugger (breakpoints, watchpoints, UBC, regs/mem/disasm), ROM manifest, label lookup, ROM diffing.",
+  "author": { "name": "HEE RE project" },
+  "license": "MIT",
+  "keywords": ["reverse-engineering", "emulator", "sh2e", "mazda-rx8", "ecu"],
+  "extensions": {
+    "ai.mistral.vibe": {
+      "schemaVersion": 1,
+      "displayName": "HEE RX-8 RE tools",
+      "toolNamespace": "heeRe"
+    }
+  }
+}

@@ -25,6 +25,10 @@ Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.js
 Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
 Windows with `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
 
+**Agent tooling:** in-session agents call `python utilities/scripts/hee.py <tool> '<json>'`
+directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin in
+`.vibe/plugins/hee-re/` (stdio server + `hee-reverse-engineering` skill).
+
 ## Goals
 
 - Understand the structure, behavior, and algorithms of the HEE PCM firmware.

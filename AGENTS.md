@@ -92,6 +92,21 @@ dumping it at the root.
 - Subject: imperative, ≤72 chars. Body: why, plus links to investigation docs and key
   addresses. One logical change per commit. Never rewrite history.
 
+## Agent tooling (how agents use the emulator/RE data)
+
+- **In-session agents (like you) do NOT need MCP** — you have local repo access.
+  Drive the tools directly:
+  - `python utilities/scripts/hee.py <tool> '<json args>'` (list: `--list`) —
+    one-shot tool calls: `hee_rom_list`, `hee_rom_info`, `hee_boot`, `hee_state`,
+    `hee_labels`, `hee_disasm_rom`, `hee_diff_roms`, `hee_manifest_check`, …
+    (sessions are per-process; for multi-step debugging use `debug.py`/`ui.py`).
+  - or from `run_typescript`: import the emulator modules under
+    `utilities/scripts/emu/` and call `emu.build()/run()`, `debugger.DebugSession`, etc.
+- **MCP plugin** `.vibe/plugins/hee-re/` (`mcp.json` + `mcp_server.py`, same
+  `call_tool`) exists for *external* agents / platforms and Vibe tool exposure;
+  it is not required for local work. Skill `hee-reverse-engineering` (in the
+  plugin) documents the RE workflows for agents.
+
 ## Verification
 
 - `python utilities/scripts/hash_binaries.py --check` after touching `binaries/`.
