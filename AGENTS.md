@@ -14,7 +14,7 @@ and session log (`docs/learnings.md`).
 - `reverse-engineered/decompiled/<rom-id>/` — decompiler C export, per-function files, indexes (`function_index.tsv`, `callgraph.tsv`, `symbols.tsv`), and synchronized named views (`named/`).
 - `reverse-engineered/reimplementation/` — clean, compilable C (C11, strict warnings) plus its host tests.
 - `docs/investigations/<rom-id>/` — per-ROM investigation evidence: root `*_report.md` subsystem reports, `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`, `backups/` (pre-change zips, LFS), README.
-- `docs/architecture/` — memory maps, `hardware/` (text pinout `mazda-rx-8-pcm-pinout-series-1.md` derived from ground-truth `docs/references/13Electrical.pdf`, plus `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + stats).
+- `docs/architecture/` — memory maps, `hardware/` (text pinout `mazda-rx-8-pcm-pinout-series-1.md` derived from ground-truth `docs/references/13Electrical.pdf`, plus `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + stats), emulator docs: `emulator-ui.md`, `emulated-obd.md`, and **`emulator-re-guide.md` — how to test firmware in the simulator with the real-car datalogs (sensor/replay input, watch/OBD output, harness.py function calls, golden-log loop); read it before emulator-based validation work**.
 - `docs/references/` — reference PDFs with trust notes, upstream repo links, prior-effort docs.
 - `docs/learnings.md` — accumulated session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (upstream vs reviewed vs merged, provenance in README).
@@ -76,7 +76,10 @@ dumping it at the root.
 ## Workflow for a typical task
 
 1. Read `README.md`, `ROADMAP.md`, this file, and `docs/learnings.md`; check
-   `docs/investigations/` for existing work on the topic.
+   `docs/investigations/` for existing work on the topic. If the task involves
+   running/validating firmware in the simulator (boot, datalog replay, UDS/OBD
+   queries, function-level checks), also read
+   `docs/architecture/emulator-re-guide.md`.
 2. Land raw material in `input/` (never committed); inventory additions in the
    investigation doc.
 3. Create/update the investigation doc with goal + plan.
@@ -95,6 +98,10 @@ dumping it at the root.
 ## Agent tooling (how agents use the emulator/RE data)
 
 - **In-session agents (like you) do NOT need MCP** — you have local repo access.
+  For any simulator-based validation (boot, datalog replay, OBD/UDS, harness
+  calls), follow `docs/architecture/emulator-re-guide.md` first — it has the
+  working commands, sensor/replay wiring, watch addresses, and the
+  golden-log comparison loop.
   Drive the tools directly:
   - `python utilities/scripts/hee.py <tool> '<json args>'` (list: `--list`) —
     one-shot tool calls: `hee_rom_list`, `hee_rom_info`, `hee_boot`, `hee_state`,
@@ -113,7 +120,8 @@ dumping it at the root.
 - `python utilities/scripts/hash_binaries.py --check` after touching `binaries/`.
 - Emulator changes (`utilities/scripts/emu/`): `python -m pytest tests/` (all
   harnesses, incl. `test_phase1_dynamic.py` which executes ROM functions via
-  `harness.py`) plus a differential trace run against the Renesas Simulator
+  `harness.py` — see `docs/architecture/emulator-re-guide.md` §5) plus a
+  differential trace run against the Renesas Simulator
   Debugger (SH7055) on the Windows machine via
   `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
   The Renesas tool is not installed on every machine: when absent, run the
