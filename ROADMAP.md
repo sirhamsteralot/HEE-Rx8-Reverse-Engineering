@@ -62,7 +62,7 @@ Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
 - Agent tooling: `utilities/scripts/hee.py` CLI (direct, no MCP needed in-session)
   + `.vibe/plugins/hee-re/` MCP plugin for external agents (20 `heeRe.*` tools,
   shared `call_tool`) + `hee-reverse-engineering` skill.
-- **36/36 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`,
+- **38/38 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`,
   `test_phase1.py`, `test_phase1_dynamic.py`, `test_agent_tools.py`).
 
 ### Phase 1 open items (validation & fidelity hardening — these are the E-items below)
@@ -134,7 +134,11 @@ Still open:
   verified/corrected (blend at 0x123da/0x124d6, clamp 0x121fc/0x12300; CLTcomp inside
   the (1-CrankingMult) group, IdleBaseFinal outside; DSC leading-only). Report:
   `docs/investigations/60E15120_N3J1E/ignition_timing_report.md`; dynamically verified
-  bit-exact in the emulator (`test_timing_cranking_blend_equation`).
+  bit-exact in the emulator (`test_timing_cranking_blend_equation`). Re-verified
+  at the binary level the same day: literal pools resolved, min-advance constants
+  corrected to -25.0/-58.5 deg (were misread as -24/-44), report §10 updated
+  (`ignition_timing_report.md`); all reports now carry a plain-language §1a
+  (AGENTS.md rule 8).
 - Cross-check thread's OL-fueling chain vs our fueling report; verify engine-load
   math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43) and settle g/rev vs VolEf.
 - Settle checksum/CVN (find the incremental hash routine) and bootloader seed/key

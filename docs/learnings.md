@@ -32,6 +32,10 @@ session-specific know-how. Everything here is backed by artifacts in
   `0xf000|(B<<8)|(A<<4)|5`, T = frB > frA; `fadd/fsub` = `0xf0..|0/1`;
   `fmov frA,frB` = `...|0xc`; `bt/s`=0x8d.., `bf/s`=0x8f.., `bra`=0xa...;
   `mov #imm,rN`=0xe...; `push/pop` = 0x2f../0x6f..; jsr @rX = 0x4000|(X<<8)|0x2b.
+- The disassembler prints the **computed EA** in `@(disp,pc)` annotations (e.g.
+  `mov.w @(0x123fc,pc)` at 0x123e0 -> literal word at 0x123fc = pc+4+disp*2), so
+  read the printed value directly as the literal-pool address — do NOT re-apply
+  pc+4+scaling to it. Literal pools show up as gaps in the listing.
 - RAM addresses in pools appear as mov.w low16 (sign-extended) or mov.l full32;
   indexed arrays appear as base+offset (stride computed by shifts, e.g. 0x18).
 - Float constants often live in a **shared pool** (0x7xxxx) reached via mov.l
@@ -85,7 +89,9 @@ session-specific know-how. Everything here is backed by artifacts in
 ## Reports
 
 - Root `*_report.md` files follow `knock_control_report.md`'s 10-section format,
-  with a mandatory memory map (function + RAM address tables). Keep historical
+  with a mandatory memory map (function + RAM address tables) and a plain-language
+  §1a after the executive summary (standard since 2026-10-31, AGENTS.md rule 8;
+  style example `ignition_timing_report.md` §1a). Keep historical
   reports intact; append a dated "Update" addendum for later passes.
 - `scripts/validate_reports.py` checks every report (sections, ROM hash, all
   memory-map addresses vs index/TSVs/ROM) — run it after any report edit.

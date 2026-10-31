@@ -126,7 +126,7 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
   (test_rcan_rx_tx_through_rom_driver); Mode 22 0x0043 → 0x56b8a (test_mode22_dispatch_pid_0043);
   0x6884 ADC sweep lands channels in RAM (test_adc_read_path_dynamic);
   boot to idle 0x3dac with zero overrides (test_nmi_pin_replaces_guessed_override).
-- `python -m pytest tests/` — 36/36 pass (decode corpus unaffected; names are cosmetic).
+- `python -m pytest tests/` — 38/38 pass (36 at this pass + 2 added later by the ignition-timing pass; names are cosmetic).
 - Pipeline validators now run from the repo root via
   `utilities/scripts/rx8-pcm-pipeline/paths.py` (no legacy `input/Tuning-merged`
   needed): `validate_export.py`, `validate_reports.py` (this report included),

@@ -162,7 +162,7 @@ backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
 ## Start here
 
 - [Firmware design document](design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [ignition timing](ignition_timing_report.md) — each with a full memory map; reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [ignition timing](ignition_timing_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
 - [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)

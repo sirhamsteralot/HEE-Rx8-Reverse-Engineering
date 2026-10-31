@@ -5,7 +5,7 @@ dynamically. Python 3, stdlib only. **Status 2026-10-31: boot of 60E15120_N3J1E
 passes CAN init (RCAN model) and parks in the main idle loop 0x3dac clean, no
 unknown opcodes; WDT serviced by the firmware's own poll path (PB15 heartbeat
 logged); golden 200k-instruction PC trace reproduces byte-exact in tests
-(compare_traces self-check MATCH); 36/36 tests pass.**
+(compare_traces self-check MATCH); 38/38 tests pass.**
 
 ## Layout
 

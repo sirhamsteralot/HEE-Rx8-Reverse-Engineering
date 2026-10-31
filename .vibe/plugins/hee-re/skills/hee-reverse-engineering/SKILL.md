@@ -44,7 +44,7 @@ not for asserting conclusions.
 
 - Every claim in docs must trace to an address + evidence; run the binary-level
   verification (pipeline validators) before claiming a labeling pass done.
-- Write findings to `docs/investigations/<rom-id>/` (10-section report format),
+- Write findings to `docs/investigations/<rom-id>/` (10-section report format incl. plain-language §1a, see AGENTS.md rule 8),
   data to `data/`, scripts to `utilities/scripts/`. Never edit `binaries/` or
   `submodules/`.
 - Emulator traces you produce should be diffed against goldens / the Renesas

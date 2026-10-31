@@ -14,7 +14,9 @@ Documentation, investigations, architecture maps, and references.
 - Investigations are organized per ROM (`docs/investigations/<rom-id>/`); within a
   ROM, follow the prior effort's per-folder READMEs. New ROMs get a new folder.
 - Subsystem reports follow the 10-section format with mandatory function/RAM address
-  tables (template: `investigations/60E15120_N3J1E/knock_control_report.md`).
+  tables and a plain-language §1a after the executive summary (template:
+  `investigations/60E15120_N3J1E/knock_control_report.md`; style example §1a:
+  `ignition_timing_report.md`).
 - Reference external material by link + access date; commit PDFs only in
   `references/` with a trust note; quote them by table/section in reports.
 - Keep `learnings.md` updated with dated, artifact-backed lessons.

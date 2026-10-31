@@ -64,7 +64,7 @@ idle_base_timing_select()     # 0x14100: a780 = tbl 0x69208 (cranking) / 0x6921c
 iat_timing_compensation_on_throttle()  # 0x14090: a778 = a77c = IAT tbl 0x6a0d8 (load>=0.5) else 0
 cranking_timing_leading_filter()       # 0x43934: ca9c = filter(lookup(ECT, 0x6b630))
 cranking_timing_trailing_filter()      # 0x439b2: caa0 = filter(lookup(ECT, 0x6b644))
-min_advance_clamp_select()    # 0x12630: a64c = -24 / -44 / lookup(ECT, 0x691a4/0x691b8)
+min_advance_clamp_select()    # 0x12630: a64c = -25.0 / -58.5 / lookup(a98c, 0x691a4/0x691b8)
 dsc_timing_derate_select()    # 0x1815c: a91c = DSC Mode A base (bc94, tbl 0x6a7a4) when DSC mode 4
 leading_timing_cranking_blend()  # 0x123da: a640 = a5e8*a644 + (a5f0+a718+ca9c)*(1-a644) + a780 - a778
 knock_retard_apply_leading()     # 0x125bc: a648 = (a734 - a6ac) - max(a750, c9a0) + a5e0 + b288 - a66c

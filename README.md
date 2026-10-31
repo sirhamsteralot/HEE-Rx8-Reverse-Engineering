@@ -40,7 +40,7 @@ exist:
 ```sh
 git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
-python -m pytest tests/                                       # 36 tests, ~25s
+python -m pytest tests/                                       # 38 tests, ~25s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
 python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
@@ -113,7 +113,7 @@ are promoted into the tracked folders.
    (literal pools, constants, descriptors, GPIO reg+mask), run the pipeline's
    `validate_export.py`/`validate_reports.py`.
 7. **Report** — 10-section subsystem format with mandatory function/RAM address
-   tables (template: `docs/investigations/60E15120_N3J1E/knock_control_report.md`).
+   tables and a plain-language §1a (template: `docs/investigations/60E15120_N3J1E/knock_control_report.md`).
 8. **Reimplement & test** — compilable C in `reverse-engineered/reimplementation/`
    with host tests, cross-checked against the emulator.
 
@@ -148,10 +148,16 @@ are promoted into the tracked folders.
   reproduce static findings in the emulator (math helpers vs the reimplementation,
   knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
   (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
-  tooling (`hee.py` + MCP plugin). 36/36 tests.
+  tooling (`hee.py` + MCP plugin). 38/38 tests.
 - **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
   cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
   into the decompiled views — `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`.
+- **Ignition timing (2026-10-31):** Phase 2 labeling pass verified the thread §9
+  BTDC equation in the emulator (blend 0x123da/0x124d6, clamp 0x121fc/0x12300),
+  labeled 15 functions + 22 RAM + 17 tables, then re-verified at the binary level
+  (min-advance constants corrected to -25.0/-58.5 deg) —
+  `docs/investigations/60E15120_N3J1E/ignition_timing_report.md` (all subsystem
+  reports now carry a plain-language §1a per AGENTS.md rule 8).
 - **Pipeline:** `utilities/scripts/rx8-pcm-pipeline/` now resolves paths via
   `paths.py` to this repo (no legacy `input/Tuning-merged`); validators
   (`validate_export`, `validate_reports`, `verify_readability`, `verify_math_units`)

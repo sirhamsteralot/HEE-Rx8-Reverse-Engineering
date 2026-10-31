@@ -6,7 +6,7 @@ the emulated PCM, run it, and compare the emulated outputs (RAM watchpoints,
 MMIO writes, UDS responses) against what the real car logged. Everything here
 runs offline; no hardware is touched.
 
-Status 2026-10-31: implemented and tested (36/36 in `python -m pytest tests/`).
+Status 2026-10-31: implemented and tested (38/38 in `python -m pytest tests/`).
 Companion docs: `emulator-ui.md` (browser UI), `emulated-obd.md` (virtual OBD
 port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 
@@ -17,7 +17,7 @@ port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 | Emulator core (CPU/bus/peripherals) | `utilities/scripts/emu/` (`emu.py`, `sh2e.py`, `bus.py`, `peripherals.py`, `can.py`, `isotp.py`, `obd_port.py`, `debugger.py`, `debug.py`, `ui.py`, `harness.py`) |
 | Per-ROM profiles (ROM hash + memory map + peripherals + sensors + replay_map + watch + uds) | `utilities/scripts/emu/profiles/*.json` |
 | Real-car datalogs (golden inputs) | `data/logs/rx8-666p/*.csv` (OBD PIDs: RPM, load %, ECT, IAT, MAF g/s, AFR, throttle %, timing), `data/logs/nr666p/*.csv` (VersaTuner: absolute load, λ, ECT, RPM, leading/trailing timing advance, IAT, **knock retard**, LTFT/STFT) |
-| Static evidence to validate | `reverse-engineered/decompiled/<rom-id>/`, `data/labels/<rom-id>/`, `docs/investigations/<rom-id>/` (10-section reports) |
+| Static evidence to validate | `reverse-engineered/decompiled/<rom-id>/`, `data/labels/<rom-id>/`, `docs/investigations/<rom-id>/` (10-section reports incl. §1a) |
 | Golden emulator outputs | `tests/fixtures/` (boot trace; add `obd/` for UDS golden logs) |
 | Findings go to | `docs/investigations/<rom-id>/` (report + evidence; never edit `binaries/` or `submodules/`) |
 
@@ -166,7 +166,7 @@ Note the dispatcher (0x3c2a) never rts — use `stop_at=(0x3DAC,)`.
 4. Compare against the same row's columns in the CSV (e.g. nr666p `Knock retard
    (°)` vs watch `knock_retard_ffffa734`; `Engine Load(Absolute)(%)` vs load).
 5. Record matches/divergences with addresses + cycle counts in
-   `docs/investigations/<rom-id>/` (10-section report format); put golden emulator
+   `docs/investigations/<rom-id>/` (10-section report format incl. §1a); put golden emulator
    outputs under `tests/fixtures/`.
 
 Known gap to keep in mind: the OS tick timer is modeled (CMI10B) but task
