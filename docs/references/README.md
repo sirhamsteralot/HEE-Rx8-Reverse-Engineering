@@ -24,15 +24,24 @@ package-pin ↔ connector-terminal link from the pinout alone.
 
 Tracked as submodules under `submodules/` (see `.gitmodules`); fetch with
 `git submodule update --init --recursive`. Never edit or commit inside them —
-cite files by path + upstream commit hash instead:
+cite files by path + upstream commit hash instead. These are the canonical home
+for their content; our repo references them rather than duplicating files:
 
-- `submodules/Mazda_RX8_PCM_ReverseEngineering` — github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering:
-  stock ROMs, data binaries, Ghidra archives, utilities (promoted copies live in
-  `binaries/`, `reverse-engineered/disassembly/archives/`, `utilities/scripts/patchers/`)
+- `submodules/Mazda_RX8_PCM_ReverseEngineering` — github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering,
+  pinned at `492193ba8548869b91915be55133d85ab7a8722a`:
+  `Stock_ROMs/` (10 stock ROMs — referenced from `binaries/README.md`),
+  `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
+  `Utilities/` (upstream patcher scripts)
+- `submodules/RX8Defs` — pinned at `1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`:
+  upstream RomRaider/ECUFlash XML definitions. Our `data/definitions/` copies were
+  taken from specific upstream commits (cited in
+  `docs/investigations/60E15120_N3J1E/defs-merge/`) and may differ from the pinned
+  HEAD — that is intentional.
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs: upstream RomRaider ECU +
   logger XML definitions (promoted copies in `data/definitions/romraider/upstream-rx8defs/`);
   commit hashes are cited as merge provenance — never rewrite that history
-- `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man: PCM reflash tool for Tactrix
+- `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man, pinned at
+  `50f905bc271e918a00ce0eda96e6414c220886e5`: PCM reflash tool for Tactrix
   (never flash without bench validation)
 
 Related but not submoduled (not git repos in the intake, URL only):

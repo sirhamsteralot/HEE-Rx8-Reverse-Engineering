@@ -29,6 +29,11 @@ live Ghidra `.gpr/.rep` project DBs, the RomRaider install, and the duplicate
 `13Electrical.pdf`, which remains ground truth) was promoted to
 `../docs/architecture/hardware/`.
 
+2026-10-31: byte-identical duplicates of submodule files were removed from the
+tracked folders (10 stock ROMs, 3 captures, 3 Ghidra `.gar` archives) — they are
+referenced via `../submodules/Mazda_RX8_PCM_ReverseEngineering/` at its pinned
+commit instead. See `../docs/references/README.md`.
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —

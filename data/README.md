@@ -4,7 +4,10 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
 
 ## Layout
 
-- `definitions/` — ECU tuning definitions:
+- `definitions/` — ECU tuning definitions. Upstream originals are in
+  `submodules/RX8Defs/` (pinned `1b3aea2…`); the copies here were taken from
+  specific upstream commits (cited in the defs-merge investigation records) and
+  may differ from the pinned HEAD — intentional, see `docs/references/README.md`.
   - `ecuflash/` — ECUFlash XML definitions (upstream).
   - `romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs.
   - `romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.

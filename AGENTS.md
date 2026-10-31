@@ -9,8 +9,8 @@ and session log (`docs/learnings.md`).
 
 - `input/` — raw, uncommitted intake (bins, prior efforts, cloned repos, tool installs). Never `git add` its contents; promote verified artifacts out of it.
 - `submodules/` — upstream repos (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`) as git submodules, **read-only context only**. Never work, edit, or commit inside them; our promoted copies live in `binaries/`, `data/`, `reverse-engineered/`, etc. To move to a newer upstream commit, update deliberately and commit the gitlink bump in this repo (`git submodule update --remote` is a shared-state action — get approval first).
-- `binaries/` — immutable dumps only: `stock-roms/` (upstream `<firmware-id>_<cal-id>.bin` names kept), `captures/` (RAM/EEPROM/IC reads), `manifest.csv` (SHA-256 + provenance, recursive). Never edit or "fix" a binary in place.
-- `reverse-engineered/disassembly/` — addressed disassembly exports per ROM (`<rom-id>/`), plus `archives/` (Ghidra `.gar`, via LFS). Live `.gpr/.rep` project DBs stay in `input/`; commit archives + exports instead.
+- `binaries/` — immutable dumps of **our own acquisitions** only, with `manifest.csv` (SHA-256 + provenance, recursive). Never edit or "fix" a binary in place. Upstream ROMs/captures are referenced via `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/` — do not duplicate them here.
+- `reverse-engineered/disassembly/` — addressed disassembly exports per ROM (`<rom-id>/`). Ghidra `.gar` archives live in the submodule's `Ghidra_Archives/` — reference, don't copy. Live `.gpr/.rep` project DBs are not committed anywhere.
 - `reverse-engineered/decompiled/<rom-id>/` — decompiler C export, per-function files, indexes (`function_index.tsv`, `callgraph.tsv`, `symbols.tsv`), and synchronized named views (`named/`).
 - `reverse-engineered/reimplementation/` — clean, compilable C (C11, strict warnings) plus its host tests.
 - `docs/investigations/<rom-id>/` — per-ROM investigation evidence: root `*_report.md` subsystem reports, `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`, `backups/` (pre-change zips, LFS), README.
@@ -39,8 +39,11 @@ dumping it at the root.
 4. **`input/` stays uncommitted** (`.gitignore` covers `input/*` except its README).
 4b. **`submodules/` is read-only context.** Don't create branches, edit files, or
     commit inside a submodule from this repo. Reference submodule files by path +
-    upstream commit hash in docs; never copy from them into tracked folders without
-    provenance notes (promotion rules in `input/README.md` still apply).
+    upstream commit hash in docs. **Don't duplicate submodule content into tracked
+    folders** — if a file is byte-identical to one in a submodule, delete our copy
+    and reference `submodules/<name>/<path>` (pinned commit) instead. Local
+    modifications of upstream files are fine to keep, with provenance notes
+    (promotion rules in `input/README.md` still apply).
 5. **Address traceability.** Tie every symbol to its original address
    (`0x08001234`) in code, docs, and commit messages.
 6. **Evidence discipline (label ladder).** `FUN_xxxxxxxx` = unnamed, address only;

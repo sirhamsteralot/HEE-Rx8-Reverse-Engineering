@@ -27,8 +27,8 @@ ROM binaries. Seeded on 2026-10-31 from a prior effort workspace
 |---|---|
 | `input/` | Raw intake drop zone (bins, prior efforts, cloned repos). **Never committed.** |
 | `submodules/` | Upstream repos as git submodules (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`) — **read-only context only**, never worked in or committed from. Fetch with `git submodule update --init --recursive`. |
-| `binaries/` | Immutable dumps: `stock-roms/`, `captures/`; `manifest.csv` = SHA-256 + provenance for every file. |
-| `reverse-engineered/` | RE output. `disassembly/` (addressed asm per ROM, `archives/` = Ghidra `.gar` via LFS), `decompiled/<rom-id>/` (C export + named views + indexes), `reimplementation/` (compilable C + host tests). |
+| `binaries/` | Immutable dumps of **our own acquisitions** only, with `manifest.csv` (SHA-256 + provenance). Upstream stock ROMs/captures are referenced, not duplicated: `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/`. |
+| `reverse-engineered/` | RE output. `disassembly/<rom-id>/` (addressed asm; `.gar` archives in the submodule's `Ghidra_Archives/`), `decompiled/<rom-id>/` (C export + named views + indexes), `reimplementation/` (compilable C + host tests). |
 | `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups), `architecture/` (memory map, `hardware/` pinouts & wiring, `design/`), `references/` (PDFs, upstream links, prior-effort docs), `learnings.md` (session log). |
 | `data/` | Machine-readable artifacts: `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records). |
 | `utilities/` | `scripts/` (`hash_binaries.py`, `rx8-pcm-pipeline/`, `patchers/`, `defs-merge/`), `tools/ghidra/` (Java headless scripts, SH-2E processor config). |

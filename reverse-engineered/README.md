@@ -5,7 +5,11 @@ All reverse-engineering output for HEE ROMs, organized per ROM ID.
 | Path | Contents |
 |---|---|
 | `disassembly/<rom-id>/` | Addressed disassembly export (instruction bytes), `decompiler_issues.tsv`, `non_instruction_ranges.tsv`. |
-| `disassembly/archives/` | Ghidra `.gar` project archives (Git LFS). Live `.gpr/.rep` project DBs stay in `input/` — commit archives + exports, not databases. |
+
+Ghidra `.gar` project archives are **not duplicated here** — see
+`submodules/Mazda_RX8_PCM_ReverseEngineering/Ghidra_Archives/` (pinned at
+`492193ba8548869b91915be55133d85ab7a8722a`). Live `.gpr/.rep` project DBs are not
+committed anywhere; commit archives (via the submodule) + exports, not databases.
 | `decompiled/<rom-id>/` | Decompiler C export: `firmware_decompiled.c`, per-function `functions/`, indexes (`function_index.tsv`, `callgraph.tsv`, `symbols.tsv`, `analysis_summary.json`), plus synchronized readable view in `named/`. |
 | `reimplementation/` | Clean, compilable C11 reimplementations (`rx8_math.c`, `rx8_apv.c` + headers) with host tests (`test_*.c`). Build: `cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off … -lm`. |
 

@@ -12,9 +12,11 @@ verifying HEE artifacts.
   workspace layout** (`../..` = `input/Tuning-merged`); run them with that tree
   present. Requires Ghidra 12.1.3 (`GHIDRA_HOME`), JDK 21+, Python 3, a C compiler.
 - `scripts/patchers/` — ROM patchers + docs (`patch_intake_rpm_window.py`,
-  `patch_limiter_behavior.py`, `G_ROM_ImmoDefWriter.py`, `PATCHER_*.md`). They write
+  `patch_limiter_behavior.py`, `PATCHER_*.md`). They write
   **new** output `.bin` files with JSON reports; input SHA-256 is asserted unchanged.
   Static validation only — never flash without bench validation.
+  Upstream originals live in `submodules/Mazda_RX8_PCM_ReverseEngineering/Utilities/`
+  (pinned `492193b…`); the copies here are our reviewed/local versions and may differ.
 - `scripts/defs-merge/` — RomRaider definition merge/review scripts
   (`merge_review.py`, `annotate_source.py`).
 - `tools/ghidra/scripts/` — Ghidra headless Java scripts (`SetupTarget.java`, …).
