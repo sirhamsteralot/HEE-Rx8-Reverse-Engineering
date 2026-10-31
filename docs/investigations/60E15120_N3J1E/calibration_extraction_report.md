@@ -4,6 +4,8 @@
 (plus all 10 stock ROMs + 4 own 60E0G500 dumps). Static analysis of ROM bytes only;
 no firmware was modified.
 
+**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md).
+
 ## 1. Executive summary
 
 Built `utilities/scripts/extract_maps.py`, a scanner that finds every Denso

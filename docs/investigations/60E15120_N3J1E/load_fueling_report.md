@@ -8,6 +8,8 @@ literals were re-read directly from the untouched ROM. No hardware execution
 was performed. Full per-function evidence: `reviews/load_fueling_model/`
 (README, REVIEW_NOTES, candidate alias TSVs, validation.json).
 
+**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md).
+
 ## 1. Executive summary
 
 The PCM's "engine load" — the axis shared by every fuel and timing table in

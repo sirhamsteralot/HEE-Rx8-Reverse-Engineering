@@ -8,6 +8,8 @@ untouched). All findings are from static analysis of the canonical export
 supplied SH7055F hardware manual (`Sh7055h.pdf`). No hardware execution was
 performed. Full evidence: `reviews/intake_solenoids/README.md`.
 
+**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md).
+
 ## 1. Executive summary
 
 The PCM drives four intake solenoids (SSV, VFAD, VDI, secondary-air) as plain

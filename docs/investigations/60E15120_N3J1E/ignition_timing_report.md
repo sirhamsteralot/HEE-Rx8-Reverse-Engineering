@@ -10,6 +10,8 @@ tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
 `source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/).
+
 ## 1. Executive summary
 
 The final ignition timing per rotor is computed in `ignition_timing_main_task` (0x142a4,

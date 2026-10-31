@@ -10,6 +10,8 @@ every dynamically-cited claim names the emulator observation. Full evidence:
 `source_review/accepted_{function,ram,lookup}_aliases.tsv`,
 backup `backups/pre_os_scheduler_can_ivt_labels.zip`.
 
+**Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs.
+
 ## 1. Executive summary
 
 The 2026-10-31 emulator pass (Phase 1 fidelity hardening) produced dynamically verified

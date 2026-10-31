@@ -17,6 +17,8 @@ performed. Full evidence: `reviews/fueling/README.md`; sceptical re-check:
 > in §2 uses raw register names (bf68, bed0, …) — a physical-units rewrite is
 > part of the deepening pass.
 
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input — see the marker above), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/).
+
 
 ## 1. Executive summary
 

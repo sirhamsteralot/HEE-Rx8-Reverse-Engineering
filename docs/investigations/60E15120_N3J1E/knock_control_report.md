@@ -8,6 +8,8 @@ untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
 performed. Full evidence: `reviews/knock_control/README.md`.
 
+**Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](calibration_extraction_report.md) (knock tables in data/maps/).
+
 ## 1. Executive summary
 
 The PCM runs a **closed-loop knock control** on both rotors. It listens to each

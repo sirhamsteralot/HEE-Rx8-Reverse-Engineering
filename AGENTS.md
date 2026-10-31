@@ -72,7 +72,15 @@ dumping it at the root.
    labeling applied, corrections, files, validation, **mandatory memory map
    (function + RAM address tables)**, limits. Detailed evidence goes in the matching
    `reviews/<subsystem>/` folder. Validation proves what it lists — never write
-   "verified working" beyond what a validation artifact covers.
+   "verified working" beyond what a validation artifact covers. **Cross-reference,
+   don't duplicate**: if a report depends on another subsystem's output (e.g. the
+   fueling chain consumes engine load), add a `**Related reports:**` line in the
+   header linking the upstream/downstream reports instead of re-deriving their
+   content — see the links in the `60E15120_N3J1E/*_report.md` headers
+   (load → fueling/ignition/intake, knock → ignition, P3 calibration extraction →
+   all table lists). If a dependency is missing, that's a sign the report is
+   shallow — mark it FURTHER INVESTIGATION NEEDED at the top and add a ROADMAP
+   backlog item.
 9. **No drive-by changes.** Match existing style (kebab-case filenames, ISO dates,
    `0x` addresses; upstream binary names excepted). Don't reformat untouched files.
 10. **Safety.** Nothing here flashes a vehicle without an explicit bench-validation
