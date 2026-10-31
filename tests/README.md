@@ -42,7 +42,7 @@ Verification that reimplemented/derived behavior matches the original binaries.
   (dynamic reproduction of static findings via `emu/harness.py`: math helpers vs
   the reimplementation, knock clamp 0x13bd2, injector map 0xd7d4→ATU-II 8A-8F,
   ADC read path, RCAN RX/TX, Mode 22 dispatch), `tests/test_agent_tools.py`
-  (`hee.py` CLI). 34 tests as of 2026-10-31.
+  (`hee.py` CLI). 36 tests as of 2026-10-31.
 - Host C tests need a machine with a working C toolchain (the current Windows
   box has MSVC cl.exe but no VC headers, and no mingw gcc) — until then the
   emulator cross-check uses a float32 Python port of the reimplementation.

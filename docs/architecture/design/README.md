@@ -69,6 +69,11 @@ the name is inherited from the reference project.
 
 ## 4. Runtime architecture: scheduler and tasks
 
+> 2026-10-31: the scheduler/OS, IVT and CAN/UDS transport are now labeled from
+> emulator execution — see `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`
+> (os_init 0x3e10, os_dispatch 0x3c2a, os_switch_to_task 0x375c, wake 0x3db0,
+> IVT at VBR 0x7fc50, CAN RX interrupt IVT 0x378).
+
 ```
 ATU timer ISRs (0x803e, 0x9fc)  --tick-->  scheduler state
                                               |

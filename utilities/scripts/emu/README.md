@@ -1,9 +1,11 @@
 # emu/ — SH-2E emulator (ROADMAP Phase 1 — implemented 2026-10-31)
 
 Config-driven emulator for running RX-8 PCM ROM images and validating findings
-dynamically. Python 3, stdlib only. **Status: full boot of 60E15120_N3J1E runs
-clean (50M+ instructions, no unknown opcodes), WDT heartbeat (PB15) live,
-golden 200k-instruction PC trace reproduces byte-exact in tests.**
+dynamically. Python 3, stdlib only. **Status 2026-10-31: boot of 60E15120_N3J1E
+passes CAN init (RCAN model) and parks in the main idle loop 0x3dac clean, no
+unknown opcodes; WDT serviced by the firmware's own poll path (PB15 heartbeat
+logged); golden 200k-instruction PC trace reproduces byte-exact in tests
+(compare_traces self-check MATCH); 36/36 tests pass.**
 
 ## Layout
 

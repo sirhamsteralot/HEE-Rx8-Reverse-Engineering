@@ -14,11 +14,12 @@ RAM), building on the prior effort and this session's tooling. Statuses are as o
   volatile I/O 0xffffe000–0xffffffff. Firmware ID at 0x2000, cal ID at 0x6c046.
 - Labeled subsystems (10-section reports + reviews): knock control, fueling chain,
   intake solenoids, load/fueling model, limiter (`docs/investigations/60E15120_N3J1E/`).
-- Ghidra SH-2E pipeline (`utilities/scripts/rx8-pcm-pipeline/`), labels
+- Ghidra SH-2E pipeline (`utilities/scripts/rx8-pcm-pipeline/`; paths resolve via
+  its `paths.py` to this repo — no legacy `input/Tuning-merged` tree needed), labels
   (`data/labels/60E15120_N3J1E/`), XML definitions (`data/definitions/`), 10 stock
   ROMs via the pinned submodule.
 
-## Phase 1 — Simulation suite (DONE 2026-10-31, core)
+## Phase 1 — Simulation suite (DONE 2026-10-31; validation/fidelity open items largely closed same day — see the register below)
 
 Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
 `emu/profiles/`):
@@ -61,7 +62,7 @@ Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
 - Agent tooling: `utilities/scripts/hee.py` CLI (direct, no MCP needed in-session)
   + `.vibe/plugins/hee-re/` MCP plugin for external agents (20 `heeRe.*` tools,
   shared `call_tool`) + `hee-reverse-engineering` skill.
-- **34/34 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`,
+- **36/36 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`,
   `test_phase1.py`, `test_phase1_dynamic.py`, `test_agent_tools.py`).
 
 ### Phase 1 open items (validation & fidelity hardening — these are the E-items below)
@@ -123,6 +124,10 @@ Still open:
   `non_instruction_ranges.tsv`.
 - Label the 99-record dispatch table at 0x5f10c–0x5f5af and task table at 0x4998
   (scheduler/OS + UDS service mapping: 0x10/0x23/0x27/0x34/0x36/0x37).
+  **Partially done 2026-10-31** (emulator-driven pass, `os_scheduler_can_ivt_report.md`):
+  task table 0x4998 + ctrl block labeled, IVT at VBR 0x7fc50 mapped, dispatch table
+  0x5f10c labeled with PID 0x43 → handler 0x56b8a (record 0x5f268) verified dynamically;
+  remaining: the other 98 records + full UDS service mapping cross-ROM.
 - Differential labeling across the 10 stock ROMs (byte-match function bodies
   ROM-to-ROM).
 - **Ignition-timing labeling pass** (not yet covered): verify/correct the thread's
@@ -136,6 +141,12 @@ Still open:
   ranges to descriptors.
 
 ### Done this session
+
+- 2026-10-31 emulator fidelity + labeling: E2/E3/E5 closed, E4 RCAN model, E6
+  partial (CAN RX interrupt autonomous); dynamic validation harness
+  (`tests/test_phase1_dynamic.py`); 27 functions + 16 RAM + 9 tables labeled from
+  emulator findings (`os_scheduler_can_ivt_report.md`); pipeline repointed to this
+  repo via `paths.py` (validators PASS from the repo root).
 
 - Tuned-vs-stock diff: `binaries/dumps/aron-N3ZHEC-streetportv1_24_*.bin` vs stock
   `aron-N3ZHEC-2026-10-31.bin` (fw 60E0G500) — **calibration-only** (≥0x6c000, no code

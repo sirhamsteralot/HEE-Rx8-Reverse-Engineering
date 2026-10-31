@@ -14,7 +14,7 @@ there is a fidelity-limits register at the bottom. **Rules for agents/humans:**
 ```sh
 git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
-python -m pytest tests/                                       # 34 tests, ~17s
+python -m pytest tests/                                       # 36 tests, ~25s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
 python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
@@ -116,12 +116,21 @@ are promoted into the tracked folders.
   inject→RXPR, TXPR→tx_log), ADC ADDRn channels with ADST→ADF handshake,
   ATU-II at 0xfffff400 (ch10B tick, crank input capture), DMAC, WDT (OVF flag +
   firmware poll), ROM read-only. Sensor inputs are wired to the real ADC/ATU
-  read paths (E2 closed); the virtual OBD-II port drives the ROM's own CAN/UDS
-  entry points (E4). `harness.py` + `tests/test_phase1_dynamic.py` dynamically
+  read paths (E2 closed); E3 (WDT IVT slot 0x358) and E5 (NMI pin, SYSC model)
+  closed; CAN RX interrupt (IVT 0x378) fires on inject so a plain run moves 0x7e0
+  frames into the UDS buffer autonomously (E6 partial); the virtual OBD-II port
+  drives the ROM's own CAN/UDS entry points for the response side (E4). `harness.py` + `tests/test_phase1_dynamic.py` dynamically
   reproduce static findings in the emulator (math helpers vs the reimplementation,
   knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
   (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
-  tooling (`hee.py` + MCP plugin). 34/34 tests.
+  tooling (`hee.py` + MCP plugin). 36/36 tests.
+- **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
+  cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
+  into the decompiled views — `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`.
+- **Pipeline:** `utilities/scripts/rx8-pcm-pipeline/` now resolves paths via
+  `paths.py` to this repo (no legacy `input/Tuning-merged`); validators
+  (`validate_export`, `validate_reports`, `verify_readability`, `verify_math_units`)
+  run from the repo root and PASS.
 - **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
   load) for `60E15120_N3J1E`; streetport-vs-stock diff done for 60E0G500
   (cal-only; rev limiter float32 at 0x6d54c: 9000→5500/9500/10000).

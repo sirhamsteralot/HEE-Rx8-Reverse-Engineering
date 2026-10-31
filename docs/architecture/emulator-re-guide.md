@@ -6,7 +6,7 @@ the emulated PCM, run it, and compare the emulated outputs (RAM watchpoints,
 MMIO writes, UDS responses) against what the real car logged. Everything here
 runs offline; no hardware is touched.
 
-Status 2026-10-31: implemented and tested (34/34 in `python -m pytest tests/`).
+Status 2026-10-31: implemented and tested (36/36 in `python -m pytest tests/`).
 Companion docs: `emulator-ui.md` (browser UI), `emulated-obd.md` (virtual OBD
 port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 
@@ -187,3 +187,7 @@ deterministically, and note this in findings.
 - Discrepancies are documented, never silently resolved (ROADMAP register).
 - Emulator limits E1–E7 are in ROADMAP.md / `utilities/scripts/emu/README.md` —
   read them before claiming fidelity (host-double FPU, cycles ≠ real time, etc.).
+- Pipeline validators run from the repo root (paths resolve via
+  `utilities/scripts/rx8-pcm-pipeline/paths.py`): `validate_export.py`,
+  `validate_reports.py`, `verify_readability.py`, `verify_math_units.py` —
+  all PASS as of 2026-10-31.
