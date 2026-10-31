@@ -112,12 +112,24 @@ changes or a new opcode is implemented:
 4. Record the result (date, N, tool version, MATCH/divergence) in the investigation
    doc for the change. A trace that only we produce is not validated.
 
-Status 2026-10-31: the Renesas Simulator Debugger (HEW/e² studio) is **not
-installed on the current Windows machine**, so no external diff has been run yet.
-In the meantime `compare_traces.py /tmp/our.trace tests/fixtures/boot-60E15120_N3J1E-200k.trace`
-reports MATCH (200k steps) — the golden trace was regenerated 2026-10-31 with the
-corrected peripheral models and validates self-reproducibility only. Run the
-Renesas diff before claiming external validation (ROADMAP Phase 1 open item).
+Status 2026-10-31 (updated): the Renesas toolchain **is now installed** (HEW
+9.4.3, SuperH RISC engine Simulator/Debugger V.9.10.00 via `Sdsh2e.dll`
+V5.10, SH7055F device files present under `System/Pg/Renesas/SH/Hardware/SH-2E/`).
+A workspace/project (SH-2E / SH7055F, big-endian) and an **SH-2E Simulator**
+debug session were created and connected in HEW, and the ROM was offered via
+File > Download (Binary format, offset 0). **No external trace diff has been
+produced yet**: this scripted session cannot inject keyboard input into HEW's
+command-line control (no window accepts foreground focus here), and the install
+is missing `hprojgen.exe` (project-generator GUI path fails). To finish the
+cross-check manually: in HEW, open the SH-2E simulator session, download
+`60E15120_N3J1E` at 0x0, then in the Command Line window run
+`TRACE ON` / `GO <count>` (or use the Trace window's save-to-file), export the
+PC trace, and diff with `compare_traces.py /tmp/our.trace /tmp/renesas.trace`.
+Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
+interrupt masking) were re-verified — `emu.py --profile 60E15120_N3J1E
+--cycles 200000 --trace` still reports **MATCH 200000 steps** against
+`tests/fixtures/boot-60E15120_N3J1E-200k.trace` (self-check; external diff still
+pending).
 
 ## Limits (honest)
 
