@@ -27,8 +27,7 @@ log), see **`docs/architecture/emulator-re-guide.md`**.
 
 Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.json`
 (ROM path + SHA-256 verified at load, memory map, SH7055 peripheral set, sensor map).
-Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC` (stock, not tuned — own
-dump of Aron's ECU), `60E1B900_N3ZBEH`, and the tuned `60E0G500_N3ZHEC_streetport_*`.
+Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC`, `60E1B900_N3ZBEH`, and the tuned `60E0G500_N3ZHEC_streetport_*`.
 To run a different `.bin`, add a profile — recipe in `utilities/scripts/emu/profiles/README.md`.
 Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
 Windows with `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
