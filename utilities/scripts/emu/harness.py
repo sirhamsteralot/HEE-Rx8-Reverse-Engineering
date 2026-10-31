@@ -43,7 +43,7 @@ def call(bus, cpu, addr, r_args=(), fr_args=(), ram=None, max_steps=200000, stop
     for i, v in enumerate(r_args):
         cpu.r[4 + i] = v & 0xFFFFFFFF
     for i, v in enumerate(fr_args):
-        cpu.fr[4 + i] = float(v)
+        cpu.fr[4 + i] = f32(float(v))  # FR registers are 32-bit single precision
     stops = (SENTINEL,) + tuple(stop_at)
     steps = 0
     while cpu.pc not in stops and steps < max_steps:

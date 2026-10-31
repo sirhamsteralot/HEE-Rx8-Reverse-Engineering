@@ -49,14 +49,17 @@ def booted():
 # --- float32 port of reverse-engineered/reimplementation/rx8_math.c ---------
 
 def ref_filter(cur, prev, coef, snap):  # rx8_first_order_filter @0x23b0
-    # emulator FPU is host double (ROADMAP E1: no SH float32 rounding), so the
-    # reference mirrors the C formula in double precision; the ROM uses fmac
-    if (harness.bits(f32(prev)) & 0x7F800000) == 0x7F800000:
+    # E1 closed: FR registers and every FPU result are float32. Mirror the ROM's
+    # exact op order (0x23b0: fsub, fsub, fmac, fsub, fabs, fcmp/gt): round each
+    # intermediate to f32; fmac rounds once (fused).
+    cur, prev, coef, snap = f32(cur), f32(prev), f32(coef), f32(snap)
+    if (harness.bits(prev) & 0x7F800000) == 0x7F800000:
         return float(cur)
-    delta = prev - cur
-    gain = 1.0 - coef
-    filt = cur + gain * delta  # fmac in the ROM (fused); double here (E1)
-    return cur if snap > abs(cur - filt) else filt
+    delta = f32(prev - cur)          # fsub fr4,fr5
+    gain = f32(1.0 - coef)           # fldi1; fsub fr6,fr0
+    filt = f32(cur + gain * delta)   # fmac fr0,fr5,fr6 (fused, single rounding)
+    diff = f32(abs(f32(cur - filt))) # fsub fr6,fr5; fabs
+    return float(cur) if snap > diff else filt  # fcmp/gt fr5,fr7; bf
 
 
 def ref_absdiff(a, b):
@@ -102,13 +105,8 @@ def test_math_helpers_vs_reimplementation(booted, addr, ref, nargs):
         args = vec[:nargs]
         _, rom_r, _ = harness.call(bus, cpu, addr, fr_args=args)
         exp = ref(*args)
-        if addr == 0x23B0:
-            # filter: double-precision comparison (E1; ROM fmac is fused)
-            assert math.isclose(rom_r, exp, rel_tol=1e-9, abs_tol=1e-12), (
-                f"0x{addr:08x}{args}: rom={rom_r!r} ref={exp!r}")
-        else:
-            assert harness.bits(rom_r) == harness.bits(exp), (
-                f"0x{addr:08x}{args}: rom={rom_r!r} ref={exp!r}")
+        assert harness.bits(rom_r) == harness.bits(exp), (
+            f"0x{addr:08x}{args}: rom={rom_r!r} ref={exp!r}")
 
 
 def test_knock_retard_clamp_dynamic(booted):

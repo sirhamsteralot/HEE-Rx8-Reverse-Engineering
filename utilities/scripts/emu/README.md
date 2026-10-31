@@ -144,3 +144,12 @@ discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
   ISR exit) is still not triggered (E6 remainder), so UDS *response* TX is
   driven via the profile `uds` entry points. `div1`/rotcl edge cases are
   approximations and "cycles" are not cycle-accurate time (E7).
+
+## 2026-10-31 fidelity pass (ROADMAP group B)
+
+- E7 closed: full DIV1 (Q/M SR bits 8/9) + ROTCR direction fixed; validated
+  against the ROM's own division routine (ref_LongFunc 0x2158).
+- E1 closed: FPU results rounded to float32 per op; harness f32-rounds args.
+- Interrupt masking: deferred delivery on SR mask lowering (ldc/rte).
+- E6 narrowed: see ROADMAP register — CAN RX autonomous, wake check needs the
+  CMI10B tick, UDS entry gated by vehicle latch 0xffff9ec8 bit0.

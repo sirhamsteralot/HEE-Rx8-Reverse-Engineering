@@ -66,7 +66,7 @@ class SH2E:
         self.r = [0] * 16
         self.pc = 0
         self.pr = 0
-        self.sr = 0          # bit0 = T
+        self.sr = 0          # bit0 = T, bit3 = S, bits4-7 = I3-I0, bit8 = Q, bit9 = M
         self.gbr = 0
         self.vbr = 0
         self.mach = 0
@@ -77,6 +77,7 @@ class SH2E:
         self.trace = trace
         self.icount = 0
         self.stopped = False
+        self.pending = []  # [(priority, vector_offset)] deferred while masked
 
     # -- bus helpers --
     def r8(self, a): return self.bus.read8(a)
@@ -96,7 +97,19 @@ class SH2E:
     def interrupt(self, vector_offset, priority=None):
         """Accept an interrupt: push SR+PC on the stack, set the SR mask to the
         interrupt's priority level, branch to IVT[VBR + vector_offset]
-        (SH-2E manual 6.1.3/7.2.5). vector_offset is relative to VBR."""
+        (SH-2E manual 6.1.3/7.2.5). vector_offset is relative to VBR.
+
+        SH-2E masking: an interrupt is accepted only if its priority level is
+        strictly greater than the current SR I3-I0 mask (manual 7.2.5); otherwise
+        it stays pending and is delivered when the mask is lowered (ldc/rte).
+        Unprioritized interrupts (priority=None, e.g. NMI/reset) always fire."""
+        if priority is not None and ((priority & 0xF) << 4) <= (self.sr & 0xF0):
+            self.pending.append((priority & 0xF, vector_offset))
+            self.pending.sort(key=lambda p: -p[0])
+            return
+        self._take_interrupt(vector_offset, priority)
+
+    def _take_interrupt(self, vector_offset, priority):
         self.r[15] = (self.r[15] - 8) & 0xFFFFFFFF
         self.w32(self.r[15], self.sr)
         self.w32(self.r[15] + 4, self.pc)
@@ -104,11 +117,36 @@ class SH2E:
             self.sr = (self.sr & ~0xF0) | ((priority & 0xF) << 4)
         self.pc = self.r32((self.vbr + vector_offset) & 0xFFFFFFFF)
 
+    def _deliver_pending(self):
+        """Deliver the highest-priority pending interrupt whose level now
+        exceeds the SR mask (called after ldc/rte lower the mask)."""
+        while self.pending:
+            pri, vec = self.pending[0]
+            if (pri << 4) > (self.sr & 0xF0):
+                self.pending.pop(0)
+                self._take_interrupt(vec, pri)
+                return True
+            break
+        return False
+
     @property
     def T(self): return self.sr & 1
 
     @T.setter
     def T(self, v): self.sr = (self.sr & ~1) | (1 if v else 0)
+
+    # Q (SR bit 8) and M (SR bit 9) — used by DIV0U/DIV0S/DIV1 (Sh7055h.pdf fig 2.2)
+    @property
+    def Q(self): return (self.sr >> 8) & 1
+
+    @Q.setter
+    def Q(self, v): self.sr = (self.sr & ~(1 << 8)) | ((1 if v else 0) << 8)
+
+    @property
+    def M(self): return (self.sr >> 9) & 1
+
+    @M.setter
+    def M(self, v): self.sr = (self.sr & ~(1 << 9)) | ((1 if v else 0) << 9)
 
     def step(self):
         pc = self.pc
@@ -156,6 +194,7 @@ class SH2E:
         target = self.r32((self.r[15] + 4) & 0xFFFFFFFF)
         self.r[15] = (self.r[15] + 8) & 0xFFFFFFFF
         self._branch(pc, target)
+        self._deliver_pending()
 
     def _op_bra(self, pc, op, t): self._branch(pc, pc + 4 + _se12(op & 0xFFF) * 2)
     def _op_bsr(self, pc, op, t):
@@ -413,6 +452,16 @@ class SH2E:
                 self.r[n] = ((v << c) | (old_t << (c - 1)) | (v >> (32 - c))) & 0xFFFFFFFF if c > 1 else ((v << 1) | old_t) & 0xFFFFFFFF
             else:
                 self.r[n] = v
+        elif kind == "rotcr":
+            # ROTCR: rotate right through carry. T -> MSB, LSB -> T. (SH-2 only
+            # encodes count=1; general c handled for completeness.)
+            c = count % 32
+            old_t = self.T
+            if c:
+                self.T = (v >> (c - 1)) & 1
+                self.r[n] = ((v >> c) | (old_t << (32 - c))) & 0xFFFFFFFF
+            else:
+                self.r[n] = v
         self._next(pc)
 
     def _op_shll(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "shll")
@@ -427,7 +476,7 @@ class SH2E:
     def _op_shal(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "shal")
     def _op_rotl(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "rotl")
     def _op_rotr(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "rotr")
-    def _op_rotcr(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "rotcl")  # rotate through carry, right
+    def _op_rotcr(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "rotcr")  # rotate through carry, right
     def _op_rotcl(self, pc, op, t): self._shift(pc, _reg(t[0]), 1, "rotcl")
 
     def _op_dt(self, pc, op, t):
@@ -460,18 +509,52 @@ class SH2E:
         self.mach = (p >> 32) & 0xFFFFFFFF
         self._next(pc)
 
-    def _op_div0u(self, pc, op, t): self.T = 0; self._next(pc)
+    def _op_div0u(self, pc, op, t):
+        # DIV0U: M=0, Q=0, T=0 (Sh7055h.pdf table 2.13)
+        self.Q = 0; self.M = 0; self.T = 0
+        self._next(pc)
 
     def _op_div0s(self, pc, op, t):
-        self.T = ((self.r[_reg(t[1])] >> 31) ^ (self.r[_reg(t[0])] >> 31)) & 1
+        # DIV0S: MSB(Rn) -> Q, MSB(Rm) -> M, M^Q -> T
+        self.Q = (self.r[_reg(t[1])] >> 31) & 1
+        self.M = (self.r[_reg(t[0])] >> 31) & 1
+        self.T = self.M ^ self.Q
         self._next(pc)
 
     def _op_div1(self, pc, op, t):
+        # DIV1 — full Q/M algorithm per Renesas SH instruction set reference
+        # (shared-ptr.com/sh_insns.html, "void DIV1"): single-step non-restoring
+        # division. old_q = Q; Q = MSB(Rn); Rn = (Rn<<1)|T; conditional add/sub
+        # with borrow/carry detect; Q updated from borrow/carry; T = (Q == M).
         n, m = _reg(t[1]), _reg(t[0])
-        q = (self.r[n] >> 31) & 1
-        mm = (self.r[m] >> 31) & 1
-        self.r[n] = ((self.r[n] << 1) | self.T) & 0xFFFFFFFF
-        self.T = 1 if q != mm else 0
+        r = self.r
+        old_q = self.Q
+        self.Q = (r[n] >> 31) & 1
+        rm = r[m]
+        r[n] = ((r[n] << 1) | self.T) & 0xFFFFFFFF
+        if old_q == 0:
+            if self.M == 0:
+                tmp0 = r[n]; r[n] = (r[n] - rm) & 0xFFFFFFFF
+                borrow = 1 if r[n] > tmp0 else 0
+                if self.Q == 0: self.Q = borrow
+                else: self.Q = 1 if borrow == 0 else 0
+            else:
+                tmp0 = r[n]; r[n] = (r[n] + rm) & 0xFFFFFFFF
+                carry = 1 if r[n] < tmp0 else 0
+                if self.Q == 0: self.Q = 1 if carry == 0 else 0
+                else: self.Q = carry
+        else:
+            if self.M == 0:
+                tmp0 = r[n]; r[n] = (r[n] + rm) & 0xFFFFFFFF
+                carry = 1 if r[n] < tmp0 else 0
+                if self.Q == 0: self.Q = carry
+                else: self.Q = 1 if carry == 0 else 0
+            else:
+                tmp0 = r[n]; r[n] = (r[n] - rm) & 0xFFFFFFFF
+                borrow = 1 if r[n] > tmp0 else 0
+                if self.Q == 0: self.Q = 1 if borrow == 0 else 0
+                else: self.Q = borrow
+        self.T = 1 if self.Q == self.M else 0
         self._next(pc)
 
     # ================= system regs =================
@@ -513,6 +596,8 @@ class SH2E:
     def _op_ldc(self, pc, op, t):
         self._lds_val_set(t[1], self.r[_reg(t[0])])
         self._next(pc)
+        if t[1].lower() == "sr":
+            self._deliver_pending()
 
     def _op_ldcl(self, pc, op, t):
         # '@r15+,gbr'
@@ -532,6 +617,11 @@ class SH2E:
         self._next(pc)
 
     # ================= FPU =================
+    # SH-2E FR registers are 32-bit single precision: every arithmetic result
+    # is rounded to float32 (E1 fix). Loads from memory are already f32.
+    def _fr(self, v):
+        return _f32(_bits(float(v)))
+
     def _op_fmovs(self, pc, op, t):
         a, b = t[0], t[1]
         if a.startswith("@"):  # load: fmov.s @ea, FRn
@@ -572,9 +662,9 @@ class SH2E:
         self.fr[_freg(t[1])] = self.fr[_freg(t[0])]
         self._next(pc)
 
-    def _op_fadd(self, pc, op, t): self.fr[_freg(t[1])] += self.fr[_freg(t[0])]; self._next(pc)
-    def _op_fsub(self, pc, op, t): self.fr[_freg(t[1])] -= self.fr[_freg(t[0])]; self._next(pc)
-    def _op_fmul(self, pc, op, t): self.fr[_freg(t[1])] *= self.fr[_freg(t[0])]; self._next(pc)
+    def _op_fadd(self, pc, op, t): self.fr[_freg(t[1])] = self._fr(self.fr[_freg(t[1])] + self.fr[_freg(t[0])]); self._next(pc)
+    def _op_fsub(self, pc, op, t): self.fr[_freg(t[1])] = self._fr(self.fr[_freg(t[1])] - self.fr[_freg(t[0])]); self._next(pc)
+    def _op_fmul(self, pc, op, t): self.fr[_freg(t[1])] = self._fr(self.fr[_freg(t[1])] * self.fr[_freg(t[0])]); self._next(pc)
 
     def _op_fdiv(self, pc, op, t):
         # SH FPU follows IEEE: x/0 = +/-inf, 0/0 = NaN (no Python exception)
@@ -586,7 +676,7 @@ class SH2E:
             else:
                 self.fr[_freg(t[1])] = math.copysign(math.inf, a) * math.copysign(1.0, b)
         else:
-            self.fr[_freg(t[1])] = a / b
+            self.fr[_freg(t[1])] = self._fr(a / b)
         self._next(pc)
 
     def _op_fcmpeq(self, pc, op, t):
@@ -601,10 +691,9 @@ class SH2E:
     def _op_fldi1(self, pc, op, t): self.fr[_freg(t[0])] = 1.0; self._next(pc)
 
     def _op_fabs(self, pc, op, t):
-        import math
-        self.fr[_freg(t[0])] = abs(self.fr[_freg(t[0])]); self._next(pc)
+        self.fr[_freg(t[0])] = self._fr(abs(self.fr[_freg(t[0])])); self._next(pc)
 
-    def _op_fneg(self, pc, op, t): self.fr[_freg(t[0])] = -self.fr[_freg(t[0])]; self._next(pc)
+    def _op_fneg(self, pc, op, t): self.fr[_freg(t[0])] = self._fr(-self.fr[_freg(t[0])]); self._next(pc)
 
     def _op_flds(self, pc, op, t):  # flds FRn,FPUL
         self.fpul = _bits(self.fr[_freg(t[0])]); self._next(pc)
@@ -614,7 +703,7 @@ class SH2E:
 
     def _op_float(self, pc, op, t):  # float FPUL,FRn
         import math
-        self.fr[_freg(t[1])] = float(struct.unpack("<i", struct.pack("<I", self.fpul))[0])
+        self.fr[_freg(t[1])] = self._fr(float(struct.unpack("<i", struct.pack("<I", self.fpul))[0]))
         self._next(pc)
 
     def _op_ftrc(self, pc, op, t):  # ftrc FRn,FPUL
@@ -622,6 +711,6 @@ class SH2E:
         self.fpul = int(v) & 0xFFFFFFFF
         self._next(pc)
 
-    def _op_fmac(self, pc, op, t):  # fmac fr0,frM,frN : frN += fr0*frM
-        self.fr[_freg(t[2])] += self.fr[0] * self.fr[_freg(t[1])]
+    def _op_fmac(self, pc, op, t):  # fmac fr0,frM,frN : frN += fr0*frM (single rounding on SH-2E)
+        self.fr[_freg(t[2])] = self._fr(self.fr[_freg(t[2])] + self.fr[0] * self.fr[_freg(t[1])])
         self._next(pc)

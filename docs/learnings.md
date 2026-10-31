@@ -205,3 +205,29 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
 - Cross-ROM matching by (dim, counts, type, axis values) is structural only;
   same-shape/different-meaning pairs exist (huge float diffs in the report are
   those, not real calibration changes).
+
+## Emulator fidelity hardening (2026-10-31, ROADMAP group B)
+
+- **DIV1 needs the Q/M SR bits** (bit8=Q, bit9=M per Sh7055h.pdf fig 2.2). The
+  old impl only set T and did no arithmetic — the ROM's 161 div1 sites (32-bit
+  divide at ref_LongFunc 0x2158) all broke. Full algorithm per the Renesas SH
+  instruction-set reference (shared-ptr.com/sh_insns.html "void DIV1"):
+  old_q=Q; Q=MSB(Rn); Rn=(Rn<<1)|T; conditional add/sub by (old_q,M) with
+  borrow/carry detect; Q updated; T=(Q==M). Validate with the ROM itself as
+  oracle: call 0x2158(r4=dividend,r5=divisor), quotient lands in r4.
+- **ROTCR was aliased to ROTCL** — rotate-right-through-carry executed as
+  rotate-left. 21 ROM sites affected. Separate "rotcr" shift kind now.
+- **FPU is single precision**: round every arithmetic result to f32
+  (`_f32(_bits(x))`), and f32-round float args in harness.call (FR regs are
+  32-bit). The 0x23b0 filter then matches the reimplementation bit-exact.
+- **Interrupt masking**: prioritized interrupts with level <= SR.I3-I0 are
+  deferred, delivered when ldc/rte lower the mask (SH-2E manual 7.2.5).
+  Previously every interrupt() fired immediately regardless of mask.
+- **E6 trace findings**: CAN RX ISR exits via plain RTE (no ref_setSR call), so
+  the 0x3db0 wake check never runs on that path. OS tick (ATU-II ch10B CMI10B
+  0x2c8) never fires: ROM arms it from task[8] (0x648e→0x759e→0x7778→0x7b58,
+  OCR10B = ROM table 0xd76d[ffff9f95*2] & 0x7f) which needs a scheduler pass
+  that needs the tick. UDS entry 0x680a0 is gated by vehicle-latch word
+  0xffff9ec8 bit0 (set by vehicle_inputs_poll 0x6744 = PFDR copy, task[17]).
+  With tick + latch, uds_entry fires autonomously; response TX still needs the
+  service task dispatched.

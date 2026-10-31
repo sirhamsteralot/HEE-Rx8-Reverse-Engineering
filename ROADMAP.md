@@ -94,20 +94,37 @@ never silently resolve.
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### B. Emulator fidelity hardening (P1 residual)
+### B. Emulator fidelity hardening (P1 residual) — partially done 2026-10-31
 
-Foundational for dynamic validation of everything in groups C–E. Most items are
-small, targeted fixes.
+Foundational for dynamic validation of everything in groups C–E.
 
-- **E6 full**: OS task context switch — the 0x3db0 wake (called from ref_setSR
-  on ISR exit) still doesn't fire, so UDS response TX is driven via profile
-  `uds` entry points (0x680a0 + dispatcher 0x3c2a) instead of an autonomously
-  scheduled task. RX side is already autonomous.
+- **E1 CLOSED 2026-10-31**: every FPU result rounded to float32 (SH-2E FR
+  registers are single precision); `harness.call` f32-rounds float args.
+  Filter 0x23b0 now bit-exact vs the reimplementation (was the last E1 diff).
+- **E7 CLOSED 2026-10-31 (div1/rotcr)**: ROTCR was aliased to ROTCL (wrong
+  direction — 21 ROM sites); DIV1 lacked the Q/M SR bits and did no arithmetic.
+  Both now implement the full Renesas algorithm (SR bit8=Q, bit9=M per
+  Sh7055h.pdf fig 2.2; DIV1 pseudocode per the SH instruction-set reference).
+  Validated against the ROM's own division routine ref_LongFunc 0x2158 as
+  oracle (r4 = exact quotient). Cycles ≠ real time remains (accepted).
+- **Interrupt masking added 2026-10-31**: prioritized interrupts below the SR
+  I3-I0 mask are now deferred and delivered when ldc/rte lower the mask
+  (SH-2E manual 7.2.5) — previously every interrupt fired immediately.
+- **E6 partial → narrowed 2026-10-31**: traced precisely. CAN RX ISR exits via
+  plain RTE, so the 0x3db0 wake check (ref_setSR 0x3934 with r4==0) never runs
+  on that path; the OS tick (ATU-II ch10B CMI10B 0x2c8) never fires because the
+  ROM arms it from task[8] (0x648e→0x759e→0x7778→0x7b58, OCR10B=table 0xd76d)
+  which needs a scheduler pass that needs the tick — boot-ordering circularity
+  in the partial peripheral model. Verified gates: with CMI10B firing, the
+  0x3db0 wake check runs (165 hits/500k cycles); with the vehicle-present latch
+  word 0xffff9ec8 bit0=1, uds_entry 0x680a0 fires autonomously from can_rx_poll
+  0x11d88. Remaining: autonomous response TX needs the ROM's task[8]/task[17]
+  to run at boot (arm tick + poll vehicle inputs) — i.e. the emulator must
+  deliver the first scheduler pass; until then the OBD port drives the profile
+  `uds` entry points (0x680a0 + 0x3c2a) for the response side. RX side autonomous.
 - **Renesas Simulator Debugger cross-check** (`compare_traces.py`): tool not
   installed on this machine (no HEW/e² studio); golden trace is self-reproducible,
   external diff pending a machine with the licensed tool.
-- **E1** FPU host floats (no SH rounding) — low priority, edge-case impact only.
-- **E7** div1/rotcl approximations, cycles ≠ real time — acceptable for now.
 
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 
@@ -171,13 +188,13 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 
 | ID | Status | What |
 |----|--------|------|
-| E1 | open | FPU uses host floats, no SH rounding |
+| E1 | CLOSED 2026-10-31 | FPU results rounded to float32 per op; harness f32-rounds float args; filter 0x23b0 bit-exact |
 | E2 | CLOSED 2026-10-31 | Peripheral bases from symbols.tsv; sensors on real ADC/ATU read paths |
 | E3 | CLOSED 2026-10-31 | WDT ITI = vector 214 = IVT offset 0x358 (Sh7055h.pdf table 7.3; ROM slot 0x7ffa8 → trampoline 0x30b8); firmware polls TCSR itself, overflow = OVF flag only |
 | E4 | partial | RCAN mailbox model done for diag path + CAN RX interrupt fires on inject (IVT 0x378 → CAN poll 0x11d88 + scheduler 0x9630); full mailbox/interrupt fidelity open |
 | E5 | CLOSED 2026-10-31 | Guessed `io_read_overrides` (0xffffed18=0x8000) was ICR_W bit15 = NMI pin level — now SYSC peripheral (`nmi_level`), overrides removed from all profiles |
-| E6 | partial | ATU-II ch10B tick (CMI10B→0x2c8) + CAN RX interrupt (0x378) fire and run scheduler/CAN poll autonomously; task context switch (0x3db0 wake via ref_setSR) still not triggered → UDS response TX driven via profile `uds` entry points |
-| E7 | open | div1/rotcl approximations; cycle counts ≠ real time |
+| E6 | partial (narrowed 2026-10-31) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte added |
+| E7 | CLOSED 2026-10-31 (div1/rotcr) | full Q/M DIV1 (SR bits 8/9) + ROTCR direction fixed, validated vs ROM div routine 0x2158; cycle counts ≠ real time remains (accepted) |
 
 ### Data / docs discrepancies (D-items)
 
