@@ -18,9 +18,14 @@ not for asserting conclusions.
 1. **Orient:** `hee_rom_list` → profiles + ROMs; `hee_rom_info` on a dump
    (fw/cal IDs at 0x2000/0x6c046, SHA-256); `hee_manifest_check`.
 2. **Boot and explore dynamically:** `hee_boot {profile: "60E15120_N3J1E", cycles: N}`
-   → `hee_state` (pc, heartbeats = firmware alive). Set inputs with `hee_set_sensor`,
-   `hee_run` more, watch outputs via `hee_state` (`watch`, e.g. engine load at RAM
-   0xffffc0b4).
+   → `hee_state` (pc, heartbeats = firmware alive). Set inputs with `hee_set_sensor`
+   (sensors are wired to the real ADC ADDRn channels / ATU-II crank capture, not
+   placeholder registers), `hee_run` more, watch outputs via `hee_state` (`watch`,
+   e.g. engine load at RAM 0xffffc0b4, rpm at 0xffff9f80). For function-level
+   dynamic checks (e.g. call a ROM helper and read r0/fr0), use
+   `utilities/scripts/emu/harness.py` (`harness.call`) — see
+   `tests/test_phase1_dynamic.py` for examples (knock clamp 0x13bd2, injector
+   map 0x8a68 vs ROM 0xd7d4, math helpers vs the reimplementation, RCAN/UDS).
 3. **Debug a function:** `hee_break` at the address (from `hee_labels` or
    `hee_disasm_rom`), `hee_continue`, then `hee_step` / `hee_regs` / `hee_mem` /
    `hee_disasm` at the stop. Watchpoints (`hee_watch`) catch RAM/ MMIO writes —
@@ -44,5 +49,8 @@ not for asserting conclusions.
   `submodules/`.
 - Emulator traces you produce should be diffed against goldens / the Renesas
   simulator (`compare_traces.py`) before being trusted (see ROADMAP E1–E7 limits).
+  The Renesas tool is not installed on every machine; without it, run the
+  self-check against `tests/fixtures/boot-60E15120_N3J1E-200k.trace` and record
+  that external validation is pending.
 - When in doubt about hardware behavior, cite `Sh7055h.pdf` by table/section and
   `13Electrical.pdf` (ground truth) for wiring.

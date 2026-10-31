@@ -131,7 +131,7 @@ TOOLS = [
      "inputSchema": {"type": "object", "properties": {"profile": {"type": "string"}, "cycles": {"type": "integer", "default": 1000000}}, "required": ["profile"]}},
     {"name": "hee_step", "description": "Single-step n instructions.",
      "inputSchema": {"type": "object", "properties": {"profile": {"type": "string"}, "n": {"type": "integer", "default": 1}}, "required": ["profile"]}},
-    {"name": "hee_set_sensor", "description": "Inject a sensor input (rpm, engine_load, maf, coolant_temp, iat, throttle) into the emulation.",
+    {"name": "hee_set_sensor", "description": "Inject a sensor input (rpm, maf, coolant_temp, iat, throttle, knock, apv) into the emulation via the profile's hardware path (ADC ADDRn channel or ATU-II crank capture for rpm). engine_load is a watched OUTPUT (RAM 0xffffc0b4), not an input.",
      "inputSchema": {"type": "object", "properties": {"profile": {"type": "string"}, "name": {"type": "string"}, "value": {"type": "number"}}, "required": ["profile", "name", "value"]}},
     {"name": "hee_replay_load", "description": "Load a drive-cycle CSV (repo-relative, e.g. data/logs/rx8-666p/....csv) for replay.",
      "inputSchema": {"type": "object", "properties": {"profile": {"type": "string"}, "csv": {"type": "string"}, "speed": {"type": "number", "default": 1}}, "required": ["profile", "csv"]}},

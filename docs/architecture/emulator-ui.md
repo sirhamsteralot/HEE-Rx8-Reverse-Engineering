@@ -23,14 +23,18 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
   - Runs the emulator on a background thread with a pause lock; sensor writes are
     applied atomically between instructions.
 - **Sensor injection path:** the profile's `sensors` map names each input to the
-  hardware path the firmware actually reads — ADC result registers (e.g.
-  0xfffff80c AN6), port input registers, or (for derived signals like RPM) the RAM
-  location / timer input the firmware uses. The UI writes raw values there via the
-  bus, so the ROM's own sensor-reading code produces the derived values (load,
-  g/rev, etc.) — we never fake firmware state directly.
-  - Profile addition: `sensors: { "coolant_temp_raw": {"via": "adc", "channel": "AN0", "scale": ...}, "rpm_raw": {"via": "atu", "channel": "..."}, ... }`
-  - Mapping table per profile filled from the disassembly labels (`data/labels/`),
-    e.g. engine speed RAM 0xffffb594 (60E0FC00) etc.
+  hardware path the firmware actually reads — ADC result registers (ADDRnH/L,
+  e.g. 0xfffff806 AN3 = MAF, 0xfffff80c AN6 = APV, 0xfffff814 AN10 = knock,
+  0xfffff848 AN28 = ECT, 0xfffff84a AN29 = IAT, 0xfffff808/0xa AN4/AN5 = TP) or
+  the ATU-II crank input capture (ICR0AH/ICR10AH, for RPM). The UI writes raw
+  values through the bus peripherals, so the ROM's own sensor-reading code
+  produces the derived values (load, g/rev, etc.) — we never fake firmware state
+  directly.
+  - Profile form (E2, done 2026-10-31): `sensors: { "maf": {"via": "adc",
+    "channel": "AN3", "scale": 1000, ...}, "rpm": {"via": "atu2", ...}, ... }`
+    (`via: "override"` remains only as the legacy placeholder path).
+  - Channel map per profile from the disassembly labels (`data/labels/`,
+    `reviews/`); rpm channel = ATU-II input capture read by 0x77f0/0xcf96.
 - **Drive-cycle replay:** `POST /api/replay` loads a `data/logs/*.csv`, maps its
   columns to sensor inputs (column-name → sensor map in the profile), and feeds
   values at the logged timestamps scaled by a speed factor; outputs (via OBD PIDs
@@ -54,9 +58,11 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
 
 1. `python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E` → open
    http://127.0.0.1:8080/.
-2. **Sensors** panel: set RPM/load/MAF/temps/throttle, press *apply* — values go to
-   the profile's `sensors` paths (currently `override` placeholder input registers;
-   mapping to the real ADC/ATU read paths is ROADMAP item E2).
+2. **Sensors** panel: set RPM/MAF/temps/throttle/knock/APV, press *apply* — values
+   go to the profile's `sensors` paths, now wired to the real hardware read paths
+   (E2 closed 2026-10-31): `via: "adc"` writes the ADDRn channel the firmware's
+   ADC sweep (0x6884) reads; `via: "atu2"` (rpm) drives the crank input capture
+   into ICR0AH/ICR10AH.
 3. **Watched emulated outputs** panel shows the profile `watch` list — e.g. the
    firmware-computed engine load at RAM 0xffffc0b4 (float32, per the fueling
    labels) and the PB15 heartbeat count — updating live as you run.
@@ -67,8 +73,10 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
    in the header; heartbeats advancing = firmware alive and reacting.
    Verified: replaying `trackLog-2026-Oct-04_09-31-12.csv` drives rpm≈2237,
    load≈42% into the emulated ECU per row.
-   Note: the watched engine-load stays 0.0 until E2 wires sensors to the real
-   hardware read paths — expected at this stage.
+   Note: the watched engine-load/rpm RAM cells update only when the firmware's
+   engine tasks run, which needs the OS tick timer (ROADMAP E6, still open) —
+   the sensor *inputs* are on the real hardware paths (E2), but task scheduling
+   is not yet autonomous in the emulator.
 
 ## Limits
 

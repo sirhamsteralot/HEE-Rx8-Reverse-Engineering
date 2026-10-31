@@ -28,24 +28,38 @@ for the "fast RAM logging" patch.
   emulator does not reimplement UDS — it runs the ROM's own handlers; we only move
   bytes.
 
-## Components (to implement under `utilities/scripts/emu/`)
+## Components (implemented 2026-10-31 under `utilities/scripts/emu/`)
 
-1. **`can.py`** (upgrade the `can` peripheral stub): real CAN controller model —
-   TX/RX mailboxes, ID filtering (config: `diag_req`/`diag_resp`/`functional`),
-   RX full → raise the CAN RX interrupt vector (from profile/`Sh7055h.pdf` IVT);
-   TX frames captured to a log (this is the "on the bus" observable).
-2. **`isotp.py`**: ISO-TP reassembly/segmentation on top of CAN frames.
-3. **`obd_port.py`**: virtual OBD-II port — a TCP server (localhost, configurable
-   port) that speaks ISO-TP, so an unmodified client (RomRaider Logger, python
-   `udsoncan`/`python-uds`, ELM327-style AT-over-ISO-TP adapter) connects as if to
-   a car. Each client request → CAN RX frame(s) into the emulated PCM → firmware
-   responds on 0x7E8 → CAN TX → ISO-TP → client. Optionally a PTY for
-   serial-style tools.
-4. **Profile config** (`peripherals` entry `type: "can"`): `{"baud": 500000,
-   "diag_req": 2016, "diag_resp": 2024, "functional": 2015, "rx_vector": null}`
-   (0x7E0/0x7E8/0x7DF decimal; rx_vector per Sh7055h.pdf — fill in).
-5. **Logging**: every UDS request/response pair logged (service, DID/PID, payload,
-   cycle) to `tests/fixtures/obd/` for golden comparison.
+1. **`can.py`** — RCAN (HCAN0) mailbox model at 0xffffe400 per `symbols.tsv`:
+   TX/RX mailboxes 0-15 (MC at +0x20, MD at +0xb0), W1C pending regs
+   (RXPR/RFPR/TXACK/ABACK/UMSR/IRR), MCR bit0 ↔ GSR bit3 reset handshake,
+   mailbox bitmask `1 << ((mb+8)&0xf)` (ROM table 0xd914), standard ID stored in
+   MC[4..5] low-byte-first, DLC in MC[0]. `inject(can_id, data)` loads the matching
+   RX mailbox and sets RXPR/IRR like hardware; a TXPR write transmits the mailbox
+   payload into `tx_log` (the "on the bus" observable) and sets TXACK. Config:
+   `diag_req`/`diag_resp` (0x7E0/0x7E8), `rx_irq_bit`.
+2. **`isotp.py`** — ISO-TP reassembly/segmentation (unit-tested).
+3. **`obd_port.py`** — virtual OBD-II port: TCP server (localhost, configurable
+   port) speaking ISO-TP, so an unmodified client connects as if to a car.
+   Requests → CAN RX into mailbox 14 (0x7E0); then the ROM's own entry points run
+   (profile `uds` section): CAN RX poll `FUN_00011d88` moves the frame into the
+   UDS RX buffer 0xffffddc8, UDS entry `FUN_000680a0(0x7e0)` schedules the service,
+   dispatcher `FUN_00003c2a` runs tasks; 0x7E8 responses are collected from
+   `tx_log` and sent back over ISO-TP. Caveat: the OS tick timer is not yet
+   modeled (ROADMAP E6), so instead of waiting for the scheduler the port calls
+   those entry functions directly — the mailbox/UDS code executed is the ROM's own.
+4. **Profile config** — `peripherals` entry `type: "can"` plus a top-level `uds`
+   section with the ROM-specific entry points (labeled for 60E15120_N3J1E in
+   `profiles/60E15120_N3J1E.json`; label the equivalents per ROM before using the
+   port with another bin).
+5. **Logging** — every UDS request/response pair is in `OBDPort.uds_log`
+   (cycle, direction, payload hex).
+
+Verified 2026-10-31 (`tests/test_phase1_dynamic.py::test_rcan_rx_tx_through_rom_driver`,
+`test_mode22_dispatch_pid_0043`, `test_phase1.py::test_obd_port_uds_log`): inject
+`02 10 03` on 0x7E0 → RXPR 0x40 → poller fills 0xffffddc8 and clears RXPR;
+`ref_txCAN_EventBased(0x99b0, desc 0x4e00c)` transmits `06 50 03 …` on 0x7E8 into
+tx_log; Mode 22 identifier 0x0043 dispatches to handler 0x56b8a (PID 0x43).
 
 ## Validation ("as if in a real car")
 

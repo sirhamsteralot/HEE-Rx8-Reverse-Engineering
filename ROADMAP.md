@@ -27,24 +27,42 @@ Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
   disassembly (`gen_opdec.py`), validated 100% against all 168,592 instructions
   (`tests/test_decode_corpus.py`); delay slots, FPU subset, sign-extending
   `mov.w @(disp,pc)`. Unknown opcodes stop loudly.
-- Full clean boot of `60E15120_N3J1E`: 50M+ instructions, 0 unknown-opcode faults,
-  195k MMIO writes, WDT serviced live (PB15 heartbeat 3.9k/1M cycles, handler 0x31c).
+- Full clean boot of `60E15120_N3J1E`: passes CAN init (RCAN MCR/GSR handshake),
+  programs ATU-II/SCI/DMAC, reaches the main idle loop 0x3dac, 0 unknown-opcode
+  faults; WDT serviced by the firmware's own poll path (keyed 0xa53c writes,
+  PB15 heartbeat on overflow, service routine 0x31c). Peripheral bases per
+  `symbols.tsv`: RCAN0 0xffffe400, RCAN1 0xffffe600, ATU-II 0xfffff400, SCI
+  0xfffff000, ADC 0xfffff800, WDT 0xffffec10, DMAC 0xffffecb0, GPIO 0xfffff700;
+  ROM region read-only; RAM 0xffff6000-0xffffe000; `interrupt()` honors VBR
+  (0x7fc50) and pushes SR/PC per the SH-2E manual.
 - Bus with ROM/RAM/IO regions, MMIO write log, per-profile `io_read_overrides`;
-  peripherals: WDT (keyed 0xA5 writes, overflow → handler), GPIO (+PB15 heartbeat
-  log), ADC (scripted sensors), ATU-II/SCI/CAN stubs, **UBC** hardware-break model.
-- Golden 200k-instruction boot PC trace (`tests/fixtures/`) reproduces byte-exact.
+  peripherals: WDT (OVF flag; firmware polls TCSR), GPIO (+PB15 heartbeat log),
+  ADC (scripted ADDRn channels, ADST→ADF handshake), ATU-II (ch10B tick → CMI10B
+  vector 0x2c8, crank input capture ICR0AH/ICR10AH), DMAC (DE→transfer+TE), RCAN
+  mailbox model, SCI/HCAN1 regfiles, **UBC** hardware-break model.
+- Golden 200k-instruction boot PC trace (`tests/fixtures/`, regenerated
+  2026-10-31 with the corrected models) reproduces byte-exact;
+  `compare_traces.py` self-check MATCH.
 - Debugger: breakpoints, read/write watchpoints, step/continue, regs/mem/disasm —
   CLI `debug.py` + UI `/api/debug` (`debugger.py`).
-- Virtual OBD-II/UDS port: `isotp.py` (unit-tested), `can.py` (inject/tx_log),
-  `obd_port.py` (localhost ISO-TP TCP bridging to emulated CAN 0x7E0/0x7E8).
-- Interactive UI: `ui.py` + `ui.html` on 127.0.0.1:8080 — sensor inputs, run/step/
-  reset, watched outputs (engine load RAM 0xffffc0b4, heartbeats), drive-cycle
-  replay of `data/logs/*.csv` (verified: 666p track log drives rpm/load per row).
+- Virtual OBD-II/UDS port: `isotp.py` (unit-tested), `can.py` (RCAN mailboxes:
+  inject→RXPR/IRR, TXPR→tx_log), `obd_port.py` (localhost ISO-TP TCP; drives the
+  ROM's own entry points from the profile `uds` section — CAN RX poll 0x11d88,
+  UDS entry 0x680a0, dispatcher 0x3c2a — since the OS tick is not yet modeled).
+- Interactive UI: `ui.py` + `ui.html` on 127.0.0.1:8080 — sensor inputs (wired to
+  the real ADC channels / ATU-II crank capture, E2), run/step/reset, watched
+  outputs (engine load RAM 0xffffc0b4, rpm RAM 0xffff9f80, heartbeats),
+  drive-cycle replay of `data/logs/*.csv`.
+- Dynamic validation: `harness.py` (direct ROM-function calls, SH-2E ABI) +
+  `tests/test_phase1_dynamic.py` — math helpers vs the `rx8_math.c`
+  reimplementation, knock clamp 0x13bd2 = [-10,0]° (0 at 6000 rpm), injector map
+  0x8a68(ch)→DCNT8x/GR1x per ROM 0xd7d4, ADC read path 0x6884, RCAN RX/TX through
+  the ROM's own driver, Mode 22 dispatch 0x5774c.
 - Agent tooling: `utilities/scripts/hee.py` CLI (direct, no MCP needed in-session)
   + `.vibe/plugins/hee-re/` MCP plugin for external agents (20 `heeRe.*` tools,
   shared `call_tool`) + `hee-reverse-engineering` skill.
-- **24/24 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`, `test_phase1.py`,
-  `test_agent_tools.py`).
+- **34/34 tests pass** (`tests/test_emu.py`, `test_decode_corpus.py`,
+  `test_phase1.py`, `test_phase1_dynamic.py`, `test_agent_tools.py`).
 
 ### Phase 1 open items (validation & fidelity hardening — these are the E-items below)
 

@@ -89,3 +89,70 @@ session-specific know-how. Everything here is backed by artifacts in
   reports intact; append a dated "Update" addendum for later passes.
 - `scripts/validate_reports.py` checks every report (sections, ROM hash, all
   memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
+
+## Emulator build-out (2026-10-31, Phase 1 fidelity pass)
+
+Hardware facts that the first emulator pass got wrong (all fixed; keep them):
+
+- **RAM is 0xffff6000-0xffffe000** (32 KiB; design doc §1). A profile with
+  ram start 0xffff8000 silently unmapped task stacks at 0xffff74xx — stack
+  writes were dropped and pr pops read 0 (PC jumped to 0). Symptom: boot crash
+  at a task-return (`lds.l @r15+,pr` → 0).
+- **ROM/flash is read-only**: CPU stores to 0x0-0x7ffff must be ignored (counted
+  in `bus.rom_writes_blocked`). The boot's mailbox-clear loop writes low
+  addresses; on real HW those hit flash and vanish, in the emulator they
+  zeroed vectors/code (0x31c) and killed the WDT handler.
+- **VBR is not 0**: the firmware sets VBR=0x7fc50 (ldc at 0xd206); the real IVT
+  lives at 0x7fc50+offset (CMI10B = vec 178 → 0x7ff18 → trampoline 0x2ec0;
+  WDT ITI = vec 214 → 0x7ffa8; HCAN0 RM0 = 0x7ffa0). `cpu.interrupt(offset)`
+  must read `r32(vbr+offset)` and push SR+PC on the stack, set SR mask (SH-2E
+  manual 6.1.3/7.2.5).
+- **WDT**: 0x31c is a *subroutine* (ends rts, clobbers r0-r4) that the firmware
+  polls/calls itself — it is NOT an interrupt entry. Overflow = TCSR OVF flag
+  only; do not redirect PC (a direct jump mid-`dt`-loop clobbers the loop
+  counter and hangs boot). Service = keyed 0xa53c write.
+- **RCAN (HCAN0) at 0xffffe400**: MCR 0x00, GSR 0x01, BCR 0x02, MBCR 0x04,
+  TXPR 0x06, TXCR 0x08, TXACK 0x0a, ABACK 0x0c, RXPR 0x0e, RFPR 0x10, IRR 0x12,
+  MBIMR 0x14, IMR 0x16, UMSR 0x1a, MC mb at 0x20+8mb, MD mb at 0xb0+8(mb&0xf).
+  Pending regs are write-1-to-clear (init writes RXPR=0xffff etc. to clear).
+  GSR bit3 follows MCR bit0 (reset handshake; boot waits on it ~4000 iters).
+  Mailbox mask = `1 << ((mb+8)&0xf)` (ROM table 0xd914). Standard CAN ID stored
+  in MC[4..5] **low byte first** (`MC[4]=(id<<5)&0xff, MC[5]=id<<5>>8`); DLC in
+  MC[0]. TX: write TXACK=mask, payload→MD, TXPR=mask → frame leaves (tx_log),
+  TXACK sets, TXPR clears. RX poll: RXPR bit set → if UMSR bit clear, clear
+  RXPR and copy MD out (FUN_000010fe). Diag mailboxes: 14=0x7e0 RX, 15=0x7e8 TX
+  (ref_resetOBDCAN_ 0x109c); UDS RX descs 0x4dffc (0x7e0), 0x4dfec (0x7df) →
+  buffer 0xffffddc8; TX desc 0x4e00c (0x7e8, buf 0xffffddd0).
+- **DMAC at 0xffffecb0**: boot waits for CHCR0 TE (bit1) at 0xd5fa; model =
+  CHCR write with DE (bit0) → copy DMATCR bytes SAR→DAR, set TE, clear DE.
+- **ADC at 0xfffff800**: ADDRnH/L at 2n (n<12), ADCSR0/ADCR0 0x18/0x19,
+  ADDR12-23 at 0x20+2(n-12), ADCSR1/ADCR1 0x38/0x39, ADDR24-31 at 0x40+2(n-24),
+  ADCSR2/ADCR2 0x58/0x59 (offsets overlap — check ADCSR/ADCR first). Firmware
+  starts a scan (ADCRn |= 0x20), busy-waits ADCSRn bit7 (ADF), then reads ADDRn
+  as a 16-bit word (0x6884 sweep → RAM 0xffff9ee4+). Channels: AN3=MAF,
+  AN4/AN5=TP, AN6=APV, AN10=knock, AN28=ECT, AN29=IAT.
+- **ATU-II at 0xfffff400**: TSTR3 (0xfffff402) **bit0** starts ch10; ch10B compare
+  (TCNT10B 0x2c4 vs OCR10B 0x2d8, TIER10 bit2) → CMI10B interrupt → vector 0x2c8;
+  OS tick setup ref_setInterruptTimer 0x7778. Crank input capture: ICR0AH
+  0xfffff434, ICR10AH 0xfffff6d0 — the rpm path (0x77f0/0xcf96 read ICR0AH;
+  ISR 0x803e computes rpm = 1.2e8/sum of the 6-entry ring at 0xffff9fd0).
+  Injector outputs: DCNT8A-P 0xfffff640-0x65e, GR1A-H 0xfffff444-0x452; channel
+  map ROM 0xd7d4 (12-byte records: DCNT ptr, GR1 ptr, TIER mask).
+- **CPU fixes**: `fmov.s` needs @rN+ (load) and @-rN/@rN+ (store); `sts/lds`
+  must cover fpscr/fpul; `fdiv` must follow IEEE (x/0=±inf, 0/0=NaN) — Python
+  raises ZeroDivisionError; `dt`/`bf/s` delay-slot semantics are correct but
+  fragile when a mis-modeled interrupt clobbers r4 mid-loop.
+- **Direct-call harness** (`utilities/scripts/emu/harness.py`): set r15 to a RAM
+  stack, pr=SENTINEL, pc=func, args in r4-r7 (int) / fr4-fr7 (float, SH-2E ABI),
+  run until pc==SENTINEL (or stop_at e.g. the idle loop 0x3dac for the task
+  dispatcher, which never rts). Return r0/fr0. Use it to execute the ROM's own
+  functions for dynamic validation (`tests/test_phase1_dynamic.py`).
+- **No C compiler on the current Windows box**: MSVC cl.exe exists but the VC
+  headers (vcruntime.h) are not installed; mingw has no gcc. Host C tests
+  (AGENTS.md `cc …` pattern) need a machine with a working toolchain; the
+  emulator cross-check uses a float32 Python port of `rx8_math.c` meanwhile.
+- **Emulator FPU is host double** (E1): `fmac` behaves as fused; results can
+  differ from strict float32 SH semantics in the last ulp — compare with
+  tolerance for filter-style code, bit-exact for min/max/clamp/absdiff.
+- 60E1B900_N3ZBEH uses opcode 0x957a (outside the 60E15120 corpus) → unknown-opcode
+  stop; regenerate `opdec.py` from that ROM's disassembly before running it.

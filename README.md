@@ -102,12 +102,22 @@ are promoted into the tracked folders.
 
 ## Status (2026-10-31)
 
-- **Emulator (ROADMAP Phase 1): implemented.** Corpus-validated SH-2E core
-  (9,902 opcodes, 100% of the 168k-instruction disassembly), full boot of
-  `60E15120_N3J1E` (50M+ instructions clean), WDT PB15 heartbeat live, golden
-  200k PC trace byte-exact; debugger (breakpoints/watchpoints/UBC), virtual OBD-II
-  port, browser UI with drive-cycle replay, agent tooling (`hee.py` + MCP plugin).
-  24/24 tests.
+- **Emulator (ROADMAP Phase 1): implemented, fidelity-hardened 2026-10-31.**
+  Corpus-validated SH-2E core (9,902 opcodes, 100% of the 168k-instruction
+  disassembly); boot of `60E15120_N3J1E` passes CAN init and reaches the main
+  idle loop (0x3dac) clean; golden 200k PC trace byte-exact (`compare_traces.py`
+  self-check MATCH; Renesas Simulator Debugger diff still pending — tool not
+  installed here). Peripherals at their symbols.tsv bases with real behavior:
+  RCAN0 mailbox model at 0xffffe400 (W1C pending regs, MCR/GSR handshake,
+  inject→RXPR, TXPR→tx_log), ADC ADDRn channels with ADST→ADF handshake,
+  ATU-II at 0xfffff400 (ch10B tick, crank input capture), DMAC, WDT (OVF flag +
+  firmware poll), ROM read-only. Sensor inputs are wired to the real ADC/ATU
+  read paths (E2 closed); the virtual OBD-II port drives the ROM's own CAN/UDS
+  entry points (E4). `harness.py` + `tests/test_phase1_dynamic.py` dynamically
+  reproduce static findings in the emulator (math helpers vs the reimplementation,
+  knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
+  (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
+  tooling (`hee.py` + MCP plugin). 34/34 tests.
 - **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
   load) for `60E15120_N3J1E`; streetport-vs-stock diff done for 60E0G500
   (cal-only; rev limiter float32 at 0x6d54c: 9000→5500/9500/10000).

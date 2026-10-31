@@ -48,12 +48,15 @@ golden 200k-instruction PC trace reproduces byte-exact in tests.**
 ```sh
 python utilities/scripts/emu/emu.py --list-profiles
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 100000 --trace /tmp/boot.trace
-python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --ui   # planned: browser UI for sensor inputs + drive-cycle replay (design: docs/architecture/emulator-ui.md)
+python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E        # browser UI on http://127.0.0.1:8080/
+python utilities/scripts/emu/obd_port.py --profile 60E15120_N3J1E --port 35000  # virtual OBD-II/UDS (ISO-TP over TCP)
+python utilities/scripts/emu/debug.py --profile 60E15120_N3J1E      # debugger REPL
 ```
 
-Planned additions (ROADMAP Phase 1): virtual OBD-II/UDS port
-(`docs/architecture/emulated-obd.md`) and the interactive UI
-(`docs/architecture/emulator-ui.md`).
+Both the virtual OBD-II/UDS port (`docs/architecture/emulated-obd.md`) and the
+interactive UI (`docs/architecture/emulator-ui.md`) are implemented (ROADMAP
+Phase 1). Dynamic validation of static findings runs through `harness.py` —
+see `tests/test_phase1_dynamic.py`.
 
 ## Tests
 
@@ -101,6 +104,13 @@ changes or a new opcode is implemented:
    views.
 4. Record the result (date, N, tool version, MATCH/divergence) in the investigation
    doc for the change. A trace that only we produce is not validated.
+
+Status 2026-10-31: the Renesas Simulator Debugger (HEW/e² studio) is **not
+installed on the current Windows machine**, so no external diff has been run yet.
+In the meantime `compare_traces.py /tmp/our.trace tests/fixtures/boot-60E15120_N3J1E-200k.trace`
+reports MATCH (200k steps) — the golden trace was regenerated 2026-10-31 with the
+corrected peripheral models and validates self-reproducibility only. Run the
+Renesas diff before claiming external validation (ROADMAP Phase 1 open item).
 
 ## Limits (honest)
 

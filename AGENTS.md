@@ -101,7 +101,8 @@ dumping it at the root.
     `hee_labels`, `hee_disasm_rom`, `hee_diff_roms`, `hee_manifest_check`, …
     (sessions are per-process; for multi-step debugging use `debug.py`/`ui.py`).
   - or from `run_typescript`: import the emulator modules under
-    `utilities/scripts/emu/` and call `emu.build()/run()`, `debugger.DebugSession`, etc.
+    `utilities/scripts/emu/` and call `emu.build()/run()`, `debugger.DebugSession`,
+    `harness.call()` (direct ROM-function calls for dynamic validation), etc.
 - **MCP plugin** `.vibe/plugins/hee-re/` (`mcp.json` + `mcp_server.py`, same
   `call_tool`) exists for *external* agents / platforms and Vibe tool exposure;
   it is not required for local work. Skill `hee-reverse-engineering` (in the
@@ -110,10 +111,15 @@ dumping it at the root.
 ## Verification
 
 - `python utilities/scripts/hash_binaries.py --check` after touching `binaries/`.
-- Emulator changes (`utilities/scripts/emu/`): `python -m pytest tests/test_emu.py`
-  plus a differential trace run against the Renesas Simulator Debugger (SH7055) on
-  the Windows machine via `utilities/scripts/emu/compare_traces.py` — see
-  `utilities/scripts/emu/README.md`. Record the result in the investigation doc.
+- Emulator changes (`utilities/scripts/emu/`): `python -m pytest tests/` (all
+  harnesses, incl. `test_phase1_dynamic.py` which executes ROM functions via
+  `harness.py`) plus a differential trace run against the Renesas Simulator
+  Debugger (SH7055) on the Windows machine via
+  `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
+  The Renesas tool is not installed on every machine: when absent, run the
+  self-check `compare_traces.py <fresh trace> tests/fixtures/boot-60E15120_N3J1E-200k.trace`
+  (must report MATCH) and record that external validation is still pending in the
+  investigation doc.
 - Host tests for reimplemented code:
   `cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off reverse-engineered/reimplementation/rx8_math.c reverse-engineered/reimplementation/test_rx8_math.c -lm -o /tmp/t && /tmp/t`
   (same pattern for `rx8_apv.c`). Host tests do not validate SH FPU rounding.
