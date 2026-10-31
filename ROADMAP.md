@@ -103,9 +103,8 @@ unnamed), 381-587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic
 axes. `diff_maps.py` does structural cross-ROM matching + per-cell diffs.
 Streetport tunes mapped to 15-17 named descriptors. Report:
 `docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`.
-6 new tests, 44/44 pass. Remaining: settle **D5** numerically (map PID 0x43
-output to a specific extracted table), feed cross-ROM diffs into
-`data/definitions/` corrections.
+6 new tests, 44/44 pass. Remaining: feed cross-ROM diffs into
+`data/definitions/` corrections (group D).
 
 ### B. Emulator fidelity hardening (P1 residual)
 
@@ -134,6 +133,9 @@ Use the emulator for dynamic verification where useful (see group B).
   classify `non_instruction_ranges.tsv`.
 - Cross-check the thread's OL-fueling chain vs our fueling report; verify
   engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
+- **Settle D5 (g/rev vs VolEf)**: trace PID 0x43 handler 0x56b8a to the specific
+  extracted table in `data/maps/60E15120_N3J1E/` it reads, then compare the
+  handler's computed value against the table + scaling numerically.
 - Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
   **bootloader seed/key location** — D4.
 - Label **60E0G500** via the pipeline (streetport diff ranges already mapped to
@@ -187,7 +189,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
 | D3 | open | checksum/CVN unverified — incremental hash routine not yet found |
 | D4 | open | bootloader seed/key location unknown |
-| D5 | open | g/rev vs VolEf — settle numerically via calibration extraction (group A) |
+| D5 | open | g/rev vs VolEf — resolve in group C: trace PID 0x43 (handler 0x56b8a) to a named table in data/maps/ |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
 | D8 | open | defs copies vs pinned submodule — dedupe per AGENTS.md rule 4b |
