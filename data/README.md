@@ -8,6 +8,8 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
   `submodules/RX8Defs/` (pinned `1b3aea2…`); the copies here were taken from
   specific upstream commits (cited in the defs-merge investigation records) and
   may differ from the pinned HEAD — intentional, see `docs/references/README.md`.
+  Known case: our `ecuflash/60E0G500.xml` (61,849 B) is from an older commit than the
+  pinned submodule's (63,606 B); both list 1,210 tables — re-sync deliberately if needed.
   - `ecuflash/` — ECUFlash XML definitions (upstream).
   - `romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs.
   - `romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.

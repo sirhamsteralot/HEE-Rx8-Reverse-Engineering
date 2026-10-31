@@ -99,10 +99,13 @@ running code.
 - Differential labeling across the 10 stock ROMs in the submodule: byte-match
   function bodies ROM-to-ROM to propagate `ref_` names and find code vs.
   calibration differences.
-- **Diff user-tuned vs stock ROMs:** `binaries/dumps/aron-N3ZHEC-streetportv1_24_*.bin`
-  vs stock `aron-N3ZHEC-2026-10-31.bin` (both fw 60E0G500) — locate the exact patched
-  byte ranges (limiter change) and map them to functions via the disassembly; same
-  technique for any future tuned dump. Record in an investigation doc.
+- **Diff user-tuned vs stock ROMs:** done 2026-10-31 for
+  `aron-N3ZHEC-streetportv1_24_*.bin` vs stock `aron-N3ZHEC-2026-10-31.bin` (fw
+  60E0G500) — see `docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md`:
+  cal-only changes (≥0x6c000), rev limiter = float32 at **0x6d54c** (9000 stock →
+  5500/9500/10000). Remaining: map changed cal ranges to descriptors/tables, and
+  label 60E0G500 functions (only 60E15120_N3J1E is labeled) so 0x6d54c's consumer is
+  named. Same diff technique applies to any future tuned dump.
 - Settle the checksum/CVN question from the RX8Club thread
   (`docs/references/rx8club-user-guide-thread.md` §4): locate the incremental
   hash routine in the disassembly; map UDS handlers (0x10/0x23/0x27/0x34/0x36/0x37)

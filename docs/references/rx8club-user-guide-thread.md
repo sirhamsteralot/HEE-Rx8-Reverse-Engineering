@@ -32,7 +32,7 @@
 | 60E1D300 | N3J1EL | 6-port MT |
 | 60E1D400 | N3J1EM | 6-port MT |
 | 60E1B800 | (two N3* strings seen) | 2005 US 6-port MT, unsupported by tools |
-| — | N3ZHEC | EU 6-port 2004 (with per-table addresses below) |
+| 60E0G500 | N3ZHEC | EU 6-port 2004 — **now held as `binaries/dumps/aron-N3ZHEC-2026-10-31.bin`** (fw/cal verified 2026-10-31); per-table addresses below verified against that ROM |
 
 Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepancy — do not "fix").
 
@@ -157,7 +157,10 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 ### 11. Inline definition addresses
 
 `rx8club-inline-defs.tsv` (19 unique `<table>` name/address entries, mostly N3ZHEC
-fan/lambda/CL-fuel tables) — cross-check against `data/definitions/`, never copy in.
+fan/lambda/CL-fuel tables) — **verified 2026-10-31 against our
+`binaries/dumps/aron-N3ZHEC-2026-10-31.bin`**: all addresses hold plausible data
+(fan ECT 96.0 °C / hysteresis 3.0, lambda limits ≈0.85/1.05). Cross-check against
+`data/definitions/`, never copy in.
 
 ### 12. OCR of the thread's screenshots (pages 2–3) — `rx8club-ocr/`
 

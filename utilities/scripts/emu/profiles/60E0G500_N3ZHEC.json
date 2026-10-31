@@ -1,0 +1,32 @@
+{
+  "name": "60E0G500_N3ZHEC",
+  "description": "Aron's ECU stock ROM (EU 6-port 2004, cal N3ZHEC). Base for the streetport tuned variants in binaries/dumps/. See docs/investigations/60E0G500_N3ZHEC/.",
+  "market": "EU",
+  "model": "RX-8 Series 1 (2004)",
+  "variant": { "engine_ports": 6, "transmission": "MT", "dsc": true, "rke": true, "immobilizer": true },
+  "rom": {
+    "path": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
+    "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+    "size": 524288
+  },
+  "memory": {
+    "rom": [0, 524288],
+    "ram": [4294934528, 4294959104],
+    "io": [4294959104, 4294967296]
+  },
+  "reset": { "pc_from_vector": 0, "sp_from_vector": 4 },
+  "peripherals": [
+    { "type": "wdt", "base": 4294959376, "size": 3,
+      "config": { "enabled": true, "overflow_vector": null } },
+    { "type": "gpio", "base": 4294965504, "size": 128,
+      "config": { "heartbeat": { "port_reg_offset": 56, "bit": 15 } } },
+    { "type": "adc", "base": 4294965760, "size": 32,
+      "config": { "result_channel": "AN6", "channels": { "AN6": 32768 } } },
+    { "type": "atu2", "base": 4294963712, "size": 512, "config": {} },
+    { "type": "sci", "base": 4294966272, "size": 32, "config": {} },
+    { "type": "can", "base": 4294964736, "size": 512,
+      "config": { "baud": 500000, "diag_req": 2016, "diag_resp": 2024, "functional": 2015 } }
+  ],
+  "pins": { "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md" },
+  "sensors": { "_note": "rev-limit cal at 0x6d54c (float32 9000.0 stock) - see docs/investigations/60E0G500_N3ZHEC/" }
+}
