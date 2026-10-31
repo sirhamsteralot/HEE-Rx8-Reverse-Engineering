@@ -63,6 +63,13 @@ running code.
    Python UDS client connects to the emulated PCM *as if it was in a real car*;
    UDS runs on the ROM's own handlers (dispatch table 0x5f10c; PID 0x43 → 0x56b8a).
    Validate against real-car log captures as golden fixtures.
+5. **Interactive UI** (design: `docs/architecture/emulator-ui.md`) —
+   `emu.py --ui` serves a localhost browser UI (stdlib only) to set sensor inputs
+   (RPM, load, MAF, coolant/IAT, throttle, λ, knock, voltage…) which are injected
+   through the hardware paths the firmware reads (ADC/port/timer regs per the
+   profile's `sensors` map), run/step/reset, watch MMIO outputs + WDT heartbeats,
+   and **replay `data/logs/*.csv` drive cycles** as scripted inputs, comparing
+   emulated OBD PID outputs against the original log.
 5. `tests/` integration: pytest harness driving the emulator; compare traces against
    golden fixtures; per-function I/O checks (feed inputs, read RAM/MMIO outputs);
    OBD-path tests (PID responses, 0x23 dump parity).
@@ -82,6 +89,9 @@ running code.
   findings (PID 0x43 = g/rev × 1/255, 0 with injectors off) and real-car log
   captures; UDS 0x23 dump of emulated memory equals the loaded ROM byte-for-byte;
   RomRaider Logger can log from the virtual port (`docs/architecture/emulated-obd.md`).
+- **UI drives the emulation:** set RPM/load/sensors in the browser UI, run, and the
+  firmware reacts; replaying a `data/logs/` CSV reproduces the logged values
+  (`docs/architecture/emulator-ui.md`).
 - Known static findings reproduced dynamically: e.g. knock retard clamped to
   [-10, 0] deg (`reviews/knock_control/`), injector channel map table 0xd7d4 →
   ATU-II 8A–8F, first-order filter endpoints (mirroring `test_rx8_math.c`).

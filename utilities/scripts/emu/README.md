@@ -20,7 +20,12 @@ dynamically. Python 3, stdlib only.
 ```sh
 python utilities/scripts/emu/emu.py --list-profiles
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 100000 --trace /tmp/boot.trace
+python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --ui   # planned: browser UI for sensor inputs + drive-cycle replay (design: docs/architecture/emulator-ui.md)
 ```
+
+Planned additions (ROADMAP Phase 1): virtual OBD-II/UDS port
+(`docs/architecture/emulated-obd.md`) and the interactive UI
+(`docs/architecture/emulator-ui.md`).
 
 ## Tests
 
