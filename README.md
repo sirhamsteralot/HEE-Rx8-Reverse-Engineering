@@ -14,7 +14,7 @@ there is a fidelity-limits register at the bottom. **Rules for agents/humans:**
 ```sh
 git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
-python -m pytest tests/                                       # 18 tests, ~4s
+python -m pytest tests/                                       # 24 tests, ~8s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
 python utilities/scripts/hash_binaries.py --check             # verify binaries/manifest.csv
@@ -101,7 +101,9 @@ are promoted into the tracked folders.
 - **Emulator (ROADMAP Phase 1): implemented.** Corpus-validated SH-2E core
   (9,902 opcodes, 100% of the 168k-instruction disassembly), full boot of
   `60E15120_N3J1E` (50M+ instructions clean), WDT PB15 heartbeat live, golden
-  200k PC trace byte-exact; virtual OBD-II port + browser UI scaffolded. 18/18 tests.
+  200k PC trace byte-exact; debugger (breakpoints/watchpoints/UBC), virtual OBD-II
+  port, browser UI with drive-cycle replay, agent tooling (`hee.py` + MCP plugin).
+  24/24 tests.
 - **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
   load) for `60E15120_N3J1E`; streetport-vs-stock diff done for 60E0G500
   (cal-only; rev limiter float32 at 0x6d54c: 9000→5500/9500/10000).
