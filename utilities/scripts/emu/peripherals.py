@@ -164,6 +164,45 @@ class CAN(RegisterFile):
     """CAN controller stub (UDS 0x10/0x23/0x27/0x34/0x36/0x37, Mode 22 PIDs)."""
 
 
+class UBC(RegisterFile):
+    """SH7055 User Break Controller (hardware breakpoints, like the real MCU).
+
+    Channels: BARA/BAMRA (address+mask), BBRA/BBRB, BRCR. When PC matches
+    BARA & BAMRA (and BRCR enables the channel), the real MCU raises the UBC
+    break; here we notify the DebugSession (bus.debugger) or fire the
+    configured break vector. Register base per Sh7055h.pdf (_note: refine).
+    """
+
+    # offsets within the UBC register block (channel A at 0x00, B at 0x10, BRCR at 0x20)
+    BARA, BAMRA, BBRA, BBRB, BRCR = 0x00, 0x04, 0x08, 0x0C, 0x20
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.break_vector = self.config.get("break_vector")  # None -> notify debugger
+
+    def tick(self, cycles):
+        cpu = getattr(self.bus, "cpu", None)
+        if cpu is None:
+            return
+        bara = int.from_bytes(self.regs[self.BARA:self.BARA + 4], "big")
+        bamra = int.from_bytes(self.regs[self.BAMRA:self.BAMRA + 4], "big")
+        bbra = int.from_bytes(self.regs[self.BBRA:self.BBRA + 4], "big")
+        bbrma = int.from_bytes(self.regs[self.BBRB:self.BBRB + 4], "big")
+        brcr = int.from_bytes(self.regs[self.BRCR:self.BRCR + 4], "big")
+        pc = cpu.pc
+        hit = None
+        if brcr & 0x1 and (pc & bamra) == (bara & bamra):  # channel A, PC match
+            hit = "UBC-A"
+        elif brcr & 0x2 and (pc & bbrma) == (bbra & bbrma):  # channel B
+            hit = "UBC-B"
+        if hit:
+            dbg = getattr(self.bus, "debugger", None)
+            if dbg is not None:
+                dbg.stopped_reason = f"{hit} hardware breakpoint at 0x{pc:08x}"
+            elif self.break_vector is not None:
+                cpu.interrupt(self.break_vector)
+
+
 TYPES = {
     "wdt": WDT,
     "gpio": GPIO,
@@ -172,4 +211,5 @@ TYPES = {
     "sci": SCI,
     "can": CAN,
     "regfile": RegisterFile,
+    "ubc": UBC,
 }

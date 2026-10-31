@@ -99,6 +99,11 @@ running code.
 - **UI drives the emulation:** set RPM/load/sensors in the browser UI, run, and the
   firmware reacts; replaying a `data/logs/` CSV reproduces the logged values
   (`docs/architecture/emulator-ui.md`).
+- **Debugging like the original MCU:** execution breakpoints, memory read/write
+  watchpoints, single-step/continue, register + memory inspection, disassembly at
+  PC — CLI (`utilities/scripts/emu/debug.py`) and UI (`/api/debug`), plus a modeled
+  SH7055 **UBC** hardware-break peripheral (`peripherals.UBC`). Implemented
+  2026-10-31, tested in `tests/test_phase1.py`.
 - Known static findings reproduced dynamically: e.g. knock retard clamped to
   [-10, 0] deg (`reviews/knock_control/`), injector channel map table 0xd7d4 →
   ATU-II 8A–8F, first-order filter endpoints (mirroring `test_rx8_math.c`).

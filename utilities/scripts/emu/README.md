@@ -23,7 +23,15 @@ golden 200k-instruction PC trace reproduces byte-exact in tests.**
 - `obd_port.py` — virtual OBD-II/UDS TCP port (design: `docs/architecture/emulated-obd.md`).
 - `ui.py` + `ui.html` — interactive UI (design: `docs/architecture/emulator-ui.md`):
   `python ui.py --profile 60E15120_N3J1E` → http://127.0.0.1:8080/ — sensor inputs,
-  run/step/reset, MMIO + heartbeat views, drive-cycle replay from `data/logs/`.
+  run/step/reset, MMIO + heartbeat views, drive-cycle replay from `data/logs/`,
+  and a debugger panel (`/api/debug`: break/watch/continue/step/regs/mem/disasm).
+- `debugger.py` + `debug.py` — debugger core + CLI:
+  `python debug.py --profile 60E15120_N3J1E` → REPL with `b/w/del/c/s/regs/m/x/state`.
+  Execution breakpoints, memory read/write watchpoints, single-step, register and
+  memory dumps, and disassembly at PC printed from the corpus table (same mnemonics
+  as the Ghidra listing). The SH7055 **UBC** (hardware break controller) is modeled
+  as a peripheral (`peripherals.UBC`): program BARA/BAMRA/BRCR and PC matches raise
+  a hardware break, like the original MCU.
 - `profiles/` — one JSON per ROM/market/model (see `profiles/README.md`).
 
 ## Running

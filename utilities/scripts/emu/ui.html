@@ -18,6 +18,15 @@
 <input id="csv" value="data/logs/rx8-666p/trackLog-2026-Oct-04_09-31-12.csv"> speed <input id="speed" value="1" style="width:4em">
 <button onclick="api('replay',{csv:document.getElementById('csv').value,speed:parseFloat(document.getElementById('speed').value)})">load</button>
 <button onclick="stepReplay()">step replay</button>
+<h2>Debugger (breakpoints / watchpoints / step)</h2>
+<input id="bpaddr" placeholder="0x31c" style="width:8em">
+<button onclick="dbg('break',{addr:document.getElementById('bpaddr').value})">break</button>
+<button onclick="dbg('watch',{addr:document.getElementById('bpaddr').value,on:'w'})">watch w</button>
+<button onclick="dbg('continue',{cycles:1000000})">continue</button>
+<button onclick="dbg('step',{n:1})">step</button>
+<button onclick="dbg('state',{})">state</button>
+<button onclick="dbg('disasm',{addr:'0x'+document.getElementById('state').textContent.split('pc=0x')[1]?.split(' ')[0]||'0'})">disasm@pc</button>
+<pre id="dbgout"></pre>
 <div id="log"></div>
 <script>
 async function api(path, body){
@@ -50,6 +59,11 @@ function sendSensors(){
 async function stepReplay(){
   const r = await api('replay_step',{});
   if (r) log(`replay row ${r.row}/${r.of} pc=0x${r.pc.toString(16)} watch=${JSON.stringify(r.watch)}`);
+  refresh();
+}
+async function dbg(action, extra){
+  const r = await api('debug', Object.assign({action}, extra||{}));
+  document.getElementById('dbgout').textContent = JSON.stringify(r, null, 1).slice(0, 3000);
   refresh();
 }
 function log(m){const l=document.getElementById('log');l.textContent+=m+'\n';l.scrollTop=l.scrollHeight;}

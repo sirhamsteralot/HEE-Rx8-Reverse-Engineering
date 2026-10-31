@@ -89,3 +89,55 @@ def test_ui_session_sensors_run_replay(tmp_path):
 def bus_addr_overridden(session):
     addr = int(str(session.prof["sensors"]["rpm"]["addr"]), 0)
     return addr in session.bus.read_overrides
+
+
+# --- debugger: breakpoints, watchpoints, UBC, inspection ---------------------
+
+def test_debugger_breakpoint_and_watchpoint():
+    import debugger
+    prof, bus, cpu = emu.build(PROFILE)
+    dbg = debugger.DebugSession(prof, bus, cpu)
+    emu.run(prof, bus, cpu, 1000)
+    dbg.add_break(0x31C, "exec")  # WDT overflow handler - recurs every ~256 cycles
+    r = dbg.continue_(500000)
+    assert "breakpoint at 0x0000031c" in r
+    assert cpu.pc == 0x31C
+    # write watchpoint on PBDR (toggled by the WDT handler)
+    dbg.breaks.clear()
+    dbg.add_break(0xFFFFF738, "mem", 2, "write")
+    r = dbg.continue_(500000)
+    assert r and "watchpoint write at 0xfffff738" in r
+    # read watchpoint on WDT TCSR
+    dbg.breaks.clear()
+    dbg.add_break(0xFFFFEC10, "mem", 1, "read")
+    r = dbg.continue_(500000)
+    assert r and "watchpoint read" in r
+
+
+def test_debugger_step_regs_mem_disasm():
+    import debugger
+    prof, bus, cpu = emu.build(PROFILE)
+    dbg = debugger.DebugSession(prof, bus, cpu)
+    dbg.step(5)
+    assert cpu.icount == 5
+    regs = dbg.regs()
+    assert "pc" in regs and "r15" in regs
+    assert dbg.mem(0x0, 2) == [bus.read32(0), bus.read32(4)]
+    d = dbg.disasm(0x8b8, 3)
+    assert d[0].startswith("0x000008b8") and "bsr" in d[0]
+
+
+def test_ubc_hardware_breakpoint():
+    import debugger
+    from peripherals import UBC
+    prof, bus, cpu = emu.build(PROFILE)
+    ubc = UBC(0xFFFFFF60, 0x24, {})
+    bus.add_peripheral(0xFFFFFF60, 0x24, ubc)
+    dbg = debugger.DebugSession(prof, bus, cpu)
+    emu.run(prof, bus, cpu, 500)
+    # program UBC channel A: break when PC == 0x31c (recurring WDT handler)
+    ubc.write(ubc.BARA, 4, 0x0000031C)
+    ubc.write(ubc.BAMRA, 4, 0xFFFFFFFF)
+    ubc.write(ubc.BRCR, 4, 0x1)
+    r = dbg.continue_(500000)
+    assert r and "UBC-A" in r and cpu.pc == 0x31C

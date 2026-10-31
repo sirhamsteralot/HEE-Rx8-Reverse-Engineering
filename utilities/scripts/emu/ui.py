@@ -134,6 +134,36 @@ class EmuSession:
                         for k, v in self.prof.get("sensors", {}).items() if not k.startswith("_")}}
 
 
+def debug_api(session, body):
+    """Debugger actions for the UI: break/watch/continue/step/regs/mem/disasm/state."""
+    import debugger
+    if not hasattr(session, "dbg"):
+        session.dbg = debugger.DebugSession(session.prof, session.bus, session.cpu)
+    dbg = session.dbg
+    act = body.get("action")
+    if act == "break":
+        return {"i": dbg.add_break(int(str(body["addr"]), 0), "exec")}
+    if act == "watch":
+        return {"i": dbg.add_break(int(str(body["addr"]), 0), "mem", int(str(body.get("size", 4)), 0),
+                                   {"r": "read", "w": "write"}.get(body.get("on", "w"), "rw"))}
+    if act == "del":
+        dbg.del_break(int(body["i"]))
+        return {"ok": True}
+    if act == "continue":
+        return {"reason": dbg.continue_(int(body.get("cycles", 100000))), "state": dbg.state()}
+    if act == "step":
+        return {"reason": dbg.step(int(body.get("n", 1))), "state": dbg.state()}
+    if act == "regs":
+        return dbg.regs()
+    if act == "mem":
+        return {"values": [hex(v) for v in dbg.mem(int(str(body["addr"]), 0), int(body.get("n", 4)))]}
+    if act == "disasm":
+        return {"lines": dbg.disasm(int(str(body["addr"]), 0), int(body.get("n", 8)))}
+    if act == "state":
+        return dbg.state()
+    return {"error": "unknown action"}
+
+
 def make_server(session, port):
     class H(BaseHTTPRequestHandler):
         def _json(self, obj, code=200):
@@ -184,6 +214,8 @@ def make_server(session, port):
                 self._json({"ok": True, "rows": len(session.replay["rows"])})
             elif self.path == "/api/replay_step":
                 self._json(session.replay_step())
+            elif self.path == "/api/debug":
+                self._json(debug_api(session, body))
             else:
                 self._json({"error": "not found"}, 404)
 
