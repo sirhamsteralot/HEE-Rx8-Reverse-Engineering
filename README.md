@@ -1,17 +1,35 @@
 # HEE — Mazda RX-8 Reverse Engineering
 
-See **[ROADMAP.md](ROADMAP.md)** for the phased plan (Phase 1: simulation suite to
-run and validate the binaries).
+Workspace for reverse engineering the Mazda RX-8 (Series 1) PCM/ECU — a Renesas
+**SH-2E (SH7055F)**, big-endian, 512 KiB flash / 32 KiB RAM. No firmware source
+exists; everything is derived from ROM binaries. Seeded 2026-10-31 from a prior
+effort workspace and community material, now with a working SH-2E emulator.
 
-Central workspace for reverse engineering the Mazda RX-8 (Series 1) PCM/ECU —
-a Renesas **SH-2E (SH7055F)**, big-endian, 512 KiB flash / 32 KiB RAM — referred to
-here as the **HEE** target. No firmware source exists; everything is derived from
-ROM binaries. Seeded on 2026-10-31 from a prior effort workspace
-(`input/Tuning-merged`, promoted into the tracked folders below).
+**Plan:** see **[ROADMAP.md](ROADMAP.md)** — Phase 1 (simulation suite) is implemented;
+there is a fidelity-limits register at the bottom. **Rules for agents/humans:**
+**[AGENTS.md](AGENTS.md)**.
+
+## Quick start
+
+```sh
+git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
+git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
+python -m pytest tests/                                       # 18 tests, ~4s
+python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
+python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
+python utilities/scripts/hash_binaries.py --check             # verify binaries/manifest.csv
+```
+
+Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.json`
+(ROM path + SHA-256 verified at load, memory map, SH7055 peripheral set, sensor map).
+Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
+Windows with `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
 
 ## Goals
 
 - Understand the structure, behavior, and algorithms of the HEE PCM firmware.
+- Run the actual binaries in the SH-2E emulator and validate every static finding
+  dynamically (golden traces, virtual OBD-II/UDS port, live sensor UI).
 - Maintain annotated disassembly, decompiled views, and clean reimplementations.
 - Maintain RomRaider/ECUFlash XML definitions that match the ROMs.
 - Document findings so the work is reproducible, evidence-ranked, and reviewable.
@@ -21,66 +39,68 @@ ROM binaries. Seeded on 2026-10-31 from a prior effort workspace
 - Work only on hardware and dumps you own or are authorized to analyze; check your
   local laws before distributing circumvention code.
 - **Never modify a stock ROM, capture, or dump** — binaries are immutable inputs.
-  Patches are written to *new* output files only.
-- **Never flash modified firmware to a vehicle** without bench validation first.
+  Patches write *new* output files only, with input SHA-256 asserted unchanged.
+- **Never flash modified firmware to a vehicle** without bench validation first
+  (BOOT-mode bench work additionally needs a ~150 Hz square wave on CN400 pin 3 —
+  see `docs/references/rx8club-user-guide-thread.md` §8).
 
 ## Repository layout
 
 | Path | Purpose |
 |---|---|
-| `input/` | Raw intake drop zone (bins, prior efforts, cloned repos). **Never committed.** |
-| `submodules/` | Upstream repos as git submodules (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`) — **read-only context only**, never worked in or committed from. Fetch with `git submodule update --init --recursive`. |
-| `binaries/` | Immutable dumps of **our own acquisitions** only, with `manifest.csv` (SHA-256 + provenance). Upstream stock ROMs/captures are referenced, not duplicated: `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/`. |
-| `reverse-engineered/` | RE output. `disassembly/<rom-id>/` (addressed asm; `.gar` archives in the submodule's `Ghidra_Archives/`), `decompiled/<rom-id>/` (C export + named views + indexes), `reimplementation/` (compilable C + host tests). |
-| `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups), `architecture/` (memory map, `hardware/` pinouts & wiring, `design/`), `references/` (PDFs, upstream links, prior-effort docs), `learnings.md` (session log). |
-| `data/` | Machine-readable artifacts: `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records). |
-| `utilities/` | `scripts/` (`hash_binaries.py`, `rx8-pcm-pipeline/`, `patchers/`, `defs-merge/`), `tools/ghidra/` (Java headless scripts, SH-2E processor config). |
-| `tests/` | Verification harnesses; host unit tests live beside the code in `reverse-engineered/reimplementation/`. |
-
-Live Ghidra project databases (`.gpr/.rep`) and third-party tool installs (RomRaider,
-Rx8Man, upstream RX8Defs clones) stay in `input/` — only `.gar` archives, exports, and
-scripts are committed. See `docs/references/README.md`.
+| `input/` | Raw intake drop zone (zips, saved pages, prior efforts). **Never committed** — verified artifacts are promoted out with provenance. |
+| `submodules/` | Upstream repos as read-only git submodules (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering` — the latter holds the 10 stock ROMs, captures, Ghidra `.gar`). Never worked in or committed from; pinned commits cited in docs. |
+| `binaries/` | Immutable dumps of **our own acquisitions** (`dumps/`, e.g. Aron's 60E0G500 stock + 3 tuned streetport ROMs), `manifest.csv` = recursive SHA-256 + provenance (tuned ROMs flagged). Upstream ROMs are referenced via the submodule, not duplicated. |
+| `reverse-engineered/` | `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, 3,355 function files, named views, indexes), `reimplementation/` (compilable C11 + host tests). |
+| `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups; incl. `60E0G500_N3ZHEC/` streetport diff), `architecture/` (memory map, `design/`, `hardware/` pinout + wiring, `emulated-obd.md`, `emulator-ui.md` designs), `references/` (SH7055F manual, wiring book = ground truth, pinout PDF-derived md, RX8Club thread extract + OCR + inline-def TSV, upstream links), `learnings.md`. |
+| `data/` | `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records), `logs/` (real-car CSV/VTLOG — golden fixtures), `tunes/` (`.vtune` containers + notes; context only). |
+| `utilities/` | `scripts/emu/` (SH-2E emulator: CPU, bus, peripherals, profiles, ISO-TP, OBD port, UI), `scripts/rx8-pcm-pipeline/` (Ghidra pipeline), `scripts/patchers/`, `scripts/defs-merge/`, `scripts/hash_binaries.py`; `tools/ghidra/` (Java scripts, SH-2E Sleigh config). |
+| `tests/` | pytest suite: emulator unit tests, corpus validation vs. the real disassembly, golden boot trace, ISO-TP/CAN/OBD/UI. Host C tests live beside code in `reverse-engineered/reimplementation/`. |
 
 ## Recommended workflow
 
-Everything raw lands in `input/` first (uncommitted intake). Only verified artifacts
+Everything raw lands in `input/` first (uncommitted intake); only verified artifacts
 are promoted into the tracked folders.
 
-1. **Acquire** — dump from your own unit (bench ECU preferred); place in `input/`,
-   then promote to `binaries/` with a manifest row (`utilities/scripts/hash_binaries.py`).
-2. **Document** — open/extend `docs/investigations/<rom-id>/` before deep diving.
-3. **Disassemble/decompile** — Ghidra with the local SH-2E processor config
-   (`utilities/tools/ghidra/processor/`); commit exports and `.gar` archives under
-   `reverse-engineered/`, not project databases.
-4. **Annotate with evidence discipline** — name things per the label ladder
-   (`FUN_xxxxxxxx` unnamed, `ref_` inherited hypothesis, `CAL_` XML-derived,
-   `tbl_` descriptor pointer, `inferred_` RAM derivation, `candidate_` unproven);
-   never upgrade a label without new evidence; always tie symbols to addresses.
-5. **Verify at the binary level** — re-check every label against the raw ROM /
-   disassembly (literal pools, constants, descriptors, GPIO reg+mask), run the
-   pipeline's `validate_export.py` / `validate_reports.py` from
-   `utilities/scripts/rx8-pcm-pipeline/` (they expect the legacy workspace layout in
-   `input/Tuning-merged`).
-6. **Report** — subsystem writeups follow the 10-section format with mandatory
-   function/RAM address tables (template: `docs/investigations/60E15120_N3J1E/knock_control_report.md`).
-7. **Reimplement & test** — compilable C goes in `reverse-engineered/reimplementation/`
-   with host tests (`cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off …`).
+1. **Acquire** — dump from your own unit (bench ECU preferred); drop in `input/`,
+   promote to `binaries/` with a manifest row (`utilities/scripts/hash_binaries.py`).
+2. **Run it** — add an emulator profile, boot it, and diff the trace against
+   `tests/fixtures/` goldens or the Renesas debugger (`compare_traces.py`).
+3. **Document** — open/extend `docs/investigations/<rom-id>/` before deep diving.
+4. **Disassemble/decompile** — Ghidra with the local SH-2E processor config
+   (`utilities/tools/ghidra/processor/`); commit exports, not `.gpr/.rep` databases.
+5. **Annotate with evidence discipline** — label ladder `FUN_`/`ref_`/`CAL_`/`tbl_`/
+   `inferred_`/`candidate_`; never upgrade without new evidence; always tie symbols
+   to addresses (`0x08001234`).
+6. **Verify at the binary level** — re-check labels against raw ROM/disassembly
+   (literal pools, constants, descriptors, GPIO reg+mask), run the pipeline's
+   `validate_export.py`/`validate_reports.py`.
+7. **Report** — 10-section subsystem format with mandatory function/RAM address
+   tables (template: `docs/investigations/60E15120_N3J1E/knock_control_report.md`).
+8. **Reimplement & test** — compilable C in `reverse-engineered/reimplementation/`
+   with host tests, cross-checked against the emulator.
 
 ## Conventions
 
-- Dates ISO (`YYYY-MM-DD`); filenames `kebab-case` except **binary dumps keep their
-  upstream names** (`<firmware-id>_<cal-id>.bin`, e.g. `60E15120_N3J1E.bin`) so they
-  match the XML definitions; new acquisitions use `<source>-<version>-<date>.<ext>`.
-- Addresses written `0x08001234`; ROM window `0x00000000–0x0007ffff`, RAM
+- Dates ISO (`YYYY-MM-DD`); filenames `kebab-case`. Binaries: upstream names
+  (`<fw-id>_<cal-id>.bin`) when referencing submodule ROMs; own acquisitions
+  `<source>-<stem>-<date>.bin`.
+- Addresses `0x08001234`; memory map: ROM `0x00000000–0x0007ffff`, RAM
   `0xffff6000–0xffffdfff`, volatile I/O `0xffffe000–0xffffffff`.
-- Binary blobs (`.bin/.gar/.zip/.jar/.exe/.dll/.so/.pdf`…) go through Git LFS —
-  see `.gitattributes`; `git-lfs` is required to clone/checkout them.
+- Binary blobs (`.bin/.gar/.zip/.jar/.exe/.dll/.so/.pdf/.vtlog`) go through Git LFS
+  (`.gitattributes`) — `git-lfs` is required to clone/checkout.
 - Commit messages: short imperative subject, body explaining *why*.
+- Discrepancies are documented, never silently resolved (see ROADMAP register D1–D10).
 
-## Status
+## Status (2026-10-31)
 
-Seeded 2026-10-31: 10 stock ROMs + 3 captures in `binaries/`, full prior analysis of
-ROM `60E15120_N3J1E` (3,355 functions) under `reverse-engineered/` and
-`docs/investigations/60E15120_N3J1E/`, XML definitions in `data/definitions/`,
-pipeline + patcher scripts in `utilities/`. See `docs/learnings.md` for session
-know-how (SH-2E encoding gotchas, pipeline pitfalls, patcher patterns).
+- **Emulator (ROADMAP Phase 1): implemented.** Corpus-validated SH-2E core
+  (9,902 opcodes, 100% of the 168k-instruction disassembly), full boot of
+  `60E15120_N3J1E` (50M+ instructions clean), WDT PB15 heartbeat live, golden
+  200k PC trace byte-exact; virtual OBD-II port + browser UI scaffolded. 18/18 tests.
+- **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
+  load) for `60E15120_N3J1E`; streetport-vs-stock diff done for 60E0G500
+  (cal-only; rev limiter float32 at 0x6d54c: 9000→5500/9500/10000).
+- **Data:** 4 own ROM dumps, 10 stock ROMs via submodule, real-car logs in
+  `data/logs/`, XML definitions in `data/definitions/`.
+- See `docs/learnings.md` for session know-how and ROADMAP.md for what's next.
