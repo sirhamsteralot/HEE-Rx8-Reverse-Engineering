@@ -82,7 +82,19 @@ running code.
   hash routine in the disassembly; map UDS handlers (0x10/0x23/0x27/0x34/0x36/0x37)
   and relate them to the dispatch table at 0x5f10c.
 - Verify the thread's engine-load math (MAF×rpm/60 → g/rev, ×0.6345 per-charge,
-  Mode 22 PID 0x43) against our fueling report.
+  Mode 22 PID 0x43) against our fueling report; settle the g/rev vs VolEf (STP
+  1.18 kg/m³) axis debate numerically once `data/maps/` is populated.
+- **Ignition-timing labeling pass** (not yet covered): use the thread's final-BTDC
+  equation (base × cranking-mult + idle blend + CLT − IAT, plus knock retard and
+  DSC derates) as the hypothesis to confirm/correct in the disassembly
+  (`docs/references/rx8club-user-guide-thread.md` §9).
+- Cross-check the thread's OL-fueling chain (max(target, tip-in×baro) × CLT corr,
+  implausible-ECT A/B sets, cat-warmup/catalyst model) against our fueling report.
+- Locate the bootloader seed/key algorithm in the ROM (thread §10) — relates to the
+  UDS 0x27 handler mapping; note immo data is outside flash (EEPROM).
+- Evaluate the "fast RAM logging" patch as a hardware validation aid for Phase 1
+  golden traces; cross-check `docs/references/rx8club-inline-defs.tsv` against
+  `data/definitions/`.
 
 ## Phase 3 — Calibration/table extraction at scale
 

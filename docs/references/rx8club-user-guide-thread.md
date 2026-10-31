@@ -116,6 +116,49 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
    **PB15 heartbeat toggles** as a trace observable ("firmware alive" signal) for
    golden-trace validation.
 
+### 9. ECU-logic writeups in the guide (hypotheses to verify against our export)
+
+- **Ignition timing** (not yet covered by our reports): 3 categories — leading /
+  trailing / common tables. Claimed final-timing equation:
+  `Final BTDC = BaseFinal×CrankingMult + (IdleBaseFinal + IdleSpeedComp + CrankingAngleTiming)×(1−CrankingMult) + CLTcomp − IATcomp`,
+  with components: base/idle-base timing tables, CLT & IAT compensations, idle-speed
+  compensation, cranking angle timing, **knock retard**, **DSC torque-request
+  derates** (from the EBCM; thought to apply to the leading rotor only). The forum
+  itself says knock-retard and cranking-angle logic were "still under development" —
+  **our `knock_control_report.md` is ahead** (retard negative, clamp [−10, 0]°,
+  attack −1.0°/cycle, recovery +0.35°/62 counts).
+- **Open-loop fueling chain**: all lambda tables store the decimal part (1 is added
+  back late in the math). `Final = max(OL target, TipIn×BaroCorr) × CLTCorr`; safe-mode
+  mirrors it; implausible-ECT mode adds A/B table sets (identical in OEM cal) with
+  changeover-enrichment blend; **cat-warmup fueling** rides a catalyst-temperature
+  model (load-based + ×compensation, cold RPM-based below 5 °C ECT). Cross-check
+  against our `fueling_control_report.md`.
+- **Load axis debate:** one poster reverse-engineered maps purely from OBD/CAN logs
+  (Excel "map generator") and found table axes match better in **VolEf** (assuming
+  STP density 1.18 kg/m³) than g/rev — contradicts the g/rev claim above; worth a
+  numeric check against our extracted tables (`data/maps/` when populated).
+- **Capability/patch list:** ignition, fuel, oil injection (metering oil pump), knock,
+  DSC, CEL/DTC handling, injector & coil sizing; patches exist for **immobilizer
+  delete** (as a RomRaider def toggle with/without RKE — see our
+  `utilities/scripts/patchers/G_ROM_ImmoDefWriter` context) and **fast RAM logging**.
+  Fast-RAM-logging patch would be a hardware-side validation aid for Phase 1 traces.
+
+### 10. Immobilizer / seed-key / dump equivalence
+
+- Third-party tunes (mazdaEdit/VersaTuner) change the **seed/key magic in the
+  bootloader section of the ROM**; flashing a stock ROM from the repo **loses immo
+  pairing** (immo data lives outside flash — cf. our `se3p_ecm_eeprom.bin` capture).
+- Rx8Man uses only the Tactrix `op20pt32.dll` driver (no ELM327); an ELM327 UDS
+  dumper was being resurrected by a poster. OBD (UDS 0x23) vs JTAG dumps are claimed
+  to be the same full 512 KiB.
+- Cross-flash note: 60E0FC00/N3Z2EU ran on 2005 USDM N3ZBEJ hardware (bench OK; start
+  blocked by immo/starter wiring) — useful for our cross-ROM work.
+
+### 11. Inline definition addresses
+
+`rx8club-inline-defs.tsv` (19 unique `<table>` name/address entries, mostly N3ZHEC
+fan/lambda/CL-fuel tables) — cross-check against `data/definitions/`, never copy in.
+
 ## Actionable items this feeds
 
 - ROADMAP Phase 2: find the incremental checksum/CVN routine (item 4); map UDS

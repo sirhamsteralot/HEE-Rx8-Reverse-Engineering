@@ -1,0 +1,23 @@
+# Inline RomRaider <table> entries from the RX8Club user-guide thread (pages 1-9)
+# Context: posted for N3ZHEC (EU 6-port 2004) and related ROMs - cross-check only;
+# authoritative defs live in data/definitions/. Extracted 2026-10-31.
+name	storageaddress	type
+Lambda Rich Limit	0x07016C	
+Lambda Lean Limit	0x070170	
+	0x070B58	X Axis
+	0x070B78	Y Axis
+Table 3D - 26 CL Fuel correction LOADvsECT	0x070B9C	
+	0x070DD4	X Axis
+	0x070E04	Y Axis
+Table 3D - 29 CL Fuel correction Table A	0x070E44	
+	0x070FC4	X Axis
+	0x070FF4	Y Axis
+Table 3D - 30 CL Fuel correction Table B	0x071034	
+Radiator Fan1 Enable (ECT)	0x07793c	
+Radiator Fan1 Hysteresis (ECT)	0x077940	
+Radiator Fan2 Enable (ECT)	0x077944	
+Radiator Fan2 Hysteresis (ECT)	0x077948	
+Radiator Fan High Speed Enable (ECT)	0x07794c	
+Radiator Fan High Speed Hysteresis (ECT)	0x077950	
+Radiator Fan Disable (Vehicle Speed)	0x077988	
+Radiator Fan Disable Hysteresis (Vehicle Speed)	0x07798c	
