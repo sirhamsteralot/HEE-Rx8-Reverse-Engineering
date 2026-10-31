@@ -18,11 +18,12 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 
 ## Status
 
-`Tuning-merged/` (union of `Tuning-29-10-2026` + `Tuning-30-10-2026`, newer wins —
-see its `MERGE_NOTES.md`) was promoted into the tracked folders on 2026-10-31.
-What intentionally **stayed here only**: the RomRaider install, `Rx8Man/`, the
-`RX8Defs`/`RX8Defs_Copy` clones, live Ghidra `.gpr/.rep` projects, and the duplicate
-`Data_binaries/60E0FC00.bin`. See `../docs/references/README.md`.
+`Tuning-merged/` (union of `Tuning-29-10-2026` + `Tuning-30-10-2026`, newer wins)
+was promoted into the tracked folders on 2026-10-31 and later removed from `input/`.
+The upstream git repositories now live as **read-only submodules** under
+`../submodules/` (see `../docs/references/README.md`). What was never promoted:
+live Ghidra `.gpr/.rep` project DBs, the RomRaider install, and the duplicate
+`Data_binaries/60E0FC00.bin`.
 
 ## Promotion path
 

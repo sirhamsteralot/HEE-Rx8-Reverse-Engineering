@@ -14,19 +14,24 @@ Rule: firmware dataflow comes from the ROM; physical pin/terminal associations f
 these documents; the two meet only at the SH7055F package pin. Never assert a
 package-pin ↔ connector-terminal link from the pinout alone.
 
-## Upstream repositories (referenced, not vendored)
+## Upstream repositories (git submodules — read-only context)
 
-Local clones/installs remain under `input/Tuning-merged/` only — do not copy them
-into tracked folders:
+Tracked as submodules under `submodules/` (see `.gitmodules`); fetch with
+`git submodule update --init --recursive`. Never edit or commit inside them —
+cite files by path + upstream commit hash instead:
 
-- `equinox311/Mazda_RX8_PCM_ReverseEngineering` — stock ROMs, data binaries, Ghidra
-  archives, utilities (promoted copies live in `binaries/`,
-  `reverse-engineered/disassembly/archives/`, `utilities/scripts/patchers/`)
-- `equinox311/RX8Defs` — upstream RomRaider ECU + logger XML definitions
-  (promoted copies in `data/definitions/romraider/upstream-rx8defs/`); commit hashes
-  are cited as merge provenance — never rewrite that history
-- `Rx8Man/Rx8Man` — PCM reflash tool for Tactrix (`Rx8Man.exe` in input/)
-- RomRaider (Java) installed distribution in input/ — https://www.romraider.com/
+- `submodules/Mazda_RX8_PCM_ReverseEngineering` — github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering:
+  stock ROMs, data binaries, Ghidra archives, utilities (promoted copies live in
+  `binaries/`, `reverse-engineered/disassembly/archives/`, `utilities/scripts/patchers/`)
+- `submodules/RX8Defs` — github.com/equinox311/RX8Defs: upstream RomRaider ECU +
+  logger XML definitions (promoted copies in `data/definitions/romraider/upstream-rx8defs/`);
+  commit hashes are cited as merge provenance — never rewrite that history
+- `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man: PCM reflash tool for Tactrix
+  (never flash without bench validation)
+
+Related but not submoduled (not git repos in the intake, URL only):
+
+- RomRaider (Java) — https://www.romraider.com/ / github.com/RomRaider/RomRaider
 - Renesas SH-2E/SH7055S hardware manual:
   https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual
 

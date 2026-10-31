@@ -8,6 +8,7 @@ and session log (`docs/learnings.md`).
 ## Repo map (put things where they belong)
 
 - `input/` — raw, uncommitted intake (bins, prior efforts, cloned repos, tool installs). Never `git add` its contents; promote verified artifacts out of it.
+- `submodules/` — upstream repos (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`) as git submodules, **read-only context only**. Never work, edit, or commit inside them; our promoted copies live in `binaries/`, `data/`, `reverse-engineered/`, etc. To move to a newer upstream commit, update deliberately and commit the gitlink bump in this repo (`git submodule update --remote` is a shared-state action — get approval first).
 - `binaries/` — immutable dumps only: `stock-roms/` (upstream `<firmware-id>_<cal-id>.bin` names kept), `captures/` (RAM/EEPROM/IC reads), `manifest.csv` (SHA-256 + provenance, recursive). Never edit or "fix" a binary in place.
 - `reverse-engineered/disassembly/` — addressed disassembly exports per ROM (`<rom-id>/`), plus `archives/` (Ghidra `.gar`, via LFS). Live `.gpr/.rep` project DBs stay in `input/`; commit archives + exports instead.
 - `reverse-engineered/decompiled/<rom-id>/` — decompiler C export, per-function files, indexes (`function_index.tsv`, `callgraph.tsv`, `symbols.tsv`), and synchronized named views (`named/`).
@@ -36,6 +37,10 @@ dumping it at the root.
 3. **Never commit secrets or personal data** (VINs etc.); redact derived files and
    note the redaction.
 4. **`input/` stays uncommitted** (`.gitignore` covers `input/*` except its README).
+4b. **`submodules/` is read-only context.** Don't create branches, edit files, or
+    commit inside a submodule from this repo. Reference submodule files by path +
+    upstream commit hash in docs; never copy from them into tracked folders without
+    provenance notes (promotion rules in `input/README.md` still apply).
 5. **Address traceability.** Tie every symbol to its original address
    (`0x08001234`) in code, docs, and commit messages.
 6. **Evidence discipline (label ladder).** `FUN_xxxxxxxx` = unnamed, address only;

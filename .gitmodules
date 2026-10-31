@@ -1,0 +1,9 @@
+[submodule "submodules/RX8Defs"]
+	path = submodules/RX8Defs
+	url = https://github.com/equinox311/RX8Defs
+[submodule "submodules/Rx8Man"]
+	path = submodules/Rx8Man
+	url = https://github.com/Rx8Man/Rx8Man
+[submodule "submodules/Mazda_RX8_PCM_ReverseEngineering"]
+	path = submodules/Mazda_RX8_PCM_ReverseEngineering
+	url = https://github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering
