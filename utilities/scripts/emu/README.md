@@ -122,9 +122,26 @@ produced yet**: this scripted session cannot inject keyboard input into HEW's
 command-line control (no window accepts foreground focus here), and the install
 is missing `hprojgen.exe` (project-generator GUI path fails). To finish the
 cross-check manually: in HEW, open the SH-2E simulator session, download
-`60E15120_N3J1E` at 0x0, then in the Command Line window run
-`TRACE ON` / `GO <count>` (or use the Trace window's save-to-file), export the
-PC trace, and diff with `compare_traces.py /tmp/our.trace /tmp/renesas.trace`.
+`60E15120_N3J1E` at 0x0 (Binary, offset 0), then in the **Command Line window**
+(View > Command Line, Ctrl+L) use the HDI debugger commands (see `he` /
+`he <cmd>` for syntax; there is **no console TRACE command** — trace is the
+Trace window):
+
+    reset                      # reset CPU (PC from reset vector)
+    go 0x3dac                  # run until PC = idle loop (temp breakpoint), prints PC
+    st instruction 200000      # execute exactly 200000 assembly instructions from PC
+    lo renesas_log.txt         # log command output to file
+    lo on                      # start logging      lo off   # stop
+    he st                      # syntax of the step command
+
+For the PC trace to diff: **View > Code > Trace (Ctrl+T)** opens the Trace
+window; in it set Trace Acquisition (buffer size >= step count, enable), run
+`st instruction 200000` from the command line, then in the Trace window
+right-click > Save/Save As to export the trace (one entry per executed
+instruction), and diff here with:
+`python utilities/scripts/emu/compare_traces.py /tmp/our-200k.trace <renesas.trace>`
+(`compare_traces.py` pulls the first `0x...` hex per line, so any trace format
+with hex PCs works).
 Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
 interrupt masking) were re-verified — `emu.py --profile 60E15120_N3J1E
 --cycles 200000 --trace` still reports **MATCH 200000 steps** against
