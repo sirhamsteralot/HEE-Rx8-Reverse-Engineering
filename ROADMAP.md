@@ -72,6 +72,12 @@ running code.
 - Differential labeling across the 10 stock ROMs in the submodule: byte-match
   function bodies ROM-to-ROM to propagate `ref_` names and find code vs.
   calibration differences.
+- Settle the checksum/CVN question from the RX8Club thread
+  (`docs/references/rx8club-user-guide-thread.md` §4): locate the incremental
+  hash routine in the disassembly; map UDS handlers (0x10/0x23/0x27/0x34/0x36/0x37)
+  and relate them to the dispatch table at 0x5f10c.
+- Verify the thread's engine-load math (MAF×rpm/60 → g/rev, ×0.6345 per-charge,
+  Mode 22 PID 0x43) against our fueling report.
 
 ## Phase 3 — Calibration/table extraction at scale
 

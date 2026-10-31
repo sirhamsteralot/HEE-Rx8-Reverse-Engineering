@@ -34,6 +34,11 @@ tracked folders (10 stock ROMs, 3 captures, 3 Ghidra `.gar` archives) — they a
 referenced via `../submodules/Mazda_RX8_PCM_ReverseEngineering/` at its pinned
 commit instead. See `../docs/references/README.md`.
 
+2026-10-31: the saved RX8Club.com user-guide thread (pages 1–9, `.htm` + `_files/`)
+was reviewed; usable facts extracted to
+`../docs/references/rx8club-user-guide-thread.md` (BOOT-mode pinout, UDS services,
+checksum/CVN question, 60E0FC00 addresses, load math). Raw pages stay here.
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —

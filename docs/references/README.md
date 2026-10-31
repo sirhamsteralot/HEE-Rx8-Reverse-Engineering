@@ -50,6 +50,15 @@ Related but not submoduled (not git repos in the intake, URL only):
 - Renesas SH-2E/SH7055S hardware manual:
   https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual
 
+## Community material
+
+- `rx8club-user-guide-thread.md` — curated extraction from the RX8Club "Open Source
+  S1 RX-8 ECU RE / Data Logging / Tuning — User's Guide" thread (raw saved pages in
+  `input/`): ROM↔cal-ID table, BOOT-mode CN400 pinout, UDS dump/flash services
+  (0x10/0x23/0x27/0x34/0x36/0x37), security-key notes, checksum/CVN open question,
+  concrete RAM/code addresses for 60E0FC00 (cross-checked), engine-load (g/rev) math.
+  Forum claims are `candidate_` until verified against our ROMs.
+
 ## Prior-effort workspace docs
 
 - `prior-effort-agents.md` — the previous workspace's AGENTS.md, preserved for
