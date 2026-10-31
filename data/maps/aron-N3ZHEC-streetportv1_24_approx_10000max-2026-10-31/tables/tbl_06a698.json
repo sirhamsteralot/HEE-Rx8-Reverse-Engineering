@@ -1,0 +1,33 @@
+{
+  "descriptor": 435864,
+  "dimension": 2,
+  "n": 7,
+  "axis": 470808,
+  "data": 470836,
+  "type_code": 8,
+  "scaled": true,
+  "raw_hex": "0007080000072f1800072f34",
+  "type_name": "uint16",
+  "elem_size": 2,
+  "axis_values": [
+    0.0,
+    15.625,
+    31.25,
+    46.875,
+    62.5,
+    78.125,
+    93.75
+  ],
+  "data_values": [
+    0,
+    340,
+    730,
+    1170,
+    1550,
+    2070,
+    2420
+  ],
+  "axis_monotonic": true,
+  "data_bytes": 14,
+  "axis_bytes": 28
+}

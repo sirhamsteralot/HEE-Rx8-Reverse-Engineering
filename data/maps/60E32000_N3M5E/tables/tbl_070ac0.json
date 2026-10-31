@@ -1,0 +1,64 @@
+{
+  "descriptor": 461504,
+  "dimension": 3,
+  "nx": 3,
+  "ny": 6,
+  "axis_x": 503104,
+  "axis_y": 503116,
+  "data": 503140,
+  "type_code": 8,
+  "scaled": true,
+  "raw_hex": "000300060007ad400007ad4c0007ad6408000000",
+  "type_name": "uint16",
+  "elem_size": 2,
+  "axis_x_values": [
+    1000.0,
+    1500.0,
+    2000.0
+  ],
+  "axis_y_values": [
+    -40.0,
+    -20.0,
+    0.0,
+    20.0,
+    40.0,
+    60.0
+  ],
+  "data_values": [
+    [
+      29401,
+      29401,
+      29401
+    ],
+    [
+      27704,
+      27704,
+      27704
+    ],
+    [
+      26067,
+      26067,
+      26067
+    ],
+    [
+      20469,
+      20469,
+      20469
+    ],
+    [
+      7414,
+      7414,
+      7414
+    ],
+    [
+      5120,
+      3482,
+      2048
+    ]
+  ],
+  "axis_x_monotonic": true,
+  "axis_y_monotonic": true,
+  "data_bytes": 36,
+  "axis_x_bytes": 12,
+  "axis_y_bytes": 24
+}

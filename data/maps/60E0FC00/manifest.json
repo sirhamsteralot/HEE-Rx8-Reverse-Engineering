@@ -1,0 +1,19 @@
+{
+  "rom_id": "60E0FC00",
+  "rom_path": "submodules\\Mazda_RX8_PCM_ReverseEngineering\\Stock_ROMs\\60E0FC00.bin",
+  "rom_sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c",
+  "rom_size": 524288,
+  "extracted_at": "2026-10-31T21:26:48.496462+00:00",
+  "total_tables": 503,
+  "by_dimension": {
+    "2D": 386,
+    "3D": 117
+  },
+  "by_type": {
+    "uint8": 213,
+    "float32": 115,
+    "uint16": 175
+  },
+  "ambiguous": 0,
+  "non_monotonic_axes": 0
+}

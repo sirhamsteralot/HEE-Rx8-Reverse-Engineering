@@ -5,9 +5,8 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 2026-10-31.
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
-pointers to the detailed docs. §Open work is the actionable list: groups are
-ordered by suggested pickup order (self-contained / highest-leverage first), and
-items within each group are roughly in dependency order. Phase numbers (P1–P6)
+pointers to the detailed docs. §Open work lists groups in pickup order (A is done — start at B). Items within
+each group are roughly in dependency order. Phase numbers (P1–P6)
 are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
 closing one requires new evidence + a note in the relevant investigation doc —
@@ -94,16 +93,19 @@ never silently resolve.
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### A. Calibration extraction at scale (P3) — recommended first
+### A. Calibration extraction at scale (P3) — DONE 2026-10-31
 
-Most self-contained, highest downstream leverage. No dependency on other open
-items; unblocks group D and settles D5 numerically.
-
-- Parse lookup descriptors (0x6c000–0x7ffff, format `>HBBII`) → dump all
-  tables + axes to `data/maps/` with ROM address + source hash.
-- Cross-ROM calibration diffs across the 10 stock ROMs → feed
-  `data/definitions/` corrections.
-- Settles **D5** (g/rev vs VolEf) numerically.
+`utilities/scripts/extract_maps.py` scans every ROM for Denso descriptors
+(2D `>HBBII` / 3D `>HHIIIB`, cal region auto-detected via `Copr.DENSO`) and
+dumps all tables+axes to `data/maps/<rom-id>/` (JSON + CSV + TSV index, ROM
+SHA-256 in manifest). 587 tables on 60E15120_N3J1E (478 XML-matched + 109
+unnamed), 381-587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic
+axes. `diff_maps.py` does structural cross-ROM matching + per-cell diffs.
+Streetport tunes mapped to 15-17 named descriptors. Report:
+`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`.
+6 new tests, 44/44 pass. Remaining: settle **D5** numerically (map PID 0x43
+output to a specific extracted table), feed cross-ROM diffs into
+`data/definitions/` corrections.
 
 ### B. Emulator fidelity hardening (P1 residual)
 
@@ -134,9 +136,8 @@ Use the emulator for dynamic verification where useful (see group B).
   engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
 - Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
   **bootloader seed/key location** — D4.
-- Label **60E0G500** via the pipeline; map the streetport diff ranges to
-  descriptors (needs group A's table dump).
-
+- Label **60E0G500** via the pipeline (streetport diff ranges already mapped to
+  descriptors via group A — see calibration_extraction_report.md §7).
 ### D. Cross-ROM propagation (P2/P5) — depends on A + C for the base ROM
 
 - Differential labeling across the 10 stock ROMs (byte-match function bodies

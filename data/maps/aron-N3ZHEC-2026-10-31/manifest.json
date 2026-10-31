@@ -1,0 +1,19 @@
+{
+  "rom_id": "aron-N3ZHEC-2026-10-31",
+  "rom_path": "binaries\\dumps\\aron-N3ZHEC-2026-10-31.bin",
+  "rom_sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+  "rom_size": 524288,
+  "extracted_at": "2026-10-31T21:27:38.082251+00:00",
+  "total_tables": 533,
+  "by_dimension": {
+    "2D": 404,
+    "3D": 129
+  },
+  "by_type": {
+    "uint8": 220,
+    "float32": 142,
+    "uint16": 171
+  },
+  "ambiguous": 0,
+  "non_monotonic_axes": 0
+}

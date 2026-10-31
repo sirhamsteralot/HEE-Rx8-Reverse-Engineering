@@ -1,0 +1,19 @@
+{
+  "rom_id": "60E32000_N3N5EB",
+  "rom_path": "submodules\\Mazda_RX8_PCM_ReverseEngineering\\Stock_ROMs\\60E32000_N3N5EB.bin",
+  "rom_sha256": "6c043bd4c9581f611919c187da95aeca152627212f235505d7b5ead34294a0a8",
+  "rom_size": 524288,
+  "extracted_at": "2026-10-31T21:26:55.407793+00:00",
+  "total_tables": 462,
+  "by_dimension": {
+    "2D": 354,
+    "3D": 108
+  },
+  "by_type": {
+    "uint8": 167,
+    "float32": 116,
+    "uint16": 179
+  },
+  "ambiguous": 0,
+  "non_monotonic_axes": 0
+}

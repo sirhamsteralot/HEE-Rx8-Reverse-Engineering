@@ -1,0 +1,19 @@
+{
+  "rom_id": "aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31",
+  "rom_path": "binaries\\dumps\\aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.bin",
+  "rom_sha256": "c09fa06b279a110f24ce99620c71fe798177b8986ce76293c19c721fd22d4738",
+  "rom_size": 524288,
+  "extracted_at": "2026-10-31T21:27:39.759113+00:00",
+  "total_tables": 533,
+  "by_dimension": {
+    "2D": 404,
+    "3D": 129
+  },
+  "by_type": {
+    "uint8": 220,
+    "float32": 142,
+    "uint16": 171
+  },
+  "ambiguous": 0,
+  "non_monotonic_axes": 0
+}

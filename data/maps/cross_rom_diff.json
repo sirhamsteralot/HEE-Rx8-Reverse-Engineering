@@ -1,0 +1,3464 @@
+{
+  "reference": "60E15120_N3J1E",
+  "roms": [
+    "60E0E500",
+    "60E0E700_N3YLEE",
+    "60E0FB00",
+    "60E0FC00",
+    "60E15120_N3J1E",
+    "60E1B900",
+    "60E1C500_N3J6EB",
+    "60E1D400",
+    "60E32000_N3M5E",
+    "60E32000_N3N5EB"
+  ],
+  "per_rom": {
+    "60E0E500": {
+      "matched": 245,
+      "unmatched_ref": 60,
+      "unmatched_rom": 54,
+      "tables_with_diffs": 39,
+      "total_diff_cells": 1305,
+      "diffs": [
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x069148",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 319,
+          "max_abs_diff": 51.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x069ddc",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 235,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x06887c",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 85,
+          "max_abs_diff": 2.0158303638833232e+34
+        },
+        {
+          "ref_descriptor": "0x06b66c",
+          "rom_descriptor": "0x06a8b0",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 81,
+          "max_abs_diff": 4486.0
+        },
+        {
+          "ref_descriptor": "0x06aeb8",
+          "rom_descriptor": "0x069ec4",
+          "dimension": 3,
+          "count": "16x5",
+          "type": "uint8",
+          "cells_differing": 80,
+          "max_abs_diff": 71.0
+        },
+        {
+          "ref_descriptor": "0x069a28",
+          "rom_descriptor": "0x068c54",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 69,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x068c38",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 66,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x069df0",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 65,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069a44",
+          "rom_descriptor": "0x068c70",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 60,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x06a8ec",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x06912c",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 29,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06a768",
+          "rom_descriptor": "0x069614",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 7655.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x06a150",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x06aaa0",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 16,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x069b58",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x069fd0",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x06a04c",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x069bac",
+          "rom_descriptor": "0x068db0",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 15.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x069b44",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b56c",
+          "rom_descriptor": "0x06a484",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint16",
+          "cells_differing": 8,
+          "max_abs_diff": 4325.0
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x069c94",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 35.0
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x06a1d4",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x06957c",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 6,
+          "max_abs_diff": 80.0
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x068f50",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 48.0
+        },
+        {
+          "ref_descriptor": "0x069d60",
+          "rom_descriptor": "0x068f64",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 21.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x069164",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06bad4",
+          "rom_descriptor": "0x06a9bc",
+          "dimension": 2,
+          "count": 5,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 0.06800000369548798
+        },
+        {
+          "ref_descriptor": "0x06ad1c",
+          "rom_descriptor": "0x069cbc",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x069dac",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 991.0
+        },
+        {
+          "ref_descriptor": "0x06b3a4",
+          "rom_descriptor": "0x06a2bc",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": NaN
+        },
+        {
+          "ref_descriptor": "0x06babc",
+          "rom_descriptor": "0x06a9a4",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 6.895566845166191e-17
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x06a55c",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x069384",
+          "rom_descriptor": "0x068630",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 1,
+          "max_abs_diff": 200.0
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068944",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x06a628",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.050000011920928955
+        },
+        {
+          "ref_descriptor": "0x0698d0",
+          "rom_descriptor": "0x068b00",
+          "dimension": 2,
+          "count": 3,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 90.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x069784",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x06a998",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.0
+        },
+        {
+          "ref_descriptor": "0x06b3dc",
+          "rom_descriptor": "0x06a2f4",
+          "dimension": 3,
+          "count": "8x10",
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 9.183549615799121e-41
+        }
+      ]
+    },
+    "60E0E700_N3YLEE": {
+      "matched": 231,
+      "unmatched_ref": 74,
+      "unmatched_rom": 69,
+      "tables_with_diffs": 72,
+      "total_diff_cells": 3207,
+      "diffs": [
+        {
+          "ref_descriptor": "0x06aa48",
+          "rom_descriptor": "0x069d14",
+          "dimension": 3,
+          "count": "17x20",
+          "type": "uint16",
+          "cells_differing": 339,
+          "max_abs_diff": 9113.0
+        },
+        {
+          "ref_descriptor": "0x06a164",
+          "rom_descriptor": "0x06951c",
+          "dimension": 3,
+          "count": "26x19",
+          "type": "uint16",
+          "cells_differing": 323,
+          "max_abs_diff": 14172.0
+        },
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x0693c8",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 309,
+          "max_abs_diff": 60.0
+        },
+        {
+          "ref_descriptor": "0x0695b4",
+          "rom_descriptor": "0x068ac4",
+          "dimension": 3,
+          "count": "20x18",
+          "type": "uint8",
+          "cells_differing": 306,
+          "max_abs_diff": 38.0
+        },
+        {
+          "ref_descriptor": "0x06a4ac",
+          "rom_descriptor": "0x069864",
+          "dimension": 3,
+          "count": "21x18",
+          "type": "uint16",
+          "cells_differing": 276,
+          "max_abs_diff": 5702.0
+        },
+        {
+          "ref_descriptor": "0x06a180",
+          "rom_descriptor": "0x069538",
+          "dimension": 3,
+          "count": "14x20",
+          "type": "uint16",
+          "cells_differing": 263,
+          "max_abs_diff": 4160.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x06a05c",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 240,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06aa80",
+          "rom_descriptor": "0x069d4c",
+          "dimension": 3,
+          "count": "17x9",
+          "type": "uint16",
+          "cells_differing": 153,
+          "max_abs_diff": 141.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x068afc",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 118,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x06b66c",
+          "rom_descriptor": "0x06ab30",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 81,
+          "max_abs_diff": 4486.0
+        },
+        {
+          "ref_descriptor": "0x06aeb8",
+          "rom_descriptor": "0x06a144",
+          "dimension": 3,
+          "count": "16x5",
+          "type": "uint8",
+          "cells_differing": 80,
+          "max_abs_diff": 71.0
+        },
+        {
+          "ref_descriptor": "0x0695ec",
+          "rom_descriptor": "0x068ae0",
+          "dimension": 3,
+          "count": "20x18",
+          "type": "uint8",
+          "cells_differing": 73,
+          "max_abs_diff": 18.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x068ef0",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 71,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x06a070",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 70,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069788",
+          "rom_descriptor": "0x068c94",
+          "dimension": 2,
+          "count": 48,
+          "type": "float32",
+          "cells_differing": 48,
+          "max_abs_diff": 1.6486968994140625
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x06ab6c",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x0693ac",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 30,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06bb6c",
+          "rom_descriptor": "0x06acc0",
+          "dimension": 3,
+          "count": "9x6",
+          "type": "uint8",
+          "cells_differing": 24,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x06a360",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 20,
+          "max_abs_diff": 2532.0
+        },
+        {
+          "ref_descriptor": "0x06a768",
+          "rom_descriptor": "0x069894",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 7830.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x06a3d0",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 4587.0
+        },
+        {
+          "ref_descriptor": "0x06b6f0",
+          "rom_descriptor": "0x06a888",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 11.0
+        },
+        {
+          "ref_descriptor": "0x06a150",
+          "rom_descriptor": "0x069508",
+          "dimension": 2,
+          "count": 19,
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 36.0
+        },
+        {
+          "ref_descriptor": "0x068ffc",
+          "rom_descriptor": "0x068630",
+          "dimension": 3,
+          "count": "16x6",
+          "type": "uint8",
+          "cells_differing": 15,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x06ad20",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 15,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x069dd8",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ae58",
+          "rom_descriptor": "0x06a0c8",
+          "dimension": 3,
+          "count": "5x5",
+          "type": "uint8",
+          "cells_differing": 13,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x06a250",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x06b9cc",
+          "rom_descriptor": "0x06ab58",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint8",
+          "cells_differing": 13,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x06ba18",
+          "rom_descriptor": "0x06ab8c",
+          "dimension": 2,
+          "count": 12,
+          "type": "float32",
+          "cells_differing": 12,
+          "max_abs_diff": 0.5800000131130219
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x06a2cc",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x069bac",
+          "rom_descriptor": "0x069030",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 15.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x069dc4",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ac4c",
+          "rom_descriptor": "0x069e80",
+          "dimension": 2,
+          "count": 17,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 5120.0
+        },
+        {
+          "ref_descriptor": "0x06ae3c",
+          "rom_descriptor": "0x06a0ac",
+          "dimension": 3,
+          "count": "16x3",
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x069d60",
+          "rom_descriptor": "0x0691e4",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 8,
+          "max_abs_diff": 21.0
+        },
+        {
+          "ref_descriptor": "0x06b1d0",
+          "rom_descriptor": "0x06a3b4",
+          "dimension": 3,
+          "count": "5x6",
+          "type": "uint16",
+          "cells_differing": 8,
+          "max_abs_diff": 20468.0
+        },
+        {
+          "ref_descriptor": "0x06b56c",
+          "rom_descriptor": "0x06a704",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint16",
+          "cells_differing": 8,
+          "max_abs_diff": 4325.0
+        },
+        {
+          "ref_descriptor": "0x069e00",
+          "rom_descriptor": "0x069284",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 20.0
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x06a454",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x0697fc",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 6,
+          "max_abs_diff": 80.0
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x069f14",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 6,
+          "max_abs_diff": 35.0
+        },
+        {
+          "ref_descriptor": "0x069490",
+          "rom_descriptor": "0x0689bc",
+          "dimension": 2,
+          "count": 5,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 2.0
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x0691d0",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 48.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x0693e4",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06a240",
+          "rom_descriptor": "0x0695f8",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 2.0
+        },
+        {
+          "ref_descriptor": "0x06bad4",
+          "rom_descriptor": "0x06ac3c",
+          "dimension": 2,
+          "count": 5,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 0.06800000369548798
+        },
+        {
+          "ref_descriptor": "0x06bae0",
+          "rom_descriptor": "0x06ac48",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x068f94",
+          "rom_descriptor": "0x0685c8",
+          "dimension": 3,
+          "count": "6x6",
+          "type": "float32",
+          "cells_differing": 4,
+          "max_abs_diff": 12072974.999956079
+        },
+        {
+          "ref_descriptor": "0x069918",
+          "rom_descriptor": "0x068de0",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint16",
+          "cells_differing": 4,
+          "max_abs_diff": 750.0
+        },
+        {
+          "ref_descriptor": "0x06a390",
+          "rom_descriptor": "0x069748",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 96.0
+        },
+        {
+          "ref_descriptor": "0x06a700",
+          "rom_descriptor": "0x069a44",
+          "dimension": 3,
+          "count": "5x20",
+          "type": "float32",
+          "cells_differing": 4,
+          "max_abs_diff": 2.266113306033124e-27
+        },
+        {
+          "ref_descriptor": "0x06a74c",
+          "rom_descriptor": "0x069a90",
+          "dimension": 3,
+          "count": "17x3",
+          "type": "uint16",
+          "cells_differing": 4,
+          "max_abs_diff": 13107.0
+        },
+        {
+          "ref_descriptor": "0x068f20",
+          "rom_descriptor": "0x068554",
+          "dimension": 2,
+          "count": 16,
+          "type": "uint8",
+          "cells_differing": 3,
+          "max_abs_diff": 11.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x06a02c",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 994.0
+        },
+        {
+          "ref_descriptor": "0x06b3a4",
+          "rom_descriptor": "0x06a53c",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": NaN
+        },
+        {
+          "ref_descriptor": "0x06babc",
+          "rom_descriptor": "0x06ac24",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 6.895566845166191e-17
+        },
+        {
+          "ref_descriptor": "0x068f5c",
+          "rom_descriptor": "0x068590",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 7.9131266975737e-24
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x06a7dc",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x0693c0",
+          "rom_descriptor": "0x0688ec",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 2,
+          "max_abs_diff": 800.0
+        },
+        {
+          "ref_descriptor": "0x06a09c",
+          "rom_descriptor": "0x069454",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 8.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x06ac18",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 3.526482842272093e-37
+        },
+        {
+          "ref_descriptor": "0x06bb3c",
+          "rom_descriptor": "0x06ac90",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 2,
+          "max_abs_diff": 256.0
+        },
+        {
+          "ref_descriptor": "0x068f48",
+          "rom_descriptor": "0x06857c",
+          "dimension": 2,
+          "count": 6,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 20.0
+        },
+        {
+          "ref_descriptor": "0x069384",
+          "rom_descriptor": "0x0688b0",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 1,
+          "max_abs_diff": 200.0
+        },
+        {
+          "ref_descriptor": "0x069508",
+          "rom_descriptor": "0x068a34",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 1,
+          "max_abs_diff": 300.0
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068bc4",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x06a8a8",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.050000011920928955
+        },
+        {
+          "ref_descriptor": "0x0698d0",
+          "rom_descriptor": "0x068d80",
+          "dimension": 2,
+          "count": 3,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 90.0
+        },
+        {
+          "ref_descriptor": "0x06a518",
+          "rom_descriptor": "0x0698d0",
+          "dimension": 2,
+          "count": 5,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 7.052965684544186e-38
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x069a04",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 60.0
+        },
+        {
+          "ref_descriptor": "0x06b3dc",
+          "rom_descriptor": "0x06a574",
+          "dimension": 3,
+          "count": "8x10",
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 9.183549615799121e-41
+        }
+      ]
+    },
+    "60E0FB00": {
+      "matched": 229,
+      "unmatched_ref": 76,
+      "unmatched_rom": 80,
+      "tables_with_diffs": 47,
+      "total_diff_cells": 1409,
+      "diffs": [
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x06865c",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 312,
+          "max_abs_diff": 46.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x069250",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 233,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069adc",
+          "rom_descriptor": "0x0681f4",
+          "dimension": 3,
+          "count": "13x7",
+          "type": "uint16",
+          "cells_differing": 91,
+          "max_abs_diff": 100.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x067d90",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 83,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x069a44",
+          "rom_descriptor": "0x068184",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 71,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a28",
+          "rom_descriptor": "0x068168",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 69,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x06814c",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 66,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x069264",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 65,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06b3dc",
+          "rom_descriptor": "0x06976c",
+          "dimension": 3,
+          "count": "8x10",
+          "type": "float32",
+          "cells_differing": 51,
+          "max_abs_diff": 2.140056872424792e+38
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x069d48",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x06bb6c",
+          "rom_descriptor": "0x069ed0",
+          "dimension": 3,
+          "count": "9x6",
+          "type": "uint8",
+          "cells_differing": 34,
+          "max_abs_diff": 76.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x068640",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 29,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06a1c4",
+          "rom_descriptor": "0x068810",
+          "dimension": 3,
+          "count": "7x4",
+          "type": "uint8",
+          "cells_differing": 21,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x0695c4",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x0699b8",
+          "rom_descriptor": "0x0680f8",
+          "dimension": 3,
+          "count": "12x3",
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 82.0
+        },
+        {
+          "ref_descriptor": "0x069944",
+          "rom_descriptor": "0x067f70",
+          "dimension": 2,
+          "count": 16,
+          "type": "float32",
+          "cells_differing": 16,
+          "max_abs_diff": 0.1802000105381012
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x069f30",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 15,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x068fcc",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x069444",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x069810",
+          "rom_descriptor": "0x069708",
+          "dimension": 2,
+          "count": 11,
+          "type": "uint16",
+          "cells_differing": 11,
+          "max_abs_diff": 22845.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x0694c0",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06b340",
+          "rom_descriptor": "0x0696e0",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint16",
+          "cells_differing": 10,
+          "max_abs_diff": 1440.0
+        },
+        {
+          "ref_descriptor": "0x06b3b0",
+          "rom_descriptor": "0x06971c",
+          "dimension": 2,
+          "count": 10,
+          "type": "float32",
+          "cells_differing": 10,
+          "max_abs_diff": 480.0
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x069e64",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 74.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x068fb8",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ad30",
+          "rom_descriptor": "0x069144",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 30.0
+        },
+        {
+          "ref_descriptor": "0x06b4d0",
+          "rom_descriptor": "0x069860",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 118.0
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x069180",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x0690e0",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x069bc0",
+          "rom_descriptor": "0x0682d8",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 3.882612348501214e+20
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x069648",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x069938",
+          "rom_descriptor": "0x068094",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 2.755106923693666e-39
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x068464",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 90.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x068678",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x069df4",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 3.3881314658997746e-20
+        },
+        {
+          "ref_descriptor": "0x069e00",
+          "rom_descriptor": "0x068518",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 12.0
+        },
+        {
+          "ref_descriptor": "0x06a0ec",
+          "rom_descriptor": "0x068724",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 8.0
+        },
+        {
+          "ref_descriptor": "0x069ca0",
+          "rom_descriptor": "0x0683b8",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 1.3944509350857465e-31
+        },
+        {
+          "ref_descriptor": "0x06a19c",
+          "rom_descriptor": "0x0687e8",
+          "dimension": 2,
+          "count": 4,
+          "type": "uint8",
+          "cells_differing": 3,
+          "max_abs_diff": 4.0
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x069554",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 1.0
+        },
+        {
+          "ref_descriptor": "0x06b1d0",
+          "rom_descriptor": "0x0695a8",
+          "dimension": 3,
+          "count": "5x6",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 2.0
+        },
+        {
+          "ref_descriptor": "0x06abc8",
+          "rom_descriptor": "0x06902c",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 2.2569490190541394e-35
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068878",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x069cd0",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.699999988079071
+        },
+        {
+          "ref_descriptor": "0x069fe8",
+          "rom_descriptor": "0x068428",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 88.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x068bf8",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        },
+        {
+          "ref_descriptor": "0x06ab70",
+          "rom_descriptor": "0x068fe0",
+          "dimension": 2,
+          "count": 17,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 5.0
+        }
+      ]
+    },
+    "60E0FC00": {
+      "matched": 229,
+      "unmatched_ref": 76,
+      "unmatched_rom": 80,
+      "tables_with_diffs": 47,
+      "total_diff_cells": 1408,
+      "diffs": [
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x06865c",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 312,
+          "max_abs_diff": 46.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x069250",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 233,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069adc",
+          "rom_descriptor": "0x0681f4",
+          "dimension": 3,
+          "count": "13x7",
+          "type": "uint16",
+          "cells_differing": 91,
+          "max_abs_diff": 100.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x067d90",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 83,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x069a44",
+          "rom_descriptor": "0x068184",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 71,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a28",
+          "rom_descriptor": "0x068168",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 69,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x06814c",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 66,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x069264",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 65,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06b3dc",
+          "rom_descriptor": "0x06976c",
+          "dimension": 3,
+          "count": "8x10",
+          "type": "float32",
+          "cells_differing": 51,
+          "max_abs_diff": 2.140056872424792e+38
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x069d48",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x06bb6c",
+          "rom_descriptor": "0x069ed0",
+          "dimension": 3,
+          "count": "9x6",
+          "type": "uint8",
+          "cells_differing": 34,
+          "max_abs_diff": 76.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x068640",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 29,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06a1c4",
+          "rom_descriptor": "0x068810",
+          "dimension": 3,
+          "count": "7x4",
+          "type": "uint8",
+          "cells_differing": 21,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x0695c4",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x0699b8",
+          "rom_descriptor": "0x0680f8",
+          "dimension": 3,
+          "count": "12x3",
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 82.0
+        },
+        {
+          "ref_descriptor": "0x069944",
+          "rom_descriptor": "0x067f70",
+          "dimension": 2,
+          "count": 16,
+          "type": "float32",
+          "cells_differing": 16,
+          "max_abs_diff": 0.1802000105381012
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x069f30",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 15,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x068fcc",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x069444",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x069810",
+          "rom_descriptor": "0x069708",
+          "dimension": 2,
+          "count": 11,
+          "type": "uint16",
+          "cells_differing": 11,
+          "max_abs_diff": 22845.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x0694c0",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06b340",
+          "rom_descriptor": "0x0696e0",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint16",
+          "cells_differing": 10,
+          "max_abs_diff": 1440.0
+        },
+        {
+          "ref_descriptor": "0x06b3b0",
+          "rom_descriptor": "0x06971c",
+          "dimension": 2,
+          "count": 10,
+          "type": "float32",
+          "cells_differing": 10,
+          "max_abs_diff": 480.0
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x069e64",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 74.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x068fb8",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ad30",
+          "rom_descriptor": "0x069144",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 30.0
+        },
+        {
+          "ref_descriptor": "0x06b4d0",
+          "rom_descriptor": "0x069860",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 118.0
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x069180",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x0690e0",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x069bc0",
+          "rom_descriptor": "0x0682d8",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 3.882612348501214e+20
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x069648",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x069938",
+          "rom_descriptor": "0x068094",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 2.755106923693666e-39
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x068464",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 90.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x068678",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x069df4",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 3.3881314658997746e-20
+        },
+        {
+          "ref_descriptor": "0x069e00",
+          "rom_descriptor": "0x068518",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 12.0
+        },
+        {
+          "ref_descriptor": "0x069ca0",
+          "rom_descriptor": "0x0683b8",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 1.3944509350857465e-31
+        },
+        {
+          "ref_descriptor": "0x06a19c",
+          "rom_descriptor": "0x0687e8",
+          "dimension": 2,
+          "count": 4,
+          "type": "uint8",
+          "cells_differing": 3,
+          "max_abs_diff": 4.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x069220",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 991.0
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x069554",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 1.0
+        },
+        {
+          "ref_descriptor": "0x06b1d0",
+          "rom_descriptor": "0x0695a8",
+          "dimension": 3,
+          "count": "5x6",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 2.0
+        },
+        {
+          "ref_descriptor": "0x06abc8",
+          "rom_descriptor": "0x06902c",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 2.2569490190541394e-35
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068878",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x069cd0",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.699999988079071
+        },
+        {
+          "ref_descriptor": "0x069fe8",
+          "rom_descriptor": "0x068428",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 88.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x068bf8",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        },
+        {
+          "ref_descriptor": "0x06ab70",
+          "rom_descriptor": "0x068fe0",
+          "dimension": 2,
+          "count": 17,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 5.0
+        }
+      ]
+    },
+    "60E1B900": {
+      "matched": 229,
+      "unmatched_ref": 76,
+      "unmatched_rom": 80,
+      "tables_with_diffs": 47,
+      "total_diff_cells": 1408,
+      "diffs": [
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x0688f4",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 312,
+          "max_abs_diff": 46.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x0694e8",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 233,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069adc",
+          "rom_descriptor": "0x06848c",
+          "dimension": 3,
+          "count": "13x7",
+          "type": "uint16",
+          "cells_differing": 91,
+          "max_abs_diff": 100.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x068028",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 83,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x069a44",
+          "rom_descriptor": "0x06841c",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 71,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a28",
+          "rom_descriptor": "0x068400",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 69,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x0683e4",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 66,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x0694fc",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 65,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06b3dc",
+          "rom_descriptor": "0x069a04",
+          "dimension": 3,
+          "count": "8x10",
+          "type": "float32",
+          "cells_differing": 51,
+          "max_abs_diff": 2.140056872424792e+38
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x069fe0",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x06bb6c",
+          "rom_descriptor": "0x06a168",
+          "dimension": 3,
+          "count": "9x6",
+          "type": "uint8",
+          "cells_differing": 34,
+          "max_abs_diff": 76.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x0688d8",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 29,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06a1c4",
+          "rom_descriptor": "0x068aa8",
+          "dimension": 3,
+          "count": "7x4",
+          "type": "uint8",
+          "cells_differing": 21,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x06985c",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x0699b8",
+          "rom_descriptor": "0x068390",
+          "dimension": 3,
+          "count": "12x3",
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 82.0
+        },
+        {
+          "ref_descriptor": "0x069944",
+          "rom_descriptor": "0x068208",
+          "dimension": 2,
+          "count": 16,
+          "type": "float32",
+          "cells_differing": 16,
+          "max_abs_diff": 0.1802000105381012
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x06a1c8",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 15,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x069264",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x0696dc",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x069810",
+          "rom_descriptor": "0x0699a0",
+          "dimension": 2,
+          "count": 11,
+          "type": "uint16",
+          "cells_differing": 11,
+          "max_abs_diff": 22845.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x069758",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06b340",
+          "rom_descriptor": "0x069978",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint16",
+          "cells_differing": 10,
+          "max_abs_diff": 1440.0
+        },
+        {
+          "ref_descriptor": "0x06b3b0",
+          "rom_descriptor": "0x0699b4",
+          "dimension": 2,
+          "count": 10,
+          "type": "float32",
+          "cells_differing": 10,
+          "max_abs_diff": 480.0
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x06a0fc",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 74.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x069250",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ad30",
+          "rom_descriptor": "0x0693dc",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 30.0
+        },
+        {
+          "ref_descriptor": "0x06b4d0",
+          "rom_descriptor": "0x069af8",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 118.0
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x069418",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x069378",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x069bc0",
+          "rom_descriptor": "0x068570",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 3.882612348501214e+20
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x0698e0",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x069938",
+          "rom_descriptor": "0x06832c",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 2.755106923693666e-39
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x0686fc",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 90.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x068910",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x06a08c",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 3.3881314658997746e-20
+        },
+        {
+          "ref_descriptor": "0x069e00",
+          "rom_descriptor": "0x0687b0",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 12.0
+        },
+        {
+          "ref_descriptor": "0x069ca0",
+          "rom_descriptor": "0x068650",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 1.3944509350857465e-31
+        },
+        {
+          "ref_descriptor": "0x06a19c",
+          "rom_descriptor": "0x068a80",
+          "dimension": 2,
+          "count": 4,
+          "type": "uint8",
+          "cells_differing": 3,
+          "max_abs_diff": 4.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x0694b8",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 991.0
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x0697ec",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 1.0
+        },
+        {
+          "ref_descriptor": "0x06b1d0",
+          "rom_descriptor": "0x069840",
+          "dimension": 3,
+          "count": "5x6",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 2.0
+        },
+        {
+          "ref_descriptor": "0x06abc8",
+          "rom_descriptor": "0x0692c4",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 2.2569490190541394e-35
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068b10",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x069f68",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.699999988079071
+        },
+        {
+          "ref_descriptor": "0x069fe8",
+          "rom_descriptor": "0x0686c0",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 88.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x068e90",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        },
+        {
+          "ref_descriptor": "0x06ab70",
+          "rom_descriptor": "0x069278",
+          "dimension": 2,
+          "count": 17,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 5.0
+        }
+      ]
+    },
+    "60E1C500_N3J6EB": {
+      "matched": 261,
+      "unmatched_ref": 44,
+      "unmatched_rom": 43,
+      "tables_with_diffs": 18,
+      "total_diff_cells": 518,
+      "diffs": [
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x06a0ac",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 233,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x068b4c",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 80,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x06a0c0",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 65,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06b9e0",
+          "rom_descriptor": "0x06abbc",
+          "dimension": 3,
+          "count": "10x8",
+          "type": "float32",
+          "cells_differing": 40,
+          "max_abs_diff": 8500.0
+        },
+        {
+          "ref_descriptor": "0x06a768",
+          "rom_descriptor": "0x0698e4",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 7655.0
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x06ad70",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 14,
+          "max_abs_diff": 88.5
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x069e28",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x06a2a0",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x06a31c",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x069e14",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x06a4a4",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x069434",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x06a07c",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 991.0
+        },
+        {
+          "ref_descriptor": "0x06b3a4",
+          "rom_descriptor": "0x06a58c",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": NaN
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x06a82c",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x068c14",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x069a54",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x06ac68",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.0
+        }
+      ]
+    },
+    "60E1D400": {
+      "matched": 253,
+      "unmatched_ref": 52,
+      "unmatched_rom": 32,
+      "tables_with_diffs": 15,
+      "total_diff_cells": 425,
+      "diffs": [
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x06b4fc",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 207,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x069608",
+          "rom_descriptor": "0x069f4c",
+          "dimension": 3,
+          "count": "19x11",
+          "type": "float32",
+          "cells_differing": 80,
+          "max_abs_diff": 7.874846074904125e+31
+        },
+        {
+          "ref_descriptor": "0x06ae14",
+          "rom_descriptor": "0x06b510",
+          "dimension": 3,
+          "count": "19x4",
+          "type": "float32",
+          "cells_differing": 62,
+          "max_abs_diff": 1130315133222912.0
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x06b278",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x06b6f0",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x06b76c",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x06b0f0",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 9,
+          "max_abs_diff": 782335.9375
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x06b264",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x06b8f4",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x06a834",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x06b4cc",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 991.0
+        },
+        {
+          "ref_descriptor": "0x06b3a4",
+          "rom_descriptor": "0x06b9dc",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": NaN
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x06bc7c",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x0698a8",
+          "rom_descriptor": "0x06a014",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 28.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x06ae54",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        }
+      ]
+    },
+    "60E32000_N3M5E": {
+      "matched": 95,
+      "unmatched_ref": 210,
+      "unmatched_rom": 186,
+      "tables_with_diffs": 33,
+      "total_diff_cells": 734,
+      "diffs": [
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x0707a0",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 245,
+          "max_abs_diff": 7.011777132462479e+25
+        },
+        {
+          "ref_descriptor": "0x069a44",
+          "rom_descriptor": "0x06fa68",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 71,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a28",
+          "rom_descriptor": "0x06fa4c",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 69,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x06fa30",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 66,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x06b198",
+          "rom_descriptor": "0x0709bc",
+          "dimension": 3,
+          "count": "6x7",
+          "type": "uint16",
+          "cells_differing": 42,
+          "max_abs_diff": 28935.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x070b14",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x0699b8",
+          "rom_descriptor": "0x06f9dc",
+          "dimension": 3,
+          "count": "12x3",
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 82.0
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x07051c",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x070994",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x0693ac",
+          "rom_descriptor": "0x06f56c",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 12,
+          "max_abs_diff": 1200.0
+        },
+        {
+          "ref_descriptor": "0x069810",
+          "rom_descriptor": "0x070c44",
+          "dimension": 2,
+          "count": 11,
+          "type": "uint16",
+          "cells_differing": 11,
+          "max_abs_diff": 22845.0
+        },
+        {
+          "ref_descriptor": "0x06b3b0",
+          "rom_descriptor": "0x070c58",
+          "dimension": 2,
+          "count": 10,
+          "type": "float32",
+          "cells_differing": 10,
+          "max_abs_diff": 480.0
+        },
+        {
+          "ref_descriptor": "0x06b538",
+          "rom_descriptor": "0x070c1c",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 56.0
+        },
+        {
+          "ref_descriptor": "0x06b850",
+          "rom_descriptor": "0x070fec",
+          "dimension": 2,
+          "count": 11,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 42.0
+        },
+        {
+          "ref_descriptor": "0x06ada0",
+          "rom_descriptor": "0x0706f4",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 1222.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x0706e8",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 9,
+          "max_abs_diff": 440.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x070508",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ad30",
+          "rom_descriptor": "0x07066c",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 30.0
+        },
+        {
+          "ref_descriptor": "0x06b5c0",
+          "rom_descriptor": "0x070ccc",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 9,
+          "max_abs_diff": 0.09578899759799242
+        },
+        {
+          "ref_descriptor": "0x06b594",
+          "rom_descriptor": "0x070d48",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 8480.0
+        },
+        {
+          "ref_descriptor": "0x06b110",
+          "rom_descriptor": "0x070df0",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint8",
+          "cells_differing": 8,
+          "max_abs_diff": 110.0
+        },
+        {
+          "ref_descriptor": "0x06b7d0",
+          "rom_descriptor": "0x070b28",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint16",
+          "cells_differing": 8,
+          "max_abs_diff": 40957.0
+        },
+        {
+          "ref_descriptor": "0x06b56c",
+          "rom_descriptor": "0x070c84",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint16",
+          "cells_differing": 8,
+          "max_abs_diff": 31035.0
+        },
+        {
+          "ref_descriptor": "0x069410",
+          "rom_descriptor": "0x0705b0",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint16",
+          "cells_differing": 7,
+          "max_abs_diff": 34328.0
+        },
+        {
+          "ref_descriptor": "0x06990c",
+          "rom_descriptor": "0x06f904",
+          "dimension": 2,
+          "count": 15,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 5999.940000001341
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x070b98",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x06a09c",
+          "rom_descriptor": "0x06fd70",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 6,
+          "max_abs_diff": 32.0
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x06f4f4",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 50.0
+        },
+        {
+          "ref_descriptor": "0x069938",
+          "rom_descriptor": "0x06f980",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 2.755106923693666e-39
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x06fd50",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06adf4",
+          "rom_descriptor": "0x070770",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 990.9995002746582
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x070aa4",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 1.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x0701c4",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 70.0
+        }
+      ]
+    },
+    "60E32000_N3N5EB": {
+      "matched": 138,
+      "unmatched_ref": 167,
+      "unmatched_rom": 152,
+      "tables_with_diffs": 56,
+      "total_diff_cells": 1153,
+      "diffs": [
+        {
+          "ref_descriptor": "0x069f44",
+          "rom_descriptor": "0x06f754",
+          "dimension": 3,
+          "count": "21x19",
+          "type": "uint8",
+          "cells_differing": 319,
+          "max_abs_diff": 51.0
+        },
+        {
+          "ref_descriptor": "0x06ae00",
+          "rom_descriptor": "0x07027c",
+          "dimension": 3,
+          "count": "19x17",
+          "type": "float32",
+          "cells_differing": 227,
+          "max_abs_diff": 1130315133222911.5
+        },
+        {
+          "ref_descriptor": "0x06aeb8",
+          "rom_descriptor": "0x070364",
+          "dimension": 3,
+          "count": "16x5",
+          "type": "uint8",
+          "cells_differing": 80,
+          "max_abs_diff": 71.0
+        },
+        {
+          "ref_descriptor": "0x069a0c",
+          "rom_descriptor": "0x06f390",
+          "dimension": 3,
+          "count": "8x9",
+          "type": "uint16",
+          "cells_differing": 68,
+          "max_abs_diff": 1100.0
+        },
+        {
+          "ref_descriptor": "0x06a8d0",
+          "rom_descriptor": "0x06fe28",
+          "dimension": 3,
+          "count": "10x5",
+          "type": "float32",
+          "cells_differing": 50,
+          "max_abs_diff": 14.649999618530273
+        },
+        {
+          "ref_descriptor": "0x06b198",
+          "rom_descriptor": "0x0704ac",
+          "dimension": 3,
+          "count": "6x7",
+          "type": "uint16",
+          "cells_differing": 42,
+          "max_abs_diff": 28935.0
+        },
+        {
+          "ref_descriptor": "0x06a90c",
+          "rom_descriptor": "0x06fe3c",
+          "dimension": 3,
+          "count": "9x5",
+          "type": "float32",
+          "cells_differing": 35,
+          "max_abs_diff": 100.0
+        },
+        {
+          "ref_descriptor": "0x069f28",
+          "rom_descriptor": "0x06f738",
+          "dimension": 3,
+          "count": "12x8",
+          "type": "uint8",
+          "cells_differing": 29,
+          "max_abs_diff": 37.0
+        },
+        {
+          "ref_descriptor": "0x06b1ec",
+          "rom_descriptor": "0x070604",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint16",
+          "cells_differing": 18,
+          "max_abs_diff": 2785.0
+        },
+        {
+          "ref_descriptor": "0x06b6f0",
+          "rom_descriptor": "0x070988",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 17,
+          "max_abs_diff": 11.0
+        },
+        {
+          "ref_descriptor": "0x06b17c",
+          "rom_descriptor": "0x070594",
+          "dimension": 3,
+          "count": "5x7",
+          "type": "uint16",
+          "cells_differing": 16,
+          "max_abs_diff": 2533.0
+        },
+        {
+          "ref_descriptor": "0x068ffc",
+          "rom_descriptor": "0x06ec48",
+          "dimension": 3,
+          "count": "16x6",
+          "type": "uint8",
+          "cells_differing": 15,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x06af40",
+          "rom_descriptor": "0x0703e4",
+          "dimension": 2,
+          "count": 16,
+          "type": "uint16",
+          "cells_differing": 15,
+          "max_abs_diff": 2828.0
+        },
+        {
+          "ref_descriptor": "0x06ab5c",
+          "rom_descriptor": "0x06ff8c",
+          "dimension": 2,
+          "count": 13,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ae58",
+          "rom_descriptor": "0x0702e8",
+          "dimension": 3,
+          "count": "5x5",
+          "type": "uint8",
+          "cells_differing": 13,
+          "max_abs_diff": 5.0
+        },
+        {
+          "ref_descriptor": "0x06b044",
+          "rom_descriptor": "0x070484",
+          "dimension": 2,
+          "count": 14,
+          "type": "uint16",
+          "cells_differing": 13,
+          "max_abs_diff": 4922.0
+        },
+        {
+          "ref_descriptor": "0x06b0fc",
+          "rom_descriptor": "0x070500",
+          "dimension": 2,
+          "count": 10,
+          "type": "uint8",
+          "cells_differing": 10,
+          "max_abs_diff": 120.0
+        },
+        {
+          "ref_descriptor": "0x06ada0",
+          "rom_descriptor": "0x0701d0",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 1222.0
+        },
+        {
+          "ref_descriptor": "0x069bac",
+          "rom_descriptor": "0x06f528",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 15.0
+        },
+        {
+          "ref_descriptor": "0x06ab34",
+          "rom_descriptor": "0x06ff78",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 9,
+          "max_abs_diff": 24740.0
+        },
+        {
+          "ref_descriptor": "0x06ad30",
+          "rom_descriptor": "0x070104",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 9,
+          "max_abs_diff": 30.0
+        },
+        {
+          "ref_descriptor": "0x06bbcc",
+          "rom_descriptor": "0x070df8",
+          "dimension": 3,
+          "count": "9x9",
+          "type": "float32",
+          "cells_differing": 9,
+          "max_abs_diff": 4.0058281734879314e+18
+        },
+        {
+          "ref_descriptor": "0x069944",
+          "rom_descriptor": "0x06f2bc",
+          "dimension": 2,
+          "count": 16,
+          "type": "float32",
+          "cells_differing": 8,
+          "max_abs_diff": 1.9979542522245142e+37
+        },
+        {
+          "ref_descriptor": "0x06ad6c",
+          "rom_descriptor": "0x06ee28",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 148.0
+        },
+        {
+          "ref_descriptor": "0x069410",
+          "rom_descriptor": "0x070020",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint16",
+          "cells_differing": 7,
+          "max_abs_diff": 34328.0
+        },
+        {
+          "ref_descriptor": "0x06990c",
+          "rom_descriptor": "0x06f234",
+          "dimension": 2,
+          "count": 15,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 5999.940000001341
+        },
+        {
+          "ref_descriptor": "0x069e00",
+          "rom_descriptor": "0x06f6b0",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 7,
+          "max_abs_diff": 20.0
+        },
+        {
+          "ref_descriptor": "0x06b288",
+          "rom_descriptor": "0x070688",
+          "dimension": 2,
+          "count": 14,
+          "type": "float32",
+          "cells_differing": 7,
+          "max_abs_diff": 499.4375
+        },
+        {
+          "ref_descriptor": "0x06acf4",
+          "rom_descriptor": "0x0700c8",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 6,
+          "max_abs_diff": 35.0
+        },
+        {
+          "ref_descriptor": "0x06a8b0",
+          "rom_descriptor": "0x06fe08",
+          "dimension": 2,
+          "count": 31,
+          "type": "float32",
+          "cells_differing": 6,
+          "max_abs_diff": 0.14999999105930328
+        },
+        {
+          "ref_descriptor": "0x069d4c",
+          "rom_descriptor": "0x06f638",
+          "dimension": 2,
+          "count": 18,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 48.0
+        },
+        {
+          "ref_descriptor": "0x069d60",
+          "rom_descriptor": "0x06f64c",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 21.0
+        },
+        {
+          "ref_descriptor": "0x069f60",
+          "rom_descriptor": "0x06f770",
+          "dimension": 2,
+          "count": 11,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 500.0
+        },
+        {
+          "ref_descriptor": "0x06a5c4",
+          "rom_descriptor": "0x06fb84",
+          "dimension": 3,
+          "count": "11x12",
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 3.0
+        },
+        {
+          "ref_descriptor": "0x06bab0",
+          "rom_descriptor": "0x070cc0",
+          "dimension": 2,
+          "count": 9,
+          "type": "float32",
+          "cells_differing": 5,
+          "max_abs_diff": 1.3943738628916192e-31
+        },
+        {
+          "ref_descriptor": "0x06bae0",
+          "rom_descriptor": "0x070d00",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint8",
+          "cells_differing": 5,
+          "max_abs_diff": 25.0
+        },
+        {
+          "ref_descriptor": "0x069918",
+          "rom_descriptor": "0x06f290",
+          "dimension": 2,
+          "count": 7,
+          "type": "uint16",
+          "cells_differing": 4,
+          "max_abs_diff": 750.0
+        },
+        {
+          "ref_descriptor": "0x06a0ec",
+          "rom_descriptor": "0x06f81c",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 8.0
+        },
+        {
+          "ref_descriptor": "0x06a390",
+          "rom_descriptor": "0x06fa04",
+          "dimension": 2,
+          "count": 8,
+          "type": "uint8",
+          "cells_differing": 4,
+          "max_abs_diff": 96.0
+        },
+        {
+          "ref_descriptor": "0x06a874",
+          "rom_descriptor": "0x06fdcc",
+          "dimension": 2,
+          "count": 25,
+          "type": "float32",
+          "cells_differing": 4,
+          "max_abs_diff": 1.1000001430511475
+        },
+        {
+          "ref_descriptor": "0x069508",
+          "rom_descriptor": "0x06ef84",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint16",
+          "cells_differing": 3,
+          "max_abs_diff": 1000.0
+        },
+        {
+          "ref_descriptor": "0x069ca0",
+          "rom_descriptor": "0x06f604",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 40.0
+        },
+        {
+          "ref_descriptor": "0x069e50",
+          "rom_descriptor": "0x06f6f4",
+          "dimension": 2,
+          "count": 7,
+          "type": "float32",
+          "cells_differing": 3,
+          "max_abs_diff": 3500.0
+        },
+        {
+          "ref_descriptor": "0x068f5c",
+          "rom_descriptor": "0x06ebc4",
+          "dimension": 2,
+          "count": 6,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 7.9131266975737e-24
+        },
+        {
+          "ref_descriptor": "0x068f94",
+          "rom_descriptor": "0x06ebfc",
+          "dimension": 3,
+          "count": "6x6",
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 12072974.999956079
+        },
+        {
+          "ref_descriptor": "0x06bb08",
+          "rom_descriptor": "0x070914",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x06a09c",
+          "rom_descriptor": "0x06f7e0",
+          "dimension": 2,
+          "count": 9,
+          "type": "uint8",
+          "cells_differing": 2,
+          "max_abs_diff": 8.0
+        },
+        {
+          "ref_descriptor": "0x06ba50",
+          "rom_descriptor": "0x070c94",
+          "dimension": 2,
+          "count": 4,
+          "type": "float32",
+          "cells_differing": 2,
+          "max_abs_diff": 7.989819887800882e-39
+        },
+        {
+          "ref_descriptor": "0x068f48",
+          "rom_descriptor": "0x06ebb0",
+          "dimension": 2,
+          "count": 6,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 20.0
+        },
+        {
+          "ref_descriptor": "0x069384",
+          "rom_descriptor": "0x06ee8c",
+          "dimension": 2,
+          "count": 12,
+          "type": "uint16",
+          "cells_differing": 1,
+          "max_abs_diff": 200.0
+        },
+        {
+          "ref_descriptor": "0x06b710",
+          "rom_descriptor": "0x070ccc",
+          "dimension": 2,
+          "count": 1,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 0.699999988079071
+        },
+        {
+          "ref_descriptor": "0x069dec",
+          "rom_descriptor": "0x07084c",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 250.0
+        },
+        {
+          "ref_descriptor": "0x069fe8",
+          "rom_descriptor": "0x06fba0",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 88.0
+        },
+        {
+          "ref_descriptor": "0x06a948",
+          "rom_descriptor": "0x06f514",
+          "dimension": 2,
+          "count": 1,
+          "type": "uint8",
+          "cells_differing": 1,
+          "max_abs_diff": 10.0
+        },
+        {
+          "ref_descriptor": "0x06a6a0",
+          "rom_descriptor": "0x06fc34",
+          "dimension": 2,
+          "count": 17,
+          "type": "float32",
+          "cells_differing": 1,
+          "max_abs_diff": 60.0
+        },
+        {
+          "ref_descriptor": "0x06b6d4",
+          "rom_descriptor": "0x070c1c",
+          "dimension": 3,
+          "count": "1x1",
+          "type": "uint16",
+          "cells_differing": 1,
+          "max_abs_diff": 3584.0
+        }
+      ]
+    }
+  }
+}
