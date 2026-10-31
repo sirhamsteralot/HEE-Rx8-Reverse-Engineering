@@ -16,12 +16,16 @@ git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
 python -m pytest tests/                                       # 24 tests, ~8s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
+python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
 python utilities/scripts/hash_binaries.py --check             # verify binaries/manifest.csv
 ```
 
 Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.json`
 (ROM path + SHA-256 verified at load, memory map, SH7055 peripheral set, sensor map).
+Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC` (stock, not tuned — own
+dump of Aron's ECU), `60E1B900_N3ZBEH`, and the tuned `60E0G500_N3ZHEC_streetport_*`.
+To run a different `.bin`, add a profile — recipe in `utilities/scripts/emu/profiles/README.md`.
 Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
 Windows with `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
 
