@@ -1,0 +1,45 @@
+[0.82] N322EU.:2004 Masda ROs 6 Port, MT
+[0.95] Unknown 3D
+[0.86] DTCs
+[0.98] Unknown ZD
+[1.00] E910
+[0.98] Crulse Control
+[0.93] E560
+[1.00] E650
+[0.96] Ignition Leadng
+[0.98] Ignition Timing
+[0.94] Ignition Tralng
+[0.99] Ide control
+[0.99] Ide Control
+[0.94] Ignition
+[1.00] 16798
+[0.97] Fuel Trim (Short Term)
+[0.63] [doo uado) sade (eng
+[0.86] 1D618
+[1.00] Fuel Trim?
+[0.97] Fuel Target (Closed Loop)
+[0.96] 22AA0
+[0.93] Torgue Control
+[0.96] 22F58
+[0.98] 231D4
+[0.96] Thrette Control
+[0.95] throtfe Control
+[0.91] Fuel Injectien
+[0.96] Altermator Control
+[0.97] Outputs
+[0.94] Secondary Air Purp
+[0.87] peoaufug
+[0.94] Ol Metering
+[0.93] Knodk Contrel
+[0.99] 35638
+[0.89] 1D080
+[0.95] Lmiters
+[0.95] CatalystTerperature
+[0.97] Sensors
+[0.98] Fuel Trim (Long Term)
+[0.97] 1DE76
+[0.95] 14FBC
+[0.76] 180F8
+[0.92] Evap/Purge
+[0.88] ID52C
+[0.99] 421DE

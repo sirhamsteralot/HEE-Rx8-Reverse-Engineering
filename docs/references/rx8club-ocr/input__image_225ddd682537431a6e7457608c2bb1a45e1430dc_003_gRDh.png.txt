@@ -1,0 +1,52 @@
+[0.92] -60E0FC00.bin
+[0.99] N3Z2EU, : 2004 Mazda RX8 6 Port, MT
+[1.00] Unknown 3D
+[0.87] DTCs
+[0.99] Unknown 2D
+[0.99] Cruise Control
+[1.00] E910
+[1.00] E560
+[1.00] E650
+[0.99] Ignition Leading
+[0.99] Ignition Timing
+[0.96] Ignition Trailing
+[0.98] Idle control
+[0.97] Idle Control
+[1.00] 16798
+[1.00] Ignition
+[0.98] Fuel Trim (Short Term)
+[0.96] 1DB18
+[0.84] +
+[0.97] Fuel Target (Open Loop)
+[0.80] +
+[1.00] Fuel Trim?
+[0.97] Fuel Target (Closed Loop)
+[0.95] Torque Control
+[0.97] 22AA0
+[0.73] 田
+[1.00] 22F58
+[0.99] 231D4
+[0.98] Throtte Contol
+[0.55] +
+[0.96] throttle Control
+[0.65] +
+[0.99] Alternator Control
+[1.00] Fuel Injection
+[0.99] Outputs
+[0.98] Secondary Air Pump
+[0.99] Engine Load
+[0.97] Oil Metering
+[0.97] Knock Control
+[1.00] 35638
+[0.99] 1D080
+[0.97] Catalyst Temperature
+[1.00] Limiters
+[0.70] 田
+[1.00] Sensors
+[1.00] 1DE76
+[1.00] Fuel Trim (Long Term)
+[0.99] 14FBC
+[0.99] 18EF8
+[0.99] 1D52C
+[1.00] Evap/Purge
+[1.00] 421DE

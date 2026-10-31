@@ -1,0 +1,18 @@
+[0.94] GR0MFlexFuelV1.2_Release.bin
+[0.95] G-ROM_FLEX, 04 Mazda RX-8 6Port, MT
+[0.96] Immobilizer
+[0.98] Unknown 3D
+[0.99] Flex Fuel
+[0.99] Outputs
+[1.00] Fan 1 Enable Coolant Temperature Threshold
+[0.98] Fan 1 Enable Coolant Temperature Hysteresis
+[0.99] Fan 2 Enable Coolant Temperature Threshold
+[0.97] Fan 2 Enable CoolantTemperatureHysteresis
+[0.97] Fan 2 Disable Vehidle Speed Threshold
+[0.98] Fan 2 Disable Vehide Speed Hysteresis
+[0.99] Fan High Speed Enable Coolant Temperature Threshold
+[0.98] Fan High Speed Enable Coolant Temperature Hysteresis
+[0.96] Auxillary Valve Close
+[0.96] VDI Open
+[0.98] SSV Switchpoint
+[0.98] Secondary Air Pump On Time

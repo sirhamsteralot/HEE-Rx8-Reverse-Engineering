@@ -1,0 +1,11 @@
+[0.98] DefinitionFileManager
+[0.99] EditorDefinitionFilePriority
+[0.95] C:\Users\Garrett\Documents\RX-8\G-ROM_defs\RX8Defs\RomRaiderrx8_defs.xm
+[1.00] MoveDown
+[0.99] Move Up
+[0.97] Add ...
+[1.00] Remove
+[0.99] Save
+[0.99] Apply
+[0.99] Undo
+[0.98] Cancel

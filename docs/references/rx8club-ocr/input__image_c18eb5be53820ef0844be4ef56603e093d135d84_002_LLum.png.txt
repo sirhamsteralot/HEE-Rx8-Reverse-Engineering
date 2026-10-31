@@ -1,0 +1,18 @@
+[0.58] ×
+[0.95] Decompile: getMode22EngineLoad -(60E0FC00.bin)
+[0.88]  Ro
+[0.98] int getMode22EngineLoad(void)
+[0.75] CTO
+[0.94] 6Eh
+[0.92] int iVarl;
+[0.99] if
+[0.99] (injectors_off_flag)
+[0.89] iVarl=0;
+[0.99] 10
+[0.94] else
+[1.00] 12
+[1.00] 13
+[0.97] return iVarl;
+[0.96] 14
+[0.90] 053
+[0.99] 15

@@ -1,0 +1,6 @@
+[0.97] RX8 Man 1.0.0.2
+[0.83] Fle Vehidle ECUToob Help
+[0.97] Console
+[0.97] 10:29:01 AM: RX8 Man version 1.0.0.2
+[0.98] 10:29:01 AM: RX8 Man supports 1 vehicles
+[0.98] No Vehicle

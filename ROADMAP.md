@@ -92,6 +92,9 @@ running code.
   implausible-ECT A/B sets, cat-warmup/catalyst model) against our fueling report.
 - Locate the bootloader seed/key algorithm in the ROM (thread §10) — relates to the
   UDS 0x27 handler mapping; note immo data is outside flash (EEPROM).
+- Map Mode 22 PID handlers cross-ROM: thread OCR shows PID 0x43 (`getMode22EngineLoad`,
+  g/rev × 1/255, 0 when injectors off) dispatched at 0x5fa0c–0x5fa14 in 60E0FC00; our
+  60E15120 labels put the same handler at 0x56b8a — extend the PID table per ROM.
 - Evaluate the "fast RAM logging" patch as a hardware validation aid for Phase 1
   golden traces; cross-check `docs/references/rx8club-inline-defs.tsv` against
   `data/definitions/`.

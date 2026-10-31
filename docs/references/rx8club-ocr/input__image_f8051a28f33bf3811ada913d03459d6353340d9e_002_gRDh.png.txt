@@ -1,0 +1,6 @@
+[0.96] Warning
+[0.97] The real value and byte value conversion expressions for table Table 3D - UNKNOWN_687b0 are invalid.
+[0.95] To real value: (x *0.0030517578) + 0
+[0.88] Tobyte:(x-0)/ 1
+[0.96] Always display this message
+[0.95] OK

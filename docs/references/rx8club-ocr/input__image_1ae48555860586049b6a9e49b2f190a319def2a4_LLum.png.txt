@@ -1,0 +1,11 @@
+[0.99] Decompile: Abs_load_CAN_repackage - (N3ZHEC patched.bin)
+[0.82] . Ro
+[1.00] 2
+[0.94] uintl6 t
+[0.55] 大
+[0.97] Abs load CAN repackage(void)
+[1.00] 3
+[0.80] 4
+[0.93] uintl6 t *puVarl;
+[0.98] puVarl = Scale_float_to_uint16_{P1-P3}dividedbyP2(RAM_ABS_LOAD,0.0039215684,0.0);
+[0.96] returnpuVarl ;

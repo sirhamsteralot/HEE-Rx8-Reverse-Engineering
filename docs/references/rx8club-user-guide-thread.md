@@ -159,6 +159,34 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 `rx8club-inline-defs.tsv` (19 unique `<table>` name/address entries, mostly N3ZHEC
 fan/lambda/CL-fuel tables) — cross-check against `data/definitions/`, never copy in.
 
+### 12. OCR of the thread's screenshots (pages 2–3) — `rx8club-ocr/`
+
+Raw per-image OCR text is in `rx8club-ocr/` (RapidOCR, 2026-10-31; noisy on small UI
+text — verify before use). Useful finds:
+
+- **Ghidra decompile of `getMode22EngineLoad` (60E0FC00)**: `if (injectors_off_flag)
+  return 0; else return floatToFP_NUMBER_SCALAR_OFFSET(engine_load_g_rev,
+  0.0039215684, 0.0)` — confirms Mode 22 **PID 0x43 = engine load in g/rev, scaled by
+  1/255**, zeroed when injectors are off. Companion shot: `Abs_load_CAN_repackage`
+  (N3ZHEC patched) = `Scale_float_to_uint16(RAM_ABS_LOAD, 1/255, 0)`. Mode 22 dispatch
+  code visible at **0x5fa0c–0x5fa14** in 60E0FC00 (PID 0x43 case, PIDs-supported 0x21–0x40).
+  - **Our cross-check:** `data/labels/60E15120_N3J1E/fueling_labels.json` already records
+    `calculate_engine_load` (c0b4, clipped, filtered) with "PID 0x0043 'Engine Load'
+    encodes c0b4, handler **0x56b8a**" in 60E15120 — same semantics, different address
+    per ROM (as expected).
+- **RomRaider table screenshots for 60E0FC00 (N3Z2EU)**: full category tree (DTCs,
+  Cruise Control, Ignition Leading/Trailing, Idle Control, Fuel Trim ST, Fuel Target
+  OL/CL, Torque Control, Throttle Control, Alternator Control, Fuel Injection, …) and
+  the ignition 2D tables: load axis **Engine Load (g/rev) 0.06–1.25** × RPM 750–16000,
+  values in **degrees BTDC** — names incl. `Ignition Leading/Trailing - Base Timing`,
+  `Idle Base Timing`, `Idle Load Compensation`, `Idle Timing Load Compensation
+  Multiplier`, `Idle Error Timing Correction (bool)`, `Off Throttle Leading Timing
+  Related`, `DSC Mode A Base/Map 2/Map 4`, `Minimum Advance`, `IAT Compensation`,
+  `On Throttle Load Compensation`, `Minimum Leading/Trailing split`, `Trailing Minimum`.
+- **G-ROM FlexFuel ROM def tree**: Immobilizer, Flex Fuel, Outputs, fan thresholds,
+  APV close / VDI open / SSV switchpoint, secondary-air pump time.
+- Rx8Man 1.0.0.2 console screenshot (Tactrix path).
+
 ## Actionable items this feeds
 
 - ROADMAP Phase 2: find the incremental checksum/CVN routine (item 4); map UDS

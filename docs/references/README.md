@@ -58,8 +58,11 @@ Related but not submoduled (not git repos in the intake, URL only):
   (0x10/0x23/0x27/0x34/0x36/0x37), security-key notes, checksum/CVN open question,
   concrete RAM/code addresses for 60E0FC00 (cross-checked), engine-load (g/rev) math,
   ignition-timing BTDC equation + OL-fueling chain hypotheses (§9), immo/seed-key
-  notes (§10), and `rx8club-inline-defs.tsv` (inline XML table addresses for
-  cross-checking `data/definitions/`).
+  notes (§10), `rx8club-inline-defs.tsv` (inline XML table addresses for
+  cross-checking `data/definitions/`), and §12 + `rx8club-ocr/` (OCR of the pages 2–3
+  screenshots: `getMode22EngineLoad` / PID 0x43 = g/rev × 1/255 with injectors-off → 0,
+  Mode 22 dispatch at 0x5fa0c in 60E0FC00, RomRaider table inventories for 60E0FC00 and
+  G-ROM FlexFuel, ignition 2D tables in deg BTDC over load g/rev × RPM).
   Forum claims are `candidate_` until verified against our ROMs.
 
 ## Prior-effort workspace docs
