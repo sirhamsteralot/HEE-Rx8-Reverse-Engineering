@@ -1,5 +1,8 @@
 # HEE — Mazda RX-8 Reverse Engineering
 
+See **[ROADMAP.md](ROADMAP.md)** for the phased plan (Phase 1: simulation suite to
+run and validate the binaries).
+
 Central workspace for reverse engineering the Mazda RX-8 (Series 1) PCM/ECU —
 a Renesas **SH-2E (SH7055F)**, big-endian, 512 KiB flash / 32 KiB RAM — referred to
 here as the **HEE** target. No firmware source exists; everything is derived from

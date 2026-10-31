@@ -75,7 +75,7 @@ dumping it at the root.
 
 ## Workflow for a typical task
 
-1. Read `README.md`, this file, and `docs/learnings.md`; check
+1. Read `README.md`, `ROADMAP.md`, this file, and `docs/learnings.md`; check
    `docs/investigations/` for existing work on the topic.
 2. Land raw material in `input/` (never committed); inventory additions in the
    investigation doc.
