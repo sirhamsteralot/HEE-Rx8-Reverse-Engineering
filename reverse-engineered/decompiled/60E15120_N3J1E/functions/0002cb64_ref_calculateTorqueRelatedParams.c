@@ -16,7 +16,7 @@ void ref_calculateTorqueRelatedParams(void)
   FUN_0002ce64();
   FUN_0002cd9c();
   ref_getRPMLoadBasedMult();
-  ref_getLeadingTimingTCModeA_4_val();
+  dsc_mode_a_base_timing_lookup();
   ref_getEngineTrqFromLookup();
   ref_calculateTorqueRelated();
   ref_calculateEngineMaxTorquePcnt__();

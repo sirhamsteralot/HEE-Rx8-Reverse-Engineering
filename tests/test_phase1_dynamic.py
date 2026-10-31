@@ -222,3 +222,59 @@ def test_can_rx_interrupt_autonomous():
     assert bus.read32(0xFFFFDDC8).to_bytes(4, "big") == bytes.fromhex("02100355")
     assert not (can.read(0x0E, 2) & 0x40)  # poller cleared RXPR
     assert cpu.pc == 0x3DAC  # back at idle
+
+
+# --- ignition timing chain (Phase 2 labeling pass, 2026-10-31) ---------------
+
+def _wf(bus, addr, v):
+    bus.write32(addr, harness.bits(f32(v)))
+
+
+def _rf(bus, addr):
+    return f32(struct.unpack("<f", struct.pack("<I", bus.read32(addr)))[0])
+
+
+def test_timing_cranking_blend_equation(booted):
+    """0x123da/0x124d6: a640 = a5e8*a644 + (a5f0+a718+ca9c)*(1-a644) + a780 - a778.
+    Verified bit-exact in the emulator for both rotors (thread section 9 equation)."""
+    _, bus, cpu = booted
+    _wf(bus, 0xFFFFA5E8, 30.0); _wf(bus, 0xFFFFA5F0, -2.0); _wf(bus, 0xFFFFA718, 0.5)
+    _wf(bus, 0xFFFFCA9C, 12.0); _wf(bus, 0xFFFFA780, 8.0); _wf(bus, 0xFFFFA778, 1.5)
+    _wf(bus, 0xFFFFA644, 0.5); _wf(bus, 0xFFFFB548, 5000.0); _wf(bus, 0xFFFFA7AC, 0.0)
+    bus.write8(0xFFFFAA62, 1)  # cranking -> a644 decays 0.05/call
+    harness.call(bus, cpu, 0x123DA, max_steps=50000)
+    m = max(0.5 - 0.05, 0.0)
+    exp = 30.0 * m + (-2.0 + 0.5 + 12.0) * (1 - m) + 8.0 - 1.5
+    assert abs(_rf(bus, 0xFFFFA644) - m) < 1e-6
+    assert abs(_rf(bus, 0xFFFFA640) - exp) < 1e-4
+    bus.write8(0xFFFFAA62, 0)  # not cranking -> a644 -> 1.0, blend collapses
+    _wf(bus, 0xFFFFA644, 0.5)
+    harness.call(bus, cpu, 0x123DA, max_steps=50000)
+    assert abs(_rf(bus, 0xFFFFA644) - 1.0) < 1e-6
+    assert abs(_rf(bus, 0xFFFFA640) - (30.0 + 8.0 - 1.5)) < 1e-4
+    # trailing mirror 0x124d6
+    _wf(bus, 0xFFFFA5EC, 20.0); _wf(bus, 0xFFFFA5F4, -1.0); _wf(bus, 0xFFFFA71C, 0.3)
+    _wf(bus, 0xFFFFCAA0, 10.0); _wf(bus, 0xFFFFA784, 6.0); _wf(bus, 0xFFFFA77C, 2.0)
+    _wf(bus, 0xFFFFA654, 0.5)
+    bus.write8(0xFFFFAA62, 1)
+    harness.call(bus, cpu, 0x124D6, max_steps=50000)
+    exp_t = 20.0 * m + (-1.0 + 0.3 + 10.0) * (1 - m) + 6.0 - 2.0
+    assert abs(_rf(bus, 0xFFFFA650) - exp_t) < 1e-4
+
+
+def test_timing_correction_add_and_final_clamp(booted):
+    """0x123ba adds base+corrections; 0x121fc clamps into a630 with min/max tables."""
+    _, bus, cpu = booted
+    _wf(bus, 0xFFFFA640, 25.0); _wf(bus, 0xFFFFA648, -3.5)
+    harness.call(bus, cpu, 0x123BA)
+    assert abs(_rf(bus, 0xFFFFA634) - 21.5) < 1e-6
+    _wf(bus, 0xFFFFA634, 100.0); _wf(bus, 0xFFFFA64C, -24.0); _wf(bus, 0xFFFFB548, 3000.0)
+    bus.write8(0xFFFFAA62, 0); bus.write8(0xFFFFCE1C, 0); bus.write8(0xFFFFBBCE, 0)
+    _wf(bus, 0xFFFFA934, 0.0)
+    harness.call(bus, cpu, 0x121FC, max_steps=100000)
+    a660 = _rf(bus, 0xFFFFA660)
+    assert a660 > 0  # max advance table 0x69190 read at 3000 rpm
+    assert abs(_rf(bus, 0xFFFFA630) - min(100.0, a660)) < 1e-4
+    _wf(bus, 0xFFFFA634, -100.0)
+    harness.call(bus, cpu, 0x121FC, max_steps=100000)
+    assert abs(_rf(bus, 0xFFFFA630) - (-24.0)) < 1e-6

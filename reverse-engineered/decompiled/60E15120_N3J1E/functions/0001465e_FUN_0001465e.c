@@ -6,8 +6,8 @@ void FUN_0001465e(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00014100();
-  ref_calcLeadingTimingIATCompensation();
+  idle_base_timing_select();
+  iat_timing_compensation_on_throttle();
   ref_setSR(uVar1);
   return;
 }

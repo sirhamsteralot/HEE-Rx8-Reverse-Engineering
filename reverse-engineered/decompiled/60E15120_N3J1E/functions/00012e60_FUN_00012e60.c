@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * timing_trim_scale_calc [medium]: a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim).
+ */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
-void FUN_00012e60(void)
+void timing_trim_scale_calc(void)
 
 {
   undefined4 uVar1;

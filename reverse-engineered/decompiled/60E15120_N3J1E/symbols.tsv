@@ -6263,7 +6263,7 @@ address	name	type	source
 000121d4	PTR_DAT_000121d4	Label	DEFAULT
 000121d8	FUN_000121d8	Function	DEFAULT
 000121ea	FUN_000121ea	Function	DEFAULT
-000121fc	FUN_000121fc	Function	DEFAULT
+000121fc	leading_final_timing_clamp_output	Function	DEFAULT
 0001225c	LAB_0001225c	Label	DEFAULT
 00012284	LAB_00012284	Label	DEFAULT
 00012286	LAB_00012286	Label	DEFAULT
@@ -6292,7 +6292,7 @@ address	name	type	source
 000122f4	PTR_DAT_000122f4	Label	DEFAULT
 000122f8	PTR_DAT_000122f8	Label	DEFAULT
 000122fc	PTR_rx8_clamp_float_000122fc	Label	DEFAULT
-00012300	FUN_00012300	Function	DEFAULT
+00012300	trailing_final_timing_clamp_output	Function	DEFAULT
 00012360	LAB_00012360	Label	DEFAULT
 00012388	LAB_00012388	Label	DEFAULT
 0001238a	LAB_0001238a	Label	DEFAULT
@@ -6300,7 +6300,7 @@ address	name	type	source
 00012392	LAB_00012392	Label	DEFAULT
 000123ba	leading_timing_add_corrections	Function	DEFAULT
 000123ca	trailing_timing_add_corrections	Function	DEFAULT
-000123da	FUN_000123da	Function	DEFAULT
+000123da	leading_timing_cranking_blend	Function	DEFAULT
 000123fc	DAT_000123fc	Label	DEFAULT
 000123fe	DAT_000123fe	Label	DEFAULT
 00012400	DAT_00012400	Label	DEFAULT
@@ -6333,7 +6333,7 @@ address	name	type	source
 00012464	LAB_00012464	Label	DEFAULT
 0001248e	LAB_0001248e	Label	DEFAULT
 0001249c	LAB_0001249c	Label	DEFAULT
-000124d6	FUN_000124d6	Function	DEFAULT
+000124d6	trailing_timing_cranking_blend	Function	DEFAULT
 000124f8	LAB_000124f8	Label	DEFAULT
 00012508	LAB_00012508	Label	DEFAULT
 00012532	DAT_00012532	Label	DEFAULT
@@ -6361,7 +6361,7 @@ address	name	type	source
 00012582	LAB_00012582	Label	DEFAULT
 000125bc	knock_retard_apply_leading	Function	DEFAULT
 000125f6	knock_retard_apply_trailing	Function	DEFAULT
-00012630	FUN_00012630	Function	DEFAULT
+00012630	min_advance_clamp_select	Function	DEFAULT
 00012682	DAT_00012682	Label	DEFAULT
 00012684	DAT_00012684	Label	DEFAULT
 00012686	DAT_00012686	Label	DEFAULT
@@ -6586,7 +6586,7 @@ address	name	type	source
 00012e42	LAB_00012e42	Label	DEFAULT
 00012e46	LAB_00012e46	Label	DEFAULT
 00012e56	LAB_00012e56	Label	DEFAULT
-00012e60	FUN_00012e60	Function	DEFAULT
+00012e60	timing_trim_scale_calc	Function	DEFAULT
 00012e9a	DAT_00012e9a	Label	DEFAULT
 00012e9c	DAT_00012e9c	Label	DEFAULT
 00012e9e	DAT_00012e9e	Label	DEFAULT
@@ -6778,7 +6778,7 @@ address	name	type	source
 000135a8	PTR_DAT_000135a8	Label	DEFAULT
 000135ac	PTR_DAT_000135ac	Label	DEFAULT
 000135b0	PTR_DAT_000135b0	Label	DEFAULT
-000135b4	ref_idleLeadingTimingCorrection_	Function	USER_DEFINED
+000135b4	idle_leading_timing_error_correction	Function	USER_DEFINED
 000135f0	LAB_000135f0	Label	DEFAULT
 000135f2	LAB_000135f2	Label	DEFAULT
 000135fa	LAB_000135fa	Label	DEFAULT
@@ -6815,7 +6815,7 @@ address	name	type	source
 000136d8	PTR_DAT_000136d8	Label	DEFAULT
 000136dc	PTR_DAT_000136dc	Label	DEFAULT
 000136e0	PTR_rx8_clamp_float_000136e0	Label	DEFAULT
-000136e4	ref_idleTrailingTimingCorrection_	Function	USER_DEFINED
+000136e4	idle_trailing_timing_error_correction	Function	USER_DEFINED
 00013720	LAB_00013720	Label	DEFAULT
 00013722	LAB_00013722	Label	DEFAULT
 0001372a	LAB_0001372a	Label	DEFAULT
@@ -7038,7 +7038,7 @@ address	name	type	source
 00013ea0	ref_debounceThrottleRate	Function	USER_DEFINED
 00013eb8	LAB_00013eb8	Label	DEFAULT
 00013ec8	LAB_00013ec8	Label	DEFAULT
-00013ecc	ref_getCoolantBasedTimingDerate__	Function	USER_DEFINED
+00013ecc	coolant_timing_derate_calc	Function	USER_DEFINED
 00013f34	ref_floatArrayToByteArrayLookup1	Function	USER_DEFINED
 00013f48	LAB_00013f48	Label	DEFAULT
 00013f60	LAB_00013f60	Label	DEFAULT
@@ -7084,7 +7084,7 @@ address	name	type	source
 00014084	DAT_00014084	Label	DEFAULT
 00014088	PTR_CAL_Table_2D___111__230_00014088	Label	DEFAULT
 0001408c	PTR_ref_fixedPointToFloat_8bit_MULT_OFF_SIG_0001408c	Label	DEFAULT
-00014090	ref_calcLeadingTimingIATCompensation	Function	USER_DEFINED
+00014090	iat_timing_compensation_on_throttle	Function	USER_DEFINED
 000140b6	LAB_000140b6	Label	DEFAULT
 000140ba	LAB_000140ba	Label	DEFAULT
 000140ca	LAB_000140ca	Label	DEFAULT
@@ -7100,7 +7100,7 @@ address	name	type	source
 000140f4	PTR_DAT_000140f4	Label	DEFAULT
 000140f8	PTR_DAT_000140f8	Label	DEFAULT
 000140fc	PTR_ref_2DLookup_000140fc	Label	DEFAULT
-00014100	FUN_00014100	Function	DEFAULT
+00014100	idle_base_timing_select	Function	DEFAULT
 00014122	LAB_00014122	Label	DEFAULT
 0001413a	LAB_0001413a	Label	DEFAULT
 00014140	LAB_00014140	Label	DEFAULT
@@ -8682,7 +8682,7 @@ address	name	type	source
 00018150	PTR_DAT_00018150	Label	DEFAULT
 00018154	PTR_rx8_max_float_00018154	Label	DEFAULT
 00018158	PTR_rx8_min_float_00018158	Label	DEFAULT
-0001815c	FUN_0001815c	Function	DEFAULT
+0001815c	dsc_timing_derate_select	Function	DEFAULT
 000181c6	LAB_000181c6	Label	DEFAULT
 000181d4	LAB_000181d4	Label	DEFAULT
 000181e8	LAB_000181e8	Label	DEFAULT
@@ -16983,7 +16983,7 @@ address	name	type	source
 0002cc0c	PTR_FUN_0002cc0c	Label	DEFAULT
 0002cc10	PTR_ref_setSR_0002cc10	Label	DEFAULT
 0002cc14	ref_getRPMLoadBasedMult	Function	USER_DEFINED
-0002cc2c	ref_getLeadingTimingTCModeA_4_val	Function	USER_DEFINED
+0002cc2c	dsc_mode_a_base_timing_lookup	Function	USER_DEFINED
 0002cc44	ref_getEngineTrqFromLookup	Function	USER_DEFINED
 0002cc5c	ref_calculateTorqueRelated	Function	USER_DEFINED
 0002cc7c	ref_calculateEngineMaxTorquePcnt__	Function	USER_DEFINED
@@ -25765,11 +25765,11 @@ address	name	type	source
 00043918	PTR_DAT_00043918	Label	DEFAULT
 0004391c	FUN_0004391c	Function	DEFAULT
 00043928	ref_throttleLiftInitStuff	Function	USER_DEFINED
-00043934	ref_calculateCrankingTimingLeading	Function	USER_DEFINED
+00043934	cranking_timing_leading_filter	Function	USER_DEFINED
 0004398a	LAB_0004398a	Label	DEFAULT
 0004399e	LAB_0004399e	Label	DEFAULT
 000439a4	LAB_000439a4	Label	DEFAULT
-000439b2	FUN_000439b2	Function	DEFAULT
+000439b2	cranking_timing_trailing_filter	Function	DEFAULT
 00043a08	LAB_00043a08	Label	DEFAULT
 00043a1c	DAT_00043a1c	Label	DEFAULT
 00043a1e	DAT_00043a1e	Label	DEFAULT

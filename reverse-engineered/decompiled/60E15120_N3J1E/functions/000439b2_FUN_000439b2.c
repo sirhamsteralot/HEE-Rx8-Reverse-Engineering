@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cranking_timing_trailing_filter [high]: Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b644: Ignition Trailing - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
  */
@@ -7,7 +10,7 @@
  */
 /* ROM address: 0x000439b2; body bytes: 126; decompiled */
 
-uint FUN_000439b2(void)
+uint cranking_timing_trailing_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;

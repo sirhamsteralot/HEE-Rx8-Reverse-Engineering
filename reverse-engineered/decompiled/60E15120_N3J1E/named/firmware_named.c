@@ -21627,11 +21627,14 @@ void FUN_000121ea(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * leading_final_timing_clamp_output [high]: a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c=-24.0. Output RAM leading_ignition_timing_ffffa630.
+ */
 /* ROM address: 0x000121fc; body bytes: 186; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x0001227c) */
 
-void FUN_000121fc(void)
+void leading_final_timing_clamp_output(void)
 
 {
   char cVar1;
@@ -21671,11 +21674,14 @@ LAB_0001228e:
  * RAM 0xffffa634 leading_timing_with_corrections (float): a640 + a648 clamped into leading_ignition_timing_ffffa630 (0x12300).
  * RAM 0xffffa63c trailing_timing_with_corrections (float): a650 + a658 clamped into trailing_ignition_timing_ffffa638.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * trailing_final_timing_clamp_output [high]: Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638.
+ */
 /* ROM address: 0x00012300; body bytes: 186; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00012380) */
 
-void FUN_00012300(void)
+void trailing_final_timing_clamp_output(void)
 
 {
   char cVar1;
@@ -21735,9 +21741,12 @@ void trailing_timing_add_corrections(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * leading_timing_cranking_blend [high]: Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (DAT_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5).
+ */
 /* ROM address: 0x000123da; body bytes: 164; decompiled */
 
-undefined4 FUN_000123da(void)
+undefined4 leading_timing_cranking_blend(void)
 
 {
   undefined4 extraout_r0;
@@ -21769,9 +21778,12 @@ undefined4 FUN_000123da(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * trailing_timing_cranking_blend [high]: Trailing mirror: a650 = a5ec*a654 + (a5f4 + a71c + caa0)*(1-a654) + a784 - a77c. Dynamically verified bit-exact in the emulator (a650=18.115 for scripted inputs).
+ */
 /* ROM address: 0x000124d6; body bytes: 164; decompiled */
 
-undefined4 FUN_000124d6(void)
+undefined4 trailing_timing_cranking_blend(void)
 
 {
   undefined4 extraout_r0;
@@ -21852,9 +21864,12 @@ void knock_retard_apply_trailing(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * min_advance_clamp_select [high]: Selects leading min-advance clamp a64c: cranking+clean -> -24.0 (0xc1c80000); (cVar4==0 && cVar2==0) or load-high -> -44.0 (0xc26a0000); else lookup_2d(ECT, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(ECT, tbl 0x691a4). Also sets load-high flag a66a (load > 0.5).
+ */
 /* ROM address: 0x00012630; body bytes: 206; decompiled */
 
-uint FUN_00012630(void)
+uint min_advance_clamp_select(void)
 
 {
   char cVar2;
@@ -22238,9 +22253,12 @@ undefined1 * FUN_00012dec(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * timing_trim_scale_calc [medium]: a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim).
+ */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
-void FUN_00012e60(void)
+void timing_trim_scale_calc(void)
 
 {
   undefined4 uVar1;
@@ -22591,12 +22609,15 @@ void FUN_00013508(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
+ */
 /* ROM address: 0x000135b4; body bytes: 228; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00013414 (228 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_idleLeadingTimingCorrection_(void)
+uint idle_leading_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -22656,12 +22677,15 @@ uint ref_idleLeadingTimingCorrection_(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
+ */
 /* ROM address: 0x000136e4; body bytes: 228; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00013544 (228 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_idleTrailingTimingCorrection_(void)
+uint idle_trailing_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -23126,12 +23150,15 @@ void ref_debounceThrottleRate(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * coolant_timing_derate_calc [high]: was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 — the max() derate subtracted in 0x125bc/0x125f6.
+ */
 /* ROM address: 0x00013ecc; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00013e30 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getCoolantBasedTimingDerate__(void)
+void coolant_timing_derate_calc(void)
 
 {
   undefined4 uVar1;
@@ -23222,13 +23249,16 @@ void ref_floatArrayToByteArrayLookup2(float param_1)
  * Descriptor 0x0006a0d8: Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a0ec: Table 2D - 113 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * iat_timing_compensation_on_throttle [high]: was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend.
+ */
 /* ROM address: 0x00014090; body bytes: 82; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x000140b6) */
 /* Unique exact-byte match to related 60E0FC00 function at 00013ff4 (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calcLeadingTimingIATCompensation(void)
+uint iat_timing_compensation_on_throttle(void)
 
 {
   uint uVar1;
@@ -23253,9 +23283,12 @@ uint ref_calcLeadingTimingIATCompensation(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_base_timing_select [high]: a780 = lookup_2d(tbl 0x69208) when cranking (aa62==1); else tbl 0x6921c if ECT<90 or load<0.5, else tbl 0x69230; mirrors to a784. Feeds the +a780/a784 term of the 0x123da/0x124d6 blend.
+ */
 /* ROM address: 0x00014100; body bytes: 86; decompiled */
 
-void FUN_00014100(void)
+void idle_base_timing_select(void)
 
 {
   undefined *puVar1;
@@ -23356,18 +23389,18 @@ void ignition_timing_main_task(void)
   knock_retard_attack();
   ref_setSR(uVar1);
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_idleLeadingTimingCorrection_();
-  ref_idleTrailingTimingCorrection_();
+  idle_leading_timing_error_correction();
+  idle_trailing_timing_error_correction();
   FUN_00013c7c();
   FUN_00013da0();
-  ref_getCoolantBasedTimingDerate__();
+  coolant_timing_derate_calc();
   FUN_00013e3e();
   FUN_00012938();
   FUN_00012dec();
-  FUN_00012e60();
-  FUN_0001815c();
-  ref_calculateCrankingTimingLeading();
-  FUN_000439b2();
+  timing_trim_scale_calc();
+  dsc_timing_derate_select();
+  cranking_timing_leading_filter();
+  cranking_timing_trailing_filter();
   ref_calculateDriverConditions();
   FUN_00042ca8();
   ref_vehicleSpeedRelatedSOmething();
@@ -23393,16 +23426,16 @@ void ignition_timing_main_task(void)
   FUN_0004359a();
   FUN_000435c8();
   FUN_0004363c();
-  FUN_00012630();
+  min_advance_clamp_select();
   knock_retard_apply_leading();
-  FUN_000123da();
+  leading_timing_cranking_blend();
   leading_timing_add_corrections();
-  FUN_000121fc();
+  leading_final_timing_clamp_output();
   FUN_00012754();
   knock_retard_apply_trailing();
-  FUN_000124d6();
+  trailing_timing_cranking_blend();
   trailing_timing_add_corrections();
-  FUN_00012300();
+  trailing_final_timing_clamp_output();
   ref_finalLeadingTimingStuff_();
   ref_finalTrailingTimingStuff_();
   ref_setPerRotorTimingValuesLeading();
@@ -23519,8 +23552,8 @@ void FUN_0001465e(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00014100();
-  ref_calcLeadingTimingIATCompensation();
+  idle_base_timing_select();
+  iat_timing_compensation_on_throttle();
   ref_setSR(uVar1);
   return;
 }
@@ -26475,9 +26508,12 @@ void FUN_000180c8(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
+ */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
-undefined4 FUN_0001815c(void)
+undefined4 dsc_timing_derate_select(void)
 
 {
   char cVar1;
@@ -43505,7 +43541,7 @@ void ref_calculateTorqueRelatedParams(void)
   FUN_0002ce64();
   FUN_0002cd9c();
   ref_getRPMLoadBasedMult();
-  ref_getLeadingTimingTCModeA_4_val();
+  dsc_mode_a_base_timing_lookup();
   ref_getEngineTrqFromLookup();
   ref_calculateTorqueRelated();
   ref_calculateEngineMaxTorquePcnt__();
@@ -43537,12 +43573,15 @@ void ref_getRPMLoadBasedMult(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a7a4: Ignition Timing Leading - DSC Mode A - Base (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_a_base_timing_lookup [high]: was ref_getLeadingTimingTCModeA_4_val. bc94 = lookup_3d(load, rpm, tbl 0x6a7a4 'Ignition Timing Leading - DSC Mode A - Base'). Consumed by 0x1815c and torque-loss calc 0x2cc5c/0x2cc7c ((bc94 - actual)^2 * bc90).
+ */
 /* ROM address: 0x0002cc2c; body bytes: 24; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002d2d0 (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getLeadingTimingTCModeA_4_val(void)
+void dsc_mode_a_base_timing_lookup(void)
 
 {
   DAT_ffffbc94 = lookup_3d_descriptor_scaled(engine_load_ffffc0b4,engine_speed_rpm_ffffb548,&tbl_ignition_timing_leading_dsc_mode_a_base_0006a7a4);
@@ -62590,12 +62629,15 @@ void ref_throttleLiftInitStuff(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cranking_timing_leading_filter [high]: was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da.
+ */
 /* ROM address: 0x00043934; body bytes: 126; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00043168 (126 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calculateCrankingTimingLeading(void)
+uint cranking_timing_leading_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;
@@ -62634,9 +62676,12 @@ uint ref_calculateCrankingTimingLeading(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cranking_timing_trailing_filter [high]: Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6.
+ */
 /* ROM address: 0x000439b2; body bytes: 126; decompiled */
 
-uint FUN_000439b2(void)
+uint cranking_timing_trailing_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;

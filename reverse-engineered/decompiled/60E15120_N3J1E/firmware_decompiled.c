@@ -21556,7 +21556,7 @@ void FUN_000121ea(void)
 
 /* WARNING: Removing unreachable block (ram,0x0001227c) */
 
-void FUN_000121fc(void)
+void leading_final_timing_clamp_output(void)
 
 {
   char cVar1;
@@ -21600,7 +21600,7 @@ LAB_0001228e:
 
 /* WARNING: Removing unreachable block (ram,0x00012380) */
 
-void FUN_00012300(void)
+void trailing_final_timing_clamp_output(void)
 
 {
   char cVar1;
@@ -21662,7 +21662,7 @@ void trailing_timing_add_corrections(void)
 
 /* ROM address: 0x000123da; body bytes: 164; decompiled */
 
-undefined4 FUN_000123da(void)
+undefined4 leading_timing_cranking_blend(void)
 
 {
   undefined4 extraout_r0;
@@ -21696,7 +21696,7 @@ undefined4 FUN_000123da(void)
 
 /* ROM address: 0x000124d6; body bytes: 164; decompiled */
 
-undefined4 FUN_000124d6(void)
+undefined4 trailing_timing_cranking_blend(void)
 
 {
   undefined4 extraout_r0;
@@ -21779,7 +21779,7 @@ void knock_retard_apply_trailing(void)
  */
 /* ROM address: 0x00012630; body bytes: 206; decompiled */
 
-uint FUN_00012630(void)
+uint min_advance_clamp_select(void)
 
 {
   char cVar2;
@@ -22165,7 +22165,7 @@ undefined1 * FUN_00012dec(void)
 
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
-void FUN_00012e60(void)
+void timing_trim_scale_calc(void)
 
 {
   undefined4 uVar1;
@@ -22521,7 +22521,7 @@ void FUN_00013508(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00013414 (228 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_idleLeadingTimingCorrection_(void)
+uint idle_leading_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -22586,7 +22586,7 @@ uint ref_idleLeadingTimingCorrection_(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00013544 (228 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_idleTrailingTimingCorrection_(void)
+uint idle_trailing_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -23056,7 +23056,7 @@ void ref_debounceThrottleRate(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00013e30 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getCoolantBasedTimingDerate__(void)
+void coolant_timing_derate_calc(void)
 
 {
   undefined4 uVar1;
@@ -23153,7 +23153,7 @@ void ref_floatArrayToByteArrayLookup2(float param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00013ff4 (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calcLeadingTimingIATCompensation(void)
+uint iat_timing_compensation_on_throttle(void)
 
 {
   uint uVar1;
@@ -23180,7 +23180,7 @@ uint ref_calcLeadingTimingIATCompensation(void)
 
 /* ROM address: 0x00014100; body bytes: 86; decompiled */
 
-void FUN_00014100(void)
+void idle_base_timing_select(void)
 
 {
   undefined *puVar1;
@@ -23281,18 +23281,18 @@ void ignition_timing_main_task(void)
   knock_retard_attack();
   ref_setSR(uVar1);
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_idleLeadingTimingCorrection_();
-  ref_idleTrailingTimingCorrection_();
+  idle_leading_timing_error_correction();
+  idle_trailing_timing_error_correction();
   FUN_00013c7c();
   FUN_00013da0();
-  ref_getCoolantBasedTimingDerate__();
+  coolant_timing_derate_calc();
   FUN_00013e3e();
   FUN_00012938();
   FUN_00012dec();
-  FUN_00012e60();
-  FUN_0001815c();
-  ref_calculateCrankingTimingLeading();
-  FUN_000439b2();
+  timing_trim_scale_calc();
+  dsc_timing_derate_select();
+  cranking_timing_leading_filter();
+  cranking_timing_trailing_filter();
   ref_calculateDriverConditions();
   FUN_00042ca8();
   ref_vehicleSpeedRelatedSOmething();
@@ -23318,16 +23318,16 @@ void ignition_timing_main_task(void)
   FUN_0004359a();
   FUN_000435c8();
   FUN_0004363c();
-  FUN_00012630();
+  min_advance_clamp_select();
   knock_retard_apply_leading();
-  FUN_000123da();
+  leading_timing_cranking_blend();
   leading_timing_add_corrections();
-  FUN_000121fc();
+  leading_final_timing_clamp_output();
   FUN_00012754();
   knock_retard_apply_trailing();
-  FUN_000124d6();
+  trailing_timing_cranking_blend();
   trailing_timing_add_corrections();
-  FUN_00012300();
+  trailing_final_timing_clamp_output();
   ref_finalLeadingTimingStuff_();
   ref_finalTrailingTimingStuff_();
   ref_setPerRotorTimingValuesLeading();
@@ -23444,8 +23444,8 @@ void FUN_0001465e(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00014100();
-  ref_calcLeadingTimingIATCompensation();
+  idle_base_timing_select();
+  iat_timing_compensation_on_throttle();
   ref_setSR(uVar1);
   return;
 }
@@ -26402,7 +26402,7 @@ void FUN_000180c8(void)
  */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
-undefined4 FUN_0001815c(void)
+undefined4 dsc_timing_derate_select(void)
 
 {
   char cVar1;
@@ -43430,7 +43430,7 @@ void ref_calculateTorqueRelatedParams(void)
   FUN_0002ce64();
   FUN_0002cd9c();
   ref_getRPMLoadBasedMult();
-  ref_getLeadingTimingTCModeA_4_val();
+  dsc_mode_a_base_timing_lookup();
   ref_getEngineTrqFromLookup();
   ref_calculateTorqueRelated();
   ref_calculateEngineMaxTorquePcnt__();
@@ -43467,7 +43467,7 @@ void ref_getRPMLoadBasedMult(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0002d2d0 (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getLeadingTimingTCModeA_4_val(void)
+void dsc_mode_a_base_timing_lookup(void)
 
 {
   DAT_ffffbc94 = lookup_3d_descriptor_scaled(engine_load_ffffc0b4,engine_speed_rpm_ffffb548,&tbl_ignition_timing_leading_dsc_mode_a_base_0006a7a4);
@@ -62520,7 +62520,7 @@ void ref_throttleLiftInitStuff(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00043168 (126 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calculateCrankingTimingLeading(void)
+uint cranking_timing_leading_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;
@@ -62561,7 +62561,7 @@ uint ref_calculateCrankingTimingLeading(void)
  */
 /* ROM address: 0x000439b2; body bytes: 126; decompiled */
 
-uint FUN_000439b2(void)
+uint cranking_timing_trailing_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;

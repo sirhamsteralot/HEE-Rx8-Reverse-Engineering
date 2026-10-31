@@ -1,10 +1,13 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * min_advance_clamp_select [high]: Selects leading min-advance clamp a64c: cranking+clean -> -24.0 (0xc1c80000); (cVar4==0 && cVar2==0) or load-high -> -44.0 (0xc26a0000); else lookup_2d(ECT, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(ECT, tbl 0x691a4). Also sets load-high flag a66a (load > 0.5).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00012630; body bytes: 206; decompiled */
 
-uint FUN_00012630(void)
+uint min_advance_clamp_select(void)
 
 {
   char cVar2;

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cranking_timing_leading_filter [high]: was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b630: Off Throttle Leading Timing Realted (RX8Defs data pointer, axes and dimensions match).
  */
@@ -10,7 +13,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00043168 (126 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calculateCrankingTimingLeading(void)
+uint cranking_timing_leading_filter(void)
 
 {
   byte snapshot_DAT_ffffb53c;

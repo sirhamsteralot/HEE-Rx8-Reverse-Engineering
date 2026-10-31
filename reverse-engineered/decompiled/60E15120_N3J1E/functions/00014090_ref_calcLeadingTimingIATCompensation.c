@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * iat_timing_compensation_on_throttle [high]: was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a0d8: Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a0ec: Table 2D - 113 (RX8Defs data pointer, axes and dimensions match).
@@ -8,7 +11,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00013ff4 (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calcLeadingTimingIATCompensation(void)
+uint iat_timing_compensation_on_throttle(void)
 
 {
   uint uVar1;

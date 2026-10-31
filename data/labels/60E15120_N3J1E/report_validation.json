@@ -8,6 +8,12 @@
       "rom_refs": 50,
       "rom_claims": 0
     },
+    "ignition_timing_report.md": {
+      "fn_checked": 0,
+      "ram_checked": 0,
+      "rom_refs": 0,
+      "rom_claims": 0
+    },
     "intake_solenoids_report.md": {
       "fn_checked": 20,
       "ram_checked": 13,

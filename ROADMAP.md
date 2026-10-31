@@ -130,8 +130,11 @@ Still open:
   remaining: the other 98 records + full UDS service mapping cross-ROM.
 - Differential labeling across the 10 stock ROMs (byte-match function bodies
   ROM-to-ROM).
-- **Ignition-timing labeling pass** (not yet covered): verify/correct the thread's
-  final-BTDC equation in the disassembly (thread extract §9).
+- **Ignition-timing labeling pass** — DONE 2026-10-31: thread §9 final-BTDC equation
+  verified/corrected (blend at 0x123da/0x124d6, clamp 0x121fc/0x12300; CLTcomp inside
+  the (1-CrankingMult) group, IdleBaseFinal outside; DSC leading-only). Report:
+  `docs/investigations/60E15120_N3J1E/ignition_timing_report.md`; dynamically verified
+  bit-exact in the emulator (`test_timing_cranking_blend_equation`).
 - Cross-check thread's OL-fueling chain vs our fueling report; verify engine-load
   math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43) and settle g/rev vs VolEf.
 - Settle checksum/CVN (find the incremental hash routine) and bootloader seed/key

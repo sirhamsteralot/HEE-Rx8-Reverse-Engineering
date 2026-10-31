@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * leading_final_timing_clamp_output [high]: a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c=-24.0. Output RAM leading_ignition_timing_ffffa630.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
@@ -6,7 +9,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x0001227c) */
 
-void FUN_000121fc(void)
+void leading_final_timing_clamp_output(void)
 
 {
   char cVar1;
