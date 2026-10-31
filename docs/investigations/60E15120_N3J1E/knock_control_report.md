@@ -26,6 +26,17 @@ gates are engine conditions only (run time, coolant, load, RPM, sensor health,
 timing-not-already-retarded). Loop mode changes the *fueling* around the
 knock correction, not the correction itself.
 
+## 1a. Plain-language summary (what knock control means for timing)
+
+- If the knock sensors hear detonation, the PCM **immediately retards the
+  spark a little (-1.0 deg per cycle)**; when the knock stops it creeps back
+  slowly (+0.35 deg per 62 cycles), never past a calibrated window
+  (-10..0 deg). It works in open loop and closed loop alike.
+- Consequence: the **ignition timing you see on OBD already includes any
+  knock retard** — the base timing maps do not show it. If the knock sensors
+  are unhealthy, a fail-safe table applies instead, and a persistent learned
+  offset is stored in EEPROM.
+
 ## 2. How it works (condensed pseudocode)
 
 ```python

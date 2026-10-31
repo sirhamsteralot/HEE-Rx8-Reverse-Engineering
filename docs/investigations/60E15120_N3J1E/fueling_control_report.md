@@ -21,6 +21,21 @@ filtered trim (`closed_loop_trim_filtered_ffffbeb8`, 0x307e0) corrects around
 open item) go 1.0 in normal conditions, decay −0.0667/call in sustained open
 loop, and 0.0 on fault/safe-mode conditions.
 
+## 1a. Plain-language summary (what the fuel math means)
+
+- The PCM decides how much fuel to inject from **measured airflow (MAF) and
+  RPM** ("load"), not from the throttle pedal. Open vs. closed loop only
+  changes the *target* (open-loop table vs. lambda-sensor target + trim);
+  the math that turns a fuel volume into injector pulse times is the same
+  either way.
+- The fuel maps in the ROM are **not the literal injector pulse width**: the
+  final pulse = base map value x enrichment factors x fuel-target multiplier,
+  split across the primary/secondary injectors, latency-compensated for
+  battery voltage, clamped, and handed to six timer channels.
+- A fuel trim shown on OBD/datalogs is the closed-loop correction *around*
+  the target, not a cell of the base map — expect it to differ from the map
+  whenever the lambda feedback is active.
+
 ## 2. Condensed pseudocode
 
 ```python

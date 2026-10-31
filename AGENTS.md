@@ -63,7 +63,11 @@ dumping it at the root.
    on decompiled C alone.
 8. **Reports follow the 10-section subsystem format** (template:
    `docs/investigations/60E15120_N3J1E/knock_control_report.md`): header with ROM
-   SHA-256 + static-analysis disclaimer, executive summary, pseudocode, tables,
+   SHA-256 + static-analysis disclaimer, executive summary **followed by a
+   plain-language summary (section 1a)** — explain in simple terms what the
+   subsystem does and what the numbers mean (e.g. ROM maps vs. actually applied
+   values, OBD/datalog values vs. commanded values); style example:
+   `ignition_timing_report.md` §1a. Then: pseudocode, tables,
    labeling applied, corrections, files, validation, **mandatory memory map
    (function + RAM address tables)**, limits. Detailed evidence goes in the matching
    `reviews/<subsystem>/` folder. Validation proves what it lists — never write

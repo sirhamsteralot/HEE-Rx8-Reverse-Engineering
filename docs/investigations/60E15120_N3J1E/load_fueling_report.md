@@ -43,6 +43,18 @@ decompiler prints only the RPM argument). Load itself is MAF-derived with a
 hard cap of 5.0 g/rev before the 0.6345 scale, so a big MAF calibration
 change cannot push load past that product ceiling.
 
+## 1a. Plain-language summary (what "engine load" means)
+
+- "Engine load" — the axis shared by every fuel and timing map — is **not a
+  percentage of anything measured**. It is an airflow-per-revolution index
+  computed from the MAF sensor (with a throttle-based fallback model if the
+  MAF fails). Manifold pressure is *estimated* from a table, not measured;
+  only barometric pressure is a real sensor.
+- So the ROM map cells are per-operating-point values indexed by this load x
+  RPM; the final fuel volume = load x base map x enrichment sum x target
+  multiplier. A datalog "load" value is this airflow index, not throttle or
+  manifold pressure.
+
 ## 2. How it works (condensed pseudocode)
 
 ```python

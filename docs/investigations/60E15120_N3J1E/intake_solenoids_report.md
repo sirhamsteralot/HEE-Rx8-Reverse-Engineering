@@ -26,6 +26,21 @@ Every output is identified at GPIO-bit level and mapped to a SH7055F package
 pin via the hardware manual; the package-pin → PCM-connector-terminal hop is
 board routing and deliberately not asserted (see §9).
 
+## 1a. Plain-language summary (what the solenoids do)
+
+- The four intake solenoids (SSV, VFAD, VDI, secondary air) are simple
+  **on/off valves** switched by engine-state windows: VDI opens at high RPM
+  (>= 7250), VFAD at mid-high RPM (>= 5250), SSV on a cold start, and the
+  secondary-air solenoid + pump run at low load/low RPM to warm up the
+  catalytic converter.
+- The APV is different: it is a **motor with closed-loop position control**
+  (target from RPM/airflow/coolant, driven by software PWM, position read
+  back on an ADC pin).
+- UDS diagnostic actuator overrides can force any of these for testing —
+  that is a service command, not normal driving behavior.
+- The GPIO-bit to chip-pin mapping is chip-level; pin to PCM-connector
+  terminal is board routing and is deliberately not asserted in this report.
+
 ## 2. How it works (condensed pseudocode)
 
 ```python

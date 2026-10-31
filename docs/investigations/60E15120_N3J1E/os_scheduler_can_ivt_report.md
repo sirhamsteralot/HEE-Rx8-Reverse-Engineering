@@ -43,6 +43,19 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
   vehicle inputs **0x6744 `vehicle_inputs_poll_pfdr_phdr`** latches PFDR (0xfffff74e) into
   0xffff9ec8 (bit0 gates the UDS service branch in 0x11d88).
 
+## 1a. Plain-language summary (the PCM's "plumbing")
+
+- This report covers the interrupt/OS/CAN plumbing, not a calibration: an
+  interrupt vector table (VBR = 0x7fc50) dispatches hardware interrupts to
+  handlers, a cooperative scheduler round-robins the tasks with an idle
+  loop, and UDS/OBD diagnostic requests arrive over CAN as an interrupt,
+  get moved into a receive buffer, and are answered by a task.
+- The ADC sweep, crank-angle capture and RPM calculation that feed every
+  other subsystem also live here.
+- Nothing in this report changes what the car does — it is the groundwork
+  that lets the simulator run the firmware so the other subsystems can be
+  tested dynamically.
+
 ## 2. How it works (condensed pseudocode)
 
 ```python
