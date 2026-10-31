@@ -18,9 +18,13 @@ is profile-driven: same code runs different bins with different peripherals.
    I/O 0xffffe000-0xffffffff), peripherals (bases per `symbols.tsv` of that ROM —
    the canonical set is RCAN0 0xffffe400, RCAN1 0xffffe600, ATU-II 0xfffff400,
    SCI 0xfffff000, ADC 0xfffff800, WDT 0xffffec10, DMAC 0xffffecb0,
-   GPIO 0xfffff700), `sensors`, `replay_map`, `watch`, `uds` (ROM-specific OBD
-   entry points; only labeled for 60E15120 so far), and
-   `memory.io_read_overrides` for any hardware-ready poll bits the boot needs.
+   SYSC 0xffffed00 (IPR/ICR/ISR; `nmi_level` = NMI pin high, boot polls ICR bit15
+   at 0x8ea), GPIO 0xfffff700 (`inputs` for scripted input pins)), `sensors`,
+   `replay_map`, `watch`, `uds` (ROM-specific OBD entry points; only labeled for
+   60E15120 so far). The `can` entry takes `rx_vector` (CAN RX interrupt IVT
+   offset, 0x378) so inject() raises it. No `io_read_overrides` needed anymore
+   (E5 closed); add them only if a future ROM polls a ready-bit we have not
+   modeled, and document which bit and why.
 4. Run it:
    ```sh
    python utilities/scripts/emu/emu.py --profile 60E1B900_N3ZBEH --cycles 1000000

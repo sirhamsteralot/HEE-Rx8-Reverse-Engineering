@@ -92,13 +92,30 @@ Closed 2026-10-31 (this session; see `tests/test_phase1_dynamic.py`):
   `interrupt()` honors VBR (0x7fc50) and pushes SR/PC. Boot now passes CAN init
   and reaches the main idle loop 0x3dac clean (golden trace regenerated).
 
+Closed 2026-10-31 (second pass):
+
+- **E3** WDT interrupt vector slot identified (0x358 / vec 214, Sh7055h.pdf table
+  7.3) — documented; behavior stays OVF-flag + firmware poll (0x31c is a polled
+  subroutine, not an ISR entry).
+- **E5** the guessed `io_read_overrides` are gone from all profiles: the
+  0xffffed18=0x8000 entry was ICR_W bit15 = NMI pin level, now a SYSC peripheral
+  (`nmi_level`), verified by boot reaching idle 0x3dac with zero overrides
+  (`test_nmi_pin_replaces_guessed_override`).
+- **E6 partial**: `can.inject()` now raises the CAN RX interrupt (IVT offset
+  0x378), so a plain `emu.run` autonomously runs the ROM's CAN RX poll
+  (0x11d88) and OS scheduler (0x9630) and moves injected 0x7e0 frames into the
+  UDS buffer 0xffffddc8 (`test_can_rx_interrupt_autonomous`). GPIO input pins
+  modeled (`inputs`, e.g. PFDR bit0).
+
 Still open:
 
 - Renesas Simulator Debugger cross-check (`compare_traces.py`) — the tool is not
   installed on this Windows machine (no HEW/e² studio); golden trace regenerated
   and self-reproducible, external diff pending a machine with the licensed tool.
-- Full OS tick (CMI10B → 0x2ec0) runs, but task contexts need it for autonomous
-  scheduling (E6) — the OBD port drives the ROM entry points directly meanwhile.
+- Full OS task context switch (E6): the 0x3db0 wake (called from ref_setSR on
+  ISR exit) still doesn't fire in emulation, so a UDS *response* TX is driven via
+  the profile `uds` entry points (0x680a0 + dispatcher 0x3c2a) instead of an
+  autonomously scheduled task. RX side is autonomous since 2026-10-31.
 
 ## Phase 2 — Static gap closure & labeling (open)
 
@@ -160,12 +177,18 @@ Still open:
 ## Fidelity limits & known discrepancies (E = emulator, D = data/docs; all open)
 
 E1 FPU host floats (no SH rounding) · E2 CLOSED 2026-10-31 (bases from symbols.tsv;
-sensors on real ADC/ATU paths) · E3 WDT IVT vector slot TODO (firmware polls TCSR,
-calls 0x31c itself; overflow = OVF flag only) · E4 RCAN mailbox model done for the
-diag path 2026-10-31 (full interrupt/mailbox fidelity open) · E5 guessed
-`io_read_overrides` ready-bits · E6 ATU-II tick modeled (CMI10B→0x2c8) but the OS
-scheduler's task contexts still need it — OBD port drives entry points directly ·
-E7 div1/rotcl approximations, cycles ≠ real time.
+sensors on real ADC/ATU paths) · E3 CLOSED 2026-10-31: WDT ITI = vector 214 = IVT
+offset 0x358 (Sh7055h.pdf table 7.3; ROM slot 0x7ffa8 -> trampoline 0x30b8);
+firmware still polls TCSR itself, overflow = OVF flag only · E4 RCAN mailbox model
+done for the diag path 2026-10-31 + CAN RX interrupt fires on inject (IVT offset
+0x378 -> handler polls RXPR/MBIMR, runs CAN poll 0x11d88 + scheduler 0x9630);
+full mailbox/interrupt fidelity open · E5 CLOSED 2026-10-31: the guessed
+`io_read_overrides` 0xffffed18=0x8000 was ICR_W bit15 = NMI pin level (manual
+7.3.2; boot polls it at 0x8ea) - now a SYSC peripheral (nmi_level=1), overrides
+removed from all profiles · E6 ATU-II ch10B tick (CMI10B→0x2c8) + CAN RX interrupt
+(0x378) fire and run the scheduler/CAN poll autonomously; the task context switch
+(0x3db0 wake via ref_setSR) is still not triggered, so UDS response TX is driven
+via the profile `uds` entry points · E7 div1/rotcl approximations, cycles ≠ real time.
 D1 N3ZHE-vs-N3J1E cal ID · D2 package-pin↔terminal board routing + pinout markers ·
 D3 checksum/CVN unverified · D4 seed/key location unknown · D5 g/rev vs VolEf ·
 D6 unproven `candidate_*` labels · D7 60E1B800 dual N3* strings · D8 defs copies vs

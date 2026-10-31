@@ -195,3 +195,30 @@ def test_mode22_dispatch_pid_0043(booted):
     r0, _, _ = harness.call(bus, cpu, 0x5774C, max_steps=200000)
     # record 0x5f268: response_length 2 -> return 2 + RX8_DIAG_READ_HEADER_SIZE(3)
     assert r0 == 5
+
+
+def test_nmi_pin_replaces_guessed_override():
+    """E5 closed: profiles carry no io_read_overrides; boot reaches idle because
+    SYSC models ICR_W bit15 = NMI pin level (boot polls it at 0x8ea)."""
+    prof, bus, cpu = emu.build(PROFILE)
+    assert not prof["memory"].get("io_read_overrides")
+    emu.run(prof, bus, cpu, 1_000_000)
+    assert cpu.pc == 0x3DAC  # idle loop reached
+    sysc = next(p for _, _, p in bus.peripherals if type(p).__name__ == "SYSC")
+    assert sysc.read(sysc.ICR, 2) & 0x8000  # NMI high
+
+
+def test_can_rx_interrupt_autonomous():
+    """E4/E6 progress: inject() raises the CAN RX interrupt (IVT offset 0x378);
+    a plain emu.run then runs the ROM's CAN RX poll (0x11d88) and moves the frame
+    into the UDS RX buffer 0xffffddc8 without any manual entry-point calls."""
+    prof, bus, cpu = emu.build(PROFILE)
+    emu.run(prof, bus, cpu, 300000)  # boot to idle
+    can = next(p for _, _, p in bus.peripherals if isinstance(p, CANController))
+    assert int(str(can.rx_vector), 0) == 0x378
+    can.inject(0x7E0, bytes([0x02, 0x10, 0x03, 0x55, 0, 0, 0, 0]))
+    assert can.read(0x0E, 2) & 0x40  # RXPR mb14 pending
+    emu.run(prof, bus, cpu, 20000)
+    assert bus.read32(0xFFFFDDC8).to_bytes(4, "big") == bytes.fromhex("02100355")
+    assert not (can.read(0x0E, 2) & 0x40)  # poller cleared RXPR
+    assert cpu.pc == 0x3DAC  # back at idle

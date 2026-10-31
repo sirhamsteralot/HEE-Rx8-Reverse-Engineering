@@ -20,9 +20,14 @@ golden 200k-instruction PC trace reproduces byte-exact in tests.**
   sensors), ATU-II, SCI, generic register file.
 - `can.py` - RCAN (HCAN0) mailbox model at 0xffffe400 per symbols.tsv: W1C pending
   regs (RXPR/RFPR/TXACK/ABACK/UMSR/IRR), MCR bit0 <-> GSR bit3 reset handshake,
-  `inject(can_id, data)` loads the matching RX mailbox and sets RXPR/IRR,
-  a TXPR write transmits the mailbox payload into `tx_log` (UDS responses on
-  0x7e8). The ROM's own CAN driver runs against this.
+  `inject(can_id, data)` loads the matching RX mailbox, sets RXPR/IRR **and raises
+  the CAN RX interrupt** (config `rx_vector`, 0x378 - the handler that runs the
+  ROM's CAN RX poll 0x11d88 + OS scheduler 0x9630), so a plain `emu.run` moves
+  injected frames into the UDS buffer autonomously. A TXPR write transmits the
+  mailbox payload into `tx_log` (UDS responses on 0x7e8).
+- `peripherals.py` also has `SYSC` (0xffffed00: IPR/ICR/ISR; ICR bit15 = NMI pin
+  level, boot polls it at 0x8ea) and GPIO `inputs` (scripted input pins, e.g.
+  PFDR bit0).
 - `harness.py` - direct ROM-function call harness (SH-2E ABI: r4-r7 / fr4-fr7
   args, r0/fr0 return) used by `tests/test_phase1_dynamic.py` to execute the
   ROM's own functions for dynamic validation.
@@ -130,8 +135,10 @@ discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
   wired to the real ADC ADDRn channels / ATU-II crank capture (E2 input side
   closed). Remaining: WDT IVT vector slot (E3 - the firmware polls TCSR and
   calls its service routine 0x31c itself), full RCAN fidelity beyond the diag
-  path, guessed `io_read_overrides` ready-bits (E5), only the modeled timers
-  fire (E6 - the OS tick CMI10B handler runs but the scheduler's task contexts
-  still need it, so the OBD port drives the ROM entry points directly),
-  `div1`/rotcl edge cases are approximations and "cycles" are not
-  cycle-accurate time (E7).
+  path; the guessed `io_read_overrides` are gone (E5 closed - the 0xffffed18
+  entry was the NMI pin level, now SYSC). Timers: ATU-II ch10B tick (CMI10B ->
+  0x2c8) and the CAN RX interrupt (0x378 on inject) fire and run the scheduler /
+  CAN poll autonomously; the OS task context switch (0x3db0 wake via ref_setSR on
+  ISR exit) is still not triggered (E6 remainder), so UDS *response* TX is
+  driven via the profile `uds` entry points. `div1`/rotcl edge cases are
+  approximations and "cycles" are not cycle-accurate time (E7).

@@ -155,4 +155,24 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   differ from strict float32 SH semantics in the last ulp — compare with
   tolerance for filter-style code, bit-exact for min/max/clamp/absdiff.
 - 60E1B900_N3ZBEH uses opcode 0x957a (outside the 60E15120 corpus) → unknown-opcode
+- **IVT lives at VBR=0x7fc50** (set at 0xd206): ROM vector slot = 0x7fc50 + offset.
+  Useful offsets: CMI10B 0x2c8 (crank/rpm path 0x803e), CAN-RX/scheduler 0x378
+  (handler polls HCAN0 RXPR/MBIMR, runs CAN RX poll 0x11d88 + ref_osTaskScheduler
+  0x9630 - found by sweeping all IVT entries and watching for those), WDT ITI
+  0x358 (vec 214, Sh7055h.pdf table 7.3). Unused vectors' trampolines end in a
+  deliberate halt loop at 0xa4be.
+- **Boot polls ICR_W (0xffffed18) bit15 at 0x8ea** = NMI pin level (manual 7.3.2);
+  model as a SYSC peripheral input (`nmi_level=1`), not an io_read_override.
+- **CAN RX interrupt**: `can.inject()` raises IVT offset 0x378; the ROM's handler
+  then moves the frame to the UDS buffer 0xffffddc8 by itself during a plain run.
+  UDS service dispatch (FUN_000680a0) is gated by the vehicle-input latch
+  DAT_ffff9ec8 bit0 (PFDR bit0, debounced by 0x6744/0x6796) and the OS task
+  context switch (0x3db0, called from ref_setSR on ISR exit) - the remaining E6
+  gap; until then drive the profile `uds` entry points (0x11d88/0x680a0/0x3c2a).
+- `tst Rm,Rn` sets T=1 when (Rn & Rm) == 0 - easy to get backwards when reading
+  branch conditions by hand.
+- Vector sweep method for "which interrupt does X": boot to idle, then for each
+  IVT entry call `cpu.interrupt(off, priority)` once and grep the PC trace for
+  the target function - cheap and decisive.
+
   stop; regenerate `opdec.py` from that ROM's disassembly before running it.

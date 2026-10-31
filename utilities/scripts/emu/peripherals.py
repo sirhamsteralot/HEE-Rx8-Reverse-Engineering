@@ -120,9 +120,16 @@ class GPIO(Peripheral):
         self.regs = bytearray(size)
         self.heartbeat = self.config.get("heartbeat", {"port_reg_offset": 0x38, "bit": 15})
         self.heartbeats = []  # (cycle, new_value_bit)
+        # scripted input pins (e.g. ignition/tester-present on PFDR bit0 =
+        # offset 0x4e in this block): OR'd into port data register reads
+        self.inputs = {int(str(k), 0): int(str(v), 0) for k, v in self.config.get("inputs", {}).items()}
 
     def read(self, off, size):
-        return int.from_bytes(self.regs[off:off + size], "big")
+        v = int.from_bytes(self.regs[off:off + size], "big")
+        for o, m in self.inputs.items():
+            if off <= o < off + size:
+                v |= m << (8 * (o - off))
+        return v
 
     def write(self, off, size, value):
         old = int.from_bytes(self.regs[off:off + size], "big")
@@ -278,6 +285,34 @@ class ATU2(RegisterFile):
                 self._next_edge += self._crank_period
 
 
+class SYSC(Peripheral):
+    """SH7055 system control block at 0xffffed00: IPRA-IPRL (0x00-0x1a),
+    ICR_W (0x18), ISR_W (0x1a) per symbols.tsv / Sh7055h.pdf 7.3.
+
+    ICR bit 15 is the NMI pin input level (manual 7.3.2); the boot ROM polls it
+    at 0x8ea and waits for it high. Config "nmi_level" (default 1 = pin pulled
+    high, as on a real board) drives that bit - replacing the old guessed
+    io_read_overrides entry for 0xffffed18."""
+
+    IPR0, ICR, ISR = 0x00, 0x18, 0x1A
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.regs = bytearray(size)
+        self.nmi_level = int(str(self.config.get("nmi_level", 1)), 0) & 1
+
+    def read(self, off, size):
+        v = int.from_bytes(self.regs[off:off + size], "big")
+        if off <= self.ICR < off + size:
+            v = (v & ~(0x8000 << (8 * (self.ICR - off)))) | (self.nmi_level << (15 + 8 * (self.ICR - off)))
+        return v
+
+    def write(self, off, size, value):
+        value &= (1 << (size * 8)) - 1
+        if 0 <= off < self.size:
+            self.regs[off:off + size] = value.to_bytes(size, "big")
+
+
 class DMAC(Peripheral):
     """SH7055 DMAC (base 0xffffecb0): DMAOR at 0x00, then per channel n:
     SARn at 0x10+0x10n, DARn at 0x14+0x10n, DMATCRn at 0x18+0x10n,
@@ -371,6 +406,7 @@ class UBC(RegisterFile):
 TYPES = {
     "wdt": WDT,
     "dmac": DMAC,
+    "sysc": SYSC,
     "gpio": GPIO,
     "adc": ADC,
     "atu2": ATU2,

@@ -52,6 +52,15 @@
       }
     },
     {
+      "type": "sysc",
+      "base": "0xffffed00",
+      "size": "0x20",
+      "config": {
+        "nmi_level": 1,
+        "_note": "IPRA-IPRL/ICR_W/ISR_W per symbols.tsv + Sh7055h.pdf 7.3. ICR bit15 = NMI pin level; boot ROM polls it at 0x8ea. nmi_level=1 replaces the old guessed io_read_overrides for 0xffffed18."
+      }
+    },
+    {
       "type": "gpio",
       "base": 4294965504,
       "size": 128,
@@ -59,7 +68,11 @@
         "heartbeat": {
           "port_reg_offset": 56,
           "bit": 15
-        }
+        },
+        "inputs": {
+          "0x4e": 1
+        },
+        "_note": " inputs: PFDR (offset 0x4e) bit0=1 scripted high (vehicle input pin)."
       }
     },
     {
@@ -89,7 +102,10 @@
       "type": "can",
       "base": 4294964736,
       "size": 512,
-      "config": {}
+      "config": {
+        "rx_vector": "0x378",
+        "rx_priority": "8"
+      }
     }
   ],
   "pins": {

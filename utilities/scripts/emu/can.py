@@ -24,7 +24,7 @@ from peripherals import RegisterFile
 
 
 def mailbox_mask(mb):
-    """Bit of RXPR/TXPR/... for mailbox mb — matches ROM table at 0xd914."""
+    """Bit of RXPR/TXPR/... for mailbox mb --- matches ROM table at 0xd914."""
     return 1 << ((mb + 8) & 0xF)
 
 
@@ -42,6 +42,12 @@ class CANController(RegisterFile):
         self.diag_req = int(str(self.config.get("diag_req", "0x7e0")), 0)
         self.diag_resp = int(str(self.config.get("diag_resp", "0x7e8")), 0)
         self.rx_irq_bit = int(str(self.config.get("rx_irq_bit", "0x01")), 0)  # IRR bit for RX
+        # IVT offset of the CAN RX interrupt handler (firmware's CAN RX +
+        # scheduler entry: polls HCAN0 RXPR/MBIMR, calls the OS scheduler).
+        # Found empirically: offset 0x378 fires the handler that runs
+        # FUN_00011d88 (CAN RX poll) + ref_osTaskScheduler (0x9630).
+        self.rx_vector = self.config.get("rx_vector")      # e.g. "0x378"
+        self.rx_priority = int(str(self.config.get("rx_priority", "8")), 0)
         self.tx_log = []      # (cycle, can_id, data)
         self.rx_frames = []   # frames injected from outside
         # power-on reset state: CAN in reset mode (MCR bit0=1, GSR bit3=1)
@@ -128,6 +134,10 @@ class CANController(RegisterFile):
         old = int.from_bytes(self.regs[self.IRR:self.IRR + 2], "big")
         self.regs[self.IRR:self.IRR + 2] = (old | self.rx_irq_bit).to_bytes(2, "big")
         self.rx_frames.append((self.bus.cycle if self.bus else 0, can_id, data))
+        # raise the CAN RX interrupt like hardware (if a vector is configured)
+        cpu = getattr(self.bus, "cpu", None) if self.bus is not None else None
+        if self.rx_vector is not None and cpu is not None:
+            cpu.interrupt(int(str(self.rx_vector), 0), priority=self.rx_priority)
 
     def note_tx(self, can_id, data):
         self.tx_log.append((self.bus.cycle if self.bus else 0, can_id, bytes(data)))

@@ -114,6 +114,12 @@ instructions.
   the ROM's own entry points (profile `uds` section: CAN RX poll 0x11d88, UDS
   entry 0x680a0, dispatcher 0x3c2a) because the OS tick is not yet modeled (E6).
   Log request/response pairs to `tests/fixtures/obd/` for golden comparison.
+  Since 2026-10-31 the RX side is fully autonomous: `can.inject(0x7e0, frame)`
+  raises the CAN RX interrupt (IVT offset 0x378), and a plain `emu.run` runs the
+  ROM's CAN RX poll (0x11d88) + scheduler (0x9630), moving the frame into the UDS
+  buffer 0xffffddc8 with no manual entry-point calls (see
+  `test_can_rx_interrupt_autonomous`). The response TX still goes through the
+  profile `uds` entry points (E6 remainder).
 
 ## 5. Function-level dynamic tests (harness.py)
 

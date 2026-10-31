@@ -27,10 +27,7 @@
     "io": [
       4294959104,
       4294967296
-    ],
-    "io_read_overrides": {
-      "0xffffed18": "0x8000"
-    }
+    ]
   },
   "reset": {
     "pc_from_vector": 0,
@@ -55,6 +52,15 @@
       }
     },
     {
+      "type": "sysc",
+      "base": "0xffffed00",
+      "size": "0x20",
+      "config": {
+        "nmi_level": 1,
+        "_note": "IPRA-IPRL/ICR_W/ISR_W per symbols.tsv + Sh7055h.pdf 7.3. ICR bit15 = NMI pin level; boot ROM polls it at 0x8ea. nmi_level=1 replaces the old guessed io_read_overrides for 0xffffed18."
+      }
+    },
+    {
       "type": "gpio",
       "base": "0xfffff700",
       "size": "0x80",
@@ -63,7 +69,10 @@
           "port_reg_offset": 56,
           "bit": 15
         },
-        "_note": "PBDR_W 0xfffff738 (offset 0x38) bit15 = external-watchdog heartbeat (service routine 0x31c); PADR 0xfffff726, PDDR 0xfffff746, PEDR 0xfffff754"
+        "_note": "PBDR_W 0xfffff738 (offset 0x38) bit15 = external-watchdog heartbeat (service routine 0x31c); PADR 0xfffff726, PDDR 0xfffff746, PEDR 0xfffff754 inputs: PFDR (offset 0x4e) bit0=1 scripted high (vehicle input pin).",
+        "inputs": {
+          "0x4e": 1
+        }
       }
     },
     {
@@ -74,7 +83,9 @@
         "diag_req": "0x7e0",
         "diag_resp": "0x7e8",
         "rx_irq_bit": "0x01",
-        "_note": "RCAN HCAN0 block per symbols.tsv (MCR 0xffffe400 ... MD0 0xffffe4b0; mailbox 14 = 0x7e0 RX, 15 = 0x7e8 TX per ref_resetOBDCAN_ 0x109c). W1C pending regs; MCR bit0 <-> GSR bit3 reset handshake; TXPR write transmits (tx_log)."
+        "_note": "RCAN HCAN0 block per symbols.tsv (MCR 0xffffe400 ... MD0 0xffffe4b0; mailbox 14 = 0x7e0 RX, 15 = 0x7e8 TX per ref_resetOBDCAN_ 0x109c). W1C pending regs; MCR bit0 <-> GSR bit3 reset handshake; TXPR write transmits (tx_log).",
+        "rx_vector": "0x378",
+        "rx_priority": "8"
       }
     },
     {
