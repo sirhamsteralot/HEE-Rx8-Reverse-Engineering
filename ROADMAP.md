@@ -68,6 +68,10 @@ running code.
   boots from the reset vector, stops at the first unimplemented opcode — 9/9 tests
   pass in `tests/test_emu.py`).
 - Golden boot trace committed; re-running reproduces it byte-for-byte.
+- **Cross-checked against Renesas' own Simulator Debugger** (SuperH family, SH7055)
+  on the Windows dev machine: same ROM, same cycle count, PC traces diffed with
+  `utilities/scripts/emu/compare_traces.py` — workflow in `utilities/scripts/emu/README.md`.
+  Every emulator-core change gets such a differential run before it is trusted.
 - Known static findings reproduced dynamically: e.g. knock retard clamped to
   [-10, 0] deg (`reviews/knock_control/`), injector channel map table 0xd7d4 →
   ATU-II 8A–8F, first-order filter endpoints (mirroring `test_rx8_math.c`).

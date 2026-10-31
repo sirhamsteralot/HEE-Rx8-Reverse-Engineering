@@ -36,14 +36,35 @@ boot smoke test on the real ROM.
   lacks and has a different (banked) FPU — the same trap as Ghidra's stock SH-2A.
 - **Unicorn 2** has no SuperH support at all (v1 had SH-4 only).
 - **Renesas Simulator Debugger for SuperH (HEW/e² studio)** does support the SH7055
-  core, but is Windows-only, GUI/license-bound — usable as a *cross-check oracle*
-  on a dev machine, not as a scriptable CI harness. SH-2E ISA manual:
+  core. It is Windows-only and GUI/license-bound, so it is **not** our CI harness —
+  but on a Windows dev machine it is our **cross-check oracle** (see workflow below).
+  SH-2E ISA manual:
   https://evoecu.logic.net/mirror/cpudocs/sh7055f/rej09b0316_sh_2esm.pdf (mirror;
   canonical: renesas.com SH-2E software manual) — add to references if downloaded.
 - So we keep the custom core: exact observed-opcode subset, loud stop on anything
   unknown. Risk = our own bugs, mitigated by golden traces, disassembly byte
-  cross-checks, `tests/test_emu.py`, and optional differential runs vs the Renesas
-  simulator on the common subset.
+  cross-checks, `tests/test_emu.py`, and differential runs vs the Renesas
+  simulator.
+
+## Cross-check workflow with the Renesas Simulator Debugger (Windows)
+
+Standing step whenever the emulator core (`sh2e.py`/`bus.py`/`peripherals.py`)
+changes or a new opcode is implemented:
+
+1. Here (any OS): `python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E
+   --cycles N --trace /tmp/our.trace` and `python -m pytest tests/test_emu.py`.
+2. On the Windows machine: open the Renesas Simulator Debugger (HEW or e² studio
+   simulator, SuperH family, device **SH7055**), load the **same ROM** at 0x00000000
+   (from `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/`), set the same
+   starting conditions (reset vector), run **N instructions**, export the PC trace
+   to `/tmp/renesas.trace` (one hex address per line).
+3. Diff: `python utilities/scripts/emu/compare_traces.py /tmp/our.trace
+   /tmp/renesas.trace` — must report MATCH for the compared prefix; investigate any
+   divergence before claiming the opcode correct. Compare MMIO writes / PB15
+   heartbeats from the `# mmio` log against the debugger's peripheral register
+   views.
+4. Record the result (date, N, tool version, MATCH/divergence) in the investigation
+   doc for the change. A trace that only we produce is not validated.
 
 ## Limits (honest)
 

@@ -95,6 +95,10 @@ dumping it at the root.
 ## Verification
 
 - `python utilities/scripts/hash_binaries.py --check` after touching `binaries/`.
+- Emulator changes (`utilities/scripts/emu/`): `python -m pytest tests/test_emu.py`
+  plus a differential trace run against the Renesas Simulator Debugger (SH7055) on
+  the Windows machine via `utilities/scripts/emu/compare_traces.py` — see
+  `utilities/scripts/emu/README.md`. Record the result in the investigation doc.
 - Host tests for reimplemented code:
   `cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off reverse-engineered/reimplementation/rx8_math.c reverse-engineered/reimplementation/test_rx8_math.c -lm -o /tmp/t && /tmp/t`
   (same pattern for `rx8_apv.c`). Host tests do not validate SH FPU rounding.

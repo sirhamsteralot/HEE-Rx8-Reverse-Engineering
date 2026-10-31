@@ -137,3 +137,17 @@ def test_real_rom_boot_smoke():
     stop = emu.run(prof, bus, cpu, cycles=20000)
     assert cpu.icount > 0
     assert "unknown opcode" in stop or "cycle limit" in stop
+
+
+# --- trace comparator -------------------------------------------------------
+
+def test_compare_traces(tmp_path):
+    import compare_traces
+    a = tmp_path / "a.txt"
+    b = tmp_path / "b.txt"
+    c = tmp_path / "c.txt"
+    a.write_text("0 0x00000100\n1 0x00000102\n# mmio 0 0x100 0xfffff738 0x8000 2\n2 0x00000104\n")
+    b.write_text("0x100\n0x102\n0x104\n")
+    c.write_text("0x100\n0x999\n")
+    assert compare_traces.main([str(a), str(b)]) == 0
+    assert compare_traces.main([str(a), str(c)]) == 1
