@@ -175,6 +175,42 @@ running code.
   pin 3 (WDT)** or the MCU self-resets (RX8Club thread §3/§8; conflicting pinout
   variant in the thread — verify against `Sh7055h.pdf` before wiring).
 
+## Fidelity limits & known discrepancies (goal: as close to real hardware as possible)
+
+Scanned 2026-10-31 across emulator, profiles, docs, and labels. Each item lists where
+it lives, the fidelity impact, and how we close it.
+
+### Emulator vs. real SH7055 hardware
+
+| # | Item | Where | Impact | Close by |
+|---|---|---|---|---|
+| E1 | FPU uses host floats — SH-2E rounding modes / exception bits not modeled | `utilities/scripts/emu/README.md` Limits | float results can differ in last ulp vs. real ECU | implement FPSCR rounding (RNE etc.) + fr bank; diff vs Renesas sim traces |
+| E2 | Peripheral register bases are placeholders (`_note` in profiles: ATU-II 0xffffe400, CAN 0xffffe800, SCI 0xfffffe00) | `emu/profiles/*.json` | MMIO addresses may be wrong per register | extract full SH7055 register map from `docs/references/Sh7055h.pdf` + reference project's `regs_7055_*.csv` |
+| E3 | WDT overflow jumps direct to handler 0x31c; real IVT vector slot TODO | profiles `wdt.config._note` | interrupt entry path differs from hardware | find WOVI vector slot (Sh7055h.pdf IVT / `ivt_7055.csv`) |
+| E4 | CAN/RCAN model is a register-file stub; OBD responses depend on the ROM's CAN driver running correctly | `emu/can.py`, `emu/obd_port.py` | UDS over virtual OBD may not answer until RCAN mailboxes are modeled | model mailboxes/interrupts per manual; test with a Mode 22 request in-emulation |
+| E5 | `io_read_overrides` (e.g. 0xffffed18=0x8000) are guessed "ready" bits | profiles `memory.io_read_overrides` | firmware may take wrong paths if the real bit semantics differ | identify the peripheral at 0xffffed18 from the manual and model it properly |
+| E6 | Only WDT overflow fires interrupts; no ATU-II timer interrupts yet | `emu/peripherals.py` | scheduler/task timing not hardware-realistic | model ATU-II timers → their vector slots; verify task-table cadence |
+| E7 | `div1` algorithm and rotcl edge cases are approximations; "cycles" ≠ real time | `emu/sh2e.py` | rare arithmetic divergence; no cycle-accurate timing | property-test vs. corpus + Renesas diff runs; document timing model |
+
+### Data / documentation discrepancies (kept deliberately, do not "fix" silently)
+
+| # | Item | Where | Close by |
+|---|---|---|---|
+| D1 | `60E15120_N3J1E.bin` contains cal ID `N3ZHE` at 0x6c046 (filename/XML say N3J1E) | `docs/architecture/design/README.md` §1 | donor-ECU provenance (part number) — leave bytes untouched |
+| D2 | Package-pin ↔ connector-terminal is board routing, unresolved; pinout has 5L unread, `*`/`†` markers, unverified mirrored pairs | `docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md` Limits | bench ECU board trace / photos |
+| D3 | Checksum/CVN algorithm unverified (forum claims conflict) | thread extract §4 | find the incremental hash routine in the disassembly |
+| D4 | Bootloader seed/key algorithm location unknown | thread §10 | locate in ROM; relate to UDS 0x27 handler |
+| D5 | Load axis semantics disputed: g/rev vs VolEf (STP 1.18 kg/m³) | thread §9 | numeric check once `data/maps/` is populated |
+| D6 | Dozens of `candidate_*` labels unproven (diag readers, knock/fuel-cut candidates) | `data/labels/60E15120_N3J1E/integrated_names.json` | binary-level verification per pass (AGENTS.md rule 7) |
+| D7 | `60E1B800` shows two N3* strings; unsupported by tools | thread §2 | dump + compare against known ROMs |
+| D8 | Our `data/definitions/` copies are from older upstream commits than the pinned submodule (e.g. ECUFlash 60E0G500.xml) | `data/README.md` | deliberate re-sync per ROM when needed |
+| D9 | BOOT-mode CN400 pinout conflict in the thread (pin 5/7 vs pin 6/8 variant) | thread §3/§8 | verify against `Sh7055h.pdf` + board before any bench wiring |
+| D10 | Logger def caveat: PID 0x221410 claimed by two definitions | fueling report | fix defs deliberately, with evidence |
+
+Rule: discrepancies are **documented, never silently resolved** — resolving one
+requires new evidence (ROM bytes, manual table, bench trace) and a note in the
+investigation doc.
+
 ## Standing rules for every phase
 
 Evidence label ladder (`FUN_`/`ref_`/`CAL_`/`tbl_`/`inferred_`/`candidate_`), binary

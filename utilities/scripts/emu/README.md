@@ -84,7 +84,13 @@ changes or a new opcode is implemented:
 
 ## Limits (honest)
 
-- CPU implements only the observed opcode subset; boot stops at the first
+Full list with closure plans in **ROADMAP.md → "Fidelity limits & known
+discrepancies"** (items E1–E7). Summary:
+
+- CPU implements the corpus-validated opcode subset; boot stops at the first
   unimplemented instruction (reported, not mis-executed).
-- Host float math does not model SH-2E FPU rounding/exception modes.
-- Peripheral register bases marked `_note` need refinement from `Sh7055h.pdf`.
+- Host float math does not model SH-2E FPU rounding/exception modes (E1).
+- Peripheral register bases marked `_note` are placeholders pending the
+  `Sh7055h.pdf` register map (E2); `io_read_overrides` are guessed ready-bits (E5);
+  only WDT overflow interrupts fire so far (E6); `div1`/rotcl edge cases are
+  approximations and "cycles" are not cycle-accurate time (E7).
