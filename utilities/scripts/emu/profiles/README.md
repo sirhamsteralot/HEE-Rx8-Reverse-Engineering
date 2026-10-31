@@ -37,6 +37,12 @@ is profile-driven: same code runs different bins with different peripherals.
 - `60E0G500_N3ZHEC.json` — own dump, Aron's ECU (EU 6-port 2004); streetport-tuned
   variants in `binaries/dumps/` share its base.
 - `60E1B900_N3ZBEH.json` — added 2026-10-31 to demonstrate running another bin.
+- `60E0G500_N3ZHEC_streetport_{5500,9500,10000}max.json` — the user-tuned streetport
+  bins from `binaries/dumps/` (fw 60E0G500). Run e.g.:
+  `python ../emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000`
+  — boots clean; read the tuned rev-limit cal in-emulation at 0x6d54c
+  (stock 9000.0 vs 5500.0/9500.0/10000.0 rpm). Tuning-validation targets, not for
+  flashing.
 
 ## Existing profiles
 

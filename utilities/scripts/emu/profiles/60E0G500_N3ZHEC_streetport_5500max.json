@@ -1,0 +1,166 @@
+{
+  "name": "60E0G500_N3ZHEC_streetport_5500max",
+  "description": "USER-TUNED streetport v1.24 (5500max rev limit) - Aron's ECU, fw 60E0G500. Tuning validation target, not for flashing.",
+  "market": "EU",
+  "model": "RX-8 Series 1 (2004)",
+  "variant": {
+    "engine_ports": 6,
+    "transmission": "MT",
+    "dsc": true,
+    "rke": true,
+    "immobilizer": true
+  },
+  "rom": {
+    "path": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin",
+    "sha256": "9f3043bbfe00b3f0c0cc9aca139565e0de374803ac0bc275b6669d5adfab205d",
+    "size": 524288
+  },
+  "memory": {
+    "rom": [
+      0,
+      524288
+    ],
+    "ram": [
+      4294934528,
+      4294959104
+    ],
+    "io": [
+      4294959104,
+      4294967296
+    ],
+    "io_read_overrides": {
+      "0xffffed18": "0x8000"
+    }
+  },
+  "reset": {
+    "pc_from_vector": 0,
+    "sp_from_vector": 4
+  },
+  "peripherals": [
+    {
+      "type": "wdt",
+      "base": "0xffffec10",
+      "size": 3,
+      "config": {
+        "enabled": true,
+        "overflow_vector": null,
+        "overflow_handler": 796,
+        "_note": "overflow_handler 0x31c = service_wdt_overflow_and_toggle_pb15 (direct; real IVT vector slot TODO per Sh7055h.pdf)"
+      }
+    },
+    {
+      "type": "gpio",
+      "base": "0xfffff700",
+      "size": "0x80",
+      "config": {
+        "heartbeat": {
+          "port_reg_offset": 56,
+          "bit": 15
+        }
+      }
+    },
+    {
+      "type": "adc",
+      "base": "0xfffff800",
+      "size": "0x20",
+      "config": {
+        "result_channel": "AN6",
+        "channels": {
+          "AN6": 32768
+        }
+      }
+    },
+    {
+      "type": "atu2",
+      "base": "0xffffe400",
+      "size": "0x200",
+      "config": {}
+    },
+    {
+      "type": "sci",
+      "base": "0xfffffe00",
+      "size": "0x20",
+      "config": {}
+    },
+    {
+      "type": "can",
+      "base": "0xffffe800",
+      "size": "0x200",
+      "config": {
+        "baud": 500000,
+        "diag_req": 2016,
+        "diag_resp": 2024,
+        "functional": 2015
+      }
+    }
+  ],
+  "pins": {
+    "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md"
+  },
+  "sensors": {
+    "_note": "UI sensor inputs. via=override writes bus.read_overrides at addr - placeholder input registers; mapping to the real ADC/ATU paths the firmware reads is ROADMAP item E2. scale converts engineering units to raw.",
+    "rpm": {
+      "via": "override",
+      "addr": "0xffffe400",
+      "scale": 1,
+      "value": 0,
+      "unit": "rpm"
+    },
+    "engine_load": {
+      "via": "override",
+      "addr": "0xffffe404",
+      "scale": 100,
+      "value": 0,
+      "unit": "%"
+    },
+    "maf": {
+      "via": "override",
+      "addr": "0xffffe408",
+      "scale": 1000,
+      "value": 0,
+      "unit": "g/s"
+    },
+    "coolant_temp": {
+      "via": "override",
+      "addr": "0xffffe40c",
+      "scale": 10,
+      "value": 900,
+      "unit": "degC"
+    },
+    "iat": {
+      "via": "override",
+      "addr": "0xffffe410",
+      "scale": 10,
+      "value": 200,
+      "unit": "degC"
+    },
+    "throttle": {
+      "via": "override",
+      "addr": "0xffffe414",
+      "scale": 100,
+      "value": 0,
+      "unit": "%"
+    }
+  },
+  "replay_map": {
+    "Engine RPM(rpm)": "rpm",
+    "Engine Load(Absolute)(%)": "engine_load",
+    "Mass Air Flow Rate(g/s)": "maf",
+    "Engine Coolant Temperature(\u00b0C)": "coolant_temp",
+    "Intake Air Temperature(\u00b0C)": "iat",
+    "Relative Throttle Position(%)": "throttle"
+  },
+  "watch": [
+    {
+      "name": "engine_load_g_rev (RAM 0xffffc0b4)",
+      "addr": "0xffffc0b4",
+      "size": 4,
+      "format": "float32",
+      "_note": "per fueling_labels.json calculate_engine_load c0b4"
+    },
+    {
+      "name": "PB15 heartbeat count",
+      "source": "heartbeats"
+    }
+  ]
+}
