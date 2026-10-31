@@ -121,6 +121,16 @@ Use the emulator for dynamic verification where useful (see group B).
   classify `non_instruction_ranges.tsv`.
 - Cross-check the thread's OL-fueling chain vs our fueling report; verify
   engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
+- **Deepen `fueling_control_report.md` (further investigation needed — see the
+  marker at the top of that report)**: the report reads shallow because the
+  load calculation is not in it (it lives in `load_fueling_report.md` —
+  cross-reference it, don't duplicate). Also: trace the untraced adder writers
+  into `fuel_correction_sum` (b0d0/c0c8/ae08/b21c/c104/cde0/ae10) and
+  `DAT_ffffadec`/`DAT_ffffc644`; resolve fuel-cut arbitration, injection-angle
+  semantics (tables 0x68ef8/0x68f0c/0x68f20), cold-start degenerate body, MAF
+  fault latching (0x19f4e/0x19f40), PID 0x1410, and the 0x4ab8 task-record
+  dispatch; map descriptor addresses to P3-extracted `data/maps/` table names;
+  dynamically verify the fuel chain in the emulator via `harness.py`.
 - **Settle D5 (g/rev vs VolEf)**: trace PID 0x43 handler 0x56b8a to the specific
   extracted table in `data/maps/60E15120_N3J1E/` it reads, then compare the
   handler's computed value against the table + scaling numerically.

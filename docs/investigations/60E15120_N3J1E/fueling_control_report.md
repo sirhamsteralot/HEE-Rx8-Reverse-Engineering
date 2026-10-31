@@ -7,6 +7,17 @@ untouched). All findings are from static analysis of the canonical export
 performed. Full evidence: `reviews/fueling/README.md`; sceptical re-check:
 `reviews/fueling/REVIEW_NOTES.md`; validation: `reviews/fueling/validation.json`.
 
+> **⚠ FURTHER INVESTIGATION NEEDED (2026-10-31).** This report is a first pass:
+> the load calculation is *not* covered here — see
+> [`load_fueling_report.md`](load_fueling_report.md) for the full
+> MAF→load chain (cross-reference, don't duplicate). Open items listed in §7
+> (untraced `fuel_correction_sum` writers, injection-angle semantics, MAF fault
+> latching, PID 0x1410, 0x4ab8 dispatch) plus dynamic emulator verification of
+> the fuel chain are tracked as a ROADMAP group C backlog item. The pseudocode
+> in §2 uses raw register names (bf68, bed0, …) — a physical-units rewrite is
+> part of the deepening pass.
+
+
 ## 1. Executive summary
 
 The PCM computes a requested fuel volume from MAF-derived load and RPM, splits
