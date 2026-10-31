@@ -5,7 +5,7 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 - firmware dumps / `.bin` files before they are verified and promoted
 - prior efforts and notes from other people
 - cloned third-party git repositories and source trees
-- reference downloads (manuals, tools, datasets)
+- reference downloads (manuals, tools, datasets, saved web pages)
 
 ## Rules
 
@@ -21,9 +21,7 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 `Tuning-merged/` (union of `Tuning-29-10-2026` + `Tuning-30-10-2026`, newer wins)
 was promoted into the tracked folders on 2026-10-31 and later removed from `input/`.
 The upstream git repositories now live as **read-only submodules** under
-`../submodules/` (see `../docs/references/README.md`). What was never promoted:
-live Ghidra `.gpr/.rep` project DBs, the RomRaider install, and the duplicate
-`Data_binaries/60E0FC00.bin`.
+`../submodules/` (see `../docs/references/README.md`).
 
 2026-10-31: `mazda-rx-8-pcm-pinout-series-1.md` (text PCM pinout derived from
 `13Electrical.pdf`, which remains ground truth) was promoted to
@@ -34,10 +32,15 @@ tracked folders (10 stock ROMs, 3 captures, 3 Ghidra `.gar` archives) — they a
 referenced via `../submodules/Mazda_RX8_PCM_ReverseEngineering/` at its pinned
 commit instead. See `../docs/references/README.md`.
 
-2026-10-31: the saved RX8Club.com user-guide thread (pages 1–9, `.htm` + `_files/`)
-was reviewed; usable facts extracted to
-`../docs/references/rx8club-user-guide-thread.md` (BOOT-mode pinout, UDS services,
-checksum/CVN question, 60E0FC00 addresses, load math). Raw pages stay here.
+2026-10-31: the saved RX8Club.com user-guide thread (pages 1–9) was reviewed;
+usable facts + OCR of screenshots extracted to `../docs/references/`
+(`rx8club-user-guide-thread.md`, `rx8club-ocr/`, `rx8club-inline-defs.tsv`).
+
+2026-10-31: `Proton Drive Download - 2026-10-31.zip` and `RX8 666p_9_files.zip`
+extracted under `extracted-proton/` and `extracted-666p/` and promoted: 4 ROMs →
+`../binaries/dumps/` (2 more were byte-identical to submodule stock ROMs and are
+referenced, not copied), logs → `../data/logs/`, tune files/notes →
+`../data/tunes/`. Nested `Aron/Tune.zip` was a duplicate bundle of the same ROMs.
 
 ## Promotion path
 
@@ -50,4 +53,6 @@ copy/promote it into the proper home with provenance:
 | Useful code from another project | summarized/ported into `reverse-engineered/` with attribution in the investigation doc |
 | External doc / link | `docs/references/` (URL + access date) |
 | Extracted tables/strings | `data/` with source hash + address range |
+| Data logs | `data/logs/` (golden fixtures for the emulator's virtual OBD port) |
+| Tune containers/notes | `data/tunes/` (context only, never flashed) |
 | Reusable script | `utilities/scripts/` |
