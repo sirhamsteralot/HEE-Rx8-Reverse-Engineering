@@ -182,3 +182,26 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   the target function - cheap and decisive.
 
   stop; regenerate `opdec.py` from that ROM's disassembly before running it.
+
+## Calibration descriptor scan (2026-10-31, P3)
+
+- **Cal region auto-detect**: find `Copr.DENSO` in the ROM above 0x60000; the
+  0x1000-aligned block containing it is the cal start (0x6c000 for most ROMs,
+  0x6d000 for 60E0FB00/60E0FC00/60E1B900, 0x71000 for 60E32000). The region
+  between code-end and cal-start holds the packed descriptor array.
+- **Descriptor formats** (big-endian): 2D base 12 B `>HBBII` (n, type, res=0,
+  axis_ptr, data_ptr); 2D scaled +8 B. 3D base 20 B `>HHIIIB`+3 pad (nx, ny,
+  ax, ay, data, type). Type codes: 0=f32, 4=u8, 8=u16, 12=s8, 16=s16 (dispatch
+  tables 0x2098/0x210c). Axes are always float32.
+- **Scan every 4 B**, validate count/type/pointers-into-cal-region/bounds, then
+  resolve overlaps by walking sorted addresses with a next-free cursor (base
+  span 12/20 B) — descriptors are packed, so a candidate inside another's span
+  is a false positive (dropped 1 in N3J1E out of 588).
+- **Monotonic-axis check** is a strong false-positive filter: 0 non-monotonic
+  axes across all 587 N3J1E tables and all 10 stock ROMs.
+- **Scaled vs base** is NOT reliably detectable in packed arrays (the trailing
+  8 B can look like the next descriptor); don't use the scaled flag for span.
+- Scan window: [cal_start−0x8000, cal_start) — 32 KB covers all observed layouts.
+- Cross-ROM matching by (dim, counts, type, axis values) is structural only;
+  same-shape/different-meaning pairs exist (huge float diffs in the report are
+  those, not real calibration changes).

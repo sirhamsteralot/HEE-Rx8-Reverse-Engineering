@@ -24,10 +24,26 @@ reads out every table, and saves them as JSON/CSV files in `data/maps/`. It also
 compares the same table across different ROMs to see what changed. Think of it as
 exporting the entire calibration spreadsheet from the ECU, table by table.
 
-## 2. Descriptor format (verified at the binary level)
+## 2. How it works (pseudocode)
 
-Big-endian, corroborated by the lookup code at 0x2068/0x20dc and the dispatch
-tables at 0x2098/0x210c:
+```
+cal_start = block_of_first('Copr.DENSO' above 0x60000)   # 0x6c000/0x6d000/0x71000
+for addr in [cal_start-0x8000, cal_start) step 4:
+    try 3D: nx,ny in [1,256], type in {0,4,8,12,16}, pad==0,
+            ax/ay/data in [cal_start, 0x80000), bounds OK  -> candidate
+    try 2D: res==0, type in {0,4,8,12,16}, axis/data in cal region -> candidate
+# overlap resolution: sort by addr, walk with next_free cursor (base span 12/20)
+for each surviving descriptor:
+    axis  = read_f32(addr=axis_ptr,  count=n)          # axes always float32
+    data  = read_typed(addr=data_ptr, count=n*ny?, type)  # per type code size
+    emit  data/maps/<rom>/tables/tbl_<desc>.{json,csv} + index.tsv row
+cross-ROM: key = (dim, counts, type, rounded axes) -> match across ROMs -> diff cells
+```
+
+## 3. Key calibrated tables (descriptor format)
+
+Big-endian, corroborated by lookup code at 0x2068/0x20dc and dispatch tables
+0x2098/0x210c:
 
 | Variant | Size | Format | Fields |
 |---|---|---|---|
@@ -37,21 +53,30 @@ tables at 0x2098/0x210c:
 | 3D scaled | 28 B | base + 2×f32 | + multiplier, offset |
 
 Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
-**8**=uint16(2B), **12**=int8(1B), **16**=int16(2B). Axes are always float32.
+**8**=uint16(2B), **12**=int8(1B), **16**=int16(2B).
 
-## 3. Scan strategy
+## 4. Labeling applied
 
-1. **Auto-detect cal region start** via the `Copr.DENSO` header string
-   (0x6c000 for most ROMs, 0x6d000 for 60E0FB00/60E0FC00/60E1B900, 0x71000 for
-   60E32000) — different ROM generations have different code/cal boundaries.
-2. **Scan** [cal_start−0x8000, cal_start) at 4-byte alignment for valid 2D/3D
-   descriptor patterns (valid count, type code, reserved=0, pointers into cal
-   region, bounds-checked).
-3. **Resolve overlaps**: descriptors are packed consecutively; if one candidate
-   starts inside another's span it's a false positive (dropped 1 in N3J1E).
-4. **Extract**: read axis (f32) + data values per type code.
+- 587 `tbl_<desc-addr>` labels created implicitly via `data/maps/60E15120_N3J1E/index.tsv`
+  (descriptor address → dimension, count, type, axis/data addresses).
+- 478 of these cross-reference the existing RX8Defs `CAL_` names in
+  `cross_ecu/romraider_descriptor_matches.json` (0 missing, 0 type mismatches).
+- 109 previously unnamed tables now have stable addresses + extracted values.
+- Streetport diff mapped to named descriptors: 15–17 tables (see §6).
 
-## 4. Results per ROM
+## 5. Corrections made in this pass
+
+- Cal-region start is **not always 0x6c000**: auto-detect via `Copr.DENSO`
+  (0x6d000 for 60E0FB00/60E0FC00/60E1B900, 0x71000 for 60E32000). A fixed
+  0x6c000 assumption silently missed entire descriptor arrays.
+- Overlap resolution needed: packed descriptors produce false candidates at
+  interior offsets (1 dropped in N3J1E). Use base span (12/20 B), not scaled.
+- The `scaled` flag heuristic is unreliable in packed arrays — do not use it
+  for span calculation.
+- Rev limiter at 0x6d54c is a **standalone scalar**, not inside any table's data
+  span (verified by checking all descriptor data ranges).
+
+## 6. Results per ROM
 
 | ROM | cal start | 2D | 3D | total | non-monotonic |
 |---|---|---|---|---|---|
@@ -68,22 +93,9 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 | Aron N3ZHEC stock | 0x6c000 | 404 | 129 | 533 | 0 |
 | Aron N3ZHEC streetport ×3 | 0x6c000 | 404 | 129 | 533 | 0 |
 
-Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16
-in this ROM).
+Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
-## 5. Validation
-
-- **All 478 RX8Defs-matched descriptors** for 60E15120_N3J1E found by the
-  scanner (0 missing, 0 type mismatches vs `cross_ecu/romraider_descriptor_matches.json`).
-- **109 additional unnamed tables** discovered beyond the XML-named set.
-- **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
-- **All axes monotonic** across all 587 tables (strong false-positive filter).
-- **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
-
-## 6. Cross-ROM diff (`diff_maps.py`)
-
-Tables matched across ROMs by (dimension, counts, type_code, axis values).
-60E15120_N3J1E has 305 unique table shapes. Per-ROM vs reference:
+### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
 | ROM | matched | unmatched ref | tables w/ diffs | diff cells |
 |---|---|---|---|---|
@@ -97,31 +109,19 @@ Tables matched across ROMs by (dimension, counts, type_code, axis values).
 | 60E32000_N3M5E | 95 | 210 | 33 | 734 |
 | 60E32000_N3N5EB | 138 | 167 | 56 | 1153 |
 
-60E0FC00 and 60E1B900 are nearly identical to 60E0FB00 (same match/diff counts).
-60E32000 is a different generation (fewer structural matches). Structural
-matching is a heuristic — some same-shape tables with different semantics pair
-up (hence huge float32 "max diff" values in the report); treat those as
-candidates, not confirmed semantic matches.
+60E0FC00 and 60E1B900 are nearly identical to 60E0FB00. 60E32000 is a different
+generation (fewer structural matches).
 
-## 7. Streetport diff mapped to descriptors
+### Streetport diff mapped to descriptors (Aron N3ZHEC stock vs tunes)
 
-Comparing Aron's stock N3ZHEC vs the 3 streetport tunes at the table level:
+- **5500max**: 15 tables differ; **9500/10000max**: 17 (extra: 0x06a548, 0x06a580).
+- Differing descriptors: 0x069a54, 0x069a68, 0x069a7c, 0x069ab8, 0x069acc,
+  0x069af4 (2D u16), 0x069e4c (2D f32, 48 cells), 0x06a4d8 (3D u8 21×19, 212),
+  0x06a548 / 0x06a580 (3D u8 21×19, 9500+10000 only), 0x06b0b0 (3D u16 18×20,
+  337), 0x06b264 (3D f32 19×17, 55), 0x06b278 (3D f32 19×4, 14), 0x06b744 (2D
+  f32, 3), 0x06bd94 (2D f32, 10), 0x06be20 (2D f32, 1), 0x06bf28 (3D f32 9×9, 1).
 
-- **5500max**: 15 tables differ (all data cells, 0 axis changes)
-- **9500max / 10000max**: 17 tables differ (same 15 + 2 extra: 0x06a548, 0x06a580)
-
-Differing descriptors: 0x069a54, 0x069a68, 0x069a7c, 0x069ab8, 0x069acc,
-0x069af4 (2D u16, 1 cell each), 0x069e4c (2D f32, 48 cells), 0x06a4d8 (3D u8
-21×19, 212 cells), 0x06a548 / 0x06a580 (3D u8 21×19, 9500+10000 only), 0x06b0b0
-(3D u16 18×20, 337 cells), 0x06b264 (3D f32 19×17, 55 cells), 0x06b278 (3D f32
-19×4, 14 cells), 0x06b744 (2D f32, 3 cells), 0x06bd94 (2D f32, 10 cells),
-0x06be20 (2D f32, 1 cell), 0x06bf28 (3D f32 9×9, 1 cell).
-
-The rev limiter float32 at **0x6d54c** (9000→5500/9500/10000 from the earlier
-raw diff) is a **standalone scalar**, not inside any table's data span —
-confirmed by checking all descriptor data ranges.
-
-## 8. Files
+## 7. Files
 
 - `utilities/scripts/extract_maps.py` — scanner + extractor
 - `utilities/scripts/diff_maps.py` — cross-ROM diff
@@ -130,14 +130,37 @@ confirmed by checking all descriptor data ranges.
 - `data/maps/README.md` — format docs + regeneration recipe
 - `tests/test_extract_maps.py` — 6 tests
 
-## 9. Limits
+## 8. Validation
+
+- **All 478 RX8Defs-matched descriptors** for 60E15120_N3J1E found by the
+  scanner (0 missing, 0 type mismatches vs `cross_ecu/romraider_descriptor_matches.json`).
+- **109 additional unnamed tables** discovered beyond the XML-named set.
+- **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
+- **All axes monotonic** across all 587 tables (strong false-positive filter).
+- **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
+- `validate_reports.py` PASS; `hash_binaries.py --check` OK.
+
+## 9. Memory map for validation
+
+Descriptor array (60E15120_N3J1E): **0x68ef8–0x6bc70** (587 descriptors,
+packed at 12/20/28 B). Axis data: **0x6c1a4–0x7dd3c**. Table data:
+**0x6c1e4–0x7dd60**. Cal header at **0x6c000** (`N3J1E` / `N3ZHE` strings,
+`Copr.DENSO` at 0x6c039). Lookup dispatch tables: 2D **0x2098**, 3D **0x210c**.
+Lookup entry points: `lookup_2d_descriptor_scaled` **0x2068** (174 callers),
+`lookup_3d_descriptor_scaled` **0x20dc** (60 callers). Type handlers:
+0x253c/0x2598/0x256c/0x25c8/0x25f4 (3D), 0x2678/0x2690/0x26b0/0x26d0/0x26f4 (2D axis).
+
+Cross-ROM cal starts: 0x6c000 (60E0E500, 60E0E700, 60E15120, 60E1C500, 60E1D400,
+Aron N3ZHEC), 0x6d000 (60E0FB00, 60E0FC00, 60E1B900), 0x71000 (60E32000 ×2).
+
+## 10. Limits
 
 - Scaled vs base descriptor variants are not reliably distinguished in packed
-  arrays (the 8 trailing bytes can look like the next descriptor); the `scaled`
-  flag in the JSON is heuristic. ScoobyRom cross-reference would resolve this.
+  arrays; the `scaled` flag in the JSON is heuristic. ScoobyRom cross-reference
+  would resolve this.
 - Structural cross-ROM matching can pair same-shape/different-meaning tables.
-  Use the axis values + surrounding code references to confirm semantic identity.
+  Use axis values + surrounding code references to confirm semantic identity.
 - Type codes 12/16 (int8/int16) not present in 60E15120_N3J1E but the handlers
   exist (0x256c/0x2598); may appear in other ROMs.
-- D5 (g/rev vs VolEf) not yet settled numerically — needs mapping PID 0x43
-  handler output to a specific extracted table (next step).
+- D5 (g/rev vs VolEf) not yet settled — needs PID 0x43 handler 0x56b8a traced
+  to a specific extracted table (ROADMAP group C).
