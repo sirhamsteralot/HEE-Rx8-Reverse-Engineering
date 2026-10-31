@@ -71,7 +71,7 @@ def test_bus_mmio_dispatch_and_log():
 
 # mov #0x42,r0 ; mov.l @(3,pc),r1 ; mov.l r0,@r1 ; bra +1 ; nop ; (skipped) ; bra -2 self-loop ; nop ; literal
 PROG = bytes.fromhex(
-    "e042" "d103" "2101" "a001" "0009" "e343" "affe" "0009" "ffff8000"
+    "e042" "d103" "2102" "a001" "0009" "e343" "affe" "0009" "ffff8000"
 )
 
 

@@ -1,18 +1,29 @@
-# emu/ — SH-2E emulator (ROADMAP Phase 1)
+# emu/ — SH-2E emulator (ROADMAP Phase 1 — implemented 2026-10-31)
 
 Config-driven emulator for running RX-8 PCM ROM images and validating findings
-dynamically. Python 3, stdlib only.
+dynamically. Python 3, stdlib only. **Status: full boot of 60E15120_N3J1E runs
+clean (50M+ instructions, no unknown opcodes), WDT heartbeat (PB15) live,
+golden 200k-instruction PC trace reproduces byte-exact in tests.**
 
 ## Layout
 
 - `emu.py` — CLI runner: `--profile NAME [--cycles N] [--trace FILE]`, `--list-profiles`.
-- `profile.py` — profile loading + ROM SHA-256 verification.
-- `bus.py` — ROM/RAM/IO regions, MMIO dispatch, MMIO write log.
-- `sh2e.py` — hand-written SH-2E CPU core (exact subset; unknown opcodes stop the
-  run loudly — see `docs/learnings.md` for the encodings). FPU subset included.
-- `peripherals.py` — SH7055 stubs: WDT (TCSR/TCNT/RSTCSR, overflow → vector,
-  keyed 0xA5 writes, PB15 heartbeat logging), GPIO, ADC (scripted sensors),
-  ATU-II, SCI, CAN, generic register file.
+- `profile.py` — profile loading + ROM SHA-256 verification (hex or decimal numbers).
+- `bus.py` — ROM/RAM/IO regions, MMIO dispatch, MMIO write log, `io_read_overrides`.
+- `sh2e.py` — hand-written SH-2E CPU core. Dispatch table `opdec.py` is
+  **generated from the real disassembly** by `gen_opdec.py` and validated
+  instruction-by-instruction (`tests/test_decode_corpus.py`, 168k instructions,
+  100% coverage); unknown opcodes raise and stop the run loudly.
+- `opdec.py` / `gen_opdec.py` — generated opcode→mnemonic table + generator.
+- `peripherals.py` — SH7055 stubs: WDT (TCSR/TCNT/RSTCSR, keyed 0xA5 writes,
+  overflow → handler/vector, PB15 heartbeat logging), GPIO, ADC (scripted
+  sensors), ATU-II, SCI, generic register file.
+- `can.py` — CAN controller: RX injection + TX capture (`inject`, `tx_log`).
+- `isotp.py` — ISO-TP encode/reassemble (unit-tested).
+- `obd_port.py` — virtual OBD-II/UDS TCP port (design: `docs/architecture/emulated-obd.md`).
+- `ui.py` + `ui.html` — interactive UI (design: `docs/architecture/emulator-ui.md`):
+  `python ui.py --profile 60E15120_N3J1E` → http://127.0.0.1:8080/ — sensor inputs,
+  run/step/reset, MMIO + heartbeat views, drive-cycle replay from `data/logs/`.
 - `profiles/` — one JSON per ROM/market/model (see `profiles/README.md`).
 
 ## Running

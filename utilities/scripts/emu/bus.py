@@ -27,6 +27,7 @@ class Bus:
             self.regions.append(Region(s, e, "io"))
         self.peripherals = []  # list of (start, end, peripheral)
         self.mmio_log = []     # (cycle, pc, addr, value, size)
+        self.read_overrides = {int(k): v for k, v in memory_map.get("io_read_overrides", {}).items()}
         self.cycle = 0
         self.pc = 0
 
@@ -48,6 +49,8 @@ class Bus:
 
     # -- reads --
     def read8(self, a):
+        if a in self.read_overrides:
+            return self.read_overrides[a] & 0xFF
         base, p = self._periph(a)
         if p is not None:
             return p.read(a - base, 1)
@@ -57,6 +60,8 @@ class Bus:
         return reg.data[a - reg.start]
 
     def read16(self, a):
+        if a in self.read_overrides:
+            return self.read_overrides[a] & 0xFFFF
         base, p = self._periph(a)
         if p is not None:
             return p.read(a - base, 2)
@@ -66,6 +71,10 @@ class Bus:
         return int.from_bytes(reg.data[a - reg.start:a - reg.start + 2], "big")
 
     def read32(self, a):
+        if a in self.read_overrides:
+            return self.read_overrides[a] & 0xFFFFFFFF
+        if (a & ~1) in self.read_overrides and a & 1 == 0:
+            pass
         base, p = self._periph(a)
         if p is not None:
             return p.read(a - base, 4)

@@ -58,7 +58,8 @@ class WDT(Peripheral):
         super().__init__(base, size, config)
         self.tcsr = 0x00
         self.tcnt = 0x00
-        self.overflow_vector = self.config.get("overflow_vector")  # None -> reset vector
+        self.overflow_vector = self.config.get("overflow_vector")      # vector slot addr
+        self.overflow_handler = self.config.get("overflow_handler")    # direct handler addr (0x31c)
         self.enabled = bool(self.config.get("enabled", True))
 
     def read(self, off, size):
@@ -98,8 +99,12 @@ class WDT(Peripheral):
             if self.tcnt == 0:  # wrapped
                 self.tcsr |= 0x80
                 if self.bus is not None and hasattr(self.bus, "cpu"):
-                    vec = self.overflow_vector if self.overflow_vector is not None else 0
-                    self.bus.cpu.interrupt(vec)
+                    if self.overflow_handler is not None:
+                        self.bus.cpu.pr = self.bus.cpu.pc
+                        self.bus.cpu.pc = self.overflow_handler & 0xFFFFFFFF
+                    else:
+                        vec = self.overflow_vector if self.overflow_vector is not None else 0
+                        self.bus.cpu.interrupt(vec)
 
 
 class GPIO(Peripheral):

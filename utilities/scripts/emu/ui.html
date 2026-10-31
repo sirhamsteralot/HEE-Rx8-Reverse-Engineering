@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>HEE emulator</title>
+<style>body{font:14px sans-serif;margin:2em}label{display:block;margin:.4em 0}input{width:8em}
+#log{background:#111;color:#0f0;padding:1em;height:16em;overflow:auto;white-space:pre}</style>
+</head><body>
+<h1>HEE SH-2E emulator</h1>
+<div id="state">loading…</div>
+<h2>Sensors</h2>
+<div id="sensors"></div>
+<button onclick="sendSensors()">apply</button>
+<h2>Control</h2>
+<button onclick="api('run',{cycles:10000})">run 10k</button>
+<button onclick="api('run',{cycles:1000000})">run 1M</button>
+<button onclick="api('reset',{})">reset</button>
+<h2>Drive-cycle replay (data/logs CSV)</h2>
+<input id="csv" value="data/logs/rx8-666p/trackLog-2026-Oct-04_09-31-12.csv"> speed <input id="speed" value="1" style="width:4em">
+<button onclick="api('replay',{csv:document.getElementById('csv').value,speed:parseFloat(document.getElementById('speed').value)})">load</button>
+<button onclick="stepReplay()">step replay</button>
+<div id="log"></div>
+<script>
+async function api(path, body){
+  const r = await fetch('/api/'+path, {method:'POST', body: JSON.stringify(body||{})});
+  return r.json();
+}
+async function refresh(){
+  const s = await (await fetch('/api/state')).json();
+  document.getElementById('state').textContent =
+    `${s.profile}  icount=${s.icount} pc=0x${s.pc.toString(16)} mmio=${s.mmio_writes} heartbeats=${s.heartbeats}`;
+  const div = document.getElementById('sensors');
+  for (const [k,v] of Object.entries(s.sensors)){
+    if (k.startsWith('_')) continue;
+    if (!document.getElementById('s_'+k)){
+      const l = document.createElement('label');
+      l.textContent = k + ' ';
+      const i = document.createElement('input'); i.id='s_'+k; i.value = (v.value!==undefined?v.value:v);
+      l.appendChild(i); div.appendChild(l);
+    }
+  }
+}
+function sendSensors(){
+  const o={};
+  document.querySelectorAll('#sensors input').forEach(i=>o[i.id.slice(2)]=parseFloat(i.value));
+  api('sensors', o).then(()=>refresh());
+}
+async function stepReplay(){
+  const r = await api('replay_step',{});
+  if (r) log(`replay row ${r.row}/${r.of} pc=0x${r.pc.toString(16)}`);
+  refresh();
+}
+function log(m){const l=document.getElementById('log');l.textContent+=m+'\n';l.scrollTop=l.scrollHeight;}
+refresh(); setInterval(refresh, 2000);
+</script>
+</body></html>

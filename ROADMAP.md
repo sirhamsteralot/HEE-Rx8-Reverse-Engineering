@@ -23,6 +23,13 @@ RAM), building on the prior effort already in this repo.
 
 ## Phase 1 — Simulation suite (run the binaries, validate against them)
 
+**Status: implemented 2026-10-31** — full boot of 60E15120_N3J1E runs 50M+ instructions
+with zero unknown-opcode faults; WDT PB15 heartbeat live (3.9k toggles / 1M cycles);
+golden 200k-instruction PC trace in `tests/fixtures/` reproduces byte-exact;
+18/18 tests pass (`tests/test_emu.py`, `tests/test_decode_corpus.py`, `tests/test_phase1.py`).
+Virtual OBD-II port (`obd_port.py` + `isotp.py`) and interactive UI (`ui.py --ui`)
+scaffolded; UI sensor injection + `data/logs/` replay work against the booted ROM.
+
 **Goal:** an SH-2E simulator that executes the ROM images so static findings can be
 checked dynamically, and every future label/reimplementation can be validated by
 running code.

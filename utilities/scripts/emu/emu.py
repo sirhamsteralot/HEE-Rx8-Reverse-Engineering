@@ -22,6 +22,13 @@ from peripherals import TYPES
 from profile import load_profile, list_profiles, ProfileError
 from sh2e import SH2E, UnknownOpcode
 
+
+def _periph_cls(p):
+    if p["type"] == "can":
+        from can import CANController
+        return CANController
+    return TYPES[p["type"]]
+
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 PROFILES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "profiles")
 
@@ -32,7 +39,7 @@ def build(profile_path):
         rom_bytes = f.read()
     bus = Bus(prof["memory"], rom_bytes)
     for p in prof["peripherals"]:
-        cls = TYPES[p["type"]]
+        cls = _periph_cls(p)
         bus.add_peripheral(p["base"], p["size"], cls(p["base"], p["size"], p.get("config", {})))
     cpu = SH2E(bus)
     bus.cpu = cpu

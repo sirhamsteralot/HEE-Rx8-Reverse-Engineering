@@ -43,9 +43,18 @@ def load_profile(path, repo_root):
     rom["_size"] = os.path.getsize(rom_path)
     if rom.get("size") and rom["_size"] != rom["size"]:
         raise ProfileError(f"{path}: ROM size mismatch")
+    def _num(v):
+        return int(str(v), 0) if isinstance(v, str) else int(v)
+    for key in ("rom", "ram", "io"):
+        if key in prof["memory"]:
+            prof["memory"][key] = [_num(v) for v in prof["memory"][key]]
+    if "io_read_overrides" in prof["memory"]:
+        prof["memory"]["io_read_overrides"] = {_num(k): _num(v) for k, v in prof["memory"]["io_read_overrides"].items()}
     for p in prof["peripherals"]:
         if "type" not in p or "base" not in p or "size" not in p:
             raise ProfileError(f"{path}: peripheral entries need type/base/size: {p}")
+        p["base"] = _num(p["base"])
+        p["size"] = _num(p["size"])
     return prof
 
 
