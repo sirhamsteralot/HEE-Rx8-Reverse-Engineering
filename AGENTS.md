@@ -14,7 +14,7 @@ and session log (`docs/learnings.md`).
 - `reverse-engineered/decompiled/<rom-id>/` — decompiler C export, per-function files, indexes (`function_index.tsv`, `callgraph.tsv`, `symbols.tsv`), and synchronized named views (`named/`).
 - `reverse-engineered/reimplementation/` — clean, compilable C (C11, strict warnings) plus its host tests.
 - `docs/investigations/<rom-id>/` — per-ROM investigation evidence: root `*_report.md` subsystem reports, `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`, `backups/` (pre-change zips, LFS), README.
-- `docs/architecture/` — memory maps, `hardware/` (pinouts, `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + stats).
+- `docs/architecture/` — memory maps, `hardware/` (text pinout `mazda-rx-8-pcm-pinout-series-1.md` derived from ground-truth `docs/references/13Electrical.pdf`, plus `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + stats).
 - `docs/references/` — reference PDFs with trust notes, upstream repo links, prior-effort docs.
 - `docs/learnings.md` — accumulated session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (upstream vs reviewed vs merged, provenance in README).

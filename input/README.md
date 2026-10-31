@@ -25,6 +25,10 @@ The upstream git repositories now live as **read-only submodules** under
 live Ghidra `.gpr/.rep` project DBs, the RomRaider install, and the duplicate
 `Data_binaries/60E0FC00.bin`.
 
+2026-10-31: `mazda-rx-8-pcm-pinout-series-1.md` (text PCM pinout derived from
+`13Electrical.pdf`, which remains ground truth) was promoted to
+`../docs/architecture/hardware/`.
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —

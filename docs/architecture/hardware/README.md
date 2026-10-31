@@ -47,6 +47,16 @@ The [complete connection table](pcm_connections.tsv) preserves page numbers,
 variant notes and component connector IDs. Pin identifiers use the letter O
 where shown, for example 1O and 2O; they are not decimal numbers.
 
+## Terminal → signal / wire-colour pinout
+
+[mazda-rx-8-pcm-pinout-series-1.md](mazda-rx-8-pcm-pinout-series-1.md) is the
+current text pinout for all five PCM connectors (terminals 1A–5AF), derived from
+`../references/13Electrical.pdf` (**ground truth**) and the FSM terminal table.
+Honour its `*` / `†` / `–` markers; only 5L lacks a legible colour. On any pinout
+update: re-diff and propagate into `pcm_connections.tsv` (`wire_colour` column),
+`firmware_annotations.tsv`, and the `[WIRING REVIEW]` blocks in all synchronized
+views (keep the marker string so `AnnotateHardware.java` rebuilds reproduce them).
+
 ## Best-supported new candidate: APV control path
 
 The diagram shows B1-37 with motor wires PCM 3J/3G, a signal wire at 3B,

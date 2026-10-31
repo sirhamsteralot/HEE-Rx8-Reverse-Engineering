@@ -7,8 +7,14 @@ External reference material and provenance for third-party sources.
 | File | What it is | Use it for | Trust caveats |
 |---|---|---|---|
 | `Sh7055h.pdf` | Renesas **SH7055F hardware manual** (ADE 602-155B) | Chip-level truth: register map, Tables 1.2/1.3 pin functions & package pin numbers, PFC/port control, ATU-II channel→pin mapping | Vendor document — authoritative for the silicon |
-| `mazda-rx-8-pcm-pinout-series-1.pdf` | Series-1 PCM connector pinout compiled from the Mazda FSM terminal table + `13Electrical.pdf` wire colours | PCM connector terminal → signal/component + wire colour | Generated from the wiring book; **no chip-pin numbers** (package-pin ↔ terminal is board routing, unresolved). Honour its markers: unmarked = confirmed, `*` single-source, `†` conflict, `³` high-power only, `–` unread |
-| `13Electrical.pdf` | Original RX-8 electrical wiring book (copy-protected; pages are images) | Circuit diagrams behind the pinout | Text extraction yields mostly headers — read via renders; treat as image source |
+| `13Electrical.pdf` | Original RX-8 electrical wiring book (copy-protected; pages are images) — **ground truth for the RX-8 electrical systems** | Underlying circuit diagrams; source for all derived pinout/colour data | Text extraction yields mostly headers — read via renders; treat as image source |
+
+Derived from `13Electrical.pdf` (regenerate + re-diff, don't edit in place): the
+Series-1 PCM connector pinout now lives as text at
+`../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md` (the earlier v3 PDF was
+removed). It has **no chip-pin numbers** — package-pin ↔ connector-terminal is board
+routing, unresolved. Honour its markers: unmarked = confirmed, `*` single-source,
+`†` conflict, `³` high-power only, `–` unread.
 
 Rule: firmware dataflow comes from the ROM; physical pin/terminal associations from
 these documents; the two meet only at the SH7055F package pin. Never assert a
