@@ -28,6 +28,9 @@ Verification that reimplemented/derived behavior matches the original binaries.
 
 ## Rules
 
-- Tests state which binary SHA-256 (from `binaries/manifest.csv`) they validate against.
+- Tests state which binary SHA-256 (from `binaries/manifest.csv` or the submodule
+  gitlink) they validate against.
 - Golden data goes in `tests/fixtures/` with provenance comments.
 - Repo-level harnesses run with `python -m pytest tests/` from the repo root.
+  Currently: `tests/test_emu.py` (emulator: profiles, bus, CPU, WDT, GPIO
+  heartbeat, real-ROM boot smoke).

@@ -6,6 +6,10 @@ verifying HEE artifacts.
 ## Layout
 
 - `scripts/hash_binaries.py` — writes/verifies `binaries/manifest.csv` (`--check`).
+- `scripts/emu/` — SH-2E emulator (ROADMAP Phase 1). Config-driven: one JSON profile
+  per ROM/market/model in `scripts/emu/profiles/` selects the ROM (SHA-256 verified),
+  memory map, and SH7055 peripheral set. Run: `python scripts/emu/emu.py --profile
+  60E15120_N3J1E --cycles 100000`. Tests: `python -m pytest tests/test_emu.py`.
 - `scripts/rx8-pcm-pipeline/` — the Ghidra export/annotation pipeline
   (`rebuild.sh NEW_PROJECT_NAME`, `prepare_metadata.py`, `validate_export.py`,
   `validate_reports.py`, review passes, …). **These scripts encode the legacy

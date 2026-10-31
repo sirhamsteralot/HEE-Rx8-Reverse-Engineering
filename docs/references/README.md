@@ -49,6 +49,10 @@ Related but not submoduled (not git repos in the intake, URL only):
 - RomRaider (Java) — https://www.romraider.com/ / github.com/RomRaider/RomRaider
 - Renesas SH-2E/SH7055S hardware manual:
   https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual
+- Renesas **SH-2E software (ISA) manual** (opcode encodings — the reference for the
+  emulator): mirror https://evoecu.logic.net/mirror/cpudocs/sh7055f/rej09b0316_sh_2esm.pdf
+  (canonical via renesas.com); see also `utilities/scripts/emu/README.md` on why we
+  don't use QEMU/Unicorn (SH-4 only / no SH) and use a custom exact core instead.
 
 ## Community material
 

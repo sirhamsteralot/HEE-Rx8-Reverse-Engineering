@@ -19,7 +19,7 @@ and session log (`docs/learnings.md`).
 - `docs/learnings.md` — accumulated session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (upstream vs reviewed vs merged, provenance in README).
 - `data/labels/<rom-id>/` — label/alias TSVs, rename maps, `validation.json` records, provenance (`input.json`).
-- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; expects legacy layout under `input/Tuning-merged`), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`.
+- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; expects legacy layout under `input/Tuning-merged`), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `emu/` (config-driven SH-2E emulator; one JSON profile per ROM/market/model in `emu/profiles/`).
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
 - `tests/` — repo-level harnesses; host unit tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
 

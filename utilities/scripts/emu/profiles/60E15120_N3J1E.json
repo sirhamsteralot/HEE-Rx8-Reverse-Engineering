@@ -1,0 +1,36 @@
+{
+  "name": "60E15120_N3J1E",
+  "description": "Primary analysis target. Cal bytes at 0x6c046 read N3ZHE (documented discrepancy vs filename N3J1E - do not 'fix').",
+  "market": "USDM",
+  "model": "RX-8 Series 1",
+  "variant": { "engine_ports": 6, "transmission": "MT", "dsc": true, "rke": true, "immobilizer": true },
+  "rom": {
+    "path": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+    "sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+    "size": 524288
+  },
+  "memory": {
+    "rom": [0, 524288],
+    "ram": [4294934528, 4294959104],
+    "io": [4294959104, 4294967296]
+  },
+  "reset": { "pc_from_vector": 0, "sp_from_vector": 4 },
+  "peripherals": [
+    { "type": "wdt", "base": 4294959376, "size": 3,
+      "config": { "enabled": true, "overflow_vector": null,
+                  "_note": "TCSR 0xffffec10 / TCNT 0xffffec11 / RSTCSR 0xffffec12 (symbols.tsv); overflow_vector per Sh7055h.pdf IVT - fill in" } },
+    { "type": "gpio", "base": 4294965504, "size": 128,
+      "config": { "heartbeat": { "port_reg_offset": 56, "bit": 15 },
+                  "_note": "PBDR_W 0xfffff738 (offset 0x38) bit15 = external-watchdog heartbeat (0x31c service_wdt_overflow_and_toggle_pb15); PADR 0xfffff726, PDDR 0xfffff746, PEDR 0xfffff754" } },
+    { "type": "adc", "base": 4294965760, "size": 32,
+      "config": { "result_channel": "AN6", "channels": { "AN6": 32768 },
+                  "_note": "ADC reg 0xfffff80c observed in APV path; AN6 = APV position on PCM 3B" } },
+    { "type": "atu2", "base": 4294963712, "size": 512,
+      "config": { "_note": "ATU-II injector outputs TO8A-F (pkg pins 195/197-201); channel map ROM 0xd7d4; base per Sh7055h.pdf - refine" } },
+    { "type": "sci", "base": 4294966272, "size": 32, "config": {} },
+    { "type": "can", "base": 4294964736, "size": 512,
+      "config": { "_note": "UDS/Mode22 transport; 4S CAN_L / 4V CAN_H per pinout; base per Sh7055h.pdf - refine" } }
+  ],
+  "pins": { "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md" },
+  "sensors": { "coolant_temp_raw": 0, "maf_raw": 0, "rpm_raw": 0 }
+}

@@ -1,0 +1,44 @@
+{
+  "_comment": "Copy this file to <ROM-ID>_<CAL-ID>.json for a new bin/market/model. rom.path is relative to the repo root; sha256 is verified at load (see binaries/manifest.csv for own dumps). market/model/variant describe the vehicle this bin came from and drive which peripherals/pins exist. Register bases per docs/references/Sh7055h.pdf; cross-check against reverse-engineered/decompiled/<rom-id>/symbols.tsv.",
+  "name": "TEMPLATE",
+  "market": "USDM | JDM | EU | ...",
+  "model": "RX-8 Series 1",
+  "variant": {
+    "engine_ports": 6,
+    "transmission": "MT | AT",
+    "dsc": true,
+    "rke": true,
+    "immobilizer": true
+  },
+  "rom": {
+    "path": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/<file>.bin",
+    "sha256": "<64 hex>",
+    "size": 524288
+  },
+  "memory": {
+    "rom": [0, 524288],
+    "ram": [4294934528, 4294959104],
+    "io": [4294959104, 4294967296]
+  },
+  "reset": { "pc_from_vector": 0, "sp_from_vector": 4 },
+  "peripherals": [
+    { "type": "wdt", "base": 4294959376, "size": 3,
+      "config": { "enabled": true, "overflow_vector": null } },
+    { "type": "gpio", "base": 4294965504, "size": 128,
+      "config": { "heartbeat": { "port_reg_offset": 56, "bit": 15 } } },
+    { "type": "adc", "base": 4294965760, "size": 32,
+      "config": { "result_channel": "AN6", "channels": { "AN6": 32768 } } },
+    { "type": "atu2", "base": 4294963712, "size": 512, "config": {} },
+    { "type": "sci", "base": 4294966272, "size": 32, "config": {} },
+    { "type": "can", "base": 4294964736, "size": 512, "config": {} }
+  ],
+  "pins": {
+    "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md",
+    "note": "connector-terminal <-> signal map; package-pin hop is board routing (unresolved)"
+  },
+  "sensors": {
+    "_comment": "scripted inputs injected via ADC/GPIO reads, e.g. coolant temp, MAF, RPM",
+    "coolant_temp_raw": 0,
+    "maf_raw": 0
+  }
+}

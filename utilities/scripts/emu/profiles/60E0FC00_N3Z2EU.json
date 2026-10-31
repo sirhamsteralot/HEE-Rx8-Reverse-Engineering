@@ -1,0 +1,31 @@
+{
+  "name": "60E0FC00_N3Z2EU",
+  "description": "Reference ROM used by the prior pipeline for byte-match seeding (N3Z2EU, 2004 US 6-port MT). Cross-flashed successfully onto 2005 USDM N3ZBEJ hardware per RX8Club thread.",
+  "market": "USDM",
+  "model": "RX-8 Series 1 (2004)",
+  "variant": { "engine_ports": 6, "transmission": "MT", "dsc": true, "rke": true, "immobilizer": true },
+  "rom": {
+    "path": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FC00.bin",
+    "sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c",
+    "size": 524288
+  },
+  "memory": {
+    "rom": [0, 524288],
+    "ram": [4294934528, 4294959104],
+    "io": [4294959104, 4294967296]
+  },
+  "reset": { "pc_from_vector": 0, "sp_from_vector": 4 },
+  "peripherals": [
+    { "type": "wdt", "base": 4294959376, "size": 3,
+      "config": { "enabled": true, "overflow_vector": null } },
+    { "type": "gpio", "base": 4294965504, "size": 128,
+      "config": { "heartbeat": { "port_reg_offset": 56, "bit": 15 } } },
+    { "type": "adc", "base": 4294965760, "size": 32,
+      "config": { "result_channel": "AN6", "channels": { "AN6": 32768 } } },
+    { "type": "atu2", "base": 4294963712, "size": 512, "config": {} },
+    { "type": "sci", "base": 4294966272, "size": 32, "config": {} },
+    { "type": "can", "base": 4294964736, "size": 512, "config": {} }
+  ],
+  "pins": { "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md" },
+  "sensors": { "_note": "Mode22 dispatch observed at 0x5fa0c-0x5fa14 in this ROM (RX8Club OCR)" }
+}

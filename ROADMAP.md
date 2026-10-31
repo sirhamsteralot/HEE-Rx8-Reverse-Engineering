@@ -29,16 +29,22 @@ running code.
 
 **Deliverables**
 
-1. `utilities/scripts/emu/` — emulator core:
+1. `utilities/scripts/emu/` — emulator core (scaffolded 2026-10-31, config-driven so
+   different bins/markets/models run with different peripherals — see
+   `emu/profiles/README.md`; add a profile per ROM/variant):
    - SH-2E CPU interpreter (custom, exact — the prior effort already documented the
      encodings in `docs/learnings.md`: PC-relative sign extension, `mov.l` align-down,
      `mova`, FPU opcodes, delay slots). Prefer a hand-written interpreter over
      Unicorn/QEMU: those model SH-4, not SH-2E, and over-accept instructions (the
-     reason the local Ghidra Sleigh config exists).
-   - FPU subset used by the firmware (fmov/fadd/fsub/fmul/fcmp/ftrc… as found in the
-     disassembly), with SH rounding noted as a limit.
-   - Memory map loaded from `data/labels/<rom-id>/input.json` + `design/README.md` §1
-     (ROM/RAM/volatile I/O windows, R/W/X flags).
+     reason the local Ghidra Sleigh config exists). Unknown opcodes stop the run
+     loudly (`UnknownOpcode`).
+   - FPU subset used by the firmware (fmov/fadd/fsub/fmul/fcmp…), with SH rounding
+     noted as a limit.
+   - **Profiles** (`emu/profiles/*.json`): ROM path + SHA-256 (verified at load),
+     memory map from `data/labels/<rom-id>/input.json` + `design/README.md` §1, and
+     the peripheral set per market/model/variant (USDM/JDM/EU, 4-/6-port, MT/AT,
+     DSC/RKE/immo) — WDT, GPIO (PB15 heartbeat), ADC (scripted sensors), ATU-II,
+     SCI, CAN.
 2. Peripheral stub layer for the SH7055 registers (map per `docs/references/Sh7055h.pdf`):
    - MMIO reads return scripted values (sensor inputs: ADC channels, e.g. AN6 APV,
      coolant temp); MMIO writes are logged (GPIO actuator writes, ATU-II injector
@@ -58,7 +64,9 @@ running code.
 **Done when**
 
 - Emulator decodes/executes every instruction in `firmware_disassembly.asm` without
-  unknown-opcode faults on a full boot run of `60E15120_N3J1E.bin`.
+  unknown-opcode faults on a full boot run of `60E15120_N3J1E.bin` (scaffold today:
+  boots from the reset vector, stops at the first unimplemented opcode — 9/9 tests
+  pass in `tests/test_emu.py`).
 - Golden boot trace committed; re-running reproduces it byte-for-byte.
 - Known static findings reproduced dynamically: e.g. knock retard clamped to
   [-10, 0] deg (`reviews/knock_control/`), injector channel map table 0xd7d4 →

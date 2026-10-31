@@ -1,0 +1,170 @@
+"""SH7055 peripheral stubs for the HEE emulator.
+
+Each peripheral is configured from the active profile (base address, size, and a
+config dict), so different RX-8 markets/models can instantiate different
+peripheral sets (see profiles/). Register maps per docs/references/Sh7055h.pdf;
+addresses cross-checked against our own symbols.tsv.
+"""
+
+
+class Peripheral:
+    def __init__(self, base, size, config):
+        self.base = base
+        self.size = size
+        self.config = config or {}
+        self.bus = None
+
+    def attach(self, bus):
+        self.bus = bus
+
+    def read(self, off, size):
+        return 0
+
+    def write(self, off, size, value):
+        pass
+
+    def tick(self, cycles):
+        pass
+
+    def reset(self):
+        pass
+
+
+class RegisterFile(Peripheral):
+    """Generic MMIO register file (reads return stored values; writes logged by bus)."""
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.regs = bytearray(size)
+
+    def read(self, off, size):
+        return int.from_bytes(self.regs[off:off + size], "big")
+
+    def write(self, off, size, value):
+        self.regs[off:off + size] = (value & ((1 << (size * 8)) - 1)).to_bytes(size, "big")
+
+
+class WDT(Peripheral):
+    """SH7055 watchdog: TCSR 0xffffec10, TCNT 0xffffec11, RSTCSR 0xffffec12.
+
+    TCNT counts up each tick; on 0xFF->0x00 wrap, TCSR OVF (0x80) sets and, if
+    enabled, the overflow vector fires (config "overflow_vector" = address of the
+    vector slot; null = fall back to reset vector). Writes need key 0xA5 in the
+    high byte (firmware writes 0xa53c to service)."""
+
+    TCSR, TCNT, RSTCSR = 0, 1, 2
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.tcsr = 0x00
+        self.tcnt = 0x00
+        self.overflow_vector = self.config.get("overflow_vector")  # None -> reset vector
+        self.enabled = bool(self.config.get("enabled", True))
+
+    def read(self, off, size):
+        if off == self.TCSR:
+            return self.tcsr
+        if off == self.TCNT:
+            return self.tcnt
+        return 0
+
+    def write(self, off, size, value):
+        if size == 1 and (value >> 8 if size == 2 else 0):
+            pass
+        if off == self.TCSR and size == 1:
+            # keyed write arrives as 16-bit 0xA5xx on the word at TCSR; handle both
+            pass
+        if off == self.TCSR:
+            if size == 2 and (value >> 8) == 0xA5:
+                low = value & 0xFF
+                self.tcsr = low & 0x7F  # OVF (0x80) cleared by writing 0 with key
+                if not (low & 0x80):
+                    self.tcsr &= 0x7F
+            elif size == 1:
+                self.tcsr = value & 0x7F
+        elif off == self.TCNT:
+            if size == 2 and (value >> 8) == 0xA5:
+                self.tcnt = value & 0xFF
+            elif size == 1:
+                self.tcnt = value
+        elif off == self.RSTCSR:
+            pass
+
+    def tick(self, cycles):
+        if not self.enabled:
+            return
+        for _ in range(cycles):
+            self.tcnt = (self.tcnt + 1) & 0xFF
+            if self.tcnt == 0:  # wrapped
+                self.tcsr |= 0x80
+                if self.bus is not None and hasattr(self.bus, "cpu"):
+                    vec = self.overflow_vector if self.overflow_vector is not None else 0
+                    self.bus.cpu.interrupt(vec)
+
+
+class GPIO(Peripheral):
+    """Port data/direction registers. Writes to the configured heartbeat pin
+    (default port B bit 15 = external watchdog heartbeat, see
+    service_wdt_overflow_and_toggle_pb15 at 0x31c) are logged as events."""
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.regs = bytearray(size)
+        self.heartbeat = self.config.get("heartbeat", {"port_reg_offset": 0x38, "bit": 15})
+        self.heartbeats = []  # (cycle, new_value_bit)
+
+    def read(self, off, size):
+        return int.from_bytes(self.regs[off:off + size], "big")
+
+    def write(self, off, size, value):
+        old = int.from_bytes(self.regs[off:off + size], "big")
+        self.regs[off:off + size] = (value & ((1 << (size * 8)) - 1)).to_bytes(size, "big")
+        hb = self.heartbeat
+        if off <= hb["port_reg_offset"] < off + size:
+            bit = 1 << hb["bit"]
+            if (old & bit) != (value & bit):
+                self.heartbeats.append((self.bus.cycle if self.bus else 0, (value & bit) >> hb["bit"]))
+
+
+class ADC(Peripheral):
+    """ADC with scripted channel values from the profile (sensor injection).
+    Register 0xfffff80c observed in the APV path (docs/architecture/hardware)."""
+
+    def __init__(self, base, size, config):
+        super().__init__(base, size, config)
+        self.channels = self.config.get("channels", {})  # name -> raw int
+
+    def read(self, off, size):
+        # offset 0x0c = ADDRA-ish result register in our observed usage
+        name = self.config.get("result_channel")
+        if name and name in self.channels:
+            return self.channels[name]
+        return 0
+
+    def write(self, off, size, value):
+        pass
+
+
+class ATU2(RegisterFile):
+    """ATU-II timer stub. Injector output pulse registers are logged by the bus;
+    config may name them for decoding later (injector channel map: ROM 0xd7d4 ->
+    ATU-II 8A-8F)."""
+
+
+class SCI(RegisterFile):
+    """Serial comm stub (diagnostic/UDS transport in real hardware)."""
+
+
+class CAN(RegisterFile):
+    """CAN controller stub (UDS 0x10/0x23/0x27/0x34/0x36/0x37, Mode 22 PIDs)."""
+
+
+TYPES = {
+    "wdt": WDT,
+    "gpio": GPIO,
+    "adc": ADC,
+    "atu2": ATU2,
+    "sci": SCI,
+    "can": CAN,
+    "regfile": RegisterFile,
+}
