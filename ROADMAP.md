@@ -48,14 +48,39 @@ Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
 
 ### Phase 1 open items (validation & fidelity hardening — these are the E-items below)
 
-- Renesas Simulator Debugger cross-check on the Windows machine
-  (`compare_traces.py`) — not yet run.
-- Dynamic reproduction of static findings (knock clamp [-10,0]°, injector map 0xd7d4
-  → ATU-II 8A–8F, math-helper endpoints) and reimplementation-vs-emulator
-  cross-validation — pending.
-- Virtual OBD-II answering real UDS requests (needs E4 RCAN model) — pending.
-- Sensor inputs wired to the real ADC/ATU read paths (E2) — currently placeholder
-  override registers.
+Closed 2026-10-31 (this session; see `tests/test_phase1_dynamic.py`):
+
+- **Dynamic reproduction of static findings + reimplementation cross-validation**
+  via the new `harness.py` direct-call harness: math helpers 0x23b0/0x23dc/0x23e4/
+  0x23f4/0x2404 match the `rx8_math.c` reimplementation (bit-exact except the
+  filter, which differs only by FMA/E1 double semantics); knock clamp 0x13bd2
+  dynamically clamps to [-10, 0] deg at 1000/3000 rpm and to 0 at 6000 rpm;
+  injector map dynamically confirmed: 0x8a68(ch) writes DCNT8x/GR1x exactly per
+  ROM table 0xd7d4 (ch0→8A, ch1→8C, ch2→8E, ch3→8B, ch4→8D, ch5→8F).
+- **E4 RCAN model**: `can.py` now models HCAN0 at 0xffffe400 (W1C pending regs,
+  MCR/GSR reset handshake, mailbox masks per ROM 0xd914). Virtual OBD-II port
+  drives the ROM's own path: inject on 0x7e0 → RXPR → FUN_00011d88 moves it to the
+  UDS buffer 0xffffddc8; ref_txCAN_EventBased(0x99b0, desc 0x4e00c) → 0x7e8 in
+  tx_log; Mode 22 dispatch 0x5774c (id 0x0043 → handler 0x56b8a) verified.
+  `obd_port.py` pumps these entry points (profile `uds` section). Fully
+  OS-scheduled round trip still needs the tick (E6).
+- **E2 sensor inputs on real read paths**: ADC model serves ADDRnH/L channels with
+  the ADCSR/ADCR-ADST→ADF handshake (ref_sensorADCRead 0x6884 consumes them);
+  ATU-II at 0xfffff400 with crank input capture into ICR0AH/ICR10AH (`set_rpm`);
+  profiles map sensors to AN3/AN4/AN6/AN10/AN28/AN29 + crank — no more placeholder
+  override registers. Profile peripheral bases fixed to symbols.tsv (RCAN0 was
+  misplaced at 0xffffe800, ATU-II at 0xffffe400); RAM base fixed to 0xffff6000;
+  ROM region is now read-only; DMAC model added (CHCR DE → transfer + TE);
+  `interrupt()` honors VBR (0x7fc50) and pushes SR/PC. Boot now passes CAN init
+  and reaches the main idle loop 0x3dac clean (golden trace regenerated).
+
+Still open:
+
+- Renesas Simulator Debugger cross-check (`compare_traces.py`) — the tool is not
+  installed on this Windows machine (no HEW/e² studio); golden trace regenerated
+  and self-reproducible, external diff pending a machine with the licensed tool.
+- Full OS tick (CMI10B → 0x2ec0) runs, but task contexts need it for autonomous
+  scheduling (E6) — the OBD port drives the ROM entry points directly meanwhile.
 
 ## Phase 2 — Static gap closure & labeling (open)
 
@@ -116,9 +141,12 @@ Delivered in `utilities/scripts/emu/` (profiles per ROM/market/model in
 
 ## Fidelity limits & known discrepancies (E = emulator, D = data/docs; all open)
 
-E1 FPU host floats (no SH rounding) · E2 placeholder peripheral bases · E3 WDT IVT
-vector slot TODO · E4 RCAN mailbox model stub (OBD answers) · E5 guessed
-`io_read_overrides` ready-bits · E6 only WDT interrupts fire (no ATU-II timers) ·
+E1 FPU host floats (no SH rounding) · E2 CLOSED 2026-10-31 (bases from symbols.tsv;
+sensors on real ADC/ATU paths) · E3 WDT IVT vector slot TODO (firmware polls TCSR,
+calls 0x31c itself; overflow = OVF flag only) · E4 RCAN mailbox model done for the
+diag path 2026-10-31 (full interrupt/mailbox fidelity open) · E5 guessed
+`io_read_overrides` ready-bits · E6 ATU-II tick modeled (CMI10B→0x2c8) but the OS
+scheduler's task contexts still need it — OBD port drives entry points directly ·
 E7 div1/rotcl approximations, cycles ≠ real time.
 D1 N3ZHE-vs-N3J1E cal ID · D2 package-pin↔terminal board routing + pinout markers ·
 D3 checksum/CVN unverified · D4 seed/key location unknown · D5 g/rev vs VolEf ·

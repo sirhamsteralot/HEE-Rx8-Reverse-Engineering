@@ -22,14 +22,22 @@ def test_full_boot_no_unknown_opcode_1m():
     stop = emu.run(prof, bus, cpu, 1_000_000)
     assert cpu.icount == 1_000_000
     assert "cycle limit" in stop  # no UnknownOpcode
-    assert len(bus.mmio_log) > 1000  # peripherals being programmed
+    # with the corrected peripheral models (RCAN/DMAC/ADC/ATU-II, ROM read-only,
+    # RAM 0xffff6000-0xffffe000) boot passes CAN init, programs ATU-II/SCI and
+    # reaches the main idle loop at 0x3dac
+    assert len(bus.mmio_log) > 200  # peripherals being programmed during init
+    assert cpu.pc == 0x3DAC  # idle loop
 
 
 def test_wdt_heartbeat_liveliness():
     prof, bus, cpu = emu.build(PROFILE)
     emu.run(prof, bus, cpu, 100_000)
     gpio = next(p for _, _, p in bus.peripherals if type(p).__name__ == "GPIO")
-    assert len(gpio.heartbeats) > 100  # PB15 toggling: firmware services the WDT
+    # firmware polls TCSR OVF and services the WDT itself (keyed 0xa53c writes);
+    # the external-watchdog heartbeat PB15 toggles when an overflow is seen
+    services = [m for m in bus.mmio_log if m[2] == 0xFFFFEC10 and m[3] == 0xA53C]
+    assert len(services) >= 5   # firmware's own poll path services the WDT
+    assert len(gpio.heartbeats) >= 5  # PB15 toggles when an overflow is seen
 
 
 def test_golden_boot_trace():
@@ -61,15 +69,19 @@ def test_can_inject_and_tx_log():
 
 def test_obd_port_uds_log():
     prof, bus, cpu = emu.build(PROFILE)
+    emu.run(prof, bus, cpu, 300000)  # boot to idle so the ROM state is set up
     port = obd_port.OBDPort(prof, bus, cpu, port=0)
     port.handle_uds(bytes.fromhex("1003"))
     assert port.uds_log[-1][1] == "req"
-    assert port.can.rx_frames  # request reached the emulated CAN bus
+    assert port.can.rx_frames  # request reached the emulated CAN bus (RCAN mailbox)
+    # the ROM's own CAN RX poller (FUN_00011d88, driven by pump_uds) moved the
+    # request into the UDS RX buffer 0xffffddc8 and cleared RXPR
+    assert bus.read32(0xFFFFDDC8).to_bytes(4, "big")[:3] == bytes.fromhex("021003")
 
 
 def test_ui_session_sensors_run_replay(tmp_path):
     session = ui.EmuSession(PROFILE)
-    session.set_sensor("coolant_temp_raw", 90)
+    session.set_sensor("coolant_temp", 90)
     session.run_cycles(5000)
     st = session.state()
     assert st["icount"] >= 5000 and st["profile"] == "60E15120_N3J1E"
@@ -87,8 +99,10 @@ def test_ui_session_sensors_run_replay(tmp_path):
 
 
 def bus_addr_overridden(session):
-    addr = int(str(session.prof["sensors"]["rpm"]["addr"]), 0)
-    return addr in session.bus.read_overrides
+    # rpm is wired to the real ATU-II crank input-capture path (E2): the ATU2
+    # peripheral has a crank wheel period set after the replay drove the sensor
+    atu = next((p for _, _, p in session.bus.peripherals if type(p).__name__ == "ATU2"), None)
+    return atu is not None and atu._crank_period > 0
 
 
 # --- debugger: breakpoints, watchpoints, UBC, inspection ---------------------

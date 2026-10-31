@@ -18,10 +18,19 @@ golden 200k-instruction PC trace reproduces byte-exact in tests.**
 - `peripherals.py` — SH7055 stubs: WDT (TCSR/TCNT/RSTCSR, keyed 0xA5 writes,
   overflow → handler/vector, PB15 heartbeat logging), GPIO, ADC (scripted
   sensors), ATU-II, SCI, generic register file.
-- `can.py` — CAN controller: RX injection + TX capture (`inject`, `tx_log`).
-- `isotp.py` — ISO-TP encode/reassemble (unit-tested).
-- `obd_port.py` — virtual OBD-II/UDS TCP port (design: `docs/architecture/emulated-obd.md`).
-- `ui.py` + `ui.html` — interactive UI (design: `docs/architecture/emulator-ui.md`):
+- `can.py` - RCAN (HCAN0) mailbox model at 0xffffe400 per symbols.tsv: W1C pending
+  regs (RXPR/RFPR/TXACK/ABACK/UMSR/IRR), MCR bit0 <-> GSR bit3 reset handshake,
+  `inject(can_id, data)` loads the matching RX mailbox and sets RXPR/IRR,
+  a TXPR write transmits the mailbox payload into `tx_log` (UDS responses on
+  0x7e8). The ROM's own CAN driver runs against this.
+- `harness.py` - direct ROM-function call harness (SH-2E ABI: r4-r7 / fr4-fr7
+  args, r0/fr0 return) used by `tests/test_phase1_dynamic.py` to execute the
+  ROM's own functions for dynamic validation.
+- `isotp.py` - ISO-TP encode/reassemble (unit-tested).
+- `obd_port.py` - virtual OBD-II/UDS TCP port (design: `docs/architecture/emulated-obd.md`):
+  requests are injected into the 0x7e0 mailbox, then the ROM's own entry points
+  (profile `uds` section: CAN RX poll 0x11d88, UDS entry 0x680a0, dispatcher
+  0x3c2a) run and 0x7e8 responses are collected from `tx_log`.
   `python ui.py --profile 60E15120_N3J1E` → http://127.0.0.1:8080/ — sensor inputs,
   run/step/reset, MMIO + heartbeat views, drive-cycle replay from `data/logs/`,
   and a debugger panel (`/api/debug`: break/watch/continue/step/regs/mem/disasm).
@@ -50,7 +59,10 @@ Planned additions (ROADMAP Phase 1): virtual OBD-II/UDS port
 
 `python -m pytest tests/test_emu.py` — profile/ROM-hash validation, bus routing,
 hand-assembled CPU program, WDT overflow/service, PB15 heartbeat logging, and a
-boot smoke test on the real ROM.
+boot smoke test on the real ROM. `python -m pytest tests/test_phase1_dynamic.py`
+- dynamic reproduction of static findings (math helpers vs the reimplementation,
+knock clamp 0x13bd2, injector map 0xd7d4 -> ATU-II 8A-8F, ADC read path, RCAN
+RX/TX through the ROM's own driver, Mode 22 dispatch).
 
 ## Why not QEMU/Unicorn (checked 2026-10-31)
 
@@ -92,13 +104,24 @@ changes or a new opcode is implemented:
 
 ## Limits (honest)
 
-Full list with closure plans in **ROADMAP.md → "Fidelity limits & known
-discrepancies"** (items E1–E7). Summary:
+Full list with closure plans in **ROADMAP.md -> "Fidelity limits & known
+discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
 
 - CPU implements the corpus-validated opcode subset; boot stops at the first
-  unimplemented instruction (reported, not mis-executed).
+  unimplemented instruction (reported, not mis-executed). `interrupt()` honors
+  VBR and pushes SR/PC per the SH-2E manual (6.1.3); FPU `fdiv` follows IEEE
+  (x/0 = inf, 0/0 = NaN); `fmov.s` handles @rN+/@-rN/@(disp,rN)/@(r0,rN);
+  `sts`/`lds` cover fpscr/fpul.
 - Host float math does not model SH-2E FPU rounding/exception modes (E1).
-- Peripheral register bases marked `_note` are placeholders pending the
-  `Sh7055h.pdf` register map (E2); `io_read_overrides` are guessed ready-bits (E5);
-  only WDT overflow interrupts fire so far (E6); `div1`/rotcl edge cases are
-  approximations and "cycles" are not cycle-accurate time (E7).
+- Peripheral bases are now from `symbols.tsv` (RCAN0 0xffffe400, RCAN1
+  0xffffe600, ATU-II 0xfffff400, SCI 0xfffff000, ADC 0xfffff800, WDT 0xffffec10,
+  DMAC 0xffffecb0, GPIO 0xfffff700); the ROM region is read-only (CPU stores to
+  flash are ignored, counted in `bus.rom_writes_blocked`). Sensor inputs are
+  wired to the real ADC ADDRn channels / ATU-II crank capture (E2 input side
+  closed). Remaining: WDT IVT vector slot (E3 - the firmware polls TCSR and
+  calls its service routine 0x31c itself), full RCAN fidelity beyond the diag
+  path, guessed `io_read_overrides` ready-bits (E5), only the modeled timers
+  fire (E6 - the OS tick CMI10B handler runs but the scheduler's task contexts
+  still need it, so the OBD port drives the ROM entry points directly),
+  `div1`/rotcl edge cases are approximations and "cycles" are not
+  cycle-accurate time (E7).

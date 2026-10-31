@@ -93,9 +93,16 @@ class SH2E:
         self.sr = 0
         self.icount = 0
 
-    def interrupt(self, vector_addr):
-        self.pr = self.pc
-        self.pc = self.r32(vector_addr)
+    def interrupt(self, vector_offset, priority=None):
+        """Accept an interrupt: push SR+PC on the stack, set the SR mask to the
+        interrupt's priority level, branch to IVT[VBR + vector_offset]
+        (SH-2E manual 6.1.3/7.2.5). vector_offset is relative to VBR."""
+        self.r[15] = (self.r[15] - 8) & 0xFFFFFFFF
+        self.w32(self.r[15], self.sr)
+        self.w32(self.r[15] + 4, self.pc)
+        if priority is not None:
+            self.sr = (self.sr & ~0xF0) | ((priority & 0xF) << 4)
+        self.pc = self.r32((self.vbr + vector_offset) & 0xFFFFFFFF)
 
     @property
     def T(self): return self.sr & 1
@@ -470,7 +477,8 @@ class SH2E:
     # ================= system regs =================
     def _sts_val(self, regname):
         return {"sr": self.sr, "gbr": self.gbr, "vbr": self.vbr,
-                "mach": self.mach, "macl": self.macl, "pr": self.pr}[regname]
+                "mach": self.mach, "macl": self.macl, "pr": self.pr,
+                "fpscr": self.fpscr, "fpul": self.fpul}[regname]
 
     def _op_stc(self, pc, op, t):
         self.r[_reg(t[1])] = self._sts_val(t[0]) & 0xFFFFFFFF
@@ -499,6 +507,8 @@ class SH2E:
         elif regname == "mach": self.mach = v
         elif regname == "macl": self.macl = v
         elif regname == "pr": self.pr = v
+        elif regname == "fpscr": self.fpscr = v
+        elif regname == "fpul": self.fpul = v
 
     def _op_ldc(self, pc, op, t):
         self._lds_val_set(t[1], self.r[_reg(t[0])])
@@ -524,9 +534,9 @@ class SH2E:
     # ================= FPU =================
     def _op_fmovs(self, pc, op, t):
         a, b = t[0], t[1]
-        if a.startswith("@"):
+        if a.startswith("@"):  # load: fmov.s @ea, FRn
             dst = _freg(b)
-            if a.endswith("+"):
+            if a.endswith("+"):  # @rN+
                 base = _reg(a[1:-1])
                 addr = self.r[base]
                 self.r[base] = (self.r[base] + 4) & 0xFFFFFFFF
@@ -535,24 +545,27 @@ class SH2E:
                 addr = (self.r[int(m.group(2))] + int(m.group(1), 16)) & 0xFFFFFFFF
             elif _R0_REG.match(a):
                 addr = (self.r[0] + self.r[int(_R0_REG.match(a).group(1))]) & 0xFFFFFFFF
-            else:
+            else:  # @rN
                 addr = self.r[_reg(a[1:])]
             self.fr[dst] = _f32(self.r32(addr))
-        else:
+        else:  # store: fmov.s FRn, @ea
             src = _freg(a)
-            if b.startswith("@"):
-                if b.endswith("+"):
-                    raise UnknownOpcode(pc, op)
-                if _DISP_REG.match(b):
-                    m = _DISP_REG.match(b)
-                    addr = (self.r[int(m.group(2))] + int(m.group(1), 16)) & 0xFFFFFFFF
-                elif _R0_REG.match(b):
-                    addr = (self.r[0] + self.r[int(_R0_REG.match(b).group(1))]) & 0xFFFFFFFF
-                else:
-                    addr = self.r[_reg(b[1:])]
-                self.w32(addr, _bits(self.fr[src]))
-            else:
-                raise UnknownOpcode(pc, op)
+            if b.endswith("+"):  # @rN+
+                base = _reg(b[1:-1])
+                addr = self.r[base]
+                self.r[base] = (self.r[base] + 4) & 0xFFFFFFFF
+            elif b.startswith("@-"):  # @-rN
+                base = _reg(b[2:])
+                self.r[base] = (self.r[base] - 4) & 0xFFFFFFFF
+                addr = self.r[base]
+            elif _DISP_REG.match(b):
+                m = _DISP_REG.match(b)
+                addr = (self.r[int(m.group(2))] + int(m.group(1), 16)) & 0xFFFFFFFF
+            elif _R0_REG.match(b):
+                addr = (self.r[0] + self.r[int(_R0_REG.match(b).group(1))]) & 0xFFFFFFFF
+            else:  # @rN
+                addr = self.r[_reg(b[1:])]
+            self.w32(addr, _bits(self.fr[src]))
         self._next(pc)
 
     def _op_fmov(self, pc, op, t):
@@ -564,7 +577,16 @@ class SH2E:
     def _op_fmul(self, pc, op, t): self.fr[_freg(t[1])] *= self.fr[_freg(t[0])]; self._next(pc)
 
     def _op_fdiv(self, pc, op, t):
-        self.fr[_freg(t[1])] /= self.fr[_freg(t[0])]
+        # SH FPU follows IEEE: x/0 = +/-inf, 0/0 = NaN (no Python exception)
+        import math
+        a, b = self.fr[_freg(t[1])], self.fr[_freg(t[0])]
+        if b == 0.0:
+            if a == 0.0 or math.isnan(a) or math.isnan(b):
+                self.fr[_freg(t[1])] = math.nan
+            else:
+                self.fr[_freg(t[1])] = math.copysign(math.inf, a) * math.copysign(1.0, b)
+        else:
+            self.fr[_freg(t[1])] = a / b
         self._next(pc)
 
     def _op_fcmpeq(self, pc, op, t):

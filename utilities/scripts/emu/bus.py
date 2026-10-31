@@ -27,6 +27,7 @@ class Bus:
             self.regions.append(Region(s, e, "io"))
         self.peripherals = []  # list of (start, end, peripheral)
         self.mmio_log = []     # (cycle, pc, addr, value, size)
+        self.rom_writes_blocked = 0  # CPU stores to flash are ignored on real HW
         self.read_overrides = {int(k): v for k, v in memory_map.get("io_read_overrides", {}).items()}
         self.cycle = 0
         self.pc = 0
@@ -91,8 +92,12 @@ class Bus:
             self.mmio_log.append((self.cycle, self.pc, a, v, 1))
             return
         reg = self._region(a, 1)
-        if reg is not None:
-            reg.data[a - reg.start] = v & 0xFF
+        if reg is None:
+            return
+        if reg.kind == "rom":  # flash: CPU stores ignored (needs program sequence)
+            self.rom_writes_blocked += 1
+            return
+        reg.data[a - reg.start] = v & 0xFF
 
     def write16(self, a, v):
         base, p = self._periph(a)
@@ -101,8 +106,12 @@ class Bus:
             self.mmio_log.append((self.cycle, self.pc, a, v, 2))
             return
         reg = self._region(a, 2)
-        if reg is not None:
-            reg.data[a - reg.start:a - reg.start + 2] = (v & 0xFFFF).to_bytes(2, "big")
+        if reg is None:
+            return
+        if reg.kind == "rom":
+            self.rom_writes_blocked += 1
+            return
+        reg.data[a - reg.start:a - reg.start + 2] = (v & 0xFFFF).to_bytes(2, "big")
 
     def write32(self, a, v):
         base, p = self._periph(a)
@@ -111,8 +120,12 @@ class Bus:
             self.mmio_log.append((self.cycle, self.pc, a, v, 4))
             return
         reg = self._region(a, 4)
-        if reg is not None:
-            reg.data[a - reg.start:a - reg.start + 4] = (v & 0xFFFFFFFF).to_bytes(4, "big")
+        if reg is None:
+            return
+        if reg.kind == "rom":
+            self.rom_writes_blocked += 1
+            return
+        reg.data[a - reg.start:a - reg.start + 4] = (v & 0xFFFFFFFF).to_bytes(4, "big")
 
     def tick(self, cycles=1):
         self.cycle += cycles

@@ -21,7 +21,7 @@
       524288
     ],
     "ram": [
-      4294934528,
+      4294926336,
       4294959104
     ],
     "io": [
@@ -43,9 +43,15 @@
       "size": 3,
       "config": {
         "enabled": true,
-        "overflow_vector": null,
-        "overflow_handler": 796,
-        "_note": "overflow_handler 0x31c = service_wdt_overflow_and_toggle_pb15 (direct; real IVT vector slot TODO per Sh7055h.pdf)"
+        "_note": "TCSR 0xffffec10 / TCNT 0xffffec11 / RSTCSR 0xffffec12 (symbols.tsv). Overflow sets TCSR OVF only; the firmware polls TCSR and calls its service routine (0x31c in 60E15120) itself - 0x31c ends rts and clobbers r0-r4, so it is NOT a raw interrupt entry. IVT vector slot still TODO (E3)."
+      }
+    },
+    {
+      "type": "dmac",
+      "base": "0xffffecb0",
+      "size": "0x50",
+      "config": {
+        "_note": "DMAC per symbols.tsv (DMAOR 0xffffecb0, ch0 SAR/DAR/DMATCR/CHCR 0xffffecc0-0xffffeccc). CHCR DE write -> immediate transfer + TE."
       }
     },
     {
@@ -56,90 +62,119 @@
         "heartbeat": {
           "port_reg_offset": 56,
           "bit": 15
-        }
+        },
+        "_note": "PBDR_W 0xfffff738 (offset 0x38) bit15 = external-watchdog heartbeat (service routine 0x31c); PADR 0xfffff726, PDDR 0xfffff746, PEDR 0xfffff754"
+      }
+    },
+    {
+      "type": "can",
+      "base": "0xffffe400",
+      "size": "0x200",
+      "config": {
+        "diag_req": "0x7e0",
+        "diag_resp": "0x7e8",
+        "rx_irq_bit": "0x01",
+        "_note": "RCAN HCAN0 block per symbols.tsv (MCR 0xffffe400 ... MD0 0xffffe4b0; mailbox 14 = 0x7e0 RX, 15 = 0x7e8 TX per ref_resetOBDCAN_ 0x109c). W1C pending regs; MCR bit0 <-> GSR bit3 reset handshake; TXPR write transmits (tx_log)."
+      }
+    },
+    {
+      "type": "regfile",
+      "base": "0xffffe600",
+      "size": "0x200",
+      "config": {
+        "_note": "RCAN HCAN1 block (symbols.tsv); not used for OBD diag on 0x7e0/0x7e8"
+      }
+    },
+    {
+      "type": "atu2",
+      "base": "0xfffff400",
+      "size": "0x300",
+      "config": {
+        "tick_vector": "0x2c8",
+        "_note": "ATU-II per symbols.tsv (TSTR 0xfffff400, ch10 at 0xfffff6c0+, ICR0AH 0xfffff434, DCNT8A-P 0xfffff640-0xfffff65e = injector outputs, channel map ROM 0xd7d4). tick_vector 0x2c8 = CMI10B (IVT table 7.3) -> handler 0x803e; OS tick per ref_setInterruptTimer 0x7778. Crank input capture into ICR0AH/ICR10AH via set_rpm()."
+      }
+    },
+    {
+      "type": "sci",
+      "base": "0xfffff000",
+      "size": "0x30",
+      "config": {
+        "_note": "SCI0-4 at 0xfffff000-0xfffff027 (symbols.tsv); knock-amplifier command channel per knock report"
       }
     },
     {
       "type": "adc",
       "base": "0xfffff800",
-      "size": "0x20",
+      "size": "0x100",
       "config": {
-        "result_channel": "AN6",
         "channels": {
-          "AN6": 32768
-        }
+          "AN3": 0,
+          "AN4": 0,
+          "AN6": 0,
+          "AN10": 0,
+          "AN28": 90000,
+          "AN29": 20000
+        },
+        "_note": "ADDRnH/L at 0xfffff800+2n (n<=11), ADCSR0/ADCR0 0xfffff818/19, ADDR12+ at 0xfffff820+, ADCSR1/2 0xfffff838/58. Channels per labels: AN3=MAF (0x6884 sweep -> 9eea), AN4/AN5=TP1/TP2 (0x94fc -> 9eec/9eee), AN6=APV (9ef0), AN10=knock (9ef8), AN28=ECT (9f1c), AN29=IAT (9f1e). ADST (ADCR 0x20) -> ADF next tick."
       }
-    },
-    {
-      "type": "atu2",
-      "base": "0xffffe400",
-      "size": "0x200",
-      "config": {}
-    },
-    {
-      "type": "sci",
-      "base": "0xfffffe00",
-      "size": "0x20",
-      "config": {}
-    },
-    {
-      "type": "can",
-      "base": "0xffffe800",
-      "size": "0x200",
-      "config": {}
     }
   ],
   "pins": {
     "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md"
   },
   "sensors": {
-    "_note": "UI sensor inputs. via=override writes bus.read_overrides at addr - placeholder input registers; mapping to the real ADC/ATU paths the firmware reads is ROADMAP item E2. scale converts engineering units to raw.",
+    "_note": "UI/hee sensor inputs wired to the real hardware read paths the firmware uses (E2): via=adc -> ADC ADDRnH channel (raw16 = value*scale); via=atu2 -> crank input capture ICR0AH/ICR10AH (rpm). No more placeholder override registers.",
     "rpm": {
-      "via": "override",
-      "addr": "0xffffe400",
+      "via": "atu2",
       "scale": 1,
       "value": 0,
       "unit": "rpm"
     },
-    "engine_load": {
-      "via": "override",
-      "addr": "0xffffe404",
-      "scale": 100,
-      "value": 0,
-      "unit": "%"
-    },
     "maf": {
-      "via": "override",
-      "addr": "0xffffe408",
+      "via": "adc",
+      "channel": "AN3",
       "scale": 1000,
       "value": 0,
       "unit": "g/s"
     },
     "coolant_temp": {
-      "via": "override",
-      "addr": "0xffffe40c",
-      "scale": 10,
+      "via": "adc",
+      "channel": "AN28",
+      "scale": 100,
       "value": 900,
       "unit": "degC"
     },
     "iat": {
-      "via": "override",
-      "addr": "0xffffe410",
-      "scale": 10,
+      "via": "adc",
+      "channel": "AN29",
+      "scale": 100,
       "value": 200,
       "unit": "degC"
     },
     "throttle": {
-      "via": "override",
-      "addr": "0xffffe414",
+      "via": "adc",
+      "channel": "AN4",
+      "scale": 655,
+      "value": 0,
+      "unit": "%"
+    },
+    "knock": {
+      "via": "adc",
+      "channel": "AN10",
       "scale": 100,
+      "value": 0,
+      "unit": "raw"
+    },
+    "apv": {
+      "via": "adc",
+      "channel": "AN6",
+      "scale": 655,
       "value": 0,
       "unit": "%"
     }
   },
   "replay_map": {
     "Engine RPM(rpm)": "rpm",
-    "Engine Load(Absolute)(%)": "engine_load",
     "Mass Air Flow Rate(g/s)": "maf",
     "Engine Coolant Temperature(\u00b0C)": "coolant_temp",
     "Intake Air Temperature(\u00b0C)": "iat",
@@ -152,6 +187,13 @@
       "size": 4,
       "format": "float32",
       "_note": "per fueling_labels.json calculate_engine_load c0b4"
+    },
+    {
+      "name": "engine_speed_rpm_raw (RAM 0xffff9f80)",
+      "addr": "0xffff9f80",
+      "size": 4,
+      "format": "float32",
+      "_note": "ISR 0x803e: 1.2e8 / crank_period_accumulator_ffff9f88"
     },
     {
       "name": "PB15 heartbeat count",

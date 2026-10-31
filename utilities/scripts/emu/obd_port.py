@@ -3,18 +3,24 @@
 emulated PCM's CAN bus — so RomRaider Logger / a Python UDS client / an
 ELM327-style adapter can talk to the emulated ECU as if it was in a real car.
 
-Design: docs/architecture/emulated-obd.md. The ROM runs its own UDS handlers
-(dispatch table 0x5f10c); this port only moves bytes.
+Design: docs/architecture/emulated-obd.md. The ROM runs its own CAN/UDS code;
+this port only moves bytes through the modeled RCAN mailboxes (can.py):
+- request: inject() into the 0x7e0 RX mailbox (RXPR/IRR set like hardware),
+  then drive the ROM's own entry points from the profile's "uds" section
+  (CAN RX poll -> UDS service entry -> task dispatcher) and collect the
+  firmware's 0x7e8 responses from the CAN tx_log.
+  Note: the OS tick timer is not yet modeled (ROADMAP E6), so instead of
+  waiting for the scheduler we call the same entry functions the periodic
+  task would call; the mailbox/UDS code executed is the ROM's own.
 
-Usage (inside emu.py --ui or standalone):
+Usage (standalone):
     python obd_port.py --profile 60E15120_N3J1E --port 35000
-Then: connect a UDS client to localhost:35000 (ISO-TP), send e.g.
+Then connect a UDS client to localhost:35000 (ISO-TP), e.g.
     10 03            (extended diagnostic session)
-    22 22 43         (Mode 22 PID 0x43 -> engine load)
+    22 00 43         (Mode 22 identifier 0x0043 -> engine load, handler 0x56b8a)
 """
 import argparse
 import os
-import socket
 import socketserver
 import sys
 import threading
@@ -22,8 +28,13 @@ import threading
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import emu  # noqa: E402
+import harness  # noqa: E402
 import isotp  # noqa: E402
 from can import CANController  # noqa: E402
+
+
+def _num(v):
+    return int(str(v), 0) if isinstance(v, str) else int(v)
 
 
 class OBDPort:
@@ -33,17 +44,49 @@ class OBDPort:
         self.cpu = cpu
         self.host = host
         self.port = port
-        self.step_budget = step_budget  # cycles run per UDS request
+        self.step_budget = step_budget
         self.can = next((p for _, _, p in bus.peripherals if isinstance(p, CANController)), None)
+        self.uds = {k: _num(v) for k, v in prof.get("uds", {}).items() if not k.startswith("_")}
         self.uds_log = []  # (cycle, direction, payload hex)
         self._srv = None
         self._thread = None
 
+    def pump_uds(self):
+        """Drive the ROM's CAN RX poll + UDS entry + task dispatcher once.
+        Returns list of response payloads (bytes) the firmware transmitted."""
+        uds = self.uds
+        if not uds or self.can is None:
+            return []
+        if self.can.rx_frames:
+            harness.call(self.bus, self.cpu, uds["can_rx_poll"], max_steps=300000)
+        harness.call(self.bus, self.cpu, uds["uds_entry"], r_args=(uds["req_id"],), max_steps=300000)
+        for _ in range(8):
+            harness.call(self.bus, self.cpu, uds["task_dispatch"], r_args=(0xFFFF7638,),
+                         max_steps=300000, stop_at=(uds.get("idle_pc", 0x3DAC),))
+            if any(cid == uds.get("resp_id", 0x7E8) for _, cid, _ in self.can.tx_log):
+                break
+        resp = [d for _, cid, d in self.can.tx_log if cid == uds.get("resp_id", 0x7E8)]
+        self.can.tx_log.clear()
+        # reassemble ISO-TP frames into payloads
+        out = []
+        reasm = isotp.Reassembler()
+        for d in resp:
+            p = reasm.feed(d)
+            if p:
+                out.append(p)
+        return out
+
     def handle_uds(self, payload):
-        """One UDS request from the client -> CAN frames into the PCM."""
+        """One UDS request from the client -> CAN frames into the PCM -> response."""
         self.uds_log.append((self.bus.cycle, "req", payload.hex()))
-        for can_id, data in isotp.encode(payload, self.can.diag_req):
+        if self.can is None:
+            return []
+        for can_id, data in isotp.encode(payload, self.uds.get("req_id", 0x7E0)):
             self.can.inject(can_id, data)
+        responses = self.pump_uds()
+        for r in responses:
+            self.uds_log.append((self.bus.cycle, "tx", r.hex()))
+        return responses
 
     def start(self):
         outer = self
@@ -55,22 +98,12 @@ class OBDPort:
                     chunk = self.rfile.read(4096)
                     if not chunk:
                         break
-                    # client sends raw ISO-TP frames back-to-back; split per CAN frame (8 bytes)
                     for i in range(0, len(chunk) - 7, 8):
                         payload = reasm.feed(chunk[i:i + 8])
                         if payload:
-                            outer.handle_uds(payload)
-                            # let the firmware chew on the request, then return any response frames
-                            emu.run(outer.prof, outer.bus, outer.cpu, outer.step_budget)
-                            resp = [d for _, cid, d in outer.can.tx_log if cid == outer.can.diag_resp]
-                            outer.can.tx_log.clear()
-                            if resp:
-                                reasm_r = isotp.Reassembler()
-                                # reassemble multi-frame responses into one payload
-                                payload_out = b"".join(d[1:] for d in resp)  # simplified: single-frame path
-                                for fid, fdata in isotp.encode(payload_out, outer.can.diag_resp):
+                            for resp in outer.handle_uds(payload):
+                                for fid, fdata in isotp.encode(resp, outer.uds.get("resp_id", 0x7E8)):
                                     self.wfile.write(fdata + b"\x00")
-                            outer.uds_log.append((outer.bus.cycle, "tx", b"".join(resp).hex()))
 
         self._srv = socketserver.TCPServer((self.host, self.port), Handler)
         self._srv.allow_reuse_address = True

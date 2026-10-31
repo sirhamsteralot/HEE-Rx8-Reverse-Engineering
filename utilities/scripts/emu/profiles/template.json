@@ -16,21 +16,81 @@
     "size": 524288
   },
   "memory": {
-    "rom": [0, 524288],
-    "ram": [4294934528, 4294959104],
-    "io": [4294959104, 4294967296]
+    "rom": [
+      0,
+      524288
+    ],
+    "ram": [
+      4294926336,
+      4294959104
+    ],
+    "io": [
+      4294959104,
+      4294967296
+    ]
   },
-  "reset": { "pc_from_vector": 0, "sp_from_vector": 4 },
+  "reset": {
+    "pc_from_vector": 0,
+    "sp_from_vector": 4
+  },
   "peripherals": [
-    { "type": "wdt", "base": 4294959376, "size": 3,
-      "config": { "enabled": true, "overflow_vector": null } },
-    { "type": "gpio", "base": 4294965504, "size": 128,
-      "config": { "heartbeat": { "port_reg_offset": 56, "bit": 15 } } },
-    { "type": "adc", "base": 4294965760, "size": 32,
-      "config": { "result_channel": "AN6", "channels": { "AN6": 32768 } } },
-    { "type": "atu2", "base": 4294963712, "size": 512, "config": {} },
-    { "type": "sci", "base": 4294966272, "size": 32, "config": {} },
-    { "type": "can", "base": 4294964736, "size": 512, "config": {} }
+    {
+      "type": "wdt",
+      "base": 4294959376,
+      "size": 3,
+      "config": {
+        "enabled": true,
+        "overflow_vector": null
+      }
+    },
+    {
+      "type": "dmac",
+      "base": "0xffffecb0",
+      "size": "0x50",
+      "config": {
+        "_note": "DMAC per symbols.tsv (DMAOR 0xffffecb0, ch0 SAR/DAR/DMATCR/CHCR 0xffffecc0-0xffffeccc). CHCR DE write -> immediate transfer + TE."
+      }
+    },
+    {
+      "type": "gpio",
+      "base": 4294965504,
+      "size": 128,
+      "config": {
+        "heartbeat": {
+          "port_reg_offset": 56,
+          "bit": 15
+        }
+      }
+    },
+    {
+      "type": "adc",
+      "base": 4294965760,
+      "size": 32,
+      "config": {
+        "result_channel": "AN6",
+        "channels": {
+          "AN6": 32768
+        }
+      }
+    },
+    {
+      "type": "atu2",
+      "base": 4294963712,
+      "size": 512,
+      "config": {}
+    },
+    {
+      "type": "sci",
+      "base": 4294966272,
+      "size": 32,
+      "config": {}
+    },
+    {
+      "type": "can",
+      "base": 4294964736,
+      "size": 512,
+      "config": {}
+    }
   ],
   "pins": {
     "doc": "docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md",
@@ -40,5 +100,16 @@
     "_comment": "scripted inputs injected via ADC/GPIO reads, e.g. coolant temp, MAF, RPM",
     "coolant_temp_raw": 0,
     "maf_raw": 0
+  },
+  "uds": {
+    "req_id": "0x7e0",
+    "resp_id": "0x7e8",
+    "can_rx_poll": "0x11d88",
+    "uds_entry": "0x680a0",
+    "task_dispatch": "0x3c2a",
+    "idle_pc": "0x3dac",
+    "diag22_dispatch": "0x5774c",
+    "tx_desc": "0x4e00c",
+    "_note": "ROM-specific entry points (60E15120_N3J1E): FUN_00011d88 CAN RX poll (descs 0x4dfec/0x4dffc -> UDS RX buffer 0xffffddc8), FUN_000680a0(0x7e0) UDS service entry, FUN_00003c2a task dispatcher (idle 0x3dac), diag22 dispatch 0x5774c (table 0x5f10c), TX descriptor 0x4e00c (id 0x7e8, mb 15, buf 0xffffddd0). OS tick timer not yet modeled (E6) - the OBD port drives these directly. Label the equivalents per ROM before using the port with another bin."
   }
 }

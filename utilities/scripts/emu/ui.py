@@ -36,12 +36,21 @@ def apply_sensor(bus, prof, name, value):
     scale = float(s.get("scale", 1))
     raw = int(round(value * scale))
     if via == "override":
+        # legacy placeholder path (E2): raw read-override register
         bus.read_overrides[int(str(s["addr"]), 0)] = raw & 0xFFFFFFFF
         s["value"] = value
     elif via == "adc":
+        # real ADC read path: scripted ADDRnH/L result register (E2)
         for _, _, p in bus.peripherals:
-            if type(p).__name__ == "ADC" and s.get("channel") in getattr(p, "channels", {}):
-                p.channels[s["channel"]] = raw
+            if type(p).__name__ == "ADC":
+                p.channels[s["channel"]] = raw & 0xFFFF
+                s["value"] = value
+                return True
+    elif via == "atu2":
+        # real ATU-II read path: crank input capture ICR0AH/ICR10AH (E2)
+        for _, _, p in bus.peripherals:
+            if type(p).__name__ == "ATU2" and hasattr(p, "set_rpm"):
+                p.set_rpm(float(value))
                 s["value"] = value
                 return True
     return True
