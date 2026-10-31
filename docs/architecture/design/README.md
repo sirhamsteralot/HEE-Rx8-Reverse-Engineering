@@ -1,5 +1,8 @@
 # Firmware design document — 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E)
 
+Related: [emulated OBD-II/UDS path design](../emulated-obd.md) — how the emulator
+exposes the PCM's diagnostic interface as if it was in a real car.
+
 How the firmware is built up and what calls what. Written 2026-10-29 from the
 canonical export (`decompiled/`), the reviewed alias tables, and the review
 folders (`hardware/`, `cross_ecu/`, `source_review/`, `math_units/`,

@@ -58,8 +58,14 @@ running code.
 3. Harness + runner: load ROM from the pinned submodule path, start at reset vector,
    run N cycles or until a stop condition; emit traces (PC stream, register deltas,
    RAM writes, MMIO access log) to `tests/fixtures/` as golden files.
-4. `tests/` integration: pytest harness driving the emulator; compare traces against
-   golden fixtures; per-function I/O checks (feed inputs, read RAM/MMIO outputs).
+4. **Virtual OBD-II/UDS port** (design: `docs/architecture/emulated-obd.md`) —
+   ISO-TP over the emulated CAN (0x7E0/0x7E8), TCP/PTY port so RomRaider Logger or a
+   Python UDS client connects to the emulated PCM *as if it was in a real car*;
+   UDS runs on the ROM's own handlers (dispatch table 0x5f10c; PID 0x43 → 0x56b8a).
+   Validate against real-car log captures as golden fixtures.
+5. `tests/` integration: pytest harness driving the emulator; compare traces against
+   golden fixtures; per-function I/O checks (feed inputs, read RAM/MMIO outputs);
+   OBD-path tests (PID responses, 0x23 dump parity).
 
 **Done when**
 
@@ -72,6 +78,10 @@ running code.
   on the Windows dev machine: same ROM, same cycle count, PC traces diffed with
   `utilities/scripts/emu/compare_traces.py` — workflow in `utilities/scripts/emu/README.md`.
   Every emulator-core change gets such a differential run before it is trusted.
+- **OBD path behaves like a real car:** Mode 22 PID responses match our static
+  findings (PID 0x43 = g/rev × 1/255, 0 with injectors off) and real-car log
+  captures; UDS 0x23 dump of emulated memory equals the loaded ROM byte-for-byte;
+  RomRaider Logger can log from the virtual port (`docs/architecture/emulated-obd.md`).
 - Known static findings reproduced dynamically: e.g. knock retard clamped to
   [-10, 0] deg (`reviews/knock_control/`), injector channel map table 0xd7d4 →
   ATU-II 8A–8F, first-order filter endpoints (mirroring `test_rx8_math.c`).
@@ -107,8 +117,9 @@ running code.
 - Map Mode 22 PID handlers cross-ROM: thread OCR shows PID 0x43 (`getMode22EngineLoad`,
   g/rev × 1/255, 0 when injectors off) dispatched at 0x5fa0c–0x5fa14 in 60E0FC00; our
   60E15120 labels put the same handler at 0x56b8a — extend the PID table per ROM.
-- Evaluate the "fast RAM logging" patch as a hardware validation aid for Phase 1
-  golden traces; cross-check `docs/references/rx8club-inline-defs.tsv` against
+- Evaluate the "fast RAM logging" patch as a validation aid — first against the
+  emulator's virtual OBD port (`docs/architecture/emulated-obd.md`), then real
+  hardware; cross-check `docs/references/rx8club-inline-defs.tsv` against
   `data/definitions/`.
 
 ## Phase 3 — Calibration/table extraction at scale
