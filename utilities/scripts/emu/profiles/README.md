@@ -47,8 +47,3 @@ User-tuned ROMs (validation targets, **not for flashing**):
   `python ../emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000`
   — boots clean; read the tuned rev-limit cal in-emulation at 0x6d54c
   (stock 9000.0 vs 5500.0/9500.0/10000.0 rpm).
-
-## Existing profiles
-
-- `60E15120_N3J1E.json` — primary analysis target (USDM S1 6-port MT).
-- `60E0FC00_N3Z2EU.json` — reference ROM (2004 US 6-port MT), byte-match seeding source.
