@@ -38,6 +38,12 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 
 ### 3. Reading/writing the ECU (bench + protocol facts)
 
+- **Watchdog (BOOT mode):** CN400 **pin 3 (WDT)** must receive a ~150 Hz, 50% DC,
+  5 V square wave, otherwise the MCU keeps commanding reset. One poster proposed a
+  variant pinout (pin 3 WDT / **pin 6 FWE** / **pin 8 MD1**) — conflicting; treat as
+  `candidate_` and verify against `Sh7055h.pdf` + board before wiring anything.
+  See §8 below for why the watchdog matters to us beyond bench work.
+
 - **CAN flash via J2534/Tactrix** with Rx8Man; size-check only, wrong ROM can brick —
   bench ECU first (matches our safety rules).
 - **BOOT mode** (recovery) via the 13-pin **CN400** header on the back of the ECU:
@@ -89,6 +95,26 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 `0x7793c`–`0x7798c`, lambda limits `0x7016c`/`0x70170`, CL fuel-correction tables
 `0x70b9c`… for N3ZHEC and others). Use as a **cross-check source** against
 `data/definitions/`; do not copy wholesale.
+
+### 8. Watchdog — relevant to us in three ways
+
+1. **Bench BOOT-mode flashing (ROADMAP Phase 6):** external ~150 Hz square wave on
+   CN400 pin 3 is mandatory or the MCU self-resets (thread §3).
+2. **Normal operation — the firmware services the SH7055 internal WDT.** Already
+   labeled in our export (`reverse-engineered/decompiled/60E15120_N3J1E/`):
+   - `0x31c service_wdt_overflow_and_toggle_pb15` — on TCSR status bit `0x80`
+     (overflow), writes keyed value `0xa53c` to TCSR (SH WDT write key `0xA5`),
+     then toggles **PBDR bit 15** — an external-watchdog heartbeat idiom
+     (`behavior_verified_role_candidate`; external chip/pin routing unverified).
+   - `0x572` / `0x1364 ref_resetWatchdog_`, `0x5b0 ref_checkWatchdogTimer_OVRCOUNT`,
+     `0x11cc service_wdt_overflow_toggle_pb15_and_count`,
+     `0x5024` / `0x5032 ref_writeWatchdog_disable_`.
+   - Registers (symbols.tsv): **WDT_TCSR `0xffffec10`, WDT_TCNT `0xffffec11`,
+     WDT_RSTCSR `0xffffec12`** — matches the SH7055F manual (`Sh7055h.pdf`).
+3. **Emulator (ROADMAP Phase 1):** the simulation must model the WDT — TCSR overflow
+   bit, TCNT counting, reset via the WDT vector if not serviced in time; and log the
+   **PB15 heartbeat toggles** as a trace observable ("firmware alive" signal) for
+   golden-trace validation.
 
 ## Actionable items this feeds
 

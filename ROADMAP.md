@@ -43,6 +43,11 @@ running code.
    - MMIO reads return scripted values (sensor inputs: ADC channels, e.g. AN6 APV,
      coolant temp); MMIO writes are logged (GPIO actuator writes, ATU-II injector
      pulse registers → decode to per-injector timing).
+   - **Watchdog modeled:** TCSR `0xffffec10` / TCNT `0xffffec11` / RSTCSR `0xffffec12` —
+     TCNT counts up, TCSR bit `0x80` sets on overflow, un-serviced overflow triggers the
+     WDT reset vector; log **PB15 heartbeat toggles** (`service_wdt_overflow_and_toggle_pb15`,
+     0x31c) as a "firmware alive" trace observable for golden-trace comparison
+     (see `docs/references/rx8club-user-guide-thread.md` §8).
    - Interrupt injection through the vector table; timers driven by a cycle counter.
 3. Harness + runner: load ROM from the pinned submodule path, start at reset vector,
    run N cycles or until a stop condition; emit traces (PC stream, register deltas,
@@ -104,6 +109,9 @@ running code.
   before any bench work; bench-ECU validation plan; only then consider flashing
   (Rx8Man context in `submodules/Rx8Man`). **No vehicle flashing without bench
   validation** — standing rule in `AGENTS.md`.
+- Bench BOOT-mode setup requires an external **~150 Hz 50% square wave on CN400
+  pin 3 (WDT)** or the MCU self-resets (RX8Club thread §3/§8; conflicting pinout
+  variant in the thread — verify against `Sh7055h.pdf` before wiring).
 
 ## Standing rules for every phase
 
