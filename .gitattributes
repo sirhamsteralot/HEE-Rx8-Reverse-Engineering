@@ -1,0 +1,5 @@
+# Route large binaries through Git LFS
+*.bin linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.ori linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.dump linguist-generated=true filter=lfs diff=lfs merge=lfs -text
+*.bak linguist-generated=true filter=lfs diff=lfs merge=lfs -text

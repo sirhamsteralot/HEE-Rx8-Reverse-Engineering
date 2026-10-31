@@ -1,0 +1,19 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Local tooling / scratch
+*.log
+scratch/
+
+# Binary dumps (*.bin, *.ori, *.dump, *.bak) are handled by .gitattributes via Git LFS.
+# Very large captures may instead be kept out of the repo with only their SHA-256
+# recorded in binaries/manifest.csv.
