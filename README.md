@@ -9,6 +9,32 @@ effort workspace and community material, now with a working SH-2E emulator.
 there is a fidelity-limits register at the bottom. **Rules for agents/humans:**
 **[AGENTS.md](AGENTS.md)**.
 
+## Credits & acknowledgements
+
+This workspace stands on community work — without the people below it would not
+exist:
+
+- **Rx8Man (rx8man)** — github.com/Rx8Man/Rx8Man (pinned in `submodules/Rx8Man`):
+  the CAN/J2534 PCM read/flash tooling that made dumping and bench work possible.
+- **equinox311 / equinox92 (equinox)** — github.com/equinox311/
+  `Mazda_RX8_PCM_ReverseEngineering` (the 10 stock ROMs, RAM/EEPROM/IC captures,
+  Ghidra archives, upstream patcher scripts — pinned in `submodules/`) and
+  github.com/equinox311/RX8Defs (the upstream RomRaider/ECUFlash XML definitions —
+  pinned in `submodules/RX8Defs`); also the driving force behind the RX8Club guide.
+- **The RX8Club forum thread contributors ("equinox92 et al.")** — the "Open Source
+  S1 RX-8 ECU Reverse Engineering, Data Logging, and Tuning — User's Guide" thread
+  (extract in `docs/references/rx8club-user-guide-thread.md`): ROM↔cal-ID table,
+  BOOT-mode CN400 pinout, UDS services, and the first public hypotheses for the
+  engine-load math and the ignition-timing BTDC equation that this repo verified.
+- **The RomRaider community** — the ECU editor/logger ecosystem the XML definitions
+  plug into (romraider.com, github.com/RomRaider/RomRaider).
+- **The Mazda RX-8 Discord community** — day-to-day Q&A, datalogs, and bench-test
+  reports that keep this project grounded in real cars.
+- **Renesas** — the SH7055S/SH-2E hardware and ISA manuals the emulator is built
+  against.
+- And, as a source of occasional inspiration, the author's own sanity (status:
+  questionable, but still running).
+
 ## Quick start
 
 ```sh
