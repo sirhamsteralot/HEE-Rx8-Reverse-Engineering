@@ -172,5 +172,5 @@ inputs verified as RPM x load), 0x6aa80 (injector latency), 0x6b1ec/0x6b200/
    (`reverse_engineered/Defs/`) before proposing definitions.
 3. Trace `DAT_ffffbe1c` and the 0x19640 snap-trigger context.
 
-Evidence details per function: `REVIEW_NOTES.md`. Candidate names:
+Evidence details per function: [`REVIEW_NOTES.md`](REVIEW_NOTES.md). Candidate names:
 `candidate_function_aliases.tsv`, `candidate_ram_aliases.tsv`.

@@ -7,7 +7,7 @@ MMIO writes, UDS responses) against what the real car logged. Everything here
 runs offline; no hardware is touched.
 
 Status 2026-10-31: implemented and tested (38/38 in `python -m pytest tests/`).
-Companion docs: `emulator-ui.md` (browser UI), `emulated-obd.md` (virtual OBD
+Companion docs: [`emulator-ui.md`](emulator-ui.md) (browser UI), [`emulated-obd.md`](emulated-obd.md) (virtual OBD
 port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 
 ## 1. Where things live

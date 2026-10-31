@@ -1,7 +1,7 @@
 # Sceptical re-review of the knock control report — findings and corrections
 
 Date: 2026-10-29. Scope: an independent, deliberately sceptical re-check of
-`knock_control_report.md` and this folder's `README.md` against the ground
+`knock_control_report.md` and this folder's [`README.md`](README.md) against the ground
 truth — the untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`, 512 KiB,
 SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),

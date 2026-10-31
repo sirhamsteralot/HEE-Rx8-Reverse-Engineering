@@ -21,7 +21,7 @@ Drop zone for raw, unvetted material related to the HEE RX-8 effort:
 `Tuning-merged/` (union of `Tuning-29-10-2026` + `Tuning-30-10-2026`, newer wins)
 was promoted into the tracked folders on 2026-10-31 and later removed from `input/`.
 The upstream git repositories now live as **read-only submodules** under
-`../submodules/` (see `../docs/references/README.md`).
+`../submodules/` (see [`../docs/references/README.md`](../docs/references/README.md)).
 2026-10-31: the pipeline (`../utilities/scripts/rx8-pcm-pipeline/`) no longer needs
 `input/Tuning-merged` — its `paths.py` shim resolves the old workspace keys to the
 promoted tracked layout (`../reverse-engineered/`, `../docs/investigations/`,
@@ -30,14 +30,14 @@ promoted tracked layout (`../reverse-engineered/`, `../docs/investigations/`,
 
 2026-10-31: `mazda-rx-8-pcm-pinout-series-1.md` (text PCM pinout derived from
 `13Electrical.pdf`, which remains ground truth) was promoted to
-`../docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md` (with a
+[`../docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md) (with a
 provenance header added there) and then removed from `input/`, like
 `Tuning-merged/` before it. The tracked copy is the one to read and edit.
 
 2026-10-31: byte-identical duplicates of submodule files were removed from the
 tracked folders (10 stock ROMs, 3 captures, 3 Ghidra `.gar` archives) — they are
 referenced via `../submodules/Mazda_RX8_PCM_ReverseEngineering/` at its pinned
-commit instead. See `../docs/references/README.md`.
+commit instead. See [`../docs/references/README.md`](../docs/references/README.md).
 
 2026-10-31: the saved RX8Club.com user-guide thread (pages 1–9) was reviewed;
 usable facts + OCR of screenshots extracted to `../docs/references/`

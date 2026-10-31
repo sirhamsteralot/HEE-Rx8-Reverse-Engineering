@@ -86,7 +86,7 @@ claims must never exceed their evidence.
 ## Decompiling a ROM / working with raw binaries
 
 All decompilation work happens in `reverse_engineered/60E15120_N3J1E/`; the
-scripts there are the workflow. Read the target's `README.md` and
+scripts there are the workflow. Read the target's [`README.md`](README.md) and
 `metadata/input.json` before starting.
 
 ### Prerequisites
@@ -213,7 +213,7 @@ change that touches the export, metadata or decompiled views.
 
 ## Working with the decompilation export
 
-Root: `reverse_engineered/60E15120_N3J1E/` — start from its `README.md` and the
+Root: `reverse_engineered/60E15120_N3J1E/` — start from its [`README.md`](README.md) and the
 per-folder READMEs (`named/`, `cross_ecu/`, `source_review/`, `math_units/`,
 `readability/`, `lookup_family/`, `hardware/`).
 
@@ -262,7 +262,7 @@ Key facts:
 - Decompiler output limits still apply: unknown calling conventions, hardware
   register side effects, interrupt state, indirect dispatch. A clean
   decompilation is not a correctness certificate.
-- New findings go in the appropriate review folder with a `README.md` update and
+- New findings go in the appropriate review folder with a [`README.md`](README.md) update and
   a `validation.json`, following the existing per-folder structure.
 - **Subsystem report format (template: `knock_control_report.md`).** Every
   subsystem review (knock, fueling, intake, …) must produce a root-level

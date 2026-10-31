@@ -84,7 +84,7 @@ idempotent) label the knock-control and loop-mode chain end to end:
 - Finding: knock control applies in open loop as well as closed loop — the
   knock chain never reads the loop-mode flags.
 
-Full write-up: `reviews/knock_control/README.md`; rename map and fix evidence:
+Full write-up: [`reviews/knock_control/README.md`](reviews/knock_control/README.md); rename map and fix evidence:
 `metadata/knock_loop_labels.json`; design update: `design/README.md` section 5.7;
 pre-change backup: `backups/pre_knock_loop_labels.zip`.
 
@@ -100,7 +100,7 @@ Resolves the knock-pass open item on blend weights b11c/b118 (producer 0x200c6).
 Injector channel map verified against the ROM (table 0xd7d4, wrappers 0x59a4-0x59ea,
 rotor blocks ROM 0x4e2c8) and `Sh7055h.pdf`: ch0/3/1/4/2/5 → ATU-II 8A/8B/8C/8D/8E/8F →
 TO8A-F → SH7055F pkg pins 195/197/198/199/200/201. Full write-up:
-`fueling_control_report.md` + `reviews/fueling/` (incl. `injector_pin_mapping.md`).
+[`fueling_control_report.md`](fueling_control_report.md) + `reviews/fueling/` (incl. `injector_pin_mapping.md`).
 Backup: `backups/pre_fueling_labels.zip`; record: `metadata/fueling_labels.json`.
 
 ## Intake solenoid actuation — 2026-10-30
@@ -110,7 +110,7 @@ Backup: `backups/pre_fueling_labels.zip`; record: `metadata/fueling_labels.json`
 the supplied SH7055F manual (`Sh7055h.pdf`, Tables 1.2/1.3): SSV PE7=pin 16 (1L),
 VFAD PE10=19 (5Z), VDI PD5=254 (1W), sec-air solenoid PE8=17 (1O), pump PB2=147,
 APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
-Write-up: `intake_solenoids_report.md` + `reviews/intake_solenoids/`.
+Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
 ## Hardware pinout cross-checks — 2026-10-30
@@ -127,7 +127,7 @@ hop remains board routing (unresolved; the pinout has no chip-pin data).
 Every label was re-checked against the raw ROM and disassembly (literal pools,
 constants, descriptors, GPIO regs/masks, dispatch records) — see the
 "binary-level verification" sections in `reviews/*/README.md` and
-`reviews/fueling/REVIEW_NOTES.md` §10. `scripts/validate_reports.py` (wired into
+[`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10. `scripts/validate_reports.py` (wired into
 `rebuild.sh`) verifies every root `*_report.md`: required sections, ROM hash, every
 function/RAM address in the memory maps against the index/TSVs/ROM. Record:
 `metadata/report_validation.json`. AGENTS.md now mandates both steps.
@@ -140,13 +140,13 @@ function/RAM address in the memory maps against the index/TSVs/ROM. Record:
 Limiter Behavior"), each writing NEW output .bin + JSON report + XML def, with
 input SHA-256 asserted unchanged and decode-verified patches. Defs added to
 `RX8Defs_Copy/RomRaider/rx8_defs.xml`. Static validation only — not hardware-tested;
-flash with `Rx8Man/`. Docs: `Utilities/PATCHER_*.md`, `reviews/limiter/README.md`.
+flash with `Rx8Man/`. Docs: `Utilities/PATCHER_*.md`, [`reviews/limiter/README.md`](reviews/limiter/README.md).
 
 ## Ignition timing labeling — 2026-10-31
 
 Phase 2 ignition-timing pass: thread §9 final-BTDC equation verified/corrected against
 the disassembly and confirmed bit-exact in the emulator; 15 functions, 22 RAM cells,
-17 tables labeled (`ignition_timing_report.md`,
+17 tables labeled ([`ignition_timing_report.md`](ignition_timing_report.md),
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`, backup
 `backups/pre_ignition_timing_labels.zip`).
 
@@ -155,7 +155,7 @@ the disassembly and confirmed bit-exact in the emulator; 15 functions, 22 RAM ce
 Emulator-driven labeling pass (Phase 1 fidelity work): 27 functions, 16 RAM locations,
 9 tables named from dynamically verified behavior (IVT at VBR 0x7fc50, CAN RX interrupt
 IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC sweep 0x6884,
-crank ISR 0x803e, NMI poll 0x8ea...). Write-up: `os_scheduler_can_ivt_report.md`;
+crank ISR 0x803e, NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md);
 labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
 backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
 

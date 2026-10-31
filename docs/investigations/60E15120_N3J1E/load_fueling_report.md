@@ -197,12 +197,12 @@ validators) — is the follow-up work if the candidates are accepted.
 
 | File | Contents |
 |---|---|
-| `reviews/load_fueling_model/README.md` | chain overview, findings, follow-ups |
-| `reviews/load_fueling_model/REVIEW_NOTES.md` | per-function evidence, disassembly excerpts |
+| [`reviews/load_fueling_model/README.md`](reviews/load_fueling_model/README.md) | chain overview, findings, follow-ups |
+| [`reviews/load_fueling_model/REVIEW_NOTES.md`](reviews/load_fueling_model/REVIEW_NOTES.md) | per-function evidence, disassembly excerpts |
 | `reviews/load_fueling_model/candidate_function_aliases.tsv` | 19 candidate function names |
 | `reviews/load_fueling_model/candidate_ram_aliases.tsv` | ~45 candidate RAM names |
 | `reviews/load_fueling_model/validation.json` | inputs by hash, literal checks, validator results |
-| `README.md` (root) | pointer section added |
+| [`README.md`](README.md) (root) | pointer section added |
 
 ## 8. Validation
 

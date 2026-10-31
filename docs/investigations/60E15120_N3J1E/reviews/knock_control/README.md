@@ -11,7 +11,7 @@ Revised 2026-10-29 after an independent sceptical re-check against the ROM
 bytes and both def sets: constant values, the cd60 polarity wording, the
 threshold-command formula, the noise-filter coefficient, the 0x1746 PID
 range, the fault-threshold "addresses", the signal-chain task attribution and
-the call-chain diagram were corrected; see `REVIEW_NOTES.md` in this folder.
+the call-chain diagram were corrected; see [`REVIEW_NOTES.md`](REVIEW_NOTES.md) in this folder.
 
 Result: the knock control strategy is now traced end to end and labeled.
 **Knock control applies in open loop as well as closed loop** — the knock chain

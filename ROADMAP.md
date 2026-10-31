@@ -21,7 +21,7 @@ never silently resolve.
 
 - Full static export of `60E15120_N3J1E.bin`: 3,355 functions decompiled, 0
   failures, 154 warnings (`reverse-engineered/decompiled/60E15120_N3J1E/`).
-- Memory map (`docs/architecture/design/README.md` §1): vectors 0x0–0x3ff, code
+- Memory map ([`docs/architecture/design/README.md`](docs/architecture/design/README.md) §1): vectors 0x0–0x3ff, code
   0x40–0x68e3e, descriptors/calibration 0x6c000–0x7ffff, RAM 0xffff6000–0xffffdfff,
   volatile I/O 0xffffe000–0xffffffff. Firmware ID at 0x2000, cal ID at 0x6c046.
 - Labeled subsystems (10-section reports): knock control, fueling chain, intake
@@ -58,8 +58,8 @@ never silently resolve.
   RCAN RX/TX through the ROM's own driver, Mode 22 dispatch 0x5774c.
 - Agent tooling: `utilities/scripts/hee.py` CLI + `.vibe/plugins/hee-re/` MCP
   plugin (20 `heeRe.*` tools) + `hee-reverse-engineering` skill.
-- **38/38 tests pass.** Details: `utilities/scripts/emu/README.md`,
-  `docs/architecture/emulator-re-guide.md`.
+- **38/38 tests pass.** Details: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
+  [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md).
 - Fidelity items closed during hardening: E2 (sensor inputs on real read paths),
   E3 (WDT IVT slot 0x358), E4 (RCAN model + CAN RX interrupt on inject),
   E5 (NMI pin = SYSC peripheral, guessed overrides removed), E6 partial
@@ -71,14 +71,14 @@ never silently resolve.
   0x123da/0x124d6, clamp 0x121fc/0x12300), dynamically bit-exact in the
   emulator, then re-verified at the binary level (min-advance constants
   corrected to −25.0/−58.5°). 15 functions + 22 RAM + 17 tables labeled.
-  → `docs/investigations/60E15120_N3J1E/ignition_timing_report.md`
+  → [`docs/investigations/60E15120_N3J1E/ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
 - **OS scheduler / IVT / CAN-UDS**: task table 0x4998 + ctrl block labeled, IVT
   at VBR 0x7fc50 mapped, dispatch table 0x5f10c PID 0x43 → handler 0x56b8a
   (record 0x5f268) verified dynamically. 27 functions + 16 RAM + 9 tables.
-  → `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`
+  → [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
 - **Streetport diff** (60E0G500): tuned vs stock = calibration-only (≥0x6c000);
   rev limiter float32 at 0x6d54c (9000.0 → 5500/9500/10000).
-  → `docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md`
+  → [`docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md`](docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md)
 - **RX8Club thread mined + OCR'd**: BOOT-mode CN400 pinout (150 Hz WDT feed pin
   3), UDS services, seed/key in bootloader, PID 0x43 = g/rev × 1/255, ignition
   BTDC equation — inline XML addresses verified against the real N3ZHEC ROM.
@@ -195,7 +195,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | D10 | open | PID 0x221410 double-claim |
 
 Full table with locations, impact, and closure plans: previous revision of this
-file in git history; summary rules in `utilities/scripts/emu/README.md` and
+file in git history; summary rules in [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md) and
 `docs/references/`. Discrepancies are **documented, never silently resolved** —
 closing one needs new evidence (ROM bytes, manual table, bench trace, Renesas
 diff) + a note in the investigation doc.
@@ -208,4 +208,4 @@ Evidence label ladder (`FUN_`/`ref_`/`CAL_`/`tbl_`/`inferred_`/`candidate_`), bi
 immutability, mandatory binary-level verification + pipeline validators after any
 pass, 10-section subsystem reports with memory maps, one subsystem per commit,
 `hash_binaries.py --check` after touching `binaries/`, emulator changes get a
-Renesas differential run. See `AGENTS.md` and `docs/learnings.md`.
+Renesas differential run. See [`AGENTS.md`](AGENTS.md) and [`docs/learnings.md`](docs/learnings.md).

@@ -2,11 +2,11 @@
 
 Date: 2026-10-29 (revised same day after an independent sceptical re-check
 against the ROM bytes and both def sets; corrections listed in
-`reviews/knock_control/REVIEW_NOTES.md`). Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+[`reviews/knock_control/REVIEW_NOTES.md`](reviews/knock_control/REVIEW_NOTES.md)). Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
-performed. Full evidence: `reviews/knock_control/README.md`.
+performed. Full evidence: [`reviews/knock_control/README.md`](reviews/knock_control/README.md).
 
 **Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](calibration_extraction_report.md) (knock tables in data/maps/).
 
@@ -158,8 +158,8 @@ error.
 
 | Artifact | Path |
 |---|---|
-| Full review (evidence, unresolved items) | `reviews/knock_control/README.md` |
-| Sceptical re-review addendum (corrections + def caveats) | `reviews/knock_control/REVIEW_NOTES.md` |
+| Full review (evidence, unresolved items) | [`reviews/knock_control/README.md`](reviews/knock_control/README.md) |
+| Sceptical re-review addendum (corrections + def caveats) | [`reviews/knock_control/REVIEW_NOTES.md`](reviews/knock_control/REVIEW_NOTES.md) |
 | Review validation record | `reviews/knock_control/validation.json` |
 | Rename map + fix evidence | `metadata/knock_loop_labels.json` |
 | Integrated rename manifest | `metadata/integrated_names.json` |
@@ -395,20 +395,20 @@ canonical C carries the newest names. The ROM was not modified.
 
 2026-10-31 addendum: 0x803e was renamed `crank_isr_compute_rpm` (emulator-verified CMI10B
 handler, IVT 0x2c8 at VBR 0x7fc50) in the 2026-10-31 OS/CAN/IVT labeling pass
-(`os_scheduler_can_ivt_report.md`); the memory-map row above carries the new name.
+([`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)); the memory-map row above carries the new name.
 
 Subsequent passes built on this review: the **fueling chain** is now labeled
-(`fueling_control_report.md`, `reviews/fueling/`) and resolves this report's open
+([`fueling_control_report.md`](fueling_control_report.md), `reviews/fueling/`) and resolves this report's open
 item on blend weights b11c/b118 (producer `blend_weight_update` 0x200c6); the
-**intake solenoids** are mapped to GPIO/package pins (`intake_solenoids_report.md`,
+**intake solenoids** are mapped to GPIO/package pins ([`intake_solenoids_report.md`](intake_solenoids_report.md),
 `reviews/intake_solenoids/`); the **injector channels** are mapped to ATU-II
 8A-8F → TO8A-F → SH7055F pins 195/197-201 with rotor blocks {0,1,2}/{3,4,5}
-(`reviews/fueling/injector_pin_mapping.md`); the supplied FSM pinout
+([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)); the supplied FSM pinout
 (`mazda-rx-8-pcm-pinout-series-1.pdf` v3) confirmed terminal functions and wire
 colours (still no chip-pin data — that hop stays board-level unresolved). All
 labels were re-verified against the raw ROM (`reviews/*/README.md` binary-level
 sections), and `scripts/validate_reports.py` now validates every root report's
 address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/` (stock ROMs untouched; see
-`reviews/limiter/README.md`). This knock report itself is unchanged and still
+[`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
 accurate for its date.

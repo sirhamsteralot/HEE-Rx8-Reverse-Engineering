@@ -17,9 +17,9 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
 - `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
   `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
   (ROM hash/IDs), `validation.json` records, export logs.
-- `logs/` — real-car data logs (see `logs/README.md`): `nr666p/` (VersaTuner),
+- `logs/` — real-car data logs (see [`logs/README.md`](logs/README.md)): `nr666p/` (VersaTuner),
   `rx8-666p/` (OBD-II PIDs). Golden fixtures for the emulator's virtual OBD port.
-- `tunes/` — third-party tune artifacts (see `tunes/README.md`): `.vtune`
+- `tunes/` — third-party tune artifacts (see [`tunes/README.md`](tunes/README.md)): `.vtune`
   containers, tune notes and table pastes. Context only, never flashed.
 
 ## Rules

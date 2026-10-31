@@ -48,7 +48,7 @@ logged); golden 200k-instruction PC trace reproduces byte-exact in tests
   as the Ghidra listing). The SH7055 **UBC** (hardware break controller) is modeled
   as a peripheral (`peripherals.UBC`): program BARA/BAMRA/BRCR and PC matches raise
   a hardware break, like the original MCU.
-- `profiles/` — one JSON per ROM/market/model (see `profiles/README.md`).
+- `profiles/` — one JSON per ROM/market/model (see [`profiles/README.md`](profiles/README.md)).
 
 ## Running
 

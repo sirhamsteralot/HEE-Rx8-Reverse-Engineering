@@ -6,7 +6,7 @@ Date: 2026-10-30 (binary-level verification pass same day; corrections in
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes, with package pins from the
 supplied SH7055F hardware manual (`Sh7055h.pdf`). No hardware execution was
-performed. Full evidence: `reviews/intake_solenoids/README.md`.
+performed. Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
 
 **Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md).
 
@@ -141,7 +141,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 
 | Artifact | Path |
 |---|---|
-| Full review + binary verification | `reviews/intake_solenoids/README.md` (§7 = verification pass) |
+| Full review + binary verification | [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) (§7 = verification pass) |
 | Review validation record | `reviews/intake_solenoids/validation.json` |
 | Rename/record manifest | `metadata/intake_labels.json` |
 | Pipeline script (idempotent, in `rebuild.sh`) | `scripts/review_intake_labels.py` |
@@ -227,7 +227,7 @@ names from `regs_7055_350.csv`.
 - Alias evidence: `source_review/accepted_function_aliases.tsv` /
   `accepted_ram_aliases.tsv` rows for basis `source_review_intake`.
 - GPIO bit claims: literal pools of the functions in §9.1 (mov.w low16 +
-  0xffff high, mov.l, mov #imm) — see `reviews/intake_solenoids/README.md` §7.
+  0xffff high, mov.l, mov #imm) — see [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §7.
 - Pins: `Sh7055h.pdf` Tables 1.2/1.3. Terminals: `hardware/pcm_connections.tsv`.
 
 ## 10. RPM-window patcher (VDI/SSV)
@@ -246,7 +246,7 @@ See `Utilities/PATCHER_intake_rpm_window.md`.
 ## 11. Rev-limiter behavior patcher (see SPEC)
 
 `Utilities/patch_limiter_behavior.py` (+`PATCHER_limiter_behavior.md`, RE notes in
-`reviews/limiter/README.md`): repoints the 0xedc4 call site to a cave that runs the
+[`reviews/limiter/README.md`](reviews/limiter/README.md)): repoints the 0xedc4 call site to a cave that runs the
 stock limiter then rewrites the shared cut flags a444/a445 per mode —
 stock/hard/soft (soft alternates rotors via a cal-block state cell), gating fuel
 AND spark together (fuel via a430, spark via 0x12938 chain — Option A confirmed in
@@ -275,8 +275,8 @@ are unproven hypotheses. ROM untouched.
   `hardware/pcm_connections.tsv` (wire_colour), `hardware/firmware_annotations.tsv`
   and all `[WIRING REVIEW]` blocks in the synchronized views. Terminal→function
   unchanged; no chip-pin data, so the pin↔terminal hop stays board-level unresolved.
-- Binary-level verification of this pass: `reviews/intake_solenoids/README.md` §8 —
+- Binary-level verification of this pass: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §8 —
   all instruction words, RAM aliases, GPIO reg/mask/helper literals, thunk targets,
   call edges, PDF pin quotes re-checked against the ROM; one evidence correction
   (APV command constants are inline pool literals of 0x31f32).
-- Rev-limiter patcher added (§11; RE topology in `reviews/limiter/README.md`).
+- Rev-limiter patcher added (§11; RE topology in [`reviews/limiter/README.md`](reviews/limiter/README.md)).

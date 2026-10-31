@@ -24,7 +24,7 @@ exist:
   pinned in `submodules/RX8Defs`); also the driving force behind the RX8Club guide.
 - **The RX8Club forum thread contributors ("equinox92 et al.")** — the "Open Source
   S1 RX-8 ECU Reverse Engineering, Data Logging, and Tuning — User's Guide" thread
-  (extract in `docs/references/rx8club-user-guide-thread.md`): ROM↔cal-ID table,
+  (extract in [`docs/references/rx8club-user-guide-thread.md`](docs/references/rx8club-user-guide-thread.md)): ROM↔cal-ID table,
   BOOT-mode CN400 pinout, UDS services, and the first public hypotheses for the
   engine-load math and the ignition-timing BTDC equation that this repo verified.
 - **The RomRaider community** — the ECU editor/logger ecosystem the XML definitions
@@ -50,14 +50,14 @@ python utilities/scripts/hash_binaries.py --check             # verify binaries/
 
 To validate firmware against the real-car datalogs in the simulator (replay a
 `data/logs/*.csv` as inputs, compare emulated outputs / UDS responses against the
-log), see **`docs/architecture/emulator-re-guide.md`**.
+log), see **[`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md)**.
 
 Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.json`
 (ROM path + SHA-256 verified at load, memory map, SH7055 peripheral set, sensor map).
 Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC`, `60E1B900_N3ZBEH`, and the tuned `60E0G500_N3ZHEC_streetport_*`.
-To run a different `.bin`, add a profile — recipe in `utilities/scripts/emu/profiles/README.md`.
+To run a different `.bin`, add a profile — recipe in [`utilities/scripts/emu/profiles/README.md`](utilities/scripts/emu/profiles/README.md).
 Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
-Windows with `utilities/scripts/emu/compare_traces.py` — see `utilities/scripts/emu/README.md`.
+Windows with `utilities/scripts/emu/compare_traces.py` — see [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md).
 
 **Agent tooling:** in-session agents call `python utilities/scripts/hee.py <tool> '<json>'`
 directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin in
@@ -80,7 +80,7 @@ directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin i
   Patches write *new* output files only, with input SHA-256 asserted unchanged.
 - **Never flash modified firmware to a vehicle** without bench validation first
   (BOOT-mode bench work additionally needs a ~150 Hz square wave on CN400 pin 3 —
-  see `docs/references/rx8club-user-guide-thread.md` §8).
+  see [`docs/references/rx8club-user-guide-thread.md`](docs/references/rx8club-user-guide-thread.md) §8).
 
 ## Repository layout
 
@@ -114,7 +114,7 @@ are promoted into the tracked folders.
    (literal pools, constants, descriptors, GPIO reg+mask), run the pipeline's
    `validate_export.py`/`validate_reports.py`.
 7. **Report** — 10-section subsystem format with mandatory function/RAM address
-   tables and a plain-language §1a (template: `docs/investigations/60E15120_N3J1E/knock_control_report.md`).
+   tables and a plain-language §1a (template: [`docs/investigations/60E15120_N3J1E/knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)).
 8. **Reimplement & test** — compilable C in `reverse-engineered/reimplementation/`
    with host tests, cross-checked against the emulator.
 
@@ -152,12 +152,12 @@ are promoted into the tracked folders.
   tooling (`hee.py` + MCP plugin). 44/44 tests.
 - **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
   cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
-  into the decompiled views — `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`.
+  into the decompiled views — [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md).
 - **Ignition timing (2026-10-31):** Phase 2 labeling pass verified the thread §9
   BTDC equation in the emulator (blend 0x123da/0x124d6, clamp 0x121fc/0x12300),
   labeled 15 functions + 22 RAM + 17 tables, then re-verified at the binary level
   (min-advance constants corrected to -25.0/-58.5 deg) —
-  `docs/investigations/60E15120_N3J1E/ignition_timing_report.md` (all subsystem
+  [`docs/investigations/60E15120_N3J1E/ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md) (all subsystem
   reports now carry a plain-language §1a per AGENTS.md rule 8).
 - **Pipeline:** `utilities/scripts/rx8-pcm-pipeline/` now resolves paths via
   `paths.py` to this repo (no legacy `input/Tuning-merged`); validators
@@ -172,8 +172,8 @@ are promoted into the tracked folders.
   unnamed), 381–587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic
   axes. Cross-ROM structural diff via `diff_maps.py`; streetport tunes mapped
   to 15–17 named descriptors. Report:
-  `docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`.
+  [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md).
 - **Data:** 4 own ROM dumps, 10 stock ROMs via submodule, real-car logs in
   `data/logs/`, XML definitions in `data/definitions/`, extracted calibration
   tables in `data/maps/` (14 ROMs + cross-ROM diff).
-- See `docs/learnings.md` for session know-how and ROADMAP.md for what's next.
+- See [`docs/learnings.md`](docs/learnings.md) for session know-how and ROADMAP.md for what's next.

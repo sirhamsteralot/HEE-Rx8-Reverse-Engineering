@@ -12,12 +12,12 @@ One folder per ROM ID, seeded from the prior effort:
 
 ## Rules
 
-- New ROM or new major question → new dated folder/file from `TEMPLATE.md`.
+- New ROM or new major question → new dated folder/file from [`TEMPLATE.md`](TEMPLATE.md).
 - Reports: 10-section format with mandatory memory map (function + RAM address
   tables) and a plain-language §1a (see AGENTS.md rule 8) — template
-  `60E15120_N3J1E/knock_control_report.md`; keep historical
+  [`60E15120_N3J1E/knock_control_report.md`](60E15120_N3J1E/knock_control_report.md); keep historical
   reports intact, append dated "Update" addenda.
-- Every review folder carries a `README.md`, a sceptical `REVIEW_NOTES.md` where
+- Every review folder carries a [`README.md`](README.md), a sceptical `REVIEW_NOTES.md` where
   warranted, and a `validation.json`; record binary-level verification results there.
 - Inputs are cited by SHA-256 (from `binaries/manifest.csv`) and upstream commits by
   hash where applicable.

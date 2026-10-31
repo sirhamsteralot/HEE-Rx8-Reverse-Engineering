@@ -4,8 +4,8 @@ Date: 2026-10-30. Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
-performed. Full evidence: `reviews/fueling/README.md`; sceptical re-check:
-`reviews/fueling/REVIEW_NOTES.md`; validation: `reviews/fueling/validation.json`.
+performed. Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.md); sceptical re-check:
+[`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md); validation: `reviews/fueling/validation.json`.
 
 > **⚠ FURTHER INVESTIGATION NEEDED (2026-10-31).** This report is a first pass:
 > the load calculation is *not* covered here — see
@@ -120,7 +120,7 @@ def-matched).
 
 1. `injector_pulse_set_channel` (0x8a68): pulse = (latency + fuel_request) >> 4 —
    the four `shar` at 0x8a96-0x8a9e apply to the sum (found in the binary-level
-   verification pass; see `reviews/fueling/REVIEW_NOTES.md` §10).
+   verification pass; see [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10).
 2. Pipeline hygiene: `review_fueling_labels.py` initially duplicated TSV header
    rows (read with explicit fieldnames); fixed to consume the header, duplicates
    removed, and `name_lookup_variables.py` confirmed as a fresh-export-only step.
@@ -146,7 +146,7 @@ injection-angle semantics, cold-start degenerate body, MAF fault latching,
 PID 0x1410) are unproven hypotheses. Untraced adder writers into
 `fuel_correction_sum` (b0d0/c0c8/ae08/b21c/c104/cde0/ae10), `DAT_ffffadec`,
 `DAT_ffffc644`, injector index->pin mapping, and the 0x4ab8 task-record
-dispatch remain open (see `reviews/fueling/README.md` §9). The ROM was not
+dispatch remain open (see [`reviews/fueling/README.md`](reviews/fueling/README.md) §9). The ROM was not
 modified.
 
 ## 8. Memory map for validation
@@ -230,7 +230,7 @@ rotation scale; 0x6ac38 fuel coolant compensation (**candidate**, descriptor
 unmatched); cal-area u16 0x6c102=0xfae1, 0x6c104=0xac0 (MAF fault thresholds).
 Injector channel map: ROM 0xd7d4 (DCNT8x/GR1x/TIER8 per ch), wrappers
 0x59a4-0x59ea, rotor blocks ROM 0x4e2c8 ({0,1,2}/{3,4,5}), task table 0x4998,
-dispatch 0x5f10c (PIDs above). See `reviews/fueling/injector_pin_mapping.md`.
+dispatch 0x5f10c (PIDs above). See [`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md).
 FSM pinout cross-check (`mazda-rx-8-pcm-pinout-series-1.pdf`, 13B/FSM-derived, markers ³/†/* kept):
   2M=Front Primary 1, 2J=Rear Primary 1, 2G=Front Secondary, 2D=Rear Secondary,
   3A/3D=Primary 2 (HP only). The PDF has no chip-pin numbers, so pkg pin (195/197-201)
@@ -241,18 +241,18 @@ FSM pinout cross-check (`mazda-rx-8-pcm-pinout-series-1.pdf`, 13B/FSM-derived, m
 - `python3 scripts/validate_export.py` (ROM hash + instruction bytes);
   `python3 scripts/verify_readability.py`.
 - Per-function C / disasm / alias TSV lookups as in §7 header; binary-level
-  re-check notes in `reviews/fueling/REVIEW_NOTES.md` §10.
+  re-check notes in [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10.
 
 ---
 
 ## 9. Update — 2026-10-30 (later same day)
 
 - Binary-level verification pass re-checked every label against the raw ROM
-  (`reviews/fueling/REVIEW_NOTES.md` §10): all 168,592 instruction words, all
+  ([`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10): all 168,592 instruction words, all
   RAM aliases vs reader literal pools, descriptors re-parsed, dispatch records —
   one correction (0x8a68 pulse = (latency+request)>>4, shift on the sum).
 - Injector channel → ATU-II → SH7055F pin mapping completed and cross-checked
-  against the supplied FSM pinout v3 (`reviews/fueling/injector_pin_mapping.md`):
+  against the supplied FSM pinout v3 ([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)):
   ch0/3/1/4/2/5 → pins 195/197/198/199/200/201; rotor blocks {0,1,2}/{3,4,5};
   injectors share a W/L +12V feed (PCM pins are ground-side). Package-pin ↔
   terminal remains board routing (unresolved).

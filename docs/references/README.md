@@ -11,7 +11,7 @@ External reference material and provenance for third-party sources.
 
 Derived from `13Electrical.pdf` (regenerate + re-diff, don't edit in place): the
 Series-1 PCM connector pinout now lives as text at
-`../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md` (the earlier v3 PDF was
+[`../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md) (the earlier v3 PDF was
 removed). It has **no chip-pin numbers** — package-pin ↔ connector-terminal is board
 routing, unresolved. Honour its markers: unmarked = confirmed, `*` single-source,
 `†` conflict, `³` high-power only, `–` unread.
@@ -56,7 +56,7 @@ Related but not submoduled (not git repos in the intake, URL only):
 
 ## Community material
 
-- `rx8club-user-guide-thread.md` — curated extraction from the RX8Club "Open Source
+- [`rx8club-user-guide-thread.md`](rx8club-user-guide-thread.md) — curated extraction from the RX8Club "Open Source
   S1 RX-8 ECU RE / Data Logging / Tuning — User's Guide" thread (raw saved pages in
   `input/`): ROM↔cal-ID table, BOOT-mode CN400 pinout, UDS dump/flash services
   (0x10/0x23/0x27/0x34/0x36/0x37), security-key notes, checksum/CVN open question,
@@ -71,6 +71,6 @@ Related but not submoduled (not git repos in the intake, URL only):
 
 ## Prior-effort workspace docs
 
-- `prior-effort-agents.md` — the previous workspace's AGENTS.md, preserved for
+- [`prior-effort-agents.md`](prior-effort-agents.md) — the previous workspace's AGENTS.md, preserved for
   provenance; its rules are distilled into this repo's root `AGENTS.md`.
-- `../learnings.md` — the previous sessions' know-how log.
+- [`../learnings.md`](../learnings.md) — the previous sessions' know-how log.

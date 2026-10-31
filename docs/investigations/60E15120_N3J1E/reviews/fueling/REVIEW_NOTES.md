@@ -1,6 +1,6 @@
 # Sceptical re-review addendum — fueling chain (2026-10-30)
 
-Independent re-check of the riskiest claims in `README.md` against the ROM
+Independent re-check of the riskiest claims in [`README.md`](README.md) against the ROM
 disassembly, the float constants and the def files. Corrections: none needed;
 confirmations and caveats below.
 

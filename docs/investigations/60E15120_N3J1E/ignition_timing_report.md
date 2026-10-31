@@ -30,7 +30,7 @@ The **thread §9 equation is confirmed**, with one structural correction: the co
 term (`CLTcomp`, a5f0 = off-throttle-3D − advance×coolant-multiplier) sits **inside**
 the `(1−CrankingMult)` blend group, and `IdleBaseFinal` (a780) is added **outside** it —
 the thread drew both outside the parens. Knock retard enters via `correction_total`
-(0x125bc/0x125f6, see `knock_control_report.md`), DSC torque-request derate applies to
+(0x125bc/0x125f6, see [`knock_control_report.md`](knock_control_report.md)), DSC torque-request derate applies to
 the **leading rotor only** (0x1815c, confirmed — no trailing reader). All dynamic checks
 in the emulator matched to <1e-4 deg (E1 double-precision limit).
 
