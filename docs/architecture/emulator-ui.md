@@ -50,6 +50,26 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
 - Cross-check: same inputs stepped in the Renesas Simulator Debugger (Windows)
   produce the same register/MMIO state (`compare_traces.py` for PC traces).
 
+## Using it (implemented 2026-10-31)
+
+1. `python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E` → open
+   http://127.0.0.1:8080/.
+2. **Sensors** panel: set RPM/load/MAF/temps/throttle, press *apply* — values go to
+   the profile's `sensors` paths (currently `override` placeholder input registers;
+   mapping to the real ADC/ATU read paths is ROADMAP item E2).
+3. **Watched emulated outputs** panel shows the profile `watch` list — e.g. the
+   firmware-computed engine load at RAM 0xffffc0b4 (float32, per the fueling
+   labels) and the PB15 heartbeat count — updating live as you run.
+4. **Replay:** enter a `data/logs/rx8-666p/*.csv` path, press *load*, then
+   *step replay* (or repeatedly): each row's columns are mapped via the profile
+   `replay_map` (e.g. `Engine RPM(rpm)` → `rpm`), applied as sensor inputs, and the
+   emulator runs `cycles_per_row` instructions. Progress shows as `replay row/of`
+   in the header; heartbeats advancing = firmware alive and reacting.
+   Verified: replaying `trackLog-2026-Oct-04_09-31-12.csv` drives rpm≈2237,
+   load≈42% into the emulated ECU per row.
+   Note: the watched engine-load stays 0.0 until E2 wires sensors to the real
+   hardware read paths — expected at this stage.
+
 ## Limits
 
 Stdlib-only, single-user, localhost — this is a dev tool, not a product. No auth

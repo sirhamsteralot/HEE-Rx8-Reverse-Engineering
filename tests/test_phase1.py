@@ -77,7 +77,15 @@ def test_ui_session_sensors_run_replay(tmp_path):
     csv_path = os.path.abspath(os.path.join(
         os.path.dirname(__file__), "..", "data", "logs", "rx8-666p",
         "trackLog-2026-Oct-04_09-31-12.csv"))
-    session.prof.setdefault("replay_map", {})
     session.start_replay(csv_path, speed=1)
     r = session.replay_step()
     assert r and r["of"] > 100
+    # replay actually drove a mapped sensor into the bus overrides
+    assert bus_addr_overridden(session)
+    # watched emulated output (engine load RAM 0xffffc0b4) is readable
+    assert "watch" in r and any("engine_load" in k for k in r["watch"])
+
+
+def bus_addr_overridden(session):
+    addr = int(str(session.prof["sensors"]["rpm"]["addr"]), 0)
+    return addr in session.bus.read_overrides

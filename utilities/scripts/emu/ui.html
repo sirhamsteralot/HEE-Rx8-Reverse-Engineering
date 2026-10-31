@@ -5,6 +5,8 @@
 </head><body>
 <h1>HEE SH-2E emulator</h1>
 <div id="state">loading…</div>
+<h2>Watched emulated outputs</h2>
+<div id="watch"></div>
 <h2>Sensors</h2>
 <div id="sensors"></div>
 <button onclick="sendSensors()">apply</button>
@@ -25,7 +27,10 @@ async function api(path, body){
 async function refresh(){
   const s = await (await fetch('/api/state')).json();
   document.getElementById('state').textContent =
-    `${s.profile}  icount=${s.icount} pc=0x${s.pc.toString(16)} mmio=${s.mmio_writes} heartbeats=${s.heartbeats}`;
+    `${s.profile}  icount=${s.icount} pc=0x${s.pc.toString(16)} mmio=${s.mmio_writes} heartbeats=${s.heartbeats}` +
+    (s.replay ? `  replay ${s.replay.row}/${s.replay.of}` : '');
+  const w = document.getElementById('watch');
+  w.textContent = Object.entries(s.watch||{}).map(([k,v])=>`${k} = ${typeof v==='number'?v.toFixed(4):v}`).join('\n');
   const div = document.getElementById('sensors');
   for (const [k,v] of Object.entries(s.sensors)){
     if (k.startsWith('_')) continue;
@@ -44,7 +49,7 @@ function sendSensors(){
 }
 async function stepReplay(){
   const r = await api('replay_step',{});
-  if (r) log(`replay row ${r.row}/${r.of} pc=0x${r.pc.toString(16)}`);
+  if (r) log(`replay row ${r.row}/${r.of} pc=0x${r.pc.toString(16)} watch=${JSON.stringify(r.watch)}`);
   refresh();
 }
 function log(m){const l=document.getElementById('log');l.textContent+=m+'\n';l.scrollTop=l.scrollHeight;}

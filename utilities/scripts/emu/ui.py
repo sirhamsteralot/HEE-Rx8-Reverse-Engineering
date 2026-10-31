@@ -30,21 +30,40 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def apply_sensor(bus, prof, name, value):
     """Inject one sensor value through its hardware path (profile `sensors`)."""
     s = prof.get("sensors", {}).get(name)
-    if not s:
+    if not s or not isinstance(s, dict):
         return False
     via = s.get("via")
     scale = float(s.get("scale", 1))
     raw = int(round(value * scale))
     if via == "override":
         bus.read_overrides[int(str(s["addr"]), 0)] = raw & 0xFFFFFFFF
+        s["value"] = value
     elif via == "adc":
         for _, _, p in bus.peripherals:
             if type(p).__name__ == "ADC" and s.get("channel") in getattr(p, "channels", {}):
                 p.channels[s["channel"]] = raw
-                if s.get("result_channel") == s["channel"] or p.config.get("result_channel") == s["channel"]:
-                    pass
+                s["value"] = value
                 return True
     return True
+
+
+def read_watch(bus, prof):
+    """Decode the profile `watch` list: emulated outputs visible in the UI."""
+    import struct
+    out = {}
+    for w in prof.get("watch", []):
+        if w.get("source") == "heartbeats":
+            out[w["name"]] = sum(len(getattr(p, "heartbeats", [])) for _, _, p in bus.peripherals)
+            continue
+        addr = int(str(w["addr"]), 0)
+        size = int(str(w.get("size", 4)), 0)
+        fmt = w.get("format", "u32")
+        raw = bus.read32(addr) if size == 4 else bus.read16(addr)
+        if fmt == "float32":
+            out[w["name"]] = struct.unpack("<f", struct.pack("<I", raw))[0]
+        else:
+            out[w["name"]] = raw
+    return out
 
 
 class EmuSession:
@@ -64,13 +83,20 @@ class EmuSession:
     def state(self):
         with self.lock:
             hb = sum(len(getattr(p, "heartbeats", [])) for _, _, p in self.bus.peripherals)
+            sensors = {k: (v.get("value") if isinstance(v, dict) else v)
+                       for k, v in self.prof.get("sensors", {}).items() if not k.startswith("_")}
+            replay = None
+            if self.replay:
+                replay = {"row": self.replay["idx"], "of": len(self.replay["rows"])}
             return {
                 "profile": self.prof["name"],
                 "icount": self.cpu.icount,
                 "pc": self.cpu.pc,
                 "mmio_writes": len(self.bus.mmio_log),
                 "heartbeats": hb,
-                "sensors": {k: v for k, v in self.prof.get("sensors", {}).items() if not k.startswith("_")},
+                "sensors": sensors,
+                "watch": read_watch(self.bus, self.prof),
+                "replay": replay,
                 "running": self.running,
             }
 
@@ -102,7 +128,10 @@ class EmuSession:
                         pass
             r["idx"] += 1
             emu.run(self.prof, self.bus, self.cpu, r["cycles_per_row"])
-            return {"row": r["idx"], "of": len(r["rows"]), "pc": self.cpu.pc}
+            return {"row": r["idx"], "of": len(r["rows"]), "pc": self.cpu.pc,
+                    "watch": read_watch(self.bus, self.prof), "sensors": {
+                        k: (v.get("value") if isinstance(v, dict) else v)
+                        for k, v in self.prof.get("sensors", {}).items() if not k.startswith("_")}}
 
 
 def make_server(session, port):
