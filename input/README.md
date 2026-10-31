@@ -30,7 +30,9 @@ promoted tracked layout (`../reverse-engineered/`, `../docs/investigations/`,
 
 2026-10-31: `mazda-rx-8-pcm-pinout-series-1.md` (text PCM pinout derived from
 `13Electrical.pdf`, which remains ground truth) was promoted to
-`../docs/architecture/hardware/`.
+`../docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md` (with a
+provenance header added there) and then removed from `input/`, like
+`Tuning-merged/` before it. The tracked copy is the one to read and edit.
 
 2026-10-31: byte-identical duplicates of submodule files were removed from the
 tracked folders (10 stock ROMs, 3 captures, 3 Ghidra `.gar` archives) — they are
