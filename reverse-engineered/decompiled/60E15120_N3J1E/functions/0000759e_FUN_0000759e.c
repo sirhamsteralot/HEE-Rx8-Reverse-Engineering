@@ -9,7 +9,7 @@ void FUN_0000759e(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0xb0);
-  ref_setInterruptTimer();
+  atu_ch10b_tick_enable();
   FUN_00007eca();
   ref_setSR(uVar1);
   return;

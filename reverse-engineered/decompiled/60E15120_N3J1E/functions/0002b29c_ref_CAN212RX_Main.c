@@ -8,7 +8,7 @@ void ref_CAN212RX_Main(void)
 {
   char cVar1;
   
-  cVar1 = ref_placeCANRX(&DAT_0004e21c);
+  cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e21c);
   if (cVar1 == '\0') {
     FUN_0000e038();
     ref_can212RXUnpack();

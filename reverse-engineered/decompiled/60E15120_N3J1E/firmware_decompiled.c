@@ -158,7 +158,7 @@ uint FUN_0000011a(byte *param_1,byte *param_2)
 void FUN_00000170(void)
 
 {
-  FUN_000009c0(&HCAN0_MCR_B);
+  can_enter_reset_mode(&HCAN0_MCR_B);
   HCAN0_TXPR_W = 0;
   HCAN0_TXCR_W = 0;
   HCAN0_TXACK_W = 0xfeff;
@@ -170,7 +170,7 @@ void FUN_00000170(void)
   INT_ATU102_IMI10AG(0,1,8,1,0xffffe,1,&HCAN0_MBCR_W,&HCAN0_MBIMR_W,&HCAN0_MD0_1__B,&HCAN0_MC0_1__B)
   ;
   INT_ATU102_IMI10AG(1,0,8,1,0x21,1,&HCAN0_MBCR_W,&HCAN0_MBIMR_W,&HCAN0_MD1_1__B,&HCAN0_MC1_1__B);
-  FUN_000009de(&HCAN0_MCR_B);
+  can_exit_reset_mode(&HCAN0_MCR_B);
   HCAN0_IMR_W = 0xfeff;
   HCAN0_LAFMH_W = 0;
   HCAN0_LAFML_W = 0;
@@ -724,7 +724,7 @@ void Illegal_instr(void)
 void ref_Manual_Reset(void)
 
 {
-  FUN_000008cc();
+  boot_wait_nmi_pin_high();
   FUN_000008f6();
   ref_resetHandler_(0);
   do {
@@ -738,7 +738,7 @@ void ref_Manual_Reset(void)
 /* Unique exact-byte match to related 60E0FC00 function at 000008cc (42 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_000008cc(void)
+undefined4 boot_wait_nmi_pin_high(void)
 
 {
   ushort uVar1;
@@ -813,7 +813,7 @@ void FUN_000008f6(void)
 
 /* ROM address: 0x000009c0; body bytes: 30; decompiled */
 
-uint FUN_000009c0(char *param_1,byte *param_2)
+uint can_enter_reset_mode(char *param_1,byte *param_2)
 
 {
   uint uVar1;
@@ -834,7 +834,7 @@ uint FUN_000009c0(char *param_1,byte *param_2)
 
 /* ROM address: 0x000009de; body bytes: 30; decompiled */
 
-byte FUN_000009de(byte *param_1,byte *param_2)
+byte can_exit_reset_mode(byte *param_1,byte *param_2)
 
 {
   byte bVar1;
@@ -3813,7 +3813,7 @@ float rx8_interpolate_1d_s8(uint32_t lower_index, const int8_t *values, float fr
 void FUN_000029f8(void)
 
 {
-  FUN_00003238();
+  interrupt_entry_save_context();
   FUN_000055d6();
   return;
 }
@@ -3824,7 +3824,7 @@ void FUN_000029f8(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00003238 (62 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 * FUN_00003238(void)
+undefined1 * interrupt_entry_save_context(void)
 
 {
   DAT_ffff7640 = DAT_ffff7640 + 1;
@@ -4052,7 +4052,7 @@ void FUN_000036d4(undefined4 param_1,undefined4 param_2,uint param_3,uint param_
  */
 /* ROM address: 0x0000375c; body bytes: 96; decompiled_with_warnings */
 
-int FUN_0000375c(int param_1,short param_2)
+int os_switch_to_task(int param_1,short param_2)
 
 {
   char cVar1;
@@ -4148,7 +4148,7 @@ void ref_setSR(int param_1)
 
 {
   if ((param_1 == 0) && (*(char *)(DAT_ffff7650 + 1) != '\x01')) {
-    FUN_00003db0();
+    os_wake_check_context_switch();
     return;
   }
   return;
@@ -4316,7 +4316,7 @@ undefined4 FUN_00003ad8(char param_1)
   }
   DAT_ffff7660 = local_8;
   DAT_ffff7640 = 0x100;
-  uVar1 = FUN_00003e10();
+  uVar1 = os_init();
   return uVar1;
 }
 
@@ -4339,7 +4339,7 @@ void FUN_00003bf4(int param_1,undefined4 param_2,char *param_3)
   }
   **(undefined1 **)(param_3 + 4) = 4;
   *(undefined1 **)(param_1 + 0xc) = puVar1;
-  FUN_00003c68();
+  os_dispatch_next_task();
   return;
 }
 
@@ -4349,11 +4349,11 @@ void FUN_00003bf4(int param_1,undefined4 param_2,char *param_3)
 /* Unique exact-byte match to related 60E0FC00 function at 00003c2a (36 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00003c2a(int param_1)
+void os_dispatch(int param_1)
 
 {
   if (*(short *)(param_1 + 6) != -1) {
-    FUN_00003c68();
+    os_dispatch_next_task();
     return;
   }
   *(undefined4 *)(param_1 + 8) = 0x80000000;
@@ -4370,10 +4370,10 @@ void FUN_00003c2a(int param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00003c68 (16 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00003c68(int param_1)
+void os_dispatch_next_task(int param_1)
 
 {
-  FUN_0000375c(param_1,(int)*(short *)(param_1 + 6));
+  os_switch_to_task(param_1,(int)*(short *)(param_1 + 6));
   return;
 }
 
@@ -4491,7 +4491,7 @@ void ref_taskEndRoutine_(void)
   ref_consistencyCheck(&DAT_ffff7638,(int)(char)puVar1[1]);
   *puVar1 = 0;
   DAT_ffff7644 = *(undefined4 *)(puVar1 + 4);
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 
@@ -4513,7 +4513,7 @@ void FUN_00003dac(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00003db0 (76 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_00003db0(void)
+undefined4 os_wake_check_context_switch(void)
 
 {
   if ((DAT_ffff763c != DAT_ffff763e) && ((DAT_ffff7640 & 0x1000) == 0)) {
@@ -4530,7 +4530,7 @@ undefined4 FUN_00003db0(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00003e10 (110 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00003e10(undefined1 param_1)
+void os_init(undefined1 param_1)
 
 {
   DAT_ffff7648 = 0xb0;
@@ -4548,7 +4548,7 @@ void FUN_00003e10(undefined1 param_1)
   FUN_00003f90(&DAT_ffff7638);
   FUN_00003f9c(&DAT_ffff7638);
   FUN_00003fa8();
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 
@@ -9082,8 +9082,8 @@ void ref_getSensorStuff__(void)
   FUN_00005f18();
   FUN_0000a850();
   FUN_00007070();
-  ref_sensorADCRead();
-  ref_getVehicleStatusInputs_();
+  adc_scan_sweep_all_channels();
+  vehicle_inputs_poll_pfdr_phdr();
   FUN_00007280();
   FUN_000074ac();
   bVar1 = ATUII_TIOR3A_B;
@@ -9577,7 +9577,7 @@ void FUN_00006684(undefined4 *param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00006744 (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getVehicleStatusInputs_(void)
+void vehicle_inputs_poll_pfdr_phdr(void)
 
 {
   DAT_ffff9ec8 = PFDR_W;
@@ -9656,7 +9656,7 @@ void FUN_00006846(void)
    is copied to RAM 0xffff9ef0. Candidate APV feedback chain, via 0x43a86. Harness APV signal is PCM
    3B (13Electrical.pdf p16); MCU-to-connector link is not electrically verified. */
 
-void ref_sensorADCRead(void)
+void adc_scan_sweep_all_channels(void)
 
 {
   byte bVar1;
@@ -9771,7 +9771,7 @@ undefined4 FUN_00006a4c(void)
   
   FUN_00006b94();
   FUN_00006c4c();
-  ref_readADCs_coolantTempInHere__();
+  adc_read_ect_iat_group();
   if (DAT_ffff9f28 == '\x02') {
     DAT_ffff9ee2 = DAT_ffff9ee2 + '\x01';
 LAB_00006a84:
@@ -9980,7 +9980,7 @@ int FUN_00006cc0(int param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00006cdc (114 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char ref_readADCs_coolantTempInHere__(void)
+char adc_read_ect_iat_group(void)
 
 {
   char cVar1;
@@ -10222,7 +10222,7 @@ void FUN_00006f16(int param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00006fb0 (174 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int ref_readADCResult(void)
+int adc_read_result_bank2(void)
 
 {
   bool bVar1;
@@ -10754,7 +10754,7 @@ void FUN_0000759e(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0xb0);
-  ref_setInterruptTimer();
+  atu_ch10b_tick_enable();
   FUN_00007eca();
   ref_setSR(uVar1);
   return;
@@ -10773,7 +10773,7 @@ void FUN_000075f4(void)
   if (DAT_ffff9fa5 == '\0') {
     FUN_00007f22();
     FUN_00007b90();
-    FUN_000077f0();
+    crank_capture_poll();
     FUN_00007be4();
   }
   FUN_00007b58();
@@ -10891,7 +10891,7 @@ uint ref_reInitCrankSensor__(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00007778 (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_setInterruptTimer(void)
+void atu_ch10b_tick_enable(void)
 
 {
   ushort uVar1;
@@ -10912,7 +10912,7 @@ void ref_setInterruptTimer(void)
 /* Unique exact-byte match to related 60E0FC00 function at 000077f0 (138 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_000077f0(void)
+uint crank_capture_poll(void)
 
 {
   uint uVar1;
@@ -11541,7 +11541,7 @@ undefined4 * ref_getCrankAngle(byte param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 0000803e (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * ref_INT_ATU101_IMI10AG(int param_1,undefined4 param_2,int param_3,uint param_4)
+undefined4 * crank_isr_compute_rpm(int param_1,undefined4 param_2,int param_3,uint param_4)
 
 {
   int iVar1;
@@ -13062,7 +13062,7 @@ void ref_CANControllerSetup(char param_1,undefined4 *param_2,byte param_3)
 /* Unique exact-byte match to related 60E0FC00 function at 00009890 (262 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 ref_placeCANRX(int param_1)
+undefined4 can_rx_copy_mailbox_to_buffer(int param_1)
 
 {
   ushort uVar1;
@@ -13074,38 +13074,38 @@ undefined4 ref_placeCANRX(int param_1)
   undefined4 uVar7;
   uint uVar8;
   
-  puVar2 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_RXPR_W);
+  puVar2 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_RXPR_W);
   uVar1 = *puVar2;
-  uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   if ((uVar5 & uVar1) == 0) {
     uVar7 = 1;
   }
   else {
     uVar3 = sh_raise_interrupt_mask_return_previous(0x90);
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
-    FUN_0000cca4((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
+    can_mailbox_read_payload((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
                  *(undefined4 *)(param_1 + 8));
     uVar7 = 2;
     uVar8 = 0;
     do {
-      puVar2 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
+      puVar2 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
       uVar1 = *puVar2;
-      uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+      uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
       if ((uVar5 & uVar1) == 0) {
         uVar7 = 0;
         break;
       }
-      puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
-      uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+      puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_UMSR_W);
+      uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
       *puVar4 = uVar6;
-      FUN_0000cca4((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
+      can_mailbox_read_payload((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
                    *(undefined4 *)(param_1 + 8));
       uVar8 = uVar8 + 1;
     } while (uVar8 < 5);
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_RXPR_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_RXPR_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
     ref_setSR(uVar3);
   }
@@ -13134,18 +13134,18 @@ bool ref_txCAN_EventBased(const Rx8CanMessageDescriptor *message)
   undefined2 request_mask;
   
   saved_interrupt_mask = sh_raise_interrupt_mask_return_previous(0x90);
-  pending_register = (ushort *)FUN_0000cee8((int)(int8_t)message->mailbox_selector,&HCAN0_TXPR_W);
+  pending_register = (ushort *)can_mailbox_reg_addr((int)(int8_t)message->mailbox_selector,&HCAN0_TXPR_W);
   pending_bits = *pending_register;
-  mailbox_mask = FUN_0000cf12((int)(int8_t)message->mailbox_selector);
+  mailbox_mask = can_mailbox_bitmask((int)(int8_t)message->mailbox_selector);
   already_pending = (mailbox_mask & pending_bits) != 0;
   if (!already_pending) {
-    control_register = (undefined2 *)FUN_0000cee8((int)(int8_t)message->mailbox_selector,&HCAN0_TXACK_W);
-    request_mask = FUN_0000cf12((int)(int8_t)message->mailbox_selector);
+    control_register = (undefined2 *)can_mailbox_reg_addr((int)(int8_t)message->mailbox_selector,&HCAN0_TXACK_W);
+    request_mask = can_mailbox_bitmask((int)(int8_t)message->mailbox_selector);
     *control_register = request_mask;
-    FUN_0000ccda((int)(int8_t)message->mailbox_selector,(int)(int8_t)message->payload_length,0,
+    can_mailbox_write_payload((int)(int8_t)message->mailbox_selector,(int)(int8_t)message->payload_length,0,
                  message->payload_address);
-    control_register = (undefined2 *)FUN_0000cee8((int)(int8_t)message->mailbox_selector,&HCAN0_TXPR_W);
-    request_mask = FUN_0000cf12((int)(int8_t)message->mailbox_selector);
+    control_register = (undefined2 *)can_mailbox_reg_addr((int)(int8_t)message->mailbox_selector,&HCAN0_TXPR_W);
+    request_mask = can_mailbox_bitmask((int)(int8_t)message->mailbox_selector);
     *control_register = request_mask;
   }
   ref_setSR(saved_interrupt_mask);
@@ -13199,15 +13199,15 @@ void ref_doSomethingIfByteIs1InCANSetup(int param_1)
   undefined2 uVar6;
   
   uVar2 = sh_raise_interrupt_mask_return_previous(0x90);
-  puVar3 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_TXPR_W);
+  puVar3 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_TXPR_W);
   uVar1 = *puVar3;
-  uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   if ((uVar5 & uVar1) != 0) {
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_ABACK_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_ABACK_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&HCAN0_TXCR_W);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&HCAN0_TXCR_W);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
   }
   ref_setSR(uVar2);
@@ -13225,7 +13225,7 @@ undefined4 FUN_00009c34(int param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0000cd40((int)*(char *)(param_1 + 5));
+  uVar1 = can_mailbox_dlc((int)*(char *)(param_1 + 5));
   return uVar1;
 }
 
@@ -13260,12 +13260,12 @@ void FUN_00009c86(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00009c8e (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_00009c8e(void)
+undefined4 can_rx_pending_check(void)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0000ce24();
+  uVar1 = can_rx_pending_bits();
   return uVar1;
 }
 
@@ -16005,7 +16005,7 @@ void ref_knockRelatedInit(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_reference_adc_read [high]: a326 = ref_readADCResult(): knock reference-channel ADC; called from 0xc8dc (knock_sensor_sci_command) and 0x5a4c.
+ * knock_reference_adc_read [high]: a326 = adc_read_result_bank2(): knock reference-channel ADC; called from 0xc8dc (knock_sensor_sci_command) and 0x5a4c.
  */
 /* ROM address: 0x0000c276; body bytes: 26; decompiled */
 
@@ -16017,7 +16017,7 @@ void knock_reference_adc_read(void)
 {
   ushort uVar1;
   
-  knock_voltage_reference_ffffa326 = ref_readADCResult();
+  knock_voltage_reference_ffffa326 = adc_read_result_bank2();
   uVar1 = ATUII_TIER8_W;
   ATUII_TIER8_W = uVar1 & 0xefff;
   return;
@@ -16594,12 +16594,12 @@ void FUN_0000cc46(char param_1,uint param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0000cca4 (54 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000cca4(byte param_1,char param_2,char param_3,undefined4 param_4)
+void can_mailbox_read_payload(byte param_1,char param_2,char param_3,undefined4 param_4)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MD0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MD0_1__B);
   FUN_00009dfc((int)param_2,(int)param_3,param_4,iVar1 + (param_1 & 0xf) * 8);
   return;
 }
@@ -16610,12 +16610,12 @@ void FUN_0000cca4(byte param_1,char param_2,char param_3,undefined4 param_4)
 /* Unique exact-byte match to related 60E0FC00 function at 0000ccda (54 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000ccda(byte param_1,char param_2,char param_3,undefined4 param_4)
+void can_mailbox_write_payload(byte param_1,char param_2,char param_3,undefined4 param_4)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MD0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MD0_1__B);
   FUN_00009e26((int)param_2,(int)param_3,param_4,iVar1 + (param_1 & 0xf) * 8);
   return;
 }
@@ -16631,7 +16631,7 @@ byte FUN_0000cd10(byte param_1,byte param_2)
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MC0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MC0_1__B);
   *(byte *)(iVar1 + (param_1 & 0xf) * 8) = param_2 & 0xf;
   return param_2 & 0xf;
 }
@@ -16642,12 +16642,12 @@ byte FUN_0000cd10(byte param_1,byte param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0000cd40 (34 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-byte FUN_0000cd40(byte param_1)
+byte can_mailbox_dlc(byte param_1)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MC0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MC0_1__B);
   return *(byte *)(iVar1 + (param_1 & 0xf) * 8) & 0xf;
 }
 
@@ -16664,7 +16664,7 @@ uint FUN_0000cd74(byte param_1)
   uint uVar2;
   uint uVar3;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&HCAN0_MC0_1__B);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&HCAN0_MC0_1__B);
   iVar1 = iVar1 + (param_1 & 0xf) * 8;
   if ((*(byte *)(iVar1 + 4) & 8) == 0) {
     uVar2 = (uint)(*(byte *)(iVar1 + 4) >> 5);
@@ -16684,7 +16684,7 @@ uint FUN_0000cd74(byte param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 0000ce24 (50 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-ushort FUN_0000ce24(char param_1)
+ushort can_rx_pending_bits(char param_1)
 
 {
   short sVar1;
@@ -16751,7 +16751,7 @@ void FUN_0000cec8(char param_1,ushort param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0000cee8 (22 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_0000cee8(byte param_1,int param_2)
+int can_mailbox_reg_addr(byte param_1,int param_2)
 
 {
   if (0x1f < param_1) {
@@ -16781,7 +16781,7 @@ int ref_getHCANRegisterAddress(char param_1,int param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0000cf12 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_0000cf12(uint param_1)
+int can_mailbox_bitmask(uint param_1)
 
 {
   return (int)*(short *)(&DAT_0000d914 + (param_1 & 0xf) * 2);
@@ -17042,7 +17042,7 @@ undefined4 ref_interestingCANSomething(void)
   undefined4 uVar3;
   
   uVar3 = 0xffffffff;
-  cVar2 = ref_placeCANRX(&DAT_0000d934);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0000d934);
   if ((cVar2 == '\0') && (iVar1 = FUN_00000636(&DAT_ffffa3e8), iVar1 != 0)) {
     uVar3 = 0;
   }
@@ -21338,7 +21338,7 @@ void FUN_00011c98(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00011e00 (256 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00011d88(void)
+uint can_rx_poll_move_to_uds_buffer(void)
 
 {
   uint uVar1;
@@ -21346,38 +21346,38 @@ uint FUN_00011d88(void)
   uint uVar2;
   
   if ((DAT_ffff9ec8 & 1) == 0) {
-    uVar1 = FUN_00009c8e(0);
+    uVar1 = can_rx_pending_check(0);
     if (uVar1 != 0) {
       if ((uVar1 & 0x2000) == 0) {
         if ((uVar1 & 0x4000) != 0) {
-          uVar1 = ref_placeCANRX(&DAT_0004dffc);
+          uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004dffc);
         }
       }
       else {
-        uVar1 = ref_placeCANRX(&DAT_0004dfec);
+        uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004dfec);
       }
     }
   }
   else {
-    uVar1 = FUN_00009c8e(0);
+    uVar1 = can_rx_pending_check(0);
     if (uVar1 != 0) {
       if ((uVar1 & 0x2000) == 0) {
         if ((uVar1 & 0x4000) != 0) {
-          cVar3 = ref_placeCANRX();
+          cVar3 = can_rx_copy_mailbox_to_buffer();
           uVar2 = FUN_00009c34(&DAT_0004dffc);
           uVar1 = (uint)cVar3;
           if ((uVar1 == 0) && (uVar1 = uVar2 & 0xff, uVar1 == 8)) {
-            uVar1 = FUN_000680a0(0x7e0);
+            uVar1 = uds_service_entry(0x7e0);
             return uVar1;
           }
         }
       }
       else {
-        cVar3 = ref_placeCANRX();
+        cVar3 = can_rx_copy_mailbox_to_buffer();
         uVar2 = FUN_00009c34(&DAT_0004dfec);
         uVar1 = (uint)cVar3;
         if ((uVar1 == 0) && (uVar1 = uVar2 & 0xff, uVar1 == 8)) {
-          uVar1 = FUN_000680a0(0x7df);
+          uVar1 = uds_service_entry(0x7df);
           return uVar1;
         }
       }
@@ -39500,7 +39500,7 @@ uint ref_CAN216RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004e22c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e22c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e040();
     can216_unpack_mixed_width_fields();
@@ -39660,7 +39660,7 @@ uint ref_CAN231TX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004df5c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004df5c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e040();
     ref_can231SetupTx();
@@ -41571,7 +41571,7 @@ uint ref_CAN4B0RX_Main(void)
   char cVar2;
   uint uVar1;
   
-  cVar2 = ref_placeCANRX(&DAT_0004e24c);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e24c);
   if (cVar2 == '\0') {
     FUN_0000e038();
     ref_canrx4b0related();
@@ -41764,7 +41764,7 @@ void ref_CAN212RX_Main(void)
 {
   char cVar1;
   
-  cVar1 = ref_placeCANRX(&DAT_0004e21c);
+  cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e21c);
   if (cVar1 == '\0') {
     FUN_0000e038();
     ref_can212RXUnpack();
@@ -42221,7 +42221,7 @@ uint ref_CAN4C0RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004e25c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e25c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e038();
     FUN_0002b97e();
@@ -48410,7 +48410,7 @@ uint ref_CAN430RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004e23c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e23c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e048();
     ref_can430rx_unpack();
@@ -53044,7 +53044,7 @@ uint ref_CAN47RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004e26c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e26c);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     FUN_0000e050();
@@ -69944,7 +69944,7 @@ uint ref_CAN4B1RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004dfdc);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004dfdc);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e038();
     ref_can4B1RXUnpack();
@@ -97419,14 +97419,14 @@ uint FUN_00067faa(uint *param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00066990 (62 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000680a0(int param_1)
+void uds_service_entry(int param_1)
 
 {
   char cVar1;
   
   if ((((param_1 == 0x7e0) || (param_1 == 0x7df)) && (cVar1 = FUN_000683d4(), cVar1 != '@')) &&
      (cVar1 = FUN_0006842c(), cVar1 == '\0')) {
-    FUN_000684b4(param_1);
+    uds_request_schedule_service_task(param_1);
     return;
   }
   return;
@@ -97654,7 +97654,7 @@ undefined4 FUN_0006842c(char param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00066da4 (116 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000684b4(int param_1)
+void uds_request_schedule_service_task(int param_1)
 
 {
   uint local_14;

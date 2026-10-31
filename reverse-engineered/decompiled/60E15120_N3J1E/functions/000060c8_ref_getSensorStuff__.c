@@ -17,8 +17,8 @@ void ref_getSensorStuff__(void)
   FUN_00005f18();
   FUN_0000a850();
   FUN_00007070();
-  ref_sensorADCRead();
-  ref_getVehicleStatusInputs_();
+  adc_scan_sweep_all_channels();
+  vehicle_inputs_poll_pfdr_phdr();
   FUN_00007280();
   FUN_000074ac();
   bVar1 = ATUII_TIOR3A_B;

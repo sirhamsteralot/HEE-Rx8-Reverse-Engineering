@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00007778 (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_setInterruptTimer(void)
+void atu_ch10b_tick_enable(void)
 
 {
   ushort uVar1;

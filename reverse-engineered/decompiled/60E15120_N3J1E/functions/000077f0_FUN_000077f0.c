@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * crank_capture_poll [high]: Reads ATUII_ICR0AH_W (0xfffff434) into 0xffff9fb8 and ATUII_ICR10AH_W (0xfffff6d0) into 0xffff9fb0, computes period into 0xffff9fa8. Emulator: ICR values tracked the virtual crank wheel (set_rpm) when called via harness.
+ */
 /* ROM address: 0x000077f0; body bytes: 138; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000077f0 (138 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_000077f0(void)
+uint crank_capture_poll(void)
 
 {
   uint uVar1;

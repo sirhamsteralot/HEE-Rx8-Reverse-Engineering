@@ -8,7 +8,7 @@
    is copied to RAM 0xffff9ef0. Candidate APV feedback chain, via 0x43a86. Harness APV signal is PCM
    3B (13Electrical.pdf p16); MCU-to-connector link is not electrically verified. */
 
-void ref_sensorADCRead(void)
+void adc_scan_sweep_all_channels(void)
 
 {
   byte bVar1;

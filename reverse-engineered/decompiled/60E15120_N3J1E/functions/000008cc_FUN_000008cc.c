@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * boot_wait_nmi_pin_high [high]: Contains the poll at 0x8ea: mov.w @(0xffffed18) & 0x8000 (ICR_W bit15 = NMI pin level, Sh7055h.pdf 7.3.2) until set. Emulator: with NMI modeled low, boot hangs exactly here (pc 0x8ea, 1 mmio write); with SYSC nmi_level=1 boot reaches idle 0x3dac.
+ */
 /* ROM address: 0x000008cc; body bytes: 42; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000008cc (42 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_000008cc(void)
+undefined4 boot_wait_nmi_pin_high(void)
 
 {
   ushort uVar1;

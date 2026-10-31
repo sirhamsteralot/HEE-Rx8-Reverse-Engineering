@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * can_exit_reset_mode [high]: MCR &= ~1, waits GSR bit3 clear. Pairs with 0x9c0 (HCAN1 copies at 0x1e94/0x1eb2).
+ */
 /* ROM address: 0x000009de; body bytes: 30; decompiled */
 
-byte FUN_000009de(byte *param_1,byte *param_2)
+byte can_exit_reset_mode(byte *param_1,byte *param_2)
 
 {
   byte bVar1;

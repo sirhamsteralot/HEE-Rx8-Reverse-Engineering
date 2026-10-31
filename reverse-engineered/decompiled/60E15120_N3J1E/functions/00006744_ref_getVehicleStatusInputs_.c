@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00006744 (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getVehicleStatusInputs_(void)
+void vehicle_inputs_poll_pfdr_phdr(void)
 
 {
   DAT_ffff9ec8 = PFDR_W;

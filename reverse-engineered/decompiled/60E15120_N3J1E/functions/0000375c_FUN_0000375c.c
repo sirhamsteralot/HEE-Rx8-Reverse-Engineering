@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_switch_to_task [high]: Sets ctrl+4 = task index, ctrl+0x18 = task record (0x4990 + idx*0x10), ctrl+0x14 = stack ptr from PTR_DAT_00004994[idx], then computed jump via PTR_FUN_00004998[idx] (task table 0x4998). Emulator: vec-0x378 handler reaches it via 0x9630.
+ */
 /* [EXPORT CLEANUP]
  * Computed indirect jump at 0x37ac: slot = incoming r2 + ROM32[0x37c0] (=0x4b34)
  * - zero-extended byte at [r13]; target = ROM32[slot]. The sibling path at
@@ -7,7 +10,7 @@
  */
 /* ROM address: 0x0000375c; body bytes: 96; decompiled_with_warnings */
 
-int FUN_0000375c(int param_1,short param_2)
+int os_switch_to_task(int param_1,short param_2)
 
 {
   char cVar1;

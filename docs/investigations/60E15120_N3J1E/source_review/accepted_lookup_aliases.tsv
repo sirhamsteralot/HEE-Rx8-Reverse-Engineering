@@ -15,3 +15,12 @@ DAT_0006b304	tbl_knock_level_3d_d_0006b304	source_review_knock_loop	3D 1x1 raw k
 DAT_0006990c	tbl_closed_loop_warmup_time_0006990c	source_review_knock_loop	Raw u16 2D, 15 cells vs catalyst-temp-model axis 0x6f7e0 (data 0x6f81c); engine warmup time before closed loop is allowed (0x1c13c). Overrides the generated RX8Defs descriptor alias on rebuild.
 tbl_table_2d_304_check_datatype_0006990c	tbl_closed_loop_warmup_time_0006990c	source_review_knock_loop	Chained rename of the auto RX8Defs descriptor name already integrated into current exports; same table as the row above.
 DAT_0006ac38	tbl_fuel_coolant_compensation_0006ac38	source_review_fueling	2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis.
+00007fc50	ivt_base_vbr	u32[236] vector table; VBR set to this at 0xd206
+00004998	os_task_table	18 x 16-byte task records {entry, mask, param, stack}; stacks 0xffff7410-0xffff7498
+00004990	os_task_record_base	task control records base used by 0x375c
+0000d914	can_mailbox_mask_table	16 x u16; mask = 1<<((mb+8)&0xf); verified vs ROM bytes
+0000d7d4	injector_channel_map	6 x 12-byte records {DCNT8x ptr, GR1x ptr, TIER mask}; dynamically confirmed via 0x8a68 (ch0 -> DCNT8A/GR1A ... ch5 -> DCNT8F/GR1F)
+00004dffc	can_rx_desc_id07e0	Rx8CanMessageDescriptor id=0x7e0 mb=14 dlc=8 buf=0xffffddc8
+00004dfec	can_rx_desc_id07df	Rx8CanMessageDescriptor id=0x7df mb=13 dlc=8 buf=0xffffddc8 (functional)
+00004e00c	can_tx_desc_id07e8	Rx8CanMessageDescriptor id=0x7e8 mb=15 dlc=8 buf=0xffffddd0; emulator TX via 0x99b0 emitted 0x7e8 frames from 0xffffddd0
+00005f10c	diag22_dispatch_table	99 x 12-byte Rx8DiagnosticRecord {identifier, resp_len, _, availability_mask, _, handler}; PID 0x43 record at 0x5f268 -> handler 0x56b8a

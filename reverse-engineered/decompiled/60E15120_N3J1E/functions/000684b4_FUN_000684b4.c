@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_request_schedule_service_task [high]: Calls 0x68b22(DAT_ffffddec), 0x68bc6(1,0x28), thunk 0x54b2c, ref_osTaskScheduler(2,0,&local_14). Executed in emulator while serving 10 03.
+ */
 /* ROM address: 0x000684b4; body bytes: 116; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00066da4 (116 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000684b4(int param_1)
+void uds_request_schedule_service_task(int param_1)
 
 {
   uint local_14;

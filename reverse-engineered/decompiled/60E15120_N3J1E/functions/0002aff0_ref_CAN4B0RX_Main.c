@@ -9,7 +9,7 @@ uint ref_CAN4B0RX_Main(void)
   char cVar2;
   uint uVar1;
   
-  cVar2 = ref_placeCANRX(&DAT_0004e24c);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e24c);
   if (cVar2 == '\0') {
     FUN_0000e038();
     ref_canrx4b0related();

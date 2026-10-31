@@ -270,3 +270,19 @@ ffffa1c2	apv_pwm_reverse_latched	uint16	0000a936	Latched a1c6 at PWM period boun
 ffffa1bc	apv_drive_status	uint8	0000aac4	Remapped 0..3 state from PH12/PH13 (PHDR 0x1000/0x2000).
 ffffcab0	apv_position_voltage	float	00043a86	APV feedback volts = ADC6 raw 9ef0 * 5/65536.
 ffff9ef0	adc6_raw_apv_position	uint16	00043a86	ADC6 (0xfffff80c, AN6 pkg pin 92) sample; candidate APV position input.
+ffff7638	os_ctrl_block	uint8[0x20]	0000375c
+ffff763c	os_scheduled_count	uint16	00003db0
+ffff763e	os_dispatched_count	uint16	00003db0
+ffff7640	os_state_flags	uint16	00003238
+ffff764c	os_current_task_record_ptr	ptr	00003e10
+ffff7650	os_task_table_ptr	ptr	00003e10
+ffff7408	os_task_stack_base	ptr	00003e10
+ffff9ec8	vehicle_inputs_pfdr_latch	uint8	00006744
+ffff9ed8	vehicle_inputs_pfdr_prev	uint8	00006796
+ffff9eca	vehicle_inputs_phdr_latch	uint8	00006744
+ffff9eda	vehicle_inputs_phdr_prev	uint8	00006796
+ffffddc8	uds_rx_buffer	uint8[8]	00011d88
+ffffddd0	uds_tx_buffer	uint8[8]	000099b0
+ffff9fb0	crank_icr10ah_sample	uint16	000077f0
+ffff9fb8	crank_icr0ah_sample	uint16	000077f0
+ffff9fa8	crank_period_last	uint32	000077f0

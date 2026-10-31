@@ -8,7 +8,7 @@ uint ref_CAN430RX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004e23c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e23c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e048();
     ref_can430rx_unpack();

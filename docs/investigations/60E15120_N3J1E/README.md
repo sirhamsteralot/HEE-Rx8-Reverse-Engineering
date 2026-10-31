@@ -142,10 +142,19 @@ input SHA-256 asserted unchanged and decode-verified patches. Defs added to
 `RX8Defs_Copy/RomRaider/rx8_defs.xml`. Static validation only — not hardware-tested;
 flash with `Rx8Man/`. Docs: `Utilities/PATCHER_*.md`, `reviews/limiter/README.md`.
 
+## OS scheduler / CAN / IVT labeling — 2026-10-31
+
+Emulator-driven labeling pass (Phase 1 fidelity work): 27 functions, 16 RAM locations,
+9 tables named from dynamically verified behavior (IVT at VBR 0x7fc50, CAN RX interrupt
+IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC sweep 0x6884,
+crank ISR 0x803e, NMI poll 0x8ea...). Write-up: `os_scheduler_can_ivt_report.md`;
+labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
+backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
+
 ## Start here
 
 - [Firmware design document](design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md) — each with a full memory map; reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md) — each with a full memory map; reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
 - [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)

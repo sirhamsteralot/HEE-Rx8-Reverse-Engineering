@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000803e (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * ref_INT_ATU101_IMI10AG(int param_1,undefined4 param_2,int param_3,uint param_4)
+undefined4 * crank_isr_compute_rpm(int param_1,undefined4 param_2,int param_3,uint param_4)
 
 {
   int iVar1;

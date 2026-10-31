@@ -8,7 +8,7 @@ uint ref_CAN231TX_Main(void)
 {
   uint uVar1;
   
-  uVar1 = ref_placeCANRX(&DAT_0004df5c);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004df5c);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e040();
     ref_can231SetupTx();
