@@ -32,6 +32,27 @@ the thread drew both outside the parens. Knock retard enters via `correction_tot
 the **leading rotor only** (0x1815c, confirmed — no trailing reader). All dynamic checks
 in the emulator matched to <1e-4 deg (E1 double-precision limit).
 
+## 1a. Plain-language summary (maps vs. applied timing)
+
+- The ROM's leading/trailing **maps** (tbl 0x69078 / 0x69120, rpm x load) are
+  only a **base** starting point — they are *not* the timing that reaches the
+  spark plugs.
+- The PCM then adds corrections (coolant, intake air, idle, cranking blend,
+  knock retard, DSC, A/C), blends during cranking via `cranking_mult`
+  (0x123da/0x124d6), adds the correction total (0x123ba/0x123ca), and finally
+  **clamps** the result between a min (-25.0/-58.5 deg or a coolant table,
+  0x12630) and a max (rpm table 0x69190/0x691cc, e.g. 65 deg @ 3000 rpm)
+  at 0x121fc/0x12300.
+- Only that clamped value is written to the output RAM (0xffffa630 leading /
+  0xffffa638 trailing) and drives the actual spark event per rotor
+  (0x14774/0x147aa).
+- So an **OBD/datalog timing value is the final computed (commanded) timing**,
+  not a raw map cell — it can legitimately differ from the map at idle,
+  cranking, cold start, or under knock retard. Even it is the *commanded*
+  value; the physically applied spark can still be altered downstream (dwell,
+  misfire cutoff), which is why the chain was verified dynamically in the
+  emulator rather than from any single number.
+
 ## 2. How it works (condensed pseudocode)
 
 ```python
