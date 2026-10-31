@@ -5,6 +5,8 @@ reverse-engineering effort. Read `README.md` first for project context.
 
 ## Repo map (put things where they belong)
 
+- `input/` — raw, uncommitted intake drop zone (bins, prior efforts, cloned repos,
+  sources). Never `git add` its contents; promote verified artifacts out of it.
 - `binaries/` — original, untouched dumps only. Never edit or "fix" a binary in place.
 - `reverse-engineered/disassembly/` — annotated disassembly exports and disassembler project notes.
 - `reverse-engineered/decompiled/` — decompiler output.
@@ -37,17 +39,23 @@ rather than dumping it at the root.
    in your summary.
 7. **No drive-by changes.** Don't reformat or "clean up" files you didn't touch. Match
    existing style (kebab-case filenames, ISO dates, `0x`-prefixed addresses).
+8. **`input/` stays uncommitted.** It holds third-party repos and raw dumps — keep
+   `git status` clean by never tracking it (`.gitignore` already covers `input/*`).
+   Promote verified material into `binaries/`, `docs/references/`, `data/`, etc.
+   with provenance instead of referencing files inside `input/`.
 
 ## Workflow for a typical task
 
 1. Read `README.md` and this file; check `docs/investigations/` for existing work on
    the topic to avoid duplication.
-2. Create/update the investigation doc with goal + plan.
-3. Do the analysis; put artifacts in the correct folder per the repo map.
-4. Add/update tests in `tests/` when behavior is reimplemented.
-5. Update the investigation doc with findings, evidence (hashes, addresses, captures),
+2. Land raw material (bins, prior efforts, cloned repos) in `input/` — never commit
+   it — and inventory what you added in the investigation doc.
+3. Create/update the investigation doc with goal + plan.
+4. Do the analysis; put artifacts in the correct folder per the repo map.
+5. Add/update tests in `tests/` when behavior is reimplemented.
+6. Update the investigation doc with findings, evidence (hashes, addresses, captures),
    and open questions.
-6. Commit with a clear imperative message; reference investigation doc and addresses in
+7. Commit with a clear imperative message; reference investigation doc and addresses in
    the body when relevant.
 
 ## Commit style

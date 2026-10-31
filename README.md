@@ -25,6 +25,7 @@ documentation and investigations, and the utilities used along the way.
 
 | Path | Purpose |
 |---|---|
+| `input/` | Raw intake drop zone: incoming bins, prior efforts, cloned third-party repos, sources. **Never committed** — verified artifacts are promoted out of it. |
 | `binaries/` | Original dumps/firmware images, with a SHA-256 provenance manifest. |
 | `reverse-engineered/` | All RE output: annotated disassembly, decompiler output, and clean reimplementations. |
 | `reverse-engineered/disassembly/` | Disassembler exports and annotated assembly (Ghidra/IDA/Binja projects live here or are referenced). |
@@ -39,6 +40,9 @@ documentation and investigations, and the utilities used along the way.
 | `tests/` | Harnesses that compare reimplemented behavior against observed original behavior. |
 
 ## Recommended workflow
+
+Everything raw lands in `input/` first (uncommitted intake). Only verified artifacts
+are promoted into the tracked folders below.
 
 1. **Acquire** — dump the binary from your own unit (bench ECU preferred over in-car).
 2. **Preserve** — drop it in `binaries/`, record provenance, and regenerate

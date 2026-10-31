@@ -17,3 +17,8 @@ scratch/
 # Binary dumps (*.bin, *.ori, *.dump, *.bak) are handled by .gitattributes via Git LFS.
 # Very large captures may instead be kept out of the repo with only their SHA-256
 # recorded in binaries/manifest.csv.
+
+# input/ is a raw intake drop zone (bins, prior efforts, cloned repos, sources).
+# Its contents are never committed; only input/README.md is tracked.
+input/*
+!input/README.md
