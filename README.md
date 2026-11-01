@@ -5,9 +5,11 @@ Workspace for reverse engineering the Mazda RX-8 (Series 1) PCM/ECU — a Renesa
 exists; everything is derived from ROM binaries. Seeded 2026-10-31 from a prior
 effort workspace and community material, now with a working SH-2E emulator.
 
-**Plan:** see **[ROADMAP.md](ROADMAP.md)** — Phase 1 (simulation suite) and Phase 3
-(calibration extraction) are done; open work starts at emulator fidelity (group B).
-There is a fidelity-limits register at the bottom. **Rules for agents/humans:**
+**Plan:** see **[ROADMAP.md](ROADMAP.md)** — Phase 1 (simulation suite), Phase 3
+(calibration extraction), group B (emulator fidelity, except the E6 remainder) and
+group C item 1 (UDS/Mode-22 dispatch tables) are done; open work starts at the
+group C remainder. There is a fidelity-limits register at the bottom. **Rules for
+agents/humans:**
 **[AGENTS.md](AGENTS.md)**.
 
 ## Credits & acknowledgements

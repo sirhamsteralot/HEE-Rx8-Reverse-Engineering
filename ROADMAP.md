@@ -5,12 +5,12 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 2026-10-31.
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
-pointers to the detailed docs. §Open work lists groups B–F in pickup order (group A = calibration extraction,
-done — see P3 above; group B is done except the E6 remainder; group C item 1 — the
-Mode 22/UDS dispatch tables — is done 2026-10-31, so start at the C remainder).
-Items within each group are roughly in
-dependency order. Phase numbers (P1–P6)
-are kept as tags so existing cross-references still resolve. The discrepancy
+pointers to the detailed docs. §Open work lists groups C–F in pickup order (group A =
+calibration extraction, done — see P3 below; group B = emulator fidelity, done except
+the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31 —
+so start at the C remainder). Items within each group are roughly in
+dependency order. Phase numbers (P1–P6) and group letters are kept as tags so existing
+cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
 closing one requires new evidence + a note in the relevant investigation doc —
 never silently resolve.
@@ -60,7 +60,7 @@ never silently resolve.
   RCAN RX/TX through the ROM's own driver, Mode 22 dispatch 0x5774c.
 - Agent tooling: `utilities/scripts/hee.py` CLI + `.vibe/plugins/hee-re/` MCP
   plugin (20 `heeRe.*` tools) + `hee-reverse-engineering` skill.
-- **38/38 tests pass.** Details: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
+- **61/61 tests pass** (2026-10-31). Details: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
   [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md).
 - Fidelity items closed during hardening: E2 (sensor inputs on real read paths),
   E3 (WDT IVT slot 0x358), E4 (RCAN model + CAN RX interrupt on inject),
@@ -91,67 +91,43 @@ never silently resolve.
 
 ### P3 — Calibration extraction (DONE 2026-10-31)
 
+- 587 tables extracted from `60E15120_N3J1E` (478 RX8Defs-matched + 109 unnamed),
+  381–587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic axes; cross-ROM
+  structural diff; streetport tunes mapped to 15–17 named descriptors.
+  → [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
+  artifacts: `data/maps/` (`extract_maps.py` + `diff_maps.py`).
+
+### B. Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E6 remainder
+
+Collapsed from the open-work list 2026-10-31 (work complete; the open remainder is
+tracked as E6 in the register below). Closed: E1 (f32 rounding, filter 0x23b0
+bit-exact), E7 (full Q/M DIV1 + ROTCR direction, oracle = ROM div routine 0x2158),
+interrupt masking on ldc/rte, E2/E3/E5; E6 narrowed (CAN RX autonomous; response TX
+still via profile `uds` entry points). Renesas Simulator Debugger cross-check DONE:
+NMI-loop segment MATCH 20000/20000; full-boot-from-reset MATCH 147/147 then one
+peripheral-pin divergence (GPIO PLIOR_W 0xfffff756 bit3) — zero CPU-caused divergence.
+→ [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
+[`docs/learnings.md`](docs/learnings.md) §group B; register below for E4/E6.
+
+### C item 1 — UDS/Mode-22 dispatch tables — DONE 2026-10-31
+
+All 99 Mode 22 PID records (0x5f10c) + 29 UDS service records (0x5eb40) + sub-PID
+table 0x5f5b2 labeled; ISO-TP frame dispatch 0x6842c, service router 0x68dac; 177
+functions + 63 RAM cells + 3 tables renamed; re-verified against raw disassembly and
+dynamically (full 99-PID sweep, 15-service routing; 61/61 tests).
+→ [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
+labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### B. Emulator fidelity hardening (P1 residual) — done 2026-10-31 except E6 remainder
-
-Foundational for dynamic validation of everything in groups C–E.
-
-- **E1 CLOSED 2026-10-31**: every FPU result rounded to float32 (SH-2E FR
-  registers are single precision); `harness.call` f32-rounds float args.
-  Filter 0x23b0 now bit-exact vs the reimplementation (was the last E1 diff).
-- **E7 CLOSED 2026-10-31 (div1/rotcr)**: ROTCR was aliased to ROTCL (wrong
-  direction — 21 ROM sites); DIV1 lacked the Q/M SR bits and did no arithmetic.
-  Both now implement the full Renesas algorithm (SR bit8=Q, bit9=M per
-  Sh7055h.pdf fig 2.2; DIV1 pseudocode per the SH instruction-set reference).
-  Validated against the ROM's own division routine ref_LongFunc 0x2158 as
-  oracle (r4 = exact quotient). Cycles ≠ real time remains (accepted).
-- **Interrupt masking added 2026-10-31**: prioritized interrupts below the SR
-  I3-I0 mask are now deferred and delivered when ldc/rte lower the mask
-  (SH-2E manual 7.2.5) — previously every interrupt fired immediately.
-- **E6 partial → narrowed 2026-10-31**: traced precisely. CAN RX ISR exits via
-  plain RTE, so the 0x3db0 wake check (ref_setSR 0x3934 with r4==0) never runs
-  on that path; the OS tick (ATU-II ch10B CMI10B 0x2c8) never fires because the
-  ROM arms it from task[8] (0x648e→0x759e→0x7778→0x7b58, OCR10B=table 0xd76d)
-  which needs a scheduler pass that needs the tick — boot-ordering circularity
-  in the partial peripheral model. Verified gates: with CMI10B firing, the
-  0x3db0 wake check runs (165 hits/500k cycles); with the vehicle-present latch
-  word 0xffff9ec8 bit0=1, uds_entry 0x680a0 fires autonomously from can_rx_poll
-  0x11d88. Remaining: autonomous response TX needs the ROM's task[8]/task[17]
-  to run at boot (arm tick + poll vehicle inputs) — i.e. the emulator must
-  deliver the first scheduler pass; until then the OBD port drives the profile
-  `uds` entry points (0x680a0 + 0x3c2a) for the response side. RX side autonomous.
-- **Renesas Simulator Debugger cross-check** (`compare_traces.py`): DONE
-  2026-10-31 — HEW 9.4.3 SH-2E simulator trace (`input/renesas.trace`,
-  Trace-window TSV) vs our emulator with the NMI pin low (same state): **MATCH,
-  20000/20000 steps identical** on the 0x8ea NMI-poll loop, and the **full-boot
-  from-reset diff is DONE**: with the sim-only NOP-patched ROM
-  (`input/60E15120_N3J1E_sim-nmi-nop.bin`, because Sdsh2e has no NMI pin model
-  and the ROM zeroes ICR_W at 0x8e6), MATCH for the first **147 steps** from
-  reset 0x8b8 (all branches/calls/delay slots identical — our trace now logs
-  delay-slot PCs; golden regenerated 319731 entries), then divergence at the
-  `bf` at 0x9d0 reading GPIO PLIOR_W 0xfffff756 bit3 (peripheral pin default
-  differs) — a peripheral-model difference, not a CPU bug. Zero CPU-caused
-  divergence across both segments. `compare_traces.py` auto-parses the Renesas
-  TSV export. Our 200k golden re-verified MATCH after the E1/E7/interrupt/
-  delay-slot-trace changes.
-
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
-Use the emulator for dynamic verification where useful (see group B).
+Use the emulator for dynamic verification where useful (group B, done).
 
-- **DONE 2026-10-31**: all **99 records** of the dispatch table at 0x5f10c–0x5f5af labeled
-  (PID → handler → semantic, incl. sub-PID supported-bits table 0x5f5b2) + full UDS service
-  table 0x5eb40 (29 records: services 0x10/0x11/0x14/0x21/0x22/0x23/0x27/0x28/0x2f/0x31/
-  0x34/0x36/0x37/0x3e/0x85 + OBD modes 0x01-0x09 + 0x12/0x18/0x32/0x33/0x3b/0xb1), ISO-TP
-  frame dispatch 0x6842c, service router 0x68dac; 175 functions + 63 RAM cells renamed,
-  dynamically verified in the emulator (59/59 tests). →
-  [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
-  labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 - Triage the **154 decompiler warning functions** (`decompiler_issues.tsv`);
   classify `non_instruction_ranges.tsv`.
 - Cross-check the thread's OL-fueling chain vs our fueling report; verify
@@ -163,10 +139,12 @@ Use the emulator for dynamic verification where useful (see group B).
   into `fuel_correction_sum` (b0d0/c0c8/ae08/b21c/c104/cde0/ae10) and
   `DAT_ffffadec`/`DAT_ffffc644`; resolve fuel-cut arbitration, injection-angle
   semantics (tables 0x68ef8/0x68f0c/0x68f20), cold-start degenerate body, MAF
-  fault latching (0x19f4e/0x19f40), PID 0x1410, and the 0x4ab8 task-record
+  fault latching (0x19f4e/0x19f40), ~~PID 0x1410~~ (resolved 2026-10-31 — injector
+  pulse time, see D10), and the 0x4ab8 task-record
   dispatch; map descriptor addresses to P3-extracted `data/maps/` table names;
   dynamically verify the fuel chain in the emulator via `harness.py`.
-- **Settle D5 (g/rev vs VolEf)**: trace PID 0x43 handler 0x56b8a to the specific
+- **Settle D5 (g/rev vs VolEf)**: handler side settled 2026-10-31 (see register D5);
+  remaining: trace `engine_load_ffffc0b4` to the specific
   extracted table in `data/maps/60E15120_N3J1E/` it reads, then compare the
   handler's computed value against the table + scaling numerically.
 - Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
