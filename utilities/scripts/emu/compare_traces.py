@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """Diff two execution traces (ours vs Renesas Simulator Debugger export, or any
-two golden traces). Each line may contain one hex address; lines starting with
-'#' are ignored. Reports the first divergence.
+two golden traces). Reports the first divergence.
+
+Plain trace format: one hex address per line; lines starting with '#' ignored.
+
+Renesas SH simulator Trace-window export (TSV whose header starts with 'PTR'):
+columns PTR, Cycle, Address, Pipeline, Instruction, ... The buffer is written
+newest-first with pipelined rows, so we keep execute-stage rows (Pipeline
+contains 'E') that carry an instruction, sort by Cycle, and use the Address
+column as the architectural PC sequence.
 
 Usage:
     python compare_traces.py trace_a.txt trace_b.txt [--max N]
 
 Our emulator writes traces via: emu.py --profile X --trace out.txt
 (lines: "<n> 0x<pc>" plus "# mmio ..." comment lines).
-Renesas Simulator Debugger: load the same ROM at 0x0 for SH7055, run the same
-number of instructions, export the PC trace (e.g. via its trace window / script)
-to a text file with one hex address per line, then diff.
 """
 import argparse
 import re
@@ -20,6 +24,21 @@ HEX = re.compile(r"0x[0-9a-fA-F]+")
 
 
 def load(path):
+    with open(path, encoding="utf-8", errors="replace") as f:
+        first = f.readline()
+    if first.lstrip().startswith("PTR"):
+        rows = []
+        with open(path, encoding="utf-8", errors="replace") as f:
+            f.readline()
+            for line in f:
+                parts = line.rstrip("\r\n").split("\t")
+                if len(parts) >= 5 and parts[4].strip() and "E" in parts[3]:
+                    try:
+                        rows.append((int(parts[1]), int(parts[2], 16)))
+                    except ValueError:
+                        pass
+        rows.sort(key=lambda r: r[0])
+        return [addr for _, addr in rows]
     pcs = []
     with open(path, encoding="utf-8", errors="replace") as f:
         for line in f:

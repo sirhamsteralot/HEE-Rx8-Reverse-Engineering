@@ -122,14 +122,14 @@ Foundational for dynamic validation of everything in groups C–E.
   to run at boot (arm tick + poll vehicle inputs) — i.e. the emulator must
   deliver the first scheduler pass; until then the OBD port drives the profile
   `uds` entry points (0x680a0 + 0x3c2a) for the response side. RX side autonomous.
-- **Renesas Simulator Debugger cross-check** (`compare_traces.py`): tooling now
-  installed (HEW 9.4.3 + SH-2E simulator Sdsh2e.dll + SH7055F device files);
-  workspace + SH-2E simulator session created and connected, ROM offered at 0x0.
-  External trace diff still pending — this scripted session cannot inject
-  keyboard input into HEW's command control, and `hprojgen.exe` is missing from
-  the install. Manual finish steps in `utilities/scripts/emu/README.md`. Our
-  200k trace re-verified MATCH vs the golden fixture after the E1/E7/interrupt
-  fixes.
+- **Renesas Simulator Debugger cross-check** (`compare_traces.py`): DONE
+  2026-10-31 — HEW 9.4.3 SH-2E simulator trace (`input/renesas.trace`,
+  Trace-window TSV) vs our emulator with the NMI pin low (same state): **MATCH,
+  20000/20000 steps identical** on the 0x8ea NMI-poll loop. `compare_traces.py`
+  now auto-parses the Renesas TSV export (execute-stage rows sorted by Cycle).
+  Full-boot trace diff pending a from-reset Renesas capture with NMI high (see
+  emu README for the exact steps). Our 200k golden re-verified MATCH after the
+  E1/E7/interrupt fixes.
 
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 

@@ -140,8 +140,22 @@ window; in it set Trace Acquisition (buffer size >= step count, enable), run
 right-click > Save/Save As to export the trace (one entry per executed
 instruction), and diff here with:
 `python utilities/scripts/emu/compare_traces.py /tmp/our-200k.trace <renesas.trace>`
-(`compare_traces.py` pulls the first `0x...` hex per line, so any trace format
-with hex PCs works).
+(`compare_traces.py` auto-detects the Renesas Trace-window TSV export — header
+starting `PTR` — and extracts the architectural PC sequence itself: execute-stage
+rows (Pipeline contains `E`) with an instruction, sorted by Cycle; plain traces
+use the first `0x...` hex per line).
+
+**Result 2026-10-31 (external cross-check DONE):** with the simulator's NMI pin
+left at its default LOW, the SH7055 ROM parks in the boot NMI-poll loop at
+0x8ea (BT 0x8ea at 0x8f0); the saved trace (`input/renesas.trace`, 174762
+executed instructions, buffer wrapped) is exactly that 4-PC loop
+(0x8ea/0x8ec/0x8ee/0x8f0). Running our emulator with `nmi_level=0` produces the
+identical loop, and `compare_traces.py` reports **MATCH: 20000 steps identical**
+against the Renesas trace. To compare the full boot instead, set the NMI pin
+HIGH in the simulator first (View > CPU > Simulated I/O, or the ICR pin in the
+Set Simulator dialog), then `reset`, enable Trace Acquisition with a buffer >=
+your step count, run (`go 0x3dac` or `st`), and Save the trace — it diffs
+against our 200k golden with the same one-liner.
 Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
 interrupt masking) were re-verified — `emu.py --profile 60E15120_N3J1E
 --cycles 200000 --trace` still reports **MATCH 200000 steps** against
