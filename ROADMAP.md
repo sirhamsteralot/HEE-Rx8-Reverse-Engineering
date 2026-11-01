@@ -4,16 +4,29 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 (Renesas SH7055 / SH-2E, big-endian, 512 KiB flash, 32 KiB RAM). Statuses as of
 2026-11-01.
 
-**How to read this file.** §Completed is reference only — collapsed summaries with
-pointers to the detailed docs. §Open work lists groups D–F in pickup order: groups
-A–C are done (group A = calibration extraction, see P3 below; group B = emulator
-fidelity, done except the E4/E6 partials tracked in the register; group C = static
-labeling & gap closure, items 1–6 all done 2026-10-31), so pick up at group D. Items
-within each group are roughly in dependency order. Phase numbers (P1–P6) and group
-letters are kept as tags so existing cross-references still resolve. The discrepancy
-register at the bottom tracks every known unknown (E = emulator, D = data/docs);
-closing one requires new evidence + a note in the relevant investigation doc —
-never silently resolve.
+**How to read this file.** §Status at a glance is the summary; §Completed is
+reference only — collapsed summaries with pointers to the detailed docs; §Open work
+lists what remains, in suggested pickup order; the discrepancy register at the
+bottom tracks every known unknown (E = emulator, D = data/docs) — closing one
+requires new evidence + a note in the relevant investigation doc, never a silent
+resolve. Tags are stable so cross-references from other docs keep resolving: phases
+P1–P6, work groups A–F with item numbers, register IDs E1–E8 / D1–D10. Group ↔ phase
+map: A = P3 (calibration extraction), B = P1 residual (emulator fidelity), C = P2
+residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E = P4
+(reimplementation), F = P6 (toward hardware).
+
+## Status at a glance
+
+| Group | Phase | Scope | Status |
+|-------|-------|-------|--------|
+| A | P3 | Calibration extraction → `data/maps/` | DONE 2026-10-31 |
+| B | P1 residual | Emulator fidelity + Renesas cross-check | DONE 2026-10-31, except E4/E6 partials (register) |
+| C | P2 residual | Static labeling & gap closure, items 1–6 | DONE 2026-10-31 |
+| D | P2/P5 | Cross-ROM propagation | items 1–3 DONE 2026-10-31/11-01; **item 4 open — next pickup** |
+| E | P4 | Reimplementation coverage | open (dependency C is done) |
+| F | P6 | Toward hardware | open, **GATED** (AGENTS.md rule 10) |
+
+Next pickup: **D item 4** (extend `data/definitions/` to all ROMs), then group E.
 
 ---
 
@@ -89,7 +102,7 @@ never silently resolve.
   external PB15 heartbeat (0x31c) — emulated and traced.
 - **ROM↔cal-ID table** verified for 60E0G500/N3ZHEC, 60E15120/N3ZHE (D1 documented).
 
-### P3 — Calibration extraction (DONE 2026-10-31)
+### Group A / P3 — Calibration extraction — DONE 2026-10-31
 
 - 587 tables extracted from `60E15120_N3J1E` (478 RX8Defs-matched + 109 unnamed),
   381–587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic axes; cross-ROM
@@ -97,7 +110,7 @@ never silently resolve.
   → [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
   artifacts: `data/maps/` (`extract_maps.py` + `diff_maps.py`).
 
-### B. Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E4/E6 partials
+### Group B — Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E4/E6 partials
 
 Collapsed from the open-work list 2026-10-31 (work complete; the open partials are
 tracked as E4/E6 in the register below). Closed: E1 (f32 rounding, filter 0x23b0
@@ -109,7 +122,7 @@ peripheral-pin divergence (GPIO PLIOR_W 0xfffff756 bit3) — zero CPU-caused div
 → [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
 [`docs/learnings.md`](docs/learnings.md) §group B; register below for E4/E6.
 
-### C. Static labeling & gap closure (P2 residual) — DONE 2026-10-31 (items 1–6, D item 1)
+### Group C — Static labeling & gap closure (P2 residual) — DONE 2026-10-31 (items 1–6, D item 1)
 
 #### C item 1 — UDS/Mode-22 dispatch tables — DONE 2026-10-31
 
@@ -180,7 +193,11 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 - → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
   [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
 
-### D item 2 — Mode 22 PID handlers cross-ROM — DONE 2026-11-01
+### Group D — Cross-ROM propagation (P2/P5) — items 1–3 DONE 2026-10-31/2026-11-01
+
+Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_function_aliases.tsv`) was completed together with C item 6 above; items 2–3:
+
+#### D item 2 — Mode 22 PID handlers cross-ROM — DONE 2026-11-01
 
 - Mode 22 dispatch table located in all 14 ROMs by pool ref + self-consistent
   count byte (family A: 99 records at 0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0;
@@ -195,7 +212,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   New register item E8 (opdec corpus-keyed; family-B diag dispatch not dynamically
   executable yet).
 
-### D item 3 — cross-ROM labels applied to the 60E0G500_N3ZHEC export — DONE 2026-11-01
+#### D item 3 — cross-ROM labels applied to the 60E0G500_N3ZHEC export — DONE 2026-11-01
 
 - `utilities/scripts/apply_cross_rom_labels.py` applied 236 renames to
   `reverse-engineered/decompiled/60E0G500_N3ZHEC/` (262 byte-match aliases from
@@ -215,41 +232,35 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 
 ## Open work — pick up here
 
-Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A–C are complete (see §Completed above), so the
-next pickup is group D — its dependencies (P3 calibration extraction + group C
-base-ROM labeling) closed 2026-10-31.
+Suggested pickup order: **D item 4 → E → F**. Groups A–C and D items 1–3 are
+complete (see §Completed above; group D's dependencies — P3 calibration
+extraction + group C base-ROM labeling — closed 2026-10-31). Each item lists
+scope, what it unblocks, and where artifacts live.
 
-### D. Cross-ROM propagation (P2/P5) — base-ROM deps (P3 + group C) DONE 2026-10-31; pick up here
+### D. Cross-ROM propagation (P2/P5) — items 1–3 done 2026-10-31/2026-11-01
 
-- Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
-  pinned submodule has a newer ECUFlash XML, 1210 tables) via
-  `utilities/scripts/defs-merge/`, citing upstream commits.
-- Apply the cross-ROM label sets to the decompiled exports: run the naming
-  pass for 60E0G500_N3ZHEC (apply `cross_ecu/cross_rom_function_aliases.tsv`
-  + the new Mode 22 labels — add handler 0x57e66 (pid 0xc116, pid_match +
-  dynamically swept), tables 0x5f8b0 / 0x5fd56 → `named/` view + rename map
-  + validation.json), and emit per-ROM Mode 22 label TSVs for the family-B
-  ROMs (60E0FB00/60E0FC00/60E1B900/60E32000_*) so their future Ghidra exports
-  consume `data/labels/cross_rom_mode22_pid_handlers.tsv` directly. Family-B
-  extra PIDs (0x0001, 0x17f4–0x17fa, 0xd100, 0xe6f2, 0xe6f3, …) stay FUN_-level
-  (no base counterpart). Depends on the Mode 22 cross-ROM map (D item 2,
-  `data/labels/cross_rom_mode22_pid_handlers.tsv`).
+- **D item 4 (open)** — extend `data/definitions/` from 60E15120_N3J1E to all
+  ROMs (incl. 60E0G500 — the pinned submodule has a newer ECUFlash XML, 1210
+  tables) via `utilities/scripts/defs-merge/`, citing upstream commits. Unblocks
+  a tuning workflow for every dumped ROM; related register item **D8** (defs
+  dedupe vs the pinned submodule). Artifacts: `data/definitions/`, per-ROM
+  `docs/investigations/<rom-id>/defs-merge/`.
 
-### E. Reimplementation coverage (P4) — depends on C
+### E. Reimplementation coverage (P4) — depends on C (done)
 
-- Grow `reverse-engineered/reimplementation/` per labeled subsystem
-  (`rx8_math`, `rx8_apv` done) with host tests **and** emulator cross-checks
-  (`harness.py` + `tests/test_phase1_dynamic.py` pattern).
+- **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
+  subsystem (`rx8_math`, `rx8_apv` done) with host tests **and** emulator
+  cross-checks (`harness.py` + `tests/test_phase1_dynamic.py` pattern).
 
 ### F. Toward hardware (P6) — GATED
 
 No vehicle flashing without bench validation (AGENTS.md rule 10).
 
-- Pre-validate patchers (`utilities/scripts/patchers/`) in the emulator first —
-  including the "fast RAM logging" patch via the virtual OBD port — then bench.
-- Bench BOOT-mode needs ~150 Hz square wave on CN400 pin 3 (thread §8; verify
-  **D9** pinout conflict against `Sh7055h.pdf` first).
+- **F item 1 (open)** — pre-validate patchers (`utilities/scripts/patchers/`) in
+  the emulator first — including the "fast RAM logging" patch via the virtual
+  OBD port — then bench.
+- **F item 2 (open)** — bench BOOT-mode needs ~150 Hz square wave on CN400 pin 3
+  (thread §8; verify **D9** pinout conflict against `Sh7055h.pdf` first).
 
 ---
 
@@ -283,11 +294,12 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D10 | open (evidence added 2026-10-31) | PID 0x221410 double-claim — in 60E15120_N3J1E, PID 0x1410 handler 0x56f6c (`diag22_pid1410_injector_pulse_time`) reads `injector_pulse_time_ffffbe24` × 8.0 = injector pulse time; throttle pedal position is PID 0x0011/0x093c (`ffffad5c`/`ffffad44`), not 0x1410. Cross-ROM check still open |
 
-Full table with locations, impact, and closure plans: previous revision of this
-file in git history; summary rules in [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md) and
-`docs/references/`. Discrepancies are **documented, never silently resolved** —
-closing one needs new evidence (ROM bytes, manual table, bench trace, Renesas
-diff) + a note in the investigation doc.
+The tables above are summaries; the full per-item records (locations, impact,
+closure plans) live in this file's git history (pre-2026-11-01 revisions).
+Summary rules: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md) and `docs/references/`.
+Discrepancies are **documented, never silently resolved** — closing one needs new
+evidence (ROM bytes, manual table, bench trace, Renesas diff) + a note in the
+investigation doc.
 
 ---
 
