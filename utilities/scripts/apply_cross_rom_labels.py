@@ -42,7 +42,7 @@ import csv, hashlib, json, re, zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 ROM_ID = "60E0G500_N3ZHEC"
-ROM_KEY = "dumps/aron-N3ZHEC-2026-10-31.bin"  # key in the cross-ROM TSVs
+ROM_KEY = "dumps/60E0G500_N3ZHEC.bin"  # key in the cross-ROM TSVs
 DEC = ROOT / "reverse-engineered" / "decompiled" / ROM_ID
 INV = ROOT / "docs" / "investigations" / ROM_ID
 LABELS = ROOT / "data" / "labels" / ROM_ID
@@ -77,7 +77,7 @@ def write_rows(p, rs, fields):
 
 
 # --- safety: ROM untouched, hash matches provenance ---
-rom_path = ROOT / "binaries" / "dumps" / "aron-N3ZHEC-2026-10-31.bin"
+rom_path = ROOT / "binaries" / "dumps" / "60E0G500_N3ZHEC.bin"
 rom_sha_before = hashlib.sha256(rom_path.read_bytes()).hexdigest()
 info = json.loads((LABELS / "input.json").read_text())
 assert rom_sha_before == info["sha256"], "ROM hash mismatch vs input.json"
@@ -161,7 +161,7 @@ canon_p = DEC / "firmware_decompiled.c"
 s = transform(canon_p.read_text())
 # fix the export header ROM name (was left as the base ROM's name) and mark integration
 s = s.replace("/* Decompiled from 60E15120_N3J1E.bin using Ghidra.",
-              "/* Decompiled from 60E0G500 (N3ZHEC, binaries/dumps/aron-N3ZHEC-2026-10-31.bin) using Ghidra.", 1)
+              "/* Decompiled from 60E0G500 (N3ZHEC, binaries/dumps/60E0G500_N3ZHEC.bin) using Ghidra.", 1)
 header = ("/* [CROSS-ROM NAMES APPLIED 2026-11-01]\n"
           " * Names propagated from 60E15120_N3J1E by unique-exact-byte function matches\n"
           " * (cross_ecu/cross_rom_function_aliases.tsv) + the Mode 22 cross-ROM map\n"

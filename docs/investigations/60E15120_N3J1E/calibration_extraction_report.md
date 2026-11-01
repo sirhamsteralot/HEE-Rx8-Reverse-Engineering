@@ -90,7 +90,7 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 | 60E1D400 | 0x6c000 | 370 | 124 | 494 | 0 |
 | 60E32000_N3M5E | 0x71000 | 293 | 88 | 381 | 0 |
 | 60E32000_N3N5EB | 0x71000 | 354 | 108 | 462 | 0 |
-| Aron N3ZHEC stock | 0x6c000 | 404 | 129 | 533 | 0 |
+| 60E0G500_N3ZHEC (own dump) | 0x6c000 | 404 | 129 | 533 | 0 |
 
 Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
@@ -141,7 +141,7 @@ Lookup entry points: `lookup_2d_descriptor_scaled` **0x2068** (174 callers),
 0x253c/0x2598/0x256c/0x25c8/0x25f4 (3D), 0x2678/0x2690/0x26b0/0x26d0/0x26f4 (2D axis).
 
 Cross-ROM cal starts: 0x6c000 (60E0E500, 60E0E700, 60E15120, 60E1C500, 60E1D400,
-Aron N3ZHEC), 0x6d000 (60E0FB00, 60E0FC00, 60E1B900), 0x71000 (60E32000 ×2).
+60E0G500_N3ZHEC own dump), 0x6d000 (60E0FB00, 60E0FC00, 60E1B900), 0x71000 (60E32000 ×2).
 
 ## 10. Limits
 

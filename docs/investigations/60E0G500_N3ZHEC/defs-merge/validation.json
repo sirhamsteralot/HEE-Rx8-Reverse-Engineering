@@ -5,7 +5,7 @@
     "manifest_sha256_all_dumps": true,
     "fwid_at_0x2000_all_60E0G500": true,
     "per_rom_xml": {
-      "aron-N3ZHEC-2026-10-31": {
+      "60E0G500_N3ZHEC": {
         "parses": true,
         "rom_blocks": 2,
         "block_xmlid": "60E0G500",

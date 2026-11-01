@@ -16,17 +16,22 @@ edited, patched, or "fixed" in place.
     to the stock ROM)
 - **`binaries/` itself is for our own acquisitions only** (new dumps from our own
   units), with `manifest.csv` = SHA-256 + provenance for every file:
-  - `dumps/` — recovered ROMs from our own ECUs, named
-    `<source>-<original-stem>-<date>.bin`. Current: 1 factory dump
-    (stock fw 60E0G500 / cal N3ZHEC). User-tuned ROMs are not retained.
+  - `dumps/` — recovered ROMs from our own ECUs, named by ROM id
+    `<firmware-id>_<cal-id>.bin` (same scheme as the upstream stock ROMs),
+    e.g. `60E0G500_N3ZHEC.bin`. Current: 1 factory dump (stock fw 60E0G500 /
+    cal N3ZHEC). User-tuned ROMs are not retained.
   - ROMs byte-identical to a submodule stock ROM are **not** duplicated — e.g.
-    Aron's `N3ZHEB00013S5060….bin` read from his original ECU is identical to
+    the donor ECU's `N3ZHEB00013S5060….bin` read is identical to
     `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
-    (SHA-256 `a7cd953c…`), as are his `60E1B900.bin` and `N3J1EM.bin` (= 60E1D400).
+    (SHA-256 `a7cd953c…`), as are its `60E1B900.bin` and `N3J1EM.bin` (= 60E1D400).
 
 ## Naming conventions
 
-- Own acquisitions: `<source>-<version>-<date>.<ext>`, e.g. `bench-ecu-v2-2026-11-02.bin`.
+- Own acquisitions: `<firmware-id>_<cal-id>.bin`, read from the dump itself
+  (fw id at 0x2000, cal id at 0x6c046) — same scheme as the upstream stock
+  ROMs, e.g. `60E0G500_N3ZHEC.bin`. Source ECU, acquisition method, and date
+  live in `manifest.csv`, not in the filename; if two distinct acquisitions of
+  the same ROM id ever occur, disambiguate with a `-<date>` suffix.
 - If an own acquisition is byte-identical to a submodule file, reference the
   submodule path instead of duplicating it.
 

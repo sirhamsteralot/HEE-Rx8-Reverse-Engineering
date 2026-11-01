@@ -1,2 +1,2 @@
 filename,size_bytes,sha256,source,acquired_with,date
-dumps/aron-N3ZHEC-2026-10-31.bin,524288,a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2,stock ROM fw 60E0G500 / cal N3ZHEC - Aron's ECU (factory read),UDS/BOOT dump from Aron's RX-8 ECU (via Proton Drive zip in input/),2026-10-31
+dumps/60E0G500_N3ZHEC.bin,524288,a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2,"stock factory ROM fw 60E0G500 / cal N3ZHEC - donor ECU (factory read; user-tuned variants not retained)","UDS/BOOT dump from donor RX-8 ECU (raw intake zip in input/)",2026-10-31

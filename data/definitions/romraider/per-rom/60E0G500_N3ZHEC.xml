@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<roms><!-- Per-ROM RomRaider def for binaries/dumps/aron-N3ZHEC-2026-10-31.bin (SHA-256 a33f79a4f1c47007..., fw id 60E0G500 at 0x2000).
+<roms><!-- Per-ROM RomRaider def for binaries/dumps/60E0G500_N3ZHEC.bin (SHA-256 a33f79a4f1c47007..., fw id 60E0G500 at 0x2000).
     Block source: upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc. Base chain: RX8Base <- 60E0G500.
     Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4).
     ECUFlash def: submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc (1210 tables) --><rom>
