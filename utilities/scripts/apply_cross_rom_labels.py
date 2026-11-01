@@ -180,14 +180,17 @@ for r in index:
     assert body[body.index(anchor):].strip() in s, r["address"]
 
 # --- index / callgraph / symbols ---
+# snapshot pre-rename names BY ADDRESS first: the index rows below are mutated
+# in place, and the callgraph fixup must key off the original names
+old_name_by_addr = {r["address"]: r["name"] for r in index}
 for r in index:
     if r["name"] in fn_map:
         r["name"] = fn_map[r["name"]]
 write_rows(DEC / "function_index.tsv", index, list(index[0].keys()))
 calls = rows(DEC / "callgraph.tsv")
 for r in calls:
-    old = byaddr.get(r["callee"], {}).get("name", "FUN_" + r["callee"])
-    if old in fn_map:
+    old = old_name_by_addr.get(r["callee"])
+    if old is not None and old in fn_map:
         r["callee_name"] = fn_map[old]
 write_rows(DEC / "callgraph.tsv", calls, list(calls[0].keys()))
 for r in syms:
