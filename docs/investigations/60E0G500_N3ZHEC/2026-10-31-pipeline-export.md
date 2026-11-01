@@ -44,4 +44,28 @@ ROADMAP group C item 6 ("label 60E0G500 via the pipeline") + group D item 1
   same categories as the base ROM (`triage_export.py`, currently base-ROM-keyed).
 - Mode 22 PID handlers cross-ROM: base 0x5f10c table; in 60E0FC00 the dispatch
   area moved (e.g. `uds_service_dispatch_table_scan` 0x68dac → 0x6769c); a
-  per-ROM PID map is group D item 2.
+  per-ROM PID map is group D item 2. **DONE 2026-11-01** — see the update below.
+
+## Update 2026-11-01 — group D items 2 and 3
+
+- **D item 2 (Mode 22 cross-ROM map, DONE):** the Mode 22 dispatch table was
+  located in all 14 ROMs; this dump's table is at **0x5f8b0** (99 records, pool
+  ref 0x57fec, count byte 0x5fd54), dispatcher **0x57ef0**, sub-PID table
+  0x5fd56. All 99 PID→handler rows for this dump byte-match base handlers and
+  were dynamically verified (99/99-PID sweep through the ROM's own dispatcher).
+  Full report: [cross_rom_mode22_pid_handlers.md](../60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md);
+  data: `data/labels/cross_rom_mode22_pid_handlers.tsv` + per-ROM TSVs in
+  `data/labels/cross_rom/mode22/`.
+- **D item 3 (labels applied to this export, DONE):**
+  `utilities/scripts/apply_cross_rom_labels.py` applied **236 renames** here
+  (262 byte-match aliases, 28 non-function-start targets skipped, plus the
+  table labels `tbl_diag22_dispatch_records_0005f8b0` /
+  `tbl_diag22_subpid_supported_bits_0005fd56`): `function_index.tsv`,
+  `callgraph.tsv`, `symbols.tsv`, `functions/*.c`, `firmware_decompiled.c`, plus
+  the synchronized `named/` view (`firmware_named.c`, `lookup_aliases.tsv`,
+  `validation.json`). Provenance:
+  `data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv`; pre-change backup
+  (LFS) at `backups/pre_crossrom_names.zip`. The export header's ROM name was
+  corrected (it said 60E15120_N3J1E). Audited byte-exact against the backup
+  (19/19 checks): only identifiers changed; comments/strings untouched; ROM
+  SHA-256 unchanged.
