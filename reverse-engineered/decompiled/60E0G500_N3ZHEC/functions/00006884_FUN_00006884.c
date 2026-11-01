@@ -1,6 +1,6 @@
 /* ROM address: 0x00006884; body bytes: 350; decompiled */
 
-void FUN_00006884(void)
+void adc_scan_sweep_all_channels(void)
 
 {
   byte bVar1;

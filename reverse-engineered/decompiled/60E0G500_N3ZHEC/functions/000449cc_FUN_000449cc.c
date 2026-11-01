@@ -3,7 +3,7 @@
 void FUN_000449cc(void)
 
 {
-  FUN_000449d6();
+  apv_position_voltage_scale();
   FUN_000449ee();
   return;
 }

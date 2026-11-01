@@ -7,7 +7,7 @@ void FUN_0001aa46(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0001b310();
-  FUN_000449d6();
+  apv_position_voltage_scale();
   FUN_000449ee();
   FUN_0002ca0c();
   FUN_0002ca34();

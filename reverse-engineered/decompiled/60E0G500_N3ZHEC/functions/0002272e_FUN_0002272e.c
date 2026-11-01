@@ -10,7 +10,7 @@ void FUN_0002272e(void)
   FUN_00022882();
   FUN_0002292e();
   FUN_00022aa0();
-  FUN_00022ce8();
+  evap_open_loop_condition();
   FUN_000227b8();
   FUN_00025ce4();
   FUN_00003934(uVar1);

@@ -1,6 +1,6 @@
 /* ROM address: 0x00055d74; body bytes: 40; decompiled */
 
-undefined2 * FUN_00055d74(void)
+undefined2 * diag_read_runtime_s(void)
 
 {
   undefined2 *puVar1;

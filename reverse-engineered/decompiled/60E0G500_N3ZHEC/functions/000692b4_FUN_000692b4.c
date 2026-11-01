@@ -1,6 +1,6 @@
 /* ROM address: 0x000692b4; body bytes: 18; decompiled */
 
-void FUN_000692b4(byte param_1,undefined1 param_2)
+void uds_rx_channel_set_service(byte param_1,undefined1 param_2)
 
 {
   (&DAT_ffffde2f)[(uint)param_1 * 2] = param_2;

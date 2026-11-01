@@ -1,6 +1,6 @@
 /* ROM address: 0x00022330; body bytes: 250; decompiled */
 
-void FUN_00022330(void)
+void ssv_solenoid_control(void)
 
 {
   char cVar1;

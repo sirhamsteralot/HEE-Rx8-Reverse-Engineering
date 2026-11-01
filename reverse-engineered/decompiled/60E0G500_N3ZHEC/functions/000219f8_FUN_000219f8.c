@@ -7,11 +7,11 @@ void FUN_000219f8(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0000e454();
-  FUN_0000e48e();
+  injection_angle_limit_lookup();
   FUN_00030e3c();
   FUN_00030e64();
   FUN_00030fd6();
-  FUN_00031250();
+  cranking_pulse_adder();
   FUN_00030df0();
   FUN_0000eefa();
   FUN_0003534c();
@@ -19,7 +19,7 @@ void FUN_000219f8(void)
   FUN_000351b6();
   FUN_00035044();
   FUN_00035116();
-  FUN_00034eb8();
+  load_delta_enrichment();
   FUN_0003522c();
   FUN_00034d20();
   FUN_00034c50();
@@ -31,13 +31,13 @@ void FUN_000219f8(void)
   FUN_000309f4();
   FUN_00030a12();
   FUN_00033ac8();
-  FUN_000312c0();
-  FUN_00031520();
+  calc_fuel_volume_request();
+  calculate_fuel_amount_per_rotation();
   FUN_000316e0();
   FUN_00031b2c();
   FUN_00030c08();
-  FUN_00030a80();
-  FUN_0001eaa8();
+  injector_pulse_time_arbitrate();
+  cold_start_enrichment();
   FUN_0004b6bc();
   FUN_0004b938();
   FUN_00003934(uVar1);

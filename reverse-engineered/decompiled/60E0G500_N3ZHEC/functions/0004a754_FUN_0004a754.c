@@ -1,6 +1,6 @@
 /* ROM address: 0x0004a754; body bytes: 216; decompiled */
 
-void FUN_0004a754(void)
+void knock_sensor_health_persistence(void)
 
 {
   char cVar1;

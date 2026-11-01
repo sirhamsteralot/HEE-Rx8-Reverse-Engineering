@@ -7,7 +7,7 @@ uint FUN_00056ffa(void)
   
   uVar1 = (uint)DAT_ffffd228;
   if (uVar1 == 1) {
-    uVar1 = FUN_00057ef0();
+    uVar1 = diag22_find_and_dispatch_identifier();
     if (DAT_ffffd224 != -0x80) {
       DAT_ffffd224 = 0;
       DAT_ffffd228 = 0;

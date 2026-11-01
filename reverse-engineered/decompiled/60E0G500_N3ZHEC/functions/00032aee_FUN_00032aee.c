@@ -1,6 +1,6 @@
 /* ROM address: 0x00032aee; body bytes: 40; decompiled */
 
-undefined4 FUN_00032aee(void)
+undefined4 apv_counter_calc(void)
 
 {
   undefined4 uVar1;

@@ -2,7 +2,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x00003ddc) */
 
-undefined4 FUN_00003db0(void)
+undefined4 os_wake_check_context_switch(void)
 
 {
   if ((DAT_ffff763c != DAT_ffff763e) && ((DAT_ffff7640 & 0x1000) == 0)) {

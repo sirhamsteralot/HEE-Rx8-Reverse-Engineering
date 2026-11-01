@@ -8,7 +8,7 @@ undefined4 FUN_000082b8(void)
   
   uVar2 = 0;
   do {
-    uVar1 = FUN_000085e4(uVar2);
+    uVar1 = injector_channel_disable(uVar2);
     uVar2 = uVar2 + 1;
   } while ((uVar2 & 0xff) < 6);
   return uVar1;

@@ -40,7 +40,7 @@ LAB_0000fd5a:
             bVar3 = 2;
           }
           else {
-            FUN_000085e4((int)(char)*pbVar5);
+            injector_channel_disable((int)(char)*pbVar5);
             bVar3 = 0;
           }
           pbVar5[1] = bVar3;

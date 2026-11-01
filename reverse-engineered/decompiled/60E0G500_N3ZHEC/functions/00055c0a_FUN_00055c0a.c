@@ -1,6 +1,6 @@
 /* ROM address: 0x00055c0a; body bytes: 30; decompiled */
 
-undefined4 FUN_00055c0a(void)
+undefined4 diag_encode_ltft(void)
 
 {
   undefined4 uVar1;

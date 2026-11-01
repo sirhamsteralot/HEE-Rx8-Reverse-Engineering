@@ -1,6 +1,6 @@
 /* ROM address: 0x00006744; body bytes: 82; decompiled */
 
-void FUN_00006744(void)
+void vehicle_inputs_poll_pfdr_phdr(void)
 
 {
   DAT_ffff9ec8 = DAT_fffff74e;

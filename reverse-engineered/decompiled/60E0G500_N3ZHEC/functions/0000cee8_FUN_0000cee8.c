@@ -1,6 +1,6 @@
 /* ROM address: 0x0000cee8; body bytes: 22; decompiled */
 
-int FUN_0000cee8(byte param_1,int param_2)
+int can_mailbox_reg_addr(byte param_1,int param_2)
 
 {
   if (0x1f < param_1) {

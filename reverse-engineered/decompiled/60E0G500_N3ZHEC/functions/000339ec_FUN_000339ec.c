@@ -1,6 +1,6 @@
 /* ROM address: 0x000339ec; body bytes: 166; decompiled */
 
-void FUN_000339ec(void)
+void warmup_fueling_compensation(void)
 
 {
   char cVar1;

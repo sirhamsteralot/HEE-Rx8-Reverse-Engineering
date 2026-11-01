@@ -5,7 +5,7 @@ uint FUN_00039104(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004ea18);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004ea18);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     FUN_0000e050();

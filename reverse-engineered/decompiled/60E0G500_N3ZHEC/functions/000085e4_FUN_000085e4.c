@@ -1,6 +1,6 @@
 /* ROM address: 0x000085e4; body bytes: 200; decompiled */
 
-void FUN_000085e4(uint param_1)
+void injector_channel_disable(uint param_1)
 
 {
   short sVar1;

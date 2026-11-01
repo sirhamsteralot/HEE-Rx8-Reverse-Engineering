@@ -1,6 +1,6 @@
 /* ROM address: 0x00006fb0; body bytes: 174; decompiled */
 
-int FUN_00006fb0(void)
+int adc_read_result_bank2(void)
 
 {
   bool bVar1;

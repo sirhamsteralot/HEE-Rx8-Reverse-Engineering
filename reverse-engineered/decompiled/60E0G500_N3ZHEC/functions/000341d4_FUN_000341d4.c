@@ -3,7 +3,7 @@
 void FUN_000341d4(void)
 
 {
-  FUN_0000c116(0);
+  reset_knock_state_on_mode_change(0);
   DAT_ffffc0d8 = DAT_ffffb5b8;
   DAT_ffffc0dc = DAT_ffffc12c;
   DAT_ffffc0e0 = DAT_ffffadc0;

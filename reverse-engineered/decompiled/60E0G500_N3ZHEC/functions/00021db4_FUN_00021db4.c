@@ -12,9 +12,9 @@ void FUN_00021db4(void)
   FUN_00020d72();
   FUN_0000e560();
   FUN_00031f20();
-  FUN_000320b4();
+  calculate_air_charge();
   FUN_00032208();
-  FUN_00030932();
+  injector_temp_multiplier_lookup();
   FUN_00003934(uVar1);
   return;
 }

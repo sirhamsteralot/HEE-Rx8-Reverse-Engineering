@@ -3,7 +3,7 @@
 void thunk_FUN_00035924(void)
 
 {
-  FUN_00035924();
+  vfad_solenoid_control();
   return;
 }
 

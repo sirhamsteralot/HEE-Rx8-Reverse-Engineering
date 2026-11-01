@@ -3,9 +3,9 @@
 void FUN_00010208(void)
 
 {
-  FUN_000086ac(0,0);
-  FUN_000086ac(1,0);
-  FUN_000086ac(2,0);
+  injector_zero_offset_set(0,0);
+  injector_zero_offset_set(1,0);
+  injector_zero_offset_set(2,0);
   FUN_000074d4(1);
   return;
 }

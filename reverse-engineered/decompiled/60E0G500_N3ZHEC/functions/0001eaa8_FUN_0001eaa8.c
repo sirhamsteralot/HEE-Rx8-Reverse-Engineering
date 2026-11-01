@@ -1,6 +1,6 @@
 /* ROM address: 0x0001eaa8; body bytes: 82; decompiled */
 
-undefined4 * FUN_0001eaa8(void)
+undefined4 * cold_start_enrichment(void)
 
 {
   undefined4 *puVar1;

@@ -7,7 +7,7 @@ void FUN_000146ac(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_00014154();
-  FUN_000140e4();
+  iat_timing_compensation_on_throttle();
   FUN_00003934(uVar1);
   return;
 }

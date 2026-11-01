@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f318 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00067a00(undefined4 param_1,char param_2)
+void obd_mode06_test_results(undefined4 param_1,char param_2)
 
 {
   char cVar1;

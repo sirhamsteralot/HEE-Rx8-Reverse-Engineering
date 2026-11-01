@@ -10,7 +10,7 @@ uint FUN_0000cd74(byte param_1)
   uint uVar2;
   uint uVar3;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe420);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe420);
   iVar1 = iVar1 + (param_1 & 0xf) * 8;
   if ((*(byte *)(iVar1 + 4) & 8) == 0) {
     uVar2 = (uint)(*(byte *)(iVar1 + 4) >> 5);

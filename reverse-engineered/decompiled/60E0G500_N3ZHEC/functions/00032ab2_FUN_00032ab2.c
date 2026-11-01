@@ -1,6 +1,6 @@
 /* ROM address: 0x00032ab2; body bytes: 60; decompiled */
 
-void FUN_00032ab2(void)
+void apv_position_voltage_counter(void)
 
 {
   if ((DAT_ffffbff3 == '\0') || ((0x4e1 < DAT_ffffbff0 && (DAT_ffffcb24 == '\0')))) {

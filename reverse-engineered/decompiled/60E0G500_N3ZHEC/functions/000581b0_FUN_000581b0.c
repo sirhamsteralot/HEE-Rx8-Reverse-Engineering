@@ -1,6 +1,6 @@
 /* ROM address: 0x000581b0; body bytes: 34; decompiled */
 
-void FUN_000581b0(undefined4 param_1,undefined4 param_2)
+void diag_append_u16_be(undefined4 param_1,undefined4 param_2)
 
 {
   undefined1 local_c;

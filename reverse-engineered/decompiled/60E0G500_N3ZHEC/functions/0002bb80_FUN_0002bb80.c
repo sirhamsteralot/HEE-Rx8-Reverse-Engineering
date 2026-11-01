@@ -6,7 +6,7 @@ uint FUN_0002bb80(void)
   char cVar2;
   uint uVar1;
   
-  cVar2 = FUN_00009890(&DAT_0004e9f8);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9f8);
   if (cVar2 == '\0') {
     FUN_0000e038();
     FUN_0002bd66();

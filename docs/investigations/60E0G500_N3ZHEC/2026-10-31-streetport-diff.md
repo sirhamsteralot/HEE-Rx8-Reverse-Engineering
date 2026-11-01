@@ -2,6 +2,9 @@
 
 - **Date:** 2026-10-31
 - **Status:** done (byte-level); function mapping pending disassembly of 60E0G500
+  — resolved 2026-10-31 by [2026-10-31-pipeline-export.md](2026-10-31-pipeline-export.md);
+  cross-ROM names applied to the export 2026-11-01 (ROADMAP D item 3, see
+  [cross_rom_mode22_pid_handlers.md](../60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md))
 - **Inputs (SHA-256 in `binaries/manifest.csv`):**
   - base: `binaries/dumps/aron-N3ZHEC-2026-10-31.bin` (stock, fw `60E0G500`, cal `N3ZHEC`)
   - tuned: `aron-N3ZHEC-streetportv1_24_approx_{5500,9500,10000}max-2026-10-31.bin`

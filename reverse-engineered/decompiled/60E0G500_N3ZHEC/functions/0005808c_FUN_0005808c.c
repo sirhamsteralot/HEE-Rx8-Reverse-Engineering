@@ -3,11 +3,11 @@
 /* Function candidate recovered from ROM pointer at 5fd14 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005808c(char param_1)
+void diag22_pidff40_fw_id_chunk_15(char param_1)
 
 {
-  FUN_000581d2((int)param_1,0x30);
-  FUN_000581d2((int)param_1,0x47);
+  diag_append_u8((int)param_1,0x30);
+  diag_append_u8((int)param_1,0x47);
   return;
 }
 

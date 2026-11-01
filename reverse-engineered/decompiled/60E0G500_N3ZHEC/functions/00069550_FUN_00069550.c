@@ -1,6 +1,6 @@
 /* ROM address: 0x00069550; body bytes: 146; decompiled */
 
-undefined4 FUN_00069550(uint param_1,short param_2,char param_3)
+undefined4 uds_service_dispatch_table_scan(uint param_1,short param_2,char param_3)
 
 {
   int iVar1;

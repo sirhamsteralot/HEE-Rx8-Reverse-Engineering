@@ -1,6 +1,6 @@
 /* ROM address: 0x0000c116; body bytes: 54; decompiled */
 
-void FUN_0000c116(char param_1)
+void reset_knock_state_on_mode_change(char param_1)
 
 {
   undefined4 uVar1;

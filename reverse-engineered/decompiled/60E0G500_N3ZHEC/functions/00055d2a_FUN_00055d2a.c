@@ -1,6 +1,6 @@
 /* ROM address: 0x00055d2a; body bytes: 38; decompiled */
 
-void FUN_00055d2a(void)
+void diag_encode_o2s2(void)
 
 {
   undefined4 uVar1;

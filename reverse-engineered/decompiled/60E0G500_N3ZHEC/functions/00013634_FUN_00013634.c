@@ -1,6 +1,6 @@
 /* ROM address: 0x00013634; body bytes: 228; decompiled */
 
-uint FUN_00013634(void)
+uint idle_trailing_timing_error_correction(void)
 
 {
   uint uVar1;

@@ -7,7 +7,7 @@ int FUN_0001aea4(void)
   int iVar2;
   byte bVar3;
   
-  FUN_0001aefa();
+  maf_voltage_and_fault_counters();
   uVar1 = DAT_ffffaa84;
   bVar3 = 0;
   iVar2 = 0;
