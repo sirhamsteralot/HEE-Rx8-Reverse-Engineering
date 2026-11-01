@@ -183,3 +183,17 @@ Initial record of this pass. Same-day follow-up: the UDS/Mode-22 dispatch labeli
 the 0x5f10c table this report introduced, the UDS service table at 0x5eb40 (router 0x68dac,
 which this report's task[2] chain feeds), and the ISO-TP frame dispatcher 0x6842c that
 0x680a0 calls — the transport picture here is now fully named end to end.
+
+## 11. Update — 2026-10-31 (task-table correction, found by the fueling deepening)
+
+Re-derivation from 0x375c `os_switch_to_task`'s disassembly (pool 0x37b0 ->
+**0x4990**, stride 16 via `shll2`x2, r14 = record+4 used as a stack pointer)
+shows the task table is **19 records based at 0x4990** with layout
+{param, stack, entry, mask}, terminated at 0x4ac0 by {0x04ffffff, 0x00000001, ...}.
+The memory-map row "0x4998 `os_task_table` - 18 x 16-byte records {entry, mask,
+param, stack}" is off by one record and mis-ordered: 0x4998 is rec[0].entry, and
+0x4ab8 (the "task-record dispatch" open item from the knock/fueling reviews) is
+rec[18].entry -> 0x64e8, a thunk {jsr 0x11534; jmp 0x3d58 taskEnd} where 0x11534 is
+the 29-call slow/background task. Byte-verified against the raw ROM
+(0x4990..0x4ad0). Details: [fueling_control_report.md](fueling_control_report.md)
+§10.6.

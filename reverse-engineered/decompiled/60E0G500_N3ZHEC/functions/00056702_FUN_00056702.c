@@ -1,0 +1,61 @@
+/* ROM address: 0x00056702; body bytes: 270; decompiled */
+
+void FUN_00056702(char param_1)
+
+{
+  char cVar2;
+  undefined4 uVar1;
+  byte *pbVar3;
+  uint uVar4;
+  byte bVar5;
+  byte bVar6;
+  byte bVar7;
+  byte local_40;
+  byte local_24 [8];
+  
+  bVar5 = 0xff;
+  bVar6 = bVar5;
+  bVar7 = bVar5;
+  if (param_1 != '\x03') {
+    local_40 = 0;
+    while( true ) {
+      uVar4 = DAT_fffff430;
+      bVar5 = 0;
+      pbVar3 = local_24;
+      do {
+        *pbVar3 = (byte)uVar4;
+        bVar5 = bVar5 + 1;
+        uVar4 = uVar4 >> 8;
+        pbVar3 = pbVar3 + 1;
+      } while (bVar5 < 4);
+      cVar2 = FUN_000565e2(4);
+      if (cVar2 == '\0') {
+        bVar6 = 0xaa;
+        bVar5 = 0x55;
+        bVar7 = 0x55;
+      }
+      else {
+        bVar5 = local_24[2] ^ local_24[0];
+        bVar6 = local_24[1] ^ local_24[0];
+        bVar7 = local_24[3] ^ local_24[0];
+      }
+      local_40 = local_40 + 1;
+      if (0x10 < local_40) break;
+      if ((((bVar5 != 0) || (bVar6 != 0)) || (bVar7 != 0)) &&
+         (((bVar5 != 0xff || (bVar6 != 0xff)) || (bVar7 != 0xff)))) goto LAB_000567f4;
+    }
+    bVar5 = 0xff;
+    bVar6 = bVar5;
+    bVar7 = 0xff;
+  }
+LAB_000567f4:
+  uVar1 = FUN_00003920(0x10);
+  DAT_ffffd211 = bVar5;
+  DAT_ffffd212 = bVar6;
+  DAT_ffffd213 = bVar7;
+  DAT_ffffd214 = param_1;
+  FUN_00003934(uVar1);
+  return;
+}
+
+

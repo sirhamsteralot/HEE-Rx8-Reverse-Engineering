@@ -8,10 +8,16 @@
       "rom_refs": 0,
       "rom_claims": 0
     },
+    "decompiler_triage_report.md": {
+      "fn_checked": 5,
+      "ram_checked": 0,
+      "rom_refs": 12,
+      "rom_claims": 0
+    },
     "fueling_control_report.md": {
-      "fn_checked": 29,
+      "fn_checked": 44,
       "ram_checked": 21,
-      "rom_refs": 50,
+      "rom_refs": 95,
       "rom_claims": 0
     },
     "ignition_timing_report.md": {
@@ -45,9 +51,9 @@
       "rom_claims": 0
     },
     "uds_mode22_dispatch_report.md": {
-      "fn_checked": 0,
+      "fn_checked": 11,
       "ram_checked": 0,
-      "rom_refs": 4,
+      "rom_refs": 15,
       "rom_claims": 0
     }
   },

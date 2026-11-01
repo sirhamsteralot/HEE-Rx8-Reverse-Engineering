@@ -16,6 +16,12 @@ performed. Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.m
 > the fuel chain are tracked as a ROADMAP group C backlog item. The pseudocode
 > in §2 uses raw register names (bf68, bed0, …) — a physical-units rewrite is
 > part of the deepening pass.
+> **Resolved 2026-10-31 (group C deepening, §10 below):** all listed §7 items are
+> now traced and byte-verified — adder writers, fuel-cut arbitration,
+> injection-angle semantics, cold-start degenerate body, MAF fault latching,
+> the 0x4ab8 task record (task table base corrected to 0x4990 / 19 records), the
+> descriptor→`data/maps` mapping, the thread's OL-chain claims, and dynamic
+> emulator verification of the load chain (`tests/test_fuel_chain_dynamic.py`).
 > **Update 2026-10-31 (UDS dispatch pass, [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)):**
 > PID 0x1410 is now resolved — handler 0x56f6c `diag22_pid1410_injector_pulse_time`
 > reads `injector_pulse_time_ffffbe24` × 8.0 (the logger def's second claim of
@@ -266,3 +272,180 @@ FSM pinout cross-check (`mazda-rx-8-pcm-pinout-series-1.pdf`, 13B/FSM-derived, m
   terminal remains board routing (unresolved).
 - `scripts/validate_reports.py` validates this report's memory map against the
   export/ROM (`metadata/report_validation.json`).
+
+
+---
+
+## 10. Update — 2026-10-31 (ROADMAP group C deepening)
+
+All §7/§9 open items traced in the canonical export, re-verified against raw ROM
+bytes (SHA-256 unchanged `a7cd953c…264f1`), cross-checked against the RX8Club
+thread ([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)
+§6/§9), and the load chain is now also verified dynamically in the emulator
+(`tests/test_fuel_chain_dynamic.py`, 65/65 pytest). Load math itself lives in
+[`load_fueling_report.md`](load_fueling_report.md) — cross-referenced, not
+duplicated; its 2026-10-31 addendum settles the units (cell = VolEf = g/rev ×
+0.6345, ROADMAP D5 closed).
+
+### 10.1 `fuel_correction_sum` (bf14) adder writers — all traced
+
+bf14 (0x306e8 `calc_fuel_volume_request`) =
+`(b0d0 − c0c8 − ae08 − b21c) + max(c104, cde0) + min(tbl_06ac38(coolant), c00c+b120) + max(ae10, b124) + 1.0`,
+then `× adec × bed4`. Producers:
+
+| cell | producer | semantics |
+|------|----------|-----------|
+| 0xffffb0d0 `inferred_ltft_bank1_ffffb0d0` | 0x1e900 `ref_LTFTForCAN__`, init 0x1e070 | learned long-term fuel trim bank 1, stored per MAF-range slot at RAM 0x80c4+8×`maf_range_index_ffffb0fe`; filter 0.1 toward current, clamp [−0.23, 0.23]; PID 0x07 |
+| 0xffffc0c8 `DAT_ffffc0c8` | 0x33dc8 (reset 0x33e36) | `c0cc = c0e0·c0ec + c0d0·c0dc + c0f0·c0fc` (3-term product sum), `c0c8 = min(c0cc·c100, 16.0)`; zeroed when engine_on_time==0 or (c108 && rpm<812.5). Subtracted |
+| 0xffffae08 `DAT_ffffae08` | 0x1cc34 | CL-target deviation `(ae0c − ae00) + af1c + af20 − b000` (ae0c = tbl_069a60/069a7c(rpm, load), bank by cac8; af20 = integral term ±0.0005, deadband ±0.02). Subtracted |
+| 0xffffae10 `DAT_ffffae10` | 0x1cc34 | CL WOT enrichment tbl_0699b8(rpm, tps); added via `max(ae10, b124)` |
+| 0xffffb21c `DAT_ffffb21c` | 0x20288 = b220·b22c | b220 = CL-trim integral clamp [−0.05, 0.15], nudged ±8e-05 by CL-trim sign (0x20298, with fuel-cut edges b238/b23c); b22c = (b224/maf)·100, b224 = filtered per-band fuel-rate array `b1dc[tbl_069f60(rpm)]` (0x2048c, coeff 0.78/0.4) → MAF-relative % correction. Subtracted |
+| 0xffffc104 `DAT_ffffc104` | 0x34230 (reset 0x342b0) | `c144 = c124·c130 + c110·c134·c140 + c114·c120` (tip-in product-sum incl. decay×load-delta×tip-in), `c104 = min(c10c·c144, 16.0)`; zeroed when cold (`tbl_06b0ac(coolant) ≤ c01c`). Added via `max(c104, cde0)` |
+| 0xffffcde0 `DAT_ffffcde0` | 0x4af14 / 0x4afd6 | transient adder with decay `max(cde0 − cde8, arg1)` / set `fVar5·fr0` (descriptors 0x6bb1c/0x6bb28/0x6bb3c/0x6bb50/0x6bb6c) |
+| 0xffffadec `inferred_lambda_actual_ffffadec` | 0x1c880 (init 0x1c0a8/0x1c0ec) | measured lambda: `adf8 = 1/afr_word_a`, 20-tap weighted sum of `aec8[i]·ae68[i]`, clamped to [b044, b048] with b044 = tbl_0698e4(aa78), b048 = max(tbl_0698bc(aa78), tbl_06999c(rpm,load), tbl_0698d0(coolant) when ≥ −40 °C); filtered into adf0/adf4 (0.015325 / 0.0078125); forced 1.0 when CL off. Multiplier `adec`; PID 0x06 = (λ−1)·100 |
+| 0xffffc644 `fuel_correction_sum_ffffc644` | 0x3e980 (helpers 0x3e766/0x3e78e) | **catalyst-temperature model** (cat-warmup correction): engine off → cat model a998 (or `max(read(0x8710) − (coolant−a998)·10, a998)`); running with c5e6 → 1000.0; else first-order approach `c644 += (c684−c644)·c678·c67c·c68c`. PID 0x3c (×0.1−40) |
+
+The trailing `+ 1.0` in bf14 and the `+ 1.0` inside the 0x1cc34 lambda-target clamp
+confirm the thread's claim that **lambda tables store the decimal part (λ−1) and
+1 is added back late** — here visible in 0x1cc34:
+`lambda_target_ffffadfc = clamp((ae0c−ae00−ae04) + trim_b074 + af1c + af20 + aff8 − b000 − max(ae10, b00c) + 1.0, 0.85, 1.05)`.
+
+### 10.2 Fuel-cut arbitration — resolved
+
+0xedc4 `candidate_fuel_cut_arbitration(param)`: request A (0xffffa464) → both
+flags set (a444=a445=1); request B (a465) only on its rising edge, and unless
+the caller is source 0x06/0x12, sets (a444=0, a445=1); otherwise a444=0, a445=0.
+Hysteresis via prev-request latches a4a2/a4a3; then calls 0xe2d4. RPM gates
+0x18cfe `candidate_fuel_cut_rpm_condition`: `fuel_cut_allowed_ffffa964` =
+(decel_a a96a && rpm>2500) || (decel_b a96c && rpm>1700), with hysteresis flags
+a97c/a97d (1700/2500). Rev-limit conditionals 0xee82: coolant<18 °C flag a4a6 and
+a 12-cycle rev-limit countdown a4ae on mode edge (prev a4ad). Still open: the
+requesters of a464/a465 (0xf960 `ref_somethingFuelCutRelated`, tables
+0x4e27c/0x4e2c8 — candidate level).
+
+### 10.3 Injection-angle semantics — resolved
+
+0xe48e `candidate_injection_angle_limit_lookup` loads a434/a438/a43c from
+tbl_068ef8 / tbl_068f0c / tbl_068f20 (rpm axis 800–6800, uint8, RX8Defs scale
+"(x·2)+0 deg (MAYBE?)" → 120° at 800 rpm down to 60° at 6800 rpm). Consumer
+0xff32 `ref_fuelInjectionRelated` cmd 1 writes them as `value × 65536`
+fixed-point into the injector struct at +0x20/+0x38/+0x50 (cmd 0 writes
+`(a440−275)·65536` = a temperature in K). So the three tables are **per-injector
+maximum open-time angle budgets in crank degrees** (primary / secondary 1 /
+secondary 2), shrinking with rpm — not injection *phase*.
+
+### 10.4 Cold-start degenerate body — resolved (byte-verified)
+
+0x1ddfc `candidate_cold_start_enrichment`: engine-off stores 0.0 (fldi0 fr15) to
+b0c4 in both coolant/IAT branches; running computes `max(b0c4 − pool, 0.0)` with
+pool word 0x1de64 → float at 0x71064 = `0x00000000` (0.0), and 0x1de60 → 0x71060
+also 0.0. So **b0c4 is hardwired to 0.0 in this ROM** — the cold-start enrichment
+is compiled out; the function only ever freezes/zeros it.
+
+### 10.5 MAF fault latching — resolved
+
+0x19f4e `candidate_maf_voltage_and_fault_counters`: `maf_voltage_ffffaa2c` =
+raw·5/65536 (step 0x38a00000); saturating u8 counters aa35 (raw ≥ 0xf852) /
+aa36 (raw < 0x7ae); the validated pair a9e4/a9e8 is latched when a counter > 2
+**or** raw is inside the valid band (0x7ae, 0xf852). 0x19f40
+`candidate_maf_filtered_update` copies a9e8 → `mass_air_flow_ffffa9ec` (the cell
+the load/fuel chain consumes). The 0.64 V / 4.9 V window fault manager itself is
+in [load_fueling_report.md](load_fueling_report.md) (cal-area u16 0x6c102/0x6c104).
+
+### 10.6 The 0x4ab8 task-record dispatch — resolved (correction to the OS report)
+
+0x375c `os_switch_to_task` loads its base from pool 0x37b0 → **0x4990** (not
+0x4998), stride 16 (`shll2`×2). Records at 0x4990+i·16 have layout
+{param, stack, entry, mask}: rec[0..18] are valid (stacks 0xffff7408–0xffff7498,
+entries 0x62a0…0x64e8), and 0x4ac0 holds the terminator {0x04ffffff, 0x00000001, …}.
+**0x4ab8 is the entry field of rec[18] → 0x64e8**, a thunk {jsr 0x11534; jmp
+0x3d58 taskEnd}; 0x11534 is the 29-call slow/background task (torque params,
+diag timers, immo counter, …). So the task table is **19 records based at
+0x4990**, correcting [os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md)'s
+"0x4998, 18 × {entry, mask, param, stack}" (0x4998 is rec[0].entry; count/layout
+off by one record — see the dated note added there).
+
+### 10.7 Descriptor → `data/maps/60E15120_N3J1E` table-name mapping
+
+P3-extracted names for every fueling-relevant descriptor (join of
+`data/maps/60E15120_N3J1E/index.tsv` with
+`cross_ecu/romraider_descriptor_matches.json`):
+
+| descriptor | data/maps name | RX8Defs name |
+|------------|---------------|--------------|
+| 0x068ef8 / 0x068f0c / 0x068f20 | tbl_068ef8 / tbl_068f0c / tbl_068f20 | Max Injection Angle1/2/3??? (deg ×2) |
+| 0x069788 | tbl_069788 | MAF Scaling |
+| 0x069cac / 0x069cc0 | tbl_069cac / tbl_069cc0 | OL Fuelling Base Correction (Throttle) [Safe Mode] |
+| 0x069cd4 | tbl_069cd4 | OL Target - Coolant Temperature Correction |
+| 0x069ce8 / 0x069cfc | tbl_069ce8 / tbl_069cfc | OL Fuelling Rich Limit [Safe Mode] |
+| 0x069d10 | tbl_069d10 | OL Temperature Correction #B |
+| 0x069e00 | tbl_069e00 | OL Changeover Enrichment |
+| 0x069e80 / 0x069eb8 | tbl_069e80 / tbl_069eb8 | OL Target - Throttle Tip In [Safe Mode] |
+| 0x069e9c / 0x069ed4 | tbl_069e9c / tbl_069ed4 | OL Target [Safe Mode] |
+| 0x069ef0 / 0x069f28 | tbl_069ef0 / tbl_069f28 | OL Target - Tip In - Coolant Implausible B / A |
+| 0x069f0c / 0x069f44 | tbl_069f0c / tbl_069f44 | OL Target - Coolant Implausible - Gear 5-6 / 1-4 |
+| 0x0699b8 | tbl_0699b8 | Closed Loop WOT Enrichment?? |
+| 0x069a60 / 0x069a7c | tbl_069a60 / tbl_069a7c | Table 3D - 29 / 30 (CL target banks) |
+| 0x06ac38 | tbl_06ac38 | (unmatched — coolant comp candidate) |
+| 0x06ac88 | tbl_06ac88 | Fuel Injection - Engine Load Compensation |
+| 0x06a9a4 / 0x06a9c0 / 0x06a9dc | tbl_06a9a4 / tbl_06a9c0 / tbl_06a9dc | Primary / Sec1 / Sec2 Injector Weighted Engine Temp Multiplier |
+| 0x06aa48 | tbl_06aa48 | Estimated Manifold Pressure |
+| 0x06aa64 / 0x06aa80 | tbl_06aa64 / tbl_06aa80 | Injector Latency Secondary / Primary |
+| 0x06ab48 / 0x06bab0 | tbl_06ab48 / tbl_06bab0 | Primary Cranking Pulse Width / Decay Time |
+| 0x06ae28 / 0x06ae3c / 0x06ae58 / 0x06ae74 | tbl_06ae28 / tbl_06ae3c / tbl_06ae58 / tbl_06ae74 | Warmup Fueling family |
+| 0x0697b4, 0x06ac4c, 0x06ad30, 0x06ad44, 0x06b0ac, 0x06b0c0, 0x06b124, 0x06b160, 0x06b17c | tbl_0697b4 … tbl_06b17c | (unmatched — Table 2D/3D-nnn in RX8Defs) |
+
+### 10.8 Thread OL-fueling cross-check — confirmed
+
+0x1ee4a `open_loop_fueling_targets`: b170 = tbl_069cac|069cc0(baro) [safe-mode
+pair], b190 = tbl_069e80|069eb8(rpm, tps) tip-in, b194 = tbl_069e9c|069ed4(load,
+rpm) main target; **b130 = max(b170·b190, b194)**; b134 = tbl_069cd4(coolant);
+**b120 = b130·b134** — exactly the thread's `Final = max(OL target,
+TipIn×BaroCorr) × CLTCorr`. Implausible-coolant A/B sets (gear 1-4 vs 5-6:
+tbl_069f44/069f0c, tip-in A/B tbl_069f28/069ef0, rich limit tbl_069cfc/069ce8)
+blend by `fuel_blend_weight_ffffb11c`: `b120 = b138·b13c·w + (1−w)·b130·b134`,
+and safe mode swaps the whole family (tbl_069cac/069cc0, 069eb8/069ed4, 069ce8).
+Cat-warmup rides the catalyst-temperature model (c644, §10.1). All thread claims
+in §9 of the reference check out against the ROM; the load-side corrections are in
+[load_fueling_report.md](load_fueling_report.md)'s 2026-10-31 addendum (D5).
+
+### 10.9 Dynamic verification (emulator, harness.py)
+
+`tests/test_fuel_chain_dynamic.py` (new; 65/65 `python -m pytest tests/`):
+- 0x1a418: `maf_per_rotation = min(maf·60/rpm, 5.0)` — 100 g/s @ 3000 rpm → 2.0;
+  1000 g/s @ 1000 rpm → 5.0 (cap).
+- 0x33a6c: `engine_load_raw = aa3c × 0.6345` — bit-exact vs ROM float 0x3f226e98.
+- 0x33ad2: filter+clamp — filter(0.8, 0.5, 0.2) → 0.56, min vs c0b8; clamp case →
+  c0b8; stopped latch → 0.525.
+- 0x55748 (PID 0x43 encode via handler 0x56b8a): c0b4 = 0.42 → raw 107; 1.0 → 255
+  (step 1/255, float at 0x55824).
+
+### 10.10 Functions traced in this update
+
+| address | name | role |
+|---------|------|------|
+| 0x01ee4a | open_loop_fueling_targets | OL target chain (§10.8) |
+| 0x01cc34 | FUN_0001cc34 | CL lambda target + WOT enrichment + af20 integral (§10.1) |
+| 0x01c880 | FUN_0001c880 | lambda actual from AFR word + taps, clamp, filters (§10.1) |
+| 0x01e900 | ref_LTFTForCAN__ | LTFT bank1 learn/store (§10.1) |
+| 0x01e070 | FUN_0001e070 | LTFT init from 0x80c4 |
+| 0x00020288 / 0x00020298 / 0x0002048c | FUN_00020288 / FUN_00020298 / FUN_0002048c | b21c = b220·b22c; b220 integral; b22c MAF-relative % (§10.1) |
+| 0x00033dc8 / 0x00033e36 | FUN_00033dc8 / FUN_00033e36 | c0c8 product-sum adder, reset |
+| 0x00034230 / 0x000342b0 | FUN_00034230 / FUN_000342b0 | c104 tip-in adder, reset |
+| 0x0004af14 / 0x0004afd6 | FUN_0004af14 / FUN_0004afd6 | cde0 transient adder + decay |
+| 0x0003e980 | FUN_0003e980 | c644 catalyst-temp correction (PID 0x3c) |
+| 0x0000edc4 / 0x00018cfe / 0x0000ee82 | candidate_fuel_cut_arbitration / candidate_fuel_cut_rpm_condition / candidate_rev_limit_conditionals | fuel-cut arbitration (§10.2) |
+| 0x0000e48e / 0x0000ff32 | candidate_injection_angle_limit_lookup / ref_fuelInjectionRelated | max injection angle tables → struct (§10.3) |
+| 0x0001ddfc | candidate_cold_start_enrichment | degenerate 0.0 body (§10.4) |
+| 0x00019f4e / 0x00019f40 | candidate_maf_voltage_and_fault_counters / candidate_maf_filtered_update | MAF latch (§10.5) |
+| 0x000064e8 / 0x00011534 | FUN_000064e8 / FUN_00011534 | task rec[18] entry → slow task (§10.6) |
+
+### 10.11 Limits of this update
+
+- Static + emulator evidence only (no hardware). Producer semantics of the
+  c0cc/c144 term cells (c0e0/c0ec/c0d0/c0dc/c0f0/c0fc, c124/c130/c110/c114/c120)
+  are read from the decompiled dataflow, not individually re-derived; the
+  requesters of fuel-cut a464/a465 (0xf960, tables 0x4e27c/0x4e2c8) and the exact
+  transform of 0x5c024 on bf14 remain candidate-level. Channel→connector-terminal
+  hop still board-level (D2). The task-table correction in §10.6 is recorded as a
+  dated note in [os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md).

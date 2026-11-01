@@ -7,8 +7,9 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 **How to read this file.** §Completed is reference only — collapsed summaries with
 pointers to the detailed docs. §Open work lists groups C–F in pickup order (group A =
 calibration extraction, done — see P3 below; group B = emulator fidelity, done except
-the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31 —
-so start at the C remainder). Items within each group are roughly in
+the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31;
+group C item 2 = decompiler-warning triage + non-instruction-range classification, done
+2026-10-31 — so start at the C remainder). Items within each group are roughly in
 dependency order. Phase numbers (P1–P6) and group letters are kept as tags so existing
 cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -118,6 +119,66 @@ dynamically (full 99-PID sweep, 15-service routing; 61/61 tests).
 → [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
 labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 
+### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE 2026-10-31
+
+All 154 warning functions triaged (151 benign, 3 actionable → all resolved: record
+dispatch tables 0x5ea08 via 0x54d90 and 0x5eb18 via 0x55a7c recovered from ROM; orphan
+2-byte artifact 0x33b6 proven unreferenced); all 1,759 non-instruction ranges (187,104
+bytes) classified with pc-relative referrer evidence. No labels upgraded.
+→ [`docs/investigations/60E15120_N3J1E/decompiler_triage_report.md`](docs/investigations/60E15120_N3J1E/decompiler_triage_report.md);
+`utilities/scripts/rx8-pcm-pipeline/triage_export.py`, `decompiler_issues_triaged.tsv`,
+`non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
+
+### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE 2026-10-31
+
+- **D5 closed**: `engine_load_ffffc0b4` and PID 0x43 are VolEf-like cell units
+  (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)), proven by the max-load clamp
+  (tbl_0x6b200×0x6b214×0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev) matching
+  the extracted load axes (tbl_06aa48 axis_y 0.0625–1.25). Thread corrections:
+  MAF×60/rpm (not ×rpm/60), 0.6345 = VolEf (not g/combustion), PID 0x43 = VolEf
+  ×1/255 (not g/rev). → load_fueling_report.md "Update 2026-10-31".
+- **fueling_control_report.md §10 deepening**: all `fuel_correction_sum` adder
+  writers traced (LTFT b0d0, product-sums c0c8/c104, CL terms ae08/ae10, MAF-%
+  b21c, transient cde0, lambda adf8→adec, cat-temp c644); fuel-cut arbitration
+  0xedc4/0x18cfe/0xee82; injection-angle tables 0x68ef8/f0c/f20 = per-injector max
+  open-angle degrees (consumer 0xff32); cold-start 0x1ddfc byte-verified
+  degenerate (pool floats 0x71060/0x71064 = 0.0); MAF latch 0x19f4e/0x19f40;
+  0x4ab8 = task rec[18].entry in a 19-record table based at 0x4990 (corrects
+  os_scheduler_can_ivt_report.md §11); descriptor→data/maps mapping; thread OL
+  chain confirmed (0x1ee4a: max(baro·tipin, target)×coolant, +1.0 lambda decimal
+  part). Dynamic: `tests/test_fuel_chain_dynamic.py` (65/65 pytest).
+
+### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE 2026-10-31
+
+- **D3 closed**: incremental checksum routine = 0x5a3f4 (dual-u16 additive sum
+  over app flash 0x2000-0x7ffff in 0x1000-byte sections per call, skipping hole
+  0x7fb00-0x7fb7f), finalized by 0x5a714 into RAM 0xffff9104/0xffff910c,
+  diag-readable via 0x55bda (case of 0x55a7c) -> 0x5a5a6. Not a CRC. App flash
+  services 0x34/36/37 are stubs; Mode 09 PID 6 stubbed — checksum fixup is
+  host-side (Rx8Man), as the thread suspected.
+- **D4 closed**: app UDS 0x27 seed/key = 0x55f5e (ATU-II timer seed ->
+  0xffffd1d5-d1d8) + 0x5609e (64-round shift/xor key verify, fixed "MazdA" key at
+  0x5f084); bootloader (SBL 0x0-0x1fff, `*SBL_END` marker at 0x1ff4) 0x27 at
+  0x1858: seed 55 AA 55, key 4D AC CD. SBL flash path 0x34/0x36/0x37/0xb1 mapped
+  (0x1ad6/0x1c04/0x1d30/0x1d78; 0x36 stages 0x400-byte blocks at 0xffff6000+ and
+  jumps on `*SBL_END` via 0x1090).
+- → [uds_mode22_dispatch_report.md §12](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
+
+### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
+
+- 60E0G500/N3ZHEC (`binaries/dumps/aron-N3ZHEC-2026-10-31.bin`) exported via
+  Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
+  (3,200 functions, 0 failures; all 166,294 instruction words byte-verified;
+  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log in `input/`
+  (uncommitted).
+- `utilities/scripts/cross_rom_match.py`: byte-match of base-ROM function bodies
+  across all 10 stock ROMs + 4 own dumps → 33,644 matches, 2,999 propagated
+  aliases (`data/labels/cross_rom_function_matches.tsv`,
+  `cross_ecu/cross_rom_function_aliases.tsv`, `cross_rom_match_summary.json`).
+  60E0G500: 2,582 matches / 262 aliases; streetport tunes identical on code.
+- → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
+  [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -128,33 +189,21 @@ and where artifacts live.
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
 Use the emulator for dynamic verification where useful (group B, done).
 
-- Triage the **154 decompiler warning functions** (`decompiler_issues.tsv`);
-  classify `non_instruction_ranges.tsv`.
-- Cross-check the thread's OL-fueling chain vs our fueling report; verify
-  engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
-- **Deepen `fueling_control_report.md` (further investigation needed — see the
-  marker at the top of that report)**: the report reads shallow because the
-  load calculation is not in it (it lives in `load_fueling_report.md` —
-  cross-reference it, don't duplicate). Also: trace the untraced adder writers
-  into `fuel_correction_sum` (b0d0/c0c8/ae08/b21c/c104/cde0/ae10) and
-  `DAT_ffffadec`/`DAT_ffffc644`; resolve fuel-cut arbitration, injection-angle
-  semantics (tables 0x68ef8/0x68f0c/0x68f20), cold-start degenerate body, MAF
-  fault latching (0x19f4e/0x19f40), ~~PID 0x1410~~ (resolved 2026-10-31 — injector
-  pulse time, see D10), and the 0x4ab8 task-record
-  dispatch; map descriptor addresses to P3-extracted `data/maps/` table names;
-  dynamically verify the fuel chain in the emulator via `harness.py`.
-- **Settle D5 (g/rev vs VolEf)**: handler side settled 2026-10-31 (see register D5);
-  remaining: trace `engine_load_ffffc0b4` to the specific
-  extracted table in `data/maps/60E15120_N3J1E/` it reads, then compare the
-  handler's computed value against the table + scaling numerically.
-- Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
-  **bootloader seed/key location** — D4.
-- Label **60E0G500** via the pipeline (streetport diff ranges already mapped to
-  descriptors via P3 — see calibration_extraction_report.md §7).
+- ~~Cross-check the thread's OL-fueling chain vs our fueling report; verify
+  engine-load math~~ **DONE 2026-10-31** — see C items 3-4 in Completed below
+  (D5 closed: load cell = VolEf = g/rev × 0.6345; OL chain confirmed; thread
+  formula corrections recorded).
+- ~~Deepen `fueling_control_report.md`~~ **DONE 2026-10-31** — fueling report §10:
+  all adder writers traced, fuel-cut arbitration / injection-angle / cold-start /
+  MAF latch / 0x4ab8 resolved, descriptor→data/maps mapping, dynamic harness tests.
+- ~~Settle checksum/CVN (D3) and bootloader seed/key (D4)~~ **DONE 2026-10-31** —
+  see C item 5 in Completed below.
+- ~~Label **60E0G500** via the pipeline~~ **DONE 2026-10-31** — see C item 6 /
+  D item 1 in Completed below.
 ### D. Cross-ROM propagation (P2/P5) — depends on P3 + C for the base ROM
 
-- Differential labeling across the 10 stock ROMs (byte-match function bodies
-  ROM-to-ROM).
+- ~~Differential labeling across the 10 stock ROMs (byte-match function bodies
+  ROM-to-ROM)~~ **DONE 2026-10-31** (C item 6 / D item 1 above).
 - Map Mode 22 PID handlers cross-ROM (0x5fa0c-area in 60E0FC00; 0x56b8a in
   60E15120).
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
@@ -198,9 +247,9 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 |----|--------|------|
 | D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them (2026-10-31, [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
-| D3 | open | checksum/CVN unverified — incremental hash routine not yet found |
-| D4 | open | bootloader seed/key location unknown |
-| D5 | open (handler side settled 2026-10-31) | g/rev vs VolEf — PID 0x43 handler 0x56b8a (`diag22_pid0043_engine_load_g_rev`) reads `engine_load_ffffc0b4` × 1/255, dynamically verified (0.42 g/rev → raw 107); remaining: trace to a named table in data/maps/ and compare numerically |
+| D3 | CLOSED 2026-10-31 | checksum/CVN routine found: 0x5a3f4 = incremental dual-u16 additive sum over app flash 0x2000-0x7ffff (0x1000 B/call, skips hole 0x7fb00-0x7fb7f), finalize 0x5a714 -> RAM 0xffff9104/0xffff910c, diag-read via 0x55bda -> 0x5a5a6. Not CRC (no CRC table/poly in ROM). See [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) §12.1 |
+| D4 | CLOSED 2026-10-31 | seed/key located in both layers: app UDS 0x27 (0x57a64): seed from ATU-II timer 0x55f5e -> 0xffffd1d5-d1d8, key verified by 0x5609e (64-round shift/xor network, fixed key "MazdA" at 0x5f084); flash bootloader (SBL 0x0-0x1fff) 0x27 at 0x1858: seed 55 AA 55, key 4D AC CD literal compare. See uds_mode22_dispatch_report.md §12.2 |
+| D5 | CLOSED 2026-10-31 | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) "Update 2026-10-31" |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
 | D8 | open | defs copies vs pinned submodule — dedupe per AGENTS.md rule 4b |
@@ -219,6 +268,8 @@ diff) + a note in the investigation doc.
 
 Evidence label ladder (`FUN_`/`ref_`/`CAL_`/`tbl_`/`inferred_`/`candidate_`), binary
 immutability, mandatory binary-level verification + pipeline validators after any
-pass, 10-section subsystem reports with memory maps, one subsystem per commit,
-`hash_binaries.py --check` after touching `binaries/`, emulator changes get a
-Renesas differential run. See [`AGENTS.md`](AGENTS.md) and [`docs/learnings.md`](docs/learnings.md).
+pass, 10-section subsystem reports with memory maps, one subsystem per work unit
+delivered as a branch + PR against `main` ([`AGENTS.md`](AGENTS.md) §Branch & PR
+workflow) with one logical change per commit, `hash_binaries.py --check` after
+touching `binaries/`, emulator changes get a Renesas differential run. See
+[`AGENTS.md`](AGENTS.md) and [`docs/learnings.md`](docs/learnings.md).
