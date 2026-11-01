@@ -177,7 +177,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 
 #### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
 
-- 60E0G500/N3ZHEC (`binaries/dumps/aron-N3ZHEC-2026-10-31.bin`) exported via
+- 60E0G500/N3ZHEC (`binaries/dumps/60E0G500_N3ZHEC.bin`) exported via
   Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
   (3,200 functions, 0 failures; all 166,294 instruction words byte-verified;
   `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log in `input/`

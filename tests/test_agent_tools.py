@@ -21,7 +21,7 @@ def test_hee_rom_list_and_info():
     lst = run_hee("hee_rom_list", {})
     assert "60E15120_N3J1E" in lst["profiles"]
     assert lst["own_dumps"]
-    info = run_hee("hee_rom_info", {"path": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin"})
+    info = run_hee("hee_rom_info", {"path": "binaries/dumps/60E0G500_N3ZHEC.bin"})
     assert info["firmware_id_at_0x2000"] == "60E0G500"
     assert info["sha256"].startswith("a33f79a4")
 
@@ -39,7 +39,7 @@ def test_hee_boot_state_labels_disasm_diff():
     d = run_hee("hee_disasm_rom", {"rom_id": "60E15120_N3J1E", "addr": "0x31c", "n": 4})
     assert any("tst" in l for l in d["lines"])
     diff = run_hee("hee_diff_roms", {
-        "a": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
+        "a": "binaries/dumps/60E0G500_N3ZHEC.bin",
         "b": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin"})
     assert diff["bytes_differing"] > 1000
     assert diff["ranges"]
