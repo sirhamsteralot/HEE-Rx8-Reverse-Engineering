@@ -158,11 +158,19 @@ and even the stock `SH7055F.IO` only defines Interrupt Control + Timer Unit
 registers, no NMI pin). ICR_W (0xFFFFED18) is a plain register in the sim;
 the boot ROM polls its bit15 at 0x8ea and parks there while it reads 0. So:
 
-    reset
-    mf 0xFFFFED18 0xFFFFED19 8000 WORD     # ICR_W bit15 = 1 (NMI high); mf mode keywords BYTE/WORD/LONG
+    reset                                  # CPU halted at reset vector
+    md 0xFFFFED18                          # verify ICR_W reads 0 before the write
+    mf 0xFFFFED18 0xFFFFED19 8000 WORD     # ICR_W bit15 = 1 (NMI high); modes BYTE/WORD/LONG
+    md 0xFFFFED18                          # MUST now read 8000 — if 0, the write failed:
+                                           #   use Setup > Radix > Hex first, or H'FFFFED18' notation,
+                                           #   or the GUI: View > CPU > Memory (Ctrl+M) -> 0xFFFFED18 -> 8000
     (Trace window Ctrl+T -> Acquisition: buffer >= step count, enable)
     go 0x3dac                              # run boot to idle; trace captures from reset
     (Trace window: right-click > Save As -> input/renesas-boot.trace)
+
+Do NOT `reset` again after the `mf` (sim reset clears I/O registers). A saved
+trace that is 100% the 0x8ea/0x8ec/0x8ee/0x8f0 loop means the write did not
+land — the boot parked in the NMI poll and the buffer wrapped.
 
 `mf` = MEMORY_FILL (`mf <start> <end> <data> [mode]`); GUI alternative: View >
 CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff
