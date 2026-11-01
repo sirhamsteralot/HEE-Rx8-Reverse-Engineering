@@ -207,6 +207,16 @@ base-ROM labeling) closed 2026-10-31.
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
   pinned submodule has a newer ECUFlash XML, 1210 tables) via
   `utilities/scripts/defs-merge/`, citing upstream commits.
+- Apply the cross-ROM label sets to the decompiled exports: run the naming
+  pass for 60E0G500_N3ZHEC (apply `cross_ecu/cross_rom_function_aliases.tsv`
+  + the new Mode 22 labels — add handler 0x57e66 (pid 0xc116, pid_match +
+  dynamically swept), tables 0x5f8b0 / 0x5fd56 → `named/` view + rename map
+  + validation.json), and emit per-ROM Mode 22 label TSVs for the family-B
+  ROMs (60E0FB00/60E0FC00/60E1B900/60E32000_*) so their future Ghidra exports
+  consume `data/labels/cross_rom_mode22_pid_handlers.tsv` directly. Family-B
+  extra PIDs (0x0001, 0x17f4–0x17fa, 0xd100, 0xe6f2, 0xe6f3, …) stay FUN_-level
+  (no base counterpart). Depends on the Mode 22 cross-ROM map (D item 2,
+  `data/labels/cross_rom_mode22_pid_handlers.tsv`).
 
 ### E. Reimplementation coverage (P4) — depends on C
 
