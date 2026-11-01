@@ -2,16 +2,15 @@
 
 Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 (Renesas SH7055 / SH-2E, big-endian, 512 KiB flash, 32 KiB RAM). Statuses as of
-2026-10-31.
+2026-11-01.
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
-pointers to the detailed docs. §Open work lists groups C–F in pickup order (group A =
-calibration extraction, done — see P3 below; group B = emulator fidelity, done except
-the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31;
-group C item 2 = decompiler-warning triage + non-instruction-range classification, done
-2026-10-31 — so start at the C remainder). Items within each group are roughly in
-dependency order. Phase numbers (P1–P6) and group letters are kept as tags so existing
-cross-references still resolve. The discrepancy
+pointers to the detailed docs. §Open work lists groups D–F in pickup order: groups
+A–C are done (group A = calibration extraction, see P3 below; group B = emulator
+fidelity, done except the E4/E6 partials tracked in the register; group C = static
+labeling & gap closure, items 1–6 all done 2026-10-31), so pick up at group D. Items
+within each group are roughly in dependency order. Phase numbers (P1–P6) and group
+letters are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
 closing one requires new evidence + a note in the relevant investigation doc —
 never silently resolve.
@@ -98,10 +97,10 @@ never silently resolve.
   → [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
   artifacts: `data/maps/` (`extract_maps.py` + `diff_maps.py`).
 
-### B. Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E6 remainder
+### B. Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E4/E6 partials
 
-Collapsed from the open-work list 2026-10-31 (work complete; the open remainder is
-tracked as E6 in the register below). Closed: E1 (f32 rounding, filter 0x23b0
+Collapsed from the open-work list 2026-10-31 (work complete; the open partials are
+tracked as E4/E6 in the register below). Closed: E1 (f32 rounding, filter 0x23b0
 bit-exact), E7 (full Q/M DIV1 + ROTCR direction, oracle = ROM div routine 0x2158),
 interrupt masking on ldc/rte, E2/E3/E5; E6 narrowed (CAN RX autonomous; response TX
 still via profile `uds` entry points). Renesas Simulator Debugger cross-check DONE:
@@ -110,7 +109,9 @@ peripheral-pin divergence (GPIO PLIOR_W 0xfffff756 bit3) — zero CPU-caused div
 → [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
 [`docs/learnings.md`](docs/learnings.md) §group B; register below for E4/E6.
 
-### C item 1 — UDS/Mode-22 dispatch tables — DONE 2026-10-31
+### C. Static labeling & gap closure (P2 residual) — DONE 2026-10-31 (items 1–6, D item 1)
+
+#### C item 1 — UDS/Mode-22 dispatch tables — DONE 2026-10-31
 
 All 99 Mode 22 PID records (0x5f10c) + 29 UDS service records (0x5eb40) + sub-PID
 table 0x5f5b2 labeled; ISO-TP frame dispatch 0x6842c, service router 0x68dac; 177
@@ -119,7 +120,7 @@ dynamically (full 99-PID sweep, 15-service routing; 61/61 tests).
 → [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
 labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 
-### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE 2026-10-31
+#### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE 2026-10-31
 
 All 154 warning functions triaged (151 benign, 3 actionable → all resolved: record
 dispatch tables 0x5ea08 via 0x54d90 and 0x5eb18 via 0x55a7c recovered from ROM; orphan
@@ -129,7 +130,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 `utilities/scripts/rx8-pcm-pipeline/triage_export.py`, `decompiler_issues_triaged.tsv`,
 `non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
 
-### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE 2026-10-31
+#### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE 2026-10-31
 
 - **D5 closed**: `engine_load_ffffc0b4` and PID 0x43 are VolEf-like cell units
   (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)), proven by the max-load clamp
@@ -148,7 +149,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   chain confirmed (0x1ee4a: max(baro·tipin, target)×coolant, +1.0 lambda decimal
   part). Dynamic: `tests/test_fuel_chain_dynamic.py` (65/65 pytest).
 
-### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE 2026-10-31
+#### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE 2026-10-31
 
 - **D3 closed**: incremental checksum routine = 0x5a3f4 (dual-u16 additive sum
   over app flash 0x2000-0x7ffff in 0x1000-byte sections per call, skipping hole
@@ -164,7 +165,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   jumps on `*SBL_END` via 0x1090).
 - → [uds_mode22_dispatch_report.md §12](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 
-### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
+#### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
 
 - 60E0G500/N3ZHEC (`binaries/dumps/aron-N3ZHEC-2026-10-31.bin`) exported via
   Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
@@ -182,28 +183,12 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live.
+and where artifacts live. Groups A–C are complete (see §Completed above), so the
+next pickup is group D — its dependencies (P3 calibration extraction + group C
+base-ROM labeling) closed 2026-10-31.
 
-### C. Static labeling & gap closure (P2 residual) — base ROM first
+### D. Cross-ROM propagation (P2/P5) — base-ROM deps (P3 + group C) DONE 2026-10-31; pick up here
 
-Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
-Use the emulator for dynamic verification where useful (group B, done).
-
-- ~~Cross-check the thread's OL-fueling chain vs our fueling report; verify
-  engine-load math~~ **DONE 2026-10-31** — see C items 3-4 in Completed below
-  (D5 closed: load cell = VolEf = g/rev × 0.6345; OL chain confirmed; thread
-  formula corrections recorded).
-- ~~Deepen `fueling_control_report.md`~~ **DONE 2026-10-31** — fueling report §10:
-  all adder writers traced, fuel-cut arbitration / injection-angle / cold-start /
-  MAF latch / 0x4ab8 resolved, descriptor→data/maps mapping, dynamic harness tests.
-- ~~Settle checksum/CVN (D3) and bootloader seed/key (D4)~~ **DONE 2026-10-31** —
-  see C item 5 in Completed below.
-- ~~Label **60E0G500** via the pipeline~~ **DONE 2026-10-31** — see C item 6 /
-  D item 1 in Completed below.
-### D. Cross-ROM propagation (P2/P5) — depends on P3 + C for the base ROM
-
-- ~~Differential labeling across the 10 stock ROMs (byte-match function bodies
-  ROM-to-ROM)~~ **DONE 2026-10-31** (C item 6 / D item 1 above).
 - Map Mode 22 PID handlers cross-ROM (0x5fa0c-area in 60E0FC00; 0x56b8a in
   60E15120).
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
