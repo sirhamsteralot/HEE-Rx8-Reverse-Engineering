@@ -186,10 +186,15 @@ stock ROM. Verified PC-trace-equivalent: our emulator on the patched ROM with
 NMI low reproduces the 200k golden trace of the original ROM with NMI high
 byte-exact (compare_traces MATCH 200000/200000), because at 0x8f0 the original
 with NMI=1 falls through (bt not taken) exactly like the patched nop. So in the
-sim: download the patched .bin at 0x0, then `reset`, trace on, and
-**`go 0xd5fa`** — stop at the CAN-status poll (0xd5fa) so the trace buffer does
-not fill with that loop. Save the trace; it should hold the whole boot
-(reset 0x8b8 -> 0xd5fa, ~105k instructions, under the 262144-entry buffer).
+sim: download the patched .bin at 0x0, then:
+1. **Setup > Radix > Hex** FIRST — the console parses `0xd5fa` only in hex
+   radix (else `go 0xd5fa` runs free and the boot parks in the loop); or use
+   `H'D5FA'` notation.
+2. Trace window (Ctrl+T): right-click > **Clear** (empty the buffer), then
+   Acquisition: enable, buffer 262144.
+3. `reset`, then **`go 0xd5fa`** — stops at the CAN-status poll entry; the
+   buffer now holds the whole boot (reset 0x8b8 -> 0xd5fa, ~105k entries).
+4. Trace window: right-click > Save As -> input/renesas-boot.trace.
 Expected diff vs our 200k golden: MATCH from 0x8b8 through the first 0xd5fa
 poll iteration (~step 104756); then the sim parks in the 0xd5fa loop
 (its RCAN model never sets the status bit) while our emulator's RCAN model
