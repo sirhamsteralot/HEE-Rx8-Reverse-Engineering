@@ -261,7 +261,7 @@
   "dedupe_d8": [
     {
       "local": "data/definitions/ecuflash/60E0G500.xml",
-      "state": "removed (rule 4b); blob from git HEAD",
+      "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
       "pinned_submodule": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "pinned_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
@@ -270,7 +270,7 @@
     },
     {
       "local": "data/definitions/ecuflash/RX8BASE.xml",
-      "state": "removed (rule 4b); blob from git HEAD",
+      "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
       "pinned_submodule": "submodules/RX8Defs/ECUFlash/RX8BASE.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "pinned_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
@@ -279,7 +279,7 @@
     },
     {
       "local": "data/definitions/romraider/upstream-rx8defs/logger_rx8_defs.xml",
-      "state": "removed (rule 4b); blob from git HEAD",
+      "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
       "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
@@ -288,7 +288,7 @@
     },
     {
       "local": "data/definitions/romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml",
-      "state": "removed (rule 4b); blob from git HEAD",
+      "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
       "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",

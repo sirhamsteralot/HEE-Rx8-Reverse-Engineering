@@ -47,3 +47,9 @@ No reset-causing bug has been proven. The new evidence improves where to inspect
 Run `python3 scripts/correlate_rx8defs.py` and then `python3 scripts/annotate_cross_ecu.py` from the artifact directory (the original workspace sources must remain available). The latter inserts idempotent review comments into individual and combined C listings, retaining original function identities. Reapply it after a Ghidra export. The saved Ghidra project predates this extension; these comments and alias files have not been imported into it.
 
 [Validation](validation.json) records counts and definition hashes; [annotation validation](annotation_validation.json) records coverage. Descriptor matches validate pointers/counts, not all calibration semantics or every table's scaling. The C schema passes C11 size/offset assertions. The existing export validator checks ROM hash, instruction bytes and file consistency; it does not prove semantic equivalence.
+
+## Cross-ROM artifacts (all 14 dumped ROMs)
+
+- [cross_rom_differential_labeling.md](cross_rom_differential_labeling.md) + alias/match TSVs — byte-match function aliases (D item 1).
+- [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) + [data/labels/cross_rom_mode22_pid_handlers.tsv](../../../../data/labels/cross_rom_mode22_pid_handlers.tsv) — Mode 22 PID handlers (D item 2).
+- [cross_rom_defs_coverage.md](cross_rom_defs_coverage.md) + [data/definitions/coverage.json](../../../../data/definitions/coverage.json) — per-ROM ECU definitions for all 14 ROMs (D item 4, 2026-11-01).
