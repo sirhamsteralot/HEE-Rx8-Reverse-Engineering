@@ -186,8 +186,9 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   count byte (family A: 99 records at 0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0;
   family B: 110 records at 0x5d994/0x5dc2c/0x64d0c; 60E32000_N3M5E: 113 at 0x651bc),
   1,444 PID→handler rows mapped (793 byte_match asserted to the same-PID base
-  handler, 479 pid_match, 73 unmapped extra PIDs); dynamically verified on
-  60E0G500/N3ZHEC (dispatcher 0x57ef0 hits the mapped handlers exactly, r0=len+3).
+  handler, 494 pid_match, 58 unmapped extra PIDs); dynamically verified on
+  60E0G500/N3ZHEC (99/99-PID sweep: dispatcher 0x57ef0 hits every mapped handler
+  exactly, r0=len+3; 5 non-table PIDs take the NRC 0x31 path).
   → [cross_ecu/cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md);
   artifacts: `data/labels/cross_rom_mode22_pid_handlers.tsv` +
   `cross_rom_mode22_summary.json`, script `utilities/scripts/cross_rom_mode22_map.py`.
