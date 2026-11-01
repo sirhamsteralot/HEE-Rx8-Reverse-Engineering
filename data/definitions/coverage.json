@@ -10,8 +10,8 @@
   },
   "roms": [
     {
-      "file": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
-      "stem": "aron-N3ZHEC-2026-10-31",
+      "file": "binaries/dumps/60E0G500_N3ZHEC.bin",
+      "stem": "60E0G500_N3ZHEC",
       "source": "binaries/dumps",
       "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
       "fwid": "60E0G500",
@@ -23,7 +23,7 @@
       ],
       "block_tables": 814,
       "block_tables_with_storageaddress": 814,
-      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-2026-10-31.xml",
+      "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
       "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "status": "OK"
     },

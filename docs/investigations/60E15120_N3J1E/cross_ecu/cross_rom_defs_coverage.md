@@ -26,7 +26,7 @@ upstream placeholder for unmapped DTC-enable bytes).
 
 | ROM | fw id @0x2000 | RomRaider block | tables | per-ROM def | status |
 |-----|---------------|-----------------|--------|-------------|--------|
-| `aron-N3ZHEC-2026-10-31.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/aron-N3ZHEC-2026-10-31.xml](../../../../data/definitions/romraider/per-rom/aron-N3ZHEC-2026-10-31.xml) | OK |
+| `60E0G500_N3ZHEC.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/60E0G500_N3ZHEC.xml](../../../../data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml) | OK |
 | `60E0E500.bin` | 60E0E500 | — | — | — | no upstream block |
 | `60E0E700_N3YLEE.bin` | 60E0E700 | 60E0E700 | 743 (+RX8Base 1052) | [per-rom/60E0E700_N3YLEE.xml](../../../../data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml) | OK |
 | `60E0FB00.bin` | 60E0FB00 | 60E0FB00 | 732 (+RX8Base 1052) | [per-rom/60E0FB00.xml](../../../../data/definitions/romraider/per-rom/60E0FB00.xml) | OK |
