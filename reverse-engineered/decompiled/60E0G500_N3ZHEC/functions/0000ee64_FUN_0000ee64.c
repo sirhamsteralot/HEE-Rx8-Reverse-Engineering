@@ -1,6 +1,6 @@
 /* ROM address: 0x0000ee64; body bytes: 30; decompiled */
 
-char FUN_0000ee64(void)
+char rev_limit_fuel_cut_init(void)
 
 {
   if (DAT_ffff9f8c == '\x01') {

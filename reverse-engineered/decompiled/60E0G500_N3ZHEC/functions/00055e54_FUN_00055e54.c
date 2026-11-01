@@ -1,6 +1,6 @@
 /* ROM address: 0x00055e54; body bytes: 30; decompiled */
 
-void FUN_00055e54(void)
+void diag_read_90fc(void)
 
 {
   undefined4 uVar1;

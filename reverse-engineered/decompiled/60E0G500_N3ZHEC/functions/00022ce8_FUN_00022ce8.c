@@ -1,6 +1,6 @@
 /* ROM address: 0x00022ce8; body bytes: 200; decompiled */
 
-uint FUN_00022ce8(void)
+uint evap_open_loop_condition(void)
 
 {
   char cVar1;

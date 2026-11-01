@@ -30,7 +30,7 @@ int FUN_000070ac(char param_1)
   }
   bVar1 = DAT_fffff002;
   DAT_fffff002 = bVar1 & 0xb | 0x30;
-  cVar3 = FUN_000071ea(0xff);
+  cVar3 = sci0_exchange_byte_wait_rdrf(0xff);
   FUN_00003934(uVar2);
   return (int)cVar3;
 }

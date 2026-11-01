@@ -1,6 +1,6 @@
 /* ROM address: 0x00030932; body bytes: 60; decompiled */
 
-void FUN_00030932(void)
+void injector_temp_multiplier_lookup(void)
 
 {
   DAT_ffffbe50 = FUN_000020dc(DAT_ffffbe5c,DAT_ffffc12c,&DAT_0006aea0);

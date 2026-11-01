@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 9730 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined4 FUN_00006010(uint param_1,undefined4 *param_2)
+undefined4 os_queue_dequeue_record(uint param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;

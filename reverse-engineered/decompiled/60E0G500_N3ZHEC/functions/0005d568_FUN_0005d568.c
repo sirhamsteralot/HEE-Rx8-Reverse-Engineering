@@ -1,6 +1,6 @@
 /* ROM address: 0x0005d568; body bytes: 186; decompiled */
 
-uint FUN_0005d568(uint param_1)
+uint vfad_diag_override(uint param_1)
 
 {
   if (DAT_ffffd355 == '\0') {

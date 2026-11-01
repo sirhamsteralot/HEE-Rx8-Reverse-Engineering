@@ -1,6 +1,6 @@
 /* ROM address: 0x00055aba; body bytes: 72; decompiled */
 
-int FUN_00055aba(void)
+int diag_read_active_cal_field(void)
 
 {
   char cVar1;

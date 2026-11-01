@@ -11,7 +11,7 @@ void FUN_0001a732(void)
   FUN_00025b12();
   FUN_0001b15c();
   FUN_00034aac();
-  FUN_00034b12();
+  calculate_engine_load();
   FUN_000342e0();
   FUN_0003457a();
   FUN_0003466c();

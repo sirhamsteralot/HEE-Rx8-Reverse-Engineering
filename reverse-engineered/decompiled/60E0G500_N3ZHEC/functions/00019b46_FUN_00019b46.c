@@ -1,6 +1,6 @@
 /* ROM address: 0x00019b46; body bytes: 130; decompiled */
 
-char FUN_00019b46(void)
+char fuel_cut_rpm_condition(void)
 
 {
   char cVar1;

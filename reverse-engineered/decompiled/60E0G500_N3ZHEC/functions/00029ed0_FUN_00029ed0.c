@@ -1,6 +1,6 @@
 /* ROM address: 0x00029ed0; body bytes: 120; decompiled */
 
-undefined4 * FUN_00029ed0(void)
+undefined4 * can201_prepare_rpm_with_conditional_filter(void)
 
 {
   undefined4 *puVar1;

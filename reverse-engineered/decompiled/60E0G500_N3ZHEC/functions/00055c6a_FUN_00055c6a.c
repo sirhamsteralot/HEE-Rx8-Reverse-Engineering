@@ -1,6 +1,6 @@
 /* ROM address: 0x00055c6a; body bytes: 22; decompiled */
 
-undefined4 FUN_00055c6a(void)
+undefined4 diag_encode_iat(void)
 
 {
   undefined4 uVar1;

@@ -3,7 +3,7 @@
 void thunk_FUN_00022330(void)
 
 {
-  FUN_00022330();
+  ssv_solenoid_control();
   return;
 }
 

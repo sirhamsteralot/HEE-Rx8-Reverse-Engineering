@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 4a28 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000064ba(void)
+void knock_sensor_fault_task(void)
 
 {
   FUN_0000d21e();

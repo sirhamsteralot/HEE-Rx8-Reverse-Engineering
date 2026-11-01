@@ -38,18 +38,18 @@ void FUN_00038340(undefined4 param_1)
     DAT_ffffc2cb = 1;
   }
   else if (DAT_ffffc2cd == '\x01') {
-    FUN_000581d2(param_1,(int)DAT_ffffc2ee);
+    diag_append_u8(param_1,(int)DAT_ffffc2ee);
     if (DAT_ffffc2ee == '\x01') {
-      FUN_000581d2(param_1,(int)DAT_ffffc2ef);
-      FUN_000581d2(param_1,(int)DAT_ffffc2f0);
+      diag_append_u8(param_1,(int)DAT_ffffc2ef);
+      diag_append_u8(param_1,(int)DAT_ffffc2f0);
       iVar1 = (int)DAT_ffffc2f1;
     }
     else {
-      FUN_000581d2(param_1,0);
-      FUN_000581d2(param_1,0);
+      diag_append_u8(param_1,0);
+      diag_append_u8(param_1,0);
       iVar1 = 0;
     }
-    FUN_000581d2(param_1,iVar1);
+    diag_append_u8(param_1,iVar1);
     DAT_ffffd224 = 0;
     DAT_ffffc2cf = '\0';
     DAT_ffffc2ce = '\0';

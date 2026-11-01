@@ -1,0 +1,111 @@
+rom	pid	record_address	response_len	byte3	availability_mask	unk	handler_address	base_handler_address	map_method	pid_in_base	handler_alias	base_function_name	semantic	confidence
+60E1B900.bin	0000	0005dc2c	4	00	fffe	0000	00054e46		pid_match	1	diag22_pid0000_pids_supported_01_20		pids_supported_01_20	pid_match
+60E1B900.bin	0001	0005dc38	4	00	fffe	0000	00054e6a		unmapped	0				
+60E1B900.bin	0002	0005dc44	2	00	fffe	0000	00054eaa		pid_match	1	diag22_pid0002_active_cal_id_field		active_cal_id_field	pid_match
+60E1B900.bin	0003	0005dc50	2	00	fffe	0000	00054f00		pid_match	1	diag22_pid0003_fuel_system_status_ol_cl		fuel_system_status_ol_cl	pid_match
+60E1B900.bin	0004	0005dc5c	1	00	fffe	0000	00054f26		pid_match	1	diag22_pid0004_calculated_engine_load_pct		calculated_engine_load_pct	pid_match
+60E1B900.bin	0005	0005dc68	1	00	fffe	0000	00054f3c		pid_match	1	diag22_pid0005_coolant_temp_c		coolant_temp_c	pid_match
+60E1B900.bin	0006	0005dc74	1	00	fffe	0000	00054f52		pid_match	1	diag22_pid0006_stft_bank1_pct		stft_bank1_pct	pid_match
+60E1B900.bin	0007	0005dc80	1	00	fffe	0000	00054f68		pid_match	1	diag22_pid0007_ltft_bank1_pct		ltft_bank1_pct	pid_match
+60E1B900.bin	000c	0005dc8c	2	00	fffe	0000	00054f7e		pid_match	1	diag22_pid000c_engine_rpm		engine_rpm	pid_match
+60E1B900.bin	000d	0005dc98	1	00	fffe	0000	00054f94		pid_match	1	diag22_pid000d_vehicle_speed_kmh		vehicle_speed_kmh	pid_match
+60E1B900.bin	000e	0005dca4	1	00	fffe	0000	00054faa		pid_match	1	diag22_pid000e_leading_ignition_timing_deg		leading_ignition_timing_deg	pid_match
+60E1B900.bin	000f	0005dcb0	1	00	fffe	0000	00054fc0		pid_match	1	diag22_pid000f_intake_air_temp_c		intake_air_temp_c	pid_match
+60E1B900.bin	0010	0005dcbc	2	00	fffe	0000	00054fd6		pid_match	1	diag22_pid0010_maf_g_s		maf_g_s	pid_match
+60E1B900.bin	0011	0005dcc8	1	00	fffe	0000	00054fec		pid_match	1	diag22_pid0011_throttle_position_pct		throttle_position_pct	pid_match
+60E1B900.bin	0012	0005dcd4	1	00	fffe	0000	00055002		pid_match	1	diag22_pid0012_secondary_air_status		secondary_air_status	pid_match
+60E1B900.bin	0013	0005dce0	1	00	fffe	0000	00055018		pid_match	1	diag22_pid0013_o2_sensors_present		o2_sensors_present	pid_match
+60E1B900.bin	0015	0005dcec	2	00	fffe	0000	0005502e		pid_match	1	diag22_pid0015_o2s2_voltage_trim		o2s2_voltage_trim	pid_match
+60E1B900.bin	001c	0005dcf8	1	00	fffe	0000	00055054		pid_match	1	diag22_pid001c_obd_standard		obd_standard	pid_match
+60E1B900.bin	001f	0005dd04	2	00	fffe	0000	0005506a		pid_match	1	diag22_pid001f_engine_runtime_s		engine_runtime_s	pid_match
+60E1B900.bin	0020	0005dd10	4	00	fffe	0000	00055080		pid_match	1	diag22_pid0020_pids_supported_21_40		pids_supported_21_40	pid_match
+60E1B900.bin	0021	0005dd1c	2	00	fffe	0000	000550a4		pid_match	1	diag22_pid0021_distance_while_mil_on		distance_while_mil_on	pid_match
+60E1B900.bin	002e	0005dd28	1	00	fffe	0000	000550ba		pid_match	1	diag22_pid002e_ram_b2f0_pct		ram_b2f0_pct	pid_match
+60E1B900.bin	002f	0005dd34	1	00	fffe	0000	000550d0		pid_match	1	diag22_pid002f_ram_d287_raw		ram_d287_raw	pid_match
+60E1B900.bin	0030	0005dd40	1	00	fffe	0000	000550e6		pid_match	1	diag22_pid0030_gear_or_vin_byte		gear_or_vin_byte	pid_match
+60E1B900.bin	0031	0005dd4c	2	00	fffe	0000	000550fc		pid_match	1	diag22_pid0031_ram_90fc_float		ram_90fc_float	pid_match
+60E1B900.bin	0033	0005dd58	1	00	fffe	0000	00055112		pid_match	1	diag22_pid0033_ram_ad10_scaled		ram_ad10_scaled	pid_match
+60E1B900.bin	0034	0005dd64	4	00	fffe	0000	00055128		pid_match	1	diag22_pid0034_afr_lambda_words		afr_lambda_words	pid_match
+60E1B900.bin	003c	0005dd70	2	00	fffe	0000	0005514c		pid_match	1	diag22_pid003c_ram_c644_scaled		ram_c644_scaled	pid_match
+60E1B900.bin	0040	0005dd7c	4	00	fffe	0000	00055162		pid_match	1	diag22_pid0040_pids_supported_41_60		pids_supported_41_60	pid_match
+60E1B900.bin	0041	0005dd88	4	00	fffe	0000	00055186		unmapped	0				
+60E1B900.bin	0042	0005dd94	2	00	fffe	0000	00055254		pid_match	1	diag22_pid0042_battery_voltage_v		battery_voltage_v	pid_match
+60E1B900.bin	0043	0005dda0	2	00	fffe	0000	00055268		pid_match	1	diag22_pid0043_engine_load_g_rev		engine_load_g_rev	pid_match
+60E1B900.bin	0044	0005ddac	2	00	fffe	0000	0005527c		pid_match	1	diag22_pid0044_lambda_target		lambda_target	pid_match
+60E1B900.bin	0045	0005ddb8	1	00	fffe	0000	00055290		pid_match	1	diag22_pid0045_ram_ad48_pct		ram_ad48_pct	pid_match
+60E1B900.bin	0047	0005ddc4	1	00	fffe	0000	000552a4		pid_match	1	diag22_pid0047_ram_ad5e_pedal		ram_ad5e_pedal	pid_match
+60E1B900.bin	0049	0005ddd0	1	00	fffe	0000	000552b8		pid_match	1	diag22_pid0049_ram_a9c4_pedal		ram_a9c4_pedal	pid_match
+60E1B900.bin	004a	0005dddc	1	00	fffe	0000	000552cc		pid_match	1	diag22_pid004a_ram_a9c6_pedal		ram_a9c6_pedal	pid_match
+60E1B900.bin	004c	0005dde8	1	00	fffe	0000	000552e0		pid_match	1	diag22_pid004c_ram_b410_pct		ram_b410_pct	pid_match
+60E1B900.bin	0200	0005ddf4	1	00	fffe	0000	000552f4		pid_match	1	diag22_pid0200_dtc_count_stored		dtc_count_stored	pid_match
+60E1B900.bin	0202	0005de00	1	00	fffe	0000	00055308		pid_match	1	diag22_pid0202_dtc_count_ram_list		dtc_count_ram_list	pid_match
+60E1B900.bin	0904	0005de0c	1	00	fffe	0000	0005531c		pid_match	1	diag22_pid0904_trailing_ignition_timing_deg		trailing_ignition_timing_deg	pid_match
+60E1B900.bin	0914	0005de18	2	00	fffe	0000	0005533c		pid_match	1	diag22_pid0914_ram_a9c4_scaled_s16		ram_a9c4_scaled_s16	pid_match
+60E1B900.bin	0915	0005de24	2	00	fffe	0000	000553b8		pid_match	1	diag22_pid0915_ram_a9c6_scaled_s16		ram_a9c6_scaled_s16	pid_match
+60E1B900.bin	0917	0005de30	2	00	fffe	0000	000553ea		pid_match	1	diag22_pid0917_ram_ad5c_scaled_s16		ram_ad5c_scaled_s16	pid_match
+60E1B900.bin	0918	0005de3c	2	00	fffe	0000	0005541c		pid_match	1	diag22_pid0918_ram_ad5e_scaled_s16		ram_ad5e_scaled_s16	pid_match
+60E1B900.bin	091a	0005de48	2	00	fffe	0000	0005544e		pid_match	1	diag22_pid091a_ram_b410_raw_512		ram_b410_raw_512	pid_match
+60E1B900.bin	093c	0005de54	2	00	fffe	0000	0005546c		pid_match	1	diag22_pid093c_throttle_position_raw		throttle_position_raw	pid_match
+60E1B900.bin	096e	0005de60	2	00	fffe	0000	0005548a		pid_match	1	diag22_pid096e_ram_a7ac_quarter		ram_a7ac_quarter	pid_match
+60E1B900.bin	097c	0005de6c	2	00	fffe	0000	000554a8		pid_match	1	diag22_pid097c_ram_b59c_div2048		ram_b59c_div2048	pid_match
+60E1B900.bin	114a	0005de78	2	00	fffe	0000	000554f4		pid_match	1	diag22_pid114a_ram_add4_raw		ram_add4_raw	pid_match
+60E1B900.bin	114d	0005de84	2	00	fffe	0000	00055512		pid_match	1	diag22_pid114d_ram_a984_raw		ram_a984_raw	pid_match
+60E1B900.bin	1153	0005de90	2	00	fffe	0000	00055530		pid_match	1	diag22_pid1153_ram_a834_lambda		ram_a834_lambda	pid_match
+60E1B900.bin	1154	0005de9c	2	00	fffe	0000	0005554e		pid_match	1	diag22_pid1154_throttle_raw_ad5c		throttle_raw_ad5c	pid_match
+60E1B900.bin	1169	0005dea8	2	00	fffe	0000	0005555c		pid_match	1	diag22_pid1169_ram_807c_scaled		ram_807c_scaled	pid_match
+60E1B900.bin	1177	0005deb4	2	00	fffe	0000	00055590		pid_match	1	diag22_pid1177_maf_voltage_latched_v		maf_voltage_latched_v	pid_match
+60E1B900.bin	1340	0005dec0	1	00	fffe	0000	000555ae		pid_match	1	diag22_pid1340_ram_a9bc_pct		ram_a9bc_pct	pid_match
+60E1B900.bin	1410	0005decc	2	00	fffe	0000	000555cc		pid_match	1	diag22_pid1410_injector_pulse_time		injector_pulse_time	pid_match
+60E1B900.bin	163e	0005ded8	2	00	fffe	0000	000555ea		pid_match	1	diag22_pid163e_ram_b074_scaled_s16		ram_b074_scaled_s16	pid_match
+60E1B900.bin	16b3	0005dee4	2	00	fffe	0000	00055650		pid_match	1	diag22_pid16b3_ram_ad10_raw		ram_ad10_raw	pid_match
+60E1B900.bin	16e8	0005def0	2	00	fffe	0000	0005566e		pid_match	1	diag22_pid16e8_ram_b5ac_raw		ram_b5ac_raw	pid_match
+60E1B900.bin	16e9	0005defc	2	00	fffe	0000	0005568c		pid_match	1	diag22_pid16e9_ram_b654_eighth		ram_b654_eighth	pid_match
+60E1B900.bin	16f0	0005df08	2	00	fffe	0000	000556aa		pid_match	1	diag22_pid16f0_tire_revolutions_per_mile		tire_revolutions_per_mile	pid_match
+60E1B900.bin	a216	0005df14	2	00	fffe	0000	000556b8		pid_match	1	diag22_pida216_ram_bc30_raw		ram_bc30_raw	pid_match
+60E1B900.bin	1746	0005df20	1	00	fffe	0000	000556d6		pid_match	1	diag22_pid1746_knock_retard_deg		knock_retard_deg	pid_match
+60E1B900.bin	1782	0005df2c	2	00	fffe	0000	000556f4		pid_match	1	diag22_pid1782_ram_c6ac_raw		ram_c6ac_raw	pid_match
+60E1B900.bin	17a6	0005df38	1	00	fffe	0000	00055712		pid_match	1	diag22_pid17a6_ram_d1ac_scaled		ram_d1ac_scaled	pid_match
+60E1B900.bin	172a	0005df44	1	00	fffe	0000	0005574a		pid_match	1	diag22_pid172a_ram_c4c8_temp_c		ram_c4c8_temp_c	pid_match
+60E1B900.bin	172d	0005df50	1	00	fffe	0000	0005574e		pid_match	1	diag22_pid172d_ram_a8f4_raw		ram_a8f4_raw	pid_match
+60E1B900.bin	1634	0005df5c	1	00	1556	0000	0005575c		pid_match	1	diag22_pid1634_apv_position_voltage		apv_position_voltage	pid_match
+60E1B900.bin	17f4	0005df68	2	00	03c0	0000	000557bc		unmapped	0				
+60E1B900.bin	17f5	0005df74	2	00	03c0	0000	000557da		unmapped	0				
+60E1B900.bin	17f7	0005df80	2	00	03c0	0000	000557f8		unmapped	0				
+60E1B900.bin	17f8	0005df8c	2	00	03c0	0000	00055816		unmapped	0				
+60E1B900.bin	17f9	0005df98	2	00	03c0	0000	00055840		unmapped	0				
+60E1B900.bin	17fa	0005dfa4	2	00	03c0	0000	0005586a		unmapped	0				
+60E1B900.bin	0968	0005dfb0	2	00	fffe	0000	00055888		pid_match	1	diag22_pid0968_io_status_b5b4_bc35		io_status_b5b4_bc35	pid_match
+60E1B900.bin	09d3	0005dfbc	2	00	1556	0000	000558e0		pid_match	1	diag22_pid09d3_pedr_bit10_status		pedr_bit10_status	pid_match
+60E1B900.bin	1101	0005dfc8	1	00	fffe	0000	00055918		pid_match	1	diag22_pid1101_io_status_bf3c_ad18_cdd8		io_status_bf3c_ad18_cdd8	pid_match
+60E1B900.bin	1102	0005dfd4	1	00	fffe	0000	0005595a		pid_match	1	diag22_pid1102_io_status_bdb8		io_status_bdb8	pid_match
+60E1B900.bin	1103	0005dfe0	1	00	fffe	0000	0005597c		pid_match	1	diag22_pid1103_io_status_pedr_cab4_d1a		io_status_pedr_cab4_d1a	pid_match
+60E1B900.bin	1104	0005dfec	1	00	fffe	0000	00055a04		pid_match	1	diag22_pid1104_io_status_pjdr_bf6c		io_status_pjdr_bf6c	pid_match
+60E1B900.bin	1631	0005dff8	1	00	fffe	0000	00055a42		pid_match	1	diag22_pid1631_tol_status_b570_b584		tol_status_b570_b584	pid_match
+60E1B900.bin	1681	0005e004	1	00	fffe	0000	00055a7e		pid_match	1	diag22_pid1681_io_status_ce1c		io_status_ce1c	pid_match
+60E1B900.bin	1688	0005e010	1	00	fffe	0000	00055aa0		pid_match	1	diag22_pid1688_secondary_air_status_bit		secondary_air_status_bit	pid_match
+60E1B900.bin	a211	0005e01c	2	00	fffe	0000	00055ac2		pid_match	1	diag22_pida211_status_b53b_aa62_bf9c		status_b53b_aa62_bf9c	pid_match
+60E1B900.bin	1711	0005e028	1	00	fffe	0000	00055b24		pid_match	1	diag22_pid1711_pedr_bit1_status		pedr_bit1_status	pid_match
+60E1B900.bin	1706	0005e034	1	00	fffe	0000	00055b52		pid_match	1	diag22_pid1706_io_status_a8f5		io_status_a8f5	pid_match
+60E1B900.bin	1718	0005e040	1	00	fffe	0000	00055b74		pid_match	1	diag22_pid1718_pedr_bit2_status		pedr_bit2_status	pid_match
+60E1B900.bin	1715	0005e04c	1	00	fffe	0000	00055ba2		pid_match	1	diag22_pid1715_pedr_pddr_status		pedr_pddr_status	pid_match
+60E1B900.bin	17de	0005e058	1	00	fffe	0000	00055bea		pid_match	1	diag22_pid17de_io_status_ce32		io_status_ce32	pid_match
+60E1B900.bin	e21b	0005e064	4	00	fffe	0000	00055c0c		pid_match	1	diag22_pide21b_cal_id_chunk_0		cal_id_chunk_0	pid_match
+60E1B900.bin	e21c	0005e070	2	00	fffe	0000	00055c3a		pid_match	1	diag22_pide21c_cal_id_chunk_1		cal_id_chunk_1	pid_match
+60E1B900.bin	e21d	0005e07c	3	00	fffe	0000	00055c60		pid_match	1	diag22_pide21d_cal_id_chunk_2		cal_id_chunk_2	pid_match
+60E1B900.bin	e21e	0005e088	1	00	fffe	0000	00055c7a		pid_match	1	diag22_pide21e_cal_id_chunk_3		cal_id_chunk_3	pid_match
+60E1B900.bin	e611	0005e094	24	00	fffe	0000	00055c90		pid_match	1	diag22_pide611_sw_name_string		sw_name_string	pid_match
+60E1B900.bin	1710	0005e0a0	7	00	fffe	0000	00055cc8		pid_match	1	diag22_pid1710_sensor_snapshot_7byte		sensor_snapshot_7byte	pid_match
+60E1B900.bin	d100	0005e0ac	1	00	fffe	0000	00055de8		unmapped	0				
+60E1B900.bin	e6f2	0005e0b8	1	00	fffe	0000	00055e38		unmapped	0				
+60E1B900.bin	e6f3	0005e0c4	1	00	fffe	0000	00055e44		unmapped	0				
+60E1B900.bin	c115	0005e0d0	1	00	3bfe	0000	00055e50		pid_match	1	diag22_pidc115_ram_c1d2_raw		ram_c1d2_raw	pid_match
+60E1B900.bin	c116	0005e0dc	4	00	3bfe	0000	00055e5e		pid_match	1	diag22_pidc116_dtc_state_machine		dtc_state_machine	pid_match
+60E1B900.bin	c117	0005e0e8	4	00	3bfe	0000	00055e64		pid_match	1	diag22_pidc117_ram_c1d3_c1d4		ram_c1d3_c1d4	pid_match
+60E1B900.bin	c124	0005e0f4	1	00	3bfe	0000	00055e98		pid_match	1	diag22_pidc124_diag_status_bits		diag_status_bits	pid_match
+60E1B900.bin	ff10	0005e100	4	00	0001	0000	00055fe8		pid_match	1	diag22_pidff10_dtc_status_c1d5_c1d8		dtc_status_c1d5_c1d8	pid_match
+60E1B900.bin	ff40	0005e10c	2	00	0001	0000	0005604c		pid_match	1	diag22_pidff40_fw_id_chunk_15		fw_id_chunk_15	pid_match
+60E1B900.bin	ff41	0005e118	4	00	0001	0000	00056066		pid_match	1	diag22_pidff41_fw_id_chunk_120		fw_id_chunk_120	pid_match
+60E1B900.bin	ff42	0005e124	3	00	0001	0000	000560b4		pid_match	1	diag22_pidff42_rom_id_bytes_ff8		rom_id_bytes_ff8	pid_match
+60E1B900.bin	ff43	0005e130	3	00	0001	0000	000560d4		pid_match	1	diag22_pidff43_rom_id_bytes_ffb		rom_id_bytes_ffb	pid_match
+60E1B900.bin	ff50	0005e13c	2	00	0001	0000	000560f4		pid_match	1	diag22_pidff50_ram_d3a0_raw		ram_d3a0_raw	pid_match
+60E1B900.bin	ff44	0005e148	2	00	0001	0000	000560fa		pid_match	1	diag22_pidff44_ram_ce30_raw		ram_ce30_raw	pid_match

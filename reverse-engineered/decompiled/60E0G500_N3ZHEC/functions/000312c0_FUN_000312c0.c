@@ -2,7 +2,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x000312f8) */
 
-void FUN_000312c0(void)
+void calc_fuel_volume_request(void)
 
 {
   float fVar1;

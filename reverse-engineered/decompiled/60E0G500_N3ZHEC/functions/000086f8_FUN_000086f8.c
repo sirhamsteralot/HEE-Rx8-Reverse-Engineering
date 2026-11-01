@@ -1,6 +1,6 @@
 /* ROM address: 0x000086f8; body bytes: 36; decompiled */
 
-int FUN_000086f8(int param_1,undefined4 param_2)
+int set_fuel_injector_latency(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {

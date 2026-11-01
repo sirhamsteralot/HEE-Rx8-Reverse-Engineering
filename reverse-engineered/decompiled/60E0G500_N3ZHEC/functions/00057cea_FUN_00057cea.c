@@ -4,10 +4,10 @@
 /* Function candidate recovered from ROM pointer at 5fcb4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057cea(undefined4 param_1)
+void diag22_pide21e_cal_id_chunk_3(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x43);
+  diag_append_u8(param_1,0x43);
   return;
 }
 

@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f30c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066874(short param_1,uint param_2)
+uint obd_mode04_clear_dtc(short param_1,uint param_2)
 
 {
   bool bVar1;

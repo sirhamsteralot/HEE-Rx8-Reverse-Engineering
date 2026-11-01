@@ -15,7 +15,7 @@ void FUN_0000c8dc(void)
   uVar1 = DAT_fffff666;
   if ((uVar1 & 0x1000) != 0) {
     FUN_0000a8a4(0xfffff658,0);
-    FUN_0000c276();
+    knock_reference_adc_read();
   }
   FUN_00003934(uVar2);
   if (DAT_ffffa385 == '\x01') {

@@ -1,6 +1,6 @@
 /* ROM address: 0x0000c3ce; body bytes: 114; decompiled */
 
-undefined2 * FUN_0000c3ce(void)
+undefined2 * knock_voltage_sample(void)
 
 {
   undefined2 *puVar1;

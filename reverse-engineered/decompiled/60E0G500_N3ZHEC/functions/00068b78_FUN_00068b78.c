@@ -1,6 +1,6 @@
 /* ROM address: 0x00068b78; body bytes: 24; decompiled */
 
-uint FUN_00068b78(void)
+uint isotp_pci_type_extract(void)
 
 {
   uint uVar1;

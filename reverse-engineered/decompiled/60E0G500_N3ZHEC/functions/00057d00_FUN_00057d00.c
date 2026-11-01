@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5fcc0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined4 FUN_00057d00(char param_1)
+undefined4 diag22_pide611_sw_name_string(char param_1)
 
 {
   char cVar1;
@@ -16,7 +16,7 @@ undefined4 FUN_00057d00(char param_1)
   do {
     cVar1 = *pcVar3;
     pcVar3 = pcVar3 + 1;
-    uVar2 = FUN_000581d2((int)param_1,(int)cVar1);
+    uVar2 = diag_append_u8((int)param_1,(int)cVar1);
     bVar4 = bVar4 + 1;
   } while (bVar4 < 0x18);
   return uVar2;

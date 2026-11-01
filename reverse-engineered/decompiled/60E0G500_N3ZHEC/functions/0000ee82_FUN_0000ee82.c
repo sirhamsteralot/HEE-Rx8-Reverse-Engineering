@@ -1,6 +1,6 @@
 /* ROM address: 0x0000ee82; body bytes: 120; decompiled */
 
-void FUN_0000ee82(void)
+void rev_limit_conditionals(void)
 
 {
   if (18.0 <= DAT_ffffaa10) {

@@ -3,12 +3,12 @@
 /* Function candidate recovered from ROM pointer at 5fd38 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000580f2(undefined4 param_1)
+void diag22_pidff43_rom_id_bytes_ffb(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x22);
-  FUN_000581d2(param_1,0xffffff93);
-  FUN_000581d2(param_1,0x6d);
+  diag_append_u8(param_1,0x22);
+  diag_append_u8(param_1,0xffffff93);
+  diag_append_u8(param_1,0x6d);
   return;
 }
 

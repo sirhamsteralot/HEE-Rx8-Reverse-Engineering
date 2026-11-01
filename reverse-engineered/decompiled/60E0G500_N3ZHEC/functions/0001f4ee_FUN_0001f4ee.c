@@ -1,6 +1,6 @@
 /* ROM address: 0x0001f4ee; body bytes: 148; decompiled */
 
-undefined1 * FUN_0001f4ee(void)
+undefined1 * maf_operating_range(void)
 
 {
   if (DAT_ffffaa88 < 1.0) {

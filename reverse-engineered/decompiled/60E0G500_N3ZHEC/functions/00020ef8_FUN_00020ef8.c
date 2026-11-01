@@ -1,6 +1,6 @@
 /* ROM address: 0x00020ef8; body bytes: 42; decompiled */
 
-void FUN_00020ef8(void)
+void open_loop_changeover_enrichment(void)
 
 {
   if (DAT_ffffb1b6 == 0) {

@@ -3,13 +3,13 @@
 /* Function candidate recovered from ROM pointer at 5fa14 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005732e(char param_1)
+void diag22_pid0043_engine_load_g_rev(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055eec();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_load_g_rev();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 

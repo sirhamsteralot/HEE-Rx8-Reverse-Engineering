@@ -14,7 +14,7 @@ void FUN_0001179c(void)
   FUN_000273d2();
   FUN_00016810();
   FUN_0003fa48();
-  FUN_00032804();
+  apv_control_task();
   FUN_00017ce4();
   FUN_0002230a();
   FUN_000358d2();

@@ -1,6 +1,6 @@
 /* ROM address: 0x00006cdc; body bytes: 114; decompiled */
 
-char FUN_00006cdc(void)
+char adc_read_ect_iat_group(void)
 
 {
   char cVar1;
