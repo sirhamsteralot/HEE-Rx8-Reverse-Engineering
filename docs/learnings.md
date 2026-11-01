@@ -250,7 +250,9 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   (the file is not cycle-ordered).
 - **No NMI pin model**: Sdsh2e does not simulate the NMI pin, and the ROM
   zeroes ICR_W at 0x8e6 before polling 0x8ea — so from reset the sim takes the
-  non-NMI path. Workaround ROM `input/60E15120_N3J1E_sim-nmi-nop.bin` NOPs the
+  non-NMI path. Workaround ROM (formerly `input/60E15120_N3J1E_sim-nmi-nop.bin`, sha256 `4f3e4f56…`,
+  removed in the 2026-11-01 input/ cleanup → recreate by patching 0x8f0 `89 fb` -> `00 09`
+  in a copy of the stock ROM) NOPs the
   `bt 0x8ea` at 0x8f0 (PC-trace-equivalent). Never commit anything from
   `input/`.
 - **Console radix gotcha**: the console wants `H'...'` hex; `0x...` arguments

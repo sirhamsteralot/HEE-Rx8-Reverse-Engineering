@@ -147,7 +147,7 @@ use the first `0x...` hex per line).
 
 **Result 2026-10-31 (external cross-check DONE):** with the simulator's NMI pin
 left at its default LOW, the SH7055 ROM parks in the boot NMI-poll loop at
-0x8ea (BT 0x8ea at 0x8f0); the saved trace (`input/renesas.trace`, 174762
+0x8ea (BT 0x8ea at 0x8f0); the then-saved trace (`input/renesas.trace`, 174762
 executed instructions, buffer wrapped) is exactly that 4-PC loop
 (0x8ea/0x8ec/0x8ee/0x8f0). Running our emulator with `nmi_level=0` produces the
 identical loop, and `compare_traces.py` reports **MATCH: 20000 steps identical**
@@ -179,7 +179,8 @@ run — the write did not land; re-do it after reset and confirm with `memory_di
 only the SH-2A/SH-2 sims do), and the ROM itself zeroes ICR_W at 0x8e6
 (`mov.w r5(=0),@r4`, r4=0xffffed18) right before the 0x8ea poll — so the pin can
 never read high in this simulator and the boot always parks at 0x8ea.
-Workaround: load the sim-only patched ROM **`input/60E15120_N3J1E_sim-nmi-nop.bin`**
+Workaround: load a sim-only patched ROM (recreate with the 2-byte patch below; the patched file
+`input/60E15120_N3J1E_sim-nmi-nop.bin` was removed in the 2026-11-01 input/ cleanup)
 (2-byte patch: `bt 0x8ea` at 0x8f0 `89 fb` -> `nop` `00 09`; sha256
 4f3e4f56ea3a8d40e0c66a77a071a8ca2b08a83335dd1346154ce32f07688f6b) instead of the
 stock ROM. Verified PC-trace-equivalent: our emulator on the patched ROM with
