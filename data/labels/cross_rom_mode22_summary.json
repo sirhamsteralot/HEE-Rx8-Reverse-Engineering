@@ -1,0 +1,620 @@
+{
+ "date": "2026-11-01",
+ "base_rom": "60E15120_N3J1E",
+ "base_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+ "base_table": "0005f10c",
+ "base_record_count": 99,
+ "record_format": "u16 pid, u8 len, u8 byte3, u16 mask, u16 unk, u32 handler (BE, 12 B)",
+ "locator": "direct byte-compare at 0x5f10c, else run-scan (>=30 ascending-pid records, valid handlers) + u32 pool ref; count = unique N with rom[table+N*12]==N and u32 ref",
+ "handler_mapping": "base | same_address | byte_match (cross_rom_function_matches.tsv, bodies re-compared from raw ROM bytes; asserted == same-pid base handler) | pid_match (same PID + same response_len in base; address link NOT asserted) | unmapped (PID not in base)",
+ "roms": {
+  "60E0E500.bin": {
+   "sha256": "c05dfd0422b2b773027a22dcce2c24923969f27b94634bfcbdb44d6157087e11",
+   "table_address": "0005e4e8",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005e98c",
+   "table_pool_refs": [
+    "00056c30"
+   ],
+   "count_pool_refs": [
+    "00056c3c"
+   ],
+   "subpid_table_address": "0005e98e",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "60E0E700_N3YLEE.bin": {
+   "sha256": "bba52346a076c35ded281c14b7ff81fcfa6c6e8119b6ec544048e269b0c53dc0",
+   "table_address": "0005e740",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005ebe4",
+   "table_pool_refs": [
+    "00056e88"
+   ],
+   "count_pool_refs": [
+    "00056e94"
+   ],
+   "subpid_table_address": "0005ebe6",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "60E0FB00.bin": {
+   "sha256": "3d32e2591a1170d5ac3feed7ae065c650bde525e56693a5ca7499e6c9eb5f661",
+   "table_address": "0005d994",
+   "table_identical_to_base": false,
+   "record_count": 110,
+   "count_byte_address": "0005debc",
+   "table_pool_refs": [
+    "00055cd4"
+   ],
+   "count_pool_refs": [
+    "00055e04"
+   ],
+   "subpid_table_address": "0005debe",
+   "pids_match_base": false,
+   "extra_pids": [
+    "0001",
+    "0041",
+    "17f4",
+    "17f5",
+    "17f7",
+    "17f8",
+    "17f9",
+    "17fa",
+    "d100",
+    "e6f2",
+    "e6f3"
+   ],
+   "missing_pids": [],
+   "handlers": {
+    "pid_match": 99,
+    "unmapped": 11
+   },
+   "unmapped_handlers": [
+    {
+     "pid": "0001",
+     "handler": "00054bd2"
+    },
+    {
+     "pid": "0041",
+     "handler": "00054eee"
+    },
+    {
+     "pid": "17f4",
+     "handler": "00055524"
+    },
+    {
+     "pid": "17f5",
+     "handler": "00055542"
+    },
+    {
+     "pid": "17f7",
+     "handler": "00055560"
+    },
+    {
+     "pid": "17f8",
+     "handler": "0005557e"
+    },
+    {
+     "pid": "17f9",
+     "handler": "000555a8"
+    },
+    {
+     "pid": "17fa",
+     "handler": "000555d2"
+    },
+    {
+     "pid": "d100",
+     "handler": "00055b50"
+    },
+    {
+     "pid": "e6f2",
+     "handler": "00055ba0"
+    },
+    {
+     "pid": "e6f3",
+     "handler": "00055bac"
+    }
+   ]
+  },
+  "60E0FC00.bin": {
+   "sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c",
+   "table_address": "0005d994",
+   "table_identical_to_base": false,
+   "record_count": 110,
+   "count_byte_address": "0005debc",
+   "table_pool_refs": [
+    "00055cd4"
+   ],
+   "count_pool_refs": [
+    "00055e04"
+   ],
+   "subpid_table_address": "0005debe",
+   "pids_match_base": false,
+   "extra_pids": [
+    "0001",
+    "0041",
+    "17f4",
+    "17f5",
+    "17f7",
+    "17f8",
+    "17f9",
+    "17fa",
+    "d100",
+    "e6f2",
+    "e6f3"
+   ],
+   "missing_pids": [],
+   "handlers": {
+    "pid_match": 99,
+    "unmapped": 11
+   },
+   "unmapped_handlers": [
+    {
+     "pid": "0001",
+     "handler": "00054bd2"
+    },
+    {
+     "pid": "0041",
+     "handler": "00054eee"
+    },
+    {
+     "pid": "17f4",
+     "handler": "00055524"
+    },
+    {
+     "pid": "17f5",
+     "handler": "00055542"
+    },
+    {
+     "pid": "17f7",
+     "handler": "00055560"
+    },
+    {
+     "pid": "17f8",
+     "handler": "0005557e"
+    },
+    {
+     "pid": "17f9",
+     "handler": "000555a8"
+    },
+    {
+     "pid": "17fa",
+     "handler": "000555d2"
+    },
+    {
+     "pid": "d100",
+     "handler": "00055b50"
+    },
+    {
+     "pid": "e6f2",
+     "handler": "00055ba0"
+    },
+    {
+     "pid": "e6f3",
+     "handler": "00055bac"
+    }
+   ]
+  },
+  "60E15120_N3J1E.bin": {
+   "sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+   "table_address": "0005f10c",
+   "table_identical_to_base": true,
+   "record_count": 99,
+   "count_byte_address": "0005f5b0",
+   "table_pool_refs": [
+    "00057848"
+   ],
+   "count_pool_refs": [
+    "00057854"
+   ],
+   "subpid_table_address": "0005f5b2",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "base": 99
+   },
+   "unmapped_handlers": []
+  },
+  "60E1B900.bin": {
+   "sha256": "b0dc94f96e8eaf6f154df8e7388d12fba490cf2adf13edb077677c4c82b3b1b5",
+   "table_address": "0005dc2c",
+   "table_identical_to_base": false,
+   "record_count": 110,
+   "count_byte_address": "0005e154",
+   "table_pool_refs": [
+    "00055f6c"
+   ],
+   "count_pool_refs": [
+    "0005609c"
+   ],
+   "subpid_table_address": "0005e156",
+   "pids_match_base": false,
+   "extra_pids": [
+    "0001",
+    "0041",
+    "17f4",
+    "17f5",
+    "17f7",
+    "17f8",
+    "17f9",
+    "17fa",
+    "d100",
+    "e6f2",
+    "e6f3"
+   ],
+   "missing_pids": [],
+   "handlers": {
+    "pid_match": 99,
+    "unmapped": 11
+   },
+   "unmapped_handlers": [
+    {
+     "pid": "0001",
+     "handler": "00054e6a"
+    },
+    {
+     "pid": "0041",
+     "handler": "00055186"
+    },
+    {
+     "pid": "17f4",
+     "handler": "000557bc"
+    },
+    {
+     "pid": "17f5",
+     "handler": "000557da"
+    },
+    {
+     "pid": "17f7",
+     "handler": "000557f8"
+    },
+    {
+     "pid": "17f8",
+     "handler": "00055816"
+    },
+    {
+     "pid": "17f9",
+     "handler": "00055840"
+    },
+    {
+     "pid": "17fa",
+     "handler": "0005586a"
+    },
+    {
+     "pid": "d100",
+     "handler": "00055de8"
+    },
+    {
+     "pid": "e6f2",
+     "handler": "00055e38"
+    },
+    {
+     "pid": "e6f3",
+     "handler": "00055e44"
+    }
+   ]
+  },
+  "60E1C500_N3J6EB.bin": {
+   "sha256": "b3b6e1e416826d9c9f51ddc853cae0dea3235a3ddbb260cccd23effc77995c68",
+   "table_address": "0005e7b8",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005ec5c",
+   "table_pool_refs": [
+    "00056ef4"
+   ],
+   "count_pool_refs": [
+    "00056f00"
+   ],
+   "subpid_table_address": "0005ec5e",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "60E1D400.bin": {
+   "sha256": "344cb8b960eb6dde973bdb8e8c3e3e96cac542166cd7158c6f5f24d71eb7af78",
+   "table_address": "0005fb48",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005ffec",
+   "table_pool_refs": [
+    "00058284"
+   ],
+   "count_pool_refs": [
+    "00058290"
+   ],
+   "subpid_table_address": "0005ffee",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "60E32000_N3M5E.bin": {
+   "sha256": "d5406459cc0b19f831a73a021ad2ae47179127097a15cfa323a34bfa47e330de",
+   "table_address": "000651bc",
+   "table_identical_to_base": false,
+   "record_count": 113,
+   "count_byte_address": "00065708",
+   "table_pool_refs": [
+    "0005d1ac"
+   ],
+   "count_pool_refs": [
+    "0005d1b8"
+   ],
+   "subpid_table_address": "0006570a",
+   "pids_match_base": false,
+   "extra_pids": [
+    "0001",
+    "0041",
+    "172e",
+    "1730",
+    "173b",
+    "17f4",
+    "17f5",
+    "17f7",
+    "17f8",
+    "17f9",
+    "17fa",
+    "d100",
+    "e6f2",
+    "e6f3"
+   ],
+   "missing_pids": [],
+   "handlers": {
+    "pid_match": 90,
+    "unmapped": 14,
+    "byte_match": 9
+   },
+   "unmapped_handlers": [
+    {
+     "pid": "0001",
+     "handler": "0005bf9a"
+    },
+    {
+     "pid": "0041",
+     "handler": "0005c2b6"
+    },
+    {
+     "pid": "17f4",
+     "handler": "0005c904"
+    },
+    {
+     "pid": "17f5",
+     "handler": "0005c922"
+    },
+    {
+     "pid": "17f7",
+     "handler": "0005c940"
+    },
+    {
+     "pid": "17f8",
+     "handler": "0005c95e"
+    },
+    {
+     "pid": "17f9",
+     "handler": "0005c988"
+    },
+    {
+     "pid": "17fa",
+     "handler": "0005c9b2"
+    },
+    {
+     "pid": "172e",
+     "handler": "0005cf68"
+    },
+    {
+     "pid": "1730",
+     "handler": "0005cf9c"
+    },
+    {
+     "pid": "173b",
+     "handler": "0005cfd0"
+    },
+    {
+     "pid": "d100",
+     "handler": "0005d004"
+    },
+    {
+     "pid": "e6f2",
+     "handler": "0005d018"
+    },
+    {
+     "pid": "e6f3",
+     "handler": "0005d024"
+    }
+   ]
+  },
+  "60E32000_N3N5EB.bin": {
+   "sha256": "6c043bd4c9581f611919c187da95aeca152627212f235505d7b5ead34294a0a8",
+   "table_address": "00064d0c",
+   "table_identical_to_base": false,
+   "record_count": 110,
+   "count_byte_address": "00065234",
+   "table_pool_refs": [
+    "0005ccc4"
+   ],
+   "count_pool_refs": [
+    "0005cdf4"
+   ],
+   "subpid_table_address": "00065236",
+   "pids_match_base": false,
+   "extra_pids": [
+    "0001",
+    "0041",
+    "17f4",
+    "17f5",
+    "17f7",
+    "17f8",
+    "17f9",
+    "17fa",
+    "d100",
+    "e6f2",
+    "e6f3"
+   ],
+   "missing_pids": [],
+   "handlers": {
+    "pid_match": 99,
+    "unmapped": 11
+   },
+   "unmapped_handlers": [
+    {
+     "pid": "0001",
+     "handler": "0005bbc2"
+    },
+    {
+     "pid": "0041",
+     "handler": "0005bede"
+    },
+    {
+     "pid": "17f4",
+     "handler": "0005c514"
+    },
+    {
+     "pid": "17f5",
+     "handler": "0005c532"
+    },
+    {
+     "pid": "17f7",
+     "handler": "0005c550"
+    },
+    {
+     "pid": "17f8",
+     "handler": "0005c56e"
+    },
+    {
+     "pid": "17f9",
+     "handler": "0005c598"
+    },
+    {
+     "pid": "17fa",
+     "handler": "0005c5c2"
+    },
+    {
+     "pid": "d100",
+     "handler": "0005cb40"
+    },
+    {
+     "pid": "e6f2",
+     "handler": "0005cb90"
+    },
+    {
+     "pid": "e6f3",
+     "handler": "0005cb9c"
+    }
+   ]
+  },
+  "dumps/aron-N3ZHEC-2026-10-31.bin": {
+   "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+   "table_address": "0005f8b0",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005fd54",
+   "table_pool_refs": [
+    "00057fec"
+   ],
+   "count_pool_refs": [
+    "00057ff8"
+   ],
+   "subpid_table_address": "0005fd56",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "dumps/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.bin": {
+   "sha256": "c09fa06b279a110f24ce99620c71fe798177b8986ce76293c19c721fd22d4738",
+   "table_address": "0005f8b0",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005fd54",
+   "table_pool_refs": [
+    "00057fec"
+   ],
+   "count_pool_refs": [
+    "00057ff8"
+   ],
+   "subpid_table_address": "0005fd56",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin": {
+   "sha256": "9f3043bbfe00b3f0c0cc9aca139565e0de374803ac0bc275b6669d5adfab205d",
+   "table_address": "0005f8b0",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005fd54",
+   "table_pool_refs": [
+    "00057fec"
+   ],
+   "count_pool_refs": [
+    "00057ff8"
+   ],
+   "subpid_table_address": "0005fd56",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  },
+  "dumps/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.bin": {
+   "sha256": "5d7d87b6489068797b545c18df575210d02fcbffe2fd4c5d3afd1d41eacac4c6",
+   "table_address": "0005f8b0",
+   "table_identical_to_base": false,
+   "record_count": 99,
+   "count_byte_address": "0005fd54",
+   "table_pool_refs": [
+    "00057fec"
+   ],
+   "count_pool_refs": [
+    "00057ff8"
+   ],
+   "subpid_table_address": "0005fd56",
+   "pids_match_base": true,
+   "extra_pids": [],
+   "missing_pids": [],
+   "handlers": {
+    "byte_match": 98,
+    "pid_match": 1
+   },
+   "unmapped_handlers": []
+  }
+ }
+}
