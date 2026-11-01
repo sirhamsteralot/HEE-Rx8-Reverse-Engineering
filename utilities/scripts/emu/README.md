@@ -195,11 +195,18 @@ sim: download the patched .bin at 0x0, then:
 3. `reset`, then **`go 0xd5fa`** — stops at the CAN-status poll entry; the
    buffer now holds the whole boot (reset 0x8b8 -> 0xd5fa, ~105k entries).
 4. Trace window: right-click > Save As -> input/renesas-boot.trace.
-Expected diff vs our 200k golden: MATCH from 0x8b8 through the first 0xd5fa
-poll iteration (~step 104756); then the sim parks in the 0xd5fa loop
-(its RCAN model never sets the status bit) while our emulator's RCAN model
-exits the poll in one pass and continues to idle 0x3dac — that divergence is a
-peripheral-model difference, not a CPU bug. Diff with:
+**Result 2026-10-31 (full-boot external diff DONE):** with the patched ROM,
+`sdb 0xD5FA` + `go` captured the boot from reset. Our trace now also logs
+delay-slot PCs (`_branch` appends pc+2; golden fixture regenerated, 319731
+entries, 58/58 tests). Diff vs `input/renesas-boot.trace`:
+**MATCH for the first 147 steps** (reset 0x8b8 through init, all branches/calls/
+delay slots identical); first divergence at step 147 = the `bf 0x9da` at 0x9d0
+whose T depends on a **GPIO PLIOR_W (0xfffff756) bit3** read at 0x9ca — ours 0
+(exits), sim 1 (loops): a peripheral input-pin default difference, not a CPU
+bug. Combined with the NMI-loop MATCH (20000/20000), the CPU core is validated
+against the Renesas SH-2E simulator on two independent segments with zero
+CPU-caused divergence; remaining divergence is peripheral models (expected).
+Diff with:
 `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
 
 `memory_fill` = MEMORY_FILL (`memory_fill <start> <end> <data> [mode]`; abbrev `mf`); GUI alternative: View >

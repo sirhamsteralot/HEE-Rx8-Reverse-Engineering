@@ -157,6 +157,8 @@ class SH2E:
         self.icount += 1
 
     def _branch(self, pc, target):
+        if self.trace is not None:
+            self.trace.append((pc + 2) & 0xFFFFFFFF)  # trace the delay-slot PC too
         self._exec(pc + 2, self.r16(pc + 2))  # delay slot
         self.pc = target & 0xFFFFFFFF
 

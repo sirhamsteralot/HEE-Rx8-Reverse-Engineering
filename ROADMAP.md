@@ -125,26 +125,17 @@ Foundational for dynamic validation of everything in groups C–E.
 - **Renesas Simulator Debugger cross-check** (`compare_traces.py`): DONE
   2026-10-31 — HEW 9.4.3 SH-2E simulator trace (`input/renesas.trace`,
   Trace-window TSV) vs our emulator with the NMI pin low (same state): **MATCH,
-  20000/20000 steps identical** on the 0x8ea NMI-poll loop. `compare_traces.py`
-  now auto-parses the Renesas TSV export (execute-stage rows sorted by Cycle).
-  Our 200k golden re-verified MATCH after the E1/E7/interrupt fixes.
-- **NEXT STEP (pick up here): full-boot from-reset Renesas diff.** The saved
-  trace only covered the 0x8ea NMI-poll loop because the simulator's NMI pin
-  defaults LOW (ROM parks there; buffer wraps). To compare the real boot:
-  the SH-2E simulator has NO NMI pin model (Sdsh2e.dll lacks NMI/IRQ pins;
-  only SH-2A/SH-2 sims have them) and the ROM zeroes ICR_W at 0x8e6 before the
-  0x8ea poll, so the pin can never read high — the boot always parks at 0x8ea.
-  Workaround: download the sim-only patched ROM
-  `input/60E15120_N3J1E_sim-nmi-nop.bin` (NOP over the `bt 0x8ea` at 0x8f0;
-  PC-trace-equivalent to our NMI-high boot — verified MATCH 200k/200k) at 0x0,
-  `reset`, trace on, `go 0x3dac`, save. Then open Trace (Ctrl+T), set
-  Acquisition buffer >= step count and enable, run `go 0x3dac`, Save the
-  trace into `input/renesas-boot.trace`. Then here:
-  `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
-  (our trace: `python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 200000 --trace ...`).
-  Expect MATCH on the shared prefix; investigate any divergence. Exact steps
-  in `utilities/scripts/emu/README.md` §cross-check.
-
+  20000/20000 steps identical** on the 0x8ea NMI-poll loop, and the **full-boot
+  from-reset diff is DONE**: with the sim-only NOP-patched ROM
+  (`input/60E15120_N3J1E_sim-nmi-nop.bin`, because Sdsh2e has no NMI pin model
+  and the ROM zeroes ICR_W at 0x8e6), MATCH for the first **147 steps** from
+  reset 0x8b8 (all branches/calls/delay slots identical — our trace now logs
+  delay-slot PCs; golden regenerated 319731 entries), then divergence at the
+  `bf` at 0x9d0 reading GPIO PLIOR_W 0xfffff756 bit3 (peripheral pin default
+  differs) — a peripheral-model difference, not a CPU bug. Zero CPU-caused
+  divergence across both segments. `compare_traces.py` auto-parses the Renesas
+  TSV export. Our 200k golden re-verified MATCH after the E1/E7/interrupt/
+  delay-slot-trace changes.
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
