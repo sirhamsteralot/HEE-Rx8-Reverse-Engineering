@@ -127,9 +127,18 @@ Foundational for dynamic validation of everything in groups C–E.
   Trace-window TSV) vs our emulator with the NMI pin low (same state): **MATCH,
   20000/20000 steps identical** on the 0x8ea NMI-poll loop. `compare_traces.py`
   now auto-parses the Renesas TSV export (execute-stage rows sorted by Cycle).
-  Full-boot trace diff pending a from-reset Renesas capture with NMI high (see
-  emu README for the exact steps). Our 200k golden re-verified MATCH after the
-  E1/E7/interrupt fixes.
+  Our 200k golden re-verified MATCH after the E1/E7/interrupt fixes.
+- **NEXT STEP (pick up here): full-boot from-reset Renesas diff.** The saved
+  trace only covered the 0x8ea NMI-poll loop because the simulator's NMI pin
+  defaults LOW (ROM parks there; buffer wraps). To compare the real boot:
+  in HEW set the NMI pin HIGH first (View > CPU > Simulated I/O, or the ICR
+  pin in the Set Simulator dialog), then `reset`, open Trace (Ctrl+T), set
+  Trace Acquisition buffer >= step count and enable, run `go 0x3dac`, Save
+  the trace into `input/renesas-boot.trace`. Then here:
+  `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
+  (our trace: `python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 200000 --trace ...`).
+  Expect MATCH on the shared prefix; investigate any divergence. Exact steps
+  in `utilities/scripts/emu/README.md` §cross-check.
 
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 
