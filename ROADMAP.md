@@ -5,10 +5,11 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 2026-11-01.
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
-pointers to the detailed docs. §Open work lists groups D–F in pickup order: groups
-A–C are done (group A = calibration extraction, see P3 below; group B = emulator
+pointers to the detailed docs. §Open work lists groups E–F in pickup order: groups
+A–D are done (group A = calibration extraction, see P3 below; group B = emulator
 fidelity, done except the E4/E6 partials tracked in the register; group C = static
-labeling & gap closure, items 1–6 all done 2026-10-31; group D items 1–4 done 2026-10-31/2026-11-01), so pick up at group E. Items
+labeling & gap closure, items 1–6 all done 2026-10-31; group D = cross-ROM
+propagation, items 1–4 done 2026-10-31/2026-11-01), so pick up at group E. Items
 within each group are roughly in dependency order. Phase numbers (P1–P6) and group
 letters are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -235,24 +236,8 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A–D are complete (see §Completed above), so the
-next pickup is group E. Group D's dependencies (P3 calibration extraction +
-group C base-ROM labeling) closed 2026-10-31.
-
-### D. Cross-ROM propagation (P2/P5) — items 1–4 DONE 2026-10-31/2026-11-01
-
-- ~~Extend `data/definitions/` to all ROMs~~ — DONE 2026-11-01 as D item 4 (see
-  §Completed); D8 closed with it.
-- Apply the cross-ROM label sets to the decompiled exports: run the naming
-  pass for 60E0G500_N3ZHEC (apply `cross_ecu/cross_rom_function_aliases.tsv`
-  + the new Mode 22 labels — add handler 0x57e66 (pid 0xc116, pid_match +
-  dynamically swept), tables 0x5f8b0 / 0x5fd56 → `named/` view + rename map
-  + validation.json), and emit per-ROM Mode 22 label TSVs for the family-B
-  ROMs (60E0FB00/60E0FC00/60E1B900/60E32000_*) so their future Ghidra exports
-  consume `data/labels/cross_rom_mode22_pid_handlers.tsv` directly. Family-B
-  extra PIDs (0x0001, 0x17f4–0x17fa, 0xd100, 0xe6f2, 0xe6f3, …) stay FUN_-level
-  (no base counterpart). Depends on the Mode 22 cross-ROM map (D item 2,
-  `data/labels/cross_rom_mode22_pid_handlers.tsv`).
+and where artifacts live. Groups A–D are complete (see §Completed above, items 1–4 incl. the
+2026-11-01 defs extension), so the next pickup is group E.
 
 ### E. Reimplementation coverage (P4) — depends on C
 

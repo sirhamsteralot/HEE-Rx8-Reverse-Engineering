@@ -36,8 +36,10 @@ COVERAGE = DEFS / "coverage.json"
 FILESIZE = 0x80000  # 512 KiB SH7055 flash
 
 
-def git(repo, *args):
-    return subprocess.check_output(["git", "-C", str(repo), *args]).decode("utf-8-sig").strip()
+def git(repo, *args, quiet=False):
+    return subprocess.check_output(
+        ["git", "-C", str(repo), *args],
+        stderr=subprocess.DEVNULL if quiet else None).decode("utf-8-sig").strip()
 
 
 def sha256(path):
@@ -201,8 +203,16 @@ def main():
         if p.exists():
             local_blob, state = blob(p), "present"
         else:
-            # deleted under rule 4b; recover the blob from our own git history for evidence
-            local_blob, state = git(ROOT, "rev-parse", f"HEAD:data/definitions/{local}"), "removed (rule 4b); blob from git HEAD"
+            # deleted under rule 4b; recover the blob from the newest commit whose tree still has the file
+            local_blob = state = None
+            for cand in git(ROOT, "rev-list", "HEAD", "--", f"data/definitions/{local}").splitlines():
+                try:
+                    local_blob = git(ROOT, "rev-parse", f"{cand}:data/definitions/{local}", quiet=True)
+                    state = f"removed (rule 4b); blob from commit {cand[:12]}"
+                    break
+                except subprocess.CalledProcessError:
+                    continue
+            assert local_blob, f"no blob found in history for {local}"
         same = local_blob == git(SUB_RX8DEFS, "rev-parse", f"HEAD:{sub}")
         dedupe.append({
             "local": f"data/definitions/{local}",
