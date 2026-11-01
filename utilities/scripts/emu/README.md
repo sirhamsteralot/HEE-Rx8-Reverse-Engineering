@@ -173,7 +173,21 @@ the boot ROM polls its bit15 at 0x8ea and parks there while it reads 0. So:
 Rules: `reset` CLEARS the I/O registers, so the `memory_fill` must come AFTER `reset`
 (while the CPU is halted) and you must NEVER `reset` again afterwards. A saved
 trace that is 100% the 0x8ea/0x8ec/0x8ee/0x8f0 loop means ICR was 0 during the
-run — the write did not land; re-do it after reset and confirm with `md`.
+run — the write did not land; re-do it after reset and confirm with `memory_display`.
+
+**SH-2E simulator has no NMI pin model** (Sdsh2e.dll has no NMI/IRQ pin strings;
+only the SH-2A/SH-2 sims do), and the ROM itself zeroes ICR_W at 0x8e6
+(`mov.w r5(=0),@r4`, r4=0xffffed18) right before the 0x8ea poll — so the pin can
+never read high in this simulator and the boot always parks at 0x8ea.
+Workaround: load the sim-only patched ROM **`input/60E15120_N3J1E_sim-nmi-nop.bin`**
+(2-byte patch: `bt 0x8ea` at 0x8f0 `89 fb` -> `nop` `00 09`; sha256
+4f3e4f56ea3a8d40e0c66a77a071a8ca2b08a83335dd1346154ce32f07688f6b) instead of the
+stock ROM. Verified PC-trace-equivalent: our emulator on the patched ROM with
+NMI low reproduces the 200k golden trace of the original ROM with NMI high
+byte-exact (compare_traces MATCH 200000/200000), because at 0x8f0 the original
+with NMI=1 falls through (bt not taken) exactly like the patched nop. So in the
+sim: download the patched .bin at 0x0, `reset`, trace on, `go 0x3dac`, save — no
+ICR write needed.
 
 `memory_fill` = MEMORY_FILL (`memory_fill <start> <end> <data> [mode]`; abbrev `mf`); GUI alternative: View >
 CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff

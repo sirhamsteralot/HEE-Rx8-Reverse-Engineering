@@ -131,12 +131,13 @@ Foundational for dynamic validation of everything in groups C–E.
 - **NEXT STEP (pick up here): full-boot from-reset Renesas diff.** The saved
   trace only covered the 0x8ea NMI-poll loop because the simulator's NMI pin
   defaults LOW (ROM parks there; buffer wraps). To compare the real boot:
-  in HEW set ICR_W bit15 high first — the SH-2E simulator has no NMI pin
-  model (Simulated I/O is empty without a loaded I/O file, and SH7055F.IO has
-  no NMI pin), so from the Command Line window: `reset`, then
-  `memory_fill 0xFFFFED18 0xFFFFED19 0x8000 WORD`, then VERIFY with `memory_display 0xFFFFED18` (must
-  read 8000; if not, set Setup > Radix > Hex or use H'FFFFED18' / the Memory
-  window Ctrl+M). Never `reset` after the `memory_fill`. Then open Trace (Ctrl+T), set
+  the SH-2E simulator has NO NMI pin model (Sdsh2e.dll lacks NMI/IRQ pins;
+  only SH-2A/SH-2 sims have them) and the ROM zeroes ICR_W at 0x8e6 before the
+  0x8ea poll, so the pin can never read high — the boot always parks at 0x8ea.
+  Workaround: download the sim-only patched ROM
+  `input/60E15120_N3J1E_sim-nmi-nop.bin` (NOP over the `bt 0x8ea` at 0x8f0;
+  PC-trace-equivalent to our NMI-high boot — verified MATCH 200k/200k) at 0x0,
+  `reset`, trace on, `go 0x3dac`, save. Then open Trace (Ctrl+T), set
   Acquisition buffer >= step count and enable, run `go 0x3dac`, Save the
   trace into `input/renesas-boot.trace`. Then here:
   `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
