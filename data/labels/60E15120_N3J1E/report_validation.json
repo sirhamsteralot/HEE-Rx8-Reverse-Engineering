@@ -15,9 +15,9 @@
       "rom_claims": 0
     },
     "fueling_control_report.md": {
-      "fn_checked": 29,
+      "fn_checked": 44,
       "ram_checked": 21,
-      "rom_refs": 50,
+      "rom_refs": 95,
       "rom_claims": 0
     },
     "ignition_timing_report.md": {

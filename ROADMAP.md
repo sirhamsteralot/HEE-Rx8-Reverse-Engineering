@@ -129,6 +129,25 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 `utilities/scripts/rx8-pcm-pipeline/triage_export.py`, `decompiler_issues_triaged.tsv`,
 `non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
 
+### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE 2026-10-31
+
+- **D5 closed**: `engine_load_ffffc0b4` and PID 0x43 are VolEf-like cell units
+  (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)), proven by the max-load clamp
+  (tbl_0x6b200×0x6b214×0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev) matching
+  the extracted load axes (tbl_06aa48 axis_y 0.0625–1.25). Thread corrections:
+  MAF×60/rpm (not ×rpm/60), 0.6345 = VolEf (not g/combustion), PID 0x43 = VolEf
+  ×1/255 (not g/rev). → load_fueling_report.md "Update 2026-10-31".
+- **fueling_control_report.md §10 deepening**: all `fuel_correction_sum` adder
+  writers traced (LTFT b0d0, product-sums c0c8/c104, CL terms ae08/ae10, MAF-%
+  b21c, transient cde0, lambda adf8→adec, cat-temp c644); fuel-cut arbitration
+  0xedc4/0x18cfe/0xee82; injection-angle tables 0x68ef8/f0c/f20 = per-injector max
+  open-angle degrees (consumer 0xff32); cold-start 0x1ddfc byte-verified
+  degenerate (pool floats 0x71060/0x71064 = 0.0); MAF latch 0x19f4e/0x19f40;
+  0x4ab8 = task rec[18].entry in a 19-record table based at 0x4990 (corrects
+  os_scheduler_can_ivt_report.md §11); descriptor→data/maps mapping; thread OL
+  chain confirmed (0x1ee4a: max(baro·tipin, target)×coolant, +1.0 lambda decimal
+  part). Dynamic: `tests/test_fuel_chain_dynamic.py` (65/65 pytest).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -139,25 +158,13 @@ and where artifacts live.
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
 Use the emulator for dynamic verification where useful (group B, done).
 
-- Cross-check the thread's OL-fueling chain vs our fueling report. Engine-load
-  math DONE 2026-10-31 (D5 closed: cell = g/rev × 0.6345 = VolEf, PID 0x43 × 1/255
-  — see load_fueling_report.md "Update 2026-10-31"); thread's "MAF×rpm/60" is a
-  typo for MAF×60/rpm, "×0.6345 g/combustion" is VolEf, "PID 0x43 = g/rev" is VolEf.
-- **Deepen `fueling_control_report.md` (further investigation needed — see the
-  marker at the top of that report)**: the report reads shallow because the
-  load calculation is not in it (it lives in `load_fueling_report.md` —
-  cross-reference it, don't duplicate). Also: trace the untraced adder writers
-  into `fuel_correction_sum` (b0d0/c0c8/ae08/b21c/c104/cde0/ae10) and
-  `DAT_ffffadec`/`DAT_ffffc644`; resolve fuel-cut arbitration, injection-angle
-  semantics (tables 0x68ef8/0x68f0c/0x68f20), cold-start degenerate body, MAF
-  fault latching (0x19f4e/0x19f40), ~~PID 0x1410~~ (resolved 2026-10-31 — injector
-  pulse time, see D10), and the 0x4ab8 task-record
-  dispatch; map descriptor addresses to P3-extracted `data/maps/` table names;
-  dynamically verify the fuel chain in the emulator via `harness.py`.
-- **Settle D5 (g/rev vs VolEf)**: handler side settled 2026-10-31 (see register D5);
-  remaining: trace `engine_load_ffffc0b4` to the specific
-  extracted table in `data/maps/60E15120_N3J1E/` it reads, then compare the
-  handler's computed value against the table + scaling numerically.
+- ~~Cross-check the thread's OL-fueling chain vs our fueling report; verify
+  engine-load math~~ **DONE 2026-10-31** — see C items 3-4 in Completed below
+  (D5 closed: load cell = VolEf = g/rev × 0.6345; OL chain confirmed; thread
+  formula corrections recorded).
+- ~~Deepen `fueling_control_report.md`~~ **DONE 2026-10-31** — fueling report §10:
+  all adder writers traced, fuel-cut arbitration / injection-angle / cold-start /
+  MAF latch / 0x4ab8 resolved, descriptor→data/maps mapping, dynamic harness tests.
 - Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
   **bootloader seed/key location** — D4.
 - Label **60E0G500** via the pipeline (streetport diff ranges already mapped to

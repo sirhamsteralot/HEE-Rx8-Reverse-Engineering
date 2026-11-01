@@ -286,3 +286,27 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   as UDS 0x5eb18/0x5eb40) — recover by reading the pool word, then the records to key==0.
 - 0x33b6 is a 2-byte orphan (`7638` + illegal 0x0000): no u32 ref, no branch target, no
   callers — treat 0x33b6-0x348f as data, keep the FUN_ label address-only.
+
+## Fueling deepening + D5 (2026-10-31, group C items 3-4)
+
+- Task table is based at **0x4990**, 19 x 16-byte records {param, stack, entry,
+  mask}, terminator at 0x4ac0 — NOT "0x4998, 18 records {entry,mask,param,stack}".
+  Proof: 0x375c loads base from pool 0x37b0 (=0x4990), stride shll2 x2. 0x4ab8 is
+  rec[18].entry -> 0x64e8 thunk -> slow task 0x11534.
+- Load cell units: 0x1a418 aa3c = min(MAF x 60/rpm, 5.0) [g/rev cap 5.0];
+  0x33a6c c0b0 = aa3c x 0.6345 (f32 @0x7a088 via pool 0x33b70) = VolEf
+  (1/(1.308L x 1.205 g/L)); 0x33ad2 c0b4 = min(filter(c0b0, 0.2), c0b8) or 0.525.
+  PID 0x43 (0x56b8a -> 0x55748) encodes c0b4 x 255 (step 0x3b808080 @0x55824).
+  Decisive numeric check: max-load tables give 0.58-1.29 in cell units, matching
+  load axes in data/maps (tbl_06aa48 y 0.0625-1.25) — so the cell is VolEf.
+- Lambda tables store lambda-1; the +1.0 is added in 0x1cc34's target clamp
+  (clamp [0.85, 1.05]) and at the end of the bf14 sum in 0x306e8.
+- OL chain 0x1ee4a: b130 = max(baro_corr x tipin, ol_target_3d); b120 = b130 x
+  coolant_corr; implausible-coolant A/B sets blend by fuel_blend_weight b11c.
+- Cold-start 0x1ddfc is degenerate: pool floats 0x71060/0x71064 are literal 0.0.
+- Dynamic harness pattern for RAM cells: ram={0xFFFFC0B4: (4, harness.bits(x))},
+  read back with struct.unpack('>f', struct.pack('>I', bus.read32(a))); compare
+  floats with f32() (1.2 is not exact in f32 — assert against f32(1.2)).
+- Windows Python here defaults to cp1252 for pathlib read_text/write_text —
+  use encoding='utf-8' or the edit tool when appending non-ASCII (→, ×) to docs,
+  else write_text truncates the file on UnicodeEncodeError.
