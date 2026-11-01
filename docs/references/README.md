@@ -38,7 +38,9 @@ for their content; our repo references them rather than duplicating files:
   `docs/investigations/60E15120_N3J1E/defs-merge/`) and may differ from the pinned
   HEAD — that is intentional.
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs: upstream RomRaider ECU +
-  logger XML definitions (promoted copies in `data/definitions/romraider/upstream-rx8defs/`);
+  logger XML definitions, referenced in place (no promoted copies since the 2026-11-01
+  D8 dedupe; the one differing snapshot kept is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
+  @ upstream `ff5ab4f`, the 60E15120 merge base — see [`../../data/definitions/README.md`](../../data/definitions/README.md));
   commit hashes are cited as merge provenance — never rewrite that history
 - `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man, pinned at
   `50f905bc271e918a00ce0eda96e6414c220886e5`: PCM reflash tool for Tactrix

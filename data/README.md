@@ -4,16 +4,14 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
 
 ## Layout
 
-- `definitions/` — ECU tuning definitions. Upstream originals are in
-  `submodules/RX8Defs/` (pinned `1b3aea2…`); the copies here were taken from
-  specific upstream commits (cited in the defs-merge investigation records) and
-  may differ from the pinned HEAD — intentional, see `docs/references/README.md`.
-  Known case: our `ecuflash/60E0G500.xml` (61,849 B) is from an older commit than the
-  pinned submodule's (63,606 B); both list 1,210 tables — re-sync deliberately if needed.
-  - `ecuflash/` — ECUFlash XML definitions (upstream).
-  - `romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs.
-  - `romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.
-  - `romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
+- `definitions/` — ECU tuning definitions; see [`definitions/README.md`](definitions/README.md)
+  for provenance, upstream commit citations, per-ROM defs and the D8 dedupe record.
+  Upstream originals live in `submodules/RX8Defs/` (pinned `1b3aea2…`); local copies
+  exist only where they differ from the pinned tree.
+  - `definitions/romraider/per-rom/` — one standalone RomRaider def per dumped ROM (all 14; generated, see `coverage.json`).
+  - `definitions/romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs snapshot @ `ff5ab4f` (merge base).
+  - `definitions/romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.
+  - `definitions/romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
 - `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
   `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
   (ROM hash/IDs), `validation.json` records, export logs.
