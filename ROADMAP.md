@@ -134,9 +134,9 @@ Foundational for dynamic validation of everything in groups C–E.
   in HEW set ICR_W bit15 high first — the SH-2E simulator has no NMI pin
   model (Simulated I/O is empty without a loaded I/O file, and SH7055F.IO has
   no NMI pin), so from the Command Line window: `reset`, then
-  `mf 0xFFFFED18 0xFFFFED19 8000 WORD`, then VERIFY with `md 0xFFFFED18` (must
+  `memory_fill 0xFFFFED18 0xFFFFED19 0x8000 WORD`, then VERIFY with `memory_display 0xFFFFED18` (must
   read 8000; if not, set Setup > Radix > Hex or use H'FFFFED18' / the Memory
-  window Ctrl+M). Never `reset` after the write. Then open Trace (Ctrl+T), set
+  window Ctrl+M). Never `reset` after the `memory_fill`. Then open Trace (Ctrl+T), set
   Acquisition buffer >= step count and enable, run `go 0x3dac`, Save the
   trace into `input/renesas-boot.trace`. Then here:
   `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`

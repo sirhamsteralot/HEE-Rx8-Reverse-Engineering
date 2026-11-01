@@ -160,22 +160,22 @@ the boot ROM polls its bit15 at 0x8ea and parks there while it reads 0. So:
 
     (Trace window Ctrl+T -> Acquisition: buffer >= step count, enable)   # enable FIRST
     reset                                  # CPU is now HALTED at the reset vector, ICR cleared to 0
-    md 0xFFFFED18                          # expect 0000
-    mf 0xFFFFED18 0xFFFFED19 8000 WORD     # ICR_W bit15 = 1 (modes BYTE/WORD/LONG); full form needs
+    memory_display 0xFFFFED18                          # expect 0000
+    memory_fill 0xFFFFED18 0xFFFFED19 0x8000 WORD     # ICR_W bit15 = 1 (modes BYTE/WORD/LONG); full form needs
                                            #   start+end+data: mf <start> <end> <data> [mode]
-    md 0xFFFFED18                          # MUST read 8000 — if 0, the write failed: set
+    memory_display 0xFFFFED18                          # MUST read 8000 — if 0, the write failed: set
                                            #   Setup > Radix > Hex (or use H'FFFFED18'), or use the
                                            #   GUI Memory window (Ctrl+M -> 0xFFFFED18 -> 8000)
     go 0x3dac                              # poll at 0x8ea now sees bit15=1 -> boots to idle;
                                            #   trace captured the whole boot from reset
     (Trace window: right-click > Save As -> input/renesas-boot.trace)
 
-Rules: `reset` CLEARS the I/O registers, so the `mf` must come AFTER `reset`
+Rules: `reset` CLEARS the I/O registers, so the `memory_fill` must come AFTER `reset`
 (while the CPU is halted) and you must NEVER `reset` again afterwards. A saved
 trace that is 100% the 0x8ea/0x8ec/0x8ee/0x8f0 loop means ICR was 0 during the
 run — the write did not land; re-do it after reset and confirm with `md`.
 
-`mf` = MEMORY_FILL (`mf <start> <end> <data> [mode]`); GUI alternative: View >
+`memory_fill` = MEMORY_FILL (`memory_fill <start> <end> <data> [mode]`; abbrev `mf`); GUI alternative: View >
 CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff
 against our 200k golden with the same one-liner.
 Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
