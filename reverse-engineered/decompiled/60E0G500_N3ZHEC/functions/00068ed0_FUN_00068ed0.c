@@ -1,6 +1,6 @@
 /* ROM address: 0x00068ed0; body bytes: 56; decompiled */
 
-undefined4 FUN_00068ed0(void)
+undefined4 isotp_consecutive_frame_check(void)
 
 {
   undefined4 uVar1;

@@ -1,6 +1,6 @@
 /* ROM address: 0x00031520; body bytes: 346; decompiled */
 
-void FUN_00031520(void)
+void calculate_fuel_amount_per_rotation(void)
 
 {
   float fVar1;

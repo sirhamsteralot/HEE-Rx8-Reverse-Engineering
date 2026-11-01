@@ -13,7 +13,7 @@ void FUN_00003d58(void)
   FUN_00003a28(&DAT_ffff7638,(int)(char)puVar1[1]);
   *puVar1 = 0;
   DAT_ffff7644 = *(undefined4 *)(puVar1 + 4);
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 

@@ -6,7 +6,7 @@
 void FUN_000029f8(void)
 
 {
-  FUN_00003238();
+  interrupt_entry_save_context();
   FUN_000055d6();
   return;
 }

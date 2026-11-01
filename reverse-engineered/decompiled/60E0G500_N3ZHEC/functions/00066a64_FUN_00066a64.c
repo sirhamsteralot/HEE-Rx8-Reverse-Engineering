@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f330 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066a64(undefined4 param_1,char param_2)
+uint obd_mode09_vehicle_info(undefined4 param_1,char param_2)
 
 {
   bool bVar1;

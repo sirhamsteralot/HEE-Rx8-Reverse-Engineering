@@ -1,6 +1,6 @@
 /* ROM address: 0x00057ef0; body bytes: 232; decompiled */
 
-int FUN_00057ef0(void)
+int diag22_find_and_dispatch_identifier(void)
 
 {
   bool bVar1;
@@ -10,14 +10,14 @@ int FUN_00057ef0(void)
   bVar2 = 0;
   bVar1 = false;
   while ((bVar2 < 99 && (!bVar1))) {
-    if (*(short *)(&DAT_0005f8b0 + (uint)bVar2 * 0xc) == DAT_ffffd226) {
+    if (*(short *)(&tbl_diag22_dispatch_records_0005f8b0 + (uint)bVar2 * 0xc) == DAT_ffffd226) {
       bVar1 = true;
       if ((*(ushort *)(&DAT_0005f8b4 + (uint)bVar2 * 0xc) & DAT_ffffd3f0) == 0) {
         unaff_r11 = FUN_00055112(0x22,0x31);
       }
       else {
         if (DAT_ffffd224 != -0x80) {
-          FUN_00057ffc();
+          diag22_append_positive_response_header();
         }
         (*(code *)(&PTR_LAB_0005f8b8)[(uint)bVar2 * 3])(0x22);
         if (DAT_ffffd224 == '\0') {

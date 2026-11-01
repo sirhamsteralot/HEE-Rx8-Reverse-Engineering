@@ -44,7 +44,7 @@ LAB_0000fc58:
         }
         if (bVar1) {
           for (pcVar6 = pcVar4 + 0x10; pcVar6 < pcVar4 + 0x58; pcVar6 = pcVar6 + 0x18) {
-            FUN_000085e4((int)*pcVar6);
+            injector_channel_disable((int)*pcVar6);
           }
           pcVar4[2] = '\0';
           pcVar4[1] = '\x01';

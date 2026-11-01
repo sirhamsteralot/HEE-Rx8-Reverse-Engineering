@@ -50,77 +50,77 @@ uint FUN_00055534(char param_1,uint param_2)
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 2:
-    uVar7 = FUN_00055b80();
+    uVar7 = diag_read_calc_load_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 3:
-    uVar7 = FUN_00055bce();
+    uVar7 = diag_encode_ect_c();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 4:
-    uVar7 = FUN_00055be4();
+    uVar7 = diag_encode_stft_lambda();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 5:
-    uVar7 = FUN_00055c0a();
+    uVar7 = diag_encode_ltft();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 6:
-    uVar7 = FUN_00055c28();
+    uVar7 = diag_encode_rpm();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 7:
-    uVar7 = FUN_00055c3e();
+    uVar7 = diag_encode_vss();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 8:
-    uVar7 = FUN_00055c52();
+    uVar7 = diag_encode_leading_timing();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 9:
-    uVar7 = FUN_00055c6a();
+    uVar7 = diag_encode_iat();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 10:
-    uVar7 = FUN_00055ccc();
+    uVar7 = diag_encode_maf();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xb:
-    uVar7 = FUN_00055ce2();
+    uVar7 = diag_encode_throttle_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xc:
-    uVar7 = FUN_00055d0e();
+    uVar7 = diag_read_secondary_air_status();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xd:
-    uVar7 = FUN_00055d24();
+    uVar7 = diag_read_o2_present_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = FUN_00055d2a();
+    uVar7 = diag_encode_o2s2();
     uVar7 = FUN_00055066(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055d50();
+    uVar2 = diag_encode_trim_b074();
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
-    uVar7 = FUN_00055d6e();
+    uVar7 = diag_read_obd_standard_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x10:
-    uVar7 = FUN_00055d74();
+    uVar7 = diag_read_runtime_s();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x11:
-    uVar7 = FUN_00055d9c();
+    uVar7 = diag_read_distance_mil();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = FUN_00055dba();
+    uVar7 = diag_encode_b2f0();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = FUN_00055dd0();
+    uVar7 = diag_read_d287();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
@@ -128,53 +128,53 @@ uint FUN_00055534(char param_1,uint param_2)
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = FUN_00055e54();
+    uVar7 = diag_read_90fc();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = FUN_00055e72();
+    uVar7 = diag_encode_ad10();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
-    uVar7 = FUN_00055e90();
+    uVar7 = diag_read_afr_word_a();
     uVar7 = FUN_00055074(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055ea6();
+    uVar2 = diag_read_afr_word_b();
     FUN_00055074(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = FUN_00055ebe();
+    uVar7 = diag_encode_c644();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
-    uVar7 = FUN_00055ed6();
+    uVar7 = diag_encode_battery_v();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1a:
-    uVar7 = FUN_00055eec();
+    uVar7 = diag_encode_load_g_rev();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1b:
-    uVar7 = FUN_00055f02();
+    uVar7 = diag_encode_lambda_target();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = FUN_00055f18();
+    uVar7 = diag_encode_ad48();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = FUN_00055f2e();
+    uVar7 = diag_encode_ad5e();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = FUN_00055f5a();
+    uVar7 = diag_encode_a9c4();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = FUN_00055fdc();
+    uVar7 = diag_encode_a9c6();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = FUN_00056008();
+    uVar7 = diag_encode_b410();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:

@@ -3,13 +3,13 @@
 /* Function candidate recovered from ROM pointer at 5fae0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000575e4(char param_1)
+void diag22_pid097c_ram_b59c_div2048(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffb60c,0x3a000000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 

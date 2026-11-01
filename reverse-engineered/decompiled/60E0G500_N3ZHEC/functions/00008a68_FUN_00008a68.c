@@ -1,6 +1,6 @@
 /* ROM address: 0x00008a68; body bytes: 192; decompiled */
 
-void FUN_00008a68(uint param_1)
+void injector_pulse_set_channel(uint param_1)
 
 {
   short sVar1;

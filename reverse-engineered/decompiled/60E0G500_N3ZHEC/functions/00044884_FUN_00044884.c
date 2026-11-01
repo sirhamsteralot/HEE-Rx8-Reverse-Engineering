@@ -1,6 +1,6 @@
 /* ROM address: 0x00044884; body bytes: 126; decompiled */
 
-uint FUN_00044884(void)
+uint cranking_timing_leading_filter(void)
 
 {
   byte bVar1;

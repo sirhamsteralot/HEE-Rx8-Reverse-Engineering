@@ -1,13 +1,13 @@
 /* ROM address: 0x00068844; body bytes: 62; decompiled */
 
-void FUN_00068844(int param_1)
+void uds_service_entry(int param_1)
 
 {
   char cVar1;
   
-  if ((((param_1 == 0x7e0) || (param_1 == 0x7df)) && (cVar1 = FUN_00068b78(), cVar1 != '@')) &&
-     (cVar1 = FUN_00068bd0(), cVar1 == '\0')) {
-    FUN_00068c58(param_1);
+  if ((((param_1 == 0x7e0) || (param_1 == 0x7df)) && (cVar1 = isotp_pci_type_extract(), cVar1 != '@')) &&
+     (cVar1 = isotp_frame_type_dispatch(), cVar1 == '\0')) {
+    uds_request_schedule_service_task(param_1);
     return;
   }
   return;

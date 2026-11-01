@@ -1,6 +1,6 @@
 /* ROM address: 0x00068c58; body bytes: 116; decompiled */
 
-void FUN_00068c58(int param_1)
+void uds_request_schedule_service_task(int param_1)
 
 {
   uint local_14;

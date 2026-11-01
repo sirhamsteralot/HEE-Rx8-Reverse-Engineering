@@ -2,7 +2,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x0001410a) */
 
-uint FUN_000140e4(void)
+uint iat_timing_compensation_on_throttle(void)
 
 {
   uint uVar1;

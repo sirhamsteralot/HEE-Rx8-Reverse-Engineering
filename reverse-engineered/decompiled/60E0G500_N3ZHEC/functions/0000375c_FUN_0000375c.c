@@ -1,6 +1,6 @@
 /* ROM address: 0x0000375c; body bytes: 96; decompiled_with_warnings */
 
-int FUN_0000375c(int param_1,short param_2)
+int os_switch_to_task(int param_1,short param_2)
 
 {
   char cVar1;

@@ -1,6 +1,6 @@
 /* ROM address: 0x00055c52; body bytes: 24; decompiled */
 
-undefined4 FUN_00055c52(void)
+undefined4 diag_encode_leading_timing(void)
 
 {
   undefined4 uVar1;

@@ -11,7 +11,7 @@ undefined4 FUN_000063f0(void)
   
   FUN_0000a3ac();
   FUN_00006a4c();
-  FUN_00007438();
+  maf_sensor_scaling();
   FUN_0000acfc();
   FUN_0000b602();
   FUN_000114fc();

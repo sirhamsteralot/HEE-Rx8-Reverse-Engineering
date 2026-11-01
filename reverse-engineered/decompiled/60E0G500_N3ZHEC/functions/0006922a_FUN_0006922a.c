@@ -1,6 +1,6 @@
 /* ROM address: 0x0006922a; body bytes: 98; decompiled */
 
-int FUN_0006922a(char param_1)
+int uds_rx_channel_alloc(char param_1)
 
 {
   bool bVar1;
@@ -22,7 +22,7 @@ int FUN_0006922a(char param_1)
     iVar2 = iVar2 + 1;
   } while (iVar2 < 1);
   if (!bVar1) {
-    FUN_000692b4(unaff_r14,(int)param_1);
+    uds_rx_channel_set_service(unaff_r14,(int)param_1);
   }
   return unaff_r14;
 }

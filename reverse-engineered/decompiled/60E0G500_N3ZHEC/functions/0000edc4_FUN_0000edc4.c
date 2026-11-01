@@ -1,6 +1,6 @@
 /* ROM address: 0x0000edc4; body bytes: 134; decompiled */
 
-void FUN_0000edc4(char param_1)
+void fuel_cut_arbitration(char param_1)
 
 {
   if (DAT_ffffa464 == '\x01') {

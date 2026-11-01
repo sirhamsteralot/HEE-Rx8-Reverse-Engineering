@@ -4,7 +4,7 @@ void FUN_00005a4c(void)
 
 {
   DAT_fffff66a = 0xefff;
-  FUN_0000c276();
+  knock_reference_adc_read();
   return;
 }
 

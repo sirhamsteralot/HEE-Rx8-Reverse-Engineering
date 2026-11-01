@@ -1,6 +1,6 @@
 /* ROM address: 0x00034eb8; body bytes: 164; decompiled */
 
-undefined4 FUN_00034eb8(void)
+undefined4 load_delta_enrichment(void)
 
 {
   undefined4 uVar1;

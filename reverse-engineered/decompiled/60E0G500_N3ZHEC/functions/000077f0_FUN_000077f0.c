@@ -1,6 +1,6 @@
 /* ROM address: 0x000077f0; body bytes: 138; decompiled */
 
-uint FUN_000077f0(void)
+uint crank_capture_poll(void)
 
 {
   uint uVar1;

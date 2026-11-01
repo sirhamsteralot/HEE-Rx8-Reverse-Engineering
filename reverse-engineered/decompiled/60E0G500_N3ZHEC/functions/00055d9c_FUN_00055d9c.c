@@ -1,6 +1,6 @@
 /* ROM address: 0x00055d9c; body bytes: 30; decompiled */
 
-void FUN_00055d9c(void)
+void diag_read_distance_mil(void)
 
 {
   undefined4 uVar1;

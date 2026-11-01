@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f2f4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0006642c(uint param_1,char param_2)
+uint obd_mode02_freeze_frame(uint param_1,char param_2)
 
 {
   bool bVar1;

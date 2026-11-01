@@ -3,8 +3,8 @@
 void FUN_00029dac(void)
 
 {
-  FUN_00029ed0();
-  FUN_00029dc6();
+  can201_prepare_rpm_with_conditional_filter();
+  can201_encode_rpm_u16();
   FUN_00029e04();
   FUN_00029e0c();
   FUN_00029e88();

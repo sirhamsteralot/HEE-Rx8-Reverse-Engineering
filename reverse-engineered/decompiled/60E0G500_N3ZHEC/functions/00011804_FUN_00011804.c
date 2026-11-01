@@ -25,8 +25,8 @@ void FUN_00011804(void)
   FUN_0002fd16();
   FUN_0002fe5a();
   FUN_00030550();
-  FUN_0003232e();
-  FUN_00019600();
+  secondary_air_on_time_task();
+  secondary_air_solenoid_control();
   FUN_0002272e();
   FUN_00017cfc();
   FUN_000294c0();

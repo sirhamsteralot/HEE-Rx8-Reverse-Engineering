@@ -1,6 +1,6 @@
 /* ROM address: 0x00030a80; body bytes: 164; decompiled */
 
-void FUN_00030a80(void)
+void injector_pulse_time_arbitrate(void)
 
 {
   float fVar1;

@@ -1,6 +1,6 @@
 /* ROM address: 0x00055fdc; body bytes: 44; decompiled */
 
-void FUN_00055fdc(void)
+void diag_encode_a9c6(void)
 
 {
   float fVar1;

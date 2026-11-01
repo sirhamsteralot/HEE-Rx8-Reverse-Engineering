@@ -1,6 +1,6 @@
 /* ROM address: 0x000071ea; body bytes: 98; decompiled */
 
-int FUN_000071ea(undefined1 param_1)
+int sci0_exchange_byte_wait_rdrf(undefined1 param_1)
 
 {
   byte bVar1;

@@ -1,6 +1,6 @@
 /* ROM address: 0x0001aefa; body bytes: 164; decompiled */
 
-undefined4 * FUN_0001aefa(void)
+undefined4 * maf_voltage_and_fault_counters(void)
 
 {
   ushort uVar1;

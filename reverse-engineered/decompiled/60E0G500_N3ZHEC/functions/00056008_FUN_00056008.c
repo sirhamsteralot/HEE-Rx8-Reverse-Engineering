@@ -1,6 +1,6 @@
 /* ROM address: 0x00056008; body bytes: 38; decompiled */
 
-undefined4 FUN_00056008(void)
+undefined4 diag_encode_b410(void)
 
 {
   undefined4 uVar1;

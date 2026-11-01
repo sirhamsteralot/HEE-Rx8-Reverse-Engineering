@@ -16,7 +16,7 @@ void FUN_0000f7f8(void)
   for (pcVar4 = &DAT_ffffa4b4; pcVar4 < &DAT_ffffa564; pcVar4 = pcVar4 + 0x58) {
     uVar1 = FUN_0000fa3a(uVar3 * 0x1e0000,*(undefined4 *)(pcVar4 + 8));
     for (pcVar5 = pcVar4 + 0x10; pcVar5 < pcVar4 + 0x58; pcVar5 = pcVar5 + 0x18) {
-      FUN_000085e4((int)*pcVar5);
+      injector_channel_disable((int)*pcVar5);
       pcVar5[1] = '\0';
     }
     FUN_0000ffd6(pcVar4);

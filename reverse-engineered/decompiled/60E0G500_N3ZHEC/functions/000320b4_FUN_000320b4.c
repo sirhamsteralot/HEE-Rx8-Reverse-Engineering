@@ -1,6 +1,6 @@
 /* ROM address: 0x000320b4; body bytes: 252; decompiled */
 
-void FUN_000320b4(void)
+void calculate_air_charge(void)
 
 {
   char cVar1;

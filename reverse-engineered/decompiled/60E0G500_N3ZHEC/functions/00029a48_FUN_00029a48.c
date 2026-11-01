@@ -1,6 +1,6 @@
 /* ROM address: 0x00029a48; body bytes: 68; decompiled */
 
-void FUN_00029a48(void)
+void can216_unpack_mixed_width_fields(void)
 
 {
   DAT_ffffbb3c = (ushort)DAT_ffffbb20 * 0x100 + (ushort)DAT_ffffbb21;

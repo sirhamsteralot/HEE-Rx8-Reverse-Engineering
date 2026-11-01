@@ -1,6 +1,6 @@
 /* ROM address: 0x00035924; body bytes: 132; decompiled */
 
-void FUN_00035924(void)
+void vfad_solenoid_control(void)
 
 {
   int iVar1;
@@ -16,7 +16,7 @@ void FUN_00035924(void)
   else {
     iVar1 = 1;
   }
-  DAT_ffffc234 = FUN_0005d568(iVar1);
+  DAT_ffffc234 = vfad_diag_override(iVar1);
   if (DAT_ffffc234 == '\x01') {
     FUN_00002054(auStack_18,0xe0);
     FUN_00004bbc(0xfffff754,0x400,1);

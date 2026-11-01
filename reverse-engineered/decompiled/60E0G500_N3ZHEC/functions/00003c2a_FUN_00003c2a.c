@@ -1,10 +1,10 @@
 /* ROM address: 0x00003c2a; body bytes: 40; decompiled */
 
-void FUN_00003c2a(int param_1)
+void os_dispatch(int param_1)
 
 {
   if (*(short *)(param_1 + 6) != -1) {
-    FUN_00003c68();
+    os_dispatch_next_task();
     return;
   }
   *(undefined4 *)(param_1 + 8) = 0x80000000;

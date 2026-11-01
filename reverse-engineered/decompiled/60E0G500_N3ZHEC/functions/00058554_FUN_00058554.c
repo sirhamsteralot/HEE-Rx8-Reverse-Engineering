@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f3b4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00058554(short param_1,uint param_2)
+uint uds_service_18(short param_1,uint param_2)
 
 {
   ushort uVar1;

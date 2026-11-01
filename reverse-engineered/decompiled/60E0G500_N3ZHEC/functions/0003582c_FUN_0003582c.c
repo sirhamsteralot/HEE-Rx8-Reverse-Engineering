@@ -1,6 +1,6 @@
 /* ROM address: 0x0003582c; body bytes: 126; decompiled */
 
-void FUN_0003582c(void)
+void vdi_solenoid_control(void)
 
 {
   int iVar1;
@@ -16,7 +16,7 @@ void FUN_0003582c(void)
   else {
     iVar1 = 1;
   }
-  DAT_ffffc230 = FUN_0005cb64(iVar1);
+  DAT_ffffc230 = vdi_diag_override(iVar1);
   if (DAT_ffffc230 == '\x01') {
     FUN_00002054(auStack_14,0xe0);
     FUN_00004bbc(0xfffff746,0x20,1);

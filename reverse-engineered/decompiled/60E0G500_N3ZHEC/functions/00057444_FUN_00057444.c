@@ -3,13 +3,13 @@
 /* Function candidate recovered from ROM pointer at 5fa68 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057444(char param_1)
+void diag22_pid0200_dtc_count_stored(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00060256();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = dtc_count_stored();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 

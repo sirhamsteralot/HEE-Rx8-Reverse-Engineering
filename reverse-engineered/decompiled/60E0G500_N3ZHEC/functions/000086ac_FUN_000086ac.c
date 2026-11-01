@@ -1,6 +1,6 @@
 /* ROM address: 0x000086ac; body bytes: 36; decompiled */
 
-int FUN_000086ac(int param_1,undefined4 param_2)
+int injector_zero_offset_set(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {

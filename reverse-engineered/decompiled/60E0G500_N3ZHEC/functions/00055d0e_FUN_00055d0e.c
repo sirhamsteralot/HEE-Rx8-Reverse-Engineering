@@ -1,6 +1,6 @@
 /* ROM address: 0x00055d0e; body bytes: 22; decompiled */
 
-undefined4 FUN_00055d0e(void)
+undefined4 diag_read_secondary_air_status(void)
 
 {
   undefined4 uVar1;

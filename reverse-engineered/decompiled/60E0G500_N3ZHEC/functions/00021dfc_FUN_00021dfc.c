@@ -7,10 +7,10 @@ void FUN_00021dfc(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0001fd70();
-  FUN_0001fadc();
+  set_open_loop_flag();
   FUN_0001faf6();
-  FUN_00020ef8();
-  FUN_000339ec();
+  open_loop_changeover_enrichment();
+  warmup_fueling_compensation();
   FUN_00020f44();
   FUN_00021138();
   FUN_00020f34();
@@ -22,7 +22,7 @@ void FUN_00021dfc(void)
   FUN_0001e4fc();
   FUN_0001e588();
   FUN_0001ede0();
-  FUN_0001f4ee();
+  maf_operating_range();
   FUN_0001f0f4();
   FUN_0001f5ac();
   FUN_0001f702();
@@ -31,8 +31,8 @@ void FUN_00021dfc(void)
   FUN_0001f852();
   FUN_0001f99a();
   FUN_000196ec();
-  FUN_00019b46();
-  FUN_0000ee82();
+  fuel_cut_rpm_condition();
+  rev_limit_conditionals();
   FUN_00003934(uVar1);
   return;
 }

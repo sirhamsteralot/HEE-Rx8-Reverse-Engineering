@@ -1,6 +1,6 @@
 /* ROM address: 0x00030b50; body bytes: 146; decompiled */
 
-void FUN_00030b50(void)
+void injector_latency_cal_lookup(void)
 
 {
   int iVar1;
@@ -26,9 +26,9 @@ void FUN_00030b50(void)
       iVar2 = 0;
     }
   }
-  FUN_000086f8(0,iVar1);
-  FUN_000086f8(1,iVar2);
-  FUN_000086f8(2,iVar2);
+  set_fuel_injector_latency(0,iVar1);
+  set_fuel_injector_latency(1,iVar2);
+  set_fuel_injector_latency(2,iVar2);
   return;
 }
 

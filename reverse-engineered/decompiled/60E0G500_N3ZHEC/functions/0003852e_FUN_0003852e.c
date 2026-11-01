@@ -1,6 +1,6 @@
 /* ROM address: 0x0003852e; body bytes: 34; decompiled */
 
-uint FUN_0003852e(void)
+uint diag_status_bit_pack(void)
 
 {
   uint uVar1;

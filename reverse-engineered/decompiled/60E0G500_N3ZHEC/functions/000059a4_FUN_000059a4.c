@@ -4,7 +4,7 @@ void FUN_000059a4(void)
 
 {
   DAT_fffff66a = 0xfffe;
-  thunk_FUN_00008a68(0);
+  injector_pulse_set_dispatch(0);
   return;
 }
 

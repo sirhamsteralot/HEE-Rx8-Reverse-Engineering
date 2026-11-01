@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f324 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066990(short param_1,char param_2)
+uint obd_mode07_pending_dtc(short param_1,char param_2)
 
 {
   undefined4 uVar1;

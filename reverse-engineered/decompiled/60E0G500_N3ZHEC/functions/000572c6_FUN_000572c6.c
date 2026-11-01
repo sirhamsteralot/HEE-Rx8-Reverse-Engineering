@@ -3,15 +3,15 @@
 /* Function candidate recovered from ROM pointer at 5f9e4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000572c6(char param_1)
+void diag22_pid0034_afr_lambda_words(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055e90();
-  FUN_000581b0((int)param_1,uVar1);
-  uVar1 = FUN_00055ea6();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_afr_word_a();
+  diag_append_u16_be((int)param_1,uVar1);
+  uVar1 = diag_read_afr_word_b();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 

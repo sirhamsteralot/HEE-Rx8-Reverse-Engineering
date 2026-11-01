@@ -1,6 +1,6 @@
 /* ROM address: 0x0005814c; body bytes: 100; decompiled */
 
-uint FUN_0005814c(uint param_1,char param_2)
+uint diag22_subpid_supported_mask(uint param_1,char param_2)
 
 {
   short *psVar1;
@@ -9,7 +9,7 @@ uint FUN_0005814c(uint param_1,char param_2)
   byte bVar4;
   short *psVar5;
   
-  psVar1 = &DAT_0005fd56;
+  psVar1 = &tbl_diag22_subpid_supported_bits_0005fd56;
   bVar4 = 0;
   uVar3 = 0;
   psVar2 = psVar1;

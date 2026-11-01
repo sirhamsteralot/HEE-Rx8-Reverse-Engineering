@@ -5,7 +5,7 @@ void FUN_0002be2c(void)
 {
   char cVar1;
   
-  cVar1 = FUN_00009890(&DAT_0004e9c8);
+  cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9c8);
   if (cVar1 == '\0') {
     FUN_0000e038();
     FUN_0002c372();
