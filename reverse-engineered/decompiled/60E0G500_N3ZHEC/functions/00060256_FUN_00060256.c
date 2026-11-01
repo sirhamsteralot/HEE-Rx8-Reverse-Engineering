@@ -1,6 +1,6 @@
 /* ROM address: 0x00060256; body bytes: 60; decompiled */
 
-uint FUN_00060256(void)
+uint dtc_count_stored(void)
 
 {
   uint uVar1;

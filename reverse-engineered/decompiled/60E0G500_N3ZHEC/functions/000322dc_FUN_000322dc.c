@@ -1,6 +1,6 @@
 /* ROM address: 0x000322dc; body bytes: 48; decompiled */
 
-undefined4 FUN_000322dc(void)
+undefined4 secondary_air_pump_control(void)
 
 {
   undefined4 uVar1;

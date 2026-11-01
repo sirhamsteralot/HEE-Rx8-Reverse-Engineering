@@ -1,6 +1,6 @@
 /* ROM address: 0x0000ce24; body bytes: 50; decompiled */
 
-ushort FUN_0000ce24(char param_1)
+ushort can_rx_pending_bits(char param_1)
 
 {
   short sVar1;

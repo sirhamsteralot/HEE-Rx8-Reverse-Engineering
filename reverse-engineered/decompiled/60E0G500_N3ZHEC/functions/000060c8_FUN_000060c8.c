@@ -17,8 +17,8 @@ void FUN_000060c8(void)
   FUN_00005f18();
   FUN_0000a850();
   FUN_00007070();
-  FUN_00006884();
-  FUN_00006744();
+  adc_scan_sweep_all_channels();
+  vehicle_inputs_poll_pfdr_phdr();
   FUN_00007280();
   FUN_000074ac();
   bVar1 = DAT_fffff4ab;
@@ -40,7 +40,7 @@ void FUN_000060c8(void)
   FUN_0000bda0();
   FUN_00007330();
   FUN_00006372();
-  FUN_00007438();
+  maf_sensor_scaling();
   FUN_00007290();
   FUN_000094f0();
   FUN_00007398();

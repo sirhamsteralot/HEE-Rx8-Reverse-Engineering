@@ -130,6 +130,23 @@ emulator change made here.
 - Streetport tunes share the stock 60E0G500 code path (cal-only diffs, as
   established in the P2 streetport diff).
 
+## Applied to the decompiled export (2026-11-01, D item 3)
+
+`utilities/scripts/apply_cross_rom_labels.py` propagated the names into
+`reverse-engineered/decompiled/60E0G500_N3ZHEC/`: 236 renames (262 byte-match
+aliases, 28 skipped as non-function-starts, + the two table labels
+`tbl_diag22_dispatch_records_0005f8b0` / `tbl_diag22_subpid_supported_bits_0005fd56`),
+rewriting `function_index.tsv` / `callgraph.tsv` / `symbols.tsv` / `functions/*.c` /
+`firmware_decompiled.c` and emitting the synchronized `named/` view
+(`firmware_named.c`, `lookup_aliases.tsv`, `validation.json`). Handler 0x57e66
+(PID 0xc116, pid_match) is a mid-function address with no C identifier — recorded
+as `candidate_diag22_pidc116_dtc_state_machine` in
+`data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv` only. Per-ROM Mode 22
+TSVs for all 14 ROMs: `data/labels/cross_rom/mode22/`. Pre-change export backup:
+`docs/investigations/60E0G500_N3ZHEC/backups/pre_crossrom_names.zip` (LFS).
+Checks: ROM SHA-256 unchanged, all function bodies intact in the canonical C,
+renamed definitions present, names unique/valid/non-colliding, comments untouched.
+
 ## Artifacts
 
 - `utilities/scripts/cross_rom_mode22_map.py` — locator + mapper (asserts: base

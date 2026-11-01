@@ -18,7 +18,7 @@ void FUN_00007188(void)
   FUN_00004bbc(0xfffff72c,0x8000,1);
   bVar1 = DAT_fffff002;
   DAT_fffff002 = bVar1 & 0xb | 0x30;
-  FUN_000071ea((int)(char)(DAT_ffff9f34 | DAT_ffff9f35));
+  sci0_exchange_byte_wait_rdrf((int)(char)(DAT_ffff9f34 | DAT_ffff9f35));
   FUN_00003934(uVar2);
   return;
 }

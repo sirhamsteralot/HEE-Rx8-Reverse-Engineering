@@ -5,11 +5,11 @@ void FUN_0004c728(void)
 {
   DAT_ffffcec0 = 0;
   DAT_ffffcec1 = 0;
-  DAT_ffffcec2 = FUN_00055c52();
-  DAT_ffffcec3 = FUN_00055c6a();
-  DAT_ffffcec4 = FUN_00055ccc();
-  DAT_ffffcec6 = FUN_00055ce2();
-  DAT_ffffcec7 = FUN_00055d0e();
+  DAT_ffffcec2 = diag_encode_leading_timing();
+  DAT_ffffcec3 = diag_encode_iat();
+  DAT_ffffcec4 = diag_encode_maf();
+  DAT_ffffcec6 = diag_encode_throttle_pct();
+  DAT_ffffcec7 = diag_read_secondary_air_status();
   return;
 }
 

@@ -1,6 +1,6 @@
 /* ROM address: 0x0001fadc; body bytes: 26; decompiled */
 
-void FUN_0001fadc(void)
+void set_open_loop_flag(void)
 
 {
   DAT_ffffb19c = DAT_ffffb19a != '\0';

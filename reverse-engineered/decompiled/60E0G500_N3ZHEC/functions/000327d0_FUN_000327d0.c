@@ -1,6 +1,6 @@
 /* ROM address: 0x000327d0; body bytes: 34; decompiled */
 
-void FUN_000327d0(void)
+void apv_command_wrapper(void)
 
 {
   float fVar1;
@@ -9,7 +9,7 @@ void FUN_000327d0(void)
   if (DAT_ffffbff3 == '\x01') {
     fVar1 = -DAT_ffffbfec;
   }
-  FUN_0000aa90(fVar1 / 100.0);
+  apv_duty_split(fVar1 / 100.0);
   return;
 }
 

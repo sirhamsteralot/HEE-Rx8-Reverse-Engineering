@@ -1,6 +1,6 @@
 /* ROM address: 0x0000aa90; body bytes: 52; decompiled */
 
-void FUN_0000aa90(float param_1)
+void apv_duty_split(float param_1)
 
 {
   param_1 = param_1 * 96.0;

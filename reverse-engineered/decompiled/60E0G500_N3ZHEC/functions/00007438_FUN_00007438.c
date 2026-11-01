@@ -1,6 +1,6 @@
 /* ROM address: 0x00007438; body bytes: 82; decompiled */
 
-undefined2 * FUN_00007438(void)
+undefined2 * maf_sensor_scaling(void)
 
 {
   ushort uVar1;

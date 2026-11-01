@@ -1,6 +1,6 @@
 /* ROM address: 0x00029dc6; body bytes: 62; decompiled */
 
-uint FUN_00029dc6(void)
+uint can201_encode_rpm_u16(void)
 
 {
   uint uVar1;

@@ -1,6 +1,6 @@
 /* ROM address: 0x00057ffc; body bytes: 44; decompiled */
 
-void FUN_00057ffc(void)
+void diag22_append_positive_response_header(void)
 
 {
   undefined1 local_c;

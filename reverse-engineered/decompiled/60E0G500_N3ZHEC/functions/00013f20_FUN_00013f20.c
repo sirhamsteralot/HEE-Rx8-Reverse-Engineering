@@ -1,6 +1,6 @@
 /* ROM address: 0x00013f20; body bytes: 104; decompiled */
 
-void FUN_00013f20(void)
+void coolant_timing_derate_calc(void)
 
 {
   undefined4 uVar1;

@@ -2,7 +2,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x00003e6a) */
 
-void FUN_00003e10(undefined1 param_1)
+void os_init(undefined1 param_1)
 
 {
   DAT_ffff7648 = 0xb0;
@@ -20,7 +20,7 @@ void FUN_00003e10(undefined1 param_1)
   FUN_00003f90(&DAT_ffff7638);
   FUN_00003f9c(&DAT_ffff7638);
   FUN_00003fa8();
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 

@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f420 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e018(undefined4 param_1,uint param_2)
+uint uds_service_37_request_transfer_exit(undefined4 param_1,uint param_2)
 
 {
   undefined4 uVar1;

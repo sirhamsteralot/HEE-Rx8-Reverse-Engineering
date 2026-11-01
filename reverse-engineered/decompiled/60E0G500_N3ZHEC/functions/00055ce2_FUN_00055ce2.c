@@ -1,6 +1,6 @@
 /* ROM address: 0x00055ce2; body bytes: 44; decompiled */
 
-void FUN_00055ce2(void)
+void diag_encode_throttle_pct(void)
 
 {
   float fVar1;

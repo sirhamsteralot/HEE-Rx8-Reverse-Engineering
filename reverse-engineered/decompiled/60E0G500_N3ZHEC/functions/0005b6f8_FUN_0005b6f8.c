@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f378 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005b6f8(short param_1,byte param_2)
+uint uds_service_11_ecu_reset(short param_1,byte param_2)
 
 {
   char cVar2;

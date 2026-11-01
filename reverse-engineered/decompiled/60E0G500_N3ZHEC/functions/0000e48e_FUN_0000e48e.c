@@ -1,6 +1,6 @@
 /* ROM address: 0x0000e48e; body bytes: 48; decompiled */
 
-void FUN_0000e48e(void)
+void injection_angle_limit_lookup(void)
 
 {
   DAT_ffffa434 = FUN_00002068(DAT_ffffb5b8,&DAT_0006969c);

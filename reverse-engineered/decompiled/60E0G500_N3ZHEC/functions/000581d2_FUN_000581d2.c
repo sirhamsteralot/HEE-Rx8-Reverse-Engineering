@@ -1,6 +1,6 @@
 /* ROM address: 0x000581d2; body bytes: 28; decompiled */
 
-undefined4 FUN_000581d2(undefined4 param_1,undefined1 param_2)
+undefined4 diag_append_u8(undefined4 param_1,undefined1 param_2)
 
 {
   undefined4 uVar1;

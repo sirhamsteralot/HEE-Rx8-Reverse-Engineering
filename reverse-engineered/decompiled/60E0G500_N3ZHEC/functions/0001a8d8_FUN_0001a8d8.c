@@ -8,7 +8,7 @@ void FUN_0001a8d8(void)
   uVar1 = FUN_00003920(0x10);
   FUN_0004b56c();
   FUN_0000e1b8();
-  FUN_0000e2a8();
+  update_injectors_off_flag();
   FUN_0001bab4();
   FUN_0001b2d4();
   FUN_0001b2fc();

@@ -195,6 +195,24 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   New register item E8 (opdec corpus-keyed; family-B diag dispatch not dynamically
   executable yet).
 
+### D item 3 — cross-ROM labels applied to the 60E0G500_N3ZHEC export — DONE 2026-11-01
+
+- `utilities/scripts/apply_cross_rom_labels.py` applied 236 renames to
+  `reverse-engineered/decompiled/60E0G500_N3ZHEC/` (262 byte-match aliases from
+  `cross_ecu/cross_rom_function_aliases.tsv` — 28 targets are not function starts
+  and were skipped — plus the Mode 22 table labels DAT_0005f8b0 →
+  `tbl_diag22_dispatch_records_0005f8b0`, DAT_0005fd56 →
+  `tbl_diag22_subpid_supported_bits_0005fd56`): function_index/callgraph/symbols,
+  functions/*.c, firmware_decompiled.c + synchronized `named/` view with
+  `validation.json`; provenance in
+  `data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv`; pre-change backup
+  zip (LFS) in `docs/investigations/60E0G500_N3ZHEC/backups/`. Handler 0x57e66
+  (PID 0xc116, pid_match) has no C identifier (mid-function) — provenance only,
+  `candidate_`-prefixed per the label ladder. Export header ROM name corrected.
+- Per-ROM Mode 22 label TSVs for all 14 ROMs emitted under
+  `data/labels/cross_rom/mode22/` for future Ghidra exports; family-B extra PIDs
+  stay FUN_-level (no base counterpart).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -207,16 +225,6 @@ base-ROM labeling) closed 2026-10-31.
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
   pinned submodule has a newer ECUFlash XML, 1210 tables) via
   `utilities/scripts/defs-merge/`, citing upstream commits.
-- Apply the cross-ROM label sets to the decompiled exports: run the naming
-  pass for 60E0G500_N3ZHEC (apply `cross_ecu/cross_rom_function_aliases.tsv`
-  + the new Mode 22 labels — add handler 0x57e66 (pid 0xc116, pid_match +
-  dynamically swept), tables 0x5f8b0 / 0x5fd56 → `named/` view + rename map
-  + validation.json), and emit per-ROM Mode 22 label TSVs for the family-B
-  ROMs (60E0FB00/60E0FC00/60E1B900/60E32000_*) so their future Ghidra exports
-  consume `data/labels/cross_rom_mode22_pid_handlers.tsv` directly. Family-B
-  extra PIDs (0x0001, 0x17f4–0x17fa, 0xd100, 0xe6f2, 0xe6f3, …) stay FUN_-level
-  (no base counterpart). Depends on the Mode 22 cross-ROM map (D item 2,
-  `data/labels/cross_rom_mode22_pid_handlers.tsv`).
 
 ### E. Reimplementation coverage (P4) — depends on C
 

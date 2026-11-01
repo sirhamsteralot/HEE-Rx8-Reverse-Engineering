@@ -9,7 +9,7 @@ void FUN_0000661e(void)
   char cVar1;
   
   cVar1 = FUN_0000a266(1);
-  FUN_0000c3ce();
+  knock_voltage_sample();
   FUN_00011bfc((int)cVar1);
   FUN_00008320();
   thunk_FUN_00009490();

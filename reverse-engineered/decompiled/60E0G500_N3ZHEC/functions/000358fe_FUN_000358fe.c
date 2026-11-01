@@ -6,7 +6,7 @@ void FUN_000358fe(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_00035924();
+  vfad_solenoid_control();
   FUN_00003934(uVar1);
   return;
 }

@@ -9,7 +9,7 @@ void FUN_000219a8(uint param_1)
   uVar1 = FUN_00003920(0x10);
   uVar2 = param_1 & 0xff;
   if ((((uVar2 == 0) || (uVar2 == 0xc)) || (uVar2 == 6)) || (uVar2 == 0x12)) {
-    FUN_0000edc4(param_1);
+    fuel_cut_arbitration(param_1);
     FUN_00047b22(param_1);
   }
   FUN_0002d604(param_1);

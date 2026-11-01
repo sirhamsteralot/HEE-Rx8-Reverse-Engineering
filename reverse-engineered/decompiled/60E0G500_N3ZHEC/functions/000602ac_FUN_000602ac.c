@@ -1,6 +1,6 @@
 /* ROM address: 0x000602ac; body bytes: 84; decompiled */
 
-uint FUN_000602ac(void)
+uint dtc_count_ram_table(void)
 
 {
   ushort uVar1;

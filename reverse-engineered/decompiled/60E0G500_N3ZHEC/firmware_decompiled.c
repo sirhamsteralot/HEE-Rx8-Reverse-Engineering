@@ -1,4 +1,12 @@
-/* Decompiled from 60E15120_N3J1E.bin using Ghidra.
+/* [CROSS-ROM NAMES APPLIED 2026-11-01]
+ * Names propagated from 60E15120_N3J1E by unique-exact-byte function matches
+ * (cross_ecu/cross_rom_function_aliases.tsv) + the Mode 22 cross-ROM map
+ * (data/labels/cross_rom_mode22_pid_handlers.tsv); provenance:
+ * data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv.
+ * Address suffixes preserve identity; this is analysis C, not buildable firmware.
+ * Saved Ghidra database has not been updated.
+ */
+/* Decompiled from 60E0G500 (N3ZHEC, binaries/dumps/aron-N3ZHEC-2026-10-31.bin) using Ghidra.
  * Analysis C: not original source and not a buildable replacement firmware.
  * ref_ names are inferred from unique exact-byte matches to 60E0FC00.
  * CAL_ labels come from local RX8Defs; see metadata and README.
@@ -2166,7 +2174,7 @@ int FUN_000026f4(void)
 void FUN_000029f8(void)
 
 {
-  FUN_00003238();
+  interrupt_entry_save_context();
   FUN_000055d6();
   return;
 }
@@ -2174,7 +2182,7 @@ void FUN_000029f8(void)
 
 /* ROM address: 0x00003238; body bytes: 62; decompiled */
 
-undefined1 * FUN_00003238(void)
+undefined1 * interrupt_entry_save_context(void)
 
 {
   DAT_ffff7640 = DAT_ffff7640 + 1;
@@ -2273,7 +2281,7 @@ void FUN_00003610(undefined4 param_1,undefined4 param_2,uint param_3)
 
 /* ROM address: 0x0000375c; body bytes: 96; decompiled_with_warnings */
 
-int FUN_0000375c(int param_1,short param_2)
+int os_switch_to_task(int param_1,short param_2)
 
 {
   char cVar1;
@@ -2361,7 +2369,7 @@ void FUN_00003934(int param_1)
 
 {
   if ((param_1 == 0) && (*(char *)(DAT_ffff7650 + 1) != '\x01')) {
-    FUN_00003db0();
+    os_wake_check_context_switch();
     return;
   }
   return;
@@ -2514,7 +2522,7 @@ undefined4 FUN_00003ad8(char param_1)
   }
   DAT_ffff7660 = local_8;
   DAT_ffff7640 = 0x100;
-  uVar1 = FUN_00003e10();
+  uVar1 = os_init();
   return uVar1;
 }
 
@@ -2534,18 +2542,18 @@ void FUN_00003bf4(int param_1,undefined4 param_2,char *param_3)
   }
   **(undefined1 **)(param_3 + 4) = 4;
   *(undefined1 **)(param_1 + 0xc) = puVar1;
-  FUN_00003c68();
+  os_dispatch_next_task();
   return;
 }
 
 
 /* ROM address: 0x00003c2a; body bytes: 40; decompiled */
 
-void FUN_00003c2a(int param_1)
+void os_dispatch(int param_1)
 
 {
   if (*(short *)(param_1 + 6) != -1) {
-    FUN_00003c68();
+    os_dispatch_next_task();
     return;
   }
   *(undefined4 *)(param_1 + 8) = 0x80000000;
@@ -2559,10 +2567,10 @@ void FUN_00003c2a(int param_1)
 
 /* ROM address: 0x00003c68; body bytes: 16; decompiled */
 
-void FUN_00003c68(int param_1)
+void os_dispatch_next_task(int param_1)
 
 {
-  FUN_0000375c(param_1,(int)*(short *)(param_1 + 6));
+  os_switch_to_task(param_1,(int)*(short *)(param_1 + 6));
   return;
 }
 
@@ -2678,7 +2686,7 @@ void FUN_00003d58(void)
   FUN_00003a28(&DAT_ffff7638,(int)(char)puVar1[1]);
   *puVar1 = 0;
   DAT_ffff7644 = *(undefined4 *)(puVar1 + 4);
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 
@@ -2698,7 +2706,7 @@ void FUN_00003dac(void)
 
 /* WARNING: Removing unreachable block (ram,0x00003ddc) */
 
-undefined4 FUN_00003db0(void)
+undefined4 os_wake_check_context_switch(void)
 
 {
   if ((DAT_ffff763c != DAT_ffff763e) && ((DAT_ffff7640 & 0x1000) == 0)) {
@@ -2713,7 +2721,7 @@ undefined4 FUN_00003db0(void)
 
 /* WARNING: Removing unreachable block (ram,0x00003e6a) */
 
-void FUN_00003e10(undefined1 param_1)
+void os_init(undefined1 param_1)
 
 {
   DAT_ffff7648 = 0xb0;
@@ -2731,7 +2739,7 @@ void FUN_00003e10(undefined1 param_1)
   FUN_00003f90(&DAT_ffff7638);
   FUN_00003f9c(&DAT_ffff7638);
   FUN_00003fa8();
-  FUN_00003c2a(&DAT_ffff7638);
+  os_dispatch(&DAT_ffff7638);
   return;
 }
 
@@ -5878,7 +5886,7 @@ void FUN_000059a4(void)
 
 {
   DAT_fffff66a = 0xfffe;
-  thunk_FUN_00008a68(0);
+  injector_pulse_set_dispatch(0);
   return;
 }
 
@@ -5889,7 +5897,7 @@ void FUN_000059b2(void)
 
 {
   DAT_fffff66a = 0xfffd;
-  thunk_FUN_00008a68(3);
+  injector_pulse_set_dispatch(3);
   return;
 }
 
@@ -5900,7 +5908,7 @@ void FUN_000059c0(void)
 
 {
   DAT_fffff66a = 0xfffb;
-  thunk_FUN_00008a68(1);
+  injector_pulse_set_dispatch(1);
   return;
 }
 
@@ -5911,7 +5919,7 @@ void FUN_000059ce(void)
 
 {
   DAT_fffff66a = 0xfff7;
-  thunk_FUN_00008a68(4);
+  injector_pulse_set_dispatch(4);
   return;
 }
 
@@ -5922,7 +5930,7 @@ void FUN_000059dc(void)
 
 {
   DAT_fffff66a = 0xffef;
-  thunk_FUN_00008a68(2);
+  injector_pulse_set_dispatch(2);
   return;
 }
 
@@ -5933,7 +5941,7 @@ void FUN_000059ea(void)
 
 {
   DAT_fffff66a = 0xffdf;
-  thunk_FUN_00008a68(5);
+  injector_pulse_set_dispatch(5);
   return;
 }
 
@@ -6010,7 +6018,7 @@ void FUN_00005a4c(void)
 
 {
   DAT_fffff66a = 0xefff;
-  FUN_0000c276();
+  knock_reference_adc_read();
   return;
 }
 
@@ -6683,7 +6691,7 @@ undefined4 FUN_00005f1c(uint param_1,undefined4 *param_2)
 /* Function candidate recovered from ROM pointer at 9730 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined4 FUN_00006010(uint param_1,undefined4 *param_2)
+undefined4 os_queue_dequeue_record(uint param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;
@@ -6743,8 +6751,8 @@ void FUN_000060c8(void)
   FUN_00005f18();
   FUN_0000a850();
   FUN_00007070();
-  FUN_00006884();
-  FUN_00006744();
+  adc_scan_sweep_all_channels();
+  vehicle_inputs_poll_pfdr_phdr();
   FUN_00007280();
   FUN_000074ac();
   bVar1 = DAT_fffff4ab;
@@ -6766,7 +6774,7 @@ void FUN_000060c8(void)
   FUN_0000bda0();
   FUN_00007330();
   FUN_00006372();
-  FUN_00007438();
+  maf_sensor_scaling();
   FUN_00007290();
   FUN_000094f0();
   FUN_00007398();
@@ -6847,7 +6855,7 @@ undefined4 FUN_000063f0(void)
   
   FUN_0000a3ac();
   FUN_00006a4c();
-  FUN_00007438();
+  maf_sensor_scaling();
   FUN_0000acfc();
   FUN_0000b602();
   FUN_000114fc();
@@ -6897,7 +6905,7 @@ void FUN_0000648e(void)
 /* Function candidate recovered from ROM pointer at 4a28 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000064ba(void)
+void knock_sensor_fault_task(void)
 
 {
   FUN_0000d21e();
@@ -7061,7 +7069,7 @@ void FUN_0000661e(void)
   char cVar1;
   
   cVar1 = FUN_0000a266(1);
-  FUN_0000c3ce();
+  knock_voltage_sample();
   FUN_00011bfc((int)cVar1);
   FUN_00008320();
   thunk_FUN_00009490();
@@ -7124,7 +7132,7 @@ void FUN_00006684(undefined4 *param_1)
 
 /* ROM address: 0x00006744; body bytes: 82; decompiled */
 
-void FUN_00006744(void)
+void vehicle_inputs_poll_pfdr_phdr(void)
 
 {
   DAT_ffff9ec8 = DAT_fffff74e;
@@ -7192,7 +7200,7 @@ void FUN_00006846(void)
 
 /* ROM address: 0x00006884; body bytes: 350; decompiled */
 
-void FUN_00006884(void)
+void adc_scan_sweep_all_channels(void)
 
 {
   byte bVar1;
@@ -7284,7 +7292,7 @@ undefined4 FUN_00006a4c(void)
   
   FUN_00006b94();
   FUN_00006c4c();
-  FUN_00006cdc();
+  adc_read_ect_iat_group();
   if (DAT_ffff9f28 == '\x02') {
     DAT_ffff9ee2 = DAT_ffff9ee2 + '\x01';
 LAB_00006a84:
@@ -7454,7 +7462,7 @@ LAB_00006cd2:
 
 /* ROM address: 0x00006cdc; body bytes: 114; decompiled */
 
-char FUN_00006cdc(void)
+char adc_read_ect_iat_group(void)
 
 {
   char cVar1;
@@ -7684,7 +7692,7 @@ void FUN_00006f16(int param_1)
 
 /* ROM address: 0x00006fb0; body bytes: 174; decompiled */
 
-int FUN_00006fb0(void)
+int adc_read_result_bank2(void)
 
 {
   bool bVar1;
@@ -7781,7 +7789,7 @@ int FUN_000070ac(char param_1)
   }
   bVar1 = DAT_fffff002;
   DAT_fffff002 = bVar1 & 0xb | 0x30;
-  cVar3 = FUN_000071ea(0xff);
+  cVar3 = sci0_exchange_byte_wait_rdrf(0xff);
   FUN_00003934(uVar2);
   return (int)cVar3;
 }
@@ -7807,7 +7815,7 @@ void FUN_00007188(void)
   FUN_00004bbc(0xfffff72c,0x8000,1);
   bVar1 = DAT_fffff002;
   DAT_fffff002 = bVar1 & 0xb | 0x30;
-  FUN_000071ea((int)(char)(DAT_ffff9f34 | DAT_ffff9f35));
+  sci0_exchange_byte_wait_rdrf((int)(char)(DAT_ffff9f34 | DAT_ffff9f35));
   FUN_00003934(uVar2);
   return;
 }
@@ -7815,7 +7823,7 @@ void FUN_00007188(void)
 
 /* ROM address: 0x000071ea; body bytes: 98; decompiled */
 
-int FUN_000071ea(undefined1 param_1)
+int sci0_exchange_byte_wait_rdrf(undefined1 param_1)
 
 {
   byte bVar1;
@@ -7979,7 +7987,7 @@ undefined2 * FUN_000073a0(void)
 
 /* ROM address: 0x00007438; body bytes: 82; decompiled */
 
-undefined2 * FUN_00007438(void)
+undefined2 * maf_sensor_scaling(void)
 
 {
   ushort uVar1;
@@ -8087,7 +8095,7 @@ void FUN_0000759e(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0xb0);
-  FUN_00007778();
+  atu_ch10b_tick_enable();
   FUN_00007eca();
   FUN_00003934(uVar1);
   return;
@@ -8104,7 +8112,7 @@ void FUN_000075f4(void)
   if (DAT_ffff9fa5 == '\0') {
     FUN_00007f22();
     FUN_00007b90();
-    FUN_000077f0();
+    crank_capture_poll();
     FUN_00007be4();
   }
   FUN_00007b58();
@@ -8232,7 +8240,7 @@ uint FUN_00007724(void)
 
 /* ROM address: 0x00007778; body bytes: 46; decompiled */
 
-void FUN_00007778(void)
+void atu_ch10b_tick_enable(void)
 
 {
   ushort uVar1;
@@ -8250,7 +8258,7 @@ void FUN_00007778(void)
 
 /* ROM address: 0x000077f0; body bytes: 138; decompiled */
 
-uint FUN_000077f0(void)
+uint crank_capture_poll(void)
 
 {
   uint uVar1;
@@ -8901,7 +8909,7 @@ undefined4 FUN_000082b8(void)
   
   uVar2 = 0;
   do {
-    uVar1 = FUN_000085e4(uVar2);
+    uVar1 = injector_channel_disable(uVar2);
     uVar2 = uVar2 + 1;
   } while ((uVar2 & 0xff) < 6);
   return uVar1;
@@ -8944,10 +8952,10 @@ undefined4 FUN_00008320(void)
 
 /* ROM address: 0x00008340; body bytes: 4; decompiled */
 
-void thunk_FUN_00008a68(void)
+void injector_pulse_set_dispatch(void)
 
 {
-  FUN_00008a68();
+  injector_pulse_set_channel();
   return;
 }
 
@@ -9147,7 +9155,7 @@ undefined4 FUN_000084c6(uint param_1,int param_2)
 
 /* ROM address: 0x000085e4; body bytes: 200; decompiled */
 
-void FUN_000085e4(uint param_1)
+void injector_channel_disable(uint param_1)
 
 {
   short sVar1;
@@ -9182,7 +9190,7 @@ void FUN_000085e4(uint param_1)
 
 /* ROM address: 0x000086ac; body bytes: 36; decompiled */
 
-int FUN_000086ac(int param_1,undefined4 param_2)
+int injector_zero_offset_set(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
@@ -9203,7 +9211,7 @@ int FUN_000086ac(int param_1,undefined4 param_2)
 
 /* ROM address: 0x000086f8; body bytes: 36; decompiled */
 
-int FUN_000086f8(int param_1,undefined4 param_2)
+int set_fuel_injector_latency(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
@@ -9363,7 +9371,7 @@ void FUN_00008814(uint param_1)
 
 /* ROM address: 0x00008a68; body bytes: 192; decompiled */
 
-void FUN_00008a68(uint param_1)
+void injector_pulse_set_channel(uint param_1)
 
 {
   short sVar1;
@@ -10072,7 +10080,7 @@ void FUN_0000969e(void)
 {
   int iVar1;
   
-  iVar1 = FUN_00006010(0,&DAT_ffffa118);
+  iVar1 = os_queue_dequeue_record(0,&DAT_ffffa118);
   if (iVar1 == 0) {
     (*DAT_ffffa118)(&DAT_ffffa11c);
   }
@@ -10086,12 +10094,12 @@ void FUN_0000969e(void)
 /* Function candidate recovered from ROM pointer at 49b8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000096be(void)
+void uds_service_task_entry(void)
 
 {
   int iVar1;
   
-  iVar1 = FUN_00006010(1,&DAT_ffffa12c);
+  iVar1 = os_queue_dequeue_record(1,&DAT_ffffa12c);
   if (iVar1 == 0) {
     (*DAT_ffffa12c)(&DAT_ffffa130);
   }
@@ -10110,7 +10118,7 @@ void FUN_000096de(void)
 {
   int iVar1;
   
-  iVar1 = FUN_00006010(2,&DAT_ffffa140);
+  iVar1 = os_queue_dequeue_record(2,&DAT_ffffa140);
   if (iVar1 == 0) {
     (*DAT_ffffa140)(&DAT_ffffa144);
   }
@@ -10129,7 +10137,7 @@ void FUN_000096fe(void)
 {
   int iVar1;
   
-  iVar1 = FUN_00006010(3,&DAT_ffffa154);
+  iVar1 = os_queue_dequeue_record(3,&DAT_ffffa154);
   if (iVar1 == 0) {
     (*DAT_ffffa154)(&DAT_ffffa158);
   }
@@ -10191,7 +10199,7 @@ void FUN_00009744(char param_1,undefined4 *param_2,byte param_3)
 
 /* ROM address: 0x00009890; body bytes: 262; decompiled */
 
-undefined4 FUN_00009890(int param_1)
+undefined4 can_rx_copy_mailbox_to_buffer(int param_1)
 
 {
   ushort uVar1;
@@ -10203,38 +10211,38 @@ undefined4 FUN_00009890(int param_1)
   undefined4 uVar7;
   uint uVar8;
   
-  puVar2 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe40e);
+  puVar2 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe40e);
   uVar1 = *puVar2;
-  uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   if ((uVar5 & uVar1) == 0) {
     uVar7 = 1;
   }
   else {
     uVar3 = FUN_00003920(0x90);
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
-    FUN_0000cca4((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
+    can_mailbox_read_payload((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
                  *(undefined4 *)(param_1 + 8));
     uVar7 = 2;
     uVar8 = 0;
     do {
-      puVar2 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
+      puVar2 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
       uVar1 = *puVar2;
-      uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+      uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
       if ((uVar5 & uVar1) == 0) {
         uVar7 = 0;
         break;
       }
-      puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
-      uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+      puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe41a);
+      uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
       *puVar4 = uVar6;
-      FUN_0000cca4((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
+      can_mailbox_read_payload((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
                    *(undefined4 *)(param_1 + 8));
       uVar8 = uVar8 + 1;
     } while (uVar8 < 5);
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe40e);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe40e);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
     FUN_00003934(uVar3);
   }
@@ -10256,18 +10264,18 @@ bool FUN_000099b0(int param_1)
   undefined2 uVar7;
   
   uVar3 = FUN_00003920(0x90);
-  puVar4 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe406);
+  puVar4 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe406);
   uVar1 = *puVar4;
-  uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   bVar2 = (uVar6 & uVar1) != 0;
   if (!bVar2) {
-    puVar5 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe40a);
-    uVar7 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar5 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe40a);
+    uVar7 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar5 = uVar7;
-    FUN_0000ccda((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
+    can_mailbox_write_payload((int)*(char *)(param_1 + 5),(int)*(char *)(param_1 + 6),0,
                  *(undefined4 *)(param_1 + 8));
-    puVar5 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe406);
-    uVar7 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar5 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe406);
+    uVar7 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar5 = uVar7;
   }
   FUN_00003934(uVar3);
@@ -10312,15 +10320,15 @@ void FUN_00009b92(int param_1)
   undefined2 uVar6;
   
   uVar2 = FUN_00003920(0x90);
-  puVar3 = (ushort *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe406);
+  puVar3 = (ushort *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe406);
   uVar1 = *puVar3;
-  uVar5 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+  uVar5 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
   if ((uVar5 & uVar1) != 0) {
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe40c);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe40c);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
-    puVar4 = (undefined2 *)FUN_0000cee8((int)*(char *)(param_1 + 5),&DAT_ffffe408);
-    uVar6 = FUN_0000cf12((int)*(char *)(param_1 + 5));
+    puVar4 = (undefined2 *)can_mailbox_reg_addr((int)*(char *)(param_1 + 5),&DAT_ffffe408);
+    uVar6 = can_mailbox_bitmask((int)*(char *)(param_1 + 5));
     *puVar4 = uVar6;
   }
   FUN_00003934(uVar2);
@@ -10335,7 +10343,7 @@ undefined4 FUN_00009c34(int param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0000cd40((int)*(char *)(param_1 + 5));
+  uVar1 = can_mailbox_dlc((int)*(char *)(param_1 + 5));
   return uVar1;
 }
 
@@ -10352,12 +10360,12 @@ void FUN_00009c86(void)
 
 /* ROM address: 0x00009c8e; body bytes: 14; decompiled */
 
-undefined4 FUN_00009c8e(void)
+undefined4 can_rx_pending_check(void)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0000ce24();
+  uVar1 = can_rx_pending_bits();
   return uVar1;
 }
 
@@ -11185,7 +11193,7 @@ undefined2 * FUN_0000a936(void)
 
 /* ROM address: 0x0000aa90; body bytes: 52; decompiled */
 
-void FUN_0000aa90(float param_1)
+void apv_duty_split(float param_1)
 
 {
   param_1 = param_1 * 96.0;
@@ -12321,7 +12329,7 @@ void FUN_0000c0f0(undefined2 param_1,undefined2 param_2)
 
 /* ROM address: 0x0000c116; body bytes: 54; decompiled */
 
-void FUN_0000c116(char param_1)
+void reset_knock_state_on_mode_change(char param_1)
 
 {
   undefined4 uVar1;
@@ -12419,12 +12427,12 @@ void FUN_0000c1f8(void)
 
 /* ROM address: 0x0000c276; body bytes: 26; decompiled */
 
-void FUN_0000c276(void)
+void knock_reference_adc_read(void)
 
 {
   ushort uVar1;
   
-  DAT_ffffa326 = FUN_00006fb0();
+  DAT_ffffa326 = adc_read_result_bank2();
   uVar1 = DAT_fffff66c;
   DAT_fffff66c = uVar1 & 0xefff;
   return;
@@ -12495,7 +12503,7 @@ void FUN_0000c338(byte param_1)
 
 /* ROM address: 0x0000c3ce; body bytes: 114; decompiled */
 
-undefined2 * FUN_0000c3ce(void)
+undefined2 * knock_voltage_sample(void)
 
 {
   undefined2 *puVar1;
@@ -12679,7 +12687,7 @@ void FUN_0000c8dc(void)
   uVar1 = DAT_fffff666;
   if ((uVar1 & 0x1000) != 0) {
     FUN_0000a8a4(0xfffff658,0);
-    FUN_0000c276();
+    knock_reference_adc_read();
   }
   FUN_00003934(uVar2);
   if (DAT_ffffa385 == '\x01') {
@@ -12889,12 +12897,12 @@ void FUN_0000cc46(char param_1,uint param_2)
 
 /* ROM address: 0x0000cca4; body bytes: 54; decompiled */
 
-void FUN_0000cca4(byte param_1,char param_2,char param_3,undefined4 param_4)
+void can_mailbox_read_payload(byte param_1,char param_2,char param_3,undefined4 param_4)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe4b0);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe4b0);
   FUN_00009dfc((int)param_2,(int)param_3,param_4,iVar1 + (param_1 & 0xf) * 8);
   return;
 }
@@ -12902,12 +12910,12 @@ void FUN_0000cca4(byte param_1,char param_2,char param_3,undefined4 param_4)
 
 /* ROM address: 0x0000ccda; body bytes: 54; decompiled */
 
-void FUN_0000ccda(byte param_1,char param_2,char param_3,undefined4 param_4)
+void can_mailbox_write_payload(byte param_1,char param_2,char param_3,undefined4 param_4)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe4b0);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe4b0);
   FUN_00009e26((int)param_2,(int)param_3,param_4,iVar1 + (param_1 & 0xf) * 8);
   return;
 }
@@ -12923,7 +12931,7 @@ byte FUN_0000cd10(byte param_1,byte param_2)
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe420);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe420);
   *(byte *)(iVar1 + (param_1 & 0xf) * 8) = param_2 & 0xf;
   return param_2 & 0xf;
 }
@@ -12931,12 +12939,12 @@ byte FUN_0000cd10(byte param_1,byte param_2)
 
 /* ROM address: 0x0000cd40; body bytes: 34; decompiled */
 
-byte FUN_0000cd40(byte param_1)
+byte can_mailbox_dlc(byte param_1)
 
 {
   int iVar1;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe420);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe420);
   return *(byte *)(iVar1 + (param_1 & 0xf) * 8) & 0xf;
 }
 
@@ -12953,7 +12961,7 @@ uint FUN_0000cd74(byte param_1)
   uint uVar2;
   uint uVar3;
   
-  iVar1 = FUN_0000cee8((int)(char)param_1,&DAT_ffffe420);
+  iVar1 = can_mailbox_reg_addr((int)(char)param_1,&DAT_ffffe420);
   iVar1 = iVar1 + (param_1 & 0xf) * 8;
   if ((*(byte *)(iVar1 + 4) & 8) == 0) {
     uVar2 = (uint)(*(byte *)(iVar1 + 4) >> 5);
@@ -12970,7 +12978,7 @@ uint FUN_0000cd74(byte param_1)
 
 /* ROM address: 0x0000ce24; body bytes: 50; decompiled */
 
-ushort FUN_0000ce24(char param_1)
+ushort can_rx_pending_bits(char param_1)
 
 {
   short sVar1;
@@ -13028,7 +13036,7 @@ void FUN_0000cec8(char param_1,ushort param_2)
 
 /* ROM address: 0x0000cee8; body bytes: 22; decompiled */
 
-int FUN_0000cee8(byte param_1,int param_2)
+int can_mailbox_reg_addr(byte param_1,int param_2)
 
 {
   if (0x1f < param_1) {
@@ -13052,7 +13060,7 @@ int FUN_0000cefe(char param_1,int param_2)
 
 /* ROM address: 0x0000cf12; body bytes: 14; decompiled */
 
-int FUN_0000cf12(uint param_1)
+int can_mailbox_bitmask(uint param_1)
 
 {
   return (int)*(short *)(&DAT_0000d914 + (param_1 & 0xf) * 2);
@@ -13276,7 +13284,7 @@ undefined4 FUN_0000d262(void)
   undefined4 uVar3;
   
   uVar3 = 0xffffffff;
-  cVar2 = FUN_00009890(&DAT_0000d934);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0000d934);
   if ((cVar2 == '\0') && (iVar1 = FUN_00000636(&DAT_ffffa3e8), iVar1 != 0)) {
     uVar3 = 0;
   }
@@ -14144,7 +14152,7 @@ void FUN_0000e274(void)
 
 /* ROM address: 0x0000e2a8; body bytes: 36; decompiled */
 
-void FUN_0000e2a8(void)
+void update_injectors_off_flag(void)
 
 {
   if ((DAT_ffffa428 == '\0') && (DAT_ffffa41c == '\0')) {
@@ -14247,7 +14255,7 @@ undefined4 * FUN_0000e454(void)
 
 /* ROM address: 0x0000e48e; body bytes: 48; decompiled */
 
-void FUN_0000e48e(void)
+void injection_angle_limit_lookup(void)
 
 {
   DAT_ffffa434 = FUN_00002068(DAT_ffffb5b8,&DAT_0006969c);
@@ -14586,7 +14594,7 @@ LAB_0000ebd0:
 
 /* ROM address: 0x0000edc4; body bytes: 134; decompiled */
 
-void FUN_0000edc4(char param_1)
+void fuel_cut_arbitration(char param_1)
 
 {
   if (DAT_ffffa464 == '\x01') {
@@ -14626,7 +14634,7 @@ LAB_0000ee36:
 
 /* ROM address: 0x0000ee64; body bytes: 30; decompiled */
 
-char FUN_0000ee64(void)
+char rev_limit_fuel_cut_init(void)
 
 {
   if (DAT_ffff9f8c == '\x01') {
@@ -14640,7 +14648,7 @@ char FUN_0000ee64(void)
 
 /* ROM address: 0x0000ee82; body bytes: 120; decompiled */
 
-void FUN_0000ee82(void)
+void rev_limit_conditionals(void)
 
 {
   if (18.0 <= DAT_ffffaa10) {
@@ -15075,7 +15083,7 @@ void FUN_0000f7f8(void)
   for (pcVar4 = &DAT_ffffa4b4; pcVar4 < &DAT_ffffa564; pcVar4 = pcVar4 + 0x58) {
     uVar1 = FUN_0000fa3a(uVar3 * 0x1e0000,*(undefined4 *)(pcVar4 + 8));
     for (pcVar5 = pcVar4 + 0x10; pcVar5 < pcVar4 + 0x58; pcVar5 = pcVar5 + 0x18) {
-      FUN_000085e4((int)*pcVar5);
+      injector_channel_disable((int)*pcVar5);
       pcVar5[1] = '\0';
     }
     FUN_0000ffd6(pcVar4);
@@ -15113,7 +15121,7 @@ void FUN_0000f8d0(void)
   
   for (puVar1 = (undefined2 *)&DAT_ffffa4b4; puVar1 < &DAT_ffffa564; puVar1 = puVar1 + 0x2c) {
     for (pcVar2 = (char *)(puVar1 + 8); pcVar2 < puVar1 + 0x2c; pcVar2 = pcVar2 + 0x18) {
-      FUN_000085e4((int)*pcVar2);
+      injector_channel_disable((int)*pcVar2);
     }
   }
   DAT_ffffa564 = 0;
@@ -15257,7 +15265,7 @@ LAB_0000fb32:
         }
         if (bVar1) {
           for (pcVar5 = pcVar3 + 0x10; pcVar5 < pcVar3 + 0x58; pcVar5 = pcVar5 + 0x18) {
-            FUN_000085e4((int)*pcVar5);
+            injector_channel_disable((int)*pcVar5);
             pcVar5[1] = '\0';
           }
           pcVar3[2] = '\0';
@@ -15319,7 +15327,7 @@ LAB_0000fc58:
         }
         if (bVar1) {
           for (pcVar6 = pcVar4 + 0x10; pcVar6 < pcVar4 + 0x58; pcVar6 = pcVar6 + 0x18) {
-            FUN_000085e4((int)*pcVar6);
+            injector_channel_disable((int)*pcVar6);
           }
           pcVar4[2] = '\0';
           pcVar4[1] = '\x01';
@@ -15376,7 +15384,7 @@ LAB_0000fd5a:
             bVar3 = 2;
           }
           else {
-            FUN_000085e4((int)(char)*pbVar5);
+            injector_channel_disable((int)(char)*pbVar5);
             bVar3 = 0;
           }
           pbVar5[1] = bVar3;
@@ -15455,7 +15463,7 @@ LAB_0000fd5a:
             bVar3 = 2;
           }
           else {
-            FUN_000085e4((int)(char)*pbVar5);
+            injector_channel_disable((int)(char)*pbVar5);
             bVar3 = 0;
           }
           pbVar5[1] = bVar3;
@@ -15736,9 +15744,9 @@ int FUN_000101ac(char param_1)
 void FUN_00010208(void)
 
 {
-  FUN_000086ac(0,0);
-  FUN_000086ac(1,0);
-  FUN_000086ac(2,0);
+  injector_zero_offset_set(0,0);
+  injector_zero_offset_set(1,0);
+  injector_zero_offset_set(2,0);
   FUN_000074d4(1);
   return;
 }
@@ -16819,7 +16827,7 @@ void FUN_0001179c(void)
   FUN_000273d2();
   FUN_00016810();
   FUN_0003fa48();
-  FUN_00032804();
+  apv_control_task();
   FUN_00017ce4();
   FUN_0002230a();
   FUN_000358d2();
@@ -16859,8 +16867,8 @@ void FUN_00011804(void)
   FUN_0002fd16();
   FUN_0002fe5a();
   FUN_00030550();
-  FUN_0003232e();
-  FUN_00019600();
+  secondary_air_on_time_task();
+  secondary_air_solenoid_control();
   FUN_0002272e();
   FUN_00017cfc();
   FUN_000294c0();
@@ -17105,7 +17113,7 @@ void FUN_00011cf0(void)
 /* Function candidate recovered from ROM pointer at d9a8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00011de0(void)
+uint can_rx_poll_move_to_uds_buffer(void)
 
 {
   uint uVar1;
@@ -17113,38 +17121,38 @@ uint FUN_00011de0(void)
   uint uVar2;
   
   if ((DAT_ffff9ec8 & 1) == 0) {
-    uVar1 = FUN_00009c8e(0);
+    uVar1 = can_rx_pending_check(0);
     if (uVar1 != 0) {
       if ((uVar1 & 0x2000) == 0) {
         if ((uVar1 & 0x4000) != 0) {
-          uVar1 = FUN_00009890(&DAT_0004e7a8);
+          uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e7a8);
         }
       }
       else {
-        uVar1 = FUN_00009890(&DAT_0004e798);
+        uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e798);
       }
     }
   }
   else {
-    uVar1 = FUN_00009c8e(0);
+    uVar1 = can_rx_pending_check(0);
     if (uVar1 != 0) {
       if ((uVar1 & 0x2000) == 0) {
         if ((uVar1 & 0x4000) != 0) {
-          cVar3 = FUN_00009890();
+          cVar3 = can_rx_copy_mailbox_to_buffer();
           uVar2 = FUN_00009c34(&DAT_0004e7a8);
           uVar1 = (uint)cVar3;
           if ((uVar1 == 0) && (uVar1 = uVar2 & 0xff, uVar1 == 8)) {
-            uVar1 = FUN_00068844(0x7e0);
+            uVar1 = uds_service_entry(0x7e0);
             return uVar1;
           }
         }
       }
       else {
-        cVar3 = FUN_00009890();
+        cVar3 = can_rx_copy_mailbox_to_buffer();
         uVar2 = FUN_00009c34(&DAT_0004e798);
         uVar1 = (uint)cVar3;
         if ((uVar1 == 0) && (uVar1 = uVar2 & 0xff, uVar1 == 8)) {
-          uVar1 = FUN_00068844(0x7df);
+          uVar1 = uds_service_entry(0x7df);
           return uVar1;
         }
       }
@@ -18111,7 +18119,7 @@ void FUN_00013458(void)
 
 /* ROM address: 0x00013504; body bytes: 228; decompiled */
 
-uint FUN_00013504(void)
+uint idle_leading_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -18165,7 +18173,7 @@ uint FUN_00013504(void)
 
 /* ROM address: 0x00013634; body bytes: 228; decompiled */
 
-uint FUN_00013634(void)
+uint idle_trailing_timing_error_correction(void)
 
 {
   uint uVar1;
@@ -18610,7 +18618,7 @@ void FUN_00013ef4(void)
 
 /* ROM address: 0x00013f20; body bytes: 104; decompiled */
 
-void FUN_00013f20(void)
+void coolant_timing_derate_calc(void)
 
 {
   undefined4 uVar1;
@@ -18693,7 +18701,7 @@ void FUN_00014050(float param_1)
 
 /* WARNING: Removing unreachable block (ram,0x0001410a) */
 
-uint FUN_000140e4(void)
+uint iat_timing_compensation_on_throttle(void)
 
 {
   uint uVar1;
@@ -18823,16 +18831,16 @@ void FUN_000142ec(void)
   FUN_00017b34();
   FUN_00003934(uVar1);
   uVar1 = FUN_00003920(0x10);
-  FUN_00013504();
-  FUN_00013634();
+  idle_leading_timing_error_correction();
+  idle_trailing_timing_error_correction();
   FUN_00013cd0();
   FUN_00013df4();
-  FUN_00013f20();
+  coolant_timing_derate_calc();
   FUN_00013e92();
   FUN_00012930();
   FUN_00012dd8();
   FUN_00018f88();
-  FUN_00044884();
+  cranking_timing_leading_filter();
   FUN_00044902();
   FUN_000439b2();
   FUN_00043bf8();
@@ -18984,7 +18992,7 @@ void FUN_000146ac(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_00014154();
-  FUN_000140e4();
+  iat_timing_compensation_on_throttle();
   FUN_00003934(uVar1);
   return;
 }
@@ -22377,7 +22385,7 @@ byte FUN_00019520(byte param_1,byte param_2)
 
 /* ROM address: 0x00019600; body bytes: 180; decompiled */
 
-undefined4 FUN_00019600(void)
+undefined4 secondary_air_solenoid_control(void)
 
 {
   undefined4 uVar1;
@@ -22407,7 +22415,7 @@ undefined4 FUN_00019600(void)
   else {
     uVar1 = 0;
   }
-  cStack_8 = FUN_0005d720(uVar1);
+  cStack_8 = secondary_air_diag_override(uVar1);
   DAT_ffffa9e4 = cStack_8;
   FUN_00002054(&local_c,0xe0);
   FUN_00004bbc(0xfffff754,0x100,cStack_8 == '\x01');
@@ -22618,7 +22626,7 @@ uint FUN_00019932(void)
 
 /* ROM address: 0x00019b46; body bytes: 130; decompiled */
 
-char FUN_00019b46(void)
+char fuel_cut_rpm_condition(void)
 
 {
   char cVar1;
@@ -23185,7 +23193,7 @@ void FUN_0001a6c4(void)
   FUN_00025a44();
   FUN_00025a5e();
   FUN_0001aecc();
-  FUN_0001aeec();
+  maf_filtered_update();
   FUN_0001b152();
   FUN_00034aa2();
   FUN_00034222();
@@ -23225,7 +23233,7 @@ void FUN_0001a732(void)
   FUN_00025b12();
   FUN_0001b15c();
   FUN_00034aac();
-  FUN_00034b12();
+  calculate_engine_load();
   FUN_000342e0();
   FUN_0003457a();
   FUN_0003466c();
@@ -23243,7 +23251,7 @@ void FUN_0001a780(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_0001aefa();
+  maf_voltage_and_fault_counters();
   FUN_0001afd8();
   FUN_00003934(uVar1);
   return;
@@ -23260,7 +23268,7 @@ void FUN_0001a8d8(void)
   uVar1 = FUN_00003920(0x10);
   FUN_0004b56c();
   FUN_0000e1b8();
-  FUN_0000e2a8();
+  update_injectors_off_flag();
   FUN_0001bab4();
   FUN_0001b2d4();
   FUN_0001b2fc();
@@ -23350,7 +23358,7 @@ void FUN_0001aa46(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0001b310();
-  FUN_000449d6();
+  apv_position_voltage_scale();
   FUN_000449ee();
   FUN_0002ca0c();
   FUN_0002ca34();
@@ -23533,7 +23541,7 @@ int FUN_0001aea4(void)
   int iVar2;
   byte bVar3;
   
-  FUN_0001aefa();
+  maf_voltage_and_fault_counters();
   uVar1 = DAT_ffffaa84;
   bVar3 = 0;
   iVar2 = 0;
@@ -23571,7 +23579,7 @@ int FUN_0001aecc(void)
 
 /* ROM address: 0x0001aeec; body bytes: 14; decompiled */
 
-void FUN_0001aeec(void)
+void maf_filtered_update(void)
 
 {
   DAT_ffffaa88 = DAT_ffffaa84;
@@ -23582,7 +23590,7 @@ void FUN_0001aeec(void)
 
 /* ROM address: 0x0001aefa; body bytes: 164; decompiled */
 
-undefined4 * FUN_0001aefa(void)
+undefined4 * maf_voltage_and_fault_counters(void)
 
 {
   ushort uVar1;
@@ -25963,7 +25971,7 @@ undefined4 FUN_0001e978(float param_1,float param_2)
 
 /* ROM address: 0x0001eaa8; body bytes: 82; decompiled */
 
-undefined4 * FUN_0001eaa8(void)
+undefined4 * cold_start_enrichment(void)
 
 {
   undefined4 *puVar1;
@@ -26343,7 +26351,7 @@ uint FUN_0001f0f4(void)
 
 /* ROM address: 0x0001f4ee; body bytes: 148; decompiled */
 
-undefined1 * FUN_0001f4ee(void)
+undefined1 * maf_operating_range(void)
 
 {
   if (DAT_ffffaa88 < 1.0) {
@@ -26607,7 +26615,7 @@ undefined4 FUN_0001f99a(void)
 
 /* ROM address: 0x0001fadc; body bytes: 26; decompiled */
 
-void FUN_0001fadc(void)
+void set_open_loop_flag(void)
 
 {
   DAT_ffffb19c = DAT_ffffb19a != '\0';
@@ -27380,7 +27388,7 @@ void FUN_00020d72(void)
 
 /* ROM address: 0x00020ef8; body bytes: 42; decompiled */
 
-void FUN_00020ef8(void)
+void open_loop_changeover_enrichment(void)
 
 {
   if (DAT_ffffb1b6 == 0) {
@@ -27782,7 +27790,7 @@ void FUN_000219a8(uint param_1)
   uVar1 = FUN_00003920(0x10);
   uVar2 = param_1 & 0xff;
   if ((((uVar2 == 0) || (uVar2 == 0xc)) || (uVar2 == 6)) || (uVar2 == 0x12)) {
-    FUN_0000edc4(param_1);
+    fuel_cut_arbitration(param_1);
     FUN_00047b22(param_1);
   }
   FUN_0002d604(param_1);
@@ -27801,11 +27809,11 @@ void FUN_000219f8(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0000e454();
-  FUN_0000e48e();
+  injection_angle_limit_lookup();
   FUN_00030e3c();
   FUN_00030e64();
   FUN_00030fd6();
-  FUN_00031250();
+  cranking_pulse_adder();
   FUN_00030df0();
   FUN_0000eefa();
   FUN_0003534c();
@@ -27813,7 +27821,7 @@ void FUN_000219f8(void)
   FUN_000351b6();
   FUN_00035044();
   FUN_00035116();
-  FUN_00034eb8();
+  load_delta_enrichment();
   FUN_0003522c();
   FUN_00034d20();
   FUN_00034c50();
@@ -27825,13 +27833,13 @@ void FUN_000219f8(void)
   FUN_000309f4();
   FUN_00030a12();
   FUN_00033ac8();
-  FUN_000312c0();
-  FUN_00031520();
+  calc_fuel_volume_request();
+  calculate_fuel_amount_per_rotation();
   FUN_000316e0();
   FUN_00031b2c();
   FUN_00030c08();
-  FUN_00030a80();
-  FUN_0001eaa8();
+  injector_pulse_time_arbitrate();
+  cold_start_enrichment();
   FUN_0004b6bc();
   FUN_0004b938();
   FUN_00003934(uVar1);
@@ -27956,7 +27964,7 @@ void FUN_00021d42(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_00030b50();
+  injector_latency_cal_lookup();
   FUN_00021780();
   FUN_000217cc();
   FUN_000218a8();
@@ -27966,7 +27974,7 @@ void FUN_00021d42(void)
   FUN_00030f78();
   FUN_0001de76();
   FUN_00034dfe();
-  FUN_0000ee64();
+  rev_limit_fuel_cut_init();
   FUN_00047878();
   FUN_0004392c();
   FUN_000352a0();
@@ -27991,9 +27999,9 @@ void FUN_00021db4(void)
   FUN_00020d72();
   FUN_0000e560();
   FUN_00031f20();
-  FUN_000320b4();
+  calculate_air_charge();
   FUN_00032208();
-  FUN_00030932();
+  injector_temp_multiplier_lookup();
   FUN_00003934(uVar1);
   return;
 }
@@ -28008,10 +28016,10 @@ void FUN_00021dfc(void)
   
   uVar1 = FUN_00003920(0x10);
   FUN_0001fd70();
-  FUN_0001fadc();
+  set_open_loop_flag();
   FUN_0001faf6();
-  FUN_00020ef8();
-  FUN_000339ec();
+  open_loop_changeover_enrichment();
+  warmup_fueling_compensation();
   FUN_00020f44();
   FUN_00021138();
   FUN_00020f34();
@@ -28023,7 +28031,7 @@ void FUN_00021dfc(void)
   FUN_0001e4fc();
   FUN_0001e588();
   FUN_0001ede0();
-  FUN_0001f4ee();
+  maf_operating_range();
   FUN_0001f0f4();
   FUN_0001f5ac();
   FUN_0001f702();
@@ -28032,8 +28040,8 @@ void FUN_00021dfc(void)
   FUN_0001f852();
   FUN_0001f99a();
   FUN_000196ec();
-  FUN_00019b46();
-  FUN_0000ee82();
+  fuel_cut_rpm_condition();
+  rev_limit_conditionals();
   FUN_00003934(uVar1);
   return;
 }
@@ -28253,7 +28261,7 @@ void FUN_0002229c(void)
 void thunk_FUN_00022330(void)
 
 {
-  FUN_00022330();
+  ssv_solenoid_control();
   return;
 }
 
@@ -28266,7 +28274,7 @@ void FUN_0002230a(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_00022330();
+  ssv_solenoid_control();
   FUN_00003934(uVar1);
   return;
 }
@@ -28274,7 +28282,7 @@ void FUN_0002230a(void)
 
 /* ROM address: 0x00022330; body bytes: 250; decompiled */
 
-void FUN_00022330(void)
+void ssv_solenoid_control(void)
 
 {
   char cVar1;
@@ -28487,7 +28495,7 @@ void FUN_0002272e(void)
   FUN_00022882();
   FUN_0002292e();
   FUN_00022aa0();
-  FUN_00022ce8();
+  evap_open_loop_condition();
   FUN_000227b8();
   FUN_00025ce4();
   FUN_00003934(uVar1);
@@ -28685,7 +28693,7 @@ uint FUN_00022aa0(void)
 
 /* ROM address: 0x00022ce8; body bytes: 200; decompiled */
 
-uint FUN_00022ce8(void)
+uint evap_open_loop_condition(void)
 
 {
   char cVar1;
@@ -33783,10 +33791,10 @@ uint FUN_00029950(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004e9d8);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9d8);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e040();
-    FUN_00029a48();
+    can216_unpack_mixed_width_fields();
     FUN_00029a8c();
     uVar1 = FUN_00029bb8();
     return uVar1;
@@ -33841,7 +33849,7 @@ void FUN_000299aa(void)
 
 /* ROM address: 0x00029a48; body bytes: 68; decompiled */
 
-void FUN_00029a48(void)
+void can216_unpack_mixed_width_fields(void)
 
 {
   DAT_ffffbb3c = (ushort)DAT_ffffbb20 * 0x100 + (ushort)DAT_ffffbb21;
@@ -33921,7 +33929,7 @@ uint FUN_00029c04(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004e708);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e708);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e040();
     FUN_00029c2e();
@@ -33994,7 +34002,7 @@ void FUN_00029d34(void)
 {
   DAT_ffffbb74 = 0xffff;
   FUN_00029dac();
-  FUN_00029d6c();
+  can201_pack_and_queue_payload();
   DAT_ffffbb74 = 0;
   return;
 }
@@ -34008,7 +34016,7 @@ void FUN_00029d3a(void)
   DAT_ffffbb74 = DAT_ffffbb74 + 1;
   if (3 < DAT_ffffbb74) {
     FUN_00029dac();
-    FUN_00029d6c();
+    can201_pack_and_queue_payload();
     DAT_ffffbb74 = 0;
   }
   return;
@@ -34027,7 +34035,7 @@ void FUN_00029d64(void)
 
 /* ROM address: 0x00029d6c; body bytes: 64; decompiled */
 
-void FUN_00029d6c(void)
+void can201_pack_and_queue_payload(void)
 
 {
   DAT_ffffbb5c = (undefined1)((ushort)DAT_ffffbb64 >> 8);
@@ -34048,8 +34056,8 @@ void FUN_00029d6c(void)
 void FUN_00029dac(void)
 
 {
-  FUN_00029ed0();
-  FUN_00029dc6();
+  can201_prepare_rpm_with_conditional_filter();
+  can201_encode_rpm_u16();
   FUN_00029e04();
   FUN_00029e0c();
   FUN_00029e88();
@@ -34060,7 +34068,7 @@ void FUN_00029dac(void)
 
 /* ROM address: 0x00029dc6; body bytes: 62; decompiled */
 
-uint FUN_00029dc6(void)
+uint can201_encode_rpm_u16(void)
 
 {
   uint uVar1;
@@ -34150,7 +34158,7 @@ void FUN_00029ec8(void)
 
 /* ROM address: 0x00029ed0; body bytes: 120; decompiled */
 
-undefined4 * FUN_00029ed0(void)
+undefined4 * can201_prepare_rpm_with_conditional_filter(void)
 
 {
   undefined4 *puVar1;
@@ -35696,7 +35704,7 @@ uint FUN_0002bb80(void)
   char cVar2;
   uint uVar1;
   
-  cVar2 = FUN_00009890(&DAT_0004e9f8);
+  cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9f8);
   if (cVar2 == '\0') {
     FUN_0000e038();
     FUN_0002bd66();
@@ -35869,7 +35877,7 @@ void FUN_0002be2c(void)
 {
   char cVar1;
   
-  cVar1 = FUN_00009890(&DAT_0004e9c8);
+  cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9c8);
   if (cVar1 == '\0') {
     FUN_0000e038();
     FUN_0002c372();
@@ -36281,7 +36289,7 @@ uint FUN_0002c4e8(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004ea08);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004ea08);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e038();
     FUN_0002c50e();
@@ -37427,7 +37435,7 @@ void FUN_0002d758(void)
   FUN_0002da58();
   FUN_0002d990();
   FUN_0002d808();
-  FUN_0002d820();
+  dsc_mode_a_base_timing_lookup();
   FUN_0002d838();
   FUN_0002d850();
   FUN_0002d870();
@@ -37452,7 +37460,7 @@ void FUN_0002d808(void)
 
 /* ROM address: 0x0002d820; body bytes: 24; decompiled */
 
-void FUN_0002d820(void)
+void dsc_mode_a_base_timing_lookup(void)
 
 {
   DAT_ffffbd00 = FUN_000020dc(DAT_ffffc12c,DAT_ffffb5b8,&DAT_0006aca0);
@@ -39671,7 +39679,7 @@ void FUN_000308ec(void)
 
 /* ROM address: 0x00030932; body bytes: 60; decompiled */
 
-void FUN_00030932(void)
+void injector_temp_multiplier_lookup(void)
 
 {
   DAT_ffffbe50 = FUN_000020dc(DAT_ffffbe5c,DAT_ffffc12c,&DAT_0006aea0);
@@ -39733,7 +39741,7 @@ void FUN_00030a30(void)
 
 /* ROM address: 0x00030a80; body bytes: 164; decompiled */
 
-void FUN_00030a80(void)
+void injector_pulse_time_arbitrate(void)
 
 {
   float fVar1;
@@ -39766,7 +39774,7 @@ void FUN_00030a80(void)
 
 /* ROM address: 0x00030b50; body bytes: 146; decompiled */
 
-void FUN_00030b50(void)
+void injector_latency_cal_lookup(void)
 
 {
   int iVar1;
@@ -39792,9 +39800,9 @@ void FUN_00030b50(void)
       iVar2 = 0;
     }
   }
-  FUN_000086f8(0,iVar1);
-  FUN_000086f8(1,iVar2);
-  FUN_000086f8(2,iVar2);
+  set_fuel_injector_latency(0,iVar1);
+  set_fuel_injector_latency(1,iVar2);
+  set_fuel_injector_latency(2,iVar2);
   return;
 }
 
@@ -40080,7 +40088,7 @@ uint FUN_00031040(void)
 
 /* ROM address: 0x00031250; body bytes: 50; decompiled */
 
-void FUN_00031250(void)
+void cranking_pulse_adder(void)
 
 {
   if (((DAT_ffffa428 == '\0') && (DAT_ffffa42c == '\x01')) && (DAT_ffffce6e == '\x01')) {
@@ -40094,7 +40102,7 @@ void FUN_00031250(void)
 
 /* WARNING: Removing unreachable block (ram,0x000312f8) */
 
-void FUN_000312c0(void)
+void calc_fuel_volume_request(void)
 
 {
   float fVar1;
@@ -40151,7 +40159,7 @@ char FUN_000313b8(void)
 
 /* ROM address: 0x00031520; body bytes: 346; decompiled */
 
-void FUN_00031520(void)
+void calculate_fuel_amount_per_rotation(void)
 
 {
   float fVar1;
@@ -40615,7 +40623,7 @@ char FUN_00031f20(void)
 
 /* ROM address: 0x000320b4; body bytes: 252; decompiled */
 
-void FUN_000320b4(void)
+void calculate_air_charge(void)
 
 {
   char cVar1;
@@ -40689,7 +40697,7 @@ void FUN_00032208(void)
 
 /* ROM address: 0x000322dc; body bytes: 48; decompiled */
 
-undefined4 FUN_000322dc(void)
+undefined4 secondary_air_pump_control(void)
 
 {
   undefined4 uVar1;
@@ -40717,7 +40725,7 @@ void FUN_00032320(void)
 
 /* ROM address: 0x0003232e; body bytes: 36; decompiled */
 
-void FUN_0003232e(void)
+void secondary_air_on_time_task(void)
 
 {
   undefined4 uVar1;
@@ -40725,7 +40733,7 @@ void FUN_0003232e(void)
   uVar1 = FUN_00003920(0x10);
   FUN_0003252e();
   FUN_00032608();
-  FUN_000322dc();
+  secondary_air_pump_control();
   FUN_00003934(uVar1);
   return;
 }
@@ -40913,7 +40921,7 @@ void FUN_00032608(void)
 
 /* ROM address: 0x000327d0; body bytes: 34; decompiled */
 
-void FUN_000327d0(void)
+void apv_command_wrapper(void)
 
 {
   float fVar1;
@@ -40922,7 +40930,7 @@ void FUN_000327d0(void)
   if (DAT_ffffbff3 == '\x01') {
     fVar1 = -DAT_ffffbfec;
   }
-  FUN_0000aa90(fVar1 / 100.0);
+  apv_duty_split(fVar1 / 100.0);
   return;
 }
 
@@ -40938,17 +40946,17 @@ void FUN_00032800(void)
 
 /* ROM address: 0x00032804; body bytes: 48; decompiled */
 
-void FUN_00032804(void)
+void apv_control_task(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
   FUN_00032850();
-  FUN_00032ab2();
-  FUN_00032aee();
+  apv_position_voltage_counter();
+  apv_counter_calc();
   FUN_00032b16();
-  FUN_000327d0();
+  apv_command_wrapper();
   FUN_00003934(uVar1);
   return;
 }
@@ -41049,7 +41057,7 @@ void FUN_00032850(void)
 
 /* ROM address: 0x00032ab2; body bytes: 60; decompiled */
 
-void FUN_00032ab2(void)
+void apv_position_voltage_counter(void)
 
 {
   if ((DAT_ffffbff3 == '\0') || ((0x4e1 < DAT_ffffbff0 && (DAT_ffffcb24 == '\0')))) {
@@ -41064,7 +41072,7 @@ void FUN_00032ab2(void)
 
 /* ROM address: 0x00032aee; body bytes: 40; decompiled */
 
-undefined4 FUN_00032aee(void)
+undefined4 apv_counter_calc(void)
 
 {
   undefined4 uVar1;
@@ -41847,7 +41855,7 @@ uint FUN_00033908(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004e9e8);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e9e8);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e048();
     FUN_00033932();
@@ -41916,7 +41924,7 @@ void FUN_00033984(void)
 
 /* ROM address: 0x000339ec; body bytes: 166; decompiled */
 
-void FUN_000339ec(void)
+void warmup_fueling_compensation(void)
 
 {
   char cVar1;
@@ -42250,7 +42258,7 @@ void FUN_0003413e(void)
 void FUN_000341d4(void)
 
 {
-  FUN_0000c116(0);
+  reset_knock_state_on_mode_change(0);
   DAT_ffffc0d8 = DAT_ffffb5b8;
   DAT_ffffc0dc = DAT_ffffc12c;
   DAT_ffffc0e0 = DAT_ffffadc0;
@@ -42449,11 +42457,11 @@ void FUN_000345f4(void)
 
 {
   if (7000.0 <= DAT_ffffb5b8) {
-    FUN_0000c116(1);
+    reset_knock_state_on_mode_change(1);
     return;
   }
   if (DAT_ffffb5b8 < 6500.0) {
-    FUN_0000c116(0);
+    reset_knock_state_on_mode_change(0);
     return;
   }
   return;
@@ -42670,7 +42678,7 @@ void FUN_00034af0(void)
 
 /* ROM address: 0x00034b12; body bytes: 126; decompiled */
 
-undefined4 FUN_00034b12(void)
+undefined4 calculate_engine_load(void)
 
 {
   char cVar1;
@@ -42853,7 +42861,7 @@ void FUN_00034e8c(void)
 
 /* ROM address: 0x00034eb8; body bytes: 164; decompiled */
 
-undefined4 FUN_00034eb8(void)
+undefined4 load_delta_enrichment(void)
 
 {
   undefined4 uVar1;
@@ -43260,7 +43268,7 @@ char FUN_000357fc(void)
 
 /* ROM address: 0x0003582c; body bytes: 126; decompiled */
 
-void FUN_0003582c(void)
+void vdi_solenoid_control(void)
 
 {
   int iVar1;
@@ -43276,7 +43284,7 @@ void FUN_0003582c(void)
   else {
     iVar1 = 1;
   }
-  DAT_ffffc230 = FUN_0005cb64(iVar1);
+  DAT_ffffc230 = vdi_diag_override(iVar1);
   if (DAT_ffffc230 == '\x01') {
     FUN_00002054(auStack_14,0xe0);
     FUN_00004bbc(0xfffff746,0x20,1);
@@ -43296,7 +43304,7 @@ void FUN_0003582c(void)
 void thunk_FUN_0003582c(void)
 
 {
-  FUN_0003582c();
+  vdi_solenoid_control();
   return;
 }
 
@@ -43309,7 +43317,7 @@ void FUN_000358d2(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_0003582c();
+  vdi_solenoid_control();
   FUN_00003934(uVar1);
   return;
 }
@@ -43320,7 +43328,7 @@ void FUN_000358d2(void)
 void thunk_FUN_00035924(void)
 
 {
-  FUN_00035924();
+  vfad_solenoid_control();
   return;
 }
 
@@ -43333,7 +43341,7 @@ void FUN_000358fe(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_00035924();
+  vfad_solenoid_control();
   FUN_00003934(uVar1);
   return;
 }
@@ -43341,7 +43349,7 @@ void FUN_000358fe(void)
 
 /* ROM address: 0x00035924; body bytes: 132; decompiled */
 
-void FUN_00035924(void)
+void vfad_solenoid_control(void)
 
 {
   int iVar1;
@@ -43357,7 +43365,7 @@ void FUN_00035924(void)
   else {
     iVar1 = 1;
   }
-  DAT_ffffc234 = FUN_0005d568(iVar1);
+  DAT_ffffc234 = vfad_diag_override(iVar1);
   if (DAT_ffffc234 == '\x01') {
     FUN_00002054(auStack_18,0xe0);
     FUN_00004bbc(0xfffff754,0x400,1);
@@ -45541,18 +45549,18 @@ void FUN_00038340(undefined4 param_1)
     DAT_ffffc2cb = 1;
   }
   else if (DAT_ffffc2cd == '\x01') {
-    FUN_000581d2(param_1,(int)DAT_ffffc2ee);
+    diag_append_u8(param_1,(int)DAT_ffffc2ee);
     if (DAT_ffffc2ee == '\x01') {
-      FUN_000581d2(param_1,(int)DAT_ffffc2ef);
-      FUN_000581d2(param_1,(int)DAT_ffffc2f0);
+      diag_append_u8(param_1,(int)DAT_ffffc2ef);
+      diag_append_u8(param_1,(int)DAT_ffffc2f0);
       iVar1 = (int)DAT_ffffc2f1;
     }
     else {
-      FUN_000581d2(param_1,0);
-      FUN_000581d2(param_1,0);
+      diag_append_u8(param_1,0);
+      diag_append_u8(param_1,0);
       iVar1 = 0;
     }
-    FUN_000581d2(param_1,iVar1);
+    diag_append_u8(param_1,iVar1);
     DAT_ffffd224 = 0;
     DAT_ffffc2cf = '\0';
     DAT_ffffc2ce = '\0';
@@ -45595,7 +45603,7 @@ char FUN_000384a6(void)
 
 /* ROM address: 0x0003852e; body bytes: 34; decompiled */
 
-uint FUN_0003852e(void)
+uint diag_status_bit_pack(void)
 
 {
   uint uVar1;
@@ -46176,7 +46184,7 @@ uint FUN_00039104(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004ea18);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004ea18);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     FUN_0000e050();
@@ -46892,7 +46900,7 @@ void FUN_00039f34(void)
   undefined4 uVar1;
   
   uVar1 = FUN_00003920(0x10);
-  FUN_0004a754();
+  knock_sensor_health_persistence();
   FUN_0004a82c();
   FUN_000394c6();
   FUN_00039554();
@@ -54908,7 +54916,7 @@ void FUN_00044878(void)
 
 /* ROM address: 0x00044884; body bytes: 126; decompiled */
 
-uint FUN_00044884(void)
+uint cranking_timing_leading_filter(void)
 
 {
   byte bVar1;
@@ -54979,7 +54987,7 @@ uint FUN_00044902(void)
 void FUN_000449cc(void)
 
 {
-  FUN_000449d6();
+  apv_position_voltage_scale();
   FUN_000449ee();
   return;
 }
@@ -54987,7 +54995,7 @@ void FUN_000449cc(void)
 
 /* ROM address: 0x000449d6; body bytes: 24; decompiled */
 
-void FUN_000449d6(void)
+void apv_position_voltage_scale(void)
 
 {
   DAT_ffffcb20 = FUN_000024c0(0x38a00000,0,(int)DAT_ffff9ef0);
@@ -59770,7 +59778,7 @@ char FUN_0004a6d8(void)
 
 /* ROM address: 0x0004a754; body bytes: 216; decompiled */
 
-void FUN_0004a754(void)
+void knock_sensor_health_persistence(void)
 
 {
   char cVar1;
@@ -61370,7 +61378,7 @@ uint FUN_0004c4f4(void)
 {
   uint uVar1;
   
-  uVar1 = FUN_00009890(&DAT_0004e788);
+  uVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e788);
   if ((uVar1 & 0xff) == 0) {
     FUN_0000e038();
     FUN_0004c51a();
@@ -61486,10 +61494,10 @@ void FUN_0004c62a(void)
 {
   DAT_ffffceac = FUN_00055b02();
   DAT_ffffcead = FUN_00055b7c();
-  DAT_ffffceae = FUN_00055b80();
-  DAT_ffffceaf = FUN_00055bce();
-  DAT_ffffceb0 = FUN_00055be4();
-  DAT_ffffceb1 = FUN_00055c0a();
+  DAT_ffffceae = diag_read_calc_load_pct();
+  DAT_ffffceaf = diag_encode_ect_c();
+  DAT_ffffceb0 = diag_encode_stft_lambda();
+  DAT_ffffceb1 = diag_encode_ltft();
   DAT_ffffceb2 = 0;
   DAT_ffffceb3 = 0;
   return;
@@ -61557,11 +61565,11 @@ void FUN_0004c728(void)
 {
   DAT_ffffcec0 = 0;
   DAT_ffffcec1 = 0;
-  DAT_ffffcec2 = FUN_00055c52();
-  DAT_ffffcec3 = FUN_00055c6a();
-  DAT_ffffcec4 = FUN_00055ccc();
-  DAT_ffffcec6 = FUN_00055ce2();
-  DAT_ffffcec7 = FUN_00055d0e();
+  DAT_ffffcec2 = diag_encode_leading_timing();
+  DAT_ffffcec3 = diag_encode_iat();
+  DAT_ffffcec4 = diag_encode_maf();
+  DAT_ffffcec6 = diag_encode_throttle_pct();
+  DAT_ffffcec7 = diag_read_secondary_air_status();
   return;
 }
 
@@ -68524,77 +68532,77 @@ uint thunk_FUN_00055534(char param_1,uint param_2)
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 2:
-    uVar7 = FUN_00055b80();
+    uVar7 = diag_read_calc_load_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 3:
-    uVar7 = FUN_00055bce();
+    uVar7 = diag_encode_ect_c();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 4:
-    uVar7 = FUN_00055be4();
+    uVar7 = diag_encode_stft_lambda();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 5:
-    uVar7 = FUN_00055c0a();
+    uVar7 = diag_encode_ltft();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 6:
-    uVar7 = FUN_00055c28();
+    uVar7 = diag_encode_rpm();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 7:
-    uVar7 = FUN_00055c3e();
+    uVar7 = diag_encode_vss();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 8:
-    uVar7 = FUN_00055c52();
+    uVar7 = diag_encode_leading_timing();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 9:
-    uVar7 = FUN_00055c6a();
+    uVar7 = diag_encode_iat();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 10:
-    uVar7 = FUN_00055ccc();
+    uVar7 = diag_encode_maf();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xb:
-    uVar7 = FUN_00055ce2();
+    uVar7 = diag_encode_throttle_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xc:
-    uVar7 = FUN_00055d0e();
+    uVar7 = diag_read_secondary_air_status();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xd:
-    uVar7 = FUN_00055d24();
+    uVar7 = diag_read_o2_present_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = FUN_00055d2a();
+    uVar7 = diag_encode_o2s2();
     uVar7 = FUN_00055066(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055d50();
+    uVar2 = diag_encode_trim_b074();
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
-    uVar7 = FUN_00055d6e();
+    uVar7 = diag_read_obd_standard_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x10:
-    uVar7 = FUN_00055d74();
+    uVar7 = diag_read_runtime_s();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x11:
-    uVar7 = FUN_00055d9c();
+    uVar7 = diag_read_distance_mil();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = FUN_00055dba();
+    uVar7 = diag_encode_b2f0();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = FUN_00055dd0();
+    uVar7 = diag_read_d287();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
@@ -68602,53 +68610,53 @@ uint thunk_FUN_00055534(char param_1,uint param_2)
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = FUN_00055e54();
+    uVar7 = diag_read_90fc();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = FUN_00055e72();
+    uVar7 = diag_encode_ad10();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
-    uVar7 = FUN_00055e90();
+    uVar7 = diag_read_afr_word_a();
     uVar7 = FUN_00055074(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055ea6();
+    uVar2 = diag_read_afr_word_b();
     FUN_00055074(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = FUN_00055ebe();
+    uVar7 = diag_encode_c644();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
-    uVar7 = FUN_00055ed6();
+    uVar7 = diag_encode_battery_v();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1a:
-    uVar7 = FUN_00055eec();
+    uVar7 = diag_encode_load_g_rev();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1b:
-    uVar7 = FUN_00055f02();
+    uVar7 = diag_encode_lambda_target();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = FUN_00055f18();
+    uVar7 = diag_encode_ad48();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = FUN_00055f2e();
+    uVar7 = diag_encode_ad5e();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = FUN_00055f5a();
+    uVar7 = diag_encode_a9c4();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = FUN_00055fdc();
+    uVar7 = diag_encode_a9c6();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = FUN_00056008();
+    uVar7 = diag_encode_b410();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:
@@ -68859,77 +68867,77 @@ uint FUN_00055534(char param_1,uint param_2)
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 2:
-    uVar7 = FUN_00055b80();
+    uVar7 = diag_read_calc_load_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 3:
-    uVar7 = FUN_00055bce();
+    uVar7 = diag_encode_ect_c();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 4:
-    uVar7 = FUN_00055be4();
+    uVar7 = diag_encode_stft_lambda();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 5:
-    uVar7 = FUN_00055c0a();
+    uVar7 = diag_encode_ltft();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 6:
-    uVar7 = FUN_00055c28();
+    uVar7 = diag_encode_rpm();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 7:
-    uVar7 = FUN_00055c3e();
+    uVar7 = diag_encode_vss();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 8:
-    uVar7 = FUN_00055c52();
+    uVar7 = diag_encode_leading_timing();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 9:
-    uVar7 = FUN_00055c6a();
+    uVar7 = diag_encode_iat();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 10:
-    uVar7 = FUN_00055ccc();
+    uVar7 = diag_encode_maf();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xb:
-    uVar7 = FUN_00055ce2();
+    uVar7 = diag_encode_throttle_pct();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xc:
-    uVar7 = FUN_00055d0e();
+    uVar7 = diag_read_secondary_air_status();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xd:
-    uVar7 = FUN_00055d24();
+    uVar7 = diag_read_o2_present_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = FUN_00055d2a();
+    uVar7 = diag_encode_o2s2();
     uVar7 = FUN_00055066(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055d50();
+    uVar2 = diag_encode_trim_b074();
     FUN_00055066(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
-    uVar7 = FUN_00055d6e();
+    uVar7 = diag_read_obd_standard_const();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x10:
-    uVar7 = FUN_00055d74();
+    uVar7 = diag_read_runtime_s();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x11:
-    uVar7 = FUN_00055d9c();
+    uVar7 = diag_read_distance_mil();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = FUN_00055dba();
+    uVar7 = diag_encode_b2f0();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = FUN_00055dd0();
+    uVar7 = diag_read_d287();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
@@ -68937,53 +68945,53 @@ uint FUN_00055534(char param_1,uint param_2)
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = FUN_00055e54();
+    uVar7 = diag_read_90fc();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = FUN_00055e72();
+    uVar7 = diag_encode_ad10();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
-    uVar7 = FUN_00055e90();
+    uVar7 = diag_read_afr_word_a();
     uVar7 = FUN_00055074(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_00055ea6();
+    uVar2 = diag_read_afr_word_b();
     FUN_00055074(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = FUN_00055ebe();
+    uVar7 = diag_encode_c644();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
-    uVar7 = FUN_00055ed6();
+    uVar7 = diag_encode_battery_v();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1a:
-    uVar7 = FUN_00055eec();
+    uVar7 = diag_encode_load_g_rev();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1b:
-    uVar7 = FUN_00055f02();
+    uVar7 = diag_encode_lambda_target();
     FUN_00055074(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = FUN_00055f18();
+    uVar7 = diag_encode_ad48();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = FUN_00055f2e();
+    uVar7 = diag_encode_ad5e();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = FUN_00055f5a();
+    uVar7 = diag_encode_a9c4();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = FUN_00055fdc();
+    uVar7 = diag_encode_a9c6();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = FUN_00056008();
+    uVar7 = diag_encode_b410();
     FUN_00055066(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:
@@ -69180,7 +69188,7 @@ byte FUN_00055a50(void)
 
 /* ROM address: 0x00055aba; body bytes: 72; decompiled */
 
-int FUN_00055aba(void)
+int diag_read_active_cal_field(void)
 
 {
   char cVar1;
@@ -69240,7 +69248,7 @@ undefined4 FUN_00055b7c(void)
 
 /* ROM address: 0x00055b80; body bytes: 78; decompiled */
 
-undefined4 FUN_00055b80(void)
+undefined4 diag_read_calc_load_pct(void)
 
 {
   char cVar1;
@@ -69264,7 +69272,7 @@ undefined4 FUN_00055b80(void)
 
 /* ROM address: 0x00055bce; body bytes: 22; decompiled */
 
-undefined4 FUN_00055bce(void)
+undefined4 diag_encode_ect_c(void)
 
 {
   undefined4 uVar1;
@@ -69276,7 +69284,7 @@ undefined4 FUN_00055bce(void)
 
 /* ROM address: 0x00055be4; body bytes: 38; decompiled */
 
-undefined4 FUN_00055be4(void)
+undefined4 diag_encode_stft_lambda(void)
 
 {
   undefined4 uVar1;
@@ -69288,7 +69296,7 @@ undefined4 FUN_00055be4(void)
 
 /* ROM address: 0x00055c0a; body bytes: 30; decompiled */
 
-undefined4 FUN_00055c0a(void)
+undefined4 diag_encode_ltft(void)
 
 {
   undefined4 uVar1;
@@ -69300,7 +69308,7 @@ undefined4 FUN_00055c0a(void)
 
 /* ROM address: 0x00055c28; body bytes: 22; decompiled */
 
-undefined4 FUN_00055c28(void)
+undefined4 diag_encode_rpm(void)
 
 {
   undefined4 uVar1;
@@ -69312,7 +69320,7 @@ undefined4 FUN_00055c28(void)
 
 /* ROM address: 0x00055c3e; body bytes: 20; decompiled */
 
-undefined4 FUN_00055c3e(void)
+undefined4 diag_encode_vss(void)
 
 {
   undefined4 uVar1;
@@ -69324,7 +69332,7 @@ undefined4 FUN_00055c3e(void)
 
 /* ROM address: 0x00055c52; body bytes: 24; decompiled */
 
-undefined4 FUN_00055c52(void)
+undefined4 diag_encode_leading_timing(void)
 
 {
   undefined4 uVar1;
@@ -69336,7 +69344,7 @@ undefined4 FUN_00055c52(void)
 
 /* ROM address: 0x00055c6a; body bytes: 22; decompiled */
 
-undefined4 FUN_00055c6a(void)
+undefined4 diag_encode_iat(void)
 
 {
   undefined4 uVar1;
@@ -69348,7 +69356,7 @@ undefined4 FUN_00055c6a(void)
 
 /* ROM address: 0x00055ccc; body bytes: 22; decompiled */
 
-undefined4 FUN_00055ccc(void)
+undefined4 diag_encode_maf(void)
 
 {
   undefined4 uVar1;
@@ -69360,7 +69368,7 @@ undefined4 FUN_00055ccc(void)
 
 /* ROM address: 0x00055ce2; body bytes: 44; decompiled */
 
-void FUN_00055ce2(void)
+void diag_encode_throttle_pct(void)
 
 {
   float fVar1;
@@ -69375,7 +69383,7 @@ void FUN_00055ce2(void)
 
 /* ROM address: 0x00055d0e; body bytes: 22; decompiled */
 
-undefined4 FUN_00055d0e(void)
+undefined4 diag_read_secondary_air_status(void)
 
 {
   undefined4 uVar1;
@@ -69392,7 +69400,7 @@ undefined4 FUN_00055d0e(void)
 
 /* ROM address: 0x00055d24; body bytes: 6; decompiled */
 
-undefined4 FUN_00055d24(void)
+undefined4 diag_read_o2_present_const(void)
 
 {
   return 2;
@@ -69401,7 +69409,7 @@ undefined4 FUN_00055d24(void)
 
 /* ROM address: 0x00055d2a; body bytes: 38; decompiled */
 
-void FUN_00055d2a(void)
+void diag_encode_o2s2(void)
 
 {
   undefined4 uVar1;
@@ -69416,7 +69424,7 @@ void FUN_00055d2a(void)
 
 /* ROM address: 0x00055d50; body bytes: 30; decompiled */
 
-undefined4 FUN_00055d50(void)
+undefined4 diag_encode_trim_b074(void)
 
 {
   undefined4 uVar1;
@@ -69428,7 +69436,7 @@ undefined4 FUN_00055d50(void)
 
 /* ROM address: 0x00055d6e; body bytes: 6; decompiled */
 
-undefined4 FUN_00055d6e(void)
+undefined4 diag_read_obd_standard_const(void)
 
 {
   return 6;
@@ -69437,7 +69445,7 @@ undefined4 FUN_00055d6e(void)
 
 /* ROM address: 0x00055d74; body bytes: 40; decompiled */
 
-undefined2 * FUN_00055d74(void)
+undefined2 * diag_read_runtime_s(void)
 
 {
   undefined2 *puVar1;
@@ -69452,7 +69460,7 @@ undefined2 * FUN_00055d74(void)
 
 /* ROM address: 0x00055d9c; body bytes: 30; decompiled */
 
-void FUN_00055d9c(void)
+void diag_read_distance_mil(void)
 
 {
   undefined4 uVar1;
@@ -69467,7 +69475,7 @@ void FUN_00055d9c(void)
 
 /* ROM address: 0x00055dba; body bytes: 22; decompiled */
 
-undefined4 FUN_00055dba(void)
+undefined4 diag_encode_b2f0(void)
 
 {
   undefined4 uVar1;
@@ -69479,7 +69487,7 @@ undefined4 FUN_00055dba(void)
 
 /* ROM address: 0x00055dd0; body bytes: 6; decompiled */
 
-int FUN_00055dd0(void)
+int diag_read_d287(void)
 
 {
   return (int)DAT_ffffd2c3;
@@ -69503,7 +69511,7 @@ uint FUN_00055dd6(void)
 
 /* ROM address: 0x00055e54; body bytes: 30; decompiled */
 
-void FUN_00055e54(void)
+void diag_read_90fc(void)
 
 {
   undefined4 uVar1;
@@ -69518,7 +69526,7 @@ void FUN_00055e54(void)
 
 /* ROM address: 0x00055e72; body bytes: 30; decompiled */
 
-undefined4 FUN_00055e72(void)
+undefined4 diag_encode_ad10(void)
 
 {
   undefined4 uVar1;
@@ -69530,7 +69538,7 @@ undefined4 FUN_00055e72(void)
 
 /* ROM address: 0x00055e90; body bytes: 22; decompiled */
 
-undefined4 FUN_00055e90(void)
+undefined4 diag_read_afr_word_a(void)
 
 {
   undefined4 uVar1;
@@ -69542,7 +69550,7 @@ undefined4 FUN_00055e90(void)
 
 /* ROM address: 0x00055ea6; body bytes: 24; decompiled */
 
-undefined4 FUN_00055ea6(void)
+undefined4 diag_read_afr_word_b(void)
 
 {
   undefined4 uVar1;
@@ -69554,7 +69562,7 @@ undefined4 FUN_00055ea6(void)
 
 /* ROM address: 0x00055ebe; body bytes: 24; decompiled */
 
-undefined4 FUN_00055ebe(void)
+undefined4 diag_encode_c644(void)
 
 {
   undefined4 uVar1;
@@ -69566,7 +69574,7 @@ undefined4 FUN_00055ebe(void)
 
 /* ROM address: 0x00055ed6; body bytes: 22; decompiled */
 
-undefined4 FUN_00055ed6(void)
+undefined4 diag_encode_battery_v(void)
 
 {
   undefined4 uVar1;
@@ -69578,7 +69586,7 @@ undefined4 FUN_00055ed6(void)
 
 /* ROM address: 0x00055eec; body bytes: 22; decompiled */
 
-undefined4 FUN_00055eec(void)
+undefined4 diag_encode_load_g_rev(void)
 
 {
   undefined4 uVar1;
@@ -69590,7 +69598,7 @@ undefined4 FUN_00055eec(void)
 
 /* ROM address: 0x00055f02; body bytes: 22; decompiled */
 
-undefined4 FUN_00055f02(void)
+undefined4 diag_encode_lambda_target(void)
 
 {
   undefined4 uVar1;
@@ -69602,7 +69610,7 @@ undefined4 FUN_00055f02(void)
 
 /* ROM address: 0x00055f18; body bytes: 22; decompiled */
 
-undefined4 FUN_00055f18(void)
+undefined4 diag_encode_ad48(void)
 
 {
   undefined4 uVar1;
@@ -69614,7 +69622,7 @@ undefined4 FUN_00055f18(void)
 
 /* ROM address: 0x00055f2e; body bytes: 44; decompiled */
 
-void FUN_00055f2e(void)
+void diag_encode_ad5e(void)
 
 {
   float fVar1;
@@ -69629,7 +69637,7 @@ void FUN_00055f2e(void)
 
 /* ROM address: 0x00055f5a; body bytes: 44; decompiled */
 
-void FUN_00055f5a(void)
+void diag_encode_a9c4(void)
 
 {
   float fVar1;
@@ -69644,7 +69652,7 @@ void FUN_00055f5a(void)
 
 /* ROM address: 0x00055fdc; body bytes: 44; decompiled */
 
-void FUN_00055fdc(void)
+void diag_encode_a9c6(void)
 
 {
   float fVar1;
@@ -69659,7 +69667,7 @@ void FUN_00055fdc(void)
 
 /* ROM address: 0x00056008; body bytes: 38; decompiled */
 
-undefined4 FUN_00056008(void)
+undefined4 diag_encode_b410(void)
 
 {
   undefined4 uVar1;
@@ -69674,7 +69682,7 @@ undefined4 FUN_00056008(void)
 /* Function candidate recovered from ROM pointer at 5f3cc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00056050(short param_1,uint param_2)
+uint uds_service_14_clear_diagnostic_information(short param_1,uint param_2)
 
 {
   uint uVar1;
@@ -70530,7 +70538,7 @@ void FUN_00056c78(void)
 /* Function candidate recovered from ROM pointer at 5f36c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00056cac(short param_1,uint param_2)
+uint uds_service_3e_tester_present(short param_1,uint param_2)
 
 {
   ushort uVar1;
@@ -70599,7 +70607,7 @@ void thunk_FUN_00056f2a(void)
 /* Function candidate recovered from ROM pointer at 5f42c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00056d8c(uint param_1,uint param_2)
+uint uds_service_b1_mazda_specific(uint param_1,uint param_2)
 
 {
   ushort uVar1;
@@ -70735,7 +70743,7 @@ void FUN_00056f66(void)
 /* Function candidate recovered from ROM pointer at 5f390 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined * FUN_00056f8c(short param_1,uint param_2)
+undefined * uds_service_22_read_data_by_identifier(short param_1,uint param_2)
 
 {
   undefined4 uVar1;
@@ -70773,7 +70781,7 @@ uint FUN_00056ffa(void)
   
   uVar1 = (uint)DAT_ffffd228;
   if (uVar1 == 1) {
-    uVar1 = FUN_00057ef0();
+    uVar1 = diag22_find_and_dispatch_identifier();
     if (DAT_ffffd224 != -0x80) {
       DAT_ffffd224 = 0;
       DAT_ffffd228 = 0;
@@ -70791,13 +70799,13 @@ uint FUN_00056ffa(void)
 /* Function candidate recovered from ROM pointer at 5f8c4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057058(char param_1)
+void diag22_pid0002_active_cal_id_field(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055aba();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_active_cal_field();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -70807,7 +70815,7 @@ void FUN_00057058(char param_1)
 /* Function candidate recovered from ROM pointer at 5f8d0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005706e(char param_1)
+void diag22_pid0003_fuel_system_status_ol_cl(char param_1)
 
 {
   byte bVar2;
@@ -70815,7 +70823,7 @@ void FUN_0005706e(char param_1)
   
   bVar2 = FUN_00055b02();
   uVar1 = FUN_00055b7c();
-  FUN_000581b0((int)param_1,(uVar1 & 0xff) + (uint)bVar2 * 0x100);
+  diag_append_u16_be((int)param_1,(uVar1 & 0xff) + (uint)bVar2 * 0x100);
   return;
 }
 
@@ -70825,13 +70833,13 @@ void FUN_0005706e(char param_1)
 /* Function candidate recovered from ROM pointer at 5f8dc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057094(char param_1)
+void diag22_pid0004_calculated_engine_load_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055b80();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_read_calc_load_pct();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70841,13 +70849,13 @@ void FUN_00057094(char param_1)
 /* Function candidate recovered from ROM pointer at 5f8e8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000570e4(char param_1)
+void diag22_pid0005_coolant_temp_c(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055bce();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_ect_c();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70857,13 +70865,13 @@ void FUN_000570e4(char param_1)
 /* Function candidate recovered from ROM pointer at 5f8f4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000570fa(char param_1)
+void diag22_pid0006_stft_bank1_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055be4();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_stft_lambda();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70873,13 +70881,13 @@ void FUN_000570fa(char param_1)
 /* Function candidate recovered from ROM pointer at 5f900 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057110(char param_1)
+void diag22_pid0007_ltft_bank1_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055c0a();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_ltft();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70889,13 +70897,13 @@ void FUN_00057110(char param_1)
 /* Function candidate recovered from ROM pointer at 5f90c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057126(char param_1)
+void diag22_pid000c_engine_rpm(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055c28();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_rpm();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -70905,13 +70913,13 @@ void FUN_00057126(char param_1)
 /* Function candidate recovered from ROM pointer at 5f918 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005713c(char param_1)
+void diag22_pid000d_vehicle_speed_kmh(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055c3e();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_vss();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70921,13 +70929,13 @@ void FUN_0005713c(char param_1)
 /* Function candidate recovered from ROM pointer at 5f924 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057152(char param_1)
+void diag22_pid000e_leading_ignition_timing_deg(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055c52();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_leading_timing();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70937,13 +70945,13 @@ void FUN_00057152(char param_1)
 /* Function candidate recovered from ROM pointer at 5f930 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057168(char param_1)
+void diag22_pid000f_intake_air_temp_c(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055c6a();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_iat();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70953,13 +70961,13 @@ void FUN_00057168(char param_1)
 /* Function candidate recovered from ROM pointer at 5f93c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005717e(char param_1)
+void diag22_pid0010_maf_g_s(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055ccc();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_maf();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -70969,13 +70977,13 @@ void FUN_0005717e(char param_1)
 /* Function candidate recovered from ROM pointer at 5f948 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057194(char param_1)
+void diag22_pid0011_throttle_position_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055ce2();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_throttle_pct();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -70985,13 +70993,13 @@ void FUN_00057194(char param_1)
 /* Function candidate recovered from ROM pointer at 5f954 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000571aa(char param_1)
+void diag22_pid0012_secondary_air_status(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055d0e();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_read_secondary_air_status();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71001,13 +71009,13 @@ void FUN_000571aa(char param_1)
 /* Function candidate recovered from ROM pointer at 5f960 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000571c0(char param_1)
+void diag22_pid0013_o2_sensors_present(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055d24();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_read_o2_present_const();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71017,15 +71025,15 @@ void FUN_000571c0(char param_1)
 /* Function candidate recovered from ROM pointer at 5f96c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000571d6(char param_1)
+void diag22_pid0015_o2s2_voltage_trim(char param_1)
 
 {
   byte bVar2;
   uint uVar1;
   
-  bVar2 = FUN_00055d2a();
-  uVar1 = FUN_00055d50();
-  FUN_000581b0((int)param_1,(uVar1 & 0xff) + (uint)bVar2 * 0x100);
+  bVar2 = diag_encode_o2s2();
+  uVar1 = diag_encode_trim_b074();
+  diag_append_u16_be((int)param_1,(uVar1 & 0xff) + (uint)bVar2 * 0x100);
   return;
 }
 
@@ -71035,13 +71043,13 @@ void FUN_000571d6(char param_1)
 /* Function candidate recovered from ROM pointer at 5f978 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000571fc(char param_1)
+void diag22_pid001c_obd_standard(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055d6e();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_read_obd_standard_const();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71051,13 +71059,13 @@ void FUN_000571fc(char param_1)
 /* Function candidate recovered from ROM pointer at 5f984 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057212(char param_1)
+void diag22_pid001f_engine_runtime_s(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055d74();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_runtime_s();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71067,11 +71075,11 @@ void FUN_00057212(char param_1)
 /* Function candidate recovered from ROM pointer at 5f990 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057228(char param_1)
+void diag22_pid0020_pids_supported_21_40(char param_1)
 
 {
-  FUN_000581b0((int)param_1,0x8007);
-  FUN_000581b0((int)param_1,0x8007b011);
+  diag_append_u16_be((int)param_1,0x8007);
+  diag_append_u16_be((int)param_1,0x8007b011);
   return;
 }
 
@@ -71081,13 +71089,13 @@ void FUN_00057228(char param_1)
 /* Function candidate recovered from ROM pointer at 5f99c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005724c(char param_1)
+void diag22_pid0021_distance_while_mil_on(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055d9c();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_distance_mil();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71097,13 +71105,13 @@ void FUN_0005724c(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9a8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057260(char param_1)
+void diag22_pid002e_ram_b2f0_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055dba();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_b2f0();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71113,13 +71121,13 @@ void FUN_00057260(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9b4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057276(char param_1)
+void diag22_pid002f_ram_d287_raw(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055dd0();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_read_d287();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71129,13 +71137,13 @@ void FUN_00057276(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9c0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005728a(char param_1)
+void diag22_pid0030_gear_or_vin_byte(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00055dd6();
-  FUN_000581d2((int)param_1,uVar1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71145,13 +71153,13 @@ void FUN_0005728a(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9cc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005729e(char param_1)
+void diag22_pid0031_ram_90fc_float(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055e54();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_90fc();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71161,13 +71169,13 @@ void FUN_0005729e(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9d8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000572b2(char param_1)
+void diag22_pid0033_ram_ad10_scaled(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055e72();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_ad10();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71177,15 +71185,15 @@ void FUN_000572b2(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9e4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000572c6(char param_1)
+void diag22_pid0034_afr_lambda_words(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055e90();
-  FUN_000581b0((int)param_1,uVar1);
-  uVar1 = FUN_00055ea6();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_read_afr_word_a();
+  diag_append_u16_be((int)param_1,uVar1);
+  uVar1 = diag_read_afr_word_b();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71195,13 +71203,13 @@ void FUN_000572c6(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9f0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000572e6(char param_1)
+void diag22_pid003c_ram_c644_scaled(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055ebe();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_c644();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71211,11 +71219,11 @@ void FUN_000572e6(char param_1)
 /* Function candidate recovered from ROM pointer at 5f9fc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000572fa(char param_1)
+void diag22_pid0040_pids_supported_41_60(char param_1)
 
 {
-  FUN_000581b0((int)param_1,0x7ad0);
-  FUN_000581b0((int)param_1,0x7ad00000);
+  diag_append_u16_be((int)param_1,0x7ad0);
+  diag_append_u16_be((int)param_1,0x7ad00000);
   return;
 }
 
@@ -71225,13 +71233,13 @@ void FUN_000572fa(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa08 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005731a(char param_1)
+void diag22_pid0042_battery_voltage_v(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055ed6();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_battery_v();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71241,13 +71249,13 @@ void FUN_0005731a(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa14 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005732e(char param_1)
+void diag22_pid0043_engine_load_g_rev(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055eec();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_load_g_rev();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71257,13 +71265,13 @@ void FUN_0005732e(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa20 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057342(char param_1)
+void diag22_pid0044_lambda_target(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055f02();
-  FUN_000581b0((int)param_1,uVar1);
+  uVar1 = diag_encode_lambda_target();
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71273,13 +71281,13 @@ void FUN_00057342(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa2c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057356(char param_1)
+void diag22_pid0045_ram_ad48_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055f18();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_ad48();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71289,13 +71297,13 @@ void FUN_00057356(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa38 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005736a(char param_1)
+void diag22_pid0047_ram_ad5e_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055f2e();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_ad5e();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71305,13 +71313,13 @@ void FUN_0005736a(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa44 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005737e(char param_1)
+void diag22_pid0049_ram_a9c4_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055f5a();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_a9c4();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71321,13 +71329,13 @@ void FUN_0005737e(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa50 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005741c(char param_1)
+void diag22_pid004a_ram_a9c6_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055fdc();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_a9c6();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71337,13 +71345,13 @@ void FUN_0005741c(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa5c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057430(char param_1)
+void diag22_pid004c_ram_b410_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00056008();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_encode_b410();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71353,13 +71361,13 @@ void FUN_00057430(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa68 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057444(char param_1)
+void diag22_pid0200_dtc_count_stored(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00060256();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = dtc_count_stored();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71369,13 +71377,13 @@ void FUN_00057444(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa74 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057458(char param_1)
+void diag22_pid0202_dtc_count_ram_list(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_000602ac();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = dtc_count_ram_table();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71385,13 +71393,13 @@ void FUN_00057458(char param_1)
 /* Function candidate recovered from ROM pointer at 5fa80 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005746c(char param_1)
+void diag22_pid0904_trailing_ignition_timing_deg(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_000024d0(DAT_ffffa644,0x3f000000,0xc2800000);
-  FUN_000581d2((int)param_1,uVar1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71401,13 +71409,13 @@ void FUN_0005746c(char param_1)
 /* Function candidate recovered from ROM pointer at 5fac8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000575a8(char param_1)
+void diag22_pid093c_throttle_position_raw(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffadbc,0x3b000000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71417,13 +71425,13 @@ void FUN_000575a8(char param_1)
 /* Function candidate recovered from ROM pointer at 5fae0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000575e4(char param_1)
+void diag22_pid097c_ram_b59c_div2048(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffb60c,0x3a000000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71433,13 +71441,13 @@ void FUN_000575e4(char param_1)
 /* Function candidate recovered from ROM pointer at 5faf8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057620(char param_1)
+void diag22_pid114d_ram_a984_raw(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffaa08,0x38a00000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71449,7 +71457,7 @@ void FUN_00057620(char param_1)
 /* Function candidate recovered from ROM pointer at 5fb1c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000576a0(char param_1)
+void diag22_pid1169_ram_807c_scaled(char param_1)
 
 {
   undefined4 uVar1;
@@ -71457,7 +71465,7 @@ void FUN_000576a0(char param_1)
   
   fVar2 = (float)FUN_0003eb72(0x41700000,&DAT_ffff80a4);
   uVar1 = FUN_00002490((fVar2 - 0.0) / 25.0,0x38a00000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71467,13 +71475,13 @@ void FUN_000576a0(char param_1)
 /* Function candidate recovered from ROM pointer at 5fb28 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000576d4(char param_1)
+void diag22_pid1177_maf_voltage_latched_v(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffaa80,0x39800000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71483,13 +71491,13 @@ void FUN_000576d4(char param_1)
 /* Function candidate recovered from ROM pointer at 5fb40 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057710(char param_1)
+void diag22_pid1410_injector_pulse_time(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffbe90,0x41000000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71499,13 +71507,13 @@ void FUN_00057710(char param_1)
 /* Function candidate recovered from ROM pointer at 5fb64 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005776c(char param_1)
+void diag22_pid16e8_ram_b5ac_raw(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffb61c,0x3b480000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71515,13 +71523,13 @@ void FUN_0005776c(char param_1)
 /* Function candidate recovered from ROM pointer at 5fb88 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057800(char param_1)
+void diag22_pida216_ram_bc30_raw(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffbc9c,0x38a00000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71531,13 +71539,13 @@ void FUN_00057800(char param_1)
 /* Function candidate recovered from ROM pointer at 5fba0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005783c(char param_1)
+void diag22_pid1782_ram_c6ac_raw(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_00002490(DAT_ffffc71c,0x38a00000,0);
-  FUN_000581b0((int)param_1,uVar1);
+  diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
@@ -71547,13 +71555,13 @@ void FUN_0005783c(char param_1)
 /* Function candidate recovered from ROM pointer at 5fbb8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057892(char param_1)
+void diag22_pid172a_ram_c4c8_temp_c(char param_1)
 
 {
   undefined4 uVar1;
   
   uVar1 = FUN_000024d0(DAT_ffffc538,0x3f800000,0xc2200000);
-  FUN_000581d2((int)param_1,uVar1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71563,7 +71571,7 @@ void FUN_00057892(char param_1)
 /* Function candidate recovered from ROM pointer at 5fbdc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000578dc(char param_1)
+void diag22_pid0968_io_status_b5b4_bc35(char param_1)
 
 {
   undefined4 uVar1;
@@ -71573,9 +71581,9 @@ void FUN_000578dc(char param_1)
   if (DAT_ffffbca1 == '\x01') {
     bVar2 = bVar2 | 0x20;
   }
-  uVar1 = FUN_0005814c(bVar2,1);
-  FUN_000581d2((int)param_1,uVar1);
-  FUN_000581d2((int)param_1,0);
+  uVar1 = diag22_subpid_supported_mask(bVar2,1);
+  diag_append_u8((int)param_1,uVar1);
+  diag_append_u8((int)param_1,0);
   return;
 }
 
@@ -71585,16 +71593,16 @@ void FUN_000578dc(char param_1)
 /* Function candidate recovered from ROM pointer at 5fbe8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057950(char param_1)
+void diag22_pid09d3_pedr_bit10_status(char param_1)
 
 {
   ushort uVar1;
   undefined4 uVar2;
   
   uVar1 = DAT_fffff754;
-  uVar2 = FUN_0005814c((uVar1 & 0x400) != 0,1);
-  FUN_000581d2((int)param_1,uVar2);
-  FUN_000581d2((int)param_1,0);
+  uVar2 = diag22_subpid_supported_mask((uVar1 & 0x400) != 0,1);
+  diag_append_u8((int)param_1,uVar2);
+  diag_append_u8((int)param_1,0);
   return;
 }
 
@@ -71604,7 +71612,7 @@ void FUN_00057950(char param_1)
 /* Function candidate recovered from ROM pointer at 5fbf4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057988(char param_1)
+void diag22_pid1101_io_status_bf3c_ad18_cdd8(char param_1)
 
 {
   undefined4 uVar1;
@@ -71617,8 +71625,8 @@ void FUN_00057988(char param_1)
   if (DAT_ffffce18 == '\x01') {
     bVar2 = bVar2 | 8;
   }
-  uVar1 = FUN_0005814c(bVar2,1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(bVar2,1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71628,13 +71636,13 @@ void FUN_00057988(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc00 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000579ca(char param_1)
+void diag22_pid1102_io_status_bdb8(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0005814c(DAT_ffffbe24 == '\x01',1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(DAT_ffffbe24 == '\x01',1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71644,7 +71652,7 @@ void FUN_000579ca(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc0c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000579ec(char param_1)
+void diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
 
 {
   ushort uVar1;
@@ -71667,8 +71675,8 @@ void FUN_000579ec(char param_1)
   if ((DAT_ffffd1de == '\x01') || (DAT_ffffd1dd == '\x01')) {
     uVar4 = uVar4 | 0x20;
   }
-  uVar3 = FUN_0005814c(uVar4,1);
-  FUN_000581d2((int)param_1,uVar3);
+  uVar3 = diag22_subpid_supported_mask(uVar4,1);
+  diag_append_u8((int)param_1,uVar3);
   return;
 }
 
@@ -71678,7 +71686,7 @@ void FUN_000579ec(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc18 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057a74(char param_1)
+void diag22_pid1104_io_status_pjdr_bf6c(char param_1)
 
 {
   ushort uVar1;
@@ -71690,8 +71698,8 @@ void FUN_00057a74(char param_1)
   if (DAT_ffffbfd4 == '\x01') {
     bVar3 = bVar3 | 0x10;
   }
-  uVar2 = FUN_0005814c(bVar3,1);
-  FUN_000581d2((int)param_1,uVar2);
+  uVar2 = diag22_subpid_supported_mask(bVar3,1);
+  diag_append_u8((int)param_1,uVar2);
   return;
 }
 
@@ -71701,7 +71709,7 @@ void FUN_00057a74(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc30 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057aee(char param_1)
+void diag22_pid1681_io_status_ce1c(char param_1)
 
 {
   undefined4 uVar1;
@@ -71710,8 +71718,8 @@ void FUN_00057aee(char param_1)
   if (DAT_ffffce58 == '\x01') {
     uVar1 = 0x40;
   }
-  uVar1 = FUN_0005814c(uVar1,1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(uVar1,1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71721,7 +71729,7 @@ void FUN_00057aee(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc3c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057b10(char param_1)
+void diag22_pid1688_secondary_air_status_bit(char param_1)
 
 {
   undefined4 uVar1;
@@ -71730,8 +71738,8 @@ void FUN_00057b10(char param_1)
   if (DAT_ffffa9e4 == '\x01') {
     uVar1 = 0x20;
   }
-  uVar1 = FUN_0005814c(uVar1,1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(uVar1,1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71741,7 +71749,7 @@ void FUN_00057b10(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc48 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057b32(char param_1)
+void diag22_pida211_status_b53b_aa62_bf9c(char param_1)
 
 {
   undefined4 uVar1;
@@ -71754,10 +71762,10 @@ void FUN_00057b32(char param_1)
   if (DAT_ffffaada == '\0') {
     uVar2 = uVar2 | 0x10;
   }
-  uVar1 = FUN_0005814c(uVar2,1);
-  FUN_000581d2((int)param_1,uVar1);
-  uVar1 = FUN_0005814c(DAT_ffffc004 == '\x01',2);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(uVar2,1);
+  diag_append_u8((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(DAT_ffffc004 == '\x01',2);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71767,7 +71775,7 @@ void FUN_00057b32(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc54 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057b94(char param_1)
+void diag22_pid1711_pedr_bit1_status(char param_1)
 
 {
   ushort uVar1;
@@ -71778,8 +71786,8 @@ void FUN_00057b94(char param_1)
   if ((uVar1 & 2) != 0) {
     uVar2 = 0x80;
   }
-  uVar2 = FUN_0005814c(uVar2,1);
-  FUN_000581d2((int)param_1,uVar2);
+  uVar2 = diag22_subpid_supported_mask(uVar2,1);
+  diag_append_u8((int)param_1,uVar2);
   return;
 }
 
@@ -71789,7 +71797,7 @@ void FUN_00057b94(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc60 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057bc2(char param_1)
+void diag22_pid1706_io_status_a8f5(char param_1)
 
 {
   undefined4 uVar1;
@@ -71798,8 +71806,8 @@ void FUN_00057bc2(char param_1)
   if (DAT_ffffa976 == '\x01') {
     uVar1 = 4;
   }
-  uVar1 = FUN_0005814c(uVar1,1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(uVar1,1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71809,15 +71817,15 @@ void FUN_00057bc2(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc6c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057be4(char param_1)
+void diag22_pid1718_pedr_bit2_status(char param_1)
 
 {
   ushort uVar1;
   undefined4 uVar2;
   
   uVar1 = DAT_fffff754;
-  uVar2 = FUN_0005814c((uVar1 & 4) != 0,1);
-  FUN_000581d2((int)param_1,uVar2);
+  uVar2 = diag22_subpid_supported_mask((uVar1 & 4) != 0,1);
+  diag_append_u8((int)param_1,uVar2);
   return;
 }
 
@@ -71827,7 +71835,7 @@ void FUN_00057be4(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc78 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057c12(char param_1)
+void diag22_pid1715_pedr_pddr_status(char param_1)
 
 {
   ushort uVar1;
@@ -71843,8 +71851,8 @@ void FUN_00057c12(char param_1)
   if ((uVar1 & 0x20) != 0) {
     uVar3 = uVar3 | 0x80;
   }
-  uVar2 = FUN_0005814c(uVar3,1);
-  FUN_000581d2((int)param_1,uVar2);
+  uVar2 = diag22_subpid_supported_mask(uVar3,1);
+  diag_append_u8((int)param_1,uVar2);
   return;
 }
 
@@ -71854,13 +71862,13 @@ void FUN_00057c12(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc84 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057c5a(char param_1)
+void diag22_pid17de_io_status_ce32(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0005814c(DAT_ffffce6e == '\x01',1);
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag22_subpid_supported_mask(DAT_ffffce6e == '\x01',1);
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
@@ -71870,13 +71878,13 @@ void FUN_00057c5a(char param_1)
 /* Function candidate recovered from ROM pointer at 5fc90 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057c7c(undefined4 param_1)
+void diag22_pide21b_cal_id_chunk_0(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x4e);
-  FUN_000581d2(param_1,0x33);
-  FUN_000581d2(param_1,0x5a);
-  FUN_000581d2(param_1,0x48);
+  diag_append_u8(param_1,0x4e);
+  diag_append_u8(param_1,0x33);
+  diag_append_u8(param_1,0x5a);
+  diag_append_u8(param_1,0x48);
   return;
 }
 
@@ -71886,12 +71894,12 @@ void FUN_00057c7c(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fca8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057cd0(undefined4 param_1)
+void diag22_pide21d_cal_id_chunk_2(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x38);
-  FUN_000581d2(param_1,0x38);
-  FUN_000581d2(param_1,0x31);
+  diag_append_u8(param_1,0x38);
+  diag_append_u8(param_1,0x38);
+  diag_append_u8(param_1,0x31);
   return;
 }
 
@@ -71902,10 +71910,10 @@ void FUN_00057cd0(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fcb4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057cea(undefined4 param_1)
+void diag22_pide21e_cal_id_chunk_3(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x43);
+  diag_append_u8(param_1,0x43);
   return;
 }
 
@@ -71915,7 +71923,7 @@ void FUN_00057cea(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fcc0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined4 FUN_00057d00(char param_1)
+undefined4 diag22_pide611_sw_name_string(char param_1)
 
 {
   char cVar1;
@@ -71928,7 +71936,7 @@ undefined4 FUN_00057d00(char param_1)
   do {
     cVar1 = *pcVar3;
     pcVar3 = pcVar3 + 1;
-    uVar2 = FUN_000581d2((int)param_1,(int)cVar1);
+    uVar2 = diag_append_u8((int)param_1,(int)cVar1);
     bVar4 = bVar4 + 1;
   } while (bVar4 < 0x18);
   return uVar2;
@@ -71940,7 +71948,7 @@ undefined4 FUN_00057d00(char param_1)
 /* Function candidate recovered from ROM pointer at 5fccc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057d38(undefined4 param_1)
+void diag22_pid1710_sensor_snapshot_7byte(undefined4 param_1)
 
 {
   char cVar2;
@@ -71955,18 +71963,18 @@ void FUN_00057d38(undefined4 param_1)
   uVar4 = FUN_0003eb72(0,&DAT_ffff9178);
   uVar5 = 0x3f800000;
   uVar4 = FUN_000024d0(uVar4,0x3f800000,uVar7);
-  FUN_000581d2(param_1,uVar4);
+  diag_append_u8(param_1,uVar4);
   uVar4 = FUN_0003eb72(uVar7,&DAT_ffff9180);
   uVar4 = FUN_000024d0(uVar4,uVar5,0xc2200000);
-  FUN_000581d2(param_1,uVar4);
+  diag_append_u8(param_1,uVar4);
   uVar4 = FUN_0003eb72(uVar7,&DAT_ffff9188);
   uVar5 = 0xc1c80000;
   uVar6 = 0x3e480000;
   uVar4 = FUN_000024d0(uVar4,0x3e480000,0xc1c80000);
-  FUN_000581d2(param_1,uVar4);
+  diag_append_u8(param_1,uVar4);
   uVar4 = FUN_0003eb72(uVar7,&DAT_ffff9190);
   uVar4 = FUN_000024d0(uVar4,uVar6,uVar5);
-  FUN_000581d2(param_1,uVar4);
+  diag_append_u8(param_1,uVar4);
   cVar2 = FUN_0003eaa4(&DAT_ffff919c,1);
   bVar3 = cVar2 == '\x01';
   cVar2 = FUN_0003eaa4(&DAT_ffff919e,1);
@@ -71989,12 +71997,12 @@ void FUN_00057d38(undefined4 param_1)
   if (cVar2 == '\x01') {
     bVar3 = bVar3 | 0x20;
   }
-  uVar4 = FUN_0005814c(bVar3,5);
-  FUN_000581d2(param_1,uVar4);
+  uVar4 = diag22_subpid_supported_mask(bVar3,5);
+  diag_append_u8(param_1,uVar4);
   uVar1 = FUN_0003eaa4(&DAT_ffff9198,0xff);
-  FUN_000581d2(param_1,uVar1 & (int)DAT_ffffd3c6);
+  diag_append_u8(param_1,uVar1 & (int)DAT_ffffd3c6);
   uVar1 = FUN_0003eaa4(&DAT_ffff919a,0xff);
-  FUN_000581d2(param_1,uVar1 & (int)DAT_ffffd3c7);
+  diag_append_u8(param_1,uVar1 & (int)DAT_ffffd3c7);
   return;
 }
 
@@ -72004,7 +72012,7 @@ void FUN_00057d38(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fcf0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057ea8(undefined4 param_1)
+void diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
 
 {
   char cVar1;
@@ -72012,10 +72020,10 @@ void FUN_00057ea8(undefined4 param_1)
   
   cVar2 = DAT_ffffc244;
   cVar1 = DAT_ffffc243;
-  FUN_000581d2(param_1,0);
-  FUN_000581d2(param_1,(int)cVar1);
-  FUN_000581d2(param_1,(int)cVar2);
-  FUN_000581d2(param_1,0);
+  diag_append_u8(param_1,0);
+  diag_append_u8(param_1,(int)cVar1);
+  diag_append_u8(param_1,(int)cVar2);
+  diag_append_u8(param_1,0);
   return;
 }
 
@@ -72025,20 +72033,20 @@ void FUN_00057ea8(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fcfc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057edc(char param_1)
+void diag22_pidc124_diag_status_bits(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0003852e();
-  FUN_000581d2((int)param_1,uVar1);
+  uVar1 = diag_status_bit_pack();
+  diag_append_u8((int)param_1,uVar1);
   return;
 }
 
 
 /* ROM address: 0x00057ef0; body bytes: 232; decompiled */
 
-int FUN_00057ef0(void)
+int diag22_find_and_dispatch_identifier(void)
 
 {
   bool bVar1;
@@ -72048,14 +72056,14 @@ int FUN_00057ef0(void)
   bVar2 = 0;
   bVar1 = false;
   while ((bVar2 < 99 && (!bVar1))) {
-    if (*(short *)(&DAT_0005f8b0 + (uint)bVar2 * 0xc) == DAT_ffffd226) {
+    if (*(short *)(&tbl_diag22_dispatch_records_0005f8b0 + (uint)bVar2 * 0xc) == DAT_ffffd226) {
       bVar1 = true;
       if ((*(ushort *)(&DAT_0005f8b4 + (uint)bVar2 * 0xc) & DAT_ffffd3f0) == 0) {
         unaff_r11 = FUN_00055112(0x22,0x31);
       }
       else {
         if (DAT_ffffd224 != -0x80) {
-          FUN_00057ffc();
+          diag22_append_positive_response_header();
         }
         (*(code *)(&PTR_LAB_0005f8b8)[(uint)bVar2 * 3])(0x22);
         if (DAT_ffffd224 == '\0') {
@@ -72078,7 +72086,7 @@ int FUN_00057ef0(void)
 
 /* ROM address: 0x00057ffc; body bytes: 44; decompiled */
 
-void FUN_00057ffc(void)
+void diag22_append_positive_response_header(void)
 
 {
   undefined1 local_c;
@@ -72098,7 +72106,7 @@ void FUN_00057ffc(void)
 /* Function candidate recovered from ROM pointer at 5fd08 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00058028(undefined4 param_1)
+void diag22_pidff10_dtc_status_c1d5_c1d8(undefined4 param_1)
 
 {
   undefined4 uVar1;
@@ -72117,11 +72125,11 @@ void FUN_00058028(undefined4 param_1)
   if (DAT_ffffc245 == '\x01') {
     uVar2 = uVar2 | 4;
   }
-  uVar1 = FUN_0005814c(uVar2,1);
-  FUN_000581d2(param_1,uVar1);
-  FUN_000581d2(param_1,0);
-  FUN_000581d2(param_1,0);
-  FUN_000581d2(param_1,0);
+  uVar1 = diag22_subpid_supported_mask(uVar2,1);
+  diag_append_u8(param_1,uVar1);
+  diag_append_u8(param_1,0);
+  diag_append_u8(param_1,0);
+  diag_append_u8(param_1,0);
   return;
 }
 
@@ -72131,11 +72139,11 @@ void FUN_00058028(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fd14 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005808c(char param_1)
+void diag22_pidff40_fw_id_chunk_15(char param_1)
 
 {
-  FUN_000581d2((int)param_1,0x30);
-  FUN_000581d2((int)param_1,0x47);
+  diag_append_u8((int)param_1,0x30);
+  diag_append_u8((int)param_1,0x47);
   return;
 }
 
@@ -72145,13 +72153,13 @@ void FUN_0005808c(char param_1)
 /* Function candidate recovered from ROM pointer at 5fd20 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000580a6(undefined4 param_1)
+void diag22_pidff41_fw_id_chunk_120(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x35);
-  FUN_000581d2(param_1,0x30);
-  FUN_000581d2(param_1,0x30);
-  FUN_000581d2(param_1,0x20);
+  diag_append_u8(param_1,0x35);
+  diag_append_u8(param_1,0x30);
+  diag_append_u8(param_1,0x30);
+  diag_append_u8(param_1,0x20);
   return;
 }
 
@@ -72161,12 +72169,12 @@ void FUN_000580a6(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fd2c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000580d2(undefined4 param_1)
+void diag22_pidff42_rom_id_bytes_ff8(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x27);
-  FUN_000581d2(param_1,0xffffff97);
-  FUN_000581d2(param_1,0x20);
+  diag_append_u8(param_1,0x27);
+  diag_append_u8(param_1,0xffffff97);
+  diag_append_u8(param_1,0x20);
   return;
 }
 
@@ -72176,19 +72184,19 @@ void FUN_000580d2(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5fd38 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_000580f2(undefined4 param_1)
+void diag22_pidff43_rom_id_bytes_ffb(undefined4 param_1)
 
 {
-  FUN_000581d2(param_1,0x22);
-  FUN_000581d2(param_1,0xffffff93);
-  FUN_000581d2(param_1,0x6d);
+  diag_append_u8(param_1,0x22);
+  diag_append_u8(param_1,0xffffff93);
+  diag_append_u8(param_1,0x6d);
   return;
 }
 
 
 /* ROM address: 0x0005814c; body bytes: 100; decompiled */
 
-uint FUN_0005814c(uint param_1,char param_2)
+uint diag22_subpid_supported_mask(uint param_1,char param_2)
 
 {
   short *psVar1;
@@ -72197,7 +72205,7 @@ uint FUN_0005814c(uint param_1,char param_2)
   byte bVar4;
   short *psVar5;
   
-  psVar1 = &DAT_0005fd56;
+  psVar1 = &tbl_diag22_subpid_supported_bits_0005fd56;
   bVar4 = 0;
   uVar3 = 0;
   psVar2 = psVar1;
@@ -72218,7 +72226,7 @@ uint FUN_0005814c(uint param_1,char param_2)
 
 /* ROM address: 0x000581b0; body bytes: 34; decompiled */
 
-void FUN_000581b0(undefined4 param_1,undefined4 param_2)
+void diag_append_u16_be(undefined4 param_1,undefined4 param_2)
 
 {
   undefined1 local_c;
@@ -72233,7 +72241,7 @@ void FUN_000581b0(undefined4 param_1,undefined4 param_2)
 
 /* ROM address: 0x000581d2; body bytes: 28; decompiled */
 
-undefined4 FUN_000581d2(undefined4 param_1,undefined1 param_2)
+undefined4 diag_append_u8(undefined4 param_1,undefined1 param_2)
 
 {
   undefined4 uVar1;
@@ -72251,7 +72259,7 @@ undefined4 FUN_000581d2(undefined4 param_1,undefined1 param_2)
 /* Function candidate recovered from ROM pointer at 5f360 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00058208(short param_1,uint param_2)
+uint uds_service_27_security_access(short param_1,uint param_2)
 
 {
   uint uVar1;
@@ -72390,7 +72398,7 @@ int FUN_000583b2(undefined1 param_1,undefined1 *param_2,byte param_3)
 /* Function candidate recovered from ROM pointer at 5f354 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00058430(short param_1,uint param_2)
+uint uds_service_10_diagnostic_session_control(short param_1,uint param_2)
 
 {
   uint uVar1;
@@ -72478,7 +72486,7 @@ undefined4 FUN_000584f4(char param_1)
 /* Function candidate recovered from ROM pointer at 5f3b4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00058554(short param_1,uint param_2)
+uint uds_service_18(short param_1,uint param_2)
 
 {
   ushort uVar1;
@@ -74044,7 +74052,7 @@ void FUN_00059bac(void)
   local_80[1] = DAT_ffffd2af;
   FUN_000688c8(0x33,local_80,2);
   DAT_ffffd2b0 = DAT_ffffd2b0 + 2;
-  DAT_ffffd2b2 = FUN_000602ac();
+  DAT_ffffd2b2 = dtc_count_ram_table();
   if (DAT_ffffd297 == '\0') {
     local_80[0] = '\x02';
 LAB_00059c42:
@@ -75139,7 +75147,7 @@ uint FUN_0005b586(uint param_1)
 /* Function candidate recovered from ROM pointer at 5f378 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005b6f8(short param_1,byte param_2)
+uint uds_service_11_ecu_reset(short param_1,byte param_2)
 
 {
   char cVar2;
@@ -75252,7 +75260,7 @@ undefined4 FUN_0005b81a(void)
 /* Function candidate recovered from ROM pointer at 5f3c0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005b838(ushort param_1,uint param_2)
+uint uds_service_12(ushort param_1,uint param_2)
 
 {
   uint uVar1;
@@ -75449,7 +75457,7 @@ int FUN_0005bade(char *param_1)
 /* Function candidate recovered from ROM pointer at 5f384 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005bbb8(short param_1,uint param_2)
+uint uds_service_21_read_data_by_local_id(short param_1,uint param_2)
 
 {
   undefined4 uVar1;
@@ -75632,7 +75640,7 @@ void FUN_0005bea8(char param_1)
 /* Function candidate recovered from ROM pointer at 5f39c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005bef4(short param_1,uint param_2)
+uint uds_service_23_read_memory_by_address(short param_1,uint param_2)
 
 {
   char cVar3;
@@ -75788,7 +75796,7 @@ void FUN_0005c188(void)
 /* Function candidate recovered from ROM pointer at 5f33c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005c19a(short param_1,uint param_2)
+uint uds_service_28_communication_control(short param_1,uint param_2)
 
 {
   ushort uVar1;
@@ -76317,7 +76325,7 @@ uint FUN_0005ca88(uint param_1)
 
 /* ROM address: 0x0005cb64; body bytes: 186; decompiled */
 
-uint FUN_0005cb64(uint param_1)
+uint vdi_diag_override(uint param_1)
 
 {
   if (DAT_ffffd355 == '\0') {
@@ -76742,7 +76750,7 @@ uint FUN_0005d458(undefined4 param_1)
 
 /* ROM address: 0x0005d568; body bytes: 186; decompiled */
 
-uint FUN_0005d568(uint param_1)
+uint vfad_diag_override(uint param_1)
 
 {
   if (DAT_ffffd355 == '\0') {
@@ -76816,7 +76824,7 @@ uint FUN_0005d644(uint param_1)
 
 /* ROM address: 0x0005d720; body bytes: 186; decompiled */
 
-uint FUN_0005d720(uint param_1)
+uint secondary_air_diag_override(uint param_1)
 
 {
   if (DAT_ffffd355 == '\0') {
@@ -77238,7 +77246,7 @@ char FUN_0005df20(void)
 /* Function candidate recovered from ROM pointer at 5f408 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005df60(short param_1,uint param_2)
+uint uds_service_34_request_download(short param_1,uint param_2)
 
 {
   char cVar2;
@@ -77276,7 +77284,7 @@ uint FUN_0005df60(short param_1,uint param_2)
 /* Function candidate recovered from ROM pointer at 5f414 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005dfd8(undefined4 param_1,uint param_2)
+uint uds_service_36_transfer_data(undefined4 param_1,uint param_2)
 
 {
   undefined4 uVar1;
@@ -77301,7 +77309,7 @@ uint FUN_0005dfd8(undefined4 param_1,uint param_2)
 /* Function candidate recovered from ROM pointer at 5f420 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e018(undefined4 param_1,uint param_2)
+uint uds_service_37_request_transfer_exit(undefined4 param_1,uint param_2)
 
 {
   undefined4 uVar1;
@@ -77326,7 +77334,7 @@ uint FUN_0005e018(undefined4 param_1,uint param_2)
 /* Function candidate recovered from ROM pointer at 5f3a8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e058(ushort param_1,uint param_2)
+uint uds_service_3b(ushort param_1,uint param_2)
 
 {
   char cVar2;
@@ -77522,7 +77530,7 @@ undefined4 FUN_0005e3e4(void)
 /* Function candidate recovered from ROM pointer at 5f348 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e3e8(short param_1,uint param_2)
+uint uds_service_85_control_dtc_setting(short param_1,uint param_2)
 
 {
   ushort uVar1;
@@ -77721,7 +77729,7 @@ void FUN_0005e6f4(void)
 /* Function candidate recovered from ROM pointer at 5f3e4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e704(short param_1,uint param_2)
+uint uds_service_31_routine_control(short param_1,uint param_2)
 
 {
   char cVar2;
@@ -77769,7 +77777,7 @@ uint FUN_0005e704(short param_1,uint param_2)
 /* Function candidate recovered from ROM pointer at 5f3f0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0005e7c8(short param_1,uint param_2)
+uint uds_service_32(short param_1,uint param_2)
 
 {
   char cVar2;
@@ -78527,7 +78535,7 @@ uint FUN_00060218(void)
 
 /* ROM address: 0x00060256; body bytes: 60; decompiled */
 
-uint FUN_00060256(void)
+uint dtc_count_stored(void)
 
 {
   uint uVar1;
@@ -78549,7 +78557,7 @@ uint FUN_00060256(void)
 
 /* ROM address: 0x000602ac; body bytes: 84; decompiled */
 
-uint FUN_000602ac(void)
+uint dtc_count_ram_table(void)
 
 {
   ushort uVar1;
@@ -83821,7 +83829,7 @@ uint FUN_00066124(char param_1)
 /* Function candidate recovered from ROM pointer at 5f2f4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0006642c(uint param_1,char param_2)
+uint obd_mode02_freeze_frame(uint param_1,char param_2)
 
 {
   bool bVar1;
@@ -84035,7 +84043,7 @@ void FUN_0006673a(undefined1 param_1,undefined1 param_2)
 /* Function candidate recovered from ROM pointer at 5f300 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_0006679c(short param_1,char param_2)
+uint obd_mode03_stored_dtc(short param_1,char param_2)
 
 {
   undefined4 uVar1;
@@ -84084,7 +84092,7 @@ uint FUN_0006679c(short param_1,char param_2)
 /* Function candidate recovered from ROM pointer at 5f30c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066874(short param_1,uint param_2)
+uint obd_mode04_clear_dtc(short param_1,uint param_2)
 
 {
   bool bVar1;
@@ -84162,7 +84170,7 @@ undefined4 FUN_0006693e(void)
 /* Function candidate recovered from ROM pointer at 5f324 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066990(short param_1,char param_2)
+uint obd_mode07_pending_dtc(short param_1,char param_2)
 
 {
   undefined4 uVar1;
@@ -84211,7 +84219,7 @@ uint FUN_00066990(short param_1,char param_2)
 /* Function candidate recovered from ROM pointer at 5f330 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint FUN_00066a64(undefined4 param_1,char param_2)
+uint obd_mode09_vehicle_info(undefined4 param_1,char param_2)
 
 {
   bool bVar1;
@@ -85176,7 +85184,7 @@ undefined4 FUN_00067904(char param_1,char *param_2,short param_3)
 /* Function candidate recovered from ROM pointer at 5f318 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00067a00(undefined4 param_1,char param_2)
+void obd_mode06_test_results(undefined4 param_1,char param_2)
 
 {
   char cVar1;
@@ -86159,14 +86167,14 @@ uint FUN_0006874e(uint *param_1)
 
 /* ROM address: 0x00068844; body bytes: 62; decompiled */
 
-void FUN_00068844(int param_1)
+void uds_service_entry(int param_1)
 
 {
   char cVar1;
   
-  if ((((param_1 == 0x7e0) || (param_1 == 0x7df)) && (cVar1 = FUN_00068b78(), cVar1 != '@')) &&
-     (cVar1 = FUN_00068bd0(), cVar1 == '\0')) {
-    FUN_00068c58(param_1);
+  if ((((param_1 == 0x7e0) || (param_1 == 0x7df)) && (cVar1 = isotp_pci_type_extract(), cVar1 != '@')) &&
+     (cVar1 = isotp_frame_type_dispatch(), cVar1 == '\0')) {
+    uds_request_schedule_service_task(param_1);
     return;
   }
   return;
@@ -86331,7 +86339,7 @@ void FUN_00068b58(void)
 
 /* ROM address: 0x00068b78; body bytes: 24; decompiled */
 
-uint FUN_00068b78(void)
+uint isotp_pci_type_extract(void)
 
 {
   uint uVar1;
@@ -86346,7 +86354,7 @@ uint FUN_00068b78(void)
 
 /* ROM address: 0x00068bd0; body bytes: 136; decompiled */
 
-undefined4 FUN_00068bd0(char param_1)
+undefined4 isotp_frame_type_dispatch(char param_1)
 
 {
   char cVar1;
@@ -86356,24 +86364,24 @@ undefined4 FUN_00068bd0(char param_1)
   if (param_1 == '\0') {
     cVar1 = FUN_00068e9c();
     if (cVar1 == '\0') {
-      uVar2 = FUN_00068cec();
+      uVar2 = isotp_single_frame_accept();
     }
   }
   else if (param_1 == '\x10') {
     cVar1 = FUN_00068eb6();
     if (cVar1 == '\0') {
-      FUN_00068d42();
+      isotp_first_frame_accept();
     }
   }
   else if (param_1 == ' ') {
-    cVar1 = FUN_00068ed0();
+    cVar1 = isotp_consecutive_frame_check();
     if ((cVar1 == '\0') && (FUN_00068dc4(), DAT_ffffde22 <= DAT_ffffde24)) {
       FUN_000693fc(5);
       uVar2 = 0;
     }
   }
   else if (param_1 == '0') {
-    cVar1 = FUN_00068f08();
+    cVar1 = isotp_flow_control_check();
     if (cVar1 == '\0') {
       FUN_00068e2c();
     }
@@ -86384,7 +86392,7 @@ undefined4 FUN_00068bd0(char param_1)
 
 /* ROM address: 0x00068c58; body bytes: 116; decompiled */
 
-void FUN_00068c58(int param_1)
+void uds_request_schedule_service_task(int param_1)
 
 {
   uint local_14;
@@ -86407,7 +86415,7 @@ void FUN_00068c58(int param_1)
 
 /* ROM address: 0x00068cec; body bytes: 86; decompiled */
 
-undefined4 FUN_00068cec(void)
+undefined4 isotp_single_frame_accept(void)
 
 {
   ushort uVar1;
@@ -86418,7 +86426,7 @@ undefined4 FUN_00068cec(void)
   if (((uVar1 & 0xf) < 8) && ((DAT_ffffde04 & 0xf) != 0)) {
     DAT_ffffde31 = DAT_ffffde31 | 4;
     FUN_00068b58();
-    DAT_ffffde28 = FUN_0006922a((int)DAT_ffffde05);
+    DAT_ffffde28 = uds_rx_channel_alloc((int)DAT_ffffde05);
     DAT_ffffde26 = DAT_ffffde05;
     DAT_ffffde22 = uVar1 & 0xf;
     FUN_000685c0((int)DAT_ffffde28,&DAT_ffffde05,7);
@@ -86430,7 +86438,7 @@ undefined4 FUN_00068cec(void)
 
 /* ROM address: 0x00068d42; body bytes: 130; decompiled */
 
-uint FUN_00068d42(void)
+uint isotp_first_frame_accept(void)
 
 {
   uint uVar1;
@@ -86439,7 +86447,7 @@ uint FUN_00068d42(void)
   if ((uVar1 < 0x1000) && (7 < uVar1)) {
     DAT_ffffde31 = DAT_ffffde31 | 4;
     FUN_00068b58();
-    DAT_ffffde28 = FUN_0006922a((int)DAT_ffffde06);
+    DAT_ffffde28 = uds_rx_channel_alloc((int)DAT_ffffde06);
     DAT_ffffde27 = 2;
     DAT_ffffde22 = (undefined2)uVar1;
     DAT_ffffde26 = DAT_ffffde06;
@@ -86529,7 +86537,7 @@ undefined4 FUN_00068eb6(void)
 
 /* ROM address: 0x00068ed0; body bytes: 56; decompiled */
 
-undefined4 FUN_00068ed0(void)
+undefined4 isotp_consecutive_frame_check(void)
 
 {
   undefined4 uVar1;
@@ -86550,7 +86558,7 @@ undefined4 FUN_00068ed0(void)
 
 /* ROM address: 0x00068f08; body bytes: 18; decompiled */
 
-bool FUN_00068f08(void)
+bool isotp_flow_control_check(void)
 
 {
   return DAT_ffffde1d != '\a';
@@ -86770,7 +86778,7 @@ void FUN_000691e8(void)
 
 /* ROM address: 0x0006922a; body bytes: 98; decompiled */
 
-int FUN_0006922a(char param_1)
+int uds_rx_channel_alloc(char param_1)
 
 {
   bool bVar1;
@@ -86792,7 +86800,7 @@ int FUN_0006922a(char param_1)
     iVar2 = iVar2 + 1;
   } while (iVar2 < 1);
   if (!bVar1) {
-    FUN_000692b4(unaff_r14,(int)param_1);
+    uds_rx_channel_set_service(unaff_r14,(int)param_1);
   }
   return unaff_r14;
 }
@@ -86818,7 +86826,7 @@ int FUN_0006928c(char param_1)
 
 /* ROM address: 0x000692b4; body bytes: 18; decompiled */
 
-void FUN_000692b4(byte param_1,undefined1 param_2)
+void uds_rx_channel_set_service(byte param_1,undefined1 param_2)
 
 {
   (&DAT_ffffde2f)[(uint)param_1 * 2] = param_2;
@@ -87021,7 +87029,7 @@ void thunk_FUN_0005533c(void)
 
 /* ROM address: 0x00069550; body bytes: 146; decompiled */
 
-undefined4 FUN_00069550(uint param_1,short param_2,char param_3)
+undefined4 uds_service_dispatch_table_scan(uint param_1,short param_2,char param_3)
 
 {
   int iVar1;

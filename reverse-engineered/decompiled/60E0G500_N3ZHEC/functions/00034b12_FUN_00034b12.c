@@ -1,6 +1,6 @@
 /* ROM address: 0x00034b12; body bytes: 126; decompiled */
 
-undefined4 FUN_00034b12(void)
+undefined4 calculate_engine_load(void)
 
 {
   char cVar1;

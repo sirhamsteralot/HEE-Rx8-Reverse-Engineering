@@ -13,7 +13,7 @@ void FUN_0002d758(void)
   FUN_0002da58();
   FUN_0002d990();
   FUN_0002d808();
-  FUN_0002d820();
+  dsc_mode_a_base_timing_lookup();
   FUN_0002d838();
   FUN_0002d850();
   FUN_0002d870();

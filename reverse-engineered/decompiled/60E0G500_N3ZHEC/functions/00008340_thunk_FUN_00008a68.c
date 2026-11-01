@@ -1,9 +1,9 @@
 /* ROM address: 0x00008340; body bytes: 4; decompiled */
 
-void thunk_FUN_00008a68(void)
+void injector_pulse_set_dispatch(void)
 
 {
-  FUN_00008a68();
+  injector_pulse_set_channel();
   return;
 }
 

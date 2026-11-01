@@ -1,6 +1,6 @@
 /* ROM address: 0x00007778; body bytes: 46; decompiled */
 
-void FUN_00007778(void)
+void atu_ch10b_tick_enable(void)
 
 {
   ushort uVar1;

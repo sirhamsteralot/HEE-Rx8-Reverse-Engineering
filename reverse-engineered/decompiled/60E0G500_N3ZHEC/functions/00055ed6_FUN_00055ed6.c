@@ -1,6 +1,6 @@
 /* ROM address: 0x00055ed6; body bytes: 22; decompiled */
 
-undefined4 FUN_00055ed6(void)
+undefined4 diag_encode_battery_v(void)
 
 {
   undefined4 uVar1;

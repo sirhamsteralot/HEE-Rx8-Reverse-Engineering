@@ -1,6 +1,6 @@
 /* ROM address: 0x00029d6c; body bytes: 64; decompiled */
 
-void FUN_00029d6c(void)
+void can201_pack_and_queue_payload(void)
 
 {
   DAT_ffffbb5c = (undefined1)((ushort)DAT_ffffbb64 >> 8);
