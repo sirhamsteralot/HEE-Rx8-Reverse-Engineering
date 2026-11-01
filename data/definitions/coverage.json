@@ -28,60 +28,6 @@
       "status": "OK"
     },
     {
-      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.bin",
-      "stem": "aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31",
-      "source": "binaries/dumps",
-      "sha256": "c09fa06b279a110f24ce99620c71fe798177b8986ce76293c19c721fd22d4738",
-      "fwid": "60E0G500",
-      "cal_strings": [],
-      "romraider_block": "60E0G500",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "base_chain": [
-        "RX8Base"
-      ],
-      "block_tables": 814,
-      "block_tables_with_storageaddress": 814,
-      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.xml",
-      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "status": "OK"
-    },
-    {
-      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin",
-      "stem": "aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31",
-      "source": "binaries/dumps",
-      "sha256": "9f3043bbfe00b3f0c0cc9aca139565e0de374803ac0bc275b6669d5adfab205d",
-      "fwid": "60E0G500",
-      "cal_strings": [],
-      "romraider_block": "60E0G500",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "base_chain": [
-        "RX8Base"
-      ],
-      "block_tables": 814,
-      "block_tables_with_storageaddress": 814,
-      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.xml",
-      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "status": "OK"
-    },
-    {
-      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.bin",
-      "stem": "aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31",
-      "source": "binaries/dumps",
-      "sha256": "5d7d87b6489068797b545c18df575210d02fcbffe2fd4c5d3afd1d41eacac4c6",
-      "fwid": "60E0G500",
-      "cal_strings": [],
-      "romraider_block": "60E0G500",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "base_chain": [
-        "RX8Base"
-      ],
-      "block_tables": 814,
-      "block_tables_with_storageaddress": 814,
-      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.xml",
-      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
-      "status": "OK"
-    },
-    {
       "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0E500.bin",
       "stem": "60E0E500",
       "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",

@@ -38,22 +38,21 @@ Labels are inherited from the base record of the same PID.
 | 60E32000_N3M5E.bin | 0x651bc | 113 | 0x5d1ac | 0x65708=113 (0x5d1b8) | 0x6570a (0x5d3c8) | +14 |
 | 60E32000_N3N5EB.bin | 0x64d0c | 110 | 0x5ccc4 | 0x65234=110 (0x5cdf4) | 0x65236 (0x5cf0c) | +11 |
 | dumps/aron-N3ZHEC-2026-10-31.bin (60E0G500/N3ZHEC) | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base |
-| 3 streetport tunes | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base (cal-only diffs) |
 
 Every ROM also has exactly one function whose 20-byte prologue matches the base
 dispatcher 0x5774c and whose literal pool contains the table address (e.g. 60E0FC00
 dispatcher 0x55c14, 60E0G500 dump dispatcher 0x57ef0) — the pool reference is the
 diag22 scanner's, not a coincidental data word. The sub-PID table (count byte + 2,
 36 × 6-byte records `{u16 pid, u8 supported_bit, u8 sub, u16 mask}`) is pool-referenced
-in all 14 ROMs and carries the identical 36-PID list as the base (0x5f5b2).
+in all 11 ROMs and carries the identical 36-PID list as the base (0x5f5b2).
 
 Full per-ROM detail incl. SHA-256, count-pool refs and extra/missing PID lists:
 [`cross_rom_mode22_summary.json`](../../../../data/labels/cross_rom_mode22_summary.json).
 
 Two firmware families plus one outlier:
 
-- **Family A** (60E0E500, 60E0E700, 60E15120, 60E1C500, 60E1D400, 60E0G500 dumps +
-  streetport tunes): identical 99-PID set as the base ROM (0 extra, 0 missing).
+- **Family A** (60E0E500, 60E0E700, 60E15120, 60E1C500, 60E1D400, 60E0G500 dump):
+  identical 99-PID set as the base ROM (0 extra, 0 missing).
 - **Family B** (60E0FB00, 60E0FC00, 60E1B900, 60E32000_N3N5EB): 110 records, all 99
   base PIDs present **plus 11 extra**: 0x0001, 0x0041, 0x17f4, 0x17f5, 0x17f7, 0x17f8,
   0x17f9, 0x17fa, 0xd100, 0xe6f2, 0xe6f3 (availability mask 0xfffe vs base 0xfffc).
@@ -64,7 +63,7 @@ PID 0x0043 *record* address in the 60E0G500 dump's table (0x5f8b0 + 29×12); the
 60E0FC00 Mode 22 table is at **0x5d994** (pool ref 0x55cd4; dispatcher at 0x55c14,
 unique prologue match of base 0x5774c).
 
-## Handler mapping (1,444 record rows in `cross_rom_mode22_pid_handlers.tsv`)
+## Handler mapping (1,147 record rows in `cross_rom_mode22_pid_handlers.tsv`)
 
 | map_method | meaning | count |
 |---|---|---|
@@ -125,10 +124,8 @@ emulator change made here.
   0xd100, 0xe6f2, 0xe6f3) have no base-ROM counterpart — addresses recorded,
   unlabeled (FUN_-level), per the label ladder.
 - Sub-PID supported-bit table at `count_byte + 2` in every ROM (base 0x5f5b2);
-  verified pool-referenced in all 14 ROMs with the identical 36-PID list — contents
+  verified pool-referenced in all 11 ROMs with the identical 36-PID list — contents
   not re-analyzed record-by-record cross-ROM.
-- Streetport tunes share the stock 60E0G500 code path (cal-only diffs, as
-  established in the P2 streetport diff).
 
 ## Applied to the decompiled export (2026-11-01, D item 3)
 
@@ -142,7 +139,7 @@ rewriting `function_index.tsv` / `callgraph.tsv` / `symbols.tsv` / `functions/*.
 (PID 0xc116, pid_match) is a mid-function address with no C identifier — recorded
 as `candidate_diag22_pidc116_dtc_state_machine` in
 `data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv` only. Per-ROM Mode 22
-TSVs for all 14 ROMs: `data/labels/cross_rom/mode22/`. Pre-change export backup:
+TSVs for all 11 ROMs: `data/labels/cross_rom/mode22/`. Pre-change export backup:
 `docs/investigations/60E0G500_N3ZHEC/backups/pre_crossrom_names.zip` (LFS).
 Checks: ROM SHA-256 unchanged, all function bodies intact in the canonical C,
 renamed definitions present, names unique/valid/non-colliding, comments untouched.

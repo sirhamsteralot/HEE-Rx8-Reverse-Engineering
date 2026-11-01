@@ -8,7 +8,7 @@ Tools (namespace heeRe):
   hee_break, hee_watch, hee_del_break, hee_continue, hee_step,
   hee_set_sensor, hee_replay_load, hee_replay_step,
   hee_labels (query data/labels), hee_disasm_rom (from the listing),
-  hee_diff_roms (byte-diff two binaries, e.g. tuned vs stock)
+  hee_diff_roms (byte-diff two binaries, e.g. two different ROMs)
 
 Emulator sessions persist per profile inside this process.
 """
@@ -141,7 +141,7 @@ TOOLS = [
      "inputSchema": {"type": "object", "properties": {"rom_id": {"type": "string"}, "query": {"type": "string"}}, "required": ["rom_id", "query"]}},
     {"name": "hee_disasm_rom", "description": "Disassemble a ROM address range from the committed listing (no emulation needed).",
      "inputSchema": {"type": "object", "properties": {"rom_id": {"type": "string"}, "addr": {"type": "string"}, "n": {"type": "integer", "default": 8}}, "required": ["rom_id", "addr"]}},
-    {"name": "hee_diff_roms", "description": "Byte-diff two repo-relative ROM paths; returns differing ranges (e.g. tuned vs stock).",
+    {"name": "hee_diff_roms", "description": "Byte-diff two repo-relative ROM paths; returns differing ranges (e.g. factory vs another ROM).",
      "inputSchema": {"type": "object", "properties": {"a": {"type": "string"}, "b": {"type": "string"}}, "required": ["a", "b"]}},
 ]
 

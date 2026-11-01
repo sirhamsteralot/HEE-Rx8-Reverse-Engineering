@@ -45,7 +45,6 @@ git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
 python -m pytest tests/                                       # 61 tests, ~25s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
-python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
 python utilities/scripts/hash_binaries.py --check             # verify binaries/manifest.csv
 ```
@@ -56,7 +55,7 @@ log), see **[`docs/architecture/emulator-re-guide.md`](docs/architecture/emulato
 
 Emulator profiles are per-ROM/market/model: `utilities/scripts/emu/profiles/*.json`
 (ROM path + SHA-256 verified at load, memory map, SH7055 peripheral set, sensor map).
-Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC`, `60E1B900_N3ZBEH`, and the tuned `60E0G500_N3ZHEC_streetport_*`.
+Existing: `60E15120_N3J1E`, `60E0FC00_N3Z2EU`, `60E0G500_N3ZHEC`, `60E1B900_N3ZBEH`.
 To run a different `.bin`, add a profile — recipe in [`utilities/scripts/emu/profiles/README.md`](utilities/scripts/emu/profiles/README.md).
 Cross-check emulator traces against Renesas' own Simulator Debugger (SH7055) on
 Windows with `utilities/scripts/emu/compare_traces.py` — see [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md).
@@ -90,9 +89,9 @@ directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin i
 |---|---|
 | `input/` | Raw intake drop zone (zips, saved pages, prior efforts). **Never committed** — verified artifacts are promoted out with provenance. |
 | `submodules/` | Upstream repos as read-only git submodules (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering` — the latter holds the 10 stock ROMs, captures, Ghidra `.gar`). Never worked in or committed from; pinned commits cited in docs. |
-| `binaries/` | Immutable dumps of **our own acquisitions** (`dumps/`, e.g. Aron's 60E0G500 stock + 3 tuned streetport ROMs), `manifest.csv` = recursive SHA-256 + provenance (tuned ROMs flagged). Upstream ROMs are referenced via the submodule, not duplicated. |
+| `binaries/` | Immutable dumps of **our own acquisitions** (`dumps/`, e.g. the 60E0G500/N3ZHEC factory read), `manifest.csv` = recursive SHA-256 + provenance. Upstream ROMs are referenced via the submodule, not duplicated. |
 | `reverse-engineered/` | `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, 3,355 function files, named views, indexes), `reimplementation/` (compilable C11 + host tests). |
-| `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups; incl. `60E0G500_N3ZHEC/` streetport diff), `architecture/` (memory map, `design/`, `hardware/` pinout + wiring, `emulated-obd.md`, `emulator-ui.md` designs), `references/` (SH7055F manual, wiring book = ground truth, pinout PDF-derived md, RX8Club thread extract + OCR + inline-def TSV, upstream links), `learnings.md`. |
+| `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups), `architecture/` (memory map, `design/`, `hardware/` pinout + wiring, `emulated-obd.md`, `emulator-ui.md` designs), `references/` (SH7055F manual, wiring book = ground truth, pinout PDF-derived md, RX8Club thread extract + OCR + inline-def TSV, upstream links), `learnings.md`. |
 | `data/` | `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records), `maps/<rom-id>/` (extracted calibration tables: manifest + index.tsv + per-table JSON/CSV, see `extract_maps.py`), `logs/` (real-car CSV/VTLOG — golden fixtures), `tunes/` (`.vtune` containers + notes; context only). |
 | `utilities/` | `scripts/emu/` (SH-2E emulator: CPU, bus, peripherals, profiles, ISO-TP, OBD port, UI), `scripts/rx8-pcm-pipeline/` (Ghidra pipeline), `scripts/patchers/`, `scripts/defs-merge/`, `scripts/extract_maps.py` + `diff_maps.py` (calibration table extraction + cross-ROM diff → `data/maps/`), `scripts/hash_binaries.py`; `tools/ghidra/` (Java scripts, SH-2E Sleigh config). |
 | `tests/` | pytest suite: emulator unit tests, corpus validation vs. the real disassembly, golden boot trace, ISO-TP/CAN/OBD/UI. Host C tests live beside code in `reverse-engineered/reimplementation/`. |
@@ -183,16 +182,14 @@ verified — full rules in [`AGENTS.md`](AGENTS.md) §Branch & PR workflow.
   (`validate_export`, `validate_reports`, `verify_readability`, `verify_math_units`)
   run from the repo root and PASS.
 - **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
-  load) for `60E15120_N3J1E`; streetport-vs-stock diff done for 60E0G500
-  (cal-only; rev limiter float32 at 0x6d54c: 9000→5500/9500/10000).
+  load) for `60E15120_N3J1E`.
 - **Calibration extraction (ROADMAP P3, 2026-10-31):**
   `extract_maps.py` scans every ROM for Denso descriptors and dumps all tables
   to `data/maps/` — 587 tables on 60E15120_N3J1E (all 478 RX8Defs-matched + 109
-  unnamed), 381–587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic
-  axes. Cross-ROM structural diff via `diff_maps.py`; streetport tunes mapped
-  to 15–17 named descriptors. Report:
+  unnamed), 381–587 across all 10 stock ROMs + 1 own dump, 0 non-monotonic
+  axes. Cross-ROM structural diff via `diff_maps.py`. Report:
   [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md).
-- **Data:** 4 own ROM dumps, 10 stock ROMs via submodule, real-car logs in
+- **Data:** 1 own ROM dump (60E0G500/N3ZHEC factory), 10 stock ROMs via submodule, real-car logs in
   `data/logs/`, XML definitions in `data/definitions/`, extracted calibration
   tables in `data/maps/` (14 ROMs + cross-ROM diff).
 - See [`docs/learnings.md`](docs/learnings.md) for session know-how and ROADMAP.md for what's next.

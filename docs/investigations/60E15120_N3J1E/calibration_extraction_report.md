@@ -1,7 +1,7 @@
 # Calibration extraction at scale — descriptor scan + cross-ROM diff
 
 **ROM:** 60E15120_N3J1E.bin, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`
-(plus all 10 stock ROMs + 4 own 60E0G500 dumps). Static analysis of ROM bytes only;
+(plus all 10 stock ROMs + the own 60E0G500 factory dump). Static analysis of ROM bytes only;
 no firmware was modified.
 
 **Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1).
@@ -13,8 +13,7 @@ lookup-table descriptor in the ROM and dumps all tables + axes to `data/maps/`.
 On 60E15120_N3J1E it finds **587 tables** (450 2D + 137 3D), of which **478 match
 the RX8Defs XML definitions** (all of them, 0 missing, 0 type mismatches) and
 **109 are previously unnamed**. Cross-ROM diff (`diff_maps.py`) matches tables
-across all 10 stock ROMs by structure and reports per-cell differences. The
-streetport tuned ROMs differ from stock in 15–17 named tables.
+across all 10 stock ROMs by structure and reports per-cell differences.
 
 ### 1a. Plain-language summary
 
@@ -64,7 +63,6 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 - 478 of these cross-reference the existing RX8Defs `CAL_` names in
   `cross_ecu/romraider_descriptor_matches.json` (0 missing, 0 type mismatches).
 - 109 previously unnamed tables now have stable addresses + extracted values.
-- Streetport diff mapped to named descriptors: 15–17 tables (see §6).
 
 ## 5. Corrections made in this pass
 
@@ -93,7 +91,6 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 | 60E32000_N3M5E | 0x71000 | 293 | 88 | 381 | 0 |
 | 60E32000_N3N5EB | 0x71000 | 354 | 108 | 462 | 0 |
 | Aron N3ZHEC stock | 0x6c000 | 404 | 129 | 533 | 0 |
-| Aron N3ZHEC streetport ×3 | 0x6c000 | 404 | 129 | 533 | 0 |
 
 Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
@@ -113,15 +110,6 @@ Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
 60E0FC00 and 60E1B900 are nearly identical to 60E0FB00. 60E32000 is a different
 generation (fewer structural matches).
-
-### Streetport diff mapped to descriptors (Aron N3ZHEC stock vs tunes)
-
-- **5500max**: 15 tables differ; **9500/10000max**: 17 (extra: 0x06a548, 0x06a580).
-- Differing descriptors: 0x069a54, 0x069a68, 0x069a7c, 0x069ab8, 0x069acc,
-  0x069af4 (2D u16), 0x069e4c (2D f32, 48 cells), 0x06a4d8 (3D u8 21×19, 212),
-  0x06a548 / 0x06a580 (3D u8 21×19, 9500+10000 only), 0x06b0b0 (3D u16 18×20,
-  337), 0x06b264 (3D f32 19×17, 55), 0x06b278 (3D f32 19×4, 14), 0x06b744 (2D
-  f32, 3), 0x06bd94 (2D f32, 10), 0x06be20 (2D f32, 1), 0x06bf28 (3D f32 9×9, 1).
 
 ## 7. Files
 

@@ -1,6 +1,6 @@
 {
   "name": "60E0G500_N3ZHEC",
-  "description": "STOCK (not tuned) ROM from Aron's ECU - fw 60E0G500, cal N3ZHEC. Base for the streetport tuned variants; see docs/investigations/60E0G500_N3ZHEC/.",
+  "description": "STOCK factory ROM from Aron's ECU - fw 60E0G500, cal N3ZHEC; see docs/investigations/60E0G500_N3ZHEC/.",
   "market": "EU",
   "model": "RX-8 Series 1 (2004)",
   "variant": {
