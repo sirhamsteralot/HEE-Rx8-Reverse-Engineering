@@ -50,6 +50,20 @@ stock ROMs are referenced, not copied); the user-tuned ROMs in the same
 bundle were deliberately not retained. Logs → `../data/logs/`, NR666P tune
 containers → `../data/tunes/`.
 
+2026-11-01: four `.bin` files audited against the collection (SHA-256 vs
+`../binaries/manifest.csv`, `../binaries/dumps/`, and the pinned submodule
+`Stock_ROMs/` + `Data_binaries/`), all 524288 B with a fw id at 0x2000:
+- `60E1B900.bin` = `b0dc94f9…` == submodule `Stock_ROMs/60E1B900.bin`
+- `N3J1EM.bin` = `344cb8b9…` == submodule `Stock_ROMs/60E1D400.bin` (fw id `60E1D400` @0x2000)
+- `N3ZHEB00013S5060_20260418_131330.bin` = `a7cd953c…` == submodule `Stock_ROMs/60E15120_N3J1E.bin`
+- `60E15120_N3J1E_sim-nmi-nop.bin` = `4f3e4f56…`, differs from stock N3J1E by
+  2 bytes at 0x8f0 (`89 fb` → `00 09`, NMI call nopped) — a patched simulation
+  variant, not a factory ROM; stays in `input/` only
+All three new reads are byte-identical duplicates of submodule stock ROMs →
+referenced via the submodule, NOT promoted to `binaries/dumps/` (rule 4b).
+No new ROMs added; the collection remains 1 own factory dump
+(`60E0G500_N3ZHEC.bin`, SHA-256 `a33f79a4…`).
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —
