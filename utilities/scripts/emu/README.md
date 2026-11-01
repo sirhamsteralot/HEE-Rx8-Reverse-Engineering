@@ -151,10 +151,21 @@ left at its default LOW, the SH7055 ROM parks in the boot NMI-poll loop at
 executed instructions, buffer wrapped) is exactly that 4-PC loop
 (0x8ea/0x8ec/0x8ee/0x8f0). Running our emulator with `nmi_level=0` produces the
 identical loop, and `compare_traces.py` reports **MATCH: 20000 steps identical**
-against the Renesas trace. To compare the full boot instead, set the NMI pin
-HIGH in the simulator first (View > CPU > Simulated I/O, or the ICR pin in the
-Set Simulator dialog), then `reset`, enable Trace Acquisition with a buffer >=
-your step count, run (`go 0x3dac` or `st`), and Save the trace — it diffs
+against the Renesas trace. To compare the full boot instead, drive the NMI level by writing ICR_W
+bit15 — the SH-2E simulator has **no pin model** (the Simulated I/O window is
+empty unless a Simulator I/O file is loaded via Setup > Simulator > System,
+and even the stock `SH7055F.IO` only defines Interrupt Control + Timer Unit
+registers, no NMI pin). ICR_W (0xFFFFED18) is a plain register in the sim;
+the boot ROM polls its bit15 at 0x8ea and parks there while it reads 0. So:
+
+    reset
+    mf 0xFFFFED18 0xFFFFED19 8000 WORD     # ICR_W bit15 = 1 (NMI high); mf mode keywords BYTE/WORD/LONG
+    (Trace window Ctrl+T -> Acquisition: buffer >= step count, enable)
+    go 0x3dac                              # run boot to idle; trace captures from reset
+    (Trace window: right-click > Save As -> input/renesas-boot.trace)
+
+`mf` = MEMORY_FILL (`mf <start> <end> <data> [mode]`); GUI alternative: View >
+CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff
 against our 200k golden with the same one-liner.
 Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
 interrupt masking) were re-verified — `emu.py --profile 60E15120_N3J1E

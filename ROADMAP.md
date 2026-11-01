@@ -131,10 +131,12 @@ Foundational for dynamic validation of everything in groups C–E.
 - **NEXT STEP (pick up here): full-boot from-reset Renesas diff.** The saved
   trace only covered the 0x8ea NMI-poll loop because the simulator's NMI pin
   defaults LOW (ROM parks there; buffer wraps). To compare the real boot:
-  in HEW set the NMI pin HIGH first (View > CPU > Simulated I/O, or the ICR
-  pin in the Set Simulator dialog), then `reset`, open Trace (Ctrl+T), set
-  Trace Acquisition buffer >= step count and enable, run `go 0x3dac`, Save
-  the trace into `input/renesas-boot.trace`. Then here:
+  in HEW set ICR_W bit15 high first — the SH-2E simulator has no NMI pin
+  model (Simulated I/O is empty without a loaded I/O file, and SH7055F.IO has
+  no NMI pin), so from the Command Line window after `reset`:
+  `mf 0xFFFFED18 0xFFFFED19 8000 WORD`. Then open Trace (Ctrl+T), set Trace
+  Acquisition buffer >= step count and enable, run `go 0x3dac`, Save the
+  trace into `input/renesas-boot.trace`. Then here:
   `python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
   (our trace: `python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 200000 --trace ...`).
   Expect MATCH on the shared prefix; investigate any divergence. Exact steps
