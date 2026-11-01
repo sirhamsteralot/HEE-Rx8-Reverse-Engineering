@@ -44,10 +44,11 @@ usable facts + OCR of screenshots extracted to `../docs/references/`
 (`rx8club-user-guide-thread.md`, `rx8club-ocr/`, `rx8club-inline-defs.tsv`).
 
 2026-10-31: `Proton Drive Download - 2026-10-31.zip` and `RX8 666p_9_files.zip`
-extracted under `extracted-proton/` and `extracted-666p/` and promoted: 4 ROMs →
-`../binaries/dumps/` (2 more were byte-identical to submodule stock ROMs and are
-referenced, not copied), logs → `../data/logs/`, tune files/notes →
-`../data/tunes/`. Nested `Aron/Tune.zip` was a duplicate bundle of the same ROMs.
+extracted under `extracted-proton/` and `extracted-666p/` and promoted: the stock
+N3ZHEC factory ROM → `../binaries/dumps/` (further reads byte-identical to submodule
+stock ROMs are referenced, not copied); the user-tuned ROMs in the same
+bundle were deliberately not retained. Logs → `../data/logs/`, NR666P tune
+containers → `../data/tunes/`.
 
 ## Promotion path
 

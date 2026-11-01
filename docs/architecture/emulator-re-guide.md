@@ -22,7 +22,7 @@ port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 | Findings go to | `docs/investigations/<rom-id>/` (report + evidence; never edit `binaries/` or `submodules/`) |
 
 Primary ROM: `60E15120_N3J1E` (profile `60E15120_N3J1E`). Other profiles exist
-(60E0FC00, 60E0G500 + streetport variants, 60E1B900). Note: 60E1B900 uses an
+(60E0FC00, 60E0G500, 60E1B900). Note: 60E1B900 uses an
 opcode outside the 60E15120 corpus (stops at 0x957a @ 0x10ae) — regenerate
 `opdec.py` from that ROM's disassembly first (`gen_opdec.py`, see
 `profiles/README.md` step 5).

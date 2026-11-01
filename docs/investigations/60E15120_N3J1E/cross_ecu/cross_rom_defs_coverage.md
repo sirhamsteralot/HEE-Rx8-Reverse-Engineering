@@ -7,7 +7,7 @@ generator: `utilities/scripts/defs-merge/extend_defs_all_roms.py` (run from repo
 
 ## Method
 
-All 14 dumped ROMs (4 in `binaries/dumps/`, 10 in
+All 11 dumped ROMs (1 in `binaries/dumps/`, 10 in
 `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/`) were identified by the
 8-byte ASCII firmware ID at file offset **0x2000** (asserted; cal strings at
 0x6c000 exist only in some ROMs — register D1/D7). Our own dumps were additionally
@@ -22,14 +22,11 @@ standalone per-ROM def (base chain + rom block + provenance comment) was emitted
 every table `storageaddress` was asserted in-range (0x2000–0x7ffff, or 0x000000 =
 upstream placeholder for unmapped DTC-enable bytes).
 
-## Results — 14 ROMs
+## Results — 11 ROMs
 
 | ROM | fw id @0x2000 | RomRaider block | tables | per-ROM def | status |
 |-----|---------------|-----------------|--------|-------------|--------|
 | `aron-N3ZHEC-2026-10-31.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/aron-N3ZHEC-2026-10-31.xml](../../../../data/definitions/romraider/per-rom/aron-N3ZHEC-2026-10-31.xml) | OK |
-| `aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.xml](../../../../data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.xml) | OK |
-| `aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.xml](../../../../data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.xml) | OK |
-| `aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.xml](../../../../data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.xml) | OK |
 | `60E0E500.bin` | 60E0E500 | — | — | — | no upstream block |
 | `60E0E700_N3YLEE.bin` | 60E0E700 | 60E0E700 | 743 (+RX8Base 1052) | [per-rom/60E0E700_N3YLEE.xml](../../../../data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml) | OK |
 | `60E0FB00.bin` | 60E0FB00 | 60E0FB00 | 732 (+RX8Base 1052) | [per-rom/60E0FB00.xml](../../../../data/definitions/romraider/per-rom/60E0FB00.xml) | OK |
@@ -41,17 +38,13 @@ upstream placeholder for unmapped DTC-enable bytes).
 | `60E32000_N3M5E.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3M5E.xml](../../../../data/definitions/romraider/per-rom/60E32000_N3M5E.xml) | OK |
 | `60E32000_N3N5EB.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3N5EB.xml](../../../../data/definitions/romraider/per-rom/60E32000_N3N5EB.xml) | OK |
 
-- **12 of 14 ROMs** now have a standalone RomRaider def. Gaps: **60E0E500** (no
+- **9 of 11 ROMs** now have a standalone RomRaider def. Gaps: **60E0E500** (no
   upstream block at all) and **60E1C500_N3J6EB** (block present upstream but
   commented out, commit `251f54f` "THESE DEFS ARE NOT CORRECT BUT CLOSE").
 - **ECUFlash**: upstream ships ECUFlash defs only for 60E0G500
   (`submodules/RX8Defs/ECUFlash/60E0G500.xml`, 1210 tables, last change
-  `aaac6f3` 2023-08-11) + base `RX8BASE.xml` (1743 tables). All four 60E0G500
-  dumps (stock N3ZHEC + 3 streetport-tuned variants) reference it; no copies kept
-  (see D8).
-- The three `aron-N3ZHEC-streetportv1_24_*` dumps are user-tuned and share the
-  stock 60E0G500 block — table *contents* may have moved; verify per-table against
-  the ROM before any write.
+  `aaac6f3` 2023-08-11) + base `RX8BASE.xml` (1743 tables). The 60E0G500 factory
+  dump (stock N3ZHEC) references it; no copies kept (see D8).
 
 ## D8 dedupe — closed 2026-11-01
 
@@ -78,7 +71,7 @@ endings only. Full provenance: [`data/definitions/README.md`](../../../../data/d
 - Script asserts per ROM: size == 512 KiB, fw id regex, manifest hash (own dumps),
   romid `internalidaddress` == 0x2000 and `internalidstring` == fw id, all
   `storageaddress` in 0x2000–0x7ffff or 0x000000, emitted XML re-parses with
-  expected block/table counts. All passed 2026-11-01 (14/14 ROMs, 12 defs, 2 gaps).
+  expected block/table counts. All passed 2026-11-01 (11/11 ROMs, 9 defs, 2 gaps).
 - No ROM binary, submodule file, or existing definition was modified; only new files
   under `data/definitions/` were written and four duplicate XMLs removed.
 - XML defs are editor metadata; they never change ROM bytes (AGENTS.md rule 2).
