@@ -25,20 +25,27 @@ Labels are inherited from the base record of the same PID.
 
 ## Results — table location and record count per ROM
 
-| ROM | table | records | pool ref (table) | count byte | sub-PID table | PID set |
-|-----|------:|--------:|------------------|-----------|---------------|---------|
-| 60E15120_N3J1E.bin (base) | 0x5f10c | 99 | 0x57848 | 0x5f5b0=99 | 0x5f5b2 | base |
-| 60E0E500.bin | 0x5e4e8 | 99 | 0x56c30 | 0x5e98c=99 | 0x5e98e | = base |
-| 60E0E700_N3YLEE.bin | 0x5e740 | 99 | 0x56e88 | 0x5ebe4=99 | 0x5ebe6 | = base |
-| 60E0FB00.bin | 0x5d994 | 110 | 0x55cd4 | 0x5de38...=110 | 0x5de3a | +11 |
-| 60E0FC00.bin | 0x5d994 | 110 | 0x55cd4 | =110 (ref 0x55e04) | 0x5de3a | +11 |
-| 60E1B900.bin | 0x5dc2c | 110 | 0x55f6c | =110 (ref 0x5609c) | 0x5dc... | +11 |
-| 60E1C500_N3J6EB.bin | 0x5e7b8 | 99 | 0x56ef4 | 0x5ec5c=99 | 0x5ec5e | = base |
-| 60E1D400.bin | 0x5fb48 | 99 | 0x58284 | 0x5ffec=99 | 0x5ffee | = base |
-| 60E32000_N3M5E.bin | 0x651bc | 113 | 0x5d1ac | 0x65708=113 | 0x6570a | +14 |
-| 60E32000_N3N5EB.bin | 0x64d0c | 110 | 0x5ccc4 | =110 (ref 0x5cdf4) | 0x64... | +11 |
-| dumps/aron-N3ZHEC-2026-10-31.bin (60E0G500/N3ZHEC) | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 | 0x5fd56 | = base |
-| 3 streetport tunes | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 | 0x5fd56 | = base (cal-only diffs) |
+| ROM | table | records | table pool ref | count byte (ref) | sub-PID table (ref) | PID set |
+|-----|------:|--------:|----------------|------------------|---------------------|---------|
+| 60E15120_N3J1E.bin (base) | 0x5f10c | 99 | 0x57848 | 0x5f5b0=99 (0x57854) | 0x5f5b2 (0x57a4c) | base |
+| 60E0E500.bin | 0x5e4e8 | 99 | 0x56c30 | 0x5e98c=99 (0x56c3c) | 0x5e98e (0x56e34) | = base |
+| 60E0E700_N3YLEE.bin | 0x5e740 | 99 | 0x56e88 | 0x5ebe4=99 (0x56e94) | 0x5ebe6 (0x5708c) | = base |
+| 60E0FB00.bin | 0x5d994 | 110 | 0x55cd4 | 0x5debc=110 (0x55e04) | 0x5debe (0x55f1c) | +11 |
+| 60E0FC00.bin | 0x5d994 | 110 | 0x55cd4 | 0x5debc=110 (0x55e04) | 0x5debe (0x55f1c) | +11 |
+| 60E1B900.bin | 0x5dc2c | 110 | 0x55f6c | 0x5e154=110 (0x5609c) | 0x5e156 (0x561b4) | +11 |
+| 60E1C500_N3J6EB.bin | 0x5e7b8 | 99 | 0x56ef4 | 0x5ec5c=99 (0x56f00) | 0x5ec5e (0x570f8) | = base |
+| 60E1D400.bin | 0x5fb48 | 99 | 0x58284 | 0x5ffec=99 (0x58290) | 0x5ffee (0x58488) | = base |
+| 60E32000_N3M5E.bin | 0x651bc | 113 | 0x5d1ac | 0x65708=113 (0x5d1b8) | 0x6570a (0x5d3c8) | +14 |
+| 60E32000_N3N5EB.bin | 0x64d0c | 110 | 0x5ccc4 | 0x65234=110 (0x5cdf4) | 0x65236 (0x5cf0c) | +11 |
+| dumps/aron-N3ZHEC-2026-10-31.bin (60E0G500/N3ZHEC) | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base |
+| 3 streetport tunes | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base (cal-only diffs) |
+
+Every ROM also has exactly one function whose 20-byte prologue matches the base
+dispatcher 0x5774c and whose literal pool contains the table address (e.g. 60E0FC00
+dispatcher 0x55c14, 60E0G500 dump dispatcher 0x57ef0) — the pool reference is the
+diag22 scanner's, not a coincidental data word. The sub-PID table (count byte + 2,
+36 × 6-byte records `{u16 pid, u8 supported_bit, u8 sub, u16 mask}`) is pool-referenced
+in all 14 ROMs and carries the identical 36-PID list as the base (0x5f5b2).
 
 Full per-ROM detail incl. SHA-256, count-pool refs and extra/missing PID lists:
 [`cross_rom_mode22_summary.json`](../../../../data/labels/cross_rom_mode22_summary.json).
@@ -63,8 +70,8 @@ unique prologue match of base 0x5774c).
 |---|---|---|
 | base | 60E15120 self | 99 |
 | byte_match | handler body unique-exact-matches a base function, re-verified from raw bytes, asserted == base handler of the same PID | 793 |
-| pid_match | handler address not byte-matched, but the PID exists in base with the same response_len → semantic label inherited, address link NOT asserted | 479 |
-| unmapped | PID not present in base ROM (family-B/N3M5E extras) — address only, FUN_-level | 73 |
+| pid_match | handler address not byte-matched, but the PID exists in base with the same response_len → semantic label inherited, address link NOT asserted | 494 |
+| unmapped | PID not present in base ROM (family-B/N3M5E extras) — address only, FUN_-level | 58 |
 
 - Family A: 98/99 byte_match + 1 pid_match (PID 0xc116 DTC state-machine thunk — its
   body pool moved in every non-base family-A ROM, so no byte match; PID+len match).
@@ -85,26 +92,29 @@ byte-match of base 0x5774c; this ROM's diag RAM cells differ, pool-verified: PID
 cell 0xffffd226, response-code 0xffffd224, permission mask 0xffffd3f0) and drove
 the ROM's own dispatcher per PID with `stop_at=(mapped handler,)`:
 
-- PID 0x0043 → handler **0x5732e** hit, r0 = 5 = len 2 + 3
-- PID 0x0005 → handler **0x570e4** hit, r0 = 4 = len 1 + 3
-- PID 0x000c → handler **0x57126** hit, r0 = 5 = len 2 + 3
-- PID 0xe611 → handler **0x57d00** hit, r0 = 27 = len 24 + 3
-- PID 0x0008 (not in table) → NRC path, r0 = 3, no handler stop
+- **Full sweep: all 99/99 PIDs** land exactly on the mapped handler address from
+  `cross_rom_mode22_pid_handlers.tsv`, and a second run per PID returns
+  r0 = response_len + 3 (e.g. 0x0043 → **0x5732e**, r0 = 5; 0xe611 → **0x57d00**,
+  r0 = 27).
+- **Negatives: 5/5 non-table PIDs** (0x0008, 0x0009, 0x1234, 0xffff, 0xe612) take
+  the NRC 0x31 path (r0 = 3) and return without reaching any handler.
 
-All four mapped handler addresses were reached exactly, with the record's
-response_length honored — the extracted table→handler map is what the firmware
-executes.
+The extracted table→handler map is exactly what the firmware executes.
 
 ## New emulator finding (register candidate E8)
 
 `opdec.OPMNEM` is a full-16-bit-word table generated from the 60E15120 corpus
 (9,902 entries). Family-B ROMs contain operand encodings absent from that corpus —
-e.g. 60E0FC00 dispatcher 0x55c14 executes `0xda29` (`mov.l @(0x29*4,pc),r10`,
-pool word 0x55cd0) at 0x55c28 → `UnknownOpcode`. Family-B profiles boot to the idle
-loop (0x3dac) because the boot path avoids those encodings, but the diag dispatcher
-cannot be executed dynamically until the opcode table covers them (masked decode or
-a wider corpus). Recorded as open E8 in the ROADMAP register; no emulator change made
-here.
+verified instance: 60E0FC00 dispatcher 0x55c14 executes `0xda29`
+(`mov.l @(0x29*4,pc),r10`, pool word 0x55cd0) at 0x55c28 → `UnknownOpcode`
+(0xda29 occurs nowhere in the base ROM bytes). Quantified over the code region
+0x40–0x6c000: 467 (60E0FB00/60E0FC00), 499 (60E1B900), 888 (60E32000_N3N5EB), 767
+(60E32000_N3M5E) distinct `mov.l @(disp,pc)` words missing from OPMNEM (upper bound —
+the count includes pool/data words, not only instructions). Family-B profiles boot
+to the idle loop (0x3dac) because the boot path avoids those encodings, but the diag
+dispatcher cannot be executed dynamically until the opcode table covers them
+(masked decode or a wider corpus). Recorded as open E8 in the ROADMAP register; no
+emulator change made here.
 
 ## Limits
 
@@ -114,8 +124,9 @@ here.
 - Family-B extra PIDs (0x0001, 0x0041, 0x17f4–0x17fa subset, 0x172e/0x1730/0x173b,
   0xd100, 0xe6f2, 0xe6f3) have no base-ROM counterpart — addresses recorded,
   unlabeled (FUN_-level), per the label ladder.
-- Sub-PID supported-bit table address recorded per ROM as `count_byte + 2`
-  (base 0x5f5b2); its contents were not re-analyzed cross-ROM.
+- Sub-PID supported-bit table at `count_byte + 2` in every ROM (base 0x5f5b2);
+  verified pool-referenced in all 14 ROMs with the identical 36-PID list — contents
+  not re-analyzed record-by-record cross-ROM.
 - Streetport tunes share the stock 60E0G500 code path (cal-only diffs, as
   established in the P2 streetport diff).
 
