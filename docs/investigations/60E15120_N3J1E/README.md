@@ -16,6 +16,11 @@ dataflow and unverified board routing.
 See [the cross-ECU and RX8Defs review](cross_ecu/README.md) for descriptor matches,
 diagnostic/RAM candidates and assembly corrections. This extension annotates the
 C export; the saved Ghidra database has not received these new annotations.
+The cross-ROM passes are documented at
+[cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md)
+(function byte-matches across all 14 ROMs, 2026-10-31) and
+[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md)
+(Mode 22 PID handlers mapped in all 14 ROMs, 2026-11-01).
 
 See also [the additional source review](source_review/README.md) for G-ROM,
 diagnostic and CAN findings added on 2026-09-09.
