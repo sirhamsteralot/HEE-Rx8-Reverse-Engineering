@@ -8,6 +8,12 @@
       "rom_refs": 0,
       "rom_claims": 0
     },
+    "decompiler_triage_report.md": {
+      "fn_checked": 5,
+      "ram_checked": 0,
+      "rom_refs": 12,
+      "rom_claims": 0
+    },
     "fueling_control_report.md": {
       "fn_checked": 29,
       "ram_checked": 21,

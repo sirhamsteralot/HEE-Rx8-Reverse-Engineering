@@ -268,3 +268,21 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   `tests/fixtures/boot-60E15120_N3J1E-200k.trace` regenerated (319731 entries,
   header documents the format); re-verified MATCH after the E1/E7/interrupt/
   delay-slot changes.
+
+## Decompiler triage (2026-10-31, group C item 2)
+
+- `triage_export.py` classifies every `non_instruction_ranges.tsv` blob by content AND by
+  referrers: the disassembly's `@(0xEA,pc)` operand is the **computed EA**, so grep/scan
+  it directly for range referrers — no pc+4+scaling re-application (see SH-2E facts above).
+  1,695/1,759 ranges have pc-relative referrers; the 64 without are pointer-reached data.
+- Gotchas found while calibrating: the IVT is only 0x0-0x3f (code starts at 0x40, so a
+  pool at 0x3f8 is NOT vectors); "ascii_string" needs a printable run >=12 + NUL/space,
+  else pointer blocks and the 0x4414 `40 21` shar-sled classify as text; float pools can
+  be tiny-magnitude (|x| >= 1e-6 counts as sane).
+- Warning categories that mean nothing: `unreachable_ram_block_removed` (dead-code elim),
+  `overlapping_symbol_labels` (inner LAB_/DAT_ labels), `infinite_loop_block` with a
+  `bra self` spin (halt idiom, e.g. 0xd8/0xd21e/0x563de). `jumptable_truncated` on the
+  0x54d90/0x55a7c pattern = 8-byte `{key:u8<<24, handler:u32}` record tables (same format
+  as UDS 0x5eb18/0x5eb40) — recover by reading the pool word, then the records to key==0.
+- 0x33b6 is a 2-byte orphan (`7638` + illegal 0x0000): no u32 ref, no branch target, no
+  callers — treat 0x33b6-0x348f as data, keep the FUN_ label address-only.

@@ -7,8 +7,9 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 **How to read this file.** §Completed is reference only — collapsed summaries with
 pointers to the detailed docs. §Open work lists groups C–F in pickup order (group A =
 calibration extraction, done — see P3 below; group B = emulator fidelity, done except
-the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31 —
-so start at the C remainder). Items within each group are roughly in
+the E6 remainder; group C item 1 = the Mode 22/UDS dispatch tables, done 2026-10-31;
+group C item 2 = decompiler-warning triage + non-instruction-range classification, done
+2026-10-31 — so start at the C remainder). Items within each group are roughly in
 dependency order. Phase numbers (P1–P6) and group letters are kept as tags so existing
 cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -118,6 +119,16 @@ dynamically (full 99-PID sweep, 15-service routing; 61/61 tests).
 → [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
 labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 
+### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE 2026-10-31
+
+All 154 warning functions triaged (151 benign, 3 actionable → all resolved: record
+dispatch tables 0x5ea08 via 0x54d90 and 0x5eb18 via 0x55a7c recovered from ROM; orphan
+2-byte artifact 0x33b6 proven unreferenced); all 1,759 non-instruction ranges (187,104
+bytes) classified with pc-relative referrer evidence. No labels upgraded.
+→ [`docs/investigations/60E15120_N3J1E/decompiler_triage_report.md`](docs/investigations/60E15120_N3J1E/decompiler_triage_report.md);
+`utilities/scripts/rx8-pcm-pipeline/triage_export.py`, `decompiler_issues_triaged.tsv`,
+`non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -128,8 +139,6 @@ and where artifacts live.
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
 Use the emulator for dynamic verification where useful (group B, done).
 
-- Triage the **154 decompiler warning functions** (`decompiler_issues.tsv`);
-  classify `non_instruction_ranges.tsv`.
 - Cross-check the thread's OL-fueling chain vs our fueling report; verify
   engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
 - **Deepen `fueling_control_report.md` (further investigation needed — see the

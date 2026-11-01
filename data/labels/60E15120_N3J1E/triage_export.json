@@ -1,0 +1,263 @@
+{
+  "date": "2026-10-31",
+  "rom": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_sha256_verified": true,
+  "non_instruction_ranges": {
+    "total": 1759,
+    "class_counts": {
+      "mixed_pool": 802,
+      "u32_table": 696,
+      "ptr_pool_code": 150,
+      "word_literal_pool": 28,
+      "u32_data": 27,
+      "u16_data": 19,
+      "ff_pad": 16,
+      "ptr_pool_ram": 11,
+      "float_pool": 6,
+      "ascii_string": 2,
+      "vector_table": 1,
+      "zero_pad": 1
+    }
+  },
+  "decompiler_issues": {
+    "total": 154,
+    "verdict_counts": {
+      "benign_dead_code_removed": 85,
+      "benign_internal_labels": 42,
+      "benign_halt_spin": 14,
+      "already_annotated": 5,
+      "benign_decompiler_artifact": 2,
+      "resolved_record_dispatch": 2,
+      "benign_infinite_loop": 1,
+      "orphan_artifact_unreferenced": 1,
+      "recovered_case_table": 1,
+      "benign_known_function": 1
+    },
+    "actionable": [
+      {
+        "address": "000033b6",
+        "name": "FUN_000033b6",
+        "issue": "bad_instruction_data; control_flow_truncated",
+        "body_bytes": "2",
+        "callers": "0",
+        "verdict": "orphan_artifact_unreferenced",
+        "evidence": "body 2 bytes 7638, next word 0000 (illegal 0x0000 on SH-2E); u32 ptr refs []; branch target: False; callers: 0",
+        "action": "treat 0x33b6-0x348f as data; keep FUN_000033b6 address-only (label ladder rule 6)"
+      },
+      {
+        "address": "00054d90",
+        "name": "FUN_00054d90",
+        "issue": "jumptable_truncated; switch_variable_unmatched",
+        "body_bytes": "1204",
+        "callers": "3",
+        "verdict": "resolved_record_dispatch",
+        "evidence": "pool word 0x54e34 -> table 0x5ea08; 33 records, format key:u8 pad:3 target:u32; linear search on key, 0x00 terminator carries default",
+        "action": "record-dispatch table recovered by this triage: base 0x5ea08, 33 records + default 0x00054dce; feed into UDS/OBD dispatch labeling"
+      },
+      {
+        "address": "00055a7c",
+        "name": "ref_OBDModeFunc_Unsure",
+        "issue": "jumptable_truncated; switch_variable_unmatched",
+        "body_bytes": "236",
+        "callers": "1",
+        "verdict": "resolved_record_dispatch",
+        "evidence": "pool word 0x55c64 -> table 0x5eb18; 4 records, format key:u8 pad:3 target:u32; linear search on key, 0x00 terminator carries default",
+        "action": "record-dispatch table recovered by this triage: base 0x5eb18, 4 records + default 0x00055aba; feed into UDS/OBD dispatch labeling"
+      }
+    ]
+  },
+  "recovered_record_tables": {
+    "00054d90": {
+      "dispatcher": "0x54d90",
+      "pool_word": "0x54e34",
+      "table_base": "0x5ea08",
+      "records": [
+        {
+          "key": "0x01",
+          "target": "0x00054dd2"
+        },
+        {
+          "key": "0x03",
+          "target": "0x00054e3c"
+        },
+        {
+          "key": "0x04",
+          "target": "0x00054e6a"
+        },
+        {
+          "key": "0x05",
+          "target": "0x00054e8a"
+        },
+        {
+          "key": "0x06",
+          "target": "0x00054eaa"
+        },
+        {
+          "key": "0x07",
+          "target": "0x00054eca"
+        },
+        {
+          "key": "0x0c",
+          "target": "0x00054eea"
+        },
+        {
+          "key": "0x0d",
+          "target": "0x00054f0a"
+        },
+        {
+          "key": "0x0e",
+          "target": "0x00054f2a"
+        },
+        {
+          "key": "0x0f",
+          "target": "0x00054f4a"
+        },
+        {
+          "key": "0x10",
+          "target": "0x00054f6a"
+        },
+        {
+          "key": "0x11",
+          "target": "0x00054f8a"
+        },
+        {
+          "key": "0x12",
+          "target": "0x00054faa"
+        },
+        {
+          "key": "0x13",
+          "target": "0x00054fca"
+        },
+        {
+          "key": "0x15",
+          "target": "0x00054fea"
+        },
+        {
+          "key": "0x1c",
+          "target": "0x00055018"
+        },
+        {
+          "key": "0x1f",
+          "target": "0x00055038"
+        },
+        {
+          "key": "0x21",
+          "target": "0x00055058"
+        },
+        {
+          "key": "0x2e",
+          "target": "0x00055078"
+        },
+        {
+          "key": "0x2f",
+          "target": "0x00055098"
+        },
+        {
+          "key": "0x30",
+          "target": "0x000550b8"
+        },
+        {
+          "key": "0x31",
+          "target": "0x000550d8"
+        },
+        {
+          "key": "0x33",
+          "target": "0x000550f8"
+        },
+        {
+          "key": "0x34",
+          "target": "0x00055120"
+        },
+        {
+          "key": "0x3c",
+          "target": "0x0005514e"
+        },
+        {
+          "key": "0x42",
+          "target": "0x0005516e"
+        },
+        {
+          "key": "0x43",
+          "target": "0x0005518e"
+        },
+        {
+          "key": "0x44",
+          "target": "0x000551ae"
+        },
+        {
+          "key": "0x45",
+          "target": "0x000551ce"
+        },
+        {
+          "key": "0x47",
+          "target": "0x000551ee"
+        },
+        {
+          "key": "0x49",
+          "target": "0x0005520e"
+        },
+        {
+          "key": "0x4a",
+          "target": "0x0005522e"
+        },
+        {
+          "key": "0x4c",
+          "target": "0x0005524e"
+        },
+        {
+          "key": "0x00",
+          "target": "0x00054dce"
+        }
+      ],
+      "record_count": 33,
+      "default_target": "0x00054dce",
+      "format": "key:u8 pad:3 target:u32; linear search on key, 0x00 terminator carries default"
+    },
+    "00055a7c": {
+      "dispatcher": "0x55a7c",
+      "pool_word": "0x55c64",
+      "table_base": "0x5eb18",
+      "records": [
+        {
+          "key": "0x02",
+          "target": "0x00055abe"
+        },
+        {
+          "key": "0x04",
+          "target": "0x00055b18"
+        },
+        {
+          "key": "0x06",
+          "target": "0x00055bda"
+        },
+        {
+          "key": "0x08",
+          "target": "0x00055c12"
+        },
+        {
+          "key": "0x00",
+          "target": "0x00055aba"
+        }
+      ],
+      "record_count": 4,
+      "default_target": "0x00055aba",
+      "format": "key:u8 pad:3 target:u32; linear search on key, 0x00 terminator carries default"
+    }
+  },
+  "orphan_function_0x33b6": {
+    "function": "0x33b6",
+    "body_bytes": "2",
+    "body_hex": "7638",
+    "next_word_hex": "0000",
+    "u32_pointer_refs": [],
+    "branch_target": false,
+    "callgraph_callers": 0
+  },
+  "outputs": [
+    "decompiled/non_instruction_ranges_classified.tsv",
+    "disassembly/non_instruction_ranges_classified.tsv",
+    "decompiled/decompiler_issues_triaged.tsv",
+    "disassembly/decompiler_issues_triaged.tsv"
+  ]
+}
