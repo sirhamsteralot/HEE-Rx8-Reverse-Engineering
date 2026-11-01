@@ -65,7 +65,7 @@ dispatch, exact 0x62-header response bytes + NRC 0x31 mask rejection). Report:
 ## 2026-10-31 verification pass — UDS/Mode-22 labels re-checked with extreme caution
 
 Re-verified all labels from the dispatch pass against the RAW DISASSEMBLY and the emulator
-(checker: `input/work/verify_labels.py`, report: `input/work/verify_report.txt`):
+(checker/report were scratch files under `input/work/`, removed in the 2026-11-01 input/ cleanup):
 99/99 PID + 29/29 service + 36/36 sub records byte-exact vs ROM; every handler's call
 targets resolved through the literal pool (0 unknown); 63/63 RAM aliases confirmed as
 (sign-extended mov.w) literals in the claimed reader after fixing one reader column
