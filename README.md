@@ -102,6 +102,11 @@ directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin i
 Everything raw lands in `input/` first (uncommitted intake); only verified artifacts
 are promoted into the tracked folders.
 
+Work is delivered **branch + pull request**: never commit directly to `main`. Start
+each work unit with `git checkout -b <type>/<slug> main` (types: `feat/`,
+`research/`, `docs/`, `fix/`) and open a PR against `main` when it's done and
+verified — full rules in [`AGENTS.md`](AGENTS.md) §Branch & PR workflow.
+
 1. **Acquire** — dump from your own unit (bench ECU preferred); drop in `input/`,
    promote to `binaries/` with a manifest row (`utilities/scripts/hash_binaries.py`).
 2. **Run it** — add an emulator profile, boot it, and diff the trace against
@@ -129,7 +134,9 @@ are promoted into the tracked folders.
   `0xffff6000–0xffffdfff`, volatile I/O `0xffffe000–0xffffffff`.
 - Binary blobs (`.bin/.gar/.zip/.jar/.exe/.dll/.so/.pdf/.vtlog`) go through Git LFS
   (`.gitattributes`) — `git-lfs` is required to clone/checkout.
-- Commit messages: short imperative subject, body explaining *why*.
+- Commit messages: short imperative subject, body explaining *why*; each work unit
+  is delivered as a branch + PR against `main` ([`AGENTS.md`](AGENTS.md) §Branch &
+  PR workflow), never as direct commits to `main`.
 - Discrepancies are documented, never silently resolved (see ROADMAP register D1–D10).
 
 ## Status (2026-10-31)

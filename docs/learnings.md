@@ -7,6 +7,10 @@ session-specific know-how. Everything here is backed by artifacts in
 
 ## Working method that scaled
 
+- **Branch + PR delivery**: every work unit runs on its own
+  `feat|research|docs|fix/<slug>` branch off `main` and lands via a PR that the
+  user reviews and merges — no direct commits to `main` (standing rules in
+  `AGENTS.md` §Branch & PR workflow).
 - **Chain-first reviews**: start from the task table (0x4998) / dispatch table
   (0x5f10c), trace through the canonical C, cross-match RX8Defs descriptors and
   logger PIDs, then label via `source_review/accepted_*.tsv` + an idempotent

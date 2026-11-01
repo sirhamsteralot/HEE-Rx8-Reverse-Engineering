@@ -268,6 +268,8 @@ diff) + a note in the investigation doc.
 
 Evidence label ladder (`FUN_`/`ref_`/`CAL_`/`tbl_`/`inferred_`/`candidate_`), binary
 immutability, mandatory binary-level verification + pipeline validators after any
-pass, 10-section subsystem reports with memory maps, one subsystem per commit,
-`hash_binaries.py --check` after touching `binaries/`, emulator changes get a
-Renesas differential run. See [`AGENTS.md`](AGENTS.md) and [`docs/learnings.md`](docs/learnings.md).
+pass, 10-section subsystem reports with memory maps, one subsystem per work unit
+delivered as a branch + PR against `main` ([`AGENTS.md`](AGENTS.md) §Branch & PR
+workflow) with one logical change per commit, `hash_binaries.py --check` after
+touching `binaries/`, emulator changes get a Renesas differential run. See
+[`AGENTS.md`](AGENTS.md) and [`docs/learnings.md`](docs/learnings.md).
