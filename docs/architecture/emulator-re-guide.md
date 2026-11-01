@@ -110,7 +110,9 @@ instructions.
 - **Virtual OBD port** (`obd_port.py`, localhost ISO-TP): send UDS requests and
   read the firmware's answers — the same interface RomRaider Logger uses on a
   car. E.g. `10 03` (extended session), `22 00 43` (Mode 22 PID 0x43 = engine
-  load g/rev × 1/255, handler 0x56b8a, dispatch table 0x5f10c). The port drives
+  load g/rev × 1/255, handler 0x56b8a `diag22_pid0043_engine_load_g_rev`, dispatch
+  table 0x5f10c — all 99 records and all 29 UDS services labeled, see
+  [the dispatch report](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)). The port drives
   the ROM's own entry points (profile `uds` section: CAN RX poll 0x11d88, UDS
   entry 0x680a0, dispatcher 0x3c2a) because the OS tick is not yet modeled (E6).
   Log request/response pairs to `tests/fixtures/obd/` for golden comparison.

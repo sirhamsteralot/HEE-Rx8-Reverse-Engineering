@@ -8,7 +8,7 @@ untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
 performed. Full evidence: [`reviews/knock_control/README.md`](reviews/knock_control/README.md).
 
-**Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](calibration_extraction_report.md) (knock tables in data/maps/).
+**Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](calibration_extraction_report.md) (knock tables in data/maps/); [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (PID 0x1746 exposes this report's retard cell).
 
 ## 1. Executive summary
 
@@ -97,8 +97,10 @@ Sensor health is monitored independently (0xc290 ADC window check ->
 0x49fac persistence -> 0x4a084 raises **DTC 0x23/0x24**; the codes are
 firmware-inferred — this ROM's def block has no DTC 0023/0024 tables);
 unhealthy sensors both block knock control and force the fail-safe retard
-table. Diagnostics: RomRaider PID 0x1746 "Knock Retard" (handler 0x5707a,
-uint8 × 0.3515625°) and OBD PID 0x0003 "OL Status" (handler 0x568ca). Note
+table. Diagnostics: RomRaider PID 0x1746 "Knock Retard" (handler 0x5707a
+`diag22_pid1746_knock_retard_deg`, uint8 × 0.3515625° — scale constant 0x3eb40000
+re-verified in the handler's literal pool 2026-10-31) and OBD PID 0x0003 "OL Status"
+(handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl`). Note
 the 0x1746 encoding (clamp(trunc(x/0.3515625 + 0.5), 0, 255)) spans
 [0, +89.7]°, so with knock_retard clamped to [−10, 0] the PID always reports
 0.00° in this ROM; the logger def's desc text ("Tire Size") is a copy-paste
@@ -245,7 +247,7 @@ calibration area 0x0006c000–0x0007ffff.
 |---|---|
 | 0x00004998–0x00004ab7 | task table: 18 × 16-byte records {entry, mask, param, stack}; stacks 0xffff7410–0xffff7498 |
 | 0x00004ab8 | additional record {0x64e8, 0x02000000, 0x04ffffff, 0x00000001} + 0xffff76xx pairs; dispatch unresolved |
-| 0x00005f10c | diagnostic dispatch table (99 × 12 bytes); PID 0x1746 → handler 0x5707a, PID 0x0003 → handler 0x568ca |
+| 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c` (99 × 12 bytes, all labeled 2026-10-31); PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg`, PID 0x0003 → handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl` — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
 | 0x0006c046 | calibration ID `N3ZHE` |
 | 0x0000d74c / 0x0000d750 | scheduler pointer table / timing records (used by 0x5f1c) |
 | 0x00009630 | `ref_osTaskScheduler` (scheduler; RAM control blocks 0xffff9304) |

@@ -12,12 +12,20 @@ performed. Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.m
 > [`load_fueling_report.md`](load_fueling_report.md) for the full
 > MAF→load chain (cross-reference, don't duplicate). Open items listed in §7
 > (untraced `fuel_correction_sum` writers, injection-angle semantics, MAF fault
-> latching, PID 0x1410, 0x4ab8 dispatch) plus dynamic emulator verification of
+> latching, ~~PID 0x1410~~, 0x4ab8 dispatch) plus dynamic emulator verification of
 > the fuel chain are tracked as a ROADMAP group C backlog item. The pseudocode
 > in §2 uses raw register names (bf68, bed0, …) — a physical-units rewrite is
 > part of the deepening pass.
+> **Update 2026-10-31 (UDS dispatch pass, [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)):**
+> PID 0x1410 is now resolved — handler 0x56f6c `diag22_pid1410_injector_pulse_time`
+> reads `injector_pulse_time_ffffbe24` × 8.0 (the logger def's second claim of
+> 0x221410 as "Throttle Pedal Position" does not hold for this ROM — throttle is
+> PID 0x0011/0x093c; ROADMAP D10). The diag-visible fuel cells are now named:
+> `inferred_lambda_actual_ffffadec` (PID 0x06, (λ−1)·100 trim), `fuel_correction_sum_ffffc644`
+> (PID 0x3c, ×0.1−40), AFR words `diag_afr_word_a_ffffaa6c`/`_b_ffffaa7c` (PID 0x0034),
+> `lambda_target_ffffadfc` (PID 0x0044).
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input — see the marker above), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input — see the marker above), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410).
 
 
 ## 1. Executive summary
@@ -189,7 +197,7 @@ entries below.
 | 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `candidate_fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
 | 0x0001ddfc | `candidate_cold_start_enrichment` | b0c4 (0.0 in this ROM) |
 | 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag22_pid0034_afr_lambda_words` / `diag22_pid0043_engine_load_g_rev` / `diag22_pid0044_lambda_target` / `diag22_pid1410_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 (renamed 2026-10-31 by the UDS dispatch pass, formerly `diag_air_fuel_ratio`/`diag_engine_load`/`diag_lambda_target`/`candidate_diag_injector_pulse_time` — see [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)) |
-| 0x000556ec / 0x00055702 | `candidate_diag_afr_word_a/b` | AFR PID words aa6c/aa7c |
+| 0x000556ec / 0x00055702 | `diag_read_afr_word_a` / `diag_read_afr_word_b` | AFR PID words aa6c/aa7c (renamed 2026-10-31, formerly `candidate_diag_afr_word_a/b`) |
 
 ### 7.2 Core RAM
 

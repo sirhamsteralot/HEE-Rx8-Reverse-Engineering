@@ -331,3 +331,5 @@ address	alias	confidence	evidence
 00068a86	uds_rx_channel_alloc	medium	finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10
 00068b10	uds_rx_channel_set_service	medium	DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer
 00068dac	uds_service_dispatch_table_scan	high	scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02
+00055702	diag_read_afr_word_b	high	PID 0x0034 handler second word; encodes diag_afr_word_b_ffffaa7c * 0.00390625 (0x3b800000) offset -128 (0xc3000000); logger 0x220034 AFR
+000556ec	diag_read_afr_word_a	high	PID 0x0034 handler 0x56b22 (diag22_pid0034_afr_lambda_words) calls it; encodes diag_afr_word_a_ffffaa6c * 3.05176e-05 (0x38000000 in pool); logger 0x220034 AFR

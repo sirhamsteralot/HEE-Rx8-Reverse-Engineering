@@ -32731,8 +32731,8 @@ address	name	type	source
 000556aa	LAB_000556aa	Label	DEFAULT
 000556b0	candidate_diag_read_90fc	Function	DEFAULT
 000556ce	candidate_diag_encode_ad10	Function	DEFAULT
-000556ec	candidate_diag_afr_word_a	Function	DEFAULT
-00055702	candidate_diag_afr_word_b	Function	DEFAULT
+000556ec	diag_read_afr_word_a	Function	DEFAULT
+00055702	diag_read_afr_word_b	Function	DEFAULT
 0005571a	candidate_diag_encode_c644	Function	DEFAULT
 00055732	diag_encode_battery_v	Function	DEFAULT
 00055748	diag_encode_load_g_rev	Function	DEFAULT

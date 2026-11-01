@@ -6,7 +6,9 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
 pointers to the detailed docs. §Open work lists groups B–F in pickup order (group A = calibration extraction,
-done — see P3 above; group B is done except the E6 remainder, so start at C). Items within each group are roughly in
+done — see P3 above; group B is done except the E6 remainder; group C item 1 — the
+Mode 22/UDS dispatch tables — is done 2026-10-31, so start at the C remainder).
+Items within each group are roughly in
 dependency order. Phase numbers (P1–P6)
 are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -216,16 +218,16 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 
 | ID | Status | What |
 |----|--------|------|
-| D1 | documented | N3ZHE-vs-N3J1E cal ID |
+| D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them (2026-10-31, [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
 | D3 | open | checksum/CVN unverified — incremental hash routine not yet found |
 | D4 | open | bootloader seed/key location unknown |
-| D5 | open | g/rev vs VolEf — resolve in group C: trace PID 0x43 (handler 0x56b8a) to a named table in data/maps/ |
+| D5 | open (handler side settled 2026-10-31) | g/rev vs VolEf — PID 0x43 handler 0x56b8a (`diag22_pid0043_engine_load_g_rev`) reads `engine_load_ffffc0b4` × 1/255, dynamically verified (0.42 g/rev → raw 107); remaining: trace to a named table in data/maps/ and compare numerically |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
 | D8 | open | defs copies vs pinned submodule — dedupe per AGENTS.md rule 4b |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
-| D10 | open | PID 0x221410 double-claim |
+| D10 | open (evidence added 2026-10-31) | PID 0x221410 double-claim — in 60E15120_N3J1E, PID 0x1410 handler 0x56f6c (`diag22_pid1410_injector_pulse_time`) reads `injector_pulse_time_ffffbe24` × 8.0 = injector pulse time; throttle pedal position is PID 0x0011/0x093c (`ffffad5c`/`ffffad44`), not 0x1410. Cross-ROM check still open |
 
 Full table with locations, impact, and closure plans: previous revision of this
 file in git history; summary rules in [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md) and

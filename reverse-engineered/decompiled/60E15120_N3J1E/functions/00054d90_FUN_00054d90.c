@@ -136,9 +136,9 @@ uint FUN_00054d90(char param_1,uint param_2)
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
-    uVar7 = candidate_diag_afr_word_a();
+    uVar7 = diag_read_afr_word_a();
     uVar7 = FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = candidate_diag_afr_word_b();
+    uVar2 = diag_read_afr_word_b();
     FUN_000548d0(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:

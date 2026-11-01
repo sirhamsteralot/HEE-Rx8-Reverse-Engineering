@@ -15,16 +15,21 @@ for the "fast RAM logging" patch.
   **0x7E8** (PCM), functional 0x7DF; bus speed configurable (typ. 500 kbit/s) —
   confirm against captures before hard-coding.
 - Transport: **ISO-TP (ISO 15765-2)** over CAN — single frame + first/consecutive
-  frames. UDS (ISO 14229) services the firmware implements (from the RX8Club
-  thread + our dispatch analysis): 0x10 session, 0x22 ReadDataByPID (Mode 22 PIDs;
-  PID 0x43 = engine load g/rev × 1/255, handler 0x56b8a in 60E15120, dispatch at
-  0x5fa0c-area in 60E0FC00), 0x23 ReadMemoryByAddress (full-RAM/ROM dumps),
-  0x27 security access (seed/key — bootloader magic; see thread §10), 0x34/0x36/0x37
-  download, 0x09 Mode 9 (CVN — incremental hash, open question), 0x21/0x40 PID
-  support lists.
+  frames (ROM frame-type dispatch 0x6842c: SF/FF/CF/FC → 0x68548/0x6859e/0x6872c/0x68764).
+  UDS (ISO 14229) services the firmware implements, all mapped in the service dispatch
+  table at **0x5eb40** (29 × 12-byte records, router 0x68dac): 0x10 session, 0x11 reset,
+  0x14 clear DTC, 0x21/0x22 read data, 0x23 ReadMemoryByAddress (full-RAM/ROM dumps),
+  0x27 security access (seed/key — bootloader magic; see thread §10), 0x28/0x2f/0x31/0x85,
+  0x34/0x36/0x37 download, 0x3e tester present, OBD modes 0x01–0x09 (0x09 Mode 9 = CVN —
+  incremental hash, open question D3). Mode 22 PIDs dispatch through the **99-record,
+  12-byte table at 0x5f10c–0x5f5af** (router 0x5774c; e.g. PID 0x43 = engine load g/rev
+  × 1/255, handler 0x56b8a `diag22_pid0043_engine_load_g_rev`; cross-ROM: 0x5fa0c-area
+  in 60E0FC00). Full labeling:
+  [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md),
+  `data/labels/60E15120_N3J1E/diagnostic_dispatch_named.tsv` + `uds_service_dispatch.tsv`.
 - Firmware side: CAN RX → interrupt vector → `ref_resetOBDCAN_`/CAN handlers →
-  UDS service dispatch (the 99-record, 12-byte dispatch table at **0x5f10c–0x5f5af**,
-  `data/labels/60E15120_N3J1E/diagnostic_dispatch.tsv`) → PID handlers. The
+  UDS entry 0x680a0 → service router 0x68dac → service handler (0x22 → 0x567e8 → PID
+  dispatch 0x5774c → PID handlers). The
   emulator does not reimplement UDS — it runs the ROM's own handlers; we only move
   bytes.
 
@@ -59,7 +64,11 @@ Verified 2026-10-31 (`tests/test_phase1_dynamic.py::test_rcan_rx_tx_through_rom_
 `test_mode22_dispatch_pid_0043`, `test_phase1.py::test_obd_port_uds_log`): inject
 `02 10 03` on 0x7E0 → RXPR 0x40 → poller fills 0xffffddc8 and clears RXPR;
 `ref_txCAN_EventBased(0x99b0, desc 0x4e00c)` transmits `06 50 03 …` on 0x7E8 into
-tx_log; Mode 22 identifier 0x0043 dispatches to handler 0x56b8a (PID 0x43).
+tx_log; Mode 22 identifier 0x0043 dispatches to handler 0x56b8a (PID 0x43). Since
+2026-10-31 additionally covered by `test_mode22_dispatch_table_payloads` (exact
+response bytes for 8 PIDs), `test_mode22_dispatch_full_sweep` (all 99 PIDs: r0 ==
+rlen+3, NRC 0x31 mask rejection) and `test_uds_service_router_routes` (15 services
+routed through 0x68dac).
 
 ## Validation ("as if in a real car")
 

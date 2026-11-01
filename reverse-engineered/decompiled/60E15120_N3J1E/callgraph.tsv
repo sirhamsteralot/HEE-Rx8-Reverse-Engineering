@@ -5382,7 +5382,7 @@ caller	callee	callee_name
 00054d90	000555ca	diag_read_obd_standard_const
 00054d90	00055616	candidate_diag_encode_b2f0
 00054d90	00055774	candidate_diag_encode_ad48
-00054d90	000556ec	candidate_diag_afr_word_a
+00054d90	000556ec	diag_read_afr_word_a
 00054d90	00055838	candidate_diag_encode_a9c6
 00054d90	00055580	diag_read_o2_present_const
 00054d90	000556ce	candidate_diag_encode_ad10
@@ -5403,7 +5403,7 @@ caller	callee	callee_name
 00054d90	000548c2	ref_updateRAM__
 00054d90	0005578a	candidate_diag_encode_ad5e
 00054d90	0005535e	diag_ol_status_byte
-00054d90	00055702	candidate_diag_afr_word_b
+00054d90	00055702	diag_read_afr_word_b
 00054d90	0005549a	diag_encode_vss
 00054d90	000556b0	candidate_diag_read_90fc
 00054d90	000554c6	diag_encode_iat
@@ -5581,8 +5581,8 @@ caller	callee	callee_name
 00056afa	00057a0c	diag_append_u16_be
 00056b0e	00057a2e	diag_append_u8
 00056b0e	000556ce	candidate_diag_encode_ad10
-00056b22	000556ec	candidate_diag_afr_word_a
-00056b22	00055702	candidate_diag_afr_word_b
+00056b22	000556ec	diag_read_afr_word_a
+00056b22	00055702	diag_read_afr_word_b
 00056b22	00057a0c	diag_append_u16_be
 00056b42	0005571a	candidate_diag_encode_c644
 00056b42	00057a0c	diag_append_u16_be

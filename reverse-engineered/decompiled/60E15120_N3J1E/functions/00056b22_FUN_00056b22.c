@@ -14,9 +14,9 @@ void diag22_pid0034_afr_lambda_words(char param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_afr_word_a();
+  uVar1 = diag_read_afr_word_a();
   diag_append_u16_be((int)param_1,uVar1);
-  uVar1 = candidate_diag_afr_word_b();
+  uVar1 = diag_read_afr_word_b();
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }

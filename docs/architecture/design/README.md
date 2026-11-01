@@ -46,7 +46,9 @@ The firmware has four entry mechanisms, all visible in the export:
    run-time entry mechanism.
 4. **Diagnostic dispatch**: 99 twelve-byte records at **0x5f10c–0x5f5af**
    (`{identifier, availability_mask, response_length, handler}`); searched and
-   dispatched by `FUN_0005774c` (0x5774c). Handler purpose is inferred.
+   dispatched by `diag22_find_and_dispatch_identifier` (0x5774c). All 99 records
+   labeled 2026-10-31 (see [the UDS/Mode-22 dispatch report](../../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md));
+   the UDS service table (29 records) lives at 0x5eb40 with router 0x68dac.
 
 ## 3. Boot flow
 
@@ -341,7 +343,9 @@ fuel cut / rev limit: fuel_cut_arbitration 0xedc4 (a444/a445 <- a464/a465),
 
 diag: PID 0x0034 AFR 0x56b22 (aa6c/aa7c), 0x0043 load 0x56b8a (c0b4),
   0x0044 lambda target 0x56b9e (adfc), 0x1410 pulse time 0x56f6c (be24, step 8 us;
-  logger def 0x221410 conflicts with 'Throttle Pedal Position')
+  logger def 0x221410 conflicts with 'Throttle Pedal Position' — resolved
+  2026-10-31: 0x1410 is injector pulse time in this ROM, throttle is PID
+  0x0011/0x093c; ROADMAP D10)
 ```
 
 ### 5.9 Intake solenoid actuators (SSV / VDI / VFAD / APV / secondary air)

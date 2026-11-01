@@ -8,7 +8,7 @@ literals were re-read directly from the untouched ROM. No hardware execution
 was performed. Full per-function evidence: `reviews/load_fueling_model/`
 (README, REVIEW_NOTES, candidate alias TSVs, validation.json).
 
-**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md).
+**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md); the computed load cell is diag-exposed as [Mode 22 PID 0x43](uds_mode22_dispatch_report.md) (handler 0x56b8a reads `engine_load_ffffc0b4` × 1/255; PID 0x04 = load/max×100 — ROADMAP D5 handler side settled 2026-10-31).
 
 ## 1. Executive summary
 

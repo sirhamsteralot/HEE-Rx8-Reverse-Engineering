@@ -77731,9 +77731,9 @@ uint FUN_00054d90(char param_1,uint param_2)
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
-    uVar7 = candidate_diag_afr_word_a();
+    uVar7 = diag_read_afr_word_a();
     uVar7 = FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = candidate_diag_afr_word_b();
+    uVar2 = diag_read_afr_word_b();
     FUN_000548d0(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
@@ -78392,7 +78392,7 @@ undefined4 candidate_diag_encode_ad10(void)
  */
 /* ROM address: 0x000556ec; body bytes: 22; decompiled */
 
-undefined4 candidate_diag_afr_word_a(void)
+undefined4 diag_read_afr_word_a(void)
 
 {
   undefined4 uVar1;
@@ -78411,7 +78411,7 @@ undefined4 candidate_diag_afr_word_a(void)
  */
 /* ROM address: 0x00055702; body bytes: 24; decompiled */
 
-undefined4 candidate_diag_afr_word_b(void)
+undefined4 diag_read_afr_word_b(void)
 
 {
   undefined4 uVar1;
@@ -80328,9 +80328,9 @@ void diag22_pid0034_afr_lambda_words(char param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_afr_word_a();
+  uVar1 = diag_read_afr_word_a();
   diag_append_u16_be((int)param_1,uVar1);
-  uVar1 = candidate_diag_afr_word_b();
+  uVar1 = diag_read_afr_word_b();
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }

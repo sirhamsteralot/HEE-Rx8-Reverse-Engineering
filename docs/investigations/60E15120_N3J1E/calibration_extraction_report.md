@@ -4,7 +4,7 @@
 (plus all 10 stock ROMs + 4 own 60E0G500 dumps). Static analysis of ROM bytes only;
 no firmware was modified.
 
-**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md).
+**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1).
 
 ## 1. Executive summary
 
@@ -164,5 +164,8 @@ Aron N3ZHEC), 0x6d000 (60E0FB00, 60E0FC00, 60E1B900), 0x71000 (60E32000 ×2).
   Use axis values + surrounding code references to confirm semantic identity.
 - Type codes 12/16 (int8/int16) not present in 60E15120_N3J1E but the handlers
   exist (0x256c/0x2598); may appear in other ROMs.
-- D5 (g/rev vs VolEf) not yet settled — needs PID 0x43 handler 0x56b8a traced
-  to a specific extracted table (ROADMAP group C).
+- D5 (g/rev vs VolEf) handler side settled 2026-10-31: PID 0x43 handler 0x56b8a
+  (`diag22_pid0043_engine_load_g_rev`) encodes `engine_load_ffffc0b4` × 1/255
+  (dynamically verified in the emulator); still needed: trace that RAM cell's
+  writers to a specific extracted table in `data/maps/` and compare numerically
+  (ROADMAP group C).

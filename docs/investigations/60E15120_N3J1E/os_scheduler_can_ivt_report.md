@@ -10,7 +10,7 @@ every dynamically-cited claim names the emulator observation. Full evidence:
 `source_review/accepted_{function,ram,lookup}_aliases.tsv`,
 backup `backups/pre_os_scheduler_can_ivt_labels.zip`.
 
-**Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs.
+**Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs — the full dispatch tables are labeled in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
 
 ## 1. Executive summary
 
@@ -88,7 +88,7 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
 | 0xd914 | `can_mailbox_mask_table` | 16 x u16; mask = 1<<((mb+8)&0xf) |
 | 0xd7d4 | `injector_channel_map` | 6 x 12-byte {DCNT8x ptr, GR1x ptr, TIER mask} — dynamically confirmed via 0x8a68 |
 | 0x4dffc / 0x4dfec / 0x4e00c | CAN descriptors | RX 0x7e0 (mb14), RX 0x7df (mb13), TX 0x7e8 (mb15, buf 0xffffddd0) |
-| 0x5f10c | `diag22_dispatch_table` | 99 x 12-byte records; PID 0x43 record at 0x5f268 -> handler 0x56b8a |
+| 0x5f10c | `tbl_diag22_dispatch_records_0005f10c` | 99 x 12-byte records; all 99 labeled 2026-10-31 (PID 0x43 record at 0x5f268 -> handler 0x56b8a `diag22_pid0043_engine_load_g_rev`) — see [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
 
 ## 4. Labeling applied (2026-10-31 pass)
 
@@ -176,4 +176,10 @@ GPIO 0xfffff700 (PBDR 0xfffff738 bit15 heartbeat, PFDR 0xfffff74e).
 - `ref_setSR` (0x3934) keeps its ref_ name (behavior partially dynamic); the 0x3db0 wake
   call site at literal 0x3950 is static evidence.
 
-## 10. Update — 2026-10-31 (this file is the initial record of the pass)
+## 10. Update — 2026-10-31
+
+Initial record of this pass. Same-day follow-up: the UDS/Mode-22 dispatch labeling pass
+([uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)) labeled every record of
+the 0x5f10c table this report introduced, the UDS service table at 0x5eb40 (router 0x68dac,
+which this report's task[2] chain feeds), and the ISO-TP frame dispatcher 0x6842c that
+0x680a0 calls — the transport picture here is now fully named end to end.

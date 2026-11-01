@@ -41,7 +41,7 @@ exist:
 ```sh
 git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
-python -m pytest tests/                                       # 58 tests, ~25s
+python -m pytest tests/                                       # 61 tests, ~25s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
 python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
@@ -151,10 +151,18 @@ are promoted into the tracked folders.
   reproduce static findings in the emulator (math helpers vs the reimplementation,
   knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
   (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
-  tooling (`hee.py` + MCP plugin). 58/58 tests.
+  tooling (`hee.py` + MCP plugin). 61/61 tests.
 - **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
   cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
   into the decompiled views — [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md).
+- **UDS/Mode-22 dispatch labeling (2026-10-31, ROADMAP group C item 1):** all 99
+  Mode 22 PID records (table 0x5f10c) and all 29 UDS service records (table 0x5eb40)
+  labeled with semantic names, plus the sub-PID table 0x5f5b2, the service router
+  0x68dac and the ISO-TP frame dispatcher 0x6842c — 177 functions + 63 RAM cells +
+  3 tables renamed; re-verified against the raw disassembly and by a full dynamic
+  sweep in the emulator (all 99 PIDs through the ROM's own 0x5774c; 15 services
+  routed through 0x68dac) —
+  [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 - **Ignition timing (2026-10-31):** Phase 2 labeling pass verified the thread §9
   BTDC equation in the emulator (blend 0x123da/0x124d6, clamp 0x121fc/0x12300),
   labeled 15 functions + 22 RAM + 17 tables, then re-verified at the binary level

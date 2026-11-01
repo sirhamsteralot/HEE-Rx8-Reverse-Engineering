@@ -2563,8 +2563,8 @@ address	name	body_bytes	status	file
 00055632	candidate_diag_read_gear_byte	34	decompiled	functions/00055632_FUN_00055632.c
 000556b0	candidate_diag_read_90fc	30	decompiled	functions/000556b0_FUN_000556b0.c
 000556ce	candidate_diag_encode_ad10	30	decompiled	functions/000556ce_FUN_000556ce.c
-000556ec	candidate_diag_afr_word_a	22	decompiled	functions/000556ec_FUN_000556ec.c
-00055702	candidate_diag_afr_word_b	24	decompiled	functions/00055702_FUN_00055702.c
+000556ec	diag_read_afr_word_a	22	decompiled	functions/000556ec_FUN_000556ec.c
+00055702	diag_read_afr_word_b	24	decompiled	functions/00055702_FUN_00055702.c
 0005571a	candidate_diag_encode_c644	24	decompiled	functions/0005571a_FUN_0005571a.c
 00055732	diag_encode_battery_v	22	decompiled	functions/00055732_FUN_00055732.c
 00055748	diag_encode_load_g_rev	22	decompiled	functions/00055748_FUN_00055748.c

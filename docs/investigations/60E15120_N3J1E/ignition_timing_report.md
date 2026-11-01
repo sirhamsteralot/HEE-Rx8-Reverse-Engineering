@@ -10,7 +10,7 @@ tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
 `source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants re-verified in the handlers' literal pools 2026-10-31.
 
 ## 1. Executive summary
 

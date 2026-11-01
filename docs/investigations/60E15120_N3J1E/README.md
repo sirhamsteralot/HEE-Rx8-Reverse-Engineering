@@ -162,7 +162,7 @@ backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
 ## Start here
 
 - [Firmware design document](design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
 - [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)
@@ -205,7 +205,9 @@ use **RX8_SH2E**. The downloadable bundle excludes the superseded project.
 3. Followed reset/interrupt vectors and analyzed reachable code.
 4. Recovered additional candidates from ROM pointers with register-save prologues,
    then a 99-record, 12-byte dispatch table at 0x5f10c–0x5f5af. Its diagnostic role
-   is inferred. Candidate addresses and evidence are recorded in `metadata/`.
+   was inferred at export time; all 99 records are labeled as of 2026-10-31
+   (`uds_mode22_dispatch_report.md`). Candidate addresses and evidence are recorded
+   in `metadata/`.
 5. Applied 1,250 calibration labels from the local 60E15120 XML definition and
    peripheral labels from the reference project's SH7055 register map.
 6. Corrected the five floating-point helper prototypes after inspecting register

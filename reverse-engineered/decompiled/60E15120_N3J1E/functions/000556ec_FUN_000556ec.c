@@ -7,7 +7,7 @@
  */
 /* ROM address: 0x000556ec; body bytes: 22; decompiled */
 
-undefined4 candidate_diag_afr_word_a(void)
+undefined4 diag_read_afr_word_a(void)
 
 {
   undefined4 uVar1;

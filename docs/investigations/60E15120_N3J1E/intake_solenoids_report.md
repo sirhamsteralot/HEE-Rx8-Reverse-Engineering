@@ -8,7 +8,7 @@ untouched). All findings are from static analysis of the canonical export
 supplied SH7055F hardware manual (`Sh7055h.pdf`). No hardware execution was
 performed. Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
 
-**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md).
+**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
 
 ## 1. Executive summary
 
