@@ -8,7 +8,7 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 pointers to the detailed docs. §Open work lists groups D–F in pickup order: groups
 A–C are done (group A = calibration extraction, see P3 below; group B = emulator
 fidelity, done except the E4/E6 partials tracked in the register; group C = static
-labeling & gap closure, items 1–6 all done 2026-10-31), so pick up at group D. Items
+labeling & gap closure, items 1–6 all done 2026-10-31; group D items 1–4 done 2026-10-31/2026-11-01), so pick up at group E. Items
 within each group are roughly in dependency order. Phase numbers (P1–P6) and group
 letters are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -213,18 +213,36 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   `data/labels/cross_rom/mode22/` for future Ghidra exports; family-B extra PIDs
   stay FUN_-level (no base counterpart).
 
+### D item 4 — ECU definitions extended to all 14 ROMs + D8 dedupe — DONE 2026-11-01
+
+- `utilities/scripts/defs-merge/extend_defs_all_roms.py` identifies every dumped ROM
+  by the fw id at 0x2000 (own dumps SHA-256-checked against `binaries/manifest.csv`)
+  and emits a standalone per-ROM RomRaider def (base chain + rom block + provenance
+  comment) to `data/definitions/romraider/per-rom/<rom-stem>.xml`; 60E15120 uses the
+  reviewed block from `rx8defs-merged-60E15120.xml`. 12 of 14 ROMs covered; gaps
+  60E0E500 (no upstream block) and 60E1C500 (block commented out upstream @
+  `251f54f`). ECUFlash defs exist upstream only for 60E0G500 (1210 tables) and are
+  referenced in place. Upstream commits cited: RX8Defs pinned
+  `1b3aea274b1e…`, rx8_defs.xml last change `1b3aea2`, ECUFlash @ `aaac6f3`,
+  60E15120 merge base `ff5ab4f`.
+  → [cross_rom_defs_coverage.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md);
+  artifacts: `data/definitions/` (per-rom/, coverage.json, README.md) +
+  [60E0G500_N3ZHEC/defs-merge/README.md](docs/investigations/60E0G500_N3ZHEC/defs-merge/README.md).
+- D8 closed with it: 4 local copies blob-identical to the pinned submodule deleted
+  (ecuflash ×2, logger ×2); `upstream-rx8defs/rx8_defs.xml` kept (= upstream
+  `ff5ab4f`, differs from pinned HEAD).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A–C are complete (see §Completed above), so the
-next pickup is group D — its dependencies (P3 calibration extraction + group C
-base-ROM labeling) closed 2026-10-31.
+and where artifacts live. Groups A–D are complete (see §Completed above), so the
+next pickup is group E. Group D's dependencies (P3 calibration extraction +
+group C base-ROM labeling) closed 2026-10-31.
 
-### D. Cross-ROM propagation (P2/P5) — base-ROM deps (P3 + group C) DONE 2026-10-31; pick up here
+### D. Cross-ROM propagation (P2/P5) — items 1–4 DONE 2026-10-31/2026-11-01
 
-- Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
-  pinned submodule has a newer ECUFlash XML, 1210 tables) via
-  `utilities/scripts/defs-merge/`, citing upstream commits.
+- ~~Extend `data/definitions/` to all ROMs~~ — DONE 2026-11-01 as D item 4 (see
+  §Completed); D8 closed with it.
 - Apply the cross-ROM label sets to the decompiled exports: run the naming
   pass for 60E0G500_N3ZHEC (apply `cross_ecu/cross_rom_function_aliases.tsv`
   + the new Mode 22 labels — add handler 0x57e66 (pid 0xc116, pid_match +
@@ -279,7 +297,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | D5 | CLOSED 2026-10-31 | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) "Update 2026-10-31" |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
-| D8 | open | defs copies vs pinned submodule — dedupe per AGENTS.md rule 4b |
+| D8 | CLOSED 2026-11-01 | 4 local def copies were git-blob-identical to pinned `submodules/RX8Defs` files (raw diff CRLF/LF only) and were deleted per rule 4b; submodule path + commit `1b3aea2…` is the reference. Also settles "pinned has a newer ECUFlash XML": identical 1210 tables, size diff was line endings. See [cross_rom_defs_coverage.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md) + [data/definitions/README.md](data/definitions/README.md) |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D10 | open (evidence added 2026-10-31) | PID 0x221410 double-claim — in 60E15120_N3J1E, PID 0x1410 handler 0x56f6c (`diag22_pid1410_injector_pulse_time`) reads `injector_pulse_time_ffffbe24` × 8.0 = injector pulse time; throttle pedal position is PID 0x0011/0x093c (`ffffad5c`/`ffffad44`), not 0x1410. Cross-ROM check still open |
 

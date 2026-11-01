@@ -1,0 +1,308 @@
+{
+  "generated": "2026-11-01",
+  "roadmap_item": "D item 4",
+  "upstream": {
+    "repo": "submodules/RX8Defs (equinox311/RX8Defs)",
+    "pinned_commit": "1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+    "romraider_rx8_defs_last_change": "1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc 2026-10-20 Fixed 60E1D400 DTC defs",
+    "ecuflash_60E0G500_last_change": "aaac6f3bdf0eb08a59f82e05cd12c1c7600ee183 2023-08-11 Tidy up, add ECUFlash Defs",
+    "ecuflash_60E0G500_tables": 1210
+  },
+  "roms": [
+    {
+      "file": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
+      "stem": "aron-N3ZHEC-2026-10-31",
+      "source": "binaries/dumps",
+      "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+      "fwid": "60E0G500",
+      "cal_strings": [],
+      "romraider_block": "60E0G500",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 814,
+      "block_tables_with_storageaddress": 814,
+      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-2026-10-31.xml",
+      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "status": "OK"
+    },
+    {
+      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.bin",
+      "stem": "aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31",
+      "source": "binaries/dumps",
+      "sha256": "c09fa06b279a110f24ce99620c71fe798177b8986ce76293c19c721fd22d4738",
+      "fwid": "60E0G500",
+      "cal_strings": [],
+      "romraider_block": "60E0G500",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 814,
+      "block_tables_with_storageaddress": 814,
+      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_10000max-2026-10-31.xml",
+      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "status": "OK"
+    },
+    {
+      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin",
+      "stem": "aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31",
+      "source": "binaries/dumps",
+      "sha256": "9f3043bbfe00b3f0c0cc9aca139565e0de374803ac0bc275b6669d5adfab205d",
+      "fwid": "60E0G500",
+      "cal_strings": [],
+      "romraider_block": "60E0G500",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 814,
+      "block_tables_with_storageaddress": 814,
+      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.xml",
+      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "status": "OK"
+    },
+    {
+      "file": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.bin",
+      "stem": "aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31",
+      "source": "binaries/dumps",
+      "sha256": "5d7d87b6489068797b545c18df575210d02fcbffe2fd4c5d3afd1d41eacac4c6",
+      "fwid": "60E0G500",
+      "cal_strings": [],
+      "romraider_block": "60E0G500",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 814,
+      "block_tables_with_storageaddress": 814,
+      "per_rom_def": "data/definitions/romraider/per-rom/aron-N3ZHEC-streetportv1_24_approx_9500max-2026-10-31.xml",
+      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0E500.bin",
+      "stem": "60E0E500",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "c05dfd0422b2b773027a22dcce2c24923969f27b94634bfcbdb44d6157087e11",
+      "fwid": "60E0E500",
+      "cal_strings": [],
+      "romraider_block": null,
+      "status": "NO_UPSTREAM_BLOCK",
+      "note": "no <rom> block in upstream rx8_defs.xml"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0E700_N3YLEE.bin",
+      "stem": "60E0E700_N3YLEE",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "bba52346a076c35ded281c14b7ff81fcfa6c6e8119b6ec544048e269b0c53dc0",
+      "fwid": "60E0E700",
+      "cal_strings": [],
+      "romraider_block": "60E0E700",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 743,
+      "block_tables_with_storageaddress": 742,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FB00.bin",
+      "stem": "60E0FB00",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "3d32e2591a1170d5ac3feed7ae065c650bde525e56693a5ca7499e6c9eb5f661",
+      "fwid": "60E0FB00",
+      "cal_strings": [],
+      "romraider_block": "60E0FB00",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base",
+        "60E0FC00"
+      ],
+      "block_tables": 732,
+      "block_tables_with_storageaddress": 732,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FC00.bin",
+      "stem": "60E0FC00",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c",
+      "fwid": "60E0FC00",
+      "cal_strings": [],
+      "romraider_block": "60E0FC00",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 907,
+      "block_tables_with_storageaddress": 907,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+      "stem": "60E15120_N3J1E",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+      "fwid": "60E15120",
+      "cal_strings": [
+        "N3J1E_1W.Z05",
+        "60E15120                        ",
+        " Copr.DENSO2000SSW-N3ZHEB000.HEX",
+        "15120 ",
+        "J60E 2.30r1",
+        "J60E 1.61r1"
+      ],
+      "romraider_block": "60E15120",
+      "block_origin": "reviewed block from data/definitions/romraider/rx8defs-merged-60E15120.xml",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 637,
+      "block_tables_with_storageaddress": 637,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1B900.bin",
+      "stem": "60E1B900",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "b0dc94f96e8eaf6f154df8e7388d12fba490cf2adf13edb077677c4c82b3b1b5",
+      "fwid": "60E1B900",
+      "cal_strings": [],
+      "romraider_block": "60E1B900",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 707,
+      "block_tables_with_storageaddress": 707,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E1B900.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1C500_N3J6EB.bin",
+      "stem": "60E1C500_N3J6EB",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "b3b6e1e416826d9c9f51ddc853cae0dea3235a3ddbb260cccd23effc77995c68",
+      "fwid": "60E1C500",
+      "cal_strings": [],
+      "romraider_block": null,
+      "status": "NO_UPSTREAM_BLOCK",
+      "note": "no <rom> block in upstream rx8_defs.xml (60E1C500 block exists but is commented out upstream, commit 251f54f)"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1D400.bin",
+      "stem": "60E1D400",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "344cb8b960eb6dde973bdb8e8c3e3e96cac542166cd7158c6f5f24d71eb7af78",
+      "fwid": "60E1D400",
+      "cal_strings": [],
+      "romraider_block": "60E1D400",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 827,
+      "block_tables_with_storageaddress": 827,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E1D400.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E32000_N3M5E.bin",
+      "stem": "60E32000_N3M5E",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "d5406459cc0b19f831a73a021ad2ae47179127097a15cfa323a34bfa47e330de",
+      "fwid": "60E32000",
+      "cal_strings": [],
+      "romraider_block": "60E32000",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 266,
+      "block_tables_with_storageaddress": 266,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3M5E.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    },
+    {
+      "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E32000_N3N5EB.bin",
+      "stem": "60E32000_N3N5EB",
+      "source": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs",
+      "sha256": "6c043bd4c9581f611919c187da95aeca152627212f235505d7b5ead34294a0a8",
+      "fwid": "60E32000",
+      "cal_strings": [
+        "I#!f#/"
+      ],
+      "romraider_block": "60E32000",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "base_chain": [
+        "RX8Base"
+      ],
+      "block_tables": 266,
+      "block_tables_with_storageaddress": 266,
+      "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3N5EB.xml",
+      "ecuflash_def": null,
+      "status": "OK"
+    }
+  ],
+  "dedupe_d8": [
+    {
+      "local": "data/definitions/ecuflash/60E0G500.xml",
+      "state": "removed (rule 4b); blob from git HEAD",
+      "local_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
+      "pinned_submodule": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "pinned_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
+      "blob_identical_to_pinned": true,
+      "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
+    },
+    {
+      "local": "data/definitions/ecuflash/RX8BASE.xml",
+      "state": "removed (rule 4b); blob from git HEAD",
+      "local_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
+      "pinned_submodule": "submodules/RX8Defs/ECUFlash/RX8BASE.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "pinned_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
+      "blob_identical_to_pinned": true,
+      "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
+    },
+    {
+      "local": "data/definitions/romraider/upstream-rx8defs/logger_rx8_defs.xml",
+      "state": "removed (rule 4b); blob from git HEAD",
+      "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
+      "blob_identical_to_pinned": true,
+      "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
+    },
+    {
+      "local": "data/definitions/romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml",
+      "state": "removed (rule 4b); blob from git HEAD",
+      "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
+      "blob_identical_to_pinned": true,
+      "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
+    },
+    {
+      "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+      "state": "present",
+      "local_blob": "35ddcf316573a092006db5d33c60238ab9a43ea2",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+      "pinned_blob": "29afd0000e9634936c6825cf5d0a7045c6505f75",
+      "blob_identical_to_pinned": false,
+      "action": "keep, record provenance"
+    }
+  ]
+}
