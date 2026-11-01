@@ -231,3 +231,40 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   0xffff9ec8 bit0 (set by vehicle_inputs_poll 0x6744 = PFDR copy, task[17]).
   With tick + latch, uds_entry fires autonomously; response TX still needs the
   service task dispatched.
+
+## Renesas Simulator Debugger cross-check (2026-10-31, ROADMAP group B)
+
+HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
+`utilities/scripts/emu/` via `compare_traces.py`. Setup + recipes live in
+[the emulator README](../utilities/scripts/emu/README.md); findings here.
+
+- **Trace export**: no console TRACE command — use the Trace window (Ctrl+T),
+  set Trace ON, GO, stop, then save the TSV. Console trace commands
+  (`trace ON/GO`, `st ...`) reject parameters. `compare_traces.py` auto-parses
+  the TSV: header row starts with `PTR`, execute-stage rows have `E` in the
+  Pipeline column and the instruction text; rows are sorted by the Cycle column
+  (the file is not cycle-ordered).
+- **No NMI pin model**: Sdsh2e does not simulate the NMI pin, and the ROM
+  zeroes ICR_W at 0x8e6 before polling 0x8ea — so from reset the sim takes the
+  non-NMI path. Workaround ROM `input/60E15120_N3J1E_sim-nmi-nop.bin` NOPs the
+  `bt 0x8ea` at 0x8f0 (PC-trace-equivalent). Never commit anything from
+  `input/`.
+- **Console radix gotcha**: the console wants `H'...'` hex; `0x...` arguments
+  mis-parse (`go H'D5FA'` then fails as an address). Use `H'08F0'` style.
+- **Console command arity**: `memory_fill <start> <end> <data> <mode>` needs
+  start AND end (`memory_fill 0xFFFFED18` errors "Parameter '<end>' is empty");
+  `memory_display <addr>` shows 16 bytes. `sdb <addr>` sets a breakpoint from
+  the console (Goto Line/Ctrl+G may be unavailable in the disassembly view).
+  Memory writes made in the IO/memory view are volatile — they are cleared on
+  `go` (reset) + stop, so set breakpoints instead of relying on patched memory.
+- **Results**: NMI-poll loop 0x8ea vs our emulator (NMI low): MATCH 20000/20000
+  steps. Full boot from reset (NOP-patched ROM): MATCH 147/147 steps, then
+  divergence at the `bf` at 0x9d0 reading GPIO PLIOR_W 0xfffff756 bit3 — a
+  peripheral-pin default difference (Sdsh2e has no PLIOR model), not a CPU
+  bug. Zero CPU-caused divergence in both segments.
+- **Trace format change**: our emulator trace now appends the delay-slot PC
+  after every branch (`sh2e.py` `_branch`), so a taken branch is two entries
+  (branch + delay slot). Golden fixture
+  `tests/fixtures/boot-60E15120_N3J1E-200k.trace` regenerated (319731 entries,
+  header documents the format); re-verified MATCH after the E1/E7/interrupt/
+  delay-slot changes.

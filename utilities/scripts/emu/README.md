@@ -228,21 +228,25 @@ discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
   VBR and pushes SR/PC per the SH-2E manual (6.1.3); FPU `fdiv` follows IEEE
   (x/0 = inf, 0/0 = NaN); `fmov.s` handles @rN+/@-rN/@(disp,rN)/@(r0,rN);
   `sts`/`lds` cover fpscr/fpul.
-- Host float math does not model SH-2E FPU rounding/exception modes (E1).
+- FPU results are rounded to float32 per op and harness float args are f32
+  (E1 closed 2026-10-31); exception modes (inexact/overflow traps) are still
+  not modeled.
 - Peripheral bases are now from `symbols.tsv` (RCAN0 0xffffe400, RCAN1
   0xffffe600, ATU-II 0xfffff400, SCI 0xfffff000, ADC 0xfffff800, WDT 0xffffec10,
   DMAC 0xffffecb0, GPIO 0xfffff700); the ROM region is read-only (CPU stores to
   flash are ignored, counted in `bus.rom_writes_blocked`). Sensor inputs are
   wired to the real ADC ADDRn channels / ATU-II crank capture (E2 input side
   closed). Remaining: WDT IVT vector slot (E3 - the firmware polls TCSR and
-  calls its service routine 0x31c itself), full RCAN fidelity beyond the diag
+  calls its service routine 0x31c itself; E3 closed — WDT ITI = vector 214 =
+  IVT offset 0x358), full RCAN fidelity beyond the diag
   path; the guessed `io_read_overrides` are gone (E5 closed - the 0xffffed18
   entry was the NMI pin level, now SYSC). Timers: ATU-II ch10B tick (CMI10B ->
   0x2c8) and the CAN RX interrupt (0x378 on inject) fire and run the scheduler /
   CAN poll autonomously; the OS task context switch (0x3db0 wake via ref_setSR on
   ISR exit) is still not triggered (E6 remainder), so UDS *response* TX is
-  driven via the profile `uds` entry points. `div1`/rotcl edge cases are
-  approximations and "cycles" are not cycle-accurate time (E7).
+  driven via the profile `uds` entry points. `div1` (full Q/M SR-bit algorithm)
+  and `rotcr` are fixed and validated vs the ROM's own divide routine (E7
+  closed 2026-10-31); "cycles" are still not cycle-accurate time.
 
 ## 2026-10-31 fidelity pass (ROADMAP group B)
 

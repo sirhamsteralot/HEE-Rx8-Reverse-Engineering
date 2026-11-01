@@ -6,7 +6,7 @@ Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 
 **How to read this file.** §Completed is reference only — collapsed summaries with
 pointers to the detailed docs. §Open work lists groups B–F in pickup order (group A = calibration extraction,
-done — see P3 above; start at B). Items within each group are roughly in
+done — see P3 above; group B is done except the E6 remainder, so start at C). Items within each group are roughly in
 dependency order. Phase numbers (P1–P6)
 are kept as tags so existing cross-references still resolve. The discrepancy
 register at the bottom tracks every known unknown (E = emulator, D = data/docs);
@@ -94,7 +94,7 @@ never silently resolve.
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### B. Emulator fidelity hardening (P1 residual) — partially done 2026-10-31
+### B. Emulator fidelity hardening (P1 residual) — done 2026-10-31 except E6 remainder
 
 Foundational for dynamic validation of everything in groups C–E.
 
@@ -136,6 +136,7 @@ Foundational for dynamic validation of everything in groups C–E.
   divergence across both segments. `compare_traces.py` auto-parses the Renesas
   TSV export. Our 200k golden re-verified MATCH after the E1/E7/interrupt/
   delay-slot-trace changes.
+
 ### C. Static labeling & gap closure (P2 residual) — base ROM first
 
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).

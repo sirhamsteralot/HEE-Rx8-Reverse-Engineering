@@ -41,7 +41,7 @@ exist:
 ```sh
 git clone <this repo> && cd HEE-Rx8-Reverse-Engineering
 git lfs install && git submodule update --init --recursive   # git-lfs required (ROMs/PDFs are LFS)
-python -m pytest tests/                                       # 44 tests, ~25s
+python -m pytest tests/                                       # 58 tests, ~25s
 python utilities/scripts/emu/emu.py --profile 60E15120_N3J1E --cycles 1000000
 python utilities/scripts/emu/emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000  # tuned bin
 python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127.0.0.1:8080/
@@ -136,8 +136,10 @@ are promoted into the tracked folders.
   Corpus-validated SH-2E core (9,902 opcodes, 100% of the 168k-instruction
   disassembly); boot of `60E15120_N3J1E` passes CAN init and reaches the main
   idle loop (0x3dac) clean; golden 200k PC trace byte-exact (`compare_traces.py`
-  self-check MATCH; Renesas Simulator Debugger diff still pending — tool not
-  installed here). Peripherals at their symbols.tsv bases with real behavior:
+  self-check MATCH; Renesas SH-2E Simulator Debugger diff DONE 2026-10-31 —
+  NMI-loop segment MATCH 20000/20000, full-boot-from-reset MATCH 147/147 then a
+  peripheral-pin divergence (see `utilities/scripts/emu/README.md` §cross-check).
+  Peripherals at their symbols.tsv bases with real behavior:
   RCAN0 mailbox model at 0xffffe400 (W1C pending regs, MCR/GSR handshake,
   inject→RXPR, TXPR→tx_log), ADC ADDRn channels with ADST→ADF handshake,
   ATU-II at 0xfffff400 (ch10B tick, crank input capture), DMAC, WDT (OVF flag +
@@ -149,7 +151,7 @@ are promoted into the tracked folders.
   reproduce static findings in the emulator (math helpers vs the reimplementation,
   knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
   (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
-  tooling (`hee.py` + MCP plugin). 44/44 tests.
+  tooling (`hee.py` + MCP plugin). 58/58 tests.
 - **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
   cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
   into the decompiled views — [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md).
