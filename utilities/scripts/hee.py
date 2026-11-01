@@ -15,7 +15,7 @@ Examples:
     python utilities/scripts/hee.py hee_boot '{"profile": "60E15120_N3J1E", "cycles": 200000}'
     python utilities/scripts/hee.py hee_disasm_rom '{"rom_id": "60E15120_N3J1E", "addr": "0x31c", "n": 6}'
     python utilities/scripts/hee.py hee_labels '{"rom_id": "60E15120_N3J1E", "query": "engine_load"}'
-    python utilities/scripts/hee.py hee_diff_roms '{"a": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin", "b": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin"}'
+    python utilities/scripts/hee.py hee_diff_roms '{"a": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin", "b": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin"}'
 """
 import json
 import os

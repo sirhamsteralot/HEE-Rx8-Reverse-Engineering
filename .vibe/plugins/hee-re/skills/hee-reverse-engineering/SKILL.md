@@ -1,6 +1,6 @@
 ---
 name: hee-reverse-engineering
-description: Reverse-engineering workflow for the HEE RX-8 PCM using the heeRe MCP tools (emulator, debugger, ROM data) and this repo's evidence rules. Use when analyzing ROMs, labeling functions, validating findings dynamically, or diffing tuned vs stock binaries.
+description: Reverse-engineering workflow for the HEE RX-8 PCM using the heeRe MCP tools (emulator, debugger, ROM data) and this repo's evidence rules. Use when analyzing ROMs, labeling functions, validating findings dynamically, or diffing different ROM binaries.
 user-invocable: true
 allowed-tools: heeRe.*
 ---
@@ -35,8 +35,8 @@ not for asserting conclusions.
    disassembly; `hee_labels {rom_id, query}` searches label TSVs/JSON
    (candidate_/ref_/CAL_ prefixes carry evidence strength — never upgrade without
    new evidence).
-5. **Diff binaries:** `hee_diff_roms {a, b}` — e.g. tuned streetport vs stock
-   `binaries/dumps/aron-N3ZHEC-2026-10-31.bin`; record ranges in an investigation doc.
+5. **Diff binaries:** `hee_diff_roms {a, b}` — e.g. `binaries/dumps/aron-N3ZHEC-2026-10-31.bin`
+   vs a submodule stock ROM; record ranges in an investigation doc.
 6. **Drive-cycle validation:** `hee_replay_load` a `data/logs/` CSV, then
    `hee_replay_step` per row; compare emulated watch values against the log columns.
 

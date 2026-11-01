@@ -40,7 +40,7 @@ def test_hee_boot_state_labels_disasm_diff():
     assert any("tst" in l for l in d["lines"])
     diff = run_hee("hee_diff_roms", {
         "a": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
-        "b": "binaries/dumps/aron-N3ZHEC-streetportv1_24_approx_5500max-2026-10-31.bin"})
+        "b": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin"})
     assert diff["bytes_differing"] > 1000
     assert diff["ranges"]
 

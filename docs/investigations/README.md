@@ -13,7 +13,6 @@ One folder per ROM ID, seeded from the prior effort:
   `binaries/dumps/aron-N3ZHEC-2026-10-31.bin` (fw 60E0G500 / cal N3ZHEC,
   SHA-256 `a33f79a4…`, see `binaries/manifest.csv`):
   [2026-10-31-pipeline-export.md](60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
-  [2026-10-31-streetport-diff.md](60E0G500_N3ZHEC/2026-10-31-streetport-diff.md),
   defs-merge records in [defs-merge/](60E0G500_N3ZHEC/defs-merge/README.md),
   pre-change backups in `backups/` (LFS zips).
 
