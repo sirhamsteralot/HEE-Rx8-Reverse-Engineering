@@ -112,6 +112,12 @@ delivered as a pull request for the user to review and merge.
   `body`). PR title follows the commit-subject style; PR body: what + why, links to
   the investigation doc(s), key `0x` addresses, validation artifacts (test /
   validator output, trace diffs), the ROADMAP item(s) closed, and open questions.
+- **PR bodies open with a plain-language summary.** First 2–5 sentences that a
+  non-specialist can read: what the PR changes, why, and what it deliberately does
+  *not* do (e.g. "this renames functions in one ROM's decompiled C from
+  byte-exact matches; it does not touch ROM binaries or the emulator"). Only then
+  the technical detail (addresses, artifacts, validation). A reviewer or future
+  reader must get the gist from the first paragraph without opening a file.
 - **Review & merge:** the user reviews and merges (merge commit or squash — the
   reviewer's choice). Agents never merge, never push to `main`, never force-push.
   After a merge, delete the branch and re-sync: `git checkout main && git pull`.
