@@ -1,7 +1,7 @@
 # 60E0G500 / N3ZHEC — full pipeline export + label propagation — 2026-10-31
 
 ROADMAP group C item 6 ("label 60E0G500 via the pipeline") + group D item 1
-(differential labeling). Base: `binaries/dumps/aron-N3ZHEC-2026-10-31.bin`
+(differential labeling). Base: `binaries/dumps/60E0G500_N3ZHEC.bin`
 (stock fw `60E0G500`, cal `N3ZHEC`, 512 KiB, SHA-256
 `a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2`, per
 `binaries/manifest.csv`).
@@ -29,7 +29,7 @@ ROADMAP group C item 6 ("label 60E0G500 via the pipeline") + group D item 1
    function aliases** propagate (see
    [cross_rom_differential_labeling.md](../60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md)
    and `cross_ecu/cross_rom_function_aliases.tsv` row set
-   `dumps/aron-N3ZHEC-2026-10-31.bin`).
+   `dumps/60E0G500_N3ZHEC.bin`).
 
 ## Follow-ups (not done here)
 

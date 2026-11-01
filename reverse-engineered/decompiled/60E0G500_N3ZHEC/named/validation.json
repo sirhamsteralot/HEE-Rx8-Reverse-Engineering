@@ -1,7 +1,7 @@
 {
  "date": "2026-11-01",
  "rom": "60E0G500_N3ZHEC",
- "rom_file": "dumps/aron-N3ZHEC-2026-10-31.bin",
+ "rom_file": "dumps/60E0G500_N3ZHEC.bin",
  "rom_sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
  "renames_applied": 236,
  "provenance_only": 1,

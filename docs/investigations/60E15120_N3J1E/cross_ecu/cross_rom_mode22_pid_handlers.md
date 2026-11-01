@@ -37,7 +37,7 @@ Labels are inherited from the base record of the same PID.
 | 60E1D400.bin | 0x5fb48 | 99 | 0x58284 | 0x5ffec=99 (0x58290) | 0x5ffee (0x58488) | = base |
 | 60E32000_N3M5E.bin | 0x651bc | 113 | 0x5d1ac | 0x65708=113 (0x5d1b8) | 0x6570a (0x5d3c8) | +14 |
 | 60E32000_N3N5EB.bin | 0x64d0c | 110 | 0x5ccc4 | 0x65234=110 (0x5cdf4) | 0x65236 (0x5cf0c) | +11 |
-| dumps/aron-N3ZHEC-2026-10-31.bin (60E0G500/N3ZHEC) | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base |
+| dumps/60E0G500_N3ZHEC.bin (60E0G500/N3ZHEC) | 0x5f8b0 | 99 | 0x57fec | 0x5fd54=99 (0x57ff8) | 0x5fd56 (0x581f0) | = base |
 
 Every ROM also has exactly one function whose 20-byte prologue matches the base
 dispatcher 0x5774c and whose literal pool contains the table address (e.g. 60E0FC00

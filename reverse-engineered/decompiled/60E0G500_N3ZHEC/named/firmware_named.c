@@ -6,7 +6,7 @@
  * Address suffixes preserve identity; this is analysis C, not buildable firmware.
  * Saved Ghidra database has not been updated.
  */
-/* Decompiled from 60E0G500 (N3ZHEC, binaries/dumps/aron-N3ZHEC-2026-10-31.bin) using Ghidra.
+/* Decompiled from 60E0G500 (N3ZHEC, binaries/dumps/60E0G500_N3ZHEC.bin) using Ghidra.
  * Analysis C: not original source and not a buildable replacement firmware.
  * ref_ names are inferred from unique exact-byte matches to 60E0FC00.
  * CAL_ labels come from local RX8Defs; see metadata and README.
