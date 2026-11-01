@@ -6,9 +6,9 @@
 void FUN_0003d4f0(void)
 
 {
-  DAT_ffffc623 = DAT_ffffb53b;
+  DAT_ffffc623 = inferred_ram_b53b_ffffb53b_ffffb53b;
   DAT_ffffc620 = 8;
-  DAT_ffffc627 = DAT_ffffbf9c;
+  DAT_ffffc627 = inferred_ram_bf9c_ffffbf9c_ffffbf9c;
   DAT_ffffc621 = 10;
   return;
 }

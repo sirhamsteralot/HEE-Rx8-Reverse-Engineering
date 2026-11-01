@@ -14,7 +14,7 @@ uint FUN_00013ce0(void)
     DAT_ffffa776 = '\x01';
   }
   uVar1 = 1;
-  if (((DAT_ffffa776 == '\x01') || (uVar1 = (uint)DAT_ffffaa62, uVar1 == 1)) || (engine_load_ffffc0b4 < 0.1)
+  if (((DAT_ffffa776 == '\x01') || (uVar1 = (uint)cranking_active_ffffaa62_ffffaa62, uVar1 == 1)) || (engine_load_ffffc0b4 < 0.1)
      ) {
     DAT_ffffa760 = 0;
   }

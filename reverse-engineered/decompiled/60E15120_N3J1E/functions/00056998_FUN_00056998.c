@@ -6,12 +6,12 @@
 /* Function candidate recovered from ROM pointer at 5f174 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag_read_vehicle_speed(char param_1)
+void diag22_pid000d_vehicle_speed_kmh(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0005549a();
+  uVar1 = diag_encode_vss();
   diag_append_u8((int)param_1,uVar1);
   return;
 }

@@ -15,7 +15,7 @@ undefined4 FUN_0005db38(undefined4 param_1,undefined4 param_2,undefined4 param_3
     iVar2 = (uint)DAT_ffffd373 * 0xc;
     if ((&DAT_0005f6dc)[iVar2] == DAT_ffffd372) {
       bVar1 = true;
-      if ((*(ushort *)(&DAT_0005f6e0 + iVar2) & DAT_ffffd3b4) == 0) {
+      if ((*(ushort *)(&DAT_0005f6e0 + iVar2) & diag_permission_mask_ffffd3b4_ffffd3b4) == 0) {
         param_3 = 0x31;
       }
       else if ((byte)(&DAT_0005f6de)[iVar2] == DAT_ffffd370) {

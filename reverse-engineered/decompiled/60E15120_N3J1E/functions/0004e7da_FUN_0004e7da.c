@@ -3,7 +3,7 @@
 bool FUN_0004e7da(void)
 
 {
-  DAT_ffffcfb9 = (DAT_ffff9ec8 & 1) != 0;
+  DAT_ffffcfb9 = (vehicle_inputs_pfdr_latch_ffff9ec8 & 1) != 0;
   return DAT_ffffcfb9;
 }
 

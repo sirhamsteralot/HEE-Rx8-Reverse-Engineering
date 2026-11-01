@@ -6,13 +6,13 @@
 void FUN_000437a0(void)
 
 {
-  if ((DAT_ffffca9a == '\0') && (DAT_ffffaa62 == '\x01')) {
+  if ((DAT_ffffca9a == '\0') && (cranking_active_ffffaa62_ffffaa62 == '\x01')) {
     DAT_ffffca42 = '\f';
   }
   else if (DAT_ffffca42 != '\0') {
     DAT_ffffca42 = DAT_ffffca42 + -1;
   }
-  DAT_ffffca9a = DAT_ffffaa62;
+  DAT_ffffca9a = cranking_active_ffffaa62_ffffaa62;
   return;
 }
 

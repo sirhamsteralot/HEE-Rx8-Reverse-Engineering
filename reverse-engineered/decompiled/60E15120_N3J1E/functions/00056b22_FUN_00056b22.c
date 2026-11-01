@@ -9,7 +9,7 @@
 /* Function candidate recovered from ROM pointer at 5f240 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void diag_air_fuel_ratio(char param_1)
+void diag22_pid0034_afr_lambda_words(char param_1)
 
 {
   undefined4 uVar1;

@@ -11,7 +11,7 @@ uint ref_getDiagSessionSubFunction(char param_1)
   for (uVar1 = 0; ((&DAT_0005f040)[(uVar1 & 0xff) * 4] != param_1 && ((uVar1 & 0xff) < 5));
       uVar1 = uVar1 + 1) {
   }
-  if (((uVar1 & 0xff) < 5) && ((DAT_ffffd3b4 & (&DAT_0005f042)[(uVar1 & 0xff) * 2]) == 0)) {
+  if (((uVar1 & 0xff) < 5) && ((diag_permission_mask_ffffd3b4_ffffd3b4 & (&DAT_0005f042)[(uVar1 & 0xff) * 2]) == 0)) {
     uVar1 = 5;
   }
   return uVar1;

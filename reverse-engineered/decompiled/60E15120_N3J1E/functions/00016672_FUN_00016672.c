@@ -17,7 +17,7 @@ char FUN_00016672(void)
   snapshot_DAT_ffffa8a4 = DAT_ffffa8a4;
   cVar1 = rx8_is_outside_tolerance_band(DAT_ffffa8a4,0,0x3727c5ac);
   cVar2 = DAT_ffffa8bc;
-  if ((((DAT_ffffa8bc != '\x01') || (DAT_ffffa7ac <= engine_speed_rpm_ffffb548)) ||
+  if ((((DAT_ffffa8bc != '\x01') || (inferred_ram_a7ac_ffffa7ac_ffffa7ac <= engine_speed_rpm_ffffb548)) ||
       ((DAT_ffffa8bd != '\x01' && (cVar2 = DAT_ffffa8be, DAT_ffffa8be != '\x01')))) ||
      (((cVar2 = engine_running_ffffa428, engine_running_ffffa428 != '\x01' || (0.01 <= snapshot_DAT_ffffa8a4)) || (cVar1 == '\0')))) {
     DAT_ffffa8a8 = 0;

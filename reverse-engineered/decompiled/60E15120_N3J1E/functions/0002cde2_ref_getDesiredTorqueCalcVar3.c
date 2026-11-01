@@ -13,7 +13,7 @@ void ref_getDesiredTorqueCalcVar3(void)
   float fVar1;
   float fVar2;
   
-  fVar1 = (float)lookup_2d_descriptor_scaled(DAT_ffffad48,&tbl_table_2d_161_0006a77c);
+  fVar1 = (float)lookup_2d_descriptor_scaled(inferred_ram_ad48_ffffad48_ffffad48,&tbl_table_2d_161_0006a77c);
   fVar2 = (float)lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_table_2d_160_0006a768);
   fVar2 = rx8_max_float(fVar2 - DAT_ffffbcb8,0.0);
   DAT_ffffbcbc = fVar1 * fVar2;

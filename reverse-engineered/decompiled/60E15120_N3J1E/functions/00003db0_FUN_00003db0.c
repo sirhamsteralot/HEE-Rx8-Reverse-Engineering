@@ -10,9 +10,9 @@
 undefined4 os_wake_check_context_switch(void)
 
 {
-  if ((DAT_ffff763c != DAT_ffff763e) && ((DAT_ffff7640 & 0x1000) == 0)) {
-    DAT_ffff7640 = 0x100;
-    FUN_00003bf4(&DAT_ffff7638);
+  if ((os_scheduled_count_ffff763c != os_dispatched_count_ffff763e) && ((os_state_flags_ffff7640 & 0x1000) == 0)) {
+    os_state_flags_ffff7640 = 0x100;
+    FUN_00003bf4(&os_ctrl_block_ffff7638);
   }
   return 0;
 }

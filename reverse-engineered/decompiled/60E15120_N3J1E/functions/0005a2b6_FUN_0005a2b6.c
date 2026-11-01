@@ -6,8 +6,8 @@
 void FUN_0005a2b6(void)
 
 {
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff90f4);
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff90fc);
+  ref_validateAddressCopy_float_ADDRESS__(&distance_mil_on_ffff90f4_ffff90f4);
+  ref_validateAddressCopy_float_ADDRESS__(&inferred_ram_90fc_ffff90fc_ffff90fc);
   return;
 }
 

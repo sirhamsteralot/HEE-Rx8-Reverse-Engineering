@@ -10,7 +10,7 @@
 /* Function candidate recovered from ROM pointer at 5f2dc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag_read_trailing_ignition_timing(char param_1)
+void diag22_pid0904_trailing_ignition_timing_deg(char param_1)
 
 {
   undefined4 uVar1;

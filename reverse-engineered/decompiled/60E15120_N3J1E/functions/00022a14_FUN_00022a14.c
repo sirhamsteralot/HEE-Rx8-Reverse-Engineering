@@ -43,10 +43,10 @@ undefined4 FUN_00022a14(void)
   cVar2 = DAT_ffffb2cd;
   cVar1 = DAT_ffffb2cc;
   arg3 = 1e-05;
-  fVar7 = DAT_ffffa9bc;
+  fVar7 = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   uVar4 = inferred_coolant_temperature_ffffa98c;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  DAT_ffffb3d4 = rx8_first_order_filter(DAT_ffffa9bc,DAT_ffffb3d4,0.1,1e-05);
+  DAT_ffffb3d4 = rx8_first_order_filter(inferred_ram_a9bc_ffffa9bc_ffffa9bc,DAT_ffffb3d4,0.1,1e-05);
   if (DAT_ffffb3d4 - fVar7 < 2.0) {
     if (DAT_ffffb3d4 - fVar7 < -2.0) {
       DAT_ffffb3ed = '\0';

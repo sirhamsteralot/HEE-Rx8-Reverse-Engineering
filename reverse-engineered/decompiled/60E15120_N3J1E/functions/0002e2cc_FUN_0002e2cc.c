@@ -3,7 +3,7 @@
 void FUN_0002e2cc(void)
 
 {
-  if (3.0 <= DAT_ffffbc30) {
+  if (3.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
     DAT_ffffbd5a = 0;
   }
   else {

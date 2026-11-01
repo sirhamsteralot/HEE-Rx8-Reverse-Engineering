@@ -35,9 +35,9 @@ void FUN_000036d4(undefined4 param_1,undefined4 param_2,uint param_3,uint param_
     else {
       uVar1 = 5;
     }
-    DAT_ffff7640 = DAT_ffff7640 | 0x2000;
+    os_state_flags_ffff7640 = os_state_flags_ffff7640 | 0x2000;
     (*(code *)0x0)(param_1,param_2,uVar1);
-    DAT_ffff7640 = DAT_ffff7640 & 0xffffdfff;
+    os_state_flags_ffff7640 = os_state_flags_ffff7640 & 0xffffdfff;
   }
   return;
 }

@@ -32,7 +32,7 @@ char FUN_0003b3ea(void)
         }
       }
       bVar2 = false;
-      if (((engine_running_ffffa428 == '\x01') && (50.0 < DAT_ffffad48)) && (DAT_ffffcca1 == '\0')) {
+      if (((engine_running_ffffa428 == '\x01') && (50.0 < inferred_ram_ad48_ffffad48_ffffad48)) && (DAT_ffffcca1 == '\0')) {
         if (mass_air_flow_ffffa9ec < 9.0) {
           bVar2 = true;
         }

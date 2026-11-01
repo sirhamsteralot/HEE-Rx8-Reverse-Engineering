@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00064578 (462 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00065c88(uint param_1,char param_2)
+uint obd_mode02_freeze_frame(uint param_1,char param_2)
 
 {
   bool bVar1;

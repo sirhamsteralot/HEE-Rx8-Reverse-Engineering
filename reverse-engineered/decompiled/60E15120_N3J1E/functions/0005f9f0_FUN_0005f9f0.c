@@ -28,7 +28,7 @@ undefined4 FUN_0005f9f0(uint param_1,char param_2)
       uVar2 = 1;
     }
   }
-  else if ((param_2 == '\x03') && ((&DAT_ffffd570)[param_1] == '\x01')) {
+  else if ((param_2 == '\x03') && ((&dtc_ram_flag_table_ffffd570_ffffd570)[param_1] == '\x01')) {
     uVar2 = 1;
   }
   return uVar2;

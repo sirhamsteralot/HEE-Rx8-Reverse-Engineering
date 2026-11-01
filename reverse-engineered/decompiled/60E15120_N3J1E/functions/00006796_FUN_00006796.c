@@ -11,11 +11,11 @@ void FUN_00006796(void)
   byte bVar3;
   
   uVar2 = PFDR_W;
-  DAT_ffff9ec8 = (DAT_ffff9ed8 | uVar2) & DAT_ffff9ec8 | DAT_ffff9ed8 & uVar2;
+  vehicle_inputs_pfdr_latch_ffff9ec8 = (vehicle_inputs_pfdr_prev_ffff9ed8 | uVar2) & vehicle_inputs_pfdr_latch_ffff9ec8 | vehicle_inputs_pfdr_prev_ffff9ed8 & uVar2;
   uVar1 = PHDR_W;
-  DAT_ffff9eca = (DAT_ffff9eda | uVar1) & DAT_ffff9eca | DAT_ffff9eda & uVar1;
-  DAT_ffff9ed8 = uVar2;
-  DAT_ffff9eda = uVar1;
+  vehicle_inputs_phdr_latch_ffff9eca = (vehicle_inputs_phdr_prev_ffff9eda | uVar1) & vehicle_inputs_phdr_latch_ffff9eca | vehicle_inputs_phdr_prev_ffff9eda & uVar1;
+  vehicle_inputs_pfdr_prev_ffff9ed8 = uVar2;
+  vehicle_inputs_phdr_prev_ffff9eda = uVar1;
   bVar3 = ref_getFromGPIO_(0);
   DAT_ffff9ecc = (DAT_ffff9edc | bVar3) & DAT_ffff9ecc | DAT_ffff9edc & bVar3;
   DAT_ffff9edc = bVar3;

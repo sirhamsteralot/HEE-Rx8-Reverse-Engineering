@@ -3,7 +3,7 @@
 void FUN_00029bf2(void)
 
 {
-  if (((DAT_ffffb418 < inferred_throttle_position_ffffad44) || (engine_running_ffffa428 != '\x01')) || (DAT_ffffaa62 != '\0')) {
+  if (((DAT_ffffb418 < inferred_throttle_position_ffffad44) || (engine_running_ffffa428 != '\x01')) || (cranking_active_ffffaa62_ffffaa62 != '\0')) {
     DAT_ffffbb27 = 0;
   }
   else {

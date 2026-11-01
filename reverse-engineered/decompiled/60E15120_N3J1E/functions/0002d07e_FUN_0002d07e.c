@@ -16,7 +16,7 @@ uint FUN_0002d07e(void)
   uint uVar4;
   
   snapshot_DAT_ffffbbcf = DAT_ffffbbcf;
-  snapshot_DAT_ffffad18 = DAT_ffffad18;
+  snapshot_DAT_ffffad18 = inferred_ram_ad18_ffffad18_ffffad18;
   uVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8668,0);
   if ((uVar3 & 0xff) == 1) {
     uVar4 = (uint)snapshot_DAT_ffffad18;

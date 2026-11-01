@@ -26,7 +26,7 @@ void FUN_000148c4(void)
     }
     fVar2 = (float)lookup_2d_descriptor_scaled(DAT_ffffb5a8,ppuVar1);
   }
-  DAT_ffffa7a4 = rx8_divide_with_zero_fallback(fVar2 * 0.6345 * 60.0,DAT_ffffa7ac);
+  DAT_ffffa7a4 = rx8_divide_with_zero_fallback(fVar2 * 0.6345 * 60.0,inferred_ram_a7ac_ffffa7ac_ffffa7ac);
   return;
 }
 

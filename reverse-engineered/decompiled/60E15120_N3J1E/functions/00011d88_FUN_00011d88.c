@@ -13,7 +13,7 @@ uint can_rx_poll_move_to_uds_buffer(void)
   char cVar3;
   uint uVar2;
   
-  if ((DAT_ffff9ec8 & 1) == 0) {
+  if ((vehicle_inputs_pfdr_latch_ffff9ec8 & 1) == 0) {
     uVar1 = can_rx_pending_check(0);
     if (uVar1 != 0) {
       if ((uVar1 & 0x2000) == 0) {

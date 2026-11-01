@@ -19,7 +19,7 @@ uint FUN_0001a1dc(void)
   
   snapshot_DAT_ffffaa4e = DAT_ffffaa4e;
   cVar1 = DAT_ffffaa4d;
-  arg0 = DAT_ffffa834;
+  arg0 = inferred_ram_a834_ffffa834_ffffa834;
   arg1 = inferred_throttle_position_ffffad44;
   arg1_00 = engine_speed_rpm_ffffb548;
   DAT_ffffaa44 = rx8_first_order_filter(engine_speed_rpm_ffffb548,DAT_ffffaa44,0.5,1e-05);
@@ -27,7 +27,7 @@ uint FUN_0001a1dc(void)
   fVar5 = rx8_absolute_difference(DAT_ffffaa44,arg1_00);
   fVar6 = rx8_absolute_difference(arg0,DAT_ffffaa58);
   DAT_ffffaa50 = (float)lookup_2d_descriptor_scaled(arg1,&DAT_000697a0);
-  if (DAT_ffffaa62 == '\0') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\0') {
     if ((DAT_ffffaa50 <= fVar4) || (8000.0 <= fVar5)) {
       DAT_ffffaa4d = 1;
     }

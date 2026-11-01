@@ -3,12 +3,12 @@
  */
 /* ROM address: 0x000555ac; body bytes: 30; decompiled */
 
-undefined4 FUN_000555ac(void)
+undefined4 candidate_diag_encode_trim_b074(void)
 
 {
   undefined4 uVar1;
   
-  uVar1 = rx8_encode_u8_affine_saturate(DAT_ffffb074 * 100.0,0x3f480346,0xc2c80000);
+  uVar1 = rx8_encode_u8_affine_saturate(inferred_trim_b074_ffffb074_ffffb074 * 100.0,0x3f480346,0xc2c80000);
   return uVar1;
 }
 

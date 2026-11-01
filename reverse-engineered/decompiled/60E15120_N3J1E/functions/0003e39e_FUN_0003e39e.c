@@ -23,7 +23,7 @@ void FUN_0003e39e(void)
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
-  DAT_ffffc654 = rx8_max_float(DAT_ffffa778,DAT_ffffa77c);
+  DAT_ffffc654 = rx8_max_float(iat_timing_compensation_leading_ffffa778,iat_timing_compensation_trailing_ffffa77c);
   DAT_ffffc658 = lookup_2d_descriptor_scaled(mass_air_flow_ffffa9ec,&tbl_airflow_inj_angle_related_0006b758);
   fVar5 = 1.0;
   if (DAT_ffffc64c == '\x01') {

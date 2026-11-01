@@ -6,7 +6,7 @@
 void ref_adcCoolantTemp2Volts(void)
 
 {
-  DAT_ffffa984 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1c);
+  inferred_ram_a984_ffffa984_ffffa984 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1c);
   return;
 }
 

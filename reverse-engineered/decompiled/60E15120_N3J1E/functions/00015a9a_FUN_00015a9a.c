@@ -40,9 +40,9 @@ undefined4 FUN_00015a9a(void)
     DAT_ffffa86c = 0;
     DAT_ffffa884 = '\x04';
   }
-  DAT_ffffa834 = ((DAT_ffffa7a0 + DAT_ffffa8c4 + DAT_ffffa8a4 + DAT_ffffa888 + DAT_ffffa7a8 +
+  inferred_ram_a834_ffffa834_ffffa834 = ((DAT_ffffa7a0 + DAT_ffffa8c4 + DAT_ffffa8a4 + DAT_ffffa888 + DAT_ffffa7a8 +
                    DAT_ffffa88c + DAT_ffffa830) - DAT_ffffa89c) + DAT_ffffc044 + DAT_ffffc19c;
-  if (engine_speed_rpm_ffffb548 < DAT_ffffa7ac + 0.0) {
+  if (engine_speed_rpm_ffffb548 < inferred_ram_a7ac_ffffa7ac_ffffa7ac + 0.0) {
     if (engine_speed_rpm_ffffb548 < 312.0) {
       DAT_ffffa844 = '\0';
     }
@@ -53,14 +53,14 @@ undefined4 FUN_00015a9a(void)
   DAT_ffffa858 = DAT_ffffa850;
   DAT_ffffa85c = DAT_ffffa854;
   arg1 = 0.0;
-  snapshot_DAT_ffffa7ac = DAT_ffffa7ac;
+  snapshot_DAT_ffffa7ac = inferred_ram_a7ac_ffffa7ac_ffffa7ac;
   snapshot_inferred_coolant_temperature_ffffa990 = inferred_coolant_temperature_ffffa990;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  fVar2 = DAT_ffffa834;
+  fVar2 = inferred_ram_a834_ffffa834_ffffa834;
   if ((DAT_ffffa844 == '\x01') &&
      (local_3c = rx8_is_outside_tolerance_band(engine_speed_rpm_ffffb548,0,0x3727c5ac),
      fVar2 = DAT_ffffa850, local_3c != '\0')) {
-    fVar2 = (DAT_ffffa834 * snapshot_DAT_ffffa7ac) / snapshot_engine_speed_rpm_ffffb548;
+    fVar2 = (inferred_ram_a834_ffffa834_ffffa834 * snapshot_DAT_ffffa7ac) / snapshot_engine_speed_rpm_ffffb548;
     if (cVar1 == '\x01') {
       fVar3 = 0.0;
     }
@@ -76,7 +76,7 @@ undefined4 FUN_00015a9a(void)
     DAT_ffffa854 = rx8_first_order_filter(DAT_ffffa850,DAT_ffffa85c,1.0 - DAT_ffffa87c,1e-05);
   }
   else {
-    DAT_ffffa854 = DAT_ffffa834;
+    DAT_ffffa854 = inferred_ram_a834_ffffa834_ffffa834;
   }
   fVar2 = arg1;
   if ((((DAT_ffffa885 != '\0') || (DAT_ffffa844 != '\x01')) && (DAT_ffffa844 != '\0')) &&
@@ -85,7 +85,7 @@ undefined4 FUN_00015a9a(void)
     fVar2 = (snapshot_engine_speed_rpm_ffffb548 * fVar2) / 38.07;
   }
   DAT_ffffa864 = fVar2;
-  if ((DAT_ffffaa62 != '\0') && (DAT_ffffa844 != '\0')) {
+  if ((cranking_active_ffffaa62_ffffaa62 != '\0') && (DAT_ffffa844 != '\0')) {
     if (cVar1 == '\0') {
       DAT_ffffa880 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa990,&tbl_table_2d_39_000694a4);
       fVar2 = (DAT_ffffa864 - DAT_ffffa880) * 0.5;
@@ -100,7 +100,7 @@ undefined4 FUN_00015a9a(void)
   }
   DAT_ffffa868 = arg1;
   if (DAT_ffffa844 == '\0') {
-    DAT_ffffa860 = DAT_ffffa834;
+    DAT_ffffa860 = inferred_ram_a834_ffffa834_ffffa834;
   }
   else if (local_3c != '\0') {
     fVar2 = (DAT_ffffc048 * snapshot_DAT_ffffa7ac) / snapshot_engine_speed_rpm_ffffb548 +
@@ -110,7 +110,7 @@ undefined4 FUN_00015a9a(void)
     DAT_ffffa860 = rx8_clamp_float(fVar2,DAT_ffffa870,DAT_ffffa874);
   }
   if (engine_running_ffffa428 == '\x01') {
-    fVar2 = (DAT_ffffa834 * snapshot_DAT_ffffa7ac) / 38.07;
+    fVar2 = (inferred_ram_a834_ffffa834_ffffa834 * snapshot_DAT_ffffa7ac) / 38.07;
     if (DAT_ffffa844 != '\0') {
       DAT_ffffa84c = fVar2;
       fVar2 = rx8_clamp_float((DAT_ffffa860 * snapshot_engine_speed_rpm_ffffb548) / 38.07,fVar2,fVar2 + 29.1969);

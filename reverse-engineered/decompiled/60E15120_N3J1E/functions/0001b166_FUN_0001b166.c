@@ -25,7 +25,7 @@ uint FUN_0001b166(void)
   cVar2 = DAT_ffffcc99;
   cVar7 = DAT_ffffcc98;
   sVar1 = DAT_ffffad88;
-  fVar11 = DAT_ffffb410;
+  fVar11 = inferred_ram_b410_ffffb410_ffffb410;
   if (DAT_ffffadd1 == '\0') {
     DAT_ffffad70 = DAT_ffffb4b0;
     DAT_ffffad74 = DAT_ffffb4b4;
@@ -58,7 +58,7 @@ uint FUN_0001b166(void)
     uVar4 = ref_updateMemoryAtAddress_float_VAL_ADDR(uVar12,&DAT_ffff80b4);
   }
   else if (0xf < uVar5) {
-    fVar9 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+    fVar9 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
     uVar4 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
     fVar8 = extraout_fr0;
     if (fVar11 + fVar9 < DAT_ffffad70 + 0.061) {

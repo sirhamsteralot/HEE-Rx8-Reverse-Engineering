@@ -43,8 +43,8 @@ uint FUN_0001778e(char param_1)
     else if (DAT_ffffa8fb == 4) {
       DAT_ffffa8fa = '0';
       FUN_000174b4(0);
-      if (DAT_ffffa8f4 < 0x3c) {
-        DAT_ffffa8fe = DAT_ffffa8f4 + 1;
+      if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 < 0x3c) {
+        DAT_ffffa8fe = inferred_ram_a8f4_ffffa8f4_ffffa8f4 + 1;
       }
     }
     else {

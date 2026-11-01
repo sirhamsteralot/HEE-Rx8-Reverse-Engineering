@@ -33,7 +33,7 @@ void FUN_0001b6fc(void)
         ((0.244 <= fVar6 || ((DAT_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')))))))) ||
       (DAT_ffffccbc != '\0')) ||
      ((((cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0), cVar3 != '\0' ||
-        (DAT_ffffb410 <= 90.0)) || (DAT_ffffad30 <= 5.0)) || (DAT_ffffb40c <= fVar7)))) {
+        (inferred_ram_b410_ffffb410_ffffb410 <= 90.0)) || (DAT_ffffad30 <= 5.0)) || (DAT_ffffb40c <= fVar7)))) {
     uVar2 = 0;
   }
   else {

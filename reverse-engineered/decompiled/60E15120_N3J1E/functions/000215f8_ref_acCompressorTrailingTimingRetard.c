@@ -13,7 +13,7 @@ uint ref_acCompressorTrailingTimingRetard(void)
   cVar1 = DAT_ffffbd68;
   if ((DAT_ffffb2a3 == '\x01') && (DAT_ffffbd68 == '\0')) {
     DAT_ffffb2a1 = 1;
-    if (DAT_ffffaa62 == '\x01') {
+    if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
       DAT_ffffb294 = 0xc0a00000;
       pbVar3 = &DAT_000722f9;
     }

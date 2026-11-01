@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f498 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005736c(char param_1)
+void candidate_diag22_pid1688_secondary_air_status_bit(char param_1)
 
 {
   undefined4 uVar1;
@@ -12,7 +12,7 @@ void FUN_0005736c(char param_1)
   if (secondary_air_request_final_ffffa960 == '\x01') {
     uVar1 = 0x20;
   }
-  uVar1 = FUN_000579a8(uVar1,1);
+  uVar1 = diag22_subpid_supported_mask(uVar1,1);
   diag_append_u8((int)param_1,uVar1);
   return;
 }

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00065b4c (144 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0006725c(undefined4 param_1,char param_2)
+void obd_mode06_test_results(undefined4 param_1,char param_2)
 
 {
   char cVar1;

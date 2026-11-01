@@ -20,7 +20,7 @@ uint FUN_0002090a(void)
   undefined4 uVar4;
   
   cVar2 = DAT_ffffaa63;
-  snapshot_DAT_ffffaa62 = DAT_ffffaa62;
+  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   if (((((DAT_ffffb0cc == '\0') && (DAT_ffffb268 == '\0')) && (DAT_ffffb269 == '\0')) &&
       ((0x270 < engine_running_timer_ffffa424 && ((0x2c < DAT_ffffb25a || (DAT_ffffb267 == 0)))))) &&
      ((DAT_ffffb266 == '\x01' && (DAT_ffffaa63 == '\0')))) {

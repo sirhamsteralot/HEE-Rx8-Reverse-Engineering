@@ -10,10 +10,10 @@ char FUN_00053dbe(void)
   
   cVar1 = '\x01';
   if ((DAT_ffffd1a3 == '\x01') || (cVar1 = DAT_ffffd1a4, DAT_ffffd1a4 == '\x01')) {
-    DAT_ffffd1a1 = 1;
+    inferred_ram_d1a1_ffffd1a1_ffffd1a1 = 1;
   }
   else {
-    DAT_ffffd1a1 = 0;
+    inferred_ram_d1a1_ffffd1a1_ffffd1a1 = 0;
   }
   return cVar1;
 }

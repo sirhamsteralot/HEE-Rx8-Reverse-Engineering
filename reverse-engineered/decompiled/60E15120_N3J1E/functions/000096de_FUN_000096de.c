@@ -8,7 +8,7 @@ void FUN_000096de(void)
 {
   int iVar1;
   
-  iVar1 = FUN_00006010(2,&DAT_ffffa140);
+  iVar1 = os_queue_dequeue_record(2,&DAT_ffffa140);
   if (iVar1 == 0) {
     (*DAT_ffffa140)(&DAT_ffffa144);
   }

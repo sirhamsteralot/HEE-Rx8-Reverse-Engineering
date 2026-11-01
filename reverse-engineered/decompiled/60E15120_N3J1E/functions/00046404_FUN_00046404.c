@@ -16,7 +16,7 @@ uint FUN_00046404(void)
   
   arg0 = DAT_ffffb40c;
   arg1 = DAT_ffffad30;
-  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffcc20 = arg1 - fVar3;
   DAT_ffffcc24 = arg0 - fVar3;
   fVar3 = rx8_absolute_difference(arg0,arg1);

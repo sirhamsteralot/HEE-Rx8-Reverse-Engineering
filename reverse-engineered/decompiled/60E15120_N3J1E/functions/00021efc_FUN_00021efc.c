@@ -23,7 +23,7 @@ uint FUN_00021efc(void)
   undefined4 snapshot_DAT_ffffbe00;
   float arg1;
   
-  fVar5 = DAT_ffffadec;
+  fVar5 = inferred_lambda_actual_ffffadec_ffffadec;
   arg1 = 0.0;
   snapshot_DAT_ffffbe00 = DAT_ffffbe00;
   fVar4 = rx8_absolute_difference(closed_loop_trim_filtered_ffffbeb8,0.0);
@@ -31,7 +31,7 @@ uint FUN_00021efc(void)
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
   DAT_ffffb320 = lookup_2d_descriptor_scaled(inferred_manifold_relative_pressure_ffffbe08,&tbl_table_2d_120_0006a1b0);
   DAT_ffffb324 = (float)lookup_3d_descriptor_scaled(snapshot_DAT_ffffbe00,engine_speed_rpm_ffffb548,&tbl_table_3d_44_0006a1e0);
-  if (DAT_ffffaa62 == '\x01') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
     DAT_ffffb2f8 = (float)lookup_2d_descriptor_scaled(inferred_barometric_pressure_ffffad14,&tbl_table_2d_119_0006a19c);
   }
   else {
@@ -63,7 +63,7 @@ uint FUN_00021efc(void)
   }
   fVar5 = (float)rx8_divide_with_zero_fallback(DAT_ffffb320,snapshot_mass_air_flow_ffffa9ec);
   DAT_ffffb300 = fVar5 * 100.0;
-  DAT_ffffb314 = (DAT_ffffb0d0 + 1.0) * DAT_ffffb324;
+  DAT_ffffb314 = (inferred_ltft_bank1_ffffb0d0_ffffb0d0 + 1.0) * DAT_ffffb324;
   fVar5 = rx8_max_float(DAT_ffffb220,arg1);
   fVar5 = (float)rx8_divide_with_zero_fallback(DAT_ffffb314,fVar5);
   DAT_ffffb304 = rx8_min_float(fVar5,20.0);

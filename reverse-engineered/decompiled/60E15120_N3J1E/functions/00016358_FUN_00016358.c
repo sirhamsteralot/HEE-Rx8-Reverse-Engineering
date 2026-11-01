@@ -9,7 +9,7 @@
 void FUN_00016358(void)
 
 {
-  DAT_ffffa898 = lookup_3d_descriptor_scaled(inferred_barometric_pressure_ffffad14,DAT_ffffa834,&tbl_table_3d_63_0006a814);
+  DAT_ffffa898 = lookup_3d_descriptor_scaled(inferred_barometric_pressure_ffffad14,inferred_ram_a834_ffffa834_ffffa834,&tbl_table_3d_63_0006a814);
   return;
 }
 

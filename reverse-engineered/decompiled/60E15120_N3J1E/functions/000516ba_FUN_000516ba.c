@@ -13,7 +13,7 @@ uint FUN_000516ba(void)
   float arg0;
   
   snapshot_DAT_ffffcfaa = DAT_ffffcfaa;
-  arg0 = (DAT_ffffadec + -1.0) * 100.0;
+  arg0 = (inferred_lambda_actual_ffffadec_ffffadec + -1.0) * 100.0;
   uVar2 = (uint)DAT_ffffd0f2;
   if (uVar2 == 1) {
     uVar2 = 0x1f;

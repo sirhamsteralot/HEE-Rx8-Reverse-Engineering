@@ -9,7 +9,7 @@ void FUN_0005e34e(void)
   undefined4 uVar1;
   
   uVar1 = 0;
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff9150);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&inferred_sensor_block_ffff9150_ffff9150);
   ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff9158);
   ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff9160);
   ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff9168);

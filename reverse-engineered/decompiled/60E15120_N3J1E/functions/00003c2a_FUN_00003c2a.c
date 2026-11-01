@@ -16,7 +16,7 @@ void os_dispatch(int param_1)
   *(undefined4 *)(param_1 + 8) = 0x80000000;
   *(undefined2 *)(param_1 + 4) = 0xffff;
   *(undefined **)(param_1 + 0x18) = &DAT_00004990;
-  *(undefined1 **)(param_1 + 0x14) = &DAT_ffff7408;
+  *(undefined1 **)(param_1 + 0x14) = &os_task_stack_base_ffff7408;
   FUN_00003dac(param_1,0);
   return;
 }

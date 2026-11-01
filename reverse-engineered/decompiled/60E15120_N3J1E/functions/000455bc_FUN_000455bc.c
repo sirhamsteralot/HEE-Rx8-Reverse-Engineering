@@ -19,7 +19,7 @@ uint FUN_000455bc(void)
   snapshot_DAT_ffffcbe6 = DAT_ffffcbe6;
   DAT_ffffcbd6 = DAT_ffffcbe6;
   DAT_ffffcbe6 = DAT_ffffcbe4;
-  DAT_ffffcbe4 = DAT_ffffad5c;
+  DAT_ffffcbe4 = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   if (DAT_ffffb4cc <= snapshot_DAT_ffffcbe6) {
     uVar5 = snapshot_DAT_ffffcbe6 - DAT_ffffb4cc;
   }

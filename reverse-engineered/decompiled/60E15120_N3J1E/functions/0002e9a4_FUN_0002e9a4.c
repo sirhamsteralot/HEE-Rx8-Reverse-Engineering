@@ -47,7 +47,7 @@ undefined1 * FUN_0002e9a4(void)
   else {
     DAT_ffffbd98 = '\x01';
   }
-  puVar2 = (undefined1 *)(uint)DAT_ffffbf3c;
+  puVar2 = (undefined1 *)(uint)inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   if ((((((puVar2 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) &&
          (puVar2 = (undefined1 *)(int)DAT_ffffbd88, puVar2 <= (undefined1 *)(int)engine_running_timer_ffffa424)) &&
         (puVar2 = (undefined1 *)(uint)snapshot_engine_injectors_off_ffffa42c, puVar2 == (undefined1 *)0x0)) &&

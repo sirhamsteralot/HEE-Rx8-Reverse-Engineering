@@ -7,7 +7,7 @@ void FUN_0001e070(void)
 
 {
   DAT_ffffb0d8 = 0x8000;
-  DAT_ffffb0d0 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff80c4);
+  inferred_ltft_bank1_ffffb0d0_ffffb0d0 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff80c4);
   return;
 }
 

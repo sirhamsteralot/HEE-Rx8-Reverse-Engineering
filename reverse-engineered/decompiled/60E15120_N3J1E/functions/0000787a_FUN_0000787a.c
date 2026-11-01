@@ -84,8 +84,8 @@ undefined4 * FUN_0000787a(void)
       puVar1 = (undefined4 *)ref_reInitCrankSensor__();
       return puVar1;
     }
-    puVar1 = &DAT_ffff9fb0;
-    if (0xa2c27 < DAT_ffff9fb0) {
+    puVar1 = &crank_icr10ah_sample_ffff9fb0;
+    if (0xa2c27 < crank_icr10ah_sample_ffff9fb0) {
       DAT_ffff9fc2 = 1;
     }
     if (2 < DAT_ffff9fc2) {
@@ -95,7 +95,7 @@ undefined4 * FUN_0000787a(void)
         DAT_ffff9fc1 = '\x01';
         DAT_ffff9f95 = 0x21;
         puVar1 = &DAT_ffff9fac;
-        DAT_ffff9fac = DAT_ffff9fb8;
+        DAT_ffff9fac = crank_icr0ah_sample_ffff9fb8;
       }
     }
   }

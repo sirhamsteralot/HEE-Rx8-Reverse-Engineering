@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00067376 (98 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_00068a86(char param_1)
+int candidate_uds_rx_channel_alloc(char param_1)
 
 {
   bool bVar1;
@@ -25,7 +25,7 @@ int FUN_00068a86(char param_1)
     iVar2 = iVar2 + 1;
   } while (iVar2 < 1);
   if (!bVar1) {
-    FUN_00068b10(unaff_r14,(int)param_1);
+    candidate_uds_rx_channel_set_service(unaff_r14,(int)param_1);
   }
   return unaff_r14;
 }

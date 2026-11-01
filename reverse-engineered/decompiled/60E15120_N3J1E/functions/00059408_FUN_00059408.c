@@ -49,7 +49,7 @@ void FUN_00059408(void)
   local_80[1] = DAT_ffffd273;
   ref_setupForUdsResponse_(0x33,local_80,2);
   DAT_ffffd274 = DAT_ffffd274 + 2;
-  DAT_ffffd276 = FUN_0005fb08();
+  DAT_ffffd276 = dtc_count_ram_table();
   if (DAT_ffffd25b == '\0') {
     local_80[0] = '\x02';
 LAB_0005949e:

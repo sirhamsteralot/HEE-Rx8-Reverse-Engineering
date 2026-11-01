@@ -6,7 +6,7 @@
 void FUN_00018f60(void)
 
 {
-  DAT_ffffa9c4 = DAT_ffff9eec;
+  inferred_pedal_volts_ffffa9c4_ffffa9c4 = DAT_ffff9eec;
   DAT_ffffa9c8 = DAT_ffffa112;
   DAT_ffffa99c = rx8_min_float(25.0,DAT_ffffa108);
   return;

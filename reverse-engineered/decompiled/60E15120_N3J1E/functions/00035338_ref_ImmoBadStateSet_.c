@@ -7,7 +7,7 @@ void ref_ImmoBadStateSet_(void)
 
 {
   ref_setImmoLight__(0);
-  DAT_ffffc1d0 = 0;
+  inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
   DAT_ffffc214 = 500;
   DAT_ffffc21d = 4;
   return;

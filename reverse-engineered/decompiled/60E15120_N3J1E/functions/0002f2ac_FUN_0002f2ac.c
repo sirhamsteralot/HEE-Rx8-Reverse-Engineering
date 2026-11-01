@@ -32,8 +32,8 @@ uint FUN_0002f2ac(void)
   else {
     DAT_ffffbdaf = '\x01';
   }
-  if (DAT_ffffc644 < 750.0) {
-    if (DAT_ffffc644 < 700.0) {
+  if (fuel_correction_sum_ffffc644_ffffc644 < 750.0) {
+    if (fuel_correction_sum_ffffc644_ffffc644 < 700.0) {
       DAT_ffffbdb0 = '\0';
     }
   }

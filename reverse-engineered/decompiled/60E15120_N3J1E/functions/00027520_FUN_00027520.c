@@ -15,8 +15,8 @@ code * FUN_00027520(void)
   
   fVar3 = 0.0;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  snapshot_DAT_ffffb2f0 = DAT_ffffb2f0;
-  uVar1 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  snapshot_DAT_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
+  uVar1 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   fVar3 = rx8_absolute_difference(DAT_ffffad50,fVar3);
   pcVar2 = (code *)(uint)DAT_ffffb69c;
   if (((((((pcVar2 != (code *)((int)&vector_Poweron_Reset + 1)) ||

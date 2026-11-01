@@ -19,7 +19,7 @@ uint FUN_00020298(void)
   fVar5 = DAT_ffffb2ec;
   snapshot_closed_loop_trim_filtered_ffffbeb8 = closed_loop_trim_filtered_ffffbeb8;
   cVar4 = rx8_is_outside_tolerance_band(DAT_ffffb2ec,0,0x3727c5ac);
-  if (DAT_ffffaa62 == '\0') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\0') {
     DAT_ffffb238 = 0;
   }
   else if (((DAT_ffffb242 == '\x01') && (cVar1 == '\0')) ||

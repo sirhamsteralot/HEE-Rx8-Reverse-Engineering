@@ -3,10 +3,10 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f538. Table purpose inferred from
    neighboring code. */
 
-void thunk_FUN_00037358(void)
+void candidate_diag22_pidc116_dtc_state_machine(void)
 
 {
-  FUN_00037358();
+  candidate_dtc_state_machine_step();
   return;
 }
 

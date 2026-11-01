@@ -6,7 +6,7 @@
 void FUN_000687c4(void)
 
 {
-  DAT_ffffddd0 = DAT_ffffddd0 | (byte)DAT_ffffdddc;
+  uds_tx_buffer_ffffddd0 = uds_tx_buffer_ffffddd0 | (byte)DAT_ffffdddc;
   FUN_00067e78((int)DAT_ffffdde2,&DAT_ffffddd1,7);
   FUN_00068bc6(3,0x30);
   return;

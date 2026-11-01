@@ -23,8 +23,8 @@ undefined4 * can201_prepare_rpm_with_conditional_filter(void)
   fVar3 = arg0;
   if ((((vehicle_speed_ffffbbb4 <= 0.099999994) &&
        (puVar1 = (undefined4 *)(uint)engine_running_ffffa428, puVar1 == (undefined4 *)0x1)) &&
-      (puVar1 = (undefined4 *)(uint)DAT_ffffaa62, puVar1 == (undefined4 *)0x1)) &&
-     ((arg0 < DAT_ffffa7ac + 150.0 && (fVar2 < 30.0)))) {
+      (puVar1 = (undefined4 *)(uint)cranking_active_ffffaa62_ffffaa62, puVar1 == (undefined4 *)0x1)) &&
+     ((arg0 < inferred_ram_a7ac_ffffa7ac_ffffa7ac + 150.0 && (fVar2 < 30.0)))) {
     fVar3 = rx8_first_order_filter(arg0,can201_prepared_engine_rpm_ffffbb04,0.04,1e-05);
     puVar1 = extraout_r0;
   }

@@ -142,9 +142,14 @@ Foundational for dynamic validation of everything in groups C–E.
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
 Use the emulator for dynamic verification where useful (see group B).
 
-- Label the remaining **98 records** of the dispatch table at 0x5f10c–0x5f5af +
-  full UDS service mapping (services 0x10/0x23/0x27/0x34/0x36/0x37). One record
-  done (PID 0x43 → 0x56b8a at 0x5f268).
+- **DONE 2026-10-31**: all **99 records** of the dispatch table at 0x5f10c–0x5f5af labeled
+  (PID → handler → semantic, incl. sub-PID supported-bits table 0x5f5b2) + full UDS service
+  table 0x5eb40 (29 records: services 0x10/0x11/0x14/0x21/0x22/0x23/0x27/0x28/0x2f/0x31/
+  0x34/0x36/0x37/0x3e/0x85 + OBD modes 0x01-0x09 + 0x12/0x18/0x32/0x33/0x3b/0xb1), ISO-TP
+  frame dispatch 0x6842c, service router 0x68dac; 175 functions + 63 RAM cells renamed,
+  dynamically verified in the emulator (59/59 tests). →
+  [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
+  labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 - Triage the **154 decompiler warning functions** (`decompiler_issues.tsv`);
   classify `non_instruction_ranges.tsv`.
 - Cross-check the thread's OL-fueling chain vs our fueling report; verify

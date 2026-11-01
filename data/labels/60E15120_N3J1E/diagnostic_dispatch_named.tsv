@@ -1,0 +1,100 @@
+record_address	pid	response_len	byte3	availability_mask	handler	handler_alias	semantic	confidence	evidence
+0005f10c	0000	4	00	fffc	00056890	diag22_pid0000_pids_supported_01_20	pids_supported_01_20	high	handler appends const u16 0xBE1F,0xE813 = OBD supported-PID bitmap 01-20; record bytes at 0x5f10c verified
+0005f118	0002	2	00	fffc	000568b4	diag22_pid0002_active_cal_id_field	active_cal_id_field	medium	reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block
+0005f124	0003	2	00	fffc	000568ca	diag22_pid0003_fuel_system_status_ol_cl	fuel_system_status_ol_cl	high	diag_ol_status_byte 0x5535e encodes CL/OL per OBD PID 03 (0x10 CL+DFE, 2 CL, 4 OL-not-allowed, 8 OL cold, 1 OL); low byte const 0
+0005f130	0004	1	00	fffc	000568f0	diag22_pid0004_calculated_engine_load_pct	calculated_engine_load_pct	high	0x553dc: engine_load_ffffc0b4*100/engine_load_max_ffffc0b8*0.392157 = OBD PID 04 A*100/max; 0xff if max~0
+0005f13c	0005	1	00	fffc	00056940	diag22_pid0005_coolant_temp_c	coolant_temp_c	high	0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40
+0005f148	0006	1	00	fffc	00056956	diag22_pid0006_stft_bank1_pct	stft_bank1_pct	high	0x55440: (DAT_ffffadec-1)*100*0.78125-100; ffffadec=lambda actual (fuel chain); OBD PID 06 trim formula
+0005f154	0007	1	00	fffc	0005696c	diag22_pid0007_ltft_bank1_pct	ltft_bank1_pct	high	0x55466: DAT_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula
+0005f160	000c	2	00	fffc	00056982	diag22_pid000c_engine_rpm	engine_rpm	high	0x55484: engine_speed_rpm_ffffb548*0.25 = OBD PID 0C A/4
+0005f16c	000d	1	00	fffc	00056998	diag22_pid000d_vehicle_speed_kmh	vehicle_speed_kmh	high	0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D
+0005f178	000e	1	00	fffc	000569ae	diag22_pid000e_leading_ignition_timing_deg	leading_ignition_timing_deg	high	0x554ae: leading_ignition_timing_ffffa630*0.5-64 = OBD PID 0E
+0005f184	000f	1	00	fffc	000569c4	diag22_pid000f_intake_air_temp_c	intake_air_temp_c	high	0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F
+0005f190	0010	2	00	fffc	000569da	diag22_pid0010_maf_g_s	maf_g_s	high	0x55528: mass_air_flow_ffffa9ec*0.01 = OBD PID 10 A/100
+0005f19c	0011	1	00	fffc	000569f0	diag22_pid0011_throttle_position_pct	throttle_position_pct	high	0x5553e: DAT_ffffad5c decode(7.63e-05)*20*0.392157 = OBD PID 11 throttle %
+0005f1a8	0012	1	00	fffc	00056a06	diag22_pid0012_secondary_air_status	secondary_air_status	high	0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12
+0005f1b4	0013	1	00	fffc	00056a1c	diag22_pid0013_o2_sensors_present	o2_sensors_present	high	const 2 = OBD PID 13 bitmap (bank1 sensors)
+0005f1c0	0015	2	00	fffc	00056a32	diag22_pid0015_o2s2_voltage_trim	o2s2_voltage_trim	medium	0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2
+0005f1cc	001c	1	00	fffc	00056a58	diag22_pid001c_obd_standard	obd_standard	high	const 6 = OBD PID 1C
+0005f1d8	001f	2	00	fffc	00056a6e	diag22_pid001f_engine_runtime_s	engine_runtime_s	high	0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start
+0005f1e4	0020	4	00	fffc	00056a84	diag22_pid0020_pids_supported_21_40	pids_supported_21_40	high	handler appends const u16 0x8007,0xB011 = supported-PID bitmap 21-40
+0005f1f0	0021	2	00	fffc	00056aa8	diag22_pid0021_distance_while_mil_on	distance_while_mil_on	high	0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21
+0005f1fc	002e	1	00	fffc	00056abc	diag22_pid002e_ram_b2f0_pct	ram_b2f0_pct	medium	0x55616: DAT_ffffb2f0*0.392157
+0005f208	002f	1	00	fffc	00056ad2	diag22_pid002f_ram_d287_raw	ram_d287_raw	medium	0x5562c: DAT_ffffd287 raw byte
+0005f214	0030	1	00	fffc	00056ae6	diag22_pid0030_gear_or_vin_byte	gear_or_vin_byte	medium	0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff
+0005f220	0031	2	00	fffc	00056afa	diag22_pid0031_ram_90fc_float	ram_90fc_float	medium	0x556b0: DAT_ffff90fc float*1.0
+0005f22c	0033	1	00	fffc	00056b0e	diag22_pid0033_ram_ad10_scaled	ram_ad10_scaled	medium	0x556ce: DAT_ffffad10*25.325+0.0182
+0005f238	0034	4	00	fffc	00056b22	diag22_pid0034_afr_lambda_words	afr_lambda_words	high	diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)
+0005f244	003c	2	00	fffc	00056b42	diag22_pid003c_ram_c644_scaled	ram_c644_scaled	medium	0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)
+0005f250	0040	4	00	fffc	00056b56	diag22_pid0040_pids_supported_41_60	pids_supported_41_60	high	handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60
+0005f25c	0042	2	00	fffc	00056b76	diag22_pid0042_battery_voltage_v	battery_voltage_v	high	0x55732: inferred_battery_voltage_ffffb590*0.001 = OBD PID 42
+0005f268	0043	2	00	fffc	00056b8a	diag22_pid0043_engine_load_g_rev	engine_load_g_rev	high	0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)
+0005f274	0044	2	00	fffc	00056b9e	diag22_pid0044_lambda_target	lambda_target	high	0x5575e: lambda_target_ffffadfc*3.05176e-05 (logger 0x220044)
+0005f280	0045	1	00	fffc	00056bb2	diag22_pid0045_ram_ad48_pct	ram_ad48_pct	medium	0x55774: DAT_ffffad48*0.392157
+0005f28c	0047	1	00	fffc	00056bc6	diag22_pid0047_ram_ad5e_pedal	ram_ad5e_pedal	medium	0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157
+0005f298	0049	1	00	fffc	00056bda	diag22_pid0049_ram_a9c4_pedal	ram_a9c4_pedal	medium	0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157
+0005f2a4	004a	1	00	fffc	00056c78	diag22_pid004a_ram_a9c6_pedal	ram_a9c6_pedal	medium	0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157
+0005f2b0	004c	1	00	fffc	00056c8c	diag22_pid004c_ram_b410_pct	ram_b410_pct	medium	0x55864: DAT_ffffb410*100/84*0.392157
+0005f2bc	0200	1	00	fffc	00056ca0	diag22_pid0200_dtc_count_stored	dtc_count_stored	high	ref_faultSomething0x0 0x5fab2: 0x61450(0x80,0) - 0x5f8fa() + 1, clamp 0xff
+0005f2c8	0202	1	00	fffc	00056cb4	diag22_pid0202_dtc_count_ram_list	dtc_count_ram_list	high	0x5fb08 counts DAT_ffffd570[0..0x8b]==1 minus rotor-0/1 adjustments, clamp 0xff
+0005f2d4	0904	1	00	fffc	00056cc8	diag22_pid0904_trailing_ignition_timing_deg	trailing_ignition_timing_deg	high	trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)
+0005f2e0	0914	2	00	fffc	00056ce8	diag22_pid0914_ram_a9c4_scaled_s16	ram_a9c4_scaled_s16	medium	0x54884(a9c4) helper = (x-p3)/p2+0.5 s16
+0005f2ec	0915	2	00	fffc	00056d1a	diag22_pid0915_ram_a9c6_scaled_s16	ram_a9c6_scaled_s16	medium	0x54884(a9c6)
+0005f2f8	0917	2	00	fffc	00056d4c	diag22_pid0917_ram_ad5c_scaled_s16	ram_ad5c_scaled_s16	medium	0x54884(ad5c)
+0005f304	0918	2	00	fffc	00056db4	diag22_pid0918_ram_ad5e_scaled_s16	ram_ad5e_scaled_s16	medium	0x54884(ad5e)
+0005f310	091a	2	00	fffc	00056de6	diag22_pid091a_ram_b410_raw_512	ram_b410_raw_512	medium	DAT_ffffb410*0.00195312 (1/512)
+0005f31c	093c	2	00	fffc	00056e04	diag22_pid093c_throttle_position_raw	throttle_position_raw	high	inferred_throttle_position_ffffad44*0.00195312 (1/512)
+0005f328	096e	2	00	fffc	00056e22	diag22_pid096e_ram_a7ac_quarter	ram_a7ac_quarter	medium	DAT_ffffa7ac*0.25
+0005f334	097c	2	00	fffc	00056e40	diag22_pid097c_ram_b59c_div2048	ram_b59c_div2048	medium	DAT_ffffb59c*0.000488281 (1/2048)
+0005f340	114a	2	00	fffc	00056e5e	diag22_pid114a_ram_add4_raw	ram_add4_raw	medium	DAT_ffffadd4*7.62939e-05
+0005f34c	114d	2	00	fffc	00056e7c	diag22_pid114d_ram_a984_raw	ram_a984_raw	medium	DAT_ffffa984*7.62939e-05
+0005f358	1153	2	00	fffc	00056e9a	diag22_pid1153_ram_a834_lambda	ram_a834_lambda	medium	DAT_ffffa834*3.05176e-05
+0005f364	1154	2	00	fffc	00056eb8	diag22_pid1154_throttle_raw_ad5c	throttle_raw_ad5c	medium	raw DAT_ffffad5c u16
+0005f370	1169	2	00	fffc	00056efc	diag22_pid1169_ram_807c_scaled	ram_807c_scaled	medium	0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05
+0005f37c	1177	2	00	fffc	00056f30	diag22_pid1177_maf_voltage_latched_v	maf_voltage_latched_v	high	maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
+0005f388	1340	1	00	fffc	00056f4e	diag22_pid1340_ram_a9bc_pct	ram_a9bc_pct	medium	DAT_ffffa9bc*0.392157
+0005f394	1410	2	00	fffc	00056f6c	diag22_pid1410_injector_pulse_time	injector_pulse_time	high	injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)
+0005f3a0	163e	2	00	fffc	00056f8a	diag22_pid163e_ram_b074_scaled_s16	ram_b074_scaled_s16	medium	0x54884(ffffb074)
+0005f3ac	16b3	2	00	fffc	00056faa	diag22_pid16b3_ram_ad10_raw	ram_ad10_raw	medium	DAT_ffffad10*7.62939e-05
+0005f3b8	16e8	2	00	fffc	00056fc8	diag22_pid16e8_ram_b5ac_raw	ram_b5ac_raw	medium	DAT_ffffb5ac*0.00305176
+0005f3c4	16e9	2	00	fffc	00056fe6	diag22_pid16e9_ram_b654_eighth	ram_b654_eighth	medium	DAT_ffffb654*0.125
+0005f3d0	16f0	2	00	fffc	00057004	diag22_pid16f0_tire_revolutions_per_mile	tire_revolutions_per_mile	high	tire_revolutions_per_mile_ffffd380 raw u16 (logger 0x2216f0)
+0005f3dc	a216	2	00	fffc	0005705c	diag22_pida216_ram_bc30_raw	ram_bc30_raw	medium	DAT_ffffbc30*7.62939e-05
+0005f3e8	1746	1	00	fffc	0005707a	diag22_pid1746_knock_retard_deg	knock_retard_deg	high	knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
+0005f3f4	1782	2	00	fffc	00057098	diag22_pid1782_ram_c6ac_raw	ram_c6ac_raw	medium	DAT_ffffc6ac*7.62939e-05
+0005f400	17a6	1	00	fffc	000570b6	diag22_pid17a6_ram_d1ac_scaled	ram_d1ac_scaled	medium	decode_u8(128,0,ffffd1ac)/1000*0.1
+0005f40c	172a	1	00	fffc	000570ee	diag22_pid172a_ram_c4c8_temp_c	ram_c4c8_temp_c	medium	DAT_ffffc4c8*1.0-40
+0005f418	172d	1	00	fffc	0005710c	diag22_pid172d_ram_a8f4_raw	ram_a8f4_raw	medium	raw DAT_ffffa8f4 u8
+0005f424	1634	1	00	155c	0005711a	diag22_pid1634_apv_position_voltage	apv_position_voltage	high	apv_position_voltage_ffffcab0*0.0195312
+0005f430	0968	2	00	fffc	00057138	diag22_pid0968_io_status_b5b4_bc35	io_status_b5b4_bc35	medium	0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0
+0005f43c	09d3	2	00	155c	000571ac	diag22_pid09d3_pedr_bit10_status	pedr_bit10_status	medium	PEDR_W & 0x400 -> 0x579a8; appends u8 + 0
+0005f448	1101	1	00	fffc	000571e4	diag22_pid1101_io_status_bf3c_ad18_cdd8	io_status_bf3c_ad18_cdd8	medium	0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)
+0005f454	1102	1	00	fffc	00057226	diag22_pid1102_io_status_bdb8	io_status_bdb8	medium	0x579a8 over DAT_ffffbdb8
+0005f460	1103	1	00	fffc	00057248	diag22_pid1103_io_status_pedr_cab4_d1a	io_status_pedr_cab4_d1a	medium	0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1
+0005f46c	1104	1	00	fffc	000572d0	diag22_pid1104_io_status_pjdr_bf6c	io_status_pjdr_bf6c	medium	0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c
+0005f478	1631	1	00	fffc	0005730e	diag22_pid1631_tol_status_b570_b584	tol_status_b570_b584	medium	0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584
+0005f484	1681	1	00	fffc	0005734a	diag22_pid1681_io_status_ce1c	io_status_ce1c	medium	0x579a8 over DAT_ffffce1c -> 0x40
+0005f490	1688	1	00	fffc	0005736c	diag22_pid1688_secondary_air_status_bit	secondary_air_status_bit	medium	0x579a8 over secondary_air_request_final_ffffa960 -> 0x20
+0005f49c	a211	2	00	fffc	0005738e	diag22_pida211_status_b53b_aa62_bf9c	status_b53b_aa62_bf9c	medium	0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8
+0005f4a8	1711	1	00	fffc	000573f0	diag22_pid1711_pedr_bit1_status	pedr_bit1_status	medium	0x579a8 over PEDR_W & 2 -> 0x80
+0005f4b4	1706	1	00	fffc	0005741e	diag22_pid1706_io_status_a8f5	io_status_a8f5	medium	0x579a8 over DAT_ffffa8f5 -> 4
+0005f4c0	1718	1	00	fffc	00057440	diag22_pid1718_pedr_bit2_status	pedr_bit2_status	medium	0x579a8 over PEDR_W & 4
+0005f4cc	1715	1	00	fffc	0005746e	diag22_pid1715_pedr_pddr_status	pedr_pddr_status	medium	0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80
+0005f4d8	17de	1	00	fffc	000574b6	diag22_pid17de_io_status_ce32	io_status_ce32	medium	0x579a8 over DAT_ffffce32
+0005f4e4	e21b	4	00	fffc	000574d8	diag22_pide21b_cal_id_chunk_0	cal_id_chunk_0	high	appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')
+0005f4f0	e21c	2	00	fffc	00057506	diag22_pide21c_cal_id_chunk_1	cal_id_chunk_1	high	appends '1','8'
+0005f4fc	e21d	3	00	fffc	0005752c	diag22_pide21d_cal_id_chunk_2	cal_id_chunk_2	high	appends '8','8','1'
+0005f508	e21e	1	00	fffc	00057546	diag22_pide21e_cal_id_chunk_3	cal_id_chunk_3	high	appends 'B'
+0005f514	e611	24	00	fffc	0005755c	diag22_pide611_sw_name_string	sw_name_string	high	appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)
+0005f520	1710	7	00	fffc	00057594	diag22_pid1710_sensor_snapshot_7byte	sensor_snapshot_7byte	medium	7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
+0005f52c	c115	1	00	3bfc	000576b4	diag22_pidc115_ram_c1d2_raw	ram_c1d2_raw	medium	raw DAT_ffffc1d2 u8
+0005f538	c116	4	00	3bfc	000576c2	diag22_pidc116_dtc_state_machine	dtc_state_machine	medium	thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code
+0005f544	c117	4	00	3bfc	00057704	diag22_pidc117_ram_c1d3_c1d4	ram_c1d3_c1d4	medium	appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0
+0005f550	c124	1	00	3bfc	00057738	diag22_pidc124_diag_status_bits	diag_status_bits	medium	0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4
+0005f55c	ff10	4	00	0001	00057884	diag22_pidff10_dtc_status_c1d5_c1d8	dtc_status_c1d5_c1d8	medium	0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8
+0005f568	ff40	2	00	0001	000578e8	diag22_pidff40_fw_id_chunk_15	fw_id_chunk_15	high	appends '1','5' (fw id '60E15120' ROM 0x2000; cal area 0x6c05c '15120 ')
+0005f574	ff41	4	00	0001	00057902	diag22_pidff41_fw_id_chunk_120	fw_id_chunk_120	high	appends '1','2','0',' '
+0005f580	ff42	3	00	0001	0005792e	diag22_pidff42_rom_id_bytes_ff8	rom_id_bytes_ff8	high	appends ROM bytes at 0xff8,0xff9,0xffa (via mov.w literals)
+0005f58c	ff43	3	00	0001	0005794e	diag22_pidff43_rom_id_bytes_ffb	rom_id_bytes_ffb	high	appends ROM bytes at 0xffb,0xffc,0xffd
+0005f598	ff50	2	00	0001	0005796e	diag22_pidff50_ram_d3a0_raw	ram_d3a0_raw	medium	raw DAT_ffffd3a0 u16
+0005f5a4	ff44	2	00	0001	00057974	diag22_pidff44_ram_ce30_raw	ram_ce30_raw	medium	raw DAT_ffffce30 u16

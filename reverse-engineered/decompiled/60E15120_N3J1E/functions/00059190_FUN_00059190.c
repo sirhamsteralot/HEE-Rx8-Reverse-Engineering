@@ -17,7 +17,7 @@ undefined4 FUN_00059190(uint param_1)
   byte local_c [2];
   ushort uStack_a;
   
-  snapshot_DAT_ffffd3b4 = DAT_ffffd3b4;
+  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   pbVar3 = local_c;
   do {
     sh_copy_bytes_forward_r0_r1_r2();

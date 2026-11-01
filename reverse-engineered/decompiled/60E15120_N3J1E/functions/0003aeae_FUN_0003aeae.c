@@ -10,7 +10,7 @@ undefined4 * FUN_0003aeae(void)
   
   puVar1 = (undefined4 *)0x1;
   if ((((DAT_ffffd1c5 == '\x01') || (puVar1 = (undefined4 *)0x1, DAT_ffffd1ad == '\x01')) ||
-      (puVar1 = &DAT_0003af84, DAT_ffffb2f0 < 8.0)) || (puVar1 = &DAT_0003af84, 92.0 < DAT_ffffb2f0)
+      (puVar1 = &DAT_0003af84, inferred_ram_b2f0_ffffb2f0_ffffb2f0 < 8.0)) || (puVar1 = &DAT_0003af84, 92.0 < inferred_ram_b2f0_ffffb2f0_ffffb2f0)
      ) {
     DAT_ffffc587 = 0;
   }

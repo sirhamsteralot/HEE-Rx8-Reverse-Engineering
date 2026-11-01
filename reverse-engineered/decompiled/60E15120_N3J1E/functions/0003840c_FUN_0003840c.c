@@ -19,7 +19,7 @@ uint FUN_0003840c(void)
   }
   fVar2 = (float)rx8_divide_with_zero_fallback(DAT_ffffc4f4,0x41200000);
   arg1 = 0.0;
-  DAT_ffffc4f0 = rx8_max_float(fVar2 + (DAT_ffffc4c8 - inferred_coolant_temperature_ffffa98c) * 87891.0,0.0);
+  DAT_ffffc4f0 = rx8_max_float(fVar2 + (inferred_temp_c4c8_ffffc4c8_ffffc4c8 - inferred_coolant_temperature_ffffa98c) * 87891.0,0.0);
   uVar1 = (uint)DAT_ffffc503;
   if (uVar1 == 1) {
     DAT_ffffc4ec = rx8_max_float((DAT_ffffc4ec + DAT_ffffc4f0) - snapshot_DAT_ffffc4f0,arg1);

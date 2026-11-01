@@ -13,14 +13,14 @@ void ref_getBrakingOrInNeutral(void)
 {
   undefined1 *puVar1;
   
-  DAT_ffffd388 = DAT_ffffad18 == '\x01';
-  if (DAT_ffffbf3c == '\x01') {
+  DAT_ffffd388 = inferred_ram_ad18_ffffad18_ffffad18 == '\x01';
+  if (inferred_ram_bf3c_ffffbf3c_ffffbf3c == '\x01') {
     DAT_ffffd388 = DAT_ffffd388 + '\x04';
   }
-  if (DAT_ffffbf9c == '\x01') {
+  if (inferred_ram_bf9c_ffffbf9c_ffffbf9c == '\x01') {
     DAT_ffffd388 = DAT_ffffd388 + ' ';
   }
-  if (DAT_ffffb53b == '\x01') {
+  if (inferred_ram_b53b_ffffb53b_ffffb53b == '\x01') {
     DAT_ffffd388 = DAT_ffffd388 + '@';
   }
   DAT_ffffd389 = 0;

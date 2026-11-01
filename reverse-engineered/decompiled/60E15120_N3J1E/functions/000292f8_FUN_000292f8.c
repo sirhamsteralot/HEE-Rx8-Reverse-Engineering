@@ -13,7 +13,7 @@ undefined1 * FUN_000292f8(void)
   
   puVar1 = &DAT_00078c6c;
   if (DAT_ffffcc91 < 3) {
-    puVar1 = (undefined1 *)rx8_encode_u8_affine_saturate(DAT_ffffa9bc,0x3f000000,0);
+    puVar1 = (undefined1 *)rx8_encode_u8_affine_saturate(inferred_ram_a9bc_ffffa9bc_ffffa9bc,0x3f000000,0);
     DAT_ffffbb02 = (byte)puVar1;
     if (200 < DAT_ffffbb02) {
       DAT_ffffbb02 = 200;

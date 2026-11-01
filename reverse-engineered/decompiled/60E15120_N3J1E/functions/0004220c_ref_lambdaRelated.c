@@ -16,7 +16,7 @@ undefined1 * ref_lambdaRelated(void)
     DAT_ffffc928 = 1.0;
   }
   else {
-    DAT_ffffc93c = ((diag_afr_word_a_ffffaa6c + DAT_ffffadec) - lambda_target_ffffadfc) + DAT_ffffb0d0;
+    DAT_ffffc93c = ((diag_afr_word_a_ffffaa6c + inferred_lambda_actual_ffffadec_ffffadec) - lambda_target_ffffadfc) + inferred_ltft_bank1_ffffb0d0_ffffb0d0;
     DAT_ffffc928 = rx8_first_order_filter(DAT_ffffc93c,DAT_ffffc928,0.03,1e-05);
     puVar1 = extraout_r0;
   }

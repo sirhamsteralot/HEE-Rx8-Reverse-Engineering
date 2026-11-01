@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f51c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined4 FUN_0005755c(char param_1)
+undefined4 diag22_pide611_sw_name_string(char param_1)
 
 {
   char cVar1;

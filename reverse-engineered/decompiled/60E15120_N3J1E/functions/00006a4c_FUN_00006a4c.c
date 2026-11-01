@@ -11,7 +11,7 @@ undefined4 FUN_00006a4c(void)
   
   FUN_00006b94();
   FUN_00006c4c();
-  adc_read_ect_iat_group();
+  candidate_adc_read_ect_iat_group();
   if (DAT_ffff9f28 == '\x02') {
     DAT_ffff9ee2 = DAT_ffff9ee2 + '\x01';
 LAB_00006a84:

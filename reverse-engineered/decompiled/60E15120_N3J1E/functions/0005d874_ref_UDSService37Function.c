@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005c064 (50 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSService37Function(undefined4 param_1,uint param_2)
+uint uds_service_37_request_transfer_exit(undefined4 param_1,uint param_2)
 
 {
   undefined4 uVar1;

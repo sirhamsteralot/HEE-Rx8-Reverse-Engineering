@@ -17,8 +17,8 @@ void FUN_000174b4(uint param_1)
   if (uVar2 == 0) {
     bVar1 = DAT_ffffa8fb + 1;
     DAT_ffffa8fb = bVar1 & 7;
-    if (((bVar1 & 1) == 0) && (DAT_ffffa8f4 < 0x3c)) {
-      DAT_ffffa8fe = DAT_ffffa8f4 + 1;
+    if (((bVar1 & 1) == 0) && (inferred_ram_a8f4_ffffa8f4_ffffa8f4 < 0x3c)) {
+      DAT_ffffa8fe = inferred_ram_a8f4_ffffa8f4_ffffa8f4 + 1;
     }
   }
   else if (uVar2 == 1) {
@@ -27,13 +27,13 @@ void FUN_000174b4(uint param_1)
     }
     else {
       DAT_ffffa8fb = DAT_ffffa8fb - 1 & 7;
-      if (((DAT_ffffa8f4 == 1) && (DAT_ffffa907 != '\x04')) &&
+      if (((inferred_ram_a8f4_ffffa8f4_ffffa8f4 == 1) && (DAT_ffffa907 != '\x04')) &&
          ((DAT_ffffa8e9 == '\x01' || (DAT_ffffa8ea == '\x01')))) {
         DAT_ffffa8fe = '\0';
       }
     }
-    if ((((DAT_ffffa8fb & 1) == 0) && (DAT_ffffa907 != '\x04')) && (DAT_ffffa8f4 != 0)) {
-      DAT_ffffa8fe = DAT_ffffa8f4 - 1;
+    if ((((DAT_ffffa8fb & 1) == 0) && (DAT_ffffa907 != '\x04')) && (inferred_ram_a8f4_ffffa8f4_ffffa8f4 != 0)) {
+      DAT_ffffa8fe = inferred_ram_a8f4_ffffa8f4_ffffa8f4 - 1;
     }
   }
   else if (uVar2 == 2) {
@@ -47,8 +47,8 @@ void FUN_000174b4(uint param_1)
       bVar1 = DAT_ffffa8fb + 2;
     }
     DAT_ffffa8fb = bVar1 & 7;
-    if (DAT_ffffa8f4 < 0x3c) {
-      DAT_ffffa8fe = DAT_ffffa8f4 + 1;
+    if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 < 0x3c) {
+      DAT_ffffa8fe = inferred_ram_a8f4_ffffa8f4_ffffa8f4 + 1;
     }
   }
   else if (uVar2 == 3) {
@@ -58,15 +58,15 @@ void FUN_000174b4(uint param_1)
       }
       else {
         DAT_ffffa8fb = DAT_ffffa8fb - 1 & 7;
-        if ((DAT_ffffa8f4 == 1) && (DAT_ffffa907 != '\x04')) {
+        if ((inferred_ram_a8f4_ffffa8f4_ffffa8f4 == 1) && (DAT_ffffa907 != '\x04')) {
           DAT_ffffa8fe = '\0';
         }
       }
     }
     else {
       DAT_ffffa8fb = DAT_ffffa8fb - 2 & 7;
-      if (DAT_ffffa8f4 != 0) {
-        DAT_ffffa8fe = DAT_ffffa8f4 - 1;
+      if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 != 0) {
+        DAT_ffffa8fe = inferred_ram_a8f4_ffffa8f4_ffffa8f4 - 1;
       }
     }
   }

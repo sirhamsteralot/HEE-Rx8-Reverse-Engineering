@@ -6,8 +6,8 @@
 bool FUN_00024b64(void)
 
 {
-  DAT_ffffb53b = (DAT_ffff9ecd & 1) == 0;
-  return DAT_ffffb53b;
+  inferred_ram_b53b_ffffb53b_ffffb53b = (DAT_ffff9ecd & 1) == 0;
+  return inferred_ram_b53b_ffffb53b_ffffb53b;
 }
 
 

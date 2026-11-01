@@ -6,7 +6,7 @@
 void ref_calculateCruiseControlSwitchVolt(void)
 
 {
-  DAT_ffffbc30 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1a);
+  inferred_ram_bc30_ffffbc30_ffffbc30 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1a);
   return;
 }
 

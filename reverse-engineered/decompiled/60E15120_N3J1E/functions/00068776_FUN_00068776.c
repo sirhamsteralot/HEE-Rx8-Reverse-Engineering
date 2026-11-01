@@ -7,19 +7,19 @@ void FUN_00068776(char param_1)
 
 {
   if (param_1 == '\0') {
-    DAT_ffffddd0 = 0;
+    uds_tx_buffer_ffffddd0 = 0;
     FUN_000687c4();
   }
   else if (param_1 == '\x10') {
-    DAT_ffffddd0 = 0x10;
+    uds_tx_buffer_ffffddd0 = 0x10;
     FUN_000687e8();
   }
   else if (param_1 == ' ') {
-    DAT_ffffddd0 = 0x20;
+    uds_tx_buffer_ffffddd0 = 0x20;
     FUN_00068826();
   }
   else if (param_1 == '0') {
-    DAT_ffffddd0 = 0x30;
+    uds_tx_buffer_ffffddd0 = 0x30;
     FUN_00068868();
   }
   ref_txCAN_EventBased(&DAT_0004e00c);

@@ -64,7 +64,7 @@ void FUN_0001cc34(void)
   DAT_ffffae10 = fVar7;
   DAT_ffffae08 = ((DAT_ffffae0c - DAT_ffffae00) + DAT_ffffaf1c + DAT_ffffaf20) - DAT_ffffb000;
   fVar6 = rx8_max_float(DAT_ffffae10,DAT_ffffb00c);
-  lambda_target_ffffadfc = rx8_clamp_float((((((DAT_ffffae0c - DAT_ffffae00) - DAT_ffffae04) + DAT_ffffb074 +
+  lambda_target_ffffadfc = rx8_clamp_float((((((DAT_ffffae0c - DAT_ffffae00) - DAT_ffffae04) + inferred_trim_b074_ffffb074_ffffb074 +
                                     0.0 + DAT_ffffaf1c + DAT_ffffaf20 + DAT_ffffaff8) - DAT_ffffb000
                                   ) - fVar6) + 1.0,0.85,1.05);
   DAT_ffffb06a = cVar1;

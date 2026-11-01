@@ -44,7 +44,7 @@ uint idle_leading_timing_error_correction(void)
     }
     DAT_ffffa720 = (float)lookup_2d_descriptor_scaled(DAT_ffffa728,puVar2);
   }
-  if (((DAT_ffffaa62 != '\x01') || (1500.0 <= fVar3)) ||
+  if (((cranking_active_ffffaa62_ffffaa62 != '\x01') || (1500.0 <= fVar3)) ||
      ((fVar3 = DAT_ffffa720, 0.009765625 <= DAT_ffffc01c && (engine_running_timer_ffffa424 < 0x177)))) {
     fVar3 = 0.0;
   }
@@ -61,7 +61,7 @@ uint idle_leading_timing_error_correction(void)
     fVar3 = rx8_clamp_float(fVar3,-2.8,0.7);
     uVar1 = extraout_r0;
   }
-  DAT_ffffa718 = fVar3;
+  idle_leading_timing_error_correction_ffffa718 = fVar3;
   return uVar1;
 }
 

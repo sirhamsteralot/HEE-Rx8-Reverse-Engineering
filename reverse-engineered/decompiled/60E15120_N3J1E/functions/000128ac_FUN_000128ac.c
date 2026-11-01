@@ -11,7 +11,7 @@ void FUN_000128ac(void)
   else {
     DAT_ffffa684 = 0xfa;
   }
-  if ((DAT_ffffad18 == '\0') || (DAT_ffffa684 == 0)) {
+  if ((inferred_ram_ad18_ffffad18_ffffad18 == '\0') || (DAT_ffffa684 == 0)) {
     DAT_ffffa689 = 0;
   }
   else if (DAT_ffffa68a == '\x01') {

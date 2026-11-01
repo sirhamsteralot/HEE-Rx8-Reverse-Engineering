@@ -11,8 +11,8 @@ void FUN_0002549e(void)
   
   fVar2 = 100.0;
   fVar1 = rx8_clamp_float(DAT_ffffb330,0.0,100.0);
-  DAT_ffffb584 = (int)((fVar1 / fVar2) * 65536.0);
-  DAT_ffff9f5a = rx8_mul_s32_shift16_saturate(DAT_ffffb584,DAT_ffff9f56);
+  inferred_ram_b584_ffffb584_ffffb584 = (int)((fVar1 / fVar2) * 65536.0);
+  DAT_ffff9f5a = rx8_mul_s32_shift16_saturate(inferred_ram_b584_ffffb584_ffffb584,DAT_ffff9f56);
   return;
 }
 

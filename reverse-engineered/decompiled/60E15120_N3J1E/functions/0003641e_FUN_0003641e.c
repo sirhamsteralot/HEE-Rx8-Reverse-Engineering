@@ -17,10 +17,10 @@ undefined1 * FUN_0003641e(void)
       DAT_ffffc242 = 1;
       in_r0 = (undefined1 *)(int)DAT_ffffc276;
       if ((in_r0 == (undefined1 *)0x0) &&
-         (in_r0 = (undefined1 *)(uint)DAT_ffffc1d2, in_r0 == (undefined1 *)0x55)) {
-        puVar1 = (undefined1 *)(uint)DAT_ffffc1d2;
+         (in_r0 = (undefined1 *)(uint)inferred_ram_c1d2_ffffc1d2_ffffc1d2, in_r0 == (undefined1 *)0x55)) {
+        puVar1 = (undefined1 *)(uint)inferred_ram_c1d2_ffffc1d2_ffffc1d2;
         if (puVar1 != (undefined1 *)((int)&vector_usr_break + 3)) {
-          DAT_ffffc1d2 = 0x33;
+          inferred_ram_c1d2_ffffc1d2_ffffc1d2 = 0x33;
           DAT_ffffc275 = DAT_ffffc275 & 0xfd;
           DAT_ffffc247 = 0;
           DAT_ffffc234 = 0;

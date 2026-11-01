@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
-void timing_trim_scale_calc(void)
+void candidate_timing_trim_scale_calc(void)
 
 {
   undefined4 uVar1;

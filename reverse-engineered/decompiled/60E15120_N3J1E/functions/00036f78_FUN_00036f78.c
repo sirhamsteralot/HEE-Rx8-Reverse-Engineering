@@ -14,13 +14,13 @@ undefined4 FUN_00036f78(void)
   uVar2 = 0;
   iVar3 = 0;
   ref_udsServiceResponse(0xb1,local_10,1);
-  if ((DAT_ffffc1d2 == -0x56) &&
+  if ((inferred_ram_c1d2_ffffc1d2_ffffc1d2 == -0x56) &&
      ((cVar1 = FUN_00055e3e(0), cVar1 == '\0' || (cVar1 = FUN_00055e3e(2), cVar1 == '\0')))) {
     if ((local_10[0] < 8) || (0x3f < local_10[0])) {
       iVar3 = 0x31;
     }
     else {
-      DAT_ffffc1d4 = local_10[0];
+      inferred_ram_c1d4_ffffc1d4_ffffc1d4 = local_10[0];
       DAT_ffffc253 = 1;
     }
   }

@@ -11,7 +11,7 @@ void FUN_0001c0ec(void)
   
   bVar2 = 1;
   puVar1 = &DAT_ffffaecc;
-  DAT_ffffadec = 0x3f800000;
+  inferred_lambda_actual_ffffadec_ffffadec = 0x3f800000;
   DAT_ffffadf0 = 0x3f800000;
   DAT_ffffadf4 = 0x3f800000;
   do {

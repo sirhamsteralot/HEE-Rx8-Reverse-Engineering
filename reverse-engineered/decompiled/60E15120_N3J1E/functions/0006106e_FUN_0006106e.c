@@ -8,7 +8,7 @@ void FUN_0006106e(void)
 {
   DAT_ffff878c = rx8_pack_u8_with_complement(0);
   DAT_ffff8784 = rx8_pack_u16_with_complement(0);
-  DAT_ffff8788 = rx8_pack_u16_with_complement(0);
+  inferred_ram_8788_ffff8788_ffff8788 = rx8_pack_u16_with_complement(0);
   return;
 }
 

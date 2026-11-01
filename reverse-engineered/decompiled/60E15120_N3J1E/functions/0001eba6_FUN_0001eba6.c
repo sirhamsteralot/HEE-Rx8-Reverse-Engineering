@@ -8,7 +8,7 @@ uint FUN_0001eba6(void)
   uVar1 = (uint)DAT_ffffb07d;
   if (((((uVar1 != 1) || (DAT_ffffb116 = '\x01', DAT_ffffb112 < 0xea6)) || (DAT_ffffb114 < 10)) ||
       (((inferred_coolant_temperature_ffffa98c < 40.0 || (mass_air_flow_ffffa9ec < 8.0)) ||
-       ((100.0 <= mass_air_flow_ffffa9ec || ((0.0001 <= DAT_ffffae04 || (DAT_ffffaa62 != '\0')))))))) ||
+       ((100.0 <= mass_air_flow_ffffa9ec || ((0.0001 <= DAT_ffffae04 || (cranking_active_ffffaa62_ffffaa62 != '\0')))))))) ||
      ((DAT_ffffae20 != '\0' ||
       ((((DAT_ffffcac8 != '\0' || (DAT_ffffc704 != '\0')) || (DAT_ffffae0c < -0.05)) ||
        (0.05 < DAT_ffffae0c)))))) {

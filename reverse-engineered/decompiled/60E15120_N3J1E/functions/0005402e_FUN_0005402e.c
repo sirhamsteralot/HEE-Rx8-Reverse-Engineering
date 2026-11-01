@@ -11,10 +11,10 @@ undefined1 * FUN_0005402e(void)
   puVar1 = (undefined1 *)(uint)engine_injectors_off_ffffa42c;
   if ((puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) || (DAT_ffffd1ae == '\0')) {
     puVar1 = &DAT_0007dea8;
-    DAT_ffffd1ac = '\b';
+    inferred_ram_d1ac_ffffd1ac_ffffd1ac = '\b';
   }
-  else if (DAT_ffffd1ac != '\0') {
-    DAT_ffffd1ac = DAT_ffffd1ac + -1;
+  else if (inferred_ram_d1ac_ffffd1ac_ffffd1ac != '\0') {
+    inferred_ram_d1ac_ffffd1ac_ffffd1ac = inferred_ram_d1ac_ffffd1ac_ffffd1ac + -1;
   }
   return puVar1;
 }

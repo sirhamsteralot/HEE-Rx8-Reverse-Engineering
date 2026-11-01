@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 57700 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00037358(undefined4 param_1)
+void candidate_dtc_state_machine_step(undefined4 param_1)
 
 {
   int iVar1;
@@ -22,7 +22,7 @@ void FUN_00037358(undefined4 param_1)
           DAT_ffffc278 = 0;
         }
         DAT_ffffc27e = '\x01';
-        if (DAT_ffffc1d2 == '3') {
+        if (inferred_ram_c1d2_ffffc1d2_ffffc1d2 == '3') {
           DAT_ffffc260 = 1;
         }
       }

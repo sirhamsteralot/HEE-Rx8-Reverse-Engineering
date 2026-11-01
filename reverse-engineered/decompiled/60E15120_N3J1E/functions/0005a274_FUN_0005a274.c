@@ -10,15 +10,15 @@ void FUN_0005a274(void)
   float fVar2;
   
   if (DAT_ffffd1c5 == '\x01') {
-    ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff90fc);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(0,&inferred_ram_90fc_ffff90fc_ffff90fc);
     return;
   }
-  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff90fc);
+  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&inferred_ram_90fc_ffff90fc_ffff90fc);
   fVar2 = fVar1 + DAT_ffffd280;
   if (65535.0 < fVar1 + DAT_ffffd280) {
     fVar2 = 65535.0;
   }
-  ref_updateMemoryAtAddress_float_VAL_ADDR(fVar2,&DAT_ffff90fc);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(fVar2,&inferred_ram_90fc_ffff90fc_ffff90fc);
   return;
 }
 

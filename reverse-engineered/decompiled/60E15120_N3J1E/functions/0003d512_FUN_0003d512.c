@@ -7,7 +7,7 @@ undefined1 * FUN_0003d512(void)
   undefined1 *puVar2;
   uint uVar3;
   
-  cVar1 = DAT_ffffb53b;
+  cVar1 = inferred_ram_b53b_ffffb53b_ffffb53b;
   DAT_ffffc624 = 30.08 < vehicle_speed_ffffbbb4;
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc622 = '\0';
@@ -17,7 +17,7 @@ undefined1 * FUN_0003d512(void)
     puVar2 = (undefined1 *)0x1;
   }
   else {
-    if (DAT_ffffc623 != DAT_ffffb53b) {
+    if (DAT_ffffc623 != inferred_ram_b53b_ffffb53b_ffffb53b) {
       DAT_ffffc622 = '\x01';
     }
     if (DAT_ffffc622 == '\x01') {
@@ -34,7 +34,7 @@ undefined1 * FUN_0003d512(void)
     }
     else {
       puVar2 = (undefined1 *)(uint)(byte)DAT_ffffc624;
-      if ((puVar2 == (undefined1 *)0x1) && (puVar2 = &DAT_ffffc627, DAT_ffffbf9c != DAT_ffffc627)) {
+      if ((puVar2 == (undefined1 *)0x1) && (puVar2 = &DAT_ffffc627, inferred_ram_bf9c_ffffbf9c_ffffbf9c != DAT_ffffc627)) {
         if (DAT_ffffc620 != '\0') {
           DAT_ffffc620 = DAT_ffffc620 + -1;
         }

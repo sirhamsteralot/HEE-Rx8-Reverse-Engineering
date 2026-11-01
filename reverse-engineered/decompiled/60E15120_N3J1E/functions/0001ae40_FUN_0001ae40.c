@@ -6,7 +6,7 @@
 void FUN_0001ae40(void)
 
 {
-  DAT_ffffad28 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffffad1c);
+  DAT_ffffad28 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_o2s2_ffffad1c_ffffad1c);
   DAT_ffffad20 = DAT_ffffad28;
   return;
 }

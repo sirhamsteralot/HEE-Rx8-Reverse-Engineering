@@ -22,7 +22,7 @@ undefined4 * FUN_000302a2(void)
   }
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffbe9c = ((float)crank_period_accumulator_ffff9f88 * 0.25) / 1000.0;
-    if (DAT_ffffce32 == '\x01') {
+    if (inferred_ram_ce32_ffffce32_ffffce32 == '\x01') {
       puVar2 = &tbl_table_2d_171_0006aac4;
     }
     else {

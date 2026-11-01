@@ -44,7 +44,7 @@ undefined4 ref_calculateRearO2SomethingIntegrator__(float param_1,float param_2)
     DAT_ffffb08c = fVar1 - fVar2;
     DAT_ffffb090 = fVar1 + fVar3;
   }
-  DAT_ffffb074 = rx8_clamp_float(DAT_ffffb0ac,DAT_ffffb08c,DAT_ffffb090);
+  inferred_trim_b074_ffffb074_ffffb074 = rx8_clamp_float(DAT_ffffb0ac,DAT_ffffb08c,DAT_ffffb090);
   if ((DAT_ffffb090 <= DAT_ffffb0ac) || (DAT_ffffb0ac <= DAT_ffffb08c)) {
     param_2 = param_2 - DAT_ffffb098;
     param_1 = DAT_ffffb088 * param_2;

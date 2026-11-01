@@ -25,7 +25,7 @@
     "callee": "lookup_2d_descriptor_scaled",
     "observed_arity": 1,
     "expected_arity": 2,
-    "raw_call": "lookup_2d_descriptor_scaled(&DAT_00069208)"
+    "raw_call": "lookup_2d_descriptor_scaled(&candidate_tbl_idle_base_timing_cranking_00069208)"
   },
   {
     "function": "00014100",

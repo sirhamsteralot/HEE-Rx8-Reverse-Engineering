@@ -6,7 +6,7 @@
 void ref_pcmBoardTempADCtoVolts(void)
 
 {
-  DAT_ffffc6ac = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f16);
+  inferred_ram_c6ac_ffffc6ac_ffffc6ac = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f16);
   return;
 }
 

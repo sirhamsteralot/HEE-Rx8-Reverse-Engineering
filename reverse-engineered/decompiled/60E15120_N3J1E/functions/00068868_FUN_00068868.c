@@ -21,7 +21,7 @@ void FUN_00068868(void)
     return;
   }
   DAT_ffffddf8 = 0;
-  DAT_ffffddd0 = DAT_ffffddd0 | bVar2;
+  uds_tx_buffer_ffffddd0 = uds_tx_buffer_ffffddd0 | bVar2;
   DAT_ffffddd1 = 0;
   DAT_ffffddd2 = 0;
   DAT_ffffddd3 = 0;

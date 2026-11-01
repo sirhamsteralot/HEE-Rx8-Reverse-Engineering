@@ -11,7 +11,7 @@ int FUN_0000e2d4(void)
        ((DAT_ffffbc86 == '\x01' || ((DAT_ffffcc72 == '\x01' || (DAT_ffffca45 == '\x01')))))) ||
       ((DAT_ffffcdbe == '\x01' ||
        ((((DAT_ffffcdbf == '\x01' || (DAT_ffffcdc0 == '\x01')) || (DAT_ffffcdc1 == '\x01')) ||
-        (DAT_ffffc1d0 == '\0')))))))) {
+        (inferred_ram_c1d0_ffffc1d0_ffffc1d0 == '\0')))))))) {
     DAT_ffffa430 = 1;
   }
   iVar1 = 1;
@@ -22,7 +22,7 @@ int FUN_0000e2d4(void)
       ((((iVar1 = 1, DAT_ffffcc73 == '\x01' || (iVar1 = 1, DAT_ffffca45 == '\x01')) ||
         (iVar1 = 1, DAT_ffffcdbe == '\x01')) ||
        (((iVar1 = 1, DAT_ffffcdbf == '\x01' || (iVar1 = 1, DAT_ffffcdc0 == '\x01')) ||
-        ((iVar1 = 1, DAT_ffffcdc1 == '\x01' || (iVar1 = (int)DAT_ffffc1d0, iVar1 == 0)))))))))) {
+        ((iVar1 = 1, DAT_ffffcdc1 == '\x01' || (iVar1 = (int)inferred_ram_c1d0_ffffc1d0_ffffc1d0, iVar1 == 0)))))))))) {
     DAT_ffffa430 = DAT_ffffa430 | 2;
   }
   return iVar1;

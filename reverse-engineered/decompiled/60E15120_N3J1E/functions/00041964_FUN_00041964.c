@@ -24,7 +24,7 @@ uint FUN_00041964(void)
   undefined4 uVar10;
   
   snapshot_DAT_ffffd1c5 = DAT_ffffd1c5;
-  cVar1 = DAT_ffffaa62;
+  cVar1 = cranking_active_ffffaa62_ffffaa62;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   DAT_ffffc950 = (float)lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_table_2d_259_0006b6f0);
   uVar10 = 0;

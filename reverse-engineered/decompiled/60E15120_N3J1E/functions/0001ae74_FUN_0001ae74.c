@@ -18,7 +18,7 @@ undefined4 FUN_0001ae74(void)
   float extraout_fr0;
   float extraout_fr0_00;
   
-  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffffad1c);
+  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_o2s2_ffffad1c_ffffad1c);
   DAT_ffffad20 = extraout_fr0;
   DAT_ffffad28 = extraout_fr0;
   if ((engine_running_ffffa428 == '\0') || (uVar1 = 1, DAT_ffffcdb8 == '\x01')) {

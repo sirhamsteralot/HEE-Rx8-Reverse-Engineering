@@ -9,13 +9,13 @@ void ref_taskEndRoutine_(void)
 {
   undefined1 *puVar1;
   
-  puVar1 = DAT_ffff764c;
-  DAT_ffff764c[3] = DAT_ffff764c[3] + '\x01';
-  DAT_ffff7640 = 0x100;
-  ref_consistencyCheck(&DAT_ffff7638,(int)(char)puVar1[1]);
+  puVar1 = os_current_task_record_ptr_ffff764c;
+  os_current_task_record_ptr_ffff764c[3] = os_current_task_record_ptr_ffff764c[3] + '\x01';
+  os_state_flags_ffff7640 = 0x100;
+  ref_consistencyCheck(&os_ctrl_block_ffff7638,(int)(char)puVar1[1]);
   *puVar1 = 0;
   DAT_ffff7644 = *(undefined4 *)(puVar1 + 4);
-  os_dispatch(&DAT_ffff7638);
+  os_dispatch(&os_ctrl_block_ffff7638);
   return;
 }
 

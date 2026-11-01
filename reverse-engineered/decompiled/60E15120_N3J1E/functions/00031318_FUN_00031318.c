@@ -10,8 +10,8 @@ undefined1 * FUN_00031318(void)
   
   puVar1 = (undefined1 *)(uint)DAT_ffffaa68;
   if (puVar1 == (undefined1 *)0x1) {
-    puVar1 = &DAT_ffffbf3c;
-    DAT_ffffbf3c = DAT_ffffbf3d;
+    puVar1 = &inferred_ram_bf3c_ffffbf3c_ffffbf3c;
+    inferred_ram_bf3c_ffffbf3c_ffffbf3c = DAT_ffffbf3d;
   }
   return puVar1;
 }

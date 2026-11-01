@@ -6,11 +6,11 @@
 void FUN_0002a082(void)
 
 {
-  if (((DAT_ffffa9bc < 65.0) || (engine_speed_rpm_ffffb548 < 5500.0)) || (engine_running_ffffa428 != '\0')) {
+  if (((inferred_ram_a9bc_ffffa9bc_ffffa9bc < 65.0) || (engine_speed_rpm_ffffb548 < 5500.0)) || (engine_running_ffffa428 != '\0')) {
     if (((DAT_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
       DAT_ffffbb5c = 900000;
     }
-    else if ((DAT_ffffaa62 == '\0') && (DAT_ffffbb5c != 0)) {
+    else if ((cranking_active_ffffaa62_ffffaa62 == '\0') && (DAT_ffffbb5c != 0)) {
       DAT_ffffbb5c = DAT_ffffbb5c + -1;
     }
   }

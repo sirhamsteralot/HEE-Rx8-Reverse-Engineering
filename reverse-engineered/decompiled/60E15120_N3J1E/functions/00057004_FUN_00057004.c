@@ -7,7 +7,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3d0. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag_read_tire_size(undefined4 param_1)
+void diag22_pid16f0_tire_revolutions_per_mile(undefined4 param_1)
 
 {
   diag_append_u16_be(param_1,(int)tire_revolutions_per_mile_ffffd380);

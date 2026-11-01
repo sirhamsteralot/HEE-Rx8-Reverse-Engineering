@@ -18,7 +18,7 @@ void ref_calcDiagFuelInjectorTrim(void)
       DAT_ffffce53 = '\0';
     }
   }
-  DAT_ffffce32 = FUN_0005d210((int)DAT_ffffce53);
+  inferred_ram_ce32_ffffce32_ffffce32 = FUN_0005d210((int)DAT_ffffce53);
   return;
 }
 

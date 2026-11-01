@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0006410c (282 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSMode1Function(uint param_1,char param_2)
+uint obd_mode01_current_data(uint param_1,char param_2)
 
 {
   bool bVar1;

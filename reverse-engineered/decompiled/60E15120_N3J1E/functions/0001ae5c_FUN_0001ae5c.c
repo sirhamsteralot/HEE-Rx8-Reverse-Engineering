@@ -9,7 +9,7 @@
 void FUN_0001ae5c(void)
 
 {
-  DAT_ffffad1c = rx8_encode_u16_affine_saturate(DAT_ffffa3e4,0x38a00000,0);
+  inferred_o2s2_ffffad1c_ffffad1c = rx8_encode_u16_affine_saturate(DAT_ffffa3e4,0x38a00000,0);
   return;
 }
 

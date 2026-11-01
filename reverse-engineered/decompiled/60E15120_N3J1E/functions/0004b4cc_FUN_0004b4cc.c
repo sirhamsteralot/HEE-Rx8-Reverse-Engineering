@@ -6,7 +6,7 @@
 void FUN_0004b4cc(void)
 
 {
-  DAT_ffffce1c = FUN_0005d134(0);
+  inferred_ram_ce1c_ffffce1c_ffffce1c = FUN_0005d134(0);
   return;
 }
 

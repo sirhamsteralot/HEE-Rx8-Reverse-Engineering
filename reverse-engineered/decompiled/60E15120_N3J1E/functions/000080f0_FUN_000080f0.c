@@ -10,8 +10,8 @@ char FUN_000080f0(void)
   float fVar2;
   
   if (DAT_ffff9f95 != '$') {
-    fVar2 = (float)DAT_ffff9fb0;
-    if (DAT_ffff9fb0 < 0) {
+    fVar2 = (float)crank_icr10ah_sample_ffff9fb0;
+    if (crank_icr10ah_sample_ffff9fb0 < 0) {
       fVar2 = fVar2 + 4.2949673e+09;
     }
     fVar1 = (float)DAT_ffff9fb4;

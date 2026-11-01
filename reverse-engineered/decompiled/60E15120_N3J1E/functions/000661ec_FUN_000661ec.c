@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00064adc (180 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_000661ec(short param_1,char param_2)
+uint obd_mode07_pending_dtc(short param_1,char param_2)
 
 {
   undefined4 uVar1;

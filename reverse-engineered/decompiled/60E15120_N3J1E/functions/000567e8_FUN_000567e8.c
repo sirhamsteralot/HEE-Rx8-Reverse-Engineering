@@ -10,7 +10,7 @@
 /* Function candidate recovered from ROM pointer at 5ebec and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined1 * candidate_diag22_accept_identifier_request(short param_1,uint param_2)
+undefined1 * uds_service_22_read_data_by_identifier(short param_1,uint param_2)
 
 {
   undefined4 uVar1;

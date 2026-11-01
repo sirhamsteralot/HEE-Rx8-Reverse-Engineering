@@ -12,7 +12,7 @@ uint FUN_0003828a(void)
   
   DAT_ffffc4e0 = rx8_first_order_filter(mass_air_flow_ffffa9ec,DAT_ffffc4e0,0.011799991,1e-05);
   DAT_ffffc518 = (float)lookup_2d_descriptor_scaled(vehicle_speed_ffffbbb4,&tbl_table_2d_231_airflow_related_0006b354);
-  DAT_ffffc4dc = (DAT_ffffc4c8 - intake_air_temperature_ffffaddc) * DAT_ffffc518;
+  DAT_ffffc4dc = (inferred_temp_c4c8_ffffc4c8_ffffc4c8 - intake_air_temperature_ffffaddc) * DAT_ffffc518;
   uVar1 = (uint)DAT_ffffb0ca;
   if (uVar1 == 1) {
     DAT_ffffc4d8 = 0.0;

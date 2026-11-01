@@ -36,12 +36,12 @@ void ref_calculateThrottlePedalPositionMapBased(void)
       else {
         puVar1 = &tbl_throttle_pedal_to_throttle_plate_request_gear_3_4_0006a4ac;
       }
-      fVar5 = (float)lookup_3d_descriptor_scaled(engine_speed_rpm_ffffb548,DAT_ffffa9bc,puVar1);
+      fVar5 = (float)lookup_3d_descriptor_scaled(engine_speed_rpm_ffffb548,inferred_ram_a9bc_ffffa9bc_ffffa9bc,puVar1);
       goto LAB_00022932;
     }
     puVar1 = &tbl_throttle_pedal_to_throttle_plate_request_gear_neutral_0006a474;
   }
-  fVar5 = (float)lookup_3d_descriptor_scaled(engine_speed_rpm_ffffb548,DAT_ffffa9bc,puVar1);
+  fVar5 = (float)lookup_3d_descriptor_scaled(engine_speed_rpm_ffffb548,inferred_ram_a9bc_ffffa9bc_ffffa9bc,puVar1);
 LAB_00022932:
   fVar5 = rx8_clamp_float(fVar5,0.0,84.0);
   DAT_ffffb3ec = 0;

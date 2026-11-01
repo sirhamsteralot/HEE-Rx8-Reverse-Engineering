@@ -19,7 +19,7 @@ uint FUN_00041bd4(void)
   else if (DAT_ffffc948 != 0) {
     DAT_ffffc948 = DAT_ffffc948 + -1;
   }
-  cVar4 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  cVar4 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   if (cVar2 == '\x01') {
     DAT_ffffc965 = 0;
     DAT_ffffc956 = 0;

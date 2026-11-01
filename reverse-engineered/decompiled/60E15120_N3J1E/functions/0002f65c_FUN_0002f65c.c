@@ -13,8 +13,8 @@ uint FUN_0002f65c(void)
   else {
     DAT_ffffbdac = '\x01';
   }
-  if (DAT_ffffc6ac < 1.94) {
-    if (DAT_ffffc6ac < 1.84) {
+  if (inferred_ram_c6ac_ffffc6ac_ffffc6ac < 1.94) {
+    if (inferred_ram_c6ac_ffffc6ac_ffffc6ac < 1.84) {
       DAT_ffffbdb2 = '\0';
     }
   }
@@ -40,7 +40,7 @@ uint FUN_0002f65c(void)
   uVar1 = (uint)DAT_ffffbda1;
   if (((((uVar1 == 1) && (0x5c < DAT_ffffbda8)) &&
        ((((DAT_ffffbdac == '\x01' ||
-          (((DAT_ffffbdac == '\0' && (DAT_ffffbd68 == '\x01')) && (DAT_ffffbdb8 == '\x01')))) ||
+          (((DAT_ffffbdac == '\0' && (DAT_ffffbd68 == '\x01')) && (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\x01')))) ||
          ((((DAT_ffffaa68 == '\0' && (DAT_ffffbda0 == '\x01')) && (DAT_ffffccc6 == '\0')) &&
           ((DAT_ffffa8ea == '\0' && (apv_target_state_ffffbf8d == '\0')))))) ||
         ((DAT_ffffbd6a == '\x01' ||

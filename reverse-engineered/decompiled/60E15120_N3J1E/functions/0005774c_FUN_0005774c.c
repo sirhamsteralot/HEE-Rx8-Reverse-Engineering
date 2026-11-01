@@ -20,7 +20,7 @@ int diag22_find_and_dispatch_identifier(void)
   while ((record_index < RX8_DIAGNOSTIC_RECORD_COUNT && (!identifier_found))) {
     if (records[record_index].identifier == diag22_current_identifier_ffffd1ea) {
       identifier_found = true;
-      if ((records[record_index].availability_mask & DAT_ffffd3b4) == 0) {
+      if ((records[record_index].availability_mask & diag_permission_mask_ffffd3b4_ffffd3b4) == 0) {
         unresolved_response_result = ref_udsErrorResponse(RX8_SERVICE_READ_DATA,RX8_DIAG_IDENTIFIER_REJECTED);
       }
       else {

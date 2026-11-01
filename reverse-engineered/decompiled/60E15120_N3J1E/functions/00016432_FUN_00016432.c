@@ -29,13 +29,13 @@ void FUN_00016432(void)
     DAT_ffffa8be = '\0';
   }
   else {
-    if (DAT_ffffa7ac + 3.0 <= engine_speed_rpm_ffffb548) {
+    if (inferred_ram_a7ac_ffffa7ac_ffffa7ac + 3.0 <= engine_speed_rpm_ffffb548) {
       DAT_ffffa8bd = '\x01';
       DAT_ffffa8be = '\x01';
     }
     snapshot_intake_air_temperature_ffffaddc = intake_air_temperature_ffffaddc;
     snapshot_inferred_coolant_temperature_ffffa990 = inferred_coolant_temperature_ffffa990;
-    if (DAT_ffffce32 == '\x01') {
+    if (inferred_ram_ce32_ffffce32_ffffce32 == '\x01') {
       DAT_ffffa8b8 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa990,&tbl_table_2d_41_000694cc);
     }
     else {

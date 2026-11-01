@@ -10,7 +10,7 @@ void FUN_00046b24(void)
   float arg1;
   float fVar5;
   
-  arg1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  arg1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8744,0);

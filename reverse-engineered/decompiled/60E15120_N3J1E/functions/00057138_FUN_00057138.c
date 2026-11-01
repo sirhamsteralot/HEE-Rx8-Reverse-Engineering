@@ -3,17 +3,17 @@
 /* Function candidate recovered from ROM pointer at 5f438 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057138(char param_1)
+void candidate_diag22_pid0968_io_status_b5b4_bc35(char param_1)
 
 {
   undefined4 uVar1;
   byte bVar2;
   
-  bVar2 = DAT_ffffb5b4 == '\x01';
-  if (DAT_ffffbc35 == '\x01') {
+  bVar2 = inferred_ram_b5b4_ffffb5b4_ffffb5b4 == '\x01';
+  if (inferred_ram_bc35_ffffbc35_ffffbc35 == '\x01') {
     bVar2 = bVar2 | 0x20;
   }
-  uVar1 = FUN_000579a8(bVar2,1);
+  uVar1 = diag22_subpid_supported_mask(bVar2,1);
   diag_append_u8((int)param_1,uVar1);
   diag_append_u8((int)param_1,0);
   return;

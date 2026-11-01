@@ -7,7 +7,7 @@ uint FUN_00034d12(void)
   
   uVar1 = (uint)DAT_ffffc21e;
   if (uVar1 == 3) {
-    if (DAT_ffffc274 == '\x01') {
+    if (inferred_ram_c274_ffffc274_ffffc274 == '\x01') {
       DAT_ffffc220 = 0xff;
       uVar1 = FUN_00035738(9);
       DAT_ffffc21d = 0;

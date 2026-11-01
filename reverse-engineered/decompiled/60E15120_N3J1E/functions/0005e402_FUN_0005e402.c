@@ -9,7 +9,7 @@ uint FUN_0005e402(void)
   float fVar2;
   
   uVar1 = (uint)DAT_ffffd252;
-  fVar2 = (DAT_ffffadec + DAT_ffffb0d0 + -1.0) * 100.0;
+  fVar2 = (inferred_lambda_actual_ffffadec_ffffadec + inferred_ltft_bank1_ffffb0d0_ffffb0d0 + -1.0) * 100.0;
   if (uVar1 == 0x30) {
     uVar1 = ref_updateMemoryAtAddress_float_VAL_ADDR(fVar2,&DAT_ffff9160);
     return uVar1;

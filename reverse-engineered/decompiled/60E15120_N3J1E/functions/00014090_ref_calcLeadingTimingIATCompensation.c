@@ -18,20 +18,20 @@ uint iat_timing_compensation_on_throttle(void)
   undefined *puVar2;
   undefined4 extraout_fr0;
   
-  if (DAT_ffffaa62 == 1) {
+  if (cranking_active_ffffaa62_ffffaa62 == 1) {
     puVar2 = &tbl_table_2d_113_0006a0ec;
   }
   else {
     if (engine_load_ffffc0b4 < 0.5) {
-      DAT_ffffa778 = 0;
-      DAT_ffffa77c = 0;
-      return (uint)DAT_ffffaa62;
+      iat_timing_compensation_leading_ffffa778 = 0;
+      iat_timing_compensation_trailing_ffffa77c = 0;
+      return (uint)cranking_active_ffffaa62_ffffaa62;
     }
     puVar2 = &tbl_ignition_leading_trailing_intake_air_temperature_compensation_on_throttle_0006a0d8;
   }
   uVar1 = lookup_2d_descriptor_scaled(intake_air_temperature_ffffaddc,puVar2);
-  DAT_ffffa778 = extraout_fr0;
-  DAT_ffffa77c = extraout_fr0;
+  iat_timing_compensation_leading_ffffa778 = extraout_fr0;
+  iat_timing_compensation_trailing_ffffa77c = extraout_fr0;
   return uVar1;
 }
 

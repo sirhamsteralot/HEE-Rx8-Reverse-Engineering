@@ -27,8 +27,8 @@ uint FUN_000470d0(void)
   cVar5 = DAT_ffffcc98;
   snapshot_DAT_ffffcc91 = DAT_ffffcc91;
   cVar3 = DAT_ffffb53a;
-  snapshot_DAT_ffffad5e = DAT_ffffad5e;
-  snapshot_DAT_ffffad5c = DAT_ffffad5c;
+  snapshot_DAT_ffffad5e = inferred_pedal_volts_ffffad5e_ffffad5e;
+  snapshot_DAT_ffffad5c = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;

@@ -42,7 +42,7 @@ void FUN_0001506c(void)
   float fVar15;
   
   cVar9 = DAT_ffffc61e;
-  cVar8 = DAT_ffffbdb8;
+  cVar8 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
   cVar7 = DAT_ffffbd69;
   cVar6 = DAT_ffffbad0;
   cVar5 = DAT_ffffb5b3;
@@ -53,7 +53,7 @@ void FUN_0001506c(void)
   arg3 = 1e-05;
   fVar13 = vehicle_speed_ffffbbb4;
   snapshot_inferred_coolant_temperature_ffffa990 = inferred_coolant_temperature_ffffa990;
-  fVar15 = DAT_ffffc6ac;
+  fVar15 = inferred_ram_c6ac_ffffc6ac_ffffc6ac;
   DAT_ffffa7c8 = rx8_first_order_filter(inferred_battery_voltage_ffffb590,DAT_ffffa7c8,0.03125,1e-05);
   if ((((DAT_ffffa7b7 == '\x01') && (0x493d < DAT_ffffa806)) && (13.016 <= DAT_ffffa7c8)) ||
      ((cVar2 == '\0' || (cVar1 == '\x01')))) {
@@ -112,7 +112,7 @@ void FUN_0001506c(void)
       if (DAT_ffffa6b7 != '\x01') {
         fVar12 = DAT_ffffa7dc;
         if (DAT_ffffa6b8 != '\x01') {
-          cVar1 = DAT_ffffb53b;
+          cVar1 = inferred_ram_b53b_ffffb53b_ffffb53b;
           if (DAT_ffffa818 != 0) goto LAB_0001537c;
           fVar12 = rx8_max_float(0.0,fVar15);
           DAT_ffffa7b8 = 0;
@@ -250,7 +250,7 @@ LAB_000156a2:
     DAT_ffffa81c = DAT_ffffa81c + -1;
   }
   if (DAT_ffffa81c == 0) {
-    DAT_ffffa7bc = (float)lookup_2d_descriptor_scaled(DAT_ffffa7b0 - DAT_ffffa7ac,&tbl_idle_target_filter_factor_0006935c);
+    DAT_ffffa7bc = (float)lookup_2d_descriptor_scaled(DAT_ffffa7b0 - inferred_ram_a7ac_ffffa7ac_ffffa7ac,&tbl_idle_target_filter_factor_0006935c);
   }
   else {
     DAT_ffffa7bc = 1.0;
@@ -262,13 +262,13 @@ LAB_000156a2:
     fVar13 = DAT_ffffa7f4;
   }
   else {
-    fVar13 = rx8_first_order_filter(DAT_ffffa7b0,DAT_ffffa7ac,DAT_ffffa7bc,arg3);
+    fVar13 = rx8_first_order_filter(DAT_ffffa7b0,inferred_ram_a7ac_ffffa7ac_ffffa7ac,DAT_ffffa7bc,arg3);
     if (DAT_ffffa7b7 != '\0') {
       fVar13 = rx8_max_float(fVar13,850.0);
     }
   }
   DAT_ffffa7f4 = fVar13;
-  DAT_ffffa7ac = (float)FUN_0005ca94(DAT_ffffa7f4);
+  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)FUN_0005ca94(DAT_ffffa7f4);
   return;
 }
 

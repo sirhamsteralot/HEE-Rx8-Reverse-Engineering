@@ -13,7 +13,7 @@ undefined4 FUN_000231f0(void)
   float arg1;
   float arg0;
   
-  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   cVar1 = engine_stopped_latch_ffffa41c;
   if (engine_speed_rpm_ffffb548 < 500.0) {
     if (engine_speed_rpm_ffffb548 < 300.0) {
@@ -23,13 +23,13 @@ undefined4 FUN_000231f0(void)
   else {
     DAT_ffffb435 = '\x01';
   }
-  if (((DAT_ffffce32 == '\x01') && (DAT_ffffb436 == '\x01')) && (engine_stopped_latch_ffffa41c == '\0')) {
+  if (((inferred_ram_ce32_ffffce32_ffffce32 == '\x01') && (DAT_ffffb436 == '\x01')) && (engine_stopped_latch_ffffa41c == '\0')) {
     DAT_ffffb420 = rx8_lookup_2d_raw_u16(inferred_coolant_temperature_ffffa98c,&PTR_PTR_0006a518);
   }
   else if (DAT_ffffb420 != 0) {
     DAT_ffffb420 = DAT_ffffb420 + -1;
   }
-  if (((DAT_ffffb435 == '\x01') || (DAT_ffffce32 == '\0')) ||
+  if (((DAT_ffffb435 == '\x01') || (inferred_ram_ce32_ffffce32_ffffce32 == '\0')) ||
      ((engine_running_ffffa428 == '\x01' || (DAT_ffffb420 == 0)))) {
     DAT_ffffb423 = '\0';
   }
@@ -50,7 +50,7 @@ undefined4 FUN_000231f0(void)
     fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
   }
   else {
-    arg0 = DAT_ffffb410 + fVar2;
+    arg0 = inferred_ram_b410_ffffb410_ffffb410 + fVar2;
     if (DAT_ffffccac == '\x01') {
       arg1 = 0.0;
       fVar2 = fVar2 + 5.0;

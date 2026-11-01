@@ -42,7 +42,7 @@ void FUN_00034ae2(void)
   else {
     DAT_ffffc21d = '\0';
     ref_setImmoLight__(0);
-    DAT_ffffc1d0 = 0;
+    inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
     DAT_ffffc1d1 = 0;
   }
   DAT_ffffc229 = 0;

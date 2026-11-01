@@ -19,7 +19,7 @@ uint FUN_0003f510(void)
   
   uVar4 = 0;
   snapshot_DAT_ffffad20 = DAT_ffffad20;
-  snapshot_DAT_ffffb074 = DAT_ffffb074;
+  snapshot_DAT_ffffb074 = inferred_trim_b074_ffffb074_ffffb074;
   fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8720);
   fVar2 = fVar2 - 0.0003;
   fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar4,&DAT_ffff8718);

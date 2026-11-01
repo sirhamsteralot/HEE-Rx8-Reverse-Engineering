@@ -16,7 +16,7 @@ char FUN_0005e7a0(void)
   else {
     local_c = 0xffff;
   }
-  DAT_ffffd3a0 = local_c;
+  inferred_ram_d3a0_ffffd3a0_ffffd3a0 = local_c;
   DAT_ffffd3a8 = local_c;
   DAT_ffffd3af = 0;
   DAT_ffffd3ae = 0;

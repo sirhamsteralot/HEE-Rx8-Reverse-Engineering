@@ -18,14 +18,14 @@ void FUN_0003ec88(void)
   cVar1 = DAT_ffffb07d;
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
   snapshot_DAT_ffffad20 = DAT_ffffad20;
-  snapshot_DAT_ffffb0d0 = DAT_ffffb0d0;
-  snapshot_DAT_ffffadec = DAT_ffffadec;
-  if ((((0.4 <= DAT_ffffad20) || ((DAT_ffffadec < 0.8 && (0x9b < DAT_ffffc6ce)))) ||
-      ((1.2 <= DAT_ffffadec && (0x9b < DAT_ffffc6d0)))) ||
-     (((DAT_ffffb0d0 < -0.5 || (0.5 <= DAT_ffffb0d0)) || (DAT_ffffd1c5 == '\x01')))) {
+  snapshot_DAT_ffffb0d0 = inferred_ltft_bank1_ffffb0d0_ffffb0d0;
+  snapshot_DAT_ffffadec = inferred_lambda_actual_ffffadec_ffffadec;
+  if ((((0.4 <= DAT_ffffad20) || ((inferred_lambda_actual_ffffadec_ffffadec < 0.8 && (0x9b < DAT_ffffc6ce)))) ||
+      ((1.2 <= inferred_lambda_actual_ffffadec_ffffadec && (0x9b < DAT_ffffc6d0)))) ||
+     (((inferred_ltft_bank1_ffffb0d0_ffffb0d0 < -0.5 || (0.5 <= inferred_ltft_bank1_ffffb0d0_ffffb0d0)) || (DAT_ffffd1c5 == '\x01')))) {
     DAT_ffffc6c8 = 0;
   }
-  else if (((0.8 <= DAT_ffffadec) && (DAT_ffffadec < 1.2)) &&
+  else if (((0.8 <= inferred_lambda_actual_ffffadec_ffffadec) && (inferred_lambda_actual_ffffadec_ffffadec < 1.2)) &&
           ((DAT_ffffb07d == '\x01' &&
            ((10.0 <= mass_air_flow_ffffa9ec &&
             (DAT_ffffc6c8 = rx8_add_u16_saturate((int)(short)DAT_ffffc6c8,1),

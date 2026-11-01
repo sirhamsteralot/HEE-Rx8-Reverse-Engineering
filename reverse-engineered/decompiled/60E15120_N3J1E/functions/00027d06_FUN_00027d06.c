@@ -14,8 +14,8 @@ undefined1 * FUN_00027d06(void)
   undefined1 local_30;
   undefined1 local_2f;
   
-  cVar2 = DAT_ffffad18;
-  if ((DAT_ffffba1f == '\0') && (DAT_ffffad18 == '\x01')) {
+  cVar2 = inferred_ram_ad18_ffffad18_ffffad18;
+  if ((DAT_ffffba1f == '\0') && (inferred_ram_ad18_ffffad18_ffffad18 == '\x01')) {
     DAT_ffffba20 = '\x01';
     bVar1 = true;
   }

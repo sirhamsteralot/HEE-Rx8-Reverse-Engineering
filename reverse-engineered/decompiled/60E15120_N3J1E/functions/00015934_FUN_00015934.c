@@ -11,7 +11,7 @@ uint FUN_00015934(byte param_1)
   float extraout_fr0;
   
   uVar1 = (uint)param_1;
-  if ((uVar1 == (DAT_ffffb534 == '\0')) || (DAT_ffffaa62 == '\0')) {
+  if ((uVar1 == (DAT_ffffb534 == '\0')) || (cranking_active_ffffaa62_ffffaa62 == '\0')) {
     DAT_ffffa7b8 = 0;
     DAT_ffffa7cc = 500.0;
     DAT_ffffa7d0 = 500.0;

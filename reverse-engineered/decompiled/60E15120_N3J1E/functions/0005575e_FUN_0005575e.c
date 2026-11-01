@@ -6,7 +6,7 @@
  */
 /* ROM address: 0x0005575e; body bytes: 22; decompiled */
 
-undefined4 FUN_0005575e(void)
+undefined4 diag_encode_lambda_target(void)
 
 {
   undefined4 uVar1;

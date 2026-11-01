@@ -78,7 +78,7 @@ undefined4 FUN_00014d10(void)
       DAT_ffffa7e8 = extraout_fr0_00;
     }
     if (DAT_ffffa7b5 == '\0') {
-      DAT_ffffa7c4 = DAT_ffffb550 - DAT_ffffa7ac;
+      DAT_ffffa7c4 = DAT_ffffb550 - inferred_ram_a7ac_ffffa7ac_ffffa7ac;
       DAT_ffffa7f8 = (float)lookup_2d_descriptor_scaled(DAT_ffffa7c4,&tbl_table_2d_23_00069348);
       fVar6 = rx8_clamp_float(DAT_ffffa7a8 + DAT_ffffa7f8,DAT_ffffa7e4,DAT_ffffa7e8);
       uVar4 = extraout_r0_00;

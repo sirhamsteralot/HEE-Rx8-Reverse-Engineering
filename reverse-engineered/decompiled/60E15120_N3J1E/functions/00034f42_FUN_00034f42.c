@@ -32,7 +32,7 @@ undefined4 * FUN_00034f42(void)
     }
     if (DAT_ffffc210 == 0) {
       ref_setImmoLight__(0);
-      DAT_ffffc1d0 = 0;
+      inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
     }
     puVar1 = &DAT_000350e8;
     if (10.0 < inferred_battery_voltage_ffffb590) {

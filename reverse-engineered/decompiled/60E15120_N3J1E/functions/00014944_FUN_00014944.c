@@ -26,8 +26,8 @@ undefined2 * FUN_00014944(void)
   else {
     DAT_ffffa827 = '\x01';
   }
-  if (DAT_ffffa9bc < 1.5) {
-    if (DAT_ffffa9bc < 1.0) {
+  if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 1.5) {
+    if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 1.0) {
       DAT_ffffa821 = '\0';
     }
   }
@@ -50,7 +50,7 @@ undefined2 * FUN_00014944(void)
     DAT_ffffa80a = rx8_add_u16_saturate((int)(short)DAT_ffffa80a,1);
   }
   uVar6 = 0x3727c5ac;
-  if (((DAT_ffffa844 == '\0') || (DAT_ffffaa62 == '\0')) || ((cVar1 == '\x01' && (snapshot_DAT_ffffb53a == 0)))) {
+  if (((DAT_ffffa844 == '\0') || (cranking_active_ffffaa62_ffffaa62 == '\0')) || ((cVar1 == '\x01' && (snapshot_DAT_ffffb53a == 0)))) {
     DAT_ffffa7f0 = 0x3e;
     DAT_ffffa7ec = snapshot_engine_speed_rpm_ffffb548;
   }
@@ -72,7 +72,7 @@ undefined2 * FUN_00014944(void)
            (DAT_ffffa7b6 != '\0')))) ||
          ((cVar1 != '\0' && (puVar5 = (undefined2 *)(uint)snapshot_DAT_ffffb53a, puVar5 != (undefined2 *)0x1)))) ||
         (((((uint)puVar4 & 0xff) != 0 || ((150.0 < DAT_ffffa7ec - snapshot_engine_speed_rpm_ffffb548 || (DAT_ffffa7f0 != 0)))) &&
-         (DAT_ffffa7ac < snapshot_engine_speed_rpm_ffffb548)))) ||
+         (inferred_ram_a7ac_ffffa7ac_ffffa7ac < snapshot_engine_speed_rpm_ffffb548)))) ||
        ((((DAT_ffffc5e6 != '\0' ||
           (puVar5 = (undefined2 *)(int)DAT_ffffc5db, puVar5 != (undefined2 *)0x0)) ||
          (puVar5 = (undefined2 *)&DAT_ffffc590, DAT_ffffc590 != '\0')) || (DAT_ffffc61e != '\0'))))

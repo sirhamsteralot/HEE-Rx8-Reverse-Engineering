@@ -30,7 +30,7 @@ char FUN_00029538(void)
     cVar1 = '\x02';
     DAT_ffffbb17 = DAT_ffffbb17 | 2;
   }
-  if (DAT_ffffad18 == '\0') {
+  if (inferred_ram_ad18_ffffad18_ffffad18 == '\0') {
     cVar1 = '\x01';
     DAT_ffffbb17 = DAT_ffffbb17 | 1;
   }

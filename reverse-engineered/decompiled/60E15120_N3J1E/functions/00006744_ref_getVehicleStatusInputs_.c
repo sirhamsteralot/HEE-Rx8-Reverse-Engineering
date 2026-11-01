@@ -6,10 +6,10 @@
 void vehicle_inputs_poll_pfdr_phdr(void)
 
 {
-  DAT_ffff9ec8 = PFDR_W;
-  DAT_ffff9eca = PHDR_W;
-  DAT_ffff9ed8 = DAT_ffff9ec8;
-  DAT_ffff9eda = DAT_ffff9eca;
+  vehicle_inputs_pfdr_latch_ffff9ec8 = PFDR_W;
+  vehicle_inputs_phdr_latch_ffff9eca = PHDR_W;
+  vehicle_inputs_pfdr_prev_ffff9ed8 = vehicle_inputs_pfdr_latch_ffff9ec8;
+  vehicle_inputs_phdr_prev_ffff9eda = vehicle_inputs_phdr_latch_ffff9eca;
   DAT_ffff9ecc = ref_getFromGPIO_(0);
   DAT_ffff9edc = DAT_ffff9ecc;
   DAT_ffff9ecd = ref_getFromGPIO_(1);

@@ -9,9 +9,9 @@ uint FUN_0005e7e4(void)
   uint uVar1;
   
   uVar1 = (uint)DAT_ffffaa68;
-  DAT_ffffd3a4 = DAT_ffffc6ac;
+  DAT_ffffd3a4 = inferred_ram_c6ac_ffffc6ac_ffffc6ac;
   if (uVar1 == 1) {
-    if (DAT_ffffc6ac < 1.374) {
+    if (inferred_ram_c6ac_ffffc6ac_ffffc6ac < 1.374) {
       uVar1 = rx8_add_u16_saturate((int)(short)DAT_ffffd3aa,1);
       DAT_ffffd3aa = (ushort)uVar1;
       if ((0x18 < DAT_ffffd3aa) && (DAT_ffffd3aa = 0, DAT_ffffd3a8 != 0)) {
@@ -26,7 +26,7 @@ uint FUN_0005e7e4(void)
       DAT_ffffd3aa = 0;
       DAT_ffffd3a8 = DAT_ffffd3a8 - 1;
     }
-    if (DAT_ffffd3a8 < DAT_ffffd3a0) {
+    if (DAT_ffffd3a8 < inferred_ram_d3a0_ffffd3a0_ffffd3a0) {
       DAT_ffffd3af = 2;
     }
     else {

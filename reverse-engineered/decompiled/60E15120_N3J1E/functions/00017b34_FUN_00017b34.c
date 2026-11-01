@@ -16,7 +16,7 @@ undefined1 * FUN_00017b34(void)
     DAT_ffffa8ff = '\x02';
   }
   puVar1 = &DAT_ffffa8dd;
-  if (DAT_ffffa8f4 == DAT_ffffa8dd) {
+  if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 == DAT_ffffa8dd) {
     DAT_ffffa8fa = 0x30;
     DAT_ffffa8ff = '\x01';
   }

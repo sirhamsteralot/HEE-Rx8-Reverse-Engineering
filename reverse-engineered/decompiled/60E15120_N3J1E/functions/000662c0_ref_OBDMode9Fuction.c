@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00064bb0 (444 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_OBDMode9Fuction(undefined4 param_1,char param_2)
+uint obd_mode09_vehicle_info(undefined4 param_1,char param_2)
 
 {
   bool bVar1;

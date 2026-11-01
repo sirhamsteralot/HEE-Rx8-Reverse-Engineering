@@ -20,7 +20,7 @@ uint FUN_000317a8(void)
     if (((((DAT_ffffc4c2 < 0x169) || (((int)DAT_ffffcd0c & 0x80U) != 0)) &&
          ((20.0 < DAT_ffffbf74 ||
           (fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(inferred_coolant_temperature_catalyst_temp_model_ffffa998,&DAT_ffff8710),
-          350.0 < fVar2)))) && ((DAT_ffffbf74 <= 20.0 && (35.0 < DAT_ffffc644)))) ||
+          350.0 < fVar2)))) && ((DAT_ffffbf74 <= 20.0 && (35.0 < fuel_correction_sum_ffffc644_ffffc644)))) ||
        ((snapshot_inferred_coolant_temperature_ffffa98c <= -10.0 || ((35.0 < snapshot_inferred_coolant_temperature_ffffa98c || (40.0 < fVar3)))))) {
       DAT_ffffbf72 = 0;
     }

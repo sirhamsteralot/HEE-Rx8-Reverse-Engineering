@@ -15,7 +15,7 @@ undefined2 * FUN_0003fa18(void)
   
   DAT_ffffc7dc = rx8_lookup_3d_raw_u8(engine_load_ffffc0b4,engine_speed_rpm_ffffb548,&tbl_table_3d_122_0006b658);
   fVar6 = 0.0;
-  cVar2 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  cVar2 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   fVar4 = rx8_absolute_difference(DAT_ffffcab8,fVar6);
   fVar5 = rx8_absolute_difference(DAT_ffffcabc,fVar6);
   fVar6 = rx8_absolute_difference(DAT_ffffad50,fVar6);

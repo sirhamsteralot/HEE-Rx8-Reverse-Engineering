@@ -25,8 +25,8 @@ undefined4 * FUN_000514c8(void)
     if (((((puVar4 == (undefined4 *)0x1) &&
           (puVar4 = (undefined4 *)(uint)DAT_ffffd0f1, puVar4 == (undefined4 *)0x1)) &&
          ((puVar4 = (undefined4 *)(int)DAT_ffffd0f0, puVar4 == (undefined4 *)0x0 &&
-          ((DAT_ffffa9bc < DAT_ffffd0fc &&
-           (puVar4 = (undefined4 *)&DAT_ffffaa62, DAT_ffffaa62 == '\0')))))) &&
+          ((inferred_ram_a9bc_ffffa9bc_ffffa9bc < DAT_ffffd0fc &&
+           (puVar4 = (undefined4 *)&cranking_active_ffffaa62_ffffaa62, cranking_active_ffffaa62_ffffaa62 == '\0')))))) &&
         ((puVar4 = (undefined4 *)-(((DAT_ffffcfb5 & 0x20) == 0) - 1), puVar4 == (undefined4 *)0x1 &&
          ((puVar4 = (undefined4 *)(uint)DAT_ffffb2f6, puVar4 == (undefined4 *)0x1 &&
           (puVar4 = (undefined4 *)(int)DAT_ffffcfc3, puVar4 == (undefined4 *)0x0)))))) &&

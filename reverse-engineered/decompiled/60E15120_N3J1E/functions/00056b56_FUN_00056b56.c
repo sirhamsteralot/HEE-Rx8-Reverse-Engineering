@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f258 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00056b56(char param_1)
+void diag22_pid0040_pids_supported_41_60(char param_1)
 
 {
   diag_append_u16_be((int)param_1,0x7ad0);

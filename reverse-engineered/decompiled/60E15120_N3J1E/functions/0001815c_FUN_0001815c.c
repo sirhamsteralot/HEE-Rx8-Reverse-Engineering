@@ -29,7 +29,7 @@ undefined4 dsc_timing_derate_select(void)
   
   snapshot_DAT_ffffbca8 = DAT_ffffbca8;
   snapshot_DAT_ffffbc98 = DAT_ffffbc98;
-  fVar11 = DAT_ffffbc94;
+  fVar11 = dsc_mode_a_base_timing_ffffbc94;
   cVar1 = DAT_ffffbc83;
   fVar8 = DAT_ffffbbd8;
   iVar7 = (int)DAT_ffffbc83;
@@ -39,10 +39,10 @@ undefined4 dsc_timing_derate_select(void)
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   cVar5 = rx8_is_outside_tolerance_band(DAT_ffffbc90,0,0x3727c5ac);
   if (cVar1 == '\x04') {
-    DAT_ffffa91c = fVar11;
+    dsc_timing_derate_leading_ffffa91c = fVar11;
   }
   else if (cVar5 == '\0') {
-    DAT_ffffa91c = -20.0;
+    dsc_timing_derate_leading_ffffa91c = -20.0;
   }
   else {
     if (DAT_ffffa930 <= DAT_ffffa92c) {
@@ -53,7 +53,7 @@ undefined4 dsc_timing_derate_select(void)
     fVar8 = rx8_max_float((DAT_ffffbcb8 + DAT_ffffbcbc + snapshot_DAT_ffffbc98 + fVar10 * (4.0 / (-fVar8 + 4.0))) -
                           snapshot_DAT_ffffbca8,0.0);
     fVar8 = (float)ref_checkFloatValidity_(fVar8 / snapshot_DAT_ffffbc90);
-    DAT_ffffa91c = fVar11 - fVar8;
+    dsc_timing_derate_leading_ffffa91c = fVar11 - fVar8;
   }
   if (cVar1 == '\x01') {
     puVar6 = &DAT_00069598;
@@ -74,15 +74,15 @@ undefined4 dsc_timing_derate_select(void)
   DAT_ffffa928 = (float)lookup_3d_descriptor_scaled(uVar4,snapshot_engine_speed_rpm_ffffb548,puVar6);
 LAB_000182d8:
   fVar8 = (float)lookup_3d_descriptor_scaled(uVar4,snapshot_engine_speed_rpm_ffffb548,&DAT_000695ec);
-  fVar11 = DAT_ffffa91c + fVar8;
+  fVar11 = dsc_timing_derate_leading_ffffa91c + fVar8;
   fVar8 = DAT_ffffa928 + fVar8;
-  DAT_ffffa924 = rx8_max_float(DAT_ffffa91c,DAT_ffffa928);
+  DAT_ffffa924 = rx8_max_float(dsc_timing_derate_leading_ffffa91c,DAT_ffffa928);
   DAT_ffffa920 = rx8_max_float(fVar11,fVar8);
   uVar4 = extraout_r0;
-  if (DAT_ffffa928 < DAT_ffffa91c) {
+  if (DAT_ffffa928 < dsc_timing_derate_leading_ffffa91c) {
     uVar4 = 0;
   }
-  DAT_ffffa93c = DAT_ffffa928 >= DAT_ffffa91c;
+  DAT_ffffa93c = DAT_ffffa928 >= dsc_timing_derate_leading_ffffa91c;
   return uVar4;
 }
 

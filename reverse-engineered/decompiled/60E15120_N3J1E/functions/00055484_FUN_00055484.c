@@ -6,7 +6,7 @@
  */
 /* ROM address: 0x00055484; body bytes: 22; decompiled */
 
-undefined4 FUN_00055484(void)
+undefined4 diag_encode_rpm(void)
 
 {
   undefined4 uVar1;

@@ -63,7 +63,7 @@ void FUN_0001b3f2(void)
   }
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a0,0);
   if (cVar4 == '\0') {
-    ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&DAT_ffff807c);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
     ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&DAT_ffff8084);
   }
   else if ((((uVar1 & 0xff) == 1) || ((uVar2 & 0xff) == 1)) && (DAT_ffffcc5e == '\x01')) {
@@ -72,7 +72,7 @@ void FUN_0001b3f2(void)
     fVar5 = DAT_ffffad58 + fVar5;
     fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar7,&DAT_ffff80b4);
     fVar6 = DAT_ffffad78 + fVar6;
-    ref_updateMemoryAtAddress_float_VAL_ADDR(fVar5,&DAT_ffff807c);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(fVar5,&inferred_ram_807c_ffff807c_ffff807c);
     ref_updateMemoryAtAddress_float_VAL_ADDR(fVar6,&DAT_ffff8084);
   }
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff809c,uVar1);

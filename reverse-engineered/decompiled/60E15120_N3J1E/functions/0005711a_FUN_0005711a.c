@@ -6,7 +6,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f424. Table purpose inferred from
    neighboring code. */
 
-void FUN_0005711a(char param_1)
+void diag22_pid1634_apv_position_voltage(char param_1)
 
 {
   undefined4 uVar1;

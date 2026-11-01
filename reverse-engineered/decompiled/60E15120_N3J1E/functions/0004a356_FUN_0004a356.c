@@ -11,7 +11,7 @@ uint FUN_0004a356(void)
   DAT_ffffcdb2 = DAT_ffffcd8a;
   uVar1 = (uint)DAT_ffffcd9c;
   if (uVar1 == 1) {
-    DAT_ffffcd78 = rx8_first_order_filter(DAT_ffffb074,DAT_ffffcd78,0.03,1e-05);
+    DAT_ffffcd78 = rx8_first_order_filter(inferred_trim_b074_ffffb074_ffffb074,DAT_ffffcd78,0.03,1e-05);
     DAT_ffffcd88 = rx8_add_u16_saturate((int)DAT_ffffcd88,1);
     uVar1 = rx8_add_u16_saturate((int)DAT_ffffcd8a,1);
     DAT_ffffcd8a = (short)uVar1;

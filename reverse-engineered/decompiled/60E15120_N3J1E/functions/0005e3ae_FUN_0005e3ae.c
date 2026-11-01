@@ -15,9 +15,9 @@ undefined4 FUN_0005e3ae(void)
   float snapshot_vehicle_speed_ffffbbb4;
   
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
-  uVar1 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff9150);
+  uVar1 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&inferred_sensor_block_ffff9150_ffff9150);
   if (extraout_fr0 < snapshot_vehicle_speed_ffffbbb4) {
-    uVar1 = ref_updateMemoryAtAddress_float_VAL_ADDR(snapshot_vehicle_speed_ffffbbb4,&DAT_ffff9150);
+    uVar1 = ref_updateMemoryAtAddress_float_VAL_ADDR(snapshot_vehicle_speed_ffffbbb4,&inferred_sensor_block_ffff9150_ffff9150);
     return uVar1;
   }
   return uVar1;

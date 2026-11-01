@@ -10,7 +10,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3e8. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag_read_knock_retard(char param_1)
+void diag22_pid1746_knock_retard_deg(char param_1)
 
 {
   undefined4 uVar1;

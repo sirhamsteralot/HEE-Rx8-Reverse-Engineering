@@ -1,0 +1,3155 @@
+{
+ "date": "2026-10-31",
+ "rom": "60E15120_N3J1E",
+ "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+ "pass_name": "uds_mode22_dispatch_labeling",
+ "source": "ROM bytes (submodule Stock_ROMs/60E15120_N3J1E.bin) + decompiled export + disassembly + logger_rx8_defs.xml + rx8club thread",
+ "diag22_table": {
+  "base": 389388,
+  "record_size": 12,
+  "count": 99,
+  "records": [
+   {
+    "record": 389388,
+    "pid": 0,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354448,
+    "raw": "00000400fffc000000056890",
+    "semantic": "pids_supported_01_20",
+    "confidence": "high",
+    "evidence": "handler appends const u16 0xBE1F,0xE813 = OBD supported-PID bitmap 01-20; record bytes at 0x5f10c verified"
+   },
+   {
+    "record": 389400,
+    "pid": 2,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354484,
+    "raw": "00020200fffc0000000568b4",
+    "semantic": "active_cal_id_field",
+    "confidence": "medium",
+    "evidence": "reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block"
+   },
+   {
+    "record": 389412,
+    "pid": 3,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354506,
+    "raw": "00030200fffc0000000568ca",
+    "semantic": "fuel_system_status_ol_cl",
+    "confidence": "high",
+    "evidence": "diag_ol_status_byte 0x5535e encodes CL/OL per OBD PID 03 (0x10 CL+DFE, 2 CL, 4 OL-not-allowed, 8 OL cold, 1 OL); low byte const 0"
+   },
+   {
+    "record": 389424,
+    "pid": 4,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354544,
+    "raw": "00040100fffc0000000568f0",
+    "semantic": "calculated_engine_load_pct",
+    "confidence": "high",
+    "evidence": "0x553dc: engine_load_ffffc0b4*100/engine_load_max_ffffc0b8*0.392157 = OBD PID 04 A*100/max; 0xff if max~0"
+   },
+   {
+    "record": 389436,
+    "pid": 5,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354624,
+    "raw": "00050100fffc000000056940",
+    "semantic": "coolant_temp_c",
+    "confidence": "high",
+    "evidence": "0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40"
+   },
+   {
+    "record": 389448,
+    "pid": 6,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354646,
+    "raw": "00060100fffc000000056956",
+    "semantic": "stft_bank1_pct",
+    "confidence": "high",
+    "evidence": "0x55440: (DAT_ffffadec-1)*100*0.78125-100; ffffadec=lambda actual (fuel chain); OBD PID 06 trim formula"
+   },
+   {
+    "record": 389460,
+    "pid": 7,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354668,
+    "raw": "00070100fffc00000005696c",
+    "semantic": "ltft_bank1_pct",
+    "confidence": "high",
+    "evidence": "0x55466: DAT_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula"
+   },
+   {
+    "record": 389472,
+    "pid": 12,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354690,
+    "raw": "000c0200fffc000000056982",
+    "semantic": "engine_rpm",
+    "confidence": "high",
+    "evidence": "0x55484: engine_speed_rpm_ffffb548*0.25 = OBD PID 0C A/4"
+   },
+   {
+    "record": 389484,
+    "pid": 13,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354712,
+    "raw": "000d0100fffc000000056998",
+    "semantic": "vehicle_speed_kmh",
+    "confidence": "high",
+    "evidence": "0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D"
+   },
+   {
+    "record": 389496,
+    "pid": 14,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354734,
+    "raw": "000e0100fffc0000000569ae",
+    "semantic": "leading_ignition_timing_deg",
+    "confidence": "high",
+    "evidence": "0x554ae: leading_ignition_timing_ffffa630*0.5-64 = OBD PID 0E"
+   },
+   {
+    "record": 389508,
+    "pid": 15,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354756,
+    "raw": "000f0100fffc0000000569c4",
+    "semantic": "intake_air_temp_c",
+    "confidence": "high",
+    "evidence": "0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F"
+   },
+   {
+    "record": 389520,
+    "pid": 16,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354778,
+    "raw": "00100200fffc0000000569da",
+    "semantic": "maf_g_s",
+    "confidence": "high",
+    "evidence": "0x55528: mass_air_flow_ffffa9ec*0.01 = OBD PID 10 A/100"
+   },
+   {
+    "record": 389532,
+    "pid": 17,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354800,
+    "raw": "00110100fffc0000000569f0",
+    "semantic": "throttle_position_pct",
+    "confidence": "high",
+    "evidence": "0x5553e: DAT_ffffad5c decode(7.63e-05)*20*0.392157 = OBD PID 11 throttle %"
+   },
+   {
+    "record": 389544,
+    "pid": 18,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354822,
+    "raw": "00120100fffc000000056a06",
+    "semantic": "secondary_air_status",
+    "confidence": "high",
+    "evidence": "0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12"
+   },
+   {
+    "record": 389556,
+    "pid": 19,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354844,
+    "raw": "00130100fffc000000056a1c",
+    "semantic": "o2_sensors_present",
+    "confidence": "high",
+    "evidence": "const 2 = OBD PID 13 bitmap (bank1 sensors)"
+   },
+   {
+    "record": 389568,
+    "pid": 21,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354866,
+    "raw": "00150200fffc000000056a32",
+    "semantic": "o2s2_voltage_trim",
+    "confidence": "medium",
+    "evidence": "0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2"
+   },
+   {
+    "record": 389580,
+    "pid": 28,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354904,
+    "raw": "001c0100fffc000000056a58",
+    "semantic": "obd_standard",
+    "confidence": "high",
+    "evidence": "const 6 = OBD PID 1C"
+   },
+   {
+    "record": 389592,
+    "pid": 31,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354926,
+    "raw": "001f0200fffc000000056a6e",
+    "semantic": "engine_runtime_s",
+    "confidence": "high",
+    "evidence": "0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start"
+   },
+   {
+    "record": 389604,
+    "pid": 32,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354948,
+    "raw": "00200400fffc000000056a84",
+    "semantic": "pids_supported_21_40",
+    "confidence": "high",
+    "evidence": "handler appends const u16 0x8007,0xB011 = supported-PID bitmap 21-40"
+   },
+   {
+    "record": 389616,
+    "pid": 33,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 354984,
+    "raw": "00210200fffc000000056aa8",
+    "semantic": "distance_while_mil_on",
+    "confidence": "high",
+    "evidence": "0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21"
+   },
+   {
+    "record": 389628,
+    "pid": 46,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355004,
+    "raw": "002e0100fffc000000056abc",
+    "semantic": "ram_b2f0_pct",
+    "confidence": "medium",
+    "evidence": "0x55616: DAT_ffffb2f0*0.392157"
+   },
+   {
+    "record": 389640,
+    "pid": 47,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355026,
+    "raw": "002f0100fffc000000056ad2",
+    "semantic": "ram_d287_raw",
+    "confidence": "medium",
+    "evidence": "0x5562c: DAT_ffffd287 raw byte"
+   },
+   {
+    "record": 389652,
+    "pid": 48,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355046,
+    "raw": "00300100fffc000000056ae6",
+    "semantic": "gear_or_vin_byte",
+    "confidence": "medium",
+    "evidence": "0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff"
+   },
+   {
+    "record": 389664,
+    "pid": 49,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355066,
+    "raw": "00310200fffc000000056afa",
+    "semantic": "ram_90fc_float",
+    "confidence": "medium",
+    "evidence": "0x556b0: DAT_ffff90fc float*1.0"
+   },
+   {
+    "record": 389676,
+    "pid": 51,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355086,
+    "raw": "00330100fffc000000056b0e",
+    "semantic": "ram_ad10_scaled",
+    "confidence": "medium",
+    "evidence": "0x556ce: DAT_ffffad10*25.325+0.0182"
+   },
+   {
+    "record": 389688,
+    "pid": 52,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355106,
+    "raw": "00340400fffc000000056b22",
+    "semantic": "afr_lambda_words",
+    "confidence": "high",
+    "evidence": "diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)"
+   },
+   {
+    "record": 389700,
+    "pid": 60,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355138,
+    "raw": "003c0200fffc000000056b42",
+    "semantic": "ram_c644_scaled",
+    "confidence": "medium",
+    "evidence": "0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)"
+   },
+   {
+    "record": 389712,
+    "pid": 64,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355158,
+    "raw": "00400400fffc000000056b56",
+    "semantic": "pids_supported_41_60",
+    "confidence": "high",
+    "evidence": "handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60"
+   },
+   {
+    "record": 389724,
+    "pid": 66,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355190,
+    "raw": "00420200fffc000000056b76",
+    "semantic": "battery_voltage_v",
+    "confidence": "high",
+    "evidence": "0x55732: inferred_battery_voltage_ffffb590*0.001 = OBD PID 42"
+   },
+   {
+    "record": 389736,
+    "pid": 67,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355210,
+    "raw": "00430200fffc000000056b8a",
+    "semantic": "engine_load_g_rev",
+    "confidence": "high",
+    "evidence": "0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)"
+   },
+   {
+    "record": 389748,
+    "pid": 68,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355230,
+    "raw": "00440200fffc000000056b9e",
+    "semantic": "lambda_target",
+    "confidence": "high",
+    "evidence": "0x5575e: lambda_target_ffffadfc*3.05176e-05 (logger 0x220044)"
+   },
+   {
+    "record": 389760,
+    "pid": 69,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355250,
+    "raw": "00450100fffc000000056bb2",
+    "semantic": "ram_ad48_pct",
+    "confidence": "medium",
+    "evidence": "0x55774: DAT_ffffad48*0.392157"
+   },
+   {
+    "record": 389772,
+    "pid": 71,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355270,
+    "raw": "00470100fffc000000056bc6",
+    "semantic": "ram_ad5e_pedal",
+    "confidence": "medium",
+    "evidence": "0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157"
+   },
+   {
+    "record": 389784,
+    "pid": 73,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355290,
+    "raw": "00490100fffc000000056bda",
+    "semantic": "ram_a9c4_pedal",
+    "confidence": "medium",
+    "evidence": "0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157"
+   },
+   {
+    "record": 389796,
+    "pid": 74,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355448,
+    "raw": "004a0100fffc000000056c78",
+    "semantic": "ram_a9c6_pedal",
+    "confidence": "medium",
+    "evidence": "0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157"
+   },
+   {
+    "record": 389808,
+    "pid": 76,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355468,
+    "raw": "004c0100fffc000000056c8c",
+    "semantic": "ram_b410_pct",
+    "confidence": "medium",
+    "evidence": "0x55864: DAT_ffffb410*100/84*0.392157"
+   },
+   {
+    "record": 389820,
+    "pid": 512,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355488,
+    "raw": "02000100fffc000000056ca0",
+    "semantic": "dtc_count_stored",
+    "confidence": "high",
+    "evidence": "ref_faultSomething0x0 0x5fab2: 0x61450(0x80,0) - 0x5f8fa() + 1, clamp 0xff"
+   },
+   {
+    "record": 389832,
+    "pid": 514,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355508,
+    "raw": "02020100fffc000000056cb4",
+    "semantic": "dtc_count_ram_list",
+    "confidence": "high",
+    "evidence": "0x5fb08 counts DAT_ffffd570[0..0x8b]==1 minus rotor-0/1 adjustments, clamp 0xff"
+   },
+   {
+    "record": 389844,
+    "pid": 2308,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355528,
+    "raw": "09040100fffc000000056cc8",
+    "semantic": "trailing_ignition_timing_deg",
+    "confidence": "high",
+    "evidence": "trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)"
+   },
+   {
+    "record": 389856,
+    "pid": 2324,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355560,
+    "raw": "09140200fffc000000056ce8",
+    "semantic": "ram_a9c4_scaled_s16",
+    "confidence": "medium",
+    "evidence": "0x54884(a9c4) helper = (x-p3)/p2+0.5 s16"
+   },
+   {
+    "record": 389868,
+    "pid": 2325,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355610,
+    "raw": "09150200fffc000000056d1a",
+    "semantic": "ram_a9c6_scaled_s16",
+    "confidence": "medium",
+    "evidence": "0x54884(a9c6)"
+   },
+   {
+    "record": 389880,
+    "pid": 2327,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355660,
+    "raw": "09170200fffc000000056d4c",
+    "semantic": "ram_ad5c_scaled_s16",
+    "confidence": "medium",
+    "evidence": "0x54884(ad5c)"
+   },
+   {
+    "record": 389892,
+    "pid": 2328,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355764,
+    "raw": "09180200fffc000000056db4",
+    "semantic": "ram_ad5e_scaled_s16",
+    "confidence": "medium",
+    "evidence": "0x54884(ad5e)"
+   },
+   {
+    "record": 389904,
+    "pid": 2330,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355814,
+    "raw": "091a0200fffc000000056de6",
+    "semantic": "ram_b410_raw_512",
+    "confidence": "medium",
+    "evidence": "DAT_ffffb410*0.00195312 (1/512)"
+   },
+   {
+    "record": 389916,
+    "pid": 2364,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355844,
+    "raw": "093c0200fffc000000056e04",
+    "semantic": "throttle_position_raw",
+    "confidence": "high",
+    "evidence": "inferred_throttle_position_ffffad44*0.00195312 (1/512)"
+   },
+   {
+    "record": 389928,
+    "pid": 2414,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355874,
+    "raw": "096e0200fffc000000056e22",
+    "semantic": "ram_a7ac_quarter",
+    "confidence": "medium",
+    "evidence": "DAT_ffffa7ac*0.25"
+   },
+   {
+    "record": 389940,
+    "pid": 2428,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355904,
+    "raw": "097c0200fffc000000056e40",
+    "semantic": "ram_b59c_div2048",
+    "confidence": "medium",
+    "evidence": "DAT_ffffb59c*0.000488281 (1/2048)"
+   },
+   {
+    "record": 389952,
+    "pid": 4426,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355934,
+    "raw": "114a0200fffc000000056e5e",
+    "semantic": "ram_add4_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffadd4*7.62939e-05"
+   },
+   {
+    "record": 389964,
+    "pid": 4429,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355964,
+    "raw": "114d0200fffc000000056e7c",
+    "semantic": "ram_a984_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffa984*7.62939e-05"
+   },
+   {
+    "record": 389976,
+    "pid": 4435,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 355994,
+    "raw": "11530200fffc000000056e9a",
+    "semantic": "ram_a834_lambda",
+    "confidence": "medium",
+    "evidence": "DAT_ffffa834*3.05176e-05"
+   },
+   {
+    "record": 389988,
+    "pid": 4436,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356024,
+    "raw": "11540200fffc000000056eb8",
+    "semantic": "throttle_raw_ad5c",
+    "confidence": "medium",
+    "evidence": "raw DAT_ffffad5c u16"
+   },
+   {
+    "record": 390000,
+    "pid": 4457,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356092,
+    "raw": "11690200fffc000000056efc",
+    "semantic": "ram_807c_scaled",
+    "confidence": "medium",
+    "evidence": "0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05"
+   },
+   {
+    "record": 390012,
+    "pid": 4471,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356144,
+    "raw": "11770200fffc000000056f30",
+    "semantic": "maf_voltage_latched_v",
+    "confidence": "high",
+    "evidence": "maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)"
+   },
+   {
+    "record": 390024,
+    "pid": 4928,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356174,
+    "raw": "13400100fffc000000056f4e",
+    "semantic": "ram_a9bc_pct",
+    "confidence": "medium",
+    "evidence": "DAT_ffffa9bc*0.392157"
+   },
+   {
+    "record": 390036,
+    "pid": 5136,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356204,
+    "raw": "14100200fffc000000056f6c",
+    "semantic": "injector_pulse_time",
+    "confidence": "high",
+    "evidence": "injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)"
+   },
+   {
+    "record": 390048,
+    "pid": 5694,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356234,
+    "raw": "163e0200fffc000000056f8a",
+    "semantic": "ram_b074_scaled_s16",
+    "confidence": "medium",
+    "evidence": "0x54884(ffffb074)"
+   },
+   {
+    "record": 390060,
+    "pid": 5811,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356266,
+    "raw": "16b30200fffc000000056faa",
+    "semantic": "ram_ad10_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffad10*7.62939e-05"
+   },
+   {
+    "record": 390072,
+    "pid": 5864,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356296,
+    "raw": "16e80200fffc000000056fc8",
+    "semantic": "ram_b5ac_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffb5ac*0.00305176"
+   },
+   {
+    "record": 390084,
+    "pid": 5865,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356326,
+    "raw": "16e90200fffc000000056fe6",
+    "semantic": "ram_b654_eighth",
+    "confidence": "medium",
+    "evidence": "DAT_ffffb654*0.125"
+   },
+   {
+    "record": 390096,
+    "pid": 5872,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356356,
+    "raw": "16f00200fffc000000057004",
+    "semantic": "tire_revolutions_per_mile",
+    "confidence": "high",
+    "evidence": "tire_revolutions_per_mile_ffffd380 raw u16 (logger 0x2216f0)"
+   },
+   {
+    "record": 390108,
+    "pid": 41494,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356444,
+    "raw": "a2160200fffc00000005705c",
+    "semantic": "ram_bc30_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffbc30*7.62939e-05"
+   },
+   {
+    "record": 390120,
+    "pid": 5958,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356474,
+    "raw": "17460100fffc00000005707a",
+    "semantic": "knock_retard_deg",
+    "confidence": "high",
+    "evidence": "knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)"
+   },
+   {
+    "record": 390132,
+    "pid": 6018,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356504,
+    "raw": "17820200fffc000000057098",
+    "semantic": "ram_c6ac_raw",
+    "confidence": "medium",
+    "evidence": "DAT_ffffc6ac*7.62939e-05"
+   },
+   {
+    "record": 390144,
+    "pid": 6054,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356534,
+    "raw": "17a60100fffc0000000570b6",
+    "semantic": "ram_d1ac_scaled",
+    "confidence": "medium",
+    "evidence": "decode_u8(128,0,ffffd1ac)/1000*0.1"
+   },
+   {
+    "record": 390156,
+    "pid": 5930,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356590,
+    "raw": "172a0100fffc0000000570ee",
+    "semantic": "ram_c4c8_temp_c",
+    "confidence": "medium",
+    "evidence": "DAT_ffffc4c8*1.0-40"
+   },
+   {
+    "record": 390168,
+    "pid": 5933,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356620,
+    "raw": "172d0100fffc00000005710c",
+    "semantic": "ram_a8f4_raw",
+    "confidence": "medium",
+    "evidence": "raw DAT_ffffa8f4 u8"
+   },
+   {
+    "record": 390180,
+    "pid": 5684,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 5468,
+    "unknown67": 0,
+    "handler": 356634,
+    "raw": "16340100155c00000005711a",
+    "semantic": "apv_position_voltage",
+    "confidence": "high",
+    "evidence": "apv_position_voltage_ffffcab0*0.0195312"
+   },
+   {
+    "record": 390192,
+    "pid": 2408,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356664,
+    "raw": "09680200fffc000000057138",
+    "semantic": "io_status_b5b4_bc35",
+    "confidence": "medium",
+    "evidence": "0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0"
+   },
+   {
+    "record": 390204,
+    "pid": 2515,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 5468,
+    "unknown67": 0,
+    "handler": 356780,
+    "raw": "09d30200155c0000000571ac",
+    "semantic": "pedr_bit10_status",
+    "confidence": "medium",
+    "evidence": "PEDR_W & 0x400 -> 0x579a8; appends u8 + 0"
+   },
+   {
+    "record": 390216,
+    "pid": 4353,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356836,
+    "raw": "11010100fffc0000000571e4",
+    "semantic": "io_status_bf3c_ad18_cdd8",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)"
+   },
+   {
+    "record": 390228,
+    "pid": 4354,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356902,
+    "raw": "11020100fffc000000057226",
+    "semantic": "io_status_bdb8",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffbdb8"
+   },
+   {
+    "record": 390240,
+    "pid": 4355,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 356936,
+    "raw": "11030100fffc000000057248",
+    "semantic": "io_status_pedr_cab4_d1a",
+    "confidence": "medium",
+    "evidence": "0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1"
+   },
+   {
+    "record": 390252,
+    "pid": 4356,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357072,
+    "raw": "11040100fffc0000000572d0",
+    "semantic": "io_status_pjdr_bf6c",
+    "confidence": "medium",
+    "evidence": "0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c"
+   },
+   {
+    "record": 390264,
+    "pid": 5681,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357134,
+    "raw": "16310100fffc00000005730e",
+    "semantic": "tol_status_b570_b584",
+    "confidence": "medium",
+    "evidence": "0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584"
+   },
+   {
+    "record": 390276,
+    "pid": 5761,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357194,
+    "raw": "16810100fffc00000005734a",
+    "semantic": "io_status_ce1c",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffce1c -> 0x40"
+   },
+   {
+    "record": 390288,
+    "pid": 5768,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357228,
+    "raw": "16880100fffc00000005736c",
+    "semantic": "secondary_air_status_bit",
+    "confidence": "medium",
+    "evidence": "0x579a8 over secondary_air_request_final_ffffa960 -> 0x20"
+   },
+   {
+    "record": 390300,
+    "pid": 41489,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357262,
+    "raw": "a2110200fffc00000005738e",
+    "semantic": "status_b53b_aa62_bf9c",
+    "confidence": "medium",
+    "evidence": "0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8"
+   },
+   {
+    "record": 390312,
+    "pid": 5905,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357360,
+    "raw": "17110100fffc0000000573f0",
+    "semantic": "pedr_bit1_status",
+    "confidence": "medium",
+    "evidence": "0x579a8 over PEDR_W & 2 -> 0x80"
+   },
+   {
+    "record": 390324,
+    "pid": 5894,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357406,
+    "raw": "17060100fffc00000005741e",
+    "semantic": "io_status_a8f5",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffa8f5 -> 4"
+   },
+   {
+    "record": 390336,
+    "pid": 5912,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357440,
+    "raw": "17180100fffc000000057440",
+    "semantic": "pedr_bit2_status",
+    "confidence": "medium",
+    "evidence": "0x579a8 over PEDR_W & 4"
+   },
+   {
+    "record": 390348,
+    "pid": 5909,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357486,
+    "raw": "17150100fffc00000005746e",
+    "semantic": "pedr_pddr_status",
+    "confidence": "medium",
+    "evidence": "0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80"
+   },
+   {
+    "record": 390360,
+    "pid": 6110,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357558,
+    "raw": "17de0100fffc0000000574b6",
+    "semantic": "io_status_ce32",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffce32"
+   },
+   {
+    "record": 390372,
+    "pid": 57883,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357592,
+    "raw": "e21b0400fffc0000000574d8",
+    "semantic": "cal_id_chunk_0",
+    "confidence": "high",
+    "evidence": "appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')"
+   },
+   {
+    "record": 390384,
+    "pid": 57884,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357638,
+    "raw": "e21c0200fffc000000057506",
+    "semantic": "cal_id_chunk_1",
+    "confidence": "high",
+    "evidence": "appends '1','8'"
+   },
+   {
+    "record": 390396,
+    "pid": 57885,
+    "response_len": 3,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357676,
+    "raw": "e21d0300fffc00000005752c",
+    "semantic": "cal_id_chunk_2",
+    "confidence": "high",
+    "evidence": "appends '8','8','1'"
+   },
+   {
+    "record": 390408,
+    "pid": 57886,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357702,
+    "raw": "e21e0100fffc000000057546",
+    "semantic": "cal_id_chunk_3",
+    "confidence": "high",
+    "evidence": "appends 'B'"
+   },
+   {
+    "record": 390420,
+    "pid": 58897,
+    "response_len": 24,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357724,
+    "raw": "e6111800fffc00000005755c",
+    "semantic": "sw_name_string",
+    "confidence": "high",
+    "evidence": "appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)"
+   },
+   {
+    "record": 390432,
+    "pid": 5904,
+    "response_len": 7,
+    "byte3": 0,
+    "availability_mask": 65532,
+    "unknown67": 0,
+    "handler": 357780,
+    "raw": "17100700fffc000000057594",
+    "semantic": "sensor_snapshot_7byte",
+    "confidence": "medium",
+    "evidence": "7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine"
+   },
+   {
+    "record": 390444,
+    "pid": 49429,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 15356,
+    "unknown67": 0,
+    "handler": 358068,
+    "raw": "c11501003bfc0000000576b4",
+    "semantic": "ram_c1d2_raw",
+    "confidence": "medium",
+    "evidence": "raw DAT_ffffc1d2 u8"
+   },
+   {
+    "record": 390456,
+    "pid": 49430,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 15356,
+    "unknown67": 0,
+    "handler": 358082,
+    "raw": "c11604003bfc0000000576c2",
+    "semantic": "dtc_state_machine",
+    "confidence": "medium",
+    "evidence": "thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code"
+   },
+   {
+    "record": 390468,
+    "pid": 49431,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 15356,
+    "unknown67": 0,
+    "handler": 358148,
+    "raw": "c11704003bfc000000057704",
+    "semantic": "ram_c1d3_c1d4",
+    "confidence": "medium",
+    "evidence": "appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0"
+   },
+   {
+    "record": 390480,
+    "pid": 49444,
+    "response_len": 1,
+    "byte3": 0,
+    "availability_mask": 15356,
+    "unknown67": 0,
+    "handler": 358200,
+    "raw": "c12401003bfc000000057738",
+    "semantic": "diag_status_bits",
+    "confidence": "medium",
+    "evidence": "0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4"
+   },
+   {
+    "record": 390492,
+    "pid": 65296,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358532,
+    "raw": "ff1004000001000000057884",
+    "semantic": "dtc_status_c1d5_c1d8",
+    "confidence": "medium",
+    "evidence": "0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8"
+   },
+   {
+    "record": 390504,
+    "pid": 65344,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358632,
+    "raw": "ff40020000010000000578e8",
+    "semantic": "fw_id_chunk_15",
+    "confidence": "high",
+    "evidence": "appends '1','5' (fw id '60E15120' ROM 0x2000; cal area 0x6c05c '15120 ')"
+   },
+   {
+    "record": 390516,
+    "pid": 65345,
+    "response_len": 4,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358658,
+    "raw": "ff4104000001000000057902",
+    "semantic": "fw_id_chunk_120",
+    "confidence": "high",
+    "evidence": "appends '1','2','0',' '"
+   },
+   {
+    "record": 390528,
+    "pid": 65346,
+    "response_len": 3,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358702,
+    "raw": "ff420300000100000005792e",
+    "semantic": "rom_id_bytes_ff8",
+    "confidence": "high",
+    "evidence": "appends ROM bytes at 0xff8,0xff9,0xffa (via mov.w literals)"
+   },
+   {
+    "record": 390540,
+    "pid": 65347,
+    "response_len": 3,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358734,
+    "raw": "ff430300000100000005794e",
+    "semantic": "rom_id_bytes_ffb",
+    "confidence": "high",
+    "evidence": "appends ROM bytes at 0xffb,0xffc,0xffd"
+   },
+   {
+    "record": 390552,
+    "pid": 65360,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358766,
+    "raw": "ff500200000100000005796e",
+    "semantic": "ram_d3a0_raw",
+    "confidence": "medium",
+    "evidence": "raw DAT_ffffd3a0 u16"
+   },
+   {
+    "record": 390564,
+    "pid": 65348,
+    "response_len": 2,
+    "byte3": 0,
+    "availability_mask": 1,
+    "unknown67": 0,
+    "handler": 358772,
+    "raw": "ff4402000001000000057974",
+    "semantic": "ram_ce30_raw",
+    "confidence": "medium",
+    "evidence": "raw DAT_ffffce30 u16"
+   }
+  ]
+ },
+ "diag22_subpid_table": {
+  "base": 390578,
+  "record_size": 6,
+  "count": 36,
+  "note": "byte1 = supported-bit mask for the (pid,sub) group; scanned by 0x579a8",
+  "records": [
+   {
+    "record": 390578,
+    "pid": 2408,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "09680101fffc"
+   },
+   {
+    "record": 390584,
+    "pid": 2408,
+    "bit": 32,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "09682001fffc"
+   },
+   {
+    "record": 390590,
+    "pid": 2515,
+    "bit": 1,
+    "sub": 1,
+    "mask": 5468,
+    "raw": "09d30101155c"
+   },
+   {
+    "record": 390596,
+    "pid": 4353,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11010101fffc"
+   },
+   {
+    "record": 390602,
+    "pid": 4353,
+    "bit": 2,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11010201fffc"
+   },
+   {
+    "record": 390608,
+    "pid": 4353,
+    "bit": 8,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11010801fffc"
+   },
+   {
+    "record": 390614,
+    "pid": 4354,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11020101fffc"
+   },
+   {
+    "record": 390620,
+    "pid": 4355,
+    "bit": 4,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11030401fffc"
+   },
+   {
+    "record": 390626,
+    "pid": 4355,
+    "bit": 8,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11030801fffc"
+   },
+   {
+    "record": 390632,
+    "pid": 4355,
+    "bit": 16,
+    "sub": 1,
+    "mask": 5468,
+    "raw": "11031001155c"
+   },
+   {
+    "record": 390638,
+    "pid": 4355,
+    "bit": 32,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11032001fffc"
+   },
+   {
+    "record": 390644,
+    "pid": 4356,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11040101fffc"
+   },
+   {
+    "record": 390650,
+    "pid": 4356,
+    "bit": 16,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "11041001fffc"
+   },
+   {
+    "record": 390656,
+    "pid": 5681,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "16310101fffc"
+   },
+   {
+    "record": 390662,
+    "pid": 5681,
+    "bit": 2,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "16310201fffc"
+   },
+   {
+    "record": 390668,
+    "pid": 5761,
+    "bit": 64,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "16814001fffc"
+   },
+   {
+    "record": 390674,
+    "pid": 5768,
+    "bit": 32,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "16882001fffc"
+   },
+   {
+    "record": 390680,
+    "pid": 41489,
+    "bit": 4,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "a2110401fffc"
+   },
+   {
+    "record": 390686,
+    "pid": 41489,
+    "bit": 16,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "a2111001fffc"
+   },
+   {
+    "record": 390692,
+    "pid": 41489,
+    "bit": 1,
+    "sub": 2,
+    "mask": 40412,
+    "raw": "a21101029ddc"
+   },
+   {
+    "record": 390698,
+    "pid": 5905,
+    "bit": 128,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17118001fffc"
+   },
+   {
+    "record": 390704,
+    "pid": 5894,
+    "bit": 4,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17060401fffc"
+   },
+   {
+    "record": 390710,
+    "pid": 5912,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17180101fffc"
+   },
+   {
+    "record": 390716,
+    "pid": 5909,
+    "bit": 64,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17154001fffc"
+   },
+   {
+    "record": 390722,
+    "pid": 5909,
+    "bit": 128,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17158001fffc"
+   },
+   {
+    "record": 390728,
+    "pid": 6110,
+    "bit": 1,
+    "sub": 1,
+    "mask": 65532,
+    "raw": "17de0101fffc"
+   },
+   {
+    "record": 390734,
+    "pid": 5904,
+    "bit": 32,
+    "sub": 5,
+    "mask": 0,
+    "raw": "171020050000"
+   },
+   {
+    "record": 390740,
+    "pid": 5904,
+    "bit": 16,
+    "sub": 5,
+    "mask": 0,
+    "raw": "171010050000"
+   },
+   {
+    "record": 390746,
+    "pid": 5904,
+    "bit": 8,
+    "sub": 5,
+    "mask": 0,
+    "raw": "171008050000"
+   },
+   {
+    "record": 390752,
+    "pid": 5904,
+    "bit": 4,
+    "sub": 5,
+    "mask": 0,
+    "raw": "171004050000"
+   },
+   {
+    "record": 390758,
+    "pid": 5904,
+    "bit": 2,
+    "sub": 5,
+    "mask": 65532,
+    "raw": "17100205fffc"
+   },
+   {
+    "record": 390764,
+    "pid": 5904,
+    "bit": 1,
+    "sub": 5,
+    "mask": 65532,
+    "raw": "17100105fffc"
+   },
+   {
+    "record": 390770,
+    "pid": 65296,
+    "bit": 64,
+    "sub": 1,
+    "mask": 1,
+    "raw": "ff1040010001"
+   },
+   {
+    "record": 390776,
+    "pid": 65296,
+    "bit": 32,
+    "sub": 1,
+    "mask": 1,
+    "raw": "ff1020010001"
+   },
+   {
+    "record": 390782,
+    "pid": 65296,
+    "bit": 8,
+    "sub": 1,
+    "mask": 1,
+    "raw": "ff1008010001"
+   },
+   {
+    "record": 390788,
+    "pid": 65296,
+    "bit": 4,
+    "sub": 1,
+    "mask": 1,
+    "raw": "ff1004010001"
+   }
+  ]
+ },
+ "uds_service_table": {
+  "base": 387904,
+  "record_size": 12,
+  "terminator": 255,
+  "router": 429484,
+  "services": [
+   {
+    "record": 387904,
+    "service": 1,
+    "handler": 415772,
+    "param": 1,
+    "raw": "010000000006581c00000001",
+    "name": "obd_mode01_current_data",
+    "confidence": "high",
+    "evidence": "OBD Mode 01 handler (caseD_27)"
+   },
+   {
+    "record": 387916,
+    "service": 2,
+    "handler": 416904,
+    "param": 1,
+    "raw": "0200000000065c8800000001",
+    "name": "obd_mode02_freeze_frame",
+    "confidence": "high",
+    "evidence": "OBD Mode 02"
+   },
+   {
+    "record": 387928,
+    "service": 3,
+    "handler": 417784,
+    "param": 1,
+    "raw": "0300000000065ff800000001",
+    "name": "obd_mode03_stored_dtc",
+    "confidence": "high",
+    "evidence": "OBD Mode 03"
+   },
+   {
+    "record": 387940,
+    "service": 4,
+    "handler": 418000,
+    "param": 1,
+    "raw": "04000000000660d000000001",
+    "name": "obd_mode04_clear_dtc",
+    "confidence": "high",
+    "evidence": "OBD Mode 04 (also ref_ClearFaults_ at 0x558ac for service 0x14)"
+   },
+   {
+    "record": 387952,
+    "service": 6,
+    "handler": 422492,
+    "param": 1,
+    "raw": "060000000006725c00000001",
+    "name": "obd_mode06_test_results",
+    "confidence": "high",
+    "evidence": "OBD Mode 06"
+   },
+   {
+    "record": 387964,
+    "service": 7,
+    "handler": 418284,
+    "param": 1,
+    "raw": "07000000000661ec00000001",
+    "name": "obd_mode07_pending_dtc",
+    "confidence": "high",
+    "evidence": "OBD Mode 07"
+   },
+   {
+    "record": 387976,
+    "service": 9,
+    "handler": 418496,
+    "param": 1,
+    "raw": "09000000000662c000000001",
+    "name": "obd_mode09_vehicle_info",
+    "confidence": "high",
+    "evidence": "OBD Mode 09 (ref_OBDMode9Fuction)"
+   },
+   {
+    "record": 387988,
+    "service": 40,
+    "handler": 375286,
+    "param": 1,
+    "raw": "280000000005b9f600000001",
+    "name": "uds_service_28_communication_control",
+    "confidence": "high",
+    "evidence": "UDS 0x28"
+   },
+   {
+    "record": 388000,
+    "service": 133,
+    "handler": 384068,
+    "param": 1,
+    "raw": "850000000005dc4400000001",
+    "name": "uds_service_85_control_dtc_setting",
+    "confidence": "high",
+    "evidence": "UDS 0x85 (ref_UDSMode85Func)"
+   },
+   {
+    "record": 388012,
+    "service": 16,
+    "handler": 359564,
+    "param": 268435471,
+    "raw": "1000000000057c8c1000000f",
+    "name": "uds_service_10_diagnostic_session_control",
+    "confidence": "high",
+    "evidence": "UDS 0x10; table record 0x5ebac"
+   },
+   {
+    "record": 388024,
+    "service": 39,
+    "handler": 359012,
+    "param": 268435470,
+    "raw": "2700000000057a641000000e",
+    "name": "uds_service_27_security_access",
+    "confidence": "high",
+    "evidence": "UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it"
+   },
+   {
+    "record": 388036,
+    "service": 62,
+    "handler": 353544,
+    "param": 268435471,
+    "raw": "3e000000000565081000000f",
+    "name": "uds_service_3e_tester_present",
+    "confidence": "high",
+    "evidence": "UDS 0x3E"
+   },
+   {
+    "record": 388048,
+    "service": 17,
+    "handler": 372564,
+    "param": 14,
+    "raw": "110000000005af540000000e",
+    "name": "uds_service_11_ecu_reset",
+    "confidence": "high",
+    "evidence": "UDS 0x11"
+   },
+   {
+    "record": 388060,
+    "service": 33,
+    "handler": 373780,
+    "param": 268435471,
+    "raw": "210000000005b4141000000f",
+    "name": "uds_service_21_read_data_by_local_id",
+    "confidence": "medium",
+    "evidence": "record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)"
+   },
+   {
+    "record": 388072,
+    "service": 34,
+    "handler": 354280,
+    "param": 268435471,
+    "raw": "22000000000567e81000000f",
+    "name": "uds_service_22_read_data_by_identifier",
+    "confidence": "high",
+    "evidence": "record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)"
+   },
+   {
+    "record": 388084,
+    "service": 35,
+    "handler": 374608,
+    "param": 6,
+    "raw": "230000000005b75000000006",
+    "name": "uds_service_23_read_memory_by_address",
+    "confidence": "high",
+    "evidence": "UDS 0x23 (ref_UDSMode23Function)"
+   },
+   {
+    "record": 388096,
+    "service": 59,
+    "handler": 383156,
+    "param": 14,
+    "raw": "3b0000000005d8b40000000e",
+    "name": "uds_service_3b",
+    "confidence": "medium",
+    "evidence": "record 0x5ec00 -> 0x5d8b4"
+   },
+   {
+    "record": 388108,
+    "service": 24,
+    "handler": 359856,
+    "param": 5,
+    "raw": "1800000000057db000000005",
+    "name": "uds_service_18",
+    "confidence": "medium",
+    "evidence": "record 0x5ec0c -> 0x57db0"
+   },
+   {
+    "record": 388120,
+    "service": 18,
+    "handler": 372884,
+    "param": 1,
+    "raw": "120000000005b09400000001",
+    "name": "uds_service_12",
+    "confidence": "medium",
+    "evidence": "record 0x5ec18 -> 0x5b094"
+   },
+   {
+    "record": 388132,
+    "service": 20,
+    "handler": 350380,
+    "param": 268435461,
+    "raw": "14000000000558ac10000005",
+    "name": "uds_service_14_clear_diagnostic_information",
+    "confidence": "high",
+    "evidence": "UDS 0x14 (ref_ClearFaults_)"
+   },
+   {
+    "record": 388144,
+    "service": 47,
+    "handler": 375884,
+    "param": 268435460,
+    "raw": "2f0000000005bc4c10000004",
+    "name": "uds_service_2f_input_output_control",
+    "confidence": "high",
+    "evidence": "UDS 0x2F"
+   },
+   {
+    "record": 388156,
+    "service": 49,
+    "handler": 384864,
+    "param": 5,
+    "raw": "310000000005df6000000005",
+    "name": "uds_service_31_routine_control",
+    "confidence": "high",
+    "evidence": "UDS 0x31"
+   },
+   {
+    "record": 388168,
+    "service": 50,
+    "handler": 385060,
+    "param": 5,
+    "raw": "320000000005e02400000005",
+    "name": "uds_service_32",
+    "confidence": "medium",
+    "evidence": "record 0x5ec48 -> 0x5e024"
+   },
+   {
+    "record": 388180,
+    "service": 51,
+    "handler": 385230,
+    "param": 5,
+    "raw": "330000000005e0ce00000005",
+    "name": "uds_service_33",
+    "confidence": "medium",
+    "evidence": "record 0x5ec54 -> 0x5e0ce",
+    "note": "handler 0x5e0ce is a real code entry (prologue verified) but not in function_index.tsv; named in uds_service_dispatch.tsv only"
+   },
+   {
+    "record": 388192,
+    "service": 52,
+    "handler": 382908,
+    "param": 2,
+    "raw": "340000000005d7bc00000002",
+    "name": "uds_service_34_request_download",
+    "confidence": "high",
+    "evidence": "UDS 0x34 (ref_UDSMode34Func)"
+   },
+   {
+    "record": 388204,
+    "service": 54,
+    "handler": 383028,
+    "param": 2,
+    "raw": "360000000005d83400000002",
+    "name": "uds_service_36_transfer_data",
+    "confidence": "high",
+    "evidence": "UDS 0x36 (ref_UDSMode36Function_)"
+   },
+   {
+    "record": 388216,
+    "service": 55,
+    "handler": 383092,
+    "param": 2,
+    "raw": "370000000005d87400000002",
+    "name": "uds_service_37_request_transfer_exit",
+    "confidence": "high",
+    "evidence": "UDS 0x37 (ref_UDSService37Function)"
+   },
+   {
+    "record": 388228,
+    "service": 177,
+    "handler": 353768,
+    "param": 15,
+    "raw": "b1000000000565e80000000f",
+    "name": "uds_service_b1_mazda_specific",
+    "confidence": "medium",
+    "evidence": "record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)"
+   },
+   {
+    "record": 388240,
+    "service": 255,
+    "handler": 419994,
+    "param": 0,
+    "raw": "ff0000000006689a00000000",
+    "name": "uds_service_ff_default",
+    "confidence": "medium",
+    "evidence": "terminator/catch-all record 0x5ec90 -> 0x6689a",
+    "note": "handler is a nop;rts stub at 0x6689a (default: no positive response)"
+   }
+  ]
+ },
+ "function_aliases": {
+  "00006010": {
+   "alias": "os_queue_dequeue_record",
+   "confidence": "high",
+   "evidence": "dequeues 20-byte (5 u32) record from queue table PTR_DAT_0000d74c, ring in DAT_ffff9305/9306"
+  },
+  "000096be": {
+   "alias": "uds_service_task_entry",
+   "confidence": "high",
+   "evidence": "task[2] entry (task table 0x49b8): 0x6010(1,&blk) then (*blk.handler)(&blk+1)"
+  },
+  "00037358": {
+   "alias": "dtc_state_machine_step",
+   "confidence": "medium",
+   "evidence": "DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)"
+  },
+  "00037546": {
+   "alias": "diag_status_bit_pack",
+   "confidence": "medium",
+   "evidence": "0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124)"
+  },
+  "00054884": {
+   "alias": "diag_encode_s16_div",
+   "confidence": "medium",
+   "evidence": "s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers"
+  },
+  "00055316": {
+   "alias": "diag_read_active_cal_field",
+   "confidence": "medium",
+   "evidence": "0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes"
+  },
+  "000553dc": {
+   "alias": "diag_read_calc_load_pct",
+   "confidence": "high",
+   "evidence": "PID 0x04: load*100/max*0.392157, 0xff if max~0"
+  },
+  "0005542a": {
+   "alias": "diag_encode_ect_c",
+   "confidence": "high",
+   "evidence": "PID 0x05: coolant_temperature_ffff9f70-40"
+  },
+  "00055440": {
+   "alias": "diag_encode_stft_lambda",
+   "confidence": "high",
+   "evidence": "PID 0x06: (ffffadec-1)*100*0.78125-100"
+  },
+  "00055466": {
+   "alias": "diag_encode_ltft",
+   "confidence": "high",
+   "evidence": "PID 0x07: ffffb0d0*100*0.78125-100"
+  },
+  "00055484": {
+   "alias": "diag_encode_rpm",
+   "confidence": "high",
+   "evidence": "PID 0x0c: rpm*0.25"
+  },
+  "0005549a": {
+   "alias": "diag_encode_vss",
+   "confidence": "high",
+   "evidence": "PID 0x0d: vss*1"
+  },
+  "000554ae": {
+   "alias": "diag_encode_leading_timing",
+   "confidence": "high",
+   "evidence": "PID 0x0e: lead*0.5-64"
+  },
+  "000554c6": {
+   "alias": "diag_encode_iat",
+   "confidence": "high",
+   "evidence": "PID 0x0f: iat-40"
+  },
+  "00055528": {
+   "alias": "diag_encode_maf",
+   "confidence": "high",
+   "evidence": "PID 0x10: maf*0.01"
+  },
+  "0005553e": {
+   "alias": "diag_encode_throttle_pct",
+   "confidence": "high",
+   "evidence": "PID 0x11: ffffad5c*20*0.392157"
+  },
+  "0005556a": {
+   "alias": "diag_read_secondary_air_status",
+   "confidence": "high",
+   "evidence": "PID 0x12: 1 or 4"
+  },
+  "00055580": {
+   "alias": "diag_read_o2_present_const",
+   "confidence": "high",
+   "evidence": "PID 0x13: const 2"
+  },
+  "00055586": {
+   "alias": "diag_encode_o2s2",
+   "confidence": "medium",
+   "evidence": "PID 0x15: ffffad1c decode*0.005"
+  },
+  "000555ac": {
+   "alias": "diag_encode_trim_b074",
+   "confidence": "medium",
+   "evidence": "PID 0x15: ffffb074*100*0.7813-100"
+  },
+  "000555ca": {
+   "alias": "diag_read_obd_standard_const",
+   "confidence": "high",
+   "evidence": "PID 0x1c: const 6"
+  },
+  "000555d0": {
+   "alias": "diag_read_runtime_s",
+   "confidence": "high",
+   "evidence": "PID 0x1f: ffffd284 via 0x409c clamp 0xffff"
+  },
+  "000555f8": {
+   "alias": "diag_read_distance_mil",
+   "confidence": "high",
+   "evidence": "PID 0x21: ffff90f4"
+  },
+  "00055616": {
+   "alias": "diag_encode_b2f0",
+   "confidence": "medium",
+   "evidence": "PID 0x2e: ffffb2f0*0.392157"
+  },
+  "0005562c": {
+   "alias": "diag_read_d287",
+   "confidence": "medium",
+   "evidence": "PID 0x2f: ffffd287"
+  },
+  "00055632": {
+   "alias": "diag_read_gear_byte",
+   "confidence": "medium",
+   "evidence": "PID 0x30: 0x61d14 (ffff8788) clamp 0xff"
+  },
+  "000556b0": {
+   "alias": "diag_read_90fc",
+   "confidence": "medium",
+   "evidence": "PID 0x31: ffff90fc"
+  },
+  "000556ce": {
+   "alias": "diag_encode_ad10",
+   "confidence": "medium",
+   "evidence": "PID 0x33: ffffad10*25.325+0.0182"
+  },
+  "0005571a": {
+   "alias": "diag_encode_c644",
+   "confidence": "medium",
+   "evidence": "PID 0x3c: ffffc644*0.1-40"
+  },
+  "00055732": {
+   "alias": "diag_encode_battery_v",
+   "confidence": "high",
+   "evidence": "PID 0x42: ffffb590*0.001"
+  },
+  "00055748": {
+   "alias": "diag_encode_load_g_rev",
+   "confidence": "high",
+   "evidence": "PID 0x43: engine_load_ffffc0b4*1/255"
+  },
+  "0005575e": {
+   "alias": "diag_encode_lambda_target",
+   "confidence": "high",
+   "evidence": "PID 0x44: lambda_target_ffffadfc*3.05e-05"
+  },
+  "00055774": {
+   "alias": "diag_encode_ad48",
+   "confidence": "medium",
+   "evidence": "PID 0x45: ffffad48*0.392157"
+  },
+  "0005578a": {
+   "alias": "diag_encode_ad5e",
+   "confidence": "medium",
+   "evidence": "PID 0x47: ffffad5e decode*20*0.392157"
+  },
+  "000557b6": {
+   "alias": "diag_encode_a9c4",
+   "confidence": "medium",
+   "evidence": "PID 0x49: ffffa9c4 decode*20*0.392157"
+  },
+  "00055838": {
+   "alias": "diag_encode_a9c6",
+   "confidence": "medium",
+   "evidence": "PID 0x4a: ffffa9c6 decode*20*0.392157"
+  },
+  "00055864": {
+   "alias": "diag_encode_b410",
+   "confidence": "medium",
+   "evidence": "PID 0x4c: ffffb410*100/84*0.392157"
+  },
+  "000558ac": {
+   "alias": "uds_service_14_clear_diagnostic_information",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec24 (service 0x14) -> handler; ROM bytes verified; UDS 0x14 (ref_ClearFaults_)"
+  },
+  "00056508": {
+   "alias": "uds_service_3e_tester_present",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E"
+  },
+  "000565e8": {
+   "alias": "uds_service_b1_mazda_specific",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)"
+  },
+  "000567e8": {
+   "alias": "uds_service_22_read_data_by_identifier",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)"
+  },
+  "00056890": {
+   "alias": "diag22_pid0000_pids_supported_01_20",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f10c -> handler verified in ROM bytes + function_index; handler appends const u16 0xBE1F,0xE813 = OBD supported-PID bitmap 01-20; record bytes at 0x5f10c verified"
+  },
+  "000568b4": {
+   "alias": "diag22_pid0002_active_cal_id_field",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f118 -> handler verified in ROM bytes + function_index; reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block"
+  },
+  "000568ca": {
+   "alias": "diag22_pid0003_fuel_system_status_ol_cl",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f124 -> handler verified in ROM bytes + function_index; diag_ol_status_byte 0x5535e encodes CL/OL per OBD PID 03 (0x10 CL+DFE, 2 CL, 4 OL-not-allowed, 8 OL cold, 1 OL); low byte const 0"
+  },
+  "000568f0": {
+   "alias": "diag22_pid0004_calculated_engine_load_pct",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f130 -> handler verified in ROM bytes + function_index; 0x553dc: engine_load_ffffc0b4*100/engine_load_max_ffffc0b8*0.392157 = OBD PID 04 A*100/max; 0xff if max~0"
+  },
+  "00056940": {
+   "alias": "diag22_pid0005_coolant_temp_c",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f13c -> handler verified in ROM bytes + function_index; 0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40"
+  },
+  "00056956": {
+   "alias": "diag22_pid0006_stft_bank1_pct",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f148 -> handler verified in ROM bytes + function_index; 0x55440: (DAT_ffffadec-1)*100*0.78125-100; ffffadec=lambda actual (fuel chain); OBD PID 06 trim formula"
+  },
+  "0005696c": {
+   "alias": "diag22_pid0007_ltft_bank1_pct",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f154 -> handler verified in ROM bytes + function_index; 0x55466: DAT_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula"
+  },
+  "00056982": {
+   "alias": "diag22_pid000c_engine_rpm",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f160 -> handler verified in ROM bytes + function_index; 0x55484: engine_speed_rpm_ffffb548*0.25 = OBD PID 0C A/4"
+  },
+  "00056998": {
+   "alias": "diag22_pid000d_vehicle_speed_kmh",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f16c -> handler verified in ROM bytes + function_index; 0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D"
+  },
+  "000569ae": {
+   "alias": "diag22_pid000e_leading_ignition_timing_deg",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f178 -> handler verified in ROM bytes + function_index; 0x554ae: leading_ignition_timing_ffffa630*0.5-64 = OBD PID 0E"
+  },
+  "000569c4": {
+   "alias": "diag22_pid000f_intake_air_temp_c",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f184 -> handler verified in ROM bytes + function_index; 0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F"
+  },
+  "000569da": {
+   "alias": "diag22_pid0010_maf_g_s",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f190 -> handler verified in ROM bytes + function_index; 0x55528: mass_air_flow_ffffa9ec*0.01 = OBD PID 10 A/100"
+  },
+  "000569f0": {
+   "alias": "diag22_pid0011_throttle_position_pct",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f19c -> handler verified in ROM bytes + function_index; 0x5553e: DAT_ffffad5c decode(7.63e-05)*20*0.392157 = OBD PID 11 throttle %"
+  },
+  "00056a06": {
+   "alias": "diag22_pid0012_secondary_air_status",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1a8 -> handler verified in ROM bytes + function_index; 0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12"
+  },
+  "00056a1c": {
+   "alias": "diag22_pid0013_o2_sensors_present",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1b4 -> handler verified in ROM bytes + function_index; const 2 = OBD PID 13 bitmap (bank1 sensors)"
+  },
+  "00056a32": {
+   "alias": "diag22_pid0015_o2s2_voltage_trim",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2"
+  },
+  "00056a58": {
+   "alias": "diag22_pid001c_obd_standard",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1cc -> handler verified in ROM bytes + function_index; const 6 = OBD PID 1C"
+  },
+  "00056a6e": {
+   "alias": "diag22_pid001f_engine_runtime_s",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1d8 -> handler verified in ROM bytes + function_index; 0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start"
+  },
+  "00056a84": {
+   "alias": "diag22_pid0020_pids_supported_21_40",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1e4 -> handler verified in ROM bytes + function_index; handler appends const u16 0x8007,0xB011 = supported-PID bitmap 21-40"
+  },
+  "00056aa8": {
+   "alias": "diag22_pid0021_distance_while_mil_on",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1f0 -> handler verified in ROM bytes + function_index; 0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21"
+  },
+  "00056abc": {
+   "alias": "diag22_pid002e_ram_b2f0_pct",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157"
+  },
+  "00056ad2": {
+   "alias": "diag22_pid002f_ram_d287_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte"
+  },
+  "00056ae6": {
+   "alias": "diag22_pid0030_gear_or_vin_byte",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff"
+  },
+  "00056afa": {
+   "alias": "diag22_pid0031_ram_90fc_float",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0"
+  },
+  "00056b0e": {
+   "alias": "diag22_pid0033_ram_ad10_scaled",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182"
+  },
+  "00056b22": {
+   "alias": "diag22_pid0034_afr_lambda_words",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f238 -> handler verified in ROM bytes + function_index; diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)"
+  },
+  "00056b42": {
+   "alias": "diag22_pid003c_ram_c644_scaled",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)"
+  },
+  "00056b56": {
+   "alias": "diag22_pid0040_pids_supported_41_60",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f250 -> handler verified in ROM bytes + function_index; handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60"
+  },
+  "00056b76": {
+   "alias": "diag22_pid0042_battery_voltage_v",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f25c -> handler verified in ROM bytes + function_index; 0x55732: inferred_battery_voltage_ffffb590*0.001 = OBD PID 42"
+  },
+  "00056b8a": {
+   "alias": "diag22_pid0043_engine_load_g_rev",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f268 -> handler verified in ROM bytes + function_index; 0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)"
+  },
+  "00056b9e": {
+   "alias": "diag22_pid0044_lambda_target",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f274 -> handler verified in ROM bytes + function_index; 0x5575e: lambda_target_ffffadfc*3.05176e-05 (logger 0x220044)"
+  },
+  "00056bb2": {
+   "alias": "diag22_pid0045_ram_ad48_pct",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157"
+  },
+  "00056bc6": {
+   "alias": "diag22_pid0047_ram_ad5e_pedal",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157"
+  },
+  "00056bda": {
+   "alias": "diag22_pid0049_ram_a9c4_pedal",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157"
+  },
+  "00056c78": {
+   "alias": "diag22_pid004a_ram_a9c6_pedal",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157"
+  },
+  "00056c8c": {
+   "alias": "diag22_pid004c_ram_b410_pct",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157"
+  },
+  "00056ca0": {
+   "alias": "diag22_pid0200_dtc_count_stored",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2bc -> handler verified in ROM bytes + function_index; ref_faultSomething0x0 0x5fab2: 0x61450(0x80,0) - 0x5f8fa() + 1, clamp 0xff"
+  },
+  "00056cb4": {
+   "alias": "diag22_pid0202_dtc_count_ram_list",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2c8 -> handler verified in ROM bytes + function_index; 0x5fb08 counts DAT_ffffd570[0..0x8b]==1 minus rotor-0/1 adjustments, clamp 0xff"
+  },
+  "00056cc8": {
+   "alias": "diag22_pid0904_trailing_ignition_timing_deg",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2d4 -> handler verified in ROM bytes + function_index; trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)"
+  },
+  "00056ce8": {
+   "alias": "diag22_pid0914_ram_a9c4_scaled_s16",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16"
+  },
+  "00056d1a": {
+   "alias": "diag22_pid0915_ram_a9c6_scaled_s16",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6)"
+  },
+  "00056d4c": {
+   "alias": "diag22_pid0917_ram_ad5c_scaled_s16",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c)"
+  },
+  "00056db4": {
+   "alias": "diag22_pid0918_ram_ad5e_scaled_s16",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e)"
+  },
+  "00056de6": {
+   "alias": "diag22_pid091a_ram_b410_raw_512",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512)"
+  },
+  "00056e04": {
+   "alias": "diag22_pid093c_throttle_position_raw",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)"
+  },
+  "00056e22": {
+   "alias": "diag22_pid096e_ram_a7ac_quarter",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25"
+  },
+  "00056e40": {
+   "alias": "diag22_pid097c_ram_b59c_div2048",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)"
+  },
+  "00056e5e": {
+   "alias": "diag22_pid114a_ram_add4_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05"
+  },
+  "00056e7c": {
+   "alias": "diag22_pid114d_ram_a984_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05"
+  },
+  "00056e9a": {
+   "alias": "diag22_pid1153_ram_a834_lambda",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05"
+  },
+  "00056eb8": {
+   "alias": "diag22_pid1154_throttle_raw_ad5c",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16"
+  },
+  "00056efc": {
+   "alias": "diag22_pid1169_ram_807c_scaled",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05"
+  },
+  "00056f30": {
+   "alias": "diag22_pid1177_maf_voltage_latched_v",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)"
+  },
+  "00056f4e": {
+   "alias": "diag22_pid1340_ram_a9bc_pct",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157"
+  },
+  "00056f6c": {
+   "alias": "diag22_pid1410_injector_pulse_time",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)"
+  },
+  "00056f8a": {
+   "alias": "diag22_pid163e_ram_b074_scaled_s16",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)"
+  },
+  "00056faa": {
+   "alias": "diag22_pid16b3_ram_ad10_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05"
+  },
+  "00056fc8": {
+   "alias": "diag22_pid16e8_ram_b5ac_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176"
+  },
+  "00056fe6": {
+   "alias": "diag22_pid16e9_ram_b654_eighth",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125"
+  },
+  "00057004": {
+   "alias": "diag22_pid16f0_tire_revolutions_per_mile",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3d0 -> handler verified in ROM bytes + function_index; tire_revolutions_per_mile_ffffd380 raw u16 (logger 0x2216f0)"
+  },
+  "0005705c": {
+   "alias": "diag22_pida216_ram_bc30_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05"
+  },
+  "0005707a": {
+   "alias": "diag22_pid1746_knock_retard_deg",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)"
+  },
+  "00057098": {
+   "alias": "diag22_pid1782_ram_c6ac_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05"
+  },
+  "000570b6": {
+   "alias": "diag22_pid17a6_ram_d1ac_scaled",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1"
+  },
+  "000570ee": {
+   "alias": "diag22_pid172a_ram_c4c8_temp_c",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40"
+  },
+  "0005710c": {
+   "alias": "diag22_pid172d_ram_a8f4_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8"
+  },
+  "0005711a": {
+   "alias": "diag22_pid1634_apv_position_voltage",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312"
+  },
+  "00057138": {
+   "alias": "diag22_pid0968_io_status_b5b4_bc35",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0"
+  },
+  "000571ac": {
+   "alias": "diag22_pid09d3_pedr_bit10_status",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0"
+  },
+  "000571e4": {
+   "alias": "diag22_pid1101_io_status_bf3c_ad18_cdd8",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)"
+  },
+  "00057226": {
+   "alias": "diag22_pid1102_io_status_bdb8",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8"
+  },
+  "00057248": {
+   "alias": "diag22_pid1103_io_status_pedr_cab4_d1a",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1"
+  },
+  "000572d0": {
+   "alias": "diag22_pid1104_io_status_pjdr_bf6c",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c"
+  },
+  "0005730e": {
+   "alias": "diag22_pid1631_tol_status_b570_b584",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584"
+  },
+  "0005734a": {
+   "alias": "diag22_pid1681_io_status_ce1c",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40"
+  },
+  "0005736c": {
+   "alias": "diag22_pid1688_secondary_air_status_bit",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20"
+  },
+  "0005738e": {
+   "alias": "diag22_pida211_status_b53b_aa62_bf9c",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8"
+  },
+  "000573f0": {
+   "alias": "diag22_pid1711_pedr_bit1_status",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80"
+  },
+  "0005741e": {
+   "alias": "diag22_pid1706_io_status_a8f5",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4"
+  },
+  "00057440": {
+   "alias": "diag22_pid1718_pedr_bit2_status",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4"
+  },
+  "0005746e": {
+   "alias": "diag22_pid1715_pedr_pddr_status",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80"
+  },
+  "000574b6": {
+   "alias": "diag22_pid17de_io_status_ce32",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32"
+  },
+  "000574d8": {
+   "alias": "diag22_pide21b_cal_id_chunk_0",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4e4 -> handler verified in ROM bytes + function_index; appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')"
+  },
+  "00057506": {
+   "alias": "diag22_pide21c_cal_id_chunk_1",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4f0 -> handler verified in ROM bytes + function_index; appends '1','8'"
+  },
+  "0005752c": {
+   "alias": "diag22_pide21d_cal_id_chunk_2",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4fc -> handler verified in ROM bytes + function_index; appends '8','8','1'"
+  },
+  "00057546": {
+   "alias": "diag22_pide21e_cal_id_chunk_3",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f508 -> handler verified in ROM bytes + function_index; appends 'B'"
+  },
+  "0005755c": {
+   "alias": "diag22_pide611_sw_name_string",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f514 -> handler verified in ROM bytes + function_index; appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)"
+  },
+  "00057594": {
+   "alias": "diag22_pid1710_sensor_snapshot_7byte",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine"
+  },
+  "000576b4": {
+   "alias": "diag22_pidc115_ram_c1d2_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8"
+  },
+  "000576c2": {
+   "alias": "diag22_pidc116_dtc_state_machine",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code"
+  },
+  "00057704": {
+   "alias": "diag22_pidc117_ram_c1d3_c1d4",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0"
+  },
+  "00057738": {
+   "alias": "diag22_pidc124_diag_status_bits",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4"
+  },
+  "00057884": {
+   "alias": "diag22_pidff10_dtc_status_c1d5_c1d8",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8"
+  },
+  "000578e8": {
+   "alias": "diag22_pidff40_fw_id_chunk_15",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f568 -> handler verified in ROM bytes + function_index; appends '1','5' (fw id '60E15120' ROM 0x2000; cal area 0x6c05c '15120 ')"
+  },
+  "00057902": {
+   "alias": "diag22_pidff41_fw_id_chunk_120",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f574 -> handler verified in ROM bytes + function_index; appends '1','2','0',' '"
+  },
+  "0005792e": {
+   "alias": "diag22_pidff42_rom_id_bytes_ff8",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f580 -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xff8,0xff9,0xffa (via mov.w literals)"
+  },
+  "0005794e": {
+   "alias": "diag22_pidff43_rom_id_bytes_ffb",
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f58c -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xffb,0xffc,0xffd"
+  },
+  "0005796e": {
+   "alias": "diag22_pidff50_ram_d3a0_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16"
+  },
+  "00057974": {
+   "alias": "diag22_pidff44_ram_ce30_raw",
+   "confidence": "medium",
+   "evidence": "dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16"
+  },
+  "000579a8": {
+   "alias": "diag22_subpid_supported_mask",
+   "confidence": "high",
+   "evidence": "scans 36 x 6-byte records at 0x5f5b2 for current PID+subfunc with mask&DAT_ffffd3b4, ORs byte1 (bit) into result; returns param & mask"
+  },
+  "00057a64": {
+   "alias": "uds_service_27_security_access",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebb8 (service 0x27) -> handler; ROM bytes verified; UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it"
+  },
+  "00057c8c": {
+   "alias": "uds_service_10_diagnostic_session_control",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebac (service 0x10) -> handler; ROM bytes verified; UDS 0x10; table record 0x5ebac"
+  },
+  "00057db0": {
+   "alias": "uds_service_18",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0"
+  },
+  "0005af54": {
+   "alias": "uds_service_11_ecu_reset",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebd0 (service 0x11) -> handler; ROM bytes verified; UDS 0x11"
+  },
+  "0005b094": {
+   "alias": "uds_service_12",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094"
+  },
+  "0005b414": {
+   "alias": "uds_service_21_read_data_by_local_id",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)"
+  },
+  "0005b750": {
+   "alias": "uds_service_23_read_memory_by_address",
+   "confidence": "high",
+   "evidence": "service table record 0x5ebf4 (service 0x23) -> handler; ROM bytes verified; UDS 0x23 (ref_UDSMode23Function)"
+  },
+  "0005b9f6": {
+   "alias": "uds_service_28_communication_control",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28"
+  },
+  "0005bc4c": {
+   "alias": "uds_service_2f_input_output_control",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec30 (service 0x2f) -> handler; ROM bytes verified; UDS 0x2F"
+  },
+  "0005d7bc": {
+   "alias": "uds_service_34_request_download",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec60 (service 0x34) -> handler; ROM bytes verified; UDS 0x34 (ref_UDSMode34Func)"
+  },
+  "0005d834": {
+   "alias": "uds_service_36_transfer_data",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec6c (service 0x36) -> handler; ROM bytes verified; UDS 0x36 (ref_UDSMode36Function_)"
+  },
+  "0005d874": {
+   "alias": "uds_service_37_request_transfer_exit",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec78 (service 0x37) -> handler; ROM bytes verified; UDS 0x37 (ref_UDSService37Function)"
+  },
+  "0005d8b4": {
+   "alias": "uds_service_3b",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4"
+  },
+  "0005dc44": {
+   "alias": "uds_service_85_control_dtc_setting",
+   "confidence": "high",
+   "evidence": "service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)"
+  },
+  "0005df60": {
+   "alias": "uds_service_31_routine_control",
+   "confidence": "high",
+   "evidence": "service table record 0x5ec3c (service 0x31) -> handler; ROM bytes verified; UDS 0x31"
+  },
+  "0005e024": {
+   "alias": "uds_service_32",
+   "confidence": "medium",
+   "evidence": "service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024"
+  },
+  "0005fab2": {
+   "alias": "dtc_count_stored",
+   "confidence": "medium",
+   "evidence": "0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)"
+  },
+  "0005fb08": {
+   "alias": "dtc_count_ram_table",
+   "confidence": "high",
+   "evidence": "counts DAT_ffffd570[0..0x8b]==1, rotor-0/1 adjust, clamp 0xff"
+  },
+  "0006581c": {
+   "alias": "obd_mode01_current_data",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb40 (service 0x01) -> handler; ROM bytes verified; OBD Mode 01 handler (caseD_27)"
+  },
+  "00065c88": {
+   "alias": "obd_mode02_freeze_frame",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb4c (service 0x02) -> handler; ROM bytes verified; OBD Mode 02"
+  },
+  "00065ff8": {
+   "alias": "obd_mode03_stored_dtc",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb58 (service 0x03) -> handler; ROM bytes verified; OBD Mode 03"
+  },
+  "000660d0": {
+   "alias": "obd_mode04_clear_dtc",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb64 (service 0x04) -> handler; ROM bytes verified; OBD Mode 04 (also ref_ClearFaults_ at 0x558ac for service 0x14)"
+  },
+  "000661ec": {
+   "alias": "obd_mode07_pending_dtc",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb7c (service 0x07) -> handler; ROM bytes verified; OBD Mode 07"
+  },
+  "000662c0": {
+   "alias": "obd_mode09_vehicle_info",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb88 (service 0x09) -> handler; ROM bytes verified; OBD Mode 09 (ref_OBDMode9Fuction)"
+  },
+  "0006725c": {
+   "alias": "obd_mode06_test_results",
+   "confidence": "high",
+   "evidence": "service table record 0x5eb70 (service 0x06) -> handler; ROM bytes verified; OBD Mode 06"
+  },
+  "000683d4": {
+   "alias": "isotp_pci_type_extract",
+   "confidence": "high",
+   "evidence": "reads RX buffer byte0, and 0xf0 -> frame type 0x00/0x10/0x20/0x30, clamp 0x40"
+  },
+  "0006842c": {
+   "alias": "isotp_frame_type_dispatch",
+   "confidence": "high",
+   "evidence": "switch on frame type: SF->0x68548, FF->0x6859e, CF->0x6872c, FC->0x68764"
+  },
+  "00068548": {
+   "alias": "isotp_single_frame_accept",
+   "confidence": "high",
+   "evidence": "SF: service=buf[1], channel=0x68a86(service), pack_for_OBD_response"
+  },
+  "0006859e": {
+   "alias": "isotp_first_frame_accept",
+   "confidence": "high",
+   "evidence": "FF: total len=(pci&0xf)*256+buf[2], service=buf[3], starts reassembly"
+  },
+  "0006872c": {
+   "alias": "isotp_consecutive_frame_check",
+   "confidence": "high",
+   "evidence": "CF: checks DAT_ffffddeb==4 and seq == expected"
+  },
+  "00068764": {
+   "alias": "isotp_flow_control_check",
+   "confidence": "high",
+   "evidence": "FC: DAT_ffffdde1 != 7"
+  },
+  "00068a86": {
+   "alias": "uds_rx_channel_alloc",
+   "confidence": "medium",
+   "evidence": "finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10"
+  },
+  "00068b10": {
+   "alias": "uds_rx_channel_set_service",
+   "confidence": "medium",
+   "evidence": "DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer"
+  },
+  "00068dac": {
+   "alias": "uds_service_dispatch_table_scan",
+   "confidence": "high",
+   "evidence": "scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02"
+  }
+ },
+ "ram_aliases": {
+  "ffffad5c": {
+   "alias": "inferred_throttle_sensor_volts_ffffad5c",
+   "type": "uint16",
+   "reader": "000555f8",
+   "evidence": "PID 0x11/0x0917/0x1154 read it; decode 7.62939e-05 V/count *20 -> %"
+  },
+  "ffffadec": {
+   "alias": "inferred_lambda_actual_ffffadec",
+   "type": "float",
+   "reader": "00055440",
+   "evidence": "PID 0x06: (x-1)*100 trim; fuel-chain cell listed in ROADMAP group C"
+  },
+  "ffffb0d0": {
+   "alias": "inferred_ltft_bank1_ffffb0d0",
+   "type": "float",
+   "reader": "00055466",
+   "evidence": "PID 0x07: x*100*0.78125-100"
+  },
+  "ffffb074": {
+   "alias": "inferred_trim_b074_ffffb074",
+   "type": "float",
+   "reader": "000555ac",
+   "evidence": "PID 0x15/0x163e: x*100*0.7813-100"
+  },
+  "ffffad1c": {
+   "alias": "inferred_o2s2_ffffad1c",
+   "type": "uint16",
+   "reader": "00055586",
+   "evidence": "PID 0x15: decode(7.63e-05)*0.005"
+  },
+  "ffffd284": {
+   "alias": "engine_runtime_counter_ffffd284",
+   "type": "uint32",
+   "reader": "000555d0",
+   "evidence": "PID 0x1f via 0x409c, clamp 0xffff (OBD PID 1F s)"
+  },
+  "ffff90f4": {
+   "alias": "distance_mil_on_ffff90f4",
+   "type": "float",
+   "reader": "000555f8",
+   "evidence": "PID 0x21 (OBD PID 21)"
+  },
+  "ffff90fc": {
+   "alias": "inferred_ram_90fc_ffff90fc",
+   "type": "float",
+   "reader": "000556b0",
+   "evidence": "PID 0x31"
+  },
+  "ffffc644": {
+   "alias": "fuel_correction_sum_ffffc644",
+   "type": "float",
+   "reader": "0005571a",
+   "evidence": "PID 0x3c: x*0.1-40; ROADMAP group C names this cell fuel_correction_sum"
+  },
+  "ffffad10": {
+   "alias": "inferred_ram_ad10_ffffad10",
+   "type": "float",
+   "reader": "000556ce",
+   "evidence": "PID 0x33/0x16b3"
+  },
+  "ffffad48": {
+   "alias": "inferred_ram_ad48_ffffad48",
+   "type": "float",
+   "reader": "00055774",
+   "evidence": "PID 0x45: *0.392157"
+  },
+  "ffffad5e": {
+   "alias": "inferred_pedal_volts_ffffad5e",
+   "type": "uint16",
+   "reader": "0005578a",
+   "evidence": "PID 0x47/0x0918"
+  },
+  "ffffa9c4": {
+   "alias": "inferred_pedal_volts_ffffa9c4",
+   "type": "uint16",
+   "reader": "000557b6",
+   "evidence": "PID 0x49/0x0914"
+  },
+  "ffffa9c6": {
+   "alias": "inferred_pedal_volts_ffffa9c6",
+   "type": "uint16",
+   "reader": "00055838",
+   "evidence": "PID 0x4a/0x0915"
+  },
+  "ffffb410": {
+   "alias": "inferred_ram_b410_ffffb410",
+   "type": "float",
+   "reader": "00055864",
+   "evidence": "PID 0x4c/0x091a"
+  },
+  "ffffb2f0": {
+   "alias": "inferred_ram_b2f0_ffffb2f0",
+   "type": "float",
+   "reader": "00055616",
+   "evidence": "PID 0x2e"
+  },
+  "ffffd287": {
+   "alias": "inferred_ram_d287_ffffd287",
+   "type": "uint8",
+   "reader": "0005562c",
+   "evidence": "PID 0x2f"
+  },
+  "ffff8788": {
+   "alias": "inferred_ram_8788_ffff8788",
+   "type": "uint16",
+   "reader": "00061d14",
+   "evidence": "PID 0x30 via 0x61d14"
+  },
+  "ffffadd4": {
+   "alias": "inferred_ram_add4_ffffadd4",
+   "type": "float",
+   "reader": "00056e5e",
+   "evidence": "PID 0x114a *7.63e-05"
+  },
+  "ffffa984": {
+   "alias": "inferred_ram_a984_ffffa984",
+   "type": "float",
+   "reader": "00056e7c",
+   "evidence": "PID 0x114d"
+  },
+  "ffffa834": {
+   "alias": "inferred_ram_a834_ffffa834",
+   "type": "float",
+   "reader": "00056e9a",
+   "evidence": "PID 0x1153 *3.05e-05"
+  },
+  "ffff807c": {
+   "alias": "inferred_ram_807c_ffff807c",
+   "type": "float",
+   "reader": "00056efc",
+   "evidence": "PID 0x1169, default 15.0"
+  },
+  "ffffa9bc": {
+   "alias": "inferred_ram_a9bc_ffffa9bc",
+   "type": "float",
+   "reader": "00056f4e",
+   "evidence": "PID 0x1340 *0.392157"
+  },
+  "ffffbc30": {
+   "alias": "inferred_ram_bc30_ffffbc30",
+   "type": "float",
+   "reader": "0005705c",
+   "evidence": "PID 0xa216"
+  },
+  "ffffc6ac": {
+   "alias": "inferred_ram_c6ac_ffffc6ac",
+   "type": "float",
+   "reader": "00057098",
+   "evidence": "PID 0x1782"
+  },
+  "ffffd1ac": {
+   "alias": "inferred_ram_d1ac_ffffd1ac",
+   "type": "uint8",
+   "reader": "000570b6",
+   "evidence": "PID 0x17a6 decode(128)/1000*0.1"
+  },
+  "ffffc4c8": {
+   "alias": "inferred_temp_c4c8_ffffc4c8",
+   "type": "float",
+   "reader": "000570ee",
+   "evidence": "PID 0x172a: x-40"
+  },
+  "ffffa8f4": {
+   "alias": "inferred_ram_a8f4_ffffa8f4",
+   "type": "uint8",
+   "reader": "0005710c",
+   "evidence": "PID 0x172d raw"
+  },
+  "ffffa8f5": {
+   "alias": "inferred_ram_a8f5_ffffa8f5",
+   "type": "uint8",
+   "reader": "0005741e",
+   "evidence": "PID 0x1706 -> bit 4"
+  },
+  "ffffb570": {
+   "alias": "inferred_ram_b570_ffffb570",
+   "type": "float",
+   "reader": "0005730e",
+   "evidence": "PID 0x1631 tolerance-band check"
+  },
+  "ffffb584": {
+   "alias": "inferred_ram_b584_ffffb584",
+   "type": "uint8",
+   "reader": "0005730e",
+   "evidence": "PID 0x1631 -> bit 2"
+  },
+  "ffffce1c": {
+   "alias": "inferred_ram_ce1c_ffffce1c",
+   "type": "uint8",
+   "reader": "0005734a",
+   "evidence": "PID 0x1681 -> 0x40"
+  },
+  "ffffce32": {
+   "alias": "inferred_ram_ce32_ffffce32",
+   "type": "uint8",
+   "reader": "000574b6",
+   "evidence": "PID 0x17de"
+  },
+  "ffffce30": {
+   "alias": "inferred_ram_ce30_ffffce30",
+   "type": "uint16",
+   "reader": "00057974",
+   "evidence": "PID 0xff44 raw"
+  },
+  "ffffb53b": {
+   "alias": "inferred_ram_b53b_ffffb53b",
+   "type": "uint8",
+   "reader": "0005738e",
+   "evidence": "PID 0xa211 -> bit 4"
+  },
+  "ffffaa62": {
+   "alias": "cranking_active_ffffaa62",
+   "type": "uint8",
+   "reader": "0005738e",
+   "evidence": "PID 0xa211 -> bit 0x10 when 0; named by ignition report (cranking multiplier decay)"
+  },
+  "ffffbf9c": {
+   "alias": "inferred_ram_bf9c_ffffbf9c",
+   "type": "uint8",
+   "reader": "0005738e",
+   "evidence": "PID 0xa211 sub2"
+  },
+  "ffffbdb8": {
+   "alias": "inferred_ram_bdb8_ffffbdb8",
+   "type": "uint8",
+   "reader": "00057226",
+   "evidence": "PID 0x1102"
+  },
+  "ffffbf3c": {
+   "alias": "inferred_ram_bf3c_ffffbf3c",
+   "type": "uint8",
+   "reader": "000571e4",
+   "evidence": "PID 0x1101 -> bit 1"
+  },
+  "ffffad18": {
+   "alias": "inferred_ram_ad18_ffffad18",
+   "type": "uint8",
+   "reader": "000571e4",
+   "evidence": "PID 0x1101 -> bit 2"
+  },
+  "ffffcdd8": {
+   "alias": "inferred_ram_cdd8_ffffcdd8",
+   "type": "uint8",
+   "reader": "000571e4",
+   "evidence": "PID 0x1101 -> bit 8"
+  },
+  "ffffcab4": {
+   "alias": "inferred_ram_cab4_ffffcab4",
+   "type": "uint8",
+   "reader": "00057248",
+   "evidence": "PID 0x1103 -> bit 0x10"
+  },
+  "ffffd1a2": {
+   "alias": "inferred_ram_d1a2_ffffd1a2",
+   "type": "uint8",
+   "reader": "00057248",
+   "evidence": "PID 0x1103 -> bit 0x20"
+  },
+  "ffffd1a1": {
+   "alias": "inferred_ram_d1a1_ffffd1a1",
+   "type": "uint8",
+   "reader": "00057248",
+   "evidence": "PID 0x1103 -> bit 0x20"
+  },
+  "ffffb5b4": {
+   "alias": "inferred_ram_b5b4_ffffb5b4",
+   "type": "uint8",
+   "reader": "00057138",
+   "evidence": "PID 0x0968 -> bit 0"
+  },
+  "ffffbc35": {
+   "alias": "inferred_ram_bc35_ffffbc35",
+   "type": "uint8",
+   "reader": "00057138",
+   "evidence": "PID 0x0968 -> bit 0x20"
+  },
+  "ffffd570": {
+   "alias": "dtc_ram_flag_table_ffffd570",
+   "type": "uint8[0x8c]",
+   "reader": "0005fb08",
+   "evidence": "PID 0x0202 counts set bytes (140 DTC slots)"
+  },
+  "ffffd3b4": {
+   "alias": "diag_permission_mask_ffffd3b4",
+   "type": "uint16",
+   "reader": "000579a8",
+   "evidence": "session/security mask ANDed with every record availability_mask in 0x5774c and 0x579a8"
+  },
+  "ffffc1d0": {
+   "alias": "inferred_ram_c1d0_ffffc1d0",
+   "type": "uint8",
+   "reader": "00037546",
+   "evidence": "PID 0xc124 -> 0x40"
+  },
+  "ffffc274": {
+   "alias": "inferred_ram_c274_ffffc274",
+   "type": "uint8",
+   "reader": "00037546",
+   "evidence": "PID 0xc124 -> 4"
+  },
+  "ffffc1d2": {
+   "alias": "inferred_ram_c1d2_ffffc1d2",
+   "type": "uint8",
+   "reader": "000576b4",
+   "evidence": "PID 0xc115 raw"
+  },
+  "ffffc1d3": {
+   "alias": "inferred_ram_c1d3_ffffc1d3",
+   "type": "uint8",
+   "reader": "00057704",
+   "evidence": "PID 0xc117"
+  },
+  "ffffc1d4": {
+   "alias": "inferred_ram_c1d4_ffffc1d4",
+   "type": "uint8",
+   "reader": "00057704",
+   "evidence": "PID 0xc117"
+  },
+  "ffffc1d5": {
+   "alias": "inferred_ram_c1d5_ffffc1d5",
+   "type": "uint8",
+   "reader": "00057884",
+   "evidence": "PID 0xff10 -> bit 4"
+  },
+  "ffffc1d6": {
+   "alias": "inferred_ram_c1d6_ffffc1d6",
+   "type": "uint8",
+   "reader": "00057884",
+   "evidence": "PID 0xff10 -> bit 8"
+  },
+  "ffffc1d7": {
+   "alias": "inferred_ram_c1d7_ffffc1d7",
+   "type": "uint8",
+   "reader": "00057884",
+   "evidence": "PID 0xff10 -> bit 0x20"
+  },
+  "ffffc1d8": {
+   "alias": "inferred_ram_c1d8_ffffc1d8",
+   "type": "uint8",
+   "reader": "00057884",
+   "evidence": "PID 0xff10 -> bit 0x40"
+  },
+  "ffffd3a0": {
+   "alias": "inferred_ram_d3a0_ffffd3a0",
+   "type": "uint16",
+   "reader": "0005796e",
+   "evidence": "PID 0xff50 raw"
+  },
+  "ffffb5ac": {
+   "alias": "inferred_ram_b5ac_ffffb5ac",
+   "type": "float",
+   "reader": "00056fc8",
+   "evidence": "PID 0x16e8"
+  },
+  "ffffb654": {
+   "alias": "inferred_ram_b654_ffffb654",
+   "type": "float",
+   "reader": "00056fe6",
+   "evidence": "PID 0x16e9 *0.125"
+  },
+  "ffffb59c": {
+   "alias": "inferred_ram_b59c_ffffb59c",
+   "type": "float",
+   "reader": "00056e40",
+   "evidence": "PID 0x097c /2048"
+  },
+  "ffffa7ac": {
+   "alias": "inferred_ram_a7ac_ffffa7ac",
+   "type": "float",
+   "reader": "00056e22",
+   "evidence": "PID 0x096e *0.25"
+  },
+  "ffff9150": {
+   "alias": "inferred_sensor_block_ffff9150",
+   "type": "float[7]",
+   "reader": "00057594",
+   "evidence": "PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b"
+  }
+ },
+ "rom_unchanged": true
+}

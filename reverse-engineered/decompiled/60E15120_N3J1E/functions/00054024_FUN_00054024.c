@@ -3,7 +3,7 @@
 void FUN_00054024(void)
 
 {
-  DAT_ffffd1ac = 8;
+  inferred_ram_d1ac_ffffd1ac_ffffd1ac = 8;
   return;
 }
 

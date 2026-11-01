@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00006010 (164 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_00006010(uint param_1,undefined4 *param_2)
+undefined4 os_queue_dequeue_record(uint param_1,undefined4 *param_2)
 
 {
   undefined4 uVar1;

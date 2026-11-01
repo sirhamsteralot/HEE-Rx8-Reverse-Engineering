@@ -6,7 +6,7 @@
 void ref_setSR(int param_1)
 
 {
-  if ((param_1 == 0) && (*(char *)(DAT_ffff7650 + 1) != '\x01')) {
+  if ((param_1 == 0) && (*(char *)(os_task_table_ptr_ffff7650 + 1) != '\x01')) {
     os_wake_check_context_switch();
     return;
   }

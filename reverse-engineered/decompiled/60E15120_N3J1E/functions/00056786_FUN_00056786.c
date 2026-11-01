@@ -8,7 +8,7 @@ undefined4 FUN_00056786(void)
 {
   undefined4 uVar1;
   
-  if (DAT_ffffc1d2 == '3') {
+  if (inferred_ram_c1d2_ffffc1d2_ffffc1d2 == '3') {
     uVar1 = FUN_000566f0(0);
   }
   else {

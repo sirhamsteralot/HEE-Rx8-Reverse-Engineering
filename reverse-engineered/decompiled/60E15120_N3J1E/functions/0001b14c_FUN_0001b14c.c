@@ -6,7 +6,7 @@
 void FUN_0001b14c(void)
 
 {
-  DAT_ffffad5e = DAT_ffff9f0a;
+  inferred_pedal_volts_ffffad5e_ffffad5e = DAT_ffff9f0a;
   DAT_ffffad86 = DAT_ffffa224;
   DAT_ffffad34 = DAT_ffffa21c;
   return;

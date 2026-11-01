@@ -3,7 +3,7 @@
 void FUN_00025a3c(void)
 
 {
-  if ((18.471 <= DAT_ffffb654) || (15.938 <= DAT_ffffb658)) {
+  if ((18.471 <= inferred_ram_b654_ffffb654_ffffb654) || (15.938 <= DAT_ffffb658)) {
     DAT_ffffb612 = 1;
   }
   else {

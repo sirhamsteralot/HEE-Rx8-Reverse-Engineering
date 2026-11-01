@@ -33,27 +33,27 @@ uint FUN_00012754(void)
   else {
     DAT_ffffa66b = '\x01';
   }
-  uVar1 = (uint)DAT_ffffaa62;
+  uVar1 = (uint)cranking_active_ffffaa62_ffffaa62;
   if (uVar1 == 1) {
     if (cVar3 == '\0') {
-      DAT_ffffa65c = 0xc1c80000;
+      trailing_min_advance_clamp_ffffa65c = 0xc1c80000;
       uVar1 = 0;
     }
     else {
       uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_000691e0);
-      DAT_ffffa65c = extraout_fr0;
+      trailing_min_advance_clamp_ffffa65c = extraout_fr0;
     }
   }
   else if ((cVar4 == '\0') && (cVar2 == '\0')) {
-    DAT_ffffa65c = 0xc28a6666;
+    trailing_min_advance_clamp_ffffa65c = 0xc28a6666;
   }
   else if (DAT_ffffa66b == '\x01') {
-    DAT_ffffa65c = 0xc28a6666;
+    trailing_min_advance_clamp_ffffa65c = 0xc28a6666;
     uVar1 = 1;
   }
   else {
     uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_000691f4);
-    DAT_ffffa65c = extraout_fr0_00;
+    trailing_min_advance_clamp_ffffa65c = extraout_fr0_00;
   }
   return uVar1;
 }

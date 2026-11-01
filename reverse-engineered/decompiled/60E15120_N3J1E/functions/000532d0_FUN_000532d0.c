@@ -12,7 +12,7 @@ uint FUN_000532d0(void)
   
   uVar1 = ref_readValue_16bit_ADDRESS_VAL(&DAT_ffff86e8,0);
   cVar3 = rx8_is_outside_tolerance_band(vehicle_speed_ffffbbb4,0,0x3ff126e9);
-  if ((((cVar3 == '\0') && (DAT_ffffaa62 == '\x01')) && (engine_running_ffffa428 == '\x01')) &&
+  if ((((cVar3 == '\0') && (cranking_active_ffffaa62_ffffaa62 == '\x01')) && (engine_running_ffffa428 == '\x01')) &&
      ((uVar1 & 0xffff) < 0xea)) {
     DAT_ffffd15c = 1;
   }

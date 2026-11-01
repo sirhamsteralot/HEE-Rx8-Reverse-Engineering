@@ -1,9 +1,9 @@
 /* ROM address: 0x0005562c; body bytes: 6; decompiled */
 
-int FUN_0005562c(void)
+int candidate_diag_read_d287(void)
 
 {
-  return (int)DAT_ffffd287;
+  return (int)inferred_ram_d287_ffffd287_ffffd287;
 }
 
 

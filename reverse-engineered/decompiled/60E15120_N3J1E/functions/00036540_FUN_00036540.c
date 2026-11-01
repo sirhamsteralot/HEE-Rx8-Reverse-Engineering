@@ -5,12 +5,12 @@ undefined2 * FUN_00036540(void)
 {
   undefined2 *puVar1;
   
-  puVar1 = (undefined2 *)(uint)DAT_ffffc1d2;
+  puVar1 = (undefined2 *)(uint)inferred_ram_c1d2_ffffc1d2_ffffc1d2;
   if (puVar1 == (undefined2 *)((int)&vector_usr_break + 3)) {
     if ((DAT_ffffc25f == '\0') &&
        (puVar1 = (undefined2 *)(uint)DAT_ffffc260,
        puVar1 == (undefined2 *)((int)&vector_Poweron_Reset + 1))) {
-      DAT_ffffc1d2 = 0x55;
+      inferred_ram_c1d2_ffffc1d2_ffffc1d2 = 0x55;
       DAT_ffffc275 = DAT_ffffc275 | 2;
       puVar1 = (undefined2 *)&DAT_ffffc23e;
       DAT_ffffc260 = 0;
@@ -26,7 +26,7 @@ undefined2 * FUN_00036540(void)
     FUN_000368f0();
     puVar1 = &DAT_ffffc232;
     if (DAT_ffffc24a == DAT_ffffc232) {
-      DAT_ffffc1d2 = 0xaa;
+      inferred_ram_c1d2_ffffc1d2_ffffc1d2 = 0xaa;
       puVar1 = (undefined2 *)((int)(char)DAT_ffffc275 & 0xfd);
       DAT_ffffc275 = (byte)puVar1;
       DAT_ffffc23b = 0;

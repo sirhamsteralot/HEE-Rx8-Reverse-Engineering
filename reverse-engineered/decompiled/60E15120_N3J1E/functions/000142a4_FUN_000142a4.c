@@ -27,7 +27,7 @@ void ignition_timing_main_task(void)
   FUN_00013e3e();
   FUN_00012938();
   FUN_00012dec();
-  timing_trim_scale_calc();
+  candidate_timing_trim_scale_calc();
   dsc_timing_derate_select();
   cranking_timing_leading_filter();
   cranking_timing_trailing_filter();

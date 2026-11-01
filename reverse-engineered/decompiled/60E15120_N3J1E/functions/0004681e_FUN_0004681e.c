@@ -15,7 +15,7 @@ uint FUN_0004681e(void)
   }
   else {
     if (DAT_ffffcc49 == '\x01') {
-      if (DAT_ffffb550 - DAT_ffffa7ac < -100.0) {
+      if (DAT_ffffb550 - inferred_ram_a7ac_ffffa7ac_ffffa7ac < -100.0) {
         DAT_ffffcc50 = 0;
         uVar1 = (uint)DAT_ffffcc44;
         if (0x74 < DAT_ffffcc52) {

@@ -6,8 +6,8 @@
 bool ref_getACSwitchStatus(void)
 
 {
-  DAT_ffffbdb8 = (DAT_ffff9ecd & 4) == 0;
-  return DAT_ffffbdb8;
+  inferred_ram_bdb8_ffffbdb8_ffffbdb8 = (DAT_ffff9ecd & 4) == 0;
+  return inferred_ram_bdb8_ffffbdb8_ffffbdb8;
 }
 
 

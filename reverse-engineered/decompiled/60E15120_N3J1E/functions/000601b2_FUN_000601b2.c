@@ -10,7 +10,7 @@ void FUN_000601b2(void)
   ushort uVar2;
   
   uVar2 = 0;
-  puVar1 = &DAT_ffffd570;
+  puVar1 = &dtc_ram_flag_table_ffffd570_ffffd570;
   do {
     uVar2 = uVar2 + 1;
     *puVar1 = 0;

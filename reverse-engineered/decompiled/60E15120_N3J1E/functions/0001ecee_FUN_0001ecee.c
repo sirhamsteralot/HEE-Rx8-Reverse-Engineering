@@ -20,7 +20,7 @@ undefined4 FUN_0001ecee(void)
   else {
     DAT_ffffb110 = rx8_add_u16_saturate((int)(short)DAT_ffffb110,1);
     fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(fVar5,&DAT_ffff80fc);
-    fVar3 = DAT_ffffb074 + fVar3;
+    fVar3 = inferred_trim_b074_ffffb074_ffffb074 + fVar3;
     uVar2 = ref_updateMemoryAtAddress_float_VAL_ADDR(fVar3,&DAT_ffff80fc);
     fVar4 = fVar5;
     if (DAT_ffffb110 != 0) {

@@ -23,7 +23,7 @@ void FUN_00025c6c(void)
   
   cVar3 = DAT_ffffb0cd;
   cVar2 = DAT_ffffaa68;
-  cVar1 = DAT_ffffaa62;
+  cVar1 = cranking_active_ffffaa62_ffffaa62;
   if (inferred_coolant_temperature_ffffa98c <= 150.0) {
     if (inferred_coolant_temperature_ffffa98c <= 145.0) {
       DAT_ffffb64a = '\x01';
@@ -48,8 +48,8 @@ void FUN_00025c6c(void)
   else {
     DAT_ffffb64c = '\x01';
   }
-  if (DAT_ffffc6ac <= 0.0) {
-    if (DAT_ffffc6ac <= 0.0) {
+  if (inferred_ram_c6ac_ffffc6ac_ffffc6ac <= 0.0) {
+    if (inferred_ram_c6ac_ffffc6ac_ffffc6ac <= 0.0) {
       DAT_ffffb61a = '\x01';
     }
   }
@@ -78,7 +78,7 @@ void FUN_00025c6c(void)
   DAT_ffffb62c = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_table_2d_153_0006a588);
   cVar4 = DAT_ffffb619;
   if (((((((cVar2 == '\x01') && (DAT_ffffb644 < 4)) || (DAT_ffffb616 == '\x01')) ||
-        (DAT_ffffad18 == '\x01')) || ((cVar1 == '\x01' && (cVar3 == '\x01')))) ||
+        (inferred_ram_ad18_ffffad18_ffffad18 == '\x01')) || ((cVar1 == '\x01' && (cVar3 == '\x01')))) ||
       ((snapshot_vehicle_speed_ffffbbb4 < 20.0 || ((DAT_ffffb5fc < 20.0 || (20.0 <= DAT_ffffb5a4)))))) ||
      (fVar5 < DAT_ffffb624 - DAT_ffffb62c)) {
     DAT_ffffb617 = '\0';
@@ -116,7 +116,7 @@ LAB_00025f94:
   }
   if (DAT_ffffb618 == '\x01') {
     DAT_ffffb630 = (float)lookup_2d_descriptor_scaled(&tbl_table_2d_154_0006a59c);
-    fVar5 = rx8_min_float(DAT_ffffb59c + 0.2,DAT_ffffb624);
+    fVar5 = rx8_min_float(inferred_ram_b59c_ffffb59c_ffffb59c + 0.2,DAT_ffffb624);
     DAT_ffffb61c = DAT_ffffb630 + fVar5;
   }
   else if (DAT_ffffb619 == '\x01') {
@@ -127,10 +127,10 @@ LAB_00025f94:
   }
   else if (DAT_ffffb617 == '\x01') {
     DAT_ffffb634 = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_table_2d_155_0006a5b0);
-    fVar5 = rx8_max_float(DAT_ffffb59c - 0.2,DAT_ffffb624);
+    fVar5 = rx8_max_float(inferred_ram_b59c_ffffb59c_ffffb59c - 0.2,DAT_ffffb624);
     DAT_ffffb61c = fVar5 - DAT_ffffb634;
   }
-  DAT_ffffb59c = (float)ref_alternatorPIDsomething(DAT_ffffb61c);
+  inferred_ram_b59c_ffffb59c_ffffb59c = (float)ref_alternatorPIDsomething(DAT_ffffb61c);
   if (cVar2 == '\x01') {
     DAT_ffffb644 = rx8_add_u8_saturate((int)(char)DAT_ffffb644,1);
   }

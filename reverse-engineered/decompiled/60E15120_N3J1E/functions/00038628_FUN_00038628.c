@@ -37,7 +37,7 @@ undefined2 * FUN_00038628(void)
   }
   else {
     puVar1 = &DAT_ffffc4f8;
-    if ((0x49 < DAT_ffffc4f8) && (76.25 < DAT_ffffc4c8)) {
+    if ((0x49 < DAT_ffffc4f8) && (76.25 < inferred_temp_c4c8_ffffc4c8_ffffc4c8)) {
       uVar2 = ref_getFaultStatus__(0x18);
       puVar1 = (undefined2 *)(uVar2 & 0xff);
       if ((puVar1 == (undefined2 *)0x0) && ((snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998 < 35.625 && (DAT_ffffc5fe == '\0')))) {

@@ -46,11 +46,11 @@ uint FUN_00018aea(void)
     DAT_ffffa983 = 1;
   }
   uVar2 = (uint)DAT_ffffa96b;
-  if ((DAT_ffffaa62 == 1) || (2 < DAT_ffffcc91)) {
+  if ((cranking_active_ffffaa62_ffffaa62 == 1) || (2 < DAT_ffffcc91)) {
     DAT_ffffa970 = 0;
     DAT_ffffa972 = 0;
     DAT_ffffa974 = 0;
-    uVar3 = (uint)DAT_ffffaa62;
+    uVar3 = (uint)cranking_active_ffffaa62_ffffaa62;
     DAT_ffffa966 = 0;
   }
   else if (uVar2 == 1) {

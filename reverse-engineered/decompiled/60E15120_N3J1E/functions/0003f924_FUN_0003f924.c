@@ -15,7 +15,7 @@ uint FUN_0003f924(void)
   sVar1 = DAT_ffffae1a;
   arg3 = 1e-05;
   arg0 = diag_afr_word_a_ffffaa6c;
-  arg0_00 = DAT_ffffadec;
+  arg0_00 = inferred_lambda_actual_ffffadec_ffffadec;
   DAT_ffffc708 = rx8_first_order_filter(diag_afr_word_a_ffffaa6c,DAT_ffffc708,1.0,1e-05);
   DAT_ffffc70c = rx8_first_order_filter(arg0,DAT_ffffc70c,0.5,arg3);
   DAT_ffffc710 = rx8_first_order_filter(arg0_00,DAT_ffffc710,0.1,arg3);

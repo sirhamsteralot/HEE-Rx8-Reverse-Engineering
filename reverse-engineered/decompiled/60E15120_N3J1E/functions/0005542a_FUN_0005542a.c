@@ -6,7 +6,7 @@
  */
 /* ROM address: 0x0005542a; body bytes: 22; decompiled */
 
-undefined4 FUN_0005542a(void)
+undefined4 diag_encode_ect_c(void)
 
 {
   undefined4 uVar1;

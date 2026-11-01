@@ -47,3 +47,17 @@ The CAN descriptor at 0x4df1c contains big-endian ID 0x201, length 8 and pointer
 - `scripts/annotate_source_review.py` reapplies accepted comments to individual and combined C exports after regeneration. Existing function identities are retained. Ghidra import has not been performed.
 
 The original export validator still checks all 3,355 function files and 168,592 instruction encodings against the ROM. These checks establish artifact consistency, not equivalence to original C or proof of the reported reset cause.
+
+## 2026-10-31 pass — UDS/Mode-22 dispatch labeling
+
+Appended 175 function aliases and 63 RAM aliases (see `accepted_function_aliases.tsv` /
+`accepted_ram_aliases.tsv`; machine-readable record in
+`data/labels/60E15120_N3J1E/uds_dispatch_labels.json`). Binary-level checks: all 99 Mode 22
+records (0x5f10c), 36 sub-PID records (0x5f5b2) and 29 service records (0x5eb40) re-read
+from the ROM and asserted byte-exact; every handler asserted to be a code entry. Applied
+with `integrate_reviewed_names.py` (3,355 function bodies re-verified). Dynamic check:
+`tests/test_phase1_dynamic.py::test_mode22_dispatch_table_payloads` (ROM's own 0x5774c
+dispatch, exact 0x62-header response bytes + NRC 0x31 mask rejection). Report:
+`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`. Validators
+`validate_export` / `validate_reports` / `verify_readability` / `verify_math_units` PASS;
+`pytest tests/` 59/59.

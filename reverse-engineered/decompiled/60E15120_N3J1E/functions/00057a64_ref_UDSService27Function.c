@@ -4,7 +4,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00055f34 (426 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSService27Function(short param_1,uint param_2)
+uint uds_service_27_security_access(short param_1,uint param_2)
 
 {
   uint uVar1;

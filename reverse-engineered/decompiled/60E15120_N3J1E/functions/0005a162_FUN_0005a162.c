@@ -6,8 +6,8 @@
 void FUN_0005a162(void)
 
 {
-  if ((engine_stopped_latch_ffffa41c == '\0') && (DAT_ffffd284 != -1)) {
-    DAT_ffffd284 = DAT_ffffd284 + 1;
+  if ((engine_stopped_latch_ffffa41c == '\0') && (engine_runtime_counter_ffffd284_ffffd284 != -1)) {
+    engine_runtime_counter_ffffd284_ffffd284 = engine_runtime_counter_ffffd284_ffffd284 + 1;
   }
   return;
 }

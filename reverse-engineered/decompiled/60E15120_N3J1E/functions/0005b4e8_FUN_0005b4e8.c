@@ -13,7 +13,7 @@ undefined4 FUN_0005b4e8(void)
     while ((DAT_ffffd2e9 < 6 && (!bVar1))) {
       if ((&DAT_0005f6dc)[(uint)DAT_ffffd2e9 * 0xc] == DAT_ffffd2e8) {
         bVar1 = true;
-        if ((*(ushort *)(&DAT_0005f6e0 + (uint)DAT_ffffd2e9 * 0xc) & DAT_ffffd3b4) == 0) {
+        if ((*(ushort *)(&DAT_0005f6e0 + (uint)DAT_ffffd2e9 * 0xc) & diag_permission_mask_ffffd3b4_ffffd3b4) == 0) {
           uVar2 = 0x31;
         }
       }

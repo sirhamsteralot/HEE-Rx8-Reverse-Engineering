@@ -24,7 +24,7 @@ undefined2 * FUN_0000e560(void)
   float snapshot_inferred_predicted_engine_speed_ffffb55c;
   float fVar9;
   
-  snapshot_DAT_ffffbf3c = DAT_ffffbf3c;
+  snapshot_DAT_ffffbf3c = inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   cVar2 = DAT_ffffb53a;
   cVar1 = DAT_ffffb534;
   if ((DAT_ffffa4a1 == '\x01') && (DAT_ffffb53a == '\0')) {
@@ -93,7 +93,7 @@ undefined2 * FUN_0000e560(void)
     DAT_ffffa46c = (float)lookup_3d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,fVar6,&tbl_off_throttle_fuel_cut_fuel_resume_in_gear_threshold_00068fa8);
   }
   DAT_ffffa448 = DAT_ffffa458 + DAT_ffffa46c;
-  if (DAT_ffffaa62 == '\0') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\0') {
     DAT_ffffa454 = 300.0;
   }
   else if (snapshot_inferred_predicted_engine_speed_ffffb55c < DAT_ffffa448) {

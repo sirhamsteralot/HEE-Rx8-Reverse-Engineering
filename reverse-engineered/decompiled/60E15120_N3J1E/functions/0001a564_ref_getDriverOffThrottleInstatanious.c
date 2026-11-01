@@ -6,8 +6,8 @@
 void ref_getDriverOffThrottleInstatanious(void)
 
 {
-  if (DAT_ffffa9bc < 2.5) {
-    if (DAT_ffffa9bc < 2.0) {
+  if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 2.5) {
+    if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 2.0) {
       DAT_ffffaa65 = '\0';
     }
   }
@@ -17,16 +17,16 @@ void ref_getDriverOffThrottleInstatanious(void)
   if (DAT_ffffaa65 == '\0') {
     if (DAT_ffffaa60 < 0x13) {
       DAT_ffffaa63 = 1;
-      DAT_ffffaa62 = 0;
+      cranking_active_ffffaa62_ffffaa62 = 0;
     }
     else {
       DAT_ffffaa63 = 1;
-      DAT_ffffaa62 = 1;
+      cranking_active_ffffaa62_ffffaa62 = 1;
     }
   }
   else {
     DAT_ffffaa63 = 0;
-    DAT_ffffaa62 = 0;
+    cranking_active_ffffaa62_ffffaa62 = 0;
   }
   return;
 }

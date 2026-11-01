@@ -36,27 +36,27 @@ uint min_advance_clamp_select(void)
   else {
     DAT_ffffa66a = '\x01';
   }
-  uVar1 = (uint)DAT_ffffaa62;
+  uVar1 = (uint)cranking_active_ffffaa62_ffffaa62;
   if (uVar1 == 1) {
     if (cVar3 == '\0') {
-      DAT_ffffa64c = 0xc1c80000;
+      leading_min_advance_clamp_ffffa64c = 0xc1c80000;
       uVar1 = 0;
     }
     else {
-      uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_000691a4);
-      DAT_ffffa64c = extraout_fr0;
+      uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&candidate_tbl_min_advance_vs_coolant_a_000691a4);
+      leading_min_advance_clamp_ffffa64c = extraout_fr0;
     }
   }
   else if ((cVar4 == '\0') && (cVar2 == '\0')) {
-    DAT_ffffa64c = 0xc26a0000;
+    leading_min_advance_clamp_ffffa64c = 0xc26a0000;
   }
   else if (DAT_ffffa66a == '\x01') {
-    DAT_ffffa64c = 0xc26a0000;
+    leading_min_advance_clamp_ffffa64c = 0xc26a0000;
     uVar1 = 1;
   }
   else {
-    uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_000691b8);
-    DAT_ffffa64c = extraout_fr0_00;
+    uVar1 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&candidate_tbl_min_advance_vs_coolant_b_000691b8);
+    leading_min_advance_clamp_ffffa64c = extraout_fr0_00;
   }
   return uVar1;
 }

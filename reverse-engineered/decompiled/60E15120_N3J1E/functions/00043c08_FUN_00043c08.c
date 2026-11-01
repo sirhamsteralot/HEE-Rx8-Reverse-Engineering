@@ -28,7 +28,7 @@ uint FUN_00043c08(void)
   fVar6 = rx8_absolute_difference(DAT_ffffcab8,0.0);
   fVar7 = rx8_absolute_difference(DAT_ffffcabc,arg1);
   fVar8 = rx8_absolute_difference(DAT_ffffad50,arg1);
-  cVar3 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,arg1,0x3727c5ac);
+  cVar3 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,arg1,0x3727c5ac);
   DAT_ffffcb38 = rx8_lookup_3d_raw_u8(engine_load_ffffc0b4,engine_speed_rpm_ffffb548,&tbl_table_3d_124_0006b984);
   cVar4 = ref_getFaultStatus__(0x2c);
   if (((((((cVar4 != '\0') || (DAT_ffffcb3a != '\x01')) || (DAT_ffffb07d != '\x01')) ||

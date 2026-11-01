@@ -31,7 +31,7 @@ uint FUN_0001e134(void)
   
   cVar4 = closed_loop_active_ffffae1f;
   snapshot_lambda_target_ffffadfc = lambda_target_ffffadfc;
-  snapshot_DAT_ffffaa62 = DAT_ffffaa62;
+  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_engine_load_delta_ffffc150 = engine_load_delta_ffffc150;
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
@@ -39,7 +39,7 @@ uint FUN_0001e134(void)
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   cVar6 = rx8_is_outside_tolerance_band(warmup_enrichment_total_ffffc00c,0,0x3727c5ac);
   cVar7 = rx8_is_outside_tolerance_band(DAT_ffffc01c,0,0x3727c5ac);
-  cVar8 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  cVar8 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   DAT_ffffb0ec = rx8_lookup_2d_raw_u16(snapshot_engine_speed_rpm_ffffb548,&PTR_PTR_00069c54);
   fVar9 = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&tbl_table_2d_83_00069c40);
   DAT_ffffb0e4 = (float)lookup_2d_descriptor_scaled(snapshot_engine_load_ffffc0b4,&tbl_table_2d_84_00069c60);

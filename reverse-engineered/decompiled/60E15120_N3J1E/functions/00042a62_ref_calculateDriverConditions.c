@@ -10,7 +10,7 @@ undefined4 * ref_calculateDriverConditions(void)
   
   if (((DAT_ffffb534 != '\x01') || (puVar1 = (undefined4 *)0x1, DAT_ffffb53a != '\0')) &&
      ((puVar1 = &DAT_ffffbfa0, DAT_ffffbfa0 <= 15.0 ||
-      ((DAT_ffffca40 == '\0' || (puVar1 = (undefined4 *)&DAT_ffffad18, DAT_ffffad18 != '\0')))))) {
+      ((DAT_ffffca40 == '\0' || (puVar1 = (undefined4 *)&inferred_ram_ad18_ffffad18_ffffad18, inferred_ram_ad18_ffffad18_ffffad18 != '\0')))))) {
     if ((DAT_ffffb534 != '\0') ||
        (puVar1 = (undefined4 *)(uint)DAT_ffffca4c, puVar1 != (undefined4 *)0x1)) {
       DAT_ffffca47 = 0;

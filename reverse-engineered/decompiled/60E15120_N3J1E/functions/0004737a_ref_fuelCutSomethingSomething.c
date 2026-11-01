@@ -19,7 +19,7 @@ void ref_fuelCutSomethingSomething(char param_1)
       pcVar2 = "";
     }
     else {
-      if (DAT_ffffad18 != '\x01') {
+      if (inferred_ram_ad18_ffffad18_ffffad18 != '\x01') {
         DAT_ffffcc70 = '\0';
         goto LAB_00047406;
       }

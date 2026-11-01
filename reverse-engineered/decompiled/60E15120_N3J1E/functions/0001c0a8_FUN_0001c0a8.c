@@ -9,7 +9,7 @@
 void FUN_0001c0a8(void)
 
 {
-  DAT_ffffadec = 0x3f800000;
+  inferred_lambda_actual_ffffadec_ffffadec = 0x3f800000;
   DAT_ffffadf0 = 0x3f800000;
   DAT_ffffadf4 = 0x3f800000;
   DAT_ffffb064 = 0xff;

@@ -23,18 +23,18 @@ void trailing_base_timing_calc(void)
   snapshot_timing_blend_weight_ffffb118 = timing_blend_weight_ffffb118;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  DAT_ffffa61c = (float)lookup_3d_descriptor_scaled(DAT_ffffa7ac,DAT_ffffa834,&DAT_000690e8);
-  DAT_ffffa620 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&DAT_00069104);
-  DAT_ffffa62c = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&DAT_0006902c);
-  DAT_ffffa5f4 = (0.0 - DAT_ffffa620 * DAT_ffffa62c) + DAT_ffffa61c;
+  DAT_ffffa61c = (float)lookup_3d_descriptor_scaled(inferred_ram_a7ac_ffffa7ac_ffffa7ac,inferred_ram_a834_ffffa834_ffffa834,&candidate_tbl_offthrottle_trailing_3d_000690e8);
+  DAT_ffffa620 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&candidate_tbl_trailing_advance_3d_alt_00069104);
+  DAT_ffffa62c = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&candidate_tbl_coolant_timing_multiplier_trailing_0006902c);
+  trailing_coolant_scaled_advance_term_ffffa5f4 = (0.0 - DAT_ffffa620 * DAT_ffffa62c) + DAT_ffffa61c;
   if (safe_mode_ffffcd60 == '\0') {
     DAT_ffffa600 = 80.0;
   }
   else {
-    DAT_ffffa600 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&DAT_0006913c);
+    DAT_ffffa600 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&candidate_tbl_safe_mode_cap_single_trailing_0006913c);
   }
   if (safe_mode_ffffb12d == '\x01') {
-    DAT_ffffa624 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&DAT_00069158);
+    DAT_ffffa624 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&candidate_tbl_safe_mode_advance_cap_trailing_00069158);
     fVar2 = rx8_min_float(DAT_ffffa624,DAT_ffffa600);
     pfVar1 = (float *)&DAT_0006c774;
   }
@@ -46,7 +46,7 @@ void trailing_base_timing_calc(void)
   DAT_ffffa604 = *pfVar1 + fVar2;
   DAT_ffffa628 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&tbl_ignition_timing_trailing_base_00069120);
   fVar2 = rx8_min_float(DAT_ffffa628,DAT_ffffa600);
-  DAT_ffffa5ec = DAT_ffffa604 * snapshot_timing_blend_weight_ffffb118 + (fVar2 + 0.0) * (1.0 - snapshot_timing_blend_weight_ffffb118);
+  trailing_base_timing_final_ffffa5ec = DAT_ffffa604 * snapshot_timing_blend_weight_ffffb118 + (fVar2 + 0.0) * (1.0 - snapshot_timing_blend_weight_ffffb118);
   return;
 }
 

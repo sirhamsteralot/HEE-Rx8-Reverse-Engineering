@@ -23,7 +23,7 @@ char * FUN_00029b48(void)
         (pcVar1 = pcVar4 + 0x75982, *pcVar1 == '\0')) &&
        ((pcVar1 = pcVar4 + 0x75983, *pcVar1 == '\0' &&
         (pcVar1 = (char *)(uint)engine_running_ffffa428, pcVar1 == (char *)((int)&vector_Poweron_Reset + 1)))))
-      && (pcVar1 = (char *)(int)DAT_ffffaa62, pcVar1 == (char *)0x0)) ||
+      && (pcVar1 = (char *)(int)cranking_active_ffffaa62_ffffaa62, pcVar1 == (char *)0x0)) ||
      ((DAT_ffffa938 == 0 && (pcVar1 = (char *)(uint)DAT_ffffa93a, pcVar1 != (char *)0x0)))) {
     DAT_ffffbb26 = 1;
   }

@@ -6,7 +6,7 @@ uint FUN_00012ed0(void)
   bool bVar1;
   uint uVar2;
   
-  if ((DAT_ffffa6dd == '\0') && (DAT_ffffa7ac - 150.0 <= engine_speed_rpm_ffffb548)) {
+  if ((DAT_ffffa6dd == '\0') && (inferred_ram_a7ac_ffffa7ac_ffffa7ac - 150.0 <= engine_speed_rpm_ffffb548)) {
     DAT_ffffa6dd = '\x01';
   }
   if ((((secondary_air_pump_request_ffffbf6c == '\x01') && (engine_running_ffffa428 == '\x01')) && (DAT_ffffa6dd == '\x01')) &&
@@ -45,7 +45,7 @@ uint FUN_00012ed0(void)
     DAT_ffffa6b8 = 1;
   }
   uVar2 = (uint)DAT_ffffa6b6;
-  if ((uVar2 == 1) && ((DAT_ffffaa62 == '\0' || (uVar2 = (uint)DAT_ffffb53a, uVar2 == 0)))) {
+  if ((uVar2 == 1) && ((cranking_active_ffffaa62_ffffaa62 == '\0' || (uVar2 = (uint)DAT_ffffb53a, uVar2 == 0)))) {
     DAT_ffffa6b9 = 1;
   }
   else {

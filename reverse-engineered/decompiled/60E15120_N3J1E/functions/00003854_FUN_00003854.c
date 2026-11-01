@@ -20,11 +20,11 @@ undefined4 FUN_00003854(short param_1)
   }
   else {
     (&PTR_DAT_00004994)[param_1 * 4][3] = cVar1 + -1;
-    iVar2 = FUN_000039ba(&DAT_ffff7638,(int)param_1,(int)(char)(&DAT_00004992)[param_1 * 0x10]);
-    if (((iVar2 != 0) && ((in_sr & 0xf0) == 0 && DAT_ffff7640 == 0)) &&
-       (*(char *)(DAT_ffff7650 + 1) == '\0')) {
-      DAT_ffff7640 = 0x100;
-      FUN_00003bf4(&DAT_ffff7638);
+    iVar2 = FUN_000039ba(&os_ctrl_block_ffff7638,(int)param_1,(int)(char)(&DAT_00004992)[param_1 * 0x10]);
+    if (((iVar2 != 0) && ((in_sr & 0xf0) == 0 && os_state_flags_ffff7640 == 0)) &&
+       (*(char *)(os_task_table_ptr_ffff7650 + 1) == '\0')) {
+      os_state_flags_ffff7640 = 0x100;
+      FUN_00003bf4(&os_ctrl_block_ffff7638);
     }
   }
   return uVar3;

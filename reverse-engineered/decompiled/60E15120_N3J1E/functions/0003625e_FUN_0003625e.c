@@ -15,7 +15,7 @@ void FUN_0003625e(void)
     DAT_ffffc23a = cVar1 == '\x01';
     FUN_000363d0();
     FUN_0003641e();
-    if ((((DAT_ffffc1d2 == '3') || ((DAT_ffffc275 & 2) != 0)) || (DAT_ffffc23a == '\x01')) &&
+    if ((((inferred_ram_c1d2_ffffc1d2_ffffc1d2 == '3') || ((DAT_ffffc275 & 2) != 0)) || (DAT_ffffc23a == '\x01')) &&
        ((cVar1 = FUN_00055e3e(0), cVar1 == '\0' || (cVar1 = FUN_00055e3e(2), cVar1 == '\0')))) {
       FUN_00036464();
       FUN_00036540();

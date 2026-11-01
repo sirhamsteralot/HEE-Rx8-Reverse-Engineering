@@ -27,11 +27,11 @@ undefined1 * FUN_0000f2ac(void)
     pcVar2 = "\x01";
   }
   else {
-    if ((undefined1 *)(uint)DAT_ffffce32 != (undefined1 *)((int)&vector_Poweron_Reset + 1U)) {
+    if ((undefined1 *)(uint)inferred_ram_ce32_ffffce32_ffffce32 != (undefined1 *)((int)&vector_Poweron_Reset + 1U)) {
       DAT_ffffa4b0 = 0;
       DAT_ffffa4b1 = 0;
       DAT_ffffa4b3 = DAT_ffff9f94;
-      return (undefined1 *)(uint)DAT_ffffce32;
+      return (undefined1 *)(uint)inferred_ram_ce32_ffffce32_ffffce32;
     }
     pcVar2 = "";
   }

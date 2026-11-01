@@ -13,7 +13,7 @@ uint FUN_00022db4(void)
   float fVar4;
   float arg0;
   
-  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   snapshot_DAT_ffffccbc = DAT_ffffccbc;
   arg0 = (fVar3 + 0.5) - 0.0;
   if (DAT_ffffb4b0 < fVar3 + 0.5) {
@@ -29,7 +29,7 @@ uint FUN_00022db4(void)
     if (DAT_ffffb401 == '\0') {
       fVar4 = fVar3 + 0.5;
       if (DAT_ffffb4b0 < fVar3 + 0.5) {
-        fVar4 = rx8_min_float(arg0,DAT_ffffb410 + fVar3);
+        fVar4 = rx8_min_float(arg0,inferred_ram_b410_ffffb410_ffffb410 + fVar3);
       }
     }
     else {

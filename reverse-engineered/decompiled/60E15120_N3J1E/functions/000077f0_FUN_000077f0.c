@@ -11,9 +11,9 @@ uint crank_capture_poll(void)
 {
   uint uVar1;
   
-  DAT_ffff9fb8 = ATUII_ICR0AH_W;
-  DAT_ffff9fb4 = DAT_ffff9fb0;
-  DAT_ffff9fb0 = ATUII_ICR10AH_W;
+  crank_icr0ah_sample_ffff9fb8 = ATUII_ICR0AH_W;
+  DAT_ffff9fb4 = crank_icr10ah_sample_ffff9fb0;
+  crank_icr10ah_sample_ffff9fb0 = ATUII_ICR10AH_W;
   FUN_0000787a();
   if (DAT_ffff9f95 == 0) {
     FUN_00007a86(0);
@@ -24,8 +24,8 @@ uint crank_capture_poll(void)
   uVar1 = (uint)DAT_ffff9fc0;
   if ((uVar1 == 1) && (uVar1 = 0, ((int)(char)(&DAT_0000d76d)[(uint)DAT_ffff9f95 * 2] & 0x80U) != 0)
      ) {
-    DAT_ffff9fa8 = DAT_ffff9fb8 - DAT_ffff9fac;
-    DAT_ffff9fac = DAT_ffff9fb8;
+    crank_period_last_ffff9fa8 = crank_icr0ah_sample_ffff9fb8 - DAT_ffff9fac;
+    DAT_ffff9fac = crank_icr0ah_sample_ffff9fb8;
     uVar1 = (uint)DAT_ffff9fa3;
     if (uVar1 != 2) {
       uVar1 = ref_geteShaftAngle_();

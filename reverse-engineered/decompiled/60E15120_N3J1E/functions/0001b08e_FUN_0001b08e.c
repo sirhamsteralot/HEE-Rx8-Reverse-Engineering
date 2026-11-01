@@ -6,7 +6,7 @@
 void FUN_0001b08e(void)
 
 {
-  DAT_ffffad5c = DAT_ffff9f08;
+  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = DAT_ffff9f08;
   DAT_ffffad84 = DAT_ffffa222;
   DAT_ffffad30 = DAT_ffffa218;
   if (DAT_ffffadd2 == '\0') {

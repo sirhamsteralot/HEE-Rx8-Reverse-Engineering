@@ -32,7 +32,7 @@ void FUN_00021c14(void)
     uVar2 = DAT_ffffb308;
     if (DAT_ffffb319 != '\x01') {
       DAT_ffffb31c = uVar3;
-      DAT_ffffb2f0 = FUN_0005c0f0(uVar3);
+      inferred_ram_b2f0_ffffb2f0_ffffb2f0 = FUN_0005c0f0(uVar3);
       return;
     }
   }

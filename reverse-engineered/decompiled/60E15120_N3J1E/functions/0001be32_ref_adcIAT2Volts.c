@@ -6,7 +6,7 @@
 void ref_adcIAT2Volts(void)
 
 {
-  DAT_ffffadd4 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1e);
+  inferred_ram_add4_ffffadd4_ffffadd4 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f1e);
   return;
 }
 

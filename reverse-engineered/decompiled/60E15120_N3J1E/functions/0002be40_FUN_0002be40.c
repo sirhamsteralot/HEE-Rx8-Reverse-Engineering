@@ -15,10 +15,10 @@ char FUN_0002be40(void)
   
   cVar2 = DAT_ffffbcec;
   cVar1 = DAT_ffffaa68;
-  if (0.125 <= DAT_ffffbc30) {
-    if (1.0 <= DAT_ffffbc30) {
-      if (2.0 <= DAT_ffffbc30) {
-        if (3.0 <= DAT_ffffbc30) {
+  if (0.125 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
+    if (1.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
+      if (2.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
+        if (3.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
           DAT_ffffbc37 = '\x05';
         }
         else {
@@ -59,13 +59,13 @@ char FUN_0002be40(void)
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8664,0);
   if (((cVar4 == '\0') || (snapshot_DAT_ffffbfa0 < 22.5)) || ((DAT_ffffbc37 != '\x03' && (DAT_ffffbc38 != '\x03'))))
   {
-    DAT_ffffbc35 = 0;
+    inferred_ram_bc35_ffffbc35_ffffbc35 = 0;
   }
   else {
     cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8664,0);
     if (((cVar4 == '\x01') && (DAT_ffffbc37 == '\x03')) &&
        ((DAT_ffffbc38 == '\x03' && ((DAT_ffffbc39 != '\x03' && (cVar2 == '\x01')))))) {
-      DAT_ffffbc35 = 1;
+      inferred_ram_bc35_ffffbc35_ffffbc35 = 1;
     }
   }
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8664,0);

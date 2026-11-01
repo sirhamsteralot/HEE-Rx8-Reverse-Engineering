@@ -6,7 +6,7 @@ uint FUN_00027444(void)
   uint uVar1;
   uint uVar2;
   
-  uVar1 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  uVar1 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   if ((uint)DAT_ffffba1c == (uVar1 & 0xff)) {
     uVar2 = rx8_add_u8_saturate((int)DAT_ffffba1b,1);
     DAT_ffffba1b = (char)uVar2;

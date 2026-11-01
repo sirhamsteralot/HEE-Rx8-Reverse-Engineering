@@ -10,7 +10,7 @@ char FUN_00010b38(char param_1)
     DAT_ffffa5da = '\0';
   }
   if ((((DAT_ffffc5cc == '\x01') || (DAT_ffffa788 == '\x01')) || (DAT_ffffbc28 == '\x01')) ||
-     ((DAT_ffffbc29 == '\x01' || (DAT_ffffc1d0 == '\0')))) {
+     ((DAT_ffffbc29 == '\x01' || (inferred_ram_c1d0_ffffc1d0_ffffc1d0 == '\0')))) {
     DAT_ffffa5d8 = 0xf;
   }
   cVar1 = DAT_ffffa951;

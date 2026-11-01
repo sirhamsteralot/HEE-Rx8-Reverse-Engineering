@@ -6,8 +6,8 @@
 void FUN_0002f0c6(void)
 
 {
-  if (1.94 < DAT_ffffc6ac) {
-    if (2.085 < DAT_ffffc6ac) {
+  if (1.94 < inferred_ram_c6ac_ffffc6ac_ffffc6ac) {
+    if (2.085 < inferred_ram_c6ac_ffffc6ac_ffffc6ac) {
       DAT_ffffbd6a = 0;
     }
   }

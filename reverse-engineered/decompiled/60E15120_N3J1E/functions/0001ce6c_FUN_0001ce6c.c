@@ -43,7 +43,7 @@ undefined4 FUN_0001ce6c(void)
   uVar6 = mass_air_flow_ffffa9ec;
   fVar7 = DAT_ffffad20;
   fVar8 = inferred_coolant_temperature_ffffa98c;
-  if (DAT_ffffaa62 == '\x01') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
     if (DAT_ffffb53a == '\x01') {
       puVar4 = &tbl_table_3d_26_00069a0c;
     }

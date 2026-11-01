@@ -12,10 +12,10 @@ undefined4 FUN_00036b98(void)
   
   uVar2 = 0;
   iVar3 = 0;
-  if ((((DAT_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) && (((int)DAT_ffffc1d3 & 0x80U) != 0))
-     && ((DAT_ffffc1d2 == '3' &&
+  if ((((DAT_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) && (((int)inferred_ram_c1d3_ffffc1d3_ffffc1d3 & 0x80U) != 0))
+     && ((inferred_ram_c1d2_ffffc1d2_ffffc1d2 == '3' &&
          ((cVar1 = FUN_00055e3e(0), cVar1 == '\0' || (cVar1 = FUN_00055e3e(2), cVar1 == '\0')))))) {
-    DAT_ffffc1d2 = 'U';
+    inferred_ram_c1d2_ffffc1d2_ffffc1d2 = 'U';
     DAT_ffffc247 = 1;
     DAT_ffffc24f = 1;
   }

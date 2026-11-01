@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0006769c (32 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 ref_udsHandler(uint param_1,short param_2,char param_3)
+undefined4 uds_service_dispatch_table_scan(uint param_1,short param_2,char param_3)
 
 {
   int iVar1;
@@ -15,11 +15,11 @@ undefined4 ref_udsHandler(uint param_1,short param_2,char param_3)
   uVar2 = FUN_00004308(param_1,1);
   bVar4 = 0;
   while( true ) {
-    if ((&DAT_0005eb40)[(uint)bVar4 * 0xc] == -1) {
+    if ((&tbl_uds_service_dispatch_0005eb40)[(uint)bVar4 * 0xc] == -1) {
       return uVar3;
     }
     iVar1 = (uint)bVar4 * 0xc;
-    if ((uint)(byte)(&DAT_0005eb40)[iVar1] == (param_1 & 0xff)) break;
+    if ((uint)(byte)(&tbl_uds_service_dispatch_0005eb40)[iVar1] == (param_1 & 0xff)) break;
     bVar4 = bVar4 + 1;
     if (0xfe < bVar4) {
       return uVar3;

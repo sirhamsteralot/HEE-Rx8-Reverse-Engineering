@@ -17,7 +17,7 @@ void FUN_0002635c(void)
   else {
     DAT_ffffb647 = '\x01';
   }
-  if (((((8.486699 <= DAT_ffffb654) || (DAT_ffffb5e0 <= 19.531)) || (engine_running_ffffa428 == '\0')) ||
+  if (((((8.486699 <= inferred_ram_b654_ffffb654_ffffb654) || (DAT_ffffb5e0 <= 19.531)) || (engine_running_ffffa428 == '\0')) ||
       ((engine_running_ffffa428 == '\x01' && (DAT_ffffb640 < 0x3f)))) ||
      ((DAT_ffffb647 == '\0' || ((DAT_ffffb647 == '\x01' && (DAT_ffffb642 < 0x3f)))))) {
     DAT_ffffb60e = 0x138;
@@ -25,7 +25,7 @@ void FUN_0002635c(void)
   else if (DAT_ffffb60e != 0) {
     DAT_ffffb60e = DAT_ffffb60e + -1;
   }
-  snapshot_DAT_ffffb654 = DAT_ffffb654;
+  snapshot_DAT_ffffb654 = inferred_ram_b654_ffffb654_ffffb654;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffb640 = 0;
   }

@@ -8,7 +8,7 @@ void FUN_0001a508(void)
 {
   DAT_ffffaa60 = 0x13;
   DAT_ffffaa63 = 1;
-  DAT_ffffaa62 = 1;
+  cranking_active_ffffaa62_ffffaa62 = 1;
   return;
 }
 

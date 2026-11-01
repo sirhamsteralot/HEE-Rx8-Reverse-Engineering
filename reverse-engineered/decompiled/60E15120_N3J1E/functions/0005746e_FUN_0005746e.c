@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5f4d4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_0005746e(char param_1)
+void candidate_diag22_pid1715_pedr_pddr_status(char param_1)
 
 {
   ushort uVar1;
@@ -19,7 +19,7 @@ void FUN_0005746e(char param_1)
   if ((uVar1 & 0x20) != 0) {
     uVar3 = uVar3 | 0x80;
   }
-  uVar2 = FUN_000579a8(uVar3,1);
+  uVar2 = diag22_subpid_supported_mask(uVar3,1);
   diag_append_u8((int)param_1,uVar2);
   return;
 }

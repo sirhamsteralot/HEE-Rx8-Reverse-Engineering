@@ -25,14 +25,14 @@ undefined4 FUN_0002ebda(void)
   float snapshot_inferred_coolant_temperature_ffffa98c;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  cVar7 = DAT_ffffbf9c;
-  cVar6 = DAT_ffffbdb8;
-  cVar5 = DAT_ffffb53b;
+  cVar7 = inferred_ram_bf9c_ffffbf9c_ffffbf9c;
+  cVar6 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
+  cVar5 = inferred_ram_b53b_ffffb53b_ffffb53b;
   cVar4 = DAT_ffffb53a;
   cVar3 = DAT_ffffb534;
   snapshot_inferred_throttle_position_ffffad44 = inferred_throttle_position_ffffad44;
-  cVar1 = DAT_ffffaa62;
-  snapshot_DAT_ffffa7ac = DAT_ffffa7ac;
+  cVar1 = cranking_active_ffffaa62_ffffaa62;
+  snapshot_DAT_ffffa7ac = inferred_ram_a7ac_ffffa7ac_ffffa7ac;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;

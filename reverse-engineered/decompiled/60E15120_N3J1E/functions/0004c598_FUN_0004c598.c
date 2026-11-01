@@ -21,7 +21,7 @@ undefined1 * FUN_0004c598(void)
   else {
     puVar1 = (undefined1 *)(uint)apv_direction_flag_ffffbf8b;
     if (puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) {
-      if (DAT_ffffcab4 == '\0') {
+      if (inferred_ram_cab4_ffffcab4_ffffcab4 == '\0') {
         if (DAT_ffffcea2 == '\0') {
           puVar1 = &UNK_ffffffff;
         }

@@ -195,6 +195,64 @@ def test_mode22_dispatch_pid_0043(booted):
     assert r0 == 5
 
 
+# --- UDS Mode 22 dispatch table labeling (ROADMAP group C, 2026-10-31) -------
+
+MODE22_RING = 0xFFFFD962  # channel-0 response ring written by ref_pack_for_OBD_response_
+
+
+def _mode22_response(booted, pid, allow_mask=0xFFFF):
+    """Drive the ROM's own diag22 dispatcher 0x5774c for one PID; return
+    (return_value, full response bytes incl. 0x62 header) from the ch0 ring."""
+    _, bus, cpu = booted
+    harness.call(bus, cpu, 0x68B10, r_args=(0, 0x22), max_steps=10000)  # bind ch0<-svc 0x22
+    bus.write8(0xFFFFDDEC, 0)        # current channel = 0
+    bus.write16(0xFFFFD95C, 0)       # ring write position = 0
+    bus.write16(0xFFFFD1EA, pid)     # diag22_current_identifier_ffffd1ea
+    bus.write8(0xFFFFD1E8, 0)
+    bus.write16(0xFFFFD3B4, allow_mask)  # diag_permission_mask_ffffd3b4
+    r0, _, _ = harness.call(bus, cpu, 0x5774C, max_steps=200000)
+    n = max(r0 - 3, 0)
+    return r0, bytes(bus.read8(MODE22_RING + i) for i in range(3 + n))
+
+
+def test_mode22_dispatch_table_payloads(booted):
+    """End-to-end through 0x5774c: each dispatch record's handler produces the
+    labeled response. Encodings verified against the ROM's own fixed-point
+    encoder semantics (trunc((signal-offset)/step + 0.5), f32, clamp)."""
+    _, bus, _ = booted
+    bus.write32(0xFFFF9F70, harness.bits(f32(90.0)))    # coolant_temperature_ffff9f70
+    bus.write32(0xFFFFB548, harness.bits(f32(3000.0)))  # engine_speed_rpm_ffffb548
+    bus.write32(0xFFFFC0B4, harness.bits(f32(0.42)))    # engine_load_ffffc0b4 g/rev
+    bus.write32(0xFFFFBBB4, harness.bits(f32(88.0)))    # vehicle_speed_ffffbbb4
+
+    def enc_u16(signal, step_bits, offset=0.0):
+        step = struct.unpack(">f", struct.pack(">I", step_bits))[0]
+        t = f32(f32(f32(signal) - f32(offset)) / f32(step))
+        c = int(t + 0.5)  # trunc(t+0.5) on non-negative values
+        return max(0, min(0xFFFF, c))
+
+    # pid -> expected payload after the 62 <pid> header
+    cases = {
+        0x0000: bytes.fromhex("be1fe813"),                # supported-PID bitmap (const)
+        0x0005: bytes([enc_u16(90.0, 0x3F800000, -40.0)]),  # ECT: (90+40)/1 = 130
+        0x000C: enc_u16(3000.0, 0x3E800000).to_bytes(2, "big"),  # rpm: 3000/0.25 = 12000
+        0x000D: bytes([88]),                               # vss km/h
+        0x0043: enc_u16(0.42, 0x3B808080).to_bytes(2, "big"),    # g/rev, step 1/255 -> 107
+        0xE611: b"SW-N3ZHEB000.HEX" + bytes(8),            # cal-id string from ROM 0x6c043, 24-byte field
+        0x0200: bytes([0]),                                # stored DTC count (empty)
+        0x0202: bytes([0]),                                # RAM DTC list count (empty)
+    }
+    for pid, payload in cases.items():
+        r0, resp = _mode22_response(booted, pid)
+        assert resp == bytes([0x62]) + pid.to_bytes(2, "big") + payload, hex(pid)
+        assert r0 == 3 + len(payload)
+
+    # permission mask gates the record: PID 0xc115 has availability_mask 0x3bfc;
+    # with DAT_ffffd3b4 = 0 the handler must not run -> NRC 0x31 (7f 22 31)
+    r0, resp = _mode22_response(booted, 0xC115, allow_mask=0x0000)
+    assert (r0, resp) == (3, bytes.fromhex("7f2231"))
+
+
 def test_nmi_pin_replaces_guessed_override():
     """E5 closed: profiles carry no io_read_overrides; boot reaches idle because
     SYSC models ICR_W bit15 = NMI pin level (boot polls it at 0x8ea)."""

@@ -46,7 +46,7 @@ void ref_calculateAlternatorDiagDCOutput(void)
     arg1 = rx8_clamp_float(fVar4,arg1,100.0);
   }
   DAT_ffffb620 = arg1;
-  DAT_ffffb5ac = ref_diagAlternatorSignalthing(DAT_ffffb620);
+  inferred_ram_b5ac_ffffb5ac_ffffb5ac = ref_diagAlternatorSignalthing(DAT_ffffb620);
   return;
 }
 

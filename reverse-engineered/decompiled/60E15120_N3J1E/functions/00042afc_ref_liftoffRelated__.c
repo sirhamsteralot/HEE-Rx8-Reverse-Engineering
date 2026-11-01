@@ -19,8 +19,8 @@ undefined1 * ref_liftoffRelated__(void)
   float snapshot_DAT_ffffa9bc;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  cVar1 = DAT_ffffaa62;
-  snapshot_DAT_ffffa9bc = DAT_ffffa9bc;
+  cVar1 = cranking_active_ffffaa62_ffffaa62;
+  snapshot_DAT_ffffa9bc = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   fVar3 = (float)lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_table_2d_274_0006b850);
   puVar2 = (undefined1 *)((int)&vector_Poweron_Reset + 1);

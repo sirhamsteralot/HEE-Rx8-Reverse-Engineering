@@ -8,7 +8,7 @@ void FUN_0003242c(void)
   bool bVar3;
   bool bVar4;
   
-  if ((DAT_ffffbfc6 == '\x01') && (DAT_ffffbc35 == '\0')) {
+  if ((DAT_ffffbfc6 == '\x01') && (inferred_ram_bc35_ffffbc35_ffffbc35 == '\0')) {
     DAT_ffffbfc5 = 1;
     bVar1 = true;
   }
@@ -16,7 +16,7 @@ void FUN_0003242c(void)
     DAT_ffffbfc5 = 0;
     bVar1 = false;
   }
-  if ((DAT_ffffbc35 == '\x01') &&
+  if ((inferred_ram_bc35_ffffbc35_ffffbc35 == '\x01') &&
      (((DAT_ffffbfc7 == '\0' && (DAT_ffffbcec == '\x01')) ||
       ((DAT_ffffbfc8 == '\x01' && (DAT_ffffbced == '\0')))))) {
     DAT_ffffbfbd = '\x01';
@@ -67,7 +67,7 @@ void FUN_0003242c(void)
   }
   DAT_ffffbfc7 = DAT_ffffbcec;
   DAT_ffffbfc8 = DAT_ffffbced;
-  DAT_ffffbfc6 = DAT_ffffbc35;
+  DAT_ffffbfc6 = inferred_ram_bc35_ffffbc35_ffffbc35;
   DAT_ffffbfc9 = DAT_ffffbfba;
   DAT_ffffbfca = DAT_ffffbfb9;
   return;

@@ -19,7 +19,7 @@ uint FUN_00030468(void)
   float fVar6;
   float snapshot_inferred_coolant_temperature_ffffa98c;
   
-  cVar2 = DAT_ffffce32;
+  cVar2 = inferred_ram_ce32_ffffce32_ffffce32;
   snapshot_engine_injectors_off_ffffa42c = engine_injectors_off_ffffa42c;
   uVar4 = (uint)(char)DAT_ffffbe9a;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
@@ -29,7 +29,7 @@ uint FUN_00030468(void)
     DAT_ffffbeaa = 0;
   }
   bVar5 = (byte)uVar4;
-  if (((-20.0 <= snapshot_inferred_coolant_temperature_ffffa98c) || (5 < (uVar4 & 0xff))) || (DAT_ffffa7ac <= engine_speed_rpm_ffffb548)) {
+  if (((-20.0 <= snapshot_inferred_coolant_temperature_ffffa98c) || (5 < (uVar4 & 0xff))) || (inferred_ram_a7ac_ffffa7ac_ffffa7ac <= engine_speed_rpm_ffffb548)) {
     bVar5 = 0;
     DAT_ffffbea5 = 0;
     DAT_ffffbeaa = 0;

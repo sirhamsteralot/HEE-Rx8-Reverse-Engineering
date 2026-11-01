@@ -51,7 +51,7 @@ undefined1 * FUN_000242ae(void)
   DAT_ffffb4e9 = cVar2 != '\0';
   cVar2 = ref_getFaultStatus__(0x42);
   if ((cVar2 != '\0') ||
-     (((DAT_ffffb422 != '\0' && (7500.0 <= engine_speed_rpm_ffffb548)) && (DAT_ffffb410 < 13.48)))) {
+     (((DAT_ffffb422 != '\0' && (7500.0 <= engine_speed_rpm_ffffb548)) && (inferred_ram_b410_ffffb410_ffffb410 < 13.48)))) {
     DAT_ffffb4ea = 1;
   }
   else {

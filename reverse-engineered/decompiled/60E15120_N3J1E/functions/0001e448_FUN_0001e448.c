@@ -25,16 +25,16 @@ uint FUN_0001e448(void)
   char local_3c;
   
   snapshot_DAT_ffffb0da = DAT_ffffb0da;
-  cVar3 = DAT_ffffaa62;
+  cVar3 = cranking_active_ffffaa62_ffffaa62;
   uVar11 = 0;
   uVar5 = (uint)DAT_ffffb0dc;
   uVar6 = (uint)DAT_ffffb0d8;
   fVar9 = lambda_target_ffffadfc;
   arg1 = DAT_ffffadf0;
   fVar8 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff80c4 + (uint)maf_range_index_ffffb0fe * 8);
-  fVar8 = rx8_absolute_difference(DAT_ffffb0d0,fVar8);
+  fVar8 = rx8_absolute_difference(inferred_ltft_bank1_ffffb0d0_ffffb0d0,fVar8);
   fVar9 = rx8_absolute_difference(DAT_ffffaa70,fVar9);
-  fVar10 = rx8_absolute_difference(DAT_ffffadec,arg1);
+  fVar10 = rx8_absolute_difference(inferred_lambda_actual_ffffadec_ffffadec,arg1);
   DAT_ffffb0fc = rx8_lookup_2d_raw_u16(engine_speed_rpm_ffffb548,&tbl_table_2d_317_00069c88);
   uVar4 = (uint)snapshot_DAT_ffffb0da;
   if ((((uVar4 != 1) || (DAT_ffffb0f0 < DAT_ffffb0fc)) || (0.02 <= fVar8)) || (0.02 <= fVar10)) {

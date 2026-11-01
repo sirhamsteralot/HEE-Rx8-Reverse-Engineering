@@ -10,10 +10,10 @@ uint FUN_00062040(uint param_1)
   int iVar2;
   
   param_1 = param_1 & 0xff;
-  if ((param_1 == 1) && (iVar2 = (int)DAT_ffff8788._0_2_, bVar1 = DAT_ffff8788._0_2_ != -1, bVar1))
+  if ((param_1 == 1) && (iVar2 = (int)inferred_ram_8788_ffff8788_ffff8788._0_2_, bVar1 = inferred_ram_8788_ffff8788_ffff8788._0_2_ != -1, bVar1))
   {
     param_1 = rx8_pack_u16_with_complement(iVar2 + 1);
-    DAT_ffff8788 = param_1;
+    inferred_ram_8788_ffff8788_ffff8788 = param_1;
   }
   return param_1;
 }

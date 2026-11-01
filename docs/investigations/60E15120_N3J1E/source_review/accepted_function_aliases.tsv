@@ -156,3 +156,178 @@ address	alias	confidence	evidence
 0001815c	dsc_timing_derate_select	high	DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
 00013ecc	coolant_timing_derate_calc	high	was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 — the max() derate subtracted in 0x125bc/0x125f6.
 00012e60	timing_trim_scale_calc	medium	a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim).
+00006010	os_queue_dequeue_record	high	dequeues 20-byte (5 u32) record from queue table PTR_DAT_0000d74c, ring in DAT_ffff9305/9306
+000096be	uds_service_task_entry	high	task[2] entry (task table 0x49b8): 0x6010(1,&blk) then (*blk.handler)(&blk+1)
+00037358	dtc_state_machine_step	medium	DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)
+00037546	diag_status_bit_pack	medium	0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124)
+00054884	diag_encode_s16_div	medium	s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers
+00055316	diag_read_active_cal_field	medium	0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes
+000553dc	diag_read_calc_load_pct	high	PID 0x04: load*100/max*0.392157, 0xff if max~0
+0005542a	diag_encode_ect_c	high	PID 0x05: coolant_temperature_ffff9f70-40
+00055440	diag_encode_stft_lambda	high	PID 0x06: (ffffadec-1)*100*0.78125-100
+00055466	diag_encode_ltft	high	PID 0x07: ffffb0d0*100*0.78125-100
+00055484	diag_encode_rpm	high	PID 0x0c: rpm*0.25
+0005549a	diag_encode_vss	high	PID 0x0d: vss*1
+000554ae	diag_encode_leading_timing	high	PID 0x0e: lead*0.5-64
+000554c6	diag_encode_iat	high	PID 0x0f: iat-40
+00055528	diag_encode_maf	high	PID 0x10: maf*0.01
+0005553e	diag_encode_throttle_pct	high	PID 0x11: ffffad5c*20*0.392157
+0005556a	diag_read_secondary_air_status	high	PID 0x12: 1 or 4
+00055580	diag_read_o2_present_const	high	PID 0x13: const 2
+00055586	diag_encode_o2s2	medium	PID 0x15: ffffad1c decode*0.005
+000555ac	diag_encode_trim_b074	medium	PID 0x15: ffffb074*100*0.7813-100
+000555ca	diag_read_obd_standard_const	high	PID 0x1c: const 6
+000555d0	diag_read_runtime_s	high	PID 0x1f: ffffd284 via 0x409c clamp 0xffff
+000555f8	diag_read_distance_mil	high	PID 0x21: ffff90f4
+00055616	diag_encode_b2f0	medium	PID 0x2e: ffffb2f0*0.392157
+0005562c	diag_read_d287	medium	PID 0x2f: ffffd287
+00055632	diag_read_gear_byte	medium	PID 0x30: 0x61d14 (ffff8788) clamp 0xff
+000556b0	diag_read_90fc	medium	PID 0x31: ffff90fc
+000556ce	diag_encode_ad10	medium	PID 0x33: ffffad10*25.325+0.0182
+0005571a	diag_encode_c644	medium	PID 0x3c: ffffc644*0.1-40
+00055732	diag_encode_battery_v	high	PID 0x42: ffffb590*0.001
+00055748	diag_encode_load_g_rev	high	PID 0x43: engine_load_ffffc0b4*1/255
+0005575e	diag_encode_lambda_target	high	PID 0x44: lambda_target_ffffadfc*3.05e-05
+00055774	diag_encode_ad48	medium	PID 0x45: ffffad48*0.392157
+0005578a	diag_encode_ad5e	medium	PID 0x47: ffffad5e decode*20*0.392157
+000557b6	diag_encode_a9c4	medium	PID 0x49: ffffa9c4 decode*20*0.392157
+00055838	diag_encode_a9c6	medium	PID 0x4a: ffffa9c6 decode*20*0.392157
+00055864	diag_encode_b410	medium	PID 0x4c: ffffb410*100/84*0.392157
+000558ac	uds_service_14_clear_diagnostic_information	high	service table record 0x5ec24 (service 0x14) -> handler; ROM bytes verified; UDS 0x14 (ref_ClearFaults_)
+00056508	uds_service_3e_tester_present	high	service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
+000565e8	uds_service_b1_mazda_specific	medium	service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)
+000567e8	uds_service_22_read_data_by_identifier	high	service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
+00056890	diag22_pid0000_pids_supported_01_20	high	dispatch record 0x5f10c -> handler verified in ROM bytes + function_index; handler appends const u16 0xBE1F,0xE813 = OBD supported-PID bitmap 01-20; record bytes at 0x5f10c verified
+000568b4	diag22_pid0002_active_cal_id_field	medium	dispatch record 0x5f118 -> handler verified in ROM bytes + function_index; reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block
+000568ca	diag22_pid0003_fuel_system_status_ol_cl	high	dispatch record 0x5f124 -> handler verified in ROM bytes + function_index; diag_ol_status_byte 0x5535e encodes CL/OL per OBD PID 03 (0x10 CL+DFE, 2 CL, 4 OL-not-allowed, 8 OL cold, 1 OL); low byte const 0
+000568f0	diag22_pid0004_calculated_engine_load_pct	high	dispatch record 0x5f130 -> handler verified in ROM bytes + function_index; 0x553dc: engine_load_ffffc0b4*100/engine_load_max_ffffc0b8*0.392157 = OBD PID 04 A*100/max; 0xff if max~0
+00056940	diag22_pid0005_coolant_temp_c	high	dispatch record 0x5f13c -> handler verified in ROM bytes + function_index; 0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40
+00056956	diag22_pid0006_stft_bank1_pct	high	dispatch record 0x5f148 -> handler verified in ROM bytes + function_index; 0x55440: (DAT_ffffadec-1)*100*0.78125-100; ffffadec=lambda actual (fuel chain); OBD PID 06 trim formula
+0005696c	diag22_pid0007_ltft_bank1_pct	high	dispatch record 0x5f154 -> handler verified in ROM bytes + function_index; 0x55466: DAT_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula
+00056982	diag22_pid000c_engine_rpm	high	dispatch record 0x5f160 -> handler verified in ROM bytes + function_index; 0x55484: engine_speed_rpm_ffffb548*0.25 = OBD PID 0C A/4
+00056998	diag22_pid000d_vehicle_speed_kmh	high	dispatch record 0x5f16c -> handler verified in ROM bytes + function_index; 0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D
+000569ae	diag22_pid000e_leading_ignition_timing_deg	high	dispatch record 0x5f178 -> handler verified in ROM bytes + function_index; 0x554ae: leading_ignition_timing_ffffa630*0.5-64 = OBD PID 0E
+000569c4	diag22_pid000f_intake_air_temp_c	high	dispatch record 0x5f184 -> handler verified in ROM bytes + function_index; 0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F
+000569da	diag22_pid0010_maf_g_s	high	dispatch record 0x5f190 -> handler verified in ROM bytes + function_index; 0x55528: mass_air_flow_ffffa9ec*0.01 = OBD PID 10 A/100
+000569f0	diag22_pid0011_throttle_position_pct	high	dispatch record 0x5f19c -> handler verified in ROM bytes + function_index; 0x5553e: DAT_ffffad5c decode(7.63e-05)*20*0.392157 = OBD PID 11 throttle %
+00056a06	diag22_pid0012_secondary_air_status	high	dispatch record 0x5f1a8 -> handler verified in ROM bytes + function_index; 0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12
+00056a1c	diag22_pid0013_o2_sensors_present	high	dispatch record 0x5f1b4 -> handler verified in ROM bytes + function_index; const 2 = OBD PID 13 bitmap (bank1 sensors)
+00056a32	diag22_pid0015_o2s2_voltage_trim	medium	dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2
+00056a58	diag22_pid001c_obd_standard	high	dispatch record 0x5f1cc -> handler verified in ROM bytes + function_index; const 6 = OBD PID 1C
+00056a6e	diag22_pid001f_engine_runtime_s	high	dispatch record 0x5f1d8 -> handler verified in ROM bytes + function_index; 0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start
+00056a84	diag22_pid0020_pids_supported_21_40	high	dispatch record 0x5f1e4 -> handler verified in ROM bytes + function_index; handler appends const u16 0x8007,0xB011 = supported-PID bitmap 21-40
+00056aa8	diag22_pid0021_distance_while_mil_on	high	dispatch record 0x5f1f0 -> handler verified in ROM bytes + function_index; 0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21
+00056abc	diag22_pid002e_ram_b2f0_pct	medium	dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157
+00056ad2	diag22_pid002f_ram_d287_raw	medium	dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte
+00056ae6	diag22_pid0030_gear_or_vin_byte	medium	dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff
+00056afa	diag22_pid0031_ram_90fc_float	medium	dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0
+00056b0e	diag22_pid0033_ram_ad10_scaled	medium	dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182
+00056b22	diag22_pid0034_afr_lambda_words	high	dispatch record 0x5f238 -> handler verified in ROM bytes + function_index; diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)
+00056b42	diag22_pid003c_ram_c644_scaled	medium	dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)
+00056b56	diag22_pid0040_pids_supported_41_60	high	dispatch record 0x5f250 -> handler verified in ROM bytes + function_index; handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60
+00056b76	diag22_pid0042_battery_voltage_v	high	dispatch record 0x5f25c -> handler verified in ROM bytes + function_index; 0x55732: inferred_battery_voltage_ffffb590*0.001 = OBD PID 42
+00056b8a	diag22_pid0043_engine_load_g_rev	high	dispatch record 0x5f268 -> handler verified in ROM bytes + function_index; 0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)
+00056b9e	diag22_pid0044_lambda_target	high	dispatch record 0x5f274 -> handler verified in ROM bytes + function_index; 0x5575e: lambda_target_ffffadfc*3.05176e-05 (logger 0x220044)
+00056bb2	diag22_pid0045_ram_ad48_pct	medium	dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157
+00056bc6	diag22_pid0047_ram_ad5e_pedal	medium	dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157
+00056bda	diag22_pid0049_ram_a9c4_pedal	medium	dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157
+00056c78	diag22_pid004a_ram_a9c6_pedal	medium	dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157
+00056c8c	diag22_pid004c_ram_b410_pct	medium	dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157
+00056ca0	diag22_pid0200_dtc_count_stored	high	dispatch record 0x5f2bc -> handler verified in ROM bytes + function_index; ref_faultSomething0x0 0x5fab2: 0x61450(0x80,0) - 0x5f8fa() + 1, clamp 0xff
+00056cb4	diag22_pid0202_dtc_count_ram_list	high	dispatch record 0x5f2c8 -> handler verified in ROM bytes + function_index; 0x5fb08 counts DAT_ffffd570[0..0x8b]==1 minus rotor-0/1 adjustments, clamp 0xff
+00056cc8	diag22_pid0904_trailing_ignition_timing_deg	high	dispatch record 0x5f2d4 -> handler verified in ROM bytes + function_index; trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)
+00056ce8	diag22_pid0914_ram_a9c4_scaled_s16	medium	dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16
+00056d1a	diag22_pid0915_ram_a9c6_scaled_s16	medium	dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6)
+00056d4c	diag22_pid0917_ram_ad5c_scaled_s16	medium	dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c)
+00056db4	diag22_pid0918_ram_ad5e_scaled_s16	medium	dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e)
+00056de6	diag22_pid091a_ram_b410_raw_512	medium	dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512)
+00056e04	diag22_pid093c_throttle_position_raw	high	dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
+00056e22	diag22_pid096e_ram_a7ac_quarter	medium	dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25
+00056e40	diag22_pid097c_ram_b59c_div2048	medium	dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)
+00056e5e	diag22_pid114a_ram_add4_raw	medium	dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05
+00056e7c	diag22_pid114d_ram_a984_raw	medium	dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05
+00056e9a	diag22_pid1153_ram_a834_lambda	medium	dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05
+00056eb8	diag22_pid1154_throttle_raw_ad5c	medium	dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16
+00056efc	diag22_pid1169_ram_807c_scaled	medium	dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05
+00056f30	diag22_pid1177_maf_voltage_latched_v	high	dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
+00056f4e	diag22_pid1340_ram_a9bc_pct	medium	dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157
+00056f6c	diag22_pid1410_injector_pulse_time	high	dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)
+00056f8a	diag22_pid163e_ram_b074_scaled_s16	medium	dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)
+00056faa	diag22_pid16b3_ram_ad10_raw	medium	dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05
+00056fc8	diag22_pid16e8_ram_b5ac_raw	medium	dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176
+00056fe6	diag22_pid16e9_ram_b654_eighth	medium	dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125
+00057004	diag22_pid16f0_tire_revolutions_per_mile	high	dispatch record 0x5f3d0 -> handler verified in ROM bytes + function_index; tire_revolutions_per_mile_ffffd380 raw u16 (logger 0x2216f0)
+0005705c	diag22_pida216_ram_bc30_raw	medium	dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05
+0005707a	diag22_pid1746_knock_retard_deg	high	dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
+00057098	diag22_pid1782_ram_c6ac_raw	medium	dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05
+000570b6	diag22_pid17a6_ram_d1ac_scaled	medium	dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1
+000570ee	diag22_pid172a_ram_c4c8_temp_c	medium	dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40
+0005710c	diag22_pid172d_ram_a8f4_raw	medium	dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8
+0005711a	diag22_pid1634_apv_position_voltage	high	dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
+00057138	diag22_pid0968_io_status_b5b4_bc35	medium	dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0
+000571ac	diag22_pid09d3_pedr_bit10_status	medium	dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0
+000571e4	diag22_pid1101_io_status_bf3c_ad18_cdd8	medium	dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)
+00057226	diag22_pid1102_io_status_bdb8	medium	dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8
+00057248	diag22_pid1103_io_status_pedr_cab4_d1a	medium	dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1
+000572d0	diag22_pid1104_io_status_pjdr_bf6c	medium	dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c
+0005730e	diag22_pid1631_tol_status_b570_b584	medium	dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584
+0005734a	diag22_pid1681_io_status_ce1c	medium	dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40
+0005736c	diag22_pid1688_secondary_air_status_bit	medium	dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20
+0005738e	diag22_pida211_status_b53b_aa62_bf9c	medium	dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8
+000573f0	diag22_pid1711_pedr_bit1_status	medium	dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80
+0005741e	diag22_pid1706_io_status_a8f5	medium	dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4
+00057440	diag22_pid1718_pedr_bit2_status	medium	dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4
+0005746e	diag22_pid1715_pedr_pddr_status	medium	dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80
+000574b6	diag22_pid17de_io_status_ce32	medium	dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32
+000574d8	diag22_pide21b_cal_id_chunk_0	high	dispatch record 0x5f4e4 -> handler verified in ROM bytes + function_index; appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')
+00057506	diag22_pide21c_cal_id_chunk_1	high	dispatch record 0x5f4f0 -> handler verified in ROM bytes + function_index; appends '1','8'
+0005752c	diag22_pide21d_cal_id_chunk_2	high	dispatch record 0x5f4fc -> handler verified in ROM bytes + function_index; appends '8','8','1'
+00057546	diag22_pide21e_cal_id_chunk_3	high	dispatch record 0x5f508 -> handler verified in ROM bytes + function_index; appends 'B'
+0005755c	diag22_pide611_sw_name_string	high	dispatch record 0x5f514 -> handler verified in ROM bytes + function_index; appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)
+00057594	diag22_pid1710_sensor_snapshot_7byte	medium	dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
+000576b4	diag22_pidc115_ram_c1d2_raw	medium	dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8
+000576c2	diag22_pidc116_dtc_state_machine	medium	dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code
+00057704	diag22_pidc117_ram_c1d3_c1d4	medium	dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0
+00057738	diag22_pidc124_diag_status_bits	medium	dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4
+00057884	diag22_pidff10_dtc_status_c1d5_c1d8	medium	dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8
+000578e8	diag22_pidff40_fw_id_chunk_15	high	dispatch record 0x5f568 -> handler verified in ROM bytes + function_index; appends '1','5' (fw id '60E15120' ROM 0x2000; cal area 0x6c05c '15120 ')
+00057902	diag22_pidff41_fw_id_chunk_120	high	dispatch record 0x5f574 -> handler verified in ROM bytes + function_index; appends '1','2','0',' '
+0005792e	diag22_pidff42_rom_id_bytes_ff8	high	dispatch record 0x5f580 -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xff8,0xff9,0xffa (via mov.w literals)
+0005794e	diag22_pidff43_rom_id_bytes_ffb	high	dispatch record 0x5f58c -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xffb,0xffc,0xffd
+0005796e	diag22_pidff50_ram_d3a0_raw	medium	dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16
+00057974	diag22_pidff44_ram_ce30_raw	medium	dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16
+000579a8	diag22_subpid_supported_mask	high	scans 36 x 6-byte records at 0x5f5b2 for current PID+subfunc with mask&DAT_ffffd3b4, ORs byte1 (bit) into result; returns param & mask
+00057a64	uds_service_27_security_access	high	service table record 0x5ebb8 (service 0x27) -> handler; ROM bytes verified; UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it
+00057c8c	uds_service_10_diagnostic_session_control	high	service table record 0x5ebac (service 0x10) -> handler; ROM bytes verified; UDS 0x10; table record 0x5ebac
+00057db0	uds_service_18	medium	service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0
+0005af54	uds_service_11_ecu_reset	high	service table record 0x5ebd0 (service 0x11) -> handler; ROM bytes verified; UDS 0x11
+0005b094	uds_service_12	medium	service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094
+0005b414	uds_service_21_read_data_by_local_id	medium	service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+0005b750	uds_service_23_read_memory_by_address	high	service table record 0x5ebf4 (service 0x23) -> handler; ROM bytes verified; UDS 0x23 (ref_UDSMode23Function)
+0005b9f6	uds_service_28_communication_control	high	service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
+0005bc4c	uds_service_2f_input_output_control	high	service table record 0x5ec30 (service 0x2f) -> handler; ROM bytes verified; UDS 0x2F
+0005d7bc	uds_service_34_request_download	high	service table record 0x5ec60 (service 0x34) -> handler; ROM bytes verified; UDS 0x34 (ref_UDSMode34Func)
+0005d834	uds_service_36_transfer_data	high	service table record 0x5ec6c (service 0x36) -> handler; ROM bytes verified; UDS 0x36 (ref_UDSMode36Function_)
+0005d874	uds_service_37_request_transfer_exit	high	service table record 0x5ec78 (service 0x37) -> handler; ROM bytes verified; UDS 0x37 (ref_UDSService37Function)
+0005d8b4	uds_service_3b	medium	service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4
+0005dc44	uds_service_85_control_dtc_setting	high	service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
+0005df60	uds_service_31_routine_control	high	service table record 0x5ec3c (service 0x31) -> handler; ROM bytes verified; UDS 0x31
+0005e024	uds_service_32	medium	service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024
+0005fab2	dtc_count_stored	medium	0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)
+0005fb08	dtc_count_ram_table	high	counts DAT_ffffd570[0..0x8b]==1, rotor-0/1 adjust, clamp 0xff
+0006581c	obd_mode01_current_data	high	service table record 0x5eb40 (service 0x01) -> handler; ROM bytes verified; OBD Mode 01 handler (caseD_27)
+00065c88	obd_mode02_freeze_frame	high	service table record 0x5eb4c (service 0x02) -> handler; ROM bytes verified; OBD Mode 02
+00065ff8	obd_mode03_stored_dtc	high	service table record 0x5eb58 (service 0x03) -> handler; ROM bytes verified; OBD Mode 03
+000660d0	obd_mode04_clear_dtc	high	service table record 0x5eb64 (service 0x04) -> handler; ROM bytes verified; OBD Mode 04 (also ref_ClearFaults_ at 0x558ac for service 0x14)
+000661ec	obd_mode07_pending_dtc	high	service table record 0x5eb7c (service 0x07) -> handler; ROM bytes verified; OBD Mode 07
+000662c0	obd_mode09_vehicle_info	high	service table record 0x5eb88 (service 0x09) -> handler; ROM bytes verified; OBD Mode 09 (ref_OBDMode9Fuction)
+0006725c	obd_mode06_test_results	high	service table record 0x5eb70 (service 0x06) -> handler; ROM bytes verified; OBD Mode 06
+000683d4	isotp_pci_type_extract	high	reads RX buffer byte0, and 0xf0 -> frame type 0x00/0x10/0x20/0x30, clamp 0x40
+0006842c	isotp_frame_type_dispatch	high	switch on frame type: SF->0x68548, FF->0x6859e, CF->0x6872c, FC->0x68764
+00068548	isotp_single_frame_accept	high	SF: service=buf[1], channel=0x68a86(service), pack_for_OBD_response
+0006859e	isotp_first_frame_accept	high	FF: total len=(pci&0xf)*256+buf[2], service=buf[3], starts reassembly
+0006872c	isotp_consecutive_frame_check	high	CF: checks DAT_ffffddeb==4 and seq == expected
+00068764	isotp_flow_control_check	high	FC: DAT_ffffdde1 != 7
+00068a86	uds_rx_channel_alloc	medium	finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10
+00068b10	uds_rx_channel_set_service	medium	DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer
+00068dac	uds_service_dispatch_table_scan	high	scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02

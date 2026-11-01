@@ -6,12 +6,12 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f388. Table purpose inferred from
    neighboring code. */
 
-void FUN_00056f4e(char param_1)
+void candidate_diag22_pid1340_ram_a9bc_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = rx8_encode_u8_affine_saturate(DAT_ffffa9bc,0x3ec8c8c8,0);
+  uVar1 = rx8_encode_u8_affine_saturate(inferred_ram_a9bc_ffffa9bc_ffffa9bc,0x3ec8c8c8,0);
   diag_append_u8((int)param_1,uVar1);
   return;
 }

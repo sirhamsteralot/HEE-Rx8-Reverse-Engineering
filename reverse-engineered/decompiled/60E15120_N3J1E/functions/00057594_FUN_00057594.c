@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 5f528 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00057594(undefined4 param_1)
+void candidate_diag22_pid1710_sensor_snapshot_7byte(undefined4 param_1)
 
 {
   char cVar2;
@@ -18,7 +18,7 @@ void FUN_00057594(undefined4 param_1)
   undefined4 uVar7;
   
   uVar7 = 0;
-  uVar4 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff9150);
+  uVar4 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&inferred_sensor_block_ffff9150_ffff9150);
   uVar5 = 0x3f800000;
   uVar4 = rx8_encode_u8_affine_saturate(uVar4,0x3f800000,uVar7);
   diag_append_u8(param_1,uVar4);
@@ -55,7 +55,7 @@ void FUN_00057594(undefined4 param_1)
   if (cVar2 == '\x01') {
     bVar3 = bVar3 | 0x20;
   }
-  uVar4 = FUN_000579a8(bVar3,5);
+  uVar4 = diag22_subpid_supported_mask(bVar3,5);
   diag_append_u8(param_1,uVar4);
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff9170,0xff);
   diag_append_u8(param_1,uVar1 & (int)DAT_ffffd38a);

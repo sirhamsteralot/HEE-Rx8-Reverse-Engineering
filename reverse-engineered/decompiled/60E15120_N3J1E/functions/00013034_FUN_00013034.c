@@ -50,7 +50,7 @@ uint knock_rough_correction_targets(void)
     DAT_ffffa6c8 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998,&tbl_ignition_13_000696e4);
   }
   else {
-    if (DAT_ffffaa62 == '\x01') {
+    if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
       pfVar3 = (float *)&DAT_0006ebc0;
     }
     else {

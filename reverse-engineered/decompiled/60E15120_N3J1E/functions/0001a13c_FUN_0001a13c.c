@@ -6,7 +6,7 @@
 void FUN_0001a13c(void)
 
 {
-  DAT_ffffaa28 = ((DAT_ffffad48 * 0.04 - -0.26) * engine_speed_rpm_ffffb548) / 60.0;
+  DAT_ffffaa28 = ((inferred_ram_ad48_ffffad48_ffffad48 * 0.04 - -0.26) * engine_speed_rpm_ffffb548) / 60.0;
   return;
 }
 

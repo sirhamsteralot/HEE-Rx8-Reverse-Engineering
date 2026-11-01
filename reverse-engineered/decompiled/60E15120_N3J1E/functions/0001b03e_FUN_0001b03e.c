@@ -6,7 +6,7 @@
 void FUN_0001b03e(void)
 
 {
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff807c);
+  ref_validateAddressCopy_float_ADDRESS__(&inferred_ram_807c_ffff807c_ffff807c);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8084);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff808c);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8094);

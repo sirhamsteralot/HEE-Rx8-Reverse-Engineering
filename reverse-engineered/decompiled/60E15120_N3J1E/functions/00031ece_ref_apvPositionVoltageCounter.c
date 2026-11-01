@@ -10,7 +10,7 @@
 void candidate_apv_position_voltage_counter(void)
 
 {
-  if ((apv_direction_flag_ffffbf8b == '\0') || ((0x4e1 < apv_position_dwell_counter_ffffbf88 && (DAT_ffffcab4 == '\0')))) {
+  if ((apv_direction_flag_ffffbf8b == '\0') || ((0x4e1 < apv_position_dwell_counter_ffffbf88 && (inferred_ram_cab4_ffffcab4_ffffcab4 == '\0')))) {
     apv_position_dwell_counter_ffffbf88 = 0;
   }
   else {

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005bfac (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSMode34Func(short param_1,uint param_2)
+uint uds_service_34_request_download(short param_1,uint param_2)
 
 {
   char cVar2;

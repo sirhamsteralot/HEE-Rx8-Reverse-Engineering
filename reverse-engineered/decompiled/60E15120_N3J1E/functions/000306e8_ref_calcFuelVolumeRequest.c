@@ -34,8 +34,8 @@ void calc_fuel_volume_request(void)
                         DAT_ffffc01c + DAT_ffffb0c4 + DAT_ffffbc74 + DAT_ffffcdf4 + DAT_ffffa5dc +
                         fVar1 + fVar2);
   fVar2 = rx8_max_float(DAT_ffffae10,open_loop_changeover_enrichment_ffffb124);
-  fuel_correction_sum_ffffbf14 = ((((DAT_ffffb0d0 - DAT_ffffc0c8) - DAT_ffffae08) - DAT_ffffb21c) + fVar1 + fVar2 +
-                 fVar3) * DAT_ffffadec * fuel_load_compensation_ffffbed4;
+  fuel_correction_sum_ffffbf14 = ((((inferred_ltft_bank1_ffffb0d0_ffffb0d0 - DAT_ffffc0c8) - DAT_ffffae08) - DAT_ffffb21c) + fVar1 + fVar2 +
+                 fVar3) * inferred_lambda_actual_ffffadec_ffffadec * fuel_load_compensation_ffffbed4;
   fuel_volume_scaled_ffffbeac = (float)FUN_0005c024(fuel_correction_sum_ffffbf14);
   fuel_volume_final_ffffbeb0 = fuel_volume_scaled_ffffbeac * fuel_load_scale_ffffbed0;
   return;

@@ -24,12 +24,12 @@ void blend_weight_update(void)
   }
   arg1 = 0.0;
   if ((DAT_ffffc590 == '\0') && (DAT_ffffcca1 == '\0')) {
-    if ((((coolant_plausible_flag_ffffb1d0 != '\x01') || (safe_mode_ffffcd60 != '\0')) || (1000.0 < DAT_ffffc644)) ||
+    if ((((coolant_plausible_flag_ffffb1d0 != '\x01') || (safe_mode_ffffcd60 != '\0')) || (1000.0 < fuel_correction_sum_ffffc644_ffffc644)) ||
        ((((ol_decay_enable_b_ffffb152 != '\x01' || (ol_decay_enable_a_ffffb142 == 0)) &&
          ((ol_timer_expired_ffffb159 != '\x01' || (ol_band_condition_ffffb154 != '\x01')))) && (ol_decay_enable_c_ffffb157 != '\x01')))) {
       if ((open_loop_active_ffffb12c != '\x01') ||
          (((ol_decay_enable_a_ffffb142 != 0 && (ol_decay_enable_c_ffffb157 != '\0')) &&
-          ((ol_timer_expired_ffffb159 != '\0' && ((DAT_ffffc644 <= 1000.0 && (ol_band_condition_ffffb154 != '\0')))))))) {
+          ((ol_timer_expired_ffffb159 != '\0' && ((fuel_correction_sum_ffffc644_ffffc644 <= 1000.0 && (ol_band_condition_ffffb154 != '\0')))))))) {
         fuel_blend_weight_ffffb11c = 0.0;
         timing_blend_weight_ffffb118 = 0.0;
       }

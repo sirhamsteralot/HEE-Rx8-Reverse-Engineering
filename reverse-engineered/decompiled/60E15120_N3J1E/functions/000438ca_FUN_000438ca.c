@@ -8,7 +8,7 @@ uint FUN_000438ca(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffaa62;
+  uVar1 = (uint)cranking_active_ffffaa62_ffffaa62;
   if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffca3f, uVar1 == 100)) {
     DAT_ffffca4f = 0;
   }

@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 5f324 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00056e04(char param_1)
+void diag22_pid093c_throttle_position_raw(char param_1)
 
 {
   undefined4 uVar1;

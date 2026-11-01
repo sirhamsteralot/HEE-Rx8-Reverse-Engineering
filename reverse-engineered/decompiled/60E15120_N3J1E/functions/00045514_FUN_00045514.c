@@ -13,11 +13,11 @@ uint FUN_00045514(void)
   if (cVar2 == '\x01') {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8728,0);
   }
-  DAT_ffffcbd6 = DAT_ffffad5c;
-  DAT_ffffcbe4 = DAT_ffffad5c;
-  DAT_ffffcbe6 = DAT_ffffad5c;
+  DAT_ffffcbd6 = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
+  DAT_ffffcbe4 = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
+  DAT_ffffcbe6 = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   uVar1 = (uint)DAT_ffffb4cc;
-  DAT_ffffcbea = (uint)(int)DAT_ffffad5c < uVar1;
+  DAT_ffffcbea = (uint)(int)inferred_throttle_sensor_volts_ffffad5c_ffffad5c < uVar1;
   if ((bool)DAT_ffffcbea) {
     uVar1 = 1;
   }

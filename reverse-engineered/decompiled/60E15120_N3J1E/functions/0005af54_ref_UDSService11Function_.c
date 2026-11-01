@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00059744 (194 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSService11Function_(short param_1,byte param_2)
+uint uds_service_11_ecu_reset(short param_1,byte param_2)
 
 {
   char cVar2;

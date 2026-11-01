@@ -7,7 +7,7 @@ void FUN_0003d184(void)
 
 {
   DAT_ffffc618 = vehicle_speed_ffffbbb4;
-  DAT_ffffc613 = DAT_ffffad18;
+  DAT_ffffc613 = inferred_ram_ad18_ffffad18_ffffad18;
   DAT_ffffc611 = 8;
   return;
 }

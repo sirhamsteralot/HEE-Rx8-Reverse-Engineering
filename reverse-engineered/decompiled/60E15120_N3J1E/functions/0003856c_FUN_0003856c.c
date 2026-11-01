@@ -12,7 +12,7 @@ uint FUN_0003856c(void)
   
   snapshot_engine_injectors_off_ffffa42c = engine_injectors_off_ffffa42c;
   uVar2 = (uint)DAT_ffffc4ff;
-  if ((uVar2 == 1) && (40.0 <= DAT_ffffc4c8)) {
+  if ((uVar2 == 1) && (40.0 <= inferred_temp_c4c8_ffffc4c8_ffffc4c8)) {
     uVar2 = rx8_add_u16_saturate((int)DAT_ffffc4fa,1);
     DAT_ffffc4fa = (short)uVar2;
   }

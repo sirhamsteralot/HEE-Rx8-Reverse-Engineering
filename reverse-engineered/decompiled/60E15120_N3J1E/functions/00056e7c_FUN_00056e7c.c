@@ -6,12 +6,12 @@
 /* Function candidate recovered from ROM pointer at 5f354 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00056e7c(char param_1)
+void candidate_diag22_pid114d_ram_a984_raw(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = rx8_encode_u16_affine_saturate(DAT_ffffa984,0x38a00000,0);
+  uVar1 = rx8_encode_u16_affine_saturate(inferred_ram_a984_ffffa984_ffffa984,0x38a00000,0);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }

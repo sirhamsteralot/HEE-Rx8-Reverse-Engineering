@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005615c (160 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSMode10Func(short param_1,uint param_2)
+uint uds_service_10_diagnostic_session_control(short param_1,uint param_2)
 
 {
   uint uVar1;

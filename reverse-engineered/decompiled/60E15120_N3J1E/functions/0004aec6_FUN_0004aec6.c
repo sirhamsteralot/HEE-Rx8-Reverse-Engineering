@@ -7,10 +7,10 @@ char FUN_0004aec6(void)
   
   cVar1 = '\x01';
   if ((DAT_ffffca4e == '\x01') || (cVar1 = DAT_ffffcdda, DAT_ffffcdda == '\x01')) {
-    DAT_ffffcdd8 = 1;
+    inferred_ram_cdd8_ffffcdd8_ffffcdd8 = 1;
   }
   else {
-    DAT_ffffcdd8 = 0;
+    inferred_ram_cdd8_ffffcdd8_ffffcdd8 = 0;
   }
   return cVar1;
 }

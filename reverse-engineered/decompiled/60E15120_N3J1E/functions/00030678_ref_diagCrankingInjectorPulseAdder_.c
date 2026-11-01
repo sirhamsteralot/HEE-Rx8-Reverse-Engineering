@@ -11,7 +11,7 @@
 void cranking_pulse_adder(void)
 
 {
-  if (((engine_running_ffffa428 == '\0') && (engine_injectors_off_ffffa42c == '\x01')) && (DAT_ffffce32 == '\x01')) {
+  if (((engine_running_ffffa428 == '\0') && (engine_injectors_off_ffffa42c == '\x01')) && (inferred_ram_ce32_ffffce32_ffffce32 == '\x01')) {
     cranking_pulse_adder_ffffbe94 = injector_pulse_crank_ffffbe58 + cranking_pulse_adder_ffffbe94;
   }
   return;

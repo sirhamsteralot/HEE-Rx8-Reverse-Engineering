@@ -16,7 +16,7 @@ undefined1 * FUN_0004a1fa(void)
   
   cVar3 = DAT_ffffd1c5;
   cVar2 = DAT_ffffcd83;
-  cVar1 = DAT_ffffaa62;
+  cVar1 = cranking_active_ffffaa62_ffffaa62;
   if ((DAT_ffffd1c5 == '\x01') || ((DAT_ffffcd83 == '\0' && (DAT_ffffcdb4 == '\x01')))) {
     DAT_ffffcd86 = 10;
   }
@@ -24,7 +24,7 @@ undefined1 * FUN_0004a1fa(void)
     DAT_ffffcd86 = DAT_ffffcd86 + -1;
   }
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
-  if ((DAT_ffffaa62 == '\0') && (DAT_ffffd1c5 == '\0')) {
+  if ((cranking_active_ffffaa62_ffffaa62 == '\0') && (DAT_ffffd1c5 == '\0')) {
     if (DAT_ffffcdb5 == '\x01') {
       DAT_ffffcdb6 = '\x01';
     }

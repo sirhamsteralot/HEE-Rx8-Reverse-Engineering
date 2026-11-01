@@ -8,10 +8,10 @@ void ref_setAlternatorWarningLight(void)
 {
   if ((((DAT_ffffb613 == '\0') || (DAT_ffffb5b0 == '\x01')) || (DAT_ffffb5b1 == '\x01')) ||
      ((DAT_ffffb5b2 == '\x01' || (DAT_ffffc5db == '\x01')))) {
-    DAT_ffffb5b4 = 1;
+    inferred_ram_b5b4_ffffb5b4_ffffb5b4 = 1;
   }
   else {
-    DAT_ffffb5b4 = 0;
+    inferred_ram_b5b4_ffffb5b4_ffffb5b4 = 0;
   }
   return;
 }

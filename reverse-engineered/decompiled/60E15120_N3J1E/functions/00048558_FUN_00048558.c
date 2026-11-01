@@ -17,7 +17,7 @@ void FUN_00048558(void)
   
   cVar2 = DAT_ffffcca2;
   snapshot_DAT_ffffcc92 = DAT_ffffcc92;
-  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   arg0 = fVar3 + 5.0;
   if ((snapshot_DAT_ffffcc92 < 3) && (cVar2 == '\x01')) {
     DAT_ffffccac = 1;

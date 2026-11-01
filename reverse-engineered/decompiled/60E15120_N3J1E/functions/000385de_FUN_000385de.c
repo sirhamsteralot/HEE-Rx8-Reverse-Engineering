@@ -3,10 +3,10 @@
 undefined4 * FUN_000385de(void)
 
 {
-  if (76.25 < DAT_ffffc4c8) {
+  if (76.25 < inferred_temp_c4c8_ffffc4c8_ffffc4c8) {
     DAT_ffffc502 = 1;
   }
-  return &DAT_ffffc4c8;
+  return &inferred_temp_c4c8_ffffc4c8_ffffc4c8;
 }
 
 

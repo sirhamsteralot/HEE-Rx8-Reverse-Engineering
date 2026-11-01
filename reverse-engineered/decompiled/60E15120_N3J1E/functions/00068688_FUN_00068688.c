@@ -8,7 +8,7 @@ uint FUN_00068688(void)
 {
   uint uVar1;
   
-  uVar1 = (int)DAT_ffffddc8 & 0xf;
+  uVar1 = (int)uds_rx_buffer_ffffddc8 & 0xf;
   DAT_ffffddf0 = (undefined1)uVar1;
   if (uVar1 == 0) {
     FUN_00068c58(4);

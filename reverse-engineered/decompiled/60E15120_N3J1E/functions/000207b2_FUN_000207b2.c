@@ -14,7 +14,7 @@ uint FUN_000207b2(void)
   fVar3 = (float)lookup_2d_descriptor_scaled(inferred_predicted_engine_speed_ffffb55c,&tbl_table_2d_145_0006a4dc);
   if (((((0xb < DAT_ffffb254) && (cVar1 == '\0')) && (DAT_ffffb262 == '\x01')) &&
       (DAT_ffffb0c9 == '\0')) &&
-     (((fVar3 < DAT_ffffb41c || ((DAT_ffffaa62 == '\0' && (DAT_ffffa450 == '\0')))) &&
+     (((fVar3 < DAT_ffffb41c || ((cranking_active_ffffaa62_ffffaa62 == '\0' && (DAT_ffffa450 == '\0')))) &&
       ((0x2c < DAT_ffffb258 || (DAT_ffffb264 == 0)))))) {
     DAT_ffffb264 = 1;
     DAT_ffffb248 = 0x43fa0000;

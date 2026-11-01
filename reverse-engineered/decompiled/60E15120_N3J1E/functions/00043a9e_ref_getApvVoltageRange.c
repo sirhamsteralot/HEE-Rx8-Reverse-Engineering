@@ -17,7 +17,7 @@ char ref_getApvVoltageRange(void)
   else {
     DAT_ffffcab5 = '\x01';
   }
-  DAT_ffffcab4 = DAT_ffffcab5 == '\x01';
+  inferred_ram_cab4_ffffcab4_ffffcab4 = DAT_ffffcab5 == '\x01';
   return DAT_ffffcab5;
 }
 

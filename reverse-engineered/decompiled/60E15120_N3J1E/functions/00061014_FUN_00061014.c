@@ -13,7 +13,7 @@ undefined4 FUN_00061014(void)
   uVar3 = 0;
   cVar2 = FUN_000655e4();
   if ((((cVar2 != '\0') || (cVar2 = FUN_000644e4(), cVar2 != '\0')) ||
-      (sVar1 = FUN_00002034(&DAT_ffff8788), sVar1 != 0)) ||
+      (sVar1 = FUN_00002034(&inferred_ram_8788_ffff8788_ffff8788), sVar1 != 0)) ||
      ((cVar2 = ref_invertAndReturn_8bit_ADDR(&DAT_ffff878c), cVar2 != '\0' ||
       (sVar1 = FUN_00002034(&DAT_ffff8784), sVar1 != 0)))) {
     uVar3 = 1;

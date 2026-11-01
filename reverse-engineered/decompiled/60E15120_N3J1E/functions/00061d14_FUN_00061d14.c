@@ -3,7 +3,7 @@
 int FUN_00061d14(void)
 
 {
-  return (int)DAT_ffff8788._0_2_;
+  return (int)inferred_ram_8788_ffff8788_ffff8788._0_2_;
 }
 
 

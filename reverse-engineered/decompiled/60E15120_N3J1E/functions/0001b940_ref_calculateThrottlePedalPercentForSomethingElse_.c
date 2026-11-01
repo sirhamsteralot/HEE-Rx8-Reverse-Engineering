@@ -10,7 +10,7 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   float fVar2;
   float arg0;
   
-  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   fVar1 = DAT_ffffad30 - fVar1;
   fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
   arg0 = 0.0;
@@ -28,7 +28,7 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   }
   DAT_ffffad40 = rx8_max_float(arg0,inferred_throttle_position_ffffad44 - DAT_ffffb2a4);
   fVar1 = (float)rx8_divide_with_zero_fallback(inferred_throttle_position_ffffad44,0x42a80000);
-  DAT_ffffad48 = fVar1 * 100.0;
+  inferred_ram_ad48_ffffad48_ffffad48 = fVar1 * 100.0;
   DAT_ffffad4c = DAT_ffffad40 - DAT_ffffadac;
   DAT_ffffadac = DAT_ffffada8;
   DAT_ffffada8 = DAT_ffffad40;

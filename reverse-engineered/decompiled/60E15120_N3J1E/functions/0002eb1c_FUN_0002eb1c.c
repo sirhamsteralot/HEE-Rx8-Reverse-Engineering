@@ -11,7 +11,7 @@ void FUN_0002eb1c(void)
   
   if (((DAT_ffffbd6c < 0x9d) || (60.06 <= DAT_ffffbd78)) || (inferred_throttle_position_ffffad44 < 60.06)) {
     if (((0x9c < DAT_ffffbd6c) || (inferred_throttle_position_ffffad44 <= 45.045)) ||
-       ((0x5e < DAT_ffffbd6c && (DAT_ffffbdb8 == '\x01')))) {
+       ((0x5e < DAT_ffffbd6c && (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\x01')))) {
       DAT_ffffbd72 = 0;
     }
   }

@@ -15,12 +15,12 @@ uint FUN_0002d1d4(void)
   uVar1 = (uint)DAT_ffffbced;
   if (((uVar1 == 1) &&
       (((10.0 <= DAT_ffffbfa0 - DAT_ffffbfa4 || (10.0 <= DAT_ffffbfa4 - DAT_ffffbfa0)) &&
-       (90.0 <= DAT_ffffa9bc)))) && (uVar1 = 0x271, 0x270 < DAT_ffffbcf0)) {
+       (90.0 <= inferred_ram_a9bc_ffffa9bc_ffffa9bc)))) && (uVar1 = 0x271, 0x270 < DAT_ffffbcf0)) {
     uVar1 = 0;
   }
   DAT_ffffbcee = 0;
   DAT_ffffbce8 = 0;
-  if (DAT_ffffa9bc < 90.0) {
+  if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 90.0) {
     DAT_ffffbcf0 = 0;
   }
   else {

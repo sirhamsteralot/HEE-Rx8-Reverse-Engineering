@@ -32,7 +32,7 @@ uint FUN_0000e910(void)
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   cVar4 = DAT_ffffb53a;
   snapshot_DAT_ffffb41c = DAT_ffffb41c;
-  snapshot_DAT_ffffaa62 = DAT_ffffaa62;
+  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_DAT_ffffa448 = DAT_ffffa448;
   snapshot_inferred_predicted_engine_speed_ffffb55c = inferred_predicted_engine_speed_ffffb55c;

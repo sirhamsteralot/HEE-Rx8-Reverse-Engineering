@@ -188,7 +188,7 @@ entries below.
 | 0x0000e2a8 / 0x0000ee64 | `update_injectors_off_flag` / `rev_limit_fuel_cut_init` | a42c; clears a4a4/a4a5/a4a8 |
 | 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `candidate_fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
 | 0x0001ddfc | `candidate_cold_start_enrichment` | b0c4 (0.0 in this ROM) |
-| 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag_air_fuel_ratio` / `diag_engine_load` / `diag_lambda_target` / `candidate_diag_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 |
+| 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag22_pid0034_afr_lambda_words` / `diag22_pid0043_engine_load_g_rev` / `diag22_pid0044_lambda_target` / `diag22_pid1410_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 (renamed 2026-10-31 by the UDS dispatch pass, formerly `diag_air_fuel_ratio`/`diag_engine_load`/`diag_lambda_target`/`candidate_diag_injector_pulse_time` — see [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)) |
 | 0x000556ec / 0x00055702 | `candidate_diag_afr_word_a/b` | AFR PID words aa6c/aa7c |
 
 ### 7.2 Core RAM

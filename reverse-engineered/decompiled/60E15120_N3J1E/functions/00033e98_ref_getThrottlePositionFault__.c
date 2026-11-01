@@ -6,8 +6,8 @@
 void ref_getThrottlePositionFault__(void)
 
 {
-  if (196.48 <= DAT_ffffad48) {
-    if (200.0 <= DAT_ffffad48) {
+  if (196.48 <= inferred_ram_ad48_ffffad48_ffffad48) {
+    if (200.0 <= inferred_ram_ad48_ffffad48_ffffad48) {
       DAT_ffffc108 = 1;
     }
   }

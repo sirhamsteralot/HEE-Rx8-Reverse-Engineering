@@ -6,7 +6,7 @@
 void FUN_0001ad3c(void)
 
 {
-  DAT_ffffad10 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f18);
+  inferred_ram_ad10_ffffad10_ffffad10 = rx8_decode_u16_affine(0x38a00000,0,(int)DAT_ffff9f18);
   return;
 }
 

@@ -15,8 +15,8 @@ char FUN_0003c2ac(void)
   
   DAT_ffffc5d0 = '\r';
   DAT_ffffc5d1 = '\r';
-  snapshot_DAT_ffffad10 = DAT_ffffad10;
-  ref_adcVoltageOutOfRangeCheck_(DAT_ffffad10);
+  snapshot_DAT_ffffad10 = inferred_ram_ad10_ffffad10_ffffad10;
+  ref_adcVoltageOutOfRangeCheck_(inferred_ram_ad10_ffffad10_ffffad10);
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc5d4 = '\0';
     DAT_ffffc5d5 = '\0';

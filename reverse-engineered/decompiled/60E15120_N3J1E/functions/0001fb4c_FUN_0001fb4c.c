@@ -54,7 +54,7 @@ undefined4 * FUN_0001fb4c(void)
     DAT_ffffb1cf = 1;
   }
   if (((((puVar5 == (undefined4 *)0x1) && (ol_decay_enable_a_ffffb142 != 0)) || (ol_timer_expired_ffffb159 == '\0')) ||
-      (puVar5 = &DAT_ffffc644, 1000.0 < DAT_ffffc644)) ||
+      (puVar5 = &fuel_correction_sum_ffffc644_ffffc644, 1000.0 < fuel_correction_sum_ffffc644_ffffc644)) ||
      ((DAT_ffffb1d5 == '\0' && (puVar5 = (undefined4 *)0x1, cVar1 == '\x01')))) {
     DAT_ffffb140 = 8;
   }

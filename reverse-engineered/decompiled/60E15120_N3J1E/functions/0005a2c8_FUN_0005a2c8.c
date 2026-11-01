@@ -9,8 +9,8 @@ void FUN_0005a2c8(void)
   undefined4 uVar1;
   
   uVar1 = 0;
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff90f4);
-  ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff90fc);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&distance_mil_on_ffff90f4_ffff90f4);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&inferred_ram_90fc_ffff90fc_ffff90fc);
   return;
 }
 

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00053bc8 (150 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_ClearFaults_(short param_1,uint param_2)
+uint uds_service_14_clear_diagnostic_information(short param_1,uint param_2)
 
 {
   uint uVar1;

@@ -8,19 +8,19 @@ void idle_base_timing_select(void)
 {
   undefined *puVar1;
   
-  if (DAT_ffffaa62 == '\x01') {
-    DAT_ffffa780 = lookup_2d_descriptor_scaled(&DAT_00069208);
+  if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
+    idle_base_timing_leading_ffffa780 = lookup_2d_descriptor_scaled(&candidate_tbl_idle_base_timing_cranking_00069208);
   }
   else {
     if ((inferred_coolant_temperature_ffffa98c < 90.0) || (engine_load_ffffc0b4 < 0.5)) {
-      puVar1 = &DAT_0006921c;
+      puVar1 = &candidate_tbl_idle_base_timing_cold_lowload_0006921c;
     }
     else {
-      puVar1 = &DAT_00069230;
+      puVar1 = &candidate_tbl_idle_base_timing_warm_highload_00069230;
     }
-    DAT_ffffa780 = lookup_2d_descriptor_scaled(puVar1);
+    idle_base_timing_leading_ffffa780 = lookup_2d_descriptor_scaled(puVar1);
   }
-  DAT_ffffa784 = DAT_ffffa780;
+  idle_base_timing_trailing_ffffa784 = idle_base_timing_leading_ffffa780;
   return;
 }
 

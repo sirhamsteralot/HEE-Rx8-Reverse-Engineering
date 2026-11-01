@@ -28,7 +28,7 @@ void FUN_0003e560(void)
   else if (DAT_ffffc69c != '\0') {
     DAT_ffffc69c = DAT_ffffc69c + -1;
   }
-  if (DAT_ffffc640 <= DAT_ffffc644) {
+  if (DAT_ffffc640 <= fuel_correction_sum_ffffc644_ffffc644) {
     puVar3 = &tbl_table_2d_266_0006b794;
   }
   else {
@@ -56,7 +56,7 @@ void FUN_0003e560(void)
     DAT_ffffc684 = DAT_ffffc680 + snapshot_diag_afr_word_a_ffffaa6c * fVar4 * 14.7 + DAT_ffffc66c;
   }
   if ((engine_running_ffffa428 == '\0') && (engine_stopped_latch_ffffa41c == '\0')) {
-    ref_updateMemoryAtAddress_float_VAL_ADDR(DAT_ffffc644,&DAT_ffff8710);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(fuel_correction_sum_ffffc644_ffffc644,&DAT_ffff8710);
   }
   if (secondary_air_pump_request_ffffbf6c == '\x01') {
     DAT_ffffc688 = (float)lookup_2d_descriptor_scaled(snapshot_diag_afr_word_a_ffffaa6c,&tbl_table_2d_262_0006b744);

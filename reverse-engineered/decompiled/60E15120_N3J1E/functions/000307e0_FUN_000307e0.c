@@ -20,7 +20,7 @@ char closed_loop_fuel_trim(void)
     fVar2 = rx8_max_float(DAT_ffffbf40,DAT_ffffc01c + DAT_ffffb0c4);
     cl_coolant_compensation_ffffbf20 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_fuel_coolant_compensation_0006ac38);
     fVar1 = rx8_min_float(cl_coolant_compensation_ffffbf20,open_loop_fuel_target_ffffb120);
-    closed_loop_trim_raw_ffffbeb4 = rx8_clamp_float((fVar2 + fVar1 + 1.0) * DAT_ffffadec + -1.0,-1.0,2.0);
+    closed_loop_trim_raw_ffffbeb4 = rx8_clamp_float((fVar2 + fVar1 + 1.0) * inferred_lambda_actual_ffffadec_ffffadec + -1.0,-1.0,2.0);
     fVar2 = rx8_first_order_filter(closed_loop_trim_raw_ffffbeb4,closed_loop_trim_filtered_ffffbeb8,0.0625,1e-05);
   }
   if (DAT_ffffb228 == '\x01') {

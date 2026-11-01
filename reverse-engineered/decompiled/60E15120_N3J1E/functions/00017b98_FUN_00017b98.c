@@ -3,8 +3,8 @@
 void FUN_00017b98(void)
 
 {
-  if (DAT_ffffa8f4 < 8) {
-    if (DAT_ffffa8f4 < 7) {
+  if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 < 8) {
+    if (inferred_ram_a8f4_ffffa8f4_ffffa8f4 < 7) {
       FUN_000174b4(2);
       DAT_ffffa8fa = 0x10;
     }

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005e414 (84 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0005fb08(void)
+uint dtc_count_ram_table(void)
 
 {
   ushort uVar1;
@@ -14,7 +14,7 @@ uint FUN_0005fb08(void)
   uVar1 = 0;
   uVar3 = 0;
   do {
-    if ((&DAT_ffffd570)[uVar1] == '\x01') {
+    if ((&dtc_ram_flag_table_ffffd570_ffffd570)[uVar1] == '\x01') {
       uVar2 = uVar2 + 1;
       if ((uVar1 == 0) || (uVar1 == 1)) {
         uVar3 = uVar3 + 1;

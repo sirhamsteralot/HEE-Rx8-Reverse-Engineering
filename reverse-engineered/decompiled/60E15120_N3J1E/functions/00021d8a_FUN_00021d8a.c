@@ -17,7 +17,7 @@ uint FUN_00021d8a(void)
   }
   if ((((DAT_ffffd040 == '\x01') || (DAT_ffffd0a8 == '\x01')) ||
       ((4500.0 <= engine_speed_rpm_ffffb548 && (DAT_ffffbe00 < 10.0)))) ||
-     ((4.0 < vehicle_speed_ffffbbb4 && (DAT_ffffaa62 == '\x01')))) {
+     ((4.0 < vehicle_speed_ffffbbb4 && (cranking_active_ffffaa62_ffffaa62 == '\x01')))) {
     DAT_ffffb2f6 = 0;
   }
   else if (((DAT_ffffb318 != '\x01') || (closed_loop_active_ffffae1f != '\x01')) ||

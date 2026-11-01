@@ -6,14 +6,14 @@
 char ref_calcBatteryRelatedFaults__(void)
 
 {
-  if (((engine_stopped_latch_ffffa41c == '\x01') && (DAT_ffffcdd8 == '\0')) && (DAT_ffffd271 == '\0')) {
+  if (((engine_stopped_latch_ffffa41c == '\x01') && (inferred_ram_cdd8_ffffcdd8_ffffcdd8 == '\0')) && (DAT_ffffd271 == '\0')) {
     DAT_ffffd25e = 1;
   }
   else {
     DAT_ffffd25e = 0;
   }
-  if (((engine_stopped_latch_ffffa41c == '\0') && (DAT_ffffcdd8 == '\0')) &&
-     ((DAT_ffffd271 == '\0' && (DAT_ffffaa62 == '\x01')))) {
+  if (((engine_stopped_latch_ffffa41c == '\0') && (inferred_ram_cdd8_ffffcdd8_ffffcdd8 == '\0')) &&
+     ((DAT_ffffd271 == '\0' && (cranking_active_ffffaa62_ffffaa62 == '\x01')))) {
     DAT_ffffd25f = 1;
   }
   else {

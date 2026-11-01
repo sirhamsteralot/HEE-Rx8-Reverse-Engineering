@@ -10,7 +10,7 @@ void FUN_00025120(void)
   float fVar2;
   
   fVar2 = 100.0;
-  fVar1 = rx8_clamp_float(DAT_ffffb2f0,0.0,100.0);
+  fVar1 = rx8_clamp_float(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0.0,100.0);
   DAT_ffff9f3c = rx8_mul_s32_shift16_saturate((int)((fVar1 / fVar2) * 65536.0),DAT_ffff9f38);
   return;
 }

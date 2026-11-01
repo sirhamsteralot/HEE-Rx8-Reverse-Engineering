@@ -70,7 +70,7 @@ char knock_threshold_setup(void)
   snapshot_coolant_timing_derate_trailing_ffffa754 = coolant_timing_derate_trailing_ffffa754;
   fVar7 = rx8_absolute_difference(arg0,DAT_ffffc06c);
   fVar8 = rx8_absolute_difference(engine_load_ffffc0b4,DAT_ffffc070);
-  fVar9 = rx8_absolute_difference(DAT_ffffad48,DAT_ffffc074);
+  fVar9 = rx8_absolute_difference(inferred_ram_ad48_ffffad48_ffffad48,DAT_ffffc074);
   if ((((DAT_ffffc0a4 == 0.0) && (snapshot_coolant_timing_derate_leading_ffffa750 != 0.0)) || ((DAT_ffffc0a8 == 0.0 && (snapshot_coolant_timing_derate_trailing_ffffa754 != 0.0)))) ||
      (((60.0 <= fVar7 || (0.08 <= fVar8)) || (8.0 <= fVar9)))) {
     DAT_ffffc094 = '\x01';

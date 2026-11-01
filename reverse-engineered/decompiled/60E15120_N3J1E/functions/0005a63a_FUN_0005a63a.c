@@ -13,7 +13,7 @@ undefined4 FUN_0005a63a(void)
   do {
     uVar1 = ref_validateAddressCopy_32bit_ADDRESS__(puVar2);
     puVar2 = puVar2 + 8;
-  } while (puVar2 < &DAT_ffff9150);
+  } while (puVar2 < &inferred_sensor_block_ffff9150_ffff9150);
   return uVar1;
 }
 

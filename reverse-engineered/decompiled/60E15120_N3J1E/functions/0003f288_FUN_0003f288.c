@@ -27,11 +27,11 @@ undefined ** FUN_0003f288(void)
   fVar8 = DAT_ffffb078 + 0.1;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
-  snapshot_DAT_ffffb074 = DAT_ffffb074;
+  snapshot_DAT_ffffb074 = inferred_trim_b074_ffffb074_ffffb074;
   snapshot_DAT_ffffad20 = DAT_ffffad20;
   fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8720);
   fVar7 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8718);
-  cVar5 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0,0x3727c5ac);
+  cVar5 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   uVar3 = ref_getFaultStatus__(0x6e);
   ppuVar4 = (undefined **)(uVar3 & 0xff);
   if (ppuVar4 == (undefined **)0x0) {

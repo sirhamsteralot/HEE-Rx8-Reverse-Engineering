@@ -29,7 +29,7 @@ uint ref_udsSomething_(undefined4 *param_1)
   }
   else {
     ref_udsServiceResponse(uVar5,auStack_18,1);
-    uVar2 = ref_udsHandler(uVar5,uVar3 - 1,uVar2);
+    uVar2 = uds_service_dispatch_table_scan(uVar5,uVar3 - 1,uVar2);
     uVar2 = uVar2 & 0xff;
     if (uVar2 == 1) {
       if (uVar4 == 0) {

@@ -5,8 +5,8 @@ undefined1 * FUN_00012c22(void)
 {
   undefined1 *puVar1;
   
-  puVar1 = &DAT_ffffaa62;
-  if (DAT_ffffaa62 == '\0') {
+  puVar1 = &cranking_active_ffffaa62_ffffaa62;
+  if (cranking_active_ffffaa62_ffffaa62 == '\0') {
     DAT_ffffa686 = '\0';
   }
   else if ((((DAT_ffffa6a3 == '\x01') && (puVar1 = (undefined1 *)0x0, fuel_cut_flag_a_ffffa444 == '\0')) ||

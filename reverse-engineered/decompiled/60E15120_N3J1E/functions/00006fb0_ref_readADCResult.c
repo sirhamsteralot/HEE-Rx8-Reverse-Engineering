@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00006fb0 (174 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int adc_read_result_bank2(void)
+int candidate_adc_read_result_bank2(void)
 
 {
   bool bVar1;

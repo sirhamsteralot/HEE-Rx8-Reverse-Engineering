@@ -16,9 +16,9 @@ uint FUN_00035062(void)
   }
   if (DAT_ffffc21e == '\0') {
     if (DAT_ffffc248 == '\0') {
-      DAT_ffffc274 = 1;
+      inferred_ram_c274_ffffc274_ffffc274 = 1;
       DAT_ffffc22b = 1;
-      DAT_ffffc1d3 = DAT_ffffc1d3 | 0x40;
+      inferred_ram_c1d3_ffffc1d3_ffffc1d3 = inferred_ram_c1d3_ffffc1d3_ffffc1d3 | 0x40;
       DAT_ffffc255 = 1;
     }
     DAT_ffffc226 = 1;

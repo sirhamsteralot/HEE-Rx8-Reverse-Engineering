@@ -17,7 +17,7 @@ void FUN_0002aa88(void)
   
   cVar6 = DAT_ffffbc04;
   cVar5 = DAT_ffffbb9b;
-  cVar4 = DAT_ffffad18;
+  cVar4 = inferred_ram_ad18_ffffad18_ffffad18;
   cVar3 = DAT_ffffaa68;
   cVar2 = engine_running_ffffa428;
   cVar1 = engine_stopped_latch_ffffa41c;

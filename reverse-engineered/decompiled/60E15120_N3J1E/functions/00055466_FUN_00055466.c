@@ -3,12 +3,12 @@
  */
 /* ROM address: 0x00055466; body bytes: 30; decompiled */
 
-undefined4 FUN_00055466(void)
+undefined4 diag_encode_ltft(void)
 
 {
   undefined4 uVar1;
   
-  uVar1 = rx8_encode_u8_affine_saturate(DAT_ffffb0d0 * 100.0,0x3f480000,0xc2c80000);
+  uVar1 = rx8_encode_u8_affine_saturate(inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0,0x3f480000,0xc2c80000);
   return uVar1;
 }
 

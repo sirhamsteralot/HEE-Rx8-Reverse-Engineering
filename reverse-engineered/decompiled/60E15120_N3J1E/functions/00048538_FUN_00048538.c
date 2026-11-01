@@ -8,7 +8,7 @@ void FUN_00048538(void)
 {
   float fVar1;
   
-  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffcca8 = fVar1 + 5.0;
   DAT_ffffccae = 0xffff;
   return;

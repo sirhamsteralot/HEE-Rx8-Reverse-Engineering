@@ -45,7 +45,7 @@ uint FUN_0004afd6(void)
     DAT_ffffcdf0 = rx8_lookup_2d_raw_u8(engine_speed_rpm_ffffb548,&tbl_table_2d_390_check_datatype_0006bb1c);
     uVar3 = (uint)DAT_ffffcdf0;
     if (DAT_ffffcde4 <= uVar3) {
-      if (DAT_ffffaa62 == '\0') {
+      if (cranking_active_ffffaa62_ffffaa62 == '\0') {
         puVar4 = &tbl_table_3d_100_0006bb50;
       }
       else {

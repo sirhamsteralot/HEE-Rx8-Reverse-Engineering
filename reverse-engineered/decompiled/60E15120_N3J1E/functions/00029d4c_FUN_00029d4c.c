@@ -29,7 +29,7 @@ undefined4 FUN_00029d4c(void)
       else {
         puVar3 = &tbl_throttle_pedal_to_throttle_plate_request_gear_3_4_0006a4ac;
       }
-      arg0 = (float)lookup_3d_descriptor_scaled(DAT_ffffbb50,DAT_ffffa9bc,puVar3);
+      arg0 = (float)lookup_3d_descriptor_scaled(DAT_ffffbb50,inferred_ram_a9bc_ffffa9bc_ffffa9bc,puVar3);
       goto LAB_00029df4;
     }
     puVar3 = &tbl_throttle_pedal_to_throttle_plate_request_gear_neutral_0006a474;

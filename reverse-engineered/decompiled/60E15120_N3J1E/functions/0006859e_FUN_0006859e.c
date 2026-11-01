@@ -3,16 +3,16 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00066e8e (130 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0006859e(void)
+uint isotp_first_frame_accept(void)
 
 {
   uint uVar1;
   
-  uVar1 = (DAT_ffffddc8 & 0xf) * 0x100 + (uint)DAT_ffffddc9;
+  uVar1 = (uds_rx_buffer_ffffddc8 & 0xf) * 0x100 + (uint)DAT_ffffddc9;
   if ((uVar1 < 0x1000) && (7 < uVar1)) {
     DAT_ffffddf5 = DAT_ffffddf5 | 4;
     FUN_000683b4();
-    DAT_ffffddec = FUN_00068a86((int)DAT_ffffddca);
+    DAT_ffffddec = candidate_uds_rx_channel_alloc((int)DAT_ffffddca);
     DAT_ffffddeb = 2;
     DAT_ffffdde6 = (undefined2)uVar1;
     DAT_ffffddea = DAT_ffffddca;

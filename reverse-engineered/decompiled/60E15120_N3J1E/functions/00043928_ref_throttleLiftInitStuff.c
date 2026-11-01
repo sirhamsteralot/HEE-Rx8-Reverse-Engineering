@@ -6,8 +6,8 @@
 void ref_throttleLiftInitStuff(void)
 
 {
-  DAT_ffffcaa8 = 0;
-  DAT_ffffcaa0 = 0;
+  cranking_angle_timing_trailing_raw_ffffcaa8 = 0;
+  cranking_angle_timing_trailing_filtered_ffffcaa0 = 0;
   return;
 }
 

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00006cdc (114 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char adc_read_ect_iat_group(void)
+char candidate_adc_read_ect_iat_group(void)
 
 {
   char cVar1;

@@ -10,8 +10,8 @@ char FUN_0003c6c8(void)
   char cVar1;
   float snapshot_DAT_ffffadd4;
   
-  snapshot_DAT_ffffadd4 = DAT_ffffadd4;
-  FUN_0003c99a(DAT_ffffadd4);
+  snapshot_DAT_ffffadd4 = inferred_ram_add4_ffffadd4_ffffadd4;
+  FUN_0003c99a(inferred_ram_add4_ffffadd4_ffffadd4);
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc5d8 = '\x03';
     DAT_ffffc5d9 = '\x03';

@@ -8,7 +8,7 @@ char FUN_0003d62c(void)
   char cVar3;
   
   cVar2 = DAT_ffffc625;
-  cVar1 = DAT_ffffbf9c;
+  cVar1 = inferred_ram_bf9c_ffffbf9c_ffffbf9c;
   if (DAT_ffffc610 == '\0') {
     DAT_ffffc625 = '\0';
   }
@@ -23,7 +23,7 @@ char FUN_0003d62c(void)
     cVar3 = '\x01';
   }
   else {
-    if (DAT_ffffc627 != DAT_ffffbf9c) {
+    if (DAT_ffffc627 != inferred_ram_bf9c_ffffbf9c_ffffbf9c) {
       DAT_ffffc626 = '\x01';
     }
     if (DAT_ffffc626 == '\x01') {

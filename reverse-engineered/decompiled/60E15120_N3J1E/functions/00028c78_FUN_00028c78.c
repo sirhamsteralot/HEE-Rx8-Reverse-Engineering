@@ -4,10 +4,10 @@ char FUN_00028c78(void)
 
 {
   DAT_ffffbab2 = 0;
-  if (DAT_ffffd1a1 == '\x01') {
+  if (inferred_ram_d1a1_ffffd1a1_ffffd1a1 == '\x01') {
     DAT_ffffbab2 = 0x8000;
   }
-  else if (DAT_ffffd1a2 == '\x01') {
+  else if (inferred_ram_d1a2_ffffd1a2_ffffd1a2 == '\x01') {
     DAT_ffffbab2 = 0x4000;
   }
   if (DAT_ffffbb64 == '\x01') {
@@ -19,7 +19,7 @@ char FUN_00028c78(void)
   if (DAT_ffffbb66 == '\x01') {
     DAT_ffffbab2 = DAT_ffffbab2 | 0x80;
   }
-  if (DAT_ffffb5b4 == '\x01') {
+  if (inferred_ram_b5b4_ffffb5b4_ffffb5b4 == '\x01') {
     DAT_ffffbab2 = DAT_ffffbab2 | 0x40;
   }
   if (DAT_ffffbb67 == '\x01') {

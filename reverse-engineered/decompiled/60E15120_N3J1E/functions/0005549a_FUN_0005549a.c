@@ -6,7 +6,7 @@
  */
 /* ROM address: 0x0005549a; body bytes: 20; decompiled */
 
-undefined4 FUN_0005549a(void)
+undefined4 diag_encode_vss(void)
 
 {
   undefined4 uVar1;

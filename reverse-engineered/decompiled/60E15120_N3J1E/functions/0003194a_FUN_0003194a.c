@@ -12,8 +12,8 @@ uint FUN_0003194a(void)
     uVar2 = 1;
     DAT_ffffbf7e = '\x01';
   }
-  else if ((engine_stopped_latch_ffffa41c != '\x01') || (DAT_ffffc644 <= 350.0)) {
-    if ((350.0 <= DAT_ffffc644) || (DAT_ffffbf6e < 0x5267)) {
+  else if ((engine_stopped_latch_ffffa41c != '\x01') || (fuel_correction_sum_ffffc644_ffffc644 <= 350.0)) {
+    if ((350.0 <= fuel_correction_sum_ffffc644_ffffc644) || (DAT_ffffbf6e < 0x5267)) {
       uVar2 = (uint)secondary_air_pump_request_ffffbf6c;
       if ((uVar2 == 1) && (DAT_ffffbf70 != 0)) {
         DAT_ffffbf70 = DAT_ffffbf70 + -1;

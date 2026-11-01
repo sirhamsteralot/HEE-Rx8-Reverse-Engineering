@@ -23,22 +23,22 @@ uint cranking_timing_leading_filter(void)
   float extraout_fr0;
   
   snapshot_DAT_ffffb53c = DAT_ffffb53c;
-  uVar2 = (uint)DAT_ffffaa62;
+  uVar2 = (uint)cranking_active_ffffaa62_ffffaa62;
   if ((uVar2 == 1) && (uVar2 = (uint)DAT_ffffb53c, uVar2 == 1)) {
-    DAT_ffffcaa4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_off_throttle_leading_timing_realted_0006b630);
+    cranking_angle_timing_leading_raw_ffffcaa4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_off_throttle_leading_timing_realted_0006b630);
     if (DAT_ffffcaac == '\0') {
       fVar3 = rx8_min_float(1.0,1.0);
-      uVar2 = rx8_divide_with_zero_fallback(DAT_ffffcaa4,fVar3);
-      DAT_ffffca9c = extraout_fr0;
+      uVar2 = rx8_divide_with_zero_fallback(cranking_angle_timing_leading_raw_ffffcaa4,fVar3);
+      cranking_angle_timing_leading_filtered_ffffca9c = extraout_fr0;
     }
     else {
-      DAT_ffffca9c = rx8_first_order_filter(DAT_ffffcaa4,DAT_ffffca9c,1.0,1e-05);
+      cranking_angle_timing_leading_filtered_ffffca9c = rx8_first_order_filter(cranking_angle_timing_leading_raw_ffffcaa4,cranking_angle_timing_leading_filtered_ffffca9c,1.0,1e-05);
       uVar2 = extraout_r0;
     }
   }
   else {
-    DAT_ffffcaa4 = 0.0;
-    DAT_ffffca9c = 0.0;
+    cranking_angle_timing_leading_raw_ffffcaa4 = 0.0;
+    cranking_angle_timing_leading_filtered_ffffca9c = 0.0;
   }
   DAT_ffffcaac = snapshot_DAT_ffffb53c;
   return uVar2;

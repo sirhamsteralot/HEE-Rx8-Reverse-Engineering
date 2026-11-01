@@ -8,7 +8,7 @@ uint FUN_00045f94(void)
 {
   uint uVar1;
   
-  DAT_ffffcc12 = DAT_ffffad18;
+  DAT_ffffcc12 = inferred_ram_ad18_ffffad18_ffffad18;
   DAT_ffffcc13 = DAT_ffffb4ec;
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8760,1);
   if ((uVar1 & 0xff) == 1) {

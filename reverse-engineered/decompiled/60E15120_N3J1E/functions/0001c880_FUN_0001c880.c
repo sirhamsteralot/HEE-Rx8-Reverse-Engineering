@@ -38,7 +38,7 @@ void FUN_0001c880(void)
   fVar11 = inferred_coolant_temperature_ffffa98c;
   arg3 = 1e-05;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
-  snapshot_DAT_ffffb0d0 = DAT_ffffb0d0;
+  snapshot_DAT_ffffb0d0 = inferred_ltft_bank1_ffffb0d0_ffffb0d0;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   cVar4 = rx8_is_outside_tolerance_band(DAT_ffffb220,DAT_ffffb050,0x3727c5ac);
   cVar5 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffb0d0,DAT_ffffb054,arg3);
@@ -46,7 +46,7 @@ void FUN_0001c880(void)
   pfVar9 = &DAT_ffffaec8;
   if (closed_loop_active_ffffae1f == '\0') {
     bVar8 = 1;
-    DAT_ffffadec = 1.0;
+    inferred_lambda_actual_ffffadec_ffffadec = 1.0;
     DAT_ffffadf0 = 1.0;
     DAT_ffffadf4 = 1.0;
     do {
@@ -78,7 +78,7 @@ void FUN_0001c880(void)
       bVar8 = bVar8 + 1;
       *pfVar9 = *pfVar9 - DAT_ffffaffc;
     } while (bVar8 < 0x15);
-    fVar13 = DAT_ffffaec8 + DAT_ffffadec;
+    fVar13 = DAT_ffffaec8 + inferred_lambda_actual_ffffadec_ffffadec;
     if (fVar12 < 5.0) {
       if (fVar12 < 2.0) {
         DAT_ffffb070 = '\0';
@@ -115,9 +115,9 @@ void FUN_0001c880(void)
     fVar11 = rx8_max_float(DAT_ffffb040,DAT_ffffb03c);
     DAT_ffffb048 = rx8_max_float(fVar11,DAT_ffffae14);
     DAT_ffffb044 = (float)lookup_2d_descriptor_scaled(snapshot_DAT_ffffaa78,&tbl_table_2d_67_000698e4);
-    DAT_ffffadec = rx8_clamp_float(fVar13,DAT_ffffb048,DAT_ffffb044);
-    fVar11 = rx8_first_order_filter(DAT_ffffadec,DAT_ffffadf0,0.015325,arg3);
-    fVar12 = rx8_first_order_filter(DAT_ffffadec,DAT_ffffadf4,0.0078125,arg3);
+    inferred_lambda_actual_ffffadec_ffffadec = rx8_clamp_float(fVar13,DAT_ffffb048,DAT_ffffb044);
+    fVar11 = rx8_first_order_filter(inferred_lambda_actual_ffffadec_ffffadec,DAT_ffffadf0,0.015325,arg3);
+    fVar12 = rx8_first_order_filter(inferred_lambda_actual_ffffadec_ffffadec,DAT_ffffadf4,0.0078125,arg3);
     cVar4 = '\x14';
     uVar7 = 0x13;
     DAT_ffffadf0 = fVar11 - DAT_ffffaffc;

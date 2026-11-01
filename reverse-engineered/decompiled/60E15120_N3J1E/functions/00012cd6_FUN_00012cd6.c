@@ -12,7 +12,7 @@ uint FUN_00012cd6(void)
   cVar2 = fuel_cut_flag_b_ffffa445;
   cVar1 = fuel_cut_flag_a_ffffa444;
   fVar4 = 0.0;
-  if (((DAT_ffffc590 == '\0') && (0x9c3 < engine_running_timer_ffffa424)) && (DAT_ffffaa62 == '\0')) {
+  if (((DAT_ffffc590 == '\0') && (0x9c3 < engine_running_timer_ffffa424)) && (cranking_active_ffffaa62_ffffaa62 == '\0')) {
     DAT_ffffa674 = (float)rx8_divide_with_zero_fallback(engine_load_raw_ffffc0b0 - engine_load_ffffc0b4);
   }
   else {

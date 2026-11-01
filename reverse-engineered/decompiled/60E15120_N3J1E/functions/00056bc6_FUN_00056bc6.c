@@ -3,12 +3,12 @@
 /* Function candidate recovered from ROM pointer at 5f294 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void FUN_00056bc6(char param_1)
+void candidate_diag22_pid0047_ram_ad5e_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0005578a();
+  uVar1 = candidate_diag_encode_ad5e();
   diag_append_u8((int)param_1,uVar1);
   return;
 }

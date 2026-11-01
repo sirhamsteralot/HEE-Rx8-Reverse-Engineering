@@ -6,7 +6,7 @@
 void FUN_00020bc8(void)
 
 {
-  if ((((DAT_ffffad50 < 1.2) || (0xb < DAT_ffffb270)) || (DAT_ffffaa62 != '\0')) ||
+  if ((((DAT_ffffad50 < 1.2) || (0xb < DAT_ffffb270)) || (cranking_active_ffffaa62_ffffaa62 != '\0')) ||
      ((engine_running_ffffa428 != '\x01' || (DAT_ffffc5e6 != '\0')))) {
     DAT_ffffb284 = 0;
   }

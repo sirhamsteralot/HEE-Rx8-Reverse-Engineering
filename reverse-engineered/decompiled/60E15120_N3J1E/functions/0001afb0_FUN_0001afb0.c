@@ -20,11 +20,11 @@ void FUN_0001afb0(void)
   }
   DAT_ffffadcd = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   DAT_ffffadce = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
-  DAT_ffffad58 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  DAT_ffffad58 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffad78 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
   DAT_ffffad60 = 0;
-  DAT_ffffad5c = DAT_ffff9f08;
-  DAT_ffffad5e = DAT_ffff9f0a;
+  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = DAT_ffff9f08;
+  inferred_pedal_volts_ffffad5e_ffffad5e = DAT_ffff9f0a;
   return;
 }
 

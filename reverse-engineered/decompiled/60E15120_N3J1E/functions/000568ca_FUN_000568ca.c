@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 5f12c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag_read_ol_status(char param_1)
+void diag22_pid0003_fuel_system_status_ol_cl(char param_1)
 
 {
   byte bVar2;

@@ -308,3 +308,66 @@ ffffa660	leading_max_advance	float	000121fc
 ffffa664	trailing_max_advance	float	00012300
 ffffbc94	dsc_mode_a_base_timing	float	0002cc2c
 ffffa91c	dsc_timing_derate_leading	float	0001815c
+ffffad5c	inferred_throttle_sensor_volts_ffffad5c	uint16	000555f8	PID 0x11/0x0917/0x1154 read it; decode 7.62939e-05 V/count *20 -> %
+ffffadec	inferred_lambda_actual_ffffadec	float	00055440	PID 0x06: (x-1)*100 trim; fuel-chain cell listed in ROADMAP group C
+ffffb0d0	inferred_ltft_bank1_ffffb0d0	float	00055466	PID 0x07: x*100*0.78125-100
+ffffb074	inferred_trim_b074_ffffb074	float	000555ac	PID 0x15/0x163e: x*100*0.7813-100
+ffffad1c	inferred_o2s2_ffffad1c	uint16	00055586	PID 0x15: decode(7.63e-05)*0.005
+ffffd284	engine_runtime_counter_ffffd284	uint32	000555d0	PID 0x1f via 0x409c, clamp 0xffff (OBD PID 1F s)
+ffff90f4	distance_mil_on_ffff90f4	float	000555f8	PID 0x21 (OBD PID 21)
+ffff90fc	inferred_ram_90fc_ffff90fc	float	000556b0	PID 0x31
+ffffc644	fuel_correction_sum_ffffc644	float	0005571a	PID 0x3c: x*0.1-40; ROADMAP group C names this cell fuel_correction_sum
+ffffad10	inferred_ram_ad10_ffffad10	float	000556ce	PID 0x33/0x16b3
+ffffad48	inferred_ram_ad48_ffffad48	float	00055774	PID 0x45: *0.392157
+ffffad5e	inferred_pedal_volts_ffffad5e	uint16	0005578a	PID 0x47/0x0918
+ffffa9c4	inferred_pedal_volts_ffffa9c4	uint16	000557b6	PID 0x49/0x0914
+ffffa9c6	inferred_pedal_volts_ffffa9c6	uint16	00055838	PID 0x4a/0x0915
+ffffb410	inferred_ram_b410_ffffb410	float	00055864	PID 0x4c/0x091a
+ffffb2f0	inferred_ram_b2f0_ffffb2f0	float	00055616	PID 0x2e
+ffffd287	inferred_ram_d287_ffffd287	uint8	0005562c	PID 0x2f
+ffff8788	inferred_ram_8788_ffff8788	uint16	00061d14	PID 0x30 via 0x61d14
+ffffadd4	inferred_ram_add4_ffffadd4	float	00056e5e	PID 0x114a *7.63e-05
+ffffa984	inferred_ram_a984_ffffa984	float	00056e7c	PID 0x114d
+ffffa834	inferred_ram_a834_ffffa834	float	00056e9a	PID 0x1153 *3.05e-05
+ffff807c	inferred_ram_807c_ffff807c	float	00056efc	PID 0x1169, default 15.0
+ffffa9bc	inferred_ram_a9bc_ffffa9bc	float	00056f4e	PID 0x1340 *0.392157
+ffffbc30	inferred_ram_bc30_ffffbc30	float	0005705c	PID 0xa216
+ffffc6ac	inferred_ram_c6ac_ffffc6ac	float	00057098	PID 0x1782
+ffffd1ac	inferred_ram_d1ac_ffffd1ac	uint8	000570b6	PID 0x17a6 decode(128)/1000*0.1
+ffffc4c8	inferred_temp_c4c8_ffffc4c8	float	000570ee	PID 0x172a: x-40
+ffffa8f4	inferred_ram_a8f4_ffffa8f4	uint8	0005710c	PID 0x172d raw
+ffffa8f5	inferred_ram_a8f5_ffffa8f5	uint8	0005741e	PID 0x1706 -> bit 4
+ffffb570	inferred_ram_b570_ffffb570	float	0005730e	PID 0x1631 tolerance-band check
+ffffb584	inferred_ram_b584_ffffb584	uint8	0005730e	PID 0x1631 -> bit 2
+ffffce1c	inferred_ram_ce1c_ffffce1c	uint8	0005734a	PID 0x1681 -> 0x40
+ffffce32	inferred_ram_ce32_ffffce32	uint8	000574b6	PID 0x17de
+ffffce30	inferred_ram_ce30_ffffce30	uint16	00057974	PID 0xff44 raw
+ffffb53b	inferred_ram_b53b_ffffb53b	uint8	0005738e	PID 0xa211 -> bit 4
+ffffaa62	cranking_active_ffffaa62	uint8	0005738e	PID 0xa211 -> bit 0x10 when 0; named by ignition report (cranking multiplier decay)
+ffffbf9c	inferred_ram_bf9c_ffffbf9c	uint8	0005738e	PID 0xa211 sub2
+ffffbdb8	inferred_ram_bdb8_ffffbdb8	uint8	00057226	PID 0x1102
+ffffbf3c	inferred_ram_bf3c_ffffbf3c	uint8	000571e4	PID 0x1101 -> bit 1
+ffffad18	inferred_ram_ad18_ffffad18	uint8	000571e4	PID 0x1101 -> bit 2
+ffffcdd8	inferred_ram_cdd8_ffffcdd8	uint8	000571e4	PID 0x1101 -> bit 8
+ffffcab4	inferred_ram_cab4_ffffcab4	uint8	00057248	PID 0x1103 -> bit 0x10
+ffffd1a2	inferred_ram_d1a2_ffffd1a2	uint8	00057248	PID 0x1103 -> bit 0x20
+ffffd1a1	inferred_ram_d1a1_ffffd1a1	uint8	00057248	PID 0x1103 -> bit 0x20
+ffffb5b4	inferred_ram_b5b4_ffffb5b4	uint8	00057138	PID 0x0968 -> bit 0
+ffffbc35	inferred_ram_bc35_ffffbc35	uint8	00057138	PID 0x0968 -> bit 0x20
+ffffd570	dtc_ram_flag_table_ffffd570	uint8[0x8c]	0005fb08	PID 0x0202 counts set bytes (140 DTC slots)
+ffffd3b4	diag_permission_mask_ffffd3b4	uint16	000579a8	session/security mask ANDed with every record availability_mask in 0x5774c and 0x579a8
+ffffc1d0	inferred_ram_c1d0_ffffc1d0	uint8	00037546	PID 0xc124 -> 0x40
+ffffc274	inferred_ram_c274_ffffc274	uint8	00037546	PID 0xc124 -> 4
+ffffc1d2	inferred_ram_c1d2_ffffc1d2	uint8	000576b4	PID 0xc115 raw
+ffffc1d3	inferred_ram_c1d3_ffffc1d3	uint8	00057704	PID 0xc117
+ffffc1d4	inferred_ram_c1d4_ffffc1d4	uint8	00057704	PID 0xc117
+ffffc1d5	inferred_ram_c1d5_ffffc1d5	uint8	00057884	PID 0xff10 -> bit 4
+ffffc1d6	inferred_ram_c1d6_ffffc1d6	uint8	00057884	PID 0xff10 -> bit 8
+ffffc1d7	inferred_ram_c1d7_ffffc1d7	uint8	00057884	PID 0xff10 -> bit 0x20
+ffffc1d8	inferred_ram_c1d8_ffffc1d8	uint8	00057884	PID 0xff10 -> bit 0x40
+ffffd3a0	inferred_ram_d3a0_ffffd3a0	uint16	0005796e	PID 0xff50 raw
+ffffb5ac	inferred_ram_b5ac_ffffb5ac	float	00056fc8	PID 0x16e8
+ffffb654	inferred_ram_b654_ffffb654	float	00056fe6	PID 0x16e9 *0.125
+ffffb59c	inferred_ram_b59c_ffffb59c	float	00056e40	PID 0x097c /2048
+ffffa7ac	inferred_ram_a7ac_ffffa7ac	float	00056e22	PID 0x096e *0.25
+ffff9150	inferred_sensor_block_ffff9150	float[7]	00057594	PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b

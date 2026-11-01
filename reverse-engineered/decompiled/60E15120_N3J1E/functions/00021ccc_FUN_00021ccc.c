@@ -8,7 +8,7 @@ void FUN_00021ccc(void)
 {
   undefined4 *unaff_r14;
   
-  DAT_ffffb2f0 = FUN_0005c0f0(*unaff_r14);
+  inferred_ram_b2f0_ffffb2f0_ffffb2f0 = FUN_0005c0f0(*unaff_r14);
   return;
 }
 

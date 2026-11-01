@@ -7,7 +7,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00056280 (194 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00057db0(short param_1,uint param_2)
+uint candidate_uds_service_18(short param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;
@@ -16,7 +16,7 @@ uint FUN_00057db0(short param_1,uint param_2)
   char cStack_17;
   char cStack_16;
   
-  snapshot_DAT_ffffd3b4 = DAT_ffffd3b4;
+  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   if (param_2 == 1) {
     if (param_1 == 3) {

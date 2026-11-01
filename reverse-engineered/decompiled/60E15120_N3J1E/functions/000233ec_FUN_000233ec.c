@@ -59,7 +59,7 @@ void FUN_000233ec(void)
       DAT_ffffb424 = DAT_ffffb41c;
     }
   }
-  DAT_ffffb410 = FUN_0005ccb4(DAT_ffffb424);
+  inferred_ram_b410_ffffb410_ffffb410 = FUN_0005ccb4(DAT_ffffb424);
   DAT_ffffb422 = uVar2;
   return;
 }

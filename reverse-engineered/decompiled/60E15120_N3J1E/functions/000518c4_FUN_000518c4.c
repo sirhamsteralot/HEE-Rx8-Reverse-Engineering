@@ -7,7 +7,7 @@ uint FUN_000518c4(void)
   float fVar2;
   float fVar3;
   
-  fVar2 = rx8_absolute_difference((DAT_ffffadec + -1.0) * 100.0,DAT_ffffd0d8);
+  fVar2 = rx8_absolute_difference((inferred_lambda_actual_ffffadec_ffffadec + -1.0) * 100.0,DAT_ffffd0d8);
   fVar3 = rx8_absolute_difference(DAT_ffffd0ec,DAT_ffffd0e8);
   DAT_ffffd0fa = 0;
   if ((DAT_ffffd1c5 == '\x01') || (DAT_ffffd03b == '\x01')) {

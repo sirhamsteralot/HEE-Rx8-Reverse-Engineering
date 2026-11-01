@@ -27,11 +27,11 @@ undefined1 * FUN_000375c0(void)
   if ((DAT_ffffd1ce == '\x01') && (cVar4 = ref_securityNotUnlocked(1), cVar4 == '\0')) {
     if (DAT_ffffc283 == '\0') {
       DAT_ffffc284 = '\0';
-      DAT_ffffc1d5 = 0;
+      inferred_ram_c1d5_ffffc1d5_ffffc1d5 = 0;
       DAT_ffffc285 = '\0';
-      DAT_ffffc1d6 = 0;
-      DAT_ffffc1d7 = 0;
-      DAT_ffffc1d8 = 0;
+      inferred_ram_c1d6_ffffc1d6_ffffc1d6 = 0;
+      inferred_ram_c1d7_ffffc1d7_ffffc1d7 = 0;
+      inferred_ram_c1d8_ffffc1d8_ffffc1d8 = 0;
       DAT_ffffc286 = '\0';
     }
     else {
@@ -64,10 +64,10 @@ undefined1 * FUN_000375c0(void)
               ((((cStack_2a == -1 && (cStack_29 == -1)) && (cStack_28 == -1)) &&
                (((cStack_27 == -1 && (cStack_26 == -1)) && ((cStack_25 == -1 && (cStack_24 == -1))))
                )))))) {
-            DAT_ffffc1d5 = 0;
+            inferred_ram_c1d5_ffffc1d5_ffffc1d5 = 0;
           }
           else {
-            DAT_ffffc1d5 = 1;
+            inferred_ram_c1d5_ffffc1d5_ffffc1d5 = 1;
           }
         }
       }
@@ -84,10 +84,10 @@ undefined1 * FUN_000375c0(void)
         if (DAT_ffffc285 == '\x01') {
           if (((puStack_44._0_2_ == -1) && (((uint)unaff_r14 & 0xffff) == 0xffff)) ||
              (((uint)unaff_r14 & 0xffff) == 0)) {
-            DAT_ffffc1d6 = 0;
+            inferred_ram_c1d6_ffffc1d6_ffffc1d6 = 0;
           }
           else {
-            DAT_ffffc1d6 = 1;
+            inferred_ram_c1d6_ffffc1d6_ffffc1d6 = 1;
           }
         }
       }
@@ -102,16 +102,16 @@ undefined1 * FUN_000375c0(void)
         ref_setSR(uVar1);
         if (DAT_ffffc286 == '\x01') {
           if (puStack_44._0_1_ == '\0') {
-            DAT_ffffc1d7 = 0;
-            DAT_ffffc1d8 = 0;
+            inferred_ram_c1d7_ffffc1d7_ffffc1d7 = 0;
+            inferred_ram_c1d8_ffffc1d8_ffffc1d8 = 0;
           }
           else if (puStack_44._0_1_ == '\x01') {
-            DAT_ffffc1d7 = 1;
-            DAT_ffffc1d8 = 0;
+            inferred_ram_c1d7_ffffc1d7_ffffc1d7 = 1;
+            inferred_ram_c1d8_ffffc1d8_ffffc1d8 = 0;
           }
           else {
-            DAT_ffffc1d7 = 1;
-            DAT_ffffc1d8 = 1;
+            inferred_ram_c1d7_ffffc1d7_ffffc1d7 = 1;
+            inferred_ram_c1d8_ffffc1d8_ffffc1d8 = 1;
           }
         }
       }

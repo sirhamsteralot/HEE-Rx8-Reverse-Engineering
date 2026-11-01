@@ -22,10 +22,10 @@ void trailing_final_timing_clamp_output(void)
   uVar5 = 0;
   uVar3 = 0x3727c5ac;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  cVar1 = rx8_is_outside_tolerance_band(DAT_ffffa784,0,0x3727c5ac);
+  cVar1 = rx8_is_outside_tolerance_band(idle_base_timing_trailing_ffffa784,0,0x3727c5ac);
   rx8_is_outside_tolerance_band(DAT_ffffbc78,uVar5,uVar3);
-  if ((((DAT_ffffaa62 != '\x01') || (cVar1 != '\0')) || (2000.0 <= snapshot_engine_speed_rpm_ffffb548)) ||
-     (DAT_ffffce1c != '\x01')) {
+  if ((((cranking_active_ffffaa62_ffffaa62 != '\x01') || (cVar1 != '\0')) || (2000.0 <= snapshot_engine_speed_rpm_ffffb548)) ||
+     (inferred_ram_ce1c_ffffce1c_ffffce1c != '\x01')) {
     arg0 = trailing_timing_with_corrections_ffffa63c;
     if ((DAT_ffffbbce != '\0') || (DAT_ffffa934 <= 0.0)) goto LAB_00012392;
     pfVar2 = (float *)&DAT_ffffa920;
@@ -35,8 +35,8 @@ void trailing_final_timing_clamp_output(void)
   }
   arg0 = *pfVar2;
 LAB_00012392:
-  DAT_ffffa664 = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&DAT_000691cc);
-  trailing_ignition_timing_ffffa638 = rx8_clamp_float(arg0,DAT_ffffa65c,DAT_ffffa664);
+  trailing_max_advance_ffffa664 = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&candidate_tbl_max_advance_vs_rpm_trailing_000691cc);
+  trailing_ignition_timing_ffffa638 = rx8_clamp_float(arg0,trailing_min_advance_clamp_ffffa65c,trailing_max_advance_ffffa664);
   return;
 }
 

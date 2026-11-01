@@ -22,7 +22,7 @@ void FUN_00042d6e(void)
   
   cVar2 = DAT_ffffca4d;
   cVar1 = DAT_ffffca4a;
-  if (DAT_ffffaa62 == '\x01') {
+  if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
     DAT_ffffca3d = 0;
   }
   else if (DAT_ffffca34 <= 5.0) {

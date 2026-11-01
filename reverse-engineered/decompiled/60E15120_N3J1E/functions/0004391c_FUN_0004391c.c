@@ -6,8 +6,8 @@
 void FUN_0004391c(void)
 
 {
-  DAT_ffffcaa4 = 0;
-  DAT_ffffca9c = 0;
+  cranking_angle_timing_leading_raw_ffffcaa4 = 0;
+  cranking_angle_timing_leading_filtered_ffffca9c = 0;
   return;
 }
 

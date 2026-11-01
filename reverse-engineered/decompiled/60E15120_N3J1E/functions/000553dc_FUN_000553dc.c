@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x000553dc; body bytes: 78; decompiled */
 
-undefined4 FUN_000553dc(void)
+undefined4 diag_read_calc_load_pct(void)
 
 {
   char cVar1;

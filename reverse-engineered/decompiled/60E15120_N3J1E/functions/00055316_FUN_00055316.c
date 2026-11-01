@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005346a (72 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_00055316(void)
+int candidate_diag_read_active_cal_field(void)
 
 {
   char cVar1;

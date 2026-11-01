@@ -10,7 +10,7 @@ undefined1 * FUN_000321f4(void)
   undefined1 *puVar2;
   
   if (((((DAT_ffffbced != '\x01') || (DAT_ffffbfb5 != '\0')) || (DAT_ffffbfcc != '\0')) ||
-      (DAT_ffffbc35 != '\x01')) ||
+      (inferred_ram_bc35_ffffbc35_ffffbc35 != '\x01')) ||
      ((2.0 < DAT_ffffbfa0 - DAT_ffffbfa4 &&
       ((6.4 < DAT_ffffbfa0 - DAT_ffffbfa4 || (DAT_ffffbfb7 != '\x01')))))) {
     DAT_ffffbfb6 = 0;
@@ -34,7 +34,7 @@ undefined1 * FUN_000321f4(void)
     puVar2 = &DAT_ffffbfb7;
   }
   DAT_ffffbfb7 = DAT_ffffbfbe != 0;
-  DAT_ffffbfcc = DAT_ffffbc35;
+  DAT_ffffbfcc = inferred_ram_bc35_ffffbc35_ffffbc35;
   DAT_ffffbfcd = DAT_ffffbfb6;
   return puVar2;
 }

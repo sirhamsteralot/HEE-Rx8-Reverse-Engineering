@@ -5,7 +5,7 @@ undefined4 FUN_0005629e(void)
 {
   char cVar1;
   
-  if (((0.64 <= maf_voltage_latched_ffffa9e4) || (DAT_ffffa984 <= 4.8)) || ((DAT_ffff9ec8 & 0x20) == 0)) {
+  if (((0.64 <= maf_voltage_latched_ffffa9e4) || (inferred_ram_a984_ffffa984_ffffa984 <= 4.8)) || ((vehicle_inputs_pfdr_latch_ffff9ec8 & 0x20) == 0)) {
     DAT_ffffd1cd = 0;
   }
   else {

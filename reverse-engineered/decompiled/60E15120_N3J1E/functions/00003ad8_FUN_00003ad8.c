@@ -16,7 +16,7 @@ undefined4 FUN_00003ad8(char param_1)
     return 0;
   }
   DAT_ffff7660 = local_8;
-  DAT_ffff7640 = 0x100;
+  os_state_flags_ffff7640 = 0x100;
   uVar1 = os_init();
   return uVar1;
 }

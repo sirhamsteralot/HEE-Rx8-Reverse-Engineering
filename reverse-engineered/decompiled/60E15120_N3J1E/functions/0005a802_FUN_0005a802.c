@@ -40,7 +40,7 @@ LAB_0005a926:
     if (40.233 <= snapshot_vehicle_speed_ffffbbb4) {
       DAT_ffffd298 = rx8_add_u16_saturate((int)DAT_ffffd298,1);
     }
-    if (((snapshot_DAT_ffffd160 < -10.0) || (DAT_ffffaa62 != '\x01')) || (1.609 < snapshot_vehicle_speed_ffffbbb4)) goto LAB_0005a926;
+    if (((snapshot_DAT_ffffd160 < -10.0) || (cranking_active_ffffaa62_ffffaa62 != '\x01')) || (1.609 < snapshot_vehicle_speed_ffffbbb4)) goto LAB_0005a926;
     DAT_ffffd29a = rx8_add_u16_saturate((int)(short)DAT_ffffd29a,1);
   }
   if (secondary_air_request_final_ffffa960 == '\x01') {

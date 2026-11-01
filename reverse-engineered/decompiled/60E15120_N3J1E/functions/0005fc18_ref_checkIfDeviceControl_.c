@@ -6,9 +6,9 @@
 char ref_checkIfDeviceControl_(void)
 
 {
-  DAT_ffffd3b4 = 0x40;
+  diag_permission_mask_ffffd3b4_ffffd3b4 = 0x40;
   if (DAT_ffffd1ce == '\x01') {
-    DAT_ffffd3b4 = 0xfffd;
+    diag_permission_mask_ffffd3b4_ffffd3b4 = 0xfffd;
   }
   return DAT_ffffd1ce;
 }

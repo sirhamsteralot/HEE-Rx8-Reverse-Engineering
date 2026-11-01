@@ -7,7 +7,7 @@ void ref_calculateTorqueRelated(void)
 
 {
   DAT_ffffbc9c = DAT_ffffbc98 -
-                 (DAT_ffffbc94 - leading_ignition_timing_ffffa630) * (DAT_ffffbc94 - leading_ignition_timing_ffffa630) * DAT_ffffbc90;
+                 (dsc_mode_a_base_timing_ffffbc94 - leading_ignition_timing_ffffa630) * (dsc_mode_a_base_timing_ffffbc94 - leading_ignition_timing_ffffa630) * DAT_ffffbc90;
   return;
 }
 

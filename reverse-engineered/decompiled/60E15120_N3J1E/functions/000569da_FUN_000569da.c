@@ -6,12 +6,12 @@
 /* Function candidate recovered from ROM pointer at 5f198 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag_read_mass_air_flow(char param_1)
+void diag22_pid0010_maf_g_s(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_00055528();
+  uVar1 = diag_encode_maf();
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }

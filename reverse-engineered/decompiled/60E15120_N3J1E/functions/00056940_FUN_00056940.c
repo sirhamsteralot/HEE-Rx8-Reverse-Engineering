@@ -6,12 +6,12 @@
 /* Function candidate recovered from ROM pointer at 5f144 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag_read_coolant_temp(char param_1)
+void diag22_pid0005_coolant_temp_c(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = FUN_0005542a();
+  uVar1 = diag_encode_ect_c();
   diag_append_u8((int)param_1,uVar1);
   return;
 }

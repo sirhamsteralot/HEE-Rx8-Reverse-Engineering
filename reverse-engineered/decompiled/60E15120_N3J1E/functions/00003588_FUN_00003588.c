@@ -6,9 +6,9 @@
 void FUN_00003588(void)
 
 {
-  DAT_ffff7640 = DAT_ffff7640 | (uint)&DAT_00010000;
+  os_state_flags_ffff7640 = os_state_flags_ffff7640 | (uint)&DAT_00010000;
   (*(code *)0x0)();
-  DAT_ffff7640 = DAT_ffff7640 & 0xfffeffff;
+  os_state_flags_ffff7640 = os_state_flags_ffff7640 & 0xfffeffff;
   return;
 }
 

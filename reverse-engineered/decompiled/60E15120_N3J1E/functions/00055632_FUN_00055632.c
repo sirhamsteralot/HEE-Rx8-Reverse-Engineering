@@ -1,6 +1,6 @@
 /* ROM address: 0x00055632; body bytes: 34; decompiled */
 
-uint FUN_00055632(void)
+uint candidate_diag_read_gear_byte(void)
 
 {
   uint uVar1;

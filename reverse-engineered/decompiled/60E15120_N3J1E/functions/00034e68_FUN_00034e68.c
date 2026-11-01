@@ -20,13 +20,13 @@ uint FUN_00034e68(void)
     else if (uVar1 == 2) {
       if ((DAT_ffffc282 == 0) || (2 < DAT_ffffc282)) {
         ref_setImmoLight__(0);
-        DAT_ffffc1d0 = 0;
+        inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
       }
       else {
         DAT_ffffc282 = DAT_ffffc282 - 1;
         DAT_ffffc22f = 1;
         ref_setImmoLight__(1);
-        DAT_ffffc1d0 = 1;
+        inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 1;
         DAT_ffffc228 = 0;
       }
       DAT_ffffc216 = 0x2ee;

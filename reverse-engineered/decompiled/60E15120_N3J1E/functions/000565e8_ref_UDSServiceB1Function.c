@@ -7,7 +7,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00054904 (234 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSServiceB1Function(uint param_1,uint param_2)
+uint candidate_uds_service_b1_mazda_specific(uint param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;
@@ -17,7 +17,7 @@ uint ref_UDSServiceB1Function(uint param_1,uint param_2)
   ushort local_24 [2];
   ushort local_20 [8];
   
-  snapshot_DAT_ffffd3b4 = DAT_ffffd3b4;
+  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   if (param_2 == 1) {
     if ((param_1 & 0xffff) < 2) {

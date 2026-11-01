@@ -45,7 +45,7 @@ undefined2 * FUN_00041fb8(void)
     else if (DAT_ffffc95a != 0) {
       DAT_ffffc95a = DAT_ffffc95a + -1;
     }
-    if ((((cVar1 == '\x01') && (DAT_ffffb0d0 < 0.23)) && (snapshot_DAT_ffffc928 < DAT_ffffc938)) &&
+    if ((((cVar1 == '\x01') && (inferred_ltft_bank1_ffffb0d0_ffffb0d0 < 0.23)) && (snapshot_DAT_ffffc928 < DAT_ffffc938)) &&
        ((DAT_ffffc95a == 0 || (cVar3 == '\0')))) {
       uVar6 = rx8_add_u16_saturate(uVar6,1);
     }

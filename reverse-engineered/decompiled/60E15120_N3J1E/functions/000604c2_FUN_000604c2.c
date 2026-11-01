@@ -8,9 +8,9 @@ uint FUN_000604c2(char param_1)
 {
   uint uVar1;
   
-  uVar1 = (uint)(short)DAT_ffffd3b4;
+  uVar1 = (uint)(short)diag_permission_mask_ffffd3b4_ffffd3b4;
   if (param_1 == '\0') {
-    uVar1 = (uint)(DAT_ffffd3b4 >> 8);
+    uVar1 = (uint)(diag_permission_mask_ffffd3b4_ffffd3b4 >> 8);
   }
   else if (param_1 != '\x01') {
     uVar1 = 0;

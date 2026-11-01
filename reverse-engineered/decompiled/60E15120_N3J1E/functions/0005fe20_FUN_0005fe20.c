@@ -10,7 +10,7 @@ uint FUN_0005fe20(uint param_1,undefined4 param_2,short param_3)
   char cVar5;
   int iVar6;
   
-  sVar2 = DAT_ffffd3b4;
+  sVar2 = diag_permission_mask_ffffd3b4_ffffd3b4;
   iVar6 = (int)*(short *)(&DAT_0007df42 + (param_1 & 0xffff) * 2);
   if ((DAT_ffffd1c5 == '\x01') || (DAT_ffffd958 == '\x01')) {
     bVar1 = true;

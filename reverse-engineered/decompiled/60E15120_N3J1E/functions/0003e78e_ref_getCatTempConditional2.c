@@ -6,8 +6,8 @@
 void ref_getCatTempConditional2(void)
 
 {
-  if (880.0 <= DAT_ffffc644) {
-    if (1000.0 < DAT_ffffc644) {
+  if (880.0 <= fuel_correction_sum_ffffc644_ffffc644) {
+    if (1000.0 < fuel_correction_sum_ffffc644_ffffc644) {
       DAT_ffffc650 = 1;
     }
   }

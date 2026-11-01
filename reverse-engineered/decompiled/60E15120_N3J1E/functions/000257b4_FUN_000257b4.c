@@ -14,7 +14,7 @@ undefined2 * FUN_000257b4(void)
   else {
     DAT_ffffb645 = '\x01';
   }
-  if ((18.471 < DAT_ffffb654) || (15.938 < DAT_ffffb658)) {
+  if ((18.471 < inferred_ram_b654_ffffb654_ffffb654) || (15.938 < DAT_ffffb658)) {
     puVar2 = (undefined2 *)0x0;
   }
   else {

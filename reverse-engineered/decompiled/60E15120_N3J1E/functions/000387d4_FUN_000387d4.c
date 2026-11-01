@@ -34,7 +34,7 @@ char FUN_000387d4(void)
     cVar5 = '\x01';
   }
   else {
-    if (((((DAT_ffffc522 < DAT_ffffc4fc) && (-40.0 < DAT_ffffc4c8)) && (DAT_ffffc5fe == '\0')) &&
+    if (((((DAT_ffffc522 < DAT_ffffc4fc) && (-40.0 < inferred_temp_c4c8_ffffc4c8_ffffc4c8)) && (DAT_ffffc5fe == '\0')) &&
         ((snapshot_inferred_coolant_temperature_catalyst_temp_model_ffffa998 < 71.0 && (cVar1 = ref_getFaultStatus__(0x17), cVar1 == '\0')))) &&
        ((DAT_ffffc590 == '\0' && (DAT_ffffc5e6 == '\0')))) {
       if (71.25 <= DAT_ffffc5f0) {

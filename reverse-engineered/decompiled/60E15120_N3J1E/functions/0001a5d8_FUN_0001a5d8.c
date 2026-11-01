@@ -6,7 +6,7 @@
 bool FUN_0001a5d8(void)
 
 {
-  DAT_ffffaa69 = (DAT_ffff9ec8 & 1) != 0;
+  DAT_ffffaa69 = (vehicle_inputs_pfdr_latch_ffff9ec8 & 1) != 0;
   return DAT_ffffaa69;
 }
 

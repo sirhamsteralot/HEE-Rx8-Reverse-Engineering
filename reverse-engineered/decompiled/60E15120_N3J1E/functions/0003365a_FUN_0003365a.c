@@ -8,7 +8,7 @@ void FUN_0003365a(void)
   DAT_ffffc074 = DAT_ffffc0a0;
   DAT_ffffc09c = engine_load_ffffc0b4;
   DAT_ffffc098 = engine_speed_rpm_ffffb548;
-  DAT_ffffc0a0 = DAT_ffffad48;
+  DAT_ffffc0a0 = inferred_ram_ad48_ffffad48_ffffad48;
   return;
 }
 

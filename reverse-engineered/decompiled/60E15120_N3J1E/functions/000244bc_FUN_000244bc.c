@@ -27,11 +27,11 @@ void FUN_000244bc(void)
     DAT_ffffb446 = rx8_encode_u16_affine_saturate(DAT_ffffb414,0x3cfa0000,0);
   }
   DAT_ffffb448 = rx8_encode_u16_affine_saturate(DAT_ffffb594,0x39a00000,0);
-  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffb44a = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
   DAT_ffffb44c = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
-  DAT_ffffb44e = DAT_ffffa9c4;
+  DAT_ffffb44e = inferred_pedal_volts_ffffa9c4_ffffa9c4;
   DAT_ffffb450 = DAT_ffffb51e;
   DAT_ffffb452 = DAT_ffffb520;
   DAT_ffffb454 = DAT_ffffb522;

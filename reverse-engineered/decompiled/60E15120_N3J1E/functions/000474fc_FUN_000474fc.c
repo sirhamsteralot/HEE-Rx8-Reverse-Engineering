@@ -12,7 +12,7 @@ void FUN_000474fc(void)
     DAT_ffffcc88 = 1.0;
   }
   else if (DAT_ffffccb8 == 0x32) {
-    fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff807c);
+    fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
     DAT_ffffcc88 = DAT_ffffb4b0 - fVar1;
   }
   else {

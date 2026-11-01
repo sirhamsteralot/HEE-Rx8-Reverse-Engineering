@@ -6,8 +6,8 @@
 void ref_getDriverOffThrottleTimer__(void)
 
 {
-  if (DAT_ffffa9bc < 2.5) {
-    if (DAT_ffffa9bc < 2.0) {
+  if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 2.5) {
+    if (inferred_ram_a9bc_ffffa9bc_ffffa9bc < 2.0) {
       DAT_ffffaa64 = '\0';
     }
   }

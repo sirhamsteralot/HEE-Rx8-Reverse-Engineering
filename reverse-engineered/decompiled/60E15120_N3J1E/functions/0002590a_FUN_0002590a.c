@@ -11,7 +11,7 @@ void FUN_0002590a(void)
   else {
     DAT_ffffb646 = '\x01';
   }
-  if (((((DAT_ffffb654 <= 16.973) || (10.938 <= DAT_ffffb658)) || (engine_running_ffffa428 == '\0')) ||
+  if (((((inferred_ram_b654_ffffb654_ffffb654 <= 16.973) || (10.938 <= DAT_ffffb658)) || (engine_running_ffffa428 == '\0')) ||
       ((engine_running_ffffa428 == '\x01' && (DAT_ffffb63c < 0x3f)))) ||
      ((DAT_ffffb646 == '\0' || ((DAT_ffffb646 == '\x01' && (DAT_ffffb63e < 0x3f)))))) {
     DAT_ffffb60a = 0x138;

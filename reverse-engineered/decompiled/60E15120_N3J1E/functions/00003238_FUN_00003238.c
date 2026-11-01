@@ -9,7 +9,7 @@
 undefined1 * interrupt_entry_save_context(void)
 
 {
-  DAT_ffff7640 = DAT_ffff7640 + 1;
+  os_state_flags_ffff7640 = os_state_flags_ffff7640 + 1;
   return &LAB_00003280;
 }
 

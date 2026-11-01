@@ -11,7 +11,7 @@ void FUN_0002616e(void)
   
   fVar4 = 2.5;
   fVar5 = -2.5;
-  fVar2 = rx8_clamp_float(DAT_ffffb59c - DAT_ffffb65c,-2.5,2.5);
+  fVar2 = rx8_clamp_float(inferred_ram_b59c_ffffb59c_ffffb59c - DAT_ffffb65c,-2.5,2.5);
   fVar3 = fVar2 - DAT_ffffb5c8;
   DAT_ffffb5c8 = fVar2;
   DAT_ffffb5cc = rx8_clamp_float(fVar3,fVar5,fVar4);

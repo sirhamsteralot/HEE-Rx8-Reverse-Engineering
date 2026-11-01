@@ -21,7 +21,7 @@ undefined4 * ref_filterEngineSpeed(void)
   }
   DAT_ffffb54c = ((engine_speed_rpm_ffffb548 + DAT_ffffb54c) - DAT_ffffb560) * 0.5;
   DAT_ffffb560 = engine_speed_rpm_ffffb548;
-  if ((cVar1 == '\0') || (DAT_ffffa7ac + 200.0 <= engine_speed_rpm_ffffb548)) {
+  if ((cVar1 == '\0') || (inferred_ram_a7ac_ffffa7ac_ffffa7ac + 200.0 <= engine_speed_rpm_ffffb548)) {
     puVar2 = &DAT_00024fb4;
     DAT_ffffb554 = engine_speed_rpm_ffffb548;
   }

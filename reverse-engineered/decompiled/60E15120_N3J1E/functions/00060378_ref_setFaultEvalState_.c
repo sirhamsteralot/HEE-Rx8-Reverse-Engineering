@@ -12,7 +12,7 @@ uint ref_setFaultEvalState_(void)
   if (DAT_ffffd1ad == '\x01') {
     uVar1 = 3;
   }
-  if ((DAT_ffff9ec8 & 1) == 0) {
+  if ((vehicle_inputs_pfdr_latch_ffff9ec8 & 1) == 0) {
     uVar1 = uVar1 | 4;
   }
   if (DAT_ffffd198 == '\x01') {

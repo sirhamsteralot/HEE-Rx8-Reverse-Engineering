@@ -10,9 +10,9 @@ char FUN_00023558(void)
     DAT_ffffb414 = 0.0;
   }
   else {
-    DAT_ffffb414 = DAT_ffffb410 - DAT_ffffb428;
+    DAT_ffffb414 = inferred_ram_b410_ffffb410_ffffb410 - DAT_ffffb428;
   }
-  DAT_ffffb428 = DAT_ffffb410;
+  DAT_ffffb428 = inferred_ram_b410_ffffb410_ffffb410;
   return DAT_ffffccc9;
 }
 

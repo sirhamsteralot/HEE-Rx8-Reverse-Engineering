@@ -11,8 +11,8 @@ uint FUN_0003af10(void)
   uint uVar1;
   float snapshot_DAT_ffffb2f0;
   
-  snapshot_DAT_ffffb2f0 = DAT_ffffb2f0;
-  cVar2 = rx8_is_outside_tolerance_band(DAT_ffffb2f0,0x42c80000,0x3727c5ac);
+  snapshot_DAT_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
+  cVar2 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0x42c80000,0x3727c5ac);
   uVar1 = 1;
   if ((DAT_ffffd1c5 == '\x01') || (uVar1 = (uint)DAT_ffffd1ad, uVar1 == 1)) {
     DAT_ffffc57d = '\0';

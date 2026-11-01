@@ -1,0 +1,30 @@
+record_address	service	handler	param	handler_alias	confidence	evidence
+0005eb40	01	0006581c	00000001	obd_mode01_current_data	high	OBD Mode 01 handler (caseD_27)
+0005eb4c	02	00065c88	00000001	obd_mode02_freeze_frame	high	OBD Mode 02
+0005eb58	03	00065ff8	00000001	obd_mode03_stored_dtc	high	OBD Mode 03
+0005eb64	04	000660d0	00000001	obd_mode04_clear_dtc	high	OBD Mode 04 (also ref_ClearFaults_ at 0x558ac for service 0x14)
+0005eb70	06	0006725c	00000001	obd_mode06_test_results	high	OBD Mode 06
+0005eb7c	07	000661ec	00000001	obd_mode07_pending_dtc	high	OBD Mode 07
+0005eb88	09	000662c0	00000001	obd_mode09_vehicle_info	high	OBD Mode 09 (ref_OBDMode9Fuction)
+0005eb94	28	0005b9f6	00000001	uds_service_28_communication_control	high	UDS 0x28
+0005eba0	85	0005dc44	00000001	uds_service_85_control_dtc_setting	high	UDS 0x85 (ref_UDSMode85Func)
+0005ebac	10	00057c8c	1000000f	uds_service_10_diagnostic_session_control	high	UDS 0x10; table record 0x5ebac
+0005ebb8	27	00057a64	1000000e	uds_service_27_security_access	high	UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it
+0005ebc4	3e	00056508	1000000f	uds_service_3e_tester_present	high	UDS 0x3E
+0005ebd0	11	0005af54	0000000e	uds_service_11_ecu_reset	high	UDS 0x11
+0005ebdc	21	0005b414	1000000f	uds_service_21_read_data_by_local_id	medium	record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+0005ebe8	22	000567e8	1000000f	uds_service_22_read_data_by_identifier	high	record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
+0005ebf4	23	0005b750	00000006	uds_service_23_read_memory_by_address	high	UDS 0x23 (ref_UDSMode23Function)
+0005ec00	3b	0005d8b4	0000000e	uds_service_3b	medium	record 0x5ec00 -> 0x5d8b4
+0005ec0c	18	00057db0	00000005	uds_service_18	medium	record 0x5ec0c -> 0x57db0
+0005ec18	12	0005b094	00000001	uds_service_12	medium	record 0x5ec18 -> 0x5b094
+0005ec24	14	000558ac	10000005	uds_service_14_clear_diagnostic_information	high	UDS 0x14 (ref_ClearFaults_)
+0005ec30	2f	0005bc4c	10000004	uds_service_2f_input_output_control	high	UDS 0x2F
+0005ec3c	31	0005df60	00000005	uds_service_31_routine_control	high	UDS 0x31
+0005ec48	32	0005e024	00000005	uds_service_32	medium	record 0x5ec48 -> 0x5e024
+0005ec54	33	0005e0ce	00000005	uds_service_33	medium	record 0x5ec54 -> 0x5e0ce
+0005ec60	34	0005d7bc	00000002	uds_service_34_request_download	high	UDS 0x34 (ref_UDSMode34Func)
+0005ec6c	36	0005d834	00000002	uds_service_36_transfer_data	high	UDS 0x36 (ref_UDSMode36Function_)
+0005ec78	37	0005d874	00000002	uds_service_37_request_transfer_exit	high	UDS 0x37 (ref_UDSService37Function)
+0005ec84	b1	000565e8	0000000f	uds_service_b1_mazda_specific	medium	record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)
+0005ec90	ff	0006689a	00000000	uds_service_ff_default	medium	terminator/catch-all record 0x5ec90 -> 0x6689a

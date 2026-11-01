@@ -50,89 +50,89 @@ uint FUN_00054d90(char param_1,uint param_2)
     ref_updateRAM__(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 2:
-    uVar7 = FUN_000553dc();
+    uVar7 = diag_read_calc_load_pct();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 3:
-    uVar7 = FUN_0005542a();
+    uVar7 = diag_encode_ect_c();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 4:
-    uVar7 = FUN_00055440();
+    uVar7 = diag_encode_stft_lambda();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 5:
-    uVar7 = FUN_00055466();
+    uVar7 = diag_encode_ltft();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 6:
-    uVar7 = FUN_00055484();
+    uVar7 = diag_encode_rpm();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 7:
-    uVar7 = FUN_0005549a();
+    uVar7 = diag_encode_vss();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 8:
-    uVar7 = FUN_000554ae();
+    uVar7 = diag_encode_leading_timing();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 9:
-    uVar7 = FUN_000554c6();
+    uVar7 = diag_encode_iat();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 10:
-    uVar7 = FUN_00055528();
+    uVar7 = diag_encode_maf();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xb:
-    uVar7 = FUN_0005553e();
+    uVar7 = diag_encode_throttle_pct();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xc:
-    uVar7 = FUN_0005556a();
+    uVar7 = diag_read_secondary_air_status();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xd:
-    uVar7 = FUN_00055580();
+    uVar7 = diag_read_o2_present_const();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = FUN_00055586();
+    uVar7 = candidate_diag_encode_o2s2();
     uVar7 = ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = FUN_000555ac();
+    uVar2 = candidate_diag_encode_trim_b074();
     ref_updateRAM__(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
-    uVar7 = FUN_000555ca();
+    uVar7 = diag_read_obd_standard_const();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x10:
-    uVar7 = FUN_000555d0();
+    uVar7 = diag_read_runtime_s();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x11:
-    uVar7 = FUN_000555f8();
+    uVar7 = diag_read_distance_mil();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = FUN_00055616();
+    uVar7 = candidate_diag_encode_b2f0();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = FUN_0005562c();
+    uVar7 = candidate_diag_read_d287();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
-    uVar7 = FUN_00055632();
+    uVar7 = candidate_diag_read_gear_byte();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = FUN_000556b0();
+    uVar7 = candidate_diag_read_90fc();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = FUN_000556ce();
+    uVar7 = candidate_diag_encode_ad10();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
@@ -142,39 +142,39 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = FUN_0005571a();
+    uVar7 = candidate_diag_encode_c644();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
-    uVar7 = FUN_00055732();
+    uVar7 = diag_encode_battery_v();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1a:
-    uVar7 = FUN_00055748();
+    uVar7 = diag_encode_load_g_rev();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1b:
-    uVar7 = FUN_0005575e();
+    uVar7 = diag_encode_lambda_target();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = FUN_00055774();
+    uVar7 = candidate_diag_encode_ad48();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = FUN_0005578a();
+    uVar7 = candidate_diag_encode_ad5e();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = FUN_000557b6();
+    uVar7 = candidate_diag_encode_a9c4();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = FUN_00055838();
+    uVar7 = candidate_diag_encode_a9c6();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = FUN_00055864();
+    uVar7 = candidate_diag_encode_b410();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:
@@ -238,7 +238,7 @@ uint FUN_00054d90(char param_1,uint param_2)
       uVar2 = ref_readValue_32bit_ADDRESS_VAL(puVar5,0);
       uVar7 = FUN_000548ec(uVar7,&stack0xffffffe4,uVar2);
       puVar5 = puVar5 + 8;
-    } while (puVar5 < &DAT_ffff9150);
+    } while (puVar5 < &inferred_sensor_block_ffff9150_ffff9150);
     return 0;
   case 0x26:
     return 0;

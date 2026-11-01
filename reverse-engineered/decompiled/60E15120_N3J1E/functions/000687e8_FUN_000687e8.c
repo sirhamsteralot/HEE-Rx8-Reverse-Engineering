@@ -6,7 +6,7 @@
 void FUN_000687e8(void)
 
 {
-  DAT_ffffddd0 = DAT_ffffddd0 | (byte)((ushort)DAT_ffffdddc >> 8);
+  uds_tx_buffer_ffffddd0 = uds_tx_buffer_ffffddd0 | (byte)((ushort)DAT_ffffdddc >> 8);
   DAT_ffffddd1 = (undefined1)DAT_ffffdddc;
   FUN_00067e78((int)DAT_ffffdde2,&DAT_ffffddd2,6);
   DAT_ffffdde3 = 1;

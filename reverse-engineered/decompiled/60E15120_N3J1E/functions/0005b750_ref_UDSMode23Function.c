@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00059f40 (156 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_UDSMode23Function(short param_1,uint param_2)
+uint uds_service_23_read_memory_by_address(short param_1,uint param_2)
 
 {
   char cVar3;

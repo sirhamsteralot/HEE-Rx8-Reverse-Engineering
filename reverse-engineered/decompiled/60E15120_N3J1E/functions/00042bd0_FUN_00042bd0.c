@@ -6,9 +6,9 @@
 void FUN_00042bd0(void)
 
 {
-  DAT_ffffca99 = DAT_ffffaa62;
-  DAT_ffffca9a = DAT_ffffaa62;
-  DAT_ffffca94 = DAT_ffffa9bc;
+  DAT_ffffca99 = cranking_active_ffffaa62_ffffaa62;
+  DAT_ffffca9a = cranking_active_ffffaa62_ffffaa62;
+  DAT_ffffca94 = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   FUN_00043870();
   return;
 }

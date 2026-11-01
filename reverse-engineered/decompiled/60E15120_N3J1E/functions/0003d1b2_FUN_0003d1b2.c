@@ -15,7 +15,7 @@ undefined1 * FUN_0003d1b2(void)
   undefined4 snapshot_vehicle_speed_ffffbbb4;
   
   snapshot_DAT_ffffc614 = DAT_ffffc614;
-  cVar1 = DAT_ffffad18;
+  cVar1 = inferred_ram_ad18_ffffad18_ffffad18;
   if (DAT_ffffc614 == 0) {
     DAT_ffffc615 = 0;
   }

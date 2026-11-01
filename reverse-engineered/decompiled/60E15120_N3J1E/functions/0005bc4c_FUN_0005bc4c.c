@@ -3,7 +3,7 @@
 /* Function candidate recovered from ROM pointer at 5ec34 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-undefined * FUN_0005bc4c(ushort param_1,uint param_2)
+undefined * uds_service_2f_input_output_control(ushort param_1,uint param_2)
 
 {
   uint uVar1;
@@ -32,7 +32,7 @@ undefined * FUN_0005bc4c(ushort param_1,uint param_2)
       iVar10 = 0x31;
       puVar4 = puVar2;
       if ((char)puVar2 != -1) {
-        if ((DAT_ffffd3b4 & *(ushort *)(&DAT_0005f72a + ((uint)puVar2 & 0xff) * 0x10)) == 0) {
+        if ((diag_permission_mask_ffffd3b4_ffffd3b4 & *(ushort *)(&DAT_0005f72a + ((uint)puVar2 & 0xff) * 0x10)) == 0) {
           puVar4 = (undefined *)0x0;
         }
         else if ((((bStack_22 == 0) && (((&DAT_0005f731)[((uint)puVar2 & 0xff) * 0x10] & 0x80) != 0)

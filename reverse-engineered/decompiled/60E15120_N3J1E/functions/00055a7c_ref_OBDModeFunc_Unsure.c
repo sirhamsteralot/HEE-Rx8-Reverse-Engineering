@@ -95,7 +95,7 @@ uint ref_OBDModeFunc_Unsure(char param_1,uint param_2)
       uVar2 = ref_readValue_32bit_ADDRESS_VAL(puVar5,0);
       uVar7 = FUN_000548ec(uVar7,&stack0xffffffe4,uVar2);
       puVar5 = puVar5 + 8;
-    } while (puVar5 < &DAT_ffff9150);
+    } while (puVar5 < &inferred_sensor_block_ffff9150_ffff9150);
     return 0;
   case 4:
     return 0;

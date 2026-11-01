@@ -8,14 +8,14 @@ uint FUN_0004b668(void)
   uint uVar1;
   
   if ((DAT_ffffc61e == '\x01') || (8.0 < DAT_ffffce38)) {
-    DAT_ffffce30 = -0x100;
+    inferred_ram_ce30_ffffce30_ffffce30 = -0x100;
   }
   DAT_ffffce38 = (vehicle_speed_ffffbbb4 * 1024.0) / 3.6e+06 + DAT_ffffce38;
-  if (DAT_ffffce30 != DAT_ffffce46) {
+  if (inferred_ram_ce30_ffffce30_ffffce30 != DAT_ffffce46) {
     DAT_ffffce4c = 1;
-    ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x7a,&DAT_ffffce30,2);
+    ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
     DAT_ffffce4a = FUN_000378dc(0x7a,2);
-    DAT_ffffce46 = DAT_ffffce30;
+    DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   }
   uVar1 = (uint)DAT_ffffce4c;
   if (uVar1 == 1) {
