@@ -8,9 +8,10 @@ ROADMAP group C item 6 ("label 60E0G500 via the pipeline") + group D item 1
 
 ## What was done
 
-1. **Ghidra headless export** (Ghidra 12.1.2 from `input/ghidra_12.1.2_PUBLIC`,
-   JDK 21; project DB in `input/ghidra-work/ghidra_60e0g500`, not committed;
-   recipe `input/ghidra-60e0g500-export.sh`, log `input/ghidra-60e0g500-export.log`):
+1. **Ghidra headless export** (Ghidra 12.1.2 + JDK 21; the tool install, project DB,
+   recipe and log lived under `input/` and were removed in the 2026-11-01 intake
+   cleanup — reinstall Ghidra 12.1.2 PUBLIC and rerun `utilities/tools/ghidra/` to
+   reproduce):
    SetupTarget → RefineTarget → RecoverDispatch → ExportTarget, same SH-2E
    processor config as the base ROM. Outputs:
    - `reverse-engineered/decompiled/60E0G500_N3ZHEC/` (3,200 functions, 0
