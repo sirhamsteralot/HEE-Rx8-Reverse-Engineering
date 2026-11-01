@@ -29,10 +29,7 @@ ROADMAP group C item 6 ("label 60E0G500 via the pipeline") + group D item 1
    function aliases** propagate (see
    [cross_rom_differential_labeling.md](../60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md)
    and `cross_ecu/cross_rom_function_aliases.tsv` row set
-   `dumps/aron-N3ZHEC-2026-10-31.bin`). The 3 streetport tunes match the stock
-   dump at the same 2,582 functions — code identical, cal-only diffs (consistent
-   with [2026-10-31-streetport-diff.md](2026-10-31-streetport-diff.md), whose
-   "function mapping pending disassembly" status is now resolved).
+   `dumps/aron-N3ZHEC-2026-10-31.bin`).
 
 ## Follow-ups (not done here)
 

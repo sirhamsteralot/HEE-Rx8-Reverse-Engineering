@@ -31,8 +31,8 @@ Axes are always float32.
 
 ## ROMs extracted
 
-10 stock ROMs (via pinned submodule) + 4 own dumps (60E0G500 stock + 3 tuned
-streetport). Table counts: 381–587 per ROM, 0 non-monotonic axes everywhere.
+10 stock ROMs (via pinned submodule) + 1 own factory dump (60E0G500/N3ZHEC).
+Table counts: 381–587 per ROM, 0 non-monotonic axes everywhere.
 
 Regenerate:
 ```sh

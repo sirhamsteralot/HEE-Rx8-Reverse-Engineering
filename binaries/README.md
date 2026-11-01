@@ -17,10 +17,8 @@ edited, patched, or "fixed" in place.
 - **`binaries/` itself is for our own acquisitions only** (new dumps from our own
   units), with `manifest.csv` = SHA-256 + provenance for every file:
   - `dumps/` — recovered ROMs from our own ECUs, named
-    `<source>-<original-stem>-<date>.bin`. The `source` column in
-    `manifest.csv` flags **user-tuned** ROMs (e.g. Aron's `-streetport` bins,
-    fw 60E0G500) vs stock reads. Current: 4 dumps from Aron's ECU
-    (1 stock N3ZHEC + 3 tuned streetport variants).
+    `<source>-<original-stem>-<date>.bin`. Current: 1 factory dump
+    (stock fw 60E0G500 / cal N3ZHEC). User-tuned ROMs are not retained.
   - ROMs byte-identical to a submodule stock ROM are **not** duplicated — e.g.
     Aron's `N3ZHEB00013S5060….bin` read from his original ECU is identical to
     `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`

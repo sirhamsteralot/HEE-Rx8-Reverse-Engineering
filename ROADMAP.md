@@ -91,9 +91,6 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   at VBR 0x7fc50 mapped, dispatch table 0x5f10c PID 0x43 → handler 0x56b8a
   (record 0x5f268) verified dynamically. 27 functions + 16 RAM + 9 tables.
   → [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
-- **Streetport diff** (60E0G500): tuned vs stock = calibration-only (≥0x6c000);
-  rev limiter float32 at 0x6d54c (9000.0 → 5500/9500/10000).
-  → [`docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md`](docs/investigations/60E0G500_N3ZHEC/2026-10-31-streetport-diff.md)
 - **RX8Club thread mined + OCR'd**: BOOT-mode CN400 pinout (150 Hz WDT feed pin
   3), UDS services, seed/key in bootloader, PID 0x43 = g/rev × 1/255, ignition
   BTDC equation — inline XML addresses verified against the real N3ZHEC ROM.
@@ -105,8 +102,8 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
 ### Group A / P3 — Calibration extraction — DONE 2026-10-31
 
 - 587 tables extracted from `60E15120_N3J1E` (478 RX8Defs-matched + 109 unnamed),
-  381–587 across all 10 stock ROMs + 4 own dumps, 0 non-monotonic axes; cross-ROM
-  structural diff; streetport tunes mapped to 15–17 named descriptors.
+  381–587 across all 10 stock ROMs + 1 own dump, 0 non-monotonic axes; cross-ROM
+  structural diff.
   → [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
   artifacts: `data/maps/` (`extract_maps.py` + `diff_maps.py`).
 
@@ -186,10 +183,10 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log in `input/`
   (uncommitted).
 - `utilities/scripts/cross_rom_match.py`: byte-match of base-ROM function bodies
-  across all 10 stock ROMs + 4 own dumps → 33,644 matches, 2,999 propagated
+  across all 10 stock ROMs + 1 own dump → 25,898 matches, 2,213 propagated
   aliases (`data/labels/cross_rom_function_matches.tsv`,
   `cross_ecu/cross_rom_function_aliases.tsv`, `cross_rom_match_summary.json`).
-  60E0G500: 2,582 matches / 262 aliases; streetport tunes identical on code.
+  60E0G500: 2,582 matches / 262 aliases.
 - → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
   [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
 

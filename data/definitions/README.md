@@ -70,10 +70,6 @@ Evidence: `coverage.json` `dedupe_d8` (regenerate to re-verify).
 
 ## Caveats
 
-- The three `aron-N3ZHEC-streetportv1_24_*` dumps are user-tuned variants of
-  fw 60E0G500: they share the 60E0G500 block, but a tune may have moved table
-  contents — verify per-table against the ROM before any write. Stock defs
-  describe the stock layout.
 - `storageaddress="0x000000"` entries are upstream placeholders (unmapped
   DTC-enable bytes), not real addresses.
 - ROM identification is by the 8-byte fw id at 0x2000, asserted per ROM by the

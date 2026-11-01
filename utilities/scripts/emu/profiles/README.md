@@ -49,14 +49,6 @@ Stock / reference ROMs:
 
 - `60E15120_N3J1E.json` — primary analysis target (USDM S1 6-port MT).
 - `60E0FC00_N3Z2EU.json` — reference ROM (2004 US 6-port MT), byte-match seeding source.
-- `60E0G500_N3ZHEC.json` — **stock, NOT tuned**: own dump of Aron's ECU (EU 6-port
-  2004, fw 60E0G500 / cal N3ZHEC). Base for the tuned variants below.
+- `60E0G500_N3ZHEC.json` — factory ROM (stock): own dump of the donor ECU (EU 6-port
+  2004, fw 60E0G500 / cal N3ZHEC).
 - `60E1B900_N3ZBEH.json` — 6-port US MT (added 2026-10-31 as the "run another bin" demo).
-
-User-tuned ROMs (validation targets, **not for flashing**):
-
-- `60E0G500_N3ZHEC_streetport_{5500,9500,10000}max.json` — the streetport v1.24 bins
-  from `binaries/dumps/`. Run e.g.:
-  `python ../emu.py --profile 60E0G500_N3ZHEC_streetport_5500max --cycles 1000000`
-  — boots clean; read the tuned rev-limit cal in-emulation at 0x6d54c
-  (stock 9000.0 vs 5500.0/9500.0/10000.0 rpm).
