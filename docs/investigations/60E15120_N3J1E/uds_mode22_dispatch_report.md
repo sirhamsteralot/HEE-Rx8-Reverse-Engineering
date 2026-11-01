@@ -387,3 +387,92 @@ sign-extended `mov.w` RAM-address idiom, call targets, encode constants) and dyn
 re-executed in the emulator (full 99-PID sweep + service routing). One metadata error
 corrected (0xffffad5c reader column); no function label changed — all 175 function aliases
 held up under both static and dynamic re-verification.
+
+---
+
+## 12. Update - 2026-10-31 (ROADMAP group C: D3 checksum/CVN + D4 seed/key located)
+
+Both register items are now settled with raw-ROM evidence (SHA-256 unchanged
+`a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`).
+
+### 12.1 D3 - the checksum/CVN routine is an incremental dual-u16 additive sum, not CRC
+
+- **Engine: 0x5a3f4 `FUN_0005a3f4`** - per invocation sums one 0x1000-byte
+  section (0x800 u16 words, `while (uVar2 < 0x1000 && ptr < 0x80000)`) into two
+  u16 accumulators `DAT_ffffd2b0` / `DAT_ffffd2b2` (via u16 readers 0x3fe8 /
+  0x4144), starting at **0x2000** (the application image; SBL 0x0-0x1fff is not
+  covered) and **skipping the hole 0x7fb00-0x7fb7f** (pool words 0x5a4c8 =
+  0x7fb00, 0x5a4cc = 0x7fb80; end 0x80000 at pool 0x5a5f0 - all byte-verified).
+  This matches the thread's "computed incrementally in sections"; the "possibly
+  CRC16" guess is wrong - no CRC table/poly exists in the ROM, it is a plain
+  additive sum.
+- **Finalize: 0x5a714 `FUN_0005a714`** - at ptr > 0x7ffff, sums 10 more words,
+  then result = `(d2b0 << 16) | d2b2` is stored to RAM **0xffff9104** (32-bit)
+  with done flag **0xffff910c** = 1 (via `ref_updateMemoryAtAddress_32bit/8bit`).
+- **Reset: 0x5a3d8** zeroes accumulators/result and re-arms the start at 0x2000.
+- **Reader / diag exposure: 0x5a5a6 `FUN_0005a5a6`** returns the 32-bit CVN from
+  0xffff9104; called from **0x55bda `caseD_2`**, a case of the 0x55a7c
+  (`ref_OBDModeFunc_Unsure`, table 0x5eb18 key 0x06) dispatcher reached from
+  0x665cc - i.e. the CVN is diag-readable through that path. 0x5a3c6 mirrors the
+  result to a second address pair.
+- Consequence for patchers: the checksum covers 0x2000-0x7ffff except
+  0x7fb00-0x7fb7f, so any patch outside that hole changes the CVN - consistent
+  with the thread's "RX8Man fixes them up" (the fixup is host-side; the
+  application-side flash services 0x34/0x36/0x37 at 0x5d7bc/0x5d834/0x5d874 are
+  stubs returning NRCs, and Mode 09 PID 6 -> 0x66620 only returns rpm/stopped).
+
+### 12.2 D4 - seed/key located in both the application and the flash bootloader (SBL)
+
+**Application UDS 0x27** (handler 0x57a64 `uds_service_27_security_access`, table
+0x5ebb8):
+
+- Seed generation: **0x55f5e `FUN_00055f5e`** - reads the free-running ATU-II
+  timer `ATUII_TCNT0H_W` (up to 16 tries), seed = 3 bytes
+  `[b2^b0, b1^b0, b3^b0]` (fallback 0xaa/0x55/0x55, then 0xff..), stored at RAM
+  **0xffffd1d5-d1d8**; read back by 0x56084.
+- Key verification: **0x5609e `FUN_0005609e`** - builds a 12-byte buffer
+  `[level-key[0..2] from ROM 0x5f089-0x5f08b, 0,0, seed[0..2], "MazdA"]` - the
+  fixed key string **"MazdA" = 4d 61 7a 64 41** (byte-verified at ROM 0x5f084 and
+  as inline immediates in 0x5609e) - then runs a **64-round (0x40) shift-right
+  Feistel-style network** over the 8-byte block with the 3-byte level key,
+  XORing 0x28/0x90/0x10 into the key when LSBs differ; the final 3 bytes are
+  nibble-swapped and compared to the client key. Level/permission tables at ROM
+  0x5f055 (6-byte stride) and 0x5f058 (3-byte stride). This is the key Rx8Man's
+  hard-coded "MazdA" refers to (thread section 5).
+
+**Flash bootloader (SBL = ROM 0x0-0x1fff, ends at the 8-byte marker `*SBL_END`
+at 0x1ff4):** the SBL command loop **0x1378 `FUN_00001378`** assembles CAN packets
+(0x154c/0x15a6/0x1654) and dispatches service bytes 0x10/0x11/0x22/0x27/0x28/0x3b/
+0x34/0x36/0x37/0x3e/0x85/0xb1. Its **0x27 handler 0x1858 `FUN_00001858`** uses a
+fixed trivial scheme: seed request -> response seed **55 AA 55** (mov #0x55 at
+0x190a, 0xaa/0x55 stores), latch `DAT_ffffdfb2`; key send (sub 4, byte 2) ->
+literal 3-byte compare against **4D AC CD** (`cmp/eq 0x4d` at 0x193a + r3/r2
+loaded with 0xac/0xcd) -> unlock latch `DAT_ffffdfb1` = 1. So the BOOT-mode
+(bootloader) seed/key magic = seed 55 AA 55 / key 4D AC CD, located at 0x1858.
+
+- SBL flash path (for context): 0x34 -> 0x1ad6 (download: target = 0xffff6000 +
+  big-endian addr via 0x1e4c, size via 0x1e72, range-checked to 0x7e000);
+  0x36 -> 0x1c04 (0x400-byte blocks copied to the RAM staging buffer, scanning for
+  the `*SBL_END` magic at 0x1ff4; on match responds 0x78 and jumps via
+  0x1090 `FUN_00001090`); 0x37 -> 0x1d30 (transfer exit); 0xb1 -> 0x1d78 (erase via
+  0x1008). No checksum is verified by the SBL itself - consistent with 12.1.
+
+### 12.3 Functions located in this update
+
+| address | name | role |
+|---------|------|------|
+| 0x0005a3f4 | FUN_0005a3f4 | incremental checksum engine (0x1000 B/call, 0x2000-0x7ffff, skip 0x7fb00-0x7fb7f) |
+| 0x0005a714 | FUN_0005a714 | checksum finalize (10 tail words), store 0xffff9104/0xffff910c |
+| 0x0005a3d8 | FUN_0005a3d8 | checksum reset/re-arm |
+| 0x0005a5a6 | FUN_0005a5a6 | CVN reader (0xffff9104) |
+| 0x00055bda | caseD_2 | diag case returning the CVN via 0x5a5a6 |
+| 0x00055f5e | FUN_00055f5e | UDS 0x27 seed from ATU-II timer -> 0xffffd1d5-d1d8 |
+| 0x0005609e | FUN_0005609e | UDS 0x27 key verify: 64-round network, fixed key "MazdA" |
+| 0x00057a64 | uds_service_27_security_access | app 0x27 handler |
+| 0x00001858 | FUN_00001858 | SBL 0x27: seed 55 AA 55, key 4D AC CD |
+| 0x00001378 | FUN_00001378 | SBL CAN command loop |
+| 0x00001ad6 / 0x00001c04 / 0x00001d30 / 0x00001d78 | FUN_00001ad6 / FUN_00001c04 / FUN_00001d30 / FUN_00001d78 | SBL 0x34/0x36/0x37/0xb1 (download/transfer/exit/erase) |
+
+Limits: the exact diag service/PID that reaches 0x55bda is still candidate-level
+(0x55a7c is `ref_OBDModeFunc_Unsure`); the 0x5609e network's round function is
+described structurally, not proven bit-exact against a known key vector.

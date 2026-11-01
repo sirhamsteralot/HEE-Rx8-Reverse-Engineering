@@ -148,6 +148,22 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   chain confirmed (0x1ee4a: max(baro·tipin, target)×coolant, +1.0 lambda decimal
   part). Dynamic: `tests/test_fuel_chain_dynamic.py` (65/65 pytest).
 
+### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE 2026-10-31
+
+- **D3 closed**: incremental checksum routine = 0x5a3f4 (dual-u16 additive sum
+  over app flash 0x2000-0x7ffff in 0x1000-byte sections per call, skipping hole
+  0x7fb00-0x7fb7f), finalized by 0x5a714 into RAM 0xffff9104/0xffff910c,
+  diag-readable via 0x55bda (case of 0x55a7c) -> 0x5a5a6. Not a CRC. App flash
+  services 0x34/36/37 are stubs; Mode 09 PID 6 stubbed — checksum fixup is
+  host-side (Rx8Man), as the thread suspected.
+- **D4 closed**: app UDS 0x27 seed/key = 0x55f5e (ATU-II timer seed ->
+  0xffffd1d5-d1d8) + 0x5609e (64-round shift/xor key verify, fixed "MazdA" key at
+  0x5f084); bootloader (SBL 0x0-0x1fff, `*SBL_END` marker at 0x1ff4) 0x27 at
+  0x1858: seed 55 AA 55, key 4D AC CD. SBL flash path 0x34/0x36/0x37/0xb1 mapped
+  (0x1ad6/0x1c04/0x1d30/0x1d78; 0x36 stages 0x400-byte blocks at 0xffff6000+ and
+  jumps on `*SBL_END` via 0x1090).
+- → [uds_mode22_dispatch_report.md §12](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -165,8 +181,8 @@ Use the emulator for dynamic verification where useful (group B, done).
 - ~~Deepen `fueling_control_report.md`~~ **DONE 2026-10-31** — fueling report §10:
   all adder writers traced, fuel-cut arbitration / injection-angle / cold-start /
   MAF latch / 0x4ab8 resolved, descriptor→data/maps mapping, dynamic harness tests.
-- Settle **checksum/CVN** (find the incremental hash routine) — D3 — and
-  **bootloader seed/key location** — D4.
+- ~~Settle checksum/CVN (D3) and bootloader seed/key (D4)~~ **DONE 2026-10-31** —
+  see C item 5 in Completed below.
 - Label **60E0G500** via the pipeline (streetport diff ranges already mapped to
   descriptors via P3 — see calibration_extraction_report.md §7).
 ### D. Cross-ROM propagation (P2/P5) — depends on P3 + C for the base ROM
@@ -216,8 +232,8 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 |----|--------|------|
 | D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them (2026-10-31, [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
-| D3 | open | checksum/CVN unverified — incremental hash routine not yet found |
-| D4 | open | bootloader seed/key location unknown |
+| D3 | CLOSED 2026-10-31 | checksum/CVN routine found: 0x5a3f4 = incremental dual-u16 additive sum over app flash 0x2000-0x7ffff (0x1000 B/call, skips hole 0x7fb00-0x7fb7f), finalize 0x5a714 -> RAM 0xffff9104/0xffff910c, diag-read via 0x55bda -> 0x5a5a6. Not CRC (no CRC table/poly in ROM). See [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) §12.1 |
+| D4 | CLOSED 2026-10-31 | seed/key located in both layers: app UDS 0x27 (0x57a64): seed from ATU-II timer 0x55f5e -> 0xffffd1d5-d1d8, key verified by 0x5609e (64-round shift/xor network, fixed key "MazdA" at 0x5f084); flash bootloader (SBL 0x0-0x1fff) 0x27 at 0x1858: seed 55 AA 55, key 4D AC CD literal compare. See uds_mode22_dispatch_report.md §12.2 |
 | D5 | CLOSED 2026-10-31 | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) "Update 2026-10-31" |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |

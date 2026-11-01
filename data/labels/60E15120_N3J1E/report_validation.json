@@ -51,9 +51,9 @@
       "rom_claims": 0
     },
     "uds_mode22_dispatch_report.md": {
-      "fn_checked": 0,
+      "fn_checked": 11,
       "ram_checked": 0,
-      "rom_refs": 4,
+      "rom_refs": 15,
       "rom_claims": 0
     }
   },
