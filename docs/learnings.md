@@ -314,3 +314,28 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
 - Windows Python here defaults to cp1252 for pathlib read_text/write_text —
   use encoding='utf-8' or the edit tool when appending non-ASCII (→, ×) to docs,
   else write_text truncates the file on UnicodeEncodeError.
+
+## Cross-ROM Mode 22 mapping (2026-11-01, ROADMAP group D)
+
+- The Mode 22 dispatch table is NOT at a fixed address: family A (60E0E500/
+  60E0E700/60E15120/60E1C500/60E1D400/60E0G500 dumps) has 99 records at
+  0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0; family B (60E0FB00/60E0FC00/
+  60E1B900/60E32000_N3N5EB) has 110 records at 0x5d994/0x5dc2c/0x64d0c;
+  60E32000_N3M5E has 113 at 0x651bc. Locate by: run-scan for >=30 stride-12
+  records (ascending u16 pid, even handlers in [0x40,0x6c000)) filtered by a u32
+  pool ref, then record count = unique N with rom[table+N*12]==N AND that address
+  u32-referenced (the dispatcher loads the count from a pool word pointing at the
+  byte right after the table). Sub-PID table = count byte + 2, also pool-referenced.
+- The dispatcher itself is findable per ROM by matching the 20-byte prologue of
+  base 0x5774c (unique in every ROM, e.g. 60E0FC00 -> 0x55c14, 60E0G500 dump -> 0x57ef0).
+- Diag RAM cells are NOT fixed across ROMs: 60E0G500 uses pid cell 0xffffd226,
+  response code 0xffffd224, permission mask 0xffffd3f0 (base: 0xffffd1ea/d1e8/d3b4).
+  Always read them from the dispatcher's pool words before a dynamic check.
+- E8 gotcha: opdec.OPMNEM is keyed on full 16-bit words from the 60E15120 corpus
+  only. Family-B ROMs use mov.l @(disp,pc) encodings absent from it (467-888
+  distinct words per ROM in the code region) -> UnknownOpcode if executed; the
+  boot path avoids them, so family-B profiles boot fine but diag dispatch does not.
+- Dynamic sweep pattern that works: harness.call(bus, cpu, DISP, stop_at=(handler,))
+  proves the dispatcher reaches the mapped handler; a second call without stop_at
+  returns r0 = response_len + 3. Non-table PIDs return r0 = 3 (NRC 0x31).
+- bus.write16 truncates to 16 bits — do not test 'negative' PIDs above 0xffff.

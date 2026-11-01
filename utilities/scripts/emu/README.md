@@ -221,7 +221,7 @@ pending).
 ## Limits (honest)
 
 Full list with closure plans in **ROADMAP.md -> "Fidelity limits & known
-discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
+discrepancies"** (items E1-E8). Summary (updated 2026-11-01):
 
 - CPU implements the corpus-validated opcode subset; boot stops at the first
   unimplemented instruction (reported, not mis-executed). `interrupt()` honors
@@ -247,6 +247,14 @@ discrepancies"** (items E1-E7). Summary (updated 2026-10-31):
   driven via the profile `uds` entry points. `div1` (full Q/M SR-bit algorithm)
   and `rotcr` are fixed and validated vs the ROM's own divide routine (E7
   closed 2026-10-31); "cycles" are still not cycle-accurate time.
+- E8 open (2026-11-01): the opcode table `opdec.OPMNEM` is keyed on full 16-bit
+  words from the 60E15120 corpus only (9,902 entries), so family-B ROMs
+  (60E0FB00/60E0FC00/60E1B900/60E32000_*) contain `mov.l @(disp,pc)` encodings
+  absent from it (467-888 distinct words per ROM in the code region; verified
+  instance 0xda29 in 60E0FC00 dispatcher 0x55c14) -> UnknownOpcode if executed.
+  Their boot path avoids those encodings, so family-B profiles boot to idle,
+  but diag dispatch is not dynamically executable yet. See ROADMAP register E8
+  and docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md.
 
 ## 2026-10-31 fidelity pass (ROADMAP group B)
 

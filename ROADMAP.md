@@ -180,6 +180,21 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 - → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
   [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
 
+### D item 2 — Mode 22 PID handlers cross-ROM — DONE 2026-11-01
+
+- Mode 22 dispatch table located in all 14 ROMs by pool ref + self-consistent
+  count byte (family A: 99 records at 0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0;
+  family B: 110 records at 0x5d994/0x5dc2c/0x64d0c; 60E32000_N3M5E: 113 at 0x651bc),
+  1,444 PID→handler rows mapped (793 byte_match asserted to the same-PID base
+  handler, 494 pid_match, 58 unmapped extra PIDs); dynamically verified on
+  60E0G500/N3ZHEC (99/99-PID sweep: dispatcher 0x57ef0 hits every mapped handler
+  exactly, r0=len+3; 5 non-table PIDs take the NRC 0x31 path).
+  → [cross_ecu/cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md);
+  artifacts: `data/labels/cross_rom_mode22_pid_handlers.tsv` +
+  `cross_rom_mode22_summary.json`, script `utilities/scripts/cross_rom_mode22_map.py`.
+  New register item E8 (opdec corpus-keyed; family-B diag dispatch not dynamically
+  executable yet).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -189,8 +204,6 @@ base-ROM labeling) closed 2026-10-31.
 
 ### D. Cross-ROM propagation (P2/P5) — base-ROM deps (P3 + group C) DONE 2026-10-31; pick up here
 
-- Map Mode 22 PID handlers cross-ROM (0x5fa0c-area in 60E0FC00; 0x56b8a in
-  60E15120).
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
   pinned submodule has a newer ECUFlash XML, 1210 tables) via
   `utilities/scripts/defs-merge/`, citing upstream commits.
@@ -225,6 +238,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | E5 | CLOSED 2026-10-31 | Guessed `io_read_overrides` (0xffffed18=0x8000) was ICR_W bit15 = NMI pin level — now SYSC peripheral (`nmi_level`), overrides removed from all profiles |
 | E6 | partial (narrowed 2026-10-31) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte added |
 | E7 | CLOSED 2026-10-31 (div1/rotcr) | full Q/M DIV1 (SR bits 8/9) + ROTCR direction fixed, validated vs ROM div routine 0x2158; cycle counts ≠ real time remains (accepted) |
+| E8 | open (added 2026-11-01) | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md) |
 
 ### Data / docs discrepancies (D-items)
 

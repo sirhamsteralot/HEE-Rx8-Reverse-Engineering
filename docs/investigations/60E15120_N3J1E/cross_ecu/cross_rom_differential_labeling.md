@@ -45,6 +45,10 @@ addresses; `uds_service_dispatch_table_scan` base 0x68dac → 60E0FC00 **0x6769c
 `ref_udsResponseRelated2` base 0x68e3e → 0x6772e; alias sample
 `boot_wait_nmi_pin_high` 0x8cc → 0x8cc in 60E0FC00.
 
+See also [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) —
+the Mode 22 dispatch table + PID handlers located and mapped in all 14 ROMs
+(2026-11-01), using the matches TSV produced here.
+
 ## Notes / limits
 
 - Byte-exact bodies only: functions whose PC-relative pools moved between ROMs
