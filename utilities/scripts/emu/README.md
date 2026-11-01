@@ -186,8 +186,16 @@ stock ROM. Verified PC-trace-equivalent: our emulator on the patched ROM with
 NMI low reproduces the 200k golden trace of the original ROM with NMI high
 byte-exact (compare_traces MATCH 200000/200000), because at 0x8f0 the original
 with NMI=1 falls through (bt not taken) exactly like the patched nop. So in the
-sim: download the patched .bin at 0x0, `reset`, trace on, `go 0x3dac`, save — no
-ICR write needed.
+sim: download the patched .bin at 0x0, then `reset`, trace on, and
+**`go 0xd5fa`** — stop at the CAN-status poll (0xd5fa) so the trace buffer does
+not fill with that loop. Save the trace; it should hold the whole boot
+(reset 0x8b8 -> 0xd5fa, ~105k instructions, under the 262144-entry buffer).
+Expected diff vs our 200k golden: MATCH from 0x8b8 through the first 0xd5fa
+poll iteration (~step 104756); then the sim parks in the 0xd5fa loop
+(its RCAN model never sets the status bit) while our emulator's RCAN model
+exits the poll in one pass and continues to idle 0x3dac — that divergence is a
+peripheral-model difference, not a CPU bug. Diff with:
+`python utilities/scripts/emu/compare_traces.py <our-200k.trace> input/renesas-boot.trace`
 
 `memory_fill` = MEMORY_FILL (`memory_fill <start> <end> <data> [mode]`; abbrev `mf`); GUI alternative: View >
 CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff
