@@ -87,7 +87,37 @@ dumping it at the root.
 9. **No drive-by changes.** Match existing style (kebab-case filenames, ISO dates,
    `0x` addresses; upstream binary names excepted). Don't reformat untouched files.
 10. **Safety.** Nothing here flashes a vehicle without an explicit bench-validation
-    note; flag risky steps in your summary. Pushes to remotes need explicit approval.
+    note; flag risky steps in your summary. Pushing a work-unit branch and opening a
+    PR is the standard authorized delivery flow (see "Branch & PR workflow" below);
+    any other push (to `main`, tags, shared branches, force-push) still needs
+    explicit approval first.
+
+## Branch & PR workflow (how work is delivered)
+
+`main` is review-gated by convention: **never commit directly to `main`**. Every
+work unit (feature, research pass, docs change) gets its own branch and is
+delivered as a pull request for the user to review and merge.
+
+- **Branch naming:** `<type>/<kebab-case-slug>` with types `feat/` (code/tooling),
+  `research/` (investigation, labeling, reports), `docs/` (documentation only),
+  `fix/` (bugfix). E.g. `research/group-c-uds-remainder`. Always branch from the
+  current `main` (`git checkout -b <type>/<slug> main`); one branch per work unit —
+  don't bundle unrelated units.
+- **Commits on the branch:** follow "Commit style" below (one logical change per
+  commit, imperative subject ≤72 chars, body with why + doc links + addresses).
+- **Push + open a PR when the unit is done and verified** (rule 7 + the Verification
+  section): `git push -u origin <branch>`, then open a PR against `main` — use
+  `gh pr create` if the CLI is installed, the GitHub web UI, or
+  `connector_github_app.create_pull_request` (`owner`/`repo`/`head`/`base`/`title`/
+  `body`). PR title follows the commit-subject style; PR body: what + why, links to
+  the investigation doc(s), key `0x` addresses, validation artifacts (test /
+  validator output, trace diffs), the ROADMAP item(s) closed, and open questions.
+- **Review & merge:** the user reviews and merges (merge commit or squash — the
+  reviewer's choice). Agents never merge, never push to `main`, never force-push.
+  After a merge, delete the branch and re-sync: `git checkout main && git pull`.
+- Anything not intended for the repo (local experiments) stays on a scratch branch
+  and is never pushed; pushing anything other than a work-unit branch (tags,
+  `main`, shared branches) needs explicit approval (rule 10).
 
 ## Workflow for a typical task
 
@@ -103,13 +133,17 @@ dumping it at the root.
 5. Verify at the binary level (rule 7) and add/update tests.
 6. Update the investigation doc with findings, evidence (hashes, addresses), and
    open questions.
-7. Commit with a clear imperative message referencing the investigation doc and
-   addresses.
+7. Commit on the work-unit branch with a clear imperative message referencing the
+   investigation doc and addresses; once the unit is verified, push the branch and
+   open a PR for review (see "Branch & PR workflow" above).
 
 ## Commit style
 
 - Subject: imperative, ≤72 chars. Body: why, plus links to investigation docs and key
   addresses. One logical change per commit. Never rewrite history.
+- PRs: title in the same imperative style; body = what + why + doc links + key
+  addresses + validation artifacts + open questions (see "Branch & PR workflow"),
+  and link the ROADMAP item(s) the PR closes.
 
 ## Agent tooling (how agents use the emulator/RE data)
 

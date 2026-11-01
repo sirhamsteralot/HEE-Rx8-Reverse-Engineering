@@ -1,0 +1,76 @@
+/* ROM address: 0x00061d6a; body bytes: 366; decompiled */
+
+uint FUN_00061d6a(char param_1,char param_2,int param_3)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  ushort uVar3;
+  uint uVar4;
+  uint uVar5;
+  ushort *puVar6;
+  
+  uVar3 = DAT_ffff8928;
+  uVar4 = 0;
+  uVar5 = 0;
+  do {
+    if (uVar5 != uVar3) {
+      bVar2 = (&DAT_ffff87de)[uVar5 * 0x10];
+      uVar1 = (&DAT_ffff87d8)[uVar5 * 8];
+      if (((param_2 == '\0') || ((param_2 == '\x01' && ((&DAT_0007e220)[uVar1] == '\x01')))) ||
+         ((param_2 == '\x02' && ((&DAT_0007e2ac)[uVar1] == '\x01')))) {
+        puVar6 = (ushort *)((uVar4 & 0xffff) * 2 + param_3);
+        if (param_1 == '\0') {
+          if (bVar2 == 0) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == '`') {
+          if ((bVar2 != 0) && (bVar2 < 0x40)) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == -0x80) {
+          if ((bVar2 & 0x80) == 0x80) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == -0x40) {
+          if (bVar2 == 0xc0) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == -0x3f) {
+          if (bVar2 == 0xc1) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == 'P') {
+          if (bVar2 == 0x50) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (param_1 == -0x10) {
+          if (((bVar2 != 0) && (bVar2 < 0x40)) || ((bVar2 & 0x80) == 0x80)) {
+            *puVar6 = uVar1;
+            uVar4 = uVar4 + 1;
+          }
+        }
+        else if (((param_1 == 'p') && (0x80 < bVar2)) && (bVar2 < 0xc0)) {
+          *puVar6 = uVar1;
+          uVar4 = uVar4 + 1;
+        }
+      }
+    }
+    uVar5 = uVar5 + 1;
+  } while ((int)uVar5 < 0x15);
+  return uVar4;
+}
+
+

@@ -1,0 +1,8 @@
+{
+  "file": "binaries/dumps/aron-N3ZHEC-2026-10-31.bin",
+  "size": 524288,
+  "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+  "firmware_id": "60E0G500",
+  "calibration_id": "N3ZHEC",
+  "file_note": "own UDS/BOOT dump of Aron RX-8 ECU (stock 60E0G500 / cal N3ZHEC); exported via Ghidra 12.1.2 headless (input/ghidra-60e0g500-export.sh) on 2026-10-31"
+}

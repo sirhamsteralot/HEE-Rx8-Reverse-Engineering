@@ -1,0 +1,50 @@
+/* ROM address: 0x00023b30; body bytes: 240; decompiled */
+
+void FUN_00023b30(void)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = FUN_00003920(0x10);
+  FUN_00033c2e();
+  FUN_00033d28();
+  FUN_00047da0();
+  FUN_00047db8();
+  FUN_00047eac();
+  FUN_00047fc0();
+  FUN_00048476();
+  FUN_00048480();
+  FUN_00048544();
+  FUN_0004897a();
+  FUN_000489aa();
+  FUN_00048c2c();
+  FUN_00048e86();
+  FUN_00048f14();
+  FUN_00049468();
+  FUN_00048f7e();
+  FUN_00049422();
+  FUN_000494e0();
+  FUN_00049518();
+  FUN_000495f4();
+  FUN_00049674();
+  FUN_00049790();
+  FUN_000497fa();
+  FUN_00049828();
+  FUN_00003934(uVar1);
+  uVar1 = FUN_00003920(0x10);
+  FUN_00047ca4();
+  FUN_00023ac0();
+  FUN_00048d00();
+  FUN_00023958();
+  FUN_00023f9c();
+  FUN_00023da0();
+  FUN_00024108();
+  FUN_00023480();
+  FUN_000235b8();
+  FUN_000238ca();
+  FUN_00025d94();
+  FUN_00003934(uVar1);
+  return;
+}
+
+
