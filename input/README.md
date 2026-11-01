@@ -50,6 +50,17 @@ stock ROMs are referenced, not copied); the user-tuned ROMs in the same
 bundle were deliberately not retained. Logs → `../data/logs/`, NR666P tune
 containers → `../data/tunes/`.
 
+2026-11-01: `input/` emptied (cleanup) — everything except this README was removed:
+the 4 .bin reads (SHA-256-audited 2026-11-01: 3 byte-identical to submodule stock
+ROMs, 1 a 2-byte NMI patch for simulation), the 2 reference-doc zips and RX8Club raw
+pages (content already promoted to `../docs/references/`), scratch scripts + `work/`,
+the Ghidra 12.1.2 install + project DBs + export recipe/log, and the saved Renesas
+simulator traces. Reacquire on demand: Ghidra 12.1.2 PUBLIC + JDK 21 (`GHIDRA_HOME`),
+the Proton Drive zip, the RX8Club thread pages, Renesas traces via the Sdsh2e
+procedure in `../utilities/scripts/emu/README.md` (save into `input/`), and the
+sim-only patched ROM by applying the 2-byte patch at 0x8f0 (`89 fb` → `00 09`)
+to a copy of the stock 60E15120_N3J1E ROM.
+
 ## Promotion path
 
 When something in `input/` proves useful, don't reference it from tracked files —

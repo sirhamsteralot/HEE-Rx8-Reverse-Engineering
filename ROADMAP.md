@@ -180,8 +180,8 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 - 60E0G500/N3ZHEC (`binaries/dumps/60E0G500_N3ZHEC.bin`) exported via
   Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
   (3,200 functions, 0 failures; all 166,294 instruction words byte-verified;
-  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log in `input/`
-  (uncommitted).
+  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log lived in `input/` (raw intake emptied 2026-11-01;
+  reproducible via `utilities/tools/ghidra/`).
 - `utilities/scripts/cross_rom_match.py`: byte-match of base-ROM function bodies
   across all 10 stock ROMs + 1 own dump → 25,898 matches, 2,213 propagated
   aliases (`data/labels/cross_rom_function_matches.tsv`,
