@@ -259,3 +259,53 @@ with per-item evidence) and in the canonical index
 validator (`utilities/scripts/rx8-pcm-pipeline/validate_reports.py`, run from
 the repo root) checks every address here against those indexes and the ROM
 SHA-256.
+
+---
+
+## Update 2026-10-31 (ROADMAP group C): engine-load units settled — D5 closed
+
+Cross-check of the RX8Club thread's load/fueling claims against the ROM
+([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)
+§6/§9) plus the D5 numeric comparison. All constants re-read from the raw ROM
+(SHA-256 unchanged, `a7cd953c…264f1`).
+
+**Byte-verified chain.** 0x1a418 `candidate_maf_per_rotation_calc`:
+`maf_per_rotation_ffffaa3c = min(maf × 60.0 / rpm, 5.0)` — 60.0 is float32
+`0x42700000` at 0x1a4e8, 5.0 is `0x40a00000` at 0x1a4f4 (g/rev, software cap 5.0).
+0x33a6c `ref_airPerStroke`: `engine_load_raw_ffffc0b0 = maf_per_rotation × 0.6345` —
+the 0.6345 float32 `0x3f226e98` lives at 0x7a088, reached via pool word 0x33b70
+(only u32 ref), operands via mov.w low16 0xaa3c (0x33b52) and 0xc0b0 (0x33b54).
+0x33ad2 `calculate_engine_load`: `engine_load_ffffc0b4 = min(filter(c0b0, 0.2 or 1.0),
+c0b8)`, forced 0.525 on cranking/injector-off edge. PID 0x43: handler 0x56b8a →
+jsr via pool 0x56c64 → 0x55748 `diag_encode_load_g_rev` →
+`rx8_encode_u16_affine_saturate(c0b4, step 0x3b808080, 0)` with the step float at
+0x55824 (mov.w 0x557ee → 0xffffc0b4); 0x3b808080 = 0.003921568 ≈ 1/255, matching the
+logger scaling 0.0039215684.
+
+**Numeric unit resolution (D5).** 1/0.6345 = 1.576 g per cell unit = 1.308 L
+(2 × 654 cc) × 1.205 g/L — i.e. the cell is **VolEf at ~20 °C air density**, not
+g/rev: cell = g/rev × 0.6345. Proof by the clamp: `engine_load_max_ffffc0b8` =
+tbl_0x6b200(IAT) × tbl_0x6b214(baro) × tbl_0x6b1ec(RPM), each uint16 with
+multiplier 1/32768 (descriptors' scaled words at 0x6b20c/0x6b220/0x6b1f8), giving
+**0.58–1.29 cell units** over IAT −40…100 °C, baro 101.3 kPa, 1000–6000 rpm —
+which equals 0.92–2.03 g/rev. That range matches the load axes of the extracted
+tables the same cell indexes (`data/maps/60E15120_N3J1E/`): tbl_06aa48 axis_y
+0.0625–1.25, tbl_06ac88 axis_y 0.125–1.203, tbl_06a9a4 axis_y 0.125–0.875. If the
+cell were g/rev, a max-load clamp of 0.58–1.29 g/rev would be physically absurd at
+WOT and the 5.0 g/rev cap would be unreachable.
+
+**Thread claims corrected:**
+- "Control load = MAF × rpm / 60" is dimensionally wrong; the ROM computes
+  MAF × 60 / rpm (g/s × 60 ÷ rpm = g/rev) — 0x1a418.
+- "× 0.6345 → g/combustion-event" is wrong (g/event = g/rev ÷ 2); 0.6345 is the
+  VolEf factor 1/(1.308 L × 1.205 g/L).
+- "PID 0x43 = engine load in g/rev" — PID 0x43 reports the cell × 1/255, i.e.
+  **VolEf**, not g/rev (the thread's VolEf-vs-g/rev debate resolves to VolEf,
+  confirming the log-based poster; the g/rev value is cell ÷ 0.6345).
+- Cap "clipped at 5.0" ✓ — but it applies to g/rev *before* the 0.6345 scale.
+
+D5 is therefore **settled**: `engine_load_ffffc0b4` and PID 0x43 are in VolEf-like
+cell units (g/rev × 0.6345); the handler side (×1/255, 0.42 → raw 107) was already
+dynamically verified 2026-10-31. The inherited name `diag22_pid0043_engine_load_g_rev`
+stays (label ladder — not renamed on this evidence alone), but its header comment
+now records the VolEf unit.

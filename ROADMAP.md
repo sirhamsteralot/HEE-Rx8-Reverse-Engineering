@@ -139,8 +139,10 @@ and where artifacts live.
 Per-ROM work on `60E15120_N3J1E` before propagating cross-ROM (group D).
 Use the emulator for dynamic verification where useful (group B, done).
 
-- Cross-check the thread's OL-fueling chain vs our fueling report; verify
-  engine-load math (MAF×rpm/60 → g/rev, ×0.6345/charge, PID 0x43).
+- Cross-check the thread's OL-fueling chain vs our fueling report. Engine-load
+  math DONE 2026-10-31 (D5 closed: cell = g/rev × 0.6345 = VolEf, PID 0x43 × 1/255
+  — see load_fueling_report.md "Update 2026-10-31"); thread's "MAF×rpm/60" is a
+  typo for MAF×60/rpm, "×0.6345 g/combustion" is VolEf, "PID 0x43 = g/rev" is VolEf.
 - **Deepen `fueling_control_report.md` (further investigation needed — see the
   marker at the top of that report)**: the report reads shallow because the
   load calculation is not in it (it lives in `load_fueling_report.md` —
@@ -209,7 +211,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
 | D3 | open | checksum/CVN unverified — incremental hash routine not yet found |
 | D4 | open | bootloader seed/key location unknown |
-| D5 | open (handler side settled 2026-10-31) | g/rev vs VolEf — PID 0x43 handler 0x56b8a (`diag22_pid0043_engine_load_g_rev`) reads `engine_load_ffffc0b4` × 1/255, dynamically verified (0.42 g/rev → raw 107); remaining: trace to a named table in data/maps/ and compare numerically |
+| D5 | CLOSED 2026-10-31 | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) "Update 2026-10-31" |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
 | D8 | open | defs copies vs pinned submodule — dedupe per AGENTS.md rule 4b |
