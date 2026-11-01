@@ -253,6 +253,65 @@ def test_mode22_dispatch_table_payloads(booted):
     assert (r0, resp) == (3, bytes.fromhex("7f2231"))
 
 
+def test_mode22_dispatch_full_sweep(booted):
+    """All 99 dispatch records at 0x5f10c: drive each through the ROM's own 0x5774c
+    and assert the return value and the response-ring length match the record's
+    response_length field (r0 == rlen+3, ring pos == rlen+3). PID 0xc116 is the
+    documented exception: its handler (0x37358) sets DAT_ffffd1e8 = 0x80
+    (suppress payload) on the cold path, so only the 3-byte header lands.
+    Restricted-mask records (mask != 0xfffc) must answer NRC 0x31 when
+    DAT_ffffd3b4 = 0."""
+    import json as _json
+    labels = _json.load(open(os.path.join(
+        os.path.dirname(__file__), "..", "data", "labels", "60E15120_N3J1E",
+        "uds_dispatch_labels.json")))
+    recs = labels["diag22_table"]["records"]
+    assert len(recs) == 99
+    for rec in recs:
+        pid, rlen = rec["pid"], rec["response_len"]
+        r0, resp = _mode22_response(booted, pid)
+        assert r0 == rlen + 3, (hex(pid), r0, rlen)
+        if pid == 0xC116:
+            assert resp[:3] == bytes([0x62]) + pid.to_bytes(2, "big")  # header only
+        else:
+            assert resp == bytes([0x62]) + pid.to_bytes(2, "big") + resp[3:rlen + 3]
+            assert len(resp) == rlen + 3, (hex(pid), len(resp), rlen)
+        if rec["availability_mask"] != 0xFFFC:
+            r0m, respm = _mode22_response(booted, pid, allow_mask=0x0000)
+            assert (r0m, respm) == (3, bytes.fromhex("7f2231")), hex(pid)
+
+
+def test_uds_service_router_routes(booted):
+    """Router 0x68dac uds_service_dispatch_table_scan over the 0x5eb40 table:
+    r4 = service byte, permission = record[8] & (1 << DAT_ffffde20[0]). Each
+    service must reach its table handler when the session bit allows, and an
+    unknown service must return "not found" (r0 == 1)."""
+    _, bus, cpu = booted
+
+    def route(svc, handler, session_bit):
+        bus.write8(0xFFFFDE20, session_bit)
+        r0, _, _ = harness.call(bus, cpu, 0x68DAC, r_args=(svc, 0, svc),
+                                max_steps=100000, stop_at=(handler,))
+        return cpu.pc == handler, r0
+
+    # record[8] bit0 set (param 0x...0f/0x...01/0x...0e/0x...05): session bit 0
+    for svc, h in [(0x3E, 0x56508), (0x22, 0x567E8), (0x10, 0x57C8C), (0x14, 0x558AC),
+                   (0x01, 0x6581C), (0x09, 0x662C0), (0x85, 0x5DC44)]:
+        reached, _ = route(svc, h, 0)
+        assert reached, hex(svc)
+    # record[8] needs bit1 (param 0x...02/0x...06/0x...0e): session bit 1
+    for svc, h in [(0x27, 0x57A64), (0x23, 0x5B750), (0x34, 0x5D7BC),
+                   (0x36, 0x5D834), (0x37, 0x5D874), (0x21, 0x5B414), (0x11, 0x5AF54)]:
+        reached, _ = route(svc, h, 1)
+        assert reached, hex(svc)
+    # same services rejected when the session bit is not allowed (r0 == 2)
+    reached, r0 = route(0x27, 0x57A64, 0)
+    assert not reached and r0 == 2
+    # unknown service: no record matches -> r0 == 1
+    _, r0 = route(0x77, 0x6689A, 0)
+    assert r0 == 1
+
+
 def test_nmi_pin_replaces_guessed_override():
     """E5 closed: profiles carry no io_read_overrides; boot reaches idle because
     SYSC models ICR_W bit15 = NMI pin level (boot polls it at 0x8ea)."""

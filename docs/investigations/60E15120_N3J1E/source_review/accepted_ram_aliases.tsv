@@ -308,7 +308,7 @@ ffffa660	leading_max_advance	float	000121fc
 ffffa664	trailing_max_advance	float	00012300
 ffffbc94	dsc_mode_a_base_timing	float	0002cc2c
 ffffa91c	dsc_timing_derate_leading	float	0001815c
-ffffad5c	inferred_throttle_sensor_volts_ffffad5c	uint16	000555f8	PID 0x11/0x0917/0x1154 read it; decode 7.62939e-05 V/count *20 -> %
+ffffad5c	inferred_throttle_sensor_volts_ffffad5c	uint16	0005553e	Read by diag_encode_throttle_pct 0x5553e (PID 0x11) and handlers 0x56d58 (PID 0x0917) / 0x56eb8 (PID 0x1154); also written in the APP/throttle chain (literal 0xad5c at 0x1b0e6/0x4561c/0x47186); decode 7.62939e-05 V/count *20 -> %
 ffffadec	inferred_lambda_actual_ffffadec	float	00055440	PID 0x06: (x-1)*100 trim; fuel-chain cell listed in ROADMAP group C
 ffffb0d0	inferred_ltft_bank1_ffffb0d0	float	00055466	PID 0x07: x*100*0.78125-100
 ffffb074	inferred_trim_b074_ffffb074	float	000555ac	PID 0x15/0x163e: x*100*0.7813-100

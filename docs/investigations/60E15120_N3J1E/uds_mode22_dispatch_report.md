@@ -277,6 +277,13 @@ against [fueling_control_report.md](fueling_control_report.md),
 - Service 0x33's record points to 0x5e0ce, a real code entry (prologue verified) that is
   **not** in function_index.tsv (Ghidra merged it into 0x5e024's body); it is named in
   `uds_service_dispatch.tsv` only. Service 0xff's handler is a `nop; rts` stub (0x6689a).
+- Verification pass correction: the RAM-alias row for `0xffffad5c` originally cited reader
+  0x555f8 (wrong — that reads 0xffff90f4); corrected to `0x5553e` (PID 0x11 throttle reader;
+  also referenced by handlers 0x56d58/0x56eb8 and the APP chain literals at
+  0x1b0e6/0x4561c/0x47186). Found by the disassembly-level RAM check in the verification pass.
+- Checker note (idiom): RAM addresses with high half 0xffff are materialized by
+  `mov.w @(disp,pc)` **sign-extended** literals (e.g. literal 0xadec -> 0xffffadec), not
+  `mov.l`; verification scripts must sign-extend 16-bit pool values.
 
 ## 6. Files
 
@@ -289,7 +296,8 @@ against [fueling_control_report.md](fueling_control_report.md),
   callgraph.tsv, functions/*.c, named/firmware_named.c, named/lookup_aliases.tsv,
   firmware_decompiled.c (renamed via `integrate_reviewed_names.py`)
 - `data/labels/60E15120_N3J1E/integrated_names.json` (regenerated)
-- `tests/test_phase1_dynamic.py` (`test_mode22_dispatch_table_payloads` added)
+- `tests/test_phase1_dynamic.py` (`test_mode22_dispatch_table_payloads`,
+  `test_mode22_dispatch_full_sweep`, `test_uds_service_router_routes` added)
 - `docs/investigations/60E15120_N3J1E/fueling_control_report.md` (one label reference updated)
 
 ## 7. Validation
@@ -305,7 +313,31 @@ against [fueling_control_report.md](fueling_control_report.md),
 - Dynamic (emulator): `test_mode22_dispatch_table_payloads` drives 0x5774c for 8 PIDs and
   asserts exact response bytes incl. the 0x62 header, plus the NRC 0x31 rejection path;
   `test_mode22_dispatch_pid_0043` (pre-existing) asserts r0 == 5 for PID 0x43.
-- `python -m pytest tests/` — **59/59 pass**.
+- **Verification pass (2026-10-31, extreme-caution re-check against raw disassembly):**
+  - All 99 PID + 29 service + 36 sub records re-read from ROM, byte-exact (99/99, 29/29,
+    36/36); every handler re-analyzed in the disassembly: direct call targets resolved
+    through the literal pool — 0 unknown targets; append structure consistent with rlen
+    (loop-appended handlers confirmed dynamically instead).
+  - All 63 RAM aliases re-checked: the claimed cell appears as a (sign-extended) literal in
+    the claimed reader's disassembly — 62/63 on first pass, 1 corrected (see section 5),
+    63/63 after.
+  - Encode-constant spot check in literal pools: ECT -40 (0xc2200000), rpm 0.25
+    (0x3e800000), timing 0.5/-64 (0x3f000000/0xc2800000), MAF 0.01 (0x3c23d70a), battery
+    0.001 (0x3a83126e), load 1/255 (0x3b808080), lambda 3.05e-05 (0x38000000), trims
+    0.78125/-100 (0x3f480000/0xc2c80000), knock 0.3515625 (0x3eb40000), injector 8.0
+    (0x41000000) — all present; 1.0/0.0 come from `fldi1`/implicit, not literals.
+  - Service router re-verified dynamically: `test_uds_service_router_routes` routes
+    0x3e/0x22/0x10/0x14/0x01/0x09/0x85 (session bit 0) and 0x27/0x23/0x34/0x36/0x37/0x21/0x11
+    (bit 1) to their table handlers, rejects 0x27 at bit 0 (r0 == 2), and returns
+    not-found (r0 == 1) for unknown service 0x77.
+  - Full Mode 22 sweep: `test_mode22_dispatch_full_sweep` dispatches **all 99 PIDs** through
+    the ROM's own 0x5774c and asserts `r0 == response_length + 3` and ring length for each;
+    all 14 restricted-mask records answer NRC `7f 22 31` when `DAT_ffffd3b4 = 0`.
+    String PIDs verified byte-exact: 0xe21b-0xe21e = "N3ZH"/"18"/"881"/"B", 0xff40/0xff41 =
+    "15"/"120 ", 0xff42/0xff43 = ROM bytes 0xff8-0xffd, 0xe611 = "SW-N3ZHEB000.HEX"+pad.
+  - Service 0x10 handler (0x57c8c) confirmed to reach 0x55de2, which writes
+    `DAT_ffffd3b4` — the session -> permission-mask chain is real, not just table position.
+- `python -m pytest tests/` — **61/61 pass**.
 - Pipeline validators from repo root: `validate_export.py`, `validate_reports.py`,
   `verify_readability.py`, `verify_math_units.py` — all PASS; `hash_binaries.py --check`
   OK (binaries untouched).
@@ -332,8 +364,14 @@ ROM strings: 0x2000 fw id, 0x6c000/0x6c043/0x6c046/0x6c05c cal ids, 0xff8-0xffd 
   knowledge, not a ROM read; Mazda-specific PIDs (0x09xx/0x11xx/0x16xx/0x17xx/0xa2xx/
   0xc1xx/0xe2xx/0xffxx) rest on logger defs + thread + handler behavior, and most carry
   medium confidence. They are hypotheses until cross-checked against a real-car datalog.
-- The service table's `param` word (record[8]) is only partially decoded (used as a
-  session-mask by 0x68dac); sub-function handling inside each service is not mapped.
+- The service table's `param` word (record[8]) is decoded as an **allowed-session-bit
+  mask**: 0x68dac computes `1 << DAT_ffffde20[0]` (via shift helper 0x4308) and requires
+  `record[8] & that != 0` — verified dynamically (services route at the right session bit,
+  reject with r0 == 2 at the wrong one). Sub-function handling inside each service is not
+  mapped.
+- PID 0xc116's handler (0x37358) sets `DAT_ffffd1e8 = 0x80` (suppress payload) on the cold
+  path, so only the 3-byte 0x62 header lands in the ring although rlen = 4 — observed in
+  the full sweep, not a mislabel.
 - Services 0x12/0x18/0x32/0x33/0x3b/0xb1 are labeled by table position only; 0x33's
   handler entry (0x5e0ce) is missing from function_index.tsv (see section 5).
 - E6 remainder still applies: response TX over CAN is driven via the profile `uds` entry
@@ -341,4 +379,11 @@ ROM strings: 0x2000 fw id, 0x6c000/0x6c043/0x6c046/0x6c05c cal ids, 0xff8-0xffd 
 - `diag22_subpid_supported_mask` (0x579a8) return semantics (param & OR of bits) verified
   statically; the 0x1710 multi-byte snapshot PID is labeled only at the block level.
 
-## 10. Update — 2026-10-31 (initial record of this pass)
+## 10. Update — 2026-10-31
+
+Initial record of this pass, plus the same-day extreme-caution verification pass described
+in sections 5/7: labels re-checked against the raw disassembly (literal pools incl. the
+sign-extended `mov.w` RAM-address idiom, call targets, encode constants) and dynamically
+re-executed in the emulator (full 99-PID sweep + service routing). One metadata error
+corrected (0xffffad5c reader column); no function label changed — all 175 function aliases
+held up under both static and dynamic re-verification.

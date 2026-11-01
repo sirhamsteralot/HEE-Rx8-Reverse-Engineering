@@ -2775,14 +2775,14 @@
   "ffffad5c": {
    "alias": "inferred_throttle_sensor_volts_ffffad5c",
    "type": "uint16",
-   "reader": "000555f8",
-   "evidence": "PID 0x11/0x0917/0x1154 read it; decode 7.62939e-05 V/count *20 -> %"
+   "reader": "0005553e",
+   "evidence": "Read by diag_encode_throttle_pct 0x5553e (PID 0x11) and handlers 0x56d58 (PID 0x0917) / 0x56eb8 (PID 0x1154); also in the APP/throttle chain (literals at 0x1b0e6/0x4561c/0x47186); decode 7.62939e-05 V/count *20 -> %"
   },
   "ffffadec": {
    "alias": "inferred_lambda_actual_ffffadec",
    "type": "float",
    "reader": "00055440",
-   "evidence": "PID 0x06: (x-1)*100 trim; fuel-chain cell listed in ROADMAP group C"
+   "evidence": "PID 0x06: (x-1)*100*0.78125-100 (lambda actual, 1.0=stoich); fueling_control_report.md line 147 lists DAT_ffffadec among fuel_correction_sum writers"
   },
   "ffffb0d0": {
    "alias": "inferred_ltft_bank1_ffffb0d0",

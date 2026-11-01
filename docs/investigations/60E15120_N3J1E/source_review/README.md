@@ -61,3 +61,17 @@ dispatch, exact 0x62-header response bytes + NRC 0x31 mask rejection). Report:
 `docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`. Validators
 `validate_export` / `validate_reports` / `verify_readability` / `verify_math_units` PASS;
 `pytest tests/` 59/59.
+
+## 2026-10-31 verification pass — UDS/Mode-22 labels re-checked with extreme caution
+
+Re-verified all labels from the dispatch pass against the RAW DISASSEMBLY and the emulator
+(checker: `input/work/verify_labels.py`, report: `input/work/verify_report.txt`):
+99/99 PID + 29/29 service + 36/36 sub records byte-exact vs ROM; every handler's call
+targets resolved through the literal pool (0 unknown); 63/63 RAM aliases confirmed as
+(sign-extended mov.w) literals in the claimed reader after fixing one reader column
+(0xffffad5c: 0x555f8 -> 0x5553e); encode float constants confirmed in the literal pools;
+full dynamic sweep of all 99 PIDs through ROM 0x5774c (r0 == rlen+3, ring length, NRC 0x31
+mask rejection on all 14 restricted records) and dynamic service routing through 0x68dac
+(session-bit mask `record[8] & (1 << DAT_ffffde20[0])` confirmed; unknown service -> r0=1).
+Durable tests added: `test_mode22_dispatch_full_sweep`, `test_uds_service_router_routes`.
+Result: no function label changed; `pytest tests/` 61/61; validators PASS.
