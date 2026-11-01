@@ -1,0 +1,9 @@
+{
+  "functions": 3200,
+  "decompiled": 3200,
+  "failed": 0,
+  "with_warnings": 144,
+  "instruction_bytes": 332588,
+  "function_body_bytes": 326490,
+  "rom_bytes": 524288
+}

@@ -164,6 +164,21 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   jumps on `*SBL_END` via 0x1090).
 - → [uds_mode22_dispatch_report.md §12](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 
+### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
+
+- 60E0G500/N3ZHEC (`binaries/dumps/aron-N3ZHEC-2026-10-31.bin`) exported via
+  Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
+  (3,200 functions, 0 failures; all 166,294 instruction words byte-verified;
+  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log in `input/`
+  (uncommitted).
+- `utilities/scripts/cross_rom_match.py`: byte-match of base-ROM function bodies
+  across all 10 stock ROMs + 4 own dumps → 33,644 matches, 2,999 propagated
+  aliases (`data/labels/cross_rom_function_matches.tsv`,
+  `cross_ecu/cross_rom_function_aliases.tsv`, `cross_rom_match_summary.json`).
+  60E0G500: 2,582 matches / 262 aliases; streetport tunes identical on code.
+- → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
+  [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
@@ -183,12 +198,12 @@ Use the emulator for dynamic verification where useful (group B, done).
   MAF latch / 0x4ab8 resolved, descriptor→data/maps mapping, dynamic harness tests.
 - ~~Settle checksum/CVN (D3) and bootloader seed/key (D4)~~ **DONE 2026-10-31** —
   see C item 5 in Completed below.
-- Label **60E0G500** via the pipeline (streetport diff ranges already mapped to
-  descriptors via P3 — see calibration_extraction_report.md §7).
+- ~~Label **60E0G500** via the pipeline~~ **DONE 2026-10-31** — see C item 6 /
+  D item 1 in Completed below.
 ### D. Cross-ROM propagation (P2/P5) — depends on P3 + C for the base ROM
 
-- Differential labeling across the 10 stock ROMs (byte-match function bodies
-  ROM-to-ROM).
+- ~~Differential labeling across the 10 stock ROMs (byte-match function bodies
+  ROM-to-ROM)~~ **DONE 2026-10-31** (C item 6 / D item 1 above).
 - Map Mode 22 PID handlers cross-ROM (0x5fa0c-area in 60E0FC00; 0x56b8a in
   60E15120).
 - Extend `data/definitions/` from 60E15120_N3J1E to all ROMs (incl. 60E0G500 —
