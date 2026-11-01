@@ -14,7 +14,10 @@ dynamically-cited claim names the emulator observation. Full evidence:
 against [fueling_control_report.md](fueling_control_report.md),
 [ignition_timing_report.md](ignition_timing_report.md),
 [knock_control_report.md](knock_control_report.md),
-[load_fueling_report.md](load_fueling_report.md); logger scalings from
+[load_fueling_report.md](load_fueling_report.md); cross-ROM propagation of this table:
+[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md)
++ [cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md);
+logger scalings from
 `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` and
 [docs/references/rx8club-user-guide-thread.md](../../references/rx8club-user-guide-thread.md).
 
