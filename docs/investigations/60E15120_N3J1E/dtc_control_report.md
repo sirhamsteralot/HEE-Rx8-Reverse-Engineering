@@ -95,6 +95,17 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
   shifted 3 bytes, for 60E1B900 and 60E32000_N3M5E the addresses point at the code
   table instead of the switch block, and for 60E0FB00/60E1D400 parts of the list are
   misaligned. Writing through those defs would flip the *wrong* switch.
+- **Each fault has THREE switch bytes, and they do different jobs** (details in §3a):
+  - **#1** = "should this fault be tracked and light the check-engine lamp?" —
+    gates the MIL and the pending→confirmed→stored aging. Off = no lamp, no aging.
+  - **#2** = "may this fault be shown to a scanner?" — gates the Mode 03 DTC list
+    and the freeze frame. Off = invisible to a scanner even if it's stored.
+  - **#3** = a small bitmask of "which internal actions are allowed" (set / confirm
+    / store / heal / report), not a simple on-off.
+  - So **fully disabling a DTC means writing #1=0 AND #2=0** (and clearing the #3
+    bits if you also want to stop it being set at all). Stock example: C073 ships
+    with #1=0 but #2=1, so a stored C073 does *not* light the lamp but *still shows
+    up in Mode 03* — verified in the emulator.
 
 ## 2. How it works (condensed pseudocode)
 
@@ -174,7 +185,21 @@ P0076/P0077 disabled); #3 holds small feature codes (0x02/0x03/0x0a/0x0f/0x2f/�
 
 The hearsay is **true**, and now pinned down per gate (all confirmed at disassembly
 level + dynamically in the emulator with stock slot 0x74 = C073, whose stock bytes
-are enable#1=0, enable#2=1, enable#3=0x0e):
+are enable#1=0, enable#2=1, enable#3=0x0e). In plain language, the three per-DTC
+switch bytes in the defs are:
+
+- **#1 ("Enable/Disable #1", 0x7e678) — the "lamp & tracking" switch.** If 0, the
+  fault is excluded from the MIL decision (0x5a130 runs its stored-count query with
+  filter=enable#1) and from the aging/state handlers (0x60f02/0x64234). It does
+  **not** hide an already-stored code from Mode 03 or from the raw PID 0x0200 count.
+- **#2 ("Enable/Disable #2", 0x7e704) — the "scanner visibility" switch.** If 0,
+  the stored DTC is dropped from the **Mode 03** response (0x65ff8 collects with
+  filter=enable#2) and from **Mode 02** freeze-frame capture (0x6071e). It does
+  **not** stop the MIL if #1=1.
+- **#3 ("Enable/Disable #3", 0x7e790) — a behavior bitmask, not on/off.** Bits:
+  0x02 = allow the normal set/transition path, 0x04+0x08 = force direct store
+  (both in 0x5fe20), 0x10 = allow heal-clear (0x60062 mode 2), 0x20 = "reportable"
+  (0x60478, also in the sweep 0x5fd96) — tested via 0x5f9b0 `(bit & #3[slot])`.
 
 | Gate (ROM table 60E15120) | Checked by | Effect when 0 / bit clear |
 |---|---|---|
