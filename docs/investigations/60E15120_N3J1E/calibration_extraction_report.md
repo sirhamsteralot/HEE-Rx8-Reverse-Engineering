@@ -137,6 +137,21 @@ tests in `tests/test_extract_scalars.py`.
   0x3c) — i.e. it converts the λ-domain fueling into AFR units. Seeded as
   `stoich_afr` in extract_scalars.py (2026-11-02). Per-operating-point AFR is
   the maps above, not this scalar.
+- **Flex-fuel cross-check (2026-11-02)**: all 11 available ROMs are non-flex —
+  each has exactly one 14.7 literal (0x416b3333) referenced by exactly one
+  `mova` 0x100 B before it (N3J1E: mova @0x3e6ec → 0x3e7ec in FUN_0003e560;
+  per-ROM lit/mova: 60E0E500 0x3f314/0x3f214, 60E0E700 0x3f56c/0x3f46c,
+  60E0FB00+60E0FC00 0x3ed88/0x3ec88, 60E1B900 0x3f020/0x3ef20, 60E1C500
+  0x3f5d8/0x3f4d8, 60E1D400 0x3f9d4/0x3f8d4, 60E32000_N3M5E 0x41a60/0x41960,
+  60E32000_N3N5EB 0x40f9c/0x40e9c, 60E0G500_N3ZHEC 0x3f73c/0x3f63c). The
+  G-ROM_FLEX def (no binary in this repo) replaces this constant with
+  "Table 2D - Stoich Fuel Ratio" @0x6C444 (12 floats, stored 1/AFR, displayed
+  AFR = 1/x, Y axis = Ethanol Content % @0x6C414) — in N3J1E that address range
+  is tbl_068f94's data, so the flex table does not exist here (already flagged
+  as unresolved G-ROM_FLEX inheritance in defs-merge/inheritance_issues.json).
+  => A flex-fuel patch hooks exactly this site: swap the 14.7 literal load for a
+  lookup into the stoich table indexed by ethanol content (logger PID 0x0555,
+  uint16 %). No ethanol-indexed 1/AFR table exists in any of the 11 ROMs (scanned).
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
