@@ -1,0 +1,15 @@
+counts pid0200/pid0202 (expect 1/1): (1, 1)
+615c6(stored 0x80): count=1 slots=['0x9'] codes=['0101']
+615c6(active|stored 0xf0): count=2 slots=['0x9', '0x8'] codes=['0101', '0077']
+615c6(active 0x60): count=1 slots=['0x8'] codes=['0077']
+615c6(0x70): count=0 slots=[] codes=[]
+615c6(0xc0): count=0 slots=[] codes=[]
+615c6(inactive 0x00): count=18 slots=['0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0'] codes=[]
+615c6(0x50): count=0 slots=[] codes=[]
+615c6(0xf0, filter=enable1): count=1 slots=['0x9'] (expect only 0x9: P0077 filtered out)
+mode03 handler 0x65ff8(0,0) executed, r0=0
+PID 0200 via dispatcher 0x5774c: r0=4 resp=62020001 (expect 62 0200 01 / 62 0202 01)
+PID 0202 via dispatcher 0x5774c: r0=4 resp=62020201 (expect 62 0200 01 / 62 0202 01)
+MIL flag DAT_ffffd286 with stored+enabled DTC present (expect 1): 1
+after init-reset 0x5fd6c counts: (1, 0)
+MIL flag after reset (expect 0): 1
