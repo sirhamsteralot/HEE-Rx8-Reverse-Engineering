@@ -15,7 +15,7 @@ undefined4 os_queue_dequeue_record(uint param_1,undefined4 *param_2)
   byte bStack_18;
   
   uVar3 = 0;
-  puVar4 = (&PTR_DAT_0000d74c)[(param_1 & 0xffff) * 2];
+  puVar4 = (&tbl_os_queue_records_0000d74c)[(param_1 & 0xffff) * 2];
   bStack_18 = (&DAT_0000d752)[(param_1 & 0xffff) * 8];
   ref_setSR_PARAM(&local_1c,0xe0);
   iVar2 = (param_1 & 0xffff) * 3;

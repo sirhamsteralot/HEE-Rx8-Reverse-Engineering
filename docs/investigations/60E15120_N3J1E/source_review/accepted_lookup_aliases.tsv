@@ -41,3 +41,9 @@ DAT_0006ac38	tbl_fuel_coolant_compensation_0006ac38	source_review_fueling	2D loo
 00069104	candidate_tbl_trailing_advance_3d_alt_00069104	3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.
 0006913c	candidate_tbl_safe_mode_cap_single_trailing_0006913c	1-cell float, data 0x6d354; 0x1206c safe-mode cap.
 00069158	candidate_tbl_safe_mode_advance_cap_trailing_00069158	3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.
+PTR_DAT_0000d74c	tbl_os_queue_records_0000d74c	source_review_os_scheduling	4 x 8-byte ROM records {buf ptr, task id, depth} = {0xffff9310,1,10},{0xffff93d8,2,10},{0xffff94a0,3,30},{0xffff96f8,4,100}; read by os_post_message 0x5f1c and os_queue_dequeue_record 0x6010; ROM bytes verified.
+PTR_DAT_0000d87c	tbl_os_schedule_group_ptrs_0000d87c	source_review_os_scheduling	Pointer table -> group descriptor bases 0xd9cc / 0xd944 / 0x67d00 (8-byte records {i16 target, u16 nargs, u32 handler}); read by os_schedule_task_event 0x9630(group, idx); target -1 = inline call (e.g. grp1 rec[12] -> 0x11d88 from CAN RX ISR).
+DAT_0000d76c	tbl_crank_next_sector_0000d76c	source_review_os_scheduling	Byte at +2*sector = next crank sector index; 0x787a advances crank_sector_index 0xffff9f95 (0x00-0x24, wrap = 36 sectors/720 deg).
+DAT_0000d76d	tbl_crank_sector_ocr10b_0000d76d	source_review_os_scheduling	Byte at +2*sector & 0x7f = OCR10B compare reload in ch10b_compare_rearm 0x7b58 (per-sector tick interval); bit 0x80 marks reference sectors used by 0x77f0.
+PTR_LAB_00004b34	tbl_os_resume_jumptable_00004b34	source_review_os_scheduling	{0x37c4, 0x3818, 0x37c8, 0x381c} context-restore variants; indexed by ctx[0] - rec.param.b0 in os_switch_to_task 0x375c (pool word 0x37c0 = 0x4b34).
+DAT_00003d48	tbl_os_class_bit_00003d48	source_review_os_scheduling	Bytes 01 02 04 08 10 20 40 80; os_mark_task_ready 0x39ba uses [class&7] as the ready-bitmap bit for 0xffff7668[class>>3].

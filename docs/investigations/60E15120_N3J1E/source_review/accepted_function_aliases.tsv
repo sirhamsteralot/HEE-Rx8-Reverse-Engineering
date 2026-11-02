@@ -333,3 +333,36 @@ address	alias	confidence	evidence
 00068dac	uds_service_dispatch_table_scan	high	scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02
 00055702	diag_read_afr_word_b	high	PID 0x0034 handler second word; encodes diag_afr_word_b_ffffaa7c * 0.00390625 (0x3b800000) offset -128 (0xc3000000); logger 0x220034 AFR
 000556ec	diag_read_afr_word_a	high	PID 0x0034 handler 0x56b22 (diag22_pid0034_afr_lambda_words) calls it; encodes diag_afr_word_a_ffffaa6c * 3.05176e-05 (0x38000000 in pool); logger 0x220034 AFR
+00005b3c	cmi10b_tick_isr	high	IVT 0x7fc50+0x2c8 -> trampoline 0x2ec0 -> handler (ROM bytes verified); clears TSR10=0xb then calls 0x75f4/0xd716/0xcf96. Emulator trace on cpu.interrupt(0x2c8): 0x3238->0x5b3c->0x75f4->0x7b58->0xd716->0xcf96->0x3280->rte->idle 0x3dac.
+000075f4	cmi10b_tick_service	high	Body of the CMI10B tick: sync check (0x7f22/0x7b90), crank capture poll 0x77f0, edge bookkeeping 0x7be4/0x80f0, then rearm via 0x7b58. In the 0x2c8 interrupt trace.
+00007b58	ch10b_compare_rearm	high	OCR10B = tbl 0xd76d[0xffff9f95*2] & 0x7f, TCNT10B = 0, mirrors value to 0xffff9fc3 (decompiled + ROM table bytes). Per-sector tick interval.
+0000787a	crank_sector_advance	high	0xffff9f95 = tbl 0xd76c[0xffff9f95*2] (next sector, wrap 0x24 = 36 sectors/720deg), plus period/angle accumulators 0xffff9fbc/9fc1/9fc2/9fc5; re-init if > 0x24.
+0000d716	crank_tick_flag_set	high	Sets DAT_ffffa3fc = 1; called from 0x5b3c (CMI10B); readers 0xd6e4/0xd70a.
+0000cf96	crank_edge_period_update	high	CMI10B sub-handler: matches sector 0xffff9f95 against edge table, reads ICR0AH, computes period 0xffffa3cc into ring 0xffffa390 (x 6666666.0), posts via 0xa156 on match.
+0000a156	post_crank_tick_message	high	Thunk: 0x9630(1, 9, arg) (disasm 0xa156: mov #9,r5; pool 0xa1fc = 0x9630) -> group1 rec[9] @0xd98c {id=2, n=1, handler=0x11c98} posted to queue slot 2.
+00005f1c	os_post_message	high	Posts 5-word {handler, arg1..4} message into queue slot: buf = ROM 0xd74c+8*slot, state at 0xffff9304+3*slot {wr, rd, count}, depth from ROM record; returns 2 if full. Dynamic: 0x9630(1,9,{0xdeadbeef}) wrote {0x11c98, 0xdeadbeef,0,0,0} at 0xffff94a0, count 0->1, wr 0->1, r0=0; then 0x6010 dequeued (rd 0->1, count 1->0).
+000039ba	os_mark_task_ready	high	Appends task id to ready ring at ctrl+0x24 (0xffff74a0)[tail], sets class bitmap 0xffff7668 (bit tbl 0x3d48[class&7] in byte class>>3), and if class > ctrl[0] (cmp/hi, unsigned) sets ctrl[0]=class, ctrl+6=task (disasm 0x39f6-0x3a00). Dynamic: bitmap 0x11000000 -> 0x15000000 on post to slot 2 (class 2).
+00003854	os_wake_posted_task	high	Decrements credit byte ctx[3] of target task (PTR_DAT_00004994[slot*4][3]; disasm 0x3878-0x3888) then calls 0x39ba; may context-switch via 0x3bf4. Dynamic: task[3] ctx[3] 0x1e -> 0x1d on post.
+00003bf4	os_context_switch	high	Saves ctx ptr to ctrl+0xc, writes state 4, calls os_dispatch_next_task (0x3c68); called from 0x3db0 (ISR-exit wake) and 0x3854.
+00009c86	can_rx_isr_handler	high	CAN RX IVT 0x378 -> trampoline 0x31c0 -> 0x5e78 thunk -> 0x9c86; dynamic trace: 0x9c86 calls 0x9630(1,12,0xffff7394) (grp1 rec[12] target -1 -> inline 0x11d88 CAN poll) which moved injected 0x7e0 frame into UDS buffer 0xffffddc8.
+000062a0	task0_background_loop	high	Task-table rec[0] entry (ROM 0x4998 = 0x62a0); do-while(true) calling 18 functions, never calls taskEnd - the never-yielding background loop; dispatch parks in idle 0x3dac when ctrl+6 == -1.
+0000969e	msg_queue_task_slot0	high	Task rec[1] entry: os_queue_dequeue_record(0, &0xffffa118); if r0==0 call msg.handler(msg.args); then taskEnd 0x3d58.
+000096de	msg_queue_task_slot2	high	Task rec[3] entry: dequeue slot 2 (&0xffffa140) -> call handler -> taskEnd. Dynamically run: dequeued posted {0x11c98, arg}, executed handler 0x11c98 -> 0x287aa -> 0x3db0 -> 0x3a0bc -> 0x3d58 -> 0x3c2a -> idle.
+000096fe	msg_queue_task_slot3	high	Task rec[4] entry: dequeue slot 3 (&0xffffa154) -> call handler -> taskEnd.
+000064e8	slow_task_entry	high	Task rec[18] entry (ROM 0x4ab8): thunk {jsr 0x11534; jmp 0x3d58}.
+00011534	slow_background_task	high	29-call slow/background task: 0x2e5c6, ref_calculateTorqueRelatedParams, 0x38f3e, 0x21186, candidate_timing_retard_fast_task, ..., ref_calculateDiagModeTimer 0x55d42, ref_runImmoRelatedCounter, ..., 0x2a290, 0x16b50.
+00011c98	crank_tick_message_handler	high	Group-1 record[9] handler (ROM 0xd98c); posted by crank tick path (0xcf96 -> 0xa156); calls 0x287aa (fuel/load update chain) and 0x3a0bc. Executed dynamically via consumer task 0x96de.
+00005348	fatal_interrupt_trap	high	Fatal trap for reserved/unexpected vectors: raises SR mask to 0xe0 (ref_setSR_PARAM), calls 0xa330(code), spins at 0x535a (disasm 0x5348-0x535c). 98 of 117 real-trampoline IVT handlers + vec 0-63 stubs 0x53a0-0x53c2 call it.
+0000a330	fatal_trap_report_halt	high	Fatal report/halt core called by 0x5348 with the vector code in r4; calls halt loop 0xa4be (bsr at 0xa300/0xa344/0xa382/0xa3d4).
+00005e0c	wdt_iti_fatal_trap	high	WDT overflow ITI (IVT 0x358 -> trampoline 0x30b8): calls 0x5348(0xd6) - deliberate halt; WDT is serviced by polling (0x31c), OVF is flag-only (E3).
+000059a4	atu_ch8_cmp_isr_ch0	high	IVT 0x260 (vec 152): TSR8=0xfffe, candidate_injector_pulse_set_dispatch(0).
+000059b2	atu_ch8_cmp_isr_ch3	high	IVT 0x264 (vec 153): TSR8=0xfffd, candidate_injector_pulse_set_dispatch(3).
+000059c0	atu_ch8_cmp_isr_ch1	high	IVT 0x268 (vec 154): TSR8=0xfffb, candidate_injector_pulse_set_dispatch(1).
+000059ce	atu_ch8_cmp_isr_ch4	high	IVT 0x26c (vec 155): TSR8=0xfff7, candidate_injector_pulse_set_dispatch(4).
+000059dc	atu_ch8_cmp_isr_ch2	high	IVT 0x270 (vec 156): TSR8=0xffef, candidate_injector_pulse_set_dispatch(2).
+000059ea	atu_ch8_cmp_isr_ch5	high	IVT 0x274 (vec 157): TSR8=0xffdf, candidate_injector_pulse_set_dispatch(5).
+00005a4c	knock_adc_trigger_isr	high	IVT 0x290 (vec 164): TSR8=0xefff, knock_reference_adc_read() - knock reference ADC sampling trigger.
+00005ce2	adc_eoc_isr_bank0	high	IVT 0x2f8 (vec 190): clears ADCSR0 bit7 (ADF), returns.
+00005cfe	adc_eoc_isr_bank1	high	IVT 0x308 (vec 194): clears ADCSR1 bit7, calls 0x6b60.
+00005d0a	adc_eoc_isr_bank2	high	IVT 0x310 (vec 196): clears ADCSR2 bit7, returns.
+00009630	os_schedule_task_event	high	The scheduler API: looks up group descriptor (ptr table 0xd87c[group] + idx*8 = {i16 target, u16 nargs, u32 handler}); target -1 -> call handler inline in caller context, else 0x5f1c posts {handler,args} to queue slot 'target' and wakes the consumer task. Upgrades inherited ref_osTaskScheduler. Dynamic: 0x9630(1,9,..) posted to slot 2 and 0x9630(1,12,..) ran 0x11d88 inline from the CAN RX ISR. Wrappers at 0xa0de-0xa22c.

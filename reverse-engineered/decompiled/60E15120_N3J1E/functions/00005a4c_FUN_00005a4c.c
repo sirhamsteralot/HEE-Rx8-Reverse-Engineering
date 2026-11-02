@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00005a4c (12 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00005a4c(void)
+void knock_adc_trigger_isr(void)
 
 {
   ATUII_TSR8_W = 0xefff;

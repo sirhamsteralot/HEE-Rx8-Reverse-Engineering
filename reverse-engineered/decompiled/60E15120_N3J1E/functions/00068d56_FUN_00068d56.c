@@ -6,7 +6,7 @@
 void FUN_00068d56(undefined4 param_1)
 
 {
-  ref_osTaskScheduler(2,1,param_1);
+  os_schedule_task_event(2,1,param_1);
   return;
 }
 

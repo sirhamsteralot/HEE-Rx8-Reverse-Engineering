@@ -3,7 +3,7 @@
   "direct_edges": 6977,
   "leaf_functions": 1041,
   "never_called": 366,
-  "thunks": 51,
+  "thunks": 50,
   "dispatch_handlers": 99,
   "vectors": {
     "vector_Power_Reset": "000008b8",
@@ -21,151 +21,159 @@
   },
   "boot_reachable_from_reset": 22,
   "task_table": {
-    "base": "0x4998",
+    "base": "0x4990",
     "record_bytes": 16,
-    "records": 18,
+    "records": 19,
     "entries": [
       {
-        "record": "00004998",
+        "record": "00004990",
         "entry": "000062a0",
-        "entry_name": "FUN_000062a0",
+        "entry_name": "task0_background_loop",
         "mask": "0x01000000",
+        "param": "0x04000000",
+        "stack": "0xffff7408"
+      },
+      {
+        "record": "000049a0",
+        "entry": "0000969e",
+        "entry_name": "msg_queue_task_slot0",
+        "mask": "0x0a000000",
         "param": "0x04000400",
         "stack": "0xffff7410"
       },
       {
-        "record": "000049a8",
-        "entry": "0000969e",
-        "entry_name": "FUN_0000969e",
+        "record": "000049b0",
+        "entry": "000096be",
+        "entry_name": "uds_service_task_entry",
         "mask": "0x0a000000",
         "param": "0x04000300",
         "stack": "0xffff7418"
       },
       {
-        "record": "000049b8",
-        "entry": "000096be",
-        "entry_name": "FUN_000096be",
-        "mask": "0x0a000000",
+        "record": "000049c0",
+        "entry": "000096de",
+        "entry_name": "msg_queue_task_slot2",
+        "mask": "0x1e000000",
         "param": "0x04000200",
         "stack": "0xffff7420"
       },
       {
-        "record": "000049c8",
-        "entry": "000096de",
-        "entry_name": "FUN_000096de",
-        "mask": "0x1e000000",
+        "record": "000049d0",
+        "entry": "000096fe",
+        "entry_name": "msg_queue_task_slot3",
+        "mask": "0x64000000",
         "param": "0x04000100",
         "stack": "0xffff7428"
       },
       {
-        "record": "000049d8",
-        "entry": "000096fe",
-        "entry_name": "FUN_000096fe",
-        "mask": "0x64000000",
+        "record": "000049e0",
+        "entry": "000065f6",
+        "entry_name": "ref_task1_",
+        "mask": "0x02000000",
         "param": "0x04000400",
         "stack": "0xffff7430"
       },
       {
-        "record": "000049e8",
-        "entry": "000065f6",
-        "entry_name": "ref_task1_",
+        "record": "000049f0",
+        "entry": "0000661e",
+        "entry_name": "ref_task2_",
         "mask": "0x02000000",
         "param": "0x04000200",
         "stack": "0xffff7438"
       },
       {
-        "record": "000049f8",
-        "entry": "0000661e",
-        "entry_name": "ref_task2_",
+        "record": "00004a00",
+        "entry": "000063f0",
+        "entry_name": "ref_interruptSetup___",
         "mask": "0x02000000",
         "param": "0x04000300",
         "stack": "0xffff7440"
       },
       {
-        "record": "00004a08",
-        "entry": "000063f0",
-        "entry_name": "ref_interruptSetup___",
+        "record": "00004a10",
+        "entry": "0000648e",
+        "entry_name": "FUN_0000648e",
         "mask": "0x02000000",
         "param": "0x04000200",
         "stack": "0xffff7448"
       },
       {
-        "record": "00004a18",
-        "entry": "0000648e",
-        "entry_name": "FUN_0000648e",
+        "record": "00004a20",
+        "entry": "000064ba",
+        "entry_name": "candidate_knock_sensor_fault_task",
         "mask": "0x02000000",
         "param": "0x04000200",
         "stack": "0xffff7450"
       },
       {
-        "record": "00004a28",
-        "entry": "000064ba",
-        "entry_name": "candidate_knock_sensor_fault_task",
+        "record": "00004a30",
+        "entry": "000064f6",
+        "entry_name": "FUN_000064f6",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7458"
       },
       {
-        "record": "00004a38",
-        "entry": "000064f6",
-        "entry_name": "FUN_000064f6",
+        "record": "00004a40",
+        "entry": "00006584",
+        "entry_name": "FUN_00006584",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7460"
       },
       {
-        "record": "00004a48",
-        "entry": "00006584",
-        "entry_name": "FUN_00006584",
+        "record": "00004a50",
+        "entry": "00006592",
+        "entry_name": "FUN_00006592",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7468"
       },
       {
-        "record": "00004a58",
-        "entry": "00006592",
-        "entry_name": "FUN_00006592",
+        "record": "00004a60",
+        "entry": "000065b2",
+        "entry_name": "FUN_000065b2",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7470"
       },
       {
-        "record": "00004a68",
-        "entry": "000065b2",
-        "entry_name": "FUN_000065b2",
+        "record": "00004a70",
+        "entry": "000065cc",
+        "entry_name": "FUN_000065cc",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7478"
       },
       {
-        "record": "00004a78",
-        "entry": "000065cc",
-        "entry_name": "FUN_000065cc",
+        "record": "00004a80",
+        "entry": "000065da",
+        "entry_name": "FUN_000065da",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7480"
       },
       {
-        "record": "00004a88",
-        "entry": "000065da",
-        "entry_name": "FUN_000065da",
+        "record": "00004a90",
+        "entry": "000065e8",
+        "entry_name": "FUN_000065e8",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7488"
       },
       {
-        "record": "00004a98",
-        "entry": "000065e8",
-        "entry_name": "FUN_000065e8",
-        "mask": "0x02000000",
+        "record": "00004aa0",
+        "entry": "000060c8",
+        "entry_name": "ref_getSensorStuff__",
+        "mask": "0x01000000",
         "param": "0x04000400",
         "stack": "0xffff7490"
       },
       {
-        "record": "00004aa8",
-        "entry": "000060c8",
-        "entry_name": "ref_getSensorStuff__",
-        "mask": "0x01000000",
+        "record": "00004ab0",
+        "entry": "000064e8",
+        "entry_name": "slow_task_entry",
+        "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7498"
       }
@@ -204,7 +212,7 @@
     },
     {
       "address": "00005348",
-      "name": "FUN_00005348",
+      "name": "fatal_interrupt_trap",
       "callers": 99
     },
     {

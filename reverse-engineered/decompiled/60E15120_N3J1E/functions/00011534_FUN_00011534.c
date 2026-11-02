@@ -1,6 +1,6 @@
 /* ROM address: 0x00011534; body bytes: 176; decompiled */
 
-void FUN_00011534(void)
+void slow_background_task(void)
 
 {
   FUN_0002e5c6();

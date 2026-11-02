@@ -420,6 +420,21 @@ address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
 [`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
 accurate for its date.
 
+
+---
+
+## 11. Update — 2026-11-02 (rpm-path attribution corrected)
+
+The "ISR 0x803e" references in §2 and the memory map above were re-checked: 0x803e has no
+callgraph callers; its only ROM reference is the default (VBR=0) IVT slot 0x2c8 (pre-VBR
+entry, superseded after VBR=0x7fc50 at 0xd206). The
+live path is the CMI10B tick chain 0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle`
+0x7fcc, which writes `crank_period_accumulator_ffff9f88` and
+`engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(0xffff9fd0[6]). Details and emulator
+evidence: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md) §7/§9.
+
+## 12. Update — 2026-11-02 (knock reimplementation, ROADMAP E item 1)
+
 2026-11-02 addendum (ROADMAP E item 1): the retard state machine is now
 reimplemented as host-testable C —
 [`reverse-engineered/reimplementation/rx8_knock.c`](../../../reverse-engineered/reimplementation/rx8_knock.c)
@@ -461,3 +476,4 @@ ROM literal pools, 2026-11-02):
   8-byte struct of four big-endian shorts; valid when
   `(short)~(s1+s0) == s2` or `== s3`, then the u32 at offset 0 is the learned
   float — this is what the dynamic test fills to drive the edge path.
+

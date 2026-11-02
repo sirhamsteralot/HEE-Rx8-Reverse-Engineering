@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000a330 (32 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0000a330(undefined4 param_1)
+undefined4 fatal_trap_report_halt(undefined4 param_1)
 
 {
   undefined4 uVar1;

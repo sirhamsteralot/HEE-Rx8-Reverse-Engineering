@@ -488,3 +488,35 @@ DAT_0006ac38	tbl_fuel_coolant_compensation_0006ac38	source_review_fueling	2D loo
 DAT_0005f10c	tbl_diag22_dispatch_records_0005f10c	uds_dispatch_labeling	99 x 12-byte {u16 pid, u8 rlen, u8 byte3, u16 mask, u16 unk, u32 handler}; scanned by diag22_find_and_dispatch_identifier 0x5774c
 DAT_0005f5b2	tbl_diag22_subpid_supported_bits_0005f5b2	uds_dispatch_labeling	36 x 6-byte {u16 pid, u8 bit, u8 sub, u16 mask}; scanned by 0x579a8
 DAT_0005eb40	tbl_uds_service_dispatch_0005eb40	uds_dispatch_labeling	26 x 12-byte {u8 svc<<24, u32 handler, u32 param}; scanned by 0x68dac (literal @0x68ed0)
+00007fc50	ivt_base_vbr	u32[236] vector table; VBR set to this at 0xd206	
+00004998	os_task_table	18 x 16-byte task records {entry, mask, param, stack}; stacks 0xffff7410-0xffff7498	
+00004990	os_task_record_base	task control records base used by 0x375c	
+0000d914	can_mailbox_mask_table	16 x u16; mask = 1<<((mb+8)&0xf); verified vs ROM bytes	
+0000d7d4	injector_channel_map	6 x 12-byte records {DCNT8x ptr, GR1x ptr, TIER mask}; dynamically confirmed via 0x8a68 (ch0 -> DCNT8A/GR1A ... ch5 -> DCNT8F/GR1F)	
+00004dffc	can_rx_desc_id07e0	Rx8CanMessageDescriptor id=0x7e0 mb=14 dlc=8 buf=0xffffddc8	
+00004dfec	can_rx_desc_id07df	Rx8CanMessageDescriptor id=0x7df mb=13 dlc=8 buf=0xffffddc8 (functional)	
+00004e00c	can_tx_desc_id07e8	Rx8CanMessageDescriptor id=0x7e8 mb=15 dlc=8 buf=0xffffddd0; emulator TX via 0x99b0 emitted 0x7e8 frames from 0xffffddd0	
+00005f10c	diag22_dispatch_table	99 x 12-byte Rx8DiagnosticRecord {identifier, resp_len, _, availability_mask, _, handler}; PID 0x43 record at 0x5f268 -> handler 0x56b8a	
+00069208	candidate_tbl_idle_base_timing_cranking_00069208	2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' — name is a hypothesis (descriptor not in romraider_descriptor_matches).	
+0006921c	candidate_tbl_idle_base_timing_cold_lowload_0006921c	2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.	
+00069230	candidate_tbl_idle_base_timing_warm_highload_00069230	2D u8 n=4, data 0x6d930; 0x14100 else branch.	
+000691a4	candidate_tbl_min_advance_vs_coolant_a_000691a4	2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'.	
+000691b8	candidate_tbl_min_advance_vs_coolant_b_000691b8	2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance).	
+00069190	candidate_tbl_max_advance_vs_rpm_leading_00069190	2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance (65.0 deg observed at 3000 rpm in emulator).	
+000691cc	candidate_tbl_max_advance_vs_rpm_trailing_000691cc	2D u8 n=9, data 0x6d844; 0x12300 trailing max advance.	
+00069040	candidate_tbl_offthrottle_leading_3d_00069040	3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040).	
+0006905c	candidate_tbl_leading_advance_3d_alt_0006905c	3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by coolant table a618.	
+00069018	candidate_tbl_coolant_timing_multiplier_leading_00069018	2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018).	
+0006902c	candidate_tbl_coolant_timing_multiplier_trailing_0006902c	2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror.	
+00069094	candidate_tbl_safe_mode_cap_single_00069094	1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D.	
+000690b0	candidate_tbl_safe_mode_advance_cap_000690b0	3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap.	
+000690e8	candidate_tbl_offthrottle_trailing_3d_000690e8	3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040.	
+00069104	candidate_tbl_trailing_advance_3d_alt_00069104	3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.	
+0006913c	candidate_tbl_safe_mode_cap_single_trailing_0006913c	1-cell float, data 0x6d354; 0x1206c safe-mode cap.	
+00069158	candidate_tbl_safe_mode_advance_cap_trailing_00069158	3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.	
+PTR_DAT_0000d74c	tbl_os_queue_records_0000d74c	source_review_os_scheduling	4 x 8-byte ROM records {buf ptr, task id, depth} = {0xffff9310,1,10},{0xffff93d8,2,10},{0xffff94a0,3,30},{0xffff96f8,4,100}; read by os_post_message 0x5f1c and os_queue_dequeue_record 0x6010; ROM bytes verified.
+PTR_DAT_0000d87c	tbl_os_schedule_group_ptrs_0000d87c	source_review_os_scheduling	Pointer table -> group descriptor bases 0xd9cc / 0xd944 / 0x67d00 (8-byte records {i16 target, u16 nargs, u32 handler}); read by os_schedule_task_event 0x9630(group, idx); target -1 = inline call (e.g. grp1 rec[12] -> 0x11d88 from CAN RX ISR).
+DAT_0000d76c	tbl_crank_next_sector_0000d76c	source_review_os_scheduling	Byte at +2*sector = next crank sector index; 0x787a advances crank_sector_index 0xffff9f95 (0x00-0x24, wrap = 36 sectors/720 deg).
+DAT_0000d76d	tbl_crank_sector_ocr10b_0000d76d	source_review_os_scheduling	Byte at +2*sector & 0x7f = OCR10B compare reload in ch10b_compare_rearm 0x7b58 (per-sector tick interval); bit 0x80 marks reference sectors used by 0x77f0.
+PTR_LAB_00004b34	tbl_os_resume_jumptable_00004b34	source_review_os_scheduling	{0x37c4, 0x3818, 0x37c8, 0x381c} context-restore variants; indexed by ctx[0] - rec.param.b0 in os_switch_to_task 0x375c (pool word 0x37c0 = 0x4b34).
+DAT_00003d48	tbl_os_class_bit_00003d48	source_review_os_scheduling	Bytes 01 02 04 08 10 20 40 80; os_mark_task_ready 0x39ba uses [class&7] as the ready-bitmap bit for 0xffff7668[class>>3].

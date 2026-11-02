@@ -1,6 +1,6 @@
 /* ROM address: 0x0000cf96; body bytes: 342; decompiled */
 
-undefined4 * FUN_0000cf96(void)
+undefined4 * crank_edge_period_update(void)
 
 {
   undefined4 uVar1;
@@ -14,12 +14,12 @@ undefined4 * FUN_0000cf96(void)
   float fVar8;
   
   if (DAT_ffff9f96 == '\x01') {
-    if ((DAT_ffff9f95 == '\0') && (DAT_ffffa3d8 = DAT_ffffa3d8 + 1, 2 < DAT_ffffa3d8)) {
+    if ((crank_sector_index_ffff9f95 == '\0') && (DAT_ffffa3d8 = DAT_ffffa3d8 + 1, 2 < DAT_ffffa3d8)) {
       DAT_ffffa3d8 = 0;
     }
     puVar6 = &DAT_ffffa3d0;
     puVar4 = &DAT_ffffa3b4;
-    in_r7 = DAT_ffff9f95 + DAT_ffffa3d8 * '$';
+    in_r7 = crank_sector_index_ffff9f95 + DAT_ffffa3d8 * '$';
     bVar7 = DAT_ffffa3d6;
     do {
       if (in_r7 == bVar7) {
@@ -54,7 +54,7 @@ undefined4 * FUN_0000cf96(void)
       }
       DAT_ffffa390 = ((float)DAT_ffffa3d7 * 6666666.0) / fVar8;
       DAT_ffffa3b0 = (undefined1)iVar5;
-      puVar4 = (undefined4 *)FUN_0000a156();
+      puVar4 = (undefined4 *)post_crank_tick_message();
       return puVar4;
     }
     iVar5 = iVar5 + 1;

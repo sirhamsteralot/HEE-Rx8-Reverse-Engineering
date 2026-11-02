@@ -38,7 +38,7 @@ int os_switch_to_task(int param_1,short param_2)
   }
                     /* WARNING: Could not recover jumptable at 0x000037ac. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  iVar4 = (**(code **)((int)&PTR_LAB_00004b34 +
+  iVar4 = (**(code **)((int)&tbl_os_resume_jumptable_00004b34 +
                       ((int)*pcVar5 - (uint)(byte)(&DAT_00004990)[iVar4 * 0x10])))
                     (*(undefined4 *)(param_1 + 0xc));
   return iVar4;

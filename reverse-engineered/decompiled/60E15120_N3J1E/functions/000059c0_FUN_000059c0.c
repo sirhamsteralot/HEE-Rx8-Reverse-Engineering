@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000059c0 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000059c0(void)
+void atu_ch8_cmp_isr_ch1(void)
 
 {
   ATUII_TSR8_W = 0xfffb;

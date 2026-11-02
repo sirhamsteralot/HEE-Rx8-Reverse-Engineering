@@ -26,10 +26,13 @@ for r in syms:
     if r['name'].startswith('vector_'):
         t=struct.unpack_from('>I',rom,int(r['address'],16))[0]
         vectors[r['name']]=f'{t:08x}'
-# task table at 0x4998: 16-byte records {entry, mask, param, stack}
+# task table at 0x4990: 19 x 16-byte records {param, stack, entry, mask}
+# (corrected 2026-10-31 fueling pass; 0x4990 base proven by 0x375c pool 0x37b0,
+#  stride shll2 x2; terminator record at 0x4ac0 excluded) — see
+# docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md
 tasks=[]
-for off in range(0x4998,0x4ab8,16):
-    e,m,p,s=struct.unpack_from('>IIII',rom,off)
+for off in range(0x4990,0x4ac0,16):
+    p,s,e,m=struct.unpack_from('>IIII',rom,off)
     tasks.append({'record':f'{off:08x}','entry':f'{e:08x}','entry_name':byaddr[f'{e:08x}']['name'],
                   'mask':f'0x{m:08x}','param':f'0x{p:08x}','stack':f'0x{s:08x}'})
 def reach(seed):
@@ -48,7 +51,7 @@ stats={
  'dispatch_handlers':len(handlers),
  'vectors':vectors,
  'boot_reachable_from_reset':len(reach('000008b8')),
- 'task_table':{'base':'0x4998','record_bytes':16,'records':len(tasks),'entries':tasks},
+ 'task_table':{'base':'0x4990','record_bytes':16,'records':len(tasks),'entries':tasks},
  'fan_in_top':[{'address':a,'name':byaddr[a]['name'],'callers':n}
    for a,n in Counter({c:len(v) for c,v in inn.items()}).most_common(20)],
  'fan_out_top':[{'address':a,'name':byaddr[a]['name'],'callees':n}

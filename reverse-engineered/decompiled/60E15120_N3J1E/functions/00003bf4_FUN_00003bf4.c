@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00003bf4 (54 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00003bf4(int param_1,undefined4 param_2,char *param_3)
+void os_context_switch(int param_1,undefined4 param_2,char *param_3)
 
 {
   undefined1 *puVar1;

@@ -3,7 +3,7 @@
 void thunk_FUN_00009c86_00005eee(void)
 
 {
-  FUN_00009c86();
+  can_rx_isr_handler();
   return;
 }
 

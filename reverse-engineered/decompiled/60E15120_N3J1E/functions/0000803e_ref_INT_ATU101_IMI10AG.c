@@ -9,7 +9,7 @@ undefined4 * crank_isr_compute_rpm(int param_1,undefined4 param_2,int param_3,ui
   int iVar1;
   int *piVar2;
   
-  piVar2 = &DAT_ffff9fd0;
+  piVar2 = &crank_period_ring_ffff9fd0;
   do {
     param_4 = param_4 + 1;
     iVar1 = *piVar2;

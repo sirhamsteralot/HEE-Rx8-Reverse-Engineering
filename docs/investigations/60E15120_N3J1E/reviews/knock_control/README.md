@@ -417,3 +417,11 @@ logger matches (`cross_ecu/romraider_logger_matches.json`: OL Status PID 0x0003
 (`reviews/reset_at_10000_rpm.md`, `source_review/`, `cross_ecu/`). Function names
 inherited from the reference project remain hypotheses where marked `ref_`;
 `candidate_` names are unproven. No hardware execution was performed.
+
+---
+
+Note 2026-11-02: the "ISR 0x803e" references above are superseded — 0x803e is only the
+default (VBR=0) IVT slot 0x2c8 target (pre-VBR entry, superseded after VBR=0x7fc50 at
+0xd206); the crank period → raw RPM 0xffff9f80 path runs in `ref_getCrankAngle`
+0x7fcc, reached from the CMI10B tick handler 0x5b3c via 0x75f4 → 0x77f0 → 0x7c68.
+See [os_scheduling_deep_dive_report.md](../../os_scheduling_deep_dive_report.md) §7.

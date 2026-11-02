@@ -76,12 +76,12 @@ uint FUN_0002f2ac(void)
   }
   if ((DAT_ffffbdb5 == 0) && (DAT_ffffbda0 == '\x01')) {
     local_18[0] = 0;
-    ref_osTaskScheduler(0,2,local_18);
+    os_schedule_task_event(0,2,local_18);
   }
   uVar2 = (uint)DAT_ffffbdb5;
   if ((uVar2 == 1) && (DAT_ffffbda0 == '\0')) {
     local_18[0] = 0;
-    uVar2 = ref_osTaskScheduler(0,3,local_18);
+    uVar2 = os_schedule_task_event(0,3,local_18);
   }
   DAT_ffffbdb5 = DAT_ffffbda0;
   DAT_ffffbdb6 = cVar1;
