@@ -49,9 +49,10 @@ Verification that reimplemented/derived behavior matches the original binaries.
   masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader),
   `tests/test_knock_retard_dynamic.py` (knock-retard state machine 0x13a60/0x13b40
   vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port).
-  68 tests as of 2026-11-02 (in this environment 4 fail pre-existing because the
-  Git LFS object for `binaries/dumps/60E0G500_N3ZHEC.bin` is not pulled; they
-  fail identically on `main`).
-- Host C tests need a machine with a working C toolchain (the current Windows
-  box has MSVC cl.exe but no VC headers, and no mingw gcc) — until then the
-  emulator cross-check uses a float32 Python port of the reimplementation.
+  68 tests as of 2026-11-02, all passing. The 4 tests touching
+  `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
+  (`git lfs pull`); without it they fail on the manifest hash check.
+- Host C tests need a machine with a working C toolchain. The Windows box has
+  MSVC cl.exe but no VC headers and no mingw gcc, so there the emulator
+  cross-check uses a float32 Python port of the reimplementation instead; on
+  this Linux box `cc` (GCC) runs the host tests directly.
