@@ -20,7 +20,7 @@ they are referenced from the submodule, not copied (AGENTS.md rule 4b).
 Run from the repo root:  python utilities/scripts/defs-merge/extend_defs_all_roms.py
 """
 from pathlib import Path
-import copy, csv, hashlib, json, re, subprocess, sys
+import copy, csv, hashlib, json, re, struct, subprocess, sys
 import xml.etree.ElementTree as E
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -85,6 +85,87 @@ def base_chain(block, blks):
         cur = blks[key]
         chain.append(cur)
     return list(reversed(chain))  # RX8Base first
+
+
+SCALARS_JSON = ROOT / "data" / "maps" / "cross_rom_scalars.json"
+SCALAR_ENTRIES = {
+    # literal-pool float32 scalars (ROADMAP D11) exposed as editable 1-cell
+    # RomRaider "scalar" tables; addresses/values from extract_scalars.py output
+    "stoich_afr": {
+        "name": "Scalar - Stoich AFR (literal pool)",
+        "units": "AFR",
+        "description": ("Literal-pool float (stoich AFR 14.7), referenced by a mova in the "
+                        "fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c "
+                        "path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. "
+                        "NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). "
+                        "Editing changes fuel correction + AFR display; this address is inside the "
+                        "app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before "
+                        "flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. "
+                        "FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the "
+                        "new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by "
+                        "14.7/new_stoich; leave the maps alone (they are lambda multipliers). For "
+                        "varying ethanol blends use the flex stoich table (0x6C444 in G-ROM_FLEX), "
+                        "not a fixed scalar. See data/definitions/README.md 'Literal-pool scalars'."),
+    },
+    "fuel_load_scale": {
+        "name": "Scalar - Fuel Load Scale (literal pool)",
+        "units": "mult",
+        "description": ("Literal-pool float (0.07196): engine_load x 0.07196 -> "
+                        "fuel_load_scale_ffffbed0; the scalar every fuel-volume request scales by "
+                        "(0x306e8 in 60E15120_N3J1E). Physical units still candidate. Editing changes "
+                        "base fueling; address is inside the checksum range (D3) - bench-validate "
+                        "before flashing (rule 10). See calibration_extraction_report.md 6a. "
+                        "FUEL CHANGE: this is the scalar that changes OPEN-LOOP injected fuel volume "
+                        "(bed0 = load x 0.07196 in the 0x306e8 fuel-volume calc); for a different-"
+                        "stoich fuel scale it by 14.7/new_stoich (E85: x1.506 -> ~0.1084) and pair "
+                        "with setting 'Scalar - Stoich AFR' to the new stoich. Unit interpretation "
+                        "candidate - verify with a wideband that commanded AFR = new stoich at "
+                        "lambda=1.0 before driving. See data/definitions/README.md."),
+    },
+}
+
+
+def inject_scalar_tables(block, rom_rec):
+    """Add literal-pool scalar entries (1D size-1 float tables) for this ROM.
+
+    Addresses come from data/maps/cross_rom_scalars.json (extract_scalars.py);
+    each address is asserted against the ROM bytes (f32 decode == expected value).
+    Skipped when the block already carries the entry (same name).
+    """
+    if not SCALARS_JSON.exists():
+        return 0
+    cross = json.loads(SCALARS_JSON.read_text())
+    stem = rom_rec["stem"]
+    rom = (ROOT / rom_rec["file"]).read_bytes()
+    existing = {t.get("name") for t in block.findall("table")}
+    n = 0
+    for key, spec in SCALAR_ENTRIES.items():
+        entry = cross["scalars"].get(key)
+        if not entry:
+            continue
+        per = entry["per_rom"].get(stem)
+        if not per or not per.get("present") or not per.get("addresses"):
+            continue
+        if spec["name"] in existing:
+            continue
+        if stem == cross["reference"]:
+            addr = int(entry["ref_addrs"][0], 16)
+        else:
+            addr = int(per["addresses"][0], 16)
+        val = struct.unpack(">f", rom[addr:addr + 4])[0]
+        assert abs(val - entry["value"]) < 1e-6,             f"{stem} {key}: ROM f32 at {addr:#x} = {val}, expected {entry['value']}"
+        t = E.SubElement(block, "table", {
+            "name": spec["name"], "category": "Fuel Injection", "type": "1D",
+            "storagetype": "float", "endian": "big", "size": "1",
+            "storageaddress": f"0x{addr:X}",
+        })
+        d = E.SubElement(t, "description")
+        d.text = (spec["description"] + f" ROM address 0x{addr:x}, value {entry['value']!r} "
+                  "(asserted against ROM bytes by this script).")
+        E.SubElement(t, "scaling", {"units": spec["units"], "expression": "x",
+                                    "to_byte": "x", "format": "0.0000"})
+        n += 1
+    return n
 
 
 def validate_block(block, fwid):
@@ -159,6 +240,10 @@ def main():
             coverage["roms"].append(rec)
             continue
         chain = base_chain(block, blks)
+        # inject into a copy so ROMs sharing one upstream block don't inherit
+        # each other's literal addresses
+        block = copy.deepcopy(block)
+        n_scalars = inject_scalar_tables(block, r)
         n_addr = validate_block(block, fwid)
         # emit standalone per-ROM def: base chain + rom block, with provenance comment
         out = E.Element("roms")
@@ -183,6 +268,7 @@ def main():
             "block_origin": origin,
             "base_chain": [b.findtext("romid/xmlid") for b in chain],
             "block_tables": len(block.findall("table")),
+            "scalar_tables_injected": n_scalars,
             "block_tables_with_storageaddress": n_addr,
             "per_rom_def": out_path.relative_to(ROOT).as_posix(),
             "ecuflash_def": (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned}" if fwid == "60E0G500" else None),

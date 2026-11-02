@@ -94,6 +94,75 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 
 Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
+### 6a. Scalar constants — literal-pool float32s (2026-11-02)
+
+Descriptor tables are not the whole calibration surface: single float32
+constants live in shared literal pools and are referenced by literal pointers
+(e.g. 0x30830 → 0x78170). `utilities/scripts/extract_scalars.py` locates 14
+binary-verified seeds by exact big-endian bit pattern and writes
+`data/maps/<rom-id>/scalars.{json,tsv}` plus `data/maps/cross_rom_scalars.json`.
+On the reference ROM 60E15120_N3J1E the script asserts every documented
+address (e.g. **fuel_load_scale 0.07196 = 0x3d935fc4 @0x78170** — the scalar
+the whole fuel-volume request scales by, `fuel_load_scale_ffffbed0`; load cell
+scale 0.6345 = 0x3f226e98 @0x7a088). All 13 seeds are present in all 11 ROMs
+except `injector_flow_secondary_cc_min` (475.93), which 60E0E700_N3YLEE
+replaces with 608.0/626.224 at 0x76ccc-0x76cd0 — different secondary injectors
+on that market ROM. Seeds + evidence come from the
+[load & fuelling review validation](reviews/load_fueling_model/validation.json);
+tests in `tests/test_extract_scalars.py`.
+- **Negative result (2026-11-02)**: no stored scalar equals λ = 0.942188
+  (f32 0x3f71333c ±2 ULP, any alignment, absent from all 11 ROMs; Q15 would be
+  30875.6 — non-integer; u8 scalings give x = 14.8 — non-integer; no extracted
+  table cell/axis in [0.9419, 0.9424] in any ROM). The base AFR/lambda reference
+  in firmware is λ = 1.0 implicit (diag Q15 /32768); WOT λ ≈ 0.942 is emergent
+  from the Open Loop Target tables (u8, λ = 1 − x/256; nearest cell x=15 →
+  λ 0.94140625) plus trim — see real-car logs `data/logs/nr666p/` (measured
+  λ 0.942 / AFR 13.85 at WOT; 13.85/14.7 = 0.942177). Nearest stored float
+  cells: 0.9418 in `tbl_069950` ("Table 2D - 308", all ROMs) and 13.85 AFR
+  cells in `tbl_06fe28` (60E32000_N3N5EB only, λ = 0.94218).
+- VersaTuner's "Air Fuel Ratio Base" ("base air fuel ratio used to calculate
+  injection duration") is a **map**, not a scalar — its ROM counterparts are
+  already extracted: `tbl_06ac88` "Fuel Injection - Engine Load Compensation"
+  (u16, λ = 0.75 + x/65536, RPM×load 18×20, data 0x785f4 — the base multiplier
+  `bed4` in the 0x306e8 fuel-volume calc) and the `tbl_069e9c` "Open Loop
+  Target" 3D map (u8, λ = 1 − x/256, load×RPM 21×19). Closest cells to
+  λ 0.942188: `tbl_069e9c` x=15 → 0.94140625 (AFR 13.84); `tbl_06ac88` raw 12616
+  → 0.94250 @ 6000 rpm / load 1.0. 0.942188 itself matches the OBD reporting
+  resolution (PID 0x06 = (λ−1)·100 → −5.78) and the WOT log values (λ 0.942 /
+  AFR 13.85), i.e. a measured λ, not a stored constant.
+- The single-value "base AFR" **is** a scalar: stoich **14.7** = f32 0x416b3333,
+  one occurrence per ROM (0x3e7ec in N3J1E), referenced by `mova` @0x3e6ec in
+  FUN_0003e560 and used as `diag_afr_word_a × fVar4 × 14.7` in the
+  fuel-correction/catalyst model (feeds `fuel_correction_sum_ffffc644`, PID
+  0x3c) — i.e. it converts the λ-domain fueling into AFR units. Seeded as
+  `stoich_afr` in extract_scalars.py (2026-11-02). Per-operating-point AFR is
+  the maps above, not this scalar.
+- **Flex-fuel cross-check (2026-11-02)**: all 11 available ROMs are non-flex —
+  each has exactly one 14.7 literal (0x416b3333) referenced by exactly one
+  `mova` 0x100 B before it (N3J1E: mova @0x3e6ec → 0x3e7ec in FUN_0003e560;
+  per-ROM lit/mova: 60E0E500 0x3f314/0x3f214, 60E0E700 0x3f56c/0x3f46c,
+  60E0FB00+60E0FC00 0x3ed88/0x3ec88, 60E1B900 0x3f020/0x3ef20, 60E1C500
+  0x3f5d8/0x3f4d8, 60E1D400 0x3f9d4/0x3f8d4, 60E32000_N3M5E 0x41a60/0x41960,
+  60E32000_N3N5EB 0x40f9c/0x40e9c, 60E0G500_N3ZHEC 0x3f73c/0x3f63c). The
+  G-ROM_FLEX def (no binary in this repo) replaces this constant with
+  "Table 2D - Stoich Fuel Ratio" @0x6C444 (12 floats, stored 1/AFR, displayed
+  AFR = 1/x, Y axis = Ethanol Content % @0x6C414) — in N3J1E that address range
+  is tbl_068f94's data, so the flex table does not exist here (already flagged
+  as unresolved G-ROM_FLEX inheritance in defs-merge/inheritance_issues.json).
+  => A flex-fuel patch hooks exactly this site: swap the 14.7 literal load for a
+  lookup into the stoich table indexed by ethanol content (logger PID 0x0555,
+  uint16 %). No ethanol-indexed 1/AFR table exists in any of the 11 ROMs (scanned).
+- Both scalars are now **editable in RomRaider/VersaTuner**: `defs-merge/extend_defs_all_roms.py`
+  injects them into every per-ROM def as 1-cell `type="1D"` float tables
+  ("Scalar - Stoich AFR (literal pool)", "Scalar - Fuel Load Scale (literal pool)")
+  with the per-ROM `storageaddress` asserted against ROM bytes at generation time;
+  test `test_per_rom_defs_expose_scalars`. Caveat in each entry: addresses are inside
+  the D3 checksum range and editing changes fueling — bench-validate before flashing.
+  For a different-stoich fuel, which scalar to change (and how) is documented in
+  [data/definitions/README.md](../../../data/definitions/README.md) "Literal-pool
+  scalars" — set stoich_afr to the new stoich AND scale fuel_load_scale by
+  14.7/new_stoich; leave the λ maps alone.
+
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
 | ROM | matched | unmatched ref | tables w/ diffs | diff cells |
@@ -115,10 +184,12 @@ generation (fewer structural matches).
 
 - `utilities/scripts/extract_maps.py` — scanner + extractor
 - `utilities/scripts/diff_maps.py` — cross-ROM diff
-- `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv)
+- `utilities/scripts/extract_scalars.py` — literal-pool scalar extractor (2026-11-02, see section 6a)
+- `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv, scalars.json + scalars.tsv)
 - `data/maps/cross_rom_diff.json` — cross-ROM diff report
-- `data/maps/README.md` — format docs + regeneration recipe
-- `tests/test_extract_maps.py` — 6 tests
+- `data/maps/cross_rom_scalars.json` — cross-ROM scalar address report
+- [data/maps README](../../../data/maps/README.md) — format docs + regeneration recipe
+- `tests/test_extract_maps.py` — 6 tests; `tests/test_extract_scalars.py` — 5 tests (2026-11-02)
 
 ## 8. Validation
 
@@ -128,6 +199,9 @@ generation (fewer structural matches).
 - **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
 - **All axes monotonic** across all 587 tables (strong false-positive filter).
 - **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
+- **Scalars (2026-11-02)**: 14 seed float32 patterns found in all 11 ROMs;
+  reference-ROM addresses asserted by `extract_scalars.py` and
+  `tests/test_extract_scalars.py` (5 tests, pass).
 - `validate_reports.py` PASS; `hash_binaries.py --check` OK.
 
 ## 9. Memory map for validation

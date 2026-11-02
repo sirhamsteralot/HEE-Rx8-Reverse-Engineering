@@ -106,6 +106,15 @@ closed loop: beb8 = filter(clamp((max(bf40, c01c+b0c4) + min(tbl_0x6ac38(ECT), b
 
 ## 3. Key calibrated tables (RX8Defs names; descriptor-matched)
 
+Scalar constants behind the math (not tables - literal-pool float32s, now
+extracted per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` by
+`utilities/scripts/extract_scalars.py`, see
+[calibration extraction section 6a](calibration_extraction_report.md)): the base
+fuel scalar `fuel_load_scale_ffffbed0` = load x **0.07196** (0x3d935fc4 @0x78170,
+ptr 0x30830) multiplying into every fuel-volume request, injector flow rates
+369.472/475.93 cc/min (@0x78184, @0x7818c/0x78194), blend decay 0.0667
+(0x3d889a02 @0x7132c/0x71330).
+
 `0x69788` MAF Scaling; `0x6ac88` Fuel Injection - Engine Load Compensation;
 `0x6aa80/0x6aa64` Injector Latency Primary/Secondary (3D vs MRP + battery V);
 `0x6a9a4/0x6a9c0/0x6a9dc` injector weighted-engine-temp multipliers;
