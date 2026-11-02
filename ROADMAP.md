@@ -94,6 +94,9 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   (task table corrected to base 0x4990/19 records by the fueling pass, §11 there;
   full scheduling model — queues, crank-angle-synchronous tick, timers — added
   2026-11-02: [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md))
+- **OS scheduling deep dive + labeling (2026-11-02)**: full scheduler model documented and
+  33 functions + 10 RAM cells + 6 tables labeled from it (os_scheduling_labels.json);
+  → [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
 - **RX8Club thread mined + OCR'd**: BOOT-mode CN400 pinout (150 Hz WDT feed pin
   3), UDS services, seed/key in bootloader, PID 0x43 = g/rev × 1/255, ignition
   BTDC equation — inline XML addresses verified against the real N3ZHEC ROM.

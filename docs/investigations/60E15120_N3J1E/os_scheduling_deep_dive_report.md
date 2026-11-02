@@ -586,3 +586,20 @@ carry ref_/candidate_ names from earlier passes).
   0x3238/0x3280 (exit switch 0x32f4), message queues via 0x9630/0x5f1c/0x6010,
   crank-angle-synchronous CMI10B tick (0x5b3c chain) + CAN RX (0x378), polled WDT
   (0x31c) with fatal ITI trap, per-task software timers. Dynamic evidence in §9.
+
+## 13. Update — 2026-11-02 (labeling pass applied + sceptical re-check)
+
+§6 was applied: 33 functions + 10 RAM cells + 6 tables renamed in the decompiled
+views via `merge_reviewed_lookup_aliases.py` + `integrate_reviewed_names.py`
+(backup `backups/pre_os_scheduling_labels.zip`, committed as LFS pointer;
+record `data/labels/60E15120_N3J1E/os_scheduling_labels.json`). Re-check after
+applying: no duplicate names in `function_index.tsv`; all 33 labels match
+`symbols.tsv`; JSON ↔ TSV rows consistent (33/33); call sites renamed correctly
+(e.g. 0x9c86 `can_rx_isr_handler` now calls `os_schedule_task_event(1, 0xc, …)`);
+RAM/lookup tokens landed in code (`queue_state_base_ffff9304`,
+`tbl_crank_next_sector_0000d76c`, …); the 117/98/19 IVT classification re-verified
+post-rename; pre-existing cp1252 bytes in two TSVs / two function files verified
+byte-identical to HEAD (surrogateescape round-trip). `validate_export.py`,
+`verify_readability.py`, `verify_math_units.py` and the targeted report checks all
+PASS; `hash_binaries.py --check` OK. Not re-run here: `pytest tests/` (pytest not
+installed in this environment; last full run on `main` 61/61).
