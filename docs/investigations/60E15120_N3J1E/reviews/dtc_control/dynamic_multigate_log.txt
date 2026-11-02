@@ -1,0 +1,8 @@
+stock cal bytes for slot 0x74 (C073): enable1=0 enable2=1 enable3=0xe
+0x61450(0x80, filt=0) [no cal filter (PID 0x0200 count path)]: count=1 slots=['0x74']
+0x61450(0x80, filt=1) [filter=enable1 #1 (MIL/aging gate)]: count=0 slots=[]
+0x61450(0x80, filt=2) [filter=enable2 #2 (Mode 03 stored list)]: count=1 slots=['0x74']
+MIL flag (0x5a130, uses filter=enable1) with stored C073: 0  -> enable1=0 suppresses MIL
+PID 0x0200 count (filter 0): 1 ; PID 0x0202 count (RAM flags): 1 -> raw counts ignore cal enables
+Mode-03-style list (filter=enable2): count=1 codes=['C073'] -> enable2=1 still REPORTS C073 in mode 03
+0x618f8 report-class for stored C073: 4 (3=both on, 4=enable1 off, 5=enable2 off)

@@ -1,0 +1,69 @@
+{
+  "pass": "dtc_control deep dive (60E15120_N3J1E)",
+  "date": "2026-11-01",
+  "rom": {
+    "id": "60E15120_N3J1E",
+    "path": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+    "sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+    "untouched": true
+  },
+  "binary_level_checks": [
+    "code table 0x7e560 (140 BE u16 slots) re-dumped from ROM bytes for 11 ROMs -> data/dtc/*.tsv",
+    "enable blocks 0x7e678/0x7e704/0x7e790 (140 u8 each) verified; bases anchored by literal-pool refs (0x60f98 et al. for 0x7e678)",
+    "per-ROM enable base literals searched in each binary: 60E0E700 uses 0x7c6d8 (def says 0x7c6db -> def wrong); 60E1B900 uses 0x7c9fc (def says 0x7c8e4 -> def wrong); 60E32000_N3M5E uses 0x7e74c (def says 0x7e661 -> def wrong)",
+    "disassembly re-read for 0x5a130 (MIL), 0x61450/0x615c6 (scanners), 0x667c8 (response builder), 0x5fe20/0x60062/0x601cc (set/store), 0x558ac (clear), 0x5dc44 (UDS 0x85)",
+    "OS diag event table 0x67d00 dumped from ROM: event 2 -> 0x61092, event 5 -> 0x61b8c"
+  ],
+  "dynamic_checks": {
+    "script": "dynamic_validation.py",
+    "log": "dynamic_validation_log.txt",
+    "observations": [
+      "0x615c6(0x80,0) with master entry slot 9 state 0x80 -> collects slot 9; 0x667c8 emits code 0x0101 (code table 0x7e560+2*9)",
+      "0x615c6(0xf0,1) (enable1 filter) drops slot 8 (P0077, enable1[8]=0), keeps slot 9 (P0101, enable1[9]=1)",
+      "Mode 22 PID 0x0200 via dispatcher 0x5774c -> response 62 0200 01; PID 0x0202 -> 62 0202 01",
+      "MIL flag 0xffffd286 = 1 after 0x5a130 with stored+enabled DTC; stays 0 when only the disabled slot is stored",
+      "0x5fd38(8,1) set-fault thunk writes 0xffffd458[8]=1 and 0xffffd3c2[8]=1 (observed); full master-table insertion via OS event 2/0x61092 not runnable autonomously (E6)",
+      "0x5fd6c boot-init clears 0xffffd570/0xffffd5fc (PID 0x0202 count -> 0)",
+      "multi-gate re-check (dynamic_multigate_log.txt): stored slot 0x74 C073 (stock enable1=0, enable2=1, enable3=0x0e): 0x61450(0x80,filt=0) counts it; filt=1 (enable#1) excludes -> MIL stays 0; filt=2 (enable#2) lists it -> mode-03-style response contains C073; 0x618f8 class=4. Confirms DTCs must be disabled in multiple cal places (#1 and #2, plus #3 bits for the set path)."
+    ],
+    "multigate_script": "dynamic_multigate.py",
+    "multigate_log": "dynamic_multigate_log.txt"
+  },
+  "defs_audit": {
+    "perfect_match_roms": [
+      "60E0FC00",
+      "60E0G500_N3ZHEC",
+      "60E15120_N3J1E",
+      "60E32000_N3N5EB"
+    ],
+    "wrong_block_roms": {
+      "60E0E700_N3YLEE": "def #1 block at 0x7c6db, ROM enable1 at 0x7c6d8 (+3; literal 0x7c6db absent from ROM)",
+      "60E1B900": "def #1/#2 blocks point at the code table 0x7c8e4.., ROM enable1 at 0x7c9fc (-0x118)",
+      "60E32000_N3M5E": "def blocks at 0x7e661.. inside the code table; ROM enable1 at 0x7e74c"
+    },
+    "partially_wrong": {
+      "60E0FB00": "98 mismatches (#1/#2): duplicated entries + gap at slot 23; #3 OK",
+      "60E1D400": "112 mismatches (#1/#2): def carries 14 codes absent from this ROM, shifting from slot 17"
+    },
+    "not_bound_in_per_rom_defs": "60E15120_N3J1E and 60E0G500_N3ZHEC bind #1 only (#2 at +0x8c, #3 at +0x118 exist in ROM but unbound); 60E0E500/60E1C500_N3J6EB have no per-rom XML",
+    "detail": "defs_audit_detail.json; summary data/dtc/defs_audit.tsv"
+  },
+  "pipeline_validators": {
+    "validate_export.py": "PASS (run 2026-11-01)",
+    "validate_reports.py": "PASS, 0 failures; dtc_control_report.md checked: 40 fn rows, 11 RAM rows, 51 ROM refs (run with errors=replace decoding wrapper because two pre-existing committed reports mix cp1252/UTF-8 and crash the stock script on Windows; pre-existing, unrelated to this pass)",
+    "verify_readability.py": "PASS (run 2026-11-01)",
+    "verify_math_units.py": "PASS (run 2026-11-01)",
+    "pytest tests/": "74 passed (run 2026-11-01)",
+    "hash_binaries.py --check": "manifest OK"
+  },
+  "limits": [
+    "aging/confirmation state machines (0x60ca6/0x64918/0x64972/0x6400a) read statically only",
+    "MIL lamp GPIO output not traced to a pin in this pass",
+    "Renesas simulator cross-check still pending (ROADMAP E-limits); no emulator changes made in this pass"
+  ],
+  "additional_rom_gate_tables": {
+    "0x7e29e": "monitor-source mask u8[0x8c], ANDed with 8-bit mask from ptr table 0x604f8 in 0x5fb68 (mode-1 store gate)",
+    "0x604f8": "8 x BE u32 monitor-check fns (0x5fbd2 x7, 0x5fbec, 0x5fbd6)",
+    "0x618f8": "report class: type-0 stored -> 3 (e1&e2 on) / 4 (e1 off) / 5 (e2 off); types 1/2/3 -> 1/2"
+  }
+}
