@@ -120,6 +120,16 @@ tests in `tests/test_extract_scalars.py`.
   λ 0.942 / AFR 13.85 at WOT; 13.85/14.7 = 0.942177). Nearest stored float
   cells: 0.9418 in `tbl_069950` ("Table 2D - 308", all ROMs) and 13.85 AFR
   cells in `tbl_06fe28` (60E32000_N3N5EB only, λ = 0.94218).
+- VersaTuner's "Air Fuel Ratio Base" ("base air fuel ratio used to calculate
+  injection duration") is a **map**, not a scalar — its ROM counterparts are
+  already extracted: `tbl_06ac88` "Fuel Injection - Engine Load Compensation"
+  (u16, λ = 0.75 + x/65536, RPM×load 18×20, data 0x785f4 — the base multiplier
+  `bed4` in the 0x306e8 fuel-volume calc) and the `tbl_069e9c` "Open Loop
+  Target" 3D map (u8, λ = 1 − x/256, load×RPM 21×19). Closest cells to
+  λ 0.942188: `tbl_069e9c` x=15 → 0.94140625 (AFR 13.84); `tbl_06ac88` raw 12616
+  → 0.94250 @ 6000 rpm / load 1.0. 0.942188 itself matches the OBD reporting
+  resolution (PID 0x06 = (λ−1)·100 → −5.78) and the WOT log values (λ 0.942 /
+  AFR 13.85), i.e. a measured λ, not a stored constant.
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
