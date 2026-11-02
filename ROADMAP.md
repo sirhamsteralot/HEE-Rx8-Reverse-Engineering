@@ -2,7 +2,7 @@
 
 Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
 (Renesas SH7055 / SH-2E, big-endian, 512 KiB flash, 32 KiB RAM). Statuses as of
-2026-11-01.
+2026-11-02.
 
 **How to read this file.** §Status at a glance is the summary; §Completed is
 reference only — collapsed summaries with pointers to the detailed docs; §Open work
@@ -255,8 +255,13 @@ and where artifacts live. Groups A–D are complete (see §Completed above, item
 ### E. Reimplementation coverage (P4) — depends on C (done)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
-  subsystem (`rx8_math`, `rx8_apv` done) with host tests **and** emulator
-  cross-checks (`harness.py` + `tests/test_phase1_dynamic.py` pattern).
+  subsystem with host tests **and** emulator cross-checks (`harness.py` +
+  `tests/test_phase1_dynamic.py` pattern). Done so far: `rx8_math`, `rx8_apv`,
+  and (2026-11-02) `rx8_knock` — knock-retard state machine 0x13a60/0x13b40 +
+  `rx8_add_u8_saturate` 0x2478, host tests plus
+  `tests/test_knock_retard_dynamic.py` emulator cross-checks (PR #13).
+  Remaining subsystems: fueling chain, load model, ignition timing, intake
+  solenoids, limiter.
 
 ### F. Toward hardware (P6) — GATED
 

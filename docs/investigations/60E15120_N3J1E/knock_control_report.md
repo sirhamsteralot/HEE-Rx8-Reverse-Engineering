@@ -120,6 +120,11 @@ error.
 | `tbl_knock_transient_hold_0006b264` | 20-cycle transient hold (raw u8 << 1) |
 | `tbl_closed_loop_warmup_time_0006990c` | engine warmup time before closed loop (raw u16 vs catalyst-temp model) |
 
+All five retard tables (0x6af68/0x6af7c/0x6af90/0x6afa4/0x6afb8) are u8-cell 2-D
+descriptors carrying multiplier **0.5 at descriptor+12** and offset **−64.0 at
+descriptor+16** (ROM bytes re-verified 2026-11-02): raw 108 → −10°, 118 → −5°,
+128 → 0°.
+
 ## 4. Labeling applied (2026-10-29 pass)
 
 - **39 functions** named in `source_review/accepted_function_aliases.tsv`
@@ -414,3 +419,45 @@ address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/` (stock ROMs untouched; see
 [`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
 accurate for its date.
+
+2026-11-02 addendum (ROADMAP E item 1): the retard state machine is now
+reimplemented as host-testable C —
+[`reverse-engineered/reimplementation/rx8_knock.c`](../../../reverse-engineered/reimplementation/rx8_knock.c)
+covers 0x13a60 (attack/edge/hold target selection + clamp) and 0x13b40 (slow
+recovery pacing), with `rx8_add_u8_saturate` (0x2478) added to
+[`rx8_math.c`](../../../reverse-engineered/reimplementation/rx8_math.c). Host tests
+(`test_rx8_knock.c`, strict C11) pass, and the ROM functions were cross-checked
+dynamically in the emulator against a float32 port of the C
+([`tests/test_knock_retard_dynamic.py`](../../../tests/test_knock_retard_dynamic.py),
+3 tests: attack/hold/edge/disabled/unhealthy paths, alt clamp-min table via
+0xffffb534/0xffffbc3d, and 62-count recovery pacing incl. counter reset and
+clamping) — the ROM's own 0x2068 lookups fed the port, so the comparison covers
+the decision logic, not the interpolation.
+
+Binary-level evidence gathered during that re-verification (disassembly +
+ROM literal pools, 2026-11-02):
+
+- **Attack step is exactly −1.0°/cycle**: 0x13a60's attack path does `fsub`
+  with fr3 loaded from ROM **0x795d8** when 0xffffc05d==0 and from **0x795e0**
+  when 0xffffc05d!=0; both constants are 1.0f in this ROM, so the
+  transient flag currently selects between two identical step sizes.
+- **Recovery pacing threshold**: `cmp/hs` against ROM byte **0x3e** at
+  **0x7959d** (counter 0xffffa74a path) / **0x7959e** (0xffffa74b path), i.e.
+  counter ≥ 62 — the decompiled `0x3d < counter` is the same condition; the
+  step addend 0.35f is at ROM **0x795dc** / **0x795e4**.
+- **Saturating add 0x2478**: `extu.b` both inputs, `add`, `extu.w`, then
+  `cmp/ge` against ROM word **0x00ff** at **0x248e** → clamp to 255.
+- **Alt clamp-min select in 0x13bd2**: `DAT_ffffb534==1` and
+  `DAT_ffffbc3d cmp/hs` ROM byte **0x05** at **0x7959c** (i.e. bc3d > 4)
+  selects tbl 0x6af7c instead of 0x6af68; max tbl 0x6af90; clamp via
+  0x2404 with args (param fr4, min fr5, max fr6).
+- **0xffffa744 write reachability**: only the sensors-unhealthy (tbl 0x6afa4)
+  and activation-edge (tbl 0x6afb8) paths reach 0x13abc (`fmov.s fr0,@r13`);
+  disabled/attack/hold leave the cell at its previous value.
+- **0xffffa74c latch**: `mov.b @r3,r14` at 0x13a78 is the delay slot of the
+  first `bf/s`, so it executes on every path — 0xffffa74c always latches the
+  entry value of 0xffffa73c.
+- **Learned-value cell 0xffff8038** (read via 0x3dc22 on the edge path):
+  8-byte struct of four big-endian shorts; valid when
+  `(short)~(s1+s0) == s2` or `== s3`, then the u32 at offset 0 is the learned
+  float — this is what the dynamic test fills to drive the edge path.
