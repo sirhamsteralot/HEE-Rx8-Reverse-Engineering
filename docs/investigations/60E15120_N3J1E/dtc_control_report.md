@@ -183,10 +183,10 @@ P0076/P0077 disabled); #3 holds small feature codes (0x02/0x03/0x0a/0x0f/0x2f/�
 
 ### 3a. "Fully disabling a DTC takes more than one byte" — verified
 
-The hearsay is **true**, and now pinned down per gate (all confirmed at disassembly
-level + dynamically in the emulator with stock slot 0x74 = C073, whose stock bytes
-are enable#1=0, enable#2=1, enable#3=0x0e). In plain language, the three per-DTC
-switch bytes in the defs are:
+Fully disabling a DTC takes more than one byte. Each gate below was confirmed at
+disassembly level and dynamically in the emulator using stock slot 0x74 = C073
+(stock bytes: enable#1=0, enable#2=1, enable#3=0x0e). In plain language, the three
+per-DTC switch bytes in the defs are:
 
 - **#1 ("Enable/Disable #1", 0x7e678) — the "lamp & tracking" switch.** If 0, the
   fault is excluded from the MIL decision (0x5a130 runs its stored-count query with
@@ -391,9 +391,9 @@ DTC category (381 tables). Note the ROM code sets differ per ROM (e.g. 60E1B900 
 - The full set→master-table insertion rides OS group-2 event 2 (0x61092); in the
   emulator the message queue isn't drained autonomously, so the dynamic log plants the
   documented RAM cells directly and proves the *reporting* half end to end.
-- MIL lamp GPIO pin not traced in this pass (flag 0xffffd286 verified; pin routing is
-  board-level, see docs/architecture/hardware/).
-- Renesas simulator cross-check still pending; no emulator code changed in this pass.
+- MIL lamp GPIO pin not traced to a package pin (flag 0xffffd286 verified; pin
+  routing is board-level, see docs/architecture/hardware/).
+- Renesas simulator cross-check still pending; no emulator code changed by this work.
 - UDS 0x19 (ReadDTCInformation) is **not** in the service table 0x5eb40 — DTC readout
   on this PCM is via OBD modes 03/07 (+0x0A-style via 0x667c8 mode arg), Mazda 0x18,
   and Mode 22 PIDs 0x0200/0x0202.

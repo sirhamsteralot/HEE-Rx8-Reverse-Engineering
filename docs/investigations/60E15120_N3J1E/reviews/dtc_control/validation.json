@@ -58,8 +58,8 @@
   },
   "limits": [
     "aging/confirmation state machines (0x60ca6/0x64918/0x64972/0x6400a) read statically only",
-    "MIL lamp GPIO output not traced to a pin in this pass",
-    "Renesas simulator cross-check still pending (ROADMAP E-limits); no emulator changes made in this pass"
+    "MIL lamp GPIO output not traced to a pin",
+    "Renesas simulator cross-check still pending (ROADMAP E-limits); no emulator changes made by this work"
   ],
   "additional_rom_gate_tables": {
     "0x7e29e": "monitor-source mask u8[0x8c], ANDed with 8-bit mask from ptr table 0x604f8 in 0x5fb68 (mode-1 store gate)",
