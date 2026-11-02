@@ -1,6 +1,6 @@
 slot	code	enable1	enable2	enable3	def_1_code_at_slot	def_match	code_table_addr	enable1_addr
-00	0300	01	01	01			07c8e4	07c9fc
-01	0300	01	01	01	0300	Y	07c8e6	07c9fd
+00	0300	01	01	01	0300	Y	07c8e4	07c9fc
+01	0300	01	01	01			07c8e6	07c9fd
 02	0030	01	01	01	0030	Y	07c8e8	07c9fe
 03	0031	01	01	01	0031	Y	07c8ea	07c9ff
 04	0032	01	01	01	0032	Y	07c8ec	07ca00

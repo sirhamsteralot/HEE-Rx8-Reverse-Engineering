@@ -77,3 +77,12 @@ exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
   already covered by `defs-merge/inheritance_issues.json`.
 - Emulator self-check vs golden boot trace not re-run for this pass (no
   emulator changes); Renesas cross-check still pending (ROADMAP E-limits).
+
+## Defs repair applied (2026-11-01)
+
+`extend_defs_all_roms.py` gained `repair_dtc_tables()`: each per-ROM block's
+`DTC xxxx Enable/Disable #N` entries are rebuilt from the ROM's own DTC layout
+(code table + 3 enable blocks, `dtc_layout()`). After regeneration: 0 mismatches
+across all 9 per-ROM defs for #1/#2/#3 (see `data/dtc/defs_audit.tsv`, regenerated).
+The merged 60E15120 block gained its missing #2/#3 bindings (363 entries, 0
+mismatches, XML re-parsed). Repair recorded in `defs-merge/definition_repairs.json`.

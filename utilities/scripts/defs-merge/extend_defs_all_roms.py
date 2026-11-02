@@ -168,6 +168,91 @@ def inject_scalar_tables(block, rom_rec):
     return n
 
 
+DTC_PREFIX = b"\x03\x00\x03\x01\x03\x02\x03\x00"  # P0300,P0301,P0302 specials + slot0 P0300
+DTC_NAME_RE = re.compile(r"^DTC ([0-9A-Fa-f]{4}) Enable/Disable (#\d)( \[additional site 0x[0-9A-Fa-f]+\])?$")
+
+
+def dtc_layout(rom):
+    """This ROM's DTC layout: (code_start, nslots, enable1_start, codes).
+
+    Anchored on the universal prefix P0300/P0301/P0302 + slot-0 P0300; the code
+    table is the BE u16 run ending at the first 0xffff padding slot; the three
+    enable/disable blocks (def '#1'/'#2'/'#3') follow the padding run, nslots
+    bytes each. Verified per ROM against literal-pool anchors and ROM bytes —
+    see docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5 and
+    data/dtc/README.md.
+    """
+    idx = rom.find(DTC_PREFIX)
+    assert idx >= 0, "DTC prefix not found in ROM"
+    code_start = idx + len(DTC_PREFIX) - 2
+    s = 0
+    while True:
+        v = struct.unpack_from(">H", rom, code_start + 2 * s)[0]
+        if v == 0xFFFF or v > 0xF3FF:
+            break
+        s += 1
+        assert s <= 0x200, "DTC code table runaway"
+    p = code_start + 2 * s
+    while rom[p] == 0xFF and rom[p + 1] == 0xFF:
+        p += 2
+    nslots = (p - code_start) // 2
+    assert nslots > 0
+    codes = [struct.unpack_from(">H", rom, code_start + 2 * i)[0] for i in range(nslots)]
+    return code_start, nslots, p, codes
+
+
+def repair_dtc_tables(block, rom_rec):
+    """Rebuild this block's 'DTC xxxx Enable/Disable #N' entries from the ROM's own
+    DTC layout, so every address maps slot -> the byte the firmware actually reads
+    (filter args 1/2 in 0x61450/0x615c6 read blocks #1/#2; #3 is the bitmask read by
+    0x5f9b0). Fixes the per-ROM defs that pointed at the code table or were shifted
+    (60E0E700 +3, 60E1B900/60E32000_N3M5E, 60E0FB00/60E1D400) and binds #2/#3 where
+    only #1 was bound (60E15120, 60E0G500). Evidence: dtc_control_report.md §5."""
+    rom = (ROOT / rom_rec["file"]).read_bytes()
+    code_start, nslots, e1, codes = dtc_layout(rom)
+    # drop existing address-bearing DTC entries in this block, keep their descriptions
+    desc = {}
+    for t in list(block.findall("table")):
+        if DTC_NAME_RE.match(t.get("name") or "") and t.get("storageaddress"):
+            d = t.find("description")
+            if d is not None and d.text:
+                desc[t.get("name")] = d.text
+            block.remove(t)
+    added = 0
+    seen = {}
+    for slot, code in enumerate(codes):
+        if code == 0xFFFF:
+            continue
+        cname = f"{code:04X}"
+        for n in (1, 2, 3):
+            addr = e1 + (n - 1) * nslots + slot
+            key = (cname, n)
+            seen[key] = seen.get(key, 0) + 1
+            if seen[key] == 1:
+                name = f"DTC {cname} Enable/Disable #{n}"
+            else:  # duplicate code (P0300 occupies slots 0 and 1): distinct editor name
+                name = f"DTC {cname} Enable/Disable #{n} [additional site 0x{addr:X}]"
+            t = E.SubElement(block, "table", {
+                "name": name, "storageaddress": f"0x{addr:X}",
+                "category": "DTCs", "type": "1D", "storagetype": "uint8",
+                "endian": "big", "expression": "x", "to_byte": "x", "size": "1",
+            })
+            d = E.SubElement(t, "description")
+            d.text = (f"[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout "
+                      f"(code table 0x{code_start:X} + 2*slot, enable blocks 0x{e1:X} / "
+                      f"0x{e1 + nslots:X} / 0x{e1 + 2 * nslots:X}); slot {slot} = code {cname}. "
+                      f"Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.")
+            if name in desc:
+                d.text = desc[name] + "\n" + d.text
+            added += 1
+    return {
+        "dtc_code_table": f"0x{code_start:X}",
+        "dtc_enable_blocks": [f"0x{e1:X}", f"0x{e1 + nslots:X}", f"0x{e1 + 2 * nslots:X}"],
+        "dtc_slots_used": sum(1 for c in codes if c != 0xFFFF),
+        "dtc_tables_emitted": added,
+    }
+
+
 def validate_block(block, fwid):
     rid = block.find("romid")
     assert rid.findtext("xmlid") == fwid, (rid.findtext("xmlid"), fwid)
@@ -244,6 +329,7 @@ def main():
         # each other's literal addresses
         block = copy.deepcopy(block)
         n_scalars = inject_scalar_tables(block, r)
+        dtc_repair = repair_dtc_tables(block, r)
         n_addr = validate_block(block, fwid)
         # emit standalone per-ROM def: base chain + rom block, with provenance comment
         out = E.Element("roms")
@@ -269,6 +355,7 @@ def main():
             "base_chain": [b.findtext("romid/xmlid") for b in chain],
             "block_tables": len(block.findall("table")),
             "scalar_tables_injected": n_scalars,
+            "dtc_repair": dtc_repair,
             "block_tables_with_storageaddress": n_addr,
             "per_rom_def": out_path.relative_to(ROOT).as_posix(),
             "ecuflash_def": (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned}" if fwid == "60E0G500" else None),
