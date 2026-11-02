@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <roms><!-- Per-ROM RomRaider def for submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E32000_N3N5EB.bin (SHA-256 6c043bd4c9581f61..., fw id 60E32000 at 0x2000).
     Block source: upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc. Base chain: RX8Base <- 60E32000.
-    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4).
+    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);
+    table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).
     ECUFlash def: none upstream --><rom>
         <romid>
             <xmlid>RX8Base</xmlid>
