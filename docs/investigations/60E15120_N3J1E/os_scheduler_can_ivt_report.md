@@ -10,7 +10,7 @@ every dynamically-cited claim names the emulator observation. Full evidence:
 `source_review/accepted_{function,ram,lookup}_aliases.tsv`,
 backup `backups/pre_os_scheduler_can_ivt_labels.zip`.
 
-**Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs — the full dispatch tables are labeled in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
+**Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs — the full dispatch tables are labeled in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md); for the full scheduling model (task loops, queues, crank-synchronous tick, timers) see [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md).
 
 ## 1. Executive summary
 
