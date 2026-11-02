@@ -82,9 +82,10 @@ hand-rolled dispatcher:
   bit0; ATU-II prescalers PSCR1–4 = 4 set at 0x4e6c/0x4f00). **CAN RX** (IVT
   0x378) → 0x5e78 → **0x9c86** → 0x9630(1, 12, …) whose descriptor has target
   −1, so the CAN RX poll **0x11d88** runs inline and moves the frame into the UDS
-  buffer 0xffffddc8. Crank input capture feeds ICR0AH/ICR10AH; rpm =
-  1.2e8 / Σ ring(0xffff9fd0[6]) into **0xffff9f80** (`crank_isr_compute_rpm`
-  0x803e, called from init/0x287aa chain — see §7 correction).
+  buffer 0xffffddc8. Crank input capture feeds ICR0AH/ICR10AH; per crank edge
+  `ref_getCrankAngle` **0x7fcc** (via 0x75f4 → 0x77f0 → 0x7c68) appends the
+  period to ring 0xffff9fd0 and computes rpm = 1.2e8 / Σ ring[6] into
+  **0xffff9f80** — see §7 for why 0x803e is *not* this path.
 - **Watchdog**: internal WDT is serviced by **polling**, not an ISR —
   `service_wdt_overflow_and_toggle_pb15` **0x31c** (keyed 0xa53c write to TCSR
   0xffffec10, PB15 heartbeat on 0xfffff738 bit15) called from 0x11a / 0x5b0 /
@@ -142,8 +143,9 @@ os_dispatch 0x3c2a(ctrl):
 os_switch_to_task 0x375c(ctrl, idx):        # pool 0x37b0 = 0x4990, stride 16
     rec = 0x4990 + idx*16; ctx = rec.stack    # 0xffff7408 + idx*8
     ctrl+4 = idx; ctrl+0x18 = rec; ctrl+0x14 = ctx; ctrl+8 = 0
-    if ctx[0] == 0:                          # fresh task: build frame, jump to rec.entry
-        ctx[1] = rec.param.b2; ctx[4..] = ctrl+0xc; jmp 0x3848 -> push {0, entry}; r15 = ctrl+0xc - 8; jmp entry
+    if ctx[0] == 0:                          # fresh task: build frame, enter via rte
+        ctx[1] = rec.param.b2; ctx[4..] = ctrl+0xc; jmp 0x3848:
+        r15 = ctrl+0xc; push SR=0; push entry; rte   # task starts with SR=0, PR-less
     else:                                    # resume: jump table 0x4b34[ctx[0]-rec.param.b0]
         jmp {0x37c4: partial restore, 0x3818/0x381c: ..., 0x37c8: full restore from r15=ctrl+0xc}
 ref_taskEndRoutine_ 0x3d58:                  # task yield
@@ -175,9 +177,14 @@ ref_osTaskScheduler 0x9630(group, idx, args...):
     q = ROM[0xd74c + target*8]               # {buf, task_id, depth}
     state = RAM 0xffff9304 + target*3        # {tail, head, count}
     if count >= depth: return 2              # full
-    0x3854(task_id): ctx[task_id][3] -= 1 (credit); 0x39ba(ctrl, target, rec.param.b2):
-        append to ready ring (ctrl+0x24 = 0xffff74a0), set bitmap 0xffff7668 bit,
-        if ctrl[0] (u8) vs class: ctrl[0] = class, ctrl+6 = target   # preempt
+    0x3854(task_id): ctx[task_id][3] -= 1 (credit); 0x39ba(ctrl, task_id, class):
+        class record = 0x4ac4 + class*8 {head, ptr -> RAM head/tail pair};
+        if its head == -1 (empty): init head/tail, set bitmap 0xffff7668
+        (bit 1<<(class&7) in byte class>>3, table 0x3d48 = 01 02 04 … 80),
+        append task id to ready ring (ctrl+0x24 = 0xffff74a0)[tail];
+        if class > ctrl[0] (cmp/hi, unsigned byte): ctrl[0] = class, ctrl+6 = task_id
+        # preempt — note: at boot ctrl[0] = 0xff, so posts from idle do NOT set
+        # ctrl+6 (dynamically observed); first real task run lowers ctrl[0]
     copy 5 words into buf[head*0x14]; head = (head+1) % depth; count += 1
     ref_setSR(old); return 0
 0x6010 os_queue_dequeue_record(slot, out):   # called by consumer tasks
@@ -189,8 +196,10 @@ ref_osTaskScheduler 0x9630(group, idx, args...):
 
 # --- the timing tick (crank-angle synchronous) ---
 CMI10B (IVT 0x2c8) -> 0x5b3c: TSR10 = 0xb
-    -> 0x75f4: if sync ok: 0x7f22/0x7b90/0x77f0 (ICR0AH->0xffff9fb8, ICR10AH->0xffff9fb0, 0x787a advances
-       sector 0xffff9f95 via tbl 0xd76c, wraps 0x24)/0x7be4/0x80f0; then 0x7b58:
+    -> 0x75f4: if sync ok: 0x7f22/0x7b90/0x77f0 (ICR0AH->0xffff9fb8, ICR10AH->0xffff9fb0,
+       0x787a advances sector 0xffff9f95 via tbl 0xd76c, wraps 0x24; 0x77f0 -> 0x7c68
+       -> 0x7fcc ref_getCrankAngle: ring 0xffff9fd0 append, rpm = 1.2e8/sum -> 0xffff9f80)
+       /0x7be4/0x80f0; then 0x7b58:
        OCR10B = tbl 0xd76d[0xffff9f95*2] & 0x7f; TCNT10B = 0   # rearm per sector
     -> 0xd716: 0xffffa3fc = 1
     -> 0xcf96: crank edge match -> period -> 0xa156: 0x9630(1, 9, arg)  # post to queue slot 2
@@ -209,7 +218,7 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 | 0x4990 | task table | 19 × 16 B records {param, ctx ptr, entry, weight}, terminator 0x4ac0 = {0x04ffffff, 1, …}; entries listed in §4 |
 | 0x4b34 | dispatch jump table | {0x37c4, 0x3818, 0x37c8, 0x381c} — resume-restore variants indexed by ctx[0] − param.b0 |
 | 0x4aec–0x4b30 | OS init tables | 0x4aec = per-class base 0x4ac4; 0x4af4 = init task list 0x4af0 = {17, 0}; 0x4b24 → 0xffff7678 = 0x4b1d order table |
-| 0xffff7638 | `os_ctrl_block` | +0 current/class byte, +4 scheduled count (`os_scheduled_count` 0xffff763c), +6 dispatched/next task (`os_dispatched_count` 0xffff763e), +8 ISR depth/flags (`os_state_flags` 0xffff7640), +0xc saved SP (`DAT_ffff7644`), +0x10 mask 0xb0, +0x14 ctx ptr (`os_current_task_record_ptr` 0xffff764c), +0x18 task-table ptr (`os_task_table_ptr` 0xffff7650), +0x20 class-records base 0x4ac4, +0x24 ready-ring ptr 0xffff74a0, +0x30 ready bitmap 0xffff7668 |
+| 0xffff7638 | `os_ctrl_block` | +0 current class byte, +4 scheduled count (`os_scheduled_count` 0xffff763c), +6 next task (`os_dispatched_count` 0xffff763e), +8 ISR depth/flags (`os_state_flags` 0xffff7640), +0xc saved SP (`DAT_ffff7644`), +0x10 mask 0xb0, +0x14 ctx ptr (`os_current_task_record_ptr` 0xffff764c), +0x18 task-table ptr (`os_task_table_ptr` 0xffff7650), +0x20 class-records base 0x4ac4, +0x24 ready-ring ptr 0xffff74a0, +0x30 ready bitmap 0xffff7668 (bit 1<<(class&7) in byte class>>3) |
 | 0xffff7408 + 8·i | per-task context blocks | byte0 state (0 fresh / 0xc preempted), byte1 class, byte2 0xff, byte3 weight/credit (task record mask byte0: 0x01/0x0a/0x1e/0x64/0x02) |
 | 0xd74c + 8·i | queue ROM records (i = 0..3) | {buf ptr, task id 1..4, depth} = {0xffff9310,1,10}, {0xffff93d8,2,10}, {0xffff94a0,3,30}, {0xffff96f8,4,100} |
 | 0xffff9304 + 3·i | queue RAM state | {tail, head, count} per slot |
@@ -248,24 +257,33 @@ back — dynamically observed (task[3] ctx[3] 0x1e → 0x1d on post).
 
 ## 5. Interrupt sources (the timing loops)
 
-114 vectors (offsets 0x100–0x374, i.e. vec 64–221) have real trampolines;
-byte-verified against ROM at 0x7fc50+off. The ones that drive scheduling/timing:
+117 vectors (offsets 0x100–0x39c, vec 64–230) point at real trampolines
+(byte-verified against ROM at 0x7fc50+off; every trampoline's first pool word =
+0x3238). Of these, **98 end in the fatal trap** `FUN_00005348` (clear a
+peripheral flag, report a code via 0xa330, spin at 0x535a forever) — any
+unexpected interrupt is a deliberate halt. The **19 with real handlers**:
 
 | IVT off | vec | handler | role |
 |---|---|---|---|
 | 0x2c8 | 178 | 0x5b3c | **CMI10B — the OS/crank tick** (see §2): sector advance, rearm, rpm ring, scheduler post |
+| 0x260–0x274 | 152–157 | 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea | **ATU-II ch8 compares → `candidate_injector_pulse_set_dispatch(0..5)`** — the per-channel injector pulse-set timing loop (one vector per output channel) |
+| 0x290 | 164 | 0x5a4c | ch8 flag + `knock_reference_adc_read` (knock ADC sampling trigger) |
+| 0x204 / 0x224 | 129/137 | 0x567a / 0x57c6 | ATU-II ch3 compares (TSR3 clear + PWM update math, 0x7e-window compares) |
+| 0x2b0 | 172 | 0x5b14 | ATU-II ch9 (TSR9 clear → 0xb5fa) |
+| 0x2f8 / 0x308 / 0x310 | 190/194/196 | 0x5ce2 / 0x5cfe / 0x5d0a | **ADC end-of-conversion** banks 0/1/2 (clear ADCSRn bit7; 0x5cfe also calls 0x6b60) |
+| 0x300 | 192 | 0x5cee | CMCSR1 (refresh timer) → 0xa522 |
+| 0x110 | 68 | 0x53f6 | ISR_W = 0xf7 (external IRQ flags) → 0xb6b2 |
 | 0x378 | 222 | 0x5e78 → 0x9c86 | **CAN RX**: inline 0x9630(1,12) → 0x11d88 CAN poll → UDS buffer 0xffffddc8 (dynamically traced §9) |
-| 0x358 | 214 | 0x5e0c → 0x5348(0xd6) | WDT overflow = **fatal trap** (Sh7055h.pdf table 7.3; E3) |
-| 0x2c0 / 0x2d0 | 176/180 | 0x5b2e / 0x5b56 | ch10 sub-flags → fatal trap unless handled (0xb0/0xb4 codes) |
-| 0x1ec–0x2b4 | 187–172 | 0x5cc4–0x5b14 | ATU-II channel compares (injector/coil PWM scheduling) — mostly flag-clear stubs, several fatal-trap |
-| 0x320–0x354 | 200–213 | 0x5d16–0x5dfc | DMAC/ADC/SCI periphs; ADC EOC stub 0x5ce2 just clears ADCSR0 bit7 and returns |
-| 0x390/0x394 | 228/229 | 0x5ece/0x5ede | HCAN1 IRR flags → fatal trap 0x5348(0xe4/0xe5) |
-| 0x0–0xfc | 0–63 | stubs 0x53a0–0x53c2 | reserved vectors: load a code into r4 and hit the **fatal trap** 0x5348 (raises mask 0xe0, reports via 0xa330, spins at 0x535a) |
+| 0x37c | 223 | 0x5ebc | HCAN0 IRR bit0 → 0x9c9c (CAN status/error path) |
+| 0x398 | 230 | 0x5eee → 0x9c86 | second CAN-related entry |
+| 0x358 | 214 | 0x5e0c → 0x5348(0xd6) | WDT overflow = **fatal trap** (Sh7055h.pdf table 7.3; E3) — counted among the 98 |
+| 0x0–0xfc | 0–63 | stubs 0x53a0–0x53c2 | reserved vectors: load a code into r4, bra 0x5348 → fatal trap |
 
-So the *live* timing loops are: **CMI10B per crank sector**, **crank input
-capture** (ICR0AH/ICR10AH, polled by 0x77f0 and used by 0xcf96),
-**CAN RX** for diagnostics, and the **ATU-II PWM compare channels** for
-injector/coil outputs. Everything else that fires is treated as a fault.
+So the *live* timing loops are: **CMI10B per crank sector** (OS tick),
+**crank input capture** (ICR0AH/ICR10AH, polled by 0x77f0 / used by 0xcf96),
+**ATU-II ch8 compare per injector channel** (pulse-set outputs),
+**ADC EOC** per bank (sensor sampling), and **CAN RX** for diagnostics.
+Everything else that fires is treated as a fault.
 
 ## 6. Labeling applied
 
@@ -283,20 +301,35 @@ Candidate names proposed here for a future pass, per the label ladder
 
 ## 7. Corrections made in this pass
 
-- **0x803e is not the CMI10B IVT handler.** IVT 0x7fc50+0x2c8 → trampoline
-  0x2ec0 → handler **0x5b3c** (byte-verified). 0x803e
-  (`crank_isr_compute_rpm`, rpm = 1.2e8/Σring) has no direct callers in the
-  callgraph; the pool word 0x2c8 = 0x803e that fooled the earlier pass is just a
-  coincidental literal (also stored to HCAN0 BCR at 0x1a6). 0x803e is reached
-  from the fuel chain (0x287aa region) and init, not from the IVT.
+- **0x803e is not the CMI10B IVT handler, and in fact nothing calls it.** IVT
+  0x7fc50+0x2c8 → trampoline 0x2ec0 → handler **0x5b3c** (byte-verified). The
+  only ROM references to 0x803e are coincidental value uses (stored to HCAN0
+  BCR at 0x1a6/0x977a, compared at 0x2a538); the callgraph has no caller. The
+  live rpm path is `ref_getCrankAngle` **0x7fcc** (ring 0xffff9fd0 append,
+  rpm = 1.2e8/Σ → 0xffff9f80), called from 0x7c68 ← 0x77f0 ← tick handler
+  0x75f4. The inherited label `ref_INT_ATU101_IMI10AG`/`crank_isr_compute_rpm`
+  on 0x803e is a misnomer for a dead duplicate of 0x7fcc's math.
 - **The "OS tick" is crank-angle-synchronous, not a fixed-period timer.**
   OCR10B is reloaded per crank sector from table 0xd76d indexed by sector
   0xffff9f95 (0x00–0x24), TCNT10B cleared on rearm (0x7b58) — so CMI10B fires per
   sector, with per-sector intervals in ROM, not every N µs.
-- **0x5348 is a fatal trap, not a dispatcher.** The vec 0–63 stubs and many
-  peripheral error vectors call it; it raises SR to 0xe0, reports the code via
-  0xa330 and spins at 0x535a forever. Only specific vectors (CMI10B, CAN RX,
-  ADC EOC, …) have real handlers.
+- **0x5348 is a fatal trap, not a dispatcher.** The vec 0–63 stubs and 98 of
+  the 117 real-trampoline vectors call it; it raises SR to 0xe0, reports the
+  code via 0xa330 and spins at 0x535a forever. Only 19 vectors have real
+  handlers (§5): CMI10B tick, the six ATU-II ch8 injector-compare vectors,
+  knock-ADC trigger, ch3/ch9 compares, three ADC EOC banks, CMCSR1, one IRQ
+  flag vector, and the CAN vectors.
+- **Vector count corrected**: 117 vectors (IVT 0x100–0x39c) have real
+  trampolines, not 114 — the earlier count mis-parsed the 0x378 trampoline's
+  pool word (re-derived with correct mov.l disp extraction, all 117 ctx words
+  = 0x3238).
+- **Fresh-task entry is `rte`, not a jump**: 0x3848 sets r15 = ctrl+0xc, pushes
+  SR=0 and the entry address, and executes `rte` (disasm 0x3848–0x3850) —
+  new tasks start with interrupt mask 0.
+- **Preemption condition**: 0x39ba sets ctrl+6 only when `class > ctrl[0]`
+  (`cmp/hi`, unsigned byte); at boot ctrl[0] = 0xff so posts from the idle
+  state do not schedule a task (dynamically observed — the decompiled signed
+  comparison `(char)ctrl[0] < class` is a decompiler sign-extension artifact).
 - Task table orientation re-confirmed: 19 records at **0x4990**
   {param, ctx, entry, weight} (fueling pass §10.6 stands); rec[0].entry 0x62a0
   is the never-yielding background loop, rec[18].entry 0x4ab8 → 0x64e8 is the
@@ -322,8 +355,12 @@ Candidate names proposed here for a future pass, per the label ladder
   - after boot: ctrl block 0xffff7638 = 0xff000000, 0xffff763c = 0xffff,
     0xffff7640 = 0x80000000, 0xffff7648 = 0xb0, 0xffff7650 = 0x4990,
     0xffff7658 = 0x4ac4, 0xffff765c = 0xffff74a0, ready bitmap 0xffff7668 =
-    0x11000000; ctx blocks 0xffff7408+8i = {00 00 ff weight} with weights
-    00/0a/0a/1e/64/02…/00/02 matching the task records;
+    0x11000000 (= classes {0, 4} marked ready — matches the init list
+    {task 17 (class 4), task 0 (class 0)} at ROM 0x4af0 walked by 0x3f10);
+    ctx blocks 0xffff7408+8i = {00 00 ff weight} with weights
+    0a/0a/1e/64/02… for tasks 1–16/18 matching the task-record mask bytes —
+    and tasks 0/17 read weight **0** (their initial 1 was consumed by 0x3f10),
+    which dynamically confirms the init task list {17, 0};
   - `cpu.interrupt(0x2c8)` trace: 0x3238 → 0x5b3c → 0x75f4 → 0x7b58 → 0xd716 →
     0xcf96 → 0x3280 → rte → 0x3dac (tick handler chain, no scheduler post without
     a crank edge match in 0xcf96);
@@ -409,8 +446,9 @@ Candidate names proposed here for a future pass, per the label ladder
 | 0x007b58 | `FUN_00007b58` (OCR10B rearm) |
 | 0x007eca | `FUN_00007eca` |
 | 0x007f22 | `FUN_00007f22` |
-| 0x007fcc | `ref_getCrankAngle` |
-| 0x00803e | `crank_isr_compute_rpm` |
+| 0x007c68 | `ref_geteShaftAngle_` (calls 0x7fcc from the tick chain) |
+| 0x007fcc | `ref_getCrankAngle` (live rpm path: ring append, rpm → 0xffff9f80) |
+| 0x00803e | `crank_isr_compute_rpm` (dead duplicate of 0x7fcc's math — no callers, §7) |
 | 0x009630 | `ref_osTaskScheduler` |
 | 0x00969e | `FUN_0000969e` (task[1], slot 0) |
 | 0x0096be | `uds_service_task_entry` (task[2], slot 1) |
