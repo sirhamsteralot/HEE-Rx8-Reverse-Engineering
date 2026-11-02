@@ -100,7 +100,12 @@ SCALAR_ENTRIES = {
                         "NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). "
                         "Editing changes fuel correction + AFR display; this address is inside the "
                         "app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before "
-                        "flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a."),
+                        "flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. "
+                        "FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the "
+                        "new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by "
+                        "14.7/new_stoich; leave the maps alone (they are lambda multipliers). For "
+                        "varying ethanol blends use the flex stoich table (0x6C444 in G-ROM_FLEX), "
+                        "not a fixed scalar. See data/definitions/README.md 'Literal-pool scalars'."),
     },
     "fuel_load_scale": {
         "name": "Scalar - Fuel Load Scale (literal pool)",
@@ -109,7 +114,13 @@ SCALAR_ENTRIES = {
                         "fuel_load_scale_ffffbed0; the scalar every fuel-volume request scales by "
                         "(0x306e8 in 60E15120_N3J1E). Physical units still candidate. Editing changes "
                         "base fueling; address is inside the checksum range (D3) - bench-validate "
-                        "before flashing (rule 10). See calibration_extraction_report.md 6a."),
+                        "before flashing (rule 10). See calibration_extraction_report.md 6a. "
+                        "FUEL CHANGE: this is the scalar that changes OPEN-LOOP injected fuel volume "
+                        "(bed0 = load x 0.07196 in the 0x306e8 fuel-volume calc); for a different-"
+                        "stoich fuel scale it by 14.7/new_stoich (E85: x1.506 -> ~0.1084) and pair "
+                        "with setting 'Scalar - Stoich AFR' to the new stoich. Unit interpretation "
+                        "candidate - verify with a wideband that commanded AFR = new stoich at "
+                        "lambda=1.0 before driving. See data/definitions/README.md."),
     },
 }
 

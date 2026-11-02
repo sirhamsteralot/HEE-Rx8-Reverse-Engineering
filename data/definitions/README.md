@@ -73,6 +73,24 @@ flashed without bench validation (AGENTS.md rule 10). ROMs without an upstream
 block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries.
 ECUFlash defs remain upstream-only for 60E0G500 (documented gap).
 
+### Changing fuel stoichiometry — which scalar does what
+
+The injection math is done in **lambda** (1.0 = stoich); the two scalars sit on
+different axes and must be changed **together** for a fixed different-stoich
+fuel:
+
+| Entry | What it changes | For new stoich S |
+|---|---|---|
+| `Scalar - Stoich AFR (literal pool)` (14.7) | λ↔AFR conversion in the AFR-domain logic: catalyst/fuel-correction model (`fuel_correction_sum_ffffc644`, PID 0x3c), AFR words/diagnostics. NOT in the injection-volume path (single use, FUN_0003e560). | set to S (e.g. 9.76 for E85) |
+| `Scalar - Fuel Load Scale (literal pool)` (0.07196) | the load→fuel-**volume** bridge in the injection path (`bed0 = load × 0.07196` → `beb0`, 0x306e8 → pulse times). This is what changes open-loop fuel quantity; its value embeds 1/stoich × fuel density (unit interpretation still candidate — verify on a wideband). | scale by 14.7/S (E85: ×1.506 → ≈0.1084) |
+
+Leave the maps (`tbl_06ac88` base fuel map, `tbl_069e9c` open-loop target) alone —
+they command λ multipliers, which are fuel-agnostic, and closed loop self-corrects
+via the O2 sensor in λ regardless. For **varying** ethanol blends, don't hardcode:
+use the flex stoich table (G-ROM_FLEX "Table 2D - Stoich Fuel Ratio" @0x6C444,
+ethanol-indexed). Both scalar addresses are inside the D3 checksum range —
+handle checksum/CVN and bench-validate before flashing (AGENTS.md rule 10).
+
 ## D8 dedupe (closed 2026-11-01)
 
 Four local copies were git-blob-identical to files in the pinned submodule

@@ -158,6 +158,10 @@ tests in `tests/test_extract_scalars.py`.
   with the per-ROM `storageaddress` asserted against ROM bytes at generation time;
   test `test_per_rom_defs_expose_scalars`. Caveat in each entry: addresses are inside
   the D3 checksum range and editing changes fueling — bench-validate before flashing.
+  For a different-stoich fuel, which scalar to change (and how) is documented in
+  [data/definitions/README.md](../../../data/definitions/README.md) "Literal-pool
+  scalars" — set stoich_afr to the new stoich AND scale fuel_load_scale by
+  14.7/new_stoich; leave the λ maps alone.
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
