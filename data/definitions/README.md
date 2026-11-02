@@ -50,6 +50,29 @@ referenced by submodule path + commit.
 ECUFlash defs exist upstream only for 60E0G500; no ECUFlash def exists for the
 other 13 ROMs (documented gap, not an omission here).
 
+## Literal-pool scalars exposed as editable entries (2026-11-02, ROADMAP D11)
+
+`utilities/scripts/defs-merge/extend_defs_all_roms.py` now injects two 1-cell
+`type="1D" size="1" storagetype="float"` tables (RomRaider renders these as
+scalars) into every per-ROM def that has a block:
+
+- **Scalar - Stoich AFR (literal pool)** — the 14.7 stoich constant
+  (0x416b3333; N3J1E @0x3E7EC, mova @0x3e6ec in FUN_0003e560).
+- **Scalar - Fuel Load Scale (literal pool)** — 0.07196
+  (N3J1E @0x78170 → `fuel_load_scale_ffffbed0`).
+
+`storageaddress` is the per-ROM literal address from
+`data/maps/cross_rom_scalars.json` (extract_scalars.py), **asserted against the
+ROM bytes** (f32 decode == expected value) at generation time, and re-checked by
+`tests/test_extract_scalars.py::test_per_rom_defs_expose_scalars`. Editing these
+in RomRaider/VersaTuner changes the λ→AFR conversion and the base load→fuel
+scale respectively. Caveats recorded in each entry's `<description>`: both
+addresses are inside the app-flash checksum range (ROADMAP D3, 0x2000–0x7ffff),
+so a changed value needs the checksum/CVN path handled, and nothing may be
+flashed without bench validation (AGENTS.md rule 10). ROMs without an upstream
+block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries.
+ECUFlash defs remain upstream-only for 60E0G500 (documented gap).
+
 ## D8 dedupe (closed 2026-11-01)
 
 Four local copies were git-blob-identical to files in the pinned submodule

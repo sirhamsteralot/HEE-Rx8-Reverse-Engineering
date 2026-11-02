@@ -152,6 +152,12 @@ tests in `tests/test_extract_scalars.py`.
   => A flex-fuel patch hooks exactly this site: swap the 14.7 literal load for a
   lookup into the stoich table indexed by ethanol content (logger PID 0x0555,
   uint16 %). No ethanol-indexed 1/AFR table exists in any of the 11 ROMs (scanned).
+- Both scalars are now **editable in RomRaider/VersaTuner**: `defs-merge/extend_defs_all_roms.py`
+  injects them into every per-ROM def as 1-cell `type="1D"` float tables
+  ("Scalar - Stoich AFR (literal pool)", "Scalar - Fuel Load Scale (literal pool)")
+  with the per-ROM `storageaddress` asserted against ROM bytes at generation time;
+  test `test_per_rom_defs_expose_scalars`. Caveat in each entry: addresses are inside
+  the D3 checksum range and editing changes fueling — bench-validate before flashing.
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
