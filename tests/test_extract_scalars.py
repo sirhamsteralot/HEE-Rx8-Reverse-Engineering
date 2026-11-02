@@ -74,10 +74,11 @@ def test_strict_ref_assertion_fires_on_wrong_rom(rom):
             es.extract_rom(bytes(bad), es.REFERENCE_ROM, ROM, "0" * 64, Path(td))
 
 
-def test_generated_outputs_exist_and_are_consistent():
+def test_generated_outputs_exist_and_are_consistent(tmp_path):
     """Committed per-ROM scalars.json/.tsv and cross_rom_scalars.json must match a fresh run."""
     rom = ROM.read_bytes()
-    rec = es.extract_rom(rom, es.REFERENCE_ROM, ROM, es.sha256_of(ROM), MAPS / es.REFERENCE_ROM)
+    # write the fresh run to a temp dir so the committed artifact is not touched
+    rec = es.extract_rom(rom, es.REFERENCE_ROM, ROM, es.sha256_of(ROM), tmp_path)
     on_disk = json.loads((MAPS / es.REFERENCE_ROM / "scalars.json").read_text())
     assert on_disk["rom_sha256"] == rec["rom_sha256"]
     assert on_disk["scalars"] == rec["scalars"]
