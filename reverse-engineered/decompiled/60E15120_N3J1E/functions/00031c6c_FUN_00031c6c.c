@@ -59,11 +59,11 @@ void candidate_apv_target_condition(void)
   }
   if ((cStack_24 == '\0') && (apv_target_state_ffffbf8d == '\x01')) {
     local_28 = 0;
-    ref_osTaskScheduler(0,2,&local_28);
+    os_schedule_task_event(0,2,&local_28);
   }
   if ((cVar1 == '\x01') && (apv_target_state_ffffbf8d == '\0')) {
     local_28 = 0;
-    ref_osTaskScheduler(0,3,&local_28);
+    os_schedule_task_event(0,3,&local_28);
   }
   if (snapshot_engine_speed_rpm_ffffb548 < 6100.0) {
     if (snapshot_engine_speed_rpm_ffffb548 < 5912.5) {

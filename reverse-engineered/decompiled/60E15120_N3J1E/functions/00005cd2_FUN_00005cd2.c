@@ -10,7 +10,7 @@ void FUN_00005cd2(void)
   
   uVar1 = CMCSR0_W;
   CMCSR0_W = uVar1 & 0xff7f;
-  FUN_00005348(0xbc);
+  fatal_interrupt_trap(0xbc);
   return;
 }
 

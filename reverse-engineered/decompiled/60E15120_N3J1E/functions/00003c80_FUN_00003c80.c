@@ -36,7 +36,7 @@ void FUN_00003c80(undefined1 *param_1)
     iVar2 = 0xc;
     iVar5 = 0x60;
   }
-  puVar1 = &DAT_ffff7668;
+  puVar1 = &os_ready_bitmap_ffff7668;
   if (*(short *)(&DAT_ffff766a + iVar2) == 0) {
     cVar4 = (&DAT_ffff7669)[iVar2];
   }

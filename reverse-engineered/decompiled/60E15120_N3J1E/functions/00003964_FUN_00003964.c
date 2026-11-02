@@ -11,12 +11,12 @@ void FUN_00003964(undefined1 *param_1)
   uint uVar3;
   int iVar4;
   
-  puVar1 = (undefined4 *)&DAT_ffff7668;
+  puVar1 = (undefined4 *)&os_ready_bitmap_ffff7668;
   uVar3 = 0;
   *param_1 = 0xff;
   *(undefined2 *)(param_1 + 6) = 0xffff;
   *(undefined **)(param_1 + 0x20) = (&PTR_DAT_00004aec)[(char)param_1[1]];
-  *(undefined **)(param_1 + 0x24) = &DAT_ffff74a0;
+  *(undefined **)(param_1 + 0x24) = &os_ready_ring_ffff74a0;
   do {
     *puVar1 = 0;
     uVar3 = uVar3 + 2;

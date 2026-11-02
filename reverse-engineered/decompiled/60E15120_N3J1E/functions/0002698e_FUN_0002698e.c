@@ -13,12 +13,12 @@ uint FUN_0002698e(void)
   cVar1 = DAT_ffffb6c7;
   if ((DAT_ffffb684 == 0) && (DAT_ffffb6c7 == '\x01')) {
     local_10[0] = 0;
-    ref_osTaskScheduler(0,2,local_10);
+    os_schedule_task_event(0,2,local_10);
   }
   uVar2 = (uint)DAT_ffffb684;
   if ((uVar2 == 1) && (cVar1 == '\0')) {
     local_10[0] = 0;
-    uVar2 = ref_osTaskScheduler(0,3,local_10);
+    uVar2 = os_schedule_task_event(0,3,local_10);
   }
   DAT_ffffb684 = cVar1;
   return uVar2;

@@ -100,8 +100,11 @@ instructions.
 ## 4. Reading outputs (what to compare against the datalog)
 
 - **Watch RAM cells** (profile `watch`, float32): engine load g/rev
-  `0xffffc0b4` (fueling labels), engine speed raw `0xffff9f80` (ISR 0x803e) and
-  `0xffffb548`, knock retard `0xffffa734` (knock report), final leading/trailing
+  `0xffffc0b4` (fueling labels), engine speed raw `0xffff9f80` (written by
+  `ref_getCrankAngle` 0x7fcc in the CMI10B tick chain 0x5b3c→0x75f4→0x77f0→0x7c68;
+  0x803e is an uncalled duplicate — see
+  [the OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) §7)
+  and `0xffffb548`, knock retard `0xffffa734` (knock report), final leading/trailing
   timing `0xffffa630`/`0xffffa638`, injector requests `0xffffa010`[ch*0x18].
   Add entries to the profile `watch` list as you label more outputs.
 - **MMIO log** (`bus.mmio_log`): injector pulse writes to ATU-II DCNT8A-P
@@ -179,7 +182,12 @@ Note the dispatcher (0x3c2a) never rts — use `stop_at=(0x3DAC,)`.
 Known gap to keep in mind: the OS tick timer is modeled (CMI10B) but task
 contexts still need it (E6), so at idle the engine tasks don't run autonomously —
 use `harness.call` on the task/function entry points (§5) to drive specific paths
-deterministically, and note this in findings.
+deterministically, and note this in findings. The full scheduling model (19-task
+table 0x4990, message queues 0x9630/0x5f1c/0x6010, crank-angle-synchronous tick
+0x5b3c, ISR-exit context switch 0x32f4) is documented in
+[the OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
+— the post→queue→dequeue→handler→taskEnd→dispatch→idle chain was reproduced
+end to end there in the emulator.
 
 ## 8. Rules (from AGENTS.md — always apply)
 

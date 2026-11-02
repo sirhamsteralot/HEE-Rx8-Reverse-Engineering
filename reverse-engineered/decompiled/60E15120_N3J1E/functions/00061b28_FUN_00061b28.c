@@ -10,7 +10,7 @@ undefined4 FUN_00061b28(uint param_1)
   uint local_8 [2];
   
   local_8[0] = param_1 & 0xffff;
-  uVar1 = ref_osTaskScheduler(2,5,local_8);
+  uVar1 = os_schedule_task_event(2,5,local_8);
   return uVar1;
 }
 

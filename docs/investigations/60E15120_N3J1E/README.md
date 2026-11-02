@@ -173,14 +173,25 @@ the disassembly and confirmed bit-exact in the emulator; 15 functions, 22 RAM ce
 Emulator-driven labeling pass (Phase 1 fidelity work): 27 functions, 16 RAM locations,
 9 tables named from dynamically verified behavior (IVT at VBR 0x7fc50, CAN RX interrupt
 IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC sweep 0x6884,
-crank ISR 0x803e, NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md);
+NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)
+(the "crank ISR 0x803e" attribution there was corrected 2026-11-02 — 0x803e is only the
+default VBR=0 IVT slot 0x2c8 target; the live rpm path is 0x7fcc — see the deep dive below);
 labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
 backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
+
+## OS scheduling labeling pass — 2026-11-02
+
+From the deep dive: 33 functions + 10 RAM cells + 6 tables labeled (OS core,
+tick chain, interrupt surface; `ref_osTaskScheduler` 0x9630 upgraded to
+`os_schedule_task_event`). Write-up: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md)
+§6; labels: `data/labels/60E15120_N3J1E/os_scheduling_labels.json` + appended
+`source_review/accepted_*.tsv` rows; backup: `backups/pre_os_scheduling_labels.zip`.
+ROM untouched.
 
 ## Start here
 
 - [Firmware design document](design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
 - [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)

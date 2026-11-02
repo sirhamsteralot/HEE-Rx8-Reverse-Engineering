@@ -11,9 +11,9 @@ undefined1 * FUN_00007be4(void)
   puVar1 = (undefined1 *)(uint)DAT_ffff9f96;
   if (puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) {
     puVar1 = &DAT_ffff9f97;
-    DAT_ffff9fc6 = DAT_ffff9f95;
+    DAT_ffff9fc6 = crank_sector_index_ffff9f95;
     if (0xb < DAT_ffff9f97) {
-      DAT_ffff9fc6 = DAT_ffff9f95 + '$';
+      DAT_ffff9fc6 = crank_sector_index_ffff9f95 + '$';
     }
   }
   else {

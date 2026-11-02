@@ -12,7 +12,7 @@ void FUN_0000553e(void)
   if ((uVar1 & 0x100) == 0x100) {
     ATUII_TSR1B_W = 1;
     ATUII_TSR1A_W = 0xff;
-    FUN_00005348(0x68);
+    fatal_interrupt_trap(0x68);
     return;
   }
   return;

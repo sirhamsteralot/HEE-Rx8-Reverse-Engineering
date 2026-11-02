@@ -3,13 +3,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00005b3c (26 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00005b3c(void)
+void cmi10b_tick_isr(void)
 
 {
   ATUII_TSR10_W = 0xb;
-  FUN_000075f4();
-  FUN_0000d716();
-  FUN_0000cf96();
+  cmi10b_tick_service();
+  crank_tick_flag_set();
+  crank_edge_period_update();
   return;
 }
 

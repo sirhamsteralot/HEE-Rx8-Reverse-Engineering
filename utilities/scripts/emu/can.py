@@ -45,7 +45,7 @@ class CANController(RegisterFile):
         # IVT offset of the CAN RX interrupt handler (firmware's CAN RX +
         # scheduler entry: polls HCAN0 RXPR/MBIMR, calls the OS scheduler).
         # Found empirically: offset 0x378 fires the handler that runs
-        # FUN_00011d88 (CAN RX poll) + ref_osTaskScheduler (0x9630).
+        # can_rx_poll_move_to_uds_buffer 0x11d88 + os_schedule_task_event 0x9630.
         self.rx_vector = self.config.get("rx_vector")      # e.g. "0x378"
         self.rx_priority = int(str(self.config.get("rx_priority", "8")), 0)
         self.tx_log = []      # (cycle, can_id, data)

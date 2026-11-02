@@ -3,7 +3,7 @@
 void FUN_00005e42(void)
 
 {
-  FUN_00005348(0xda);
+  fatal_interrupt_trap(0xda);
   return;
 }
 

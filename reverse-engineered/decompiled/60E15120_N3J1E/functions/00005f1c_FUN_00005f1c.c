@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00005f1c (218 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_00005f1c(uint param_1,undefined4 *param_2)
+undefined4 os_post_message(uint param_1,undefined4 *param_2)
 
 {
   byte bVar1;
@@ -18,7 +18,7 @@ undefined4 FUN_00005f1c(uint param_1,undefined4 *param_2)
   
   uVar7 = 0;
   iVar5 = (param_1 & 0xffff) * 8;
-  puVar8 = (&PTR_DAT_0000d74c)[(param_1 & 0xffff) * 2];
+  puVar8 = (&tbl_os_queue_records_0000d74c)[(param_1 & 0xffff) * 2];
   sVar2 = *(short *)(&DAT_0000d750 + iVar5);
   bVar1 = (&DAT_0000d752)[iVar5];
   uVar3 = sh_raise_interrupt_mask_return_previous(0xe0);
@@ -26,11 +26,11 @@ undefined4 FUN_00005f1c(uint param_1,undefined4 *param_2)
     uVar7 = 2;
   }
   else {
-    iVar5 = FUN_00003854((int)sVar2);
+    iVar5 = os_wake_posted_task((int)sVar2);
     if (iVar5 == 0) {
       iVar5 = (param_1 & 0xffff) * 3;
       (&DAT_ffff9306)[iVar5] = (&DAT_ffff9306)[iVar5] + '\x01';
-      puVar9 = (undefined4 *)(puVar8 + (uint)(byte)(&DAT_ffff9304)[iVar5] * 0x14);
+      puVar9 = (undefined4 *)(puVar8 + (uint)(byte)(&queue_state_base_ffff9304)[iVar5] * 0x14);
       iVar5 = 5;
       do {
         uVar4 = *param_2;
@@ -39,10 +39,10 @@ undefined4 FUN_00005f1c(uint param_1,undefined4 *param_2)
         *puVar9 = uVar4;
         puVar9 = puVar9 + 1;
       } while (iVar5 != 0);
-      pbVar6 = &DAT_ffff9304 + (param_1 & 0xffff) * 3;
+      pbVar6 = &queue_state_base_ffff9304 + (param_1 & 0xffff) * 3;
       *pbVar6 = *pbVar6 + 1;
       if (bVar1 <= *pbVar6) {
-        (&DAT_ffff9304)[(param_1 & 0xffff) * 3] = 0;
+        (&queue_state_base_ffff9304)[(param_1 & 0xffff) * 3] = 0;
       }
     }
     else {

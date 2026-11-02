@@ -64,7 +64,7 @@ uint FUN_0001702c(void)
   uVar4 = 0x10;
   if ((cStack_2c == '\0') && (uVar4 = (uint)DAT_ffffa8ea, uVar4 == 1)) {
     local_3c = 0;
-    uVar4 = ref_osTaskScheduler(0,2,&local_3c);
+    uVar4 = os_schedule_task_event(0,2,&local_3c);
   }
   return uVar4;
 }

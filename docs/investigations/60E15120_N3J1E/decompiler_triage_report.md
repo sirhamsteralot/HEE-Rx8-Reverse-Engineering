@@ -114,7 +114,7 @@ via pool word 0x54e34-style indirection) or pure padding.
 | benign_infinite_loop | 1 | no-rts unconditional loop (reset path) |
 | orphan_artifact_unreferenced | 1 | 0x33b6 — see §3d |
 | recovered_case_table | 1 | 0x43c8 — byte-indexed case table recovered in export cleanup |
-| benign_known_function | 1 | 0x9630 `ref_osTaskScheduler` — type-propagation warning only |
+| benign_known_function | 1 | 0x9630 `os_schedule_task_event` — type-propagation warning only |
 
 ### 3c. Recovered record-dispatch tables (the actionable jumptables)
 
@@ -195,7 +195,7 @@ The two recovered tables (0x5ea08, 0x5eb18) are documented here and in
 | 0x00054d90 | FUN_00054d90 | 1204 | record-dispatch scan over table 0x5ea08 (pool word 0x54e34) |
 | 0x00055a7c | ref_OBDModeFunc_Unsure | 236 | record-dispatch scan over table 0x5eb18 (pool word 0x55c64) |
 | 0x000033b6 | FUN_000033b6 | 2 | orphan artifact (`add 0x38,r6` + illegal 0x0000), unreferenced |
-| 0x00009630 | ref_osTaskScheduler | 110 | OS scheduler; type-propagation warning only |
+| 0x00009630 | os_schedule_task_event | 110 | OS scheduler; type-propagation warning only |
 | 0x0000031c | service_wdt_overflow_and_toggle_pb15 | — | WDT service routine; owns the word-literal pool at 0x3f8 |
 
 ### Data

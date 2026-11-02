@@ -10,7 +10,7 @@ void FUN_00005ede(void)
   
   uVar1 = HCAN1_IRR_W;
   HCAN1_IRR_W = uVar1 | 0x9910;
-  FUN_00005348(0xe5);
+  fatal_interrupt_trap(0xe5);
   return;
 }
 

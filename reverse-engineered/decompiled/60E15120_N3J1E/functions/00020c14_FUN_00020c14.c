@@ -24,7 +24,7 @@ undefined4 * FUN_00020c14(void)
     puVar1 = &DAT_00020ce8;
     if (500.0 <= DAT_ffffb26c) {
       DAT_ffffb285 = 1;
-      puVar1 = (undefined4 *)ref_osTaskScheduler(0,1,&DAT_ffffb26c);
+      puVar1 = (undefined4 *)os_schedule_task_event(0,1,&DAT_ffffb26c);
       return puVar1;
     }
   }
