@@ -92,8 +92,8 @@ directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin i
 | `binaries/` | Immutable dumps of **our own acquisitions** (`dumps/`, e.g. the 60E0G500/N3ZHEC factory read), `manifest.csv` = recursive SHA-256 + provenance. Upstream ROMs are referenced via the submodule, not duplicated. |
 | `reverse-engineered/` | `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, 3,355 function files, named views, indexes), `reimplementation/` (compilable C11 + host tests). |
 | `docs/` | `investigations/<rom-id>/` (subsystem reports, reviews, evidence, backups), `architecture/` (memory map, `design/`, `hardware/` pinout + wiring, `emulated-obd.md`, `emulator-ui.md` designs), `references/` (SH7055F manual, wiring book = ground truth, pinout PDF-derived md, RX8Club thread extract + OCR + inline-def TSV, upstream links), `learnings.md`. |
-| `data/` | `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records), `maps/<rom-id>/` (extracted calibration tables: manifest + index.tsv + per-table JSON/CSV, see `extract_maps.py`), `logs/` (real-car CSV/VTLOG — golden fixtures), `tunes/` (`.vtune` containers + notes; context only). |
-| `utilities/` | `scripts/emu/` (SH-2E emulator: CPU, bus, peripherals, profiles, ISO-TP, OBD port, UI), `scripts/rx8-pcm-pipeline/` (Ghidra pipeline), `scripts/patchers/`, `scripts/defs-merge/`, `scripts/extract_maps.py` + `diff_maps.py` (calibration table extraction + cross-ROM diff → `data/maps/`), `scripts/hash_binaries.py`; `tools/ghidra/` (Java scripts, SH-2E Sleigh config). |
+| `data/` | `definitions/` (RomRaider/ECUFlash XML), `labels/<rom-id>/` (label/alias TSV+JSON, validation records), `maps/<rom-id>/` (extracted calibration: tables — manifest + index.tsv + per-table JSON/CSV via `extract_maps.py`; literal-pool scalars — scalars.json/tsv via `extract_scalars.py`), `logs/` (real-car CSV/VTLOG — golden fixtures), `tunes/` (`.vtune` containers + notes; context only). |
+| `utilities/` | `scripts/emu/` (SH-2E emulator: CPU, bus, peripherals, profiles, ISO-TP, OBD port, UI), `scripts/rx8-pcm-pipeline/` (Ghidra pipeline), `scripts/patchers/`, `scripts/defs-merge/`, `scripts/extract_maps.py` + `diff_maps.py` (calibration table extraction + cross-ROM diff → `data/maps/`), `scripts/extract_scalars.py` (literal-pool scalar constants → `data/maps/<rom-id>/scalars.*` + `cross_rom_scalars.json`), `scripts/hash_binaries.py`; `tools/ghidra/` (Java scripts, SH-2E Sleigh config). |
 | `tests/` | pytest suite: emulator unit tests, corpus validation vs. the real disassembly, golden boot trace, ISO-TP/CAN/OBD/UI. Host C tests live beside code in `reverse-engineered/reimplementation/`. |
 
 ## Recommended workflow
@@ -188,8 +188,11 @@ verified — full rules in [`AGENTS.md`](AGENTS.md) §Branch & PR workflow.
   to `data/maps/` — 587 tables on 60E15120_N3J1E (all 478 RX8Defs-matched + 109
   unnamed), 381–587 across all 10 stock ROMs + 1 own dump, 0 non-monotonic
   axes. Cross-ROM structural diff via `diff_maps.py`. Report:
-  [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md).
+  [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md).  Scalar constants in shared literal pools (not descriptor tables — e.g. the
+  base fuel scalar 0.07196 @0x78170 → `fuel_load_scale_ffffbed0`) are extracted
+  separately by `extract_scalars.py` (2026-11-02) into `data/maps/<rom-id>/scalars.*`
+  + `data/maps/cross_rom_scalars.json` — report §6a.
 - **Data:** 1 own ROM dump (60E0G500/N3ZHEC factory), 10 stock ROMs via submodule, real-car logs in
   `data/logs/`, XML definitions in `data/definitions/`, extracted calibration
-  tables in `data/maps/` (14 ROMs + cross-ROM diff).
+  tables and scalar constants in `data/maps/` (14 ROMs + cross-ROM diffs).
 - See [`docs/learnings.md`](docs/learnings.md) for session know-how and ROADMAP.md for what's next.

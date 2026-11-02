@@ -45,11 +45,13 @@ Verification that reimplemented/derived behavior matches the original binaries.
   the reimplementation, knock clamp 0x13bd2, injector map 0xd7d4→ATU-II 8A-8F,
   ADC read path, RCAN RX/TX, Mode 22 dispatch), `tests/test_agent_tools.py`
   (`hee.py` CLI), `tests/test_extract_maps.py` (calibration descriptor scanner),
+  `tests/test_extract_scalars.py` (literal-pool scalar extractor: seed values,
+  reference-ROM addresses, strict layout assertion, generated-output consistency),
   `tests/test_emu_fidelity.py` (E1 f32 rounding, E7 div1/rotcr, interrupt
   masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader),
   `tests/test_knock_retard_dynamic.py` (knock-retard state machine 0x13a60/0x13b40
   vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port).
-  68 tests as of 2026-11-02, all passing. The 4 tests touching
+  73 tests as of 2026-11-02, all passing. The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
   (`git lfs pull`); without it they fail on the manifest hash check.
 - Host C tests need a machine with a working C toolchain. The Windows box has

@@ -210,6 +210,27 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   same-shape/different-meaning pairs exist (huge float diffs in the report are
   those, not real calibration changes).
 
+## Scalar constants — literal pools (2026-11-02, ROADMAP D11)
+
+- The descriptor scan only finds lookup **tables**. Single float32 calibration
+  constants live in **shared literal pools** in the code region (e.g. 0x78170)
+  and are referenced by literal pointers (e.g. 0x30830 → 0x78170 from 0x306e8).
+  `utilities/scripts/extract_scalars.py` locates a curated, binary-verified seed
+  list by exact big-endian bit pattern (`rom.find`) and writes
+  `data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`.
+- On the reference ROM the script **asserts** every documented seed address — a
+  layout change fails loudly instead of mis-mapping. Tests:
+  `tests/test_extract_scalars.py`.
+- Common values (60.0, 5.0, 300.0 …) occur in hundreds of pool slots; only
+  address-anchored occurrences are meaningful — always record the reference
+  address + referencing function/literal pointer, not just the value.
+- Cross-ROM: identical bits ⇒ identical value; an absent pattern means a real
+  difference (60E0E700_N3YLEE secondary injector flow 475.93 → 608.0/626.224).
+- Pitfall: some report files are UTF-8, at least one (`uds_mode22_dispatch_report.md`)
+  is cp1252 — `validate_reports.py` reads with the default encoding, so on a
+  Windows cp1252 box it crashes either way (0x90 / 0x97 bytes). Run with
+  `PYTHONUTF8=1` and tolerate the cp1252 file, or normalize encodings first.
+
 ## Emulator fidelity hardening (2026-10-31, ROADMAP group B)
 
 - **DIV1 needs the Q/M SR bits** (bit8=Q, bit9=M per Sh7055h.pdf fig 2.2). The

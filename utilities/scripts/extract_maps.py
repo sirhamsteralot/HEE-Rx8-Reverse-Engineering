@@ -14,6 +14,9 @@ Descriptor formats (big-endian, verified against ROM bytes and lookup code):
 Type codes (dispatch tables 0x2098/0x210c -> handler names in symbols.tsv):
   0 = float32 (4 B)   4 = uint8 (1 B)   8 = uint16 (2 B)   12 = int8 (1 B)   16 = int16 (2 B)
 
+Companion: extract_scalars.py locates literal-pool scalar constants (not
+descriptor tables) into data/maps/<rom-id>/scalars.{json,tsv}.
+
 Usage:
   python utilities/scripts/extract_maps.py <rom.bin> [--rom-id ID] [--out data/maps]
   python utilities/scripts/extract_maps.py --list   # list stock ROMs in the submodule
