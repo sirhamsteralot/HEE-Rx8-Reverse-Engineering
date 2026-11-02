@@ -38,6 +38,14 @@ REFERENCE_ROM = "60E15120_N3J1E"
 # literal pointer / RAM cell). Values are decoded from the bits, not restated.
 SEEDS = [
     {
+        "name": "stoich_afr",
+        "bits": "416b3333",
+        "ref_addrs": [0x3e7ec],
+        "subsystem": "fueling",
+        "ram_alias": "diag_afr_word_a_ffffaa6c (lambda->AFR conversion)",
+        "evidence": "14.7 stoichiometric AFR literal @0x3e7ec, referenced by mova @0x3e6ec in FUN_0003e560; used as diag_afr_word_a * fVar4 * 14.7 in the fuel-correction/catalyst model (feeds fuel_correction_sum_ffffc644, PID 0x3c). Exactly one occurrence per ROM (verified all 11). This is the single-value 'base AFR' scalar (VersaTuner 'Air Fuel Ratio Base'); per-operating-point AFR lives in maps tbl_06ac88/tbl_069e9c.",
+    },
+    {
         "name": "fuel_load_scale",
         "bits": "3d935fc4",
         "ref_addrs": [0x78170],

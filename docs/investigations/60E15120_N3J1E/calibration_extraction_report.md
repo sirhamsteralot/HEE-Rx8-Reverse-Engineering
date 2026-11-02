@@ -98,7 +98,7 @@ Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
 Descriptor tables are not the whole calibration surface: single float32
 constants live in shared literal pools and are referenced by literal pointers
-(e.g. 0x30830 → 0x78170). `utilities/scripts/extract_scalars.py` locates 13
+(e.g. 0x30830 → 0x78170). `utilities/scripts/extract_scalars.py` locates 14
 binary-verified seeds by exact big-endian bit pattern and writes
 `data/maps/<rom-id>/scalars.{json,tsv}` plus `data/maps/cross_rom_scalars.json`.
 On the reference ROM 60E15120_N3J1E the script asserts every documented
@@ -130,6 +130,13 @@ tests in `tests/test_extract_scalars.py`.
   → 0.94250 @ 6000 rpm / load 1.0. 0.942188 itself matches the OBD reporting
   resolution (PID 0x06 = (λ−1)·100 → −5.78) and the WOT log values (λ 0.942 /
   AFR 13.85), i.e. a measured λ, not a stored constant.
+- The single-value "base AFR" **is** a scalar: stoich **14.7** = f32 0x416b3333,
+  one occurrence per ROM (0x3e7ec in N3J1E), referenced by `mova` @0x3e6ec in
+  FUN_0003e560 and used as `diag_afr_word_a × fVar4 × 14.7` in the
+  fuel-correction/catalyst model (feeds `fuel_correction_sum_ffffc644`, PID
+  0x3c) — i.e. it converts the λ-domain fueling into AFR units. Seeded as
+  `stoich_afr` in extract_scalars.py (2026-11-02). Per-operating-point AFR is
+  the maps above, not this scalar.
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
@@ -167,7 +174,7 @@ generation (fewer structural matches).
 - **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
 - **All axes monotonic** across all 587 tables (strong false-positive filter).
 - **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
-- **Scalars (2026-11-02)**: 13 seed float32 patterns found in all 11 ROMs;
+- **Scalars (2026-11-02)**: 14 seed float32 patterns found in all 11 ROMs;
   reference-ROM addresses asserted by `extract_scalars.py` and
   `tests/test_extract_scalars.py` (5 tests, pass).
 - `validate_reports.py` PASS; `hash_binaries.py --check` OK.

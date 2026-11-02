@@ -26,6 +26,7 @@ def rom():
 def test_seed_bits_decode_to_documented_values():
     """Every seed's bit pattern must decode to its expected float32 value."""
     expected = {
+        "stoich_afr": 14.699999809265137,
         "fuel_load_scale": 0.07196000218391418,
         "load_cell_scale": 0.6345000267028809,
         "air_per_rev_factor": 60.0,
