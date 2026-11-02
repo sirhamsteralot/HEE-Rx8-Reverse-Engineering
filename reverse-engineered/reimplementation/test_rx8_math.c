@@ -21,5 +21,12 @@ int main(void)
     assert(isnan(rx8_min_float(4, NAN)));
     assert(signbit(rx8_max_float(0.0f, -0.0f)));
     assert(signbit(rx8_min_float(0.0f, -0.0f)));
+    assert(rx8_add_u8_saturate(0, 0) == 0);
+    assert(rx8_add_u8_saturate(61, 1) == 62);
+    assert(rx8_add_u8_saturate(254, 1) == 255);   /* 0xfe < sum -> saturate */
+    assert(rx8_add_u8_saturate(255, 1) == 255);
+    assert(rx8_add_u8_saturate(200, 200) == 255);
+    assert(rx8_add_u8_saturate(0x1ff, 1) == 255);   /* inputs truncated to u8 first */
+    assert(rx8_add_u8_saturate(0x100 + 5, 0x100 + 6) == 11);
     return 0;
 }
