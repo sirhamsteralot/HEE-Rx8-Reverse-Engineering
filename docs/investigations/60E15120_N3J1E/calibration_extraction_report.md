@@ -110,6 +110,16 @@ replaces with 608.0/626.224 at 0x76ccc-0x76cd0 — different secondary injectors
 on that market ROM. Seeds + evidence come from the
 [load & fuelling review validation](reviews/load_fueling_model/validation.json);
 tests in `tests/test_extract_scalars.py`.
+- **Negative result (2026-11-02)**: no stored scalar equals λ = 0.942188
+  (f32 0x3f71333c ±2 ULP, any alignment, absent from all 11 ROMs; Q15 would be
+  30875.6 — non-integer; u8 scalings give x = 14.8 — non-integer; no extracted
+  table cell/axis in [0.9419, 0.9424] in any ROM). The base AFR/lambda reference
+  in firmware is λ = 1.0 implicit (diag Q15 /32768); WOT λ ≈ 0.942 is emergent
+  from the Open Loop Target tables (u8, λ = 1 − x/256; nearest cell x=15 →
+  λ 0.94140625) plus trim — see real-car logs `data/logs/nr666p/` (measured
+  λ 0.942 / AFR 13.85 at WOT; 13.85/14.7 = 0.942177). Nearest stored float
+  cells: 0.9418 in `tbl_069950` ("Table 2D - 308", all ROMs) and 13.85 AFR
+  cells in `tbl_06fe28` (60E32000_N3N5EB only, λ = 0.94218).
 
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
