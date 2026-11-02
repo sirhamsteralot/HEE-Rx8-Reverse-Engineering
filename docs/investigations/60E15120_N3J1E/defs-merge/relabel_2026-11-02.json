@@ -8,7 +8,10 @@
   "annotated": 0,
   "added": 96,
   "skipped_marker": 0,
-  "no_label": 413
+  "no_label": 413,
+  "block_tables": 879,
+  "join_rate": 0.559,
+  "preexisting_duplicate_names": []
  },
  "details": [
   {
