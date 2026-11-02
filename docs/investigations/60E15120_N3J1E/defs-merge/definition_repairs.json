@@ -987,5 +987,13 @@
     "functions": [
       "0004441e"
     ]
+  },
+  {
+    "table": "DTC xxxx Enable/Disable #1/#2/#3 (all per-ROM blocks)",
+    "field": "storageaddress",
+    "old": "upstream block addresses (wrong for 60E0E700 +3, 60E1B900/60E32000_N3M5E pointed at the code table, 60E0FB00/60E1D400 misaligned; #2/#3 unbound for 60E15120/60E0G500)",
+    "new": "regenerated per ROM from the ROM's own DTC layout (code table + 3 enable blocks), via repair_dtc_tables() in utilities/scripts/defs-merge/extend_defs_all_roms.py; merged 60E15120 block gained #2/#3 bindings",
+    "basis": "ROM bytes + literal-pool anchors per ROM (mov.l of enable-block base) + emulator dynamic checks; 0 mismatches after repair across all 9 per-rom defs (data/dtc/defs_audit.tsv regenerated)",
+    "evidence": "docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5"
   }
 ]

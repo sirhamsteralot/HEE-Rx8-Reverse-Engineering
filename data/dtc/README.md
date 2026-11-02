@@ -43,6 +43,14 @@ query); 0x80..0xbf stored/MIL ("0x80-bit" query); 0xc0/0xc1 confirmed
 variants; FUN_00061800 maps master state 1..0x3f → 0x60 and 0x80..0xbf → 0x70
 for the 0xffffd5fc mirror array.
 
+## Defs status
+
+The `def_match` column and `defs_audit.tsv` reflect the **repaired** per-ROM defs
+(2026-11-01, `repair_dtc_tables()` in `utilities/scripts/defs-merge/extend_defs_all_roms.py`):
+0 mismatches across all ROMs for #1/#2/#3. The pre-repair audit (with the wrong
+blocks for 60E0E700/60E1B900/60E32000_N3M5E/60E0FB00/60E1D400) is preserved in
+`docs/investigations/60E15120_N3J1E/reviews/dtc_control/defs_audit_detail.json`.
+
 ## Provenance
 
 - ROMs: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/*.bin`
