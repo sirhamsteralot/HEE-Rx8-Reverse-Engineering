@@ -21,9 +21,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 816,
+      "block_tables": 937,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 816,
+      "dtc_repair": {
+        "dtc_code_table": "0x7E108",
+        "dtc_enable_blocks": [
+          "0x7E220",
+          "0x7E2AC",
+          "0x7E338"
+        ],
+        "dtc_slots_used": 121,
+        "dtc_tables_emitted": 363
+      },
+      "block_tables_with_storageaddress": 937,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
       "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "status": "OK"
@@ -51,9 +61,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 745,
+      "block_tables": 865,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 744,
+      "dtc_repair": {
+        "dtc_code_table": "0x7C5C0",
+        "dtc_enable_blocks": [
+          "0x7C6D8",
+          "0x7C764",
+          "0x7C7F0"
+        ],
+        "dtc_slots_used": 121,
+        "dtc_tables_emitted": 363
+      },
+      "block_tables_with_storageaddress": 865,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -71,9 +91,19 @@
         "RX8Base",
         "60E0FC00"
       ],
-      "block_tables": 734,
+      "block_tables": 864,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 734,
+      "dtc_repair": {
+        "dtc_code_table": "0x7C8E4",
+        "dtc_enable_blocks": [
+          "0x7C9FC",
+          "0x7CA88",
+          "0x7CB14"
+        ],
+        "dtc_slots_used": 124,
+        "dtc_tables_emitted": 372
+      },
+      "block_tables_with_storageaddress": 864,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -90,9 +120,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 909,
+      "block_tables": 912,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 909,
+      "dtc_repair": {
+        "dtc_code_table": "0x7C8E4",
+        "dtc_enable_blocks": [
+          "0x7C9FC",
+          "0x7CA88",
+          "0x7CB14"
+        ],
+        "dtc_slots_used": 124,
+        "dtc_tables_emitted": 372
+      },
+      "block_tables_with_storageaddress": 912,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -116,9 +156,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 639,
+      "block_tables": 881,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 639,
+      "dtc_repair": {
+        "dtc_code_table": "0x7E560",
+        "dtc_enable_blocks": [
+          "0x7E678",
+          "0x7E704",
+          "0x7E790"
+        ],
+        "dtc_slots_used": 121,
+        "dtc_tables_emitted": 363
+      },
+      "block_tables_with_storageaddress": 881,
       "per_rom_def": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -135,9 +185,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 709,
+      "block_tables": 839,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 709,
+      "dtc_repair": {
+        "dtc_code_table": "0x7C8E4",
+        "dtc_enable_blocks": [
+          "0x7C9FC",
+          "0x7CA88",
+          "0x7CB14"
+        ],
+        "dtc_slots_used": 124,
+        "dtc_tables_emitted": 372
+      },
+      "block_tables_with_storageaddress": 839,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1B900.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -165,9 +225,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 829,
+      "block_tables": 928,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 829,
+      "dtc_repair": {
+        "dtc_code_table": "0x7E108",
+        "dtc_enable_blocks": [
+          "0x7E220",
+          "0x7E2AC",
+          "0x7E338"
+        ],
+        "dtc_slots_used": 121,
+        "dtc_tables_emitted": 363
+      },
+      "block_tables_with_storageaddress": 928,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1D400.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -184,9 +254,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 268,
+      "block_tables": 391,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 268,
+      "dtc_repair": {
+        "dtc_code_table": "0x7E634",
+        "dtc_enable_blocks": [
+          "0x7E74C",
+          "0x7E7D8",
+          "0x7E864"
+        ],
+        "dtc_slots_used": 129,
+        "dtc_tables_emitted": 387
+      },
+      "block_tables_with_storageaddress": 391,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3M5E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -205,9 +285,19 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 268,
+      "block_tables": 403,
       "scalar_tables_injected": 2,
-      "block_tables_with_storageaddress": 268,
+      "dtc_repair": {
+        "dtc_code_table": "0x7E548",
+        "dtc_enable_blocks": [
+          "0x7E660",
+          "0x7E6EC",
+          "0x7E778"
+        ],
+        "dtc_slots_used": 133,
+        "dtc_tables_emitted": 399
+      },
+      "block_tables_with_storageaddress": 403,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3N5EB.xml",
       "ecuflash_def": null,
       "status": "OK"
