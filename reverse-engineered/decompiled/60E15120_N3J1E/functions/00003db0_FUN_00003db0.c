@@ -12,7 +12,7 @@ undefined4 os_wake_check_context_switch(void)
 {
   if ((os_scheduled_count_ffff763c != os_dispatched_count_ffff763e) && ((os_state_flags_ffff7640 & 0x1000) == 0)) {
     os_state_flags_ffff7640 = 0x100;
-    FUN_00003bf4(&os_ctrl_block_ffff7638);
+    os_context_switch(&os_ctrl_block_ffff7638);
   }
   return 0;
 }

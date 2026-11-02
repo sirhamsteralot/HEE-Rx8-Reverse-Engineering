@@ -12,13 +12,13 @@ uint FUN_00005b56(void)
   uVar1 = ATUII_TIER10_W;
   if (((uVar1 & 2) == 2) && (uVar1 = ATUII_TSR10_W, (uVar1 & 2) == 2)) {
     ATUII_TSR10_W = 0xd;
-    FUN_00005348(0xb4);
+    fatal_interrupt_trap(0xb4);
   }
   uVar1 = ATUII_TIER10_W;
   uVar2 = uVar1 & 8;
   if ((uVar2 == 8) && (uVar1 = ATUII_TSR10_W, uVar2 = uVar1 & 8, uVar2 == 8)) {
     ATUII_TSR10_W = 7;
-    uVar2 = FUN_00005348(0xb4);
+    uVar2 = fatal_interrupt_trap(0xb4);
     return uVar2;
   }
   return uVar2;

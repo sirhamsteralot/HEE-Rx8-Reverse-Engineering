@@ -9,7 +9,7 @@ undefined4 FUN_0000a05a(void)
   int iVar1;
   undefined4 uVar2;
   
-  iVar1 = FUN_00003854(0xf);
+  iVar1 = os_wake_posted_task(0xf);
   if (iVar1 != 0) {
     uVar2 = ref_calledLots(0xf);
     return uVar2;

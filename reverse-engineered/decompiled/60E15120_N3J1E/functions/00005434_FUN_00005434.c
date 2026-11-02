@@ -10,7 +10,7 @@ void FUN_00005434(void)
   
   uVar1 = DMAC_CHCR1_L;
   DMAC_CHCR1_L = uVar1 & 0xfffffffd;
-  FUN_00005348(0x4a);
+  fatal_interrupt_trap(0x4a);
   return;
 }
 

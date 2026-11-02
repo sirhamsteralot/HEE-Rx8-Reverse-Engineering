@@ -1,6 +1,6 @@
 /* ROM address: 0x000059dc; body bytes: 14; decompiled */
 
-void FUN_000059dc(void)
+void atu_ch8_cmp_isr_ch2(void)
 
 {
   ATUII_TSR8_W = 0xffef;

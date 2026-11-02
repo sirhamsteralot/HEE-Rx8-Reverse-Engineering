@@ -12,7 +12,7 @@ undefined4 FUN_00061b02(uint param_1)
   
   uStack_8 = param_1 & 0xffff;
   local_c = 0x14;
-  uVar1 = ref_osTaskScheduler(2,3,&local_c);
+  uVar1 = os_schedule_task_event(2,3,&local_c);
   return uVar1;
 }
 

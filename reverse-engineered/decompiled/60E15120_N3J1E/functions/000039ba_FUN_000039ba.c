@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000039ba (110 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_000039ba(char *param_1,undefined2 param_2,uint param_3)
+undefined4 os_mark_task_ready(char *param_1,undefined2 param_2,uint param_3)
 
 {
   short sVar1;
@@ -15,8 +15,8 @@ undefined4 FUN_000039ba(char *param_1,undefined2 param_2,uint param_3)
   if (*psVar3 == -1) {
     psVar3[1] = *psVar2;
     *psVar3 = *psVar2;
-    (&DAT_ffff7668)[(int)param_3 >> 3] =
-         (&DAT_ffff7668)[(int)param_3 >> 3] | (&DAT_00003d48)[param_3 & 7];
+    (&os_ready_bitmap_ffff7668)[(int)param_3 >> 3] =
+         (&os_ready_bitmap_ffff7668)[(int)param_3 >> 3] | (&tbl_os_class_bit_00003d48)[param_3 & 7];
     *(undefined2 *)(*(int *)(param_1 + 0x24) + psVar3[1] * 2) = param_2;
     if ((int)*param_1 < (int)param_3) {
       *param_1 = (char)param_3;

@@ -2,7 +2,7 @@
 
 Date: 2026-11-02. Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
-untouched — this pass is analysis + report only, no label or binary change).
+untouched — no binary change; labels were applied in the 2026-11-02 labeling pass, see §6).
 Static-analysis disclaimer: findings come from the canonical export
 (`reverse-engineered/decompiled/60E15120_N3J1E/`), the disassembly
 (`reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm`) and the
@@ -54,7 +54,7 @@ hand-rolled dispatcher:
   0xc, and jumps into the dispatcher) instead of `rte`. `ref_setSR` **0x3934**
   does the same check on the software path via `os_wake_check_context_switch`
   **0x3db0** (call-site literal 0x3950 = 0x3db0, byte-verified).
-- **Event/message queues**: the system-call-style API is `ref_osTaskScheduler`
+- **Event/message queues**: the system-call-style API is `os_schedule_task_event`
   **0x9630(group, idx, args…)**. It looks up a descriptor {target, nargs,
   handler} in the group tables (pointer table **0xd87c** → bases 0xd9cc / 0xd944
   / 0x67d00; 8-byte records). If target == −1 the handler is **called inline in
@@ -90,7 +90,7 @@ hand-rolled dispatcher:
   `service_wdt_overflow_and_toggle_pb15` **0x31c** (keyed 0xa53c write to TCSR
   0xffffec10, PB15 heartbeat on 0xfffff738 bit15) called from 0x11a / 0x5b0 /
   0x6c8 (boot + task paths). The WDT overflow interrupt itself (IVT 0x358) is a
-  **fatal trap**: 0x5e0c → `FUN_00005348`(0xd6) which raises the mask, reports
+  **fatal trap**: 0x5e0c → `fatal_interrupt_trap`(0xd6) which raises the mask, reports
   via 0xa330 and spins forever — as do most unused ATU-II sub-vectors.
 - **Software timers**: there is no central timer-decrement ISR; timers are
   **per-task counters advanced each time the owning task runs** (the task period
@@ -168,7 +168,7 @@ ref_setSR 0x3934 (software mask changes): ... -> os_wake_check_context_switch 0x
             flags = 0x100; 0x3bf4(ctrl) -> os_dispatch_next_task  # switch now
 
 # --- message post (the "system call") ---
-ref_osTaskScheduler 0x9630(group, idx, args...):
+os_schedule_task_event 0x9630(group, idx, args...):
     rec = PTR[0xd87c + group*4] + idx*8      # {i16 target, u16 nargs, u32 handler}
     msg = {handler, arg1..arg4}
     if target == -1: handler(args)           # inline (ISR context), e.g. CAN poll 0x11d88
@@ -259,7 +259,7 @@ back — dynamically observed (task[3] ctx[3] 0x1e → 0x1d on post).
 
 117 vectors (offsets 0x100–0x39c, vec 64–230) point at real trampolines
 (byte-verified against ROM at 0x7fc50+off; every trampoline's first pool word =
-0x3238). Of these, **98 end in the fatal trap** `FUN_00005348` (clear a
+0x3238). Of these, **98 end in the fatal trap** `fatal_interrupt_trap` (clear a
 peripheral flag, report a code via 0xa330, spin at 0x535a forever) — any
 unexpected interrupt is a deliberate halt. The **19 with real handlers**:
 
@@ -287,28 +287,52 @@ Everything else that fires is treated as a fault.
 
 ## 6. Labeling applied
 
-**No labels were changed in this pass** (report-only work unit; renaming the
-decompiled views is a separate pipeline pass with `validation.json` updates).
-Candidate names proposed here for a future pass, per the label ladder
-(`candidate_` = unproven, address-tied):
+**2026-11-02 labeling pass applied** (all high-confidence, each tied to its ROM
+address and backed by the binary-level + emulator evidence in §9; full record:
+`data/labels/60E15120_N3J1E/os_scheduling_labels.json`; rows appended to
+`source_review/accepted_{function,ram,lookup}_aliases.tsv`; applied via
+`merge_reviewed_lookup_aliases.py` + `integrate_reviewed_names.py`; pre-change
+backup `backups/pre_os_scheduling_labels.zip`):
 
-- 0x5f1c `candidate_os_post_message`, 0x39ba `candidate_os_mark_task_ready`,
-  0x3854 `candidate_os_consume_credit`, 0x3bf4 `candidate_os_context_switch`,
-  0x5b3c `candidate_cmi10b_tick_handler`, 0x7b58 `candidate_ch10b_rearm`,
-  0x787a `candidate_crank_sector_advance`, 0x5348 `candidate_fatal_interrupt_trap`,
-  0xa330 `candidate_fatal_report`, 0x32f4 (LAB) `candidate_isr_exit_switch`,
-  0x3848 (LAB) `candidate_task_first_entry`, 0xa0de–0xa22c `candidate_post_wrappers`.
+- **33 functions** (all `high`): 0x5b3c `cmi10b_tick_isr`, 0x75f4
+  `cmi10b_tick_service`, 0x7b58 `ch10b_compare_rearm`, 0x787a
+  `crank_sector_advance`, 0xd716 `crank_tick_flag_set`, 0xcf96
+  `crank_edge_period_update`, 0xa156 `post_crank_tick_message`, 0x5f1c
+  `os_post_message`, 0x39ba `os_mark_task_ready`, 0x3854 `os_wake_posted_task`,
+  0x3bf4 `os_context_switch`, 0x9c86 `can_rx_isr_handler`, 0x62a0
+  `task0_background_loop`, 0x969e `msg_queue_task_slot0`, 0x96de
+  `msg_queue_task_slot2`, 0x96fe `msg_queue_task_slot3`, 0x64e8 `slow_task_entry`,
+  0x11534 `slow_background_task`, 0x11c98 `crank_tick_message_handler`, 0x5348
+  `fatal_interrupt_trap`, 0xa330 `fatal_trap_report_halt`, 0x5e0c
+  `wdt_iti_fatal_trap`, 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea
+  `atu_ch8_cmp_isr_ch0/3/1/4/2/5`, 0x5a4c `knock_adc_trigger_isr`, 0x5ce2/0x5cfe/0x5d0a
+  `adc_eoc_isr_bank0/1/2`, and 0x9630 `ref_osTaskScheduler` →
+  `os_schedule_task_event` (upgrade of the inherited ref_ name on new dynamic
+  evidence).
+- **10 RAM cells**: 0xffff9304 `queue_state_base`, 0xffff9f95
+  `crank_sector_index`, 0xffffa3fc `crank_tick_flag`, 0xffff7668
+  `os_ready_bitmap`, 0xffff74a0 `os_ready_ring`, 0xffff9fd0 `crank_period_ring`,
+  0xffffa118/a12c/a140/a154 `msg_dequeue_scratch_slot0..3`.
+- **6 tables**: `tbl_os_queue_records_0000d74c`, `tbl_os_schedule_group_ptrs_0000d87c`,
+  `tbl_crank_next_sector_0000d76c`, `tbl_crank_sector_ocr10b_0000d76d`,
+  `tbl_os_resume_jumptable_00004b34`, `tbl_os_class_bit_00003d48`.
+
+Not labeled (deliberately left at FUN_/ref_ level): the LAB_ addresses 0x32f4 /
+0x3848 (epilogue switch / first-entry tails — verified but label-as-function not
+applied), 0x803e (see §7 — pre-VBR vector target, name kept), the ch3/ch9
+compare handlers 0x567a/0x57c6/0x5b14 and IRQ-flag handler 0x53f6 (role clear,
+naming left for a future pass), and the task entries 0x65f6–0x65e8 (already
+carry ref_/candidate_ names from earlier passes).
 
 ## 7. Corrections made in this pass
 
-- **0x803e is not the CMI10B IVT handler, and in fact nothing calls it.** IVT
-  0x7fc50+0x2c8 → trampoline 0x2ec0 → handler **0x5b3c** (byte-verified). The
-  only ROM references to 0x803e are coincidental value uses (stored to HCAN0
-  BCR at 0x1a6/0x977a, compared at 0x2a538); the callgraph has no caller. The
-  live rpm path is `ref_getCrankAngle` **0x7fcc** (ring 0xffff9fd0 append,
-  rpm = 1.2e8/Σ → 0xffff9f80), called from 0x7c68 ← 0x77f0 ← tick handler
-  0x75f4. The inherited label `ref_INT_ATU101_IMI10AG`/`crank_isr_compute_rpm`
-  on 0x803e is a misnomer for a dead duplicate of 0x7fcc's math.
+- **0x803e is not the post-VBR CMI10B handler.** IVT 0x7fc50+0x2c8 → trampoline
+  0x2ec0 → handler **0x5b3c** (byte-verified). 0x803e has no callgraph callers; its
+  only ROM reference is the *default* (VBR=0) vector table slot 0x2c8 (u32 at ROM
+  0x2c8 = 0x803e) — the pre-relocation entry, superseded once VBR=0x7fc50 is set
+  at 0xd206. The live rpm path is `ref_getCrankAngle` **0x7fcc** (ring 0xffff9fd0
+  append, rpm = 1.2e8/Σ → 0xffff9f80), called from 0x7c68 ← 0x77f0 ← tick
+  handler 0x75f4; 0x803e duplicates 0x7fcc's math for the pre-VBR entry.
 - **The "OS tick" is crank-angle-synchronous, not a fixed-period timer.**
   OCR10B is reloaded per crank sector from table 0xd76d indexed by sector
   0xffff9f95 (0x00–0x24), TCNT10B cleared on rearm (0x7b58) — so CMI10B fires per
@@ -338,9 +362,14 @@ Candidate names proposed here for a future pass, per the label ladder
 ## 8. Files
 
 - This report: `docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`
-- Cross-link added to [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) (Related reports line).
-- No changes under `reverse-engineered/`, `data/labels/`, `binaries/`;
-  ROM untouched (`hash_binaries.py` unaffected — no `binaries/` file touched).
+- Cross-link added to [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) (Related reports line + §12 addendum).
+- Labeling pass artifacts (§6): `data/labels/60E15120_N3J1E/os_scheduling_labels.json`;
+  appended rows in `source_review/accepted_{function,ram,lookup}_aliases.tsv`;
+  renamed views: `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols.tsv,
+  function_index.tsv, callgraph.tsv, functions/*.c, firmware_decompiled.c,
+  named/firmware_named.c, named/lookup_aliases.tsv, metadata/integrated_names.json);
+  pre-change backup `backups/pre_os_scheduling_labels.zip` (LFS).
+  No `binaries/` file touched (`hash_binaries.py --check` OK); ROM SHA unchanged.
 
 ## 9. Validation
 
@@ -383,8 +412,13 @@ Candidate names proposed here for a future pass, per the label ladder
   (required sections, ROM SHA, memory-map addresses/names vs `function_index.tsv`
   + `accepted_ram_aliases.tsv`/`integrated_names.json`, ROM bounds) against this
   report only: PASS.
-- `python -m pytest tests/` not re-run (no code changed); last full run 61/61 on
-  `main`.
+- After the labeling pass (§6): `validate_export.py` PASS (input SHA-256 verified,
+  3,355 function files, 168,592 instructions / 337,184 bytes verified, 1,833 exact
+  reference matches; `semantic_equivalence_verified: false` is the pre-existing
+  state, unchanged in `validation.json`), `verify_readability.py` PASS (3,355
+  bodies consistent), `verify_math_units.py` PASS, targeted report checks PASS on
+  all UTF-8-clean reports incl. this one. `python -m pytest tests/` could not run
+  in this environment (pytest not installed here); last full run on `main` was 61/61.
 
 ## 10. Memory map for validation
 
@@ -396,13 +430,13 @@ Candidate names proposed here for a future pass, per the label ladder
 | 0x003490 | `FUN_00003490` |
 | 0x0035cc | `FUN_000035cc` |
 | 0x00375c | `os_switch_to_task` |
-| 0x003854 | `FUN_00003854` |
+| 0x003854 | `os_wake_posted_task` |
 | 0x003920 | `sh_raise_interrupt_mask_return_previous` |
 | 0x003934 | `ref_setSR` |
-| 0x0039ba | `FUN_000039ba` |
+| 0x0039ba | `os_mark_task_ready` |
 | 0x003a28 | `ref_consistencyCheck` |
 | 0x003ac0 | `FUN_00003ac0` |
-| 0x003bf4 | `FUN_00003bf4` |
+| 0x003bf4 | `os_context_switch` |
 | 0x003c2a | `os_dispatch` |
 | 0x003c68 | `os_dispatch_next_task` |
 | 0x003d58 | `ref_taskEndRoutine_` |
@@ -412,20 +446,20 @@ Candidate names proposed here for a future pass, per the label ladder
 | 0x003964 | `FUN_00003964` |
 | 0x003ec0 | `FUN_00003ec0` |
 | 0x003f10 | `FUN_00003f10` |
-| 0x005348 | `FUN_00005348` (fatal trap) |
+| 0x005348 | `fatal_interrupt_trap` (fatal trap) |
 | 0x005b2e | `FUN_00005b2e` |
-| 0x005b3c | `FUN_00005b3c` (CMI10B handler) |
+| 0x005b3c | `cmi10b_tick_isr` (CMI10B handler) |
 | 0x005b56 | `FUN_00005b56` |
-| 0x005e0c | `FUN_00005e0c` (WDT ITI trap) |
-| 0x005e78 | `thunk_FUN_00009c86_00005e78` (CAN RX) |
-| 0x005f1c | `FUN_00005f1c` (post) |
+| 0x005e0c | `wdt_iti_fatal_trap` (WDT ITI trap) |
+| 0x005e78 | `thunk_FUN_00009c86_00005e78` (CAN RX thunk -> 0x9c86 `can_rx_isr_handler`) |
+| 0x005f1c | `os_post_message` (post) |
 | 0x006010 | `os_queue_dequeue_record` |
 | 0x0060c8 | `ref_getSensorStuff__` (task[17]) |
-| 0x0062a0 | `FUN_000062a0` (task[0] background loop) |
+| 0x0062a0 | `task0_background_loop` (task[0] background loop) |
 | 0x0063f0 | `ref_interruptSetup___` (task[7]) |
 | 0x00648e | `FUN_0000648e` (task[8], arms tick) |
 | 0x0064ba | `candidate_knock_sensor_fault_task` (task[9]) |
-| 0x0064e8 | `FUN_000064e8` (task[18] thunk) |
+| 0x0064e8 | `slow_task_entry` (task[18] thunk) |
 | 0x0064f6 | `FUN_000064f6` (task[10]) |
 | 0x006584 | `FUN_00006584` (task[11], fueling) |
 | 0x006592 | `FUN_00006592` (task[12]) |
@@ -442,31 +476,31 @@ Candidate names proposed here for a future pass, per the label ladder
 | 0x00759e | `FUN_0000759e` |
 | 0x007778 | `atu_ch10b_tick_enable` |
 | 0x0077f0 | `crank_capture_poll` |
-| 0x00787a | `FUN_0000787a` (sector advance) |
-| 0x007b58 | `FUN_00007b58` (OCR10B rearm) |
+| 0x00787a | `crank_sector_advance` (sector advance) |
+| 0x007b58 | `ch10b_compare_rearm` (OCR10B rearm) |
 | 0x007eca | `FUN_00007eca` |
 | 0x007f22 | `FUN_00007f22` |
 | 0x007c68 | `ref_geteShaftAngle_` (calls 0x7fcc from the tick chain) |
 | 0x007fcc | `ref_getCrankAngle` (live rpm path: ring append, rpm → 0xffff9f80) |
-| 0x00803e | `crank_isr_compute_rpm` (dead duplicate of 0x7fcc's math — no callers, §7) |
-| 0x009630 | `ref_osTaskScheduler` |
-| 0x00969e | `FUN_0000969e` (task[1], slot 0) |
+| 0x00803e | `crank_isr_compute_rpm` (pre-VBR base-IVT CMI10B target at ROM slot 0x2c8; superseded post-VBR by 0x5b3c; duplicates 0x7fcc's math — §7) |
+| 0x009630 | `os_schedule_task_event` |
+| 0x00969e | `msg_queue_task_slot0` (task[1], slot 0) |
 | 0x0096be | `uds_service_task_entry` (task[2], slot 1) |
-| 0x0096de | `FUN_000096de` (task[3], slot 2) |
-| 0x0096fe | `FUN_000096fe` (task[4], slot 3) |
-| 0x009c86 | `FUN_00009c86` (CAN RX handler body) |
+| 0x0096de | `msg_queue_task_slot2` (task[3], slot 2) |
+| 0x0096fe | `msg_queue_task_slot3` (task[4], slot 3) |
+| 0x009c86 | `can_rx_isr_handler` (CAN RX handler body) |
 | 0x00a0de | `FUN_0000a0de` (post wrapper grp1[6]) |
 | 0x00a10e | `ref_putTaskInSchedule_FuelArrayStuff` (grp1[4]) |
-| 0x00a156 | `FUN_0000a156` (grp1[9], crank-tick post) |
-| 0x00a330 | `FUN_0000a330` (fatal report) |
+| 0x00a156 | `post_crank_tick_message` (grp1[9], crank-tick post) |
+| 0x00a330 | `fatal_trap_report_halt` (fatal report) |
 | 0x00a218 | `FUN_0000a218` (post wrapper grp2[3]) |
 | 0x0011d88 | `can_rx_poll_move_to_uds_buffer` |
-| 0x0011534 | `FUN_00011534` (slow task, 29 calls) |
-| 0x0011c98 | `FUN_00011c98` (grp1[9] handler) |
+| 0x0011534 | `slow_background_task` (slow task, 29 calls) |
+| 0x0011c98 | `crank_tick_message_handler` (grp1[9] handler) |
 | 0x000287aa | `FUN_000287aa` (per-tick fuel/load update) |
 | 0x0003a0bc | `FUN_0003a0bc` |
-| 0x0000cf96 | `FUN_0000cf96` (crank edge/sector track) |
-| 0x0000d716 | `FUN_0000d716` (tick flag) |
+| 0x0000cf96 | `crank_edge_period_update` (crank edge/sector track) |
+| 0x0000d716 | `crank_tick_flag_set` (tick flag) |
 | 0x0000e21c | `ref_calculateEngineRunningTimer` |
 | 0x00031c | `service_wdt_overflow_and_toggle_pb15` |
 

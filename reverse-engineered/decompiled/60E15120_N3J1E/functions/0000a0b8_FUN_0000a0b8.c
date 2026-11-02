@@ -8,7 +8,7 @@ void FUN_0000a0b8(undefined4 param_1)
 {
   int iVar1;
   
-  iVar1 = FUN_00003854(6);
+  iVar1 = os_wake_posted_task(6);
   if (iVar1 != 0) {
     ref_calledLots(6);
     return;

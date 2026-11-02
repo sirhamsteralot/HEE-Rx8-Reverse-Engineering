@@ -10,7 +10,7 @@ void atu_ch10b_tick_enable(void)
   
   if (DAT_ffff9fc4 == '\0') {
     ATUII_TSR10_W = 0xb;
-    FUN_00007b58();
+    ch10b_compare_rearm();
     uVar1 = ATUII_TIER10_W;
     ATUII_TIER10_W = uVar1 & 0xfffb | 4;
     DAT_ffff9fc4 = '\x01';

@@ -21,15 +21,15 @@ undefined4 * ref_getCrankAngle(byte param_1)
   if (5 < DAT_ffff9fe9) {
     DAT_ffff9fe9 = 0;
   }
-  puVar1 = &DAT_ffff9fd0;
-  (&DAT_ffff9fd0)[DAT_ffff9fe9] = crank_period_last_ffff9fa8;
+  puVar1 = &crank_period_ring_ffff9fd0;
+  (&crank_period_ring_ffff9fd0)[DAT_ffff9fe9] = crank_period_last_ffff9fa8;
   if (DAT_ffff9fe8 != 0xff) {
     DAT_ffff9fe8 = DAT_ffff9fe8 + 1;
   }
   if (5 < DAT_ffff9fe8) {
     crank_period_accumulator_ffff9f88 = 0;
     bVar3 = 0;
-    piVar4 = &DAT_ffff9fd0;
+    piVar4 = &crank_period_ring_ffff9fd0;
     do {
       bVar3 = bVar3 + 1;
       iVar2 = *piVar4;

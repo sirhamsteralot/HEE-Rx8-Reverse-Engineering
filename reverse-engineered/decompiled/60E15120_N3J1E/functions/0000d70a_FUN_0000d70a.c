@@ -3,7 +3,7 @@
 void FUN_0000d70a(void)
 
 {
-  DAT_ffffa3fc = 0;
+  crank_tick_flag_ffffa3fc = 0;
   return;
 }
 

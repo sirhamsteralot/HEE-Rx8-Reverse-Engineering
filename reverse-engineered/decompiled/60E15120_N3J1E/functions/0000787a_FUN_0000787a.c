@@ -1,6 +1,6 @@
 /* ROM address: 0x0000787a; body bytes: 470; decompiled */
 
-undefined4 * FUN_0000787a(void)
+undefined4 * crank_sector_advance(void)
 
 {
   char cVar2;
@@ -8,12 +8,12 @@ undefined4 * FUN_0000787a(void)
   byte bVar3;
   uint uVar4;
   
-  if (0x24 < DAT_ffff9f95) {
+  if (0x24 < crank_sector_index_ffff9f95) {
     ref_reInitCrankSensor__();
   }
-  DAT_ffff9f95 = (&DAT_0000d76c)[(uint)DAT_ffff9f95 * 2];
-  if ((DAT_ffff9fc3 != 0) && (DAT_ffff9f95 = DAT_ffff9f95 + DAT_ffff9fc3, 0x23 < DAT_ffff9f95)) {
-    DAT_ffff9f95 = DAT_ffff9f95 - 0x24;
+  crank_sector_index_ffff9f95 = (&tbl_crank_next_sector_0000d76c)[(uint)crank_sector_index_ffff9f95 * 2];
+  if ((DAT_ffff9fc3 != 0) && (crank_sector_index_ffff9f95 = crank_sector_index_ffff9f95 + DAT_ffff9fc3, 0x23 < crank_sector_index_ffff9f95)) {
+    crank_sector_index_ffff9f95 = crank_sector_index_ffff9f95 - 0x24;
   }
   uVar4 = (uint)DAT_ffff9fc5 + (uint)DAT_ffff9fc3 + 1;
   if (uVar4 < 0x100) {
@@ -27,7 +27,7 @@ undefined4 * FUN_0000787a(void)
     DAT_ffff9fc2 = DAT_ffff9fc2 + 1;
   }
   if (DAT_ffff9fc1 == '\x03') {
-    puVar1 = (undefined4 *)(uint)DAT_ffff9f95;
+    puVar1 = (undefined4 *)(uint)crank_sector_index_ffff9f95;
     if ((puVar1 == (undefined4 *)&UNK_0000001c) ||
        (puVar1 == (undefined4 *)((int)&vector_Manual_Reset + 2))) {
       DAT_ffff9fc1 = '\x02';
@@ -46,7 +46,7 @@ undefined4 * FUN_0000787a(void)
     }
     else {
       DAT_ffff9fc1 = '\x01';
-      DAT_ffff9f95 = DAT_ffff9f95 + (&DAT_0000d7b6)[DAT_ffff9fc2];
+      crank_sector_index_ffff9f95 = crank_sector_index_ffff9f95 + (&DAT_0000d7b6)[DAT_ffff9fc2];
       puVar1 = (undefined4 *)(uint)DAT_ffff9fc2;
       if (puVar1 == (undefined4 *)((int)&vector_Poweron_Reset + 3)) {
         DAT_ffff9fa2 = 0;
@@ -67,14 +67,14 @@ undefined4 * FUN_0000787a(void)
       else {
         bVar3 = 0x12;
       }
-      if (DAT_ffff9f95 == bVar3) {
+      if (crank_sector_index_ffff9f95 == bVar3) {
         if (DAT_ffff9fa1 != -1) {
           DAT_ffff9fa1 = DAT_ffff9fa1 + '\x01';
         }
       }
       else {
         DAT_ffff9fa1 = '\0';
-        DAT_ffff9f95 = bVar3;
+        crank_sector_index_ffff9f95 = bVar3;
       }
     }
     DAT_ffff9fc1 = '\x03';
@@ -93,7 +93,7 @@ undefined4 * FUN_0000787a(void)
       puVar1 = (undefined4 *)0x0;
       if (cVar2 != '\0') {
         DAT_ffff9fc1 = '\x01';
-        DAT_ffff9f95 = 0x21;
+        crank_sector_index_ffff9f95 = 0x21;
         puVar1 = &DAT_ffff9fac;
         DAT_ffff9fac = crank_icr0ah_sample_ffff9fb8;
       }

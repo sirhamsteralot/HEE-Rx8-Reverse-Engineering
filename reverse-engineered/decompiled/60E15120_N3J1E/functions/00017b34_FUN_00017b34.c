@@ -12,7 +12,7 @@ undefined1 * FUN_00017b34(void)
   if (DAT_ffffa8ff == '\x01') {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8054,1);
     local_c[0] = 0;
-    ref_osTaskScheduler(0,3,local_c);
+    os_schedule_task_event(0,3,local_c);
     DAT_ffffa8ff = '\x02';
   }
   puVar1 = &DAT_ffffa8dd;

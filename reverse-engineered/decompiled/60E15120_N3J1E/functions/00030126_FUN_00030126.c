@@ -36,7 +36,7 @@ undefined1 * FUN_00030126(void)
       DAT_ffffbea4 = 0;
       DAT_ffffbea8 = '\0';
       DAT_ffffbe60 = lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_table_2d_175_0006ab34);
-      puVar2 = (undefined1 *)ref_osTaskScheduler(0,1,&DAT_ffffbe60);
+      puVar2 = (undefined1 *)os_schedule_task_event(0,1,&DAT_ffffbe60);
     }
   }
   DAT_ffffbea7 = snapshot_engine_injectors_off_ffffa42c;

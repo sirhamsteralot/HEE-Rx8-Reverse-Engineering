@@ -10,7 +10,7 @@ void FUN_00005d70(void)
   
   bVar1 = SCI_SSR0_B;
   SCI_SSR0_B = bVar1 & 7 | 0xf8;
-  FUN_00005348(0xcb);
+  fatal_interrupt_trap(0xcb);
   return;
 }
 

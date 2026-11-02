@@ -1,9 +1,9 @@
 /* ROM address: 0x00005e0c; body bytes: 6; decompiled */
 
-void FUN_00005e0c(void)
+void wdt_iti_fatal_trap(void)
 
 {
-  FUN_00005348(0xd6);
+  fatal_interrupt_trap(0xd6);
   return;
 }
 

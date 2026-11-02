@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00005cfe (12 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00005cfe(void)
+void adc_eoc_isr_bank1(void)
 
 {
   byte bVar1;

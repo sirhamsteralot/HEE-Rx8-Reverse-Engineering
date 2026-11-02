@@ -60,7 +60,7 @@ int FUN_0005e8a4(void)
     }
     uVar1 = 3;
   }
-  iVar2 = ref_osTaskScheduler(0,uVar1,&local_28);
+  iVar2 = os_schedule_task_event(0,uVar1,&local_28);
   return iVar2;
 }
 

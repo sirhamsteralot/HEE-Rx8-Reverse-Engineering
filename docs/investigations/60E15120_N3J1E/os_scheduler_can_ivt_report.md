@@ -209,10 +209,11 @@ this report's earlier statements:
   TSR10=0xb; then 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc, which does the
   ring-0xffff9fd0 append and rpm = 1.2e8/Σ → 0xffff9f80; plus 0xd716 and 0xcf96, and
   0x7b58 rearms OCR10B from tbl 0xd76d[sector 0xffff9f95*2] & 0x7f — the tick is
-  **crank-angle-synchronous**, 36 sectors/720°). 0x803e has **no callers at all** (its
-  pool references at 0x1a2/0x977a/0x2a538 are coincidental BCR/compare values); it is a
-  dead duplicate of 0x7fcc's math, so the `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG`
-  rename of 2026-10-31 should be treated as a misnomer for uncalled code.
+  **crank-angle-synchronous**, 36 sectors/720°). 0x803e has **no callgraph callers**; its only ROM
+  reference is the default (VBR=0) vector table slot 0x2c8 (u32 at ROM 0x2c8 = 0x803e) —
+  the pre-relocation CMI10B entry, superseded after VBR=0x7fc50 is set at 0xd206. It
+  duplicates 0x7fcc's rpm math for that pre-VBR entry, so the 2026-10-31 rename
+  `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG` is a misnomer for the legacy handler.
 - **Unused/fatal vectors**: 117 IVT slots (0x100–0x39c) have real trampolines (all ctx
   word = 0x3238); 98 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
   report via 0xa330, halt 0xa4be / spin 0x535a). Only 19 have real handlers: CMI10B
