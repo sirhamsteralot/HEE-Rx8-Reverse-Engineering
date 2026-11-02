@@ -91,6 +91,9 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   at VBR 0x7fc50 mapped, dispatch table 0x5f10c PID 0x43 → handler 0x56b8a
   (record 0x5f268) verified dynamically. 27 functions + 16 RAM + 9 tables.
   → [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
+  (task table corrected to base 0x4990/19 records by the fueling pass, §11 there;
+  full scheduling model — queues, crank-angle-synchronous tick, timers — added
+  2026-11-02: [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md))
 - **RX8Club thread mined + OCR'd**: BOOT-mode CN400 pinout (150 Hz WDT feed pin
   3), UDS services, seed/key in bootloader, PID 0x43 = g/rev × 1/255, ignition
   BTDC equation — inline XML addresses verified against the real N3ZHEC ROM.
@@ -281,7 +284,7 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 | E3 | CLOSED 2026-10-31 | WDT ITI = vector 214 = IVT offset 0x358 (Sh7055h.pdf table 7.3; ROM slot 0x7ffa8 → trampoline 0x30b8); firmware polls TCSR itself, overflow = OVF flag only |
 | E4 | partial | RCAN mailbox model done for diag path + CAN RX interrupt fires on inject (IVT 0x378 → CAN poll 0x11d88 + scheduler 0x9630); full mailbox/interrupt fidelity open |
 | E5 | CLOSED 2026-10-31 | Guessed `io_read_overrides` (0xffffed18=0x8000) was ICR_W bit15 = NMI pin level — now SYSC peripheral (`nmi_level`), overrides removed from all profiles |
-| E6 | partial (narrowed 2026-10-31) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte added |
+| E6 | partial (narrowed 2026-10-31; characterized 2026-11-02, still open) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte added. 2026-11-02 deep dive ([os_scheduling_deep_dive_report.md](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)): full scheduler model mapped and the post→queue→dequeue→handler→taskEnd→dispatch chain reproduced in the emulator; the ISR-exit context switch (0x32f4) still does not fire autonomously from idle (preemption needs class > ctrl[0] unsigned, ctrl[0]=0xff at boot) — that is the remaining E6 gap |
 | E7 | CLOSED 2026-10-31 (div1/rotcr) | full Q/M DIV1 (SR bits 8/9) + ROTCR direction fixed, validated vs ROM div routine 0x2158; cycle counts ≠ real time remains (accepted) |
 | E8 | open (added 2026-11-01) | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md) |
 

@@ -341,3 +341,49 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   proves the dispatcher reaches the mapped handler; a second call without stop_at
   returns r0 = response_len + 3. Non-table PIDs return r0 = 3 (NRC 0x31).
 - bus.write16 truncates to 16 bits — do not test 'negative' PIDs above 0xffff.
+
+## OS scheduling deep dive (2026-11-02)
+
+Full scheduler model in
+[`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md).
+Session gotchas worth keeping:
+
+- **IVT trampoline parsing**: each used IVT slot (VBR 0x7fc50 + off) points at a
+  14-byte trampoline at 0x2710-0x31f0; the `mov.l @(disp,pc)` disp is the **low byte
+  of the opcode word at the instruction's own address**, EA = ((pc+4)&~3) + disp*4.
+  Reading the disp from the *next* word mis-parses some trampolines (e.g. 0x378's)
+  — that's how an earlier count said 114 real vectors; the correct count is **117**
+  (all with ctx word 0x3238), of which **98 end in the fatal trap 0x5348** and 19
+  have real handlers (CMI10B 0x5b3c, 6x ATU ch8 injector compares 0x59a4-0x59ea,
+  knock ADC 0x5a4c, ch3/ch9, 3x ADC EOC, CMCSR1 0x5cee, IRQ 0x53f6, CAN
+  0x378/0x37c/0x398). Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
+- **0x803e is dead code**: the inherited `ref_INT_ATU101_IMI10AG`/`vector_INT_ATU101_CMI10B`
+  labels point at an uncalled duplicate of the rpm math. Live path: CMI10B handler
+  0x5b3c -> 0x75f4 -> 0x77f0 -> 0x7c68 (`ref_geteShaftAngle_`) -> 0x7fcc
+  (`ref_getCrankAngle`: ring 0xffff9fd0 append, rpm = 1.2e8/sum -> 0xffff9f80).
+  Check "callers" via pool-word scan, not just callgraph.tsv (jmp/pointer calls are
+  invisible there); a pool word equal to a function address can also be a coincidental
+  value (CAN BCR 0x803e at 0x1a2/0x977a, compare at 0x2a538).
+- **Tick is crank-angle-synchronous**: OCR10B = tbl 0xd76d[sector 0xffff9f95 * 2] & 0x7f,
+  TCNT10B cleared on rearm (0x7b58), sector advanced via tbl 0xd76c in 0x787a
+  (0x00-0x24 = 36 sectors/720 deg). Armed by task[8] 0x648e -> 0x759e -> 0x7778
+  (TIER10 bit2); ATU PSCR1-4 = 4 (0x4e6c/0x4f00).
+- **Fresh tasks enter via `rte`**: 0x3848 sets r15 = ctrl+0xc, pushes SR=0 and the
+  entry, `rte` (not a jump). Resume path: jump table 0x4b34 indexed by
+  ctx[0] - rec.param.b0 (all params are 0x04xxxxxx, so state 0xc -> table entry 4).
+- **`cmp/hi`/`cmp/gt` vs decompiler sign assumptions**: 0x39ba's preemption is
+  `class > ctrl[0]` with ctrl[0] read by `mov.b` (register form zero-extends in the
+  corpus-validated emulator) — so at boot ctrl[0]=0xff blocks preemption from idle
+  (observed: posts don't set ctrl+6 until a task has run). The decompiled
+  `(char)ctrl[0] < class` is a sign-extension artifact. Dynamically: post
+  0x9630(1,9,..) -> queue slot 2 count/idx advance, message {handler,args} at
+  0xffff94a0, bitmap 0xffff7668 |= bit(class), task ctx[3] credit -= 1; running
+  consumer 0x96de dequeues (0x6010) and calls the handler, then taskEnd 0x3d58 ->
+  dispatch 0x3c2a -> idle 0x3dac.
+- **Ready bitmap is class-indexed**: 0x39ba sets bit `tbl 0x3d48[class&7]`
+  (= 1<<(class&7)) in byte `0xffff7668[class>>3]`; init list {17, 0} at ROM 0x4af0
+  (walked by 0x3f10) shows up after boot as bitmap 0x11000000 (classes 0 and 4)
+  and ctx[3] of tasks 0/17 reading 0 (initial credit 1 consumed).
+- **design_graph_stats.py** now reads the task table at base 0x4990, 19 records
+  {param, stack, entry, mask} (terminator 0x4ac0 excluded); all 6 cross-checks
+  still pass and graph_stats.json was regenerated.

@@ -414,3 +414,14 @@ address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/` (stock ROMs untouched; see
 [`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
 accurate for its date.
+
+---
+
+## 11. Update — 2026-11-02 (rpm-path attribution corrected)
+
+The "ISR 0x803e" references in §2 and the memory map above were re-checked: 0x803e has no
+callers in the callgraph or as a ROM pointer — it is a dead duplicate of the rpm math. The
+live path is the CMI10B tick chain 0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle`
+0x7fcc, which writes `crank_period_accumulator_ffff9f88` and
+`engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(0xffff9fd0[6]). Details and emulator
+evidence: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md) §7/§9.
