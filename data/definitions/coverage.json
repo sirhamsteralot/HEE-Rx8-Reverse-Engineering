@@ -1,5 +1,6 @@
 {
   "generated": "2026-11-01",
+  "relabel_pass": "2026-11-02 (utilities/scripts/defs-merge/relabel.py; labels from data/labels/60E15120_N3J1E/defs_table_labels.json; cross-ROM via structural match in data/maps)",
   "roadmap_item": "D item 4",
   "upstream": {
     "repo": "submodules/RX8Defs (equinox311/RX8Defs)",
@@ -33,6 +34,17 @@
         "dtc_slots_used": 121,
         "dtc_tables_emitted": 363
       },
+      "relabel_2026-11-02": {
+        "renamed": 54,
+        "regrouped": 54,
+        "annotated": 0,
+        "added": 0,
+        "skipped_marker": 0,
+        "no_label": 479,
+        "block_tables": 937,
+        "join_rate": 0.569,
+        "preexisting_duplicate_names": []
+      },
       "block_tables_with_storageaddress": 937,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
       "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
@@ -61,7 +73,7 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 865,
+      "block_tables": 904,
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C5C0",
@@ -73,7 +85,18 @@
         "dtc_slots_used": 121,
         "dtc_tables_emitted": 363
       },
-      "block_tables_with_storageaddress": 865,
+      "relabel_2026-11-02": {
+        "renamed": 35,
+        "regrouped": 35,
+        "annotated": 0,
+        "added": 39,
+        "skipped_marker": 0,
+        "no_label": 436,
+        "block_tables": 865,
+        "join_rate": 0.545,
+        "preexisting_duplicate_names": []
+      },
+      "block_tables_with_storageaddress": 904,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -91,7 +114,7 @@
         "RX8Base",
         "60E0FC00"
       ],
-      "block_tables": 864,
+      "block_tables": 936,
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -103,7 +126,20 @@
         "dtc_slots_used": 124,
         "dtc_tables_emitted": 372
       },
-      "block_tables_with_storageaddress": 864,
+      "relabel_2026-11-02": {
+        "renamed": 40,
+        "regrouped": 40,
+        "annotated": 0,
+        "added": 72,
+        "skipped_marker": 0,
+        "no_label": 401,
+        "block_tables": 864,
+        "join_rate": 0.51,
+        "preexisting_duplicate_names": [
+          "Table 2D - 85 "
+        ]
+      },
+      "block_tables_with_storageaddress": 936,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -120,7 +156,7 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 912,
+      "block_tables": 966,
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -132,7 +168,21 @@
         "dtc_slots_used": 124,
         "dtc_tables_emitted": 372
       },
-      "block_tables_with_storageaddress": 912,
+      "relabel_2026-11-02": {
+        "renamed": 43,
+        "regrouped": 43,
+        "annotated": 0,
+        "added": 54,
+        "skipped_marker": 0,
+        "no_label": 416,
+        "block_tables": 912,
+        "join_rate": 0.503,
+        "preexisting_duplicate_names": [
+          "Ignition Leading - Ignition Base Max",
+          "Ignition Leading - Ignition Base Max Safe Mode"
+        ]
+      },
+      "block_tables_with_storageaddress": 966,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -156,7 +206,7 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 881,
+      "block_tables": 977,
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E560",
@@ -168,7 +218,18 @@
         "dtc_slots_used": 121,
         "dtc_tables_emitted": 363
       },
-      "block_tables_with_storageaddress": 881,
+      "relabel_2026-11-02": {
+        "renamed": 0,
+        "regrouped": 0,
+        "annotated": 0,
+        "added": 0,
+        "skipped_marker": 174,
+        "no_label": 413,
+        "block_tables": 977,
+        "join_rate": 0.601,
+        "preexisting_duplicate_names": []
+      },
+      "block_tables_with_storageaddress": 977,
       "per_rom_def": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -185,7 +246,7 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 839,
+      "block_tables": 919,
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -197,7 +258,18 @@
         "dtc_slots_used": 124,
         "dtc_tables_emitted": 372
       },
-      "block_tables_with_storageaddress": 839,
+      "relabel_2026-11-02": {
+        "renamed": 38,
+        "regrouped": 38,
+        "annotated": 0,
+        "added": 80,
+        "skipped_marker": 0,
+        "no_label": 385,
+        "block_tables": 839,
+        "join_rate": 0.504,
+        "preexisting_duplicate_names": []
+      },
+      "block_tables_with_storageaddress": 919,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1B900.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -237,6 +309,17 @@
         "dtc_slots_used": 121,
         "dtc_tables_emitted": 363
       },
+      "relabel_2026-11-02": {
+        "renamed": 53,
+        "regrouped": 53,
+        "annotated": 0,
+        "added": 0,
+        "skipped_marker": 0,
+        "no_label": 441,
+        "block_tables": 928,
+        "join_rate": 0.532,
+        "preexisting_duplicate_names": []
+      },
       "block_tables_with_storageaddress": 928,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1D400.xml",
       "ecuflash_def": null,
@@ -265,6 +348,17 @@
         ],
         "dtc_slots_used": 129,
         "dtc_tables_emitted": 387
+      },
+      "relabel_2026-11-02": {
+        "renamed": 0,
+        "regrouped": 0,
+        "annotated": 0,
+        "added": 0,
+        "skipped_marker": 0,
+        "no_label": 0,
+        "block_tables": 391,
+        "join_rate": 0.0,
+        "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
       "block_tables_with_storageaddress": 391,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3M5E.xml",
@@ -296,6 +390,17 @@
         ],
         "dtc_slots_used": 133,
         "dtc_tables_emitted": 399
+      },
+      "relabel_2026-11-02": {
+        "renamed": 0,
+        "regrouped": 0,
+        "annotated": 0,
+        "added": 0,
+        "skipped_marker": 0,
+        "no_label": 0,
+        "block_tables": 403,
+        "join_rate": 0.0,
+        "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
       "block_tables_with_storageaddress": 403,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3N5EB.xml",
