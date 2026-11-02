@@ -1,0 +1,58 @@
+# REVIEW_NOTES — DTC control deep dive
+
+Date: 2026-11-01. Reviewer pass over the DTC findings before the report was
+written.
+
+## Binary-level re-checks performed
+
+1. Re-dumped ROM bytes at the DTC region of all 11 ROMs and re-derived the
+   layout independently of the decompiler: prefix `03 00 03 01 03 02` +
+   slot0 `03 00`, code table (BE u16, 140 slots, 0xffff padding), then three
+   enable blocks of 140 u8. Matches `data/dtc/*.tsv`.
+2. Cross-checked the enable-block base against literal-pool references in each
+   ROM (see README) — this is what convicts the 60E0E700 (+3 bytes), 60E1B900
+   and 60E32000_N3M5E (point into the code table) per-rom defs, and acquits
+   60E15120_N3J1E / 60E0FC00 / 60E0G500_N3ZHEC / 60E32000_N3N5EB.
+3. Re-read disassembly of 0x5a130: r4 = 1 + 0x7f = 0x80 in the delay slot, so
+   the stored-count query 0x61450 runs with filter arg r5=1 (enable#1 gate) —
+   confirmed by the emulator: with slot 8 (P0077, enable1=0) stored, the MIL
+   flag stayed 0; with slot 9 (P0101, enable1=1) stored, MIL flag = 1.
+4. Dynamic run (`dynamic_validation_log.txt`): Mode 22 PID 0x0200 returns
+   `62 02 00 01` and PID 0x0202 `62 02 02 01` through the ROM dispatcher
+   0x5774c with one stored DTC; 0x615c6(0x80) collects slot 9 and 0x667c8 maps
+   it to code 0x0101 via code table 0x7e560; enable1 filter drops the
+   disabled slot. Set-path partially dynamic: 0x5fd38(id, mode) writes
+   0xffffd458[slot] and 0xffffd3c2[id] (observed), but the full
+   master-table insertion rides OS group-2 event 2 (handler 0x61092) which
+   the emulator does not run autonomously (E6), so the stored-state planting
+   in the log is done via the documented RAM cells (harness ram= equivalent).
+
+## Corrections made during the pass
+
+- Initial audit (v2) used the def's min address as block start, which made
+  60E0FC00 look off-by-one; re-audit (v3) derives the block start from the ROM
+  (end of the 0xffff padding run) — 60E0FC00 is actually correct (its first def
+  entry binds slot 1, the duplicate P0300; slot 0 is unbound but harmless).
+- 60E1D400 is +1 shifted (absorbed by the duplicate P0300 at slots 0/1) AND its
+  def carries 14 codes this ROM does not have at those slots (0116, 0134,
+  0137, 0411, 0444, 0445, 050A, 2009, 2010, 2016, 2067, 2068, 2102, 2103),
+  shifting everything from slot 17 — matches the pre-existing
+  `defs-merge/inheritance_issues.json` entries (0128/1574/1577/2008/2101/2406
+  family).
+- 60E0FB00's def has duplicated entries (0300 x3, 0030 x2, ...) and a gap at
+  slot 23 — 98 mismatches; its #3 block is fine.
+- 60E0E700's def #2 contains an entry with storageaddress 0x0 (bogus).
+
+## Not verified / limits
+
+- The aging/confirmation counters (how many drive cycles until
+  pending->confirmed->stored, and the 40-warm-up-style clear) live in
+  0x60ca6/0x64918/0x64972/0x6400a and were read statically only; not executed
+  dynamically (OS tick E6).
+- MIL lamp GPIO pin not traced in this pass (flag 0xffffd286 verified; the
+  physical output write is in the output task, not chased here).
+- Upstream `rx8_defs.xml` child ROMs inheriting `Rx8Base` DTC addresses show
+  the expected inheritance drift (97-98 mismatches for 60E0FC00-based blocks);
+  already covered by `defs-merge/inheritance_issues.json`.
+- Emulator self-check vs golden boot trace not re-run for this pass (no
+  emulator changes); Renesas cross-check still pending (ROADMAP E-limits).

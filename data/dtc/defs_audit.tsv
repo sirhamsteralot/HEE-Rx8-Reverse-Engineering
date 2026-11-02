@@ -1,0 +1,34 @@
+rom	suffix	def_entries	mismatches	out_of_range	examples
+60E0E500	#1	0	0	0	
+60E0E500	#2	0	0	0	
+60E0E500	#3	0	0	0	
+60E0E700_N3YLEE	#1	121	121	0	DTC 0300 Enable/Disable #1@0x7c6db(slot 3, rom 49); DTC 0300 Enable/Disable #1@0x7c6dc(slot 4, rom 50); DTC 0030 Enable/Disable #1@0x7c6dd(slot 5, rom 55); DTC 0031 Enable/Disable #1@0x7c6de(slot 6, rom 56); DTC 0032 Enable/Disable #1@0x7c6df(slot 7, rom 118); DTC 0037 Enable/Disable #1@0x7c6e0(slot 8, rom 119); DTC 0038 Enable/Disable #1@0x7c6e1(slot 9, rom 257); DTC 0076 Enable/Disable #1@0x7c6e2(slot 10, rom 258)
+60E0E700_N3YLEE	#2	122	121	2	DTC 0300 Enable/Disable #2@0x0(slot -509796, rom None); DTC 0300 Enable/Disable #2@0x7c763(slot -1, rom None); DTC 0030 Enable/Disable #2@0x7c765(slot 1, rom 768); DTC 0031 Enable/Disable #2@0x7c766(slot 2, rom 48); DTC 0032 Enable/Disable #2@0x7c767(slot 3, rom 49); DTC 0037 Enable/Disable #2@0x7c768(slot 4, rom 50); DTC 0038 Enable/Disable #2@0x7c769(slot 5, rom 55); DTC 0076 Enable/Disable #2@0x7c76a(slot 6, rom 56)
+60E0E700_N3YLEE	#3	0	0	0	
+60E0FB00	#1	244	98	0	DTC 0128 Enable/Disable #1@0x7ca13(slot 23, rom 304); DTC 0130 Enable/Disable #1@0x7ca14(slot 24, rom 305); DTC 0131 Enable/Disable #1@0x7ca15(slot 25, rom 306); DTC 0132 Enable/Disable #1@0x7ca16(slot 26, rom 307); DTC 0133 Enable/Disable #1@0x7ca17(slot 27, rom 312); DTC 0138 Enable/Disable #1@0x7ca18(slot 28, rom 313); DTC 0139 Enable/Disable #1@0x7ca19(slot 29, rom 369); DTC 0171 Enable/Disable #1@0x7ca1a(slot 30, rom 370)
+60E0FB00	#2	244	98	0	DTC 0128 Enable/Disable #2@0x7ca9f(slot 23, rom 304); DTC 0130 Enable/Disable #2@0x7caa0(slot 24, rom 305); DTC 0131 Enable/Disable #2@0x7caa1(slot 25, rom 306); DTC 0132 Enable/Disable #2@0x7caa2(slot 26, rom 307); DTC 0133 Enable/Disable #2@0x7caa3(slot 27, rom 312); DTC 0138 Enable/Disable #2@0x7caa4(slot 28, rom 313); DTC 0139 Enable/Disable #2@0x7caa5(slot 29, rom 369); DTC 0171 Enable/Disable #2@0x7caa6(slot 30, rom 370)
+60E0FB00	#3	123	0	0	
+60E0FC00	#1	123	0	0	
+60E0FC00	#2	123	0	0	
+60E0FC00	#3	123	0	0	
+60E0G500_N3ZHEC	#1	121	0	0	
+60E0G500_N3ZHEC	#2	121	0	0	
+60E0G500_N3ZHEC	#3	0	0	0	
+60E15120_N3J1E	#1	121	0	0	
+60E15120_N3J1E	#2	0	0	0	
+60E15120_N3J1E	#3	0	0	0	
+60E1B900	#1	121	121	121	DTC 0300 Enable/Disable #1@0x7c8e4(slot -280, rom None); DTC 0300 Enable/Disable #1@0x7c8e5(slot -279, rom None); DTC 0030 Enable/Disable #1@0x7c8e6(slot -278, rom None); DTC 0031 Enable/Disable #1@0x7c8e7(slot -277, rom None); DTC 0032 Enable/Disable #1@0x7c8e8(slot -276, rom None); DTC 0037 Enable/Disable #1@0x7c8e9(slot -275, rom None); DTC 0038 Enable/Disable #1@0x7c8ea(slot -274, rom None); DTC 0076 Enable/Disable #1@0x7c8eb(slot -273, rom None)
+60E1B900	#2	121	121	121	DTC 0300 Enable/Disable #2@0x7c9fc(slot -140, rom None); DTC 0300 Enable/Disable #2@0x7c9fd(slot -139, rom None); DTC 0030 Enable/Disable #2@0x7c9fe(slot -138, rom None); DTC 0031 Enable/Disable #2@0x7c9ff(slot -137, rom None); DTC 0032 Enable/Disable #2@0x7ca00(slot -136, rom None); DTC 0037 Enable/Disable #2@0x7ca01(slot -135, rom None); DTC 0038 Enable/Disable #2@0x7ca02(slot -134, rom None); DTC 0076 Enable/Disable #2@0x7ca03(slot -133, rom None)
+60E1B900	#3	0	0	0	
+60E1C500_N3J6EB	#1	0	0	0	
+60E1C500_N3J6EB	#2	0	0	0	
+60E1C500_N3J6EB	#3	0	0	0	
+60E1D400	#1	132	112	0	DTC 0116 Enable/Disable #1@0x7e231(slot 17, rom 279); DTC 0117 Enable/Disable #1@0x7e232(slot 18, rom 280); DTC 0118 Enable/Disable #1@0x7e233(slot 19, rom 290); DTC 0122 Enable/Disable #1@0x7e234(slot 20, rom 291); DTC 0123 Enable/Disable #1@0x7e235(slot 21, rom 293); DTC 0125 Enable/Disable #1@0x7e236(slot 22, rom 294); DTC 0126 Enable/Disable #1@0x7e237(slot 23, rom 296); DTC 0134 Enable/Disable #1@0x7e23c(slot 28, rom 312)
+60E1D400	#2	132	112	0	DTC 0116 Enable/Disable #2@0x7e2bd(slot 17, rom 279); DTC 0117 Enable/Disable #2@0x7e2be(slot 18, rom 280); DTC 0118 Enable/Disable #2@0x7e2bf(slot 19, rom 290); DTC 0122 Enable/Disable #2@0x7e2c0(slot 20, rom 291); DTC 0123 Enable/Disable #2@0x7e2c1(slot 21, rom 293); DTC 0125 Enable/Disable #2@0x7e2c2(slot 22, rom 294); DTC 0126 Enable/Disable #2@0x7e2c3(slot 23, rom 296); DTC 0134 Enable/Disable #2@0x7e2c8(slot 28, rom 312)
+60E1D400	#3	0	0	0	
+60E32000_N3M5E	#1	132	132	132	DTC 0300 Enable/Disable #1@0x7e661(slot -235, rom None); DTC 0030 Enable/Disable #1@0x7e662(slot -234, rom None); DTC 0031 Enable/Disable #1@0x7e663(slot -233, rom None); DTC 0032 Enable/Disable #1@0x7e664(slot -232, rom None); DTC 0037 Enable/Disable #1@0x7e665(slot -231, rom None); DTC 0038 Enable/Disable #1@0x7e666(slot -230, rom None); DTC 0076 Enable/Disable #1@0x7e667(slot -229, rom None); DTC 0077 Enable/Disable #1@0x7e668(slot -228, rom None)
+60E32000_N3M5E	#2	132	132	132	DTC 0300 Enable/Disable #2@0x7e6ed(slot -235, rom None); DTC 0030 Enable/Disable #2@0x7e6ee(slot -234, rom None); DTC 0031 Enable/Disable #2@0x7e6ef(slot -233, rom None); DTC 0032 Enable/Disable #2@0x7e6f0(slot -232, rom None); DTC 0037 Enable/Disable #2@0x7e6f1(slot -231, rom None); DTC 0038 Enable/Disable #2@0x7e6f2(slot -230, rom None); DTC 0076 Enable/Disable #2@0x7e6f3(slot -229, rom None); DTC 0077 Enable/Disable #2@0x7e6f4(slot -228, rom None)
+60E32000_N3M5E	#3	0	0	0	
+60E32000_N3N5EB	#1	132	0	0	
+60E32000_N3N5EB	#2	132	0	0	
+60E32000_N3N5EB	#3	0	0	0	
