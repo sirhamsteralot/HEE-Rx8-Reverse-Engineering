@@ -143,6 +143,11 @@ Worked examples already in `tests/test_phase1_dynamic.py`: math helpers
 0x23b0/0x23dc/0x23e4/0x23f4/0x2404 vs the `rx8_math.c` reimplementation; knock
 clamp 0x13bd2; injector map 0x8a68(ch) → DCNT8x/GR1x vs ROM 0xd7d4; ADC sweep
 0x6884; RCAN RX/TX through the ROM's own driver; Mode 22 dispatch 0x5774c.
+`tests/test_knock_retard_dynamic.py` extends the same pattern to RAM-state
+driven functions: it boots once, writes the knock state cells
+(0xffffa734/a73c/a73d/a73e/a744/a74a/a74b/a74c, 0xffffc05c/c05d, 0xffffb548),
+calls 0x13a60/0x13b40, and compares the resulting RAM against a float32 Python
+port of `rx8_knock.c` (the ROM's own 0x2068 lookups feed the port).
 Note the dispatcher (0x3c2a) never rts — use `stop_at=(0x3DAC,)`.
 
 ## 6. Tracing, debugging, diffing
