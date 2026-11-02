@@ -1,0 +1,1233 @@
+{
+ "file": "data\\definitions\\romraider\\rx8defs-merged-60E15120.xml",
+ "rom_block": "60E15120",
+ "marker": "RE relabel 2026-11-02",
+ "stats": {
+  "renamed": 78,
+  "regrouped": 78,
+  "annotated": 0,
+  "added": 96,
+  "skipped_marker": 0,
+  "no_label": 413
+ },
+ "details": [
+  {
+   "descriptor": "0x68ef8",
+   "old": "Fuel Injector - Unknown - Max Injection Angle1???",
+   "new": "Injector Max Open Angle 1 (deg)",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x68f0c",
+   "old": "Fuel Injector - Unknown - Max Injection Angle2???",
+   "new": "Injector Max Open Angle 2 (deg)",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x68f20",
+   "old": "Fuel Injector - Unknown - Max Injection Angle3???",
+   "new": "Injector Max Open Angle 3 (deg)",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69cac",
+   "old": "Open Loop Fuelling Base Correction (Throttle) - Safe Mode",
+   "new": "OL Fuelling Base Correction - Baro",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69cc0",
+   "old": "Open Loop Fuelling Base Correction (Throttle)",
+   "new": "OL Fuelling Base Correction - Baro [Safe Mode]",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69cd4",
+   "old": "Open Loop Target - Coolant Temperature Correction",
+   "new": "OL Target - Coolant Temperature Correction",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69ce8",
+   "old": "Open Loop Fuelling Rich Limit - Safe Mode",
+   "new": "OL Fuelling Rich Limit",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69cfc",
+   "old": "Open Loop Fuelling Rich Limit",
+   "new": "OL Fuelling Rich Limit [Safe Mode]",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d10",
+   "old": "Open Loop Temperature Correction #B",
+   "new": "OL Temperature Correction #B",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d24",
+   "old": "Closed Loop Fuelling Threshold (Engine Load A)",
+   "new": "Closed Loop Fuelling Threshold A",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d38",
+   "old": "Closed Loop Fuelling Threshold (Engine Load B)",
+   "new": "Closed Loop Fuelling Threshold B",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d4c",
+   "old": "Closed Loop Fuelling Threshold (Engine Load C)",
+   "new": "Closed Loop Fuelling Threshold C",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d60",
+   "old": "Closed Loop Fuelling Threshold (Unknown A)",
+   "new": "Closed Loop Fuelling Threshold D",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69d74",
+   "old": "Closed Loop Fuelling Threshold (Throttle Position) ",
+   "new": "Closed Loop Fuelling Threshold E",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69e00",
+   "old": "Open Loop Changeover Enrichment",
+   "new": "OL Changeover Enrichment",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a060",
+   "old": "Ignition Leading - Idle Error Timing Correction - Unknown Bool False",
+   "new": "Idle Error Timing Correction - Leading Off (deg)",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a074",
+   "old": "Ignition Leading - Idle Error Timing Correction - Unknown Bool True",
+   "new": "Idle Error Timing Correction - Leading On (deg)",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a088",
+   "old": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool False",
+   "new": "Idle Error Timing Correction - Trailing Off (deg)",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a09c",
+   "old": "Ignition Trailing - Idle Error Timing Correction - Unknown Bool True",
+   "new": "Idle Error Timing Correction - Trailing On (deg)",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a0d8",
+   "old": "Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle",
+   "new": "IAT Compensation - On Throttle (deg)",
+   "category": "Ignition Timing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a0ec",
+   "old": "Table 2D - 113 ",
+   "new": "IAT Compensation - Cranking (deg) (candidate)",
+   "category": "Ignition Timing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6aa0c",
+   "old": "Injector Manifold Vacuum Multiplier",
+   "new": "Injector Manifold Vacuum Multiplier A",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ab48",
+   "old": "Primary Fuel Injector Cranking Pulse Width",
+   "new": "Primary Cranking Pulse Width",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ac38",
+   "old": "Table 2D - 181 Minimum Lambda/EQ for Secondary Injectiors",
+   "new": "Fuel Coolant Compensation (candidate)",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ac4c",
+   "old": "Table 2D - 182 ",
+   "new": "Per-Rotation Fuel Scale",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ad30",
+   "old": "Table 2D - 191 ",
+   "new": "Air Flow x Battery A",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ad44",
+   "old": "Table 2D - 192 ",
+   "new": "Air Flow x Battery B",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ae28",
+   "old": "Fuel Injection - Warmup Fueling - Load Based Multiplier",
+   "new": "Warmup Fueling A",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6af2c",
+   "old": "Ignition Leading - Cranking Timing Advance",
+   "new": "Ignition Leading - Cranking Timing Advance (ECT)",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b0c0",
+   "old": "Table 2D - 216 ",
+   "new": "Load Delta / Tip-In A",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b124",
+   "old": "Table 2D - 219 ",
+   "new": "Load Delta / Tip-In B",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b1ec",
+   "old": "RPM Based Max Engine Load",
+   "new": "RPM-Based Max Engine Load",
+   "category": "Engine Load",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b200",
+   "old": "Table 2D - 223 ",
+   "new": "Max Engine Load - IAT Correction",
+   "category": "Engine Load",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b214",
+   "old": "Max Load - Barometric Pressure Compensation",
+   "new": "Max Engine Load - Baro Correction",
+   "category": "Engine Load",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b250",
+   "old": "Knock Voltage To Magnitude",
+   "new": "Knock Voltage To Magnitude Scale",
+   "category": "Knock Control",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b630",
+   "old": "Off Throttle Leading Timing Realted",
+   "new": "Off-Throttle Leading Timing vs ECT (deg)",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b644",
+   "old": "Ignition Trailing - Cranking Timing Advance",
+   "new": "Ignition Trailing - Cranking Timing Advance (ECT)",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b83c",
+   "old": "Table 2D - 273 ",
+   "new": "Cold-Start Advance Reduction (RPM)",
+   "category": "Ignition Timing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69788",
+   "old": "MAF Scaling",
+   "new": "MAF Scaling",
+   "category": "Sensors",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6990c",
+   "old": "Table 2D - 304 Check DataType",
+   "new": "Closed Loop Warmup Time",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ab98",
+   "old": "Table 2D - 347 Check DataType",
+   "new": "Cranking Pulse Width B",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6abc8",
+   "old": "Table 2D - 350 Check DataType",
+   "new": "Cranking Pulse Width C",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b270",
+   "old": "Ignition Timing Threshold A - Knock Retard Reset Off",
+   "new": "Knock Ignition Threshold A (RPM)",
+   "category": "Knock Control",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b288",
+   "old": "Ignition Timing Threshold B - Knock Retard Reset Off",
+   "new": "Knock Ignition Threshold B (RPM)",
+   "category": "Knock Control",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b2a0",
+   "old": "Knock Related",
+   "new": "Knock Noise Threshold Min",
+   "category": "Knock Control",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b2ac",
+   "old": "Knock Related 3",
+   "new": "Knock Noise Floor (RPM)",
+   "category": "Knock Control",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6bab0",
+   "old": "Primary Fuel Injector Cranking Pulse Decay Time",
+   "new": "Primary Cranking Decay Time",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69078",
+   "old": "Ignition Leading - Base Timing",
+   "new": "Ignition Leading - Base Timing",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x690b0",
+   "old": "Ignition Timing Leading Advance - Safe Mode",
+   "new": "Safe Mode Advance Cap 3D - Leading (candidate)",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x690cc",
+   "old": "Ignition Timing Leading Advance",
+   "new": "Ignition Leading Advance Cap",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69120",
+   "old": "Ignition Timing Trailing Base",
+   "new": "Ignition Trailing - Base Timing",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69158",
+   "old": "Ignition Timing Trailing Advance - Safe Mode",
+   "new": "Safe Mode Advance Cap 3D - Trailing (candidate)",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69174",
+   "old": "Ignition Timing Trailing Advance",
+   "new": "Ignition Trailing Advance",
+   "category": "Ignition Trailing",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6957c",
+   "old": "Igntion Leading Timing - DSC Mode A - Map 4",
+   "new": "Ignition Leading - DSC Mode A Map 4",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x699b8",
+   "old": "Closed Loop WOT Enrichment??",
+   "new": "Closed Loop WOT Enrichment",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69a60",
+   "old": "Table 3D - 29",
+   "new": "Closed Loop Target Bank A (3D)",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69a7c",
+   "old": "Table 3D - 30 ",
+   "new": "Closed Loop Target Bank B (3D)",
+   "category": "Fuel Target (Closed Loop)",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69e80",
+   "old": "Open Loop Target - Throttle Tip In",
+   "new": "OL Target - Throttle Tip In",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69e9c",
+   "old": "Open Loop Target",
+   "new": "OL Target - Main (load x RPM)",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69eb8",
+   "old": "Open Loop Target - Throttle Tip In (Safe Mode)",
+   "new": "OL Target - Throttle Tip In [Safe Mode]",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69ed4",
+   "old": "Open Loop Target (Safe Mode)",
+   "new": "OL Target - Main [Safe Mode]",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69ef0",
+   "old": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible B",
+   "new": "OL Target - Tip In - Coolant Implausible B",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69f0c",
+   "old": "Open Loop Target - Coolant Temp Implausible - Gear 5-6",
+   "new": "OL Target - Coolant Implausible - Gear 5-6",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69f28",
+   "old": "Open Loop Target - Throttle Tip in - Coolant Temp Implausible A",
+   "new": "OL Target - Tip In - Coolant Implausible A",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69f44",
+   "old": "Open Loop Target - Coolant Temp Implausible - Gear 1-4",
+   "new": "OL Target - Coolant Implausible - Gear 1-4",
+   "category": "Fuel Injection - Open Loop",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a7a4",
+   "old": "Ignition Timing Leading - DSC Mode A - Base",
+   "new": "Ignition Leading - DSC Mode A Base",
+   "category": "Ignition Leading",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a9a4",
+   "old": "Primary Injector Weighted Engine Temp Multiplier",
+   "new": "Primary Injector Weighted Engine Temp Multiplier",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a9c0",
+   "old": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+   "new": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6a9dc",
+   "old": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+   "new": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6aa48",
+   "old": "Estimated Manifold Pressure",
+   "new": "Estimated Manifold Pressure (RPM x load)",
+   "category": "Engine Load",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6aa64",
+   "old": "Injector Latency Secondary",
+   "new": "Injector Latency - Secondary",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6aa80",
+   "old": "Injector Latency Primary",
+   "new": "Injector Latency - Primary",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ac88",
+   "old": "Fuel Injection - Engine Load Compensation",
+   "new": "Fuel Injection - Engine Load Compensation (base fuel map)",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ae3c",
+   "old": "Fuel Injection - Warmup Fueling",
+   "new": "Warmup Fueling B",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ae58",
+   "old": "Fuel Injection - Warmup Fueling - Engine Speed Based",
+   "new": "Warmup Fueling C",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6ae74",
+   "old": "Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)",
+   "new": "Warmup Fueling D",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b160",
+   "old": "Table 3D - 79 ",
+   "new": "Load Delta / Tip-In C",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x6b17c",
+   "old": "Table 3D - 80 ",
+   "new": "Load Delta / Tip-In D",
+   "category": "Fuel Injection",
+   "action": "renamed"
+  },
+  {
+   "descriptor": "0x69018",
+   "new": "Coolant Timing Multiplier - Leading (candidate)",
+   "category": "Ignition Leading",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6902c",
+   "new": "Coolant Timing Multiplier - Trailing (candidate)",
+   "category": "Ignition Trailing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69040",
+   "new": "Off-Throttle Leading Timing 3D (candidate)",
+   "category": "Ignition Leading",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6905c",
+   "new": "Leading Advance 3D Alt (candidate)",
+   "category": "Ignition Leading",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69094",
+   "new": "Safe Mode Cap - Single (candidate)",
+   "category": "Ignition Leading",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x690e8",
+   "new": "Off-Throttle Trailing Timing 3D (candidate)",
+   "category": "Ignition Trailing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69104",
+   "new": "Trailing Advance 3D Alt (candidate)",
+   "category": "Ignition Trailing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6913c",
+   "new": "Safe Mode Cap - Single Trailing (candidate)",
+   "category": "Ignition Trailing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69190",
+   "new": "Max Advance vs RPM - Leading (candidate)",
+   "category": "Ignition Leading",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x691a4",
+   "new": "Min Advance vs Coolant A (candidate)",
+   "category": "Ignition Timing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x691b8",
+   "new": "Min Advance vs Coolant B (candidate)",
+   "category": "Ignition Timing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x691cc",
+   "new": "Max Advance vs RPM - Trailing (candidate)",
+   "category": "Ignition Trailing",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x691e0",
+   "new": "Table 2D - 0x691e0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x691f4",
+   "new": "Table 2D - 0x691f4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69208",
+   "new": "Idle Base Timing - Cranking (candidate)",
+   "category": "Idle Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6921c",
+   "new": "Idle Base Timing - Cold Low Load (candidate)",
+   "category": "Idle Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69230",
+   "new": "Idle Base Timing - Warm High Load (candidate)",
+   "category": "Idle Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69468",
+   "new": "Table 2D - 0x69468 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69598",
+   "new": "Table 3D - 0x69598 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x695d0",
+   "new": "Table 3D - 0x695d0 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6961c",
+   "new": "Table 3D - 0x6961c (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69794",
+   "new": "MAF Density-Cap Window vs RPM (candidate)",
+   "category": "Engine Load",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x697a0",
+   "new": "Transient-Detection Threshold vs Throttle (candidate)",
+   "category": "Engine Load",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x697b4",
+   "new": "MAF Filter Coefficient vs RPM (candidate)",
+   "category": "Engine Load",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x69894",
+   "new": "Table 2D - 0x69894 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x698a8",
+   "new": "Table 2D - 0x698a8 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69980",
+   "new": "Table 3D - 0x69980 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69a98",
+   "new": "Table 3D - 0x69a98 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69aac",
+   "new": "Table 3D - 0x69aac (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69f6c",
+   "new": "Table 2D - 0x69f6c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69f80",
+   "new": "Table 2D - 0x69f80 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69f94",
+   "new": "Table 2D - 0x69f94 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69fa0",
+   "new": "Table 2D - 0x69fa0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69fac",
+   "new": "Table 2D - 0x69fac (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69fc0",
+   "new": "Table 2D - 0x69fc0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69fd4",
+   "new": "Table 2D - 0x69fd4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69fe8",
+   "new": "Table 2D - 0x69fe8 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x69ffc",
+   "new": "Table 2D - 0x69ffc (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a010",
+   "new": "Table 2D - 0x6a010 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a024",
+   "new": "Table 2D - 0x6a024 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a04c",
+   "new": "Table 2D - 0x6a04c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a5e0",
+   "new": "Table 2D - 0x6a5e0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a5f4",
+   "new": "Table 2D - 0x6a5f4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a61c",
+   "new": "Table 2D - 0x6a61c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a630",
+   "new": "Table 3D - 0x6a630 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a644",
+   "new": "Table 3D - 0x6a644 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a658",
+   "new": "Table 2D - 0x6a658 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a66c",
+   "new": "Table 2D - 0x6a66c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a6ac",
+   "new": "Table 2D - 0x6a6ac (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6a6b8",
+   "new": "Table 2D - 0x6a6b8 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6aa20",
+   "new": "Injector Manifold Vacuum Multiplier B",
+   "category": "Fuel Injection",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6aa34",
+   "new": "Injector Manifold Vacuum Multiplier C",
+   "category": "Fuel Injection",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6aa9c",
+   "new": "Max Per-Channel Injection Time vs RPM (candidate)",
+   "category": "Fuel Injection",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6aab0",
+   "new": "Table 2D - 0x6aab0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6aaec",
+   "new": "Table 2D - 0x6aaec (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ab00",
+   "new": "Table 2D - 0x6ab00 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ab14",
+   "new": "Table 2D - 0x6ab14 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ab28",
+   "new": "Table 2D - 0x6ab28 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ab5c",
+   "new": "Table 2D - 0x6ab5c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6aba4",
+   "new": "Table 2D - 0x6aba4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6abb0",
+   "new": "Table 2D - 0x6abb0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6abbc",
+   "new": "Table 2D - 0x6abbc (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6abfc",
+   "new": "Table 2D - 0x6abfc (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ac10",
+   "new": "Table 2D - 0x6ac10 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ac24",
+   "new": "Table 2D - 0x6ac24 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ac74",
+   "new": "Table 2D - 0x6ac74 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6adc8",
+   "new": "Table 2D - 0x6adc8 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6add4",
+   "new": "Table 2D - 0x6add4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6af54",
+   "new": "Knock Enable Load Floor (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6af68",
+   "new": "Knock Retard Clamp Min (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6af7c",
+   "new": "Knock Retard Clamp Min Alt (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6af90",
+   "new": "Knock Retard Clamp Max (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6afa4",
+   "new": "Knock Recovery Target (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6afb8",
+   "new": "Knock Learned Retard Scale",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6afcc",
+   "new": "Table 2D - 0x6afcc (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6afe0",
+   "new": "Table 2D - 0x6afe0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6aff4",
+   "new": "Table 2D - 0x6aff4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b008",
+   "new": "Table 2D - 0x6b008 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b01c",
+   "new": "Table 2D - 0x6b01c (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b074",
+   "new": "Table 3D - 0x6b074 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b090",
+   "new": "Table 3D - 0x6b090 (unlabeled)",
+   "category": "Unknown 3D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b0ac",
+   "new": "Table 2D - 0x6b0ac (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b0e8",
+   "new": "Table 2D - 0x6b0e8 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b0fc",
+   "new": "Table 2D - 0x6b0fc (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b264",
+   "new": "Knock Transient Hold (cycles)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b27c",
+   "new": "Knock Ignition Threshold A Alt (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b294",
+   "new": "Knock Ignition Threshold B Alt (RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b2b8",
+   "new": "Knock Level 3D A (load x RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b2d4",
+   "new": "Knock Level 3D B (load x RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b2f0",
+   "new": "Knock Level 3D C (load x RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b304",
+   "new": "Knock Level 3D D (load x RPM)",
+   "category": "Knock Control",
+   "action": "added",
+   "labeled": true
+  },
+  {
+   "descriptor": "0x6b9c0",
+   "new": "Table 2D - 0x6b9c0 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6b9f4",
+   "new": "Table 2D - 0x6b9f4 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ba00",
+   "new": "Table 2D - 0x6ba00 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6ba24",
+   "new": "Table 2D - 0x6ba24 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  },
+  {
+   "descriptor": "0x6bb08",
+   "new": "Table 2D - 0x6bb08 (unlabeled)",
+   "category": "Unknown 2D",
+   "action": "added",
+   "labeled": false
+  }
+ ]
+}
