@@ -3,11 +3,27 @@
   "rom_path": "C:\\Users\\SirHamsterAlot\\source\\repos\\HEE-Rx8-Reverse-Engineering\\binaries\\dumps\\60E0G500_N3ZHEC.bin",
   "rom_sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
   "rom_size": 524288,
-  "extracted_at": "2026-11-02T16:26:40.077006+00:00",
+  "extracted_at": "2026-11-02T17:22:01.582958+00:00",
   "reference_rom": "60E15120_N3J1E",
   "note": "Literal-pool float32 scalars (not descriptor tables \u2014 see extract_maps.py). Addresses are every ROM occurrence of the exact bit pattern; ref_addrs are the addresses binary-verified in the reference ROM. Seeds curated from docs/investigations/60E15120_N3J1E/reviews/load_fueling_model/validation.json.",
-  "total_scalars": 13,
+  "total_scalars": 14,
   "scalars": [
+    {
+      "name": "stoich_afr",
+      "value": 14.699999809265137,
+      "bits_hex": "416b3333",
+      "type": "float32",
+      "addresses": [
+        "0x03f73c"
+      ],
+      "ref_addrs": [
+        "0x03e7ec"
+      ],
+      "ref_addrs_confirmed": null,
+      "subsystem": "fueling",
+      "ram_alias": "diag_afr_word_a_ffffaa6c (lambda->AFR conversion)",
+      "evidence": "14.7 stoichiometric AFR literal @0x3e7ec, referenced by mova @0x3e6ec in FUN_0003e560; used as diag_afr_word_a * fVar4 * 14.7 in the fuel-correction/catalyst model (feeds fuel_correction_sum_ffffc644, PID 0x3c). Exactly one occurrence per ROM (verified all 11). This is the single-value 'base AFR' scalar (VersaTuner 'Air Fuel Ratio Base'); per-operating-point AFR lives in maps tbl_06ac88/tbl_069e9c."
+    },
     {
       "name": "fuel_load_scale",
       "value": 0.07196000218391418,

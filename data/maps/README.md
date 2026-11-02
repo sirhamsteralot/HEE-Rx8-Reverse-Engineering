@@ -57,11 +57,11 @@ python utilities/scripts/extract_scalars.py --all   # scalars.* per ROM + cross_
 - Data spot-checked against raw ROM bytes (20 tables, all match).
 - Cal region auto-detected via 'Copr.DENSO' header (handles 0x6c000 / 0x6d000 /
   0x71000 layouts).
-- Scalars (extract_scalars.py): 13 seeded float32 constants located by exact bit
+- Scalars (extract_scalars.py): 14 seeded float32 constants located by exact bit
   pattern in all 11 ROMs. Every seed's reference-ROM (60E15120_N3J1E) address was
   re-read from the untouched ROM and is asserted by the script + tests (e.g.
-  fuel_load_scale 0.07196 = 0x3d935fc4 @0x78170, load_cell_scale 0.6345
-  = 0x3f226e98 @0x7a088). One cross-ROM difference found:
+  fuel_load_scale 0.07196 = 0x3d935fc4 @0x78170, stoich_afr 14.7 = 0x416b3333
+  @0x3e7ec, load_cell_scale 0.6345 = 0x3f226e98 @0x7a088). One cross-ROM difference found:
   injector_flow_secondary_cc_min (475.93 = 0x43edf70a) is absent in
   60E0E700_N3YLEE, which uses 608.0/626.224 (0x44180000/0x441c8e5b) at
   0x76ccc-0x76cd0 next to its primary-flow literal - different secondary

@@ -2,6 +2,96 @@
   "reference": "60E15120_N3J1E",
   "note": "Per-ROM addresses of each seed scalar's exact float32 bit pattern. value is identical wherever present (same bits); 'present' flags ROMs where the pattern was not found (layout difference or different cal).",
   "scalars": {
+    "stoich_afr": {
+      "value": 14.699999809265137,
+      "bits_hex": "416b3333",
+      "type": "float32",
+      "subsystem": "fueling",
+      "ram_alias": "diag_afr_word_a_ffffaa6c (lambda->AFR conversion)",
+      "evidence": "14.7 stoichiometric AFR literal @0x3e7ec, referenced by mova @0x3e6ec in FUN_0003e560; used as diag_afr_word_a * fVar4 * 14.7 in the fuel-correction/catalyst model (feeds fuel_correction_sum_ffffc644, PID 0x3c). Exactly one occurrence per ROM (verified all 11). This is the single-value 'base AFR' scalar (VersaTuner 'Air Fuel Ratio Base'); per-operating-point AFR lives in maps tbl_06ac88/tbl_069e9c.",
+      "per_rom": {
+        "60E0E500": {
+          "present": true,
+          "addresses": [
+            "0x03f314"
+          ],
+          "rom_sha256": "c05dfd0422b2b773027a22dcce2c24923969f27b94634bfcbdb44d6157087e11"
+        },
+        "60E0E700_N3YLEE": {
+          "present": true,
+          "addresses": [
+            "0x03f56c"
+          ],
+          "rom_sha256": "bba52346a076c35ded281c14b7ff81fcfa6c6e8119b6ec544048e269b0c53dc0"
+        },
+        "60E0FB00": {
+          "present": true,
+          "addresses": [
+            "0x03ed88"
+          ],
+          "rom_sha256": "3d32e2591a1170d5ac3feed7ae065c650bde525e56693a5ca7499e6c9eb5f661"
+        },
+        "60E0FC00": {
+          "present": true,
+          "addresses": [
+            "0x03ed88"
+          ],
+          "rom_sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c"
+        },
+        "60E15120_N3J1E": {
+          "present": true,
+          "addresses": [
+            "0x03e7ec"
+          ],
+          "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1"
+        },
+        "60E1B900": {
+          "present": true,
+          "addresses": [
+            "0x03f020"
+          ],
+          "rom_sha256": "b0dc94f96e8eaf6f154df8e7388d12fba490cf2adf13edb077677c4c82b3b1b5"
+        },
+        "60E1C500_N3J6EB": {
+          "present": true,
+          "addresses": [
+            "0x03f5d8"
+          ],
+          "rom_sha256": "b3b6e1e416826d9c9f51ddc853cae0dea3235a3ddbb260cccd23effc77995c68"
+        },
+        "60E1D400": {
+          "present": true,
+          "addresses": [
+            "0x03f9d4"
+          ],
+          "rom_sha256": "344cb8b960eb6dde973bdb8e8c3e3e96cac542166cd7158c6f5f24d71eb7af78"
+        },
+        "60E32000_N3M5E": {
+          "present": true,
+          "addresses": [
+            "0x041a60"
+          ],
+          "rom_sha256": "d5406459cc0b19f831a73a021ad2ae47179127097a15cfa323a34bfa47e330de"
+        },
+        "60E32000_N3N5EB": {
+          "present": true,
+          "addresses": [
+            "0x040f9c"
+          ],
+          "rom_sha256": "6c043bd4c9581f611919c187da95aeca152627212f235505d7b5ead34294a0a8"
+        },
+        "60E0G500_N3ZHEC": {
+          "present": true,
+          "addresses": [
+            "0x03f73c"
+          ],
+          "rom_sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2"
+        }
+      },
+      "ref_addrs": [
+        "0x03e7ec"
+      ]
+    },
     "fuel_load_scale": {
       "value": 0.07196000218391418,
       "bits_hex": "3d935fc4",
