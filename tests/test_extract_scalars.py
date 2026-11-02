@@ -97,3 +97,36 @@ def test_generated_outputs_exist_and_are_consistent(tmp_path):
             if d["present"]:
                 assert d["addresses"], f"{name} present but no addresses in {rom_id}"
         assert entry["per_rom"][es.REFERENCE_ROM]["present"]
+
+
+def test_per_rom_defs_expose_scalars():
+    """Each per-ROM RomRaider def must expose the literal-pool scalars as editable
+    1-cell scalar tables, with storageaddress matching cross_rom_scalars.json and
+    ROM bytes at that address decoding to the scalar value."""
+    import xml.etree.ElementTree as E
+    cross = json.loads((MAPS / "cross_rom_scalars.json").read_text())
+    rom_paths = {p.stem: p for p in (REPO / "submodules" / "Mazda_RX8_PCM_ReverseEngineering" / "Stock_ROMs").glob("*.bin")}
+    rom_paths.update({p.stem: p for p in (REPO / "binaries" / "dumps").glob("*.bin")})
+    names = {"stoich_afr": "Scalar - Stoich AFR (literal pool)",
+             "fuel_load_scale": "Scalar - Fuel Load Scale (literal pool)"}
+    checked = 0
+    for stem in cross["scalars"]["stoich_afr"]["per_rom"]:
+        xml = REPO / "data" / "definitions" / "romraider" / "per-rom" / f"{stem}.xml"
+        if not xml.exists():
+            continue  # ROMs without an upstream block (60E0E500, 60E1C500)
+        root = E.parse(xml).getroot()
+        scalars = {t.get("name"): t for t in root.iter("table")
+                   if (t.get("name") or "").startswith("Scalar - ")}
+        for key, spec in names.items():
+            entry = cross["scalars"][key]["per_rom"][stem]
+            tbl = scalars.get(spec)
+            assert tbl is not None, f"{stem}: {spec} missing from per-rom def"
+            addr = int(tbl.get("storageaddress"), 16)
+            expect = (int(cross["scalars"][key]["ref_addrs"][0], 16)
+                      if stem == cross["reference"] else int(entry["addresses"][0], 16))
+            assert addr == expect, f"{stem} {key}: storageaddress {addr:#x} != {expect:#x}"
+            rom = rom_paths[stem].read_bytes()
+            val = struct.unpack(">f", rom[addr:addr + 4])[0]
+            assert abs(val - cross["scalars"][key]["value"]) < 1e-6
+        checked += 1
+    assert checked >= 9, f"only {checked} per-rom defs checked"
