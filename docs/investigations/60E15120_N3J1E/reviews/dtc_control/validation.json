@@ -23,8 +23,11 @@
       "Mode 22 PID 0x0200 via dispatcher 0x5774c -> response 62 0200 01; PID 0x0202 -> 62 0202 01",
       "MIL flag 0xffffd286 = 1 after 0x5a130 with stored+enabled DTC; stays 0 when only the disabled slot is stored",
       "0x5fd38(8,1) set-fault thunk writes 0xffffd458[8]=1 and 0xffffd3c2[8]=1 (observed); full master-table insertion via OS event 2/0x61092 not runnable autonomously (E6)",
-      "0x5fd6c boot-init clears 0xffffd570/0xffffd5fc (PID 0x0202 count -> 0)"
-    ]
+      "0x5fd6c boot-init clears 0xffffd570/0xffffd5fc (PID 0x0202 count -> 0)",
+      "multi-gate re-check (dynamic_multigate_log.txt): stored slot 0x74 C073 (stock enable1=0, enable2=1, enable3=0x0e): 0x61450(0x80,filt=0) counts it; filt=1 (enable#1) excludes -> MIL stays 0; filt=2 (enable#2) lists it -> mode-03-style response contains C073; 0x618f8 class=4. Confirms DTCs must be disabled in multiple cal places (#1 and #2, plus #3 bits for the set path)."
+    ],
+    "multigate_script": "dynamic_multigate.py",
+    "multigate_log": "dynamic_multigate_log.txt"
   },
   "defs_audit": {
     "perfect_match_roms": [
@@ -57,5 +60,10 @@
     "aging/confirmation state machines (0x60ca6/0x64918/0x64972/0x6400a) read statically only",
     "MIL lamp GPIO output not traced to a pin in this pass",
     "Renesas simulator cross-check still pending (ROADMAP E-limits); no emulator changes made in this pass"
-  ]
+  ],
+  "additional_rom_gate_tables": {
+    "0x7e29e": "monitor-source mask u8[0x8c], ANDed with 8-bit mask from ptr table 0x604f8 in 0x5fb68 (mode-1 store gate)",
+    "0x604f8": "8 x BE u32 monitor-check fns (0x5fbd2 x7, 0x5fbec, 0x5fbd6)",
+    "0x618f8": "report class: type-0 stored -> 3 (e1&e2 on) / 4 (e1 off) / 5 (e2 off); types 1/2/3 -> 1/2"
+  }
 }

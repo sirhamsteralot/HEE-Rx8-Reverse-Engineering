@@ -60,3 +60,10 @@ address	label	kind	evidence
 0x7e81c	dtc_confirmation_mask_table	ROM	BE u16 per slot; faultConfirmationSomething_
 0x7e934	dtc_status_mask_table	ROM	BE u32 per slot; low16 vs RAM 0xffffd930, high16 vs 0x66a58 mask (0x66a00)
 0x7e06c	dtc_related_type_table	ROM	4 B per slot; nibbles read by 0x5ff5a (types 1/2/4, masks 0x10/0x01/0x40/0x04/0x20/0x02)
+0x618f8	dtc_report_class	function	for stored type-0 DTCs: 3 if enable1&enable2==1, 4 if enable1==0, 5 if enable2==0 (types 1/2/3 -> class 1/2); called from aging handlers 0x60b14/0x63f64/0x64620/0x6477c; emulator: class 4 for stored C073 (e1=0,e2=1)
+0x60f02	dtc_enable1_predicate	function	(CAL enable1 0x7e678[slot]==1); called from 0x60b14 aging handler
+0x64234	dtc_enable1_predicate2	function	same predicate, called from 0x63f64
+0x5fb68	dtc_monitor_source_gate	function	builds 8-bit mask from ptr table 0x604f8 (0x5fbd2 x7, 0x5fbec, 0x5fbd6), ANDs ROM 0x7e29e[slot]; called in 0x60062 mode-1 store
+0x604f8	dtc_monitor_check_ptr_table	ROM	8 x BE u32 -> monitor-check functions used by 0x5fb68
+0x7e29e	dtc_monitor_source_mask_table	ROM	0x8c u8 per slot, ANDed with monitor-check mask in 0x5fb68
+0x6071e	dtc_freeze_frame_gate	function	enable2 0x7e704[slot]==1 && state==0xc0 gates Mode 02 freeze-frame capture (0x65c88); also 0x61af4
