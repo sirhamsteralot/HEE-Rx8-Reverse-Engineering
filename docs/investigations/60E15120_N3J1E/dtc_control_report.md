@@ -58,6 +58,12 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
   count+0x80 into the CAN status message.
 - **Clear:** UDS 0x14 / Mode 04 → 0x558ac → 0x55992 → 0x61b02 + 0x5fd92/0x5fd84
   (zero 0xffffd570, 0xffffd5fc, …); boot-init 0x5fd6c does the same RAM reset.
+- **"Fully disabling a DTC takes multiple writes" — confirmed (§3a):** enable#1
+  (0x7e678) gates MIL + aging, enable#2 (0x7e704) gates the Mode 03 list and freeze
+  frame, enable#3 (0x7e790) is a bitmask gating set/confirm/heal paths, plus
+  confirmation mask 0x7e81c and monitor-source mask 0x7e29e. Stock example C073
+  (slot 0x74: #1=0, #2=1) is still reported by Mode 03 while MIL stays off —
+  proven dynamically in the emulator (§3a, `dynamic_multigate_log.txt`).
 - **Defs accuracy (§5):** the per-rom defs are **correct for 60E0FC00, 60E0G500_N3ZHEC,
   60E15120_N3J1E, 60E32000_N3N5EB** (0 mismatches against the ROM code table), but
   **wrong for 60E0E700_N3YLEE** (block +3 bytes; firmware literal is 0x7c6d8, def says
@@ -163,6 +169,33 @@ MIL: 0x5a130 -> 0xffffd286 = (0x61450(0x80, filter=enable1) != 0 && 0xffffd1c5 !
 Per-ROM values (stock bytes) are extracted in [`data/dtc/<rom-id>.tsv`](../../../data/dtc/README.md).
 Default stock values: #1/#2 mostly 0x01 with a handful of 0x00 (e.g. slots 7/8 =
 P0076/P0077 disabled); #3 holds small feature codes (0x02/0x03/0x0a/0x0f/0x2f/…).
+
+### 3a. "Fully disabling a DTC takes more than one byte" — verified
+
+The hearsay is **true**, and now pinned down per gate (all confirmed at disassembly
+level + dynamically in the emulator with stock slot 0x74 = C073, whose stock bytes
+are enable#1=0, enable#2=1, enable#3=0x0e):
+
+| Gate (ROM table 60E15120) | Checked by | Effect when 0 / bit clear |
+|---|---|---|
+| `0x7e678` enable#1 (def `#1`) | scanners 0x61450/0x615c6/0x61d28 filter=1; predicates 0x60f02/0x64234 called from aging handlers 0x60b14/0x63f64/0x64620/0x6477c; MIL 0x5a130 (filter=1, disasm-verified) | stored DTC **excluded from MIL and aging**; still counted by PID 0x0200 (filter 0) and still listed by Mode 03 (filter 2) |
+| `0x7e704` enable#2 (def `#2`) | scanners filter=2 — used by **Mode 03** 0x65ff8 (`0x615c6(0x80,2)`); also 0x6071e gates Mode 02 freeze-frame capture (0x65c88) | stored DTC **still reported by Mode 03** if only #1 is cleared |
+| `0x7e790` enable#3 (def `#3`, **bitmask**) | `ref_faultEnableStatus2` 0x5f9b0: bits 0x02/0x04/0x08 gate confirm/store in 0x5fe20, 0x10 gates heal-clear in 0x60062 mode 2, 0x20 gates "reportable" 0x60478 | set/confirm path behavior per bit |
+| `0x7e81c` confirmation mask (u16/slot) | `ref_faultConfirmationSomething_` 0x5f9c2 in 0x5fe20 | blocks confirmation |
+| `0x7e29e` monitor-source mask (u8/slot) | 0x5fb68: ANDed with an 8-bit mask from 8 monitor-check fns (ptr table 0x604f8 → 0x5fbd2…); called in 0x60062 mode-1 store | gates the mode-1 store transition |
+| `0x7e06c` 4-byte related/type records | 0x5ff5a (nibbles 0x01/0x02/0x04/0x10/0x20/0x40 select eval-state caching) | per-id eval state |
+| `0x7e32a` type (u8/slot) | 0x612ee/0x61092/0x60062/0x618f8 dispatch to per-type state machines; 0x618f8 returns report class 1/2 (types 1/2/3) or 3/4/5 (type 0, graded by #1/#2) | selects aging behavior + report class |
+| RAM 0xffffd688 + UDS 0x85 | 0x5fe20 path select; 0x5fd4a | global "DTC setting off" |
+
+Dynamic proof (`reviews/dtc_control/dynamic_multigate_log.txt`): stored C073 →
+`0x61450(0x80, filt=0)` count=1 (PID 0x0200 sees it), `filt=1` (enable#1) count=0
+→ MIL stays 0 after 0x5a130, but `filt=2` (enable#2) count=1 → Mode-03-style list
+emits `C073`; 0x618f8 class=4. So clearing **#1 alone does not remove the DTC from
+Mode 03**, and clearing **#2 alone does not stop the MIL/aging paths** — you must
+write #1 **and** #2 (and the relevant #3 bits to stop it being set/confirmed at all).
+In stock ROMs the two blocks are asymmetric for exactly one used slot: 0x74 (C073,
+#1=0/#2=1); ten slots are 0/0 (0076, 0077, 0480, 0481, 0505, 0564, 0571, 1260, 2502,
+2503, 2504).
 
 ## 4. Labeling applied (2026-11-01 pass)
 
@@ -319,10 +352,11 @@ DTC category (381 tables). Note the ROM code sets differ per ROM (e.g. 60E1B900 
 |---|---|
 | 0x7e55a | P0300/P0301/P0302 prefix codes |
 | 0x7e560 | DTC code table, 140 × BE u16 |
-| 0x7e678 / 0x7e704 / 0x7e790 | enable/disable #1 / #2 / #3 (def tables) |
-| 0x7e32a | type byte per slot |
-| 0x7df42 | fault-id → slot map |
-| 0x7e81c / 0x7e934 / 0x7e06c | confirmation mask / status mask / related-type records |
+| 0x7e678 / 0x7e704 / 0x7e790 | enable/disable #1 / #2 / #3 (def tables; #3 = bitmask) |
+| 0x7e32a | type byte per slot (only slots 0,1 = 1/2 and 0x1e,0x1f = 3 nonzero) |
+| 0x7df42 | fault-id → slot map (BE u16/id; tail 0x7e05a = ids 0x82..0x8a) |
+| 0x7e81c / 0x7e934 / 0x7e06c | confirmation mask / status mask / 4-byte related-type records |
+| 0x7e29e | monitor-source mask (u8/slot), ANDed with 8 monitor checks in 0x5fb68 (ptr table 0x604f8) |
 
 ## 9. Limits
 

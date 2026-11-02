@@ -43,6 +43,28 @@ written.
   slot 23 — 98 mismatches; its #3 block is fine.
 - 60E0E700's def #2 contains an entry with storageaddress 0x0 (bogus).
 
+## Re-check pass 2 (2026-11-01, "multiple places to disable a DTC" hearsay)
+
+The hearsay is TRUE and is now pinned per gate. Additional gate tables found beyond
+the first pass: monitor-source mask **0x7e29e** (ANDed with an 8-bit mask from the
+ptr table 0x604f8 in 0x5fb68, called from the mode-1 store transition 0x60062), and
+the report-class function **0x618f8** (class 3/4/5 for type-0 stored DTCs depending
+on enable#1/#2). enable#1 predicates 0x60f02/0x64234 are called from the aging
+handlers 0x60b14/0x63f64/0x64620/0x6477c; 0x6071e gates Mode 02 freeze-frame capture
+on enable#2 + state 0xc0.
+
+Dynamic proof with stock-asymmetric slot 0x74 (C073, #1=0/#2=1/#3=0x0e)
+(`dynamic_multigate_log.txt`): 0x61450(0x80,filt=0) counts it (PID 0x0200),
+filt=1 (enable#1) excludes it -> MIL stays 0 after 0x5a130, filt=2 (enable#2) still
+lists it -> Mode-03-style response contains C073; 0x618f8 returns class 4.
+Emulator ROM is read-only (write8 to 0x7e681 ignored), so the asymmetry was
+exercised with the stock bytes themselves rather than by flipping cal bytes.
+
+Conclusion for tuners: to fully suppress a DTC you must clear **#1 AND #2** (and the
+relevant **#3 bits** to stop it being set/confirmed); clearing only one leaves it
+visible in Mode 03 (#1-only clear) or in MIL/aging (#2-only clear). Stock ROMs have
+exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
+
 ## Not verified / limits
 
 - The aging/confirmation counters (how many drive cycles until
