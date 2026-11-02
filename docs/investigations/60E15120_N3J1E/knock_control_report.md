@@ -414,3 +414,17 @@ address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/` (stock ROMs untouched; see
 [`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
 accurate for its date.
+
+2026-11-02 addendum (ROADMAP E item 1): the retard state machine is now
+reimplemented as host-testable C —
+[`reverse-engineered/reimplementation/rx8_knock.c`](../../../reverse-engineered/reimplementation/rx8_knock.c)
+covers 0x13a60 (attack/edge/hold target selection + clamp) and 0x13b40 (slow
+recovery pacing), with `rx8_add_u8_saturate` (0x2478) added to
+[`rx8_math.c`](../../../reverse-engineered/reimplementation/rx8_math.c). Host tests
+(`test_rx8_knock.c`, strict C11) pass, and the ROM functions were cross-checked
+dynamically in the emulator against a float32 port of the C
+([`tests/test_knock_retard_dynamic.py`](../../../tests/test_knock_retard_dynamic.py),
+3 tests: attack/hold/edge/disabled/unhealthy paths, alt clamp-min table via
+0xffffb534/0xffffbc3d, and 62-count recovery pacing incl. counter reset and
+clamping) — the ROM's own 0x2068 lookups fed the port, so the comparison covers
+the decision logic, not the interpolation.
