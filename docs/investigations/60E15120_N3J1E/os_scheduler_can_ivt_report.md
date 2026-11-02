@@ -197,3 +197,39 @@ rec[18].entry -> 0x64e8, a thunk {jsr 0x11534; jmp 0x3d58 taskEnd} where 0x11534
 the 29-call slow/background task. Byte-verified against the raw ROM
 (0x4990..0x4ad0). Details: [fueling_control_report.md](fueling_control_report.md)
 §10.6.
+
+## 12. Update — 2026-11-02 (sceptical re-check; corrections + pointer to the deep dive)
+
+The 2026-11-02 deep dive ([os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md))
+re-derived the interrupt/OS plumbing from raw ROM bytes and emulator traces. Corrections to
+this report's earlier statements:
+
+- **§1/§2/§5 "CMI10B (IVT 0x2c8) → 0x803e `crank_isr_compute_rpm`" is wrong.** The IVT slot
+  0x7fc50+0x2c8 points at trampoline 0x2ec0 whose handler is **0x5b3c** (byte-verified:
+  TSR10=0xb; then 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc, which does the
+  ring-0xffff9fd0 append and rpm = 1.2e8/Σ → 0xffff9f80; plus 0xd716 and 0xcf96, and
+  0x7b58 rearms OCR10B from tbl 0xd76d[sector 0xffff9f95*2] & 0x7f — the tick is
+  **crank-angle-synchronous**, 36 sectors/720°). 0x803e has **no callers at all** (its
+  pool references at 0x1a2/0x977a/0x2a538 are coincidental BCR/compare values); it is a
+  dead duplicate of 0x7fcc's math, so the `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG`
+  rename of 2026-10-31 should be treated as a misnomer for uncalled code.
+- **Unused/fatal vectors**: 117 IVT slots (0x100–0x39c) have real trampolines (all ctx
+  word = 0x3238); 98 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
+  report via 0xa330, halt 0xa4be / spin 0x535a). Only 19 have real handlers: CMI10B
+  0x5b3c, six ATU-II ch8 injector compares 0x59a4–0x59ea →
+  `candidate_injector_pulse_set_dispatch(0..5)`, knock-ADC trigger 0x5a4c, ch3/ch9
+  compares, three ADC EOC banks, CMCSR1 0x5cee, IRQ flags 0x53f6, CAN 0x378/0x37c/0x398.
+  WDT ITI 0x358 → 0x5e0c → fatal trap (as E3 said, overflow is polled-only; the ITI
+  firing is deliberate halt). Reserved vectors 0x0–0xfc → stubs 0x53a0–0x53c2 → 0x5348.
+- **Scheduler mechanics confirmed/refined**: fresh tasks are entered via `rte` at 0x3848
+  (push SR=0 + entry), resume via jump table 0x4b34 indexed by ctx[0] − param byte0;
+  preemption in 0x39ba fires only when `class > ctrl[0]` as an **unsigned** byte
+  (`cmp/hi`) — at boot ctrl[0]=0xff so posts from idle do not set ctrl+6 (dynamically
+  observed; the decompiled signed compare is a sign-extension artifact). Ready bitmap
+  0xffff7668 is class-indexed (bit 1<<(class&7) at byte class>>3, table 0x3d48).
+  Init schedules tasks {17, 0} (list at ROM 0x4af0 walked by 0x3f10) — dynamically
+  confirmed (bitmap 0x11000000 after boot; tasks 0/17 credit bytes read 0).
+- The full model — task inventory, message queues (0x9630/0x5f1c/0x6010, ROM 0xd74c,
+  RAM 0xffff9304+3i), ISR-exit context switch 0x32f4, per-task software timers, and the
+  end-to-end emulator reproduction (post → queue → dequeue → handler 0x11c98 → taskEnd →
+  dispatch → idle) — is in [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md).

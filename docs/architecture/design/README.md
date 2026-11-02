@@ -36,14 +36,21 @@ The firmware has four entry mechanisms, all visible in the export:
    0x8b8 `ref_Manual_Reset`; all exception vectors → 0x8b4 `Illegal_instr`
    (a terminal halt loop — most of the 15 "infinite loop block" decompiler
    warnings are these intentional stops).
-2. **Periodic timer interrupts**: ATU101 CMI10B (vector 0x2c8 → 0x803e
-   `ref_INT_ATU101_IMI10AG`, 44 bytes, no calls — sets state for the
-   scheduler) and ATU102 IMI10AG (vector 0x2d0 → 0x9fc `INT_ATU102_IMI10AG`,
-   210 bytes, also invoked from the boot path at 0x170).
-3. **Scheduled tasks**: an 18-record task table at **0x4998–0x4ab7**
-   (16-byte records: `{entry, mask, param, stack}`; stacks 0xffff7410–0xffff7498).
-   Every record's entry is a function in the index. This table is the main
-   run-time entry mechanism.
+2. **Periodic timer interrupts**: ATU-II channel 10B compare **CMI10B**
+   (IVT offset 0x2c8 at VBR 0x7fc50 → trampoline 0x2ec0 → handler **0x5b3c**)
+   is the crank-angle-synchronous OS tick (see §4). Note: the inherited label
+   `ref_INT_ATU101_IMI10AG`/`vector_INT_ATU101_CMI10B` at 0x803e is a **dead
+   duplicate** of the rpm math — nothing calls it; the live path is
+   0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc
+   (2026-11-02 re-check, see [the OS scheduling deep dive](../../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)).
+   ATU102 IMI10AG (vector 0x2d0 → 0x9fc `INT_ATU102_IMI10AG`, 210 bytes, also
+   invoked from the boot path at 0x170).
+3. **Scheduled tasks**: a 19-record task table at **0x4990–0x4ab7**
+   (16-byte records: `{param, stack-ctx, entry, mask}`; context blocks
+   0xffff7408–0xffff7498). Every record's entry is a function in the index.
+   This table is the main run-time entry mechanism. (Corrected 2026-10-31:
+   base 0x4990, not 0x4998 — proven by the pool 0x37b0 = 0x4990 load and the
+   stride in `os_switch_to_task` 0x375c.)
 4. **Diagnostic dispatch**: 99 twelve-byte records at **0x5f10c–0x5f5af**
    (`{identifier, availability_mask, response_length, handler}`); searched and
    dispatched by `diag22_find_and_dispatch_identifier` (0x5774c). All 99 records
@@ -75,27 +82,40 @@ the name is inherited from the reference project.
 > emulator execution — see `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`
 > (os_init 0x3e10, os_dispatch 0x3c2a, os_switch_to_task 0x375c, wake 0x3db0,
 > IVT at VBR 0x7fc50, CAN RX interrupt IVT 0x378).
+> 2026-11-02: the full scheduling model (task loops, message queues,
+> crank-angle-synchronous tick, timers) is documented in
+> [the OS scheduling deep dive](../../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
+> — the diagram below is the corrected picture.
 
 ```
-ATU timer ISRs (0x803e, 0x9fc)  --tick-->  scheduler state
-                                              |
-task table 0x4998 (18 x {entry,mask,param,stack}) --driven by-->
-  ref_osTaskScheduler (0x9630)          descriptor pointer table 0xd87c
-    -> FUN_00005f1c (0x5f1c)            pointer table 0xd74c, 3-byte timing
-       raise interrupt mask (0xe0)      records 0xd750, RAM control blocks
-       queue check FUN_00003854         at 0xffff9304 (20-byte slots),
-       copy 5-word argument block       ref_calledLots (0xa2b6) marks runnable
-       restore mask (ref_setSR)
-tasks end with ref_taskEndRoutine_ (0x3d58)  <- called by 18 task entries
-  -> FUN_000035ee, ref_consistencyCheck (0x3a28), FUN_00003c2a
-ref_whileLoop (0x9efe) — 14-byte idle loop
+CMI10B tick (IVT 0x2c8 -> 0x5b3c, per crank sector: OCR10B = tbl 0xd76d[sector],
+  sector 0xffff9f95 via tbl 0xd76c) -> 0x75f4 -> 0x77f0 -> 0x7c68 -> 0x7fcc (rpm)
+  -> on crank edge 0xcf96 -> 0xa156 -> ref_osTaskScheduler 0x9630(1,9,..)
+CAN RX (IVT 0x378 -> 0x5e78 -> 0x9c86) -> 0x9630(1,12,..) target -1 -> 0x11d88 inline
+other live vectors: 6x ATU ch8 injector compares (0x59a4-0x59ea), knock ADC 0x5a4c,
+  ch3/ch9, 3x ADC EOC, CMCSR1, IRQ flags; 98 of 117 vectors = fatal trap 0x5348
+        |
+  ref_osTaskScheduler (0x9630)  group descriptor tables via ptr table 0xd87c
+    -> target -1: call handler inline (ISR context)
+    -> else FUN_00005f1c (0x5f1c): post 5-word {handler,args} message into a ring
+       queue (ROM records 0xd74c+8i {buf, task id, depth}; bufs 0xffff9310/93d8/
+       94a0/96f8; state 0xffff9304+3i {wr, rd, count}), via FUN_00003854 (credit
+       byte ctx[3] -= 1) -> FUN_000039ba: ready ring (ctrl+0x24 = 0xffff74a0) +
+       class bitmap 0xffff7668; preempt: class > ctrl[0] (unsigned) -> ctrl+6
+  ISR exit epilogue 0x3280: if a task is scheduled -> context switch 0x32f4
+    -> os_switch_to_task 0x375c (fresh: rte via 0x3848; resume: jump table 0x4b34)
+task table 0x4990 (19 x 16-byte {param, stack-ctx, entry, mask}) --dispatch via-->
+  os_dispatch 0x3c2a -> 0x3c68 -> 0x375c; task ends: ref_taskEndRoutine_ 0x3d58
+  -> os_dispatch again; nothing ready -> idle spin 0x3dac (bra self)
+consumer tasks 0x969e/0x96be/0x96de/0x96fe dequeue one message (os_queue_dequeue_record
+  0x6010) and call its handler; task[0] 0x62a0 is the never-yielding background loop
 ```
 
 Scheduling requests also arrive through `ref_putTaskInSchedule_FuelArrayStuff`
-(0xa10e) and ~33 other callers of `ref_osTaskScheduler`; small stubs at
-0x9f5e–0xa186 (28-byte spacing) wrap scheduler interactions.
+(0xa10e) and the post wrappers at 0xa0de–0xa22c (0x18-byte spacing, fixed
+group/idx immediates) plus ~20 larger callers of `ref_osTaskScheduler`.
 
-### Task table (0x4998, 16-byte records)
+### Task table (0x4990, 19 x 16-byte records {param, stack-ctx, entry, mask})
 
 | Entry | Name | Notes |
 |---|---|---|
@@ -113,18 +133,19 @@ Scheduling requests also arrive through `ref_putTaskInSchedule_FuelArrayStuff`
 | 0x65cc / 0x65da / 0x65e8 | FUN_000065xx | single-worker tasks (0x11adc, 0x11b08, 0x11b22); 0x11adc -> 0x39b08 -> 0x41964 reads closed_loop_active_ffffae1f |
 | 0x60c8 | ref_getSensorStuff__ | sensor acquisition: ref_sensorADCRead, ref_getMAFSensorValue, ref_getVehicleStatusInputs_ |
 
-A further record at ROM **0x4ab8** (immediately after the table) holds
-{0x64e8, 0x02000000, 0x04ffffff, 0x00000001} followed by 0xffff76xx
-stack/param pairs. 0x64e8 is a thin wrapper (`FUN_00011534` +
-`ref_taskEndRoutine_`) leading to candidate_timing_retard_fast_task (0x145c8:
-knock-seen counter + slow recovery + throttle/rev-limit/AC retards). Its
-record layout differs from the 0x4998 entries and its dispatch mechanism is
-unresolved (as is any ROM pointer to 0x4998 itself) — see
-`reviews/knock_control/README.md` section 5.
+Record 18 at ROM **0x4ab0** (last table entry; terminator at 0x4ac0) is
+{param 0x04000100, ctx 0xffff7498, entry **0x64e8**, mask 0x02000000}.
+0x64e8 is a thin wrapper (`FUN_00011534` + `ref_taskEndRoutine_`) leading to
+the 29-call slow/background task 0x11534 (torque params, diag-mode timer,
+immo counter, …) — resolved 2026-10-31/2026-11-02; see
+[the OS scheduling deep dive](../../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) §4.
 
-Masks group tasks (0x01/0x02/0x0a/0x1e/0x64 x 0x01000000); their exact
-scheduling semantics (period, priority) are not established — the timing
-records live at 0xd750 and the RAM control blocks at 0xffff9304.
+The mask byte (0x01/0x02/0x0a/0x1e/0x64) is the task's **weight/credit**
+byte, copied to ctx[3] at init (0x3ec0), decremented per posted message
+(0x3854) and restored at taskEnd (0x3d58); the param byte 2 is the task's
+**priority class** (used by 0x39ba for the ready bitmap and preemption).
+Task periods are not fixed wall-clock values — the tick is crank-angle
+synchronous and timers are per-task counters (deep dive §1/§5).
 
 ## 5. Subsystems and call relationships
 
@@ -244,7 +265,9 @@ task[5] 0x65f6 ref_task1_ (knock sensing)
        -> 0xc276 knock_reference_adc_read    per-rotor threshold command out,
        -> 0xc3ce knock_voltage_sample        filtered level in (200-2000 RPM window)
   -> 0xc7ba ref_setupCoilOutputs            coil timing, thresholds a37e/a37c
-ISR 0x803e -> engine_speed_rpm_raw_ffff9f80 (120e6 / crank period)
+CMI10B tick chain 0x5b3c -> 0x75f4 -> 0x77f0 -> 0x7c68 -> ref_getCrankAngle 0x7fcc
+  -> engine_speed_rpm_raw_ffff9f80 (1.2e8 / crank period sum; 0x803e is an
+  uncalled duplicate of this math — 2026-11-02 re-check)
 
 task[6] 0x661e -> ref_engineControlTASK (0x11ba4)
   -> 0x197be -> 0x336c4 knock_threshold_setup   3D level tables -> a328,
@@ -386,7 +409,7 @@ APV motor      apv_control_task 0x31c20 (task 0x64f6 -> 0x11744):
 | Identified functions | 3,355 |
 | Direct call edges | 6,977 |
 | Leaf functions (call nothing) | 1,041 |
-| Never called directly | 366 (vector targets 0x8b8/0x8b4/0x803e/0x9fc, 99 dispatch handlers, 18 task-table entries, thunks, jump-table targets, unresolved entries) |
+| Never called directly | 366 (reset targets 0x8b8/0x8b4, IVT trampoline targets, 99 dispatch handlers, 19 task-table entries, thunks, jump-table targets, unresolved entries; includes 0x803e — a genuinely uncalled duplicate of 0x7fcc, not a vector target) |
 | Thunks | 51 (47 with direct callers) |
 | Fan-in > 10 | 64 functions |
 | Largest fan-out | FUN_0003957c: 161 callees (called only by FUN_000118d0) |
@@ -400,11 +423,14 @@ Top fan-in hubs: `ref_setSR` (184), `sh_raise_interrupt_mask_return_previous`
 ## 7. Layer view
 
 ```
- entries: reset/exception vectors, ATU timer ISRs, task table 0x4998,
-          diagnostic dispatch table 0x5f10c
+ entries: reset/exception vectors, IVT trampolines (VBR 0x7fc50; live handlers:
+          CMI10B tick 0x5b3c, ATU ch8 injector compares, ADC EOC, CAN RX 0x378),
+          task table 0x4990 (19 tasks), diagnostic dispatch table 0x5f10c
         |
- OS/scheduler: ref_osTaskScheduler, FUN_00005f1c, ref_taskEndRoutine_,
-               critical sections 0x3920/0x3934, ref_whileLoop
+ OS/scheduler: ref_osTaskScheduler 0x9630, post 0x5f1c / dequeue 0x6010
+               (queues 0xd74c / RAM 0xffff9304+), dispatch 0x3c2a/0x375c,
+               taskEnd 0x3d58, idle 0x3dac, ISR entry/exit 0x3238/0x3280,
+               critical sections 0x3920/0x3934
         |
  tasks: ref_task1_/ref_task2_, sensor task ref_getSensorStuff__,
         FUN_0000648e (sensors+CAN), FUN_000064ba (main), ...
@@ -424,7 +450,7 @@ Top fan-in hubs: `ref_setSR` (184), `sh_raise_interrupt_mask_return_previous`
 
 - **Indirect dispatch**: the computed jump at 0x37ac, the chained pointer
   tables at 0x420c/0x4218, the recovered shift dispatchers 0x43c8/0x44e0, the
-  diagnostic dispatch table 0x5f10c and the task table 0x4998 are entry
+  diagnostic dispatch table 0x5f10c and the task table 0x4990 are entry
   mechanisms invisible to direct call edges; reachability from them is
   under-approximated (3,157 functions are not reached from reset+timers+
   dispatch by direct edges alone — expected, since the scheduler reaches
