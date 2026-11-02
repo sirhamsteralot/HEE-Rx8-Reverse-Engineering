@@ -21,8 +21,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 814,
-      "block_tables_with_storageaddress": 814,
+      "block_tables": 816,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 816,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
       "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "status": "OK"
@@ -50,8 +51,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 743,
-      "block_tables_with_storageaddress": 742,
+      "block_tables": 745,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 744,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -69,8 +71,9 @@
         "RX8Base",
         "60E0FC00"
       ],
-      "block_tables": 732,
-      "block_tables_with_storageaddress": 732,
+      "block_tables": 734,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 734,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -87,8 +90,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 907,
-      "block_tables_with_storageaddress": 907,
+      "block_tables": 909,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 909,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -112,8 +116,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 637,
-      "block_tables_with_storageaddress": 637,
+      "block_tables": 639,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 639,
       "per_rom_def": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -130,8 +135,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 707,
-      "block_tables_with_storageaddress": 707,
+      "block_tables": 709,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 709,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1B900.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -159,8 +165,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 827,
-      "block_tables_with_storageaddress": 827,
+      "block_tables": 829,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 829,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1D400.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -177,8 +184,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 266,
-      "block_tables_with_storageaddress": 266,
+      "block_tables": 268,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 268,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3M5E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -197,8 +205,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 266,
-      "block_tables_with_storageaddress": 266,
+      "block_tables": 268,
+      "scalar_tables_injected": 2,
+      "block_tables_with_storageaddress": 268,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3N5EB.xml",
       "ecuflash_def": null,
       "status": "OK"

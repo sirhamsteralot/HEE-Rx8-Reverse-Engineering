@@ -218,6 +218,13 @@ validators) — is the follow-up work if the candidates are accepted.
 - ROM literal verification (big-endian float32 read from the untouched ROM):
   0.6345 @0x7a088, 0.07196 @0x78170, 60.0 @0x1a4e8, 5.0 @0x1a4f4, 273.0
   @0x1a194, 293.0 @0x1a198, 101.33299 @0x1a1a0, 300.0, 369.472, 475.93.
+- 2026-11-02: these literal-pool scalars (incl. the base fuel scalar
+  **0.07196 @0x78170 -> `fuel_load_scale_ffffbed0`**) are now machine-extracted
+  per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` +
+  `data/maps/cross_rom_scalars.json` by `utilities/scripts/extract_scalars.py`
+  - see [calibration extraction section 6a](calibration_extraction_report.md)
+  and the [data/maps README](../../../data/maps/README.md); tests
+  `tests/test_extract_scalars.py`.
 - Disassembly verification: the MAF copy gate (0x19fa8–0x19fe8), the 0x1a418
   call arguments (RPM/filter/MAF wiring), and the 0x306e8 lookup_3d
   arguments (RPM via delay slot, load in fr5) were each checked against
