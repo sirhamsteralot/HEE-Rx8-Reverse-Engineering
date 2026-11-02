@@ -14,6 +14,12 @@
       "rom_refs": 12,
       "rom_claims": 0
     },
+    "dtc_control_report.md": {
+      "fn_checked": 40,
+      "ram_checked": 11,
+      "rom_refs": 51,
+      "rom_claims": 0
+    },
     "fueling_control_report.md": {
       "fn_checked": 44,
       "ram_checked": 21,
@@ -48,6 +54,12 @@
       "fn_checked": 0,
       "ram_checked": 0,
       "rom_refs": 0,
+      "rom_claims": 0
+    },
+    "os_scheduling_deep_dive_report.md": {
+      "fn_checked": 77,
+      "ram_checked": 20,
+      "rom_refs": 115,
       "rom_claims": 0
     },
     "uds_mode22_dispatch_report.md": {

@@ -381,3 +381,13 @@ ffffa118	msg_dequeue_scratch_slot0	uint32[5]	0000969e	Dequeue output buffer of c
 ffffa12c	msg_dequeue_scratch_slot1	uint32[5]	000096be	Dequeue output buffer of consumer task 0x96be (slot 1).
 ffffa140	msg_dequeue_scratch_slot2	uint32[5]	000096de	Dequeue output buffer of consumer task 0x96de (slot 2); dynamic: held {0x11c98, 0xdeadbeef, 0,0,0} after 0x9630(1,9) post.
 ffffa154	msg_dequeue_scratch_slot3	uint32[5]	000096fe	Dequeue output buffer of consumer task 0x96fe (slot 3).
+ffff87b0	dtc_master_table_21	uint8[0x150]	00061450	21 x 0x10 B master DTC table: u16 slot at +0, state byte at +6, priority at +0x0d; scanned by 0x61450/0x615c6, iterated by 0x6328a.
+ffff8900	dtc_master_current_index	uint16	00061450	Current master-table index; excluded from every scan (0x61450/0x615c6/0x62df8).
+ffffd5fc	dtc_state_array	uint8[0x8c]	0005f9f0	Per-slot DTC state mirror (0xc0/0xc1/0x70/0x60/0); cleared by 0x6028c, written by 0x602c8/0x602a4/0x6020e.
+ffffd458	dtc_eval_state_array	uint8[0x8c]	0005ff5a	Per-slot eval state (1/2/4) written by 0x5ff5a; read by 0x60478.
+ffffd4e4	dtc_transition_state_array	uint8[0x8c]	00060062	Per-slot transition state written by 0x60062 on mode 1/2/4.
+ffffd3c0	dtc_first_stored_code	uint16	000601cc	First stored DTC code, recorded by 0x601cc when flag table goes 0->1.
+ffffd286	mil_lamp_flag	uint8	0005a130	MIL flag: set by 0x5a130 when stored+enabled DTC exists (disasm 0x5a130 verified; emulator MIL=1 case in reviews/dtc_control/dynamic_validation_log.txt); gates 0x5a188 distance-MIL and 0x55278 CAN status.
+ffffd688	dtc_eval_enable	uint8	0005fd4a	1 = fault evaluation active; set at init by 0x5fd6c via 0x5fd4a(1); selects path in 0x5fe20.
+ffffd930	dtc_status_bits	uint32	00066a00	Status bits ANDed with low16 of ROM mask table 0x7e934 in ref_getFaultStatus__ (0x66a00).
+ffffd3c2	dtc_eval_state_cache	uint8[0x8c]	0005ff5a	Per-fault-id cached eval-state argument written by 0x5ff5a.

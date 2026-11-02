@@ -1,0 +1,51 @@
+# DTC control deep-dive — evidence folder (60E15120_N3J1E)
+
+Companion evidence for [`../../dtc_control_report.md`](../../dtc_control_report.md).
+
+## Contents
+
+- `extract_dtc_tables.py` — script that locates the DTC code table in each ROM
+  (anchored on the universal BE prefix `03 00 03 01 03 02 03 00` =
+  P0300/P0301/P0302 specials + slot-0 P0300), walks the used slots, skips the
+  0xffff padding, and derives the enable#1/#2/#3 block addresses from the ROM
+  itself. Output: `data/dtc/<rom-id>.tsv` + `data/dtc/defs_audit.tsv`.
+- `defs_audit_detail.json` — full per-entry audit of every
+  `DTC xxxx Enable/Disable #N` storageaddress in
+  `data/definitions/romraider/per-rom/*.xml` and in
+  `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml` against the ROM
+  bytes (slot, ROM code at that slot, match flag, ROM byte).
+- `dynamic_validation.py` / `dynamic_validation_log.txt` — emulator run on the
+  `60E15120_N3J1E` profile: boots 300k cycles, inits DTC RAM via the ROM's own
+  0x5fd6c, plants a stored DTC (slot 9 = P0101, state 0x80) and an active DTC
+  (slot 8 = P0077, state 0x01) in the master table cells, then exercises the
+  ROM's own collectors/handlers (0x615c6, 0x667c8, mode 03 0x65ff8, mode 07
+  0x661ec, Mode 22 PIDs 0x0200/0x0202 through dispatcher 0x5774c, MIL flag
+  updater 0x5a130). Log shows `62 0200 01`, `62 0202 01`, code 0101 emitted
+  for slot 9, enable1 filter dropping P0077, MIL flag = 1.
+
+## What was checked at binary level (rule 7)
+
+- ROM bytes of code table / enable blocks for all 11 ROMs (see
+  `data/dtc/*.tsv`); 60E15120_N3J1E SHA-256
+  a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1.
+- Literal-pool anchors for the enable-block base per ROM: 0x0007e678 (60E15120,
+  refs at 0x60f98/0x6155c/0x616d4/0x61b48/0x61e70/0x642b0), 0x0007c6d8
+  (60E0E700, refs 0x605cc/0x60b90/0x60d08/0x6117c/0x614a4/0x638e4 — the def
+  uses 0x7c6db, which occurs nowhere in the ROM), 0x0007c9fc (60E1B900/60E0FC00/
+  60E0FB00 — the 60E1B900 def uses 0x7c8e4 = the code table), 0x0007e74c
+  (60E32000_N3M5E — the def uses 0x7e661, inside the code table).
+- Disassembly of 0x5a130 (MIL flag), 0x61450/0x615c6 (state scanners),
+  0x667c8 (response builder), 0x5fe20/0x60062/0x601cc (set/store path),
+  0x558ac (clear), 0x5dc44 (UDS 0x85) read from `firmware_disassembly.asm` /
+  per-function decompiled C.
+- OS event table 0x67d00 (diag group): event 2 -> handler 0x61092, event 5 ->
+  0x61b8c (ROM bytes dumped).
+
+## Corrections / labels applied
+
+- New label file `data/labels/60E15120_N3J1E/dtc_engine_labels.tsv` (functions,
+  RAM cells, ROM tables of the DTC engine, each with evidence).
+- No existing label was upgraded; `ref_` names kept as hypotheses.
+- Known nuance recorded, not "fixed": master-table entry 0 is excluded from
+  every scan (index == DAT_ffff8900); slot 0/1 both hold code P0300 (rotor
+  misfire pair), which is why some defs bind two "0300" bytes.
