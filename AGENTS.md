@@ -54,6 +54,12 @@ dumping it at the root.
    meaning derived from a table axis; `candidate_` = unproven. Never upgrade a label
    because it's plausible. Distinguish firmware dataflow from physical pin routing;
    package-pin ↔ connector-terminal is board routing unless traced.
+6b. **Concise editor-def descriptions.** Table `<description>` entries in the XML defs
+   (`data/definitions/`) stay short: what the table is + its descriptor address (+ prior
+   name when renamed). No source/evidence dumps — provenance lives in the label map
+   (`data/labels/<rom-id>/defs_table_labels.json`), TSVs and the investigation docs.
+   Safety warnings required by rule 10 (checksum range, bench-validation) are the
+   exception and stay.
 7. **Binary-level verification is mandatory** before claiming a review pass done:
    re-check labels against the raw ROM/disassembly (literal pools incl. shared pools,
    `mov.w`/`mov.l`/`mov #imm`/base+offset idioms, GPIO reg+mask+helper, descriptor

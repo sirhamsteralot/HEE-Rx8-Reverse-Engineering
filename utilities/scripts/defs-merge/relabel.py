@@ -194,13 +194,16 @@ def _append_desc(el, text):
 
 
 def _label_desc(label, desc, old_name, rom_id, rom_desc):
+    # Concise editor-facing description (AGENTS.md rule 6b): no source/evidence
+    # dumps here — provenance lives in defs_table_labels.json + the
+    # investigation doc. Keep: marker, semantics note, descriptor address,
+    # prior name.
     prov = (f"descriptor 0x{desc:x}" if rom_id == REFERENCE else
-            f"cross-ROM structural match to {REFERENCE} descriptor 0x{desc:x} "
-            f"(data/maps/cross_rom_diff key: dim+counts+type+axes); this ROM descriptor 0x{rom_desc:x}")
-    conf = label.get("confidence", "high")
-    return (f"[{MARKER}] {label['name']} | {prov}. {label.get('note','')} "
-            f"Evidence: {label.get('evidence','')} Source: {label.get('source','')} "
-            f"Confidence: {conf}" + (f" | Prior editor name: '{old_name}'" if old_name else ""))
+            f"structural match to {REFERENCE} descriptor 0x{desc:x}; this ROM descriptor 0x{rom_desc:x}")
+    parts = [f"[{MARKER}]", label.get("note", "").strip() or label["name"], prov]
+    if old_name:
+        parts.append(f"prior name '{old_name}'")
+    return " ".join(p for p in parts if p)
 
 
 def _scaling_from_rom(rom, row):
@@ -399,12 +402,11 @@ def apply_to_block(block, blks, rom_id, stats=None):
             dim = int(row["dimension"])
             name = f"Table {dim}D - 0x{desc:x} (unlabeled)"
             cat = f"Unknown {dim}D"
-        desc_text = (f"[{MARKER}] Added from data/maps/{rom_id} extraction (descriptor 0x{desc:x}, "
+        desc_text = (f"[{MARKER}] added from data/maps/{rom_id} extraction: descriptor 0x{desc:x}, "
                      f"data 0x{row['data_i']:x}, dim {row['dimension']}, count {row['count']}, "
-                     f"type {row['type']}, scaled={row['scaled']}). No editor entry existed for this "
-                     f"descriptor. " +
-                     (_label_desc(label, desc_map.get(desc, desc), None, rom_id, desc) if label
-                      else "No reference-ROM label; unlabeled."))
+                     f"type {row['type']}, scaled={row['scaled']}"
+                     + (f"; {_label_desc(label, desc_map.get(desc, desc), None, rom_id, desc)}" if label
+                        else "; unlabeled"))
         el = _self_contained(row, rom, name, cat, desc_text)
         block.append(el)
         existing_names.add(name)

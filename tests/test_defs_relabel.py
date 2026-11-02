@@ -69,6 +69,10 @@ def test_merged_def_relabel_applied():
     by_desc, by_data = relabel.maps_index(relabel.REFERENCE)
     marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
     assert len(marked) >= 150, f"only {len(marked)} relabeled entries in merged def"
+    # AGENTS.md rule 6b: editor-facing descriptions stay concise — no source/evidence dumps
+    for t in marked:
+        d = t.findtext("description") or ""
+        assert "Evidence:" not in d and "Source:" not in d, f"{t.get('name')}: evidence/source in description"
     # every high/candidate label with a descriptor present in the block is applied
     applied = {t.get("name") for t in marked}
     for desc, lab in labels.items():
@@ -103,6 +107,9 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
             continue  # 60E32000_*: upstream block layout mismatch, documented
         marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
         assert len(marked) >= st["renamed"] + st["added"]
+        for t in marked:  # rule 6b: concise, no evidence/source
+            d = t.findtext("description") or ""
+            assert "Evidence:" not in d and "Source:" not in d, f"{stem}: {t.get('name')}"
         # every marked table's storageaddress is a real data address of this ROM
         _, by_data = relabel.maps_index(stem)
         for t in marked:
