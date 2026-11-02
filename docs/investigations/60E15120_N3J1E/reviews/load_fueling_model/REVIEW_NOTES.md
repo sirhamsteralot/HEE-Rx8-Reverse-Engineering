@@ -107,6 +107,9 @@ SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
 
 ### 0x306e8 ref_calcFuelVolumeRequest — ROM/disasm-verified
 - bed0 = load x 0.07196 (literal pointer @0x30830 -> 0x78170).
+  2026-11-02: this and the other verified literals are machine-extracted per ROM
+  into `data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`
+  (`utilities/scripts/extract_scalars.py`, tests/test_extract_scalars.py).
 - bed4 = lookup3d(RPM, load; 0x6ac88): RPM argument via fr4 delay slot at
   0x3070c (@0x30800 -> 0xb548); load already in fr5 from the bed0 multiply
   (0x306fe `fmul fr5,fr3` used 0xffffc0b4 via @0x307fe). The decompiler's
