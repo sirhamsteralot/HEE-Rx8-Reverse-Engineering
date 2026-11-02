@@ -94,6 +94,23 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 
 Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
+### 6a. Scalar constants — literal-pool float32s (2026-11-02)
+
+Descriptor tables are not the whole calibration surface: single float32
+constants live in shared literal pools and are referenced by literal pointers
+(e.g. 0x30830 → 0x78170). `utilities/scripts/extract_scalars.py` locates 13
+binary-verified seeds by exact big-endian bit pattern and writes
+`data/maps/<rom-id>/scalars.{json,tsv}` plus `data/maps/cross_rom_scalars.json`.
+On the reference ROM 60E15120_N3J1E the script asserts every documented
+address (e.g. **fuel_load_scale 0.07196 = 0x3d935fc4 @0x78170** — the scalar
+the whole fuel-volume request scales by, `fuel_load_scale_ffffbed0`; load cell
+scale 0.6345 = 0x3f226e98 @0x7a088). All 13 seeds are present in all 11 ROMs
+except `injector_flow_secondary_cc_min` (475.93), which 60E0E700_N3YLEE
+replaces with 608.0/626.224 at 0x76ccc-0x76cd0 — different secondary injectors
+on that market ROM. Seeds + evidence come from the
+[load & fuelling review validation](reviews/load_fueling_model/validation.json);
+tests in `tests/test_extract_scalars.py`.
+
 ### Cross-ROM diff (vs 60E15120_N3J1E, 305 unique shapes)
 
 | ROM | matched | unmatched ref | tables w/ diffs | diff cells |
@@ -115,10 +132,12 @@ generation (fewer structural matches).
 
 - `utilities/scripts/extract_maps.py` — scanner + extractor
 - `utilities/scripts/diff_maps.py` — cross-ROM diff
-- `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv)
+- `utilities/scripts/extract_scalars.py` — literal-pool scalar extractor (2026-11-02, see section 6a)
+- `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv, scalars.json + scalars.tsv)
 - `data/maps/cross_rom_diff.json` — cross-ROM diff report
-- `data/maps/README.md` — format docs + regeneration recipe
-- `tests/test_extract_maps.py` — 6 tests
+- `data/maps/cross_rom_scalars.json` — cross-ROM scalar address report
+- [data/maps README](../../../data/maps/README.md) — format docs + regeneration recipe
+- `tests/test_extract_maps.py` — 6 tests; `tests/test_extract_scalars.py` — 5 tests (2026-11-02)
 
 ## 8. Validation
 
@@ -128,6 +147,9 @@ generation (fewer structural matches).
 - **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
 - **All axes monotonic** across all 587 tables (strong false-positive filter).
 - **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
+- **Scalars (2026-11-02)**: 13 seed float32 patterns found in all 11 ROMs;
+  reference-ROM addresses asserted by `extract_scalars.py` and
+  `tests/test_extract_scalars.py` (5 tests, pass).
 - `validate_reports.py` PASS; `hash_binaries.py --check` OK.
 
 ## 9. Memory map for validation
