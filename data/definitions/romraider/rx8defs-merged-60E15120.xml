@@ -28494,84 +28494,226 @@
         <description>[60E15120 analysis 2026-09-18] Lookup descriptor 0x0006bbcc; 3D; data 0x0007cf58; counts [9, 9]; type/reserved byte 0 (float only for scaled dispatch; raw wrappers determine their own storage). Descriptor/data/axis/count correspondence verified against this ROM. Table purpose follows community definitions unless independently corroborated. [2026-09-30 review] Lookup path: rx8_lookup_3d_raw_u16. Effective storage: uint16.</description>
     </table>
     <table name="DTC 0300 Enable/Disable #1" storageaddress="0x7E678" />
+        <table name="DTC 0300 Enable/Disable #2" storageaddress="0x7E704" />
+        <table name="DTC 0300 Enable/Disable #3" storageaddress="0x7E790" />
     <table name="DTC 0300 Enable/Disable #1 [additional site 0x7e679]" storageaddress="0x7E679" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 0300 Enable/Disable #1 [additional site 0x7e679]"}</description>
     </table>
     <table name="DTC 0030 Enable/Disable #1" storageaddress="0x7E67A" />
+        <table name="DTC 0030 Enable/Disable #2" storageaddress="0x7E706" />
+        <table name="DTC 0030 Enable/Disable #3" storageaddress="0x7E792" />
     <table name="DTC 0031 Enable/Disable #1" storageaddress="0x7E67B" />
+        <table name="DTC 0031 Enable/Disable #2" storageaddress="0x7E707" />
+        <table name="DTC 0031 Enable/Disable #3" storageaddress="0x7E793" />
     <table name="DTC 0032 Enable/Disable #1" storageaddress="0x7E67C" />
+        <table name="DTC 0032 Enable/Disable #2" storageaddress="0x7E708" />
+        <table name="DTC 0032 Enable/Disable #3" storageaddress="0x7E794" />
     <table name="DTC 0037 Enable/Disable #1" storageaddress="0x7E67D" />
+        <table name="DTC 0037 Enable/Disable #2" storageaddress="0x7E709" />
+        <table name="DTC 0037 Enable/Disable #3" storageaddress="0x7E795" />
     <table name="DTC 0038 Enable/Disable #1" storageaddress="0x7E67E" />
+        <table name="DTC 0038 Enable/Disable #2" storageaddress="0x7E70A" />
+        <table name="DTC 0038 Enable/Disable #3" storageaddress="0x7E796" />
     <table name="DTC 0076 Enable/Disable #1" storageaddress="0x7E67F" />
+        <table name="DTC 0076 Enable/Disable #2" storageaddress="0x7E70B" />
+        <table name="DTC 0076 Enable/Disable #3" storageaddress="0x7E797" />
     <table name="DTC 0077 Enable/Disable #1" storageaddress="0x7E680" />
+        <table name="DTC 0077 Enable/Disable #2" storageaddress="0x7E70C" />
+        <table name="DTC 0077 Enable/Disable #3" storageaddress="0x7E798" />
     <table name="DTC 0101 Enable/Disable #1" storageaddress="0x7E681" />
+        <table name="DTC 0101 Enable/Disable #2" storageaddress="0x7E70D" />
+        <table name="DTC 0101 Enable/Disable #3" storageaddress="0x7E799" />
     <table name="DTC 0102 Enable/Disable #1" storageaddress="0x7E682" />
+        <table name="DTC 0102 Enable/Disable #2" storageaddress="0x7E70E" />
+        <table name="DTC 0102 Enable/Disable #3" storageaddress="0x7E79A" />
     <table name="DTC 0103 Enable/Disable #1" storageaddress="0x7E683" />
+        <table name="DTC 0103 Enable/Disable #2" storageaddress="0x7E70F" />
+        <table name="DTC 0103 Enable/Disable #3" storageaddress="0x7E79B" />
     <table name="DTC 0107 Enable/Disable #1" storageaddress="0x7E684" />
+        <table name="DTC 0107 Enable/Disable #2" storageaddress="0x7E710" />
+        <table name="DTC 0107 Enable/Disable #3" storageaddress="0x7E79C" />
     <table name="DTC 0108 Enable/Disable #1" storageaddress="0x7E685" />
+        <table name="DTC 0108 Enable/Disable #2" storageaddress="0x7E711" />
+        <table name="DTC 0108 Enable/Disable #3" storageaddress="0x7E79D" />
     <table name="DTC 0111 Enable/Disable #1" storageaddress="0x7E686" />
+        <table name="DTC 0111 Enable/Disable #2" storageaddress="0x7E712" />
+        <table name="DTC 0111 Enable/Disable #3" storageaddress="0x7E79E" />
     <table name="DTC 0112 Enable/Disable #1" storageaddress="0x7E687" />
+        <table name="DTC 0112 Enable/Disable #2" storageaddress="0x7E713" />
+        <table name="DTC 0112 Enable/Disable #3" storageaddress="0x7E79F" />
     <table name="DTC 0113 Enable/Disable #1" storageaddress="0x7E688" />
+        <table name="DTC 0113 Enable/Disable #2" storageaddress="0x7E714" />
+        <table name="DTC 0113 Enable/Disable #3" storageaddress="0x7E7A0" />
     <table name="DTC 0117 Enable/Disable #1" storageaddress="0x7E689" />
+        <table name="DTC 0117 Enable/Disable #2" storageaddress="0x7E715" />
+        <table name="DTC 0117 Enable/Disable #3" storageaddress="0x7E7A1" />
     <table name="DTC 0118 Enable/Disable #1" storageaddress="0x7E68A" />
+        <table name="DTC 0118 Enable/Disable #2" storageaddress="0x7E716" />
+        <table name="DTC 0118 Enable/Disable #3" storageaddress="0x7E7A2" />
     <table name="DTC 0122 Enable/Disable #1" storageaddress="0x7E68B" />
+        <table name="DTC 0122 Enable/Disable #2" storageaddress="0x7E717" />
+        <table name="DTC 0122 Enable/Disable #3" storageaddress="0x7E7A3" />
     <table name="DTC 0123 Enable/Disable #1" storageaddress="0x7E68C" />
+        <table name="DTC 0123 Enable/Disable #2" storageaddress="0x7E718" />
+        <table name="DTC 0123 Enable/Disable #3" storageaddress="0x7E7A4" />
     <table name="DTC 0125 Enable/Disable #1" storageaddress="0x7E68D" />
+        <table name="DTC 0125 Enable/Disable #2" storageaddress="0x7E719" />
+        <table name="DTC 0125 Enable/Disable #3" storageaddress="0x7E7A5" />
     <table name="DTC 0126 Enable/Disable #1" storageaddress="0x7E68E" />
+        <table name="DTC 0126 Enable/Disable #2" storageaddress="0x7E71A" />
+        <table name="DTC 0126 Enable/Disable #3" storageaddress="0x7E7A6" />
     <table name="DTC 0128 Enable/Disable #1" storageaddress="0x7E68F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 0128 Enable/Disable #1"}</description>
     </table>
     <table name="DTC 0130 Enable/Disable #1" storageaddress="0x7E690" />
+        <table name="DTC 0130 Enable/Disable #2" storageaddress="0x7E71C" />
+        <table name="DTC 0130 Enable/Disable #3" storageaddress="0x7E7A8" />
     <table name="DTC 0131 Enable/Disable #1" storageaddress="0x7E691" />
+        <table name="DTC 0131 Enable/Disable #2" storageaddress="0x7E71D" />
+        <table name="DTC 0131 Enable/Disable #3" storageaddress="0x7E7A9" />
     <table name="DTC 0132 Enable/Disable #1" storageaddress="0x7E692" />
+        <table name="DTC 0132 Enable/Disable #2" storageaddress="0x7E71E" />
+        <table name="DTC 0132 Enable/Disable #3" storageaddress="0x7E7AA" />
     <table name="DTC 0133 Enable/Disable #1" storageaddress="0x7E693" />
+        <table name="DTC 0133 Enable/Disable #2" storageaddress="0x7E71F" />
+        <table name="DTC 0133 Enable/Disable #3" storageaddress="0x7E7AB" />
     <table name="DTC 0138 Enable/Disable #1" storageaddress="0x7E694" />
+        <table name="DTC 0138 Enable/Disable #2" storageaddress="0x7E720" />
+        <table name="DTC 0138 Enable/Disable #3" storageaddress="0x7E7AC" />
     <table name="DTC 0139 Enable/Disable #1" storageaddress="0x7E695" />
+        <table name="DTC 0139 Enable/Disable #2" storageaddress="0x7E721" />
+        <table name="DTC 0139 Enable/Disable #3" storageaddress="0x7E7AD" />
     <table name="DTC 0171 Enable/Disable #1" storageaddress="0x7E696" />
+        <table name="DTC 0171 Enable/Disable #2" storageaddress="0x7E722" />
+        <table name="DTC 0171 Enable/Disable #3" storageaddress="0x7E7AE" />
     <table name="DTC 0172 Enable/Disable #1" storageaddress="0x7E697" />
+        <table name="DTC 0172 Enable/Disable #2" storageaddress="0x7E723" />
+        <table name="DTC 0172 Enable/Disable #3" storageaddress="0x7E7AF" />
     <table name="DTC 0222 Enable/Disable #1" storageaddress="0x7E698" />
+        <table name="DTC 0222 Enable/Disable #2" storageaddress="0x7E724" />
+        <table name="DTC 0222 Enable/Disable #3" storageaddress="0x7E7B0" />
     <table name="DTC 0223 Enable/Disable #1" storageaddress="0x7E699" />
+        <table name="DTC 0223 Enable/Disable #2" storageaddress="0x7E725" />
+        <table name="DTC 0223 Enable/Disable #3" storageaddress="0x7E7B1" />
     <table name="DTC 0327 Enable/Disable #1" storageaddress="0x7E69A" />
+        <table name="DTC 0327 Enable/Disable #2" storageaddress="0x7E726" />
+        <table name="DTC 0327 Enable/Disable #3" storageaddress="0x7E7B2" />
     <table name="DTC 0328 Enable/Disable #1" storageaddress="0x7E69B" />
+        <table name="DTC 0328 Enable/Disable #2" storageaddress="0x7E727" />
+        <table name="DTC 0328 Enable/Disable #3" storageaddress="0x7E7B3" />
     <table name="DTC 0335 Enable/Disable #1" storageaddress="0x7E69C" />
+        <table name="DTC 0335 Enable/Disable #2" storageaddress="0x7E728" />
+        <table name="DTC 0335 Enable/Disable #3" storageaddress="0x7E7B4" />
     <table name="DTC 0336 Enable/Disable #1" storageaddress="0x7E69D" />
+        <table name="DTC 0336 Enable/Disable #2" storageaddress="0x7E729" />
+        <table name="DTC 0336 Enable/Disable #3" storageaddress="0x7E7B5" />
     <table name="DTC 0351 Enable/Disable #1" storageaddress="0x7E69E" />
+        <table name="DTC 0351 Enable/Disable #2" storageaddress="0x7E72A" />
+        <table name="DTC 0351 Enable/Disable #3" storageaddress="0x7E7B6" />
     <table name="DTC 0352 Enable/Disable #1" storageaddress="0x7E69F" />
+        <table name="DTC 0352 Enable/Disable #2" storageaddress="0x7E72B" />
+        <table name="DTC 0352 Enable/Disable #3" storageaddress="0x7E7B7" />
     <table name="DTC 0353 Enable/Disable #1" storageaddress="0x7E6A0" />
+        <table name="DTC 0353 Enable/Disable #2" storageaddress="0x7E72C" />
+        <table name="DTC 0353 Enable/Disable #3" storageaddress="0x7E7B8" />
     <table name="DTC 0354 Enable/Disable #1" storageaddress="0x7E6A1" />
+        <table name="DTC 0354 Enable/Disable #2" storageaddress="0x7E72D" />
+        <table name="DTC 0354 Enable/Disable #3" storageaddress="0x7E7B9" />
     <table name="DTC 0410 Enable/Disable #1" storageaddress="0x7E6A2" />
+        <table name="DTC 0410 Enable/Disable #2" storageaddress="0x7E72E" />
+        <table name="DTC 0410 Enable/Disable #3" storageaddress="0x7E7BA" />
     <table name="DTC 0420 Enable/Disable #1" storageaddress="0x7E6A3" />
+        <table name="DTC 0420 Enable/Disable #2" storageaddress="0x7E72F" />
+        <table name="DTC 0420 Enable/Disable #3" storageaddress="0x7E7BB" />
     <table name="DTC 0441 Enable/Disable #1" storageaddress="0x7E6A4" />
+        <table name="DTC 0441 Enable/Disable #2" storageaddress="0x7E730" />
+        <table name="DTC 0441 Enable/Disable #3" storageaddress="0x7E7BC" />
     <table name="DTC 0442 Enable/Disable #1" storageaddress="0x7E6A5" />
+        <table name="DTC 0442 Enable/Disable #2" storageaddress="0x7E731" />
+        <table name="DTC 0442 Enable/Disable #3" storageaddress="0x7E7BD" />
     <table name="DTC 0443 Enable/Disable #1" storageaddress="0x7E6A6" />
+        <table name="DTC 0443 Enable/Disable #2" storageaddress="0x7E732" />
+        <table name="DTC 0443 Enable/Disable #3" storageaddress="0x7E7BE" />
     <table name="DTC 0446 Enable/Disable #1" storageaddress="0x7E6A7" />
+        <table name="DTC 0446 Enable/Disable #2" storageaddress="0x7E733" />
+        <table name="DTC 0446 Enable/Disable #3" storageaddress="0x7E7BF" />
     <table name="DTC 0455 Enable/Disable #1" storageaddress="0x7E6A8" />
+        <table name="DTC 0455 Enable/Disable #2" storageaddress="0x7E734" />
+        <table name="DTC 0455 Enable/Disable #3" storageaddress="0x7E7C0" />
     <table name="DTC 0456 Enable/Disable #1" storageaddress="0x7E6A9" />
+        <table name="DTC 0456 Enable/Disable #2" storageaddress="0x7E735" />
+        <table name="DTC 0456 Enable/Disable #3" storageaddress="0x7E7C1" />
     <table name="DTC 0461 Enable/Disable #1" storageaddress="0x7E6AA" />
+        <table name="DTC 0461 Enable/Disable #2" storageaddress="0x7E736" />
+        <table name="DTC 0461 Enable/Disable #3" storageaddress="0x7E7C2" />
     <table name="DTC 0462 Enable/Disable #1" storageaddress="0x7E6AB" />
+        <table name="DTC 0462 Enable/Disable #2" storageaddress="0x7E737" />
+        <table name="DTC 0462 Enable/Disable #3" storageaddress="0x7E7C3" />
     <table name="DTC 0463 Enable/Disable #1" storageaddress="0x7E6AC" />
+        <table name="DTC 0463 Enable/Disable #2" storageaddress="0x7E738" />
+        <table name="DTC 0463 Enable/Disable #3" storageaddress="0x7E7C4" />
     <table name="DTC 0480 Enable/Disable #1" storageaddress="0x7E6AD" />
+        <table name="DTC 0480 Enable/Disable #2" storageaddress="0x7E739" />
+        <table name="DTC 0480 Enable/Disable #3" storageaddress="0x7E7C5" />
     <table name="DTC 0481 Enable/Disable #1" storageaddress="0x7E6AE" />
+        <table name="DTC 0481 Enable/Disable #2" storageaddress="0x7E73A" />
+        <table name="DTC 0481 Enable/Disable #3" storageaddress="0x7E7C6" />
     <table name="DTC 0500 Enable/Disable #1" storageaddress="0x7E6AF" />
+        <table name="DTC 0500 Enable/Disable #2" storageaddress="0x7E73B" />
+        <table name="DTC 0500 Enable/Disable #3" storageaddress="0x7E7C7" />
     <table name="DTC 0505 Enable/Disable #1" storageaddress="0x7E6B0" />
+        <table name="DTC 0505 Enable/Disable #2" storageaddress="0x7E73C" />
+        <table name="DTC 0505 Enable/Disable #3" storageaddress="0x7E7C8" />
     <table name="DTC 0506 Enable/Disable #1" storageaddress="0x7E6B1" />
+        <table name="DTC 0506 Enable/Disable #2" storageaddress="0x7E73D" />
+        <table name="DTC 0506 Enable/Disable #3" storageaddress="0x7E7C9" />
     <table name="DTC 0507 Enable/Disable #1" storageaddress="0x7E6B2" />
+        <table name="DTC 0507 Enable/Disable #2" storageaddress="0x7E73E" />
+        <table name="DTC 0507 Enable/Disable #3" storageaddress="0x7E7CA" />
     <table name="DTC 0562 Enable/Disable #1" storageaddress="0x7E6B3" />
+        <table name="DTC 0562 Enable/Disable #2" storageaddress="0x7E73F" />
+        <table name="DTC 0562 Enable/Disable #3" storageaddress="0x7E7CB" />
     <table name="DTC 0564 Enable/Disable #1" storageaddress="0x7E6B4" />
+        <table name="DTC 0564 Enable/Disable #2" storageaddress="0x7E740" />
+        <table name="DTC 0564 Enable/Disable #3" storageaddress="0x7E7CC" />
     <table name="DTC 0571 Enable/Disable #1" storageaddress="0x7E6B5" />
+        <table name="DTC 0571 Enable/Disable #2" storageaddress="0x7E741" />
+        <table name="DTC 0571 Enable/Disable #3" storageaddress="0x7E7CD" />
     <table name="DTC 0601 Enable/Disable #1" storageaddress="0x7E6B6" />
+        <table name="DTC 0601 Enable/Disable #2" storageaddress="0x7E742" />
+        <table name="DTC 0601 Enable/Disable #3" storageaddress="0x7E7CE" />
     <table name="DTC 0602 Enable/Disable #1" storageaddress="0x7E6B7" />
+        <table name="DTC 0602 Enable/Disable #2" storageaddress="0x7E743" />
+        <table name="DTC 0602 Enable/Disable #3" storageaddress="0x7E7CF" />
     <table name="DTC 0604 Enable/Disable #1" storageaddress="0x7E6B8" />
+        <table name="DTC 0604 Enable/Disable #2" storageaddress="0x7E744" />
+        <table name="DTC 0604 Enable/Disable #3" storageaddress="0x7E7D0" />
     <table name="DTC 0610 Enable/Disable #1" storageaddress="0x7E6B9" />
+        <table name="DTC 0610 Enable/Disable #2" storageaddress="0x7E745" />
+        <table name="DTC 0610 Enable/Disable #3" storageaddress="0x7E7D1" />
     <table name="DTC 0638 Enable/Disable #1" storageaddress="0x7E6BA" />
+        <table name="DTC 0638 Enable/Disable #2" storageaddress="0x7E746" />
+        <table name="DTC 0638 Enable/Disable #3" storageaddress="0x7E7D2" />
     <table name="DTC 0661 Enable/Disable #1" storageaddress="0x7E6BB" />
+        <table name="DTC 0661 Enable/Disable #2" storageaddress="0x7E747" />
+        <table name="DTC 0661 Enable/Disable #3" storageaddress="0x7E7D3" />
     <table name="DTC 0662 Enable/Disable #1" storageaddress="0x7E6BC" />
+        <table name="DTC 0662 Enable/Disable #2" storageaddress="0x7E748" />
+        <table name="DTC 0662 Enable/Disable #3" storageaddress="0x7E7D4" />
     <table name="DTC 0703 Enable/Disable #1" storageaddress="0x7E6BD" />
+        <table name="DTC 0703 Enable/Disable #2" storageaddress="0x7E749" />
+        <table name="DTC 0703 Enable/Disable #3" storageaddress="0x7E7D5" />
     <table name="DTC 0704 Enable/Disable #1" storageaddress="0x7E6BE" />
+        <table name="DTC 0704 Enable/Disable #2" storageaddress="0x7E74A" />
+        <table name="DTC 0704 Enable/Disable #3" storageaddress="0x7E7D6" />
     <table name="DTC 0850 Enable/Disable #1" storageaddress="0x7E6BF" />
+        <table name="DTC 0850 Enable/Disable #2" storageaddress="0x7E74B" />
+        <table name="DTC 0850 Enable/Disable #3" storageaddress="0x7E7D7" />
     <table name="DTC 1260 Enable/Disable #1" storageaddress="0x7E6C0" />
+        <table name="DTC 1260 Enable/Disable #2" storageaddress="0x7E74C" />
+        <table name="DTC 1260 Enable/Disable #3" storageaddress="0x7E7D8" />
     <table name="DTC 1574 Enable/Disable #1" storageaddress="0x7E6C1" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 1574 Enable/Disable #1"}</description>
@@ -28581,55 +28723,131 @@
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 1577 Enable/Disable #1"}</description>
     </table>
     <table name="DTC 1686 Enable/Disable #1" storageaddress="0x7E6C3" />
+        <table name="DTC 1686 Enable/Disable #2" storageaddress="0x7E74F" />
+        <table name="DTC 1686 Enable/Disable #3" storageaddress="0x7E7DB" />
     <table name="DTC 1687 Enable/Disable #1" storageaddress="0x7E6C4" />
+        <table name="DTC 1687 Enable/Disable #2" storageaddress="0x7E750" />
+        <table name="DTC 1687 Enable/Disable #3" storageaddress="0x7E7DC" />
     <table name="DTC 1688 Enable/Disable #1" storageaddress="0x7E6C5" />
+        <table name="DTC 1688 Enable/Disable #2" storageaddress="0x7E751" />
+        <table name="DTC 1688 Enable/Disable #3" storageaddress="0x7E7DD" />
     <table name="DTC 2004 Enable/Disable #1" storageaddress="0x7E6C6" />
+        <table name="DTC 2004 Enable/Disable #2" storageaddress="0x7E752" />
+        <table name="DTC 2004 Enable/Disable #3" storageaddress="0x7E7DE" />
     <table name="DTC 2006 Enable/Disable #1" storageaddress="0x7E6C7" />
+        <table name="DTC 2006 Enable/Disable #2" storageaddress="0x7E753" />
+        <table name="DTC 2006 Enable/Disable #3" storageaddress="0x7E7DF" />
     <table name="DTC 2008 Enable/Disable #1" storageaddress="0x7E6C8" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 2008 Enable/Disable #1"}</description>
     </table>
     <table name="DTC 2017 Enable/Disable #1" storageaddress="0x7E6C9" />
+        <table name="DTC 2017 Enable/Disable #2" storageaddress="0x7E755" />
+        <table name="DTC 2017 Enable/Disable #3" storageaddress="0x7E7E1" />
     <table name="DTC 2070 Enable/Disable #1" storageaddress="0x7E6CA" />
+        <table name="DTC 2070 Enable/Disable #2" storageaddress="0x7E756" />
+        <table name="DTC 2070 Enable/Disable #3" storageaddress="0x7E7E2" />
     <table name="DTC 2096 Enable/Disable #1" storageaddress="0x7E6CB" />
+        <table name="DTC 2096 Enable/Disable #2" storageaddress="0x7E757" />
+        <table name="DTC 2096 Enable/Disable #3" storageaddress="0x7E7E3" />
     <table name="DTC 2097 Enable/Disable #1" storageaddress="0x7E6CC" />
+        <table name="DTC 2097 Enable/Disable #2" storageaddress="0x7E758" />
+        <table name="DTC 2097 Enable/Disable #3" storageaddress="0x7E7E4" />
     <table name="DTC 2101 Enable/Disable #1" storageaddress="0x7E6CD" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 2101 Enable/Disable #1"}</description>
     </table>
     <table name="DTC 2106 Enable/Disable #1" storageaddress="0x7E6CE" />
+        <table name="DTC 2106 Enable/Disable #2" storageaddress="0x7E75A" />
+        <table name="DTC 2106 Enable/Disable #3" storageaddress="0x7E7E6" />
     <table name="DTC 2107 Enable/Disable #1" storageaddress="0x7E6CF" />
+        <table name="DTC 2107 Enable/Disable #2" storageaddress="0x7E75B" />
+        <table name="DTC 2107 Enable/Disable #3" storageaddress="0x7E7E7" />
     <table name="DTC 2108 Enable/Disable #1" storageaddress="0x7E6D0" />
+        <table name="DTC 2108 Enable/Disable #2" storageaddress="0x7E75C" />
+        <table name="DTC 2108 Enable/Disable #3" storageaddress="0x7E7E8" />
     <table name="DTC 2109 Enable/Disable #1" storageaddress="0x7E6D1" />
+        <table name="DTC 2109 Enable/Disable #2" storageaddress="0x7E75D" />
+        <table name="DTC 2109 Enable/Disable #3" storageaddress="0x7E7E9" />
     <table name="DTC 2112 Enable/Disable #1" storageaddress="0x7E6D2" />
+        <table name="DTC 2112 Enable/Disable #2" storageaddress="0x7E75E" />
+        <table name="DTC 2112 Enable/Disable #3" storageaddress="0x7E7EA" />
     <table name="DTC 2119 Enable/Disable #1" storageaddress="0x7E6D3" />
+        <table name="DTC 2119 Enable/Disable #2" storageaddress="0x7E75F" />
+        <table name="DTC 2119 Enable/Disable #3" storageaddress="0x7E7EB" />
     <table name="DTC 2122 Enable/Disable #1" storageaddress="0x7E6D4" />
+        <table name="DTC 2122 Enable/Disable #2" storageaddress="0x7E760" />
+        <table name="DTC 2122 Enable/Disable #3" storageaddress="0x7E7EC" />
     <table name="DTC 2123 Enable/Disable #1" storageaddress="0x7E6D5" />
+        <table name="DTC 2123 Enable/Disable #2" storageaddress="0x7E761" />
+        <table name="DTC 2123 Enable/Disable #3" storageaddress="0x7E7ED" />
     <table name="DTC 2127 Enable/Disable #1" storageaddress="0x7E6D6" />
+        <table name="DTC 2127 Enable/Disable #2" storageaddress="0x7E762" />
+        <table name="DTC 2127 Enable/Disable #3" storageaddress="0x7E7EE" />
     <table name="DTC 2128 Enable/Disable #1" storageaddress="0x7E6D7" />
+        <table name="DTC 2128 Enable/Disable #2" storageaddress="0x7E763" />
+        <table name="DTC 2128 Enable/Disable #3" storageaddress="0x7E7EF" />
     <table name="DTC 2135 Enable/Disable #1" storageaddress="0x7E6D8" />
+        <table name="DTC 2135 Enable/Disable #2" storageaddress="0x7E764" />
+        <table name="DTC 2135 Enable/Disable #3" storageaddress="0x7E7F0" />
     <table name="DTC 2136 Enable/Disable #1" storageaddress="0x7E6D9" />
+        <table name="DTC 2136 Enable/Disable #2" storageaddress="0x7E765" />
+        <table name="DTC 2136 Enable/Disable #3" storageaddress="0x7E7F1" />
     <table name="DTC 2138 Enable/Disable #1" storageaddress="0x7E6DA" />
+        <table name="DTC 2138 Enable/Disable #2" storageaddress="0x7E766" />
+        <table name="DTC 2138 Enable/Disable #3" storageaddress="0x7E7F2" />
     <table name="DTC 2195 Enable/Disable #1" storageaddress="0x7E6DB" />
+        <table name="DTC 2195 Enable/Disable #2" storageaddress="0x7E767" />
+        <table name="DTC 2195 Enable/Disable #3" storageaddress="0x7E7F3" />
     <table name="DTC 2196 Enable/Disable #1" storageaddress="0x7E6DC" />
+        <table name="DTC 2196 Enable/Disable #2" storageaddress="0x7E768" />
+        <table name="DTC 2196 Enable/Disable #3" storageaddress="0x7E7F4" />
     <table name="DTC 2257 Enable/Disable #1" storageaddress="0x7E6DD" />
+        <table name="DTC 2257 Enable/Disable #2" storageaddress="0x7E769" />
+        <table name="DTC 2257 Enable/Disable #3" storageaddress="0x7E7F5" />
     <table name="DTC 2258 Enable/Disable #1" storageaddress="0x7E6DE" />
+        <table name="DTC 2258 Enable/Disable #2" storageaddress="0x7E76A" />
+        <table name="DTC 2258 Enable/Disable #3" storageaddress="0x7E7F6" />
     <table name="DTC 2259 Enable/Disable #1" storageaddress="0x7E6DF" />
+        <table name="DTC 2259 Enable/Disable #2" storageaddress="0x7E76B" />
+        <table name="DTC 2259 Enable/Disable #3" storageaddress="0x7E7F7" />
     <table name="DTC 2260 Enable/Disable #1" storageaddress="0x7E6E0" />
+        <table name="DTC 2260 Enable/Disable #2" storageaddress="0x7E76C" />
+        <table name="DTC 2260 Enable/Disable #3" storageaddress="0x7E7F8" />
     <table name="DTC 2270 Enable/Disable #1" storageaddress="0x7E6E1" />
+        <table name="DTC 2270 Enable/Disable #2" storageaddress="0x7E76D" />
+        <table name="DTC 2270 Enable/Disable #3" storageaddress="0x7E7F9" />
     <table name="DTC 2271 Enable/Disable #1" storageaddress="0x7E6E2" />
+        <table name="DTC 2271 Enable/Disable #2" storageaddress="0x7E76E" />
+        <table name="DTC 2271 Enable/Disable #3" storageaddress="0x7E7FA" />
     <table name="DTC 2401 Enable/Disable #1" storageaddress="0x7E6E3" />
+        <table name="DTC 2401 Enable/Disable #2" storageaddress="0x7E76F" />
+        <table name="DTC 2401 Enable/Disable #3" storageaddress="0x7E7FB" />
     <table name="DTC 2402 Enable/Disable #1" storageaddress="0x7E6E4" />
+        <table name="DTC 2402 Enable/Disable #2" storageaddress="0x7E770" />
+        <table name="DTC 2402 Enable/Disable #3" storageaddress="0x7E7FC" />
     <table name="DTC 2404 Enable/Disable #1" storageaddress="0x7E6E5" />
+        <table name="DTC 2404 Enable/Disable #2" storageaddress="0x7E771" />
+        <table name="DTC 2404 Enable/Disable #3" storageaddress="0x7E7FD" />
     <table name="DTC 2405 Enable/Disable #1" storageaddress="0x7E6E6" />
+        <table name="DTC 2405 Enable/Disable #2" storageaddress="0x7E772" />
+        <table name="DTC 2405 Enable/Disable #3" storageaddress="0x7E7FE" />
     <table name="DTC 2406 Enable/Disable #1" storageaddress="0x7E6E7" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 2406 Enable/Disable #1"}</description>
     </table>
     <table name="DTC 2407 Enable/Disable #1" storageaddress="0x7E6E8" />
+        <table name="DTC 2407 Enable/Disable #2" storageaddress="0x7E774" />
+        <table name="DTC 2407 Enable/Disable #3" storageaddress="0x7E800" />
     <table name="DTC 2502 Enable/Disable #1" storageaddress="0x7E6E9" />
+        <table name="DTC 2502 Enable/Disable #2" storageaddress="0x7E775" />
+        <table name="DTC 2502 Enable/Disable #3" storageaddress="0x7E801" />
     <table name="DTC 2503 Enable/Disable #1" storageaddress="0x7E6EA" />
+        <table name="DTC 2503 Enable/Disable #2" storageaddress="0x7E776" />
+        <table name="DTC 2503 Enable/Disable #3" storageaddress="0x7E802" />
     <table name="DTC 2504 Enable/Disable #1" storageaddress="0x7E6EB" />
+        <table name="DTC 2504 Enable/Disable #2" storageaddress="0x7E777" />
+        <table name="DTC 2504 Enable/Disable #3" storageaddress="0x7E803" />
     <table name="DTC c073 Enable/Disable #1" storageaddress="0x7E6EC" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC c073 Enable/Disable #1"}</description>
@@ -28650,6 +28868,30 @@
         <description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC c167 Enable/Disable #1"}</description>
     </table>
+        <table name="DTC 0300 Enable/Disable #2 [additional site 0x7E705]" storageaddress="0x7E705" />
+        <table name="DTC 0300 Enable/Disable #3 [additional site 0x7E791]" storageaddress="0x7E791" />
+        <table name="DTC 0128 Enable/Disable #2" storageaddress="0x7E71B" />
+        <table name="DTC 0128 Enable/Disable #3" storageaddress="0x7E7A7" />
+        <table name="DTC 1574 Enable/Disable #2" storageaddress="0x7E74D" />
+        <table name="DTC 1574 Enable/Disable #3" storageaddress="0x7E7D9" />
+        <table name="DTC 1577 Enable/Disable #2" storageaddress="0x7E74E" />
+        <table name="DTC 1577 Enable/Disable #3" storageaddress="0x7E7DA" />
+        <table name="DTC 2008 Enable/Disable #2" storageaddress="0x7E754" />
+        <table name="DTC 2008 Enable/Disable #3" storageaddress="0x7E7E0" />
+        <table name="DTC 2101 Enable/Disable #2" storageaddress="0x7E759" />
+        <table name="DTC 2101 Enable/Disable #3" storageaddress="0x7E7E5" />
+        <table name="DTC 2406 Enable/Disable #2" storageaddress="0x7E773" />
+        <table name="DTC 2406 Enable/Disable #3" storageaddress="0x7E7FF" />
+        <table name="DTC C073 Enable/Disable #2" storageaddress="0x7E778" />
+        <table name="DTC C073 Enable/Disable #3" storageaddress="0x7E804" />
+        <table name="DTC C101 Enable/Disable #2" storageaddress="0x7E779" />
+        <table name="DTC C101 Enable/Disable #3" storageaddress="0x7E805" />
+        <table name="DTC C121 Enable/Disable #2" storageaddress="0x7E77A" />
+        <table name="DTC C121 Enable/Disable #3" storageaddress="0x7E806" />
+        <table name="DTC C155 Enable/Disable #2" storageaddress="0x7E77B" />
+        <table name="DTC C155 Enable/Disable #3" storageaddress="0x7E807" />
+        <table name="DTC C167 Enable/Disable #2" storageaddress="0x7E77C" />
+        <table name="DTC C167 Enable/Disable #3" storageaddress="0x7E808" />
 </rom>
 	
 	<rom base="Rx8Base">

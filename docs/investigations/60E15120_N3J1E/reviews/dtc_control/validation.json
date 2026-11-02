@@ -46,7 +46,9 @@
       "60E1D400": "112 mismatches (#1/#2): def carries 14 codes absent from this ROM, shifting from slot 17"
     },
     "not_bound_in_per_rom_defs": "60E15120_N3J1E and 60E0G500_N3ZHEC bind #1 only (#2 at +0x8c, #3 at +0x118 exist in ROM but unbound); 60E0E500/60E1C500_N3J6EB have no per-rom XML",
-    "detail": "defs_audit_detail.json; summary data/dtc/defs_audit.tsv"
+    "detail": "defs_audit_detail.json; summary data/dtc/defs_audit.tsv",
+    "status": "REPAIRED 2026-11-01: repair_dtc_tables() in extend_defs_all_roms.py rebuilds all per-ROM DTC #N entries from the ROM layout; post-repair audit = 0 mismatches for all 9 per-rom defs (#1/#2/#3) and the merged 60E15120 block (363 entries). Pre-repair detail kept in defs_audit_detail.json.",
+    "post_repair": "data/dtc/defs_audit.tsv regenerated: all zeros"
   },
   "pipeline_validators": {
     "validate_export.py": "PASS (run 2026-11-01)",
