@@ -3,7 +3,7 @@
 void FUN_00005ec8(void)
 
 {
-  FUN_00005348(0xe0);
+  fatal_interrupt_trap(0xe0);
   return;
 }
 

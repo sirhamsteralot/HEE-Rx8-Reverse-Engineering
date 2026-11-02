@@ -22,7 +22,7 @@ uint obd_mode04_clear_dtc(short param_1,uint param_2)
       DAT_ffffd958 = 1;
       local_24 = 4;
       ppuStack_20 = &PTR_ref_LongFunc_0000ff00;
-      ref_osTaskScheduler(2,3);
+      os_schedule_task_event(2,3);
       local_2c[0] = 0x44;
       param_2 = ref_setupForUdsResponse_(4,local_2c,1);
     }

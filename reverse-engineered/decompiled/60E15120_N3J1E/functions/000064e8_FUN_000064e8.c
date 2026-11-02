@@ -3,10 +3,10 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000064e8 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000064e8(void)
+void slow_task_entry(void)
 
 {
-  FUN_00011534();
+  slow_background_task();
   ref_taskEndRoutine_();
   return;
 }

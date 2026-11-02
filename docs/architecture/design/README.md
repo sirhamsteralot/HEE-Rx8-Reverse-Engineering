@@ -39,8 +39,9 @@ The firmware has four entry mechanisms, all visible in the export:
 2. **Periodic timer interrupts**: ATU-II channel 10B compare **CMI10B**
    (IVT offset 0x2c8 at VBR 0x7fc50 → trampoline 0x2ec0 → handler **0x5b3c**)
    is the crank-angle-synchronous OS tick (see §4). Note: the inherited label
-   `ref_INT_ATU101_IMI10AG`/`vector_INT_ATU101_CMI10B` at 0x803e is a **dead
-   duplicate** of the rpm math — nothing calls it; the live path is
+   `ref_INT_ATU101_IMI10AG`/`vector_INT_ATU101_CMI10B` at 0x803e is the **default
+   (VBR=0) vector-table entry** (ROM slot 0x2c8) — superseded once VBR=0x7fc50 is set;
+   the live path is
    0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc
    (2026-11-02 re-check, see [the OS scheduling deep dive](../../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)).
    ATU102 IMI10AG (vector 0x2d0 → 0x9fc `INT_ATU102_IMI10AG`, 210 bytes, also

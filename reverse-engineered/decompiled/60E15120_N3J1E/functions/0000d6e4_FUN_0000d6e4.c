@@ -10,8 +10,8 @@ int FUN_0000d6e4(void)
   char cStack_8;
   
   ref_setSR_PARAM(&local_c,0xe0);
-  cStack_8 = DAT_ffffa3fc;
-  DAT_ffffa3fc = 0;
+  cStack_8 = crank_tick_flag_ffffa3fc;
+  crank_tick_flag_ffffa3fc = 0;
   FUN_00002064(local_c);
   return (int)cStack_8;
 }

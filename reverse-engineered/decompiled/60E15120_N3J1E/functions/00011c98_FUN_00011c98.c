@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00011d10 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00011c98(void)
+void crank_tick_message_handler(void)
 
 {
   FUN_000287aa();

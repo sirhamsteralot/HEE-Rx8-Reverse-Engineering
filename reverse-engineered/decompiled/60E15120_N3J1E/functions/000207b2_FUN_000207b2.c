@@ -25,7 +25,7 @@ uint FUN_000207b2(void)
   uVar2 = (uint)DAT_ffffb264;
   if (uVar2 == 1) {
     if (DAT_ffffb25d < 5) {
-      ref_osTaskScheduler(0,4);
+      os_schedule_task_event(0,4);
       DAT_ffffb25d = rx8_add_u8_saturate((int)(char)DAT_ffffb25d,1);
     }
     else {

@@ -7,7 +7,7 @@ void FUN_000053d2(void)
 
 {
   ISR_W = 0xbf;
-  FUN_00005348(0x41);
+  fatal_interrupt_trap(0x41);
   return;
 }
 

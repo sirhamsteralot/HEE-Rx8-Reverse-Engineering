@@ -16,7 +16,7 @@ void FUN_00003f10(int param_1)
     sVar1 = *psVar2;
     psVar2 = psVar2 + 1;
     (&PTR_DAT_00004994)[sVar1 * 4][3] = (&PTR_DAT_00004994)[sVar1 * 4][3] + -1;
-    FUN_000039ba(param_1,(int)sVar1,(int)(char)(&DAT_00004992)[sVar1 * 0x10]);
+    os_mark_task_ready(param_1,(int)sVar1,(int)(char)(&DAT_00004992)[sVar1 * 0x10]);
   }
   return;
 }

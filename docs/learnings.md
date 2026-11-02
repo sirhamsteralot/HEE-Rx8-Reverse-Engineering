@@ -357,8 +357,11 @@ Session gotchas worth keeping:
   have real handlers (CMI10B 0x5b3c, 6x ATU ch8 injector compares 0x59a4-0x59ea,
   knock ADC 0x5a4c, ch3/ch9, 3x ADC EOC, CMCSR1 0x5cee, IRQ 0x53f6, CAN
   0x378/0x37c/0x398). Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
-- **0x803e is dead code**: the inherited `ref_INT_ATU101_IMI10AG`/`vector_INT_ATU101_CMI10B`
-  labels point at an uncalled duplicate of the rpm math. Live path: CMI10B handler
+- **0x803e is the pre-VBR (VBR=0) CMI10B vector target**: base IVT slot 0x2c8 (u32 at
+  ROM 0x2c8 = 0x803e) — that's where the inherited `vector_INT_ATU101_CMI10B` label comes
+  from; after `ldc vbr, 0x7fc50` (0xd206) the relocated table's trampoline 0x2ec0 →
+  handler 0x5b3c runs instead, and 0x803e (a duplicate of the rpm math) never executes.
+  Live path: CMI10B handler
   0x5b3c -> 0x75f4 -> 0x77f0 -> 0x7c68 (`ref_geteShaftAngle_`) -> 0x7fcc
   (`ref_getCrankAngle`: ring 0xffff9fd0 append, rpm = 1.2e8/sum -> 0xffff9f80).
   Check "callers" via pool-word scan, not just callgraph.tsv (jmp/pointer calls are

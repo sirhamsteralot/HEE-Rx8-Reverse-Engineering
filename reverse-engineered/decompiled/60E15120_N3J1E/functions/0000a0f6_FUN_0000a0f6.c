@@ -10,7 +10,7 @@ undefined4 FUN_0000a0f6(undefined4 param_1)
   undefined4 local_8 [2];
   
   local_8[0] = param_1;
-  uVar1 = ref_osTaskScheduler(1,7,local_8);
+  uVar1 = os_schedule_task_event(1,7,local_8);
   return uVar1;
 }
 

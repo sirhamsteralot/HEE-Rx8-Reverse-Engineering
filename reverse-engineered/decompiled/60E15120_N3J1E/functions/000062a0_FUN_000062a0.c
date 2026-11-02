@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000062a0 (192 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000062a0(void)
+void task0_background_loop(void)
 
 {
   byte bVar1;

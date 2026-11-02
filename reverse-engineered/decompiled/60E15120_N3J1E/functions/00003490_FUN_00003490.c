@@ -27,7 +27,7 @@ undefined4 FUN_00003490(char param_1)
     }
     else {
       os_state_flags_ffff7640 = 0x100;
-      FUN_00003bf4(&os_ctrl_block_ffff7638,uVar5,os_task_table_ptr_ffff7650);
+      os_context_switch(&os_ctrl_block_ffff7638,uVar5,os_task_table_ptr_ffff7650);
     }
   }
   else {
@@ -41,7 +41,7 @@ undefined4 FUN_00003490(char param_1)
       ref_consistencyCheck(&os_ctrl_block_ffff7638,(int)cVar1);
       if (((*(char *)(snapshot_DAT_ffff7650 + 1) == '\0') && (os_scheduled_count_ffff763c != os_dispatched_count_ffff763e)) &&
          ((os_state_flags_ffff7640 & 0x1000) == 0)) {
-        FUN_00003bf4(&os_ctrl_block_ffff7638,uVar5,snapshot_DAT_ffff7650);
+        os_context_switch(&os_ctrl_block_ffff7638,uVar5,snapshot_DAT_ffff7650);
       }
       else {
         os_state_flags_ffff7640 = os_state_flags_ffff7640 - 0x100;

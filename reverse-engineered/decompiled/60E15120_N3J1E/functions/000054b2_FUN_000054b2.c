@@ -7,7 +7,7 @@ void FUN_000054b2(void)
 
 {
   ATUII_TSR0_W = 0xfb;
-  FUN_00005348(0x58);
+  fatal_interrupt_trap(0x58);
   return;
 }
 

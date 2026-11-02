@@ -4,7 +4,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000075f4 (48 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000075f4(void)
+void cmi10b_tick_service(void)
 
 {
   if (DAT_ffff9fa5 == '\0') {
@@ -13,7 +13,7 @@ void FUN_000075f4(void)
     crank_capture_poll();
     FUN_00007be4();
   }
-  FUN_00007b58();
+  ch10b_compare_rearm();
   return;
 }
 
