@@ -255,8 +255,12 @@ and where artifacts live. Groups A–D are complete (see §Completed above, item
 ### E. Reimplementation coverage (P4) — depends on C (done)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
-  subsystem (`rx8_math`, `rx8_apv` done) with host tests **and** emulator
-  cross-checks (`harness.py` + `tests/test_phase1_dynamic.py` pattern).
+  subsystem (`rx8_math`, `rx8_apv` done; 2026-11-02: `rx8_knock` — retard state
+  machine 0x13a60/0x13b40 + `rx8_add_u8_saturate` 0x2478 — with host tests and
+  `tests/test_knock_retard_dynamic.py` emulator cross-checks) with host tests
+  **and** emulator cross-checks (`harness.py` + `tests/test_phase1_dynamic.py`
+  pattern). Remaining subsystems: fueling chain, load model, ignition timing,
+  intake solenoids, limiter.
 
 ### F. Toward hardware (P6) — GATED
 
