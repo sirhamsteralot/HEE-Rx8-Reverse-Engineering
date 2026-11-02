@@ -22,11 +22,11 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 | A | P3 | Calibration extraction → `data/maps/` | DONE 2026-10-31 |
 | B | P1 residual | Emulator fidelity + Renesas cross-check | DONE 2026-10-31, except E4/E6 partials (register) |
 | C | P2 residual | Static labeling & gap closure, items 1–6 | DONE 2026-10-31 |
-| D | P2/P5 | Cross-ROM propagation | items 1–4 DONE 2026-10-31/2026-11-01 |
+| D | P2/P5 | Cross-ROM propagation | items 1–5 DONE 2026-10-31/2026-11-02 |
 | E | P4 | Reimplementation coverage | open (dependency C is done) |
 | F | P6 | Toward hardware | open, **GATED** (AGENTS.md rule 10) |
 
-Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (item 4 = per-ROM defs + D8, 2026-11-01).
+Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (items 1–5: item 4 = per-ROM defs + D8, 2026-11-01; item 5 = defs relabel/regroup pass, 2026-11-02).
 
 ---
 
@@ -251,6 +251,21 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
 - D8 closed with it: 4 local copies blob-identical to the pinned submodule deleted
   (ecuflash ×2, logger ×2); `upstream-rx8defs/rx8_defs.xml` kept (= upstream
   `ff5ab4f`, differs from pinned HEAD).
+
+#### D item 5 — defs relabel/regroup pass from all labeling passes — DONE 2026-11-02
+
+- Curated 112-descriptor label map (name + category + evidence + confidence) built from the
+  knock/ignition/fueling `lookup_aliases` + subsystem reports →
+  `data/labels/60E15120_N3J1E/defs_table_labels.json` (builder:
+  `utilities/scripts/defs-merge/build_table_labels.py`).
+- Applied to the reviewed merged def's 60E15120 block (78 renamed + regrouped, 96 unmapped
+  extracted tables added; 879 → 975 tables) via surgical splice
+  (`relabel_merged_def.py` + shared `relabel.py`) and propagated cross-ROM into the per-ROM
+  defs at generation time (263 renamed + 245 added across 8 ROMs; 60E32000_N3M5E/N3N5EB
+  skipped — upstream block addresses don't join either variant's `data/maps`, recorded in
+  `coverage.json`). Names/categories/descriptions only; zero address/axis/scaling changes
+  (invariant-tested, `tests/test_defs_relabel.py`; 78/78 pytest).
+  → [defs-merge/relabel_2026-11-02.md](docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
 
 ## Open work — pick up here
 
