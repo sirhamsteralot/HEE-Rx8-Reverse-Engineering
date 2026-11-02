@@ -28,7 +28,7 @@
       {
         "record": "00004990",
         "entry": "000062a0",
-        "entry_name": "FUN_000062a0",
+        "entry_name": "task0_background_loop",
         "mask": "0x01000000",
         "param": "0x04000000",
         "stack": "0xffff7408"
@@ -36,7 +36,7 @@
       {
         "record": "000049a0",
         "entry": "0000969e",
-        "entry_name": "FUN_0000969e",
+        "entry_name": "msg_queue_task_slot0",
         "mask": "0x0a000000",
         "param": "0x04000400",
         "stack": "0xffff7410"
@@ -52,7 +52,7 @@
       {
         "record": "000049c0",
         "entry": "000096de",
-        "entry_name": "FUN_000096de",
+        "entry_name": "msg_queue_task_slot2",
         "mask": "0x1e000000",
         "param": "0x04000200",
         "stack": "0xffff7420"
@@ -60,7 +60,7 @@
       {
         "record": "000049d0",
         "entry": "000096fe",
-        "entry_name": "FUN_000096fe",
+        "entry_name": "msg_queue_task_slot3",
         "mask": "0x64000000",
         "param": "0x04000100",
         "stack": "0xffff7428"
@@ -172,7 +172,7 @@
       {
         "record": "00004ab0",
         "entry": "000064e8",
-        "entry_name": "FUN_000064e8",
+        "entry_name": "slow_task_entry",
         "mask": "0x02000000",
         "param": "0x04000100",
         "stack": "0xffff7498"
@@ -212,7 +212,7 @@
     },
     {
       "address": "00005348",
-      "name": "FUN_00005348",
+      "name": "fatal_interrupt_trap",
       "callers": 99
     },
     {

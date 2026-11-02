@@ -7,6 +7,8 @@ Verification that reimplemented/derived behavior matches the original binaries.
 - Host unit tests for reimplemented helpers live next to the code:
   - `reverse-engineered/reimplementation/test_rx8_math.c`
   - `reverse-engineered/reimplementation/test_rx8_apv.c`
+  - `reverse-engineered/reimplementation/test_rx8_knock.c` (knock-retard state
+    machine 0x13a60/0x13b40; build with `rx8_math.c` + `rx8_knock.c`)
 
   Build/run (C11, strict warnings, no FP contraction so results are comparable):
 
@@ -44,8 +46,13 @@ Verification that reimplemented/derived behavior matches the original binaries.
   ADC read path, RCAN RX/TX, Mode 22 dispatch), `tests/test_agent_tools.py`
   (`hee.py` CLI), `tests/test_extract_maps.py` (calibration descriptor scanner),
   `tests/test_emu_fidelity.py` (E1 f32 rounding, E7 div1/rotcr, interrupt
-  masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader).
-  58 tests as of 2026-10-31.
-- Host C tests need a machine with a working C toolchain (the current Windows
-  box has MSVC cl.exe but no VC headers, and no mingw gcc) — until then the
-  emulator cross-check uses a float32 Python port of the reimplementation.
+  masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader),
+  `tests/test_knock_retard_dynamic.py` (knock-retard state machine 0x13a60/0x13b40
+  vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port).
+  68 tests as of 2026-11-02, all passing. The 4 tests touching
+  `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
+  (`git lfs pull`); without it they fail on the manifest hash check.
+- Host C tests need a machine with a working C toolchain. The Windows box has
+  MSVC cl.exe but no VC headers and no mingw gcc, so there the emulator
+  cross-check uses a float32 Python port of the reimplementation instead; on
+  this Linux box `cc` (GCC) runs the host tests directly.

@@ -2,7 +2,8 @@
 
 The export contains **3,355 identified functions** decompiled from the target ROM.
 This is reverse-engineering analysis C, **not the original source or a buildable
-replacement ROM**. Five small routines have also been rewritten as compilable C.
+replacement ROM**. A set of small routines has also been rewritten as compilable
+C — see [`reverse-engineered/reimplementation/`](../../../reverse-engineered/reimplementation/README.md).
 
 ## Wiring-assisted extension
 
@@ -93,6 +94,18 @@ Full write-up: [`reviews/knock_control/README.md`](reviews/knock_control/README.
 `metadata/knock_loop_labels.json`; design update: `design/README.md` section 5.7;
 pre-change backup: `backups/pre_knock_loop_labels.zip`.
 
+### Knock retard reimplementation — 2026-11-02 (ROADMAP E item 1, PR #13)
+
+The retard state machine (0x13a60 attack / 0x13b40 slow recovery / 0x13bd2
+clamp, plus `rx8_add_u8_saturate` 0x2478) is reimplemented as host-testable C
+in [`reverse-engineered/reimplementation/rx8_knock.c`](../../../reverse-engineered/reimplementation/rx8_knock.c)
+with strict host tests and emulator cross-checks
+([`tests/test_knock_retard_dynamic.py`](../../../tests/test_knock_retard_dynamic.py);
+ROM's own 0x2068 lookups feed the comparison port). Binary-level evidence from
+the re-verification (literal-pool constants, table scales, RAM write
+reachability) is recorded in the 2026-11-02 addendum of
+[`knock_control_report.md`](knock_control_report.md).
+
 
 ## Fueling chain labeling — 2026-10-30
 
@@ -182,7 +195,7 @@ ROM untouched.
 - [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)
-- [Readable, compilable math helpers](reconstructed/rx8_math.c)
+- [Readable, compilable helper modules](../../../reverse-engineered/reimplementation/README.md) (`rx8_math`, `rx8_apv`, `rx8_knock`)
 - [Addressed disassembly with instruction bytes](decompiled/firmware_disassembly.asm)
 - [Functions requiring decompiler review](decompiled/decompiler_issues.tsv)
 - [Call graph](decompiled/callgraph.tsv) and [symbols](decompiled/symbols.tsv)
@@ -258,15 +271,20 @@ links and summary counts. It does not prove that every decoded instruction is
 code, that all function boundaries are correct, or that the C is semantically
 equivalent to execution on the ECU.
 
-The five routines in `reconstructed/rx8_math.c` compile cleanly with C11 and strict
-warnings. Their tests cover filter endpoints, non-finite previous state, threshold
-boundaries, clamps, NaNs and signed zero. Run from this directory:
+The reimplementation modules in
+[`reverse-engineered/reimplementation/`](../../../reverse-engineered/reimplementation/README.md)
+compile cleanly with C11 and strict warnings. Their host tests cover filter
+endpoints, non-finite previous state, threshold boundaries, clamps, NaNs,
+signed zero, and (2026-11-02, `rx8_knock`) every knock-retard attack/recovery
+path. Run from the repo root:
 
 ```sh
 cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off \
-  reconstructed/rx8_math.c reconstructed/test_rx8_math.c -lm -o /tmp/rx8_math_test
-/tmp/rx8_math_test
-python3 scripts/validate_export.py
+  reverse-engineered/reimplementation/rx8_math.c \
+  reverse-engineered/reimplementation/rx8_knock.c \
+  reverse-engineered/reimplementation/test_rx8_knock.c -lm -o /tmp/rx8_knock_test
+/tmp/rx8_knock_test
+python utilities/scripts/rx8-pcm-pipeline/validate_export.py
 ```
 
 ## Limits of the C output
