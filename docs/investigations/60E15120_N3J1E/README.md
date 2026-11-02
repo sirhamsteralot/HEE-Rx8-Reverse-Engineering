@@ -161,10 +161,19 @@ Emulator-driven labeling pass (Phase 1 fidelity work): 27 functions, 16 RAM loca
 9 tables named from dynamically verified behavior (IVT at VBR 0x7fc50, CAN RX interrupt
 IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC sweep 0x6884,
 NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)
-(the "crank ISR 0x803e" attribution there was corrected 2026-11-02 — 0x803e is an uncalled
-duplicate; the live rpm path is 0x7fcc — see the deep dive below);
+(the "crank ISR 0x803e" attribution there was corrected 2026-11-02 — 0x803e is only the
+default VBR=0 IVT slot 0x2c8 target; the live rpm path is 0x7fcc — see the deep dive below);
 labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
 backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
+
+## OS scheduling labeling pass — 2026-11-02
+
+From the deep dive: 33 functions + 10 RAM cells + 6 tables labeled (OS core,
+tick chain, interrupt surface; `ref_osTaskScheduler` 0x9630 upgraded to
+`os_schedule_task_event`). Write-up: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md)
+§6; labels: `data/labels/60E15120_N3J1E/os_scheduling_labels.json` + appended
+`source_review/accepted_*.tsv` rows; backup: `backups/pre_os_scheduling_labels.zip`.
+ROM untouched.
 
 ## Start here
 
