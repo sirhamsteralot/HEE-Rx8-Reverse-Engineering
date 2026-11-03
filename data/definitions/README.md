@@ -91,6 +91,29 @@ use the flex stoich table (G-ROM_FLEX "Table 2D - Stoich Fuel Ratio" @0x6C444,
 ethanol-indexed). Both scalar addresses are inside the D3 checksum range —
 handle checksum/CVN and bench-validate before flashing (AGENTS.md rule 10).
 
+## Relabel / regroup pass (2026-11-02, ROADMAP D item 5)
+
+The reviewed 60E15120 def and all per-ROM defs were relabeled from the
+subsystem RE passes (knock / fueling / load / ignition / OS): 112 lookup
+descriptors carry curated editor names, subsystem categories (the RomRaider
+grouping) and dated evidence notes in
+[`data/labels/60E15120_N3J1E/defs_table_labels.json`](../labels/60E15120_N3J1E/defs_table_labels.json).
+Editor-facing `<description>` entries stay short per AGENTS.md rule 6b — a
+simplified what-the-table-does sentence (only when accurately known; candidate
+labels get a "not fully verified" note), no addresses or derivation details;
+provenance stays in the label map.
+In the merged 60E15120 block **78 tables were renamed + regrouped and 96
+extracted-but-unmapped tables added** (879 → 975); cross-ROM, 263 renamed +
+245 added across the 8 ROMs whose upstream blocks join their `data/maps`
+extraction (60E32000_N3M5E/N3N5EB skipped — upstream block layout mismatch,
+recorded in `coverage.json`). Only names/categories/descriptions changed plus
+whole-table additions; no storageaddress, axis, scaling or cell was modified
+(invariant-checked by `tests/test_defs_relabel.py`). Regenerate with
+`utilities/scripts/defs-merge/relabel_merged_def.py` (merged def) and
+`utilities/scripts/defs-merge/extend_defs_all_roms.py` (per-ROM defs);
+pass log + investigation doc:
+[`docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md`](../docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
+
 ## D8 dedupe (closed 2026-11-01)
 
 Four local copies were git-blob-identical to files in the pinned submodule
