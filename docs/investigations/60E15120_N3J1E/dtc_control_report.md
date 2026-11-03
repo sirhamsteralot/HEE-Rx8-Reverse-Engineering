@@ -61,7 +61,7 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
 - **"Fully disabling a DTC takes multiple writes" — confirmed (§3a):** enable#1
   (0x7e678) gates MIL + aging, enable#2 (0x7e704) gates the Mode 03 list and freeze
   frame, enable#3 (0x7e790) is a bitmask gating set/confirm/heal paths, plus
-  confirmation mask 0x7e81c and monitor-source mask 0x7e29e. Stock example C073
+  confirmation mask 0x7e81c and monitor-source mask 0x7e29e. Stock example C073 (= U0073 on a standard scanner; def label now `DTC U0073 …`, §5b)
   (slot 0x74: #1=0, #2=1) is still reported by Mode 03 while MIL stays off —
   proven dynamically in the emulator (§3a, `dynamic_multigate_log.txt`).
 - **Defs accuracy (§5):** the per-rom defs are **correct for 60E0FC00, 60E0G500_N3ZHEC,
@@ -103,8 +103,8 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
   - **#3** = a small bitmask of "which internal actions are allowed" (set / confirm
     / store / heal / report), not a simple on-off.
   - So **fully disabling a DTC means writing #1=0 AND #2=0** (and clearing the #3
-    bits if you also want to stop it being set at all). Stock example: C073 ships
-    with #1=0 but #2=1, so a stored C073 does *not* light the lamp but *still shows
+    bits if you also want to stop it being set at all). Stock example: C073 (U0073) ships
+    with #1=0 but #2=1, so a stored C073 (U0073) does *not* light the lamp but *still shows
     up in Mode 03* — verified in the emulator.
 
 ## 2. How it works (condensed pseudocode)
@@ -184,7 +184,7 @@ P0076/P0077 disabled); #3 holds small feature codes (0x02/0x03/0x0a/0x0f/0x2f/�
 ### 3a. "Fully disabling a DTC takes more than one byte" — verified
 
 Fully disabling a DTC takes more than one byte. Each gate below was confirmed at
-disassembly level and dynamically in the emulator using stock slot 0x74 = C073
+disassembly level and dynamically in the emulator using stock slot 0x74 = C073 (U0073; the raw mode-03 bytes `C0 73`)
 (stock bytes: enable#1=0, enable#2=1, enable#3=0x0e). In plain language, the three
 per-DTC switch bytes in the defs are:
 
@@ -276,6 +276,54 @@ real enable#1 0x7c9fc / 0x7e74c; 60E0FB00 had 98 and 60E1D400 112 misaligned ent
 (`rx8defs-merged-60E15120.xml`) gained the missing #2/#3 bindings (363 DTC entries,
 0 mismatches). Repair record: `defs-merge/definition_repairs.json` (entry 83);
 pre-repair detail: `reviews/dtc_control/defs_audit_detail.json`.
+
+#### §5b DTC P-code labels in the defs (2026-11-03)
+
+The def table names now carry the standard 5-char OBD code:
+`DTC 0420 Enable/Disable #1` → `DTC P0420 Enable/Disable #1` (catalyst system
+efficiency below threshold, bank 1). **Correspondence verified:** the ROM code
+table stores exactly the two OBD mode-03 response bytes (BE u16) per slot, and
+SAE J2012 / ISO 15031-6 decodes them as byte0 bits 7-6 → letter (00 P, 01 C,
+10 B, 11 U), bits 5-4 → second digit (0/2 = SAE generic, 1/3 = manufacturer),
+low 12 bits → last 3 digits — so `0x0420` = P0420, `0x2504` = P2504, and the
+dynamically observed slot-9 emission `01 01` = P0101. All 134 codes used across
+the 11 ROMs were mapped in [`data/dtc/pcodes.tsv`](../../../data/dtc/pcodes.tsv)
+against two independent SAE J2012 lists (tekseport/obd2-codes @ `ddadc77e`,
+foerbsnavi/OBDex @ `3f03bb0`, cross-checked 2026-11-03): every `0x0xxx` code is a
+generic **P0** code and every `0x2xxx` a generic **P2** code with a standard
+meaning; the six `0x1xxx` codes (1260/1574/1577/1686-1688) are **P1
+manufacturer-specific** (no SAE text — labeled as such, not guessed); the five
+`0xCxxx` codes are **U0 network** codes (C073→U0073 CAN bus A off, C101→U0101
+lost comm TCM, C121→U0121 ABS, C155→U0155 instrument cluster, C167→U0167
+immobilizer) — the old "Cxxx" labels misread the high hex nibble (0xC0>>6 = U,
+not chassis). Applied by `utilities/scripts/defs-merge/relabel_dtc_names.py`
+(merged def, all active blocks, 4027 tables renamed + 23 P0300 duplicate-site
+suffixes + 12 stale descriptions replaced, surgical splice, idempotent) and by
+`repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
+descriptions; a rule-10 checksum-range note was initially included but is
+dropped again per updated rule 6b — it is not table description text).
+Post-rename audit:
+still **0 mismatches** across all 9 per-ROM defs × #1/#2/#3
+([`data/dtc/defs_audit.tsv`](../../../data/dtc/defs_audit.tsv)); stats:
+[`defs-merge/dtc_pcode_labels_2026-11-03.json`](defs-merge/dtc_pcode_labels_2026-11-03.json);
+tests: `tests/test_dtc_pcode_labels.py` (14 passed). Repair record:
+`defs-merge/definition_repairs.json` (entry 84).
+
+Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf`
+("RX8 – Engine Diagnostics & Control", 2003; DTC TABLE section parsed to
+[`data/dtc/mazda_dtc_table.tsv`](../../../data/dtc/mazda_dtc_table.tsv), 118 codes,
+2026-11-03): all manual codes exist in the ROMs (P0301/P0302 are the rotor-misfire
+prefix codes at 0x7e55a); 18 ROM codes are absent from the 2003 table (later J2012
+additions — they keep their SAE text). The manual supplies the **manufacturer-specific
+P1 meanings** the SAE list lacks — P1260 immobilizer system problem, P1574/P1577 TP /
+APP sensor output incongruent, P1686-P1688 metering oil pump control circuit
+low/high/initial-check flow-side problems — and Mazda's own part wording (P0335
+eccentric shaft position sensor, P0076/P0077 VDI solenoid, P2004 APV, P2070 SSV,
+P0661/P0662 SSV solenoid), which the def descriptions now prefer over the SAE generic
+text (`mazda_manual_description` column in [`data/dtc/pcodes.tsv`](../../../data/dtc/pcodes.tsv)).
+One conflict recorded, not resolved silently: **U0167** — SAE generic = lost
+communication with the immobilizer module, Mazda manual = keyless control module;
+the def uses the Mazda assignment (RX-8-specific).
 
 ## 6. Files
 

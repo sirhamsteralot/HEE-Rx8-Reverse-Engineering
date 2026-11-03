@@ -1,0 +1,2243 @@
+{
+ "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+ "pass": "Rename the DTC enable/disable tables in rx8defs-merged-60E15120.xml from the",
+ "runs": [
+  {
+   "renamed": 4027,
+   "suffixed": 23,
+   "descriptions_replaced": 12,
+   "details": [
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0030 Enable/Disable #1",
+     "new": "DTC P0030 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0031 Enable/Disable #1",
+     "new": "DTC P0031 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0032 Enable/Disable #1",
+     "new": "DTC P0032 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0037 Enable/Disable #1",
+     "new": "DTC P0037 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0038 Enable/Disable #1",
+     "new": "DTC P0038 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0076 Enable/Disable #1",
+     "new": "DTC P0076 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0077 Enable/Disable #1",
+     "new": "DTC P0077 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0101 Enable/Disable #1",
+     "new": "DTC P0101 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0102 Enable/Disable #1",
+     "new": "DTC P0102 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0103 Enable/Disable #1",
+     "new": "DTC P0103 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0107 Enable/Disable #1",
+     "new": "DTC P0107 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0108 Enable/Disable #1",
+     "new": "DTC P0108 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0111 Enable/Disable #1",
+     "new": "DTC P0111 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0112 Enable/Disable #1",
+     "new": "DTC P0112 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0113 Enable/Disable #1",
+     "new": "DTC P0113 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0117 Enable/Disable #1",
+     "new": "DTC P0117 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0118 Enable/Disable #1",
+     "new": "DTC P0118 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0122 Enable/Disable #1",
+     "new": "DTC P0122 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0123 Enable/Disable #1",
+     "new": "DTC P0123 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0125 Enable/Disable #1",
+     "new": "DTC P0125 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0126 Enable/Disable #1",
+     "new": "DTC P0126 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0130 Enable/Disable #1",
+     "new": "DTC P0130 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0131 Enable/Disable #1",
+     "new": "DTC P0131 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0132 Enable/Disable #1",
+     "new": "DTC P0132 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0133 Enable/Disable #1",
+     "new": "DTC P0133 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0138 Enable/Disable #1",
+     "new": "DTC P0138 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0139 Enable/Disable #1",
+     "new": "DTC P0139 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0171 Enable/Disable #1",
+     "new": "DTC P0171 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0172 Enable/Disable #1",
+     "new": "DTC P0172 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0222 Enable/Disable #1",
+     "new": "DTC P0222 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0223 Enable/Disable #1",
+     "new": "DTC P0223 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0327 Enable/Disable #1",
+     "new": "DTC P0327 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0328 Enable/Disable #1",
+     "new": "DTC P0328 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0335 Enable/Disable #1",
+     "new": "DTC P0335 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0336 Enable/Disable #1",
+     "new": "DTC P0336 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0351 Enable/Disable #1",
+     "new": "DTC P0351 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0352 Enable/Disable #1",
+     "new": "DTC P0352 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0353 Enable/Disable #1",
+     "new": "DTC P0353 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0354 Enable/Disable #1",
+     "new": "DTC P0354 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0410 Enable/Disable #1",
+     "new": "DTC P0410 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0420 Enable/Disable #1",
+     "new": "DTC P0420 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0441 Enable/Disable #1",
+     "new": "DTC P0441 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0442 Enable/Disable #1",
+     "new": "DTC P0442 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0443 Enable/Disable #1",
+     "new": "DTC P0443 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0444 Enable/Disable #1",
+     "new": "DTC P0444 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0445 Enable/Disable #1",
+     "new": "DTC P0445 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0446 Enable/Disable #1",
+     "new": "DTC P0446 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0455 Enable/Disable #1",
+     "new": "DTC P0455 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0456 Enable/Disable #1",
+     "new": "DTC P0456 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0461 Enable/Disable #1",
+     "new": "DTC P0461 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0462 Enable/Disable #1",
+     "new": "DTC P0462 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0463 Enable/Disable #1",
+     "new": "DTC P0463 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0480 Enable/Disable #1",
+     "new": "DTC P0480 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0481 Enable/Disable #1",
+     "new": "DTC P0481 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0500 Enable/Disable #1",
+     "new": "DTC P0500 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0505 Enable/Disable #1",
+     "new": "DTC P0505 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0506 Enable/Disable #1",
+     "new": "DTC P0506 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0507 Enable/Disable #1",
+     "new": "DTC P0507 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0562 Enable/Disable #1",
+     "new": "DTC P0562 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0564 Enable/Disable #1",
+     "new": "DTC P0564 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0571 Enable/Disable #1",
+     "new": "DTC P0571 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0601 Enable/Disable #1",
+     "new": "DTC P0601 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0602 Enable/Disable #1",
+     "new": "DTC P0602 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0604 Enable/Disable #1",
+     "new": "DTC P0604 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0610 Enable/Disable #1",
+     "new": "DTC P0610 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0638 Enable/Disable #1",
+     "new": "DTC P0638 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0661 Enable/Disable #1",
+     "new": "DTC P0661 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0662 Enable/Disable #1",
+     "new": "DTC P0662 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0703 Enable/Disable #1",
+     "new": "DTC P0703 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0704 Enable/Disable #1",
+     "new": "DTC P0704 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0850 Enable/Disable #1",
+     "new": "DTC P0850 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1260 Enable/Disable #1",
+     "new": "DTC P1260 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1686 Enable/Disable #1",
+     "new": "DTC P1686 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1687 Enable/Disable #1",
+     "new": "DTC P1687 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1688 Enable/Disable #1",
+     "new": "DTC P1688 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2004 Enable/Disable #1",
+     "new": "DTC P2004 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2006 Enable/Disable #1",
+     "new": "DTC P2006 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2009 Enable/Disable #1",
+     "new": "DTC P2009 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2010 Enable/Disable #1",
+     "new": "DTC P2010 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2016 Enable/Disable #1",
+     "new": "DTC P2016 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2017 Enable/Disable #1",
+     "new": "DTC P2017 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2067 Enable/Disable #1",
+     "new": "DTC P2067 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2068 Enable/Disable #1",
+     "new": "DTC P2068 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2070 Enable/Disable #1",
+     "new": "DTC P2070 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2096 Enable/Disable #1",
+     "new": "DTC P2096 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2097 Enable/Disable #1",
+     "new": "DTC P2097 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2102 Enable/Disable #1",
+     "new": "DTC P2102 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2103 Enable/Disable #1",
+     "new": "DTC P2103 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2106 Enable/Disable #1",
+     "new": "DTC P2106 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2107 Enable/Disable #1",
+     "new": "DTC P2107 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2108 Enable/Disable #1",
+     "new": "DTC P2108 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2109 Enable/Disable #1",
+     "new": "DTC P2109 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2112 Enable/Disable #1",
+     "new": "DTC P2112 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2119 Enable/Disable #1",
+     "new": "DTC P2119 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2122 Enable/Disable #1",
+     "new": "DTC P2122 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2123 Enable/Disable #1",
+     "new": "DTC P2123 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2127 Enable/Disable #1",
+     "new": "DTC P2127 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2128 Enable/Disable #1",
+     "new": "DTC P2128 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2135 Enable/Disable #1",
+     "new": "DTC P2135 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2136 Enable/Disable #1",
+     "new": "DTC P2136 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2138 Enable/Disable #1",
+     "new": "DTC P2138 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2195 Enable/Disable #1",
+     "new": "DTC P2195 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2196 Enable/Disable #1",
+     "new": "DTC P2196 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2257 Enable/Disable #1",
+     "new": "DTC P2257 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2258 Enable/Disable #1",
+     "new": "DTC P2258 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2259 Enable/Disable #1",
+     "new": "DTC P2259 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2260 Enable/Disable #1",
+     "new": "DTC P2260 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2270 Enable/Disable #1",
+     "new": "DTC P2270 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2271 Enable/Disable #1",
+     "new": "DTC P2271 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2401 Enable/Disable #1",
+     "new": "DTC P2401 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2402 Enable/Disable #1",
+     "new": "DTC P2402 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2404 Enable/Disable #1",
+     "new": "DTC P2404 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2405 Enable/Disable #1",
+     "new": "DTC P2405 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2407 Enable/Disable #1",
+     "new": "DTC P2407 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2502 Enable/Disable #1",
+     "new": "DTC P2502 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2503 Enable/Disable #1",
+     "new": "DTC P2503 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2504 Enable/Disable #1",
+     "new": "DTC P2504 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C073 Enable/Disable #1",
+     "new": "DTC U0073 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C101 Enable/Disable #1",
+     "new": "DTC U0101 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C121 Enable/Disable #1",
+     "new": "DTC U0121 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C155 Enable/Disable #1",
+     "new": "DTC U0155 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C167 Enable/Disable #1",
+     "new": "DTC U0167 Enable/Disable #1",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0030 Enable/Disable #2",
+     "new": "DTC P0030 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0031 Enable/Disable #2",
+     "new": "DTC P0031 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0032 Enable/Disable #2",
+     "new": "DTC P0032 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0037 Enable/Disable #2",
+     "new": "DTC P0037 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0038 Enable/Disable #2",
+     "new": "DTC P0038 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0076 Enable/Disable #2",
+     "new": "DTC P0076 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0077 Enable/Disable #2",
+     "new": "DTC P0077 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0101 Enable/Disable #2",
+     "new": "DTC P0101 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0102 Enable/Disable #2",
+     "new": "DTC P0102 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0103 Enable/Disable #2",
+     "new": "DTC P0103 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0107 Enable/Disable #2",
+     "new": "DTC P0107 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0108 Enable/Disable #2",
+     "new": "DTC P0108 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0111 Enable/Disable #2",
+     "new": "DTC P0111 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0112 Enable/Disable #2",
+     "new": "DTC P0112 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0113 Enable/Disable #2",
+     "new": "DTC P0113 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0117 Enable/Disable #2",
+     "new": "DTC P0117 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0118 Enable/Disable #2",
+     "new": "DTC P0118 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0122 Enable/Disable #2",
+     "new": "DTC P0122 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0123 Enable/Disable #2",
+     "new": "DTC P0123 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0125 Enable/Disable #2",
+     "new": "DTC P0125 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0126 Enable/Disable #2",
+     "new": "DTC P0126 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0130 Enable/Disable #2",
+     "new": "DTC P0130 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0131 Enable/Disable #2",
+     "new": "DTC P0131 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0132 Enable/Disable #2",
+     "new": "DTC P0132 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0133 Enable/Disable #2",
+     "new": "DTC P0133 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0138 Enable/Disable #2",
+     "new": "DTC P0138 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0139 Enable/Disable #2",
+     "new": "DTC P0139 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0171 Enable/Disable #2",
+     "new": "DTC P0171 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0172 Enable/Disable #2",
+     "new": "DTC P0172 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0222 Enable/Disable #2",
+     "new": "DTC P0222 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0223 Enable/Disable #2",
+     "new": "DTC P0223 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0327 Enable/Disable #2",
+     "new": "DTC P0327 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0328 Enable/Disable #2",
+     "new": "DTC P0328 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0335 Enable/Disable #2",
+     "new": "DTC P0335 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0336 Enable/Disable #2",
+     "new": "DTC P0336 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0351 Enable/Disable #2",
+     "new": "DTC P0351 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0352 Enable/Disable #2",
+     "new": "DTC P0352 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0353 Enable/Disable #2",
+     "new": "DTC P0353 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0354 Enable/Disable #2",
+     "new": "DTC P0354 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0410 Enable/Disable #2",
+     "new": "DTC P0410 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0420 Enable/Disable #2",
+     "new": "DTC P0420 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0441 Enable/Disable #2",
+     "new": "DTC P0441 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0442 Enable/Disable #2",
+     "new": "DTC P0442 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0443 Enable/Disable #2",
+     "new": "DTC P0443 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0444 Enable/Disable #2",
+     "new": "DTC P0444 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0445 Enable/Disable #2",
+     "new": "DTC P0445 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0446 Enable/Disable #2",
+     "new": "DTC P0446 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0455 Enable/Disable #2",
+     "new": "DTC P0455 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0456 Enable/Disable #2",
+     "new": "DTC P0456 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0461 Enable/Disable #2",
+     "new": "DTC P0461 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0462 Enable/Disable #2",
+     "new": "DTC P0462 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0463 Enable/Disable #2",
+     "new": "DTC P0463 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0480 Enable/Disable #2",
+     "new": "DTC P0480 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0481 Enable/Disable #2",
+     "new": "DTC P0481 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0500 Enable/Disable #2",
+     "new": "DTC P0500 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0505 Enable/Disable #2",
+     "new": "DTC P0505 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0506 Enable/Disable #2",
+     "new": "DTC P0506 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0507 Enable/Disable #2",
+     "new": "DTC P0507 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0562 Enable/Disable #2",
+     "new": "DTC P0562 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0564 Enable/Disable #2",
+     "new": "DTC P0564 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0571 Enable/Disable #2",
+     "new": "DTC P0571 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0601 Enable/Disable #2",
+     "new": "DTC P0601 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0602 Enable/Disable #2",
+     "new": "DTC P0602 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0604 Enable/Disable #2",
+     "new": "DTC P0604 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0610 Enable/Disable #2",
+     "new": "DTC P0610 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0638 Enable/Disable #2",
+     "new": "DTC P0638 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0661 Enable/Disable #2",
+     "new": "DTC P0661 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0662 Enable/Disable #2",
+     "new": "DTC P0662 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0703 Enable/Disable #2",
+     "new": "DTC P0703 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0704 Enable/Disable #2",
+     "new": "DTC P0704 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0850 Enable/Disable #2",
+     "new": "DTC P0850 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1260 Enable/Disable #2",
+     "new": "DTC P1260 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1686 Enable/Disable #2",
+     "new": "DTC P1686 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1687 Enable/Disable #2",
+     "new": "DTC P1687 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1688 Enable/Disable #2",
+     "new": "DTC P1688 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2004 Enable/Disable #2",
+     "new": "DTC P2004 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2006 Enable/Disable #2",
+     "new": "DTC P2006 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2009 Enable/Disable #2",
+     "new": "DTC P2009 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2010 Enable/Disable #2",
+     "new": "DTC P2010 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2016 Enable/Disable #2",
+     "new": "DTC P2016 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2017 Enable/Disable #2",
+     "new": "DTC P2017 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2067 Enable/Disable #2",
+     "new": "DTC P2067 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2068 Enable/Disable #2",
+     "new": "DTC P2068 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2070 Enable/Disable #2",
+     "new": "DTC P2070 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2096 Enable/Disable #2",
+     "new": "DTC P2096 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2097 Enable/Disable #2",
+     "new": "DTC P2097 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2102 Enable/Disable #2",
+     "new": "DTC P2102 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2103 Enable/Disable #2",
+     "new": "DTC P2103 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2106 Enable/Disable #2",
+     "new": "DTC P2106 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2107 Enable/Disable #2",
+     "new": "DTC P2107 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2108 Enable/Disable #2",
+     "new": "DTC P2108 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2109 Enable/Disable #2",
+     "new": "DTC P2109 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2112 Enable/Disable #2",
+     "new": "DTC P2112 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2119 Enable/Disable #2",
+     "new": "DTC P2119 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2122 Enable/Disable #2",
+     "new": "DTC P2122 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2123 Enable/Disable #2",
+     "new": "DTC P2123 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2127 Enable/Disable #2",
+     "new": "DTC P2127 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2128 Enable/Disable #2",
+     "new": "DTC P2128 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2135 Enable/Disable #2",
+     "new": "DTC P2135 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2136 Enable/Disable #2",
+     "new": "DTC P2136 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2138 Enable/Disable #2",
+     "new": "DTC P2138 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2195 Enable/Disable #2",
+     "new": "DTC P2195 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2196 Enable/Disable #2",
+     "new": "DTC P2196 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2257 Enable/Disable #2",
+     "new": "DTC P2257 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2258 Enable/Disable #2",
+     "new": "DTC P2258 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2259 Enable/Disable #2",
+     "new": "DTC P2259 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2260 Enable/Disable #2",
+     "new": "DTC P2260 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2270 Enable/Disable #2",
+     "new": "DTC P2270 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2271 Enable/Disable #2",
+     "new": "DTC P2271 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2401 Enable/Disable #2",
+     "new": "DTC P2401 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2402 Enable/Disable #2",
+     "new": "DTC P2402 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2404 Enable/Disable #2",
+     "new": "DTC P2404 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2405 Enable/Disable #2",
+     "new": "DTC P2405 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2407 Enable/Disable #2",
+     "new": "DTC P2407 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2502 Enable/Disable #2",
+     "new": "DTC P2502 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2503 Enable/Disable #2",
+     "new": "DTC P2503 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2504 Enable/Disable #2",
+     "new": "DTC P2504 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C073 Enable/Disable #2",
+     "new": "DTC U0073 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C101 Enable/Disable #2",
+     "new": "DTC U0101 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C121 Enable/Disable #2",
+     "new": "DTC U0121 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C155 Enable/Disable #2",
+     "new": "DTC U0155 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C167 Enable/Disable #2",
+     "new": "DTC U0167 Enable/Disable #2",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #3",
+     "new": "DTC P0300 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0030 Enable/Disable #3",
+     "new": "DTC P0030 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0031 Enable/Disable #3",
+     "new": "DTC P0031 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0032 Enable/Disable #3",
+     "new": "DTC P0032 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0037 Enable/Disable #3",
+     "new": "DTC P0037 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0038 Enable/Disable #3",
+     "new": "DTC P0038 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0076 Enable/Disable #3",
+     "new": "DTC P0076 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0077 Enable/Disable #3",
+     "new": "DTC P0077 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0101 Enable/Disable #3",
+     "new": "DTC P0101 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0102 Enable/Disable #3",
+     "new": "DTC P0102 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0103 Enable/Disable #3",
+     "new": "DTC P0103 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0107 Enable/Disable #3",
+     "new": "DTC P0107 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0108 Enable/Disable #3",
+     "new": "DTC P0108 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0111 Enable/Disable #3",
+     "new": "DTC P0111 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0112 Enable/Disable #3",
+     "new": "DTC P0112 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0113 Enable/Disable #3",
+     "new": "DTC P0113 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0117 Enable/Disable #3",
+     "new": "DTC P0117 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0118 Enable/Disable #3",
+     "new": "DTC P0118 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0122 Enable/Disable #3",
+     "new": "DTC P0122 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0123 Enable/Disable #3",
+     "new": "DTC P0123 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0125 Enable/Disable #3",
+     "new": "DTC P0125 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0126 Enable/Disable #3",
+     "new": "DTC P0126 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0130 Enable/Disable #3",
+     "new": "DTC P0130 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0131 Enable/Disable #3",
+     "new": "DTC P0131 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0132 Enable/Disable #3",
+     "new": "DTC P0132 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0133 Enable/Disable #3",
+     "new": "DTC P0133 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0138 Enable/Disable #3",
+     "new": "DTC P0138 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0139 Enable/Disable #3",
+     "new": "DTC P0139 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0171 Enable/Disable #3",
+     "new": "DTC P0171 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0172 Enable/Disable #3",
+     "new": "DTC P0172 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0222 Enable/Disable #3",
+     "new": "DTC P0222 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0223 Enable/Disable #3",
+     "new": "DTC P0223 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0327 Enable/Disable #3",
+     "new": "DTC P0327 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0328 Enable/Disable #3",
+     "new": "DTC P0328 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0335 Enable/Disable #3",
+     "new": "DTC P0335 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0336 Enable/Disable #3",
+     "new": "DTC P0336 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0351 Enable/Disable #3",
+     "new": "DTC P0351 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0352 Enable/Disable #3",
+     "new": "DTC P0352 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0353 Enable/Disable #3",
+     "new": "DTC P0353 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0354 Enable/Disable #3",
+     "new": "DTC P0354 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0410 Enable/Disable #3",
+     "new": "DTC P0410 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0420 Enable/Disable #3",
+     "new": "DTC P0420 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0441 Enable/Disable #3",
+     "new": "DTC P0441 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0442 Enable/Disable #3",
+     "new": "DTC P0442 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0443 Enable/Disable #3",
+     "new": "DTC P0443 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0444 Enable/Disable #3",
+     "new": "DTC P0444 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0445 Enable/Disable #3",
+     "new": "DTC P0445 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0446 Enable/Disable #3",
+     "new": "DTC P0446 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0455 Enable/Disable #3",
+     "new": "DTC P0455 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0456 Enable/Disable #3",
+     "new": "DTC P0456 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0461 Enable/Disable #3",
+     "new": "DTC P0461 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0462 Enable/Disable #3",
+     "new": "DTC P0462 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0463 Enable/Disable #3",
+     "new": "DTC P0463 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0480 Enable/Disable #3",
+     "new": "DTC P0480 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0481 Enable/Disable #3",
+     "new": "DTC P0481 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0500 Enable/Disable #3",
+     "new": "DTC P0500 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0505 Enable/Disable #3",
+     "new": "DTC P0505 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0506 Enable/Disable #3",
+     "new": "DTC P0506 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0507 Enable/Disable #3",
+     "new": "DTC P0507 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0562 Enable/Disable #3",
+     "new": "DTC P0562 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0564 Enable/Disable #3",
+     "new": "DTC P0564 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0571 Enable/Disable #3",
+     "new": "DTC P0571 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0601 Enable/Disable #3",
+     "new": "DTC P0601 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0602 Enable/Disable #3",
+     "new": "DTC P0602 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0604 Enable/Disable #3",
+     "new": "DTC P0604 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0610 Enable/Disable #3",
+     "new": "DTC P0610 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0638 Enable/Disable #3",
+     "new": "DTC P0638 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0661 Enable/Disable #3",
+     "new": "DTC P0661 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0662 Enable/Disable #3",
+     "new": "DTC P0662 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0703 Enable/Disable #3",
+     "new": "DTC P0703 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0704 Enable/Disable #3",
+     "new": "DTC P0704 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0850 Enable/Disable #3",
+     "new": "DTC P0850 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1260 Enable/Disable #3",
+     "new": "DTC P1260 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1686 Enable/Disable #3",
+     "new": "DTC P1686 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1687 Enable/Disable #3",
+     "new": "DTC P1687 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 1688 Enable/Disable #3",
+     "new": "DTC P1688 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2004 Enable/Disable #3",
+     "new": "DTC P2004 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2006 Enable/Disable #3",
+     "new": "DTC P2006 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2009 Enable/Disable #3",
+     "new": "DTC P2009 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2010 Enable/Disable #3",
+     "new": "DTC P2010 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2016 Enable/Disable #3",
+     "new": "DTC P2016 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2017 Enable/Disable #3",
+     "new": "DTC P2017 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2067 Enable/Disable #3",
+     "new": "DTC P2067 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2068 Enable/Disable #3",
+     "new": "DTC P2068 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2070 Enable/Disable #3",
+     "new": "DTC P2070 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2096 Enable/Disable #3",
+     "new": "DTC P2096 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2097 Enable/Disable #3",
+     "new": "DTC P2097 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2102 Enable/Disable #3",
+     "new": "DTC P2102 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2103 Enable/Disable #3",
+     "new": "DTC P2103 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2106 Enable/Disable #3",
+     "new": "DTC P2106 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2107 Enable/Disable #3",
+     "new": "DTC P2107 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2108 Enable/Disable #3",
+     "new": "DTC P2108 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2109 Enable/Disable #3",
+     "new": "DTC P2109 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2112 Enable/Disable #3",
+     "new": "DTC P2112 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2119 Enable/Disable #3",
+     "new": "DTC P2119 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2122 Enable/Disable #3",
+     "new": "DTC P2122 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2123 Enable/Disable #3",
+     "new": "DTC P2123 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2127 Enable/Disable #3",
+     "new": "DTC P2127 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2128 Enable/Disable #3",
+     "new": "DTC P2128 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2135 Enable/Disable #3",
+     "new": "DTC P2135 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2136 Enable/Disable #3",
+     "new": "DTC P2136 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2138 Enable/Disable #3",
+     "new": "DTC P2138 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2195 Enable/Disable #3",
+     "new": "DTC P2195 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2196 Enable/Disable #3",
+     "new": "DTC P2196 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2257 Enable/Disable #3",
+     "new": "DTC P2257 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2258 Enable/Disable #3",
+     "new": "DTC P2258 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2259 Enable/Disable #3",
+     "new": "DTC P2259 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2260 Enable/Disable #3",
+     "new": "DTC P2260 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2270 Enable/Disable #3",
+     "new": "DTC P2270 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2271 Enable/Disable #3",
+     "new": "DTC P2271 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2401 Enable/Disable #3",
+     "new": "DTC P2401 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2402 Enable/Disable #3",
+     "new": "DTC P2402 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2404 Enable/Disable #3",
+     "new": "DTC P2404 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2405 Enable/Disable #3",
+     "new": "DTC P2405 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2407 Enable/Disable #3",
+     "new": "DTC P2407 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2502 Enable/Disable #3",
+     "new": "DTC P2502 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2503 Enable/Disable #3",
+     "new": "DTC P2503 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 2504 Enable/Disable #3",
+     "new": "DTC P2504 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C073 Enable/Disable #3",
+     "new": "DTC U0073 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C101 Enable/Disable #3",
+     "new": "DTC U0101 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C121 Enable/Disable #3",
+     "new": "DTC U0121 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C155 Enable/Disable #3",
+     "new": "DTC U0155 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC C167 Enable/Disable #3",
+     "new": "DTC U0167 Enable/Disable #3",
+     "storageaddress": null
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7E221]",
+     "storageaddress": "0x07E221"
+    },
+    {
+     "old": "DTC 0128 Enable/Disable #1",
+     "new": "DTC P0128 Enable/Disable #1",
+     "storageaddress": "0x07E237"
+    },
+    {
+     "old": "DTC 1574 Enable/Disable #1",
+     "new": "DTC P1574 Enable/Disable #1",
+     "storageaddress": "0x07E269"
+    },
+    {
+     "old": "DTC 1577 Enable/Disable #1",
+     "new": "DTC P1577 Enable/Disable #1",
+     "storageaddress": "0x07E26A"
+    },
+    {
+     "old": "DTC 2008 Enable/Disable #1",
+     "new": "DTC P2008 Enable/Disable #1",
+     "storageaddress": "0x07E270"
+    },
+    {
+     "old": "DTC 2101 Enable/Disable #1",
+     "new": "DTC P2101 Enable/Disable #1",
+     "storageaddress": "0x07E275"
+    },
+    {
+     "old": "DTC 2406 Enable/Disable #1",
+     "new": "DTC P2406 Enable/Disable #1",
+     "storageaddress": "0x07E28F"
+    },
+    {
+     "old": "DTC c073 Enable/Disable #1",
+     "new": "DTC U0073 Enable/Disable #1",
+     "storageaddress": "0x07E294"
+    },
+    {
+     "old": "DTC c101 Enable/Disable #1",
+     "new": "DTC U0101 Enable/Disable #1",
+     "storageaddress": "0x07E295"
+    },
+    {
+     "old": "DTC c121 Enable/Disable #1",
+     "new": "DTC U0121 Enable/Disable #1",
+     "storageaddress": "0x07E296"
+    },
+    {
+     "old": "DTC c155 Enable/Disable #1",
+     "new": "DTC U0155 Enable/Disable #1",
+     "storageaddress": "0x07E297"
+    },
+    {
+     "old": "DTC c167 Enable/Disable #1",
+     "new": "DTC U0167 Enable/Disable #1",
+     "storageaddress": "0x07E298"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7E2AD]",
+     "storageaddress": "0x07E2AD"
+    },
+    {
+     "old": "DTC 0128 Enable/Disable #2",
+     "new": "DTC P0128 Enable/Disable #2",
+     "storageaddress": "0x07E2C3"
+    },
+    {
+     "old": "DTC 1574 Enable/Disable #2",
+     "new": "DTC P1574 Enable/Disable #2",
+     "storageaddress": "0x07E2F5"
+    },
+    {
+     "old": "DTC 1577 Enable/Disable #2",
+     "new": "DTC P1577 Enable/Disable #2",
+     "storageaddress": "0x07E2F6"
+    },
+    {
+     "old": "DTC 2008 Enable/Disable #2",
+     "new": "DTC P2008 Enable/Disable #2",
+     "storageaddress": "0x07E2FC"
+    },
+    {
+     "old": "DTC 2101 Enable/Disable #2",
+     "new": "DTC P2101 Enable/Disable #2",
+     "storageaddress": "0x07E301"
+    },
+    {
+     "old": "DTC 2406 Enable/Disable #2",
+     "new": "DTC P2406 Enable/Disable #2",
+     "storageaddress": "0x07E31B"
+    },
+    {
+     "old": "DTC c073 Enable/Disable #2",
+     "new": "DTC U0073 Enable/Disable #2",
+     "storageaddress": "0x07E320"
+    },
+    {
+     "old": "DTC c101 Enable/Disable #2",
+     "new": "DTC U0101 Enable/Disable #2",
+     "storageaddress": "0x07E321"
+    },
+    {
+     "old": "DTC c121 Enable/Disable #2",
+     "new": "DTC U0121 Enable/Disable #2",
+     "storageaddress": "0x07E322"
+    },
+    {
+     "old": "DTC c155 Enable/Disable #2",
+     "new": "DTC U0155 Enable/Disable #2",
+     "storageaddress": "0x07E323"
+    },
+    {
+     "old": "DTC c167 Enable/Disable #2",
+     "new": "DTC U0167 Enable/Disable #2",
+     "storageaddress": "0x07E324"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7CA89]",
+     "storageaddress": "0x07CA89"
+    },
+    {
+     "old": "DTC c167 Enable/Disable #3",
+     "new": "DTC U0167 Enable/Disable #3",
+     "storageaddress": "0x07cb8f"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x1]",
+     "storageaddress": "0x000001"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x1]",
+     "storageaddress": "0x000001"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x1]",
+     "storageaddress": "0x000001"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x1]",
+     "storageaddress": "0x000001"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7E7F9]",
+     "storageaddress": "0x07E7F9"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7E885]",
+     "storageaddress": "0x07E885"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7C8E5]",
+     "storageaddress": "0x07C8E5"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7C9FD]",
+     "storageaddress": "0x07C9FD"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7C9FD]",
+     "storageaddress": "0x07C9FD"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7CA89]",
+     "storageaddress": "0x07CA89"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7D0C1]",
+     "storageaddress": "0x0007D0C1"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7C6DC]",
+     "storageaddress": "0x07C6DC"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7C763]",
+     "storageaddress": "0x07C763"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7C764]",
+     "storageaddress": "0x07C764"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7C6DC]",
+     "storageaddress": "0x07C6DC"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7C763]",
+     "storageaddress": "0x07C763"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7C764]",
+     "storageaddress": "0x07C764"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #1 [additional site 0x7e679]",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+     "storageaddress": "0x7E679"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #2 [additional site 0x7E705]",
+     "new": "DTC P0300 Enable/Disable #2 [additional site 0x7E705]",
+     "storageaddress": "0x7E705"
+    },
+    {
+     "old": "DTC 0300 Enable/Disable #3 [additional site 0x7E791]",
+     "new": "DTC P0300 Enable/Disable #3 [additional site 0x7E791]",
+     "storageaddress": "0x7E791"
+    },
+    {
+     "old": "DTC 0128 Enable/Disable #3",
+     "new": "DTC P0128 Enable/Disable #3",
+     "storageaddress": "0x7E7A7"
+    },
+    {
+     "old": "DTC 1574 Enable/Disable #3",
+     "new": "DTC P1574 Enable/Disable #3",
+     "storageaddress": "0x7E7D9"
+    },
+    {
+     "old": "DTC 1577 Enable/Disable #3",
+     "new": "DTC P1577 Enable/Disable #3",
+     "storageaddress": "0x7E7DA"
+    },
+    {
+     "old": "DTC 2008 Enable/Disable #3",
+     "new": "DTC P2008 Enable/Disable #3",
+     "storageaddress": "0x7E7E0"
+    },
+    {
+     "old": "DTC 2101 Enable/Disable #3",
+     "new": "DTC P2101 Enable/Disable #3",
+     "storageaddress": "0x7E7E5"
+    },
+    {
+     "old": "DTC 2406 Enable/Disable #3",
+     "new": "DTC P2406 Enable/Disable #3",
+     "storageaddress": "0x7E7FF"
+    },
+    {
+     "old": "DTC 0116 Enable/Disable #1",
+     "new": "DTC P0116 Enable/Disable #1",
+     "storageaddress": "0x7E671"
+    },
+    {
+     "old": "DTC 0134 Enable/Disable #1",
+     "new": "DTC P0134 Enable/Disable #1",
+     "storageaddress": "0x7E67C"
+    },
+    {
+     "old": "DTC 0137 Enable/Disable #1",
+     "new": "DTC P0137 Enable/Disable #1",
+     "storageaddress": "0x7E67D"
+    },
+    {
+     "old": "DTC 0411 Enable/Disable #1",
+     "new": "DTC P0411 Enable/Disable #1",
+     "storageaddress": "0x7E68D"
+    },
+    {
+     "old": "DTC 050A Enable/Disable #1",
+     "new": "DTC P050A Enable/Disable #1",
+     "storageaddress": "0x7E6A0"
+    },
+    {
+     "old": "DTC 0116 Enable/Disable #2",
+     "new": "DTC P0116 Enable/Disable #2",
+     "storageaddress": "0x7E6FD"
+    },
+    {
+     "old": "DTC 0134 Enable/Disable #2",
+     "new": "DTC P0134 Enable/Disable #2",
+     "storageaddress": "0x7E708"
+    },
+    {
+     "old": "DTC 0137 Enable/Disable #2",
+     "new": "DTC P0137 Enable/Disable #2",
+     "storageaddress": "0x7E709"
+    },
+    {
+     "old": "DTC 0411 Enable/Disable #2",
+     "new": "DTC P0411 Enable/Disable #2",
+     "storageaddress": "0x7E719"
+    },
+    {
+     "old": "DTC 050A Enable/Disable #2",
+     "new": "DTC P050A Enable/Disable #2",
+     "storageaddress": "0x7E72C"
+    }
+   ],
+   "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "pass": "Rename the DTC enable/disable tables in rx8defs-merged-60E15120.xml from the",
+   "bom": true,
+   "crlf": false
+  },
+  {
+   "renamed": 0,
+   "suffixed": 1,
+   "descriptions_replaced": 12,
+   "details": [
+    {
+     "old": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+     "storageaddress": "0x7E679"
+    },
+    {
+     "old": "DTC P0128 Enable/Disable #1",
+     "new": "DTC P0128 Enable/Disable #1",
+     "storageaddress": "0x7E68F"
+    },
+    {
+     "old": "DTC P1574 Enable/Disable #1",
+     "new": "DTC P1574 Enable/Disable #1",
+     "storageaddress": "0x7E6C1"
+    },
+    {
+     "old": "DTC P1577 Enable/Disable #1",
+     "new": "DTC P1577 Enable/Disable #1",
+     "storageaddress": "0x7E6C2"
+    },
+    {
+     "old": "DTC P2008 Enable/Disable #1",
+     "new": "DTC P2008 Enable/Disable #1",
+     "storageaddress": "0x7E6C8"
+    },
+    {
+     "old": "DTC P2101 Enable/Disable #1",
+     "new": "DTC P2101 Enable/Disable #1",
+     "storageaddress": "0x7E6CD"
+    },
+    {
+     "old": "DTC P2406 Enable/Disable #1",
+     "new": "DTC P2406 Enable/Disable #1",
+     "storageaddress": "0x7E6E7"
+    },
+    {
+     "old": "DTC U0073 Enable/Disable #1",
+     "new": "DTC U0073 Enable/Disable #1",
+     "storageaddress": "0x7E6EC"
+    },
+    {
+     "old": "DTC U0101 Enable/Disable #1",
+     "new": "DTC U0101 Enable/Disable #1",
+     "storageaddress": "0x7E6ED"
+    },
+    {
+     "old": "DTC U0121 Enable/Disable #1",
+     "new": "DTC U0121 Enable/Disable #1",
+     "storageaddress": "0x7E6EE"
+    },
+    {
+     "old": "DTC U0155 Enable/Disable #1",
+     "new": "DTC U0155 Enable/Disable #1",
+     "storageaddress": "0x7E6EF"
+    },
+    {
+     "old": "DTC U0167 Enable/Disable #1",
+     "new": "DTC U0167 Enable/Disable #1",
+     "storageaddress": "0x7E6F0"
+    }
+   ],
+   "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "pass": "Rename the DTC enable/disable tables in rx8defs-merged-60E15120.xml from the",
+   "bom": true,
+   "crlf": false
+  }
+ ]
+}

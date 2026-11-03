@@ -67,5 +67,18 @@
     "0x7e29e": "monitor-source mask u8[0x8c], ANDed with 8-bit mask from ptr table 0x604f8 in 0x5fb68 (mode-1 store gate)",
     "0x604f8": "8 x BE u32 monitor-check fns (0x5fbd2 x7, 0x5fbec, 0x5fbd6)",
     "0x618f8": "report class: type-0 stored -> 3 (e1&e2 on) / 4 (e1 off) / 5 (e2 off); types 1/2/3 -> 1/2"
-  }
+  },
+  "passes": [
+    {
+      "pass": "DTC P-code labels in defs (2026-11-03)",
+      "binary_level_checks": [
+        "all 134 DTC codes used across 11 ROMs re-dumped from the code tables (data/dtc/*.tsv) and decoded per SAE J2012/ISO 15031-6 into data/dtc/pcodes.tsv",
+        "pcodes.tsv cross-checked against tekseport/obd2-codes obd2-codes.csv @ ddadc77e and foerbsnavi/OBDex data/generic/*_enriched.yaml @ 3f03bb0 (both fetched 2026-11-03); P1 codes absent from both generic lists = manufacturer-specific",
+        "merged def rename: re-parse after splice, all active DTC names 5-char prefixed, storageaddress multiset unchanged, no new duplicate names per block, idempotent re-run",
+        "per-ROM defs regenerated (extend_defs_all_roms.py); defs_audit.tsv regenerated: 0 mismatches / 0 out-of-range, 9 defs x #1/#2/#3",
+        "input/4EngineControl.pdf (Mazda RX-8 workshop manual 2003) DTC TABLE parsed -> data/dtc/mazda_dtc_table.tsv (118 codes); all manual codes exist in ROMs (P0301/P0302 = 0x7e55a prefix codes); 18 ROM codes absent from the 2003 table (later J2012 additions); P1 meanings taken from the manual; U0167 SAE-vs-Mazda conflict recorded (Mazda=keyless control module used)"
+      ],
+      "tests": "tests/test_dtc_pcode_labels.py 14 passed; full pytest 90 passed + 1 pre-existing failure (test_extract_scalars.py, fails on main too)"
+    }
+  ]
 }
