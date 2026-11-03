@@ -199,7 +199,7 @@ sim: download the patched .bin at 0x0, then:
 **Result (full-boot external diff):** with the patched ROM,
 `sdb 0xD5FA` + `go` captured the boot from reset. Our trace now also logs
 delay-slot PCs (`_branch` appends pc+2; golden fixture regenerated, 319731
-entries, 61/61 tests). Diff vs `input/renesas-boot.trace`:
+entries). Diff vs `input/renesas-boot.trace`:
 **MATCH for the first 147 steps** (reset 0x8b8 through init, all branches/calls/
 delay slots identical); first divergence at step 147 = the `bf 0x9da` at 0x9d0
 whose T depends on a **GPIO PLIOR_W (0xfffff756) bit3** read at 0x9ca — ours 0

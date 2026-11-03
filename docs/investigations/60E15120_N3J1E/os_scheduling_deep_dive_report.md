@@ -418,7 +418,7 @@ carry ref_/candidate_ names from earlier passes).
   state, unchanged in `validation.json`), `verify_readability.py` PASS (3,355
   bodies consistent), `verify_math_units.py` PASS, targeted report checks PASS on
   all UTF-8-clean reports incl. this one. `python -m pytest tests/` could not run
-  in this environment (pytest not installed here); last full run on `main` was 61/61.
+  in that environment (pytest not installed there).
 
 ## 10. Memory map for validation
 
@@ -592,5 +592,5 @@ RAM/lookup tokens landed in code (`queue_state_base_ffff9304`,
 `tbl_crank_next_sector_0000d76c`, …); the 117/98/19 IVT classification is re-verified; pre-existing cp1252 bytes in two TSVs / two function files verified
 byte-identical to HEAD (surrogateescape round-trip). `validate_export.py`,
 `verify_readability.py`, `verify_math_units.py` and the targeted report checks all
-PASS; `hash_binaries.py --check` OK. Not re-run here: `pytest tests/` (pytest not
-installed in this environment; last full run on `main` 61/61).
+PASS; `hash_binaries.py --check` OK. Not run there: `pytest tests/` (pytest not
+installed in that environment).
