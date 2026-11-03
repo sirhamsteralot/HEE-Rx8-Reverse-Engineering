@@ -1,8 +1,8 @@
 # Extracted DTC (diagnostic trouble code) tables per ROM
 
-New folder proposed with the DTC deep dive (2026-11): the per-ROM DTC engine
-tables extracted from the ROM binaries at binary level, plus the audit of the
-RomRaider defs' `DTC xxxx Enable/Disable #N` tables against them.
+Per-ROM DTC engine tables extracted from the ROM binaries at binary level, plus
+the audit of the RomRaider defs' `DTC xxxx Enable/Disable #N` tables against
+them.
 
 ## Files
 
@@ -25,13 +25,13 @@ RomRaider defs' `DTC xxxx Enable/Disable #N` tables against them.
   Sources: Mazda manual `input/4EngineControl.pdf` ("RX8 – Engine Diagnostics &
   Control", 2003, DTC TABLE section — parsed to `mazda_dtc_table.tsv`);
   `tekseport/obd2-codes` `obd2-codes.csv` @ `ddadc77e` + `foerbsnavi/OBDex`
-  `data/generic/*_enriched.yaml` @ `3f03bb0` (cross-checked 2026-11-03).
+  `data/generic/*_enriched.yaml` @ `3f03bb0` (cross-checked).
   Decode rule (SAE J2012 / ISO 15031-6; the ROM stores the two mode-03 response
   bytes as BE u16): byte0 bits 7-6 → letter (P/C/B/U), bits 5-4 → second digit
   (0/2 SAE-generic, 1/3 manufacturer), low 12 bits → last 3 hex digits. So
   `0420` → **P0420**, `2504` → P2504, `1260` → P1260 (manufacturer-specific, no
-  SAE text), and `C167` → **U0167** (network — the old def label "C167" misread
-  the high hex nibble; 0xC0>>6 = U). Implemented in
+  SAE text), and `C167` → **U0167** (network — 0xC0>>6 = U, not chassis).
+  Implemented in
   `utilities/scripts/defs-merge/dtc_names.py`.
 - `mazda_dtc_table.tsv` — the DTC TABLE of `input/4EngineControl.pdf` parsed to
   `obd_code, mazda_manual_condition` (118 codes). The 2003 manual predates some
@@ -72,24 +72,24 @@ for the 0xffffd5fc mirror array.
 ## Defs status
 
 The `def_match` column and `defs_audit.tsv` reflect the **repaired** per-ROM defs
-(2026-11-01, `repair_dtc_tables()` in `utilities/scripts/defs-merge/extend_defs_all_roms.py`):
-0 mismatches across all ROMs for #1/#2/#3. The pre-repair audit (with the wrong
-blocks for 60E0E700/60E1B900/60E32000_N3M5E/60E0FB00/60E1D400) is preserved in
-`docs/investigations/60E15120_N3J1E/reviews/dtc_control/defs_audit_detail.json`.
+(`repair_dtc_tables()` in `utilities/scripts/defs-merge/extend_defs_all_roms.py`):
+0 mismatches across all ROMs for #1/#2/#3. (A pre-repair audit — with the wrong
+blocks for 60E0E700/60E1B900/60E32000_N3M5E/60E0FB00/60E1D400 — is preserved in
+`docs/investigations/60E15120_N3J1E/reviews/dtc_control/defs_audit_detail.json`.)
 
-Since 2026-11-03 the def tables are also **P-code labeled**: every
+The def tables are also **P-code labeled**: every
 `DTC xxxx Enable/Disable #N` entry in the per-ROM defs and in all active blocks
 of `rx8defs-merged-60E15120.xml` is named with the standard 5-char OBD code
 (`DTC P0420 Enable/Disable #1`, `DTC U0167 ...`; P0300's two slots get
-`[additional site 0x...]` suffixes). Rename pass:
+`[additional site 0x...]` suffixes). Rename tooling:
 `utilities/scripts/defs-merge/relabel_dtc_names.py` (merged def, surgical) +
 `repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
 descriptions); stats in
 `docs/investigations/60E15120_N3J1E/defs-merge/dtc_pcode_labels_2026-11-03.json`.
-Re-audit after the rename: still 0 mismatches (`defs_audit.tsv` regenerated;
+Audit: 0 mismatches (`defs_audit.tsv`;
 the audit compares decoded u16 codes, so both naming forms audit identically).
 Tests: `tests/test_dtc_pcode_labels.py`. See
-[dtc_control_report.md §5b](../docs/investigations/60E15120_N3J1E/dtc_control_report.md).
+[dtc_control_report.md §5b](../../docs/investigations/60E15120_N3J1E/dtc_control_report.md).
 
 ## Provenance
 

@@ -1,11 +1,9 @@
 # Mazda RX-8 PCM Pinout — What Each Pin Connects To
 
-> **Provenance:** promoted from `input/mazda-rx-8-pcm-pinout-series-1.md` on
-> 2026-10-31. Text-based PCM-connector pinout derived by visual reading of
+> **Source:** text-based PCM-connector pinout derived by visual reading of
 > `../references/13Electrical.pdf` (**ground truth for the RX-8 electrical
 > systems** — the copy-protected wiring book, 148 pages) plus the FSM terminal
-> table. Supersedes the earlier `mazda-rx-8-pcm-pinout-series-1.pdf` (v3), which
-> was removed from `docs/references/`. When this file is updated, re-diff and
+> table. When this file is updated, re-diff and
 > propagate changes into `pcm_connections.tsv` (`wire_colour`),
 > `firmware_annotations.tsv`, and the `[WIRING REVIEW]` blocks in the
 > synchronized C views. This document has **no chip-pin numbers** —
@@ -219,18 +217,18 @@ Mazda colour codes: **B** Black · **W** White · **R** Red · **G** Green · **
 - APV assembly (B1-37, five wires): motor **3G G/B** (+) / **3J L/R** (−), position sensor **3B R/G** (signal), **1S R/W** (Vref), **1U BR** (ground).
 - CAN bus: **4S = G/B** (CAN_L) / **4V = L/W** (CAN_H), the same twisted pair that runs to the instrument cluster, ABS/DSC HU/CM, EPS control module, keyless control module, TPMS module and the data link connector.
 
-**† Conflicts and corrections:**
-- **5T** — previously shown **B †**; resolved as **B/O & B/R** (two wires). The circuit diagram prints *B/O & B/R (F)* on terminal 5T: two separate ground wires spliced together before entering the single PCM terminal. The earlier "B" read was spillover from adjacent GND terminals 5O/5R (both plain B, confirmed by the same diagram).
-- **4C** — previously shown **N/W †**; corrected to **W/B**. The drive-by-wire (ETV) relay circuit diagram (B1-02) shows W/B (F) on the relay-coil wire ending at PCM 4C, confirmed on two independent reads; N/W, G/B and G/Y are retired as misreads.
-- **4K** — function corrected from "power supply" to **Vref (constant voltage)**: the BARO sensor circuit diagram labels the B/L wire to 4K as *CONSTANT VOLTAGE (Vref)*. The same diagram confirms 5S = B/R (signal) and 4U = B/G (ground).
-- **5Z** — colour resolved as **O** (was "no colour found"). The VFAD solenoid circuit diagram (B1-15) shows the O (F) wire terminating at PCM 5Z on two agreeing reads; the companion B/L (F) wire is the feed side.
-- **1O** — previously shown **G**; corrected to **R/L**. The AIR solenoid circuit diagram (connector B1-23: control wire R/L, feed W/R) traces the R/L wire unambiguously to PCM 1O, so the earlier G read is superseded.
-- **1S** — function corrected from "power supply" to **Vref (constant voltage)**: the APV circuit diagram (B1-37) labels the R/W wire to 1S as *CONSTANT VOLTAGE (Vref)*.
-- **2A** — previously shown **W/R**; corrected to **R**. The rear HO2S circuit diagram (B1-28) shows solid R on the heater-control terminal 2A, with W/R as the switched feed to the heater element on the other side (never reaching the PCM). Signal Y → 2Q and ground BR → 1U match the table unchanged.
+**† Conflict resolutions:**
+- **5T** — **B/O & B/R** (two wires). The circuit diagram prints *B/O & B/R (F)* on terminal 5T: two separate ground wires spliced together before entering the single PCM terminal. (A plain-B read is spillover from adjacent GND terminals 5O/5R, both plain B, confirmed by the same diagram.)
+- **4C** — **W/B**. The drive-by-wire (ETV) relay circuit diagram (B1-02) shows W/B (F) on the relay-coil wire ending at PCM 4C, confirmed on two independent reads.
+- **4K** — function **Vref (constant voltage)**: the BARO sensor circuit diagram labels the B/L wire to 4K as *CONSTANT VOLTAGE (Vref)*. The same diagram confirms 5S = B/R (signal) and 4U = B/G (ground).
+- **5Z** — colour **O**. The VFAD solenoid circuit diagram (B1-15) shows the O (F) wire terminating at PCM 5Z on two agreeing reads; the companion B/L (F) wire is the feed side.
+- **1O** — **R/L**. The AIR solenoid circuit diagram (connector B1-23: control wire R/L, feed W/R) traces the R/L wire unambiguously to PCM 1O.
+- **1S** — function **Vref (constant voltage)**: the APV circuit diagram (B1-37) labels the R/W wire to 1S as *CONSTANT VOLTAGE (Vref)*.
+- **2A** — **R**. The rear HO2S circuit diagram (B1-28) shows solid R on the heater-control terminal 2A, with W/R as the switched feed to the heater element on the other side (never reaching the PCM). Signal Y → 2Q and ground BR → 1U match the table.
 
 **\* Single-source entries (the complete list):** 1K = G · 1Q = G · 2I = BR/R · 2P = R/Y · 2U = Y/B · 4H = R/L · 4O = L/R · 5I = L. Of these, 1Q, 2P, 2U and 4F/4T-style entries were cross-checked against component connectors; 1K, 5I sit on pins the FSM lists as unused.
 
-**Used pins with no colour found:** **5L** (fuel pump relay, without-immobilizer variant) — not legible in any available source. The wiring book marks 5L with an asterisk (option/variant marker) and shows the line ending unlabelled, consistent with it being populated only on non-immobilizer cars. (5Z, previously in this list, was resolved as **O** — see corrections.)
+**Used pins with no colour found:** **5L** (fuel pump relay, without-immobilizer variant) — not legible in any available source. The wiring book marks 5L with an asterisk (option/variant marker) and shows the line ending unlabelled, consistent with it being populated only on non-immobilizer cars.
 
 **Pins listed as unused (—):** the FSM PCM terminal table may not document every populated terminal. Wires were intermittently glimpsed near several unused pins — 1A (B or L/B), 1N (B/L or Y/R), 2L (V or G/W), 3E/3M/3R (R/G, L/R — offset reads of neighbours 3B/3J), 4D (Y/B, read twice), 4G (R/L or L/G), 4B, 4I, 4L, 4N, 4R — but those label attributions proved unstable, so no colour is recorded for them. Only 1K, 1X and 5I gave consistent reads on unused pins and are shown (1X = BR across four agreeing passes).
 

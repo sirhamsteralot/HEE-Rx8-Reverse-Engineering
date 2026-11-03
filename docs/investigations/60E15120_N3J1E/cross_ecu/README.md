@@ -5,7 +5,7 @@
 below about a separate named view or unchanged raw C describe the pre-integration
 state. The saved Ghidra database remains unchanged. See `metadata/integrated_names.json`.
 
-Reviewed 2026-09-09 against the stock 60E15120 ROM. This extension adds evidence-backed comments and proposed aliases to the exported analysis C. It does not modify the ROM or rename symbols in the saved Ghidra database. Definitions are community interpretations, not recovered Mazda source names.
+Reviewed against the stock 60E15120 ROM. This extension adds evidence-backed comments and proposed aliases to the exported analysis C. It does not modify the ROM or rename symbols in the saved Ghidra database. Definitions are community interpretations, not recovered Mazda source names.
 
 ## Results from local RomRaider definitions
 
@@ -52,4 +52,4 @@ Run `python3 scripts/correlate_rx8defs.py` and then `python3 scripts/annotate_cr
 
 - [cross_rom_differential_labeling.md](cross_rom_differential_labeling.md) + alias/match TSVs — byte-match function aliases (D item 1).
 - [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) + [data/labels/cross_rom_mode22_pid_handlers.tsv](../../../../data/labels/cross_rom_mode22_pid_handlers.tsv) — Mode 22 PID handlers (D item 2).
-- [cross_rom_defs_coverage.md](cross_rom_defs_coverage.md) + [data/definitions/coverage.json](../../../../data/definitions/coverage.json) — per-ROM ECU definitions for all 14 ROMs (D item 4, 2026-11-01).
+- [cross_rom_defs_coverage.md](cross_rom_defs_coverage.md) + [data/definitions/coverage.json](../../../../data/definitions/coverage.json) — per-ROM ECU definitions for all 14 ROMs (D item 4).

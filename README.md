@@ -2,14 +2,13 @@
 
 Workspace for reverse engineering the Mazda RX-8 (Series 1) PCM/ECU — a Renesas
 **SH-2E (SH7055F)**, big-endian, 512 KiB flash / 32 KiB RAM. No firmware source
-exists; everything is derived from ROM binaries. Seeded 2026-10-31 from a prior
-effort workspace and community material, now with a working SH-2E emulator.
+exists; everything is derived from ROM binaries. Includes a working SH-2E
+emulator.
 
-**Plan:** see **[ROADMAP.md](ROADMAP.md)** — Phase 1 (simulation suite), Phase 3
-(calibration extraction), group B (emulator fidelity, except the E4/E6 partials),
-all of group C (static labeling & gap closure, items 1–6), and group D items 1–3
-(cross-ROM propagation) are done; open work starts at group D item 4 (extend the
-XML definitions to all ROMs). There is a discrepancy register at the bottom of the
+**Plan:** see **[ROADMAP.md](ROADMAP.md)** — groups A–D (emulator,
+calibration extraction, static labeling, cross-ROM propagation) are done; open
+work starts at group E (reimplementation coverage), then F (toward hardware,
+gated). There is a discrepancy register at the bottom of the
 ROADMAP. **Rules for agents/humans:** **[AGENTS.md](AGENTS.md)**.
 
 ## Credits & acknowledgements
@@ -87,7 +86,7 @@ directly (no MCP needed — see AGENTS.md); external agents use the MCP plugin i
 
 | Path | Purpose |
 |---|---|
-| `input/` | Raw intake drop zone (zips, saved pages, prior efforts). **Never committed** — verified artifacts are promoted out with provenance. |
+| `input/` | Raw intake drop zone (ROM dumps, zips, saved pages, cloned repos). **Never committed** — verified artifacts are promoted out with provenance. |
 | `submodules/` | Upstream repos as read-only git submodules (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering` — the latter holds the 10 stock ROMs, captures, Ghidra `.gar`). Never worked in or committed from; pinned commits cited in docs. |
 | `binaries/` | Immutable dumps of **our own acquisitions** (`dumps/`, e.g. the 60E0G500/N3ZHEC factory read), `manifest.csv` = recursive SHA-256 + provenance. Upstream ROMs are referenced via the submodule, not duplicated. |
 | `reverse-engineered/` | `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, 3,355 function files, named views, indexes), `reimplementation/` (compilable C11 + host tests). |
@@ -138,13 +137,13 @@ verified — full rules in [`AGENTS.md`](AGENTS.md) §Branch & PR workflow.
   PR workflow), never as direct commits to `main`.
 - Discrepancies are documented, never silently resolved (see ROADMAP register D1–D10).
 
-## Status (2026-10-31)
+## Status
 
-- **Emulator (ROADMAP Phase 1): implemented, fidelity-hardened 2026-10-31.**
+- **Emulator (ROADMAP Phase 1): implemented and fidelity-hardened.**
   Corpus-validated SH-2E core (9,902 opcodes, 100% of the 168k-instruction
   disassembly); boot of `60E15120_N3J1E` passes CAN init and reaches the main
   idle loop (0x3dac) clean; golden 200k PC trace byte-exact (`compare_traces.py`
-  self-check MATCH; Renesas SH-2E Simulator Debugger diff DONE 2026-10-31 —
+  self-check MATCH; Renesas SH-2E Simulator Debugger cross-check:
   NMI-loop segment MATCH 20000/20000, full-boot-from-reset MATCH 147/147 then a
   peripheral-pin divergence (see `utilities/scripts/emu/README.md` §cross-check).
   Peripherals at their symbols.tsv bases with real behavior:
@@ -160,37 +159,38 @@ verified — full rules in [`AGENTS.md`](AGENTS.md) §Branch & PR workflow.
   knock clamp 0x13bd2 = [-10,0]°, injector map 0xd7d4→ATU-II 8A-8F). Debugger
   (breakpoints/watchpoints/UBC), browser UI with drive-cycle replay, agent
   tooling (`hee.py` + MCP plugin). 61/61 tests.
-- **Labeling (2026-10-31):** emulator-driven pass resolved 27 functions + 16 RAM
+- **Labeling:** the emulator-driven OS-scheduler pass resolved 27 functions + 16 RAM
   cells + 9 tables (OS scheduler, IVT at VBR 0x7fc50, CAN/UDS transport, ADC/crank)
-  into the decompiled views — [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md).
-- **UDS/Mode-22 dispatch labeling (2026-10-31, ROADMAP group C item 1):** all 99
+  into the decompiled views —
+  [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md).
+- **UDS/Mode-22 dispatch labeling (ROADMAP group C item 1):** all 99
   Mode 22 PID records (table 0x5f10c) and all 29 UDS service records (table 0x5eb40)
-  labeled with semantic names, plus the sub-PID table 0x5f5b2, the service router
+  carry semantic names, plus the sub-PID table 0x5f5b2, the service router
   0x68dac and the ISO-TP frame dispatcher 0x6842c — 177 functions + 63 RAM cells +
-  3 tables renamed; re-verified against the raw disassembly and by a full dynamic
+  3 tables renamed; verified against the raw disassembly and by a full dynamic
   sweep in the emulator (all 99 PIDs through the ROM's own 0x5774c; 15 services
   routed through 0x68dac) —
   [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
-- **Ignition timing (2026-10-31):** Phase 2 labeling pass verified the thread §9
+- **Ignition timing:** the Phase 2 labeling pass verified the thread §9
   BTDC equation in the emulator (blend 0x123da/0x124d6, clamp 0x121fc/0x12300),
-  labeled 15 functions + 22 RAM + 17 tables, then re-verified at the binary level
-  (min-advance constants corrected to -25.0/-58.5 deg) —
+  labeled 15 functions + 22 RAM + 17 tables, with the min-advance constants
+  (-25.0/-58.5 deg) re-verified at the binary level —
   [`docs/investigations/60E15120_N3J1E/ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md) (all subsystem
-  reports now carry a plain-language §1a per AGENTS.md rule 8).
-- **Pipeline:** `utilities/scripts/rx8-pcm-pipeline/` now resolves paths via
-  `paths.py` to this repo (no legacy `input/Tuning-merged`); validators
+  reports carry a plain-language §1a per AGENTS.md rule 8).
+- **Pipeline:** `utilities/scripts/rx8-pcm-pipeline/` resolves paths via
+  `paths.py` to this repo layout; validators
   (`validate_export`, `validate_reports`, `verify_readability`, `verify_math_units`)
   run from the repo root and PASS.
 - **Analysis:** full static export + labeled subsystems (knock, fueling, intake,
   load) for `60E15120_N3J1E`.
-- **Calibration extraction (ROADMAP P3, 2026-10-31):**
+- **Calibration extraction (ROADMAP P3):**
   `extract_maps.py` scans every ROM for Denso descriptors and dumps all tables
   to `data/maps/` — 587 tables on 60E15120_N3J1E (all 478 RX8Defs-matched + 109
   unnamed), 381–587 across all 10 stock ROMs + 1 own dump, 0 non-monotonic
   axes. Cross-ROM structural diff via `diff_maps.py`. Report:
   [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md).  Scalar constants in shared literal pools (not descriptor tables — e.g. the
   base fuel scalar 0.07196 @0x78170 → `fuel_load_scale_ffffbed0`) are extracted
-  separately by `extract_scalars.py` (2026-11-02) into `data/maps/<rom-id>/scalars.*`
+  separately by `extract_scalars.py` into `data/maps/<rom-id>/scalars.*`
   + `data/maps/cross_rom_scalars.json` — report §6a.
 - **Data:** 1 own ROM dump (60E0G500/N3ZHEC factory), 10 stock ROMs via submodule, real-car logs in
   `data/logs/`, XML definitions in `data/definitions/`, extracted calibration

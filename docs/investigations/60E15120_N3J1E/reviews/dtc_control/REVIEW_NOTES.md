@@ -1,7 +1,6 @@
 # REVIEW_NOTES — DTC control deep dive
 
-Date: 2026-11-01. Reviewer pass over the DTC findings before the report was
-written.
+Reviewer pass over the DTC findings.
 
 ## Binary-level re-checks performed
 
@@ -43,7 +42,7 @@ written.
   slot 23 — 98 mismatches; its #3 block is fine.
 - 60E0E700's def #2 contains an entry with storageaddress 0x0 (bogus).
 
-## Multi-gate verification (2026-11-01)
+## Multi-gate verification
 
 Confirmed per gate: monitor-source mask **0x7e29e** (ANDed with an 8-bit mask from the
 ptr table 0x604f8 in 0x5fb68, called from the mode-1 store transition 0x60062), and
@@ -78,7 +77,7 @@ exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
 - Emulator self-check vs golden boot trace not re-run for this pass (no
   emulator changes); Renesas cross-check still pending (ROADMAP E-limits).
 
-## Defs repair applied (2026-11-01)
+## Defs repair
 
 `extend_defs_all_roms.py` gained `repair_dtc_tables()`: each per-ROM block's
 `DTC xxxx Enable/Disable #N` entries are rebuilt from the ROM's own DTC layout
@@ -87,15 +86,15 @@ across all 9 per-ROM defs for #1/#2/#3 (see `data/dtc/defs_audit.tsv`, regenerat
 The merged 60E15120 block gained its missing #2/#3 bindings (363 entries, 0
 mismatches, XML re-parsed). Repair recorded in `defs-merge/definition_repairs.json`.
 
-## P-code label pass applied (2026-11-03)
+## P-code labels
 
 - Verified the code→P-code correspondence at binary level: ROM code table = the
   two mode-03 response bytes per slot (BE u16); SAE J2012/ISO 15031-6 decode
   (byte0 bits 7-6 letter, bits 5-4 digit, low 12 bits digits) maps all 134 codes
   used across the 11 ROMs in `data/dtc/pcodes.tsv`, cross-checked against
-  tekseport/obd2-codes @ ddadc77e and foerbsnavi/OBDex @ 3f03bb0 (2026-11-03).
+  tekseport/obd2-codes @ ddadc77e and foerbsnavi/OBDex @ 3f03bb0.
   0x0xxx→P0 generic, 0x2xxx→P2 generic, 0x1xxx→P1 manufacturer-specific (no SAE
-  text), 0xCxxx→U0 network (old "Cxxx" def labels were a high-nibble misread).
+  text), 0xCxxx→U0 network (0xC0>>6 = U, not chassis).
 - Renamed `DTC xxxx Enable/Disable #N` → `DTC Pxxxx ...` in all active blocks of
   `rx8defs-merged-60E15120.xml` (`relabel_dtc_names.py`, surgical splice,
   4027 renamed, 23 P0300 duplicate-site suffixes, 12 stale "not verified"
@@ -110,9 +109,9 @@ mismatches, XML re-parsed). Repair recorded in `defs-merge/definition_repairs.js
   (1 pre-existing failure in test_extract_scalars.py, also on main: scalars.tsv
   has a latin-1 byte that read_text(utf-8) rejects).
 
-## Mazda workshop manual cross-check (2026-11-03, input/4EngineControl.pdf)
+## Mazda workshop manual cross-check (`input/4EngineControl.pdf`)
 
-- New raw input: `input/4EngineControl.pdf` — Mazda RX-8 workshop manual "Engine
+- Raw input: `input/4EngineControl.pdf` — Mazda RX-8 workshop manual "Engine
   Diagnostics & Control" (PDF title, created 2003-11-21; stays uncommitted in
   input/ per rule 4). Its DTC TABLE section was extracted with pdftotext and parsed
   to `data/dtc/mazda_dtc_table.tsv` (118 codes; tall-row splits hand-verified against

@@ -1,4 +1,4 @@
-# named view — 60E0G500_N3ZHEC
+# named view â€” 60E0G500_N3ZHEC
 
 Synchronized copy of `firmware_decompiled.c` after applying the cross-ROM
 names (see the [CROSS-ROM NAMES APPLIED] header). Provenance:

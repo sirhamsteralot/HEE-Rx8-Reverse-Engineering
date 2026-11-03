@@ -1,11 +1,11 @@
-# Additional source review — 2026-09-09
+# Additional source review
 
 **Integration update:** These names and review comments are now included in
 `decompiled/firmware_decompiled.c` and individual function files. Earlier statements
 below about a separate named view or unchanged raw C describe the pre-integration
 state. The saved Ghidra database remains unchanged. See `metadata/integrated_names.json`.
 
-This pass adds **11 reviewed function annotations and 11 RAM aliases** to the exported C. Some clarify existing inherited names rather than identify previously unknown routines. Names describe observed behavior; they are not recovered factory symbols. The ROM and saved Ghidra database are unchanged.
+This review adds **11 reviewed function annotations and 11 RAM aliases** to the exported C. Some clarify existing inherited names rather than identify unknown routines. Names describe observed behavior; they are not recovered factory symbols. The ROM and saved Ghidra database are unchanged.
 
 ## Supported additions
 
@@ -29,7 +29,7 @@ The CAN descriptor at 0x4df1c contains big-endian ID 0x201, length 8 and pointer
 
 ## Sources examined and their limits
 
-**G-ROM:** [RX8_FlexFuel](https://github.com/equinox311/RX8_FlexFuel), especially `RomAddresses.s`, `vars.h` and `pid_handler.h`, supplies OEM hooks, declarations and a diagnostic-record structure for reference ROM 60E0FC00. Three previously unnamed helpers were matched with only PC-relative literal displacement differences, then checked against target behavior. Its seven logger identifiers previously absent from our stock dispatch are explicitly present in the patch's extended PID list. Its `can216rx_byteN` names are misleading for original unpacked values: our routine stores three words and two bytes, not eight consecutive raw bytes. No general RAM offset was applied. Other engine-variable mappings remain unresolved. This is the same author's work as our reference archive, not an independent second implementation.
+**G-ROM:** [RX8_FlexFuel](https://github.com/equinox311/RX8_FlexFuel), especially `RomAddresses.s`, `vars.h` and `pid_handler.h`, supplies OEM hooks, declarations and a diagnostic-record structure for reference ROM 60E0FC00. Three unnamed helpers were matched with only PC-relative literal displacement differences, then checked against target behavior. Its seven logger identifiers that are absent from our stock dispatch are explicitly present in the patch's extended PID list. Its `can216rx_byteN` names are misleading for original unpacked values: our routine stores three words and two bytes, not eight consecutive raw bytes. No general RAM offset was applied. Other engine-variable mappings remain unresolved. This is the same author's work as our reference archive, not an independent second implementation.
 
 **Renesas:** [SH7055 On-Chip I/O application note](https://www.renesas.com/en/document/apn/sh7055-chip-io-volume-application-note), section 2.20, printed pages 111–115, confirms synchronous SCI setup and RDRF mask 0x40. Its sample itself waits without a timeout. This strengthens the peripheral interpretation but weakens any claim that the mere existence of such a loop establishes a defect. Transfer frequency cannot be inferred from its example without verifying our clock configuration.
 
@@ -48,7 +48,7 @@ The CAN descriptor at 0x4df1c contains big-endian ID 0x201, length 8 and pointer
 
 The original export validator still checks all 3,355 function files and 168,592 instruction encodings against the ROM. These checks establish artifact consistency, not equivalence to original C or proof of the reported reset cause.
 
-## 2026-10-31 pass — UDS/Mode-22 dispatch labeling
+## UDS/Mode-22 dispatch labeling
 
 Appended 175 function aliases and 63 RAM aliases (see `accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`; machine-readable record in
@@ -62,10 +62,9 @@ dispatch, exact 0x62-header response bytes + NRC 0x31 mask rejection). Report:
 `validate_export` / `validate_reports` / `verify_readability` / `verify_math_units` PASS;
 `pytest tests/` 59/59.
 
-## 2026-10-31 verification pass — UDS/Mode-22 labels re-checked with extreme caution
+## UDS/Mode-22 label verification (extreme caution)
 
-Re-verified all labels from the dispatch pass against the RAW DISASSEMBLY and the emulator
-(checker/report were scratch files under `input/work/`, removed in the 2026-11-01 input/ cleanup):
+All labels from the dispatch pass are re-verified against the RAW DISASSEMBLY and the emulator:
 99/99 PID + 29/29 service + 36/36 sub records byte-exact vs ROM; every handler's call
 targets resolved through the literal pool (0 unknown); 63/63 RAM aliases confirmed as
 (sign-extended mov.w) literals in the claimed reader after fixing one reader column

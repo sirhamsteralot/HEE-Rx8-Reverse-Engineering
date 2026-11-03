@@ -12,7 +12,7 @@ Built `utilities/scripts/extract_maps.py`, a scanner that finds every Denso
 lookup-table descriptor in the ROM and dumps all tables + axes to `data/maps/`.
 On 60E15120_N3J1E it finds **587 tables** (450 2D + 137 3D), of which **478 match
 the RX8Defs XML definitions** (all of them, 0 missing, 0 type mismatches) and
-**109 are previously unnamed**. Cross-ROM diff (`diff_maps.py`) matches tables
+**109 are unnamed**. Cross-ROM diff (`diff_maps.py`) matches tables
 across all 10 stock ROMs by structure and reports per-cell differences.
 
 ### 1a. Plain-language summary
@@ -62,7 +62,7 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
   (descriptor address → dimension, count, type, axis/data addresses).
 - 478 of these cross-reference the existing RX8Defs `CAL_` names in
   `cross_ecu/romraider_descriptor_matches.json` (0 missing, 0 type mismatches).
-- 109 previously unnamed tables now have stable addresses + extracted values.
+- 109 tables that carry no XML name have stable addresses + extracted values.
 
 ## 5. Corrections made in this pass
 
@@ -94,7 +94,7 @@ Type codes → handler (symbols.tsv): **0**=float32(4B), **4**=uint8(1B),
 
 Type distribution (N3J1E): uint8=264, uint16=175, float32=148 (no int8/int16).
 
-### 6a. Scalar constants — literal-pool float32s (2026-11-02)
+### 6a. Scalar constants — literal-pool float32s
 
 Descriptor tables are not the whole calibration surface: single float32
 constants live in shared literal pools and are referenced by literal pointers
@@ -110,7 +110,7 @@ replaces with 608.0/626.224 at 0x76ccc-0x76cd0 — different secondary injectors
 on that market ROM. Seeds + evidence come from the
 [load & fuelling review validation](reviews/load_fueling_model/validation.json);
 tests in `tests/test_extract_scalars.py`.
-- **Negative result (2026-11-02)**: no stored scalar equals λ = 0.942188
+- **Negative result**: no stored scalar equals λ = 0.942188
   (f32 0x3f71333c ±2 ULP, any alignment, absent from all 11 ROMs; Q15 would be
   30875.6 — non-integer; u8 scalings give x = 14.8 — non-integer; no extracted
   table cell/axis in [0.9419, 0.9424] in any ROM). The base AFR/lambda reference
@@ -135,9 +135,9 @@ tests in `tests/test_extract_scalars.py`.
   FUN_0003e560 and used as `diag_afr_word_a × fVar4 × 14.7` in the
   fuel-correction/catalyst model (feeds `fuel_correction_sum_ffffc644`, PID
   0x3c) — i.e. it converts the λ-domain fueling into AFR units. Seeded as
-  `stoich_afr` in extract_scalars.py (2026-11-02). Per-operating-point AFR is
+  `stoich_afr` in extract_scalars.py. Per-operating-point AFR is
   the maps above, not this scalar.
-- **Flex-fuel cross-check (2026-11-02)**: all 11 available ROMs are non-flex —
+- **Flex-fuel cross-check**: all 11 available ROMs are non-flex —
   each has exactly one 14.7 literal (0x416b3333) referenced by exactly one
   `mova` 0x100 B before it (N3J1E: mova @0x3e6ec → 0x3e7ec in FUN_0003e560;
   per-ROM lit/mova: 60E0E500 0x3f314/0x3f214, 60E0E700 0x3f56c/0x3f46c,
@@ -184,12 +184,12 @@ generation (fewer structural matches).
 
 - `utilities/scripts/extract_maps.py` — scanner + extractor
 - `utilities/scripts/diff_maps.py` — cross-ROM diff
-- `utilities/scripts/extract_scalars.py` — literal-pool scalar extractor (2026-11-02, see section 6a)
+- `utilities/scripts/extract_scalars.py` — literal-pool scalar extractor (see section 6a)
 - `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv, scalars.json + scalars.tsv)
 - `data/maps/cross_rom_diff.json` — cross-ROM diff report
 - `data/maps/cross_rom_scalars.json` — cross-ROM scalar address report
 - [data/maps README](../../../data/maps/README.md) — format docs + regeneration recipe
-- `tests/test_extract_maps.py` — 6 tests; `tests/test_extract_scalars.py` — 5 tests (2026-11-02)
+- `tests/test_extract_maps.py` — 6 tests; `tests/test_extract_scalars.py` — 5 tests
 
 ## 8. Validation
 
@@ -199,7 +199,7 @@ generation (fewer structural matches).
 - **Data spot-check**: 20 tables re-read from raw ROM bytes — all values match.
 - **All axes monotonic** across all 587 tables (strong false-positive filter).
 - **6 new tests** in `tests/test_extract_maps.py`; full suite 44/44 pass.
-- **Scalars (2026-11-02)**: 14 seed float32 patterns found in all 11 ROMs;
+- **Scalars**: 14 seed float32 patterns found in all 11 ROMs;
   reference-ROM addresses asserted by `extract_scalars.py` and
   `tests/test_extract_scalars.py` (5 tests, pass).
 - `validate_reports.py` PASS; `hash_binaries.py --check` OK.
@@ -226,7 +226,7 @@ Cross-ROM cal starts: 0x6c000 (60E0E500, 60E0E700, 60E15120, 60E1C500, 60E1D400,
   Use axis values + surrounding code references to confirm semantic identity.
 - Type codes 12/16 (int8/int16) not present in 60E15120_N3J1E but the handlers
   exist (0x256c/0x2598); may appear in other ROMs.
-- D5 (g/rev vs VolEf) handler side settled 2026-10-31: PID 0x43 handler 0x56b8a
+- D5 (g/rev vs VolEf) handler side: PID 0x43 handler 0x56b8a
   (`diag22_pid0043_engine_load_g_rev`) encodes `engine_load_ffffc0b4` × 1/255
   (dynamically verified in the emulator); still needed: trace that RAM cell's
   writers to a specific extracted table in `data/maps/` and compare numerically
