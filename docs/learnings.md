@@ -439,9 +439,12 @@ Session gotchas worth keeping:
   0/1) get `[additional site 0xADDR]` suffixes; commented-out blocks untouched;
   re-run = no-op; pass log deduped per rename pair. Per-ROM defs get the names at
   generation time via `repair_dtc_tables()` (`dtc_names.py` shared decode/desc).
-  Descriptions follow rule 6b: `DTC P0420 - <Mazda/SAE meaning>. <gate meaning>
-  <rule-10 checksum-range note>` — the enable blocks sit inside the checksummed
-  range 0x2000-0x7ffff, so every DTC switch byte carries the bench-validate note.
+  Descriptions follow rule 6b: `DTC P0420 - <Mazda/SAE meaning>. <gate meaning>`.
+  (Correction: the pass initially appended a `<rule-10 checksum-range note>` to
+  every DTC switch-byte description — removed again the same day; rule 6b forbids
+  checksum-range/bench-validate text in `<description>`, it is not a table
+  description. The enable blocks do sit inside the checksummed range
+  0x2000-0x7ffff, but that fact lives in the investigation docs, not the defs.)
 - **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
   on re-run (writes the file even when normalization-only) — check `git diff` after
   running it.

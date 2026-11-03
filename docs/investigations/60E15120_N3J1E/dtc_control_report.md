@@ -300,7 +300,9 @@ not chassis). Applied by `utilities/scripts/defs-merge/relabel_dtc_names.py`
 (merged def, all active blocks, 4027 tables renamed + 23 P0300 duplicate-site
 suffixes + 12 stale descriptions replaced, surgical splice, idempotent) and by
 `repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
-descriptions with the rule-10 checksum-range safety note). Post-rename audit:
+descriptions; a rule-10 checksum-range note was initially included but is
+dropped again per updated rule 6b — it is not table description text).
+Post-rename audit:
 still **0 mismatches** across all 9 per-ROM defs × #1/#2/#3
 ([`data/dtc/defs_audit.tsv`](../../../data/dtc/defs_audit.tsv)); stats:
 [`defs-merge/dtc_pcode_labels_2026-11-03.json`](defs-merge/dtc_pcode_labels_2026-11-03.json);

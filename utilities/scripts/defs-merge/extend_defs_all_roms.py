@@ -238,10 +238,8 @@ def repair_dtc_tables(block, rom_rec):
                 "category": "DTCs", "type": "1D", "storagetype": "uint8",
                 "endian": "big", "expression": "x", "to_byte": "x", "size": "1",
             })
-            # short editor-facing description (AGENTS.md rule 6b/6c): DTC meaning
-            # + what this switch byte does, no checksum/bench-validate note;
-            # address/slot provenance stays in data/dtc/<rom>.tsv and
-            # dtc_control_report.md §5
+            # short editor-facing description (AGENTS.md rule 6b); address/slot
+            # provenance stays in data/dtc/<rom>.tsv and dtc_control_report.md §5
             d = E.SubElement(t, "description")
             d.text = dtc_names.dtc_description(code, f"#{n}")
             added += 1
