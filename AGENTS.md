@@ -54,6 +54,28 @@ dumping it at the root.
    meaning derived from a table axis; `candidate_` = unproven. Never upgrade a label
    because it's plausible. Distinguish firmware dataflow from physical pin routing;
    package-pin ↔ connector-terminal is board routing unless traced.
+6b. **Concise editor-def descriptions.** Table `<description>` entries in the XML defs
+   (`data/definitions/`) stay short: a simplified description of what the table does —
+   only when we accurately know that (candidate labels get a "not fully verified" note
+   instead). No memory addresses, no structural-match information, no derivation or
+   prior-name dumps, no dated pass markers — provenance lives in the label map
+   (`data/labels/<rom-id>/defs_table_labels.json`), TSVs and the investigation docs.
+   Safety warnings required by rule 10 (checksum range, bench-validation) are the
+   exception and stay.
+6c. **Editor-def passes: keep provenance out of the XML, keep passes re-runnable.**
+   Learned on the 2026-11-02 defs relabel pass (PR #18 review):
+   - `<description>` is user-facing text — never use it as a processing tag. Detect
+     already-processed entries by content/name against the label map (see
+     `is_relabeled` in `utilities/scripts/defs-merge/relabel.py`), and in tests map
+     tables to descriptors via the label map by name — don't regex `0x…` addresses out
+     of descriptions (rule 6b keeps them out of there).
+   - Per-ROM defs are fully regenerated (`utilities/scripts/defs-merge/extend_defs_all_roms.py`);
+     the merged def is spliced in place (`relabel_merged_def.py`), and its pass-log stats
+     JSON is only rewritten on a fresh renaming run — so re-running a pass to re-normalize
+     descriptions is safe and doesn't clobber the log.
+   - When a pass rewrites a touched table's description, replace the whole description on
+     that entry (dropping any carried-over analysis block); untouched entries keep their
+     pre-existing descriptions (rule 9).
 7. **Binary-level verification is mandatory** before claiming a review pass done:
    re-check labels against the raw ROM/disassembly (literal pools incl. shared pools,
    `mov.w`/`mov.l`/`mov #imm`/base+offset idioms, GPIO reg+mask+helper, descriptor

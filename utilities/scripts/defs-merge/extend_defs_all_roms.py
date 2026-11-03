@@ -3,7 +3,8 @@
 
 Read-only on all inputs (binaries/, submodules/, existing data/definitions/ XMLs).
 Writes only NEW files:
-  - data/definitions/romraider/per-rom/<rom-stem>.xml   (standalone RomRaider def per ROM)
+  - data/definitions/romraider/per-rom/<rom-stem>.xml   (standalone RomRaider def per ROM;
+    auto-formatted with ET.indent, 4-space indent, one element per line)
   - data/definitions/coverage.json                      (per-ROM mapping + provenance + validation)
 
 ROM inventory: binaries/dumps/*.bin (our acquisitions, hash-checked against
@@ -24,6 +25,9 @@ import copy, csv, hashlib, json, re, struct, subprocess, sys
 import xml.etree.ElementTree as E
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import relabel  # 2026-11-02 table relabel pass (shared with relabel_merged_def.py)
+
 DEFS = ROOT / "data" / "definitions"
 SUB_RX8DEFS = ROOT / "submodules" / "RX8Defs"
 UPSTREAM_RR = SUB_RX8DEFS / "RomRaider" / "rx8_defs.xml"
@@ -298,6 +302,7 @@ def main():
 
     coverage = {
         "generated": "2026-11-01",
+        "relabel_pass": "2026-11-02 (utilities/scripts/defs-merge/relabel.py; labels from data/labels/60E15120_N3J1E/defs_table_labels.json; cross-ROM via structural match in data/maps)",
         "roadmap_item": "D item 4",
         "upstream": {
             "repo": "submodules/RX8Defs (equinox311/RX8Defs)",
@@ -330,6 +335,13 @@ def main():
         block = copy.deepcopy(block)
         n_scalars = inject_scalar_tables(block, r)
         dtc_repair = repair_dtc_tables(block, r)
+        # 2026-11-02 relabel pass: apply the curated 60E15120 table labels
+        # (data/labels/60E15120_N3J1E/defs_table_labels.json) to this ROM's
+        # block — direct for 60E15120, cross-ROM structural match otherwise;
+        # adds extracted tables that had no editor entry. Names/categories/
+        # descriptions only; storageaddresses/axes/scalings untouched.
+        relabel_stats = relabel.apply_to_block(block, blks, r["stem"])
+        relabel_stats = {k: v for k, v in relabel_stats.items() if k != "details"}
         n_addr = validate_block(block, fwid)
         # emit standalone per-ROM def: base chain + rom block, with provenance comment
         out = E.Element("roms")
@@ -337,12 +349,18 @@ def main():
             f" Per-ROM RomRaider def for {r['file']} (SHA-256 {r['sha256'][:16]}..., fw id {fwid} at 0x2000).\n"
             f"    Block source: {origin}. Base chain: "
             + " <- ".join(b.findtext('romid/xmlid') for b in chain) + f" <- {fwid}.\n"
-            f"    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4).\n"
+            f"    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);\n"
+            f"    table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).\n"
             f"    ECUFlash def: " + (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned} ({ecuflash_tables} tables)" if fwid == "60E0G500" else "none upstream") + " "
         )
         out.append(c)
         for b in chain + [block]:
             out.append(copy.deepcopy(b))
+        # auto-format the generated file: one element per line, 4-space indent
+        # (matches the splice style of relabel_merged_def.py); ET.indent only
+        # touches whitespace-only text/tail, so descriptions and data="..."
+        # attribute values are preserved verbatim
+        E.indent(out, space="    ")
         out_path = OUT_DIR / f"{r['stem']}.xml"
         E.ElementTree(out).write(out_path, encoding="utf-8", xml_declaration=True)
         # re-parse what we wrote (validation of the artifact, not just the tree)
@@ -356,6 +374,7 @@ def main():
             "block_tables": len(block.findall("table")),
             "scalar_tables_injected": n_scalars,
             "dtc_repair": dtc_repair,
+            "relabel_2026-11-02": relabel_stats,
             "block_tables_with_storageaddress": n_addr,
             "per_rom_def": out_path.relative_to(ROOT).as_posix(),
             "ecuflash_def": (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned}" if fwid == "60E0G500" else None),
