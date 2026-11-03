@@ -18,6 +18,17 @@ data/definitions/romraider/rx8defs-merged-60E15120.xml instead of upstream.
 ECUFlash defs exist upstream only for 60E0G500 (ECUFlash/60E0G500.xml, 1210 tables);
 they are referenced from the submodule, not copied (AGENTS.md rule 4b).
 
+Stock-only defs (2026-11-03): the G-ROM_FLEX-only 'Flex Fuel' category tables that the
+RX8Base chain hands to every <rom> (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444) are
+stripped from every emitted def — all dumped ROMs are stock and 0x6C444 is tbl_068f94
+data in them (calibration_extraction_report.md 6a). Policy + provenance:
+data/definitions/README.md 'Stock-only defs'.
+
+Editor-facing descriptions (2026-11-03, AGENTS.md rule 6b): clean_descriptions.clean_block
+strips provenance (addresses, pass markers, evidence/report links, generator assertions
+like "asserted against ROM bytes by this script", checksum/rule-10 notes) from every
+<description>, keeping only the plain what-the-table-does text.
+
 Run from the repo root:  python utilities/scripts/defs-merge/extend_defs_all_roms.py
 """
 from pathlib import Path
@@ -27,6 +38,7 @@ import xml.etree.ElementTree as E
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import relabel  # 2026-11-02 table relabel pass (shared with relabel_merged_def.py)
+import clean_descriptions  # 2026-11-03 rule 6b: editor-facing descriptions carry no provenance
 import dtc_names  # 2026-11-03 DTC P-code table names (data/dtc/pcodes.tsv)
 
 DEFS = ROOT / "data" / "definitions"
@@ -92,38 +104,45 @@ def base_chain(block, blks):
     return list(reversed(chain))  # RX8Base first
 
 
+# Stock-only defs policy (2026-11-03, data/definitions/README.md 'Stock-only defs'):
+# the 'Flex Fuel' category tables live in the RX8Base block and are inherited by every
+# <rom>, but they exist only in G-ROM_FLEX — all dumped ROMs are stock (single 14.7
+# stoich literal each, no ethanol-indexed 1/AFR table; 0x6C444 is tbl_068f94 data in
+# stock ROMs — calibration_extraction_report.md 6a flex-fuel cross-check).
+FLEX_CATEGORY = "Flex Fuel"
+
+
+def strip_flex_tables(block):
+    """Remove upstream 'Flex Fuel' category tables from a <rom> block; returns count."""
+    n = 0
+    for t in list(block.findall("table")):
+        if t.get("category") == FLEX_CATEGORY:
+            block.remove(t)
+            n += 1
+    return n
+
+
 SCALARS_JSON = ROOT / "data" / "maps" / "cross_rom_scalars.json"
 SCALAR_ENTRIES = {
     # literal-pool float32 scalars (ROADMAP D11) exposed as editable 1-cell
     # RomRaider "scalar" tables; addresses/values from extract_scalars.py output
+    # rule 6b: editor-facing text only — what the scalar does and how to retune
+    # for another fuel; addresses/provenance/checksum notes stay out of the XML
     "stoich_afr": {
         "name": "Scalar - Stoich AFR (literal pool)",
         "units": "AFR",
-        "description": ("Literal-pool float (stoich AFR 14.7), referenced by a mova in the "
-                        "fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c "
-                        "path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. "
-                        "NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). "
-                        "Editing changes fuel correction + AFR display. See "
-                        "calibration_extraction_report.md 6a. "
-                        "FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the "
-                        "new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by "
-                        "14.7/new_stoich; leave the maps alone (they are lambda multipliers). For "
-                        "varying ethanol blends use the flex stoich table (0x6C444 in G-ROM_FLEX), "
-                        "not a fixed scalar. See data/definitions/README.md 'Literal-pool scalars'."),
+        "description": ("Stoichiometric air-fuel ratio (14.7 = gasoline); converts lambda to AFR "
+                        "in the fuel-correction/AFR display. For a different-stoich fuel set this "
+                        "to the new stoich (e.g. 9.76 for E85) and scale 'Scalar - Fuel Load Scale' "
+                        "by 14.7/new stoich. Stock ROMs have no ethanol-indexed stoich table - this "
+                        "fixed scalar is the only stoich constant."),
     },
     "fuel_load_scale": {
         "name": "Scalar - Fuel Load Scale (literal pool)",
         "units": "mult",
-        "description": ("Literal-pool float (0.07196): engine_load x 0.07196 -> "
-                        "fuel_load_scale_ffffbed0; the scalar every fuel-volume request scales by "
-                        "(0x306e8 in 60E15120_N3J1E). Physical units still candidate. Editing changes "
-                        "base fueling. See calibration_extraction_report.md 6a. "
-                        "FUEL CHANGE: this is the scalar that changes OPEN-LOOP injected fuel volume "
-                        "(bed0 = load x 0.07196 in the 0x306e8 fuel-volume calc); for a different-"
-                        "stoich fuel scale it by 14.7/new_stoich (E85: x1.506 -> ~0.1084) and pair "
-                        "with setting 'Scalar - Stoich AFR' to the new stoich. Unit interpretation "
-                        "candidate - verify with a wideband that commanded AFR = new stoich at "
-                        "lambda=1.0 before driving. See data/definitions/README.md."),
+        "description": ("Scales engine load into the base injected fuel volume; editing changes "
+                        "open-loop fueling. For a different-stoich fuel scale it by 14.7/new stoich "
+                        "(E85: x1.506), paired with setting 'Scalar - Stoich AFR' to the new stoich."),
     },
 }
 
@@ -163,8 +182,9 @@ def inject_scalar_tables(block, rom_rec):
             "storageaddress": f"0x{addr:X}",
         })
         d = E.SubElement(t, "description")
-        d.text = (spec["description"] + f" ROM address 0x{addr:x}, value {entry['value']!r} "
-                  "(asserted against ROM bytes by this script).")
+        # rule 6b: user-facing text only — the ROM-bytes assertion above stays in
+        # code, not in the description the end user reads
+        d.text = spec["description"]
         E.SubElement(t, "scaling", {"units": spec["units"], "expression": "x",
                                     "to_byte": "x", "format": "0.0000"})
         n += 1
@@ -296,6 +316,7 @@ def main():
 
     coverage = {
         "generated": "2026-11-01",
+        "stock_only_defs": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables stripped from every per-ROM def (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444); see data/definitions/README.md 'Stock-only defs'",
         "relabel_pass": "2026-11-02 (utilities/scripts/defs-merge/relabel.py; labels from data/labels/60E15120_N3J1E/defs_table_labels.json; cross-ROM via structural match in data/maps)",
         "roadmap_item": "D item 4",
         "upstream": {
@@ -324,9 +345,16 @@ def main():
             coverage["roms"].append(rec)
             continue
         chain = base_chain(block, blks)
-        # inject into a copy so ROMs sharing one upstream block don't inherit
-        # each other's literal addresses
+        # work on copies so ROMs sharing one upstream block don't inherit
+        # each other's literal addresses (and the shared parse tree stays intact)
+        chain = [copy.deepcopy(b) for b in chain]
         block = copy.deepcopy(block)
+        # stock-only defs (2026-11-03): drop the G-ROM_FLEX-only 'Flex Fuel' tables
+        # inherited through the base chain — wrong addresses for every stock ROM
+        # (data/definitions/README.md 'Stock-only defs')
+        for b in chain:
+            strip_flex_tables(b)
+        strip_flex_tables(block)
         n_scalars = inject_scalar_tables(block, r)
         dtc_repair = repair_dtc_tables(block, r)
         # 2026-11-02 relabel pass: apply the curated 60E15120 table labels
@@ -335,6 +363,12 @@ def main():
         # adds extracted tables that had no editor entry. Names/categories/
         # descriptions only; storageaddresses/axes/scalings untouched.
         relabel_stats = relabel.apply_to_block(block, blks, r["stem"])
+        # 2026-11-03 rule 6b pass: strip provenance (addresses, pass markers,
+        # evidence links, generator assertions) from every remaining description;
+        # already-clean relabel descriptions pass through unchanged
+        for b in chain:
+            clean_descriptions.clean_block(b)
+        clean_descriptions.clean_block(block)
         relabel_stats = {k: v for k, v in relabel_stats.items() if k != "details"}
         n_addr = validate_block(block, fwid)
         # emit standalone per-ROM def: base chain + rom block, with provenance comment
@@ -345,11 +379,14 @@ def main():
             + " <- ".join(b.findtext('romid/xmlid') for b in chain) + f" <- {fwid}.\n"
             f"    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);\n"
             f"    table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).\n"
+            f"    Stock-only def (2026-11-03): G-ROM_FLEX-only 'Flex Fuel' base tables stripped at generation (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444);\n"
+            f"    descriptions cleaned per AGENTS.md rule 6b (clean_descriptions.py) — no addresses/provenance in editor text.\n"
+            f"    see data/definitions/README.md 'Stock-only defs'.\n"
             f"    ECUFlash def: " + (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned} ({ecuflash_tables} tables)" if fwid == "60E0G500" else "none upstream") + " "
         )
         out.append(c)
-        for b in chain + [block]:
-            out.append(copy.deepcopy(b))
+        for b in chain + [block]:  # already private copies
+            out.append(b)
         # auto-format the generated file: one element per line, 4-space indent
         # (matches the splice style of relabel_merged_def.py); ET.indent only
         # touches whitespace-only text/tail, so descriptions and data="..."
@@ -366,6 +403,7 @@ def main():
             "block_origin": origin,
             "base_chain": [b.findtext("romid/xmlid") for b in chain],
             "block_tables": len(block.findall("table")),
+            "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
             "scalar_tables_injected": n_scalars,
             "dtc_repair": dtc_repair,
             "relabel_2026-11-02": relabel_stats,

@@ -32,7 +32,8 @@ referenced by submodule path + commit.
   git blob `35ddcf316573a092006db5d33c60238ab9a43ea2` = upstream commit
   **`ff5ab4f`** (2026-09-29). Kept (not deleted under rule 4b) because the pinned
   HEAD carries a *newer* blob (`29afd000…` @ `1b3aea2`) and the 60E15120 merge
-  was built against `ff5ab4f`; do not mix the two.
+  was built against `ff5ab4f`; do not mix the two. Locally modified 2026-11-03:
+  flex-fuel content stripped (see "Stock-only defs" below).
 - `romraider/reviewed-rx8defs-copy/rx8_defs.xml` — prior effort's locally reviewed
   copy (base `944062e` + annotations; blob `0cd7ec8d…`, not an upstream blob).
 - `romraider/reviewed-rx8defs-copy/logger_60E15120_reviewed.xml` — reviewed
@@ -85,10 +86,65 @@ fuel:
 
 Leave the maps (`tbl_06ac88` base fuel map, `tbl_069e9c` open-loop target) alone —
 they command λ multipliers, which are fuel-agnostic, and closed loop self-corrects
-via the O2 sensor in λ regardless. For **varying** ethanol blends, don't hardcode:
-use the flex stoich table (G-ROM_FLEX "Table 2D - Stoich Fuel Ratio" @0x6C444,
-ethanol-indexed). Both scalar addresses are inside the D3 checksum range, so a
+via the O2 sensor in λ regardless. These defs describe **stock ROMs only**: no
+flex-fuel / ethanol-indexed stoich table exists in any of them (see "Stock-only
+defs" below), so for varying ethanol blends there is no table to edit here — the
+fixed `Scalar - Stoich AFR` above is the only stoich constant in a stock ROM.
+Both scalar addresses are inside the D3 checksum range, so a
 changed value needs the checksum/CVN path handled.
+
+## Stock-only defs — flex-fuel content removed (2026-11-03)
+
+All defs in this tree describe **stock ROMs only**. The upstream `RX8Base` block
+carries a `Flex Fuel` category (8 tables, incl. `Table 2D - Stoich Fuel Ratio`
+@0x6C444) plus a whole `G-ROM_FLEX` `<rom>` block, but those exist only in the
+flex-fuel variant ROM, for which this repo has no binary: every dumped ROM carries
+a single 14.7 stoich literal (0x416b3333) and no ethanol-indexed 1/AFR table, and
+in a stock ROM 0x6C444 is `tbl_068f94`'s data, not a stoich table (flex-fuel
+cross-check: [calibration_extraction_report.md §6a](../../docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
+unresolved G-ROM_FLEX inheritance: [defs-merge/inheritance_issues.json](../../docs/investigations/60E15120_N3J1E/defs-merge/inheritance_issues.json)).
+Removed on 2026-11-03 from:
+
+- all 9 `romraider/per-rom/*.xml` — stripped at generation time by
+  `extend_defs_all_roms.py` (`strip_flex_tables`); each file carries a
+  provenance comment and `coverage.json` records `stock_only_flex_strip`
+  per ROM;
+- `romraider/rx8defs-merged-60E15120.xml`,
+  `romraider/reviewed-rx8defs-copy/rx8_defs.xml`,
+  `romraider/upstream-rx8defs/rx8_defs.xml` — byte-preserving line splice by
+  [`utilities/scripts/defs-merge/strip_flex_fuel.py`](../../utilities/scripts/defs-merge/strip_flex_fuel.py)
+  (idempotent, `--check` mode; removes the `G-ROM_FLEX` `<rom>` block and every
+  `Flex Fuel` table, incl. commented-out ones).
+
+Provenance note for the upstream snapshot: `romraider/upstream-rx8defs/rx8_defs.xml`
+was a verbatim snapshot of upstream commit `ff5ab4f` (blob `35ddcf3…`); it is now
+locally modified (flex-fuel content removed — AGENTS.md rule 4b provenance note),
+so that blob no longer matches this file. The pinned submodule
+`submodules/RX8Defs/RomRaider/rx8_defs.xml` is read-only and still carries the
+upstream flex-fuel content.
+
+## Editor-facing descriptions cleaned (2026-11-03, AGENTS.md rule 6b)
+
+Per rule 6b a `<description>` is user-facing text only — a simplified
+what-the-table-does sentence. A cleanup pass
+([`utilities/scripts/defs-merge/clean_descriptions.py`](../../utilities/scripts/defs-merge/clean_descriptions.py),
+idempotent with `--check`) removed from every `<description>` in all defs here:
+addresses and ROM-address assertions ("ROM address 0x…, value … (asserted
+against ROM bytes by this script)"), lookup-descriptor/dispatch inventories,
+function/PID/mova references, dated pass markers and JSON correction dumps
+("[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout …",
+"[60E15120 analysis 2026-09-18] Lookup descriptor 0x…", "Upstream rename from …",
+"[2026-09-30 review] Correction: {…}"), evidence/report links, and
+checksum/rule-10 bench-validation notes. DTC `Enable/Disable` tables now carry a
+one-line user-facing description ("Enable/disable flag for diagnostic trouble
+code DTC xxxx (block #n)."); descriptions left with no user-facing text were
+removed. Plain what-the-table-does sentences (e.g. "Used to correct the max
+primary injector amount based on barometric pressure …") were kept. The per-ROM
+defs are cleaned at generation time by `extend_defs_all_roms.py`
+(`clean_descriptions.clean_block`); the merged/reviewed/upstream-snapshot files
+were cleaned by the splice script. Provenance stays in the label map, TSVs and
+investigation docs — not in the XML. 4,526 descriptions now carry text; none
+contain provenance markers.
 
 ## Relabel / regroup pass (2026-11-02, ROADMAP D item 5)
 

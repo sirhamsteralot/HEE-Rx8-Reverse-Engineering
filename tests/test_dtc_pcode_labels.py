@@ -192,7 +192,9 @@ def test_merged_def_all_blocks_prefixed_and_addresses_unchanged():
             if parsed is not None:
                 n_dtc += 1
                 assert re.match(r"^DTC [PCBU][0-9A-F]{4} Enable/Disable #\d", t.get("name")), t.get("name")
-    assert n_dtc > 4000, n_dtc  # 4027 renamed in the pass (comments excluded by ET)
+    # 4027 renamed in the pass; 3785 after the 2026-11-03 stock-only strip removed
+    # the G-ROM_FLEX <rom> block (242 DTC tables, comments excluded by ET)
+    assert n_dtc > 3700, n_dtc
 
 
 def test_repair_dtc_tables_idempotent_on_regenerated_def():
