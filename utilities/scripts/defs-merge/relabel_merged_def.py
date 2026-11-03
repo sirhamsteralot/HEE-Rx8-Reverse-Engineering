@@ -8,7 +8,10 @@ the file is left untouched (verified by re-parsing + git diff). The pass itself
 lives in relabel.py (shared with extend_defs_all_roms.py for the per-ROM
 defs).
 
-Idempotent: entries already carrying the relabel marker are skipped.
+Idempotent: entries already carrying the relabel marker keep their
+name/category/addresses and only get their description re-normalized to the
+short rule-6b form; the pass log (stats JSON) is only rewritten on a fresh
+renaming run.
 
 Run from the repo root:
   python utilities/scripts/defs-merge/relabel_merged_def.py [--dry-run]
@@ -163,12 +166,18 @@ def main():
     n_marker = sum(1 for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or ""))
     print(f"OK: block tables {len(old_els)} -> {len(names)}; renamed={stats['renamed']} "
           f"added={stats['added']} regrouped={stats['regrouped']} marker_entries={n_marker}")
-    STATS_OUT.write_text(json.dumps({
-        "file": str(MERGED.relative_to(ROOT)), "rom_block": TARGET_XMLID,
-        "marker": relabel.MARKER, "stats": {k: v for k, v in stats.items() if k != "details"},
-        "details": stats["details"],
-    }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
+    if stats["renamed"] or stats["added"]:
+        # fresh pass: (re)write the pass log. On a normalization-only re-run
+        # (everything already marked) the original stats file is kept.
+        STATS_OUT.write_text(json.dumps({
+            "file": str(MERGED.relative_to(ROOT)), "rom_block": TARGET_XMLID,
+            "marker": relabel.MARKER, "stats": {k: v for k, v in stats.items() if k != "details"},
+            "details": stats["details"],
+        }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
+    else:
+        print(f"normalization-only run (skipped_marker={stats['skipped_marker']}); "
+              f"stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

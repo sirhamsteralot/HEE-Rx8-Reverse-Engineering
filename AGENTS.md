@@ -55,8 +55,10 @@ dumping it at the root.
    because it's plausible. Distinguish firmware dataflow from physical pin routing;
    package-pin ↔ connector-terminal is board routing unless traced.
 6b. **Concise editor-def descriptions.** Table `<description>` entries in the XML defs
-   (`data/definitions/`) stay short: what the table is + its descriptor address (+ prior
-   name when renamed). No source/evidence dumps — provenance lives in the label map
+   (`data/definitions/`) stay short: a simplified description of what the table does —
+   only when we accurately know that (candidate labels get a "not fully verified" note
+   instead). No memory addresses, no structural-match information, no derivation or
+   prior-name dumps — provenance lives in the label map
    (`data/labels/<rom-id>/defs_table_labels.json`), TSVs and the investigation docs.
    Safety warnings required by rule 10 (checksum range, bench-validation) are the
    exception and stay.

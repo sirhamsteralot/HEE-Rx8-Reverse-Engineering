@@ -11,10 +11,13 @@ Sources, in priority order (later overrides earlier on the same descriptor):
      per-entry citations. Every entry is keyed by the lookup DESCRIPTOR
      address (the tbl_XXXXXXXX name in data/maps/<rom>/index.tsv).
 
-Each entry: {name, category, note, evidence, source, confidence}.
+Each entry: {name, category, note, desc, evidence, source, confidence}.
   name       RomRaider table name to use (" (candidate)" suffix marks unproven)
   category   RomRaider category = the grouping (existing RX8Defs category names)
-  note       short semantics/units note appended to the def <description>
+  note       detailed semantics/provenance note — NOT editor-facing (stays here)
+  desc       short editor-facing <description> text (AGENTS.md rule 6b): a
+             simplified description of what the table does, only when accurately
+             known; no addresses, no structural-match/derivation details
   confidence "high" = binary-verified role; "candidate" = hypothesis (label ladder)
 
 Run from the repo root:
@@ -295,6 +298,119 @@ REPORT_ENTRIES = {
         note="", source=f"{REPORT}/knock_control_report.md §8.4"),
 }
 
+# Short editor-facing <description> text per descriptor (AGENTS.md rule 6b):
+# a simplified description of what the table does — only where accurately
+# known (high confidence). No memory addresses, no structural-match or
+# derivation details here; provenance stays in note/evidence/source and the
+# investigation docs. Candidate labels get CANDIDATE_DESC instead.
+DESC = {
+    # ---- Knock control
+    "0x6af54": "Lowest engine load at which knock control is enabled, vs RPM.",
+    "0x6af68": "Most negative knock retard allowed (lower clamp), vs RPM.",
+    "0x6af7c": "Alternate lower knock retard clamp, vs RPM.",
+    "0x6af90": "Upper knock retard clamp, vs RPM.",
+    "0x6afa4": "Knock retard recovery target in fail-safe, vs RPM.",
+    "0x6afb8": "Scale applied to learned knock retard.",
+    "0x6b250": "Scales knock sensor voltage to knock magnitude.",
+    "0x6b264": "Number of cycles knock retard is held after a transient.",
+    "0x6b270": "Knock level threshold that triggers ignition retard, channel A, vs RPM.",
+    "0x6b27c": "Alternate knock ignition-retard threshold A, vs RPM.",
+    "0x6b288": "Knock level threshold that triggers ignition retard, channel B, vs RPM.",
+    "0x6b294": "Alternate knock ignition-retard threshold B, vs RPM.",
+    "0x6b2a0": "Minimum knock noise threshold (clamp floor).",
+    "0x6b2ac": "Knock noise floor vs RPM.",
+    "0x6b2b8": "Knock level map vs load and RPM (variant A).",
+    "0x6b2d4": "Knock level map vs load and RPM (variant B).",
+    "0x6b2f0": "Knock level map vs load and RPM (variant C).",
+    "0x6b304": "Knock level map vs load and RPM (variant D).",
+    "0x6b83c": "Cold-start ignition advance reduction, vs RPM.",
+    # ---- Ignition timing
+    "0x69078": "Main leading (front rotor) base ignition timing vs load and RPM.",
+    "0x690cc": "Maximum allowed leading ignition advance.",
+    "0x69120": "Trailing (rear rotor) base ignition timing map.",
+    "0x69174": "Trailing ignition advance adder.",
+    "0x6a060": "Idle speed error correction to leading timing (idle control off).",
+    "0x6a074": "Idle speed error correction to leading timing (idle control on).",
+    "0x6a088": "Idle speed error correction to trailing timing (idle control off).",
+    "0x6a09c": "Idle speed error correction to trailing timing (idle control on).",
+    "0x6a0d8": "Intake-air-temperature correction to timing on throttle.",
+    "0x6af2c": "Cranking ignition advance adder vs coolant temperature, leading.",
+    "0x6b644": "Cranking ignition advance adder vs coolant temperature, trailing.",
+    "0x6b630": "Off-throttle leading timing vs coolant temperature.",
+    "0x6a7a4": "Leading base timing in DSC mode A.",
+    "0x6957c": "Leading timing map 4 in DSC mode A.",
+    # ---- Fuel / injection / airflow
+    "0x68ef8": "Maximum injector open angle, stage 1, in degrees.",
+    "0x68f0c": "Maximum injector open angle, stage 2, in degrees.",
+    "0x68f20": "Maximum injector open angle, stage 3, in degrees.",
+    "0x69788": "MAF sensor voltage to air mass flow (g/s).",
+    "0x69cac": "Open-loop fuelling base correction vs barometric pressure.",
+    "0x69cc0": "Open-loop fuelling base correction vs barometric pressure (safe mode).",
+    "0x69cd4": "Open-loop target lambda correction vs coolant temperature.",
+    "0x69ce8": "Rich limit for open-loop fuelling.",
+    "0x69cfc": "Rich limit for open-loop fuelling (safe mode).",
+    "0x69d10": "Open-loop fuelling temperature correction B.",
+    "0x69e00": "Fuel enrichment during open-loop changeover.",
+    "0x69e80": "Open-loop target lambda during throttle tip-in, vs RPM and throttle.",
+    "0x69eb8": "Open-loop target lambda during throttle tip-in (safe mode).",
+    "0x69e9c": "Main open-loop target lambda vs engine load and RPM.",
+    "0x69ed4": "Main open-loop target lambda vs engine load and RPM (safe mode).",
+    "0x69ef0": "Tip-in target lambda for implausible coolant reading (variant B).",
+    "0x69f28": "Tip-in target lambda for implausible coolant reading (variant A).",
+    "0x69f0c": "Open-loop target lambda for implausible coolant reading, gears 5-6.",
+    "0x69f44": "Open-loop target lambda for implausible coolant reading, gears 1-4.",
+    "0x699b8": "Closed-loop fuel enrichment at wide-open throttle.",
+    "0x69a60": "Closed-loop target lambda bank A vs load and RPM.",
+    "0x69a7c": "Closed-loop target lambda bank B vs load and RPM.",
+    "0x6ac88": "Base fuel map vs RPM and engine load.",
+    "0x6a9a4": "Engine-temperature multiplier for primary injector pulse width.",
+    "0x6a9c0": "Engine-temperature multiplier for secondary injector 1 pulse width.",
+    "0x6a9dc": "Engine-temperature multiplier for secondary injector 2 pulse width.",
+    "0x6aa0c": "Manifold vacuum correction to injection volume (variant A).",
+    "0x6aa20": "Manifold vacuum correction to injection volume (variant B).",
+    "0x6aa34": "Manifold vacuum correction to injection volume (variant C).",
+    "0x6aa48": "Estimated manifold pressure vs RPM and engine load.",
+    "0x6aa64": "Secondary injector dead time vs estimated manifold pressure and battery voltage.",
+    "0x6aa80": "Primary injector dead time vs estimated manifold pressure and battery voltage.",
+    "0x6ab48": "Cranking injection pulse width (primary).",
+    "0x6ab98": "Cranking injection pulse width (variant B).",
+    "0x6abc8": "Cranking injection pulse width (variant C).",
+    "0x6bab0": "Cranking pulse decay time.",
+    "0x6ae28": "Warmup fuel enrichment (variant A).",
+    "0x6ae3c": "Warmup fuel enrichment (variant B).",
+    "0x6ae58": "Warmup fuel enrichment (variant C).",
+    "0x6ae74": "Warmup fuel enrichment (variant D).",
+    "0x6b0c0": "Load-delta / tip-in fuel correction (variant A).",
+    "0x6b124": "Load-delta / tip-in fuel correction (variant B).",
+    "0x6b160": "Load-delta / tip-in fuel correction (variant C).",
+    "0x6b17c": "Load-delta / tip-in fuel correction (variant D).",
+    "0x6b1ec": "Maximum engine load ceiling vs RPM.",
+    "0x6b200": "Intake-air-temperature multiplier in the max engine load clamp.",
+    "0x6b214": "Barometric-pressure multiplier in the max engine load clamp.",
+    "0x6ad30": "Air-flow x battery-voltage correction (variant A).",
+    "0x6ad44": "Air-flow x battery-voltage correction (variant B).",
+    "0x6ac4c": "Per-rotation fuel scale in the fuel-volume calculation.",
+    "0x69d24": "Closed-loop fuelling enable threshold (variant A).",
+    "0x69d38": "Closed-loop fuelling enable threshold (variant B).",
+    "0x69d4c": "Closed-loop fuelling enable threshold (variant C).",
+    "0x69d60": "Closed-loop fuelling enable threshold (variant D).",
+    "0x69d74": "Closed-loop fuelling enable threshold (variant E).",
+    "0x6990c": "Time after start during which closed-loop fuelling is inhibited.",
+}
+CANDIDATE_DESC = "Purpose not fully verified (candidate label)."
+
+
+def desc_for(key, name, confidence):
+    """Editor-facing short description; falls back to the candidate note or a
+    name-derived sentence so every entry always carries a usable desc."""
+    if key in DESC:
+        return DESC[key]
+    if confidence == "candidate":
+        return CANDIDATE_DESC
+    n = re.sub(r"\s*\(candidate\)\s*$", "", name).strip()
+    return n + "."
+
+
 # lookup_aliases keys that are descriptor-keyed and NOT curated above; they get
 # an auto-derived name (alias minus tbl_/candidate_ prefix and _XXXXXXXX
 # suffix) and keep their evidence string. candidate_ aliases -> confidence
@@ -335,25 +451,30 @@ def main():
             else:
                 alias, evidence = val, ""
             cand = "candidate_" in alias
+            name = auto_name(alias) + (" (candidate)" if cand else "")
+            conf = "candidate" if cand else "high"
             labels[k] = {
-                "name": auto_name(alias) + (" (candidate)" if cand else ""),
+                "name": name,
                 "category": None,  # filled by curated entries or left to the existing def
                 "note": "",
+                "desc": desc_for(k, name, conf),
                 "evidence": evidence,
                 "source": f"data/labels/60E15120_N3J1E/{fn} lookup_aliases[{key}]",
-                "confidence": "candidate" if cand else "high",
+                "confidence": conf,
                 "alias": alias,
             }
     # 2. curated report entries override
     for k, e in REPORT_ENTRIES.items():
         base = labels.get(k, {})
+        conf = e.get("confidence", "high")
         labels[k] = {
             "name": e["name"],
             "category": e.get("category"),
             "note": e.get("note", ""),
+            "desc": desc_for(k, e["name"], conf),
             "evidence": e.get("evidence", base.get("evidence", "")),
             "source": e["source"],
-            "confidence": e.get("confidence", "high"),
+            "confidence": conf,
             "alias": base.get("alias"),
         }
     # validate keys against data/maps index (every descriptor must exist in ROM extraction)
@@ -365,6 +486,11 @@ def main():
             descs.add("0x%x" % int(row["descriptor"], 16))
     missing = sorted(set(labels) - descs)
     assert not missing, f"label descriptors not in maps index: {missing}"
+    for k, v in labels.items():
+        assert v.get("desc"), f"{k}: no editor-facing desc"
+        if v["confidence"] == "high" and k not in DESC:
+            print(f"warning: {k} ({v['name']!r}) has no curated DESC entry; "
+                  f"falling back to name-derived desc")
     out = {
         "pass": "defs_table_labels",
         "reference_rom": "60E15120_N3J1E",

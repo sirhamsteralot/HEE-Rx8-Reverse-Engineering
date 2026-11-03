@@ -264,7 +264,9 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   defs at generation time (263 renamed + 245 added across 8 ROMs; 60E32000_N3M5E/N3N5EB
   skipped — upstream block addresses don't join either variant's `data/maps`, recorded in
   `coverage.json`). Names/categories/descriptions only; zero address/axis/scaling changes
-  (invariant-tested, `tests/test_defs_relabel.py`; 78/78 pytest).
+  (invariant-tested, `tests/test_defs_relabel.py`; 78/78 pytest). Descriptions kept short
+  per AGENTS.md rule 6b (simplified after PR #18 review): what the table does, no
+  addresses/structural-match/derivation text — provenance stays in the label map.
   → [defs-merge/relabel_2026-11-02.md](docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
 
 ## Open work — pick up here

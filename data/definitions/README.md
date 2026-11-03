@@ -98,6 +98,10 @@ subsystem RE passes (knock / fueling / load / ignition / OS): 112 lookup
 descriptors carry curated editor names, subsystem categories (the RomRaider
 grouping) and dated evidence notes in
 [`data/labels/60E15120_N3J1E/defs_table_labels.json`](../labels/60E15120_N3J1E/defs_table_labels.json).
+Editor-facing `<description>` entries stay short per AGENTS.md rule 6b — a
+simplified what-the-table-does sentence (only when accurately known; candidate
+labels get a "not fully verified" note), no addresses or derivation details;
+provenance stays in the label map.
 In the merged 60E15120 block **78 tables were renamed + regrouped and 96
 extracted-but-unmapped tables added** (879 → 975); cross-ROM, 263 renamed +
 245 added across the 8 ROMs whose upstream blocks join their `data/maps`
