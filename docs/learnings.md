@@ -411,3 +411,40 @@ Session gotchas worth keeping:
 - **design_graph_stats.py** now reads the task table at base 0x4990, 19 records
   {param, stack, entry, mask} (terminator 0x4ac0 excluded); all 6 cross-checks
   still pass and graph_stats.json was regenerated.
+
+## DTC codes & def labels (2026-11-03 pass, ROADMAP D item 6)
+
+- **ROM DTC encoding:** the code table (60E15120 @ 0x7e560, per-ROM bases in
+  `data/dtc/*.tsv`) stores the two OBD **mode-03 response bytes** per slot as BE
+  u16; the response builder 0x667c8 emits them verbatim. SAE J2012 / ISO 15031-6
+  decode: byte0 bits 7-6 → letter (00 P, 01 C, 10 B, 11 U), bits 5-4 → second digit
+  (0/2 SAE-generic, 1/3 manufacturer-specific), low 12 bits → last 3 hex digits.
+  So `0x0420` = P0420, `0x2504` = P2504, `0x1260` = P1260 (mfr-specific),
+  `0xC167` = **U0167** — the old def labels "Cxxx" were a high-nibble misread
+  (0xC0>>6 = U, not chassis). P0301/P0302 live in the 0x7e55a prefix table, not
+  in the slot table.
+- **Mapping artifact:** `data/dtc/pcodes.tsv` (code → 5-char OBD code, class, SAE
+  J2012 text, Mazda manual text). SAE sources cross-checked 2026-11-03:
+  tekseport/obd2-codes `obd2-codes.csv` @ ddadc77e + foerbsnavi/OBDex
+  `data/generic/*_enriched.yaml` @ 3f03bb0. Mazda manual: `input/4EngineControl.pdf`
+  (RX-8 "Engine Diagnostics & Control", 2003) DTC TABLE → `data/dtc/mazda_dtc_table.tsv`
+  (118 codes; pdftotext -layout, condition column ≈ chars 8–49, tall-row splits
+  need hand-verification). The 2003 manual lacks 18 ROM codes (later J2012
+  additions); it is the authority for the P1 meanings and Mazda part names
+  (APV/SSV/VDI, eccentric shaft position sensor). U0167: SAE = immobilizer,
+  Mazda = keyless control module → Mazda wins for the RX-8 (recorded).
+- **Rename mechanics:** `utilities/scripts/defs-merge/relabel_dtc_names.py` does a
+  surgical (expat line-span) rename across ALL `<rom>` blocks of the merged def so
+  name-based inheritance keeps working; within-block duplicate codes (P0300 slots
+  0/1) get `[additional site 0xADDR]` suffixes; commented-out blocks untouched;
+  re-run = no-op; pass log deduped per rename pair. Per-ROM defs get the names at
+  generation time via `repair_dtc_tables()` (`dtc_names.py` shared decode/desc).
+  Descriptions follow rule 6b: `DTC P0420 - <Mazda/SAE meaning>. <gate meaning>`.
+  (Correction: the pass initially appended a `<rule-10 checksum-range note>` to
+  every DTC switch-byte description — removed again the same day; rule 6b forbids
+  checksum-range/bench-validate text in `<description>`, it is not a table
+  description. The enable blocks do sit inside the checksummed range
+  0x2000-0x7ffff, but that fact lives in the investigation docs, not the defs.)
+- **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
+  on re-run (writes the file even when normalization-only) — check `git diff` after
+  running it.

@@ -60,8 +60,10 @@ dumping it at the root.
    instead). No memory addresses, no structural-match information, no derivation or
    prior-name dumps, no dated pass markers — provenance lives in the label map
    (`data/labels/<rom-id>/defs_table_labels.json`), TSVs and the investigation docs.
-   Safety warnings required by rule 10 (checksum range, bench-validation) are the
-   exception and stay.
+   Checksum-range / bench-validation safety notes (rule 10) must **never** appear in
+   a `<description>` either: they are repo-process notes, not a description of the
+   table, and they clutter the editor for end users. Rule-10 safety guidance belongs
+   in `data/definitions/README.md` and the investigation docs, not in per-table XML.
 6c. **Editor-def passes: keep provenance out of the XML, keep passes re-runnable.**
    Learned on the 2026-11-02 defs relabel pass (PR #18 review):
    - `<description>` is user-facing text — never use it as a processing tag. Detect

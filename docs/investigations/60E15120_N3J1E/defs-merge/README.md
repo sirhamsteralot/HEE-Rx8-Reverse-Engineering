@@ -108,3 +108,24 @@ The generated `validation.json` pins their hashes and commits.
 - `annotation_corrections.json`: old storage-annotation clarifications.
 - `inheritance_issues.json`: unresolved common-base and other-variant issues.
 - `function_findings.json`: new source interpretations, confidence and limitations.
+
+## Follow-up passes after the merge
+
+- **2026-11-01 — DTC enable/disable address repair** (entry 83 in
+  `definition_repairs.json`): per-ROM `DTC xxxx Enable/Disable #N` storageaddresses
+  rebuilt from each ROM's own DTC layout (`repair_dtc_tables()` in
+  `utilities/scripts/defs-merge/extend_defs_all_roms.py`); evidence in
+  [`../dtc_control_report.md`](../dtc_control_report.md) §5 and
+  [`../reviews/dtc_control/`](../reviews/dtc_control/README.md).
+- **2026-11-02 — relabel/regroup pass**: [`relabel_2026-11-02.md`](relabel_2026-11-02.md)
+  (ROADMAP D item 5).
+- **2026-11-03 — DTC P-code labels** (entry 84 in `definition_repairs.json`, ROADMAP
+  D item 6): `DTC 0420 …` → `DTC P0420 …` (standard 5-char OBD code; old `C167` →
+  `U0167`) in all active blocks of the merged def via
+  `utilities/scripts/defs-merge/relabel_dtc_names.py` (surgical splice, idempotent;
+  pass log `dtc_pcode_labels_2026-11-03.json`) and in all per-ROM defs at generation.
+  SAE J2012 mapping `data/dtc/pcodes.tsv` cross-checked against the Mazda workshop
+  manual `input/4EngineControl.pdf` (DTC TABLE → `data/dtc/mazda_dtc_table.tsv`);
+  Mazda wording preferred in descriptions. Evidence:
+  [`../dtc_control_report.md`](../dtc_control_report.md) §5b; tests
+  `tests/test_dtc_pcode_labels.py`.

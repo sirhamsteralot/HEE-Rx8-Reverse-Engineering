@@ -20,6 +20,20 @@ Rule: firmware dataflow comes from the ROM; physical pin/terminal associations f
 these documents; the two meet only at the SH7055F package pin. Never assert a
 package-pin ↔ connector-terminal link from the pinout alone.
 
+## Received 2026-11-03 (kept uncommitted in `input/`, vetted by use)
+
+- `input/4EngineControl.pdf` — Mazda RX-8 workshop manual **"RX8 – Engine
+  Diagnostics & Control"** (PDF created 2003-11-21; copy-protected like the others).
+  Its **DTC TABLE** section is the official RX-8 fault-code list; parsed (pdftotext
+  -layout + column slicing) to the tracked
+  [`../../data/dtc/mazda_dtc_table.tsv`](../../data/dtc/mazda_dtc_table.tsv) and merged
+  into [`../../data/dtc/pcodes.tsv`](../../data/dtc/pcodes.tsv) — used for the def
+  DTC labels since 2026-11-03. Cite it as "RX8 Engine Diagnostics & Control (2003),
+  DTC TABLE". Evidence + cross-checks:
+  [`../investigations/60E15120_N3J1E/dtc_control_report.md`](../investigations/60E15120_N3J1E/dtc_control_report.md) §5b.
+  The PDF itself stays in `input/` (AGENTS.md rule 4); the parsed TSV is the
+  committable artifact.
+
 ## Upstream repositories (git submodules — read-only context)
 
 Tracked as submodules under `submodules/` (see `.gitmodules`); fetch with
