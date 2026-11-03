@@ -2,7 +2,7 @@
 
 Third-party tune artifacts kept as opaque reference (context only). User-tuned
 ROM dumps are not retained in this repo — only factory ROMs (see
-[`binaries/README.md`](../binaries/README.md)).
+[`binaries/README.md`](../../binaries/README.md)).
 
 ## Layout
 

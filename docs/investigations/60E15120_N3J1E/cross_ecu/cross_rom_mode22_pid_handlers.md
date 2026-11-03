@@ -1,4 +1,4 @@
-# Cross-ROM Mode 22 (ReadDataByIdentifier) PID handler map — 2026-11-01
+# Cross-ROM Mode 22 (ReadDataByIdentifier) PID handler map
 
 ROADMAP group D, open bullet "Map Mode 22 PID handlers cross-ROM". Base ROM
 `60E15120_N3J1E` (SHA-256 asserted against `data/labels/60E15120_N3J1E/input.json`):
@@ -127,7 +127,7 @@ emulator change made here.
   verified pool-referenced in all 11 ROMs with the identical 36-PID list — contents
   not re-analyzed record-by-record cross-ROM.
 
-## Applied to the decompiled export (2026-11-01, D item 3)
+## Applied to the decompiled export (D item 3)
 
 `utilities/scripts/apply_cross_rom_labels.py` propagated the names into
 `reverse-engineered/decompiled/60E0G500_N3ZHEC/`: 236 renames (262 byte-match

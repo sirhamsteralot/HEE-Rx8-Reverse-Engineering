@@ -1,8 +1,8 @@
-# UDS service dispatch + Mode 22 PID dispatch-table labeling report — 60E15120_N3J1E
+# UDS service dispatch + Mode 22 PID dispatch-table labeling report â€” 60E15120_N3J1E
 
-Date: 2026-10-31. Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
-untouched — labels only, no binary change). Static-analysis disclaimer: findings come
+untouched â€” labels only, no binary change). Static-analysis disclaimer: findings come
 from the canonical export + disassembly + ROM bytes, **plus dynamic execution in the
 SH-2E emulator** (`utilities/scripts/emu/`, `tests/test_phase1_dynamic.py`); every
 dynamically-cited claim names the emulator observation. Full evidence:
@@ -30,7 +30,7 @@ logger scalings from
   `diag22_current_identifier_ffffd1ea`, rejects when
   `(record.availability_mask & DAT_ffffd3b4) == 0` (NRC 0x31), appends the 0x62 header
   (0x57858) unless `DAT_ffffd1e8 == -0x80`, calls `handler(0x22)`, and returns
-  `response_length + 3`. **All 99 records are now labeled** (previously 1).
+  `response_length + 3`. All 99 records are labeled.
 - A second table at **0x5f5b2** (36 x 6-byte records `{u16 pid, u8 supported_bit,
   u8 sub, u16 mask}`) backs the "status bitmap" PIDs (0x0968, 0x09d3, 0x11xx, 0x16xx,
   0x17xx, 0xa211, 0xff10): handlers build a status byte from RAM/GPIO latches and call
@@ -41,7 +41,7 @@ logger scalings from
   0x6689a. Scanned by **0x68dac `uds_service_dispatch_table_scan`** (literal @0x68ed0;
   byte0==service, `record[8] & session_mask` check, `jsr record[4]`). This maps services
   0x10/0x11/0x14/0x21/0x22/0x23/0x27/0x28/0x2f/0x31/0x34/0x36/0x37/0x3e/0x85 + OBD modes
-  0x01-0x09 + Mazda-specific 0x12/0x18/0x32/0x33/0x3b/0xb1 — **all now labeled**.
+  0x01-0x09 + Mazda-specific 0x12/0x18/0x32/0x33/0x3b/0xb1 â€” **all now labeled**.
 - The ISO-TP frame-type dispatcher is **0x6842c `isotp_frame_type_dispatch`** (r4 =
   PCI byte & 0xf0 from 0x683d4): SF->0x68548, FF->0x6859e, CF->0x6872c, FC->0x68764.
   UDS entry 0x680a0 -> 0x683d4 -> 0x6842c -> (accept) 0x684b4 schedules OS task 2
@@ -51,7 +51,7 @@ logger scalings from
   the 24-byte field; PIDs 0xe21b-0xe21e return immediate chunks "N3ZH"/"18"/"881"/"B"),
   `"15120 "` at 0x6c05c (PIDs 0xff40/0xff41), ROM ID bytes 0xff8-0xffd (PIDs
   0xff42/0xff43). Note D1: the file is named N3J1E while the cal-ID string at 0x6c046
-  reads N3ZHEB000.HEX — already documented in the ROADMAP register.
+  reads N3ZHEB000.HEX â€” already documented in the ROADMAP register.
 - Dynamic verification (emulator): dispatching PIDs 0x0000/0x0005/0x000c/0x000d/0x0043/
   0xe611/0x0200/0x0202 through the ROM's own 0x5774c produces the exact labeled response
   bytes in the channel-0 ring (0xffffd962): e.g. `62 0005 82` for ECT 90 degC
@@ -71,7 +71,7 @@ logger scalings from
   converts it to the OBD-II raw-byte format with the ROM's own fixed-point encoder, and
   appends it to the response. The response is a `0x62` header + the 2-byte PID + payload.
 - ROM-vs-applied-values note: the PIDs report *internal* RAM values (e.g. PID 0x43 is the
-  computed g/rev load cell 0xffffc0b4 scaled by 1/255), not the calibration tables — same
+  computed g/rev load cell 0xffffc0b4 scaled by 1/255), not the calibration tables â€” same
   distinction as the other subsystem reports.
 - Nothing here changes what the car does; it makes the diagnostic interface fully
   navigable, which is what loggers and flash tools rely on.
@@ -252,7 +252,7 @@ logger scalings from
 | 0x5ec84 | 0xb1 | 0x565e8 | 0x0000000f | `uds_service_b1_mazda_specific` |
 | 0x5ec90 | 0xff | 0x6689a | 0x00000000 | `uds_service_ff_default` |
 
-## 4. Labeling applied (2026-10-31 pass)
+## 4. Labeling applied
 
 - **175 functions** renamed via `source_review/accepted_function_aliases.tsv` + `integrate_reviewed_names.py`
   (symbols.tsv, function_index.tsv, callgraph.tsv, functions/*.c, named/firmware_named.c,
@@ -274,14 +274,14 @@ logger scalings from
   (0x56b22/0x56b8a/0x56b9e/0x56f6c); updated to the new `diag22_pidXXXX_*` labels with a
   pointer to this report (found by `validate_reports.py`).
 - The encode helpers are **divide**-by-step encoders: `rx8_encode_u16_affine_saturate`
-  (0x2490) computes `trunc((signal-offset)/units_per_count + 0.5)` — e.g. PID 0x0005 ECT
-  90 degC encodes to 130 (0x82), PID 0x000c 3000 rpm to 12000 (0x2ee0). Earlier notes that
-  read the float constants as multipliers were corrected in the per-PID evidence strings.
+  (0x2490) computes `trunc((signal-offset)/units_per_count + 0.5)` â€” e.g. PID 0x0005 ECT
+  90 degC encodes to 130 (0x82), PID 0x000c 3000 rpm to 12000 (0x2ee0). The float constants are
+  step sizes, not multipliers (per-PID evidence strings).
 - Service 0x33's record points to 0x5e0ce, a real code entry (prologue verified) that is
   **not** in function_index.tsv (Ghidra merged it into 0x5e024's body); it is named in
   `uds_service_dispatch.tsv` only. Service 0xff's handler is a `nop; rts` stub (0x6689a).
 - Verification pass correction: the RAM-alias row for `0xffffad5c` originally cited reader
-  0x555f8 (wrong — that reads 0xffff90f4); corrected to `0x5553e` (PID 0x11 throttle reader;
+  0x555f8 (wrong â€” that reads 0xffff90f4); corrected to `0x5553e` (PID 0x11 throttle reader;
   also referenced by handlers 0x56d58/0x56eb8 and the APP chain literals at
   0x1b0e6/0x4561c/0x47186). Found by the disassembly-level RAM check in the verification pass.
 - Checker note (idiom): RAM addresses with high half 0xffff are materialized by
@@ -316,19 +316,19 @@ logger scalings from
 - Dynamic (emulator): `test_mode22_dispatch_table_payloads` drives 0x5774c for 8 PIDs and
   asserts exact response bytes incl. the 0x62 header, plus the NRC 0x31 rejection path;
   `test_mode22_dispatch_pid_0043` (pre-existing) asserts r0 == 5 for PID 0x43.
-- **Verification pass (2026-10-31, extreme-caution re-check against raw disassembly):**
+- **Verification (extreme-caution re-check against raw disassembly):**
   - All 99 PID + 29 service + 36 sub records re-read from ROM, byte-exact (99/99, 29/29,
     36/36); every handler re-analyzed in the disassembly: direct call targets resolved
-    through the literal pool — 0 unknown targets; append structure consistent with rlen
+    through the literal pool â€” 0 unknown targets; append structure consistent with rlen
     (loop-appended handlers confirmed dynamically instead).
   - All 63 RAM aliases re-checked: the claimed cell appears as a (sign-extended) literal in
-    the claimed reader's disassembly — 62/63 on first pass, 1 corrected (see section 5),
+    the claimed reader's disassembly â€” 62/63 on first pass, 1 corrected (see section 5),
     63/63 after.
   - Encode-constant spot check in literal pools: ECT -40 (0xc2200000), rpm 0.25
     (0x3e800000), timing 0.5/-64 (0x3f000000/0xc2800000), MAF 0.01 (0x3c23d70a), battery
     0.001 (0x3a83126e), load 1/255 (0x3b808080), lambda 3.05e-05 (0x38000000), trims
     0.78125/-100 (0x3f480000/0xc2c80000), knock 0.3515625 (0x3eb40000), injector 8.0
-    (0x41000000) — all present; 1.0/0.0 come from `fldi1`/implicit, not literals.
+    (0x41000000) â€” all present; 1.0/0.0 come from `fldi1`/implicit, not literals.
   - Service router re-verified dynamically: `test_uds_service_router_routes` routes
     0x3e/0x22/0x10/0x14/0x01/0x09/0x85 (session bit 0) and 0x27/0x23/0x34/0x36/0x37/0x21/0x11
     (bit 1) to their table handlers, rejects 0x27 at bit 0 (r0 == 2), and returns
@@ -339,10 +339,10 @@ logger scalings from
     String PIDs verified byte-exact: 0xe21b-0xe21e = "N3ZH"/"18"/"881"/"B", 0xff40/0xff41 =
     "15"/"120 ", 0xff42/0xff43 = ROM bytes 0xff8-0xffd, 0xe611 = "SW-N3ZHEB000.HEX"+pad.
   - Service 0x10 handler (0x57c8c) confirmed to reach 0x55de2, which writes
-    `DAT_ffffd3b4` — the session -> permission-mask chain is real, not just table position.
-- `python -m pytest tests/` — **61/61 pass**.
+    `DAT_ffffd3b4` â€” the session -> permission-mask chain is real, not just table position.
+- `python -m pytest tests/` â€” **61/61 pass**.
 - Pipeline validators from repo root: `validate_export.py`, `validate_reports.py`,
-  `verify_readability.py`, `verify_math_units.py` — all PASS; `hash_binaries.py --check`
+  `verify_readability.py`, `verify_math_units.py` â€” all PASS; `hash_binaries.py --check`
   OK (binaries untouched).
 
 ## 8. Memory map for validation
@@ -363,17 +363,17 @@ ROM strings: 0x2000 fw id, 0x6c000/0x6c043/0x6c046/0x6c05c cal ids, 0xff8-0xffd 
 ## 9. Limits
 
 - PID semantics for the 0x00xx range follow the public OBD-II PID definitions, anchored
-  to the handler's encode math and RAM cell — the OBD standard is external reference
+  to the handler's encode math and RAM cell â€” the OBD standard is external reference
   knowledge, not a ROM read; Mazda-specific PIDs (0x09xx/0x11xx/0x16xx/0x17xx/0xa2xx/
   0xc1xx/0xe2xx/0xffxx) rest on logger defs + thread + handler behavior, and most carry
   medium confidence. They are hypotheses until cross-checked against a real-car datalog.
 - The service table's `param` word (record[8]) is decoded as an **allowed-session-bit
   mask**: 0x68dac computes `1 << DAT_ffffde20[0]` (via shift helper 0x4308) and requires
-  `record[8] & that != 0` — verified dynamically (services route at the right session bit,
+  `record[8] & that != 0` â€” verified dynamically (services route at the right session bit,
   reject with r0 == 2 at the wrong one). Sub-function handling inside each service is not
   mapped.
 - PID 0xc116's handler (0x37358) sets `DAT_ffffd1e8 = 0x80` (suppress payload) on the cold
-  path, so only the 3-byte 0x62 header lands in the ring although rlen = 4 — observed in
+  path, so only the 3-byte 0x62 header lands in the ring although rlen = 4 â€” observed in
   the full sweep, not a mislabel.
 - Services 0x12/0x18/0x32/0x33/0x3b/0xb1 are labeled by table position only; 0x33's
   handler entry (0x5e0ce) is missing from function_index.tsv (see section 5).
@@ -382,20 +382,18 @@ ROM strings: 0x2000 fw id, 0x6c000/0x6c043/0x6c046/0x6c05c cal ids, 0xff8-0xffd 
 - `diag22_subpid_supported_mask` (0x579a8) return semantics (param & OR of bits) verified
   statically; the 0x1710 multi-byte snapshot PID is labeled only at the block level.
 
-## 10. Update — 2026-10-31
+## 10. Verification record
 
-Initial record of this pass, plus the same-day extreme-caution verification pass described
-in sections 5/7: labels re-checked against the raw disassembly (literal pools incl. the
+Labels are re-checked against the raw disassembly (literal pools incl. the
 sign-extended `mov.w` RAM-address idiom, call targets, encode constants) and dynamically
-re-executed in the emulator (full 99-PID sweep + service routing). One metadata error
-corrected (0xffffad5c reader column); no function label changed — all 175 function aliases
-held up under both static and dynamic re-verification.
+re-executed in the emulator (full 99-PID sweep + service routing). All 175 function
+aliases hold up under both static and dynamic verification.
 
 ---
 
-## 12. Update - 2026-10-31 (ROADMAP group C: D3 checksum/CVN + D4 seed/key located)
+## 12. Checksum/CVN (D3) + seed/key (D4)
 
-Both register items are now settled with raw-ROM evidence (SHA-256 unchanged
+Both register items are settled with raw-ROM evidence (SHA-256 unchanged
 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`).
 
 ### 12.1 D3 - the checksum/CVN routine is an incremental dual-u16 additive sum, not CRC

@@ -1,6 +1,6 @@
 # Load and fuelling model report — 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E)
 
-Date: 2026-10-29. Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes; the load-path float
@@ -8,7 +8,7 @@ literals were re-read directly from the untouched ROM. No hardware execution
 was performed. Full per-function evidence: `reviews/load_fueling_model/`
 (README, REVIEW_NOTES, candidate alias TSVs, validation.json).
 
-**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md); the computed load cell is diag-exposed as [Mode 22 PID 0x43](uds_mode22_dispatch_report.md) (handler 0x56b8a reads `engine_load_ffffc0b4` × 1/255; PID 0x04 = load/max×100 — ROADMAP D5 handler side settled 2026-10-31).
+**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md); the computed load cell is diag-exposed as [Mode 22 PID 0x43](uds_mode22_dispatch_report.md) (handler 0x56b8a reads `engine_load_ffffc0b4` × 1/255; PID 0x04 = load/max×100 — ROADMAP D5).
 
 ## 1. Executive summary
 
@@ -174,7 +174,7 @@ verification required before any def work):**
 
 ## 5. Candidates recorded (not yet integrated)
 
-This pass was a findings review; **no rename pass was run**. Candidates live
+This is a findings review; **no rename pass runs here**. Candidates live
 in `reviews/load_fueling_model/candidate_function_aliases.tsv`
 (19 functions: 14 high, 5 medium confidence) and
 `candidate_ram_aliases.tsv` (~45 RAM locations). Integration into the
@@ -218,8 +218,8 @@ validators) — is the follow-up work if the candidates are accepted.
 - ROM literal verification (big-endian float32 read from the untouched ROM):
   0.6345 @0x7a088, 0.07196 @0x78170, 60.0 @0x1a4e8, 5.0 @0x1a4f4, 273.0
   @0x1a194, 293.0 @0x1a198, 101.33299 @0x1a1a0, 300.0, 369.472, 475.93.
-- 2026-11-02: these literal-pool scalars (incl. the base fuel scalar
-  **0.07196 @0x78170 -> `fuel_load_scale_ffffbed0`**) are now machine-extracted
+- These literal-pool scalars (incl. the base fuel scalar
+  **0.07196 @0x78170 -> `fuel_load_scale_ffffbed0`**) are machine-extracted
   per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` +
   `data/maps/cross_rom_scalars.json` by `utilities/scripts/extract_scalars.py`
   - see [calibration extraction section 6a](calibration_extraction_report.md)
@@ -244,9 +244,9 @@ the output-timer-channel-to-physical-injector mapping. Candidate aliases are
 not factory symbols; they must not be presented as verified names until the
 integration pass and its validators pass.
 
-## 10. Labeling applied (2026-10-30 pass, recorded 2026-10-31 for the report validator)
+## 10. Labeling applied
 
-The 2026-10-30 fueling-chain labeling pass integrated **39 function aliases,
+The fueling-chain labeling integrated **39 function aliases,
 150 RAM aliases and lookup aliases** into the synchronized views
 (`data/labels/60E15120_N3J1E/fueling_labels.json`;
 `source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`;
@@ -269,7 +269,7 @@ SHA-256.
 
 ---
 
-## Update 2026-10-31 (ROADMAP group C): engine-load units settled — D5 closed
+## 12. Engine-load units (ROADMAP group C) — D5 closed
 
 Cross-check of the RX8Club thread's load/fueling claims against the ROM
 ([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)
@@ -312,7 +312,7 @@ WOT and the 5.0 g/rev cap would be unreachable.
 - Cap "clipped at 5.0" ✓ — but it applies to g/rev *before* the 0.6345 scale.
 
 D5 is therefore **settled**: `engine_load_ffffc0b4` and PID 0x43 are in VolEf-like
-cell units (g/rev × 0.6345); the handler side (×1/255, 0.42 → raw 107) was already
-dynamically verified 2026-10-31. The inherited name `diag22_pid0043_engine_load_g_rev`
-stays (label ladder — not renamed on this evidence alone), but its header comment
-now records the VolEf unit.
+cell units (g/rev × 0.6345); the handler side (×1/255, 0.42 → raw 107) is
+dynamically verified. The inherited name `diag22_pid0043_engine_load_g_rev`
+stays (label ladder — not renamed on this evidence alone); its header comment
+records the VolEf unit.

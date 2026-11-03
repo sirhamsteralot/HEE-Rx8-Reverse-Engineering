@@ -70,7 +70,7 @@ each has a UDS diagnostic actuator override (0x5c9ac / 0x5c3c0 / 0x5cdc4 /
   ADC6 raw 9ef0 → volts cab0 (0x43a86, ×5/65536) → range logic 0x43a9e.
   See also `reconstructed/rx8_apv.c` (host-tested reconstruction).
 
-## 3. Labeling applied (2026-10-30 pass)
+## 3. Labeling applied
 
 - 26 functions + 26 RAM locations added to `source_review/accepted_*_aliases.tsv`
   via `scripts/review_intake_labels.py` (idempotent, wired into
@@ -93,7 +93,7 @@ each has a UDS diagnostic actuator override (0x5c9ac / 0x5c3c0 / 0x5cdc4 /
 
 ## 5. FSM pinout cross-check
 
-Terminal functions cross-checked against the supplied `mazda-rx-8-pcm-pinout-series-1.pdf` v3 (2026-10-30: colours resolved for all used terminals except 5L/5Z; screenshots; unmarked = confirmed, * provisional, † conflict, ³ HP-only). v3 colours: 1D SSV switch L, 1L SSV L/Y, 1O AIR G, 1W VDI L/B, 3J APV (-) L/R (all confirmed); 1S APV power R/W, 3B APV angle R/G ³, 3G APV (+) G/B ³; 2P purge R/Y * (new); 5Z VFAD still unread. Applied to the decompiled views via hardware/firmware_annotations.tsv + pcm_connections.tsv (wire_colour column). The PDF has no chip-pin numbers, so package-pin → terminal remains board routing. `hardware/pcm_connections.tsv` rows updated with the FSM names.
+Terminal functions cross-checked against the FSM pinout ([`mazda-rx-8-pcm-pinout-series-1.md`](../../../../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)) (colours resolved for all used terminals except 5L/5Z; screenshots; unmarked = confirmed, * provisional, † conflict, ³ HP-only). Colours: 1D SSV switch L, 1L SSV L/Y, 1O AIR G, 1W VDI L/B, 3J APV (-) L/R (all confirmed); 1S APV power R/W, 3B APV angle R/G ³, 3G APV (+) G/B ³; 2P purge R/Y *; 5Z VFAD unread. Applied to the decompiled views via hardware/firmware_annotations.tsv + pcm_connections.tsv (wire_colour column). The pinout has no chip-pin numbers, so package-pin → terminal remains board routing. `hardware/pcm_connections.tsv` rows carry the FSM names.
 
 ## 6. Limits
 
@@ -115,7 +115,7 @@ hardware manual, pin tables); `regs_7055_350.csv` register map;
 `hardware/pcm_connections.tsv` + `hardware/firmware_annotations.tsv` (wiring);
 `reconstructed/rx8_apv.c`; design doc `design/README.md` §5.9.
 
-## 8. Binary-level verification pass (2026-10-30, sceptical re-check vs raw ROM)
+## 8. Binary-level verification (sceptical re-check vs raw ROM)
 
 Every label in this pass was re-checked against `60E15120_N3J1E.bin` and the
 disassembly, not the decompiled C:
@@ -147,7 +147,7 @@ disassembly, not the decompiled C:
   binary holds 7250.0 and 188.0), so those exact literals do not exist in ROM.
 - No ROM/def/wiring bytes changed; docs and evidence strings only.
 
-## 9. RPM-window patcher (VDI/SSV) — 2026-10-30
+## 9. RPM-window patcher (VDI/SSV)
 
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/patch_intake_rpm_window.py`
 (+ `PATCHER_intake_rpm_window.md`) patches a stock ROM so the VDI or SSV

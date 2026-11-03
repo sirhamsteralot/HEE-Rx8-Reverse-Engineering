@@ -21,14 +21,13 @@ Verification that reimplemented/derived behavior matches the original binaries.
 
   Host tests do **not** validate SH-2E FPU rounding/exception behavior.
 - `docs/investigations/60E15120_N3J1E/lookup_family/test_lookup_family.c` — lookup
-  interpolation family test from the prior effort.
+  interpolation family host test.
 - Pipeline validators run from the **repo root** (paths resolve via
-  `utilities/scripts/rx8-pcm-pipeline/paths.py` to the promoted layout; the
-  legacy `input/Tuning-merged` tree is not needed):
+  `utilities/scripts/rx8-pcm-pipeline/paths.py` to the repo layout):
   `utilities/scripts/rx8-pcm-pipeline/validate_export.py` (ROM hash, instruction
   bytes, matches, linkage), `validate_reports.py` (report sections, ROM hash, every
   address in report memory maps vs index/TSVs/ROM), `verify_readability.py`,
-  `verify_math_units.py`. All four PASS as of 2026-10-31. Ghidra-dependent steps
+  `verify_math_units.py`. All four PASS. Ghidra-dependent steps
   in `rebuild.sh` additionally need `GHIDRA_HOME` + JDK.
 
 ## Rules
@@ -51,12 +50,12 @@ Verification that reimplemented/derived behavior matches the original binaries.
   masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader),
   `tests/test_knock_retard_dynamic.py` (knock-retard state machine 0x13a60/0x13b40
   vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port),
-  `tests/test_defs_relabel.py` (2026-11-02 relabel-pass invariants),
-  `tests/test_dtc_pcode_labels.py` (2026-11-03 DTC P-code label pass: SAE J2012
+  `tests/test_defs_relabel.py` (defs relabel invariants),
+  `tests/test_dtc_pcode_labels.py` (DTC P-code labels: SAE J2012
   decode round-trip, `data/dtc/pcodes.tsv` + `mazda_dtc_table.tsv` coverage and
   spot checks, per-ROM def DTC names == ROM code at the slot derived from each
   storageaddress, rule-6b description sweep, generator idempotency).
-  92 tests as of 2026-11-03: 91 passing, 1 pre-existing failure
+  92 tests: 91 passing, 1 pre-existing failure
   (`test_extract_scalars.py` — a cp1252 byte in committed `scalars.tsv` crashes
   `read_text()`; fails on main too, unrelated). The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled

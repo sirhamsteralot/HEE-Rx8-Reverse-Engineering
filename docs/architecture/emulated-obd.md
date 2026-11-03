@@ -33,7 +33,7 @@ for the "fast RAM logging" patch.
   emulator does not reimplement UDS — it runs the ROM's own handlers; we only move
   bytes.
 
-## Components (implemented 2026-10-31 under `utilities/scripts/emu/`)
+## Components (under `utilities/scripts/emu/`)
 
 1. **`can.py`** — RCAN (HCAN0) mailbox model at 0xffffe400 per `symbols.tsv`:
    TX/RX mailboxes 0-15 (MC at +0x20, MD at +0xb0), W1C pending regs
@@ -60,12 +60,12 @@ for the "fast RAM logging" patch.
 5. **Logging** — every UDS request/response pair is in `OBDPort.uds_log`
    (cycle, direction, payload hex).
 
-Verified 2026-10-31 (`tests/test_phase1_dynamic.py::test_rcan_rx_tx_through_rom_driver`,
-`test_mode22_dispatch_pid_0043`, `test_phase1.py::test_obd_port_uds_log`): inject
+Verified by `tests/test_phase1_dynamic.py::test_rcan_rx_tx_through_rom_driver`,
+`test_mode22_dispatch_pid_0043` and `test_phase1.py::test_obd_port_uds_log`: inject
 `02 10 03` on 0x7E0 → RXPR 0x40 → poller fills 0xffffddc8 and clears RXPR;
 `ref_txCAN_EventBased(0x99b0, desc 0x4e00c)` transmits `06 50 03 …` on 0x7E8 into
-tx_log; Mode 22 identifier 0x0043 dispatches to handler 0x56b8a (PID 0x43). Since
-2026-10-31 additionally covered by `test_mode22_dispatch_table_payloads` (exact
+tx_log; Mode 22 identifier 0x0043 dispatches to handler 0x56b8a (PID 0x43).
+Additionally covered by `test_mode22_dispatch_table_payloads` (exact
 response bytes for 8 PIDs), `test_mode22_dispatch_full_sweep` (all 99 PIDs: r0 ==
 rlen+3, NRC 0x31 mask rejection) and `test_uds_service_router_routes` (15 services
 routed through 0x68dac).

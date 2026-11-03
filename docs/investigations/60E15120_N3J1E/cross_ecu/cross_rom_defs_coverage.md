@@ -1,4 +1,4 @@
-# Cross-ROM ECU definition coverage — 2026-11-01
+# Cross-ROM ECU definition coverage
 
 ROADMAP **D item 4** (extend `data/definitions/` from 60E15120_N3J1E to all ROMs,
 incl. 60E0G500) + register item **D8** (defs dedupe vs the pinned submodule).
@@ -46,7 +46,7 @@ upstream placeholder for unmapped DTC-enable bytes).
   `aaac6f3` 2023-08-11) + base `RX8BASE.xml` (1743 tables). The 60E0G500 factory
   dump (stock N3ZHEC) references it; no copies kept (see D8).
 
-## D8 dedupe — closed 2026-11-01
+## D8 dedupe
 
 Four local copies under `data/definitions/` were git-blob-identical to files in the
 pinned submodule (raw bytes differed only in CRLF/LF) and were **deleted** per
@@ -71,7 +71,7 @@ endings only. Full provenance: [`data/definitions/README.md`](../../../../data/d
 - Script asserts per ROM: size == 512 KiB, fw id regex, manifest hash (own dumps),
   romid `internalidaddress` == 0x2000 and `internalidstring` == fw id, all
   `storageaddress` in 0x2000–0x7ffff or 0x000000, emitted XML re-parses with
-  expected block/table counts. All passed 2026-11-01 (11/11 ROMs, 9 defs, 2 gaps).
+  expected block/table counts. All pass (11/11 ROMs, 9 defs, 2 gaps).
 - No ROM binary, submodule file, or existing definition was modified; only new files
   under `data/definitions/` were written and four duplicate XMLs removed.
 - XML defs are editor metadata; they never change ROM bytes (AGENTS.md rule 2).

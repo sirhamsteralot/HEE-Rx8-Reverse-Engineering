@@ -1,6 +1,6 @@
 # Load/fuelling model review — per-function evidence notes
 
-Date: 2026-10-29. Ground truth: untouched ROM
+Ground truth: untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`, 512 KiB,
 SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
 `decompiled/firmware_disassembly.asm`, `decompiled/`, `decompiled/callgraph.tsv`,
@@ -107,7 +107,7 @@ SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
 
 ### 0x306e8 ref_calcFuelVolumeRequest — ROM/disasm-verified
 - bed0 = load x 0.07196 (literal pointer @0x30830 -> 0x78170).
-  2026-11-02: this and the other verified literals are machine-extracted per ROM
+  This and the other verified literals are machine-extracted per ROM
   into `data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`
   (`utilities/scripts/extract_scalars.py`, tests/test_extract_scalars.py).
 - bed4 = lookup3d(RPM, load; 0x6ac88): RPM argument via fr4 delay slot at

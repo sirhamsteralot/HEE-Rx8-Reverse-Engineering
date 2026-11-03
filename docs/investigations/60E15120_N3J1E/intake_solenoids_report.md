@@ -1,7 +1,6 @@
 # Intake solenoid actuation report — 60E15120_N3J1E (RX-8 PCM, SH7055F / SH-2E)
 
-Date: 2026-10-30 (binary-level verification pass same day; corrections in
-§6). Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes, with package pins from the
@@ -116,7 +115,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 | 0x3493c / 0x187b8 pools | 5250.0 / 4000.0 and offsets; 0.8 / 0.75 in shared pool |
 | 0x5d4a, 0x72732, 0x7323a | 0xbc (SSV on-counter) u16 in shared pools |
 
-## 5. Labeling applied (2026-10-30 pass)
+## 5. Labeling applied
 
 - 26 functions + 26 RAM locations added to `source_review/accepted_*_aliases.tsv`
   by `scripts/review_intake_labels.py` (idempotent; wired into `rebuild.sh`
@@ -134,7 +133,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
    u16 band thresholds) — evidence text fixed everywhere.
 2. Documented that hysteresis lower bounds (7062/5062/3900/2800) are folded
    threshold-minus-offset in the binary, not standalone literals.
-3. (Fueling pass, same day) injector pulse = (latency + request) >> 4 — the
+3. Injector pulse = (latency + request) >> 4 — the
    shift applies to the sum (four `shar` at 0x8a96-0x8a9e).
 
 ## 7. Files
@@ -257,7 +256,7 @@ SKIP). Static validation only; flash with Rx8Man.
 
 ## 12. Limits
 
-FSM pinout cross-check v3 (mazda-rx-8-pcm-pinout-series-1.pdf, 2026-10-30: colours resolved for all used terminals except 5L/5Z): terminal→function unchanged; wire colours now known — injectors 2M LG/R, 2J LG/B, 2G G/R, 2D L/B, 3A L/B ³, 3D W/G ³, all with a shared W/L +12V feed; SSV 1L L/Y, 1D L; AIR 1O G; VDI 1W L/B (confirmed); APV 3J L/R, 3G G/B ³, 3B R/G ³, 1S R/W; purge 2P R/Y *; 5Z unread. Applied back into the decompiled code annotations. Still no chip-pin data in it, so the pin↔terminal hop stays board-level unresolved.
+FSM pinout cross-check ([mazda-rx-8-pcm-pinout-series-1.md](../../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)): colours resolved for all used terminals except 5L/5Z; wire colours — injectors 2M LG/R, 2J LG/B, 2G G/R, 2D L/B, 3A L/B ³, 3D W/G ³, all with a shared W/L +12V feed; SSV 1L L/Y, 1D L; AIR 1O G; VDI 1W L/B (confirmed); APV 3J L/R, 3G G/B ³, 3B R/G ³, 1S R/W; purge 2P R/Y *; 5Z unread. Applied to the decompiled code annotations. Still no chip-pin data in it, so the pin↔terminal hop stays board-level unresolved.
 
 Static analysis only; no hardware execution. Package-pin → connector-terminal
 is board routing (unresolved here, per `hardware/README.md`). SSV
@@ -267,16 +266,16 @@ are unproven hypotheses. ROM untouched.
 
 ---
 
-## 12. Update — 2026-10-30 (later same day)
+## 13. Pinout cross-check + binary-level verification
 
-- Pinout **v3** (`mazda-rx-8-pcm-pinout-series-1.pdf`): wire colours resolved for
+- Wire colours are resolved for
   all used terminals except 5L/5Z — SSV 1L L/Y, VDI 1W L/B, APV 3J L/R (confirmed),
-  1S R/W, 3B R/G ³, 3G G/B ³, purge 2P R/Y * (new), 5Z still unread. Applied to
+  1S R/W, 3B R/G ³, 3G G/B ³, purge 2P R/Y *, 5Z unread. Applied to
   `hardware/pcm_connections.tsv` (wire_colour), `hardware/firmware_annotations.tsv`
   and all `[WIRING REVIEW]` blocks in the synchronized views. Terminal→function
   unchanged; no chip-pin data, so the pin↔terminal hop stays board-level unresolved.
-- Binary-level verification of this pass: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §8 —
+- Binary-level verification: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §8 —
   all instruction words, RAM aliases, GPIO reg/mask/helper literals, thunk targets,
-  call edges, PDF pin quotes re-checked against the ROM; one evidence correction
-  (APV command constants are inline pool literals of 0x31f32).
-- Rev-limiter patcher added (§11; RE topology in [`reviews/limiter/README.md`](reviews/limiter/README.md)).
+  call edges and pinout quotes checked against the ROM (APV command constants
+  are inline pool literals of 0x31f32).
+- Rev-limiter patcher (§11; RE topology in [`reviews/limiter/README.md`](reviews/limiter/README.md)).

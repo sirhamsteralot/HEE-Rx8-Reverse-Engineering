@@ -10,9 +10,8 @@ External reference material and provenance for third-party sources.
 | `13Electrical.pdf` | Original RX-8 electrical wiring book (copy-protected; pages are images) — **ground truth for the RX-8 electrical systems** | Underlying circuit diagrams; source for all derived pinout/colour data | Text extraction yields mostly headers — read via renders; treat as image source |
 
 Derived from `13Electrical.pdf` (regenerate + re-diff, don't edit in place): the
-Series-1 PCM connector pinout now lives as text at
-[`../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md) (the earlier v3 PDF was
-removed). It has **no chip-pin numbers** — package-pin ↔ connector-terminal is board
+Series-1 PCM connector pinout lives as text at
+[`../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md). It has **no chip-pin numbers** — package-pin ↔ connector-terminal is board
 routing, unresolved. Honour its markers: unmarked = confirmed, `*` single-source,
 `†` conflict, `³` high-power only, `–` unread.
 
@@ -20,15 +19,15 @@ Rule: firmware dataflow comes from the ROM; physical pin/terminal associations f
 these documents; the two meet only at the SH7055F package pin. Never assert a
 package-pin ↔ connector-terminal link from the pinout alone.
 
-## Received 2026-11-03 (kept uncommitted in `input/`, vetted by use)
+## Workshop manual (kept uncommitted in `input/`, vetted by use)
 
 - `input/4EngineControl.pdf` — Mazda RX-8 workshop manual **"RX8 – Engine
   Diagnostics & Control"** (PDF created 2003-11-21; copy-protected like the others).
   Its **DTC TABLE** section is the official RX-8 fault-code list; parsed (pdftotext
   -layout + column slicing) to the tracked
   [`../../data/dtc/mazda_dtc_table.tsv`](../../data/dtc/mazda_dtc_table.tsv) and merged
-  into [`../../data/dtc/pcodes.tsv`](../../data/dtc/pcodes.tsv) — used for the def
-  DTC labels since 2026-11-03. Cite it as "RX8 Engine Diagnostics & Control (2003),
+  into [`../../data/dtc/pcodes.tsv`](../../data/dtc/pcodes.tsv) — the source for the def
+  DTC labels. Cite it as "RX8 Engine Diagnostics & Control (2003),
   DTC TABLE". Evidence + cross-checks:
   [`../investigations/60E15120_N3J1E/dtc_control_report.md`](../investigations/60E15120_N3J1E/dtc_control_report.md) §5b.
   The PDF itself stays in `input/` (AGENTS.md rule 4); the parsed TSV is the
@@ -46,15 +45,12 @@ for their content; our repo references them rather than duplicating files:
   `Stock_ROMs/` (10 stock ROMs — referenced from `binaries/README.md`),
   `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
   `Utilities/` (upstream patcher scripts)
-- `submodules/RX8Defs` — pinned at `1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`:
-  upstream RomRaider/ECUFlash XML definitions. Our `data/definitions/` copies were
-  taken from specific upstream commits (cited in
-  `docs/investigations/60E15120_N3J1E/defs-merge/`) and may differ from the pinned
-  HEAD — that is intentional.
-- `submodules/RX8Defs` — github.com/equinox311/RX8Defs: upstream RomRaider ECU +
-  logger XML definitions, referenced in place (no promoted copies since the 2026-11-01
-  D8 dedupe; the one differing snapshot kept is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
-  @ upstream `ff5ab4f`, the 60E15120 merge base — see [`../../data/definitions/README.md`](../../data/definitions/README.md));
+- `submodules/RX8Defs` — github.com/equinox311/RX8Defs, pinned at
+  `1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`: upstream RomRaider/ECUFlash ECU +
+  logger XML definitions, referenced in place — no promoted copies (rule 4b);
+  the one differing snapshot is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
+  @ upstream `ff5ab4f`, the 60E15120 merge base — see
+  [`../../data/definitions/README.md`](../../data/definitions/README.md);
   commit hashes are cited as merge provenance — never rewrite that history
 - `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man, pinned at
   `50f905bc271e918a00ce0eda96e6414c220886e5`: PCM reflash tool for Tactrix
@@ -84,9 +80,3 @@ Related but not submoduled (not git repos in the intake, URL only):
   Mode 22 dispatch at 0x5fa0c in 60E0FC00, RomRaider table inventories for 60E0FC00 and
   G-ROM FlexFuel, ignition 2D tables in deg BTDC over load g/rev × RPM).
   Forum claims are `candidate_` until verified against our ROMs.
-
-## Prior-effort workspace docs
-
-- [`prior-effort-agents.md`](prior-effort-agents.md) — the previous workspace's AGENTS.md, preserved for
-  provenance; its rules are distilled into this repo's root `AGENTS.md`.
-- [`../learnings.md`](../learnings.md) — the previous sessions' know-how log.

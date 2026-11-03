@@ -6,7 +6,7 @@ The crucial discovery is that **0x2624 returns an index and a fraction**, not ju
 
 0x2658 performs two searches, saving X and Y indices/fractions in R2/R3 and FR0/FR1. Both calls matter. It is now `rx8_find_xy_axis_positions`. Lookup wrappers now pass explicit inputs to searches and pass the results to interpolation, replacing the previous uninitialized `in_fr*` artifacts in this family.
 
-The two formerly identical `ref_interpolate_floatTable` names now distinguish one-dimensional interpolation from interpolation across two axes. Related signed/unsigned byte, signed/unsigned word, and float variants use consistent names. The ROM dispatch arrays at 0x2098 and 0x210c establish type-byte offsets 0, 4, 8, 12 and 16 for those variants. Both dispatch arrays were checked directly against the input ROM.
+The two `ref_interpolate_floatTable` names distinguish one-dimensional interpolation from interpolation across two axes. Related signed/unsigned byte, signed/unsigned word, and float variants use consistent names. The ROM dispatch arrays at 0x2098 and 0x210c establish type-byte offsets 0, 4, 8, 12 and 16 for those variants. Both dispatch arrays were checked directly against the input ROM.
 
 ## Semantics deliberately retained
 

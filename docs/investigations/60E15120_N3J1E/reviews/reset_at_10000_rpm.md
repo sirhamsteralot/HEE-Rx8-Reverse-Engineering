@@ -55,7 +55,7 @@ Sources: local address-indexed C, SH disassembly and original ROM bytes.
 The function names are inherited hypotheses; no hardware execution was performed.
 
 
-## 2026-09-09: Denso comparison and logger evidence
+## Denso comparison and logger evidence
 
 RX8Defs identifier 0x000c maps through 0x56982 and 0x55484 to RAM 0xffffb548, independently supporting its RPM role. The logger gauge maximum of 10,000 is a UI setting, not an ECU reset threshold.
 
