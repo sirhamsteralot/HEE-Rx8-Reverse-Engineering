@@ -340,7 +340,7 @@ logger scalings from
     "15"/"120 ", 0xff42/0xff43 = ROM bytes 0xff8-0xffd, 0xe611 = "SW-N3ZHEB000.HEX"+pad.
   - Service 0x10 handler (0x57c8c) confirmed to reach 0x55de2, which writes
     `DAT_ffffd3b4` — the session -> permission-mask chain is real, not just table position.
-- `python -m pytest tests/` — **61/61 pass**.
+- `python -m pytest tests/` — PASS.
 - Pipeline validators from repo root: `validate_export.py`, `validate_reports.py`,
   `verify_readability.py`, `verify_math_units.py` — all PASS; `hash_binaries.py --check`
   OK (binaries untouched).
