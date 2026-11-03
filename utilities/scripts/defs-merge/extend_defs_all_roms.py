@@ -3,7 +3,8 @@
 
 Read-only on all inputs (binaries/, submodules/, existing data/definitions/ XMLs).
 Writes only NEW files:
-  - data/definitions/romraider/per-rom/<rom-stem>.xml   (standalone RomRaider def per ROM)
+  - data/definitions/romraider/per-rom/<rom-stem>.xml   (standalone RomRaider def per ROM;
+    auto-formatted with ET.indent, 4-space indent, one element per line)
   - data/definitions/coverage.json                      (per-ROM mapping + provenance + validation)
 
 ROM inventory: binaries/dumps/*.bin (our acquisitions, hash-checked against
@@ -355,6 +356,11 @@ def main():
         out.append(c)
         for b in chain + [block]:
             out.append(copy.deepcopy(b))
+        # auto-format the generated file: one element per line, 4-space indent
+        # (matches the splice style of relabel_merged_def.py); ET.indent only
+        # touches whitespace-only text/tail, so descriptions and data="..."
+        # attribute values are preserved verbatim
+        E.indent(out, space="    ")
         out_path = OUT_DIR / f"{r['stem']}.xml"
         E.ElementTree(out).write(out_path, encoding="utf-8", xml_declaration=True)
         # re-parse what we wrote (validation of the artifact, not just the tree)
