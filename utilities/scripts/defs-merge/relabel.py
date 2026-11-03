@@ -6,10 +6,10 @@ built by build_table_labels.py) to a RomRaider <rom> block:
 
   * tables whose lookup descriptor has a label get the new editor name, the
     subsystem category (the RomRaider grouping), and a short <description>:
-    the dated marker + a simplified description of what the table does, only
-    when accurately known (candidate labels get a "not fully verified" note)
-    — AGENTS.md rule 6b: no addresses, no structural-match or derivation
-    details in editor-facing descriptions; provenance stays in
+    a simplified description of what the table does, only when accurately
+    known (candidate labels get a "not fully verified" note) — AGENTS.md
+    rule 6b: no addresses, no structural-match or derivation details, no
+    pass marker in editor-facing descriptions; provenance stays in
     defs_table_labels.json + the investigation docs. Renamed entries are made
     self-contained (type/scaling/axes copied from the base-chain template of
     the same old name) so RomRaider's name-based inheritance keeps working.
@@ -39,7 +39,7 @@ ROOT = Path(__file__).resolve().parents[3]
 LABELS_JSON = ROOT / "data" / "labels" / "60E15120_N3J1E" / "defs_table_labels.json"
 MAPS = ROOT / "data" / "maps"
 REFERENCE = "60E15120_N3J1E"
-MARKER = "RE relabel 2026-11-02"
+MARKER = "RE relabel 2026-11-02"  # legacy detection token only — NOT written into descriptions anymore (rule 6b)
 
 DESC_RE = re.compile(r"Lookup descriptor 0x([0-9a-fA-F]+)")
 STORAGETYPE = {0: "float", 4: "uint8", 8: "uint16", 12: "int8", 16: "int16"}
@@ -198,10 +198,10 @@ def _set_desc(el, text):
 
 
 def _label_desc(label):
-    """Short editor-facing description (AGENTS.md rule 6b): the dated marker +
-    a simplified description of what the table does — only when accurately
-    known. No memory addresses, no structural-match info, no derivation or
-    prior-name dumps; provenance lives in defs_table_labels.json + the
+    """Short editor-facing description (AGENTS.md rule 6b): a simplified
+    description of what the table does — only when accurately known. No
+    memory addresses, no structural-match info, no derivation/prior-name
+    dumps, no pass marker; provenance lives in defs_table_labels.json + the
     investigation docs (rule-10 safety warnings excepted)."""
     desc = (label.get("desc") or "").strip()
     if not desc:
@@ -209,10 +209,20 @@ def _label_desc(label):
             desc = "Purpose not fully verified (candidate label)."
         else:
             desc = label["name"]
-    return f"[{MARKER}] {desc}"
+    return desc
 
 
-UNLABELED_DESC = f"[{MARKER}] Unlabeled lookup table (no verified purpose)."
+UNLABELED_DESC = "Unlabeled lookup table (no verified purpose)."
+
+
+def is_relabeled(t, label):
+    """True if table element `t` already carries this pass's description
+    (idempotency check). MARKER only recognizes the legacy format written by
+    the first version of this pass; current output has no marker."""
+    d = t.findtext("description") or ""
+    if MARKER in d:
+        return True
+    return d == (_label_desc(label) if label is not None else UNLABELED_DESC)
 
 
 def _scaling_from_rom(rom, row):
@@ -281,9 +291,9 @@ def apply_to_block(block, blks, rom_id, stats=None):
 
     blks: all <rom> elements of the same file (for base-chain template lookup),
     keyed by lowercase xmlid — see extend_defs_all_roms.blocks().
-    Returns stats dict. Idempotent: entries already carrying MARKER keep their
-    name/category/addresses and only get their description re-normalized to the
-    short form (rule 6b).
+    Returns stats dict. Idempotent: entries already carrying this pass's
+    description (see is_relabeled) keep their name/category/addresses and only
+    get their description re-normalized to the short form (rule 6b).
     """
     labels = load_labels()
     by_desc, by_data = maps_index(rom_id)
@@ -296,7 +306,7 @@ def apply_to_block(block, blks, rom_id, stats=None):
         sm = structural_matches().get(rom_id, {})
         label_of = {rd: labels.get(ref) for rd, ref in sm.items()}  # rom_desc -> label
 
-    st = {"renamed": 0, "regrouped": 0, "annotated": 0, "added": 0, "skipped_marker": 0,
+    st = {"renamed": 0, "regrouped": 0, "annotated": 0, "added": 0, "already_relabeled": 0,
           "no_label": 0, "details": []}
     if stats is not None:
         stats.update(st)
@@ -341,15 +351,15 @@ def apply_to_block(block, blks, rom_id, stats=None):
         if row is None:
             continue
         label = label_of.get(desc)
-        if MARKER in d:
-            # already relabeled: keep name/category/addresses, re-normalize the
-            # description to the short form (rule 6b: no addresses/derivation)
+        if is_relabeled(t, label):
+            # already relabeled (or legacy marker format): keep name/category/
+            # addresses, re-normalize the description to the short form
             new_el = copy.deepcopy(t)
             _set_desc(new_el, _label_desc(label) if label else UNLABELED_DESC)
             idx = list(block).index(t)
             block.remove(t)
             block.insert(idx, new_el)
-            st["skipped_marker"] += 1
+            st["already_relabeled"] += 1
             continue
         old_name = t.get("name")
         if label is None:

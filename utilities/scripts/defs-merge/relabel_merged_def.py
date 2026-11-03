@@ -8,10 +8,10 @@ the file is left untouched (verified by re-parsing + git diff). The pass itself
 lives in relabel.py (shared with extend_defs_all_roms.py for the per-ROM
 defs).
 
-Idempotent: entries already carrying the relabel marker keep their
-name/category/addresses and only get their description re-normalized to the
-short rule-6b form; the pass log (stats JSON) is only rewritten on a fresh
-renaming run.
+Idempotent: entries already carrying the pass's short description (relabel
+is_relabeled) keep their name/category/addresses and only get their
+description re-normalized; the pass log (stats JSON) is only rewritten on a
+fresh renaming run.
 
 Run from the repo root:
   python utilities/scripts/defs-merge/relabel_merged_def.py [--dry-run]
@@ -137,7 +137,7 @@ def main():
     if dry:
         print(f"dry run: would replace {sum(1 for e in edits if len(e) == 3)} tables, "
               f"add {len(new_els) - n_old}; stats: renamed={stats['renamed']} added={stats['added']} "
-              f"regrouped={stats['regrouped']} skipped_marker={stats['skipped_marker']} no_label={stats['no_label']}")
+              f"regrouped={stats['regrouped']} already_relabeled={stats['already_relabeled']} no_label={stats['no_label']}")
         return
 
     # apply edits bottom-up
@@ -163,20 +163,20 @@ def main():
             blk = r
     names = [t.get("name") for t in blk.findall("table")]
     assert len(names) == len(set(names)), "duplicate names after relabel"
-    n_marker = sum(1 for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or ""))
+    n_relabel = stats["renamed"] + stats["already_relabeled"]
     print(f"OK: block tables {len(old_els)} -> {len(names)}; renamed={stats['renamed']} "
-          f"added={stats['added']} regrouped={stats['regrouped']} marker_entries={n_marker}")
+          f"added={stats['added']} regrouped={stats['regrouped']} relabeled_entries={n_relabel}")
     if stats["renamed"] or stats["added"]:
         # fresh pass: (re)write the pass log. On a normalization-only re-run
         # (everything already marked) the original stats file is kept.
         STATS_OUT.write_text(json.dumps({
             "file": str(MERGED.relative_to(ROOT)), "rom_block": TARGET_XMLID,
-            "marker": relabel.MARKER, "stats": {k: v for k, v in stats.items() if k != "details"},
+            "pass": relabel.__doc__.splitlines()[0], "stats": {k: v for k, v in stats.items() if k != "details"},
             "details": stats["details"],
         }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
     else:
-        print(f"normalization-only run (skipped_marker={stats['skipped_marker']}); "
+        print(f"normalization-only run (already_relabeled={stats['already_relabeled']}); "
               f"stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
 
 
