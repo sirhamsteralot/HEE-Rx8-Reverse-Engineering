@@ -67,10 +67,10 @@ scalars) into every per-ROM def that has a block:
 ROM bytes** (f32 decode == expected value) at generation time, and re-checked by
 `tests/test_extract_scalars.py::test_per_rom_defs_expose_scalars`. Editing these
 in RomRaider/VersaTuner changes the λ→AFR conversion and the base load→fuel
-scale respectively. Caveats recorded in each entry's `<description>`: both
-addresses are inside the app-flash checksum range (ROADMAP D3, 0x2000–0x7ffff),
-so a changed value needs the checksum/CVN path handled, and nothing may be
-flashed without bench validation (AGENTS.md rule 10). ROMs without an upstream
+scale respectively. Caveat (kept here in the README, not in the `<description>`
+— rule 6b): both addresses are inside the app-flash checksum range (ROADMAP D3,
+0x2000–0x7ffff), so a changed value needs the checksum/CVN path handled, and
+nothing may be flashed without bench validation (AGENTS.md rule 10). ROMs without an upstream
 block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries.
 ECUFlash defs remain upstream-only for 60E0G500 (documented gap).
 
@@ -123,6 +123,29 @@ locally modified (flex-fuel content removed — AGENTS.md rule 4b provenance not
 so that blob no longer matches this file. The pinned submodule
 `submodules/RX8Defs/RomRaider/rx8_defs.xml` is read-only and still carries the
 upstream flex-fuel content.
+
+## Editor-facing descriptions cleaned (2026-11-03, AGENTS.md rule 6b)
+
+Per rule 6b a `<description>` is user-facing text only — a simplified
+what-the-table-does sentence. A cleanup pass
+([`utilities/scripts/defs-merge/clean_descriptions.py`](../../utilities/scripts/defs-merge/clean_descriptions.py),
+idempotent with `--check`) removed from every `<description>` in all defs here:
+addresses and ROM-address assertions ("ROM address 0x…, value … (asserted
+against ROM bytes by this script)"), lookup-descriptor/dispatch inventories,
+function/PID/mova references, dated pass markers and JSON correction dumps
+("[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout …",
+"[60E15120 analysis 2026-09-18] Lookup descriptor 0x…", "Upstream rename from …",
+"[2026-09-30 review] Correction: {…}"), evidence/report links, and
+checksum/rule-10 bench-validation notes. DTC `Enable/Disable` tables now carry a
+one-line user-facing description ("Enable/disable flag for diagnostic trouble
+code DTC xxxx (block #n)."); descriptions left with no user-facing text were
+removed. Plain what-the-table-does sentences (e.g. "Used to correct the max
+primary injector amount based on barometric pressure …") were kept. The per-ROM
+defs are cleaned at generation time by `extend_defs_all_roms.py`
+(`clean_descriptions.clean_block`); the merged/reviewed/upstream-snapshot files
+were cleaned by the splice script. Provenance stays in the label map, TSVs and
+investigation docs — not in the XML. 4,526 descriptions now carry text; none
+contain provenance markers.
 
 ## Relabel / regroup pass (2026-11-02, ROADMAP D item 5)
 
