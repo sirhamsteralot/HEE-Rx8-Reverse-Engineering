@@ -7,14 +7,26 @@ RomRaider defs' `DTC xxxx Enable/Disable #N` tables against them.
 ## Files
 
 - `<rom-id>.tsv` — one row per DTC **slot** (0x00..0x8b, 140 slots in all
-  inspected ROMs): the OBD DTC code (big-endian u16 from the code table), the
-  three enable/disable calibration bytes, the def-side `#1` code bound to that
+  inspected ROMs): the OBD DTC code (big-endian u16 from the code table), its
+  standard 5-char form (`obd_code` column, e.g. `P0420`), the three
+  enable/disable calibration bytes, the def-side `#1` code bound to that
   slot (if any) and whether it matches, and the absolute addresses of the code
   and enable#1 bytes.
 - `defs_audit.tsv` — per ROM and per def suffix (#1/#2/#3): number of def
   entries, how many mismatch the ROM code at their slot, how many fall outside
   the slot range, and examples. Audited against
   `data/definitions/romraider/per-rom/*.xml`.
+- `pcodes.tsv` — the 4-hex ROM code → standard 5-char OBD code mapping with the
+  SAE J2012 description and generic/manufacturer-specific class for every code
+  used by any ROM (134 codes). Sources: `tekseport/obd2-codes` `obd2-codes.csv`
+  @ `ddadc77e` + `foerbsnavi/OBDex` `data/generic/*_enriched.yaml` @ `3f03bb0`
+  (cross-checked 2026-11-03). Decode rule (SAE J2012 / ISO 15031-6; the ROM
+  stores the two mode-03 response bytes as BE u16): byte0 bits 7-6 → letter
+  (P/C/B/U), bits 5-4 → second digit (0/2 SAE-generic, 1/3 manufacturer), low
+  12 bits → last 3 hex digits. So `0420` → **P0420**, `2504` → P2504,
+  `1260` → P1260 (manufacturer-specific, no SAE text), and `C167` → **U0167**
+  (network — the old def label "C167" misread the high hex nibble; 0xC0>>6 = U).
+  Implemented in `utilities/scripts/defs-merge/dtc_names.py`.
 
 ## ROM layout (verified at byte level; 60E15120_N3J1E addresses shown)
 
@@ -50,6 +62,20 @@ The `def_match` column and `defs_audit.tsv` reflect the **repaired** per-ROM def
 0 mismatches across all ROMs for #1/#2/#3. The pre-repair audit (with the wrong
 blocks for 60E0E700/60E1B900/60E32000_N3M5E/60E0FB00/60E1D400) is preserved in
 `docs/investigations/60E15120_N3J1E/reviews/dtc_control/defs_audit_detail.json`.
+
+Since 2026-11-03 the def tables are also **P-code labeled**: every
+`DTC xxxx Enable/Disable #N` entry in the per-ROM defs and in all active blocks
+of `rx8defs-merged-60E15120.xml` is named with the standard 5-char OBD code
+(`DTC P0420 Enable/Disable #1`, `DTC U0167 ...`; P0300's two slots get
+`[additional site 0x...]` suffixes). Rename pass:
+`utilities/scripts/defs-merge/relabel_dtc_names.py` (merged def, surgical) +
+`repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
+descriptions); stats in
+`docs/investigations/60E15120_N3J1E/defs-merge/dtc_pcode_labels_2026-11-03.json`.
+Re-audit after the rename: still 0 mismatches (`defs_audit.tsv` regenerated;
+the audit compares decoded u16 codes, so both naming forms audit identically).
+Tests: `tests/test_dtc_pcode_labels.py`. See
+[dtc_control_report.md §5b](../docs/investigations/60E15120_N3J1E/dtc_control_report.md).
 
 ## Provenance
 

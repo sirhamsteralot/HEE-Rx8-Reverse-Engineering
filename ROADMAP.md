@@ -22,11 +22,11 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 | A | P3 | Calibration extraction → `data/maps/` | DONE 2026-10-31 |
 | B | P1 residual | Emulator fidelity + Renesas cross-check | DONE 2026-10-31, except E4/E6 partials (register) |
 | C | P2 residual | Static labeling & gap closure, items 1–6 | DONE 2026-10-31 |
-| D | P2/P5 | Cross-ROM propagation | items 1–5 DONE 2026-10-31/2026-11-02 |
+| D | P2/P5 | Cross-ROM propagation | items 1–6 DONE 2026-10-31/2026-11-03 |
 | E | P4 | Reimplementation coverage | open (dependency C is done) |
 | F | P6 | Toward hardware | open, **GATED** (AGENTS.md rule 10) |
 
-Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (items 1–5: item 4 = per-ROM defs + D8, 2026-11-01; item 5 = defs relabel/regroup pass, 2026-11-02).
+Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (items 1–6: item 4 = per-ROM defs + D8, 2026-11-01; item 5 = defs relabel/regroup pass, 2026-11-02; item 6 = DTC P-code labels, 2026-11-03).
 
 ---
 
@@ -269,6 +269,25 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   addresses/structural-match/derivation text, no pass marker — provenance stays in the
   label map.
   → [defs-merge/relabel_2026-11-02.md](docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
+
+#### D item 6 — DTC tables labeled with their standard P-codes in the defs — DONE 2026-11-03
+
+- The ROM DTC code table stores the two OBD mode-03 bytes per slot (BE u16), so the
+  SAE J2012 / ISO 15031-6 decode (byte0 bits 7-6 → P/C/B/U, bits 5-4 → 0/2 generic vs
+  1/3 manufacturer, low 12 bits → digits) maps every code: all `0x0xxx` = generic P0,
+  all `0x2xxx` = generic P2, `0x1xxx` = P1 manufacturer-specific (no SAE text), and the
+  old `Cxxx` labels were a high-nibble misread — `0xCxxx` decodes to **U0** network
+  codes (C101 → U0101 lost comm with TCM, …). Mapping + SAE descriptions for all 134
+  codes: `data/dtc/pcodes.tsv` (cross-checked against tekseport/obd2-codes @ `ddadc77e`
+  and foerbsnavi/OBDex @ `3f03bb0`, 2026-11-03).
+- `DTC 0420 Enable/Disable #1` → `DTC P0420 Enable/Disable #1` in all active blocks of
+  `rx8defs-merged-60E15120.xml` (surgical, `relabel_dtc_names.py`: 4027 renamed, 23 P0300
+  duplicate-site suffixes, idempotent, addresses unchanged) and in all 9 per-ROM defs at
+  generation (`repair_dtc_tables()` emits the P-code names + short rule-6b descriptions
+  with the rule-10 checksum-range note). Post-rename audit still 0 mismatches
+  (`data/dtc/defs_audit.tsv`); tests `tests/test_dtc_pcode_labels.py` (13 passed).
+  → [dtc_control_report.md §5b](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
+  [data/dtc/README.md](data/dtc/README.md).
 
 ## Open work — pick up here
 
