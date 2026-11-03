@@ -1,0 +1,119 @@
+obd_code	mazda_manual_condition
+P0030	Front HO2S heater control circuit problem
+P0031	Front HO2S heater control circuit low
+P0032	Front HO2S heater control circuit high
+P0037	Rear HO2S heater control circuit low
+P0038	Rear HO2S heater control circuit high
+P0076	VDI solenoid valve control circuit low
+P0077	VDI solenoid valve control circuit high
+P0101	MAF sensor circuit range/performance problem
+P0102	MAF sensor circuit low input
+P0103	MAF sensor circuit high input
+P0107	BARO sensor circuit low input
+P0108	BARO sensor circuit high input
+P0111	IAT sensor circuit range/performance problem
+P0112	IAT sensor circuit low input
+P0113	IAT sensor circuit high input
+P0117	ECT sensor circuit low input
+P0118	ECT sensor circuit high input
+P0122	TP sensor No.1 circuit low input
+P0123	TP sensor No.1 circuit high input
+P0125	Insufficient coolant temperature for closed loop fuel control
+P0126	Insufficient coolant temperature for stable operation
+P0128	Coolant thermostat problem
+P0130	Front HO2S circuit problem
+P0131	Front HO2S circuit low voltage
+P0132	Front HO2S circuit high voltage
+P0133	Front HO2S circuit slow response
+P0138	Rear HO2S circuit high voltage
+P0139	Rear HO2S circuit slow response
+P0171	System too lean
+P0172	System too rich
+P0222	TP sensor No.2 circuit low input
+P0223	TP sensor No.2 circuit high input
+P0300	Random misfire detected
+P0301	Front rotor misfire detected
+P0302	Rear rotor misfire detected
+P0327	KS circuit low input
+P0328	KS circuit high input
+P0335	Eccentric shaft position sensor circuit
+P0336	Eccentric shaft position sensor circuit range/performance problem
+P0410	AIR system problem
+P0420	Catalyst system efficiency below threshold
+P0441	EVAP system incorrect purge flow
+P0442	EVAP system leak detected (small leak)
+P0443	Purge solenoid valve circuit problem
+P0446	EVAP system vent control circuit problem
+P0455	EVAP system leak detected (large leak)
+P0456	EVAP system leak detected (very small leak)
+P0461	Fuel gauge sender unit circuit range/performance problem
+P0462	Fuel gauge sender unit circuit low input
+P0463	Fuel gauge sender unit circuit high input
+P0480	Cooling fan No.1 control circuit problem
+P0481	Cooling fan No.2 control circuit problem
+P0500	VSS circuit problem
+P0505	Idle air control system problem
+P0506	Idle air control system RPM lower than expected
+P0507	Idle air control system RPM higher than expected
+P0562	System voltage low (KAM)
+P0564	Cruise control switch input circuit problem
+P0571	Brake switch input circuit problem
+P0601	PCM memory check sum error
+P0602	PCM programming error
+P0604	PCM random access memory error
+P0610	PCM vehicle options error
+P0638	Throttle actuator control circuit range/performance problem
+P0661	SSV solenoid valve control circuit low
+P0662	SSV solenoid valve control circuit high
+P0703	Brake switch No.1 input circuit problem
+P0704	Clutch switch input circuit problem
+P0850	Neutral switch input circuit problem
+P1260	Immobilizer system problem
+P1574	TP sensor output incongruent
+P1577	APP sensor output incongruent
+P1686	Metering oil pump control circuit low flow side problem
+P1687	Metering oil pump control circuit high flow side problem
+P1688	Metering oil pump control circuit initial check problem
+P2004	APV stuck open
+P2006	APV motor control circuit IC problem
+P2008	APV motor control circuit/open
+P2017	APV position sensor circuit problem
+P2070	SSV stuck open
+P2096	Target A/F feedback system too lean
+P2097	Target A/F feedback system too rich
+P2101	Drive-by-wire relay control circuit problem
+P2106	Throttle actuator control system-forced limited power
+P2107	Throttle actuator control module processor error
+P2108	Throttle actuator control module performance error
+P2109	TP sensor minimum stop range/performance problem
+P2112	Throttle actuator control system range/performance problem
+P2119	Throttle actuator control throttle body range/performance problem
+P2122	APP sensor No.1 circuit low input
+P2123	APP sensor No.1 circuit high input
+P2127	APP sensor No.2 circuit low input
+P2128	APP sensor No.2 circuit high input
+P2135	TP sensor No.1/No.2 voltage correlation problem
+P2136	TP sensor No.1/No.3 voltage correlation problem
+P2138	APP sensor No.1/No.2 voltage correlation problem
+P2195	Front HO2S signal stuck lean
+P2196	Front HO2S signal stuck rich
+P2257	AIR pump relay control circuit low
+P2258	AIR pump relay control circuit high
+P2259	AIR solenoid valve control circuit low
+P2260	AIR solenoid valve control circuit high
+P2270	Rear HO2S signal stuck lean
+P2271	Rear HO2S signal stuck rich
+P2401	EVAP system leak detection pump control circuit low
+P2402	EVAP system leak detection pump control circuit high
+P2404	EVAP system leak detection pump sense circuit range/performance problem
+P2405	EVAP system leak detection pump sense circuit low
+P2406	EVAP system leak detection pump sense circuit high
+P2407	EVAP system leak detection pump sense circuit intermittent/erratic problem
+P2502	Charging system voltage problem
+P2503	Charging system voltage low
+P2504	Charging system voltage high
+U0073	CAN system communication error
+U0101	Communication error to TCM
+U0121	Communication error to ABS HU/CM
+U0155	Communication error to instrument cluster
+U0167	Communication error to keyless control module

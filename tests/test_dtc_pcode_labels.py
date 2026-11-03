@@ -83,6 +83,9 @@ def test_pcodes_covers_all_rom_codes_and_defs():
                 assert rows[v]["obd_code"] == dtc_names.obd_code(v)
                 if rows[v]["class"].endswith("manufacturer-specific"):
                     assert not rows[v]["sae_j2012_description"]
+                    # the Mazda workshop manual (input/4EngineControl.pdf DTC TABLE ->
+                    # data/dtc/mazda_dtc_table.tsv) defines all P1 codes used in the ROMs
+                    assert rows[v]["mazda_manual_description"], f"{code}: P1 code without Mazda manual text"
                 else:
                     assert rows[v]["sae_j2012_description"], f"{code}: generic code without SAE text"
     # every DTC table name in the defs
@@ -91,6 +94,39 @@ def test_pcodes_covers_all_rom_codes_and_defs():
             parsed = dtc_names.parse_dtc_name(t.get("name"))
             if parsed is not None:
                 assert parsed[0] in rows, f"{xml.name}: {t.get('name')} not in pcodes.tsv"
+
+
+def test_mazda_manual_table_consistent_with_pcodes():
+    """data/dtc/mazda_dtc_table.tsv (parsed from input/4EngineControl.pdf, Mazda RX-8
+    workshop manual 'Engine Diagnostics & Control' 2003, DTC TABLE section) must be a
+    subset of pcodes.tsv obd_codes and agree with its mazda_manual_description column."""
+    with open(PCODES, newline="", encoding="utf-8") as f:
+        pc = {r["obd_code"]: r for r in csv.DictReader(f, delimiter="\t")}
+    with open(DTC_DIR / "mazda_dtc_table.tsv", newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f, delimiter="\t"))
+    assert len(rows) >= 110
+    for r in rows:
+        c = r["obd_code"]
+        assert c in pc, f"{c}: in Mazda table but not pcodes.tsv"
+        assert pc[c]["mazda_manual_description"] == r["mazda_manual_condition"], c
+    # spot checks incl. Mazda-specific assignments (P1 codes, U0167 keyless module,
+    # RX-8 part names: APV/SSV/VDI/eccentric shaft position sensor)
+    spot = {
+        "P1260": "Immobilizer system problem",
+        "P1574": "TP sensor output incongruent",
+        "P1577": "APP sensor output incongruent",
+        "P1686": "Metering oil pump control circuit low flow side problem",
+        "P1687": "Metering oil pump control circuit high flow side problem",
+        "P1688": "Metering oil pump control circuit initial check problem",
+        "U0167": "Communication error to keyless control module",
+        "P0335": "Eccentric shaft position sensor circuit",
+        "P0076": "VDI solenoid valve control circuit low",
+        "P2004": "APV stuck open",
+        "P2070": "SSV stuck open",
+        "P0420": "Catalyst system efficiency below threshold",
+    }
+    for c, d in spot.items():
+        assert pc[c]["mazda_manual_description"] == d, (c, pc[c]["mazda_manual_description"])
 
 
 def _rom_block_tables(xml_path):
@@ -133,6 +169,10 @@ def test_per_rom_dtc_names_match_rom_codes(xml):
         assert "bench-validate" in desc, f"{name}: missing rule-10 safety note"
         assert not re.search(r"0x[0-9A-Fa-f]{4,}", desc.replace("0x2000-0x7ffff", "")), \
             f"{name}: storage address in description: {desc!r}"
+        # description names the DTC with its (Mazda-preferred) meaning
+        pc = dtc_names.load_pcodes()[code]
+        want = pc["mazda_manual_description"] or pc["sae_j2012_description"]
+        assert desc.startswith(f"DTC {pc['obd_code']} - {want}."), f"{name}: {desc!r}"
     # every used slot is bound exactly once per suffix
     for n in (1, 2, 3):
         bound = {int(a, 16) - e1 - (n - 1) * nslots for _, a, _, (_, s, _) in entries if s == f"#{n}"}

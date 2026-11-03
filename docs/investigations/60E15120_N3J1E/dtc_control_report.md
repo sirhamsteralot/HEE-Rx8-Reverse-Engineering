@@ -304,8 +304,24 @@ descriptions with the rule-10 checksum-range safety note). Post-rename audit:
 still **0 mismatches** across all 9 per-ROM defs × #1/#2/#3
 ([`data/dtc/defs_audit.tsv`](../../../data/dtc/defs_audit.tsv)); stats:
 [`defs-merge/dtc_pcode_labels_2026-11-03.json`](defs-merge/dtc_pcode_labels_2026-11-03.json);
-tests: `tests/test_dtc_pcode_labels.py` (13 passed). Repair record:
+tests: `tests/test_dtc_pcode_labels.py` (14 passed). Repair record:
 `defs-merge/definition_repairs.json` (entry 84).
+
+Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf`
+("RX8 – Engine Diagnostics & Control", 2003; DTC TABLE section parsed to
+[`data/dtc/mazda_dtc_table.tsv`](../../../data/dtc/mazda_dtc_table.tsv), 118 codes,
+2026-11-03): all manual codes exist in the ROMs (P0301/P0302 are the rotor-misfire
+prefix codes at 0x7e55a); 18 ROM codes are absent from the 2003 table (later J2012
+additions — they keep their SAE text). The manual supplies the **manufacturer-specific
+P1 meanings** the SAE list lacks — P1260 immobilizer system problem, P1574/P1577 TP /
+APP sensor output incongruent, P1686-P1688 metering oil pump control circuit
+low/high/initial-check flow-side problems — and Mazda's own part wording (P0335
+eccentric shaft position sensor, P0076/P0077 VDI solenoid, P2004 APV, P2070 SSV,
+P0661/P0662 SSV solenoid), which the def descriptions now prefer over the SAE generic
+text (`mazda_manual_description` column in [`data/dtc/pcodes.tsv`](../../../data/dtc/pcodes.tsv)).
+One conflict recorded, not resolved silently: **U0167** — SAE generic = lost
+communication with the immobilizer module, Mazda manual = keyless control module;
+the def uses the Mazda assignment (RX-8-specific).
 
 ## 6. Files
 

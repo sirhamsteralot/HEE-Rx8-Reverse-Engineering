@@ -16,17 +16,31 @@ RomRaider defs' `DTC xxxx Enable/Disable #N` tables against them.
   entries, how many mismatch the ROM code at their slot, how many fall outside
   the slot range, and examples. Audited against
   `data/definitions/romraider/per-rom/*.xml`.
-- `pcodes.tsv` — the 4-hex ROM code → standard 5-char OBD code mapping with the
-  SAE J2012 description and generic/manufacturer-specific class for every code
-  used by any ROM (134 codes). Sources: `tekseport/obd2-codes` `obd2-codes.csv`
-  @ `ddadc77e` + `foerbsnavi/OBDex` `data/generic/*_enriched.yaml` @ `3f03bb0`
-  (cross-checked 2026-11-03). Decode rule (SAE J2012 / ISO 15031-6; the ROM
-  stores the two mode-03 response bytes as BE u16): byte0 bits 7-6 → letter
-  (P/C/B/U), bits 5-4 → second digit (0/2 SAE-generic, 1/3 manufacturer), low
-  12 bits → last 3 hex digits. So `0420` → **P0420**, `2504` → P2504,
-  `1260` → P1260 (manufacturer-specific, no SAE text), and `C167` → **U0167**
-  (network — the old def label "C167" misread the high hex nibble; 0xC0>>6 = U).
-  Implemented in `utilities/scripts/defs-merge/dtc_names.py`.
+- `pcodes.tsv` — the 4-hex ROM code → standard 5-char OBD code mapping for every
+  code used by any ROM (136 codes, incl. the P0301/P0302 rotor-misfire prefix
+  codes held at 0x7e55a), with class (P0/P2 generic, P1 manufacturer-specific,
+  U0 generic), the **Mazda workshop-manual condition** (`mazda_manual_description`,
+  preferred in def descriptions — vehicle-specific wording, e.g. P0335 = eccentric
+  shaft position sensor, P2004 = APV stuck open) and the **SAE J2012** description.
+  Sources: Mazda manual `input/4EngineControl.pdf` ("RX8 – Engine Diagnostics &
+  Control", 2003, DTC TABLE section — parsed to `mazda_dtc_table.tsv`);
+  `tekseport/obd2-codes` `obd2-codes.csv` @ `ddadc77e` + `foerbsnavi/OBDex`
+  `data/generic/*_enriched.yaml` @ `3f03bb0` (cross-checked 2026-11-03).
+  Decode rule (SAE J2012 / ISO 15031-6; the ROM stores the two mode-03 response
+  bytes as BE u16): byte0 bits 7-6 → letter (P/C/B/U), bits 5-4 → second digit
+  (0/2 SAE-generic, 1/3 manufacturer), low 12 bits → last 3 hex digits. So
+  `0420` → **P0420**, `2504` → P2504, `1260` → P1260 (manufacturer-specific, no
+  SAE text), and `C167` → **U0167** (network — the old def label "C167" misread
+  the high hex nibble; 0xC0>>6 = U). Implemented in
+  `utilities/scripts/defs-merge/dtc_names.py`.
+- `mazda_dtc_table.tsv` — the DTC TABLE of `input/4EngineControl.pdf` parsed to
+  `obd_code, mazda_manual_condition` (118 codes). The 2003 manual predates some
+  J2012 codes the ROMs carry (P0116, P0134, P0137, P0351-0354, P0411, P0444,
+  P0445, P050A, P2009, P2010, P2016, P2067, P2068, P2102, P2103 — those keep
+  their SAE text only); P0301/P0302 appear in the manual but in the ROM live in
+  the 0x7e55a prefix table, not the slot table. Note U0167: SAE generic says
+  immobilizer module, the Mazda manual says keyless control module — Mazda's
+  assignment wins for the RX-8.
 
 ## ROM layout (verified at byte level; 60E15120_N3J1E addresses shown)
 
