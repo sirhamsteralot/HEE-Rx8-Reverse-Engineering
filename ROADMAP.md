@@ -285,7 +285,14 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   duplicate-site suffixes, idempotent, addresses unchanged) and in all 9 per-ROM defs at
   generation (`repair_dtc_tables()` emits the P-code names + short rule-6b descriptions
   with the rule-10 checksum-range note). Post-rename audit still 0 mismatches
-  (`data/dtc/defs_audit.tsv`); tests `tests/test_dtc_pcode_labels.py` (13 passed).
+  (`data/dtc/defs_audit.tsv`); tests `tests/test_dtc_pcode_labels.py` (14 passed).
+- Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf` (DTC TABLE
+  → `data/dtc/mazda_dtc_table.tsv`, 118 codes): all manual codes exist in the ROMs
+  (P0301/P0302 are the 0x7e55a prefix codes); the manual fills the P1 meanings
+  (P1260 immobilizer, P1574/P1577 TP/APP incongruent, P1686-1688 metering oil pump) and
+  Mazda part wording (APV/SSV/VDI, eccentric shaft position sensor) is now preferred in
+  the def descriptions; U0167 SAE-vs-Mazda conflict recorded (Mazda: keyless control
+  module). 18 ROM codes are later J2012 additions absent from the 2003 table.
   → [dtc_control_report.md §5b](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
   [data/dtc/README.md](data/dtc/README.md).
 

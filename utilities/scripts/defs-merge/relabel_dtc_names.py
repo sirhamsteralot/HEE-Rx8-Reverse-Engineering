@@ -131,16 +131,19 @@ def main():
         code, suffix, site = parsed
         new_name = plan[i]
         addr_before.append(attrs.get("storageaddress"))
-        if new_name == name:
-            continue
         frag = E.fromstring("<root>" + "\n".join(lines[s:e + 1]) + "</root>")[0]
-        frag.set("name", new_name)
         d = frag.find("description")
+        new_desc = dtc_names.dtc_description(code, suffix) if d is not None else None
+        if new_name == name and (d is None or d.text == new_desc):
+            continue  # already in final form (idempotent re-run)
+        frag.set("name", new_name)
         if d is not None:
-            d.text = dtc_names.dtc_description(code, suffix)
-            stats["descriptions_replaced"] += 1
+            if d.text != new_desc:
+                stats["descriptions_replaced"] += 1
+            d.text = new_desc
         edits.append((s, e, serialize(frag)))
-        stats["renamed"] += 1
+        if new_name != name:
+            stats["renamed"] += 1
         if new_name != f"DTC {dtc_names.obd_code(code)} Enable/Disable {suffix}":
             stats["suffixed"] += 1
         stats["details"].append({"old": name, "new": new_name,
@@ -188,12 +191,22 @@ def main():
         "storageaddress multiset changed"
     stats.update({"file": str(MERGED.relative_to(ROOT)), "pass": __doc__.splitlines()[0],
                   "bom": bom, "crlf": nl == b"\r\n"})
-    if stats["renamed"]:
-        STATS_OUT.write_text(json.dumps(stats, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    if stats["renamed"] or stats["descriptions_replaced"]:
+        # cumulative run log: keep earlier runs, append this one
+        doc = {"file": str(MERGED.relative_to(ROOT)), "pass": __doc__.splitlines()[0],
+               "runs": []}
+        if STATS_OUT.exists():
+            try:
+                prev = json.loads(STATS_OUT.read_text(encoding="utf-8"))
+                doc["runs"] = prev.get("runs") or [prev]
+            except Exception:
+                pass
+        doc["runs"].append(stats)
+        STATS_OUT.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"OK: renamed {stats['renamed']} DTC tables ({stats['suffixed']} site-suffixed, "
               f"{stats['descriptions_replaced']} descriptions replaced); stats -> {STATS_OUT.relative_to(ROOT)}")
     else:
-        print(f"normalization-only run (nothing to rename); stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
+        print(f"normalization-only run (nothing to change); stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

@@ -109,3 +109,25 @@ mismatches, XML re-parsed). Repair recorded in `defs-merge/definition_repairs.js
 - Tests: `tests/test_dtc_pcode_labels.py` 13 passed; full suite 90 passed
   (1 pre-existing failure in test_extract_scalars.py, also on main: scalars.tsv
   has a latin-1 byte that read_text(utf-8) rejects).
+
+## Mazda workshop manual cross-check (2026-11-03, input/4EngineControl.pdf)
+
+- New raw input: `input/4EngineControl.pdf` — Mazda RX-8 workshop manual "Engine
+  Diagnostics & Control" (PDF title, created 2003-11-21; stays uncommitted in
+  input/ per rule 4). Its DTC TABLE section was extracted with pdftotext and parsed
+  to `data/dtc/mazda_dtc_table.tsv` (118 codes; tall-row splits hand-verified against
+  the raw layout).
+- Coverage: every manual code exists in the ROMs (P0301/P0302 are the rotor-misfire
+  prefix codes at 0x7e55a, not slot codes — added to pcodes.tsv); 18 ROM codes are not
+  in the 2003 table (P0116/P0134/P0137/P0351-0354/P0411/P0444/P0445/P050A/P2009/
+  P2010/P2016/P2067/P2068/P2102/P2103 — later J2012 additions, SAE text kept).
+- Fills the P1 gap deliberately left open: P1260 immobilizer system problem,
+  P1574/P1577 TP/APP sensor output incongruent, P1686-P1688 metering oil pump control
+  circuit low/high/initial-check flow-side problem.
+- Mazda-specific wording preferred in def descriptions (P0335 eccentric shaft position
+  sensor, P0076/77 VDI solenoid, P2004 APV stuck open, P2070 SSV stuck open, ...).
+  U0167 conflict recorded: SAE=immobilizer module vs Mazda=keyless control module;
+  Mazda assignment used for the RX-8.
+- pcodes.tsv gained the `mazda_manual_description` column (136 rows); dtc_names.py
+  prefers it; per-ROM defs + the 12 annotated merged-def entries regenerated with the
+  Mazda wording; audit still 0 mismatches; tests/test_dtc_pcode_labels.py 14 passed.

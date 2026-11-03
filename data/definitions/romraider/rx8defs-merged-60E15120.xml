@@ -28727,7 +28727,7 @@
     <table name="DTC P0300 Enable/Disable #2" storageaddress="0x7E704" />
     <table name="DTC P0300 Enable/Disable #3" storageaddress="0x7E790" />
     <table name="DTC P0300 Enable/Disable #1 [additional site 0x7e679]" storageaddress="0x7E679" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P0300 - Random/Multiple Cylinder Misfire Detected. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P0300 - Random misfire detected. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P0030 Enable/Disable #1" storageaddress="0x7E67A" />
     <table name="DTC P0030 Enable/Disable #2" storageaddress="0x7E706" />
@@ -28793,7 +28793,7 @@
     <table name="DTC P0126 Enable/Disable #2" storageaddress="0x7E71A" />
     <table name="DTC P0126 Enable/Disable #3" storageaddress="0x7E7A6" />
     <table name="DTC P0128 Enable/Disable #1" storageaddress="0x7E68F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P0128 - Coolant Thermostat (Coolant Temperature Below Thermostat Regulating Temperature). #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P0128 - Coolant thermostat problem. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P0130 Enable/Disable #1" storageaddress="0x7E690" />
     <table name="DTC P0130 Enable/Disable #2" storageaddress="0x7E71C" />
@@ -28943,10 +28943,10 @@
     <table name="DTC P1260 Enable/Disable #2" storageaddress="0x7E74C" />
     <table name="DTC P1260 Enable/Disable #3" storageaddress="0x7E7D8" />
     <table name="DTC P1574 Enable/Disable #1" storageaddress="0x7E6C1" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P1574 (manufacturer-specific code, no SAE J2012 definition). #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P1574 - TP sensor output incongruent. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P1577 Enable/Disable #1" storageaddress="0x7E6C2" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P1577 (manufacturer-specific code, no SAE J2012 definition). #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P1577 - APP sensor output incongruent. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P1686 Enable/Disable #1" storageaddress="0x7E6C3" />
     <table name="DTC P1686 Enable/Disable #2" storageaddress="0x7E74F" />
@@ -28964,7 +28964,7 @@
     <table name="DTC P2006 Enable/Disable #2" storageaddress="0x7E753" />
     <table name="DTC P2006 Enable/Disable #3" storageaddress="0x7E7DF" />
     <table name="DTC P2008 Enable/Disable #1" storageaddress="0x7E6C8" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P2008 - Intake Manifold Runner Control Circuit/Open Bank 1. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P2008 - APV motor control circuit/open. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P2017 Enable/Disable #1" storageaddress="0x7E6C9" />
     <table name="DTC P2017 Enable/Disable #2" storageaddress="0x7E755" />
@@ -28979,7 +28979,7 @@
     <table name="DTC P2097 Enable/Disable #2" storageaddress="0x7E758" />
     <table name="DTC P2097 Enable/Disable #3" storageaddress="0x7E7E4" />
     <table name="DTC P2101 Enable/Disable #1" storageaddress="0x7E6CD" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P2101 - Throttle Actuator A Control Motor Circuit Range/Performance. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P2101 - Drive-by-wire relay control circuit problem. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P2106 Enable/Disable #1" storageaddress="0x7E6CE" />
     <table name="DTC P2106 Enable/Disable #2" storageaddress="0x7E75A" />
@@ -29057,7 +29057,7 @@
     <table name="DTC P2405 Enable/Disable #2" storageaddress="0x7E772" />
     <table name="DTC P2405 Enable/Disable #3" storageaddress="0x7E7FE" />
     <table name="DTC P2406 Enable/Disable #1" storageaddress="0x7E6E7" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC P2406 - EVAP System Leak Detection Pump Sense Circuit High. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC P2406 - EVAP system leak detection pump sense circuit high. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P2407 Enable/Disable #1" storageaddress="0x7E6E8" />
     <table name="DTC P2407 Enable/Disable #2" storageaddress="0x7E774" />
@@ -29072,19 +29072,19 @@
     <table name="DTC P2504 Enable/Disable #2" storageaddress="0x7E777" />
     <table name="DTC P2504 Enable/Disable #3" storageaddress="0x7E803" />
     <table name="DTC U0073 Enable/Disable #1" storageaddress="0x7E6EC" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC U0073 - Control Module Communication Bus A Off. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC U0073 - CAN system communication error. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC U0101 Enable/Disable #1" storageaddress="0x7E6ED" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC U0101 - Lost Communication With TCM. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC U0101 - Communication error to TCM. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC U0121 Enable/Disable #1" storageaddress="0x7E6EE" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC U0121 - Lost Communication With ABS Control Module. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC U0121 - Communication error to ABS HU/CM. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC U0155 Enable/Disable #1" storageaddress="0x7E6EF" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC U0155 - Lost Communication With Instrument Panel Cluster (IPC) Control Module. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC U0155 - Communication error to instrument cluster. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC U0167 Enable/Disable #1" storageaddress="0x7E6F0" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
-        <description>DTC U0167 - Lost Communication With Vehicle Immobilizer Control Module. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
+        <description>DTC U0167 - Communication error to keyless control module. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp. Byte sits inside the checksummed flash range (0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10).</description>
     </table>
     <table name="DTC P0300 Enable/Disable #2 [additional site 0x7E705]" storageaddress="0x7E705" />
     <table name="DTC P0300 Enable/Disable #3 [additional site 0x7E791]" storageaddress="0x7E791" />

@@ -73,7 +73,7 @@ def parse_dtc_name(name):
 
 
 def load_pcodes():
-    """{u16 code: {'obd_code', 'class', 'sae_j2012_description'}} from data/dtc/pcodes.tsv."""
+    """{u16 code: {...}} from data/dtc/pcodes.tsv (SAE J2012 + Mazda manual columns)."""
     out = {}
     with open(PCODES_TSV, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f, delimiter="\t"):
@@ -82,6 +82,7 @@ def load_pcodes():
                 "obd_code": row["obd_code"],
                 "class": row["class"],
                 "sae_j2012_description": row.get("sae_j2012_description") or "",
+                "mazda_manual_description": row.get("mazda_manual_description") or "",
             }
     return out
 
@@ -96,15 +97,22 @@ def dtc_table_name(code, suffix_no, dup_addr=None):
 
 
 def dtc_description(code, suffix_no):
-    """Short editor-facing <description> (AGENTS.md rule 6b): the DTC's standard
-    meaning when SAE-defined, what this switch byte does, and the rule-10
-    checksum safety note (the only permitted address-range text)."""
+    """Short editor-facing <description> (AGENTS.md rule 6b): the DTC's meaning —
+    the Mazda workshop-manual wording when the manual lists the code (vehicle-
+    specific ground truth, e.g. P0335 = eccentric shaft position sensor; P1 codes
+    only the manual defines), else the SAE J2012 text for generic codes — plus
+    what this switch byte does and the rule-10 checksum safety note (the only
+    permitted address-range text)."""
     pc = load_pcodes().get(code)
     c5 = pc["obd_code"] if pc else obd_code(code)
-    if pc and pc["class"].endswith("manufacturer-specific"):
-        head = f"DTC {c5} (manufacturer-specific code, no SAE J2012 definition)."
-    elif pc and pc["sae_j2012_description"]:
-        head = f"DTC {c5} - {pc['sae_j2012_description']}."
+    mazda = pc.get("mazda_manual_description") if pc else ""
+    sae = pc.get("sae_j2012_description") if pc else ""
+    if mazda:
+        head = f"DTC {c5} - {mazda}."
+    elif sae:
+        head = f"DTC {c5} - {sae}."
+    elif pc and pc["class"].endswith("manufacturer-specific"):
+        head = f"DTC {c5} (manufacturer-specific code, no SAE J2012 or Mazda manual definition)."
     else:
         head = f"DTC {c5}."
     return f"{head} {GATE_DESC[suffix_no]} {SAFETY}"
