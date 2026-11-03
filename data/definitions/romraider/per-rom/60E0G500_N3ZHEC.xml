@@ -5,7 +5,7 @@
     Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);
     table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).
     Stock-only def (2026-11-03): G-ROM_FLEX-only 'Flex Fuel' base tables stripped at generation (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444);
-    descriptions cleaned per AGENTS.md rule 6b (clean_descriptions.py) — no addresses/provenance in editor text.
+    descriptions cleaned per AGENTS.md rule 6b at generation — no addresses/provenance in editor text.
     see data/definitions/README.md 'Stock-only defs'.
     ECUFlash def: submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc (1210 tables) -->
     <rom>

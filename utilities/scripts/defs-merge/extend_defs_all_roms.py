@@ -24,10 +24,12 @@ stripped from every emitted def — all dumped ROMs are stock and 0x6C444 is tbl
 data in them (calibration_extraction_report.md 6a). Policy + provenance:
 data/definitions/README.md 'Stock-only defs'.
 
-Editor-facing descriptions (2026-11-03, AGENTS.md rule 6b): clean_descriptions.clean_block
-strips provenance (addresses, pass markers, evidence/report links, generator assertions
-like "asserted against ROM bytes by this script", checksum/rule-10 notes) from every
-<description>, keeping only the plain what-the-table-does text.
+Editor-facing descriptions (2026-11-03, AGENTS.md rule 6b): the rule-6b cleaning
+below (clean_description/clean_block, inlined from the one-time 2026-11-03 pass)
+strips provenance (addresses, pass markers, evidence/report links, generator
+assertions like "asserted against ROM bytes by this script", checksum/rule-10
+notes) from every <description> at generation, keeping only the plain
+what-the-table-does text — so no separate post-generation cleanup pass is needed.
 
 Run from the repo root:  python utilities/scripts/defs-merge/extend_defs_all_roms.py
 """
@@ -38,7 +40,6 @@ import xml.etree.ElementTree as E
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import relabel  # 2026-11-02 table relabel pass (shared with relabel_merged_def.py)
-import clean_descriptions  # 2026-11-03 rule 6b: editor-facing descriptions carry no provenance
 import dtc_names  # 2026-11-03 DTC P-code table names (data/dtc/pcodes.tsv)
 
 DEFS = ROOT / "data" / "definitions"
@@ -118,6 +119,79 @@ def strip_flex_tables(block):
     for t in list(block.findall("table")):
         if t.get("category") == FLEX_CATEGORY:
             block.remove(t)
+            n += 1
+    return n
+
+
+# Rule 6b description cleaning (2026-11-03). A <description> is user-facing text:
+# a simplified what-the-table-does sentence only. It must not carry memory
+# addresses, derivation, pass markers, evidence/report references, checksum or
+# bench-validation (rule-10) process notes, or generator assertions ("asserted
+# against ROM bytes by this script"). Provenance lives in the label map
+# (data/labels/60E15120_N3J1E/defs_table_labels.json), TSVs and investigation
+# docs, not in the XML the end user reads. Inlined from the one-time 2026-11-03
+# cleanup pass so generation emits clean editor text directly.
+LEGACY_DTC_NAME_RE = re.compile(r"^DTC ([0-9A-Fa-f]{4}) Enable/Disable (#\d)")
+
+# bracketed blocks that are provenance: dated markers, JSON dumps, process keywords
+BRACKET_RE = re.compile(r"\[[^\]]*\]")
+BRACKET_BAD_RE = re.compile(r"20\d\d-\d\d-\d\d|\{|^\s*\[(?:analysis|review|repair|correction|dtc)\b", re.I)
+
+# sentences containing any of these are provenance, not what-the-table-does
+BAD_SENTENCE_RE = re.compile(
+    r"0x[0-9a-fA-F]+"                          # memory addresses
+    r"|\b(?=[0-9a-f]*\d)[0-9a-fA-F]{5,8}\b"     # bare hex ids with a digit (6a354, 0000e910)
+    r"|\bdescriptors?\b|\bdispatch\b|\bcorrespondence\b|\bevidence\b|\basserted\b"
+    r"|rom address|by this script|\bfun_\b|\bmova\b|\bpid\b|rule 10"
+    r"|bench|checksum|\bcvn\b|verified against|referencing function|lookup path"
+    r"|\.md\b|\.json\b|\.tsv\b|\breport\b|\bsee \b|g-rom|literal|extract"
+    r"|community definition|consult|not independently|address derived"
+    r"|code table|enable block|this rom|slot \d|correction:|\bbasis\b"
+    r"|storage|axis pointer|raw_|wrapper|20\d\d-\d\d-\d\d"
+    r"|upstream rename|prior name|puvar\d*|rpm-indexed|do not infer"
+    r"|axis labels? inferred|inferred from",
+    re.I)
+
+
+def _legacy_dtc_description(code, block_no):
+    """Short user-facing description for a legacy 'DTC xxxx Enable/Disable #N' name."""
+    return f"Enable/disable flag for diagnostic trouble code DTC {code} (block {block_no})."
+
+
+def clean_description(text, name=""):
+    """Return cleaned description text, or None if nothing user-facing remains.
+
+    Idempotent: already-clean text (incl. the relabel pass's label-map
+    descriptions and the P-code DTC descriptions from dtc_names) is returned
+    unchanged.
+    """
+    m = LEGACY_DTC_NAME_RE.match(name or "")
+    if m:
+        return _legacy_dtc_description(m.group(1).upper(), m.group(2))
+    if not text or not text.strip():
+        return None
+    t = BRACKET_RE.sub(lambda mo: " " if BRACKET_BAD_RE.search(mo.group(0)) else mo.group(0), text)
+    parts = re.split(r"\n+|(?<=[.!?])\s+", t)
+    keep = [p.strip() for p in parts if p.strip() and not BAD_SENTENCE_RE.search(p)]
+    out = re.sub(r"\s+", " ", " ".join(keep)).strip()
+    return out or None
+
+
+def clean_block(block):
+    """Clean every <description> under a <rom> block (rule 6b); returns the
+    number of descriptions changed or removed."""
+    n = 0
+    for t in block.iter("table"):
+        d = t.find("description")
+        if d is None:
+            continue
+        cleaned = clean_description(d.text or "", t.get("name") or "")
+        if cleaned is None:
+            if (d.text or "").strip():
+                t.remove(d)
+                n += 1
+        elif cleaned != d.text:
+            d.text = cleaned
             n += 1
     return n
 
@@ -367,8 +441,8 @@ def main():
         # evidence links, generator assertions) from every remaining description;
         # already-clean relabel descriptions pass through unchanged
         for b in chain:
-            clean_descriptions.clean_block(b)
-        clean_descriptions.clean_block(block)
+            clean_block(b)
+        clean_block(block)
         relabel_stats = {k: v for k, v in relabel_stats.items() if k != "details"}
         n_addr = validate_block(block, fwid)
         # emit standalone per-ROM def: base chain + rom block, with provenance comment
@@ -380,7 +454,7 @@ def main():
             f"    Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);\n"
             f"    table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).\n"
             f"    Stock-only def (2026-11-03): G-ROM_FLEX-only 'Flex Fuel' base tables stripped at generation (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444);\n"
-            f"    descriptions cleaned per AGENTS.md rule 6b (clean_descriptions.py) — no addresses/provenance in editor text.\n"
+            f"    descriptions cleaned per AGENTS.md rule 6b at generation — no addresses/provenance in editor text.\n"
             f"    see data/definitions/README.md 'Stock-only defs'.\n"
             f"    ECUFlash def: " + (f"submodules/RX8Defs/ECUFlash/60E0G500.xml @ {pinned} ({ecuflash_tables} tables)" if fwid == "60E0G500" else "none upstream") + " "
         )

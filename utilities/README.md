@@ -26,7 +26,9 @@ verifying HEE artifacts.
   Upstream originals live in `submodules/Mazda_RX8_PCM_ReverseEngineering/Utilities/`
   (pinned `492193b…`); the copies here are our reviewed/local versions and may differ.
 - `scripts/defs-merge/` — RomRaider definition merge/review scripts
-  (`merge_review.py`, `annotate_source.py`).
+  (`merge_review.py`, `build_table_labels.py`, `relabel.py`,
+  `relabel_merged_def.py`, `relabel_dtc_names.py`, `dtc_names.py`,
+  `extend_defs_all_roms.py`).
 - `tools/ghidra/scripts/` — Ghidra headless Java scripts (`SetupTarget.java`, …).
 - `tools/ghidra/processor/` — local **SH-2E** Sleigh processor config
   (`sh-2e.ldefs/.slaspec/.sla`); install into

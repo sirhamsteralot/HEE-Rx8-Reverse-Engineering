@@ -96,6 +96,14 @@ python3 /home/yannick/Documents/Tuning/reverse_engineered/Defs/merge_review.py
 python3 /home/yannick/Documents/Tuning/reverse_engineered/Defs/annotate_source.py
 ```
 
+(Historical record of the prior effort's original-workspace workflow. This repo's
+live copy of the merger is
+[`utilities/scripts/defs-merge/merge_review.py`](../../../../utilities/scripts/defs-merge/merge_review.py);
+the one-shot `annotate_source.py` was removed from this repo on 2026-11-03 as
+dead — its legacy layout paths no longer resolve, and its review comments
+(`[RX8DEFS 2026-09-30 …]` markers) are already baked into the promoted export,
+re-derivable from `function_findings.json` above if ever needed.)
+
 The merger intentionally fails on unexpected local structural changes. Its
 current inputs are the two local repositories and existing target source/ROM.
 The generated `validation.json` pins their hashes and commits.

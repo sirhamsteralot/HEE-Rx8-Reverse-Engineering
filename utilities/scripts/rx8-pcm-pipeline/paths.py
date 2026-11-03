@@ -24,7 +24,6 @@ workspace root). This repo promotes those into tracked folders:
   reference_project/, ghidra_project/ -> $GHIDRA_WORK (default input/ghidra-work;
                      Ghidra project DBs are NOT committed - AGENTS.md)
   Mazda_RX8_PCM_ReverseEngineering/..., RX8Defs/..., Rx8Man/... -> submodules/...
-  RX8Defs/Analysis/... (extend_definitions outputs) -> data/definitions/romraider/
 
 Scripts keep working unchanged: they do `from paths import b` (or `base`) and
 use `b/'decompiled/...'` / `b.parents[1]` exactly as before; this shim remaps
@@ -77,8 +76,6 @@ def remap(key):
     if first in DIR_MAP:
         rest = key[len(first):].lstrip("/").lstrip(os.sep)
         return DIR_MAP[first] / rest if rest else DIR_MAP[first]
-    if key.startswith("RX8Defs/Analysis"):
-        return ROOT / "data/definitions/romraider" / key[len("RX8Defs/"):]
     for p in REPO_PREFIXES:
         if key.startswith(p):
             return SUBM / key
