@@ -14,7 +14,14 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
   - `definitions/romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
 - `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
   `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
-  (ROM hash/IDs), `validation.json` records, export logs.
+  (ROM hash/IDs), `validation.json` records, export logs. Note: the `CAL_DTC_xxxx_…`
+  labels in `calibration_labels.tsv` keep the pre-2026-11-03 XML names in
+  `original_name` (provenance); the defs now name those tables with the standard
+  OBD code (`DTC P0420 Enable/Disable #1`) — mapping in [`dtc/pcodes.tsv`](dtc/pcodes.tsv).
+- `dtc/` — extracted DTC tables per ROM (`<rom-id>.tsv`, with the standard 5-char
+  `obd_code`), the defs audit (`defs_audit.tsv`), the code→OBD-code mapping with SAE
+  J2012 + Mazda workshop-manual descriptions (`pcodes.tsv`), and the parsed Mazda
+  manual DTC table (`mazda_dtc_table.tsv`); see [`dtc/README.md`](dtc/README.md).
 - `logs/` — real-car data logs (see [`logs/README.md`](logs/README.md)): `nr666p/` (VersaTuner),
   `rx8-666p/` (OBD-II PIDs). Golden fixtures for the emulator's virtual OBD port.
 - `tunes/` — third-party tune artifacts (see [`tunes/README.md`](tunes/README.md)): `.vtune`

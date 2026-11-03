@@ -995,5 +995,13 @@
     "new": "regenerated per ROM from the ROM's own DTC layout (code table + 3 enable blocks), via repair_dtc_tables() in utilities/scripts/defs-merge/extend_defs_all_roms.py; merged 60E15120 block gained #2/#3 bindings",
     "basis": "ROM bytes + literal-pool anchors per ROM (mov.l of enable-block base) + emulator dynamic checks; 0 mismatches after repair across all 9 per-rom defs (data/dtc/defs_audit.tsv regenerated)",
     "evidence": "docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5"
+  },
+  {
+    "table": "DTC xxxx Enable/Disable #1/#2/#3 (merged def, all active blocks; all per-ROM defs)",
+    "field": "name (+ description on 12 stale entries)",
+    "old": "DTC 0420 Enable/Disable #1 (raw 4-hex; 'C167' misread as chassis)",
+    "new": "DTC P0420 Enable/Disable #1 (standard 5-char OBD code; C167 -> U0167); short rule-6b descriptions with rule-10 checksum note in per-ROM defs",
+    "basis": "SAE J2012/ISO 15031-6 decode of the ROM BE-u16 mode-03 codes (data/dtc/pcodes.tsv, cross-checked vs tekseport/obd2-codes @ ddadc77e + foerbsnavi/OBDex @ 3f03bb0, 2026-11-03); post-rename audit 0 mismatches (data/dtc/defs_audit.tsv)",
+    "evidence": "docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5b; defs-merge/dtc_pcode_labels_2026-11-03.json"
   }
 ]
