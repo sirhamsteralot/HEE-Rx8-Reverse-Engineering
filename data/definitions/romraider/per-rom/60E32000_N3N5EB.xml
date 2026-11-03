@@ -4,6 +4,8 @@
     Block source: upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc. Base chain: RX8Base <- 60E32000.
     Generated 2026-11-01 by utilities/scripts/defs-merge/extend_defs_all_roms.py (ROADMAP D item 4);
     table relabel pass 2026-11-02 applied (relabel.py + defs_table_labels.json, cross-ROM structural match).
+    Stock-only def (2026-11-03): G-ROM_FLEX-only 'Flex Fuel' base tables stripped at generation (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444);
+    see data/definitions/README.md 'Stock-only defs'.
     ECUFlash def: none upstream -->
     <rom>
         <romid>
@@ -41,52 +43,6 @@
                 <scaling expression="x" to_byte="x" format="0.00" />
             </table>
         </table>
-        <table name="Table 3D - Timing Ethanol Adder - Leading" category="Flex Fuel" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18">
-            <scaling expression="(x * 0.5) - 50" to_byte="(x + 50.0) *2" format="0.00" />
-            <table name="Engine Load" type="X Axis" storagetype="float" endian="big">
-                <scaling units="g/rev" expression="x" to_byte="x" format="0.00" />
-            </table>
-            <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big">
-                <scaling units="RPM" expression="x" to_byte="x" format="0" />
-            </table>
-        </table>
-        <table name="Table 3D - Timing Ethanol Adder - Trailing" units="deg" category="Flex Fuel" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18">
-            <scaling expression="(x * 0.5) - 50" to_byte="(x + 50.0) * 2" format="0.00" />
-            <table name="Engine Load" type="X Axis" storagetype="float" endian="big">
-                <scaling units="g/rev" expression="x" to_byte="x" format="0.00" />
-            </table>
-            <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big">
-                <scaling units="RPM" expression="x" to_byte="x" format="0" />
-            </table>
-        </table>
-        <table name="Table 2D - Timing Multiplier" category="Flex Fuel" type="2D" storagetype="float" endian="big" sizey="12">
-            <scaling units="mult" expression="x" to_byte="x" format="0.00" />
-            <table name="Ethanol Content" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x">
-                <scaling units="%" />
-            </table>
-        </table>
-        <table name="Table 2D - Stoich Fuel Ratio" category="Flex Fuel" type="2D" storagetype="float" endian="big" sizey="12">
-            <scaling units="AFR" expression="1/x" to_byte="x^-1" format="0.00" />
-            <table name="Ethanol Content" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x">
-                <scaling units="%" format="0" />
-            </table>
-        </table>
-        <table name="Ethanol Content Sample Threshold - Engine Speed" category="Flex Fuel" type="1D" storagetype="float" endian="big" expression="x" to_byte="x" size="1">
-            <scaling units="RPM" />
-        </table>
-        <table name="Ethanol Content Sample Threshold - Engine Load" category="Flex Fuel" type="1D" storagetype="float" endian="big" expression="x" to_byte="x" size="1">
-            <scaling units="g/rev" />
-        </table>
-        <table name="Table 3D - Cranking Fuel Multiplier" category="Flex Fuel" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="13">
-            <scaling units="mult" expression="(x * 0.1) + 1" to_byte="(x - 1) / 0.1" format="0.00" />
-            <table name="Ethanol Conent" type="X Axis" storagetype="float" endian="big">
-                <scaling units="%" expression="x" to_byte="x" format="0" />
-            </table>
-            <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big">
-                <scaling units="degC" expression="x" to_byte="x" format="0" />
-            </table>
-        </table>
-        <table name="Ethanol Sensor CAN ID" category="Flex Fuel" type="1D" storagetype="uint16" endian="big" expression="x" to_byte="x" size="1" />
         <table name="Table 3D - UNKNOWN_68d30" category="Torque Control" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="8" sizey="19">
             <scaling expression="(x * 0.0078125) + 0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
             <table name="Value" type="X Axis" storagetype="float" endian="big">
@@ -3882,7 +3838,7 @@
         </table>
         <table name="Immobilizer Disable - With RKE Installed" storageaddress="0x37624" />
         <table name="Scalar - Stoich AFR (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x40F9C">
-            <description>Literal-pool float (stoich AFR 14.7), referenced by a mova in the fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). Editing changes fuel correction + AFR display; this address is inside the app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by 14.7/new_stoich; leave the maps alone (they are lambda multipliers). For varying ethanol blends use the flex stoich table (0x6C444 in G-ROM_FLEX), not a fixed scalar. See data/definitions/README.md 'Literal-pool scalars'. ROM address 0x40f9c, value 14.699999809265137 (asserted against ROM bytes by this script).</description>
+            <description>Literal-pool float (stoich AFR 14.7), referenced by a mova in the fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). Editing changes fuel correction + AFR display; this address is inside the app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by 14.7/new_stoich; leave the maps alone (they are lambda multipliers). Stock-only defs: no flex-fuel/ethanol-indexed stoich table exists in any stock ROM (0x6C444 is tbl_068f94 data there, not a stoich table) - this fixed scalar is the only stoich constant. See data/definitions/README.md 'Literal-pool scalars' and 'Stock-only defs'. ROM address 0x40f9c, value 14.699999809265137 (asserted against ROM bytes by this script).</description>
             <scaling units="AFR" expression="x" to_byte="x" format="0.0000" />
         </table>
         <table name="Scalar - Fuel Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x79D8C">
