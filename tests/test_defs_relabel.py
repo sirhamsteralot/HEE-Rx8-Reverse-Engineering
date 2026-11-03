@@ -61,6 +61,24 @@ def test_label_map_is_consistent_with_reference_extraction():
             assert "(candidate)" in entry["name"], entry["name"]
         assert entry.get("category"), f"{key}: no category (grouping)"
         assert entry.get("source"), f"{key}: no provenance source"
+        # rule 6b: every label carries a short editor-facing desc (no addresses)
+        desc = entry.get("desc") or ""
+        assert desc, f"{key}: no editor-facing desc"
+        assert "0x" not in desc.lower(), f"{key}: address in desc: {desc!r}"
+
+
+def assert_rule_6b_descriptions(marked, stem=""):
+    """AGENTS.md rule 6b: editor-facing descriptions are short and carry a
+    simplified what-the-table-does text only — no memory addresses, no
+    structural-match info, no derivation/prior-name/evidence dumps."""
+    for t in marked:
+        d = t.findtext("description") or ""
+        low = d.lower()
+        assert "0x" not in low, f"{stem}{t.get('name')}: address in description: {d!r}"
+        for frag in ("structural", "prior name", "descriptor", "added from", "data/maps",
+                     "evidence:", "source:"):
+            assert frag not in low, f"{stem}{t.get('name')}: {frag!r} in description: {d!r}"
+        assert len(d) <= 200, f"{stem}{t.get('name')}: description too long ({len(d)} chars)"
 
 
 def test_merged_def_relabel_applied():
@@ -69,10 +87,7 @@ def test_merged_def_relabel_applied():
     by_desc, by_data = relabel.maps_index(relabel.REFERENCE)
     marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
     assert len(marked) >= 150, f"only {len(marked)} relabeled entries in merged def"
-    # AGENTS.md rule 6b: editor-facing descriptions stay concise — no source/evidence dumps
-    for t in marked:
-        d = t.findtext("description") or ""
-        assert "Evidence:" not in d and "Source:" not in d, f"{t.get('name')}: evidence/source in description"
+    assert_rule_6b_descriptions(marked)
     # every high/candidate label with a descriptor present in the block is applied
     applied = {t.get("name") for t in marked}
     for desc, lab in labels.items():
@@ -81,17 +96,19 @@ def test_merged_def_relabel_applied():
         # may be name-collision-suffixed
         assert any(n.startswith(lab["name"]) for n in applied), \
             f"label for descriptor 0x{desc:x} ({lab['name']!r}) not applied"
-    # storageaddress of every marked table == data_addr of its descriptor
-    desc_of = {}
+    # storageaddress of every labeled marked table == data_addr of its descriptor
+    # (descriptor is recovered from the label map by table name — rule 6b keeps
+    # addresses out of the descriptions themselves)
+    name_to_desc = {lab["name"]: desc for desc, lab in labels.items()}
+    checked = 0
     for t in marked:
-        import re
-        m = re.search(r"descriptor 0x([0-9a-f]+)", t.findtext("description") or "")
-        if m:
-            desc_of[t.get("name")] = int(m.group(1), 16)
-    for name, desc in desc_of.items():
-        row = by_desc[desc]
-        t = next(x for x in marked if x.get("name") == name)
-        assert int(t.get("storageaddress"), 16) == row["data_i"], name
+        sa = t.get("storageaddress")
+        assert sa and int(sa, 16) in by_data, f"{t.get('name')}: sa {sa} not a maps data_addr"
+        base = t.get("name").split(" [0x")[0]  # strip name-collision suffix
+        if base in name_to_desc:
+            assert int(sa, 16) == by_desc[name_to_desc[base]]["data_i"], t.get("name")
+            checked += 1
+    assert checked >= 100, f"only {checked} labeled tables address-checked"
 
 
 def test_per_rom_defs_carry_labels_and_keep_geometry():
@@ -107,9 +124,7 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
             continue  # 60E32000_*: upstream block layout mismatch, documented
         marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
         assert len(marked) >= st["renamed"] + st["added"]
-        for t in marked:  # rule 6b: concise, no evidence/source
-            d = t.findtext("description") or ""
-            assert "Evidence:" not in d and "Source:" not in d, f"{stem}: {t.get('name')}"
+        assert_rule_6b_descriptions(marked, stem=f"{stem}: ")
         # every marked table's storageaddress is a real data address of this ROM
         _, by_data = relabel.maps_index(stem)
         for t in marked:

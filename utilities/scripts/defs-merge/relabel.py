@@ -5,20 +5,24 @@ Applies the curated table labels (data/labels/60E15120_N3J1E/defs_table_labels.j
 built by build_table_labels.py) to a RomRaider <rom> block:
 
   * tables whose lookup descriptor has a label get the new editor name, the
-    subsystem category (the RomRaider grouping), and a dated <description>
-    addendum carrying the evidence + source report; the prior name is kept in
-    the description for provenance. Renamed entries are made self-contained
-    (type/scaling/axes copied from the base-chain template of the same old
-    name) so RomRaider's name-based inheritance keeps working.
+    subsystem category (the RomRaider grouping), and a short <description>:
+    the dated marker + a simplified description of what the table does, only
+    when accurately known (candidate labels get a "not fully verified" note)
+    — AGENTS.md rule 6b: no addresses, no structural-match or derivation
+    details in editor-facing descriptions; provenance stays in
+    defs_table_labels.json + the investigation docs. Renamed entries are made
+    self-contained (type/scaling/axes copied from the base-chain template of
+    the same old name) so RomRaider's name-based inheritance keeps working.
   * extracted tables (data/maps/<rom>/index.tsv) that are missing from the
     block are ADDED as self-contained entries (geometry + scaling from the
     ROM descriptor bytes), labeled when the reference ROM has a label.
 
 Cross-ROM: for non-reference ROMs the reference descriptor is mapped to the
 ROM's own descriptor by the same structural key diff_maps.py uses
-(dimension, counts, type_code, axis values) over data/maps/<rom>/tables/*.json;
-the applied description records that provenance (label ladder: structural
-match, not byte equality of cells).
+(dimension, counts, type_code, axis values) over data/maps/<rom>/tables/*.json
+(label ladder: structural match, not byte equality of cells). The match
+provenance is recorded in the stats/details, not in the editor-facing
+description.
 
 Nothing here changes a storageaddress, axis address, scaling or ROM byte; only
 names/categories/descriptions, plus whole-table additions for previously
@@ -186,24 +190,29 @@ def _set_axes(el, row):
             child.set("storageaddress", _fmt_addr(ay if ay is not None else (a or 0)))
 
 
-def _append_desc(el, text):
+def _set_desc(el, text):
     d = el.find("description")
     if d is None:
         d = E.SubElement(el, "description")
-    d.text = (d.text or "") + "\n" + text if d.text else text
+    d.text = text
 
 
-def _label_desc(label, desc, old_name, rom_id, rom_desc):
-    # Concise editor-facing description (AGENTS.md rule 6b): no source/evidence
-    # dumps here — provenance lives in defs_table_labels.json + the
-    # investigation doc. Keep: marker, semantics note, descriptor address,
-    # prior name.
-    prov = (f"descriptor 0x{desc:x}" if rom_id == REFERENCE else
-            f"structural match to {REFERENCE} descriptor 0x{desc:x}; this ROM descriptor 0x{rom_desc:x}")
-    parts = [f"[{MARKER}]", label.get("note", "").strip() or label["name"], prov]
-    if old_name:
-        parts.append(f"prior name '{old_name}'")
-    return " ".join(p for p in parts if p)
+def _label_desc(label):
+    """Short editor-facing description (AGENTS.md rule 6b): the dated marker +
+    a simplified description of what the table does — only when accurately
+    known. No memory addresses, no structural-match info, no derivation or
+    prior-name dumps; provenance lives in defs_table_labels.json + the
+    investigation docs (rule-10 safety warnings excepted)."""
+    desc = (label.get("desc") or "").strip()
+    if not desc:
+        if label.get("confidence") == "candidate":
+            desc = "Purpose not fully verified (candidate label)."
+        else:
+            desc = label["name"]
+    return f"[{MARKER}] {desc}"
+
+
+UNLABELED_DESC = f"[{MARKER}] Unlabeled lookup table (no verified purpose)."
 
 
 def _scaling_from_rom(rom, row):
@@ -272,7 +281,9 @@ def apply_to_block(block, blks, rom_id, stats=None):
 
     blks: all <rom> elements of the same file (for base-chain template lookup),
     keyed by lowercase xmlid — see extend_defs_all_roms.blocks().
-    Returns stats dict. Idempotent: entries already carrying MARKER are skipped.
+    Returns stats dict. Idempotent: entries already carrying MARKER keep their
+    name/category/addresses and only get their description re-normalized to the
+    short form (rule 6b).
     """
     labels = load_labels()
     by_desc, by_data = maps_index(rom_id)
@@ -280,12 +291,10 @@ def apply_to_block(block, blks, rom_id, stats=None):
         row["_rom"] = rom_id
     rom = rom_bytes(rom_id)
     if rom_id == REFERENCE:
-        desc_map = {d: d for d in by_desc}          # own descriptor
         label_of = {d: labels.get(d) for d in by_desc}  # direct
     else:
         sm = structural_matches().get(rom_id, {})
-        desc_map = sm                                  # rom_desc -> ref_desc
-        label_of = {rd: labels.get(ref) for rd, ref in sm.items()}
+        label_of = {rd: labels.get(ref) for rd, ref in sm.items()}  # rom_desc -> label
 
     st = {"renamed": 0, "regrouped": 0, "annotated": 0, "added": 0, "skipped_marker": 0,
           "no_label": 0, "details": []}
@@ -333,6 +342,13 @@ def apply_to_block(block, blks, rom_id, stats=None):
             continue
         label = label_of.get(desc)
         if MARKER in d:
+            # already relabeled: keep name/category/addresses, re-normalize the
+            # description to the short form (rule 6b: no addresses/derivation)
+            new_el = copy.deepcopy(t)
+            _set_desc(new_el, _label_desc(label) if label else UNLABELED_DESC)
+            idx = list(block).index(t)
+            block.remove(t)
+            block.insert(idx, new_el)
             st["skipped_marker"] += 1
             continue
         old_name = t.get("name")
@@ -351,17 +367,12 @@ def apply_to_block(block, blks, rom_id, stats=None):
                 new_el.set("category", label["category"])
             new_el.set("storageaddress", _fmt_addr(row["data_i"]))
             _set_axes(new_el, row)
-            # keep the existing 2026-09-18 description, append ours
-            old_desc = t.findtext("description")
-            new_el_desc = new_el.find("description")
-            if old_desc:
-                if new_el_desc is None:
-                    new_el_desc = E.SubElement(new_el, "description")
-                new_el_desc.text = old_desc + "\n" + (new_el_desc.text or "")
-            _append_desc(new_el, _label_desc(label, desc_map.get(desc, desc), old_name, rom_id, desc))
+            # short editor-facing description only (rule 6b) — replaces any
+            # pre-existing analysis text on this entry
+            _set_desc(new_el, _label_desc(label))
         else:
             new_el = _self_contained(row, rom, new_name, label.get("category") or "Unknown",
-                                     _label_desc(label, desc_map.get(desc, desc), old_name, rom_id, desc))
+                                     _label_desc(label))
         idx = list(block).index(t)
         block.remove(t)
         block.insert(idx, new_el)
@@ -393,8 +404,6 @@ def apply_to_block(block, blks, rom_id, stats=None):
         if desc in present_desc or row["data_i"] in present_data:
             continue
         label = label_of.get(desc)
-        if label is not None and MARKER in json.dumps(label):
-            pass
         if label is not None:
             name = _unique_name(label["name"], desc, existing_names)
             cat = label.get("category") or "Unknown"
@@ -402,11 +411,9 @@ def apply_to_block(block, blks, rom_id, stats=None):
             dim = int(row["dimension"])
             name = f"Table {dim}D - 0x{desc:x} (unlabeled)"
             cat = f"Unknown {dim}D"
-        desc_text = (f"[{MARKER}] added from data/maps/{rom_id} extraction: descriptor 0x{desc:x}, "
-                     f"data 0x{row['data_i']:x}, dim {row['dimension']}, count {row['count']}, "
-                     f"type {row['type']}, scaled={row['scaled']}"
-                     + (f"; {_label_desc(label, desc_map.get(desc, desc), None, rom_id, desc)}" if label
-                        else "; unlabeled"))
+        # short editor-facing description only (rule 6b); the extraction
+        # provenance (descriptor/data/dim/count/type) stays in the stats details
+        desc_text = _label_desc(label) if label else UNLABELED_DESC
         el = _self_contained(row, rom, name, cat, desc_text)
         block.append(el)
         existing_names.add(name)
