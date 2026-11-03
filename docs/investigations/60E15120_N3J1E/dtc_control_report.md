@@ -277,6 +277,36 @@ real enable#1 0x7c9fc / 0x7e74c; 60E0FB00 had 98 and 60E1D400 112 misaligned ent
 0 mismatches). Repair record: `defs-merge/definition_repairs.json` (entry 83);
 pre-repair detail: `reviews/dtc_control/defs_audit_detail.json`.
 
+#### §5b DTC P-code labels in the defs (2026-11-03)
+
+The def table names now carry the standard 5-char OBD code:
+`DTC 0420 Enable/Disable #1` → `DTC P0420 Enable/Disable #1` (catalyst system
+efficiency below threshold, bank 1). **Correspondence verified:** the ROM code
+table stores exactly the two OBD mode-03 response bytes (BE u16) per slot, and
+SAE J2012 / ISO 15031-6 decodes them as byte0 bits 7-6 → letter (00 P, 01 C,
+10 B, 11 U), bits 5-4 → second digit (0/2 = SAE generic, 1/3 = manufacturer),
+low 12 bits → last 3 digits — so `0x0420` = P0420, `0x2504` = P2504, and the
+dynamically observed slot-9 emission `01 01` = P0101. All 134 codes used across
+the 11 ROMs were mapped in [`data/dtc/pcodes.tsv`](../../../data/dtc/pcodes.tsv)
+against two independent SAE J2012 lists (tekseport/obd2-codes @ `ddadc77e`,
+foerbsnavi/OBDex @ `3f03bb0`, cross-checked 2026-11-03): every `0x0xxx` code is a
+generic **P0** code and every `0x2xxx` a generic **P2** code with a standard
+meaning; the six `0x1xxx` codes (1260/1574/1577/1686-1688) are **P1
+manufacturer-specific** (no SAE text — labeled as such, not guessed); the five
+`0xCxxx` codes are **U0 network** codes (C073→U0073 CAN bus A off, C101→U0101
+lost comm TCM, C121→U0121 ABS, C155→U0155 instrument cluster, C167→U0167
+immobilizer) — the old "Cxxx" labels misread the high hex nibble (0xC0>>6 = U,
+not chassis). Applied by `utilities/scripts/defs-merge/relabel_dtc_names.py`
+(merged def, all active blocks, 4027 tables renamed + 23 P0300 duplicate-site
+suffixes + 12 stale descriptions replaced, surgical splice, idempotent) and by
+`repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
+descriptions with the rule-10 checksum-range safety note). Post-rename audit:
+still **0 mismatches** across all 9 per-ROM defs × #1/#2/#3
+([`data/dtc/defs_audit.tsv`](../../../data/dtc/defs_audit.tsv)); stats:
+[`defs-merge/dtc_pcode_labels_2026-11-03.json`](defs-merge/dtc_pcode_labels_2026-11-03.json);
+tests: `tests/test_dtc_pcode_labels.py` (13 passed). Repair record:
+`defs-merge/definition_repairs.json` (entry 84).
+
 ## 6. Files
 
 - `docs/investigations/60E15120_N3J1E/dtc_control_report.md` — this report.

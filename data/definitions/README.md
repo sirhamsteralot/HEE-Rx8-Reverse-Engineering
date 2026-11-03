@@ -136,6 +136,11 @@ Evidence: `coverage.json` `dedupe_d8` (regenerate to re-verify).
 
 - `storageaddress="0x000000"` entries are upstream placeholders (unmapped
   DTC-enable bytes), not real addresses.
+- DTC enable/disable tables are named with the standard 5-char OBD code since
+  2026-11-03: `DTC P0420 Enable/Disable #1` (was `DTC 0420 ...`; `C167` was a
+  high-nibble misread and is now `DTC U0167 ...` — 0xC0>>6 = U per SAE J2012).
+  Decode + SAE descriptions: [`data/dtc/pcodes.tsv`](../dtc/pcodes.tsv);
+  details in [dtc_control_report.md §5b](../../docs/investigations/60E15120_N3J1E/dtc_control_report.md).
 - ROM identification is by the 8-byte fw id at 0x2000, asserted per ROM by the
   generator script; cal-id strings at 0x6c000 exist only in some ROMs
   (register item D1/D7).

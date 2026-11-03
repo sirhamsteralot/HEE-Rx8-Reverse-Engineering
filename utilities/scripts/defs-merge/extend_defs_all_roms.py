@@ -27,6 +27,7 @@ import xml.etree.ElementTree as E
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import relabel  # 2026-11-02 table relabel pass (shared with relabel_merged_def.py)
+import dtc_names  # 2026-11-03 DTC P-code table names (data/dtc/pcodes.tsv)
 
 DEFS = ROOT / "data" / "definitions"
 SUB_RX8DEFS = ROOT / "submodules" / "RX8Defs"
@@ -173,7 +174,8 @@ def inject_scalar_tables(block, rom_rec):
 
 
 DTC_PREFIX = b"\x03\x00\x03\x01\x03\x02\x03\x00"  # P0300,P0301,P0302 specials + slot0 P0300
-DTC_NAME_RE = re.compile(r"^DTC ([0-9A-Fa-f]{4}) Enable/Disable (#\d)( \[additional site 0x[0-9A-Fa-f]+\])?$")
+# matches legacy "DTC 0420 ..." and relabeled "DTC P0420 ..." names alike
+DTC_NAME_RE = dtc_names.DTC_NAME_RE
 
 
 def dtc_layout(rom):
@@ -211,43 +213,38 @@ def repair_dtc_tables(block, rom_rec):
     (filter args 1/2 in 0x61450/0x615c6 read blocks #1/#2; #3 is the bitmask read by
     0x5f9b0). Fixes the per-ROM defs that pointed at the code table or were shifted
     (60E0E700 +3, 60E1B900/60E32000_N3M5E, 60E0FB00/60E1D400) and binds #2/#3 where
-    only #1 was bound (60E15120, 60E0G500). Evidence: dtc_control_report.md §5."""
+    only #1 was bound (60E15120, 60E0G500). Names carry the standard 5-char OBD code
+    ("DTC P0420 Enable/Disable #1", decode in dtc_names.py; mapping data/dtc/pcodes.tsv).
+    Evidence: dtc_control_report.md §5."""
     rom = (ROOT / rom_rec["file"]).read_bytes()
     code_start, nslots, e1, codes = dtc_layout(rom)
-    # drop existing address-bearing DTC entries in this block, keep their descriptions
-    desc = {}
+    # drop existing address-bearing DTC entries in this block (either naming
+    # form); they are re-added below from the ROM layout with P-code names
     for t in list(block.findall("table")):
-        if DTC_NAME_RE.match(t.get("name") or "") and t.get("storageaddress"):
-            d = t.find("description")
-            if d is not None and d.text:
-                desc[t.get("name")] = d.text
+        if dtc_names.parse_dtc_name(t.get("name")) and t.get("storageaddress"):
             block.remove(t)
     added = 0
     seen = {}
     for slot, code in enumerate(codes):
         if code == 0xFFFF:
             continue
-        cname = f"{code:04X}"
         for n in (1, 2, 3):
             addr = e1 + (n - 1) * nslots + slot
-            key = (cname, n)
+            key = (code, n)
             seen[key] = seen.get(key, 0) + 1
-            if seen[key] == 1:
-                name = f"DTC {cname} Enable/Disable #{n}"
-            else:  # duplicate code (P0300 occupies slots 0 and 1): distinct editor name
-                name = f"DTC {cname} Enable/Disable #{n} [additional site 0x{addr:X}]"
+            # duplicate code (P0300 occupies slots 0 and 1): distinct editor name
+            dup = addr if seen[key] > 1 else None
+            name = dtc_names.dtc_table_name(code, f"#{n}", dup)
             t = E.SubElement(block, "table", {
                 "name": name, "storageaddress": f"0x{addr:X}",
                 "category": "DTCs", "type": "1D", "storagetype": "uint8",
                 "endian": "big", "expression": "x", "to_byte": "x", "size": "1",
             })
+            # short editor-facing description (AGENTS.md rule 6b/6c): DTC meaning
+            # + what this switch byte does + checksum safety note; address/slot
+            # provenance stays in data/dtc/<rom>.tsv and dtc_control_report.md §5
             d = E.SubElement(t, "description")
-            d.text = (f"[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout "
-                      f"(code table 0x{code_start:X} + 2*slot, enable blocks 0x{e1:X} / "
-                      f"0x{e1 + nslots:X} / 0x{e1 + 2 * nslots:X}); slot {slot} = code {cname}. "
-                      f"Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.")
-            if name in desc:
-                d.text = desc[name] + "\n" + d.text
+            d.text = dtc_names.dtc_description(code, f"#{n}")
             added += 1
     return {
         "dtc_code_table": f"0x{code_start:X}",
