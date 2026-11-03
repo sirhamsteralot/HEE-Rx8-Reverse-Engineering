@@ -66,10 +66,9 @@ scalars) into every per-ROM def that has a block:
 ROM bytes** (f32 decode == expected value) at generation time, and re-checked by
 `tests/test_extract_scalars.py::test_per_rom_defs_expose_scalars`. Editing these
 in RomRaider/VersaTuner changes the λ→AFR conversion and the base load→fuel
-scale respectively. Caveats recorded in each entry's `<description>`: both
-addresses are inside the app-flash checksum range (ROADMAP D3, 0x2000–0x7ffff),
-so a changed value needs the checksum/CVN path handled, and nothing may be
-flashed without bench validation (AGENTS.md rule 10). ROMs without an upstream
+scale respectively. Caveat: both addresses are inside the app-flash checksum
+range (ROADMAP D3, 0x2000–0x7ffff), so a changed value needs the checksum/CVN
+path handled. ROMs without an upstream
 block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries.
 ECUFlash defs remain upstream-only for 60E0G500 (documented gap).
 
@@ -88,8 +87,8 @@ Leave the maps (`tbl_06ac88` base fuel map, `tbl_069e9c` open-loop target) alone
 they command λ multipliers, which are fuel-agnostic, and closed loop self-corrects
 via the O2 sensor in λ regardless. For **varying** ethanol blends, don't hardcode:
 use the flex stoich table (G-ROM_FLEX "Table 2D - Stoich Fuel Ratio" @0x6C444,
-ethanol-indexed). Both scalar addresses are inside the D3 checksum range —
-handle checksum/CVN and bench-validate before flashing (AGENTS.md rule 10).
+ethanol-indexed). Both scalar addresses are inside the D3 checksum range, so a
+changed value needs the checksum/CVN path handled.
 
 ## Relabel / regroup pass (2026-11-02, ROADMAP D item 5)
 

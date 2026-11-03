@@ -283,8 +283,9 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
 - `DTC 0420 Enable/Disable #1` → `DTC P0420 Enable/Disable #1` in all active blocks of
   `rx8defs-merged-60E15120.xml` (surgical, `relabel_dtc_names.py`: 4027 renamed, 23 P0300
   duplicate-site suffixes, idempotent, addresses unchanged) and in all 9 per-ROM defs at
-  generation (`repair_dtc_tables()` emits the P-code names + short rule-6b descriptions
-  with the rule-10 checksum-range note). Post-rename audit still 0 mismatches
+  generation (`repair_dtc_tables()` emits the P-code names + short rule-6b descriptions;
+  the rule-10 checksum-range note was dropped from them per updated rule 6b).
+  Post-rename audit still 0 mismatches
   (`data/dtc/defs_audit.tsv`); tests `tests/test_dtc_pcode_labels.py` (14 passed).
 - Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf` (DTC TABLE
   → `data/dtc/mazda_dtc_table.tsv`, 118 codes): all manual codes exist in the ROMs
