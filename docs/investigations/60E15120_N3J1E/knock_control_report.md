@@ -1,8 +1,6 @@
 # Knock control report — 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E)
 
-Date: 2026-10-29 (revised same day after an independent sceptical re-check
-against the ROM bytes and both def sets; corrections listed in
-[`reviews/knock_control/REVIEW_NOTES.md`](reviews/knock_control/REVIEW_NOTES.md)). Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
@@ -99,7 +97,7 @@ firmware-inferred — this ROM's def block has no DTC 0023/0024 tables);
 unhealthy sensors both block knock control and force the fail-safe retard
 table. Diagnostics: RomRaider PID 0x1746 "Knock Retard" (handler 0x5707a
 `diag22_pid1746_knock_retard_deg`, uint8 × 0.3515625° — scale constant 0x3eb40000
-re-verified in the handler's literal pool 2026-10-31) and OBD PID 0x0003 "OL Status"
+verified in the handler's literal pool) and OBD PID 0x0003 "OL Status"
 (handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl`). Note
 the 0x1746 encoding (clamp(trunc(x/0.3515625 + 0.5), 0, 255)) spans
 [0, +89.7]°, so with knock_retard clamped to [−10, 0] the PID always reports
@@ -122,10 +120,10 @@ error.
 
 All five retard tables (0x6af68/0x6af7c/0x6af90/0x6afa4/0x6afb8) are u8-cell 2-D
 descriptors carrying multiplier **0.5 at descriptor+12** and offset **−64.0 at
-descriptor+16** (ROM bytes re-verified 2026-11-02): raw 108 → −10°, 118 → −5°,
+descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 128 → 0°.
 
-## 4. Labeling applied (2026-10-29 pass)
+## 4. Labeling applied
 
 - **39 functions** named in `source_review/accepted_function_aliases.tsv`
   (33 high confidence; 6 medium → `candidate_` prefix: `candidate_timing_retard_fast_task`,
@@ -197,7 +195,7 @@ calibration area 0x0006c000–0x0007ffff.
 
 | Address | Name | Role |
 |---|---|---|
-| 0x0000803e | `crank_isr_compute_rpm` (ISR; renamed 2026-10-31 from `ref_INT_ATU101_IMI10AG` — see §10) | crank period sum → raw RPM 0xffff9f80 |
+| 0x0000803e | `crank_isr_compute_rpm` (ISR; see §10) | crank period sum → raw RPM 0xffff9f80 |
 | 0x0000c276 | `knock_reference_adc_read` | reference-channel ADC → 0xffffa326; called from 0xc8dc and 0x5a4c |
 | 0x0000c290 | `ref_knockSensorADCFault` | knock ref ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c → fault status |
 | 0x0000c3ce | `knock_voltage_sample` | knock ADC sample/filter (200–2000 RPM window), 10k flag; called from 0x661e (task[6]) |
@@ -252,7 +250,7 @@ calibration area 0x0006c000–0x0007ffff.
 |---|---|
 | 0x00004998–0x00004ab7 | task table: 18 × 16-byte records {entry, mask, param, stack}; stacks 0xffff7410–0xffff7498 |
 | 0x00004ab8 | additional record {0x64e8, 0x02000000, 0x04ffffff, 0x00000001} + 0xffff76xx pairs; dispatch unresolved |
-| 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c` (99 × 12 bytes, all labeled 2026-10-31); PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg`, PID 0x0003 → handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl` — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
+| 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c` (99 × 12 bytes, all labeled); PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg`, PID 0x0003 → handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl` — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
 | 0x0006c046 | calibration ID `N3ZHE` |
 | 0x0000d74c / 0x0000d750 | scheduler pointer table / timing records (used by 0x5f1c) |
 | 0x00009630 | `ref_osTaskScheduler` (scheduler; RAM control blocks 0xffff9304) |
@@ -393,49 +391,45 @@ unproven hypotheses. Unresolved: the blend weights b11c/b118, the variant/mode
 selectors (b534, bc3d, a415, cd5c, …), the task-record dispatch at ROM 0x4ab8
 (entry 0x64e8), the exact semantics of the two "safe mode" flags
 (b12d/cd60), and the idle/base terms 0xffffa5e0/a5e4/a5dc (read by
-0x125bc/0x125f6/0x306e8 with no identified writer in the export). The saved Ghidra database predates these annotations; the
-canonical C carries the newest names. The ROM was not modified.
+0x125bc/0x125f6/0x306e8 with no identified writer in the export). The saved Ghidra
+database does not carry these annotations; the canonical C carries the accepted
+names. The ROM was not modified.
 
 ---
 
-## 10. Update — 2026-10-30 (later passes, this file left as the 2026-10-29 record)
+## 10. Related subsystems
 
-2026-10-31 addendum: 0x803e was renamed `crank_isr_compute_rpm` (emulator-verified CMI10B
-handler, IVT 0x2c8 at VBR 0x7fc50) in the 2026-10-31 OS/CAN/IVT labeling pass
-([`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)); the memory-map row above carries the new name.
-
-Subsequent passes built on this review: the **fueling chain** is now labeled
+The **fueling chain** is labeled
 ([`fueling_control_report.md`](fueling_control_report.md), `reviews/fueling/`) and resolves this report's open
 item on blend weights b11c/b118 (producer `blend_weight_update` 0x200c6); the
 **intake solenoids** are mapped to GPIO/package pins ([`intake_solenoids_report.md`](intake_solenoids_report.md),
 `reviews/intake_solenoids/`); the **injector channels** are mapped to ATU-II
 8A-8F → TO8A-F → SH7055F pins 195/197-201 with rotor blocks {0,1,2}/{3,4,5}
-([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)); the supplied FSM pinout
-(`mazda-rx-8-pcm-pinout-series-1.pdf` v3) confirmed terminal functions and wire
+([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)); the FSM pinout
+([`mazda-rx-8-pcm-pinout-series-1.md`](../../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)) confirms terminal functions and wire
 colours (still no chip-pin data — that hop stays board-level unresolved). All
-labels were re-verified against the raw ROM (`reviews/*/README.md` binary-level
-sections), and `scripts/validate_reports.py` now validates every root report's
+labels are verified against the raw ROM (`reviews/*/README.md` binary-level
+sections), and `scripts/validate_reports.py` validates every root report's
 address tables. Patchers for VDI/SSV RPM windows and limiter behavior live in
-`Mazda_RX8_PCM_ReverseEngineering/Utilities/` (stock ROMs untouched; see
-[`reviews/limiter/README.md`](reviews/limiter/README.md)). This knock report itself is unchanged and still
-accurate for its date.
+`utilities/scripts/patchers/` (stock ROMs untouched; see
+[`reviews/limiter/README.md`](reviews/limiter/README.md)).
 
 
 ---
 
-## 11. Update — 2026-11-02 (rpm-path attribution corrected)
+## 11. RPM path attribution
 
-The "ISR 0x803e" references in §2 and the memory map above were re-checked: 0x803e has no
-callgraph callers; its only ROM reference is the default (VBR=0) IVT slot 0x2c8 (pre-VBR
-entry, superseded after VBR=0x7fc50 at 0xd206). The
+0x803e has no
+callgraph callers; its only ROM reference is the default (VBR=0) IVT slot 0x2c8 (the
+pre-VBR entry, inactive once VBR=0x7fc50 is set at 0xd206). The
 live path is the CMI10B tick chain 0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle`
 0x7fcc, which writes `crank_period_accumulator_ffff9f88` and
 `engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(0xffff9fd0[6]). Details and emulator
 evidence: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md) §7/§9.
 
-## 12. Update — 2026-11-02 (knock reimplementation, ROADMAP E item 1)
+## 12. Knock reimplementation (ROADMAP E item 1)
 
-2026-11-02 addendum (ROADMAP E item 1): the retard state machine is now
+The retard state machine is
 reimplemented as host-testable C —
 [`reverse-engineered/reimplementation/rx8_knock.c`](../../../reverse-engineered/reimplementation/rx8_knock.c)
 covers 0x13a60 (attack/edge/hold target selection + clamp) and 0x13b40 (slow
@@ -449,8 +443,8 @@ dynamically in the emulator against a float32 port of the C
 clamping) — the ROM's own 0x2068 lookups fed the port, so the comparison covers
 the decision logic, not the interpolation.
 
-Binary-level evidence gathered during that re-verification (disassembly +
-ROM literal pools, 2026-11-02):
+Binary-level evidence (disassembly +
+ROM literal pools):
 
 - **Attack step is exactly −1.0°/cycle**: 0x13a60's attack path does `fsub`
   with fr3 loaded from ROM **0x795d8** when 0xffffc05d==0 and from **0x795e0**

@@ -25,7 +25,7 @@ Other dimensional clues are deliberately provisional: 5/65536 in the MAF sensor 
 
 - **0x231c — rx8_mul_s32_shift16_saturate:** signed 64-bit product, arithmetic shift by 16, signed 32-bit saturation. This is consistent with Q16.16 multiplication when the operands use that format. It differs from ordinary multiplication and GCC's SH `__mulsi3` implementation. Compared against the [GCC SH runtime source](https://github.com/gcc-mirror/gcc/blob/master/libgcc/config/sh/lib1funcs.S) and [runtime descriptions](https://gcc.gnu.org/onlinedocs/gcc-9.1.0/gccint/Integer-library-routines.html); no library-origin match is claimed.
 - **0x2490 / 0x24d0 — unsigned affine encoders:** application scaling, rounding and saturation, rather than generic casts or `roundf`.
-- **0x2440 — outside-tolerance test:** checks strict lower/upper inequalities; its old divide-protection name was misleading.
+- **0x2440 — outside-tolerance test:** checks strict lower/upper inequalities; it is not a divide-protection helper.
 - **0x2420 / 0x2430 — value/complement packing:** redundancy encoding, not endian conversion or CRC.
 - **0x42b0 — forward byte copy:** R0=count, R1=destination, R2=source. It does not return the original destination in R0 and does not select a backwards copy path. The behavior resembles a runtime copy primitive, but is not the standard `memcpy` interface or an overlap-safe `memmove`. Compared with [newlib's memory-function contracts](https://sourceware.org/newlib/libc.html).
 - **0x6689e — specialized insertion sort:** ascending uint16 key, byte payload, four-byte stride. No general comparator and no proven `qsort` origin.

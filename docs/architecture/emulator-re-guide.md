@@ -6,7 +6,7 @@ the emulated PCM, run it, and compare the emulated outputs (RAM watchpoints,
 MMIO writes, UDS responses) against what the real car logged. Everything here
 runs offline; no hardware is touched.
 
-Status 2026-10-31: implemented and tested (38/38 in `python -m pytest tests/`).
+Status: implemented and tested (38/38 in `python -m pytest tests/`).
 Companion docs: [`emulator-ui.md`](emulator-ui.md) (browser UI), [`emulated-obd.md`](emulated-obd.md) (virtual OBD
 port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
 
@@ -119,7 +119,7 @@ instructions.
   the ROM's own entry points (profile `uds` section: CAN RX poll 0x11d88, UDS
   entry 0x680a0, dispatcher 0x3c2a) because the OS tick is not yet modeled (E6).
   Log request/response pairs to `tests/fixtures/obd/` for golden comparison.
-  Since 2026-10-31 the RX side is fully autonomous: `can.inject(0x7e0, frame)`
+  The RX side is fully autonomous: `can.inject(0x7e0, frame)`
   raises the CAN RX interrupt (IVT offset 0x378), and a plain `emu.run` runs the
   ROM's CAN RX poll (0x11d88) + scheduler (0x9630), moving the frame into the UDS
   buffer 0xffffddc8 with no manual entry-point calls (see
@@ -158,7 +158,7 @@ Note the dispatcher (0x3c2a) never rts — use `stop_at=(0x3DAC,)`.
 - `--trace FILE` writes `cycle pc` per instruction; diff two traces with
   `python utilities/scripts/emu/compare_traces.py a b [--max N]` (reports first
   divergence). Golden boot trace: `tests/fixtures/boot-60E15120_N3J1E-200k.trace`
-  (regenerated 2026-10-31; self-check MATCH). **Renesas Simulator Debugger
+  (self-check MATCH). **Renesas Simulator Debugger
   cross-check is still pending** — the licensed tool isn't installed on the
   current machine; when available, follow `utilities/scripts/emu/README.md`
   §cross-check workflow and record the result in the investigation doc.
@@ -205,4 +205,4 @@ end to end there in the emulator.
 - Pipeline validators run from the repo root (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py`): `validate_export.py`,
   `validate_reports.py`, `verify_readability.py`, `verify_math_units.py` —
-  all PASS as of 2026-10-31.
+  all PASS.

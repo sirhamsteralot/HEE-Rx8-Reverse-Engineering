@@ -1,8 +1,7 @@
 # ROADMAP — HEE RX-8 PCM reverse engineering
 
 Plan for reverse engineering and labeling the Mazda RX-8 (Series 1) PCM firmware
-(Renesas SH7055 / SH-2E, big-endian, 512 KiB flash, 32 KiB RAM). Statuses as of
-2026-11-02.
+(Renesas SH7055 / SH-2E, big-endian, 512 KiB flash, 32 KiB RAM).
 
 **How to read this file.** §Status at a glance is the summary; §Completed is
 reference only — collapsed summaries with pointers to the detailed docs; §Open work
@@ -19,20 +18,20 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 
 | Group | Phase | Scope | Status |
 |-------|-------|-------|--------|
-| A | P3 | Calibration extraction → `data/maps/` | DONE 2026-10-31 |
-| B | P1 residual | Emulator fidelity + Renesas cross-check | DONE 2026-10-31, except E4/E6 partials (register) |
-| C | P2 residual | Static labeling & gap closure, items 1–6 | DONE 2026-10-31 |
-| D | P2/P5 | Cross-ROM propagation | items 1–6 DONE 2026-10-31/2026-11-03 |
+| A | P3 | Calibration extraction → `data/maps/` | DONE |
+| B | P1 residual | Emulator fidelity + Renesas cross-check | DONE, except E4/E6 partials (register) |
+| C | P2 residual | Static labeling & gap closure, items 1–6 | DONE |
+| D | P2/P5 | Cross-ROM propagation | items 1–6 DONE |
 | E | P4 | Reimplementation coverage | open (dependency C is done) |
 | F | P6 | Toward hardware | open, **GATED** (AGENTS.md rule 10) |
 
-Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (items 1–6: item 4 = per-ROM defs + D8, 2026-11-01; item 5 = defs relabel/regroup pass, 2026-11-02; item 6 = DTC P-code labels, 2026-11-03).
+Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D is done (items 1–6: per-ROM defs + D8, defs relabel/regroup pass, DTC P-code labels).
 
 ---
 
 ## Completed (reference only)
 
-### Baseline (prior effort)
+### Baseline
 
 - Full static export of `60E15120_N3J1E.bin`: 3,355 functions decompiled, 0
   failures, 154 warnings (`reverse-engineered/decompiled/60E15120_N3J1E/`).
@@ -46,7 +45,7 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   `paths.py`), labels (`data/labels/60E15120_N3J1E/`), XML definitions
   (`data/definitions/`), 10 stock ROMs via the pinned submodule.
 
-### P1 — Simulation suite (DONE 2026-10-31)
+### P1 — Simulation suite (DONE)
 
 - Corpus-validated SH-2E CPU core: dispatch table `opdec.py` generated from the
   real disassembly, 100% decode of all 168,592 instructions
@@ -73,28 +72,28 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   RCAN RX/TX through the ROM's own driver, Mode 22 dispatch 0x5774c.
 - Agent tooling: `utilities/scripts/hee.py` CLI + `.vibe/plugins/hee-re/` MCP
   plugin (20 `heeRe.*` tools) + `hee-reverse-engineering` skill.
-- **61/61 tests pass** (2026-10-31). Details: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
+- **61/61 tests pass**. Details: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
   [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md).
 - Fidelity items closed during hardening: E2 (sensor inputs on real read paths),
   E3 (WDT IVT slot 0x358), E4 (RCAN model + CAN RX interrupt on inject),
   E5 (NMI pin = SYSC peripheral, guessed overrides removed), E6 partial
   (CAN RX + scheduler autonomous). See register below.
 
-### P2 — Completed labeling passes (2026-10-31)
+### P2 — Completed labeling passes
 
-- **Ignition timing**: thread §9 final-BTDC equation verified/corrected (blend
-  0x123da/0x124d6, clamp 0x121fc/0x12300), dynamically bit-exact in the
-  emulator, then re-verified at the binary level (min-advance constants
-  corrected to −25.0/−58.5°). 15 functions + 22 RAM + 17 tables labeled.
+- **Ignition timing**: thread §9 final-BTDC equation verified (blend
+  0x123da/0x124d6, clamp 0x121fc/0x12300; min-advance constants
+  −25.0/−58.5°), dynamically bit-exact in the
+  emulator and re-verified at the binary level. 15 functions + 22 RAM + 17 tables labeled.
   → [`docs/investigations/60E15120_N3J1E/ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
 - **OS scheduler / IVT / CAN-UDS**: task table 0x4998 + ctrl block labeled, IVT
   at VBR 0x7fc50 mapped, dispatch table 0x5f10c PID 0x43 → handler 0x56b8a
   (record 0x5f268) verified dynamically. 27 functions + 16 RAM + 9 tables.
   → [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
-  (task table corrected to base 0x4990/19 records by the fueling pass, §11 there;
-  full scheduling model — queues, crank-angle-synchronous tick, timers — added
-  2026-11-02: [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md))
-- **OS scheduling deep dive + labeling (2026-11-02)**: full scheduler model documented and
+  (task table at base 0x4990/19 records — §11 there; full scheduling model —
+  queues, crank-angle-synchronous tick, timers:
+  [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md))
+- **OS scheduling deep dive + labeling**: full scheduler model documented and
   33 functions + 10 RAM cells + 6 tables labeled from it (os_scheduling_labels.json);
   → [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
 - **RX8Club thread mined + OCR'd**: BOOT-mode CN400 pinout (150 Hz WDT feed pin
@@ -105,7 +104,7 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   external PB15 heartbeat (0x31c) — emulated and traced.
 - **ROM↔cal-ID table** verified for 60E0G500/N3ZHEC, 60E15120/N3ZHE (D1 documented).
 
-### Group A / P3 — Calibration extraction — DONE 2026-10-31
+### Group A / P3 — Calibration extraction — DONE
 
 - 587 tables extracted from `60E15120_N3J1E` (478 RX8Defs-matched + 109 unnamed),
   381–587 across all 10 stock ROMs + 1 own dump, 0 non-monotonic axes; cross-ROM
@@ -113,10 +112,10 @@ Next pickup: **E item 1** (reimplementation coverage), then F (gated). Group D i
   → [`docs/investigations/60E15120_N3J1E/calibration_extraction_report.md`](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
   artifacts: `data/maps/` (`extract_maps.py` + `diff_maps.py`).
 
-### Group B — Emulator fidelity hardening (P1 residual) — DONE 2026-10-31 except the E4/E6 partials
+### Group B — Emulator fidelity hardening (P1 residual) — DONE except the E4/E6 partials
 
-Collapsed from the open-work list 2026-10-31 (work complete; the open partials are
-tracked as E4/E6 in the register below). Closed: E1 (f32 rounding, filter 0x23b0
+Work complete except the E4/E6 partials (tracked in the register below). Closed: E1
+(f32 rounding, filter 0x23b0
 bit-exact), E7 (full Q/M DIV1 + ROTCR direction, oracle = ROM div routine 0x2158),
 interrupt masking on ldc/rte, E2/E3/E5; E6 narrowed (CAN RX autonomous; response TX
 still via profile `uds` entry points). Renesas Simulator Debugger cross-check DONE:
@@ -125,9 +124,9 @@ peripheral-pin divergence (GPIO PLIOR_W 0xfffff756 bit3) — zero CPU-caused div
 → [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md),
 [`docs/learnings.md`](docs/learnings.md) §group B; register below for E4/E6.
 
-### Group C — Static labeling & gap closure (P2 residual) — DONE 2026-10-31 (items 1–6, D item 1)
+### Group C — Static labeling & gap closure (P2 residual) — DONE (items 1–6, D item 1)
 
-#### C item 1 — UDS/Mode-22 dispatch tables — DONE 2026-10-31
+#### C item 1 — UDS/Mode-22 dispatch tables — DONE
 
 All 99 Mode 22 PID records (0x5f10c) + 29 UDS service records (0x5eb40) + sub-PID
 table 0x5f5b2 labeled; ISO-TP frame dispatch 0x6842c, service router 0x68dac; 177
@@ -136,7 +135,7 @@ dynamically (full 99-PID sweep, 15-service routing; 61/61 tests).
 → [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
 labels: `data/labels/60E15120_N3J1E/uds_dispatch_labels.json`.
 
-#### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE 2026-10-31
+#### C item 2 — Decompiler-warning triage + non-instruction-range classification — DONE
 
 All 154 warning functions triaged (151 benign, 3 actionable → all resolved: record
 dispatch tables 0x5ea08 via 0x54d90 and 0x5eb18 via 0x55a7c recovered from ROM; orphan
@@ -146,14 +145,14 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
 `utilities/scripts/rx8-pcm-pipeline/triage_export.py`, `decompiler_issues_triaged.tsv`,
 `non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
 
-#### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE 2026-10-31
+#### C items 3-4 — Fueling deepening + engine-load units (D5) — DONE
 
 - **D5 closed**: `engine_load_ffffc0b4` and PID 0x43 are VolEf-like cell units
   (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)), proven by the max-load clamp
   (tbl_0x6b200×0x6b214×0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev) matching
   the extracted load axes (tbl_06aa48 axis_y 0.0625–1.25). Thread corrections:
   MAF×60/rpm (not ×rpm/60), 0.6345 = VolEf (not g/combustion), PID 0x43 = VolEf
-  ×1/255 (not g/rev). → load_fueling_report.md "Update 2026-10-31".
+  ×1/255 (not g/rev). → [`load_fueling_report.md`](docs/investigations/60E15120_N3J1E/load_fueling_report.md).
 - **fueling_control_report.md §10 deepening**: all `fuel_correction_sum` adder
   writers traced (LTFT b0d0, product-sums c0c8/c104, CL terms ae08/ae10, MAF-%
   b21c, transient cde0, lambda adf8→adec, cat-temp c644); fuel-cut arbitration
@@ -165,7 +164,7 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   chain confirmed (0x1ee4a: max(baro·tipin, target)×coolant, +1.0 lambda decimal
   part). Dynamic: `tests/test_fuel_chain_dynamic.py` (65/65 pytest).
 
-#### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE 2026-10-31
+#### C item 5 — Checksum/CVN (D3) + seed/key (D4) — DONE
 
 - **D3 closed**: incremental checksum routine = 0x5a3f4 (dual-u16 additive sum
   over app flash 0x2000-0x7ffff in 0x1000-byte sections per call, skipping hole
@@ -181,26 +180,25 @@ bytes) classified with pc-relative referrer evidence. No labels upgraded.
   jumps on `*SBL_END` via 0x1090).
 - → [uds_mode22_dispatch_report.md §12](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 
-#### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE 2026-10-31
+#### C item 6 + D item 1 — 60E0G500 pipeline export + cross-ROM differential labeling — DONE
 
 - 60E0G500/N3ZHEC (`binaries/dumps/60E0G500_N3ZHEC.bin`) exported via
   Ghidra 12.1.2 headless into `reverse-engineered/{decompiled,disassembly}/60E0G500_N3ZHEC/`
   (3,200 functions, 0 failures; all 166,294 instruction words byte-verified;
-  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Recipe/log lived in `input/` (raw intake emptied 2026-11-01;
-  reproducible via `utilities/tools/ghidra/`).
+  `data/labels/60E0G500_N3ZHEC/input.json` provenance). Reproducible via
+  `utilities/tools/ghidra/`.
 - `utilities/scripts/cross_rom_match.py`: byte-match of base-ROM function bodies
   across all 10 stock ROMs + 1 own dump → 25,898 matches, 2,213 propagated
   aliases (`data/labels/cross_rom_function_matches.tsv`,
   `cross_ecu/cross_rom_function_aliases.tsv`, `cross_rom_match_summary.json`).
   60E0G500: 2,582 matches / 262 aliases.
-- → [60E0G500_N3ZHEC/2026-10-31-pipeline-export.md](docs/investigations/60E0G500_N3ZHEC/2026-10-31-pipeline-export.md),
-  [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
+- → [cross_ecu/cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_differential_labeling.md).
 
-### Group D — Cross-ROM propagation (P2/P5) — items 1–4 DONE 2026-10-31/2026-11-01
+### Group D — Cross-ROM propagation (P2/P5) — items 1–6 DONE
 
 Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_function_aliases.tsv`) was completed together with C item 6 above; items 2–3:
 
-#### D item 2 — Mode 22 PID handlers cross-ROM — DONE 2026-11-01
+#### D item 2 — Mode 22 PID handlers cross-ROM — DONE
 
 - Mode 22 dispatch table located in all 14 ROMs by pool ref + self-consistent
   count byte (family A: 99 records at 0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0;
@@ -215,7 +213,7 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   New register item E8 (opdec corpus-keyed; family-B diag dispatch not dynamically
   executable yet).
 
-#### D item 3 — cross-ROM labels applied to the 60E0G500_N3ZHEC export — DONE 2026-11-01
+#### D item 3 — cross-ROM labels applied to the 60E0G500_N3ZHEC export — DONE
 
 - `utilities/scripts/apply_cross_rom_labels.py` applied 236 renames to
   `reverse-engineered/decompiled/60E0G500_N3ZHEC/` (262 byte-match aliases from
@@ -233,7 +231,7 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   `data/labels/cross_rom/mode22/` for future Ghidra exports; family-B extra PIDs
   stay FUN_-level (no base counterpart).
 
-### D item 4 — ECU definitions extended to all 14 ROMs + D8 dedupe — DONE 2026-11-01
+### D item 4 — ECU definitions extended to all 14 ROMs + D8 dedupe — DONE
 
 - `utilities/scripts/defs-merge/extend_defs_all_roms.py` identifies every dumped ROM
   by the fw id at 0x2000 (own dumps SHA-256-checked against `binaries/manifest.csv`)
@@ -252,7 +250,7 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   (ecuflash ×2, logger ×2); `upstream-rx8defs/rx8_defs.xml` kept (= upstream
   `ff5ab4f`, differs from pinned HEAD).
 
-#### D item 5 — defs relabel/regroup pass from all labeling passes — DONE 2026-11-02
+#### D item 5 — defs relabel/regroup pass from all labeling passes — DONE
 
 - Curated 112-descriptor label map (name + category + evidence + confidence) built from the
   knock/ignition/fueling `lookup_aliases` + subsystem reports →
@@ -265,33 +263,34 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   skipped — upstream block addresses don't join either variant's `data/maps`, recorded in
   `coverage.json`). Names/categories/descriptions only; zero address/axis/scaling changes
   (invariant-tested, `tests/test_defs_relabel.py`; 78/78 pytest). Descriptions kept short
-  per AGENTS.md rule 6b (simplified after PR #18 review): what the table does, no
+  per AGENTS.md rule 6b: what the table does, no
   addresses/structural-match/derivation text, no pass marker — provenance stays in the
   label map.
-  → [defs-merge/relabel_2026-11-02.md](docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
+  → [defs-merge/README.md](docs/investigations/60E15120_N3J1E/defs-merge/README.md).
 
-#### D item 6 — DTC tables labeled with their standard P-codes in the defs — DONE 2026-11-03
+#### D item 6 — DTC tables labeled with their standard P-codes in the defs — DONE
 
 - The ROM DTC code table stores the two OBD mode-03 bytes per slot (BE u16), so the
   SAE J2012 / ISO 15031-6 decode (byte0 bits 7-6 → P/C/B/U, bits 5-4 → 0/2 generic vs
   1/3 manufacturer, low 12 bits → digits) maps every code: all `0x0xxx` = generic P0,
-  all `0x2xxx` = generic P2, `0x1xxx` = P1 manufacturer-specific (no SAE text), and the
-  old `Cxxx` labels were a high-nibble misread — `0xCxxx` decodes to **U0** network
+  all `0x2xxx` = generic P2, `0x1xxx` = P1 manufacturer-specific (no SAE text), and
+  `0xCxxx` decodes to **U0** network
   codes (C101 → U0101 lost comm with TCM, …). Mapping + SAE descriptions for all 134
   codes: `data/dtc/pcodes.tsv` (cross-checked against tekseport/obd2-codes @ `ddadc77e`
-  and foerbsnavi/OBDex @ `3f03bb0`, 2026-11-03).
-- `DTC 0420 Enable/Disable #1` → `DTC P0420 Enable/Disable #1` in all active blocks of
+  and foerbsnavi/OBDex @ `3f03bb0`).
+- The DTC enable/disable tables carry the standard P-code names (`DTC P0420
+  Enable/Disable #1`) in all active blocks of
   `rx8defs-merged-60E15120.xml` (surgical, `relabel_dtc_names.py`: 4027 renamed, 23 P0300
   duplicate-site suffixes, idempotent, addresses unchanged) and in all 9 per-ROM defs at
-  generation (`repair_dtc_tables()` emits the P-code names + short rule-6b descriptions;
-  the rule-10 checksum-range note was dropped from them per updated rule 6b).
-  Post-rename audit still 0 mismatches
+  generation (`repair_dtc_tables()` emits the P-code names + short rule-6b
+  descriptions).
+  Audit: 0 mismatches
   (`data/dtc/defs_audit.tsv`); tests `tests/test_dtc_pcode_labels.py` (14 passed).
 - Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf` (DTC TABLE
   → `data/dtc/mazda_dtc_table.tsv`, 118 codes): all manual codes exist in the ROMs
   (P0301/P0302 are the 0x7e55a prefix codes); the manual fills the P1 meanings
   (P1260 immobilizer, P1574/P1577 TP/APP incongruent, P1686-1688 metering oil pump) and
-  Mazda part wording (APV/SSV/VDI, eccentric shaft position sensor) is now preferred in
+  Mazda part wording (APV/SSV/VDI, eccentric shaft position sensor) in
   the def descriptions; U0167 SAE-vs-Mazda conflict recorded (Mazda: keyless control
   module). 18 ROM codes are later J2012 additions absent from the 2003 table.
   → [dtc_control_report.md §5b](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
@@ -300,17 +299,17 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A–D are complete (see §Completed above, items 1–4 incl. the
-2026-11-01 defs extension), so the next pickup is group E.
+and where artifacts live. Groups A–D are complete (see §Completed above), so the
+next pickup is group E.
 
 ### E. Reimplementation coverage (P4) — depends on C (done)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
   subsystem with host tests **and** emulator cross-checks (`harness.py` +
-  `tests/test_phase1_dynamic.py` pattern). Done so far: `rx8_math`, `rx8_apv`,
-  and (2026-11-02) `rx8_knock` — knock-retard state machine 0x13a60/0x13b40 +
+  `tests/test_phase1_dynamic.py` pattern). Implemented so far: `rx8_math`, `rx8_apv`,
+  `rx8_knock` — knock-retard state machine 0x13a60/0x13b40 +
   `rx8_add_u8_saturate` 0x2478, host tests plus
-  `tests/test_knock_retard_dynamic.py` emulator cross-checks (PR #13).
+  `tests/test_knock_retard_dynamic.py` emulator cross-checks.
   Remaining subsystems: fueling chain, load model, ignition timing, intake
   solenoids, limiter.
 
@@ -332,33 +331,33 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
 
 | ID | Status | What |
 |----|--------|------|
-| E1 | CLOSED 2026-10-31 | FPU results rounded to float32 per op; harness f32-rounds float args; filter 0x23b0 bit-exact |
-| E2 | CLOSED 2026-10-31 | Peripheral bases from symbols.tsv; sensors on real ADC/ATU read paths |
-| E3 | CLOSED 2026-10-31 | WDT ITI = vector 214 = IVT offset 0x358 (Sh7055h.pdf table 7.3; ROM slot 0x7ffa8 → trampoline 0x30b8); firmware polls TCSR itself, overflow = OVF flag only |
+| E1 | CLOSED | FPU results rounded to float32 per op; harness f32-rounds float args; filter 0x23b0 bit-exact |
+| E2 | CLOSED | Peripheral bases from symbols.tsv; sensors on real ADC/ATU read paths |
+| E3 | CLOSED | WDT ITI = vector 214 = IVT offset 0x358 (Sh7055h.pdf table 7.3; ROM slot 0x7ffa8 → trampoline 0x30b8); firmware polls TCSR itself, overflow = OVF flag only |
 | E4 | partial | RCAN mailbox model done for diag path + CAN RX interrupt fires on inject (IVT 0x378 → CAN poll 0x11d88 + scheduler 0x9630); full mailbox/interrupt fidelity open |
-| E5 | CLOSED 2026-10-31 | Guessed `io_read_overrides` (0xffffed18=0x8000) was ICR_W bit15 = NMI pin level — now SYSC peripheral (`nmi_level`), overrides removed from all profiles |
-| E6 | partial (narrowed 2026-10-31; characterized 2026-11-02, still open) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte added. 2026-11-02 deep dive ([os_scheduling_deep_dive_report.md](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)): full scheduler model mapped and the post→queue→dequeue→handler→taskEnd→dispatch chain reproduced in the emulator; the ISR-exit context switch (0x32f4) still does not fire autonomously from idle (preemption needs class > ctrl[0] unsigned, ctrl[0]=0xff at boot) — that is the remaining E6 gap |
-| E7 | CLOSED 2026-10-31 (div1/rotcr) | full Q/M DIV1 (SR bits 8/9) + ROTCR direction fixed, validated vs ROM div routine 0x2158; cycle counts ≠ real time remains (accepted) |
-| E8 | open (added 2026-11-01) | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md) |
+| E5 | CLOSED | `io_read_overrides` guess (0xffffed18=0x8000) resolved as ICR_W bit15 = NMI pin level, modeled as the SYSC peripheral (`nmi_level`); profiles carry no read overrides |
+| E6 | partial (still open) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte. The deep dive ([os_scheduling_deep_dive_report.md](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)) maps the full scheduler model and reproduces the post→queue→dequeue→handler→taskEnd→dispatch chain in the emulator; the ISR-exit context switch (0x32f4) still does not fire autonomously from idle (preemption needs class > ctrl[0] unsigned, ctrl[0]=0xff at boot) — that is the remaining E6 gap |
+| E7 | CLOSED (div1/rotcr) | full Q/M DIV1 (SR bits 8/9) + ROTCR direction, validated vs ROM div routine 0x2158; cycle counts ≠ real time remains (accepted) |
+| E8 | open | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md) |
 
 ### Data / docs discrepancies (D-items)
 
 | ID | Status | What |
 |----|--------|------|
-| D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them (2026-10-31, [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
+| D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them ([uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
-| D3 | CLOSED 2026-10-31 | checksum/CVN routine found: 0x5a3f4 = incremental dual-u16 additive sum over app flash 0x2000-0x7ffff (0x1000 B/call, skips hole 0x7fb00-0x7fb7f), finalize 0x5a714 -> RAM 0xffff9104/0xffff910c, diag-read via 0x55bda -> 0x5a5a6. Not CRC (no CRC table/poly in ROM). See [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) §12.1 |
-| D4 | CLOSED 2026-10-31 | seed/key located in both layers: app UDS 0x27 (0x57a64): seed from ATU-II timer 0x55f5e -> 0xffffd1d5-d1d8, key verified by 0x5609e (64-round shift/xor network, fixed key "MazdA" at 0x5f084); flash bootloader (SBL 0x0-0x1fff) 0x27 at 0x1858: seed 55 AA 55, key 4D AC CD literal compare. See uds_mode22_dispatch_report.md §12.2 |
-| D5 | CLOSED 2026-10-31 | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) "Update 2026-10-31" |
+| D3 | CLOSED | checksum/CVN routine found: 0x5a3f4 = incremental dual-u16 additive sum over app flash 0x2000-0x7ffff (0x1000 B/call, skips hole 0x7fb00-0x7fb7f), finalize 0x5a714 -> RAM 0xffff9104/0xffff910c, diag-read via 0x55bda -> 0x5a5a6. Not CRC (no CRC table/poly in ROM). See [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) §12.1 |
+| D4 | CLOSED | seed/key located in both layers: app UDS 0x27 (0x57a64): seed from ATU-II timer 0x55f5e -> 0xffffd1d5-d1d8, key verified by 0x5609e (64-round shift/xor network, fixed key "MazdA" at 0x5f084); flash bootloader (SBL 0x0-0x1fff) 0x27 at 0x1858: seed 55 AA 55, key 4D AC CD literal compare. See uds_mode22_dispatch_report.md §12.2 |
+| D5 | CLOSED | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) |
 | D6 | open | unproven `candidate_*` labels |
 | D7 | open | 60E1B800 dual N3* strings |
-| D8 | CLOSED 2026-11-01 | 4 local def copies were git-blob-identical to pinned `submodules/RX8Defs` files (raw diff CRLF/LF only) and were deleted per rule 4b; submodule path + commit `1b3aea2…` is the reference. Also settles "pinned has a newer ECUFlash XML": identical 1210 tables, size diff was line endings. See [cross_rom_defs_coverage.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md) + [data/definitions/README.md](data/definitions/README.md) |
+| D8 | CLOSED | local def copies that are git-blob-identical to pinned `submodules/RX8Defs` files are not kept (rule 4b) — the submodule path + commit `1b3aea2…` is the reference. The local and pinned ECUFlash XMLs have identical 1210 tables (raw diff is CRLF/LF only). See [cross_rom_defs_coverage.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md) + [data/definitions/README.md](data/definitions/README.md) |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
-| D11 | CLOSED 2026-11-02 | literal-pool scalar constants were not in `data/maps/` (only descriptor tables were extracted) - `utilities/scripts/extract_scalars.py` now locates 14 binary-verified float32 seeds by exact bit pattern per ROM (`data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`), asserting the reference-ROM addresses (base fuel scalar 0.07196 = 0x3d935fc4 @0x78170 -> `fuel_load_scale_ffffbed0`, load cell 0.6345 @0x7a088, ...); cross-ROM: 475.93 cc/min secondary flow absent in 60E0E700_N3YLEE (uses 608.0/626.224 @0x76ccc-0x76cd0). per-ROM RomRaider defs now expose stoich_afr 14.7 + fuel_load_scale 0.07196 as editable 1-cell scalar tables (extend_defs_all_roms.py injects per-ROM storageaddress, asserted vs ROM bytes). Tests `tests/test_extract_scalars.py` (6, pass). See [calibration extraction section 6a](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md) + [data/maps README](data/maps/README.md) |
-| D10 | open (evidence added 2026-10-31) | PID 0x221410 double-claim — in 60E15120_N3J1E, PID 0x1410 handler 0x56f6c (`diag22_pid1410_injector_pulse_time`) reads `injector_pulse_time_ffffbe24` × 8.0 = injector pulse time; throttle pedal position is PID 0x0011/0x093c (`ffffad5c`/`ffffad44`), not 0x1410. Cross-ROM check still open |
+| D11 | CLOSED | literal-pool scalar constants are extracted into `data/maps/` by `utilities/scripts/extract_scalars.py`: 14 binary-verified float32 seeds located by exact bit pattern per ROM (`data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`), asserting the reference-ROM addresses (base fuel scalar 0.07196 = 0x3d935fc4 @0x78170 -> `fuel_load_scale_ffffbed0`, load cell 0.6345 @0x7a088, ...); cross-ROM: 475.93 cc/min secondary flow absent in 60E0E700_N3YLEE (uses 608.0/626.224 @0x76ccc-0x76cd0). per-ROM RomRaider defs expose stoich_afr 14.7 + fuel_load_scale 0.07196 as editable 1-cell scalar tables (extend_defs_all_roms.py injects per-ROM storageaddress, asserted vs ROM bytes). Tests `tests/test_extract_scalars.py` (6, pass). See [calibration extraction section 6a](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md) + [data/maps README](data/maps/README.md) |
+| D10 | open | PID 0x221410 double-claim — in 60E15120_N3J1E, PID 0x1410 handler 0x56f6c (`diag22_pid1410_injector_pulse_time`) reads `injector_pulse_time_ffffbe24` × 8.0 = injector pulse time; throttle pedal position is PID 0x0011/0x093c (`ffffad5c`/`ffffad44`), not 0x1410. Cross-ROM check still open |
 
 The tables above are summaries; the full per-item records (locations, impact,
-closure plans) live in this file's git history (pre-2026-11-01 revisions).
+closure plans) live in this file's git history.
 Summary rules: [`utilities/scripts/emu/README.md`](utilities/scripts/emu/README.md) and `docs/references/`.
 Discrepancies are **documented, never silently resolved** — closing one needs new
 evidence (ROM bytes, manual table, bench trace, Renesas diff) + a note in the

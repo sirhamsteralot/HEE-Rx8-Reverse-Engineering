@@ -1,4 +1,4 @@
-# RX8 definition merge and source review — 2026-09-30
+# RX8 definition merge and source review
 
 `rx8defs.xml` combines RX8Defs at **ff5ab4f** with the local analysis in
 RX8Defs_Copy (based on **944062e**). The ten most recent commits were reviewed;
@@ -57,8 +57,8 @@ the physical meanings of numerator and denominator are proven.
 on zero/one, with related reads in four other functions. This confirms a policy
 array, not the individual SAE DTC assignments in the upstream #1 bank.
 
-Dated comments were added to these four individual function files, the combined
-C export, and the named C view. Executable C tokens and canonical function names
+These four individual function files, the combined
+C export, and the named C view carry dated review comments. Executable C tokens and canonical function names
 are unchanged; suggested names and confidence live in `function_findings.json`.
 A backup is in `../60E15120_N3J1E/backups/pre_defs_20260930.zip`.
 
@@ -96,13 +96,10 @@ python3 /home/yannick/Documents/Tuning/reverse_engineered/Defs/merge_review.py
 python3 /home/yannick/Documents/Tuning/reverse_engineered/Defs/annotate_source.py
 ```
 
-(Historical record of the prior effort's original-workspace workflow. This repo's
-live copy of the merger is
-[`utilities/scripts/defs-merge/merge_review.py`](../../../../utilities/scripts/defs-merge/merge_review.py);
-the one-shot `annotate_source.py` was removed from this repo on 2026-11-03 as
-dead — its legacy layout paths no longer resolve, and its review comments
-(`[RX8DEFS 2026-09-30 …]` markers) are already baked into the promoted export,
-re-derivable from `function_findings.json` above if ever needed.)
+(This repo's live copy of the merger is
+[`utilities/scripts/defs-merge/merge_review.py`](../../../../utilities/scripts/defs-merge/merge_review.py).
+The merger's review comments (`[RX8DEFS …]` markers) are baked into the
+promoted export and re-derivable from `function_findings.json` above.)
 
 The merger intentionally fails on unexpected local structural changes. Its
 current inputs are the two local repositories and existing target source/ROM.
@@ -117,19 +114,19 @@ The generated `validation.json` pins their hashes and commits.
 - `inheritance_issues.json`: unresolved common-base and other-variant issues.
 - `function_findings.json`: new source interpretations, confidence and limitations.
 
-## Follow-up passes after the merge
+## Follow-up work after the merge
 
-- **2026-11-01 — DTC enable/disable address repair** (entry 83 in
+- **DTC enable/disable address repair** (entry 83 in
   `definition_repairs.json`): per-ROM `DTC xxxx Enable/Disable #N` storageaddresses
   rebuilt from each ROM's own DTC layout (`repair_dtc_tables()` in
   `utilities/scripts/defs-merge/extend_defs_all_roms.py`); evidence in
   [`../dtc_control_report.md`](../dtc_control_report.md) §5 and
   [`../reviews/dtc_control/`](../reviews/dtc_control/README.md).
-- **2026-11-02 — relabel/regroup pass**: [`relabel_2026-11-02.md`](relabel_2026-11-02.md)
-  (ROADMAP D item 5).
-- **2026-11-03 — DTC P-code labels** (entry 84 in `definition_repairs.json`, ROADMAP
-  D item 6): `DTC 0420 …` → `DTC P0420 …` (standard 5-char OBD code; old `C167` →
-  `U0167`) in all active blocks of the merged def via
+- **Relabel/regroup pass** (ROADMAP D item 5): pass log
+  [`relabel_2026-11-02.json`](relabel_2026-11-02.json).
+- **DTC P-code labels** (entry 84 in `definition_repairs.json`, ROADMAP
+  D item 6): the standard 5-char OBD code (`DTC P0420 …`; slot code `0xC167` decodes
+  to `U0167`) in all active blocks of the merged def via
   `utilities/scripts/defs-merge/relabel_dtc_names.py` (surgical splice, idempotent;
   pass log `dtc_pcode_labels_2026-11-03.json`) and in all per-ROM defs at generation.
   SAE J2012 mapping `data/dtc/pcodes.tsv` cross-checked against the Mazda workshop

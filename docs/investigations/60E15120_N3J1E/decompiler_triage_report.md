@@ -1,6 +1,6 @@
 # Decompiler-warning triage + non-instruction-range classification report — 60E15120_N3J1E
 
-Date: 2026-10-31. Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched — labels/triage only, no binary change). Static-analysis disclaimer: findings
 come from the canonical export + disassembly + raw ROM bytes re-read by

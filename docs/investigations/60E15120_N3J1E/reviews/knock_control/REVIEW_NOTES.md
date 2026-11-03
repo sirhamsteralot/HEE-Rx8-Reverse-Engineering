@@ -1,6 +1,6 @@
 # Sceptical re-review of the knock control report — findings and corrections
 
-Date: 2026-10-29. Scope: an independent, deliberately sceptical re-check of
+Scope: an independent, deliberately sceptical re-check of
 `knock_control_report.md` and this folder's [`README.md`](README.md) against the ground
 truth — the untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`, 512 KiB,
@@ -108,7 +108,7 @@ via the CLF threshold tables).
 12. **Signal-chain misattribution**: README §1 put 0xc3ce
     (`knock_voltage_sample`) under the 0x65f6 task chain; its only caller is
     **0x661e (task[6])**, which calls it before `ref_engineControlTASK`. The
-    report's §2 header "sensing (task entry 0x65f6)" was misleading for the
+    §2 header "sensing (task entry 0x65f6)" covers only the
     sample/filter part (0xc486 magnitude integration *is* in the 0x65f6 chain
     via 0xc338). Also 0xc276's callers are 0xc8dc and 0x5a4c — the README
     diagram showed 0xc338 calling it, which is wrong.

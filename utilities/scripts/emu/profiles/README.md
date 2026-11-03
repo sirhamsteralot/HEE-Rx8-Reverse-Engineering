@@ -51,4 +51,4 @@ Stock / reference ROMs:
 - `60E0FC00_N3Z2EU.json` — reference ROM (2004 US 6-port MT), byte-match seeding source.
 - `60E0G500_N3ZHEC.json` — factory ROM (stock): own dump of the donor ECU (EU 6-port
   2004, fw 60E0G500 / cal N3ZHEC).
-- `60E1B900_N3ZBEH.json` — 6-port US MT (added 2026-10-31 as the "run another bin" demo).
+- `60E1B900_N3ZBEH.json` — 6-port US MT (the "run another bin" demo).

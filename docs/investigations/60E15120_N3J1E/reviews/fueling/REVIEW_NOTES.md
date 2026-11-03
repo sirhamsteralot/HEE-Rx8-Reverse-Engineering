@@ -1,4 +1,4 @@
-# Sceptical re-review addendum — fueling chain (2026-10-30)
+# Sceptical re-review addendum — fueling chain
 
 Independent re-check of the riskiest claims in [`README.md`](README.md) against the ROM
 disassembly, the float constants and the def files. Corrections: none needed;
@@ -58,7 +58,7 @@ confirmations and caveats below.
 9. No ROM bytes, def XML or address values were modified; all changes are
    names/comments in the export views and metadata.
 
-## 10. Binary-level verification pass (2026-10-30, second pass)
+## 10. Binary-level verification
 
 Every label was re-checked against the raw ROM (`60E15120_N3J1E.bin`) and
 `decompiled/firmware_disassembly.asm`, independently of the decompiler:

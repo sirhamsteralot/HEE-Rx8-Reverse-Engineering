@@ -13,8 +13,8 @@ Companion evidence for [`../../dtc_control_report.md`](../../dtc_control_report.
   `DTC xxxx Enable/Disable #N` storageaddress in
   `data/definitions/romraider/per-rom/*.xml` and in
   `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml` against the ROM
-  bytes (slot, ROM code at that slot, match flag, ROM byte). Pre-rename (2026-11-01)
-  names; since 2026-11-03 the defs use the standard 5-char OBD code
+  bytes (slot, ROM code at that slot, match flag, ROM byte), recorded under the
+  pre-P-code names. The defs use the standard 5-char OBD code
   (`DTC P0420 Enable/Disable #1`, `DTC U0167 …`) — decode + mapping in
   `data/dtc/pcodes.tsv`, pass log
   `../defs-merge/dtc_pcode_labels_2026-11-03.json`, report §5b.
@@ -54,11 +54,10 @@ Companion evidence for [`../../dtc_control_report.md`](../../dtc_control_report.
   every scan (index == DAT_ffff8900); slot 0/1 both hold code P0300 (rotor
   misfire pair), which is why some defs bind two "0300" bytes.
 
-## 2026-11-03 P-code label pass (ROADMAP D item 6)
+## P-code labels (ROADMAP D item 6)
 
-- Every `DTC xxxx Enable/Disable #N` table renamed to the standard 5-char OBD code
-  (`DTC P0420 Enable/Disable #1`; the old `C167` labels were a high-nibble misread
-  and became `DTC U0167 …`) in all active blocks of
+- Every `DTC xxxx Enable/Disable #N` table carries the standard 5-char OBD code
+  (`DTC P0420 Enable/Disable #1`; slot code `0xC167` decodes to `DTC U0167 …`) in all active blocks of
   `rx8defs-merged-60E15120.xml` (surgical splice, `utilities/scripts/defs-merge/relabel_dtc_names.py`,
   4027 renamed, 23 P0300 duplicate-site suffixes, 12 stale descriptions replaced,
   idempotent) and in all 9 per-ROM defs at generation (`repair_dtc_tables()`).

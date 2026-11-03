@@ -10,13 +10,13 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
   exist only where they differ from the pinned tree.
   - `definitions/romraider/per-rom/` — one standalone RomRaider def per dumped ROM (all 14; generated, see `coverage.json`).
   - `definitions/romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs snapshot @ `ff5ab4f` (merge base).
-  - `definitions/romraider/reviewed-rx8defs-copy/` — locally reviewed defs from the prior effort's working copy.
+  - `definitions/romraider/reviewed-rx8defs-copy/` — locally reviewed defs.
   - `definitions/romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
 - `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
   `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
   (ROM hash/IDs), `validation.json` records, export logs. Note: the `CAL_DTC_xxxx_…`
-  labels in `calibration_labels.tsv` keep the pre-2026-11-03 XML names in
-  `original_name` (provenance); the defs now name those tables with the standard
+  labels in `calibration_labels.tsv` keep the upstream XML names in
+  `original_name` (provenance); the defs name those tables with the standard
   OBD code (`DTC P0420 Enable/Disable #1`) — mapping in [`dtc/pcodes.tsv`](dtc/pcodes.tsv).
 - `dtc/` — extracted DTC tables per ROM (`<rom-id>.tsv`, with the standard 5-char
   `obd_code`), the defs audit (`defs_audit.tsv`), the code→OBD-code mapping with SAE

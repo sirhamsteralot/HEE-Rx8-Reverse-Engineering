@@ -1,37 +1,13 @@
 # Fueling control report — 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E)
 
-Date: 2026-10-30. Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
 performed. Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.md); sceptical re-check:
 [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md); validation: `reviews/fueling/validation.json`.
 
-> **⚠ FURTHER INVESTIGATION NEEDED (2026-10-31).** This report is a first pass:
-> the load calculation is *not* covered here — see
-> [`load_fueling_report.md`](load_fueling_report.md) for the full
-> MAF→load chain (cross-reference, don't duplicate). Open items listed in §7
-> (untraced `fuel_correction_sum` writers, injection-angle semantics, MAF fault
-> latching, ~~PID 0x1410~~, 0x4ab8 dispatch) plus dynamic emulator verification of
-> the fuel chain are tracked as a ROADMAP group C backlog item. The pseudocode
-> in §2 uses raw register names (bf68, bed0, …) — a physical-units rewrite is
-> part of the deepening pass.
-> **Resolved 2026-10-31 (group C deepening, §10 below):** all listed §7 items are
-> now traced and byte-verified — adder writers, fuel-cut arbitration,
-> injection-angle semantics, cold-start degenerate body, MAF fault latching,
-> the 0x4ab8 task record (task table base corrected to 0x4990 / 19 records), the
-> descriptor→`data/maps` mapping, the thread's OL-chain claims, and dynamic
-> emulator verification of the load chain (`tests/test_fuel_chain_dynamic.py`).
-> **Update 2026-10-31 (UDS dispatch pass, [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)):**
-> PID 0x1410 is now resolved — handler 0x56f6c `diag22_pid1410_injector_pulse_time`
-> reads `injector_pulse_time_ffffbe24` × 8.0 (the logger def's second claim of
-> 0x221410 as "Throttle Pedal Position" does not hold for this ROM — throttle is
-> PID 0x0011/0x093c; ROADMAP D10). The diag-visible fuel cells are now named:
-> `inferred_lambda_actual_ffffadec` (PID 0x06, (λ−1)·100 trim), `fuel_correction_sum_ffffc644`
-> (PID 0x3c, ×0.1−40), AFR words `diag_afr_word_a_ffffaa6c`/`_b_ffffaa7c` (PID 0x0034),
-> `lambda_target_ffffadfc` (PID 0x0044).
-
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input — see the marker above), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410).
 
 
 ## 1. Executive summary
@@ -127,7 +103,7 @@ Max Injection Angle 1-3; `0x6ad30/0x6ad44` air-flow x battery-V correction;
 `0x6ac38` fuel coolant compensation (**candidate name** — descriptor not
 def-matched).
 
-## 4. Labeling applied (2026-10-30 pass)
+## 4. Labeling applied
 
 - 39 functions, 151 RAM locations, 1 lookup table added to
   `source_review/accepted_*_aliases.tsv`; integrated into all synchronized
@@ -142,11 +118,9 @@ def-matched).
 ## 5. Corrections made in this pass
 
 1. `injector_pulse_set_channel` (0x8a68): pulse = (latency + fuel_request) >> 4 —
-   the four `shar` at 0x8a96-0x8a9e apply to the sum (found in the binary-level
-   verification pass; see [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10).
-2. Pipeline hygiene: `review_fueling_labels.py` initially duplicated TSV header
-   rows (read with explicit fieldnames); fixed to consume the header, duplicates
-   removed, and `name_lookup_variables.py` confirmed as a fresh-export-only step.
+   the four `shar` at 0x8a96-0x8a9e apply to the sum (see [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10).
+2. Pipeline hygiene: TSV append scripts consume the header (DictReader without
+   fieldnames), and `name_lookup_variables.py` is a fresh-export-only step.
 3. Def caveat (documented, not fixed — upstream repo): logger PID 0x221410 is
    claimed by both "Injector Pulse Time" and "Throttle Pedal Position"; handler
    0x56f6c encodes `injector_pulse_time_ffffbe24` at step 8 µs.
@@ -211,8 +185,8 @@ entries below.
 | 0x0000e2a8 / 0x0000ee64 | `update_injectors_off_flag` / `rev_limit_fuel_cut_init` | a42c; clears a4a4/a4a5/a4a8 |
 | 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `candidate_fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
 | 0x0001ddfc | `candidate_cold_start_enrichment` | b0c4 (0.0 in this ROM) |
-| 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag22_pid0034_afr_lambda_words` / `diag22_pid0043_engine_load_g_rev` / `diag22_pid0044_lambda_target` / `diag22_pid1410_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 (renamed 2026-10-31 by the UDS dispatch pass, formerly `diag_air_fuel_ratio`/`diag_engine_load`/`diag_lambda_target`/`candidate_diag_injector_pulse_time` — see [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)) |
-| 0x000556ec / 0x00055702 | `diag_read_afr_word_a` / `diag_read_afr_word_b` | AFR PID words aa6c/aa7c (renamed 2026-10-31, formerly `candidate_diag_afr_word_a/b`) |
+| 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag22_pid0034_afr_lambda_words` / `diag22_pid0043_engine_load_g_rev` / `diag22_pid0044_lambda_target` / `diag22_pid1410_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 (see [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)) |
+| 0x000556ec / 0x00055702 | `diag_read_afr_word_a` / `diag_read_afr_word_b` | AFR PID words aa6c/aa7c |
 
 ### 7.2 Core RAM
 
@@ -268,14 +242,14 @@ FSM pinout cross-check (`mazda-rx-8-pcm-pinout-series-1.pdf`, 13B/FSM-derived, m
 
 ---
 
-## 9. Update — 2026-10-30 (later same day)
+## 9. Binary-level verification
 
-- Binary-level verification pass re-checked every label against the raw ROM
+- Every label is verified against the raw ROM
   ([`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10): all 168,592 instruction words, all
   RAM aliases vs reader literal pools, descriptors re-parsed, dispatch records —
-  one correction (0x8a68 pulse = (latency+request)>>4, shift on the sum).
-- Injector channel → ATU-II → SH7055F pin mapping completed and cross-checked
-  against the supplied FSM pinout v3 ([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)):
+  0x8a68 pulse = (latency+request)>>4, the shift applies to the sum.
+- Injector channel → ATU-II → SH7055F pin mapping, cross-checked
+  against the FSM pinout ([`reviews/fueling/injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)):
   ch0/3/1/4/2/5 → pins 195/197/198/199/200/201; rotor blocks {0,1,2}/{3,4,5};
   injectors share a W/L +12V feed (PCM pins are ground-side). Package-pin ↔
   terminal remains board routing (unresolved).
@@ -285,15 +259,15 @@ FSM pinout cross-check (`mazda-rx-8-pcm-pinout-series-1.pdf`, 13B/FSM-derived, m
 
 ---
 
-## 10. Update — 2026-10-31 (ROADMAP group C deepening)
+## 10. Group C deepening (ROADMAP)
 
-All §7/§9 open items traced in the canonical export, re-verified against raw ROM
+All §7/§9 items are traced in the canonical export, verified against raw ROM
 bytes (SHA-256 unchanged `a7cd953c…264f1`), cross-checked against the RX8Club
 thread ([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)
-§6/§9), and the load chain is now also verified dynamically in the emulator
+§6/§9), and the load chain is verified dynamically in the emulator
 (`tests/test_fuel_chain_dynamic.py`, 65/65 pytest). Load math itself lives in
 [`load_fueling_report.md`](load_fueling_report.md) — cross-referenced, not
-duplicated; its 2026-10-31 addendum settles the units (cell = VolEf = g/rev ×
+duplicated; it settles the units (cell = VolEf = g/rev ×
 0.6345, ROADMAP D5 closed).
 
 ### 10.1 `fuel_correction_sum` (bf14) adder writers — all traced
@@ -415,8 +389,8 @@ tbl_069f44/069f0c, tip-in A/B tbl_069f28/069ef0, rich limit tbl_069cfc/069ce8)
 blend by `fuel_blend_weight_ffffb11c`: `b120 = b138·b13c·w + (1−w)·b130·b134`,
 and safe mode swaps the whole family (tbl_069cac/069cc0, 069eb8/069ed4, 069ce8).
 Cat-warmup rides the catalyst-temperature model (c644, §10.1). All thread claims
-in §9 of the reference check out against the ROM; the load-side corrections are in
-[load_fueling_report.md](load_fueling_report.md)'s 2026-10-31 addendum (D5).
+in §9 of the reference check out against the ROM; the load-side units are settled in
+[load_fueling_report.md](load_fueling_report.md) (D5).
 
 ### 10.9 Dynamic verification (emulator, harness.py)
 

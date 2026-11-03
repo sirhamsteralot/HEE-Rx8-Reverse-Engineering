@@ -7,7 +7,7 @@ C — see [`reverse-engineered/reimplementation/`](../../../reverse-engineered/r
 
 ## Wiring-assisted extension
 
-See [the series-1 wiring review](hardware/README.md) for 35 documented component
+See [the series-1 wiring review](../../architecture/hardware/README.md) for 35 documented component
 connections, 16 firmware annotations and three additional compilable APV-candidate
 helpers. Physical pin associations remain explicitly distinguished from firmware
 dataflow and unverified board routing.
@@ -19,16 +19,16 @@ diagnostic/RAM candidates and assembly corrections. This extension annotates the
 C export; the saved Ghidra database has not received these new annotations.
 The cross-ROM passes are documented at
 [cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md)
-(function byte-matches across all 14 ROMs, 2026-10-31) and
+(function byte-matches across all 14 ROMs) and
 [cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md)
-(Mode 22 PID handlers mapped in all 14 ROMs, 2026-11-01).
+(Mode 22 PID handlers mapped in all 14 ROMs).
 
 See also [the additional source review](source_review/README.md) for G-ROM,
-diagnostic and CAN findings added on 2026-09-09.
+diagnostic and CAN findings.
 
 ## Integrated reviewed names
 
-The canonical `decompiled/firmware_decompiled.c` and individual C files now include
+The canonical `decompiled/firmware_decompiled.c` and individual C files include
 all accepted review aliases and explicitly marked lookup-axis candidates. The function
 index and call graph use the updated names. Historical filenames and provenance
 comments retain original identifiers. `named/firmware_named.c` is a synchronized copy.
@@ -45,7 +45,7 @@ for the latest readability pass and unresolved lookup-call audit.
 See [the axis-search/interpolation family reconstruction](lookup_family/README.md)
 for recovered register outputs, typed variants and per-function analysis records.
 
-## Export cleanup — 2026-10-29
+## Export cleanup
 
 `scripts/refine_export_cleanup.py` post-processes the export without touching
 the saved Ghidra database or the ROM:
@@ -68,7 +68,7 @@ the saved Ghidra database or the ROM:
 Evidence and rename map: `metadata/export_cleanup.json`; pre-change backup in
 `backups/pre_cleanup.zip`.
 
-## Knock control and loop-mode labeling — 2026-10-29
+## Knock control and loop-mode labeling
 
 `scripts/review_knock_loop_labels.py`, `scripts/merge_reviewed_lookup_aliases.py`
 and `scripts/review_knock_loop_labels_apply.py` (wired into `scripts/rebuild.sh`,
@@ -76,14 +76,14 @@ idempotent) label the knock-control and loop-mode chain end to end:
 
 - 39 functions, 84 RAM locations and 15 lookup tables named from static
   evidence; 6 medium-confidence functions carry the `candidate_` prefix.
-- Two inherited misnomers corrected: `ref_setClosedLoopBool` (0x1ee30) is
+- Two inherited `ref_` misnomers: `ref_setClosedLoopBool` (0x1ee30) is
   `set_open_loop_flag` and `ref_enableDisableCruiseControl__` (0xc116) is
   `reset_knock_state_on_mode_change`.
 - Polarity correction: 0xffffb12a/0xffffb12c are the **open**-loop flag
   (1 = open loop), established from the OBD PID 0x0003 handler and the
   0x1c13c/0x1ee4a logic.
-- Export bug fixed: 0x13bd2 `knock_retard_clamp` now returns the
-  `rx8_clamp_float` result (SH fr0) instead of discarding it as `void`.
+- 0x13bd2 `knock_retard_clamp` returns the
+  `rx8_clamp_float` result (SH fr0) rather than discarding it as `void`.
 - Knock retard signs settled: the retard is negative, clamped to [-10, 0] deg;
   attack (attack-condition flag set) is -1.0 deg/cycle, slow recovery +0.35 deg
   per 62 counts.
@@ -91,10 +91,10 @@ idempotent) label the knock-control and loop-mode chain end to end:
   knock chain never reads the loop-mode flags.
 
 Full write-up: [`reviews/knock_control/README.md`](reviews/knock_control/README.md); rename map and fix evidence:
-`metadata/knock_loop_labels.json`; design update: `design/README.md` section 5.7;
+`metadata/knock_loop_labels.json`; design doc: `architecture/design/README.md` §5.7;
 pre-change backup: `backups/pre_knock_loop_labels.zip`.
 
-### Knock retard reimplementation — 2026-11-02 (ROADMAP E item 1, PR #13)
+### Knock retard reimplementation (ROADMAP E item 1)
 
 The retard state machine (0x13a60 attack / 0x13b40 slow recovery / 0x13bd2
 clamp, plus `rx8_add_u8_saturate` 0x2478) is reimplemented as host-testable C
@@ -103,11 +103,11 @@ with strict host tests and emulator cross-checks
 ([`tests/test_knock_retard_dynamic.py`](../../../tests/test_knock_retard_dynamic.py);
 ROM's own 0x2068 lookups feed the comparison port). Binary-level evidence from
 the re-verification (literal-pool constants, table scales, RAM write
-reachability) is recorded in the 2026-11-02 addendum of
+reachability) is recorded in
 [`knock_control_report.md`](knock_control_report.md).
 
 
-## Fueling chain labeling — 2026-10-30
+## Fueling chain labeling
 
 `scripts/review_fueling_labels.py` (wired into `scripts/rebuild.sh`, idempotent)
 labels the fueling chain end to end: 39 functions, 150 RAM locations, 1 lookup
@@ -121,7 +121,7 @@ TO8A-F → SH7055F pkg pins 195/197/198/199/200/201. Full write-up:
 [`fueling_control_report.md`](fueling_control_report.md) + `reviews/fueling/` (incl. `injector_pin_mapping.md`).
 Backup: `backups/pre_fueling_labels.zip`; record: `metadata/fueling_labels.json`.
 
-## Intake solenoid actuation — 2026-10-30
+## Intake solenoid actuation
 
 `scripts/review_intake_labels.py` labels SSV/VDI/VFAD/APV/secondary-air actuation
 (26 functions, 26 RAM): GPIO bits verified in the disassembly, package pins from
@@ -131,7 +131,7 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
-## Hardware pinout cross-checks — 2026-10-30
+## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names
 from the supplied `mazda-rx-8-pcm-pinout-series-1.pdf` (v3: colours resolved for all
@@ -140,7 +140,7 @@ ground-side). `hardware/firmware_annotations.tsv` and the `[WIRING REVIEW]` bloc
 all synchronized views carry the same facts. The package-pin ↔ connector-terminal
 hop remains board routing (unresolved; the pinout has no chip-pin data).
 
-## Binary-level verification + report validation — 2026-10-30
+## Binary-level verification + report validation
 
 Every label was re-checked against the raw ROM and disassembly (literal pools,
 constants, descriptors, GPIO regs/masks, dispatch records) — see the
@@ -148,9 +148,9 @@ constants, descriptors, GPIO regs/masks, dispatch records) — see the
 [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10. `scripts/validate_reports.py` (wired into
 `rebuild.sh`) verifies every root `*_report.md`: required sections, ROM hash, every
 function/RAM address in the memory maps against the index/TSVs/ROM. Record:
-`metadata/report_validation.json`. AGENTS.md now mandates both steps.
+`metadata/report_validation.json`. AGENTS.md mandates both steps.
 
-## Patchers (new files, stock ROMs untouched) — 2026-10-30
+## Patchers (new files, stock ROMs untouched)
 
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/`:
 `patch_intake_rpm_window.py` (VDI/SSV RPM-window, RomRaider cal table) and
@@ -160,29 +160,29 @@ input SHA-256 asserted unchanged and decode-verified patches. Defs added to
 `RX8Defs_Copy/RomRaider/rx8_defs.xml`. Static validation only — not hardware-tested;
 flash with `Rx8Man/`. Docs: `Utilities/PATCHER_*.md`, [`reviews/limiter/README.md`](reviews/limiter/README.md).
 
-## Ignition timing labeling — 2026-10-31
+## Ignition timing labeling
 
-Phase 2 ignition-timing pass: thread §9 final-BTDC equation verified/corrected against
+Thread §9 final-BTDC equation verified against
 the disassembly and confirmed bit-exact in the emulator; 15 functions, 22 RAM cells,
 17 tables labeled ([`ignition_timing_report.md`](ignition_timing_report.md),
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`, backup
 `backups/pre_ignition_timing_labels.zip`).
 
-## OS scheduler / CAN / IVT labeling — 2026-10-31
+## OS scheduler / CAN / IVT labeling
 
 Emulator-driven labeling pass (Phase 1 fidelity work): 27 functions, 16 RAM locations,
 9 tables named from dynamically verified behavior (IVT at VBR 0x7fc50, CAN RX interrupt
 IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC sweep 0x6884,
 NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)
-(the "crank ISR 0x803e" attribution there was corrected 2026-11-02 — 0x803e is only the
+(0x803e there is only the
 default VBR=0 IVT slot 0x2c8 target; the live rpm path is 0x7fcc — see the deep dive below);
 labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
 backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
 
-## OS scheduling labeling pass — 2026-11-02
+## OS scheduling labeling
 
 From the deep dive: 33 functions + 10 RAM cells + 6 tables labeled (OS core,
-tick chain, interrupt surface; `ref_osTaskScheduler` 0x9630 upgraded to
+tick chain, interrupt surface; `ref_osTaskScheduler` 0x9630 =
 `os_schedule_task_event`). Write-up: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md)
 §6; labels: `data/labels/60E15120_N3J1E/os_scheduling_labels.json` + appended
 `source_review/accepted_*.tsv` rows; backup: `backups/pre_os_scheduling_labels.zip`.
@@ -190,16 +190,16 @@ ROM untouched.
 
 ## Start here
 
-- [Firmware design document](design/README.md)
+- [Firmware design document](../../architecture/design/README.md)
 - Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md) (tables in `data/maps/<rom-id>/tables/` via `extract_maps.py`; literal-pool scalar constants — e.g. base fuel scalar 0.07196 @0x78170 — in `data/maps/<rom-id>/scalars.*` via `extract_scalars.py`, report §6a; cross-ROM: `data/maps/cross_rom_diff.json` + `cross_rom_scalars.json`), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
-- [Named C view with lookup descriptor and RAM aliases](named/firmware_named.c) — [naming evidence](named/README.md)
+- [Named C view with lookup descriptor and RAM aliases](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c) — [naming evidence](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/README.md)
 - [Combined C listing](decompiled/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)
 - [Readable, compilable helper modules](../../../reverse-engineered/reimplementation/README.md) (`rx8_math`, `rx8_apv`, `rx8_knock`)
 - [Addressed disassembly with instruction bytes](decompiled/firmware_disassembly.asm)
 - [Functions requiring decompiler review](decompiled/decompiler_issues.tsv)
 - [Call graph](decompiled/callgraph.tsv) and [symbols](decompiled/symbols.tsv)
-- [Ghidra project](ghidra_project/RX8_SH2E.gpr), requiring the [local processor configuration](processor/README.md)
+- [Local SH-2E Ghidra processor configuration](../../../utilities/tools/ghidra/processor/README.md) (live project DBs are not committed)
 
 ## Input and architecture
 
@@ -221,9 +221,7 @@ provenance were not established from this dump alone.
 
 Renesas documents this processor family as SH-2E with 512 KiB flash and 32 KiB
 RAM: [hardware manual](https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual).
-The final analysis uses Ghidra 12.1.3 with the supplied SH-2+FPU configuration.
-The earlier RX8_N3J1E project in the local folder used SH-2A and is superseded;
-use **RX8_SH2E**. The downloadable bundle excludes the superseded project.
+The analysis uses Ghidra 12.1.3 with the SH-2+FPU configuration (project **RX8_SH2E**).
 
 ## Recovery and naming
 
@@ -234,8 +232,8 @@ use **RX8_SH2E**. The downloadable bundle excludes the superseded project.
 3. Followed reset/interrupt vectors and analyzed reachable code.
 4. Recovered additional candidates from ROM pointers with register-save prologues,
    then a 99-record, 12-byte dispatch table at 0x5f10c–0x5f5af. Its diagnostic role
-   was inferred at export time; all 99 records are labeled as of 2026-10-31
-   (`uds_mode22_dispatch_report.md`). Candidate addresses and evidence are recorded
+   was inferred at export time; all 99 records are labeled
+   ([`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)). Candidate addresses and evidence are recorded
    in `metadata/`.
 5. Applied 1,250 calibration labels from the local 60E15120 XML definition and
    peripheral labels from the reference project's SH7055 register map.
@@ -275,7 +273,7 @@ The reimplementation modules in
 [`reverse-engineered/reimplementation/`](../../../reverse-engineered/reimplementation/README.md)
 compile cleanly with C11 and strict warnings. Their host tests cover filter
 endpoints, non-finite previous state, threshold boundaries, clamps, NaNs,
-signed zero, and (2026-11-02, `rx8_knock`) every knock-retard attack/recovery
+signed zero, and, for `rx8_knock`, every knock-retard attack/recovery
 path. Run from the repo root:
 
 ```sh

@@ -1,4 +1,4 @@
-# Rev-limiter RE findings + behavior patcher (2026-10-30)
+# Rev-limiter RE findings + behavior patcher
 
 RE pass for the limiter patcher spec. Topology (all verified against the ROM):
 
