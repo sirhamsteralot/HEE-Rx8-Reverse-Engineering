@@ -111,10 +111,11 @@ Removed on 2026-11-03 from:
   per ROM;
 - `romraider/rx8defs-merged-60E15120.xml`,
   `romraider/reviewed-rx8defs-copy/rx8_defs.xml`,
-  `romraider/upstream-rx8defs/rx8_defs.xml` — byte-preserving line splice by
-  [`utilities/scripts/defs-merge/strip_flex_fuel.py`](../../utilities/scripts/defs-merge/strip_flex_fuel.py)
-  (idempotent, `--check` mode; removes the `G-ROM_FLEX` `<rom>` block and every
-  `Flex Fuel` table, incl. commented-out ones).
+  `romraider/upstream-rx8defs/rx8_defs.xml` — one-time byte-preserving line
+  splice on 2026-11-03 (removed the `G-ROM_FLEX` `<rom>` block and every
+  `Flex Fuel` table, incl. commented-out ones); these owned files are not
+  regenerated, and no pipeline re-introduces flex content, so no repeat pass
+  is needed.
 
 Provenance note for the upstream snapshot: `romraider/upstream-rx8defs/rx8_defs.xml`
 was a verbatim snapshot of upstream commit `ff5ab4f` (blob `35ddcf3…`); it is now
@@ -126,9 +127,8 @@ upstream flex-fuel content.
 ## Editor-facing descriptions cleaned (2026-11-03, AGENTS.md rule 6b)
 
 Per rule 6b a `<description>` is user-facing text only — a simplified
-what-the-table-does sentence. A cleanup pass
-([`utilities/scripts/defs-merge/clean_descriptions.py`](../../utilities/scripts/defs-merge/clean_descriptions.py),
-idempotent with `--check`) removed from every `<description>` in all defs here:
+what-the-table-does sentence. A one-time cleanup pass on 2026-11-03 removed
+from every `<description>` in all defs here:
 addresses and ROM-address assertions ("ROM address 0x…, value … (asserted
 against ROM bytes by this script)"), lookup-descriptor/dispatch inventories,
 function/PID/mova references, dated pass markers and JSON correction dumps
@@ -140,9 +140,12 @@ one-line user-facing description ("Enable/disable flag for diagnostic trouble
 code DTC xxxx (block #n)."); descriptions left with no user-facing text were
 removed. Plain what-the-table-does sentences (e.g. "Used to correct the max
 primary injector amount based on barometric pressure …") were kept. The per-ROM
-defs are cleaned at generation time by `extend_defs_all_roms.py`
-(`clean_descriptions.clean_block`); the merged/reviewed/upstream-snapshot files
-were cleaned by the splice script. Provenance stays in the label map, TSVs and
+defs are cleaned at generation time by
+[`extend_defs_all_roms.py`](../../utilities/scripts/defs-merge/extend_defs_all_roms.py)
+(`clean_block`, rule 6b logic inlined in the generator); the
+merged/reviewed/upstream-snapshot files were cleaned by the one-time pass. The
+standalone cleanup scripts were deleted once this generation-time handling made
+them redundant. Provenance stays in the label map, TSVs and
 investigation docs — not in the XML. 4,526 descriptions now carry text; none
 contain provenance markers.
 
