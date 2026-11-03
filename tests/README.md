@@ -50,8 +50,15 @@ Verification that reimplemented/derived behavior matches the original binaries.
   `tests/test_emu_fidelity.py` (E1 f32 rounding, E7 div1/rotcr, interrupt
   masking), `tests/test_compare_traces_renesas.py` (Renesas TSV trace loader),
   `tests/test_knock_retard_dynamic.py` (knock-retard state machine 0x13a60/0x13b40
-  vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port).
-  73 tests as of 2026-11-02, all passing. The 4 tests touching
+  vs the `rx8_knock.c` reimplementation, ROM lookups 0x2068 feeding the port),
+  `tests/test_defs_relabel.py` (2026-11-02 relabel-pass invariants),
+  `tests/test_dtc_pcode_labels.py` (2026-11-03 DTC P-code label pass: SAE J2012
+  decode round-trip, `data/dtc/pcodes.tsv` + `mazda_dtc_table.tsv` coverage and
+  spot checks, per-ROM def DTC names == ROM code at the slot derived from each
+  storageaddress, rule-6b description sweep, generator idempotency).
+  92 tests as of 2026-11-03: 91 passing, 1 pre-existing failure
+  (`test_extract_scalars.py` — a cp1252 byte in committed `scalars.tsv` crashes
+  `read_text()`; fails on main too, unrelated). The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
   (`git lfs pull`); without it they fail on the manifest hash check.
 - Host C tests need a machine with a working C toolchain. The Windows box has
