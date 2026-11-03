@@ -122,6 +122,7 @@ def main():
 
     edits = []
     stats = {"renamed": 0, "suffixed": 0, "descriptions_replaced": 0, "details": []}
+    seen_pairs = set()
     addr_before = []
     for i, (s, e, attrs, rom_key) in enumerate(spans):
         name = attrs.get("name") or ""
@@ -146,8 +147,13 @@ def main():
             stats["renamed"] += 1
         if new_name != f"DTC {dtc_names.obd_code(code)} Enable/Disable {suffix}":
             stats["suffixed"] += 1
-        stats["details"].append({"old": name, "new": new_name,
-                                 "storageaddress": attrs.get("storageaddress")})
+        # one detail row per unique rename pair (the same code repeats across
+        # blocks/suffixes); suffixed entries keep their per-site row
+        pair = (name, new_name)
+        if pair not in seen_pairs or "[additional site" in new_name:
+            seen_pairs.add(pair)
+            stats["details"].append({"old": name, "new": new_name,
+                                     "storageaddress": attrs.get("storageaddress")})
 
     if dry:
         print(f"dry run: would rename {stats['renamed']} DTC tables "
