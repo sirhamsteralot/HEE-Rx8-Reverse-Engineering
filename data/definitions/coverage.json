@@ -1,5 +1,6 @@
 {
   "generated": "2026-11-01",
+  "stock_only_defs": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables stripped from every per-ROM def (incl. 'Table 2D - Stoich Fuel Ratio' @0x6C444); see data/definitions/README.md 'Stock-only defs'",
   "relabel_pass": "2026-11-02 (utilities/scripts/defs-merge/relabel.py; labels from data/labels/60E15120_N3J1E/defs_table_labels.json; cross-ROM via structural match in data/maps)",
   "roadmap_item": "D item 4",
   "upstream": {
@@ -23,6 +24,7 @@
         "RX8Base"
       ],
       "block_tables": 937,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E108",
@@ -74,6 +76,7 @@
         "RX8Base"
       ],
       "block_tables": 904,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C5C0",
@@ -115,6 +118,7 @@
         "60E0FC00"
       ],
       "block_tables": 936,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -157,6 +161,7 @@
         "RX8Base"
       ],
       "block_tables": 966,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -207,6 +212,7 @@
         "RX8Base"
       ],
       "block_tables": 977,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E560",
@@ -247,6 +253,7 @@
         "RX8Base"
       ],
       "block_tables": 919,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
@@ -298,6 +305,7 @@
         "RX8Base"
       ],
       "block_tables": 928,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E108",
@@ -338,6 +346,7 @@
         "RX8Base"
       ],
       "block_tables": 391,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E634",
@@ -380,6 +389,7 @@
         "RX8Base"
       ],
       "block_tables": 403,
+      "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 2,
       "dtc_repair": {
         "dtc_code_table": "0x7E548",
@@ -448,7 +458,7 @@
     {
       "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
       "state": "present",
-      "local_blob": "35ddcf316573a092006db5d33c60238ab9a43ea2",
+      "local_blob": "7fb8a3ef38d064cd4c24c15948c054d9b00f5802",
       "pinned_submodule": "submodules/RX8Defs/RomRaider/rx8_defs.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "pinned_blob": "29afd0000e9634936c6825cf5d0a7045c6505f75",
       "blob_identical_to_pinned": false,
