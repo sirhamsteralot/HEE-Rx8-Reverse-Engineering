@@ -103,9 +103,8 @@ SCALAR_ENTRIES = {
                         "fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c "
                         "path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. "
                         "NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). "
-                        "Editing changes fuel correction + AFR display; this address is inside the "
-                        "app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before "
-                        "flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. "
+                        "Editing changes fuel correction + AFR display. See "
+                        "calibration_extraction_report.md 6a. "
                         "FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the "
                         "new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by "
                         "14.7/new_stoich; leave the maps alone (they are lambda multipliers). For "
@@ -118,8 +117,7 @@ SCALAR_ENTRIES = {
         "description": ("Literal-pool float (0.07196): engine_load x 0.07196 -> "
                         "fuel_load_scale_ffffbed0; the scalar every fuel-volume request scales by "
                         "(0x306e8 in 60E15120_N3J1E). Physical units still candidate. Editing changes "
-                        "base fueling; address is inside the checksum range (D3) - bench-validate "
-                        "before flashing (rule 10). See calibration_extraction_report.md 6a. "
+                        "base fueling. See calibration_extraction_report.md 6a. "
                         "FUEL CHANGE: this is the scalar that changes OPEN-LOOP injected fuel volume "
                         "(bed0 = load x 0.07196 in the 0x306e8 fuel-volume calc); for a different-"
                         "stoich fuel scale it by 14.7/new_stoich (E85: x1.506 -> ~0.1084) and pair "
@@ -241,8 +239,9 @@ def repair_dtc_tables(block, rom_rec):
                 "endian": "big", "expression": "x", "to_byte": "x", "size": "1",
             })
             # short editor-facing description (AGENTS.md rule 6b/6c): DTC meaning
-            # + what this switch byte does + checksum safety note; address/slot
-            # provenance stays in data/dtc/<rom>.tsv and dtc_control_report.md §5
+            # + what this switch byte does, no checksum/bench-validate note;
+            # address/slot provenance stays in data/dtc/<rom>.tsv and
+            # dtc_control_report.md §5
             d = E.SubElement(t, "description")
             d.text = dtc_names.dtc_description(code, f"#{n}")
             added += 1

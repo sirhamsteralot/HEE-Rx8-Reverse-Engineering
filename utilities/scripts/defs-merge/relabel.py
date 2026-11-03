@@ -201,8 +201,10 @@ def _label_desc(label):
     """Short editor-facing description (AGENTS.md rule 6b): a simplified
     description of what the table does — only when accurately known. No
     memory addresses, no structural-match info, no derivation/prior-name
-    dumps, no pass marker; provenance lives in defs_table_labels.json + the
-    investigation docs (rule-10 safety warnings excepted)."""
+    dumps, no pass marker, and no checksum-range / bench-validation safety
+    notes (those live in the README/investigation docs, never in a table
+    <description>); provenance lives in defs_table_labels.json + the
+    investigation docs."""
     desc = (label.get("desc") or "").strip()
     if not desc:
         if label.get("confidence") == "candidate":

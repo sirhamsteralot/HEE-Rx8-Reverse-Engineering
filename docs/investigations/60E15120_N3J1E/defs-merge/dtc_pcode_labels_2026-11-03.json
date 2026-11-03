@@ -2167,6 +2167,77 @@
    "pass": "Rename the DTC enable/disable tables in rx8defs-merged-60E15120.xml from the",
    "bom": true,
    "crlf": false
+  },
+  {
+   "renamed": 0,
+   "suffixed": 1,
+   "descriptions_replaced": 12,
+   "details": [
+    {
+     "old": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+     "new": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+     "storageaddress": "0x7E679"
+    },
+    {
+     "old": "DTC P0128 Enable/Disable #1",
+     "new": "DTC P0128 Enable/Disable #1",
+     "storageaddress": "0x7E68F"
+    },
+    {
+     "old": "DTC P1574 Enable/Disable #1",
+     "new": "DTC P1574 Enable/Disable #1",
+     "storageaddress": "0x7E6C1"
+    },
+    {
+     "old": "DTC P1577 Enable/Disable #1",
+     "new": "DTC P1577 Enable/Disable #1",
+     "storageaddress": "0x7E6C2"
+    },
+    {
+     "old": "DTC P2008 Enable/Disable #1",
+     "new": "DTC P2008 Enable/Disable #1",
+     "storageaddress": "0x7E6C8"
+    },
+    {
+     "old": "DTC P2101 Enable/Disable #1",
+     "new": "DTC P2101 Enable/Disable #1",
+     "storageaddress": "0x7E6CD"
+    },
+    {
+     "old": "DTC P2406 Enable/Disable #1",
+     "new": "DTC P2406 Enable/Disable #1",
+     "storageaddress": "0x7E6E7"
+    },
+    {
+     "old": "DTC U0073 Enable/Disable #1",
+     "new": "DTC U0073 Enable/Disable #1",
+     "storageaddress": "0x7E6EC"
+    },
+    {
+     "old": "DTC U0101 Enable/Disable #1",
+     "new": "DTC U0101 Enable/Disable #1",
+     "storageaddress": "0x7E6ED"
+    },
+    {
+     "old": "DTC U0121 Enable/Disable #1",
+     "new": "DTC U0121 Enable/Disable #1",
+     "storageaddress": "0x7E6EE"
+    },
+    {
+     "old": "DTC U0155 Enable/Disable #1",
+     "new": "DTC U0155 Enable/Disable #1",
+     "storageaddress": "0x7E6EF"
+    },
+    {
+     "old": "DTC U0167 Enable/Disable #1",
+     "new": "DTC U0167 Enable/Disable #1",
+     "storageaddress": "0x7E6F0"
+    }
+   ],
+   "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "pass": "Rename the DTC enable/disable tables in rx8defs-merged-60E15120.xml from the",
+   "bom": true,
+   "crlf": false
   }
  ]
 }
