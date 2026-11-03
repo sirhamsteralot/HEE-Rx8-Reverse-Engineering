@@ -1,13 +1,12 @@
 # AGENTS.md — working rules for this repo
 
 Instructions for AI agents (and humans) working on the HEE Mazda RX-8 PCM
-reverse-engineering effort. Read [`README.md`](README.md) first. Practices here incorporate the
-prior effort's workspace rules (preserved at [`docs/references/prior-effort-agents.md`](docs/references/prior-effort-agents.md))
-and session log ([`docs/learnings.md`](docs/learnings.md)).
+reverse-engineering effort. Read [`README.md`](README.md) first, plus the session
+log ([`docs/learnings.md`](docs/learnings.md)).
 
 ## Repo map (put things where they belong)
 
-- `input/` — raw, uncommitted intake (bins, prior efforts, cloned repos, tool installs). Never `git add` its contents; promote verified artifacts out of it.
+- `input/` — raw, uncommitted intake (ROM dumps, cloned repos, saved pages, tool installs). Never `git add` its contents; promote verified artifacts out of it.
 - `submodules/` — upstream repos (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`) as git submodules, **read-only context only**. Never work, edit, or commit inside them; our promoted copies live in `binaries/`, `data/`, `reverse-engineered/`, etc. To move to a newer upstream commit, update deliberately and commit the gitlink bump in this repo (`git submodule update --remote` is a shared-state action — get approval first).
 - `binaries/` — immutable dumps of **our own acquisitions** only, with `manifest.csv` (SHA-256 + provenance, recursive). Never edit or "fix" a binary in place. Upstream ROMs/captures are referenced via `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/` — do not duplicate them here.
 - `reverse-engineered/disassembly/` — addressed disassembly exports per ROM (`<rom-id>/`). Ghidra `.gar` archives live in the submodule's `Ghidra_Archives/` — reference, don't copy. Live `.gpr/.rep` project DBs are not committed anywhere.
@@ -15,12 +14,12 @@ and session log ([`docs/learnings.md`](docs/learnings.md)).
 - `reverse-engineered/reimplementation/` — clean, compilable C (C11, strict warnings) plus its host tests.
 - `docs/investigations/<rom-id>/` — per-ROM investigation evidence: root `*_report.md` subsystem reports, `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`, `backups/` (pre-change zips, LFS), README.
 - `docs/architecture/` — memory maps, `hardware/` (text pinout `mazda-rx-8-pcm-pinout-series-1.md` derived from ground-truth `docs/references/13Electrical.pdf`, plus `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + stats), emulator docs: `emulator-ui.md`, `emulated-obd.md`, and **`emulator-re-guide.md` — how to test firmware in the simulator with the real-car datalogs (sensor/replay input, watch/OBD output, harness.py function calls, golden-log loop); read it before emulator-based validation work**.
-- `docs/references/` — reference PDFs with trust notes, upstream repo links, prior-effort docs.
+- `docs/references/` — reference PDFs with trust notes and upstream repo links.
 - [`docs/learnings.md`](docs/learnings.md) — accumulated session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (upstream vs reviewed vs merged, provenance in README).
 - `data/labels/<rom-id>/` — label/alias TSVs, rename maps, `validation.json` records, provenance (`input.json`).
 - `data/maps/<rom-id>/` — extracted calibration per ROM: tables (`manifest.json` + `index.tsv` + `tables/*.json`/`*.csv`, from `utilities/scripts/extract_maps.py`) **and** literal-pool scalars (`scalars.json`/`scalars.tsv`, from `utilities/scripts/extract_scalars.py`); cross-ROM reports `data/maps/cross_rom_diff.json` (`diff_maps.py`) and `data/maps/cross_rom_scalars.json` (`extract_scalars.py --all`). See [`data/maps/README.md`](data/maps/README.md).
-- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; paths resolve via its `paths.py` shim to this repo's promoted layout — `reverse-engineered/`, `docs/investigations/`, `data/labels/` — no legacy `input/Tuning-merged` tree needed; Ghidra project DBs go to `${GHIDRA_WORK:-input/ghidra-work}` and are not committed), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `extract_maps.py` + `diff_maps.py` (descriptor scan → `data/maps/`, cross-ROM diff) + `extract_scalars.py` (literal-pool scalar scan → `data/maps/<rom-id>/scalars.*`, cross-ROM scalar report), `emu/` (config-driven SH-2E emulator; one JSON profile per ROM/market/model in `emu/profiles/`).
+- `utilities/scripts/` — `hash_binaries.py`, `rx8-pcm-pipeline/` (Ghidra pipeline; paths resolve via its `paths.py` shim to this repo's layout — `reverse-engineered/`, `docs/investigations/`, `data/labels/`; Ghidra project DBs go to `${GHIDRA_WORK:-input/ghidra-work}` and are not committed), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `extract_maps.py` + `diff_maps.py` (descriptor scan → `data/maps/`, cross-ROM diff) + `extract_scalars.py` (literal-pool scalar scan → `data/maps/<rom-id>/scalars.*`, cross-ROM scalar report), `emu/` (config-driven SH-2E emulator; one JSON profile per ROM/market/model in `emu/profiles/`).
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
 - `tests/` — repo-level harnesses; host unit tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
 
@@ -65,7 +64,6 @@ dumping it at the root.
    table, and they clutter the editor for end users. Rule-10 safety guidance belongs
    in `data/definitions/README.md` and the investigation docs, not in per-table XML.
 6c. **Editor-def passes: keep provenance out of the XML, keep passes re-runnable.**
-   Learned on the 2026-11-02 defs relabel pass (PR #18 review):
    - `<description>` is user-facing text — never use it as a processing tag. Detect
      already-processed entries by content/name against the label map (see
      `is_relabeled` in `utilities/scripts/defs-merge/relabel.py`), and in tests map

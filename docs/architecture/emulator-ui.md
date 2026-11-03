@@ -30,9 +30,9 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
   values through the bus peripherals, so the ROM's own sensor-reading code
   produces the derived values (load, g/rev, etc.) — we never fake firmware state
   directly.
-  - Profile form (E2, done 2026-10-31): `sensors: { "maf": {"via": "adc",
+  - Profile form (E2): `sensors: { "maf": {"via": "adc",
     "channel": "AN3", "scale": 1000, ...}, "rpm": {"via": "atu2", ...}, ... }`
-    (`via: "override"` remains only as the legacy placeholder path).
+    (`via: "override"` is the legacy placeholder path).
   - Channel map per profile from the disassembly labels (`data/labels/`,
     `reviews/`); rpm channel = ATU-II input capture read by 0x77f0/0xcf96.
 - **Drive-cycle replay:** `POST /api/replay` loads a `data/logs/*.csv`, maps its
@@ -54,13 +54,13 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
 - Cross-check: same inputs stepped in the Renesas Simulator Debugger (Windows)
   produce the same register/MMIO state (`compare_traces.py` for PC traces).
 
-## Using it (implemented 2026-10-31)
+## Using it
 
 1. `python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E` → open
    http://127.0.0.1:8080/.
 2. **Sensors** panel: set RPM/MAF/temps/throttle/knock/APV, press *apply* — values
    go to the profile's `sensors` paths, now wired to the real hardware read paths
-   (E2 closed 2026-10-31): `via: "adc"` writes the ADDRn channel the firmware's
+   (E2): `via: "adc"` writes the ADDRn channel the firmware's
    ADC sweep (0x6884) reads; `via: "atu2"` (rpm) drives the crank input capture
    into ICR0AH/ICR10AH.
 3. **Watched emulated outputs** panel shows the profile `watch` list — e.g. the

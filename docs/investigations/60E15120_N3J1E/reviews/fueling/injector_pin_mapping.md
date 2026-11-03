@@ -1,4 +1,4 @@
-# Injector channel → ATU-II → pin mapping investigation (2026-10-30)
+# Injector channel → ATU-II → pin mapping investigation
 
 Question: which firmware injector channel index (the `param_1 & 0xff` of
 `injector_pulse_set_channel` 0x8a68 / `injector_channel_disable` 0x85e4, and the
@@ -117,13 +117,12 @@ each block (channels 0 and 3) with flag 1 — candidate "primary-1" markers.
   one-shot pulse output, GR1x as one-shot offset with DCNT8x).
 - **Not established:** package pin → PCM connector terminal (2M/2J/2G/2D/3A/
   3D) — that is board routing (`hardware/README.md` lists it as unresolved;
-  external ECU pinout pages were 403-blocked from this environment on
-  2026-10-30). So the final fw-channel → terminal table is **candidate-only**
+  external ECU pinout pages are 403-blocked). So the fw-channel → terminal table is **candidate-only**
   until a board trace or an accessible Denso RX-8 PCM pinout confirms which
   of pins 195/197-201 land on which terminal.
 - No ROM, def or wiring data was modified; this file is analysis output only.
 
-## 6. What this resolves in the fueling control (2026-10-30 update)
+## 6. What this resolves in the fueling control
 
 - **Per-rotor fueling:** the injection schedule is two rotor blocks
   (queue at 0xffffa4b4, 0x58-byte blocks); block 0 fires fw channels {0,1,2}
@@ -147,7 +146,7 @@ each block (channels 0 and 3) with flag 1 — candidate "primary-1" markers.
   Temperature Based"(coolant) — consumers of bf36/bf37 are not identified in
   this export (open).
 
-## 7. FSM pinout cross-check (mazda-rx-8-pcm-pinout-series-1.pdf, 2026-10-30)
+## 7. FSM pinout cross-check
 
 The supplied pinout PDF (generated from the 13B electrical book / official FSM
 PCM terminal table) gives **terminal → function** with FSM names. It contains
@@ -195,44 +194,37 @@ beac = FUN_0005c024(bf14) and beb0 = beac*bed0 (fuel volume scaled/final), and
 the cranking pulses live at be58/be5c (0x2fea8). Our disasm-derived labels
 stand; the reference names appear misassigned.
 
-## 8. Pinout v3 update (2026-10-30: colours resolved for every used terminal except 5L/5Z)
+## 8. Wire colours (FSM pinout cross-check)
 
-The updated `mazda-rx-8-pcm-pinout-series-1.pdf` v3 resolves wire colours for every used
-terminal except 5L/5Z (FSM terminal table + wiring-book reads; unmarked = confirmed,
-* = single-source, † = conflict, ³ = high-power only) and one new topology fact:
-**each injector also has a shared W/L +12 V power feed** — the PCM switches the
-low side (TO8A–F, pkg pins 195/197–201), which matches the firmware driving
-one side per channel. Terminal→function is unchanged from v1, so all mappings in
-§7 stand. Control-wire colours now:
+The FSM pinout ([`mazda-rx-8-pcm-pinout-series-1.md`](../../../../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md))
+resolves wire colours for every used terminal except 5L/5Z (FSM terminal table +
+wiring-book reads; unmarked = confirmed, * = single-source, † = conflict, ³ = high-power
+only) and one topology fact: **each injector also has a shared W/L +12 V power
+feed** — the PCM switches the low side (TO8A–F, pkg pins 195/197–201), which
+matches the firmware driving one side per channel. Terminal→function matches §7.
+Control-wire colours:
 
 | Terminal | FSM function | Wire colour | Marker |
 |---|---|---|---|
 | 2M | Front Primary 1 | LG/R | confirmed |
 | 2J | Rear Primary 1 | LG/B | confirmed |
-| 2G | Front Secondary | G/R | confirmed (was B/Y *) |
-| 2D | Rear Secondary | L/B | confirmed (was –†) |
+| 2G | Front Secondary | G/R | confirmed |
+| 2D | Rear Secondary | L/B | confirmed |
 | 3A | Front Primary 2 | L/B | ³ HP-only |
 | 3D | Rear Primary 2 | W/G | ³ HP-only |
+| 1L | SSV | L/Y | confirmed |
+| 1W | VDI | L/B | confirmed |
+| 3J | APV (motor −) | L/R | confirmed |
+| 1S | APV position sensor Vref | R/W | |
+| 3B | APV position sensor signal | R/G | ³ |
+| 3G | APV (motor +) | G/B | ³ |
+| 2P | purge | R/Y | * |
+| 5Z | VFAD | unread | — |
 
-Applied back to the decompiled sources: `hardware/pcm_connections.tsv` gained a
-`wire_colour` column, `hardware/firmware_annotations.tsv` actuator rows updated,
+Applied to the decompiled sources: `hardware/pcm_connections.tsv` carries the
+`wire_colour` column, `hardware/firmware_annotations.tsv` holds the actuator rows,
 and the `[WIRING REVIEW …]` blocks in all synchronized views
-(per-function files, `firmware_decompiled.c`, `firmware_named.c`) rewritten to
-match (marker kept so a Ghidra rebuild reproduces them). Still unresolved: the
-package-pin ↔ terminal hop (board routing — the pinout has no chip-pin data),
-and the purge (2P) / VFAD (5Z) wire colours remain unread.
-
-
-## 9. Pinout v3 delta (2026-10-30, later same day)
-
-v3 re-reads several connector-1/3 colours and resolves the purge wire; injector
-colours and terminal→function are unchanged from v2, so §7/§8 stand. Deltas:
-1L SSV Y/R* → **L/Y** (confirmed); 1W VDI L/B* → **L/B** (confirmed); 3J APV (-)
-L/R* → **L/R** (confirmed); 1S APV power B/W* → **R/W**; 3B APV angle G/B* →
-**R/G**; 3G APV (+) R/W* → **G/B**; **2P purge – → R/Y*** (new); 5Z VFAD still
-unread (one of only two unresolved colours). v3 also confirms the injector
-topology note: all six injectors share a W/L +12V feed; PCM pins are ground-side
-controls (matches TO8A–F low-side drive). v3 Limits: no chip-pin data (board
-routing still the open hop); mirrored colour pairs (e.g. 5C/5F) not independently
-re-verified. Applied to pcm_connections.tsv (wire_colour), firmware_annotations.tsv
-and all [WIRING REVIEW] blocks in the three synchronized views.
+(per-function files, `firmware_decompiled.c`, `firmware_named.c`) match (marker
+kept so a Ghidra rebuild reproduces them). Still unresolved: the package-pin ↔
+terminal hop (board routing — the pinout has no chip-pin data), and the VFAD
+(5Z) wire colour remains unread (the purge 2P is R/Y *).

@@ -21,7 +21,7 @@ steps from the **repo root**.
 
 ## Usage
 
-- Validators (no Ghidra needed; all PASS as of 2026-10-31):
+- Validators (no Ghidra needed; all PASS):
   `python utilities/scripts/rx8-pcm-pipeline/validate_export.py`,
   `validate_reports.py`, `verify_readability.py`, `verify_math_units.py`.
 - Full rebuild (needs Ghidra 12.1.3 + JDK 21+): `GHIDRA_HOME=... bash

@@ -67,7 +67,7 @@ sensors feeding load:
   -> calculate_engine_load 0x33ad2 -> engine_load c0b4 (PID 0x0043)
 ```
 
-### 1.1 Injector channel → rotor → ATU-II → pin (resolved 2026-10-30, see [`injector_pin_mapping.md`](injector_pin_mapping.md))
+### 1.1 Injector channel → rotor → ATU-II → pin (see [`injector_pin_mapping.md`](injector_pin_mapping.md))
 
 - Rotor blocks: queue blocks at 0xffffa4b4; block 0 → fw channels {0,1,2},
   block 1 → {3,4,5} (ROM 0x4e2c8 via `ref_fuelingArrayInit_` 0xf37c) —

@@ -94,10 +94,8 @@ output timers 0x8a68 ref_injectorPulseSet / 0x8814 / 0x8344 (6 channels,
   This is the documented MAF-failure fuelling path; unit interpretation of
   the 0.04/0.26 affine is a candidate, not established.
 - Density cap `FUN_0001a086`: MAF used = min(2-sample buffer average,
-  `f(RPM; tbl 0x69794) x 293.0/(IAT+273) x baro/101.33299`). **Correction:
-  the reference temperature literal is 293.0 K (0x43928000 @0x1a198), not
-  295** — earlier annotations said 295; all synchronized views were corrected
-  in this pass (documentation-only change).
+  `f(RPM; tbl 0x69794) x 293.0/(IAT+273) x baro/101.33299`). **The reference temperature literal is 293.0 K (0x43928000 @0x1a198), not
+  295** (documentation-only; all synchronized views carry 293.0).
 
 ## 4. Manifold pressure is estimated, and baro is real (verified)
 

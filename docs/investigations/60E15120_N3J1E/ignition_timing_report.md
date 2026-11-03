@@ -1,6 +1,6 @@
 # Ignition timing report — 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E)
 
-Date: 2026-10-31 (Phase 2 ignition-timing labeling pass). Target ROM:
+Target ROM:
 `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). Static-analysis disclaimer: findings come from the canonical export +
@@ -10,7 +10,7 @@ tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
 `source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants re-verified in the handlers' literal pools 2026-10-31.
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools.
 
 ## 1. Executive summary
 
@@ -96,7 +96,7 @@ leading_final_timing_clamp_output()  # 0x121fc: a630 = clamp(a634, a64c, lookup(
 Descriptors not present in `romraider_descriptor_matches.json` are labeled
 `candidate_` (thread names are hypotheses until cross-ROM matched).
 
-## 4. Labeling applied (2026-10-31 pass)
+## 4. Labeling applied
 
 - **15 functions** renamed (see `ignition_timing_labels.json`): 0x123da/0x124d6
   cranking blends, 0x121fc/0x12300 final clamps, 0x12630 min-advance select,
@@ -170,11 +170,9 @@ a66c/a670 trim; bc94 DSC base; a91c DSC derate. Tables: section 3.
   application point (final clamp? torque limit?) is partially resolved: torque-loss
   calc reads bc94; flag if a reader appears in later passes.
 
-## 10. Update — 2026-10-31 (initial record of this pass)
+## 10. Binary-level re-verification
 
-### Re-verification pass (2026-10-31, binary level)
-
-Re-checked the pass against raw ROM bytes + disassembly (literal pools resolved;
+The labels are checked against raw ROM bytes + disassembly (literal pools resolved;
 note this disassembly prints the *computed* EA in `@(disp,pc)`, and `mov.w
 @(disp,pc)` **sign-extends** on this core, so 16-bit literals like 0xa5e8 are
 RAM 0xffffa5e8):
@@ -192,10 +190,10 @@ RAM 0xffffa5e8):
   flat-topped table after the descriptor's 0.5/-40 affine map). Confirmed.
 - **Correction:** min-advance fixed constants in 0x12630/0x12754 are
   **-25.0** (0xc1c80000 @0x6d76c/0x6d794) and **-58.5** (0xc26a0000
-  @0x6d770/0x6d774), not -24/-44 as first recorded. Branch structure confirmed
+  @0x6d770/0x6d774). Branch structure confirmed
   in emulator: cranking(aa62==1) && a66c in band -> -25.0; cranking && a66c
   out of band -> lookup(a98c, 0x691a4); else if a750,c9a0 in band or
   load-high a66a -> -58.5; else lookup(a98c, 0x691b8). a66a hysteresis:
   set when c0b4 > 0.5, cleared at <= 0.45 (0x6d780=0.5, 0x6d784=0.05).
-  All prose (report, labels JSON, accepted_*.tsv, decompiled comments) updated.
+  The report, labels JSON, accepted_*.tsv and decompiled comments all carry the corrected values.
 - Base calc 0x11f00 cap constant 80.0 (0x42a00000 @0x6c758/0x6c76c) confirmed.

@@ -1,4 +1,4 @@
-# Cross-ROM differential function labeling (byte-match) — 2026-10-31
+# Cross-ROM differential function labeling (byte-match)
 
 ROADMAP group D item 1 (and feeds C item 6 for 60E0G500). Target: propagate the
 60E15120_N3J1E labels to every other ROM by exact byte matching — no Ghidra run
@@ -46,7 +46,7 @@ addresses; `uds_service_dispatch_table_scan` base 0x68dac → 60E0FC00 **0x6769c
 
 See also [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) —
 the Mode 22 dispatch table + PID handlers located and mapped in all 11 ROMs
-(2026-11-01), using the matches TSV produced here.
+, using the matches TSV produced here.
 
 ## Notes / limits
 

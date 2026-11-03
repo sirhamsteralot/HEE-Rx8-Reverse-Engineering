@@ -1,6 +1,6 @@
 # OS scheduler / interrupt controller / CAN-UDS transport report — 60E15120_N3J1E
 
-Date: 2026-10-31. Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
+Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched — labels only, no binary change). Static-analysis disclaimer: findings below
 come from the canonical export + disassembly + ROM bytes, **plus dynamic execution in
@@ -14,8 +14,8 @@ backup `backups/pre_os_scheduler_can_ivt_labels.zip`.
 
 ## 1. Executive summary
 
-The 2026-10-31 emulator pass (Phase 1 fidelity hardening) produced dynamically verified
-knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled code:
+The Phase 1 fidelity-hardening emulator pass produced dynamically verified
+knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled code:
 
 - The IVT lives at **VBR = 0x7fc50** (set at 0xd206); ROM vector slot = 0x7fc50 + offset.
   All IVT trampolines (0x28c0-0x30d0) jsr the common context-save **0x3238**
@@ -24,8 +24,8 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
   halt loop at **0xa4be**.
 - The OS is cooperative: **0x3e10 `os_init`** sets up the control block at **0xffff7638**
   (task table ptr 0x4990, stack base 0xffff7408) and calls **0x3c2a `os_dispatch`**,
-  which runs **0x3c68 → 0x375c `os_switch_to_task`** (computed jump via task table
-  **0x4998**) or parks in the idle loop **0x3dac**. Task end (**0x3d58
+  which runs **0x3c68 → 0x375c `os_switch_to_task`** (computed jump via the task
+  table at **0x4990**, rec[0].entry at 0x4998) or parks in the idle loop **0x3dac**. Task end (**0x3d58
   `ref_taskEndRoutine_`**) re-enters 0x3c2a. The ISR-exit wake is **0x3db0
   `os_wake_check_context_switch`** (called from `ref_setSR` 0x3934 when
   0xffff763c != 0xffff763e and 0xffff7640 & 0x1000 == 0).
@@ -35,9 +35,10 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
   `can.inject(0x7e0, ...)` raising 0x378 makes a plain `emu.run` move the frame into the
   UDS RX buffer **0xffffddc8** autonomously.
 - Boot waits for **ICR_W (0xffffed18) bit15 = NMI pin level** at 0x8ea (Sh7055h.pdf 7.3.2);
-  the old guessed `io_read_overrides` entry was exactly this pin (E5 closed; SYSC model).
-- Crank/rpm: ch10B compare tick (CMI10B, IVT 0x2c8) → **0x803e `crank_isr_compute_rpm`**
-  (sums ring 0xffff9fd0 → `crank_period_accumulator_ffff9f88`, rpm = 1.2e8/sum into
+  ICR_W bit15 is modeled as the SYSC `nmi_level` peripheral (E5 closed).
+- Crank/rpm: the ch10B compare tick (CMI10B, IVT 0x2c8 at VBR 0x7fc50 → trampoline
+  0x2ec0 → **0x5b3c**) chains 0x75f4 → 0x77f0 → 0x7c68 → **0x7fcc `ref_getCrankAngle`**
+  (appends ring 0xffff9fd0 → `crank_period_accumulator_ffff9f88`, rpm = 1.2e8/sum into
   0xffff9f80); polled path **0x77f0 `crank_capture_poll`** reads ICR0AH/ICR10AH into
   0xffff9fb8/0xffff9fb0. ATU-II ch10 started by TSTR3 bit0; tick enabled by
   **0x7778 `atu_ch10b_tick_enable`** (TIER10 bit2).
@@ -71,7 +72,8 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
 # UDS entry 0x680a0: PCI check 0x683d4, service dispatch 0x6842c, 0x684b4 schedules
 #   service task via ref_osTaskScheduler(2,...); response TX via 0x99b0 desc 0x4e00c
 #   (mb15/0x7e8, buf 0xffffddd0)
-# crank: CMI10B (IVT 0x2c8) -> 0x803e rpm = 1.2e8/sum(ring 0xffff9fd0[6]);
+# crank: CMI10B (IVT 0x2c8 @ VBR 0x7fc50) -> 0x2ec0 -> 0x5b3c -> 0x75f4 -> 0x77f0 -> 0x7c68
+#   -> 0x7fcc ref_getCrankAngle: rpm = 1.2e8/sum(ring 0xffff9fd0[6]);
 #   polled: 0x77f0 reads ICR0AH(0xfffff434)/ICR10AH(0xfffff6d0)
 # ADC: 0x6884 sweep ADDR0H-31H -> RAM 0xffff9ee4+; 0x6744 PFDR->0xffff9ec8
 # WDT: overflow = TCSR OVF flag only; firmware polls and calls 0x31c (keyed 0xa53c,
@@ -83,14 +85,13 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
 | Address | Name | Contents |
 |---|---|---|
 | 0x7fc50 | `ivt_base_vbr` | u32[236] vector table (VBR target) |
-| 0x4998 | `os_task_table` | 18 x 16-byte task records {entry, mask, param, stack 0xffff7410-0xffff7498} |
-| 0x4990 | `os_task_record_base` | task control records (used by 0x375c) |
+| 0x4990 | `os_task_table` | 19 x 16-byte task records {param, stack, entry, mask}, terminator 0x4ac0; rec[0].entry at 0x4998, stack range 0xffff7410-0xffff7498 |
 | 0xd914 | `can_mailbox_mask_table` | 16 x u16; mask = 1<<((mb+8)&0xf) |
 | 0xd7d4 | `injector_channel_map` | 6 x 12-byte {DCNT8x ptr, GR1x ptr, TIER mask} — dynamically confirmed via 0x8a68 |
 | 0x4dffc / 0x4dfec / 0x4e00c | CAN descriptors | RX 0x7e0 (mb14), RX 0x7df (mb13), TX 0x7e8 (mb15, buf 0xffffddd0) |
-| 0x5f10c | `tbl_diag22_dispatch_records_0005f10c` | 99 x 12-byte records; all 99 labeled 2026-10-31 (PID 0x43 record at 0x5f268 -> handler 0x56b8a `diag22_pid0043_engine_load_g_rev`) — see [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
+| 0x5f10c | `tbl_diag22_dispatch_records_0005f10c` | 99 x 12-byte records; all 99 labeled (PID 0x43 record at 0x5f268 -> handler 0x56b8a `diag22_pid0043_engine_load_g_rev`) — see [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
 
-## 4. Labeling applied (2026-10-31 pass)
+## 4. Labeling applied
 
 - **27 functions** renamed in `symbols.tsv`, `function_index.tsv`, `callgraph.tsv`,
   `functions/*.c`, `named/firmware_named.c`, `firmware_decompiled.c`
@@ -103,10 +104,11 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
 
 ## 5. Corrections made in this pass
 
-- `ref_INT_ATU101_IMI10AG` (0x803e) was a misnomer: it is the CMI10B (vec 0x2c8) handler
-  computing rpm from the crank ring — renamed `crank_isr_compute_rpm` (high, dynamic).
-- The old guessed `io_read_overrides` 0xffffed18=0x8000 was ICR_W bit15 = NMI pin level,
-  not a ready-bit — removed from profiles, modeled as SYSC `nmi_level` (E5 closed).
+- `ref_INT_ATU101_IMI10AG` (0x803e) is a misnomer: 0x803e is the default (VBR=0) IVT
+  slot 0x2c8 target, not the live CMI10B handler (see §12); its math computes
+  rpm from the crank ring, hence the name `crank_isr_compute_rpm` (high, dynamic).
+- ICR_W (0xffffed18) bit15 is the NMI pin level, not a ready-bit — modeled as the
+  SYSC `nmi_level` peripheral; profiles carry no read override (E5 closed).
 - 0x31c is a polled subroutine (ends rts, clobbers r0-r4), not an interrupt entry —
   WDT overflow is OVF-flag-only in the emulator; ITI vector slot documented as 0x358 (E3 closed).
 
@@ -123,16 +125,16 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, now labeled in the decompiled
 
 - Every function address verified present in `function_index.tsv`; ROM bytes untouched
   (`rom_unchanged: true`; binaries not modified, `hash_binaries.py --check` unaffected).
-- Dynamic evidence executed in the emulator this session: inject→IVT 0x378→0x11d88→
+- Dynamic evidence executed in the emulator: inject→IVT 0x378→0x11d88→
   0xffffddc8 (test_can_rx_interrupt_autonomous); TX 0x99b0 desc 0x4e00c → 0x7e8
   (test_rcan_rx_tx_through_rom_driver); Mode 22 0x0043 → 0x56b8a (test_mode22_dispatch_pid_0043);
   0x6884 ADC sweep lands channels in RAM (test_adc_read_path_dynamic);
   boot to idle 0x3dac with zero overrides (test_nmi_pin_replaces_guessed_override).
-- `python -m pytest tests/` — 38/38 pass (36 at this pass + 2 added later by the ignition-timing pass; names are cosmetic).
-- Pipeline validators now run from the repo root via
-  `utilities/scripts/rx8-pcm-pipeline/paths.py` (no legacy `input/Tuning-merged`
-  needed): `validate_export.py`, `validate_reports.py` (this report included),
-  `verify_readability.py`, `verify_math_units.py` all PASS as of 2026-10-31.
+- `python -m pytest tests/` — 38/38 pass.
+- Pipeline validators run from the repo root via
+  `utilities/scripts/rx8-pcm-pipeline/paths.py`:
+  `validate_export.py`, `validate_reports.py` (this report included),
+  `verify_readability.py`, `verify_math_units.py` all PASS.
   Ghidra-dependent `rebuild.sh` steps still need `GHIDRA_HOME` + JDK and were
   not run here.
 
@@ -176,44 +178,43 @@ GPIO 0xfffff700 (PBDR 0xfffff738 bit15 heartbeat, PFDR 0xfffff74e).
 - `ref_setSR` (0x3934) keeps its ref_ name (behavior partially dynamic); the 0x3db0 wake
   call site at literal 0x3950 is static evidence.
 
-## 10. Update — 2026-10-31
+## 10. Related dispatch labeling
 
-Initial record of this pass. Same-day follow-up: the UDS/Mode-22 dispatch labeling pass
-([uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)) labeled every record of
-the 0x5f10c table this report introduced, the UDS service table at 0x5eb40 (router 0x68dac,
+The UDS/Mode-22 dispatch labeling ([uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md))
+labels every record of
+the 0x5f10c table, the UDS service table at 0x5eb40 (router 0x68dac,
 which this report's task[2] chain feeds), and the ISO-TP frame dispatcher 0x6842c that
-0x680a0 calls — the transport picture here is now fully named end to end.
+0x680a0 calls — the transport picture is fully named end to end.
 
-## 11. Update — 2026-10-31 (task-table correction, found by the fueling deepening)
+## 11. Task table
 
-Re-derivation from 0x375c `os_switch_to_task`'s disassembly (pool 0x37b0 ->
+Derivation from 0x375c `os_switch_to_task`'s disassembly (pool 0x37b0 ->
 **0x4990**, stride 16 via `shll2`x2, r14 = record+4 used as a stack pointer)
 shows the task table is **19 records based at 0x4990** with layout
 {param, stack, entry, mask}, terminated at 0x4ac0 by {0x04ffffff, 0x00000001, ...}.
-The memory-map row "0x4998 `os_task_table` - 18 x 16-byte records {entry, mask,
-param, stack}" is off by one record and mis-ordered: 0x4998 is rec[0].entry, and
-0x4ab8 (the "task-record dispatch" open item from the knock/fueling reviews) is
+0x4998 is rec[0].entry, and
+0x4ab8 is
 rec[18].entry -> 0x64e8, a thunk {jsr 0x11534; jmp 0x3d58 taskEnd} where 0x11534 is
 the 29-call slow/background task. Byte-verified against the raw ROM
 (0x4990..0x4ad0). Details: [fueling_control_report.md](fueling_control_report.md)
 §10.6.
 
-## 12. Update — 2026-11-02 (sceptical re-check; corrections + pointer to the deep dive)
+## 12. Corrections from the OS scheduling deep dive
 
-The 2026-11-02 deep dive ([os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md))
-re-derived the interrupt/OS plumbing from raw ROM bytes and emulator traces. Corrections to
-this report's earlier statements:
+The deep dive ([os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md))
+re-derived the interrupt/OS plumbing from raw ROM bytes and emulator
+traces:
 
-- **§1/§2/§5 "CMI10B (IVT 0x2c8) → 0x803e `crank_isr_compute_rpm`" is wrong.** The IVT slot
+- **CMI10B handler chain.** The IVT slot
   0x7fc50+0x2c8 points at trampoline 0x2ec0 whose handler is **0x5b3c** (byte-verified:
   TSR10=0xb; then 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc, which does the
   ring-0xffff9fd0 append and rpm = 1.2e8/Σ → 0xffff9f80; plus 0xd716 and 0xcf96, and
   0x7b58 rearms OCR10B from tbl 0xd76d[sector 0xffff9f95*2] & 0x7f — the tick is
   **crank-angle-synchronous**, 36 sectors/720°). 0x803e has **no callgraph callers**; its only ROM
   reference is the default (VBR=0) vector table slot 0x2c8 (u32 at ROM 0x2c8 = 0x803e) —
-  the pre-relocation CMI10B entry, superseded after VBR=0x7fc50 is set at 0xd206. It
-  duplicates 0x7fcc's rpm math for that pre-VBR entry, so the 2026-10-31 rename
-  `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG` is a misnomer for the legacy handler.
+  the pre-relocation CMI10B entry, inactive once VBR=0x7fc50 is set at 0xd206. It
+  duplicates 0x7fcc's rpm math for that pre-VBR entry, so
+  `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG` is a misnomer for that legacy handler.
 - **Unused/fatal vectors**: 117 IVT slots (0x100–0x39c) have real trampolines (all ctx
   word = 0x3238); 98 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
   report via 0xa330, halt 0xa4be / spin 0x535a). Only 19 have real handlers: CMI10B
@@ -222,7 +223,7 @@ this report's earlier statements:
   compares, three ADC EOC banks, CMCSR1 0x5cee, IRQ flags 0x53f6, CAN 0x378/0x37c/0x398.
   WDT ITI 0x358 → 0x5e0c → fatal trap (as E3 said, overflow is polled-only; the ITI
   firing is deliberate halt). Reserved vectors 0x0–0xfc → stubs 0x53a0–0x53c2 → 0x5348.
-- **Scheduler mechanics confirmed/refined**: fresh tasks are entered via `rte` at 0x3848
+- **Scheduler mechanics**: fresh tasks are entered via `rte` at 0x3848
   (push SR=0 + entry), resume via jump table 0x4b34 indexed by ctx[0] − param byte0;
   preemption in 0x39ba fires only when `class > ctrl[0]` as an **unsigned** byte
   (`cmp/hi`) — at boot ctrl[0]=0xff so posts from idle do not set ctrl+6 (dynamically

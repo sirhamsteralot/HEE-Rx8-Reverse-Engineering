@@ -1,9 +1,9 @@
-# 60E15120 definition extension — 2026-09-18
+# 60E15120 definition extension
 
 Updated `RomRaider/rx8_defs.xml` in place for target 60E15120:
 
 - 478 existing calibration tables now document their verified descriptor address, storage type, dimensions and known referencing functions.
-- 103 previously generic axis labels now have names inferred from explicit lookup inputs. They carry `(inferred)`; this does not establish raw/filtered/requested distinctions.
+- 103 axis labels carry names inferred from explicit lookup inputs. They carry `(inferred)`; this does not establish raw/filtered/requested distinctions.
 - Existing top-level table names are retained because they are inheritance keys. Addresses, scaling, dimensions, switch data and all other ROM blocks are unchanged.
 
 The target block retains its existing secondary N3J1E identification even though the examined binary contains N3ZHE at the secondary location. This review does not resolve that identification mismatch. The common base definitions are not generalized from one ROM.
@@ -28,4 +28,6 @@ Editor tables cannot represent arbitrary functions or RAM symbols. Those finding
 
 `table_changes.json` gives per-table edits. `validation.json` records XML parsing and unchanged calibration structure checks. RomRaider's local TableScaleUnmarshaller was inspected: descriptions are supported and nested axes are selected by axis type before applying overrides. An actual RomRaider GUI load/live logging test has not been performed.
 
-`definitions_before_review.zip` preserves both original XML files. The generation script is `reverse_engineered/60E15120_N3J1E/scripts/extend_definitions.py` in the original workspace. It refuses repeated application to an already-extended XML; restore a backup before regenerating. (A copy of that script formerly lived in this repo at `utilities/scripts/rx8-pcm-pipeline/extend_definitions.py`; it was removed on 2026-11-03 as dead — its legacy `RX8Defs/` write path does not resolve in this repo's promoted layout, and the defs flow is now owned by [`utilities/scripts/defs-merge/`](../../../../utilities/scripts/defs-merge/). The outputs it produced are preserved here and in `data/definitions/`.)
+`definitions_before_review.zip` preserves both original XML files. The generation script is `reverse_engineered/60E15120_N3J1E/scripts/extend_definitions.py` in the original workspace. It refuses repeated application to an already-extended XML; restore a backup before regenerating. (The defs flow is owned by
+[`utilities/scripts/defs-merge/`](../../../../utilities/scripts/defs-merge/);
+the outputs of the original generation are preserved here and in `data/definitions/`.)

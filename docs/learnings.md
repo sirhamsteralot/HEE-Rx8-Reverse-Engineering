@@ -1,8 +1,8 @@
-# Learnings — RX-8 PCM RE session log (2026-10-29/30)
+# Learnings — RX-8 PCM RE know-how
 
-Practical lessons from the knock → fueling → intake → patcher passes on
-`60E15120_N3J1E`. See `AGENTS.md` for the standing rules; this file is the
-session-specific know-how. Everything here is backed by artifacts in
+Practical lessons for work on `60E15120_N3J1E` (knock, fueling, intake,
+patcher passes). See `AGENTS.md` for the standing rules; this file is the
+working know-how. Everything here is backed by artifacts in
 `reverse_engineered/60E15120_N3J1E/` (reviews, metadata, validation JSONs).
 
 ## Working method that scaled
@@ -94,15 +94,16 @@ session-specific know-how. Everything here is backed by artifacts in
 
 - Root `*_report.md` files follow `knock_control_report.md`'s 10-section format,
   with a mandatory memory map (function + RAM address tables) and a plain-language
-  §1a after the executive summary (standard since 2026-10-31, AGENTS.md rule 8;
-  style example `ignition_timing_report.md` §1a). Keep historical
-  reports intact; append a dated "Update" addendum for later passes.
+  §1a after the executive summary (AGENTS.md rule 8;
+  style example `ignition_timing_report.md` §1a). Reports state current
+  findings — don't append dated change-log addenda (git history records how
+  they changed).
 - `scripts/validate_reports.py` checks every report (sections, ROM hash, all
   memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
 
-## Emulator build-out (2026-10-31, Phase 1 fidelity pass)
+## Emulator build-out (Phase 1 fidelity)
 
-Hardware facts that the first emulator pass got wrong (all fixed; keep them):
+Hardware facts the emulator must get right:
 
 - **RAM is 0xffff6000-0xffffe000** (32 KiB; design doc §1). A profile with
   ram start 0xffff8000 silently unmapped task stacks at 0xffff74xx — stack
@@ -187,7 +188,7 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
 
   stop; regenerate `opdec.py` from that ROM's disassembly before running it.
 
-## Calibration descriptor scan (2026-10-31, P3)
+## Calibration descriptor scan (P3)
 
 - **Cal region auto-detect**: find `Copr.DENSO` in the ROM above 0x60000; the
   0x1000-aligned block containing it is the cal start (0x6c000 for most ROMs,
@@ -210,7 +211,7 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   same-shape/different-meaning pairs exist (huge float diffs in the report are
   those, not real calibration changes).
 
-## Scalar constants — literal pools (2026-11-02, ROADMAP D11)
+## Scalar constants — literal pools (ROADMAP D11)
 
 - The descriptor scan only finds lookup **tables**. Single float32 calibration
   constants live in **shared literal pools** in the code region (e.g. 0x78170)
@@ -231,23 +232,23 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   Windows cp1252 box it crashes either way (0x90 / 0x97 bytes). Run with
   `PYTHONUTF8=1` and tolerate the cp1252 file, or normalize encodings first.
 
-## Emulator fidelity hardening (2026-10-31, ROADMAP group B)
+## Emulator fidelity hardening (ROADMAP group B)
 
-- **DIV1 needs the Q/M SR bits** (bit8=Q, bit9=M per Sh7055h.pdf fig 2.2). The
-  old impl only set T and did no arithmetic — the ROM's 161 div1 sites (32-bit
-  divide at ref_LongFunc 0x2158) all broke. Full algorithm per the Renesas SH
+- **DIV1 needs the Q/M SR bits** (bit8=Q, bit9=M per Sh7055h.pdf fig 2.2) — it
+  must do the full arithmetic, not just set T; the ROM's 161 div1 sites (32-bit
+  divide at ref_LongFunc 0x2158) all depend on it. Full algorithm per the Renesas SH
   instruction-set reference (shared-ptr.com/sh_insns.html "void DIV1"):
   old_q=Q; Q=MSB(Rn); Rn=(Rn<<1)|T; conditional add/sub by (old_q,M) with
   borrow/carry detect; Q updated; T=(Q==M). Validate with the ROM itself as
   oracle: call 0x2158(r4=dividend,r5=divisor), quotient lands in r4.
-- **ROTCR was aliased to ROTCL** — rotate-right-through-carry executed as
-  rotate-left. 21 ROM sites affected. Separate "rotcr" shift kind now.
+- **ROTCR is a separate shift kind from ROTCL** — rotate-right-through-carry,
+  not rotate-left. 21 ROM sites use it.
 - **FPU is single precision**: round every arithmetic result to f32
   (`_f32(_bits(x))`), and f32-round float args in harness.call (FR regs are
   32-bit). The 0x23b0 filter then matches the reimplementation bit-exact.
 - **Interrupt masking**: prioritized interrupts with level <= SR.I3-I0 are
-  deferred, delivered when ldc/rte lower the mask (SH-2E manual 7.2.5).
-  Previously every interrupt() fired immediately regardless of mask.
+  deferred, delivered when ldc/rte lower the mask (SH-2E manual 7.2.5) — never
+  fire an interrupt immediately regardless of mask.
 - **E6 trace findings**: CAN RX ISR exits via plain RTE (no ref_setSR call), so
   the 0x3db0 wake check never runs on that path. OS tick (ATU-II ch10B CMI10B
   0x2c8) never fires: ROM arms it from task[8] (0x648e→0x759e→0x7778→0x7b58,
@@ -257,7 +258,7 @@ Hardware facts that the first emulator pass got wrong (all fixed; keep them):
   With tick + latch, uds_entry fires autonomously; response TX still needs the
   service task dispatched.
 
-## Renesas Simulator Debugger cross-check (2026-10-31, ROADMAP group B)
+## Renesas Simulator Debugger cross-check (ROADMAP group B)
 
 HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
 `utilities/scripts/emu/` via `compare_traces.py`. Setup + recipes live in
@@ -271,8 +272,8 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   (the file is not cycle-ordered).
 - **No NMI pin model**: Sdsh2e does not simulate the NMI pin, and the ROM
   zeroes ICR_W at 0x8e6 before polling 0x8ea — so from reset the sim takes the
-  non-NMI path. Workaround ROM (formerly `input/60E15120_N3J1E_sim-nmi-nop.bin`, sha256 `4f3e4f56…`,
-  removed in the 2026-11-01 input/ cleanup → recreate by patching 0x8f0 `89 fb` -> `00 09`
+  non-NMI path. Workaround ROM (`60E15120_N3J1E_sim-nmi-nop.bin`, sha256 `4f3e4f56…`,
+  created by patching 0x8f0 `89 fb` -> `00 09`
   in a copy of the stock ROM) NOPs the
   `bt 0x8ea` at 0x8f0 (PC-trace-equivalent). Never commit anything from
   `input/`.
@@ -289,14 +290,14 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   divergence at the `bf` at 0x9d0 reading GPIO PLIOR_W 0xfffff756 bit3 — a
   peripheral-pin default difference (Sdsh2e has no PLIOR model), not a CPU
   bug. Zero CPU-caused divergence in both segments.
-- **Trace format change**: our emulator trace now appends the delay-slot PC
+- **Trace format**: the emulator trace appends the delay-slot PC
   after every branch (`sh2e.py` `_branch`), so a taken branch is two entries
   (branch + delay slot). Golden fixture
   `tests/fixtures/boot-60E15120_N3J1E-200k.trace` regenerated (319731 entries,
   header documents the format); re-verified MATCH after the E1/E7/interrupt/
   delay-slot changes.
 
-## Decompiler triage (2026-10-31, group C item 2)
+## Decompiler triage (group C item 2)
 
 - `triage_export.py` classifies every `non_instruction_ranges.tsv` blob by content AND by
   referrers: the disassembly's `@(0xEA,pc)` operand is the **computed EA**, so grep/scan
@@ -314,7 +315,7 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
 - 0x33b6 is a 2-byte orphan (`7638` + illegal 0x0000): no u32 ref, no branch target, no
   callers — treat 0x33b6-0x348f as data, keep the FUN_ label address-only.
 
-## Fueling deepening + D5 (2026-10-31, group C items 3-4)
+## Fueling deepening + D5 (group C items 3-4)
 
 - Task table is based at **0x4990**, 19 x 16-byte records {param, stack, entry,
   mask}, terminator at 0x4ac0 — NOT "0x4998, 18 records {entry,mask,param,stack}".
@@ -338,7 +339,7 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   use encoding='utf-8' or the edit tool when appending non-ASCII (→, ×) to docs,
   else write_text truncates the file on UnicodeEncodeError.
 
-## Cross-ROM Mode 22 mapping (2026-11-01, ROADMAP group D)
+## Cross-ROM Mode 22 mapping (ROADMAP group D)
 
 - The Mode 22 dispatch table is NOT at a fixed address: family A (60E0E500/
   60E0E700/60E15120/60E1C500/60E1D400/60E0G500 dumps) has 99 records at
@@ -363,7 +364,7 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   returns r0 = response_len + 3. Non-table PIDs return r0 = 3 (NRC 0x31).
 - bus.write16 truncates to 16 bits — do not test 'negative' PIDs above 0xffff.
 
-## OS scheduling deep dive (2026-11-02)
+## OS scheduling deep dive
 
 Full scheduler model in
 [`docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`](investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md).
@@ -408,11 +409,11 @@ Session gotchas worth keeping:
   (= 1<<(class&7)) in byte `0xffff7668[class>>3]`; init list {17, 0} at ROM 0x4af0
   (walked by 0x3f10) shows up after boot as bitmap 0x11000000 (classes 0 and 4)
   and ctx[3] of tasks 0/17 reading 0 (initial credit 1 consumed).
-- **design_graph_stats.py** now reads the task table at base 0x4990, 19 records
+- **design_graph_stats.py** reads the task table at base 0x4990, 19 records
   {param, stack, entry, mask} (terminator 0x4ac0 excluded); all 6 cross-checks
-  still pass and graph_stats.json was regenerated.
+  pass.
 
-## DTC codes & def labels (2026-11-03 pass, ROADMAP D item 6)
+## DTC codes & def labels (ROADMAP D item 6)
 
 - **ROM DTC encoding:** the code table (60E15120 @ 0x7e560, per-ROM bases in
   `data/dtc/*.tsv`) stores the two OBD **mode-03 response bytes** per slot as BE
@@ -420,11 +421,10 @@ Session gotchas worth keeping:
   decode: byte0 bits 7-6 → letter (00 P, 01 C, 10 B, 11 U), bits 5-4 → second digit
   (0/2 SAE-generic, 1/3 manufacturer-specific), low 12 bits → last 3 hex digits.
   So `0x0420` = P0420, `0x2504` = P2504, `0x1260` = P1260 (mfr-specific),
-  `0xC167` = **U0167** — the old def labels "Cxxx" were a high-nibble misread
-  (0xC0>>6 = U, not chassis). P0301/P0302 live in the 0x7e55a prefix table, not
+  `0xC167` = **U0167** (0xC0>>6 = U, not chassis). P0301/P0302 live in the 0x7e55a prefix table, not
   in the slot table.
 - **Mapping artifact:** `data/dtc/pcodes.tsv` (code → 5-char OBD code, class, SAE
-  J2012 text, Mazda manual text). SAE sources cross-checked 2026-11-03:
+  J2012 text, Mazda manual text). SAE sources:
   tekseport/obd2-codes `obd2-codes.csv` @ ddadc77e + foerbsnavi/OBDex
   `data/generic/*_enriched.yaml` @ 3f03bb0. Mazda manual: `input/4EngineControl.pdf`
   (RX-8 "Engine Diagnostics & Control", 2003) DTC TABLE → `data/dtc/mazda_dtc_table.tsv`
@@ -439,12 +439,10 @@ Session gotchas worth keeping:
   0/1) get `[additional site 0xADDR]` suffixes; commented-out blocks untouched;
   re-run = no-op; pass log deduped per rename pair. Per-ROM defs get the names at
   generation time via `repair_dtc_tables()` (`dtc_names.py` shared decode/desc).
-  Descriptions follow rule 6b: `DTC P0420 - <Mazda/SAE meaning>. <gate meaning>`.
-  (Correction: the pass initially appended a `<rule-10 checksum-range note>` to
-  every DTC switch-byte description — removed again the same day; rule 6b forbids
-  checksum-range/bench-validate text in `<description>`, it is not a table
-  description. The enable blocks do sit inside the checksummed range
-  0x2000-0x7ffff, but that fact lives in the investigation docs, not the defs.)
+  Descriptions follow rule 6b: `DTC P0420 - <Mazda/SAE meaning>. <gate meaning>`
+  — checksum-range/bench-validate text never goes in a `<description>`
+  (it is not a table description). The enable blocks do sit inside the checksummed range
+  0x2000-0x7ffff, but that fact lives in the investigation docs, not the defs.
 - **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
   on re-run (writes the file even when normalization-only) — check `git diff` after
   running it.

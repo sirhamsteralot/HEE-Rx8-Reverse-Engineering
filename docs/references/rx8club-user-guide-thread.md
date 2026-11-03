@@ -14,7 +14,7 @@
   → we hold upstream/reviewed/merged copies in `data/definitions/romraider/`;
   upstream repo = `submodules/RX8Defs`.
 - Ghidra archives of the USDM 6-port ROM → `submodules/Mazda_RX8_PCM_ReverseEngineering/Ghidra_Archives/`
-  (the `.gar` files we previously held; now referenced via the pinned submodule).
+  (referenced via the pinned submodule Ghidra_Archives).
 - Rx8Man (CAN/J2534 flash read/write) → `submodules/Rx8Man`.
 - Launch-control / flex-fuel patcher lives in the upstream repo's `Utilities/`
   (our local versions in `utilities/scripts/patchers/`).
@@ -32,7 +32,7 @@
 | 60E1D300 | N3J1EL | 6-port MT |
 | 60E1D400 | N3J1EM | 6-port MT |
 | 60E1B800 | (two N3* strings seen) | 2005 US 6-port MT, unsupported by tools |
-| 60E0G500 | N3ZHEC | EU 6-port 2004 — **now held as `binaries/dumps/60E0G500_N3ZHEC.bin`** (fw/cal verified 2026-10-31); per-table addresses below verified against that ROM |
+| 60E0G500 | N3ZHEC | EU 6-port 2004 — **held as `binaries/dumps/60E0G500_N3ZHEC.bin`** (fw/cal verified); per-table addresses below verified against that ROM |
 
 Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepancy — do not "fix").
 
@@ -75,9 +75,9 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 - Rev limit function `0xeefe`, rev-limit cal `0x6da4c`, RPM signal pointer `0xef5a`,
   fuel-cut function pointer (listed in patcher output).
 - DTC display chars: 140-word (2-byte) array in RAM.
-- **Cross-check done 2026-10-31 against `submodules/.../Stock_ROMs/60E0FC00.bin`:**
+- **Cross-checked against `submodules/.../Stock_ROMs/60E0FC00.bin`:**
   bytes at `0xef5a` contain `b594` (low half of `0xffffb594`) — consistent;
-  `0x6da4c`/`0xeefe` hold plausible cal/code bytes; `0x2000` = `"60E0FC00"` firmware ID — matches our convention.
+  PLACEHOLDER; `0x2000` = `"60E0FC00"` firmware ID — matches our convention.
 
 ### 6. Engine-load semantics (relevant to fueling/load investigations)
 
@@ -157,14 +157,14 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 ### 11. Inline definition addresses
 
 `rx8club-inline-defs.tsv` (19 unique `<table>` name/address entries, mostly N3ZHEC
-fan/lambda/CL-fuel tables) — **verified 2026-10-31 against our
+fan/lambda/CL-fuel tables) — **verified against our
 `binaries/dumps/60E0G500_N3ZHEC.bin`**: all addresses hold plausible data
 (fan ECT 96.0 °C / hysteresis 3.0, lambda limits ≈0.85/1.05). Cross-check against
 `data/definitions/`, never copy in.
 
 ### 12. OCR of the thread's screenshots (pages 2–3) — `rx8club-ocr/`
 
-Raw per-image OCR text is in `rx8club-ocr/` (RapidOCR, 2026-10-31; noisy on small UI
+Raw per-image OCR text is in `rx8club-ocr/` (RapidOCR; noisy on small UI
 text — verify before use). Useful finds:
 
 - **Ghidra decompile of `getMode22EngineLoad` (60E0FC00)**: `if (injectors_off_flag)

@@ -1,7 +1,7 @@
-# emu/ — SH-2E emulator (ROADMAP Phase 1 — implemented 2026-10-31)
+# emu/ — SH-2E emulator (ROADMAP Phase 1 — implemented)
 
 Config-driven emulator for running RX-8 PCM ROM images and validating findings
-dynamically. Python 3, stdlib only. **Status 2026-10-31: boot of 60E15120_N3J1E
+dynamically. Python 3, stdlib only. **Status: boot of 60E15120_N3J1E
 passes CAN init (RCAN model) and parks in the main idle loop 0x3dac clean, no
 unknown opcodes; WDT serviced by the firmware's own poll path (PB15 heartbeat
 logged); golden 200k-instruction PC trace reproduces byte-exact in tests
@@ -74,7 +74,7 @@ boot smoke test on the real ROM. `python -m pytest tests/test_phase1_dynamic.py`
 knock clamp 0x13bd2, injector map 0xd7d4 -> ATU-II 8A-8F, ADC read path, RCAN
 RX/TX through the ROM's own driver, Mode 22 dispatch).
 
-## Why not QEMU/Unicorn (checked 2026-10-31)
+## Why not QEMU/Unicorn
 
 - **QEMU** `target/sh4` models only the SH-4 family (SH7750/7751R/7785…); there is
   no SH-2E/SH7055 CPU model and no SH7055 SoC — the ATU-II/PFC/WDT/RCAN peripherals
@@ -112,7 +112,7 @@ changes or a new opcode is implemented:
 4. Record the result (date, N, tool version, MATCH/divergence) in the investigation
    doc for the change. A trace that only we produce is not validated.
 
-Status 2026-10-31 (updated): the Renesas toolchain **is now installed** (HEW
+Status: the Renesas toolchain **is installed** (HEW
 9.4.3, SuperH RISC engine Simulator/Debugger V.9.10.00 via `Sdsh2e.dll`
 V5.10, SH7055F device files present under `System/Pg/Renesas/SH/Hardware/SH-2E/`).
 A workspace/project (SH-2E / SH7055F, big-endian) and an **SH-2E Simulator**
@@ -145,7 +145,7 @@ starting `PTR` — and extracts the architectural PC sequence itself: execute-st
 rows (Pipeline contains `E`) with an instruction, sorted by Cycle; plain traces
 use the first `0x...` hex per line).
 
-**Result 2026-10-31 (external cross-check DONE):** with the simulator's NMI pin
+**Result (external cross-check):** with the simulator's NMI pin
 left at its default LOW, the SH7055 ROM parks in the boot NMI-poll loop at
 0x8ea (BT 0x8ea at 0x8f0); the then-saved trace (`input/renesas.trace`, 174762
 executed instructions, buffer wrapped) is exactly that 4-PC loop
@@ -179,8 +179,8 @@ run — the write did not land; re-do it after reset and confirm with `memory_di
 only the SH-2A/SH-2 sims do), and the ROM itself zeroes ICR_W at 0x8e6
 (`mov.w r5(=0),@r4`, r4=0xffffed18) right before the 0x8ea poll — so the pin can
 never read high in this simulator and the boot always parks at 0x8ea.
-Workaround: load a sim-only patched ROM (recreate with the 2-byte patch below; the patched file
-`input/60E15120_N3J1E_sim-nmi-nop.bin` was removed in the 2026-11-01 input/ cleanup)
+Workaround: load a sim-only patched ROM (create it with the 2-byte patch below; the patched file
+`60E15120_N3J1E_sim-nmi-nop.bin` is not committed
 (2-byte patch: `bt 0x8ea` at 0x8f0 `89 fb` -> `nop` `00 09`; sha256
 4f3e4f56ea3a8d40e0c66a77a071a8ca2b08a83335dd1346154ce32f07688f6b) instead of the
 stock ROM. Verified PC-trace-equivalent: our emulator on the patched ROM with
@@ -196,7 +196,7 @@ sim: download the patched .bin at 0x0, then:
 3. `reset`, then **`go 0xd5fa`** — stops at the CAN-status poll entry; the
    buffer now holds the whole boot (reset 0x8b8 -> 0xd5fa, ~105k entries).
 4. Trace window: right-click > Save As -> input/renesas-boot.trace.
-**Result 2026-10-31 (full-boot external diff DONE):** with the patched ROM,
+**Result (full-boot external diff):** with the patched ROM,
 `sdb 0xD5FA` + `go` captured the boot from reset. Our trace now also logs
 delay-slot PCs (`_branch` appends pc+2; golden fixture regenerated, 319731
 entries, 61/61 tests). Diff vs `input/renesas-boot.trace`:
@@ -213,7 +213,7 @@ Diff with:
 `memory_fill` = MEMORY_FILL (`memory_fill <start> <end> <data> [mode]`; abbrev `mf`); GUI alternative: View >
 CPU > Memory (Ctrl+M) -> address 0xFFFFED18 -> edit the word to 8000. Then diff
 against our 200k golden with the same one-liner.
-Our side: the 2026-10-31 fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
+Our side: the fidelity fixes (E1 f32 rounding, E7 div1/rotcr,
 interrupt masking) were re-verified — `emu.py --profile 60E15120_N3J1E
 --cycles 200000 --trace` still reports **MATCH 200000 steps** against
 `tests/fixtures/boot-60E15120_N3J1E-200k.trace` (self-check; external diff still
@@ -222,7 +222,7 @@ pending).
 ## Limits (honest)
 
 Full list with closure plans in **ROADMAP.md -> "Fidelity limits & known
-discrepancies"** (items E1-E8). Summary (updated 2026-11-01):
+discrepancies"** (items E1-E8). Summary:
 
 - CPU implements the corpus-validated opcode subset; boot stops at the first
   unimplemented instruction (reported, not mis-executed). `interrupt()` honors
@@ -230,7 +230,7 @@ discrepancies"** (items E1-E8). Summary (updated 2026-11-01):
   (x/0 = inf, 0/0 = NaN); `fmov.s` handles @rN+/@-rN/@(disp,rN)/@(r0,rN);
   `sts`/`lds` cover fpscr/fpul.
 - FPU results are rounded to float32 per op and harness float args are f32
-  (E1 closed 2026-10-31); exception modes (inexact/overflow traps) are still
+  (E1 closed); exception modes (inexact/overflow traps) are still
   not modeled.
 - Peripheral bases are now from `symbols.tsv` (RCAN0 0xffffe400, RCAN1
   0xffffe600, ATU-II 0xfffff400, SCI 0xfffff000, ADC 0xfffff800, WDT 0xffffec10,
@@ -240,15 +240,15 @@ discrepancies"** (items E1-E8). Summary (updated 2026-11-01):
   closed). Remaining: WDT IVT vector slot (E3 - the firmware polls TCSR and
   calls its service routine 0x31c itself; E3 closed — WDT ITI = vector 214 =
   IVT offset 0x358), full RCAN fidelity beyond the diag
-  path; the guessed `io_read_overrides` are gone (E5 closed - the 0xffffed18
-  entry was the NMI pin level, now SYSC). Timers: ATU-II ch10B tick (CMI10B ->
+  path; profiles carry no read overrides (E5 closed - the 0xffffed18
+  entry is the NMI pin level, modeled as SYSC). Timers: ATU-II ch10B tick (CMI10B ->
   0x2c8) and the CAN RX interrupt (0x378 on inject) fire and run the scheduler /
   CAN poll autonomously; the OS task context switch (0x3db0 wake via ref_setSR on
   ISR exit) is still not triggered (E6 remainder), so UDS *response* TX is
   driven via the profile `uds` entry points. `div1` (full Q/M SR-bit algorithm)
   and `rotcr` are fixed and validated vs the ROM's own divide routine (E7
-  closed 2026-10-31); "cycles" are still not cycle-accurate time.
-- E8 open (2026-11-01): the opcode table `opdec.OPMNEM` is keyed on full 16-bit
+  closed); "cycles" are still not cycle-accurate time.
+- E8 open: the opcode table `opdec.OPMNEM` is keyed on full 16-bit
   words from the 60E15120 corpus only (9,902 entries), so family-B ROMs
   (60E0FB00/60E0FC00/60E1B900/60E32000_*) contain `mov.l @(disp,pc)` encodings
   absent from it (467-888 distinct words per ROM in the code region; verified
@@ -257,7 +257,7 @@ discrepancies"** (items E1-E8). Summary (updated 2026-11-01):
   but diag dispatch is not dynamically executable yet. See ROADMAP register E8
   and docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md.
 
-## 2026-10-31 fidelity pass (ROADMAP group B)
+## Fidelity pass (ROADMAP group B)
 
 - E7 closed: full DIV1 (Q/M SR bits 8/9) + ROTCR direction fixed; validated
   against the ROM's own division routine (ref_LongFunc 0x2158).
