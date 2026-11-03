@@ -73,4 +73,4 @@ full dynamic sweep of all 99 PIDs through ROM 0x5774c (r0 == rlen+3, ring length
 mask rejection on all 14 restricted records) and dynamic service routing through 0x68dac
 (session-bit mask `record[8] & (1 << DAT_ffffde20[0])` confirmed; unknown service -> r0=1).
 Durable tests added: `test_mode22_dispatch_full_sweep`, `test_uds_service_router_routes`.
-Result: no function label changed; `pytest tests/` 61/61; validators PASS.
+Result: no function label changed; `pytest tests/` and the validators PASS.

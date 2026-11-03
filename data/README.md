@@ -4,20 +4,14 @@ Machine-readable artifacts extracted from (or describing) HEE binaries.
 
 ## Layout
 
-- `definitions/` — ECU tuning definitions; see [`definitions/README.md`](definitions/README.md)
-  for provenance, upstream commit citations, per-ROM defs and the D8 dedupe record.
-  Upstream originals live in `submodules/RX8Defs/` (pinned `1b3aea2…`); local copies
-  exist only where they differ from the pinned tree.
-  - `definitions/romraider/per-rom/` — one standalone RomRaider def per dumped ROM (all 14; generated, see `coverage.json`).
-  - `definitions/romraider/upstream-rx8defs/` — upstream `equinox311/RX8Defs` RomRaider defs snapshot @ `ff5ab4f` (merge base).
-  - `definitions/romraider/reviewed-rx8defs-copy/` — locally reviewed defs.
-  - `definitions/romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM `60E15120_N3J1E` (merge records in `docs/investigations/60E15120_N3J1E/defs-merge/`).
+- `definitions/` — ECU tuning definitions (RomRaider/ECUFlash XML): per-ROM defs, the
+  reviewed merged 60E15120 def, upstream snapshots. See
+  [`definitions/README.md`](definitions/README.md) for layout, provenance and the
+  D8 dedupe record.
 - `labels/<rom-id>/` — label/alias records for a ROM: `calibration_labels.tsv`,
   `*_labels.json`, `integrated_names.json`, `accepted_*_aliases.tsv`, `input.json`
-  (ROM hash/IDs), `validation.json` records, export logs. Note: the `CAL_DTC_xxxx_…`
-  labels in `calibration_labels.tsv` keep the upstream XML names in
-  `original_name` (provenance); the defs name those tables with the standard
-  OBD code (`DTC P0420 Enable/Disable #1`) — mapping in [`dtc/pcodes.tsv`](dtc/pcodes.tsv).
+  (ROM hash/IDs), `validation.json` records, export logs. `CAL_DTC_xxxx_…` rows keep the upstream XML name in
+  `original_name`; the defs use the standard OBD code (`DTC P0420 Enable/Disable #1`) — mapping in [`dtc/pcodes.tsv`](dtc/pcodes.tsv).
 - `dtc/` — extracted DTC tables per ROM (`<rom-id>.tsv`, with the standard 5-char
   `obd_code`), the defs audit (`defs_audit.tsv`), the code→OBD-code mapping with SAE
   J2012 + Mazda workshop-manual descriptions (`pcodes.tsv`), and the parsed Mazda
