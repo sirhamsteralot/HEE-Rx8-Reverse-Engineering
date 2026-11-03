@@ -61,7 +61,7 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
 - **"Fully disabling a DTC takes multiple writes" — confirmed (§3a):** enable#1
   (0x7e678) gates MIL + aging, enable#2 (0x7e704) gates the Mode 03 list and freeze
   frame, enable#3 (0x7e790) is a bitmask gating set/confirm/heal paths, plus
-  confirmation mask 0x7e81c and monitor-source mask 0x7e29e. Stock example C073
+  confirmation mask 0x7e81c and monitor-source mask 0x7e29e. Stock example C073 (= U0073 on a standard scanner; def label now `DTC U0073 …`, §5b)
   (slot 0x74: #1=0, #2=1) is still reported by Mode 03 while MIL stays off —
   proven dynamically in the emulator (§3a, `dynamic_multigate_log.txt`).
 - **Defs accuracy (§5):** the per-rom defs are **correct for 60E0FC00, 60E0G500_N3ZHEC,
@@ -103,8 +103,8 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
   - **#3** = a small bitmask of "which internal actions are allowed" (set / confirm
     / store / heal / report), not a simple on-off.
   - So **fully disabling a DTC means writing #1=0 AND #2=0** (and clearing the #3
-    bits if you also want to stop it being set at all). Stock example: C073 ships
-    with #1=0 but #2=1, so a stored C073 does *not* light the lamp but *still shows
+    bits if you also want to stop it being set at all). Stock example: C073 (U0073) ships
+    with #1=0 but #2=1, so a stored C073 (U0073) does *not* light the lamp but *still shows
     up in Mode 03* — verified in the emulator.
 
 ## 2. How it works (condensed pseudocode)
@@ -184,7 +184,7 @@ P0076/P0077 disabled); #3 holds small feature codes (0x02/0x03/0x0a/0x0f/0x2f/�
 ### 3a. "Fully disabling a DTC takes more than one byte" — verified
 
 Fully disabling a DTC takes more than one byte. Each gate below was confirmed at
-disassembly level and dynamically in the emulator using stock slot 0x74 = C073
+disassembly level and dynamically in the emulator using stock slot 0x74 = C073 (U0073; the raw mode-03 bytes `C0 73`)
 (stock bytes: enable#1=0, enable#2=1, enable#3=0x0e). In plain language, the three
 per-DTC switch bytes in the defs are:
 

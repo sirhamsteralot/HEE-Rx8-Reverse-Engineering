@@ -88,12 +88,18 @@ for t in target.findall('table'):
    if old!=str(n):
     t.set(key,str(n));repairs.append({'table':t.get('name'),'field':key,'old':old,'new':str(n),'descriptor':hex(d),'basis':'unique ROM data and axis pointer match'})
 # Missing target DTC templates can be expressed locally with the upstream byte format.
+# DTC table names carry the standard OBD code since 2026-11-03 ("DTC P0300 ...");
+# accept both that and the legacy raw-hex form ("DTC 0300 ...").
+def _base_dtc_template():
+ for cand in ('DTC P0300 Enable/Disable #1','DTC 0300 Enable/Disable #1'):
+  if cand in base:return base[cand]
+ raise KeyError('no DTC template in base block')
 seen=collections.Counter()
 for t in target.findall('table'):
  name=t.get('name');seen[name]+=1
  if name.startswith('DTC ') and (name not in base or seen[name]>1):
   if seen[name]>1:t.set('name',name+' [additional site '+hex(addr(t))+']')
-  for k,v in base['DTC 0300 Enable/Disable #1'].attrib.items():
+  for k,v in _base_dtc_template().attrib.items():
    if k!='name':t.set(k,v)
   note=E.SubElement(t,'description');note.text='[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.'
   repairs.append({'table':t.get('name'),'basis':'self-contained upstream DTC byte template; distinct name for duplicate site'})
