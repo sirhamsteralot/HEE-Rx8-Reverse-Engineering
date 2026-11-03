@@ -88,20 +88,31 @@ for t in target.findall('table'):
    if old!=str(n):
     t.set(key,str(n));repairs.append({'table':t.get('name'),'field':key,'old':old,'new':str(n),'descriptor':hex(d),'basis':'unique ROM data and axis pointer match'})
 # Missing target DTC templates can be expressed locally with the upstream byte format.
-# DTC table names carry the standard OBD code since 2026-11-03 ("DTC P0300 ...");
-# accept both that and the legacy raw-hex form ("DTC 0300 ...").
-def _base_dtc_template():
- for cand in ('DTC P0300 Enable/Disable #1','DTC 0300 Enable/Disable #1'):
-  if cand in base:return base[cand]
- raise KeyError('no DTC template in base block')
+# Since 2026-11-03 DTC table names carry the standard 5-char OBD code
+# ("DTC P0300 Enable/Disable #1"); this script supports ONLY that form — any
+# DTC name that does not conform is stale and must be updated first
+# (utilities/scripts/defs-merge/relabel_dtc_names.py), so fail loudly instead
+# of silently processing legacy raw-hex names.
+DTC_NAME_RE=re.compile(r'^DTC [PCBU][0-9A-F]{4} Enable/Disable #\d( \[additional site 0x[0-9A-Fa-f]+\])?$')
+def _require_new_dtc_name(name,where):
+ if not DTC_NAME_RE.match(name or ''):
+  raise ValueError(f'{where}: non-conforming DTC table name {name!r}; expected '
+                   f'"DTC <5-char OBD code> Enable/Disable #N" — update the def first '
+                   f'(utilities/scripts/defs-merge/relabel_dtc_names.py)')
+if 'DTC P0300 Enable/Disable #1' not in base:
+ raise KeyError('base block has no "DTC P0300 Enable/Disable #1" template — '
+                'base def predates the 2026-11-03 P-code labels; update it first')
+_base_dtc_template=base['DTC P0300 Enable/Disable #1']
+for t in target.findall('table'):
+ if t.get('name','').startswith('DTC '):_require_new_dtc_name(t.get('name'),'target 60E15120')
 seen=collections.Counter()
 for t in target.findall('table'):
  name=t.get('name');seen[name]+=1
  if name.startswith('DTC ') and (name not in base or seen[name]>1):
   if seen[name]>1:t.set('name',name+' [additional site '+hex(addr(t))+']')
-  for k,v in _base_dtc_template().attrib.items():
+  for k,v in _base_dtc_template.attrib.items():
    if k!='name':t.set(k,v)
-  note=E.SubElement(t,'description');note.text='[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.'
+  note=E.SubElement(t,'description');note.text='DTC enable/disable byte; identity and enable/disable semantics verified at ROM-binary level (docs/investigations/60E15120_N3J1E/dtc_control_report.md sections 2/5). Additional sites have distinct names to avoid inheritance-key collisions.'
   repairs.append({'table':t.get('name'),'basis':'self-contained upstream DTC byte template; distinct name for duplicate site'})
 # This pre-existing entry has no base template. Recover its unique scaled descriptor.
 t=next(x for x in target.findall('table') if x.get('name')=='Alternator Diagnostic Voltage Delta to DC')
