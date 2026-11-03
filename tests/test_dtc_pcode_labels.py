@@ -12,8 +12,9 @@ Invariants checked against the artifacts on disk:
     the merged def is named "DTC <5-char code> Enable/Disable #N", and its u16 code
     equals the ROM code table entry at the slot derived from its storageaddress
     (address traceability, rule 5; audit: data/dtc/defs_audit.tsv = 0 mismatches);
-  * rule 6b: DTC <description>s in the per-ROM defs are short, carry the rule-10
-    checksum safety note, and contain no per-table storage address;
+  * rule 6b: DTC <description>s in the per-ROM defs are short, contain no
+    per-table storage address, and carry no checksum-range / bench-validate
+    note (rule-10 safety guidance lives in docs, not in editor-facing XML);
   * idempotency: re-running repair_dtc_tables on the regenerated 60E15120 block
     reproduces identical DTC table names.
 """
@@ -164,10 +165,12 @@ def test_per_rom_dtc_names_match_rom_codes(xml):
         assert codes[slot] == code, (
             f"{name} @ {addr}: def code {dtc_names.obd_code(code)} != ROM "
             f"{dtc_names.obd_code(codes[slot])} at slot {slot}")
-        # rule 6b: short description, checksum safety note, no per-table address
+        # rule 6b: short description, no per-table address, no checksum /
+        # bench-validate note (repo-process text must not reach the editor)
         assert desc, f"{name}: no description"
-        assert "bench-validate" in desc, f"{name}: missing rule-10 safety note"
-        assert not re.search(r"0x[0-9A-Fa-f]{4,}", desc.replace("0x2000-0x7ffff", "")), \
+        assert "bench-validate" not in desc and "checksum" not in desc.lower(), \
+            f"{name}: rule-10 note in description: {desc!r}"
+        assert not re.search(r"0x[0-9A-Fa-f]{4,}", desc), \
             f"{name}: storage address in description: {desc!r}"
         # description names the DTC with its (Mazda-preferred) meaning
         pc = dtc_names.load_pcodes()[code]

@@ -42,10 +42,6 @@ GATE_DESC = {
     "#3": "#3 is a feature bitmask, not on/off (0x02 set path, 0x04/0x08 force store, "
           "0x10 heal-clear, 0x20 reportable).",
 }
-SAFETY = ("Byte sits inside the checksummed flash range (0x2000-0x7ffff) - "
-          "bench-validate before flashing (AGENTS.md rule 10).")
-
-
 def obd_code(u16):
     """BE u16 DTC as stored in the ROM -> 5-char OBD code ('P0420', 'U0167')."""
     b0 = (u16 >> 8) & 0xFF
@@ -101,8 +97,9 @@ def dtc_description(code, suffix_no):
     the Mazda workshop-manual wording when the manual lists the code (vehicle-
     specific ground truth, e.g. P0335 = eccentric shaft position sensor; P1 codes
     only the manual defines), else the SAE J2012 text for generic codes — plus
-    what this switch byte does and the rule-10 checksum safety note (the only
-    permitted address-range text)."""
+    what this switch byte does. No checksum-range or bench-validation text:
+    <description> is end-user-facing and must not carry repo-rule notes
+    (AGENTS.md rule 6b)."""
     pc = load_pcodes().get(code)
     c5 = pc["obd_code"] if pc else obd_code(code)
     mazda = pc.get("mazda_manual_description") if pc else ""
@@ -115,4 +112,4 @@ def dtc_description(code, suffix_no):
         head = f"DTC {c5} (manufacturer-specific code, no SAE J2012 or Mazda manual definition)."
     else:
         head = f"DTC {c5}."
-    return f"{head} {GATE_DESC[suffix_no]} {SAFETY}"
+    return f"{head} {GATE_DESC[suffix_no]}"
