@@ -75,3 +75,10 @@ copy/promote it into the proper home with provenance:
 | Data logs | `data/logs/` (golden fixtures for the emulator's virtual OBD port) |
 | Tune containers/notes | `data/tunes/` (context only, never flashed) |
 | Reusable script | `utilities/scripts/` |
+
+2026-11-03: `4EngineControl.pdf` (Mazda RX-8 workshop manual "RX8 – Engine
+Diagnostics & Control", PDF created 2003-11-21) received. Its DTC TABLE section was
+parsed to the tracked `data/dtc/mazda_dtc_table.tsv` and merged into
+`data/dtc/pcodes.tsv` (Mazda wording preferred in def descriptions) — see
+`docs/investigations/60E15120_N3J1E/dtc_control_report.md` §5b. The PDF itself stays
+here uncommitted (rule 4).
