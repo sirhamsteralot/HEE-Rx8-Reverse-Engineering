@@ -13,7 +13,7 @@ result. **Paths resolve to this repo's promoted layout via `paths.py`** — the 
 | `design/`, `hardware/` | `docs/architecture/design/`, `docs/architecture/hardware/` |
 | `processor/`, `scripts/` (Java) | `utilities/tools/ghidra/processor/`, `utilities/tools/ghidra/scripts/` |
 | `reference_project/`, `ghidra_project/` | `${GHIDRA_WORK:-input/ghidra-work}/...` — Ghidra project DBs are **not committed** |
-| `Mazda_RX8_PCM_ReverseEngineering/…`, `RX8Defs/…`, `Rx8Man/…` | `submodules/…` (read-only; `extend_definitions.py` writes merged XML to `data/definitions/romraider/`) |
+| `Mazda_RX8_PCM_ReverseEngineering/…`, `RX8Defs/…`, `Rx8Man/…` | `submodules/…` (read-only; the current defs generator is `utilities/scripts/defs-merge/extend_defs_all_roms.py`, which writes only to `data/definitions/`) |
 
 Every script starts with `from paths import b, base, rom_file, ROOT` (or equivalent)
 and then uses the old `b/'decompiled/...'` style unchanged. Run the pure-python
