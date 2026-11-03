@@ -266,7 +266,8 @@ Item 1 (byte-match function aliases across all 14 ROMs → `cross_ecu/cross_rom_
   `coverage.json`). Names/categories/descriptions only; zero address/axis/scaling changes
   (invariant-tested, `tests/test_defs_relabel.py`; 78/78 pytest). Descriptions kept short
   per AGENTS.md rule 6b (simplified after PR #18 review): what the table does, no
-  addresses/structural-match/derivation text — provenance stays in the label map.
+  addresses/structural-match/derivation text, no pass marker — provenance stays in the
+  label map.
   → [defs-merge/relabel_2026-11-02.md](docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.md).
 
 ## Open work — pick up here

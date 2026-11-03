@@ -3907,21 +3907,21 @@
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6C1A4">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Maximum injector open angle, stage 1, in degrees.</description>
+        <description>Maximum injector open angle, stage 1, in degrees.</description>
     </table>
     <table name="Injector Max Open Angle 2 (deg)" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="16" storageaddress="0x6C234">
         <scaling units="deg(MAYBE??)" expression="(x * 2 ) + 0" to_byte="(x - 0.0) / 2.0" format="0.00" />
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6C1F4">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Maximum injector open angle, stage 2, in degrees.</description>
+        <description>Maximum injector open angle, stage 2, in degrees.</description>
     </table>
     <table name="Injector Max Open Angle 3 (deg)" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="16" storageaddress="0x6C284">
         <scaling units="deg(MAYBE??)" expression="(x * 2 ) + 0" to_byte="(x - 0.0) / 2.0" format="0.00" />
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6C244">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Maximum injector open angle, stage 3, in degrees.</description>
+        <description>Maximum injector open angle, stage 3, in degrees.</description>
     </table>
     <table name="Table 2D - 3 " storageaddress="0x06C314">
         <table type="Y Axis" storageaddress="0x06C2EC" />
@@ -4235,59 +4235,59 @@
     <table name="OL Fuelling Base Correction - Baro" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x71388">
         <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71364" />
-        <description>[RE relabel 2026-11-02] Open-loop fuelling base correction vs barometric pressure.</description>
+        <description>Open-loop fuelling base correction vs barometric pressure.</description>
     </table>
     <table name="OL Fuelling Base Correction - Baro [Safe Mode]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="1" storageaddress="0x71398">
         <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71394" />
-        <description>[RE relabel 2026-11-02] Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
+        <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
     </table>
     <table name="OL Target - Coolant Temperature Correction" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x713B8">
         <scaling units="mult" expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7139C">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda correction vs coolant temperature.</description>
+        <description>Open-loop target lambda correction vs coolant temperature.</description>
     </table>
     <table name="OL Fuelling Rich Limit" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x713E4">
         <scaling expression="(1 / ( (x * 0.007812) + 1 )) * 14.7" to_byte="((14.7 / x) - 1) / 0.007812" format="0.000" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x713C0" />
-        <description>[RE relabel 2026-11-02] Rich limit for open-loop fuelling.</description>
+        <description>Rich limit for open-loop fuelling.</description>
     </table>
     <table name="OL Fuelling Rich Limit [Safe Mode]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x71414">
         <scaling expression="(1 / ( (x * 0.007812) + 1 )) * 14.7" to_byte="((14.7 / x) - 1) / 0.007812" format="0.000" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x713F0" />
-        <description>[RE relabel 2026-11-02] Rich limit for open-loop fuelling (safe mode).</description>
+        <description>Rich limit for open-loop fuelling (safe mode).</description>
     </table>
     <table name="OL Temperature Correction #B" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x7143C">
         <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71420" />
-        <description>[RE relabel 2026-11-02] Open-loop fuelling temperature correction B.</description>
+        <description>Open-loop fuelling temperature correction B.</description>
     </table>
     <table name="Closed Loop Fuelling Threshold A" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x7148C">
         <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71444" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant A).</description>
+        <description>Closed-loop fuelling enable threshold (variant A).</description>
     </table>
     <table name="Closed Loop Fuelling Threshold B" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x714E8">
         <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x714A0" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant B).</description>
+        <description>Closed-loop fuelling enable threshold (variant B).</description>
     </table>
     <table name="Closed Loop Fuelling Threshold C" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x71544">
         <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x714FC" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant C).</description>
+        <description>Closed-loop fuelling enable threshold (variant C).</description>
     </table>
     <table name="Closed Loop Fuelling Threshold D" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="12" storageaddress="0x71588">
         <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71558" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant D).</description>
+        <description>Closed-loop fuelling enable threshold (variant D).</description>
     </table>
     <table name="Closed Loop Fuelling Threshold E" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x715E0">
         <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71594" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant E).</description>
+        <description>Closed-loop fuelling enable threshold (variant E).</description>
     </table>
     <table name="Table 2D - 97 " storageaddress="0x07163C">
         <table type="Y Axis" storageaddress="0x0715F4" name="Engine speed rpm (inferred)" />
@@ -4316,7 +4316,7 @@
     <table name="OL Changeover Enrichment" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x7173C">
         <scaling expression="x * 0.00390625" to_byte="x / 0.00390625" format="0.000" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71720" />
-        <description>[RE relabel 2026-11-02] Fuel enrichment during open-loop changeover.</description>
+        <description>Fuel enrichment during open-loop changeover.</description>
     </table>
     <table name="Table 2D - 105 " storageaddress="0x072408">
         <table type="Y Axis" storageaddress="0x0723E4" />
@@ -4327,28 +4327,28 @@
         <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72448">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to leading timing (idle control off).</description>
+        <description>Idle speed error correction to leading timing (idle control off).</description>
     </table>
     <table name="Idle Error Timing Correction - Leading On (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7249C">
         <scaling units="deg" expression="(x * 0.25 ) + -32" to_byte="(x - -32.0) / 0.25" format="0.00" />
         <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72478">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to leading timing (idle control on).</description>
+        <description>Idle speed error correction to leading timing (idle control on).</description>
     </table>
     <table name="Idle Error Timing Correction - Trailing Off (deg)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x724CC">
         <scaling expression="(x * 0.25 ) + -32" to_byte="(x - -32.0) / 0.25" format="0.00" />
         <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x724A8">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to trailing timing (idle control off).</description>
+        <description>Idle speed error correction to trailing timing (idle control off).</description>
     </table>
     <table name="Idle Error Timing Correction - Trailing On (deg)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x724FC">
         <scaling expression="(x * 0.25 ) + -32" to_byte="(x - -32.0) / 0.25" format="0.00" />
         <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x724D8">
             <scaliung units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to trailing timing (idle control on).</description>
+        <description>Idle speed error correction to trailing timing (idle control on).</description>
     </table>
     <table name="Table 2D - 110 " storageaddress="0x072590">
         <table type="Y Axis" storageaddress="0x072538" />
@@ -4363,12 +4363,12 @@
         <table name="Intake Air Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72620">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Intake-air-temperature correction to timing on throttle.</description>
+        <description>Intake-air-temperature correction to timing on throttle.</description>
     </table>
     <table name="IAT Compensation - Cranking (deg) (candidate)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x72674">
         <scaling expression="(x * 0.5 ) + -40" to_byte="(x - -40) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72650" />
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Table 2D - 114 " storageaddress="0x07269C">
         <table type="Y Axis" storageaddress="0x072680" />
@@ -4608,7 +4608,7 @@
         <table name="Relative Manifold Pressure" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x77770">
             <scaling units="kPa" />
         </table>
-        <description>[RE relabel 2026-11-02] Manifold vacuum correction to injection volume (variant A).</description>
+        <description>Manifold vacuum correction to injection volume (variant A).</description>
     </table>
     <table name="Table 2D - 171 " storageaddress="0x077FC0">
         <table type="Y Axis" storageaddress="0x077FA8" />
@@ -4628,7 +4628,7 @@
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x780C8">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Cranking injection pulse width (primary).</description>
+        <description>Cranking injection pulse width (primary).</description>
     </table>
     <table name="Table 2D - 177 Might be Primary/Secondary Ratio" storageaddress="0x078230">
         <table type="Y Axis" storageaddress="0x0781EC" />
@@ -4650,12 +4650,12 @@
     <table name="Fuel Coolant Compensation (candidate)" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="9" storageaddress="0x78470">
         <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7844C" />
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Per-Rotation Fuel Scale" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="17" storageaddress="0x784C8">
         <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78484" />
-        <description>[RE relabel 2026-11-02] Per-rotation fuel scale in the fuel-volume calculation.</description>
+        <description>Per-rotation fuel scale in the fuel-volume calculation.</description>
     </table>
     <table name="Secondary Injectors Allowed Threshold - Coolant Temperature Based" storageaddress="0x078510">
         <table type="Y Axis" storageaddress="0x0784EC" />
@@ -4692,12 +4692,12 @@
     <table name="Air Flow x Battery A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x78A74">
         <scaling expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78A50" />
-        <description>[RE relabel 2026-11-02] Air-flow x battery-voltage correction (variant A).</description>
+        <description>Air-flow x battery-voltage correction (variant A).</description>
     </table>
     <table name="Air Flow x Battery B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="11" storageaddress="0x78AAC">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78A80" />
-        <description>[RE relabel 2026-11-02] Air-flow x battery-voltage correction (variant B).</description>
+        <description>Air-flow x battery-voltage correction (variant B).</description>
     </table>
     <table name="Table 2D - 193 " storageaddress="0x078AF4">
         <table type="Y Axis" storageaddress="0x078AC4" name="Coolant temperature (inferred)" />
@@ -4729,7 +4729,7 @@
         <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79070">
             <scaling units="g/rev" />
         </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant A).</description>
+        <description>Warmup fuel enrichment (variant A).</description>
     </table>
     <table name="Table 2D - 200 " storageaddress="0x079214">
         <table type="Y Axis" storageaddress="0x0791D4" />
@@ -4756,7 +4756,7 @@
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x794FC">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Cranking ignition advance adder vs coolant temperature, leading.</description>
+        <description>Cranking ignition advance adder vs coolant temperature, leading.</description>
     </table>
     <table name="Table 2D - 206 " storageaddress="0x079578">
         <table type="Y Axis" storageaddress="0x079538" />
@@ -4774,7 +4774,7 @@
     <table name="Load Delta / Tip-In A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="10" storageaddress="0x79C58">
         <scaling expression="(x * 0.05 ) + 0" to_byte="(x - 0) / 0.05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79C30" />
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant A).</description>
+        <description>Load-delta / tip-in fuel correction (variant A).</description>
     </table>
     <table name="Table 2D - 217 " storageaddress="0x079C88">
         <table type="Y Axis" storageaddress="0x079C64" />
@@ -4787,7 +4787,7 @@
     <table name="Load Delta / Tip-In B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="14" storageaddress="0x79D5C">
         <scaling expression="(x * 1E-05 ) + 0" to_byte="(x - 0) / 1E-05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79D24" />
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant B).</description>
+        <description>Load-delta / tip-in fuel correction (variant B).</description>
     </table>
     <table name="Table 2D - 220 " storageaddress="0x079DB0">
         <table type="Y Axis" storageaddress="0x079D78" />
@@ -4802,19 +4802,19 @@
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A0D0">
             <scaling units="RPM" />
         </table>
-        <description>[RE relabel 2026-11-02] Maximum engine load ceiling vs RPM.</description>
+        <description>Maximum engine load ceiling vs RPM.</description>
     </table>
     <table name="Max Engine Load - IAT Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x7A15C">
         <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A13C" />
-        <description>[RE relabel 2026-11-02] Intake-air-temperature multiplier in the max engine load clamp.</description>
+        <description>Intake-air-temperature multiplier in the max engine load clamp.</description>
     </table>
     <table name="Max Engine Load - Baro Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x7A18C">
         <scaling units="mult" expression="x*0.000030517578" to_byte="x / 0.000030517578" format="0.00" />
         <table name="Barometric Pressure" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A16C">
             <scaling units="kPa" />
         </table>
-        <description>[RE relabel 2026-11-02] Barometric-pressure multiplier in the max engine load clamp.</description>
+        <description>Barometric-pressure multiplier in the max engine load clamp.</description>
     </table>
     <table name="Table 2D - 225 " storageaddress="0x07A1C0">
         <table type="Y Axis" storageaddress="0x07A19C" />
@@ -4827,7 +4827,7 @@
     <table name="Knock Voltage To Magnitude Scale" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="58" storageaddress="0x7A34C">
         <scaling expression="(x * 1 ) - 0" to_byte="(x +0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A264" />
-        <description>[RE relabel 2026-11-02] Scales knock sensor voltage to knock magnitude.</description>
+        <description>Scales knock sensor voltage to knock magnitude.</description>
     </table>
     <table name="Table 2D - 228 " storageaddress="0x07A78C">
         <table type="Y Axis" storageaddress="0x07A770" name="Vehicle speed (inferred)" />
@@ -4948,14 +4948,14 @@
     <table name="Off-Throttle Leading Timing vs ECT (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7AC30">
         <scaling units="degrees" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
         <table name="Coolant Temp" units="degC" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7AC0C" />
-        <description>[RE relabel 2026-11-02] Off-throttle leading timing vs coolant temperature.</description>
+        <description>Off-throttle leading timing vs coolant temperature.</description>
     </table>
     <table name="Ignition Trailing - Cranking Timing Advance (ECT)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7AC60">
         <scaling units="deg" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7AC3C">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Cranking ignition advance adder vs coolant temperature, trailing.</description>
+        <description>Cranking ignition advance adder vs coolant temperature, trailing.</description>
     </table>
     <table name="Table 2D - 259 " storageaddress="0x07B0B4">
         <table type="Y Axis" storageaddress="0x07B06C" name="Engine speed rpm (inferred)" />
@@ -5016,7 +5016,7 @@
     <table name="Cold-Start Advance Reduction (RPM)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="11" storageaddress="0x7B710">
         <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7B6E4" />
-        <description>[RE relabel 2026-11-02] Cold-start ignition advance reduction, vs RPM.</description>
+        <description>Cold-start ignition advance reduction, vs RPM.</description>
     </table>
     <table name="Table 2D - 274 " storageaddress="0x07B748">
         <table type="Y Axis" storageaddress="0x07B71C" />
@@ -5096,7 +5096,7 @@
     <table name="MAF Scaling" category="Sensors" type="2D" storagetype="float" endian="big" sizey="48" storageaddress="0x6F010">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EF50" />
-        <description>[RE relabel 2026-11-02] MAF sensor voltage to air mass flow (g/s).</description>
+        <description>MAF sensor voltage to air mass flow (g/s).</description>
     </table>
     <table name="Table 2D - 295 Check DataType" storageaddress="0x06F1D8">
         <table type="Y Axis" storageaddress="0x06F1B8" />
@@ -5133,7 +5133,7 @@
     <table name="Closed Loop Warmup Time" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="15" storageaddress="0x6F81C">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6F7E0" />
-        <description>[RE relabel 2026-11-02] Time after start during which closed-loop fuelling is inhibited.</description>
+        <description>Time after start during which closed-loop fuelling is inhibited.</description>
     </table>
     <table name="Table 2D - 305" storageaddress="0x06F880" storagetype="uint16">
         <table type="Y Axis" storageaddress="0x06F868" />
@@ -5330,7 +5330,7 @@
     <table name="Cranking Pulse Width B" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x78290">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7826C" />
-        <description>[RE relabel 2026-11-02] Cranking injection pulse width (variant B).</description>
+        <description>Cranking injection pulse width (variant B).</description>
     </table>
     <table name="Table 2D - 349 Check DataType" storageaddress="0x07831E">
         <table type="Y Axis" storageaddress="0x0782D0" />
@@ -5340,7 +5340,7 @@
     <table name="Cranking Pulse Width C" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x78350">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7832C" />
-        <description>[RE relabel 2026-11-02] Cranking injection pulse width (variant C).</description>
+        <description>Cranking injection pulse width (variant C).</description>
     </table>
     <table name="Secondary Air Pump On Time" storageaddress="0x078BA0">
         <table type="Y Axis" storageaddress="0x078B84" />
@@ -5353,22 +5353,22 @@
     <table name="Knock Ignition Threshold A (RPM)" category="Knock Control" type="2D" storagetype="uint16" endian="big" sizey="14" storageaddress="0x7A3C8">
         <scaling expression="(x * 0.15625 ) + 0" to_byte="(x - 0) / 0.15625" format="0.00" />
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A390" />
-        <description>[RE relabel 2026-11-02] Knock level threshold that triggers ignition retard, channel A, vs RPM.</description>
+        <description>Knock level threshold that triggers ignition retard, channel A, vs RPM.</description>
     </table>
     <table name="Knock Ignition Threshold B (RPM)" category="Knock Control" type="2D" storagetype="uint16" endian="big" sizey="14" storageaddress="0x7A424">
         <scaling expression="(x * 0.15625)" to_byte="(x - 0) / 0.15625" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A3EC" />
-        <description>[RE relabel 2026-11-02] Knock level threshold that triggers ignition retard, channel B, vs RPM.</description>
+        <description>Knock level threshold that triggers ignition retard, channel B, vs RPM.</description>
     </table>
     <table name="Knock Noise Threshold Min" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x7A44C">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A448" />
-        <description>[RE relabel 2026-11-02] Minimum knock noise threshold (clamp floor).</description>
+        <description>Minimum knock noise threshold (clamp floor).</description>
     </table>
     <table name="Knock Noise Floor (RPM)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x7A454">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A450" />
-        <description>[RE relabel 2026-11-02] Knock noise floor vs RPM.</description>
+        <description>Knock noise floor vs RPM.</description>
     </table>
     <table name="Table 2D - 364 Check DataType" storageaddress="0x07A99C" storagetype="uint16">
         <table type="Y Axis" storageaddress="0x07A970" />
@@ -5482,7 +5482,7 @@
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7C968">
             <scaling units="degC" />
         </table>
-        <description>[RE relabel 2026-11-02] Cranking pulse decay time.</description>
+        <description>Cranking pulse decay time.</description>
     </table>
     <table name="Table 2D - 387 Check DataType" storageaddress="0x07CA20" storagetype="uint16">
         <table type="Y Axis" storageaddress="0x07C9FC" />
@@ -5596,7 +5596,7 @@
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6C9E0">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Main leading (front rotor) base ignition timing vs load and RPM.</description>
+        <description>Main leading (front rotor) base ignition timing vs load and RPM.</description>
     </table>
     <table name="Safe Mode Advance Cap 3D - Leading (candidate)" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6CC34">
         <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
@@ -5606,7 +5606,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6CBEC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Ignition Leading Advance Cap" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6CE34">
         <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
@@ -5616,7 +5616,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6CDEC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Maximum allowed leading ignition advance.</description>
+        <description>Maximum allowed leading ignition advance.</description>
     </table>
     <table name="Ignition Trailing - Base Timing" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6D1E8">
         <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
@@ -5626,7 +5626,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D1A0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Trailing (rear rotor) base ignition timing map.</description>
+        <description>Trailing (rear rotor) base ignition timing map.</description>
     </table>
     <table name="Safe Mode Advance Cap 3D - Trailing (candidate)" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6D3F4">
         <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
@@ -5636,7 +5636,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D3AC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Ignition Trailing Advance" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6D5F4">
         <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
@@ -5646,7 +5646,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D5AC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Trailing ignition advance adder.</description>
+        <description>Trailing ignition advance adder.</description>
     </table>
     <table name="Table 3D - 12 " storageaddress="0x06DF18">
         <table type="X Axis" storageaddress="0x06DEF0" name="Coolant temperature (inferred)" />
@@ -5671,7 +5671,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E330">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Leading timing map 4 in DSC mode A.</description>
+        <description>Leading timing map 4 in DSC mode A.</description>
     </table>
     <table name="Igntion Leading Timing - DSC Mode A - Map 2" storageaddress="0x06E584">
         <table type="X Axis" storageaddress="0x06E4E0" />
@@ -5718,7 +5718,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6FDC0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Closed-loop fuel enrichment at wide-open throttle.</description>
+        <description>Closed-loop fuel enrichment at wide-open throttle.</description>
     </table>
     <table name="Table 3D - 24 " storageaddress="0x06FE40">
         <table type="X Axis" storageaddress="0x06FDF0" />
@@ -5753,7 +5753,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x702AC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Closed-loop target lambda bank A vs load and RPM.</description>
+        <description>Closed-loop target lambda bank A vs load and RPM.</description>
     </table>
     <table name="Closed Loop Target Bank B (3D)" category="Fuel Target (Closed Loop)" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="12" sizey="16" storageaddress="0x704DC">
         <scaling expression="(x * 0.0001 ) + -1" to_byte="(x - -1) / 0.0001" format="0.00" />
@@ -5763,7 +5763,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7049C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Closed-loop target lambda bank B vs load and RPM.</description>
+        <description>Closed-loop target lambda bank B vs load and RPM.</description>
     </table>
     <table name="Table 3D - 31 " storageaddress="0x0708BC">
         <table type="X Axis" storageaddress="0x07065C" />
@@ -5778,53 +5778,53 @@
     </table>
     <table name="OL Target - Throttle Tip In" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="8" storageaddress="0x71944">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x718F4">
+                        <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x718F4">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
         <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71924">
             <scaling units="%" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda during throttle tip-in, vs RPM and throttle.</description>
+        <description>Open-loop target lambda during throttle tip-in, vs RPM and throttle.</description>
     </table>
     <table name="OL Target - Main (load x RPM)" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="21" sizey="19" storageaddress="0x71A44">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x719A4">
+                        <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x719A4">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x719F8">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Main open-loop target lambda vs engine load and RPM.</description>
+        <description>Main open-loop target lambda vs engine load and RPM.</description>
     </table>
     <table name="OL Target - Throttle Tip In [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x71BDC">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BD4">
+                        <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BD4">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
         <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71BD8">
             <scaling units="%" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda during throttle tip-in (safe mode).</description>
+        <description>Open-loop target lambda during throttle tip-in (safe mode).</description>
     </table>
     <table name="OL Target - Main [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x71BE8">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BE0">
+                        <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BE0">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71BE4">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Main open-loop target lambda vs engine load and RPM (safe mode).</description>
+        <description>Main open-loop target lambda vs engine load and RPM (safe mode).</description>
     </table>
     <table name="OL Target - Tip In - Coolant Implausible B" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="8" storageaddress="0x71C3C">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BEC">
+                        <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x71BEC">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
         <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71C1C">
             <scaling units="%" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Tip-in target lambda for implausible coolant reading (variant B).</description>
+        <description>Tip-in target lambda for implausible coolant reading (variant B).</description>
     </table>
     <table name="OL Target - Coolant Implausible - Gear 5-6" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="21" sizey="19" storageaddress="0x71D3C">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />
@@ -5834,7 +5834,7 @@
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71CF0">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda for implausible coolant reading, gears 5-6.</description>
+        <description>Open-loop target lambda for implausible coolant reading, gears 5-6.</description>
     </table>
     <table name="OL Target - Tip In - Coolant Implausible A" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="8" storageaddress="0x71F1C">
         <scaling units="Lambda" expression="(x * 0.003906)+1" to_byte="(x - 1) / 0.003906" format="0.000" />
@@ -5844,17 +5844,17 @@
         <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71EFC">
             <scaling units="%" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Tip-in target lambda for implausible coolant reading (variant A).</description>
+        <description>Tip-in target lambda for implausible coolant reading (variant A).</description>
     </table>
     <table name="OL Target - Coolant Implausible - Gear 1-4" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="21" sizey="19" storageaddress="0x7201C">
         <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-                    <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x71F7C">
+                        <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x71F7C">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
         <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71FD0">
             <scaling units="RPM" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda for implausible coolant reading, gears 1-4.</description>
+        <description>Open-loop target lambda for implausible coolant reading, gears 1-4.</description>
     </table>
     <table name="Trans Requested Torque To Throttle Plate Position Position" storageaddress="0x072850">
         <table type="X Axis" storageaddress="0x07279C" />
@@ -5944,7 +5944,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75D1C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Leading base timing in DSC mode A.</description>
+        <description>Leading base timing in DSC mode A.</description>
     </table>
     <table name="Table 3D - 60 " storageaddress="0x075F54">
         <table type="X Axis" storageaddress="0x075EC0" name="Engine load (inferred)" />
@@ -5974,7 +5974,7 @@
         <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77694">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Engine-temperature multiplier for primary injector pulse width.</description>
+        <description>Engine-temperature multiplier for primary injector pulse width.</description>
     </table>
     <table name="Secondary 1 Injector Weighted Engine Temp Multiplier" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x77744">
         <scaling expression="(x * 0.003906 ) + 0.75" to_byte="(x - 0.75) / 0.003906" format="0.00" />
@@ -5984,7 +5984,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77740">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Engine-temperature multiplier for secondary injector 1 pulse width.</description>
+        <description>Engine-temperature multiplier for secondary injector 1 pulse width.</description>
     </table>
     <table name="Secondary 2 Injector Weighted Engine Temp Multiplier" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x77750">
         <scaling expression="(x * 0.003906 ) + 0.75" to_byte="(x - 0.75) / 0.003906" format="0.00" />
@@ -5994,7 +5994,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7774C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Engine-temperature multiplier for secondary injector 2 pulse width.</description>
+        <description>Engine-temperature multiplier for secondary injector 2 pulse width.</description>
     </table>
     <table name="Estimated Manifold Pressure (RPM x load)" category="Engine Load" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="20" storageaddress="0x7793C">
         <scaling expression="(x * 0.00390625 ) + 0" to_byte="(x - 0) / 0.00390625" format="0.00" />
@@ -6004,7 +6004,7 @@
         <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x778EC">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Estimated manifold pressure vs RPM and engine load.</description>
+        <description>Estimated manifold pressure vs RPM and engine load.</description>
     </table>
     <table name="Injector Latency - Secondary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x77C4C">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
@@ -6014,7 +6014,7 @@
         <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77C28">
             <scaling units="V" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Secondary injector dead time vs estimated manifold pressure and battery voltage.</description>
+        <description>Secondary injector dead time vs estimated manifold pressure and battery voltage.</description>
     </table>
     <table name="Injector Latency - Primary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x77DE8">
         <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
@@ -6024,7 +6024,7 @@
         <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77DC4">
             <scaling units="V" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Primary injector dead time vs estimated manifold pressure and battery voltage.</description>
+        <description>Primary injector dead time vs estimated manifold pressure and battery voltage.</description>
     </table>
     <table name="Fuel Injection - Engine Load Compensation (base fuel map)" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="18" sizey="20" storageaddress="0x785F4">
         <scaling units="lambda" expression="(x * 0.000015258789 ) + 0.75" to_byte="(x - 0.75) / 0.000015258789" format="0.0000" />
@@ -6034,7 +6034,7 @@
         <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x785A4">
             <scaling units="g/rev" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Base fuel map vs RPM and engine load.</description>
+        <description>Base fuel map vs RPM and engine load.</description>
     </table>
     <table name="Warmup Fueling B" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="16" sizey="3" storageaddress="0x790F0">
         <scaling units="mult" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
@@ -6044,7 +6044,7 @@
         <table name="Coolant Temperature (Catalyst Temp Model)" type="Y Axis" storagetype="float" endian="big" storageaddress="0x790E4">
             <scaling units="degC" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant B).</description>
+        <description>Warmup fuel enrichment (variant B).</description>
     </table>
     <table name="Warmup Fueling C" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="5" sizey="5" storageaddress="0x79148">
         <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
@@ -6054,7 +6054,7 @@
         <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79134">
             <scaling units="degC" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant C).</description>
+        <description>Warmup fuel enrichment (variant C).</description>
     </table>
     <table name="Warmup Fueling D" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="7" sizey="6" storageaddress="0x79198">
         <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
@@ -6064,7 +6064,7 @@
         <table name="Coolant Temp" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79180">
             <scaling units="degC" expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant D).</description>
+        <description>Warmup fuel enrichment (variant D).</description>
     </table>
     <table name="Table 3D - 74 " storageaddress="0x0792E8">
         <table type="X Axis" storageaddress="0x079294" name="Coolant temperature catalyst temp model (inferred)" />
@@ -6102,7 +6102,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79E38">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant C).</description>
+        <description>Load-delta / tip-in fuel correction (variant C).</description>
     </table>
     <table name="Load Delta / Tip-In D" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="5" sizey="7" storageaddress="0x79ED8">
         <scaling expression="(x * 0.000488 ) + 0" to_byte="(x - 0) / 0.000488" format="0.00" />
@@ -6112,7 +6112,7 @@
         <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79EBC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant D).</description>
+        <description>Load-delta / tip-in fuel correction (variant D).</description>
     </table>
     <table name="Table 3D - 81 " storageaddress="0x079F54">
         <table type="X Axis" storageaddress="0x079F20" />
@@ -6342,14 +6342,14 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6C77C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Coolant Timing Multiplier - Trailing (candidate)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6C7D0">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6C7AC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Off-Throttle Leading Timing 3D (candidate)" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" sizex="16" sizey="11" storageaddress="0x6C848">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6359,7 +6359,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6C81C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Leading Advance 3D Alt (candidate)" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" sizex="10" sizey="8" storageaddress="0x6C940">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6369,7 +6369,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6C920">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Safe Mode Cap - Single (candidate)" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" sizex="1" sizey="1" storageaddress="0x6CB98">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6379,7 +6379,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6CB94">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Off-Throttle Trailing Timing 3D (candidate)" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" sizex="16" sizey="11" storageaddress="0x6D008">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6389,7 +6389,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6CFDC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Trailing Advance 3D Alt (candidate)" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" sizex="10" sizey="8" storageaddress="0x6D100">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6399,7 +6399,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D0E0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Safe Mode Cap - Single Trailing (candidate)" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" sizex="1" sizey="1" storageaddress="0x6D358">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6409,77 +6409,77 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D354">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Max Advance vs RPM - Leading (candidate)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D7C4">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D7A0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Min Advance vs Coolant A (candidate)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D7F0">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D7D0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Min Advance vs Coolant B (candidate)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D818">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D7F8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Max Advance vs RPM - Trailing (candidate)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D844">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D820">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Table 2D - 0x691e0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D870">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D850">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x691f4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D898">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D878">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Idle Base Timing - Cranking (candidate)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D8E4">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D8C0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Idle Base Timing - Cold Low Load (candidate)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D914">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D8F0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Idle Base Timing - Warm High Load (candidate)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6D930">
         <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6D920">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Table 2D - 0x69468 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6DFE8">
         <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DFC4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x69598 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="1" sizey="1" storageaddress="0x6E4E8">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6489,7 +6489,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E4E4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x695d0 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="1" sizey="1" storageaddress="0x6E6F4">
         <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
@@ -6499,7 +6499,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E6F0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x6961c (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="1" sizey="1" storageaddress="0x6EB1C">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -6509,42 +6509,42 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6EB18">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="MAF Density-Cap Window vs RPM (candidate)" category="Engine Load" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x6F0D4">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F0D0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Transient-Detection Threshold vs Throttle (candidate)" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6F130">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F108">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="MAF Filter Coefficient vs RPM (candidate)" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6F16C">
         <scaling expression="(x * 0.0009999999310821295) + 0.0" to_byte="(x - 0.0) / 0.0009999999310821295" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F144">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Table 2D - 0x69894 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6F718">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F714">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x698a8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6F720">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F71C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x69980 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="1" sizey="1" storageaddress="0x6FD0C">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
@@ -6554,7 +6554,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6FD08">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x69a98 (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="13" sizey="7" storageaddress="0x706AC">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -6564,7 +6564,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70690">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x69aac (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="13" sizey="7" storageaddress="0x707B4">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -6574,112 +6574,112 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70798">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69f6c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7226C">
         <scaling expression="(x * 50.0) + 0.0" to_byte="(x - 0.0) / 50.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7224C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69f80 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72294">
         <scaling expression="(x * 50.0) + 0.0" to_byte="(x - 0.0) / 50.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72274">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69f94 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x722BC">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7229C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69fa0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x722E4">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x722C4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69fac (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72338">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72334">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69fc0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72340">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7233C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69fd4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72348">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72344">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69fe8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72350">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7234C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x69ffc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72378">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72354">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a010 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x723A8">
         <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72384">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a024 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x723D8">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x723B4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a04c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72418">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72414">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a5e0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x74D74">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x74D50">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a5f4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x74DA4">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x74D80">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a61c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x74E04">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x74DE0">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x6a630 (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="10" sizey="17" storageaddress="0x74E7C">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -6689,7 +6689,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x74E38">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x6a644 (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="10" sizey="17" storageaddress="0x75190">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -6699,238 +6699,238 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7514C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a658 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x754C0">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75478">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a66c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7551C">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x754D4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a6ac (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x756E0">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x756CC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6a6b8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x75738">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x756F4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Injector Manifold Vacuum Multiplier B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7781C">
         <scaling expression="(x * 9.999999747378752e-05) + 0.0" to_byte="(x - 0.0) / 9.999999747378752e-05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x777D8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Manifold vacuum correction to injection volume (variant B).</description>
+        <description>Manifold vacuum correction to injection volume (variant B).</description>
     </table>
     <table name="Injector Manifold Vacuum Multiplier C" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x77884">
         <scaling expression="(x * 9.999999747378752e-05) + 0.0" to_byte="(x - 0.0) / 9.999999747378752e-05" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77840">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Manifold vacuum correction to injection volume (variant C).</description>
+        <description>Manifold vacuum correction to injection volume (variant C).</description>
     </table>
     <table name="Max Per-Channel Injection Time vs RPM (candidate)" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x77F40">
         <scaling expression="(x * 1000.0) + 0.0" to_byte="(x - 0.0) / 1000.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77F28">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description>
+        <description>Purpose not fully verified (candidate label).</description>
     </table>
     <table name="Table 2D - 0x6aab0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x77FA0">
         <scaling expression="(x * 0.004999999888241291) + 0.0" to_byte="(x - 0.0) / 0.004999999888241291" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77F84">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6aaec (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x78000">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77FE8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ab00 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x78020">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78008">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ab14 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x78050">
         <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78028">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ab28 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x78078">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7805C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ab5c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7814C">
         <scaling expression="(x * 5.0) + 0.0" to_byte="(x - 0.0) / 5.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78118">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6aba4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x782C0">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7829C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6abb0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x782F0">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x782CC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6abbc (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x78320">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x782FC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6abfc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x783E0">
         <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x783BC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ac10 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x78410">
         <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x783EC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ac24 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x78440">
         <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7841C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ac74 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x78548">
         <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78524">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6adc8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x78D74">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78D60">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6add4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x78DA0">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78D7C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Knock Enable Load Floor (RPM)" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79618">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x795E8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Lowest engine load at which knock control is enabled, vs RPM.</description>
+        <description>Lowest engine load at which knock control is enabled, vs RPM.</description>
     </table>
     <table name="Knock Retard Clamp Min (RPM)" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79640">
         <scaling expression="(x * 0.5) + -64.0" to_byte="(x - -64.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79624">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Most negative knock retard allowed (lower clamp), vs RPM.</description>
+        <description>Most negative knock retard allowed (lower clamp), vs RPM.</description>
     </table>
     <table name="Knock Retard Clamp Min Alt (RPM)" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79664">
         <scaling expression="(x * 0.5) + -64.0" to_byte="(x - -64.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79648">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Alternate lower knock retard clamp, vs RPM.</description>
+        <description>Alternate lower knock retard clamp, vs RPM.</description>
     </table>
     <table name="Knock Retard Clamp Max (RPM)" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x796A8">
         <scaling expression="(x * 0.5) + -64.0" to_byte="(x - -64.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7966C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Upper knock retard clamp, vs RPM.</description>
+        <description>Upper knock retard clamp, vs RPM.</description>
     </table>
     <table name="Knock Recovery Target (RPM)" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x796F4">
         <scaling expression="(x * 0.5) + -64.0" to_byte="(x - -64.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x796B8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Knock retard recovery target in fail-safe, vs RPM.</description>
+        <description>Knock retard recovery target in fail-safe, vs RPM.</description>
     </table>
     <table name="Knock Learned Retard Scale" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79738">
         <scaling expression="(x * 0.5) + -64.0" to_byte="(x - -64.0) / 0.5" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79704">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Scale applied to learned knock retard.</description>
+        <description>Scale applied to learned knock retard.</description>
     </table>
     <table name="Table 2D - 0x6afcc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7978C">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79764">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6afe0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x797C0">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79798">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6aff4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x797F4">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x797CC">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b008 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79820">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79800">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b01c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x79860">
         <scaling expression="(x * 9.999999747378752e-06) + 0.0" to_byte="(x - 0.0) / 9.999999747378752e-06" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79828">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x6b074 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="10" sizey="8" storageaddress="0x79A54">
         <scaling expression="(x * 0.0009765625) + 0.0" to_byte="(x - 0.0) / 0.0009765625" format="0.00" />
@@ -6940,7 +6940,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79A34">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 3D - 0x6b090 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="10" sizey="8" storageaddress="0x79B3C">
         <scaling expression="(x * 0.0009765625) + 0.0" to_byte="(x - 0.0) / 0.0009765625" format="0.00" />
@@ -6950,49 +6950,49 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79B1C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b0ac (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79C28">
         <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79C08">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b0e8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79CBC">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79C94">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b0fc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79CF0">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79CC8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Knock Transient Hold (cycles)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7A38C">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A388">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Number of cycles knock retard is held after a transient.</description>
+        <description>Number of cycles knock retard is held after a transient.</description>
     </table>
     <table name="Knock Ignition Threshold A Alt (RPM)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7A3E8">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A3E4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Alternate knock ignition-retard threshold A, vs RPM.</description>
+        <description>Alternate knock ignition-retard threshold A, vs RPM.</description>
     </table>
     <table name="Knock Ignition Threshold B Alt (RPM)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7A444">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A440">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Alternate knock ignition-retard threshold B, vs RPM.</description>
+        <description>Alternate knock ignition-retard threshold B, vs RPM.</description>
     </table>
     <table name="Knock Level 3D A (load x RPM)" category="Knock Control" type="3D" storagetype="uint8" endian="big" sizex="20" sizey="12" storageaddress="0x7A4D8">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
@@ -7002,7 +7002,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A4A8">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Knock level map vs load and RPM (variant A).</description>
+        <description>Knock level map vs load and RPM (variant A).</description>
     </table>
     <table name="Knock Level 3D B (load x RPM)" category="Knock Control" type="3D" storagetype="uint8" endian="big" sizex="20" sizey="12" storageaddress="0x7A648">
         <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
@@ -7012,7 +7012,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A618">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Knock level map vs load and RPM (variant B).</description>
+        <description>Knock level map vs load and RPM (variant B).</description>
     </table>
     <table name="Knock Level 3D C (load x RPM)" category="Knock Control" type="3D" storagetype="float" endian="big" sizex="1" sizey="1" storageaddress="0x7A740">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -7022,7 +7022,7 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A73C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Knock level map vs load and RPM (variant C).</description>
+        <description>Knock level map vs load and RPM (variant C).</description>
     </table>
     <table name="Knock Level 3D D (load x RPM)" category="Knock Control" type="3D" storagetype="float" endian="big" sizex="1" sizey="1" storageaddress="0x7A74C">
         <scaling expression="x" to_byte="x" format="0.00" />
@@ -7032,42 +7032,42 @@
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A748">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Knock level map vs load and RPM (variant D).</description>
+        <description>Knock level map vs load and RPM (variant D).</description>
     </table>
     <table name="Table 2D - 0x6b9c0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7C2D4">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7C278">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6b9f4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7C46C">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7C43C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ba00 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7C4CC">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7C49C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6ba24 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7C620">
         <scaling expression="x" to_byte="x" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7C5C4">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
     <table name="Table 2D - 0x6bb08 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7CB40">
         <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
         <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7CB1C">
             <scaling expression="x" to_byte="x" />
         </table>
-        <description>[RE relabel 2026-11-02] Unlabeled lookup table (no verified purpose).</description>
+        <description>Unlabeled lookup table (no verified purpose).</description>
     </table>
 <table name="Scalar - Stoich AFR (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x3E7EC"><description>Literal-pool float (stoich AFR 14.7), referenced by a mova in the fuel-correction/catalyst model (FUN_0003e560 in 60E15120_N3J1E, PID 0x3c path): diag_afr_word_a * fVar4 * 14.7. Converts lambda-domain fueling to AFR. NOT the base injection map (that is tbl 0x6ac88 + open-loop target 0x69e9c). Editing changes fuel correction + AFR display; this address is inside the app-flash checksum range (D3, 0x2000-0x7ffff) - bench-validate before flashing (AGENTS.md rule 10). See calibration_extraction_report.md 6a. FUEL CHANGE: for a fuel with a different stoich ratio set THIS scalar to the new stoich (e.g. 9.76 for E85) AND scale 'Scalar - Fuel Load Scale' by 14.7/new_stoich; leave the maps alone (they are lambda multipliers). For varying ethanol blends use the flex stoich table (0x6C444 in G-ROM_FLEX), not a fixed scalar. See data/definitions/README.md 'Literal-pool scalars'. ROM address 0x3e7ec, value 14.699999809265137 (asserted against ROM bytes by this script).</description><scaling units="AFR" expression="x" to_byte="x" format="0.0000" /></table><table name="Scalar - Fuel Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x78170"><description>Literal-pool float (0.07196): engine_load x 0.07196 -&gt; fuel_load_scale_ffffbed0; the scalar every fuel-volume request scales by (0x306e8 in 60E15120_N3J1E). Physical units still candidate. Editing changes base fueling; address is inside the checksum range (D3) - bench-validate before flashing (rule 10). See calibration_extraction_report.md 6a. FUEL CHANGE: this is the scalar that changes OPEN-LOOP injected fuel volume (bed0 = load x 0.07196 in the 0x306e8 fuel-volume calc); for a different-stoich fuel scale it by 14.7/new_stoich (E85: x1.506 -&gt; ~0.1084) and pair with setting 'Scalar - Stoich AFR' to the new stoich. Unit interpretation candidate - verify with a wideband that commanded AFR = new stoich at lambda=1.0 before driving. See data/definitions/README.md. ROM address 0x78170, value 0.07196000218391418 (asserted against ROM bytes by this script).</description><scaling units="mult" expression="x" to_byte="x" format="0.0000" /></table><table name="DTC 0300 Enable/Disable #1" storageaddress="0x7E678" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 0 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0300 Enable/Disable #2" storageaddress="0x7E704" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 0 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0300 Enable/Disable #3" storageaddress="0x7E790" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 0 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0300 Enable/Disable #1 [additional site 0x7E679]" storageaddress="0x7E679" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 1 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0300 Enable/Disable #2 [additional site 0x7E705]" storageaddress="0x7E705" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 1 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0300 Enable/Disable #3 [additional site 0x7E791]" storageaddress="0x7E791" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 1 = code 0300. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0030 Enable/Disable #1" storageaddress="0x7E67A" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 2 = code 0030. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0030 Enable/Disable #2" storageaddress="0x7E706" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 2 = code 0030. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0030 Enable/Disable #3" storageaddress="0x7E792" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 2 = code 0030. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0031 Enable/Disable #1" storageaddress="0x7E67B" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 3 = code 0031. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0031 Enable/Disable #2" storageaddress="0x7E707" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 3 = code 0031. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0031 Enable/Disable #3" storageaddress="0x7E793" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 3 = code 0031. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0032 Enable/Disable #1" storageaddress="0x7E67C" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 4 = code 0032. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0032 Enable/Disable #2" storageaddress="0x7E708" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 4 = code 0032. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0032 Enable/Disable #3" storageaddress="0x7E794" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 4 = code 0032. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0037 Enable/Disable #1" storageaddress="0x7E67D" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 5 = code 0037. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0037 Enable/Disable #2" storageaddress="0x7E709" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 5 = code 0037. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0037 Enable/Disable #3" storageaddress="0x7E795" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 5 = code 0037. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0038 Enable/Disable #1" storageaddress="0x7E67E" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 6 = code 0038. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0038 Enable/Disable #2" storageaddress="0x7E70A" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 6 = code 0038. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0038 Enable/Disable #3" storageaddress="0x7E796" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 6 = code 0038. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0076 Enable/Disable #1" storageaddress="0x7E67F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 7 = code 0076. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0076 Enable/Disable #2" storageaddress="0x7E70B" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 7 = code 0076. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0076 Enable/Disable #3" storageaddress="0x7E797" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 7 = code 0076. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0077 Enable/Disable #1" storageaddress="0x7E680" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 8 = code 0077. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0077 Enable/Disable #2" storageaddress="0x7E70C" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 8 = code 0077. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0077 Enable/Disable #3" storageaddress="0x7E798" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 8 = code 0077. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0101 Enable/Disable #1" storageaddress="0x7E681" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 9 = code 0101. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0101 Enable/Disable #2" storageaddress="0x7E70D" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 9 = code 0101. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0101 Enable/Disable #3" storageaddress="0x7E799" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 9 = code 0101. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0102 Enable/Disable #1" storageaddress="0x7E682" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 10 = code 0102. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0102 Enable/Disable #2" storageaddress="0x7E70E" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 10 = code 0102. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0102 Enable/Disable #3" storageaddress="0x7E79A" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 10 = code 0102. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0103 Enable/Disable #1" storageaddress="0x7E683" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 11 = code 0103. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0103 Enable/Disable #2" storageaddress="0x7E70F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 11 = code 0103. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0103 Enable/Disable #3" storageaddress="0x7E79B" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 11 = code 0103. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0107 Enable/Disable #1" storageaddress="0x7E684" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 12 = code 0107. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0107 Enable/Disable #2" storageaddress="0x7E710" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 12 = code 0107. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0107 Enable/Disable #3" storageaddress="0x7E79C" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 12 = code 0107. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0108 Enable/Disable #1" storageaddress="0x7E685" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 13 = code 0108. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0108 Enable/Disable #2" storageaddress="0x7E711" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 13 = code 0108. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0108 Enable/Disable #3" storageaddress="0x7E79D" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 13 = code 0108. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0111 Enable/Disable #1" storageaddress="0x7E686" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 14 = code 0111. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0111 Enable/Disable #2" storageaddress="0x7E712" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 14 = code 0111. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0111 Enable/Disable #3" storageaddress="0x7E79E" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 14 = code 0111. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0112 Enable/Disable #1" storageaddress="0x7E687" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 15 = code 0112. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0112 Enable/Disable #2" storageaddress="0x7E713" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 15 = code 0112. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0112 Enable/Disable #3" storageaddress="0x7E79F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 15 = code 0112. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0113 Enable/Disable #1" storageaddress="0x7E688" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 16 = code 0113. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0113 Enable/Disable #2" storageaddress="0x7E714" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 16 = code 0113. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0113 Enable/Disable #3" storageaddress="0x7E7A0" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 16 = code 0113. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0117 Enable/Disable #1" storageaddress="0x7E689" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 17 = code 0117. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0117 Enable/Disable #2" storageaddress="0x7E715" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 17 = code 0117. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0117 Enable/Disable #3" storageaddress="0x7E7A1" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 17 = code 0117. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0118 Enable/Disable #1" storageaddress="0x7E68A" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 18 = code 0118. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0118 Enable/Disable #2" storageaddress="0x7E716" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 18 = code 0118. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0118 Enable/Disable #3" storageaddress="0x7E7A2" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 18 = code 0118. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0122 Enable/Disable #1" storageaddress="0x7E68B" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 19 = code 0122. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0122 Enable/Disable #2" storageaddress="0x7E717" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 19 = code 0122. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0122 Enable/Disable #3" storageaddress="0x7E7A3" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 19 = code 0122. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0123 Enable/Disable #1" storageaddress="0x7E68C" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 20 = code 0123. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0123 Enable/Disable #2" storageaddress="0x7E718" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 20 = code 0123. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0123 Enable/Disable #3" storageaddress="0x7E7A4" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 20 = code 0123. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0125 Enable/Disable #1" storageaddress="0x7E68D" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 21 = code 0125. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0125 Enable/Disable #2" storageaddress="0x7E719" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 21 = code 0125. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0125 Enable/Disable #3" storageaddress="0x7E7A5" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 21 = code 0125. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0126 Enable/Disable #1" storageaddress="0x7E68E" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 22 = code 0126. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0126 Enable/Disable #2" storageaddress="0x7E71A" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 22 = code 0126. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0126 Enable/Disable #3" storageaddress="0x7E7A6" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-11-01 DTC repair] Address derived from this ROM's own DTC layout (code table 0x7E560 + 2*slot, enable blocks 0x7E678 / 0x7E704 / 0x7E790); slot 22 = code 0126. Evidence: docs/investigations/60E15120_N3J1E/dtc_control_report.md section 5.</description></table><table name="DTC 0128 Enable/Disable #1" storageaddress="0x7E68F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1"><description>[2026-09-30 review] Upstream DTC mapping retained as a byte setting. DTC identity and enable/disable semantics are not independently verified. Additional sites have distinct names to avoid inheritance-key collisions.
 [2026-09-30 review] Correction: {"basis": "self-contained upstream DTC byte template; distinct name for duplicate site", "table": "DTC 0128 Enable/Disable #1"}

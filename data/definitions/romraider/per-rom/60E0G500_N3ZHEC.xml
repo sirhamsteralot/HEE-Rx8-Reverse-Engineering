@@ -4208,7 +4208,7 @@
         <table name="OL Fuelling Base Correction - Baro [Safe Mode]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="1" storageaddress="0x71CE0">
             <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71CDC" />
-        <description>[RE relabel 2026-11-02] Open-loop fuelling base correction vs barometric pressure (safe mode).</description></table>
+        <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description></table>
         <table name="Open Loop Target - Coolant Temperature Correction" storageaddress="0x071D00">
             <table type="Y Axis" storageaddress="0x071CE4" />
         </table>
@@ -4224,23 +4224,23 @@
         <table name="Closed Loop Fuelling Threshold A" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x71DD4">
             <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71D8C" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant A).</description></table>
+        <description>Closed-loop fuelling enable threshold (variant A).</description></table>
         <table name="Closed Loop Fuelling Threshold B" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x71E30">
             <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71DE8" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant B).</description></table>
+        <description>Closed-loop fuelling enable threshold (variant B).</description></table>
         <table name="Closed Loop Fuelling Threshold C" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="18" storageaddress="0x71E8C">
             <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71E44" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant C).</description></table>
+        <description>Closed-loop fuelling enable threshold (variant C).</description></table>
         <table name="Closed Loop Fuelling Threshold D" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="12" storageaddress="0x71ED0">
             <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71EA0" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant D).</description></table>
+        <description>Closed-loop fuelling enable threshold (variant D).</description></table>
         <table name="Closed Loop Fuelling Threshold E" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x71F28">
             <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0.0) / 0.5" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71EDC" />
-        <description>[RE relabel 2026-11-02] Closed-loop fuelling enable threshold (variant E).</description></table>
+        <description>Closed-loop fuelling enable threshold (variant E).</description></table>
         <table name="Table 2D - 97 " storageaddress="0x071F84">
             <table type="Y Axis" storageaddress="0x071F3C" />
         </table>
@@ -4262,7 +4262,7 @@
         <table name="OL Changeover Enrichment" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x72084">
             <scaling expression="x * 0.00390625" to_byte="x / 0.00390625" format="0.000" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72068" />
-        <description>[RE relabel 2026-11-02] Fuel enrichment during open-loop changeover.</description></table>
+        <description>Fuel enrichment during open-loop changeover.</description></table>
         <table name="Table 2D - 104 " storageaddress="0x072C20">
             <table type="Y Axis" storageaddress="0x072BFC" />
         </table>
@@ -4274,13 +4274,13 @@
             <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72C88">
 				<scaling units="RPM" />
 			</table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to leading timing (idle control off).</description></table>
+        <description>Idle speed error correction to leading timing (idle control off).</description></table>
         <table name="Idle Error Timing Correction - Leading On (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x72CDC">
             <scaling units="deg" expression="(x * 0.25 ) + -32" to_byte="(x - -32.0) / 0.25" format="0.00" />
             <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72CB8">
 				<scaling units="RPM" />
 			</table>
-        <description>[RE relabel 2026-11-02] Idle speed error correction to leading timing (idle control on).</description></table>
+        <description>Idle speed error correction to leading timing (idle control on).</description></table>
         <table name="Ignition Trailing - Idle Error Timing Correction - Unknown Bool False" storageaddress="0x072D0C">
             <table type="Y Axis" storageaddress="0x072CE8" />
         </table>
@@ -4298,11 +4298,11 @@
             <table name="Intake Air Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72E60">
 				<scaling units="degC" />
 			</table>
-        <description>[RE relabel 2026-11-02] Intake-air-temperature correction to timing on throttle.</description></table>
+        <description>Intake-air-temperature correction to timing on throttle.</description></table>
         <table name="IAT Compensation - Cranking (deg) (candidate)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x72EB4">
             <scaling expression="(x * 0.5 ) + -40" to_byte="(x - -40) / 0.5" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72E90" />
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description></table>
+        <description>Purpose not fully verified (candidate label).</description></table>
         <table name="Table 2D - 114 " storageaddress="0x072EDC">
             <table type="Y Axis" storageaddress="0x072EC0" />
         </table>
@@ -4507,11 +4507,11 @@
         <table name="Fuel Coolant Compensation (candidate)" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="9" storageaddress="0x7859C">
             <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78578" />
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description></table>
+        <description>Purpose not fully verified (candidate label).</description></table>
         <table name="Per-Rotation Fuel Scale" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="17" storageaddress="0x785F4">
             <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x785B0" />
-        <description>[RE relabel 2026-11-02] Per-rotation fuel scale in the fuel-volume calculation.</description></table>
+        <description>Per-rotation fuel scale in the fuel-volume calculation.</description></table>
         <table name="Secondary Injectors Allowed Threshold - Coolant Temperature Based" storageaddress="0x07863C">
             <table type="Y Axis" storageaddress="0x078618" />
         </table>
@@ -4539,11 +4539,11 @@
         <table name="Air Flow x Battery A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x78B68">
             <scaling expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78B44" />
-        <description>[RE relabel 2026-11-02] Air-flow x battery-voltage correction (variant A).</description></table>
+        <description>Air-flow x battery-voltage correction (variant A).</description></table>
         <table name="Air Flow x Battery B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="11" storageaddress="0x78BA0">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78B74" />
-        <description>[RE relabel 2026-11-02] Air-flow x battery-voltage correction (variant B).</description></table>
+        <description>Air-flow x battery-voltage correction (variant B).</description></table>
         <table name="Table 2D - 193 " storageaddress="0x078BE8">
             <table type="Y Axis" storageaddress="0x078BB8" />
         </table>
@@ -4567,7 +4567,7 @@
             <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7930C">
 				<scaling units="g/rev" />
 			</table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant A).</description></table>
+        <description>Warmup fuel enrichment (variant A).</description></table>
         <table name="Table 2D - 200 " storageaddress="0x0794B0">
             <table type="Y Axis" storageaddress="0x079470" />
         </table>
@@ -4588,7 +4588,7 @@
             <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79798">
 				<scaling units="degC" />
 			</table>
-        <description>[RE relabel 2026-11-02] Cranking ignition advance adder vs coolant temperature, leading.</description></table>
+        <description>Cranking ignition advance adder vs coolant temperature, leading.</description></table>
         <table name="Table 2D - 206 " storageaddress="0x079814">
             <table type="Y Axis" storageaddress="0x0797D4" />
         </table>
@@ -4622,7 +4622,7 @@
         <table name="Load Delta / Tip-In A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="10" storageaddress="0x79C18">
             <scaling expression="(x * 0.05 ) + 0" to_byte="(x - 0) / 0.05" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79BF0" />
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant A).</description></table>
+        <description>Load-delta / tip-in fuel correction (variant A).</description></table>
         <table name="Table 2D - 217 " storageaddress="0x079C48">
             <table type="Y Axis" storageaddress="0x079C24" />
         </table>
@@ -4632,7 +4632,7 @@
         <table name="Load Delta / Tip-In B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="14" storageaddress="0x79CB4">
             <scaling expression="(x * 1E-05 ) + 0" to_byte="(x - 0) / 1E-05" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79C7C" />
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant B).</description></table>
+        <description>Load-delta / tip-in fuel correction (variant B).</description></table>
         <table name="Table 2D - 220 " storageaddress="0x079D08">
             <table type="Y Axis" storageaddress="0x079CD0" />
         </table>
@@ -4644,17 +4644,17 @@
             <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A028">
 				<scaling units="RPM" />
 			</table>
-        <description>[RE relabel 2026-11-02] Maximum engine load ceiling vs RPM.</description></table>
+        <description>Maximum engine load ceiling vs RPM.</description></table>
         <table name="Max Engine Load - IAT Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x7A0B4">
             <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A094" />
-        <description>[RE relabel 2026-11-02] Intake-air-temperature multiplier in the max engine load clamp.</description></table>
+        <description>Intake-air-temperature multiplier in the max engine load clamp.</description></table>
         <table name="Max Engine Load - Baro Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x7A0E4">
             <scaling units="mult" expression="x*0.000030517578" to_byte="x / 0.000030517578" format="0.00" />
             <table name="Barometric Pressure" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A0C4">
 				<scaling units="kPa" />
 			</table>
-        <description>[RE relabel 2026-11-02] Barometric-pressure multiplier in the max engine load clamp.</description></table>
+        <description>Barometric-pressure multiplier in the max engine load clamp.</description></table>
         <table name="Table 2D - 225 " storageaddress="0x07A118">
             <table type="Y Axis" storageaddress="0x07A0F4" />
         </table>
@@ -4664,7 +4664,7 @@
         <table name="Knock Voltage To Magnitude Scale" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="58" storageaddress="0x7A318">
             <scaling expression="(x * 1 ) - 0" to_byte="(x +0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A230" />
-        <description>[RE relabel 2026-11-02] Scales knock sensor voltage to knock magnitude.</description></table>
+        <description>Scales knock sensor voltage to knock magnitude.</description></table>
         <table name="Table 2D - 228 " storageaddress="0x07A554">
             <table type="Y Axis" storageaddress="0x07A538" />
         </table>
@@ -4755,13 +4755,13 @@
         <table name="Off-Throttle Leading Timing vs ECT (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7A9F8">
             <scaling units="degrees" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
             <table name="Coolant Temp" units="degC" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A9D4" />
-        <description>[RE relabel 2026-11-02] Off-throttle leading timing vs coolant temperature.</description></table>
+        <description>Off-throttle leading timing vs coolant temperature.</description></table>
         <table name="Ignition Trailing - Cranking Timing Advance (ECT)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7AA28">
             <scaling units="deg" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
             <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7AA04">
 				<scaling units="degC" />
 			</table>
-        <description>[RE relabel 2026-11-02] Cranking ignition advance adder vs coolant temperature, trailing.</description></table>
+        <description>Cranking ignition advance adder vs coolant temperature, trailing.</description></table>
         <table name="Table 2D - 259 " storageaddress="0x07AE7C">
             <table type="Y Axis" storageaddress="0x07AE34" />
         </table>
@@ -4807,7 +4807,7 @@
         <table name="Cold-Start Advance Reduction (RPM)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="11" storageaddress="0x7B4D8">
             <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0) / 0.5" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7B4AC" />
-        <description>[RE relabel 2026-11-02] Cold-start ignition advance reduction, vs RPM.</description></table>
+        <description>Cold-start ignition advance reduction, vs RPM.</description></table>
         <table name="Table 2D - 274 " storageaddress="0x07B510">
             <table type="Y Axis" storageaddress="0x07B4E4" />
         </table>
@@ -4871,7 +4871,7 @@
         <table name="MAF Scaling" category="Sensors" type="2D" storagetype="float" endian="big" sizey="48" storageaddress="0x6FBD8">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6FB18" />
-        <description>[RE relabel 2026-11-02] MAF sensor voltage to air mass flow (g/s).</description></table>
+        <description>MAF sensor voltage to air mass flow (g/s).</description></table>
         <table name="Table 2D - 295 Check DataType" storageaddress="0x06FCF8">
             <table type="Y Axis" storageaddress="0x06FCD8" />
         </table>
@@ -4902,7 +4902,7 @@
         <table name="Closed Loop Warmup Time" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="15" storageaddress="0x70380">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x70344" />
-        <description>[RE relabel 2026-11-02] Time after start during which closed-loop fuelling is inhibited.</description></table>
+        <description>Time after start during which closed-loop fuelling is inhibited.</description></table>
         <table name="Table 2D - 305" storageaddress="0x0703E4">
             <table type="Y Axis" storageaddress="0x0703CC" />
         </table>
@@ -5041,7 +5041,7 @@
         <table name="Cranking Pulse Width C" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x7850C">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x784E8" />
-        <description>[RE relabel 2026-11-02] Cranking injection pulse width (variant C).</description></table>
+        <description>Cranking injection pulse width (variant C).</description></table>
         <table name="Secondary Air Pump On Time" storageaddress="0x078C94">
             <table type="Y Axis" storageaddress="0x078C78" />
         </table>
@@ -5078,11 +5078,11 @@
         <table name="Knock Noise Threshold Min" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x7A400">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A3FC" />
-        <description>[RE relabel 2026-11-02] Minimum knock noise threshold (clamp floor).</description></table>
+        <description>Minimum knock noise threshold (clamp floor).</description></table>
         <table name="Knock Noise Floor (RPM)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x7A408">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A404" />
-        <description>[RE relabel 2026-11-02] Knock noise floor vs RPM.</description></table>
+        <description>Knock noise floor vs RPM.</description></table>
         <table name="Table 2D - 364 Check DataType" storageaddress="0x07A764">
             <table type="Y Axis" storageaddress="0x07A738" />
         </table>
@@ -5154,7 +5154,7 @@
             <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7C564">
 				<scaling units="degC" />
 			</table>
-        <description>[RE relabel 2026-11-02] Cranking pulse decay time.</description></table>
+        <description>Cranking pulse decay time.</description></table>
         <table name="Table 2D - 387 Check DataType" storageaddress="0x07C61C">
             <table type="Y Axis" storageaddress="0x07C5F8" />
         </table>
@@ -5242,7 +5242,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DB00">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Maximum allowed leading ignition advance.</description></table>
+        <description>Maximum allowed leading ignition advance.</description></table>
         <table name="Ignition Timing Trailing Idle Temperature Compensation" storageaddress="0x06DCF4">
             <table type="X Axis" storageaddress="0x06DCB0" />
             <table type="Y Axis" storageaddress="0x06DCD8" />
@@ -5255,7 +5255,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DD8C">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Trailing (rear rotor) base ignition timing map.</description></table>
+        <description>Trailing (rear rotor) base ignition timing map.</description></table>
         <table name="Safe Mode Advance Cap 3D - Trailing (candidate)" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6DFD4">
             <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
             <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6DF3C">
@@ -5264,7 +5264,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DF8C">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Purpose not fully verified (candidate label).</description></table>
+        <description>Purpose not fully verified (candidate label).</description></table>
         <table name="Ignition Trailing Advance" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6E1D4">
             <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
             <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6E13C">
@@ -5273,7 +5273,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E18C">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Trailing ignition advance adder.</description></table>
+        <description>Trailing ignition advance adder.</description></table>
         <table name="Table 3D - 12 " storageaddress="0x06EA88">
             <table type="X Axis" storageaddress="0x06EA60" />
             <table type="Y Axis" storageaddress="0x06EA7C" />
@@ -5294,7 +5294,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6EEA4">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Leading timing map 4 in DSC mode A.</description></table>
+        <description>Leading timing map 4 in DSC mode A.</description></table>
         <table name="Igntion Leading Timing - DSC Mode A - Map 2" storageaddress="0x06F0EC">
             <table type="X Axis" storageaddress="0x06F054" />
             <table type="Y Axis" storageaddress="0x06F0A4" />
@@ -5331,7 +5331,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70918">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Closed-loop fuel enrichment at wide-open throttle.</description></table>
+        <description>Closed-loop fuel enrichment at wide-open throttle.</description></table>
         <table name="Table 3D - 24 " storageaddress="0x070998">
             <table type="X Axis" storageaddress="0x070948" />
             <table type="Y Axis" storageaddress="0x07097C" />
@@ -5380,7 +5380,7 @@
             <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72340">
                 <scaling units="RPM" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Main open-loop target lambda vs engine load and RPM.</description></table>
+        <description>Main open-loop target lambda vs engine load and RPM.</description></table>
         <table name="OL Target - Throttle Tip In [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x72524">
             <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
             <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x7251C">
@@ -5389,7 +5389,7 @@
             <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72520">
                 <scaling units="%" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda during throttle tip-in (safe mode).</description></table>
+        <description>Open-loop target lambda during throttle tip-in (safe mode).</description></table>
         <table name="OL Target - Main [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x72530">
             <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
             <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x72528">
@@ -5398,7 +5398,7 @@
             <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7252C">
                 <scaling units="RPM" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Main open-loop target lambda vs engine load and RPM (safe mode).</description></table>
+        <description>Main open-loop target lambda vs engine load and RPM (safe mode).</description></table>
         <table name="Open Loop Target - Throttle Tip in - Coolant Temp Implausible B" storageaddress="0x072584">
             <table type="X Axis" storageaddress="0x072534" />
             <table type="Y Axis" storageaddress="0x072564" />
@@ -5411,7 +5411,7 @@
             <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72638">
                 <scaling units="RPM" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda for implausible coolant reading, gears 5-6.</description></table>
+        <description>Open-loop target lambda for implausible coolant reading, gears 5-6.</description></table>
         <table name="Open Loop Target - Throttle Tip in - Coolant Temp Implausible A" storageaddress="0x072864">
             <table type="X Axis" storageaddress="0x072814" />
             <table type="Y Axis" storageaddress="0x072844" />
@@ -5424,7 +5424,7 @@
             <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72918">
                 <scaling units="RPM" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Open-loop target lambda for implausible coolant reading, gears 1-4.</description></table>
+        <description>Open-loop target lambda for implausible coolant reading, gears 1-4.</description></table>
         <table name="Trans Requested Torque To Throttle Plate Position Position" storageaddress="0x073090">
             <table type="X Axis" storageaddress="0x072FDC" />
             <table type="Y Axis" storageaddress="0x073044" />
@@ -5505,7 +5505,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x760F8">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Leading base timing in DSC mode A.</description></table>
+        <description>Leading base timing in DSC mode A.</description></table>
         <table name="Table 3D - 60 " storageaddress="0x076330">
             <table type="X Axis" storageaddress="0x07629C" />
             <table type="Y Axis" storageaddress="0x0762E4" />
@@ -5530,7 +5530,7 @@
             <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77A70">
                 <scaling units="g/rev" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Engine-temperature multiplier for primary injector pulse width.</description></table>
+        <description>Engine-temperature multiplier for primary injector pulse width.</description></table>
         <table name="Secondary 1 Injector Weighted Engine Temp Multiplier" storageaddress="0x077B20">
             <table type="X Axis" storageaddress="0x077B18" />
             <table type="Y Axis" storageaddress="0x077B1C" />
@@ -5547,7 +5547,7 @@
             <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77BF8">
                 <scaling units="g/rev" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Estimated manifold pressure vs RPM and engine load.</description></table>
+        <description>Estimated manifold pressure vs RPM and engine load.</description></table>
         <table name="Injector Latency - Secondary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x77F58">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Manifold Relative Pressure" type="X Axis" storagetype="float" endian="big" storageaddress="0x77EF0">
@@ -5556,7 +5556,7 @@
             <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77F34">
                 <scaling units="V" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Secondary injector dead time vs estimated manifold pressure and battery voltage.</description></table>
+        <description>Secondary injector dead time vs estimated manifold pressure and battery voltage.</description></table>
         <table name="Injector Latency - Primary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x780F4">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Manifold Relative Pressure" type="X Axis" storagetype="float" endian="big" storageaddress="0x7808C">
@@ -5565,7 +5565,7 @@
             <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x780D0">
                 <scaling units="V" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Primary injector dead time vs estimated manifold pressure and battery voltage.</description></table>
+        <description>Primary injector dead time vs estimated manifold pressure and battery voltage.</description></table>
         <table name="Fuel Injection - Engine Load Compensation (base fuel map)" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="18" sizey="20" storageaddress="0x786E8">
             <scaling units="lambda" expression="(x * 0.000015258789 ) + 0.75" to_byte="(x - 0.75) / 0.000015258789" format="0.0000" />
             <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x78650">
@@ -5574,7 +5574,7 @@
             <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78698">
                 <scaling units="g/rev" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Base fuel map vs RPM and engine load.</description></table>
+        <description>Base fuel map vs RPM and engine load.</description></table>
         <table name="Warmup Fueling B" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="16" sizey="3" storageaddress="0x7938C">
             <scaling units="mult" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
             <table name="Coolant Temperature" type="X Axis" storagetype="float" endian="big" storageaddress="0x79340">
@@ -5583,7 +5583,7 @@
             <table name="Coolant Temperature (Catalyst Temp Model)" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79380">
                 <scaling units="degC" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant B).</description></table>
+        <description>Warmup fuel enrichment (variant B).</description></table>
         <table name="Warmup Fueling C" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="5" sizey="5" storageaddress="0x793E4">
             <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
             <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x793BC">
@@ -5592,7 +5592,7 @@
             <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" storageaddress="0x793D0">
                 <scaling units="degC" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant C).</description></table>
+        <description>Warmup fuel enrichment (variant C).</description></table>
         <table name="Warmup Fueling D" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="7" sizey="6" storageaddress="0x79434">
             <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
             <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x79400">
@@ -5601,7 +5601,7 @@
             <table name="Coolant Temp" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7941C">
                 <scaling units="degC" expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Warmup fuel enrichment (variant D).</description></table>
+        <description>Warmup fuel enrichment (variant D).</description></table>
         <table name="Table 3D - 74 " storageaddress="0x079584">
             <table type="X Axis" storageaddress="0x079530" />
             <table type="Y Axis" storageaddress="0x079570" />
@@ -5630,7 +5630,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79D90">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant C).</description></table>
+        <description>Load-delta / tip-in fuel correction (variant C).</description></table>
         <table name="Load Delta / Tip-In D" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="5" sizey="7" storageaddress="0x79E30">
             <scaling expression="(x * 0.000488 ) + 0" to_byte="(x - 0) / 0.000488" format="0.00" />
             <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x79E00">
@@ -5639,7 +5639,7 @@
             <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79E14">
                 <scaling expression="x" to_byte="x" />
             </table>
-        <description>[RE relabel 2026-11-02] Load-delta / tip-in fuel correction (variant D).</description></table>
+        <description>Load-delta / tip-in fuel correction (variant D).</description></table>
         <table name="Table 3D - 81 " storageaddress="0x079EAC">
             <table type="X Axis" storageaddress="0x079E78" />
             <table type="Y Axis" storageaddress="0x079E90" />

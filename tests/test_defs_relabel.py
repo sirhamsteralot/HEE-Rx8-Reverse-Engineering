@@ -3,17 +3,20 @@
 
 Invariants checked against the artifacts on disk:
   * the merged 60E15120 def and every per-ROM def parse and carry the relabel
-    marker on the labeled entries (names + categories applied);
+    pass's short descriptions on the labeled entries (names + categories applied);
   * no pre-existing table changed storageaddress / axis addresses / scaling /
     type / sizes (names and descriptions only, plus whole-table additions);
   * every labeled table's storageaddress equals the data address of its
     descriptor in data/maps/<rom>/index.tsv (address traceability, rule 5);
   * the curated label map covers only descriptors that exist in the reference
     ROM's extraction, and candidate labels keep their "(candidate)" marker;
-  * the generator is idempotent on the 60E15120 per-ROM def (marker skip).
+  * rule 6b: every relabeled entry's <description> is short, marker-free and
+    address/derivation-free (simplified what-the-table-does text only);
+  * the generator is idempotent on the 60E15120 per-ROM def (description match).
 """
 import csv
 import json
+import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
@@ -67,16 +70,34 @@ def test_label_map_is_consistent_with_reference_extraction():
         assert "0x" not in desc.lower(), f"{key}: address in desc: {desc!r}"
 
 
+def marked_tables(blk, labels):
+    """Relabel-pass entries of a block: identified by their (marker-free)
+    short description matching the label map (relabel.is_relabeled), plus
+    added-unlabeled entries by name pattern."""
+    out = []
+    for t in blk.findall("table"):
+        n = t.get("name") or ""
+        base = n.split(" [0x")[0]  # strip name-collision suffix
+        lab = next((l for l in labels.values() if l["name"] == base), None)
+        if lab is not None and relabel.is_relabeled(t, lab):
+            out.append(t)
+        elif lab is None and re.fullmatch(r"Table [123]D - 0x[0-9a-f]+ \(unlabeled\)", n) \
+                and (t.findtext("description") or "") == relabel.UNLABELED_DESC:
+            out.append(t)
+    return out
+
+
 def assert_rule_6b_descriptions(marked, stem=""):
     """AGENTS.md rule 6b: editor-facing descriptions are short and carry a
     simplified what-the-table-does text only — no memory addresses, no
-    structural-match info, no derivation/prior-name/evidence dumps."""
+    structural-match info, no derivation/prior-name/evidence/pass-marker."""
     for t in marked:
         d = t.findtext("description") or ""
         low = d.lower()
         assert "0x" not in low, f"{stem}{t.get('name')}: address in description: {d!r}"
+        assert relabel.MARKER not in d, f"{stem}{t.get('name')}: pass marker in description: {d!r}"
         for frag in ("structural", "prior name", "descriptor", "added from", "data/maps",
-                     "evidence:", "source:"):
+                     "evidence:", "source:", "relabel"):
             assert frag not in low, f"{stem}{t.get('name')}: {frag!r} in description: {d!r}"
         assert len(d) <= 200, f"{stem}{t.get('name')}: description too long ({len(d)} chars)"
 
@@ -85,7 +106,7 @@ def test_merged_def_relabel_applied():
     blk = rom_block(MERGED, "60E15120")
     labels = {int(k, 16): v for k, v in json.loads(LABELS.read_text(encoding="utf-8"))["entries"].items()}
     by_desc, by_data = relabel.maps_index(relabel.REFERENCE)
-    marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
+    marked = marked_tables(blk, labels)
     assert len(marked) >= 150, f"only {len(marked)} relabeled entries in merged def"
     assert_rule_6b_descriptions(marked)
     # every high/candidate label with a descriptor present in the block is applied
@@ -122,7 +143,8 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
         st = rec["relabel_2026-11-02"]
         if st.get("skipped"):
             continue  # 60E32000_*: upstream block layout mismatch, documented
-        marked = [t for t in blk.findall("table") if relabel.MARKER in (t.findtext("description") or "")]
+        labels = {int(k, 16): v for k, v in json.loads(LABELS.read_text(encoding="utf-8"))["entries"].items()}
+        marked = marked_tables(blk, labels)
         assert len(marked) >= st["renamed"] + st["added"]
         assert_rule_6b_descriptions(marked, stem=f"{stem}: ")
         # every marked table's storageaddress is a real data address of this ROM
