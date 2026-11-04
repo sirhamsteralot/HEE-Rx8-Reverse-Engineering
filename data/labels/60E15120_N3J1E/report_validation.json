@@ -23,7 +23,7 @@
     "free_resources_report.md": {
       "fn_checked": 3,
       "ram_checked": 2,
-      "rom_refs": 5,
+      "rom_refs": 10,
       "rom_claims": 0
     },
     "fueling_control_report.md": {

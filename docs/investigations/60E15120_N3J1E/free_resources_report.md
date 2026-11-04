@@ -26,7 +26,10 @@ free-run pattern), [calibration_extraction_report.md](calibration_extraction_rep
   (`accepted_ram_aliases.tsv` union + 0xffff8038), the largest contiguous free
   runs are **0xffff8901–0xffff90f3 (2,035 B)** and **0xffff807d–0xffff8787
   (1,803 B)**. This matches the feasibility report's 60E15120_N3J1E numbers
-  exactly (verification in §7).
+  exactly (verification in §7). **The static allocation analysis (§10) then
+  shows 308 B of that window are still code-referenced (latent use, e.g. the
+  EEPROM mirror at 0xffff8000–0xffff80ff), leaving 3,852 B truly free, largest
+  contiguous run 1,087 B (0xffff8109–0xffff8547).**
 - **Free app flash varies widely: 899 B – 21,956 B** (0xFF runs ≥16 B in
   0x2000–0x7ffff). Common to **all 11 ROMs**: the 196 B run
   **0x7fb8c–0x7fc4f** (the patchers' code cave, right before the IVT at
@@ -145,6 +148,9 @@ no committed file and no emulator semantics for the 60E15120 corpus.
   | largest runs excl. labeled cells 0xffff8901–0xffff90f3 2,035 B / 0xffff807d–0xffff8787 1,803 B | identical (0xffff8901 len 2035, 0xffff807d len 1803) | yes |
 - Every ROM's SHA-256 re-computed during the scan and quoted in §3; the
   reference ROM hash in the header equals the submodule ROM's hash.
+- §10 static analysis re-run deterministically from the committed disassembly
+  (`firmware_disassembly.asm`) and ROM bytes: 4,546 point refs + 768 intervals,
+  392/393 labeled aliases matched, 308 window refs — quoted above.
 - `python utilities/scripts/rx8-pcm-pipeline/validate_reports.py` — PASS.
 - `python utilities/scripts/hash_binaries.py --check` — OK (no binary touched).
 - `python -m pytest tests/` — 91 passed, 1 pre-existing cp1252 failure
@@ -188,8 +194,68 @@ no committed file and no emulator semantics for the 60E15120 corpus.
 - Free-RAM identity across ROMs is expected (same firmware family, same RAM
   map) but only *measured* at idle boot; treat per-ROM differences as
   "not yet measured" rather than "proven equal".
+- §10 Method A caveats: base+disp intervals use light per-function register
+  tracking (approximation — a base register reloaded mid-function may extend an
+  interval); the static stack estimate covers call chains only, not interrupt
+  nesting; Method B (raw u32 scan) misses mov.w sign-extended low16 literals on
+  ROMs without a committed disassembly, so per-ROM window counts (137–180) are
+  lower bounds. The EEPROM-mirror identification rests on the 0x55aa/0xaa55
+  magic at 0xffff8000 (0xd408/0xd44c) + the 256 B 93c56 dump size — solid, but
+  the exact mirror extent (0x100 B assumed) is not proven cell-by-cell.
 
-## 10. Related subsystems / next steps
+## 10. Static allocation analysis (beyond idle-boot measurements)
+
+Idle-boot write-tracking only shows what boot *happened* to touch. To see what
+the code *can* touch, we extracted every static RAM reference from the
+60E15120_N3J1E disassembly and cross-scanned all ROMs at byte level:
+
+- **Method A (full disassembly, 60E15120_N3J1E):** every `mov.w/mov.l
+  @(EA,pc),rN` whose literal-pool word lands in RAM (mov.w = sign-extended
+  low16, mov.l = full32) is a direct cell reference; `mov.x @(disp,rN)` with rN
+  tracked (light per-function register tracking) to a RAM base adds a
+  base+disp interval; `add #imm,r15` prologues give stack frame sizes, combined
+  with `callgraph.tsv` into a longest-chain estimate. Result: **4,546 direct
+  point references + 768 base+disp intervals = 5,351 statically referenced RAM
+  bytes** (range 0xffff6000–0xffffdffc), of which 392 match the labeled
+  aliases — i.e. the label set covers the referenced cells well, and ~4,950
+  referenced bytes were previously unlabeled.
+- **Method B (raw byte scan, all 11 ROMs):** every 4-aligned big-endian u32 in
+  the ROM with value in 0xffff6000–0xffffe000 is a mov.l literal-pool reference
+  (2,674–2,810 per ROM). Inside the idle-free window 0xffff8000–0xffff92ff each
+  ROM has **137–180 such literals** — the latent usage is corpus-wide, not an
+  artifact of one ROM. (mov.w low16 literals are only captured by Method A;
+  for other ROMs Method B is a lower bound.)
+- **Method C (dynamic stack):** reset SP = 0xffffdfa0 (vector 4); task contexts
+  at 0xffff7408+8·i grow down from ≈0xffff7498; observed low-water mark during
+  the 2M idle boot = **0xffff73e8**; static longest-call-chain estimate ≈
+  **10,284 B** (largest single frame 8,972 B, chain rooted at 0x61092), i.e.
+  worst-case main-stack bottom ≈ 0xffffb584 — comfortably above the free
+  window, but interrupt nesting is not included in that estimate.
+
+**Classification:** static allocations = the 5,351 literal/interval-referenced
+bytes (globals: engine state 0xffffa000–0xffffdxxx bins are densest, EEPROM
+mirror at 0xffff8000–0xffff80ff — 0xffff8000 holds the 0x55aa/0xaa55 EEPROM
+magic, see 0xd408/0xd44c, matching the 256 B 93c56 IC420 dump); dynamic
+allocations = stacks (above) plus the pointer-driven ring buffers (queue state
+0xffff9304+3i, bufs 0xffff9310/0xffff93d8/0xffff94a0/0xffff96f8, diag response
+ring 0xffffd962, UDS RX 0xffffddc8).
+
+### Latent references inside the idle-free window (60E15120_N3J1E, Method A)
+
+| cluster | bytes | note |
+|---|---:|---|
+| 0xffff8000–0xffff8004, 0xffff802c–0xffff8108 | 195 | EEPROM mirror (magic at 0xffff8000; 93c56 = 256 B) |
+| 0xffff8548, 0xffff8658–0xffff87be | 360 | incl. DTC master table 0xffff87b0 |
+| 0xffff8900–0xffff8910, 0xffff893a | 18 | |
+| 0xffff8d4c–0xffff8d56, 0xffff8e6c–0xffff8f97, 0xffff8f98–0xffff8fe8 | 125 | |
+| 0xffff9010–0xffff9110, 0xffff9150–0xffff917e | 304 | incl. labeled 0xffff9150 |
+
+308 bytes total. Subtracting them from the 4,864 B window leaves **3,852 B
+static-free**, largest contiguous runs: **0xffff8109–0xffff8547 (1,087 B)**,
+**0xffff893b–0xffff8d4b (1,041 B)**, 0xffff917f–0xffff92ff (385 B),
+0xffff87bf–0xffff88ff (321 B).
+
+## 11. Related subsystems / next steps
 
 - Feeds [live_tuning_feasibility_report.md](live_tuning_feasibility_report.md)
   (ROADMAP F item 3): RAM shadow budget ~2 KiB contiguous on every ROM; cave

@@ -84,7 +84,7 @@ dump any memory address. What it *cannot* do today is accept changes while
 running — the firmware has no "write memory" diagnostic command, and its
 calibration tables live in flash, which the CPU cannot write at runtime. The
 study shows there is enough spare flash (~2.2 KiB of code caves) and spare RAM
-(~2 KiB contiguous) to add both: a small patch that (1) copies the handful of
+(~1 KiB contiguous after static-reference exclusion) to add both: a small patch that (1) copies the handful of
 tables you actually tune into RAM at startup, (2) points the firmware's table
 lookups at those RAM copies, and (3) adds a "write these bytes to that RAM
 area" diagnostic command with a strict address check. The PC tool then logs
@@ -180,9 +180,12 @@ tracking; "never written" after boot):
 | 0xffff8000–0xffff92ff | 4,864 B | only never-written run ≥32 B in the 32 KiB RAM |
 | — excl. labeled cells 0xffff8038/0xffff807c/0xffff8788/0xffff87b0/0xffff8900/0xffff90f4/0xffff90fc/0xffff9150 | | largest contiguous: **0xffff8901–0xffff90f3 (2,035 B)**, then **0xffff807d–0xffff8787 (1,803 B)** |
 
-~2 KiB contiguous is enough for one 16×16 f32 3D table + axes, or a set of
-smaller 2D tables — i.e. live-tune the hot tables (fuel, ignition, knock
-clamps, limiter), not the whole cal region. Re-measure under drive-cycle replay
+~2 KiB contiguous at idle boot; after removing the 308 B the static allocation
+analysis shows are still code-referenced ([free_resources_report.md](free_resources_report.md)
+§10), ~1 KiB contiguous remains (0xffff8109–0xffff8547) — enough for one
+16×16 f32 3D table or a set of smaller 2D tables / scalars, i.e. live-tune
+the hot tables (fuel, ignition, knock clamps, limiter), not the whole cal
+region. Re-measure under drive-cycle replay
 before committing to addresses (idle boot may under-use RAM — see §9).
 
 CAN bandwidth (estimate, not measured on a real bus): typ. 500 kbit/s → an
@@ -315,11 +318,17 @@ ROMs; the effect on this study's verdict:
 
 - **Verdict unchanged, confidence up: feasible on every ROM in the corpus, not
   just the reference ROM.** The Tier-2 design's binding constraint is RAM, and
-  the free-RAM budget is *identical* on all 11 ROMs (never-written
-  0xffff8000–0xffff92ff 4,864 B; largest contiguous excl. labeled cells
-  0xffff8901–0xffff90f3 2,035 B + 0xffff807d–0xffff8787 1,803 B), so the
-  RAM-shadow approach (~2 KiB of hot tables) ports to every ROM without
-  per-ROM RAM risk.
+  the idle-boot free-RAM window is *identical* on all 11 ROMs (never-written
+  0xffff8000–0xffff92ff 4,864 B). The static allocation analysis
+  ([free_resources_report.md](free_resources_report.md) §10) then removes the
+  308 B of that window that code can still reference (EEPROM mirror at
+  0xffff8000–0xffff80ff, DTC master 0xffff87b0, …), leaving **3,852 B
+  static-free, largest contiguous 1,087 B (0xffff8109–0xffff8547) + 1,041 B
+  (0xffff893b–0xffff8d4b)** — the shadow budget is ~1 KiB contiguous per run:
+  one 16×16 f32 table, or several smaller hot tables/scalars, and it ports to
+  every ROM (each has 137–180 latent literals in the same window). Stacks are
+  not a conflict: worst-case static chain ≈10.3 KB from reset SP 0xffffdfa0
+  bottoms out ≈0xffffb584, above the window.
 - **Flash cave budget is per-ROM (899 B–21,956 B app) but never a blocker for
   the patch size needed.** The Tier-1/Tier-2 patch (boot-copy hook + write
   service handler + one dispatch record) needs a few hundred bytes of code. The
