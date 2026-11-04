@@ -3,10 +3,12 @@
 Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched — this study changes no binaries). Static-analysis disclaimer: findings
-come from the canonical export + disassembly + ROM bytes; the two measurements
-marked "emulator" were produced by booting the real ROM in the SH-2E emulator
-(`utilities/scripts/emu/`, 2M cycles to the idle loop 0x3dac) with RAM-write
-tracking, and by scanning the ROM bytes for 0xFF runs.
+come from the canonical export + disassembly + ROM bytes. Three measurement kinds
+back the numbers: ROM-byte scans (free flash), emulator boots of the real ROM
+(`utilities/scripts/emu/`, 2M cycles to the idle loop 0x3dac, RAM-write
+tracking — free RAM at idle), and a static allocation analysis of the
+disassembly (every code-reachable RAM reference — see
+[free_resources_report.md](free_resources_report.md) §10).
 
 **Related reports:** [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)
 (service/PID tables, checksum D3, seed/key D4, SBL flash path),
@@ -52,12 +54,13 @@ is fully reversed and the ROM has measured free space.
   to RAM, buffer initialized from flash at boot by a cave hook in the init
   chain — the same cave pattern the existing patchers use). RAM budget is the
   binding constraint: a 2M-cycle emulator boot never writes
-  **0xffff8000–0xffff92ff (4,864 B)**; excluding 8 labeled cells inside it, the
-  largest contiguous free runs are **0xffff8901–0xffff90f3 (2,035 B)** and
-  **0xffff807d–0xffff8787 (1,803 B)** — enough to shadow the hot tables (main
-  fuel / ignition 3D + axes, knock, limiter), not the whole 80 KiB cal region.
-  Corpus-wide cross-check: identical free-RAM numbers on all 11 ROMs, and
-  per-ROM free-flash budgets 899 B–21,956 B, in
+  **0xffff8000–0xffff92ff (4,864 B)**, and the static allocation analysis removes
+  the 308 B of that window the code can still reference (EEPROM mirror
+  0xffff8000–0xffff80ff, DTC master 0xffff87b0, …), leaving **3,852 B
+  static-free, largest contiguous run 1,087 B (0xffff8109–0xffff8547)** — enough
+  to shadow one hot 3D table or several smaller tables/scalars, not the whole
+  80 KiB cal region. Corpus-wide cross-check: the same window and per-ROM
+  free-flash budgets 899 B–21,956 B on all 11 ROMs, in
   [free_resources_report.md](free_resources_report.md).
 - **Checksum is not a blocker.** The app CVN is a runtime-computed dual-u16
   additive sum over 0x2000–0x7ffff (skipping hole 0x7fb00–0x7fb7f), stored to
@@ -84,10 +87,11 @@ dump any memory address. What it *cannot* do today is accept changes while
 running — the firmware has no "write memory" diagnostic command, and its
 calibration tables live in flash, which the CPU cannot write at runtime. The
 study shows there is enough spare flash (~2.2 KiB of code caves) and spare RAM
-(~1 KiB contiguous after static-reference exclusion) to add both: a small patch that (1) copies the handful of
-tables you actually tune into RAM at startup, (2) points the firmware's table
-lookups at those RAM copies, and (3) adds a "write these bytes to that RAM
-area" diagnostic command with a strict address check. The PC tool then logs
+(~1 KiB contiguous once code-referenced cells are excluded) to add both: a
+small patch that (1) copies the handful of tables you actually tune into RAM at
+startup, (2) points the firmware's table lookups at those RAM copies, and (3)
+adds a "write these bytes to that RAM area" diagnostic command with a strict
+address check. The PC tool then logs
 live (stock PIDs or a fast RAM-block stream) and edits table cells on the fly,
 with every write read back to confirm. Haltech does the same thing over USB;
 here the link is the car's CAN bus, which is slower but plenty for ~30 values
@@ -177,12 +181,11 @@ tracking; "never written" after boot):
 
 | Run | Length | Note |
 |---|---:|---|
-| 0xffff8000–0xffff92ff | 4,864 B | only never-written run ≥32 B in the 32 KiB RAM |
-| — excl. labeled cells 0xffff8038/0xffff807c/0xffff8788/0xffff87b0/0xffff8900/0xffff90f4/0xffff90fc/0xffff9150 | | largest contiguous: **0xffff8901–0xffff90f3 (2,035 B)**, then **0xffff807d–0xffff8787 (1,803 B)** |
+| 0xffff8000–0xffff92ff | 4,864 B | only never-written run ≥32 B in the 32 KiB RAM (idle boot) |
+| — excl. 8 labeled cells (0xffff8038/0xffff807c/0xffff8788/0xffff87b0/0xffff8900/0xffff90f4/0xffff90fc/0xffff9150) | | idle-boot largest contiguous: 0xffff8901–0xffff90f3 (2,035 B), 0xffff807d–0xffff8787 (1,803 B) |
+| — excl. the further 308 B the static analysis shows are code-referenced | 3,852 B | static-free; largest contiguous: **0xffff8109–0xffff8547 (1,087 B)**, 0xffff893b–0xffff8d4b (1,041 B) — see [free_resources_report.md](free_resources_report.md) §10 |
 
-~2 KiB contiguous at idle boot; after removing the 308 B the static allocation
-analysis shows are still code-referenced ([free_resources_report.md](free_resources_report.md)
-§10), ~1 KiB contiguous remains (0xffff8109–0xffff8547) — enough for one
+~1 KiB contiguous is statically free (0xffff8109–0xffff8547) — enough for one
 16×16 f32 3D table or a set of smaller 2D tables / scalars, i.e. live-tune
 the hot tables (fuel, ignition, knock clamps, limiter), not the whole cal
 region. Re-measure under drive-cycle replay
@@ -203,9 +206,12 @@ exist in `data/labels/60E15120_N3J1E/` (see the related reports in the header).
 
 ## 5. Corrections made in this pass
 
-None. (Two new measurements are recorded in §3: free-flash runs scanned from
-ROM bytes; free-RAM runs measured by emulator write-tracking. Neither
-contradicts an existing label.)
+None to existing labels. One refinement to this report's own earlier figure:
+the idle-boot free-RAM window (4,864 B) was first quoted as ~2 KiB contiguous
+usable; the static allocation analysis
+([free_resources_report.md](free_resources_report.md) §10) showed 308 B of it
+are still code-referenced, so the usable figure is 3,852 B, largest contiguous
+1,087 B. §1/§3/§10 quote the corrected numbers.
 
 ## 6. Files
 
@@ -223,7 +229,10 @@ contradicts an existing label.)
   RAM bytes; largest free runs computed excluding the labeled cells listed.
   Re-measured corpus-wide (all 11 ROMs, free-flash scan + per-ROM boot) in
   [free_resources_report.md](free_resources_report.md) §7 — every figure quoted
-  above for 60E15120_N3J1E matches that scan exactly.
+  above for 60E15120_N3J1E matches that scan exactly. The static allocation
+  analysis of the disassembly (resource report §10) was re-run deterministically
+  from the committed `firmware_disassembly.asm` and produced the 308 B
+  code-referenced correction quoted above.
 - Stock-read-path claims rest on executed tests, not just statics:
   `tests/test_phase1_dynamic.py::test_mode22_dispatch_full_sweep` (all 99 PIDs
   through the ROM's own 0x5774c), `test_uds_service_router_routes` (15 services
