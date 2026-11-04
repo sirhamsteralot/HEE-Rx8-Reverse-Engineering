@@ -17,7 +17,7 @@ memory map), [free-flash / free-RAM resource scan](../investigations/60E15120_N3
 §12 (CVN checksum + SBL services), [OS scheduler / IVT report](../investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
 (VBR + interrupt vectors), [learnings](../learnings.md) (VBR value, ROM
 read-only behavior), [hardware pinout](hardware/mazda-rx-8-pcm-pinout-series-1.md),
-[upstream ROM↔cal-ID table extract](../references/rx8club-user-guide-thread.md) §8.
+[upstream ROM↔cal-ID table extract](../references/rx8club-user-guide-thread.md) §2.
 
 ## 1. Executive summary
 
@@ -61,7 +61,7 @@ flowchart TD
         RAM["On-chip RAM\n0xffff6000 – 0xffffdfff\n32 KiB working data"]
         IO["On-chip I/O registers\n0xffffe000 – 0xffffffff\nADC, timers (ATU-II), HCAN, DMAC, WDT, GPIO…"]
     end
-    EEPROM["External 93C56 serial EEPROM (IC420)\n256 bytes — persistent data\n(immobilizer/DTC/learned values); mirrored at\nRAM 0xffff8000–0xffff80ff during runtime"]
+    EEPROM["External 93C56 serial EEPROM (IC420)\n256 bytes — persistent data incl.\nlearned knock retard (0xffff8038 mirror);\nfull content not yet mapped; mirrored at\nRAM 0xffff8000–0xffff80ff during runtime"]
     FLASH -->|"CPU reads code + calibration"| CPU["SH-2E core"]
     RAM --> CPU
     IO --> CPU
@@ -73,7 +73,7 @@ flowchart TD
 | User ROM (flash) | 0x00000000–0x0007ffff | 512 KiB | The dumped image: SBL + app + calibration + runtime IVT | all 11 dumps are exactly 524,288 B; [SH7055 hardware manual](https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual) |
 | On-chip RAM | 0xffff6000–0xffffdfff | 32 KiB | Working variables, task stacks, EEPROM mirror, CVN result | [design doc §1](design/README.md); emulator profiles `memory.ram` |
 | I/O registers | 0xffffe000–0xffffffff | 8 KiB | SH7055 peripherals (volatile) | emulator profiles `memory.io`; [learnings](../learnings.md) |
-| External 93C56 | off-chip | 256 B | Persistent storage (IC420); 0x55aa/0xaa55 magic mirrored at 0xffff8000 | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/free_resources_report.md) |
+| External 93C56 | off-chip | 256 B | Persistent storage (IC420) incl. learned knock retard; 0x55aa/0xaa55 magic mirrored at 0xffff8000 (full content not yet mapped) | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/free_resources_report.md) |
 
 Runtime flash is **read-only** from the CPU: stores to `0x0–0x7ffff` are ignored
 (the emulator counts them in `bus.rom_writes_blocked`; on hardware they need
@@ -209,9 +209,14 @@ Notes on the table:
   (0x7dd84) is a span estimate that can overshoot by a few dozen bytes
   (type-size rounding on the last table).
 - File names vs internal IDs: `60E0E500.bin` has no cal suffix in its file name
-  but internally carries the `N3YMEC` package; the upstream
-  [ROM↔cal-ID table](../references/rx8club-user-guide-thread.md) §8 matches
-  these internal strings. Market/model context per ROM (hypotheses, from the
+  but internally carries the `N3YMEC` package. The upstream
+  [ROM↔cal-ID table](../references/rx8club-user-guide-thread.md) §2 agrees with
+  the internal strings where it lists them (`N3Z2ET`, `N3Z2EU`, `N3J1EM`,
+  `N3ZHEC`), with two documented discrepancies: 60E1B900's internal package is
+  `N3ZDEH` (byte-verified here; the forum table and the emu profile name say
+  `N3ZBEH`), and the reference ROM's `N3ZHE` at 0x6c046 (already noted as a
+  do-not-"fix" discrepancy in that extract). Market/model context per ROM
+  (hypotheses, from the
   [emulator profiles](../../utilities/scripts/emu/profiles/README.md)):
   60E0G500_N3ZHEC = EU, 2004 Series 1, 6-port MT.
 - The ID-header position inside the cal region varies (`0x6c000`, `0x6c600`,
@@ -329,7 +334,10 @@ the session scratchpad (`flash-layout-report/findings.md`).
 - `python utilities/scripts/rx8-pcm-pipeline/validate_reports.py` — PASS
   (this file is outside `docs/investigations/` and not scanned; run as a
   no-regression check). `python utilities/scripts/hash_binaries.py --check` —
-  OK (no binary touched).
+  OK (no binary touched). `python -m pytest tests/` — 91 passed, 1
+  pre-existing cp1252 failure (`test_extract_scalars.py`, also on `main`,
+  unrelated to this docs-only change; `verify_readability.py` fails on the
+  same class of pre-existing cp1252 decode error).
 
 ## 9. Memory map for validation (key anchors)
 
