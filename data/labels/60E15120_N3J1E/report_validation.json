@@ -20,6 +20,12 @@
       "rom_refs": 51,
       "rom_claims": 0
     },
+    "free_resources_report.md": {
+      "fn_checked": 3,
+      "ram_checked": 2,
+      "rom_refs": 10,
+      "rom_claims": 0
+    },
     "fueling_control_report.md": {
       "fn_checked": 44,
       "ram_checked": 21,
@@ -42,6 +48,12 @@
       "fn_checked": 48,
       "ram_checked": 56,
       "rom_refs": 131,
+      "rom_claims": 0
+    },
+    "live_tuning_feasibility_report.md": {
+      "fn_checked": 27,
+      "ram_checked": 6,
+      "rom_refs": 34,
       "rom_claims": 0
     },
     "load_fueling_report.md": {
