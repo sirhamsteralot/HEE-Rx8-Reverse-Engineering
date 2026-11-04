@@ -84,9 +84,11 @@ external agents use the MCP plugin in `.vibe/plugins/hee-re/`.
   local laws before distributing circumvention code.
 - **Binaries are immutable inputs** — patches write *new* output files only, with
   the input SHA-256 asserted unchanged.
-- **Never flash modified firmware to a vehicle** without bench validation first
-  (BOOT-mode bench work needs a ~150 Hz square wave on CN400 pin 3 — see
-  [`docs/references/rx8club-user-guide-thread.md`](docs/references/rx8club-user-guide-thread.md) §8).
+- **Never flash modified firmware to a vehicle** without bench validation first:
+  validate in the emulator, then upload to a **bench ECU over the OBD port**
+  (UDS 0x34/0x36/0x37). CN400 BOOT mode is recovery-only — it erases flash before
+  any read and needs a ~150 Hz square wave on pin 3 — see
+  [`docs/references/rx8club-user-guide-thread.md`](docs/references/rx8club-user-guide-thread.md) §8.
 
 Full rules: [AGENTS.md](AGENTS.md).
 

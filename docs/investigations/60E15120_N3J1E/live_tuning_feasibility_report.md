@@ -46,7 +46,10 @@ is fully reversed and the ROM has measured free space.
   needs a patch, and it fits.** The 29-record service table at 0x5eb40 has **no
   0x2E WriteDataByIdentifier**; the app's 0x34/0x36/0x37 (0x5d7bc/0x5d834/0x5d874)
   are NRC stubs — real flashing exists only in the SBL BOOT mode
-  (0x1ad6/0x1c04/0x1d30/0x1d78). CPU writes to flash are ignored (read-only), so
+  (0x1ad6/0x1c04/0x1d30/0x1d78). (In practice the OBD upload path 0x34/0x36/0x37
+  is how bench ECUs get flashed by Rx8Man-class tools; how the app stubs hand
+  off to the SBL over OBD is an open question — ROADMAP F item 4.) CPU writes to
+  flash are ignored (read-only), so
   live writes must target **RAM**: patch = new service record → cave handler →
   range-checked write via the firmware's own `ref_updateMemoryAtAddress_*` helpers
   (0x3dc70/0x3dcd0) under the critical-section pair 0x3920/0x3934, aimed at a
@@ -76,7 +79,8 @@ is fully reversed and the ROM has measured free space.
   risk is a wrong-address write; mitigate with a strict shadow-range check and
   an optional engine-state gate in the handler. Per AGENTS.md rule 10 / ROADMAP
   group F, nothing flashes to a vehicle before emulator validation (virtual OBD
-  port + real-car datalog replay) and BOOT-mode bench validation.
+  port + real-car datalog replay) and bench-ECU validation via OBD upload (UDS
+  0x34/0x36/0x37; CN400 BOOT mode is recovery-only).
 
 ## 1a. Plain-language summary
 
@@ -366,8 +370,9 @@ ROMs; the effect on this study's verdict:
 ## 11. Related subsystems / next steps
 
 - ROADMAP **F item 3** (added with this study): implement the Tier 1/2 patch in
-  the emulator first (virtual OBD port + golden datalogs), then bench — the
-  existing patcher pattern (`utilities/scripts/patchers/`) is the template.
+  the emulator first (virtual OBD port + golden datalogs), then bench ECU via OBD
+  upload (UDS 0x34/0x36/0x37) — the existing patcher pattern
+  (`utilities/scripts/patchers/`) is the template.
 - PC tool: new `utilities/scripts/` tool (hee.py-style) speaking ISO-TP/UDS over
   J2534 (car) and the emulator TCP port (dev), with CSV logging against
   `data/logs/` and table edit/write/read-back against `data/maps/<rom>/` +
