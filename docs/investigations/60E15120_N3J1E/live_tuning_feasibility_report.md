@@ -286,8 +286,10 @@ requires TSV-alias rows in this table.)
   parks in idle 0x3dac; under a real drive cycle more RAM may be touched. Before
   picking shadow addresses, re-run the write-tracking measurement with
   `hee_replay_load`/`hee_replay_step` over `data/logs/rx8-666p/*.csv`.
-- **Free-flash runs are per-ROM.** The runs in §3 are for 60E15120_N3J1E; the
-  patchers already do per-ROM free-run discovery (verified all-0xFF) — reuse that.
+- **Free-flash runs are per-ROM.** The runs in §3 are for 60E15120_N3J1E;
+  corpus-wide budgets are 899 B–21,956 B app free
+  ([free_resources_report.md](free_resources_report.md) §3); the patchers
+  already do per-ROM free-run discovery (verified all-0xFF) — reuse that.
 - **Bandwidth numbers are estimates** (500 kbit/s assumption from
   emulated-obd.md, "confirm against captures"); not measured on a real bus.
 - **E6/E8 still apply:** in the emulator, UDS response TX is driven via profile
@@ -306,7 +308,44 @@ requires TSV-alias rows in this table.)
   Safety design (range check, engine-state gate, read-back verify) is proposed,
   not implemented.
 
-## 10. Related subsystems / next steps
+## 10. Corpus-wide impact of the per-ROM resource scan
+
+[free_resources_report.md](free_resources_report.md) measured all 11 unique
+ROMs; the effect on this study's verdict:
+
+- **Verdict unchanged, confidence up: feasible on every ROM in the corpus, not
+  just the reference ROM.** The Tier-2 design's binding constraint is RAM, and
+  the free-RAM budget is *identical* on all 11 ROMs (never-written
+  0xffff8000–0xffff92ff 4,864 B; largest contiguous excl. labeled cells
+  0xffff8901–0xffff90f3 2,035 B + 0xffff807d–0xffff8787 1,803 B), so the
+  RAM-shadow approach (~2 KiB of hot tables) ports to every ROM without
+  per-ROM RAM risk.
+- **Flash cave budget is per-ROM (899 B–21,956 B app) but never a blocker for
+  the patch size needed.** The Tier-1/Tier-2 patch (boot-copy hook + write
+  service handler + one dispatch record) needs a few hundred bytes of code. The
+  common 196 B run 0x7fb8c–0x7fc4f (present on all 11 ROMs, right before the
+  IVT) fits the hook trampoline; the handler goes into a per-ROM larger run.
+  60E15120_N3J1E (2,378 B, largest run 928 B) is comfortable; even the
+  tightest, 60E32000_N3M5E (899 B, largest single run 244 B), fits if the cave
+  is split across its runs — and the patchers already do per-ROM
+  verified-all-0xFF discovery, so this is tooling, not risk.
+- **CVN-neutral space exists on every ROM**: the SBL-region run
+  0xb0e–0xfdf (1,234 B; 0x1fc4–0x1fff +60 B on five ROMs) lies below the
+  checksum's 0x2000 start (verified for 60E15120_N3J1E, D3) — usable for code
+  that must not move the reported CVN, subject to flash-block/erase checks
+  (ROADMAP F gating). The 0x7fb00–0x7fb7f hole inside the covered range is
+  verified CVN-neutral only for 60E15120_N3J1E; other ROMs need the same
+  literal-pool check of their checksum routine first (noted in the resource
+  report §9).
+- **Practical consequence for sequencing:** implement and validate the patch on
+  60E15120_N3J1E (fully labeled, emulator profile, most cave room among the
+  family-A set), then propagate per ROM using the resource scan's cave table +
+  the existing cross-ROM label pipeline; expect no redesign, only per-ROM cave
+  and checksum-hole verification.
+- Remaining caveat, unchanged: all free-RAM numbers are idle-boot measurements;
+  re-measure under drive-cycle replay before fixing shadow addresses.
+
+## 11. Related subsystems / next steps
 
 - ROADMAP **F item 3** (added with this study): implement the Tier 1/2 patch in
   the emulator first (virtual OBD port + golden datalogs), then bench — the
