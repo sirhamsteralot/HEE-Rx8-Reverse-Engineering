@@ -56,6 +56,9 @@ is fully reversed and the ROM has measured free space.
   largest contiguous free runs are **0xffff8901–0xffff90f3 (2,035 B)** and
   **0xffff807d–0xffff8787 (1,803 B)** — enough to shadow the hot tables (main
   fuel / ignition 3D + axes, knock, limiter), not the whole 80 KiB cal region.
+  Corpus-wide cross-check: identical free-RAM numbers on all 11 ROMs, and
+  per-ROM free-flash budgets 899 B–21,956 B, in
+  [free_resources_report.md](free_resources_report.md).
 - **Checksum is not a blocker.** The app CVN is a runtime-computed dual-u16
   additive sum over 0x2000–0x7ffff (skipping hole 0x7fb00–0x7fb7f), stored to
   RAM 0xffff9104/0xffff910c by 0x5a3f4/0x5a714 (D3); no boot-time verification
@@ -215,6 +218,9 @@ contradicts an existing label.)
   (`emu.build`/`emu.run`, profile `60E15120_N3J1E`, 2M cycles, stop = cycle
   limit at idle pc 0x3dac) with `bus.write8/16/32` wrapped to record touched
   RAM bytes; largest free runs computed excluding the labeled cells listed.
+  Re-measured corpus-wide (all 11 ROMs, free-flash scan + per-ROM boot) in
+  [free_resources_report.md](free_resources_report.md) §7 — every figure quoted
+  above for 60E15120_N3J1E matches that scan exactly.
 - Stock-read-path claims rest on executed tests, not just statics:
   `tests/test_phase1_dynamic.py::test_mode22_dispatch_full_sweep` (all 99 PIDs
   through the ROM's own 0x5774c), `test_uds_service_router_routes` (15 services

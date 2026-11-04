@@ -20,6 +20,12 @@
       "rom_refs": 51,
       "rom_claims": 0
     },
+    "free_resources_report.md": {
+      "fn_checked": 3,
+      "ram_checked": 2,
+      "rom_refs": 5,
+      "rom_claims": 0
+    },
     "fueling_control_report.md": {
       "fn_checked": 44,
       "ram_checked": 21,
