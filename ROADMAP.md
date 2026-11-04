@@ -16,10 +16,48 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A–D are complete; the next pickup is group E:
-**E item 1** (reimplementation coverage), then F (gated).
+and where artifacts live. Groups A, B and D are complete. Group C (static
+labeling & gap closure) is **reopened**: items 1–6 closed 2026-10-31, a
+2026-11-04 coverage audit found new gaps (items 7–10) — pick those up first;
+C item 10 pairs naturally with **E item 1** (reimplementation coverage),
+then F (gated). The audit snapshot: 3,355 functions in the 60E15120_N3J1E
+export, 833 named + 2,522 `FUN_` (function_index.tsv figures of 2026-11-04,
+`reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
 
-### E. Reimplementation coverage (P4) — depends on C (done)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 7–10)
+
+- **C item 7 (open)** — identify scheduler task handlers 12–16. Task entries
+  0x6592 (task[12]), 0x65b2 (task[13]), 0x65cc (task[14]), 0x65da (task[15]),
+  0x65e8 (task[16]) from the [scheduler deep-dive memory map](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
+  wrap unnamed handlers (0x11880/0xb308/0xa4b6, 0x7298/0x73a0/0x118d0,
+  0x11adc, 0x11b08, 0x11b22). Smallest open unit; completes the task-level
+  subsystem map (all other tasks already have labels).
+- **C item 8 (open)** — identify and label the large unlabeled control bodies:
+  0x3fb9e (4,884 B; 3-D lookups + tolerance bands + saturating adds, called
+  from 0x38f3e), 0x4ca7e (2,200 B; 2-D lookups + first-order filter),
+  0x23844 (1,562 B), 0x1506c (1,530 B), 0x2d83c (1,444 B), 0x244bc (1,408 B),
+  0x2a4f8 (1,218 B) — the biggest chunks of unnamed control logic left in the
+  corpus. Each identified subsystem gets a 10-section report (AGENTS.md rule 8).
+- **C item 9 (open)** — subsystem reports for areas with only inherited
+  `ref_` seed labels and no report: idle speed control
+  (`ref_updateIdleControl__` 0x167c0), alternator/charging
+  (`ref_alternatorControlMain` 0x267c6 / `ref_alternatorControl` 0x2680e
+  chain), cooling fan (`ref_initFanControl` 0x2f188 / `ref_setFanOutputGPIO`
+  0x2f1dc), E2RAM read/write layer (`ref_getDataFromE2RAM` 0x3599c /
+  `ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4; serves knock-learn storage,
+  [knock report](docs/investigations/60E15120_N3J1E/knock_control_report.md) 0x139c4),
+  DSC-related CAN arbitration (`ref_updateDSCRelatedCANStuff__` 0x2a2ae).
+  `ref_` names are upstream-inherited hypotheses — binary-verify before
+  upgrading any label (rule 6).
+- **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
+  labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
+  candidates (`candidate_rev_limit_conditionals` 0xee82,
+  `candidate_o2_monitor_integrator` 0x3d010,
+  `candidate_evap_open_loop_condition` 0x22144,
+  `candidate_knock_sensor_fault_task` 0x64ba). Dynamic validation
+  (`harness.call()` + datalog replay) pairs naturally with E item 1.
+
+### E. Reimplementation coverage (P4) — depends on C items 1–6 (done)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
   subsystem with host tests **and** emulator cross-checks (`harness.py` +
@@ -88,7 +126,7 @@ flash before any read), not the test path.
 | D3 | CLOSED | checksum/CVN routine found: 0x5a3f4 = incremental dual-u16 additive sum over app flash 0x2000-0x7ffff (0x1000 B/call, skips hole 0x7fb00-0x7fb7f), finalize 0x5a714 -> RAM 0xffff9104/0xffff910c, diag-read via 0x55bda -> 0x5a5a6. Not CRC (no CRC table/poly in ROM). See [uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) §12.1 |
 | D4 | CLOSED | seed/key located in both layers: app UDS 0x27 (0x57a64): seed from ATU-II timer 0x55f5e -> 0xffffd1d5-d1d8, key verified by 0x5609e (64-round shift/xor network, fixed key "MazdA" at 0x5f084); flash bootloader (SBL 0x0-0x1fff) 0x27 at 0x1858: seed 55 AA 55, key 4D AC CD literal compare. See uds_mode22_dispatch_report.md §12.2 |
 | D5 | CLOSED | g/rev vs VolEf settled: `engine_load_ffffc0b4` = VolEf-like cell units (g/rev × 0.6345 = 1/(1.308 L × 1.205 g/L)); PID 0x43 reports that cell × 1/255, not g/rev. Numeric proof: max-load clamp tbl_0x6b200×tbl_0x6b214×tbl_0x6b1ec = 0.58–1.29 cell units ↔ 0.92–2.03 g/rev, matching load axes in data/maps (tbl_06aa48 axis_y 0.0625–1.25). See [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md) |
-| D6 | open | unproven `candidate_*` labels |
+| D6 | open | unproven `candidate_*` labels — 122 in the 60E15120_N3J1E export ([function_index.tsv](reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv)); pickup = C item 10 |
 | D7 | open | 60E1B800 dual N3* strings |
 | D8 | CLOSED | local def copies that are git-blob-identical to pinned `submodules/RX8Defs` files are not kept (rule 4b) — the submodule path + commit `1b3aea2…` is the reference. The local and pinned ECUFlash XMLs have identical 1210 tables (raw diff is CRLF/LF only). See [cross_rom_defs_coverage.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md) + [data/definitions/README.md](data/definitions/README.md) |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
