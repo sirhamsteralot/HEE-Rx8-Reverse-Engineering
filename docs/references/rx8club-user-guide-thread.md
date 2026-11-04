@@ -98,7 +98,8 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
 
 ### 8. Watchdog — relevant to us in three ways
 
-1. **Bench BOOT-mode flashing (ROADMAP Phase 6):** external ~150 Hz square wave on
+1. **BOOT-mode recovery (ROADMAP Phase 6, recovery-only — preferred bench validation
+   is OBD upload, see ROADMAP group F):** external ~150 Hz square wave on
    CN400 pin 3 is mandatory or the MCU self-resets (thread §3).
 2. **Normal operation — the firmware services the SH7055 internal WDT.** Already
    labeled in our export (`reverse-engineered/decompiled/60E15120_N3J1E/`):

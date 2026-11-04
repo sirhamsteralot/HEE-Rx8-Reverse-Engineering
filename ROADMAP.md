@@ -32,13 +32,25 @@ and where artifacts live. Groups A–D are complete; the next pickup is group E:
 
 ### F. Toward hardware (P6) — GATED
 
-No vehicle flashing without bench validation (AGENTS.md rule 10).
+No vehicle flashing without bench validation (AGENTS.md rule 10). Preferred bench
+path: upload the patched blob to a **bench ECU over the OBD port** via UDS 0x34
+RequestDownload / 0x36 TransferData / 0x37 RequestTransferExit (ISO-TP on CAN
+0x7E0/0x7E8, after 0x10 session + 0x27 security unlock) — the same route
+Rx8Man-class tools use on a car. CN400 **BOOT mode is recovery-only** (it erases
+flash before any read), not the test path.
 
 - **F item 1 (open)** — pre-validate patchers (`utilities/scripts/patchers/`) in
   the emulator first — including the "fast RAM logging" patch via the virtual
-  OBD port — then bench.
-- **F item 2 (open)** — bench BOOT-mode needs ~150 Hz square wave on CN400 pin 3
-  (thread §8; verify **D9** pinout conflict against `Sh7055h.pdf` first).
+  OBD port — then bench-ECU OBD upload.
+- **F item 2 (open)** — recovery only: BOOT-mode via CN400 needs ~150 Hz square
+  wave on pin 3 (thread §8; verify **D9** pinout conflict against `Sh7055h.pdf`
+  first).
+- **F item 4 (open)** — reconcile the OBD upload path with our static finding that
+  the app's 0x34/0x36/0x37 handlers (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E) are
+  NRC stubs and real flashing code lives in the SBL BOOT (0x1ad6/0x1c04/0x1d30/
+  0x1d78): check session/security gating of the app handlers and whether an
+  unlocked app 0x34 hands off to the SBL over OBD. Bench-ECU OBD upload is the
+  accepted working path; the ROM-side mechanism is still open.
 - **F item 3 (study done, implementation open)** — live-tuning feasibility:
   stock ROM already supports live logging (Mode 22 PIDs + UDS 0x23 after 0x27
   unlock); live *writes* need a patch (no 0x2E; app 0x34/0x36/0x37 are stubs) —
