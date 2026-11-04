@@ -39,6 +39,13 @@ No vehicle flashing without bench validation (AGENTS.md rule 10).
   OBD port — then bench.
 - **F item 2 (open)** — bench BOOT-mode needs ~150 Hz square wave on CN400 pin 3
   (thread §8; verify **D9** pinout conflict against `Sh7055h.pdf` first).
+- **F item 3 (study done, implementation open)** — live-tuning feasibility:
+  stock ROM already supports live logging (Mode 22 PIDs + UDS 0x23 after 0x27
+  unlock); live *writes* need a patch (no 0x2E; app 0x34/0x36/0x37 are stubs) —
+  RAM-shadow of hot cal tables (≈2 KiB free RAM at 0xffff8901–0xffff90f3 /
+  0xffff807d–0xffff8787, measured) + write service in a code cave (≈2.2 KiB free
+  app flash) + PC tool over CAN/ISO-TP (J2534 on car, emulator TCP port in dev).
+  See [live_tuning_feasibility_report.md](docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md).
 
 ---
 
