@@ -28,6 +28,9 @@ Renesas SH7055 (SH-2E, SH-2 + FPU), big-endian, 512 KiB flash, 32 KiB RAM.
 | RAM | 0xffff6000–0xffffdfff | Working data; task stacks end at 0xffff7498 |
 | Volatile I/O | 0xffffe000–0xffffffff | SH7055 peripheral registers |
 
+Corpus-wide flash/memory layout (all 11 ROMs, with diagrams and the
+per-ROM differences): [flash-memory-layout.md](../flash-memory-layout.md).
+
 ## 2. Entry points
 
 The firmware has four entry mechanisms, all visible in the export:
