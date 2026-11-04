@@ -6,9 +6,11 @@ Corpus: the 10 upstream stock ROMs + our own dump `binaries/dumps/60E0G500_N3ZHE
 = **11 unique ROMs** (`60E0FC00.bin` is byte-identical in `Stock_ROMs/` and
 `Data_binaries/`, SHA-256 `476ddcbe…`, counted once). No binary is modified by
 this study. Method disclaimer: free-flash numbers are scanned from raw ROM bytes;
-free-memory numbers are measured by booting each real ROM in the SH-2E emulator
+free-memory numbers come from booting each real ROM in the SH-2E emulator
 (`utilities/scripts/emu/`, 2M cycles to the idle loop 0x3dac) with per-byte RAM
-write tracking.
+write tracking (idle boot), refined by a static allocation analysis of the
+60E15120 disassembly (§10) that removes code-referenced cells from the
+idle-free window.
 
 **Related reports:** [live_tuning_feasibility_report.md](live_tuning_feasibility_report.md)
 (the study these numbers feed — its 60E15120_N3J1E figures are cross-checked
@@ -41,9 +43,10 @@ free-run pattern), [calibration_extraction_report.md](calibration_extraction_rep
   The roomiest are 60E0FB00/60E0FC00 (21,956 B, incl. a 13,244 B run
   0x69f44–0x6d2ff).
 - Consequence for live tuning (feasibility report): the RAM shadow budget
-  (~2 KiB contiguous) is the same on every ROM, so the patch design is portable;
-  the code-cave budget is per-ROM and must be re-discovered per ROM (the
-  patchers already do verified-all-0xFF discovery).
+  (3,852 B static-free, largest contiguous 1,087 B — §10) is the same on every
+  ROM, so the patch design is portable; the code-cave budget is per-ROM and
+  must be re-discovered per ROM (the patchers already do verified-all-0xFF
+  discovery).
 
 ## 1a. Plain-language summary
 
@@ -54,9 +57,11 @@ every ROM in the emulator for 2 million instructions and recorded every RAM byte
 the firmware ever wrote; whatever was never touched is free. Result: every ROM
 leaves the same 4.8 KB block at 0xffff8000–0xffff92ff untouched at idle (about
 2 KB contiguous after skipping a handful of used cells) — enough for a RAM copy
-of the handful of tables you live-tune. Flash headroom differs per ROM
-(0.9–22 KB), but every ROM has the same 196-byte cave at 0x7fb8c plus ~1.2 KB
-in the bootloader area that the checksum doesn't cover.
+of the handful of tables you live-tune — though a static check of the code shows
+part of that block is still referenced (the EEPROM mirror at 0xffff8000–0xffff80ff
+and friends), leaving ~1 KB contiguous that is provably unreferenced. Flash
+headroom differs per ROM (0.9–22 KB), but every ROM has the same 196-byte cave
+at 0x7fb8c plus ~1.2 KB in the bootloader area that the checksum doesn't cover.
 
 ## 2. Method (condensed pseudocode)
 
@@ -117,6 +122,10 @@ checksum hole 0x7fb00–0x7fb7f (CVN-neutral, D3 — verified for 60E15120_N3J1E
 |---|---|---:|---|---|
 | all 11 ROMs | cycle limit reached (idle 0x3dac) | 27,904 / 32,768 | 0xffff8000–0xffff92ff = 4,864 B (single run) | 0xffff8901–0xffff90f3 2035; 0xffff807d–0xffff8787 1803; 0xffff9151–0xffff92ff 431; 0xffff87b1–0xffff88ff 335 |
 
+§10 then removes the 308 B of that window the code can still reference
+(EEPROM mirror, DTC master, … — corpus-wide: 137–180 latent literals per ROM),
+leaving 3,852 B static-free; largest contiguous 0xffff8109–0xffff8547 (1,087 B).
+
 ## 4. Labeling applied
 
 None — measurement report; no labels changed. The 393 excluded RAM cells come
@@ -125,17 +134,22 @@ plus the prose-documented 0xffff8038.
 
 ## 5. Corrections made in this pass
 
-None. The opcode-table widening used for booting the 7 un-profiled ROMs is a
-measurement-time shim only (E8 stays open for the repo's opdec.py); it changed
-no committed file and no emulator semantics for the 60E15120 corpus.
+No existing labels corrected. One refinement to this report's own first figure:
+the idle-free window was initially quoted as 4,864 B usable; §10's static
+analysis showed 308 B of it are still code-referenced, so the usable figure is
+3,852 B static-free (largest contiguous 1,087 B). The opcode-table widening used
+for booting the 7 un-profiled ROMs is a measurement-time shim only (E8 stays
+open for the repo's opdec.py); it changed no committed file and no emulator
+semantics for the 60E15120 corpus.
 
 ## 6. Files
 
 - This report: `docs/investigations/60E15120_N3J1E/free_resources_report.md`
 - `docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md` — §3/§7
   now cross-reference this scan (verification of its numbers)
-- Raw measurement JSON: session scratchpad (`/tmp/free_res_scan.json`), method
-  in §2; no binaries touched.
+- Raw measurement JSON: session scratchpad (`/tmp/free_res_scan.json` flash/RAM
+  scan, `/tmp/ram_static.json` static allocation analysis), methods in §2/§10;
+  no binaries touched.
 
 ## 7. Validation
 
@@ -258,8 +272,8 @@ static-free**, largest contiguous runs: **0xffff8109–0xffff8547 (1,087 B)**,
 ## 11. Related subsystems / next steps
 
 - Feeds [live_tuning_feasibility_report.md](live_tuning_feasibility_report.md)
-  (ROADMAP F item 3): RAM shadow budget ~2 KiB contiguous on every ROM; cave
-  budget per-ROM per §3.
+  (ROADMAP F item 3): RAM shadow budget 3,852 B static-free (largest contiguous
+  1,087 B) on every ROM; cave budget per-ROM per §3.
 - Next measurement step: re-run the write-tracking scan under drive-cycle
   replay (`data/logs/`) to get a running-condition free-RAM bound.
 - If a ROM-specific patcher is written, re-run the free-flash scan for that
