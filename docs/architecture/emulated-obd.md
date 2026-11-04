@@ -86,6 +86,7 @@ routed through 0x68dac).
 ## Safety
 
 The virtual port is read-oriented (0x22/0x23/0x09/0x21). Write services (0x2E/0x34/
-0x36) stay disabled unless explicitly enabled per run — emulated flash writes are
-out of scope until Phase 6 bench gating. No path from the emulator to real
-hardware.
+0x36) stay disabled unless explicitly enabled per run — emulated flash writes stay
+out of scope; real firmware uploads for validation go to a **bench ECU over the
+physical OBD port** (UDS 0x34/0x36/0x37), never from the emulator. No path from
+the emulator to real hardware.
