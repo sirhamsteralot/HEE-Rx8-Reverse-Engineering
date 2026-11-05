@@ -18,7 +18,7 @@ disassembly (every code-reachable RAM reference — see
 [emulated-obd.md](../../architecture/emulated-obd.md) + [emulator-re-guide.md](../../architecture/emulator-re-guide.md)
 (virtual OBD port, replay workflow), [learnings.md](../../learnings.md) (patcher
 patterns, free cal-area run), patchers
-[`PATCHER_limiter_behavior.md`](../../../../utilities/scripts/patchers/PATCHER_limiter_behavior.md).
+[`PATCHER_limiter_behavior.md`](../../../utilities/scripts/patchers/PATCHER_limiter_behavior.md).
 
 ## 1. Executive summary
 
@@ -220,7 +220,7 @@ are still code-referenced, so the usable figure is 3,852 B, largest contiguous
 ## 6. Files
 
 - This report: `docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md`
-- `ROADMAP.md` — new F item 3 pointing at this study
+- [`ROADMAP.md`](../../../ROADMAP.md) — new F item 3 pointing at this study
 - No binaries touched (`hash_binaries.py --check` unaffected); no code changed.
 
 ## 7. Validation

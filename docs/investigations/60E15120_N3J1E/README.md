@@ -91,7 +91,7 @@ idempotent) label the knock-control and loop-mode chain end to end:
   knock chain never reads the loop-mode flags.
 
 Full write-up: [`reviews/knock_control/README.md`](reviews/knock_control/README.md); rename map and fix evidence:
-`metadata/knock_loop_labels.json`; design doc: `architecture/design/README.md` §5.7;
+`metadata/knock_loop_labels.json`; design doc: [`architecture/design/README.md`](../../architecture/design/README.md) §5.7;
 pre-change backup: `backups/pre_knock_loop_labels.zip`.
 
 ### Knock retard reimplementation (ROADMAP E item 1)
@@ -118,7 +118,7 @@ Resolves the knock-pass open item on blend weights b11c/b118 (producer 0x200c6).
 Injector channel map verified against the ROM (table 0xd7d4, wrappers 0x59a4-0x59ea,
 rotor blocks ROM 0x4e2c8) and `Sh7055h.pdf`: ch0/3/1/4/2/5 → ATU-II 8A/8B/8C/8D/8E/8F →
 TO8A-F → SH7055F pkg pins 195/197/198/199/200/201. Full write-up:
-[`fueling_control_report.md`](fueling_control_report.md) + `reviews/fueling/` (incl. `injector_pin_mapping.md`).
+[`fueling_control_report.md`](fueling_control_report.md) + `reviews/fueling/` (incl. [`injector_pin_mapping.md`](reviews/fueling/injector_pin_mapping.md)).
 Backup: `backups/pre_fueling_labels.zip`; record: `metadata/fueling_labels.json`.
 
 ## Intake solenoid actuation

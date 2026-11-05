@@ -11,7 +11,7 @@ harness terminal, read from the canonical export (`decompiled/`), the raw ROM
 Result: every intake actuator output is identified at GPIO-bit level, and the
 GPIO→package-pin hop is now closed with the hardware manual. The last hop,
 package pin → PCM connector terminal, is board routing and remains unresolved
-in this workspace (as `hardware/README.md` already declares) — the terminal
+in this workspace (as [`hardware/README.md`](../../../../architecture/hardware/README.md) already declares) — the terminal
 column below comes from the wiring diagram and is **not** claimed to be
 electrically traced to the chip pin.
 
@@ -113,7 +113,7 @@ Terminal functions cross-checked against the FSM pinout ([`mazda-rx-8-pcm-pinout
 Canonical export + disassembly + raw ROM; `Sh7055h.pdf` (supplied SH7055F
 hardware manual, pin tables); `regs_7055_350.csv` register map;
 `hardware/pcm_connections.tsv` + `hardware/firmware_annotations.tsv` (wiring);
-`reconstructed/rx8_apv.c`; design doc `design/README.md` §5.9.
+`reconstructed/rx8_apv.c`; design doc [`design/README.md`](../../../../architecture/design/README.md) §5.9.
 
 ## 8. Binary-level verification (sceptical re-check vs raw ROM)
 
@@ -150,7 +150,7 @@ disassembly, not the decompiled C:
 ## 9. RPM-window patcher (VDI/SSV)
 
 `Mazda_RX8_PCM_ReverseEngineering/Utilities/patch_intake_rpm_window.py`
-(+ `PATCHER_intake_rpm_window.md`) patches a stock ROM so the VDI or SSV
+(+ [`PATCHER_intake_rpm_window.md`](../../../../../utilities/scripts/patchers/PATCHER_intake_rpm_window.md)) patches a stock ROM so the VDI or SSV
 solenoid is open only inside an RPM window (default VDI 7000–8500 rpm):
 `--actuator vdi|ssv --open-rpm 7000 --close-rpm 8500`. It locates the control
 function by exact body byte-match (unique in all 10 stock ROMs), rewrites only

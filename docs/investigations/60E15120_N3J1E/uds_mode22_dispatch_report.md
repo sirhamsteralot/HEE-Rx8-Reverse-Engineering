@@ -19,7 +19,10 @@ against [fueling_control_report.md](fueling_control_report.md),
 + [cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md);
 logger scalings from
 `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` and
-[docs/references/rx8club-user-guide-thread.md](../../references/rx8club-user-guide-thread.md).
+[docs/references/rx8club-user-guide-thread.md](../../references/rx8club-user-guide-thread.md);
+this report's §12 SBL/security + CVN facts feed the
+[flash-memory-layout.md](../../architecture/flash-memory-layout.md) §3 skeleton
+(SBL services 0x1ad6–0x1d78, CVN hole 0x7fb00–0x7fb7f; cross-checked in its §8).
 
 ## 1. Executive summary
 
@@ -270,7 +273,7 @@ logger scalings from
 
 ## 5. Corrections made in this pass
 
-- `fueling_control_report.md` section 7.1 referenced the pre-rename names of the PID handlers
+- [`fueling_control_report.md`](fueling_control_report.md) section 7.1 referenced the pre-rename names of the PID handlers
   (0x56b22/0x56b8a/0x56b9e/0x56f6c); updated to the new `diag22_pidXXXX_*` labels with a
   pointer to this report (found by `validate_reports.py`).
 - The encode helpers are **divide**-by-step encoders: `rx8_encode_u16_affine_saturate`
@@ -301,7 +304,7 @@ logger scalings from
 - `data/labels/60E15120_N3J1E/integrated_names.json` (regenerated)
 - `tests/test_phase1_dynamic.py` (`test_mode22_dispatch_table_payloads`,
   `test_mode22_dispatch_full_sweep`, `test_uds_service_router_routes` added)
-- `docs/investigations/60E15120_N3J1E/fueling_control_report.md` (one label reference updated)
+- [`docs/investigations/60E15120_N3J1E/fueling_control_report.md`](fueling_control_report.md) (one label reference updated)
 
 ## 7. Validation
 

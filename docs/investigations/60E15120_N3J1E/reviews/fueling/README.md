@@ -248,5 +248,5 @@ RX8Defs descriptor matches (`cross_ecu/romraider_descriptor_matches.json`),
 logger matches (`cross_ecu/romraider_logger_matches.json`), the logger def
 conflict (`RX8Defs/RomRaider/logger_rx8_defs.xml` 0x221410), wiring
 (`hardware/pcm_connections.tsv`), and the knock review
-(`reviews/knock_control/README.md`, whose loop-mode findings this pass
+([`reviews/knock_control/README.md`](../knock_control/README.md), whose loop-mode findings this pass
 builds on).

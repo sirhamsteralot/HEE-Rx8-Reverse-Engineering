@@ -4,8 +4,8 @@ One folder per ROM ID:
 
 - `60E15120_N3J1E/` — full analysis of ROM `60E15120_N3J1E.bin`
   (SHA-256 `a7cd953c…`, see `binaries/manifest.csv`): subsystem reports
-  (`knock_control_report.md`, `fueling_control_report.md`,
-  `intake_solenoids_report.md`, `load_fueling_report.md`), detailed evidence in
+  ([`knock_control_report.md`](60E15120_N3J1E/knock_control_report.md), [`fueling_control_report.md`](60E15120_N3J1E/fueling_control_report.md),
+  [`intake_solenoids_report.md`](60E15120_N3J1E/intake_solenoids_report.md), [`load_fueling_report.md`](60E15120_N3J1E/load_fueling_report.md)), detailed evidence in
   `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`,
   `readability/`, defs-merge records in `defs-merge/` + `rx8defs-analysis/`,
   pre-change backups in `backups/` (LFS zips).

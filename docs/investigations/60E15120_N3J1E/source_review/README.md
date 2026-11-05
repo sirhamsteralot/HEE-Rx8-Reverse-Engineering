@@ -58,7 +58,7 @@ from the ROM and asserted byte-exact; every handler asserted to be a code entry.
 with `integrate_reviewed_names.py` (3,355 function bodies re-verified). Dynamic check:
 `tests/test_phase1_dynamic.py::test_mode22_dispatch_table_payloads` (ROM's own 0x5774c
 dispatch, exact 0x62-header response bytes + NRC 0x31 mask rejection). Report:
-`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`. Validators
+[`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](../uds_mode22_dispatch_report.md). Validators
 `validate_export` / `validate_reports` / `verify_readability` / `verify_math_units` PASS;
 `pytest tests/` 59/59.
 

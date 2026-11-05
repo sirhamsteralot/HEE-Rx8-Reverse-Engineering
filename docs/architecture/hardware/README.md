@@ -25,7 +25,7 @@ decompilation; no additional newly discovered functions are claimed.
 The six injector circuits in the high-power diagram are not six interchangeable
 outputs: it distinguishes front/rear primary 1, secondary, and primary 2. Their
 PCM terminals are 2M/2J, 2G/2D, and 3A/3D respectively. The firmware analysis
-(`reviews/fueling/injector_pin_mapping.md`) established the full chain up
+([`reviews/fueling/injector_pin_mapping.md`](../../investigations/60E15120_N3J1E/reviews/fueling/injector_pin_mapping.md)) established the full chain up
 to the chip: firmware channel → ATU-II 8x/1x pair (ch0→8A/1A, ch1→8C/1C,
 ch2→8E/1E, ch3→8B/1B, ch4→8D/1D, ch5→8F/1F, ROM 0xd7d4), rotor split
 (channels 0-2 / 3-5 per rotor block, ROM 0x4e2c8), and — via the SH7055F
