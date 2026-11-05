@@ -264,7 +264,7 @@ def test_medium_diag22_records_dynamic(booted):
     RAM_TYPES = {k[-4:]: v.get("type", "uint16") for k, v in labels["ram_aliases"].items()}
     _, bus, _ = booted
     med = [r for r in labels["diag22_table"]["records"] if r["confidence"] == "medium"]
-    # after the 2026-11-05 proof pass only 0x0002 and 0x1710 may remain medium
+    # only 0x0002 and 0x1710 remain medium (documented exceptions)
     assert {r["pid"] for r in med} <= {0x02, 0x1710}, [hex(r["pid"]) for r in med]
     skip = {0x02, 0x1710, 0xC116}
     for rec in med:
