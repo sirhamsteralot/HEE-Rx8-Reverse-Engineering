@@ -10,7 +10,7 @@
  */
 /* ROM address: 0x000244bc; body bytes: 1408; decompiled */
 
-void FUN_000244bc(void)
+void e2ram_block_encode(void)
 
 {
   ushort uVar1;

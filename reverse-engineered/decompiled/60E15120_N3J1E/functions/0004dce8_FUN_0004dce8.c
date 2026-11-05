@@ -15,7 +15,7 @@ void FUN_0004dce8(void)
   cVar2 = '\v';
   pfVar5 = (float *)&DAT_ffffceb4;
   puVar1 = &DAT_ffffcedc;
-  puVar4 = &DAT_ffffcee4;
+  puVar4 = &cruise_speed_error_mean12_ffffcee4;
   do {
     cVar2 = cVar2 + -1;
     puVar4 = puVar4 + -1;
@@ -35,7 +35,7 @@ void FUN_0004dce8(void)
     pfVar5 = pfVar5 + 1;
     fVar6 = fVar7 + fVar6;
   } while (bVar3 < 0xc);
-  DAT_ffffcee4 = fVar6 / 12.0;
+  cruise_speed_error_mean12_ffffcee4 = fVar6 / 12.0;
   return;
 }
 

@@ -19,9 +19,9 @@ void ref_canSetup(void)
       ref_CANControllerSetup(0,&DAT_0004e11c,0x10);
       puVar3 = &DAT_0004e11c;
     }
-    cVar1 = FUN_0002a4f8(0,puVar3);
+    cVar1 = hcan_mailbox_config_compare(0,puVar3);
     ref_CANControllerSetup(1,&DAT_0004e21c,6);
-    cVar2 = FUN_0002a4f8(1,&DAT_0004e21c);
+    cVar2 = hcan_mailbox_config_compare(1,&DAT_0004e21c);
     if (cVar1 == '\0' && cVar2 == '\0') break;
   }
   if (1 < DAT_ffffa40e) {

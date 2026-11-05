@@ -13,8 +13,8 @@ void FUN_00038f3e(void)
   FUN_0004281c();
   FUN_00042968();
   FUN_00044ffc();
-  FUN_0003fb9e();
-  FUN_0004128e();
+  o2_response_monitor_accumulate();
+  o2_response_monitor_evaluate();
   ref_setSR(uVar1);
   return;
 }

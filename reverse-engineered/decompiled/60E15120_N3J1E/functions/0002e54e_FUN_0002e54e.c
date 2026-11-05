@@ -6,7 +6,7 @@
 void FUN_0002e54e(void)
 
 {
-  if ((DAT_ffffbced == '\0') || (DAT_ffffbcf8 < DAT_ffffa9b4)) {
+  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < DAT_ffffa9b4)) {
     DAT_ffffbd61 = 0;
   }
   else {
