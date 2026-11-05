@@ -12,19 +12,19 @@ record_address	service	handler	param	handler_alias	confidence	evidence
 0005ebb8	27	00057a64	1000000e	uds_service_27_security_access	high	UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it
 0005ebc4	3e	00056508	1000000f	uds_service_3e_tester_present	high	UDS 0x3E
 0005ebd0	11	0005af54	0000000e	uds_service_11_ecu_reset	high	UDS 0x11
-0005ebdc	21	0005b414	1000000f	uds_service_21_read_data_by_local_id	medium	record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+0005ebdc	21	0005b414	1000000f	uds_service_21_read_data_by_local_id	high	record 0x5ebdc -> 0x5b414 (ref_UDSService21Function); reached (r0=33), ReadDataByLocalId confirmed in emulator router test
 0005ebe8	22	000567e8	1000000f	uds_service_22_read_data_by_identifier	high	record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
 0005ebf4	23	0005b750	00000006	uds_service_23_read_memory_by_address	high	UDS 0x23 (ref_UDSMode23Function)
-0005ec00	3b	0005d8b4	0000000e	uds_service_3b	medium	record 0x5ec00 -> 0x5d8b4
-0005ec0c	18	00057db0	00000005	uds_service_18	medium	record 0x5ec0c -> 0x57db0
-0005ec18	12	0005b094	00000001	uds_service_12	medium	record 0x5ec18 -> 0x5b094
+0005ec00	3b	0005d8b4	0000000e	uds_service_3b	high	record 0x5ec00 -> 0x5d8b4; reached with session bits 1-3 (r0=59) in emulator router test
+0005ec0c	18	00057db0	00000005	uds_service_18	high	record 0x5ec0c -> 0x57db0; reached via router 0x68dac at session bit 0 (r0=24) in emulator router test
+0005ec18	12	0005b094	00000001	uds_service_12	high	record 0x5ec18 -> 0x5b094; reached (r0=18) in emulator router test
 0005ec24	14	000558ac	10000005	uds_service_14_clear_diagnostic_information	high	UDS 0x14 (ref_ClearFaults_)
 0005ec30	2f	0005bc4c	10000004	uds_service_2f_input_output_control	high	UDS 0x2F
 0005ec3c	31	0005df60	00000005	uds_service_31_routine_control	high	UDS 0x31
-0005ec48	32	0005e024	00000005	uds_service_32	medium	record 0x5ec48 -> 0x5e024
-0005ec54	33	0005e0ce	00000005	uds_service_33	medium	record 0x5ec54 -> 0x5e0ce
+0005ec48	32	0005e024	00000005	uds_service_32	high	record 0x5ec48 -> 0x5e024; reached (r0=50) in emulator router test
+0005ec54	33	0005e0ce	00000005	uds_service_33	high	record 0x5ec54 -> 0x5e0ce; reached (r0=51) in emulator router test
 0005ec60	34	0005d7bc	00000002	uds_service_34_request_download	high	UDS 0x34 (ref_UDSMode34Func)
 0005ec6c	36	0005d834	00000002	uds_service_36_transfer_data	high	UDS 0x36 (ref_UDSMode36Function_)
 0005ec78	37	0005d874	00000002	uds_service_37_request_transfer_exit	high	UDS 0x37 (ref_UDSService37Function)
-0005ec84	b1	000565e8	0000000f	uds_service_b1_mazda_specific	medium	record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)
-0005ec90	ff	0006689a	00000000	uds_service_ff_default	medium	terminator/catch-all record 0x5ec90 -> 0x6689a
+0005ec84	b1	000565e8	0000000f	uds_service_b1_mazda_specific	high	record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function); reached (r0=177), Mazda-specific confirmed in emulator router test
+0005ec90	ff	0006689a	00000000	uds_service_ff_default	medium	terminator/catch-all record 0x5ec90 -> 0x6689a; catch-all nop stub 0x6689a: router returned not-found (r0=1) at session bit 0

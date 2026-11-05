@@ -103,12 +103,12 @@ rom	pid	record_address	response_len	byte3	availability_mask	unk	handler_address	
 60E32000_N3M5E.bin	e6f3	00065678	1	00	fffc	0000	0005d024		unmapped	0				
 60E32000_N3M5E.bin	c115	00065684	1	00	3bfc	0000	0005d030		pid_match	1	diag22_pidc115_ram_c1d2_raw		ram_c1d2_raw	pid_match
 60E32000_N3M5E.bin	c116	00065690	4	00	3bfc	0000	0005d03e		pid_match	1	diag22_pidc116_dtc_state_machine		dtc_state_machine	pid_match
-60E32000_N3M5E.bin	c117	0006569c	4	00	3bfc	0000	0005d068	00057704	byte_match	1	diag22_pidc117_ram_c1d3_c1d4	candidate_diag22_pidc117_ram_c1d3_c1d4	ram_c1d3_c1d4	medium
-60E32000_N3M5E.bin	c124	000656a8	1	00	3bfc	0000	0005d09c	00057738	byte_match	1	diag22_pidc124_diag_status_bits	candidate_diag22_pidc124_diag_status_bits	diag_status_bits	medium
-60E32000_N3M5E.bin	ff10	000656b4	4	00	0001	0000	0005d1e8	00057884	byte_match	1	diag22_pidff10_dtc_status_c1d5_c1d8	candidate_diag22_pidff10_dtc_status_c1d5_c1d8	dtc_status_c1d5_c1d8	medium
+60E32000_N3M5E.bin	c117	0006569c	4	00	3bfc	0000	0005d068	00057704	byte_match	1	diag22_pidc117_ram_c1d3_c1d4	candidate_diag22_pidc117_ram_c1d3_c1d4	ram_c1d3_c1d4	high
+60E32000_N3M5E.bin	c124	000656a8	1	00	3bfc	0000	0005d09c	00057738	byte_match	1	diag22_pidc124_diag_status_bits	candidate_diag22_pidc124_diag_status_bits	diag_status_bits	high
+60E32000_N3M5E.bin	ff10	000656b4	4	00	0001	0000	0005d1e8	00057884	byte_match	1	diag22_pidff10_dtc_status_c1d5_c1d8	candidate_diag22_pidff10_dtc_status_c1d5_c1d8	dtc_status_c1d5_c1d8	high
 60E32000_N3M5E.bin	ff40	000656c0	2	00	0001	0000	0005d24c	000578e8	byte_match	1	diag22_pidff40_fw_id_chunk_15	diag22_pidff40_fw_id_chunk_15	fw_id_chunk_15	high
 60E32000_N3M5E.bin	ff41	000656cc	4	00	0001	0000	0005d266	00057902	byte_match	1	diag22_pidff41_fw_id_chunk_120	diag22_pidff41_fw_id_chunk_120	fw_id_chunk_120	high
 60E32000_N3M5E.bin	ff42	000656d8	3	00	0001	0000	0005d292	0005792e	byte_match	1	diag22_pidff42_rom_id_bytes_ff8	diag22_pidff42_rom_id_bytes_ff8	rom_id_bytes_ff8	high
 60E32000_N3M5E.bin	ff43	000656e4	3	00	0001	0000	0005d2b2	0005794e	byte_match	1	diag22_pidff43_rom_id_bytes_ffb	diag22_pidff43_rom_id_bytes_ffb	rom_id_bytes_ffb	high
-60E32000_N3M5E.bin	ff50	000656f0	2	00	0001	0000	0005d2d2	0005796e	byte_match	1	diag22_pidff50_ram_d3a0_raw	candidate_diag22_pidff50_ram_d3a0_raw	ram_d3a0_raw	medium
-60E32000_N3M5E.bin	ff44	000656fc	2	00	0001	0000	0005d2d8	00057974	byte_match	1	diag22_pidff44_ram_ce30_raw	candidate_diag22_pidff44_ram_ce30_raw	ram_ce30_raw	medium
+60E32000_N3M5E.bin	ff50	000656f0	2	00	0001	0000	0005d2d2	0005796e	byte_match	1	diag22_pidff50_ram_d3a0_raw	candidate_diag22_pidff50_ram_d3a0_raw	ram_d3a0_raw	high
+60E32000_N3M5E.bin	ff44	000656fc	2	00	0001	0000	0005d2d8	00057974	byte_match	1	diag22_pidff44_ram_ce30_raw	candidate_diag22_pidff44_ram_ce30_raw	ram_ce30_raw	high

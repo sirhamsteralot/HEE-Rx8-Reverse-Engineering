@@ -1,270 +1,270 @@
 {
-  "date": "2026-10-31",
-  "pass": "ignition_timing_labeling",
-  "source": "static export + ROM descriptor bytes + RX8Club thread section 9 + dynamic execution in utilities/scripts/emu (harness calls on 0x123da/0x124d6/0x121fc/0x123ba/0x11f00)",
-  "function_aliases": {
-    "000123da": {
-      "alias": "leading_timing_cranking_blend",
-      "confidence": "high",
-      "evidence": "Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (DAT_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5)."
-    },
-    "000124d6": {
-      "alias": "trailing_timing_cranking_blend",
-      "confidence": "high",
-      "evidence": "Trailing mirror: a650 = a5ec*a654 + (a5f4 + a71c + caa0)*(1-a654) + a784 - a77c. Dynamically verified bit-exact in the emulator (a650=18.115 for scripted inputs)."
-    },
-    "000121fc": {
-      "alias": "leading_final_timing_clamp_output",
-      "confidence": "high",
-      "evidence": "a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630."
-    },
-    "00012300": {
-      "alias": "trailing_final_timing_clamp_output",
-      "confidence": "high",
-      "evidence": "Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638."
-    },
-    "00012630": {
-      "alias": "min_advance_clamp_select",
-      "confidence": "high",
-      "evidence": "Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45)."
-    },
-    "00014100": {
-      "alias": "idle_base_timing_select",
-      "confidence": "high",
-      "evidence": "a780 = lookup_2d(tbl 0x69208) when cranking (aa62==1); else tbl 0x6921c if ECT<90 or load<0.5, else tbl 0x69230; mirrors to a784. Feeds the +a780/a784 term of the 0x123da/0x124d6 blend."
-    },
-    "00014090": {
-      "alias": "iat_timing_compensation_on_throttle",
-      "confidence": "high",
-      "evidence": "was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend."
-    },
-    "00043934": {
-      "alias": "cranking_timing_leading_filter",
-      "confidence": "high",
-      "evidence": "was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da."
-    },
-    "000439b2": {
-      "alias": "cranking_timing_trailing_filter",
-      "confidence": "high",
-      "evidence": "Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6."
-    },
-    "000135b4": {
-      "alias": "idle_leading_timing_error_correction",
-      "confidence": "high",
-      "evidence": "was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da."
-    },
-    "000136e4": {
-      "alias": "idle_trailing_timing_error_correction",
-      "confidence": "high",
-      "evidence": "was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6."
-    },
-    "0002cc2c": {
-      "alias": "dsc_mode_a_base_timing_lookup",
-      "confidence": "high",
-      "evidence": "was ref_getLeadingTimingTCModeA_4_val. bc94 = lookup_3d(load, rpm, tbl 0x6a7a4 'Ignition Timing Leading - DSC Mode A - Base'). Consumed by 0x1815c and torque-loss calc 0x2cc5c/0x2cc7c ((bc94 - actual)^2 * bc90)."
-    },
-    "0001815c": {
-      "alias": "dsc_timing_derate_select",
-      "confidence": "high",
-      "evidence": "DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found)."
-    },
-    "00013ecc": {
-      "alias": "coolant_timing_derate_calc",
-      "confidence": "high",
-      "evidence": "was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 \u2014 the max() derate subtracted in 0x125bc/0x125f6."
-    },
-    "00012e60": {
-      "alias": "timing_trim_scale_calc",
-      "confidence": "medium",
-      "evidence": "a66c = a67c * a698; a670 = a680 * a698 \u2014 the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim)."
-    }
-  },
-  "ram_aliases": {
-    "ffffa5e8": {
-      "alias": "leading_base_timing_final",
-      "type": "float",
-      "reader": "000123da"
-    },
-    "ffffa5ec": {
-      "alias": "trailing_base_timing_final",
-      "type": "float",
-      "reader": "000124d6"
-    },
-    "ffffa5f0": {
-      "alias": "leading_coolant_scaled_advance_term",
-      "type": "float",
-      "reader": "00011f00"
-    },
-    "ffffa5f4": {
-      "alias": "trailing_coolant_scaled_advance_term",
-      "type": "float",
-      "reader": "0001206c"
-    },
-    "ffffa718": {
-      "alias": "idle_leading_timing_error_correction",
-      "type": "float",
-      "reader": "000135b4"
-    },
-    "ffffa71c": {
-      "alias": "idle_trailing_timing_error_correction",
-      "type": "float",
-      "reader": "000136e4"
-    },
-    "ffffca9c": {
-      "alias": "cranking_angle_timing_leading_filtered",
-      "type": "float",
-      "reader": "00043934"
-    },
-    "ffffcaa0": {
-      "alias": "cranking_angle_timing_trailing_filtered",
-      "type": "float",
-      "reader": "000439b2"
-    },
-    "ffffcaa4": {
-      "alias": "cranking_angle_timing_leading_raw",
-      "type": "float",
-      "reader": "00043934"
-    },
-    "ffffcaa8": {
-      "alias": "cranking_angle_timing_trailing_raw",
-      "type": "float",
-      "reader": "000439b2"
-    },
-    "ffffa780": {
-      "alias": "idle_base_timing_leading",
-      "type": "float",
-      "reader": "00014100"
-    },
-    "ffffa784": {
-      "alias": "idle_base_timing_trailing",
-      "type": "float",
-      "reader": "00014100"
-    },
-    "ffffa778": {
-      "alias": "iat_timing_compensation_leading",
-      "type": "float",
-      "reader": "00014090"
-    },
-    "ffffa77c": {
-      "alias": "iat_timing_compensation_trailing",
-      "type": "float",
-      "reader": "00014090"
-    },
-    "ffffa644": {
-      "alias": "cranking_timing_multiplier_leading",
-      "type": "float",
-      "reader": "000123da"
-    },
-    "ffffa654": {
-      "alias": "cranking_timing_multiplier_trailing",
-      "type": "float",
-      "reader": "000124d6"
-    },
-    "ffffa64c": {
-      "alias": "leading_min_advance_clamp",
-      "type": "float",
-      "reader": "00012630"
-    },
-    "ffffa65c": {
-      "alias": "trailing_min_advance_clamp",
-      "type": "float",
-      "reader": "00012754"
-    },
-    "ffffa660": {
-      "alias": "leading_max_advance",
-      "type": "float",
-      "reader": "000121fc"
-    },
-    "ffffa664": {
-      "alias": "trailing_max_advance",
-      "type": "float",
-      "reader": "00012300"
-    },
-    "ffffbc94": {
-      "alias": "dsc_mode_a_base_timing",
-      "type": "float",
-      "reader": "0002cc2c"
-    },
-    "ffffa91c": {
-      "alias": "dsc_timing_derate_leading",
-      "type": "float",
-      "reader": "0001815c"
-    }
-  },
-  "lookup_aliases": {
-    "00069208": {
-      "alias": "candidate_tbl_idle_base_timing_cranking_00069208",
-      "evidence": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' \u2014 name is a hypothesis (descriptor not in romraider_descriptor_matches)."
-    },
-    "0006921c": {
-      "alias": "candidate_tbl_idle_base_timing_cold_lowload_0006921c",
-      "evidence": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch."
-    },
-    "00069230": {
-      "alias": "candidate_tbl_idle_base_timing_warm_highload_00069230",
-      "evidence": "2D u8 n=4, data 0x6d930; 0x14100 else branch."
-    },
-    "000691a4": {
-      "alias": "candidate_tbl_min_advance_vs_coolant_a_000691a4",
-      "evidence": "2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'."
-    },
-    "000691b8": {
-      "alias": "candidate_tbl_min_advance_vs_coolant_b_000691b8",
-      "evidence": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance)."
-    },
-    "00069190": {
-      "alias": "candidate_tbl_max_advance_vs_rpm_leading_00069190",
-      "evidence": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance (65.0 deg observed at 3000 rpm in emulator)."
-    },
-    "000691cc": {
-      "alias": "candidate_tbl_max_advance_vs_rpm_trailing_000691cc",
-      "evidence": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance."
-    },
-    "00069040": {
-      "alias": "candidate_tbl_offthrottle_leading_3d_00069040",
-      "evidence": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040)."
-    },
-    "0006905c": {
-      "alias": "candidate_tbl_leading_advance_3d_alt_0006905c",
-      "evidence": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by coolant table a618."
-    },
-    "00069018": {
-      "alias": "candidate_tbl_coolant_timing_multiplier_leading_00069018",
-      "evidence": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018)."
-    },
-    "0006902c": {
-      "alias": "candidate_tbl_coolant_timing_multiplier_trailing_0006902c",
-      "evidence": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror."
-    },
-    "00069094": {
-      "alias": "candidate_tbl_safe_mode_cap_single_00069094",
-      "evidence": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D."
-    },
-    "000690b0": {
-      "alias": "candidate_tbl_safe_mode_advance_cap_000690b0",
-      "evidence": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap."
-    },
-    "000690e8": {
-      "alias": "candidate_tbl_offthrottle_trailing_3d_000690e8",
-      "evidence": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040."
-    },
-    "00069104": {
-      "alias": "candidate_tbl_trailing_advance_3d_alt_00069104",
-      "evidence": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c."
-    },
-    "0006913c": {
-      "alias": "candidate_tbl_safe_mode_cap_single_trailing_0006913c",
-      "evidence": "1-cell float, data 0x6d354; 0x1206c safe-mode cap."
-    },
-    "00069158": {
-      "alias": "candidate_tbl_safe_mode_advance_cap_trailing_00069158",
-      "evidence": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap."
-    }
-  },
-  "thread_equation_check": {
-    "thread_claim": "Final BTDC = BaseFinal*CrankingMult + (IdleBaseFinal + IdleSpeedComp + CrankingAngleTiming)*(1-CrankingMult) + CLTcomp - IATcomp",
-    "firmware_leading_000123da": "a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778",
-    "verdict": "CONFIRMED with mapping: BaseFinal=a5e8, CrankingMult=a644, CLTcomp=a5f0 (inside the (1-mult) group, not added separately), IdleSpeedComp=a718, CrankingAngleTiming=ca9c, IdleBaseFinal=a780 (added outside the blend), IATcomp=a778 (subtracted). Verified bit-exact in the emulator for both rotors."
-  },
-  "rom_unchanged": true
+ "date": "2026-10-31",
+ "pass": "ignition_timing_labeling",
+ "source": "static export + ROM descriptor bytes + RX8Club thread section 9 + dynamic execution in utilities/scripts/emu (harness calls on 0x123da/0x124d6/0x121fc/0x123ba/0x11f00)",
+ "function_aliases": {
+ "000123da": {
+  "alias": "leading_timing_cranking_blend",
+  "confidence": "high",
+  "evidence": "Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (DAT_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5)."
+ },
+ "000124d6": {
+  "alias": "trailing_timing_cranking_blend",
+  "confidence": "high",
+  "evidence": "Trailing mirror: a650 = a5ec*a654 + (a5f4 + a71c + caa0)*(1-a654) + a784 - a77c. Dynamically verified bit-exact in the emulator (a650=18.115 for scripted inputs)."
+ },
+ "000121fc": {
+  "alias": "leading_final_timing_clamp_output",
+  "confidence": "high",
+  "evidence": "a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630."
+ },
+ "00012300": {
+  "alias": "trailing_final_timing_clamp_output",
+  "confidence": "high",
+  "evidence": "Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638."
+ },
+ "00012630": {
+  "alias": "min_advance_clamp_select",
+  "confidence": "high",
+  "evidence": "Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45)."
+ },
+ "00014100": {
+  "alias": "idle_base_timing_select",
+  "confidence": "high",
+  "evidence": "a780 = lookup_2d(tbl 0x69208) when cranking (aa62==1); else tbl 0x6921c if ECT<90 or load<0.5, else tbl 0x69230; mirrors to a784. Feeds the +a780/a784 term of the 0x123da/0x124d6 blend."
+ },
+ "00014090": {
+  "alias": "iat_timing_compensation_on_throttle",
+  "confidence": "high",
+  "evidence": "was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend."
+ },
+ "00043934": {
+  "alias": "cranking_timing_leading_filter",
+  "confidence": "high",
+  "evidence": "was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da."
+ },
+ "000439b2": {
+  "alias": "cranking_timing_trailing_filter",
+  "confidence": "high",
+  "evidence": "Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6."
+ },
+ "000135b4": {
+  "alias": "idle_leading_timing_error_correction",
+  "confidence": "high",
+  "evidence": "was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da."
+ },
+ "000136e4": {
+  "alias": "idle_trailing_timing_error_correction",
+  "confidence": "high",
+  "evidence": "was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6."
+ },
+ "0002cc2c": {
+  "alias": "dsc_mode_a_base_timing_lookup",
+  "confidence": "high",
+  "evidence": "was ref_getLeadingTimingTCModeA_4_val. bc94 = lookup_3d(load, rpm, tbl 0x6a7a4 'Ignition Timing Leading - DSC Mode A - Base'). Consumed by 0x1815c and torque-loss calc 0x2cc5c/0x2cc7c ((bc94 - actual)^2 * bc90)."
+ },
+ "0001815c": {
+  "alias": "dsc_timing_derate_select",
+  "confidence": "high",
+  "evidence": "DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found)."
+ },
+ "00013ecc": {
+  "alias": "coolant_timing_derate_calc",
+  "confidence": "high",
+  "evidence": "was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 — the max() derate subtracted in 0x125bc/0x125f6."
+ },
+ "00012e60": {
+  "alias": "timing_trim_scale_calc",
+  "confidence": "high",
+  "evidence": "a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim).; dynamically verified in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): a698 = lookup_2d(decode_u8(1.0, a688), tbl 0x6a04c) then a66c = a67c*a698, a670 = a680*a698 - with a67c=3.0/a680=5.0 and a688 swept 0/128/255, a66c/a67c == a670/a680 == a698 exactly (table returns 1.0 over swept range); caller ignition_timing_main_task 0x142a4"
+ }
+ },
+ "ram_aliases": {
+ "ffffa5e8": {
+  "alias": "leading_base_timing_final",
+  "type": "float",
+  "reader": "000123da"
+ },
+ "ffffa5ec": {
+  "alias": "trailing_base_timing_final",
+  "type": "float",
+  "reader": "000124d6"
+ },
+ "ffffa5f0": {
+  "alias": "leading_coolant_scaled_advance_term",
+  "type": "float",
+  "reader": "00011f00"
+ },
+ "ffffa5f4": {
+  "alias": "trailing_coolant_scaled_advance_term",
+  "type": "float",
+  "reader": "0001206c"
+ },
+ "ffffa718": {
+  "alias": "idle_leading_timing_error_correction",
+  "type": "float",
+  "reader": "000135b4"
+ },
+ "ffffa71c": {
+  "alias": "idle_trailing_timing_error_correction",
+  "type": "float",
+  "reader": "000136e4"
+ },
+ "ffffca9c": {
+  "alias": "cranking_angle_timing_leading_filtered",
+  "type": "float",
+  "reader": "00043934"
+ },
+ "ffffcaa0": {
+  "alias": "cranking_angle_timing_trailing_filtered",
+  "type": "float",
+  "reader": "000439b2"
+ },
+ "ffffcaa4": {
+  "alias": "cranking_angle_timing_leading_raw",
+  "type": "float",
+  "reader": "00043934"
+ },
+ "ffffcaa8": {
+  "alias": "cranking_angle_timing_trailing_raw",
+  "type": "float",
+  "reader": "000439b2"
+ },
+ "ffffa780": {
+  "alias": "idle_base_timing_leading",
+  "type": "float",
+  "reader": "00014100"
+ },
+ "ffffa784": {
+  "alias": "idle_base_timing_trailing",
+  "type": "float",
+  "reader": "00014100"
+ },
+ "ffffa778": {
+  "alias": "iat_timing_compensation_leading",
+  "type": "float",
+  "reader": "00014090"
+ },
+ "ffffa77c": {
+  "alias": "iat_timing_compensation_trailing",
+  "type": "float",
+  "reader": "00014090"
+ },
+ "ffffa644": {
+  "alias": "cranking_timing_multiplier_leading",
+  "type": "float",
+  "reader": "000123da"
+ },
+ "ffffa654": {
+  "alias": "cranking_timing_multiplier_trailing",
+  "type": "float",
+  "reader": "000124d6"
+ },
+ "ffffa64c": {
+  "alias": "leading_min_advance_clamp",
+  "type": "float",
+  "reader": "00012630"
+ },
+ "ffffa65c": {
+  "alias": "trailing_min_advance_clamp",
+  "type": "float",
+  "reader": "00012754"
+ },
+ "ffffa660": {
+  "alias": "leading_max_advance",
+  "type": "float",
+  "reader": "000121fc"
+ },
+ "ffffa664": {
+  "alias": "trailing_max_advance",
+  "type": "float",
+  "reader": "00012300"
+ },
+ "ffffbc94": {
+  "alias": "dsc_mode_a_base_timing",
+  "type": "float",
+  "reader": "0002cc2c"
+ },
+ "ffffa91c": {
+  "alias": "dsc_timing_derate_leading",
+  "type": "float",
+  "reader": "0001815c"
+ }
+ },
+ "lookup_aliases": {
+ "00069208": {
+  "alias": "candidate_tbl_idle_base_timing_cranking_00069208",
+  "evidence": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' — name is a hypothesis (descriptor not in romraider_descriptor_matches)."
+ },
+ "0006921c": {
+  "alias": "candidate_tbl_idle_base_timing_cold_lowload_0006921c",
+  "evidence": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch."
+ },
+ "00069230": {
+  "alias": "candidate_tbl_idle_base_timing_warm_highload_00069230",
+  "evidence": "2D u8 n=4, data 0x6d930; 0x14100 else branch."
+ },
+ "000691a4": {
+  "alias": "candidate_tbl_min_advance_vs_coolant_a_000691a4",
+  "evidence": "2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'."
+ },
+ "000691b8": {
+  "alias": "candidate_tbl_min_advance_vs_coolant_b_000691b8",
+  "evidence": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance)."
+ },
+ "00069190": {
+  "alias": "candidate_tbl_max_advance_vs_rpm_leading_00069190",
+  "evidence": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance (65.0 deg observed at 3000 rpm in emulator)."
+ },
+ "000691cc": {
+  "alias": "candidate_tbl_max_advance_vs_rpm_trailing_000691cc",
+  "evidence": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance."
+ },
+ "00069040": {
+  "alias": "candidate_tbl_offthrottle_leading_3d_00069040",
+  "evidence": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040)."
+ },
+ "0006905c": {
+  "alias": "candidate_tbl_leading_advance_3d_alt_0006905c",
+  "evidence": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by coolant table a618."
+ },
+ "00069018": {
+  "alias": "candidate_tbl_coolant_timing_multiplier_leading_00069018",
+  "evidence": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018)."
+ },
+ "0006902c": {
+  "alias": "candidate_tbl_coolant_timing_multiplier_trailing_0006902c",
+  "evidence": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror."
+ },
+ "00069094": {
+  "alias": "candidate_tbl_safe_mode_cap_single_00069094",
+  "evidence": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D."
+ },
+ "000690b0": {
+  "alias": "candidate_tbl_safe_mode_advance_cap_000690b0",
+  "evidence": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap."
+ },
+ "000690e8": {
+  "alias": "candidate_tbl_offthrottle_trailing_3d_000690e8",
+  "evidence": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040."
+ },
+ "00069104": {
+  "alias": "candidate_tbl_trailing_advance_3d_alt_00069104",
+  "evidence": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c."
+ },
+ "0006913c": {
+  "alias": "candidate_tbl_safe_mode_cap_single_trailing_0006913c",
+  "evidence": "1-cell float, data 0x6d354; 0x1206c safe-mode cap."
+ },
+ "00069158": {
+  "alias": "candidate_tbl_safe_mode_advance_cap_trailing_00069158",
+  "evidence": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap."
+ }
+ },
+ "thread_equation_check": {
+ "thread_claim": "Final BTDC = BaseFinal*CrankingMult + (IdleBaseFinal + IdleSpeedComp + CrankingAngleTiming)*(1-CrankingMult) + CLTcomp - IATcomp",
+ "firmware_leading_000123da": "a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778",
+ "verdict": "CONFIRMED with mapping: BaseFinal=a5e8, CrankingMult=a644, CLTcomp=a5f0 (inside the (1-mult) group, not added separately), IdleSpeedComp=a718, CrankingAngleTiming=ca9c, IdleBaseFinal=a780 (added outside the blend), IATcomp=a778 (subtracted). Verified bit-exact in the emulator for both rotors."
+ },
+ "rom_unchanged": true
 }
