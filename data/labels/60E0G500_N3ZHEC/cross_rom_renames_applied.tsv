@@ -7,19 +7,19 @@ address	old_name	new_name	source	confidence	applied	evidence
 00003db0	FUN_00003db0	os_wake_check_context_switch	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00003e10	FUN_00003e10	os_init	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00006010	FUN_00006010	os_queue_dequeue_record	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-000064ba	FUN_000064ba	knock_sensor_fault_task	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000064ba	FUN_000064ba	knock_sensor_fault_task	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000064ba (base label still medium/candidate)
 00006744	FUN_00006744	vehicle_inputs_poll_pfdr_phdr	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00006884	FUN_00006884	adc_scan_sweep_all_channels	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00006cdc	FUN_00006cdc	adc_read_ect_iat_group	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00006fb0	FUN_00006fb0	adc_read_result_bank2	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00006cdc	FUN_00006cdc	adc_read_ect_iat_group	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00006cdc adc_read_ect_iat_group - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00006fb0	FUN_00006fb0	adc_read_result_bank2	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00006fb0 adc_read_result_bank2 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000071ea	FUN_000071ea	sci0_exchange_byte_wait_rdrf	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00007438	FUN_00007438	maf_sensor_scaling	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00007778	FUN_00007778	atu_ch10b_tick_enable	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000077f0	FUN_000077f0	crank_capture_poll	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0000803e			cross_rom_function_aliases	high	skipped (not a function start in export)	
-00008340	thunk_FUN_00008a68	injector_pulse_set_dispatch	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00008340	thunk_FUN_00008a68	injector_pulse_set_dispatch	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00008340 injector_pulse_set_dispatch - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000085e4	FUN_000085e4	injector_channel_disable	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-000086ac	FUN_000086ac	injector_zero_offset_set	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000086ac	FUN_000086ac	injector_zero_offset_set	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000086ac injector_zero_offset_set - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000086f8	FUN_000086f8	set_fuel_injector_latency	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00008a68	FUN_00008a68	injector_pulse_set_channel	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000096be	FUN_000096be	uds_service_task_entry	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -36,25 +36,25 @@ address	old_name	new_name	source	confidence	applied	evidence
 0000cee8	FUN_0000cee8	can_mailbox_reg_addr	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0000cf12	FUN_0000cf12	can_mailbox_bitmask	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0000e2a8	FUN_0000e2a8	update_injectors_off_flag	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0000e48e	FUN_0000e48e	injection_angle_limit_lookup	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0000edc4	FUN_0000edc4	fuel_cut_arbitration	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0000e48e	FUN_0000e48e	injection_angle_limit_lookup	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0000e48e injection_angle_limit_lookup - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0000edc4	FUN_0000edc4	fuel_cut_arbitration	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0000edc4 fuel_cut_arbitration - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0000ee64	FUN_0000ee64	rev_limit_fuel_cut_init	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0000ee82	FUN_0000ee82	rev_limit_conditionals	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0000ee82	FUN_0000ee82	rev_limit_conditionals	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0000ee82 rev_limit_conditionals - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00011de0	FUN_00011de0	can_rx_poll_move_to_uds_buffer	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00013504	FUN_00013504	idle_leading_timing_error_correction	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00013634	FUN_00013634	idle_trailing_timing_error_correction	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00013f20	FUN_00013f20	coolant_timing_derate_calc	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000140e4	FUN_000140e4	iat_timing_compensation_on_throttle	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00019600	FUN_00019600	secondary_air_solenoid_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00019b46	FUN_00019b46	fuel_cut_rpm_condition	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0001aeec	FUN_0001aeec	maf_filtered_update	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0001aefa	FUN_0001aefa	maf_voltage_and_fault_counters	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0001eaa8	FUN_0001eaa8	cold_start_enrichment	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00019b46	FUN_00019b46	fuel_cut_rpm_condition	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00018cfe fuel_cut_rpm_condition - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0001aeec	FUN_0001aeec	maf_filtered_update	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00019f40 maf_filtered_update - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0001aefa	FUN_0001aefa	maf_voltage_and_fault_counters	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00019f4e maf_voltage_and_fault_counters - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0001eaa8	FUN_0001eaa8	cold_start_enrichment	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0001ddfc cold_start_enrichment - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0001f4ee	FUN_0001f4ee	maf_operating_range	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0001fadc	FUN_0001fadc	set_open_loop_flag	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00020ef8	FUN_00020ef8	open_loop_changeover_enrichment	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00022330	FUN_00022330	ssv_solenoid_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00022ce8	FUN_00022ce8	evap_open_loop_condition	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00022ce8	FUN_00022ce8	evap_open_loop_condition	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00022144 (base label still medium/candidate)
 00029a48	FUN_00029a48	can216_unpack_mixed_width_fields	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00029d6c	FUN_00029d6c	can201_pack_and_queue_payload	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00029dc6	FUN_00029dc6	can201_encode_rpm_u16	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -68,22 +68,22 @@ address	old_name	new_name	source	confidence	applied	evidence
 00031520	FUN_00031520	calculate_fuel_amount_per_rotation	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000320b4	FUN_000320b4	calculate_air_charge	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000322dc	FUN_000322dc	secondary_air_pump_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0003232e	FUN_0003232e	secondary_air_on_time_task	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-000327d0	FUN_000327d0	apv_command_wrapper	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0003232e	FUN_0003232e	secondary_air_on_time_task	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0003174a (base label still medium/candidate)
+000327d0	FUN_000327d0	apv_command_wrapper	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00031bec (base label still medium/candidate)
 00032804	FUN_00032804	apv_control_task	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00032ab2	FUN_00032ab2	apv_position_voltage_counter	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00032aee	FUN_00032aee	apv_counter_calc	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00032ab2	FUN_00032ab2	apv_position_voltage_counter	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00031ece apv_position_voltage_counter - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00032aee	FUN_00032aee	apv_counter_calc	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00031f0a apv_counter_calc - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000339ec	FUN_000339ec	warmup_fueling_compensation	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00034b12	FUN_00034b12	calculate_engine_load	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00034eb8	FUN_00034eb8	load_delta_enrichment	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0003582c	FUN_0003582c	vdi_solenoid_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00035924	FUN_00035924	vfad_solenoid_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0003852e	FUN_0003852e	diag_status_bit_pack	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0003852e	FUN_0003852e	diag_status_bit_pack	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00037546 diag_status_bit_pack - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00044884	FUN_00044884	cranking_timing_leading_filter	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-000449d6	FUN_000449d6	apv_position_voltage_scale	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000449d6	FUN_000449d6	apv_position_voltage_scale	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00043a86 apv_position_voltage_scale - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0004a754	FUN_0004a754	knock_sensor_health_persistence	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055028			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-00055aba	FUN_00055aba	diag_read_active_cal_field	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00055aba	FUN_00055aba	diag_read_active_cal_field	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055316 (base label still medium/candidate)
 00055b80	FUN_00055b80	diag_read_calc_load_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055bce	FUN_00055bce	diag_encode_ect_c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055be4	FUN_00055be4	diag_encode_stft_lambda	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -96,32 +96,32 @@ address	old_name	new_name	source	confidence	applied	evidence
 00055ce2	FUN_00055ce2	diag_encode_throttle_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055d0e	FUN_00055d0e	diag_read_secondary_air_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055d24	FUN_00055d24	diag_read_o2_present_const	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00055d2a	FUN_00055d2a	diag_encode_o2s2	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055d50	FUN_00055d50	diag_encode_trim_b074	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00055d2a	FUN_00055d2a	diag_encode_o2s2	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055586 diag_encode_o2s2 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055d50	FUN_00055d50	diag_encode_trim_b074	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000555ac diag_encode_trim_b074 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00055d6e	FUN_00055d6e	diag_read_obd_standard_const	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055d74	FUN_00055d74	diag_read_runtime_s	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055d9c	FUN_00055d9c	diag_read_distance_mil	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00055dba	FUN_00055dba	diag_encode_b2f0	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055dd0	FUN_00055dd0	diag_read_d287	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055e54	FUN_00055e54	diag_read_90fc	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055e72	FUN_00055e72	diag_encode_ad10	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00055dba	FUN_00055dba	diag_encode_b2f0	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055616 diag_encode_b2f0 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055dd0	FUN_00055dd0	diag_read_d287	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005562c diag_read_d287 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055e54	FUN_00055e54	diag_read_90fc	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000556b0 diag_read_90fc - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055e72	FUN_00055e72	diag_encode_ad10	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000556ce diag_encode_ad10 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00055e90	FUN_00055e90	diag_read_afr_word_a	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055ea6	FUN_00055ea6	diag_read_afr_word_b	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00055ebe	FUN_00055ebe	diag_encode_c644	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00055ebe	FUN_00055ebe	diag_encode_c644	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005571a diag_encode_c644 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00055ed6	FUN_00055ed6	diag_encode_battery_v	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055eec	FUN_00055eec	diag_encode_load_g_rev	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00055f02	FUN_00055f02	diag_encode_lambda_target	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00055f18	FUN_00055f18	diag_encode_ad48	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055f2e	FUN_00055f2e	diag_encode_ad5e	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055f5a	FUN_00055f5a	diag_encode_a9c4	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00055fdc	FUN_00055fdc	diag_encode_a9c6	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00056008	FUN_00056008	diag_encode_b410	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00055f18	FUN_00055f18	diag_encode_ad48	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055774 diag_encode_ad48 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055f2e	FUN_00055f2e	diag_encode_ad5e	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005578a diag_encode_ad5e - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055f5a	FUN_00055f5a	diag_encode_a9c4	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000557b6 diag_encode_a9c4 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00055fdc	FUN_00055fdc	diag_encode_a9c6	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055838 diag_encode_a9c6 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00056008	FUN_00056008	diag_encode_b410	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00055864 diag_encode_b410 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00056050	FUN_00056050	uds_service_14_clear_diagnostic_information	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00056cac	FUN_00056cac	uds_service_3e_tester_present	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00056d8c	FUN_00056d8c	uds_service_b1_mazda_specific	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00056d8c	FUN_00056d8c	uds_service_b1_mazda_specific	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000565e8 uds_service_b1_mazda_specific - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00056f8c	FUN_00056f8c	uds_service_22_read_data_by_identifier	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057034			cross_rom_function_aliases	high	skipped (not a function start in export)	
-00057058	FUN_00057058	diag22_pid0002_active_cal_id_field	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057058	FUN_00057058	diag22_pid0002_active_cal_id_field	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000568b4 (base label still medium/candidate)
 0005706e	FUN_0005706e	diag22_pid0003_fuel_system_status_ol_cl	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057094	FUN_00057094	diag22_pid0004_calculated_engine_load_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000570e4	FUN_000570e4	diag22_pid0005_coolant_temp_c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -135,27 +135,27 @@ address	old_name	new_name	source	confidence	applied	evidence
 00057194	FUN_00057194	diag22_pid0011_throttle_position_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000571aa	FUN_000571aa	diag22_pid0012_secondary_air_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000571c0	FUN_000571c0	diag22_pid0013_o2_sensors_present	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-000571d6	FUN_000571d6	diag22_pid0015_o2s2_voltage_trim	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000571d6	FUN_000571d6	diag22_pid0015_o2s2_voltage_trim	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056a32 diag22_pid0015_o2s2_voltage_trim - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000571fc	FUN_000571fc	diag22_pid001c_obd_standard	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057212	FUN_00057212	diag22_pid001f_engine_runtime_s	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057228	FUN_00057228	diag22_pid0020_pids_supported_21_40	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005724c	FUN_0005724c	diag22_pid0021_distance_while_mil_on	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00057260	FUN_00057260	diag22_pid002e_ram_b2f0_pct	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057276	FUN_00057276	diag22_pid002f_ram_d287_raw	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005728a	FUN_0005728a	diag22_pid0030_gear_or_vin_byte	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005729e	FUN_0005729e	diag22_pid0031_ram_90fc_float	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-000572b2	FUN_000572b2	diag22_pid0033_ram_ad10_scaled	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057260	FUN_00057260	diag22_pid002e_ram_b2f0_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056abc diag22_pid002e_ram_b2f0_pct - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057276	FUN_00057276	diag22_pid002f_ram_d287_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056ad2 diag22_pid002f_ram_d287_raw - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005728a	FUN_0005728a	diag22_pid0030_gear_or_vin_byte	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056ae6 diag22_pid0030_gear_or_vin_byte - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005729e	FUN_0005729e	diag22_pid0031_ram_90fc_float	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056afa diag22_pid0031_ram_90fc_float - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+000572b2	FUN_000572b2	diag22_pid0033_ram_ad10_scaled	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056b0e diag22_pid0033_ram_ad10_scaled - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000572c6	FUN_000572c6	diag22_pid0034_afr_lambda_words	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-000572e6	FUN_000572e6	diag22_pid003c_ram_c644_scaled	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000572e6	FUN_000572e6	diag22_pid003c_ram_c644_scaled	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056b42 diag22_pid003c_ram_c644_scaled - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000572fa	FUN_000572fa	diag22_pid0040_pids_supported_41_60	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005731a	FUN_0005731a	diag22_pid0042_battery_voltage_v	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005732e	FUN_0005732e	diag22_pid0043_engine_load_g_rev	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057342	FUN_00057342	diag22_pid0044_lambda_target	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00057356	FUN_00057356	diag22_pid0045_ram_ad48_pct	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005736a	FUN_0005736a	diag22_pid0047_ram_ad5e_pedal	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005737e	FUN_0005737e	diag22_pid0049_ram_a9c4_pedal	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005741c	FUN_0005741c	diag22_pid004a_ram_a9c6_pedal	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057430	FUN_00057430	diag22_pid004c_ram_b410_pct	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057356	FUN_00057356	diag22_pid0045_ram_ad48_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056bb2 diag22_pid0045_ram_ad48_pct - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005736a	FUN_0005736a	diag22_pid0047_ram_ad5e_pedal	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056bc6 diag22_pid0047_ram_ad5e_pedal - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005737e	FUN_0005737e	diag22_pid0049_ram_a9c4_pedal	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056bda diag22_pid0049_ram_a9c4_pedal - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005741c	FUN_0005741c	diag22_pid004a_ram_a9c6_pedal	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056c78 diag22_pid004a_ram_a9c6_pedal - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057430	FUN_00057430	diag22_pid004c_ram_b410_pct	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056c8c diag22_pid004c_ram_b410_pct - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00057444	FUN_00057444	diag22_pid0200_dtc_count_stored	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057458	FUN_00057458	diag22_pid0202_dtc_count_ram_list	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005746c	FUN_0005746c	diag22_pid0904_trailing_ignition_timing_deg	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -166,54 +166,54 @@ address	old_name	new_name	source	confidence	applied	evidence
 0005758a			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 000575a8	FUN_000575a8	diag22_pid093c_throttle_position_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000575c6			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-000575e4	FUN_000575e4	diag22_pid097c_ram_b59c_div2048	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000575e4	FUN_000575e4	diag22_pid097c_ram_b59c_div2048	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056e40 diag22_pid097c_ram_b59c_div2048 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00057602			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-00057620	FUN_00057620	diag22_pid114d_ram_a984_raw	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057620	FUN_00057620	diag22_pid114d_ram_a984_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056e7c diag22_pid114d_ram_a984_raw - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005763e			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 0005765c			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-000576a0	FUN_000576a0	diag22_pid1169_ram_807c_scaled	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000576a0	FUN_000576a0	diag22_pid1169_ram_807c_scaled	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056efc diag22_pid1169_ram_807c_scaled - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000576d4	FUN_000576d4	diag22_pid1177_maf_voltage_latched_v	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000576f2			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 00057710	FUN_00057710	diag22_pid1410_injector_pulse_time	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005772e			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 0005774e			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-0005776c	FUN_0005776c	diag22_pid16e8_ram_b5ac_raw	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005776c	FUN_0005776c	diag22_pid16e8_ram_b5ac_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00056fc8 diag22_pid16e8_ram_b5ac_raw - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005778a			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 000577a8			cross_rom_function_aliases	high	skipped (not a function start in export)	
-00057800	FUN_00057800	diag22_pida216_ram_bc30_raw	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057800	FUN_00057800	diag22_pida216_ram_bc30_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005705c diag22_pida216_ram_bc30_raw - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005781e			cross_rom_function_aliases	high	skipped (not a function start in export)	
-0005783c	FUN_0005783c	diag22_pid1782_ram_c6ac_raw	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005783c	FUN_0005783c	diag22_pid1782_ram_c6ac_raw	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057098 diag22_pid1782_ram_c6ac_raw - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005785a			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-00057892	FUN_00057892	diag22_pid172a_ram_c4c8_temp_c	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057892	FUN_00057892	diag22_pid172a_ram_c4c8_temp_c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000570ee diag22_pid172a_ram_c4c8_temp_c - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000578b0			cross_rom_function_aliases	medium	skipped (not a function start in export)	
 000578be			cross_rom_function_aliases	high	skipped (not a function start in export)	
-000578dc	FUN_000578dc	diag22_pid0968_io_status_b5b4_bc35	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057950	FUN_00057950	diag22_pid09d3_pedr_bit10_status	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057988	FUN_00057988	diag22_pid1101_io_status_bf3c_ad18_cdd8	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-000579ca	FUN_000579ca	diag22_pid1102_io_status_bdb8	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-000579ec	FUN_000579ec	diag22_pid1103_io_status_pedr_cab4_d1a	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057a74	FUN_00057a74	diag22_pid1104_io_status_pjdr_bf6c	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+000578dc	FUN_000578dc	diag22_pid0968_io_status_b5b4_bc35	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057138 diag22_pid0968_io_status_b5b4_bc35 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057950	FUN_00057950	diag22_pid09d3_pedr_bit10_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000571ac diag22_pid09d3_pedr_bit10_status - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057988	FUN_00057988	diag22_pid1101_io_status_bf3c_ad18_cdd8	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000571e4 diag22_pid1101_io_status_bf3c_ad18_cdd8 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+000579ca	FUN_000579ca	diag22_pid1102_io_status_bdb8	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057226 diag22_pid1102_io_status_bdb8 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+000579ec	FUN_000579ec	diag22_pid1103_io_status_pedr_cab4_d1a	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057248 diag22_pid1103_io_status_pedr_cab4_d1a - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057a74	FUN_00057a74	diag22_pid1104_io_status_pjdr_bf6c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000572d0 diag22_pid1104_io_status_pjdr_bf6c - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00057ab2			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-00057aee	FUN_00057aee	diag22_pid1681_io_status_ce1c	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057b10	FUN_00057b10	diag22_pid1688_secondary_air_status_bit	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057b32	FUN_00057b32	diag22_pida211_status_b53b_aa62_bf9c	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057b94	FUN_00057b94	diag22_pid1711_pedr_bit1_status	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057bc2	FUN_00057bc2	diag22_pid1706_io_status_a8f5	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057be4	FUN_00057be4	diag22_pid1718_pedr_bit2_status	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057c12	FUN_00057c12	diag22_pid1715_pedr_pddr_status	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057c5a	FUN_00057c5a	diag22_pid17de_io_status_ce32	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057aee	FUN_00057aee	diag22_pid1681_io_status_ce1c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005734a diag22_pid1681_io_status_ce1c - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057b10	FUN_00057b10	diag22_pid1688_secondary_air_status_bit	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005736c diag22_pid1688_secondary_air_status_bit - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057b32	FUN_00057b32	diag22_pida211_status_b53b_aa62_bf9c	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005738e diag22_pida211_status_b53b_aa62_bf9c - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057b94	FUN_00057b94	diag22_pid1711_pedr_bit1_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000573f0 diag22_pid1711_pedr_bit1_status - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057bc2	FUN_00057bc2	diag22_pid1706_io_status_a8f5	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005741e diag22_pid1706_io_status_a8f5 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057be4	FUN_00057be4	diag22_pid1718_pedr_bit2_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057440 diag22_pid1718_pedr_bit2_status - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057c12	FUN_00057c12	diag22_pid1715_pedr_pddr_status	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005746e diag22_pid1715_pedr_pddr_status - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057c5a	FUN_00057c5a	diag22_pid17de_io_status_ce32	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x000574b6 diag22_pid17de_io_status_ce32 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00057c7c	FUN_00057c7c	diag22_pide21b_cal_id_chunk_0	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057caa			cross_rom_function_aliases	high	skipped (not a function start in export)	
 00057cd0	FUN_00057cd0	diag22_pide21d_cal_id_chunk_2	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057cea	FUN_00057cea	diag22_pide21e_cal_id_chunk_3	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057d00	FUN_00057d00	diag22_pide611_sw_name_string	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00057d38	FUN_00057d38	diag22_pid1710_sensor_snapshot_7byte	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057d38	FUN_00057d38	diag22_pid1710_sensor_snapshot_7byte	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057594 (base label still medium/candidate)
 00057e58			cross_rom_function_aliases	medium	skipped (not a function start in export)	
-00057ea8	FUN_00057ea8	diag22_pidc117_ram_c1d3_c1d4	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00057edc	FUN_00057edc	diag22_pidc124_diag_status_bits	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00057ea8	FUN_00057ea8	diag22_pidc117_ram_c1d3_c1d4	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057704 diag22_pidc117_ram_c1d3_c1d4 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00057edc	FUN_00057edc	diag22_pidc124_diag_status_bits	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057738 diag22_pidc124_diag_status_bits - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00057ef0	FUN_00057ef0	diag22_find_and_dispatch_identifier	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00057ffc	FUN_00057ffc	diag22_append_positive_response_header	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00058028	FUN_00058028	diag22_pidff10_dtc_status_c1d5_c1d8	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00058028	FUN_00058028	diag22_pidff10_dtc_status_c1d5_c1d8	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057884 diag22_pidff10_dtc_status_c1d5_c1d8 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005808c	FUN_0005808c	diag22_pidff40_fw_id_chunk_15	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000580a6	FUN_000580a6	diag22_pidff41_fw_id_chunk_120	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 000580d2	FUN_000580d2	diag22_pidff42_rom_id_bytes_ff8	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -225,23 +225,23 @@ address	old_name	new_name	source	confidence	applied	evidence
 000581d2	FUN_000581d2	diag_append_u8	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00058208	FUN_00058208	uds_service_27_security_access	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00058430	FUN_00058430	uds_service_10_diagnostic_session_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-00058554	FUN_00058554	uds_service_18	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+00058554	FUN_00058554	uds_service_18	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00057db0 uds_service_18 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005b6f8	FUN_0005b6f8	uds_service_11_ecu_reset	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0005b838	FUN_0005b838	uds_service_12	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005bbb8	FUN_0005bbb8	uds_service_21_read_data_by_local_id	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005b838	FUN_0005b838	uds_service_12	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005b094 uds_service_12 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+0005bbb8	FUN_0005bbb8	uds_service_21_read_data_by_local_id	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005b414 uds_service_21_read_data_by_local_id - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005bef4	FUN_0005bef4	uds_service_23_read_memory_by_address	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005c19a	FUN_0005c19a	uds_service_28_communication_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0005cb64	FUN_0005cb64	vdi_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005d568	FUN_0005d568	vfad_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-0005d720	FUN_0005d720	secondary_air_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005cb64	FUN_0005cb64	vdi_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005c3c0 (base label still medium/candidate)
+0005d568	FUN_0005d568	vfad_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005cdc4 (base label still medium/candidate)
+0005d720	FUN_0005d720	secondary_air_diag_override	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005cf7c (base label still medium/candidate)
 0005df60	FUN_0005df60	uds_service_34_request_download	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005dfd8	FUN_0005dfd8	uds_service_36_transfer_data	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005e018	FUN_0005e018	uds_service_37_request_transfer_exit	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0005e058	FUN_0005e058	uds_service_3b	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005e058	FUN_0005e058	uds_service_3b	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005d8b4 uds_service_3b - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 0005e3e8	FUN_0005e3e8	uds_service_85_control_dtc_setting	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005e704	FUN_0005e704	uds_service_31_routine_control	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0005e7c8	FUN_0005e7c8	uds_service_32	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-00060256	FUN_00060256	dtc_count_stored	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0005e7c8	FUN_0005e7c8	uds_service_32	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005e024 uds_service_32 - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+00060256	FUN_00060256	dtc_count_stored	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x0005fab2 dtc_count_stored - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 000602ac	FUN_000602ac	dtc_count_ram_table	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00065fc0			cross_rom_function_aliases	high	skipped (not a function start in export)	
 0006642c	FUN_0006642c	obd_mode02_freeze_frame	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
@@ -258,9 +258,9 @@ address	old_name	new_name	source	confidence	applied	evidence
 00068d42	FUN_00068d42	isotp_first_frame_accept	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00068ed0	FUN_00068ed0	isotp_consecutive_frame_check	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 00068f08	FUN_00068f08	isotp_flow_control_check	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
-0006922a	FUN_0006922a	uds_rx_channel_alloc	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
-000692b4	FUN_000692b4	uds_rx_channel_set_service	cross_rom_function_aliases (unique_exact_bytes)	medium	yes	
+0006922a	FUN_0006922a	uds_rx_channel_alloc	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00068a86 uds_rx_channel_alloc - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
+000692b4	FUN_000692b4	uds_rx_channel_set_service	cross_rom_function_aliases (unique_exact_bytes)	high	yes	2026-11-05: byte-exact match (unique_exact_bytes) to 60E15120_N3J1E 0x00068b10 uds_rx_channel_set_service - that label is high after the 2026-11-05 dynamic proof pass (see data/labels/60E15120_N3J1E/*)
 00069550	FUN_00069550	uds_service_dispatch_table_scan	cross_rom_function_aliases (unique_exact_bytes)	high	yes	
 0005f8b0	DAT_0005f8b0	tbl_diag22_dispatch_records_0005f8b0	cross_rom_mode22_pid_handlers (table location)	high	yes	Mode 22 dispatch table in this ROM: u32 pool ref 0x57fec + count byte 0x5fd54=99 (pool ref 0x57ff8); 99 x 12-byte records; dispatcher 0x57ef0 dynamically swept 99/99
 0005fd56	DAT_0005fd56	tbl_diag22_subpid_supported_bits_0005fd56	cross_rom_mode22_pid_handlers (table location)	high	yes	sub-PID supported-bit table = count byte + 2; u32 pool ref 0x581f0; 36 x 6-byte records, same PID list as base 0x5f5b2
-00057e66	(no C identifier — mid-function address)	candidate_diag22_pidc116_dtc_state_machine	cross_rom_mode22_pid_handlers (pid_match)	pid_match	provenance only (no symbol to rename)	pid_match: PID 0xc116, same response_len; dump dispatcher 0x57ef0 dynamically reaches 0x57e66 for PID 0xc116 (99/99 sweep); base handler 0x576c2 = diag22_pidc116_dtc_state_machine
+00057e66	(no C identifier ï¿½ mid-function address)	candidate_diag22_pidc116_dtc_state_machine	cross_rom_mode22_pid_handlers (pid_match)	pid_match	provenance only (no symbol to rename)	pid_match: PID 0xc116, same response_len; dump dispatcher 0x57ef0 dynamically reaches 0x57e66 for PID 0xc116 (99/99 sweep); base handler 0x576c2 = diag22_pidc116_dtc_state_machine

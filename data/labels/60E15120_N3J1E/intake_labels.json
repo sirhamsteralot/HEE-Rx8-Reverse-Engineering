@@ -1,298 +1,298 @@
 {
-  "date": "2026-10-30",
-  "pass": "intake_solenoid_actuator_labeling",
-  "basis": "source_review_intake",
-  "function_aliases": {
-    "0002178c": {
-      "alias": "ssv_solenoid_control",
-      "confidence": "high",
-      "evidence": "Writes PEDR_W 0xfffff754 bit 0x80 (PE7, SH7055F pkg pin 16) via ref_setRegister_REG_BIT_VAL after diag override 0x5c9ac. On-condition: coolant hysteresis 197/200 C (b2b4), counter b2b2=0xbc, (aa68==0 && b2b5 prev) || becd. Harness: SSV solenoid PCM 1L (position switch is separate, PCM 1D). Reached from task 0x64f6 -> 0x11744 -> 0x21766."
-    },
-    "00021760": {
-      "alias": "ssv_control_thunk",
-      "confidence": "medium",
-      "evidence": "4-byte thunk to 0x2178c; called from init fan-out 0x1102a."
-    },
-    "00021766": {
-      "alias": "ssv_control_task_wrapper",
-      "confidence": "medium",
-      "evidence": "Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain)."
-    },
-    "00034844": {
-      "alias": "vdi_solenoid_control",
-      "confidence": "high",
-      "evidence": "Writes PDDR_W 0xfffff746 bit 0x20 (PD5, pkg pin 254; PD5/TIO1F alternate) after diag override ref_diagControlVDI. On = RPM >= 7250 (hysteresis 7062). Harness: VDI solenoid PCM 1W. Reached from 0x11744 -> 0x348ea."
-    },
-    "000348e4": {
-      "alias": "vdi_control_thunk",
-      "confidence": "medium",
-      "evidence": "4-byte thunk to 0x34844; called from 0x1102a."
-    },
-    "000348ea": {
-      "alias": "vdi_control_task_wrapper",
-      "confidence": "medium",
-      "evidence": "Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744."
-    },
-    "0003493c": {
-      "alias": "vfad_solenoid_control",
-      "confidence": "high",
-      "evidence": "Writes PEDR_W bit 0x400 (PE10, pkg pin 19) after diag override ref_diagControlVFADMAYBE. On = RPM >= 5250 (hysteresis 5062). Harness: VFAD solenoid PCM 5Z (high-power only). Reached from 0x11744 -> 0x34916."
-    },
-    "00034910": {
-      "alias": "vfad_control_thunk",
-      "confidence": "medium",
-      "evidence": "4-byte thunk to 0x3493c; called from 0x1102a."
-    },
-    "00034916": {
-      "alias": "vfad_control_task_wrapper",
-      "confidence": "medium",
-      "evidence": "Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744."
-    },
-    "00031c20": {
-      "alias": "apv_control_task",
-      "confidence": "high",
-      "evidence": "APV wrapper under mask 0x10: calls 0x31c6c (target/condition), ref_apvPositionVoltageCounter (0x31ece), ref_calcAPVCounter (0x31f0a), 0x31f32 (command), ref_setAPVDC_00031bec. Called from 0x11744 (task 0x64f6 chain). Harness: APV motor PCM 3J/3G, signal 3B, ref 1S, return 1U."
-    },
-    "00031c6c": {
-      "alias": "apv_target_condition",
-      "confidence": "medium",
-      "evidence": "Computes APV target state bf8d from RPM >= 150/200 (bf99), counter bf92 > 0x32, aa68; uses MAF a9ec and coolant a98c snapshots."
-    },
-    "00031ece": {
-      "alias": "apv_position_voltage_counter",
-      "confidence": "medium",
-      "evidence": "bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment \u2014 position-voltage dwell counter."
-    },
-    "00031f0a": {
-      "alias": "apv_counter_calc",
-      "confidence": "medium",
-      "evidence": "bf8a: 0 when bf8b==1 else saturating u8 increment \u2014 APV drive counter."
-    },
-    "00031f32": {
-      "alias": "apv_command_calc",
-      "confidence": "medium",
-      "evidence": "Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset)."
-    },
-    "00031bec": {
-      "alias": "apv_command_wrapper",
-      "confidence": "medium",
-      "evidence": "bf84 negated when bf8b==1, divided by 100, passed to apv_duty_split (0xaa90) \u2014 signed percent command."
-    },
-    "0000aa90": {
-      "alias": "apv_duty_split",
-      "confidence": "high",
-      "evidence": "param * 96.0 (period u16 at ROM 0x78bb6); positive -> a1c4, negative -> a1c6 (other zeroed): signed duty split into forward/reverse tick counts. See reconstructed/rx8_apv.c."
-    },
-    "0000a936": {
-      "alias": "apv_pwm_service",
-      "confidence": "medium",
-      "evidence": "Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4."
-    },
-    "0000aac4": {
-      "alias": "apv_drive_status_sample",
-      "confidence": "medium",
-      "evidence": "Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc."
-    },
-    "00043a86": {
-      "alias": "apv_position_voltage_scale",
-      "confidence": "medium",
-      "evidence": "cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified."
-    },
-    "000187b8": {
-      "alias": "secondary_air_solenoid_control",
-      "confidence": "high",
-      "evidence": "Writes PEDR_W bit 0x100 (PE8, pkg pin 17) from diag-checked request: load > 0.8 (hyst 0.75, a961), RPM > 4000 (hyst 3900, a962), condition (bf6c && !a961 && !a962) || d26e; override via ref_diagCheckSecondaryAirRequest (0x5cf7c) -> a960. Harness: secondary air injection solenoid PCM 1O. Called from 0x117ac (task 0x6584 chain)."
-    },
-    "000316f8": {
-      "alias": "secondary_air_pump_control",
-      "confidence": "high",
-      "evidence": "Writes PBDR_W 0xfffff738 bit 0x4 (PB2, pkg pin 147) = (bf6c == 1): secondary air pump relay/drive output. Called from 0x3174a."
-    },
-    "0003174a": {
-      "alias": "secondary_air_on_time_task",
-      "confidence": "medium",
-      "evidence": "Mask-0x10 task: 0x3194a + 0x31a24 + secondary_air_pump_control (0x316f8)."
-    },
-    "0005c9ac": {
-      "alias": "ssv_diag_override",
-      "confidence": "medium",
-      "evidence": "UDS actuator-test arbitration for SSV (d314 = -0x16da, d319/d326 state machine, d34b output); feeds ssv_solenoid_control (0x2178c)."
-    },
-    "0005c3c0": {
-      "alias": "vdi_diag_override",
-      "confidence": "medium",
-      "evidence": "UDS actuator-test arbitration for VDI (d314 = -0x16db); output d33d feeds vdi_solenoid_control (0x34844)."
-    },
-    "0005cdc4": {
-      "alias": "vfad_diag_override",
-      "confidence": "medium",
-      "evidence": "UDS actuator-test arbitration for VFAD (d314 = 0x17c8); output d353 feeds vfad_solenoid_control (0x3493c)."
-    },
-    "0005cf7c": {
-      "alias": "secondary_air_diag_override",
-      "confidence": "medium",
-      "evidence": "UDS actuator-test arbitration for the secondary-air solenoid; output feeds secondary_air_solenoid_control (0x187b8)."
-    }
+ "date": "2026-10-30",
+ "pass": "intake_solenoid_actuator_labeling",
+ "basis": "source_review_intake",
+ "function_aliases": {
+  "0002178c": {
+   "alias": "ssv_solenoid_control",
+   "confidence": "high",
+   "evidence": "Writes PEDR_W 0xfffff754 bit 0x80 (PE7, SH7055F pkg pin 16) via ref_setRegister_REG_BIT_VAL after diag override 0x5c9ac. On-condition: coolant hysteresis 197/200 C (b2b4), counter b2b2=0xbc, (aa68==0 && b2b5 prev) || becd. Harness: SSV solenoid PCM 1L (position switch is separate, PCM 1D). Reached from task 0x64f6 -> 0x11744 -> 0x21766."
   },
-  "ram_aliases": {
-    "ffffb2b0": {
-      "alias": "ssv_diag_override_result",
-      "type": "uint8",
-      "reader": "0002178c",
-      "evidence": "Result of ssv_diag_override (0x5c9ac); 1 -> PEDR PE7 set."
-    },
-    "ffffb2b2": {
-      "alias": "ssv_on_counter",
-      "type": "uint8",
-      "reader": "0002178c",
-      "evidence": "Set to 0xbc when (aa68==0 && b2b5==1), else decremented; gates SSV on with b2b4."
-    },
-    "ffffb2b4": {
-      "alias": "ssv_coolant_hot_flag",
-      "type": "uint8",
-      "reader": "0002178c",
-      "evidence": "coolant >= 200 (clear below 197) hysteresis; blocks SSV on-condition."
-    },
-    "ffffb2b5": {
-      "alias": "ssv_was_enabled",
-      "type": "uint8",
-      "reader": "0002178c",
-      "evidence": "previous aa68 snapshot; edge term in the on-condition."
-    },
-    "ffffc1c0": {
-      "alias": "vdi_command",
-      "type": "uint8",
-      "reader": "00034844",
-      "evidence": "RPM 7062/7250 hysteresis -> ref_diagControlVDI -> PEDR PD5."
-    },
-    "ffffc1c4": {
-      "alias": "vfad_command",
-      "type": "uint8",
-      "reader": "0003493c",
-      "evidence": "RPM 5062/5250 hysteresis -> ref_diagControlVFADMAYBE -> PEDR PE10."
-    },
-    "ffffa960": {
-      "alias": "secondary_air_request_final",
-      "type": "uint8",
-      "reader": "000187b8",
-      "evidence": "diag-checked secondary-air solenoid request (PE8)."
-    },
-    "ffffa961": {
-      "alias": "sec_air_load_high",
-      "type": "uint8",
-      "reader": "000187b8",
-      "evidence": "load > 0.8 (hyst 0.75)."
-    },
-    "ffffa962": {
-      "alias": "sec_air_rpm_high",
-      "type": "uint8",
-      "reader": "000187b8",
-      "evidence": "RPM > 4000 (hyst 3900)."
-    },
-    "ffffbf6c": {
-      "alias": "secondary_air_pump_request",
-      "type": "uint8",
-      "reader": "000316f8",
-      "evidence": "Drives PBDR PB2 (pump) and feeds the solenoid condition in 0x187b8."
-    },
-    "ffffbf84": {
-      "alias": "apv_command_percent",
-      "type": "float",
-      "reader": "00031bec",
-      "evidence": "APV command from 0x31f32 (staged 100.0/12.5 constants); negated when bf8b, /100 -> 0xaa90."
-    },
-    "ffffbf88": {
-      "alias": "apv_position_dwell_counter",
-      "type": "uint16",
-      "reader": "00031ece",
-      "evidence": "Incremented unless bf8b==0 or (bf88>0x4e1 && cab4==0); bands in 0x31f32."
-    },
-    "ffffbf8a": {
-      "alias": "apv_drive_counter",
-      "type": "uint8",
-      "reader": "00031f0a",
-      "evidence": "0 when bf8b else saturating increment."
-    },
-    "ffffbf8b": {
-      "alias": "apv_direction_flag",
-      "type": "uint8",
-      "reader": "00031bec",
-      "evidence": "When 1, negates the APV command (reverse) and resets bf8a."
-    },
-    "ffffbf8d": {
-      "alias": "apv_target_state",
-      "type": "uint8",
-      "reader": "00031c6c",
-      "evidence": "APV target condition from RPM/counter/aa68."
-    },
-    "ffffbf8e": {
-      "alias": "apv_target_state_prev",
-      "type": "uint8",
-      "reader": "00031c6c",
-      "evidence": "previous bf8d."
-    },
-    "ffffbf92": {
-      "alias": "apv_counter_92",
-      "type": "uint8",
-      "reader": "00031c6c",
-      "evidence": "> 0x32 term in APV target logic."
-    },
-    "ffffbf98": {
-      "alias": "apv_rpm_high_flag",
-      "type": "uint8",
-      "reader": "00031f32",
-      "evidence": "RPM > 3000 (hyst 2800)."
-    },
-    "ffffbf99": {
-      "alias": "apv_rpm_low_flag",
-      "type": "uint8",
-      "reader": "00031c6c",
-      "evidence": "RPM >= 200 (clear below 150)."
-    },
-    "ffffa1c4": {
-      "alias": "apv_pwm_forward_ticks",
-      "type": "uint16",
-      "reader": "0000aa90",
-      "evidence": "Forward duty ticks from apv_duty_split (param*96)."
-    },
-    "ffffa1c6": {
-      "alias": "apv_pwm_reverse_ticks",
-      "type": "uint16",
-      "reader": "0000aa90",
-      "evidence": "Reverse duty ticks (other direction zeroed)."
-    },
-    "ffffa1c0": {
-      "alias": "apv_pwm_forward_latched",
-      "type": "uint16",
-      "reader": "0000a936",
-      "evidence": "Latched a1c4 at PWM period boundary."
-    },
-    "ffffa1c2": {
-      "alias": "apv_pwm_reverse_latched",
-      "type": "uint16",
-      "reader": "0000a936",
-      "evidence": "Latched a1c6 at PWM period boundary."
-    },
-    "ffffa1bc": {
-      "alias": "apv_drive_status",
-      "type": "uint8",
-      "reader": "0000aac4",
-      "evidence": "Remapped 0..3 state from PH12/PH13 (PHDR 0x1000/0x2000)."
-    },
-    "ffffcab0": {
-      "alias": "apv_position_voltage",
-      "type": "float",
-      "reader": "00043a86",
-      "evidence": "APV feedback volts = ADC6 raw 9ef0 * 5/65536."
-    },
-    "ffff9ef0": {
-      "alias": "adc6_raw_apv_position",
-      "type": "uint16",
-      "reader": "00043a86",
-      "evidence": "ADC6 (0xfffff80c, AN6 pkg pin 92) sample; candidate APV position input."
-    }
+  "00021760": {
+   "alias": "ssv_control_thunk",
+   "confidence": "high",
+   "evidence": "4-byte thunk to 0x2178c; called from init fan-out 0x1102a.; 2026-11-05: 4-byte thunk to ssv_solenoid_control 0x2178c (labeled); called from init fan-out 0x1102a; no cross-ROM byte match (thunk bytes differ per ROM layout)"
   },
-  "rom_unchanged": true,
-  "ghidra_database_updated": false,
-  "pin_sources": "Sh7055h.pdf (SH7055F HW manual ADE 602-155B) Tables 1.2/1.3; port regs from regs_7055_350.csv; harness terminals from hardware/pcm_connections.tsv; chip-pin->terminal routing unresolved (board)"
+  "00021766": {
+   "alias": "ssv_control_task_wrapper",
+   "confidence": "high",
+   "evidence": "Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain).; 2026-11-05: mask-0x10 wrapper calling ssv_solenoid_control 0x2178c; called from task chain 0x11744; thunk/wrapper structure re-read in decompiled C"
+  },
+  "00034844": {
+   "alias": "vdi_solenoid_control",
+   "confidence": "high",
+   "evidence": "Writes PDDR_W 0xfffff746 bit 0x20 (PD5, pkg pin 254; PD5/TIO1F alternate) after diag override ref_diagControlVDI. On = RPM >= 7250 (hysteresis 7062). Harness: VDI solenoid PCM 1W. Reached from 0x11744 -> 0x348ea."
+  },
+  "000348e4": {
+   "alias": "vdi_control_thunk",
+   "confidence": "high",
+   "evidence": "4-byte thunk to 0x34844; called from 0x1102a.; 2026-11-05: 4-byte thunk to vdi_solenoid_control 0x34844 (labeled); called from init fan-out 0x1102a"
+  },
+  "000348ea": {
+   "alias": "vdi_control_task_wrapper",
+   "confidence": "high",
+   "evidence": "Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744.; 2026-11-05: mask-0x10 wrapper calling vdi_solenoid_control 0x34844; called from task chain 0x11744"
+  },
+  "0003493c": {
+   "alias": "vfad_solenoid_control",
+   "confidence": "high",
+   "evidence": "Writes PEDR_W bit 0x400 (PE10, pkg pin 19) after diag override ref_diagControlVFADMAYBE. On = RPM >= 5250 (hysteresis 5062). Harness: VFAD solenoid PCM 5Z (high-power only). Reached from 0x11744 -> 0x34916."
+  },
+  "00034910": {
+   "alias": "vfad_control_thunk",
+   "confidence": "high",
+   "evidence": "4-byte thunk to 0x3493c; called from 0x1102a.; 2026-11-05: 4-byte thunk to vfad_solenoid_control 0x3493c (labeled); called from init fan-out 0x1102a"
+  },
+  "00034916": {
+   "alias": "vfad_control_task_wrapper",
+   "confidence": "high",
+   "evidence": "Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744.; 2026-11-05: mask-0x10 wrapper calling vfad_solenoid_control 0x3493c; called from task chain 0x11744"
+  },
+  "00031c20": {
+   "alias": "apv_control_task",
+   "confidence": "high",
+   "evidence": "APV wrapper under mask 0x10: calls 0x31c6c (target/condition), ref_apvPositionVoltageCounter (0x31ece), ref_calcAPVCounter (0x31f0a), 0x31f32 (command), ref_setAPVDC_00031bec. Called from 0x11744 (task 0x64f6 chain). Harness: APV motor PCM 3J/3G, signal 3B, ref 1S, return 1U."
+  },
+  "00031c6c": {
+   "alias": "apv_target_condition",
+   "confidence": "medium",
+   "evidence": "Computes APV target state bf8d from RPM >= 150/200 (bf99), counter bf92 > 0x32, aa68; uses MAF a9ec and coolant a98c snapshots.; 2026-11-05: caller apv_control_task 0x31c20 (labeled); body re-read 2026-11-05: target bf8d from rpm>=150/200 (bf99), counter bf92>0x32, aa68, MAF a9ec and coolant a98c snapshots - dynamic run with rpm=3000 gave bf8d=90 (multi-input); label stands but full condition matrix not swept"
+  },
+  "00031ece": {
+   "alias": "apv_position_voltage_counter",
+   "confidence": "high",
+   "evidence": "bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment — position-voltage dwell counter.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): bf8b==0 -> bf88 reset to 0 observed; saturating increment path per body; caller apv_control_task 0x31c20; byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00031f0a": {
+   "alias": "apv_counter_calc",
+   "confidence": "high",
+   "evidence": "bf8a: 0 when bf8b==1 else saturating u8 increment — APV drive counter.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): bf8b==0 -> bf8a increments (observed 0->1); caller apv_control_task 0x31c20; byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00031f32": {
+   "alias": "apv_command_calc",
+   "confidence": "high",
+   "evidence": "Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): with target conditions met, command bf84 = 100.0 (literal 0x42c80000 in own pool, re-read in ROM) observed; caller apv_control_task 0x31c20"
+  },
+  "00031bec": {
+   "alias": "apv_command_wrapper",
+   "confidence": "medium",
+   "evidence": "bf84 negated when bf8b==1, divided by 100, passed to apv_duty_split (0xaa90) — signed percent command.; 2026-11-05: wrapper: negates bf84 when bf8b==1, divides by 100, passes to apv_duty_split 0xaa90; caller apv_control_task 0x31c20; structure re-read in decompiled C"
+  },
+  "0000aa90": {
+   "alias": "apv_duty_split",
+   "confidence": "high",
+   "evidence": "param * 96.0 (period u16 at ROM 0x78bb6); positive -> a1c4, negative -> a1c6 (other zeroed): signed duty split into forward/reverse tick counts. See reconstructed/rx8_apv.c."
+  },
+  "0000a936": {
+   "alias": "apv_pwm_service",
+   "confidence": "high",
+   "evidence": "Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): software-PWM service - ran 0x62 calls with forward ticks a1c4=0x30 / reverse a1c6=0x10: at period boundary (a1be>=0x60) latches a1c0/a1c2, drives PLDR_W 0xfffff75e - bit 0x100 set (reverse, active-high) observed, bit 0x20 cleared (forward, active-low) - opposite polarity confirmed; caller 0x63f0"
+  },
+  "0000aac4": {
+   "alias": "apv_drive_status_sample",
+   "confidence": "high",
+   "evidence": "Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): with drive flag a1c8=1: PHDR_W 0xfffff72c 0x3000 -> a1bc=0, 0x2000 -> 1, 0x1000 -> 2, 0x0000 -> 3; flags clear -> 3 - the remapped 0..3 state exact; called from apv_pwm_service 0xa936"
+  },
+  "00043a86": {
+   "alias": "apv_position_voltage_scale",
+   "confidence": "high",
+   "evidence": "cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): adc6_raw_apv_position 9ef0=32768 -> cab0 = 2.5 V exactly ((float)raw * 5/65536, 0x38a00000); callers 0x19aa0/0x43a7c; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "000187b8": {
+   "alias": "secondary_air_solenoid_control",
+   "confidence": "high",
+   "evidence": "Writes PEDR_W bit 0x100 (PE8, pkg pin 17) from diag-checked request: load > 0.8 (hyst 0.75, a961), RPM > 4000 (hyst 3900, a962), condition (bf6c && !a961 && !a962) || d26e; override via ref_diagCheckSecondaryAirRequest (0x5cf7c) -> a960. Harness: secondary air injection solenoid PCM 1O. Called from 0x117ac (task 0x6584 chain)."
+  },
+  "000316f8": {
+   "alias": "secondary_air_pump_control",
+   "confidence": "high",
+   "evidence": "Writes PBDR_W 0xfffff738 bit 0x4 (PB2, pkg pin 147) = (bf6c == 1): secondary air pump relay/drive output. Called from 0x3174a."
+  },
+  "0003174a": {
+   "alias": "secondary_air_on_time_task",
+   "confidence": "medium",
+   "evidence": "Mask-0x10 task: 0x3194a + 0x31a24 + secondary_air_pump_control (0x316f8).; 2026-11-05: byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv); caller 0x117ac (task table region); secondary-air on-time logic"
+  },
+  "0005c9ac": {
+   "alias": "ssv_diag_override",
+   "confidence": "medium",
+   "evidence": "UDS actuator-test arbitration for SSV (d314 = -0x16da, d319/d326 state machine, d34b output); feeds ssv_solenoid_control (0x2178c).; 2026-11-05: called from ssv_solenoid_control 0x2178c (labeled); diag override hook"
+  },
+  "0005c3c0": {
+   "alias": "vdi_diag_override",
+   "confidence": "medium",
+   "evidence": "UDS actuator-test arbitration for VDI (d314 = -0x16db); output d33d feeds vdi_solenoid_control (0x34844).; 2026-11-05: called from vdi_solenoid_control 0x34844 (labeled); diag override hook; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "0005cdc4": {
+   "alias": "vfad_diag_override",
+   "confidence": "medium",
+   "evidence": "UDS actuator-test arbitration for VFAD (d314 = 0x17c8); output d353 feeds vfad_solenoid_control (0x3493c).; 2026-11-05: called from vfad_solenoid_control 0x3493c (labeled); diag override hook; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "0005cf7c": {
+   "alias": "secondary_air_diag_override",
+   "confidence": "medium",
+   "evidence": "UDS actuator-test arbitration for the secondary-air solenoid; output feeds secondary_air_solenoid_control (0x187b8).; 2026-11-05: called from secondary_air_solenoid_control 0x187b8 (labeled); diag override hook; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  }
+ },
+ "ram_aliases": {
+  "ffffb2b0": {
+   "alias": "ssv_diag_override_result",
+   "type": "uint8",
+   "reader": "0002178c",
+   "evidence": "Result of ssv_diag_override (0x5c9ac); 1 -> PEDR PE7 set."
+  },
+  "ffffb2b2": {
+   "alias": "ssv_on_counter",
+   "type": "uint8",
+   "reader": "0002178c",
+   "evidence": "Set to 0xbc when (aa68==0 && b2b5==1), else decremented; gates SSV on with b2b4."
+  },
+  "ffffb2b4": {
+   "alias": "ssv_coolant_hot_flag",
+   "type": "uint8",
+   "reader": "0002178c",
+   "evidence": "coolant >= 200 (clear below 197) hysteresis; blocks SSV on-condition."
+  },
+  "ffffb2b5": {
+   "alias": "ssv_was_enabled",
+   "type": "uint8",
+   "reader": "0002178c",
+   "evidence": "previous aa68 snapshot; edge term in the on-condition."
+  },
+  "ffffc1c0": {
+   "alias": "vdi_command",
+   "type": "uint8",
+   "reader": "00034844",
+   "evidence": "RPM 7062/7250 hysteresis -> ref_diagControlVDI -> PEDR PD5."
+  },
+  "ffffc1c4": {
+   "alias": "vfad_command",
+   "type": "uint8",
+   "reader": "0003493c",
+   "evidence": "RPM 5062/5250 hysteresis -> ref_diagControlVFADMAYBE -> PEDR PE10."
+  },
+  "ffffa960": {
+   "alias": "secondary_air_request_final",
+   "type": "uint8",
+   "reader": "000187b8",
+   "evidence": "diag-checked secondary-air solenoid request (PE8)."
+  },
+  "ffffa961": {
+   "alias": "sec_air_load_high",
+   "type": "uint8",
+   "reader": "000187b8",
+   "evidence": "load > 0.8 (hyst 0.75)."
+  },
+  "ffffa962": {
+   "alias": "sec_air_rpm_high",
+   "type": "uint8",
+   "reader": "000187b8",
+   "evidence": "RPM > 4000 (hyst 3900)."
+  },
+  "ffffbf6c": {
+   "alias": "secondary_air_pump_request",
+   "type": "uint8",
+   "reader": "000316f8",
+   "evidence": "Drives PBDR PB2 (pump) and feeds the solenoid condition in 0x187b8."
+  },
+  "ffffbf84": {
+   "alias": "apv_command_percent",
+   "type": "float",
+   "reader": "00031bec",
+   "evidence": "APV command from 0x31f32 (staged 100.0/12.5 constants); negated when bf8b, /100 -> 0xaa90."
+  },
+  "ffffbf88": {
+   "alias": "apv_position_dwell_counter",
+   "type": "uint16",
+   "reader": "00031ece",
+   "evidence": "Incremented unless bf8b==0 or (bf88>0x4e1 && cab4==0); bands in 0x31f32."
+  },
+  "ffffbf8a": {
+   "alias": "apv_drive_counter",
+   "type": "uint8",
+   "reader": "00031f0a",
+   "evidence": "0 when bf8b else saturating increment."
+  },
+  "ffffbf8b": {
+   "alias": "apv_direction_flag",
+   "type": "uint8",
+   "reader": "00031bec",
+   "evidence": "When 1, negates the APV command (reverse) and resets bf8a."
+  },
+  "ffffbf8d": {
+   "alias": "apv_target_state",
+   "type": "uint8",
+   "reader": "00031c6c",
+   "evidence": "APV target condition from RPM/counter/aa68."
+  },
+  "ffffbf8e": {
+   "alias": "apv_target_state_prev",
+   "type": "uint8",
+   "reader": "00031c6c",
+   "evidence": "previous bf8d."
+  },
+  "ffffbf92": {
+   "alias": "apv_counter_92",
+   "type": "uint8",
+   "reader": "00031c6c",
+   "evidence": "> 0x32 term in APV target logic."
+  },
+  "ffffbf98": {
+   "alias": "apv_rpm_high_flag",
+   "type": "uint8",
+   "reader": "00031f32",
+   "evidence": "RPM > 3000 (hyst 2800)."
+  },
+  "ffffbf99": {
+   "alias": "apv_rpm_low_flag",
+   "type": "uint8",
+   "reader": "00031c6c",
+   "evidence": "RPM >= 200 (clear below 150)."
+  },
+  "ffffa1c4": {
+   "alias": "apv_pwm_forward_ticks",
+   "type": "uint16",
+   "reader": "0000aa90",
+   "evidence": "Forward duty ticks from apv_duty_split (param*96)."
+  },
+  "ffffa1c6": {
+   "alias": "apv_pwm_reverse_ticks",
+   "type": "uint16",
+   "reader": "0000aa90",
+   "evidence": "Reverse duty ticks (other direction zeroed)."
+  },
+  "ffffa1c0": {
+   "alias": "apv_pwm_forward_latched",
+   "type": "uint16",
+   "reader": "0000a936",
+   "evidence": "Latched a1c4 at PWM period boundary."
+  },
+  "ffffa1c2": {
+   "alias": "apv_pwm_reverse_latched",
+   "type": "uint16",
+   "reader": "0000a936",
+   "evidence": "Latched a1c6 at PWM period boundary."
+  },
+  "ffffa1bc": {
+   "alias": "apv_drive_status",
+   "type": "uint8",
+   "reader": "0000aac4",
+   "evidence": "Remapped 0..3 state from PH12/PH13 (PHDR 0x1000/0x2000)."
+  },
+  "ffffcab0": {
+   "alias": "apv_position_voltage",
+   "type": "float",
+   "reader": "00043a86",
+   "evidence": "APV feedback volts = ADC6 raw 9ef0 * 5/65536."
+  },
+  "ffff9ef0": {
+   "alias": "adc6_raw_apv_position",
+   "type": "uint16",
+   "reader": "00043a86",
+   "evidence": "ADC6 (0xfffff80c, AN6 pkg pin 92) sample; candidate APV position input."
+  }
+ },
+ "rom_unchanged": true,
+ "ghidra_database_updated": false,
+ "pin_sources": "Sh7055h.pdf (SH7055F HW manual ADE 602-155B) Tables 1.2/1.3; port regs from regs_7055_350.csv; harness terminals from hardware/pcm_connections.tsv; chip-pin->terminal routing unresolved (board)"
 }

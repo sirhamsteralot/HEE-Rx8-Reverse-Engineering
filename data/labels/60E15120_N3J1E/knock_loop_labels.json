@@ -1,1582 +1,1588 @@
 {
-  "date": "2026-10-29",
-  "pass": "knock_control_and_loop_mode_labeling",
-  "function_aliases": {
-    "00013826": {
-      "alias": "knock_enable_gate",
-      "confidence": "high"
-    },
-    "0001388a": {
-      "alias": "knock_sensor_health_gate",
-      "confidence": "high"
-    },
-    "000138b2": {
-      "alias": "knock_active_gate",
-      "confidence": "high"
-    },
-    "000139c4": {
-      "alias": "knock_retard_learn_to_eeprom",
-      "confidence": "high"
-    },
-    "00013a60": {
-      "alias": "knock_retard_attack",
-      "confidence": "high"
-    },
-    "00013b40": {
-      "alias": "knock_retard_slow_recovery",
-      "confidence": "high"
-    },
-    "00013bd2": {
-      "alias": "knock_retard_clamp",
-      "confidence": "high"
-    },
-    "000125bc": {
-      "alias": "knock_retard_apply_leading",
-      "confidence": "high"
-    },
-    "000125f6": {
-      "alias": "knock_retard_apply_trailing",
-      "confidence": "high"
-    },
-    "000123ba": {
-      "alias": "leading_timing_add_corrections",
-      "confidence": "high"
-    },
-    "000123ca": {
-      "alias": "trailing_timing_add_corrections",
-      "confidence": "high"
-    },
-    "00011f00": {
-      "alias": "leading_base_timing_calc",
-      "confidence": "high"
-    },
-    "0001206c": {
-      "alias": "trailing_base_timing_calc",
-      "confidence": "high"
-    },
-    "00049fac": {
-      "alias": "knock_sensor_health_persistence",
-      "confidence": "high"
-    },
-    "0004a084": {
-      "alias": "knock_sensor_dtc_report",
-      "confidence": "high"
-    },
-    "000336c4": {
-      "alias": "knock_threshold_setup",
-      "confidence": "high"
-    },
-    "00033632": {
-      "alias": "knock_filter_constants_init",
-      "confidence": "high"
-    },
-    "00033970": {
-      "alias": "knock_attack_condition",
-      "confidence": "high"
-    },
-    "000335e4": {
-      "alias": "knock_condition_snapshots_init",
-      "confidence": "high"
-    },
-    "0000c486": {
-      "alias": "knock_magnitude_integrate",
-      "confidence": "high"
-    },
-    "0000c8dc": {
-      "alias": "knock_sensor_sci_command",
-      "confidence": "high"
-    },
-    "0000c3ce": {
-      "alias": "knock_voltage_sample",
-      "confidence": "high"
-    },
-    "0000c276": {
-      "alias": "knock_reference_adc_read",
-      "confidence": "high"
-    },
-    "0000c116": {
-      "alias": "reset_knock_state_on_mode_change",
-      "confidence": "high"
-    },
-    "000339ea": {
-      "alias": "knock_state_reset_rpm_window",
-      "confidence": "high"
-    },
-    "0001c13c": {
-      "alias": "closed_loop_enable_condition",
-      "confidence": "high"
-    },
-    "0001f0c4": {
-      "alias": "open_loop_request_condition",
-      "confidence": "high"
-    },
-    "0001ee30": {
-      "alias": "set_open_loop_flag",
-      "confidence": "high"
-    },
-    "0001ee4a": {
-      "alias": "open_loop_fueling_targets",
-      "confidence": "high"
-    },
-    "0005535e": {
-      "alias": "diag_ol_status_byte",
-      "confidence": "high"
-    },
-    "000553d8": {
-      "alias": "diag_ol_status_low_byte",
-      "confidence": "high"
-    },
-    "000142a4": {
-      "alias": "ignition_timing_main_task",
-      "confidence": "high"
-    },
-    "000145c8": {
-      "alias": "timing_retard_fast_task",
-      "confidence": "medium"
-    },
-    "000390b8": {
-      "alias": "knock_sensor_monitor_task",
-      "confidence": "medium"
-    },
-    "000064ba": {
-      "alias": "knock_sensor_fault_task",
-      "confidence": "medium"
-    },
-    "0001467c": {
-      "alias": "knock_rough_correction_update",
-      "confidence": "medium"
-    },
-    "00013034": {
-      "alias": "knock_rough_correction_targets",
-      "confidence": "high"
-    },
-    "0003d010": {
-      "alias": "o2_monitor_integrator",
-      "confidence": "medium"
-    },
-    "00022144": {
-      "alias": "evap_open_loop_condition",
-      "confidence": "medium"
-    }
+ "date": "2026-10-29",
+ "pass": "knock_control_and_loop_mode_labeling",
+ "function_aliases": {
+  "00013826": {
+   "alias": "knock_enable_gate",
+   "confidence": "high"
   },
-  "ram_aliases": {
-    "ffffd1ea": {
-      "alias": "diag22_current_identifier",
-      "type": "uint16",
-      "reader": "00057858"
-    },
-    "ffffbb04": {
-      "alias": "can201_prepared_engine_rpm",
-      "type": "float",
-      "reader": "00029340"
-    },
-    "ffffbb08": {
-      "alias": "can201_previous_engine_rpm",
-      "type": "float",
-      "reader": "00029340"
-    },
-    "ffffbafc": {
-      "alias": "can201_encoded_rpm",
-      "type": "uint16",
-      "reader": "00029236"
-    },
-    "ffffbb00": {
-      "alias": "can201_encoded_vehicle_speed",
-      "type": "uint16",
-      "reader": "0002927c"
-    },
-    "ffffbaf4": {
-      "alias": "can201_tx_payload",
-      "type": "uint8[8]",
-      "reader": "000291dc"
-    },
-    "ffffbad4": {
-      "alias": "can216_unpacked_field_0",
-      "type": "uint16",
-      "reader": "00028eb8"
-    },
-    "ffffbad6": {
-      "alias": "can216_unpacked_field_1",
-      "type": "uint16",
-      "reader": "00028eb8"
-    },
-    "ffffbad8": {
-      "alias": "can216_unpacked_field_2",
-      "type": "uint8",
-      "reader": "00028eb8"
-    },
-    "ffffbada": {
-      "alias": "can216_unpacked_field_3",
-      "type": "uint16",
-      "reader": "00028eb8"
-    },
-    "ffffbadc": {
-      "alias": "can216_unpacked_field_4",
-      "type": "uint8",
-      "reader": "00028eb8"
-    },
-    "ffffa73d": {
-      "alias": "knock_enable",
-      "type": "uint8",
-      "reader": "0001388a"
-    },
-    "ffffa73e": {
-      "alias": "knock_sensors_healthy",
-      "type": "uint8",
-      "reader": "0001388a"
-    },
-    "ffffa73c": {
-      "alias": "knock_active",
-      "type": "uint8",
-      "reader": "00013b40"
-    },
-    "ffffa73f": {
-      "alias": "knock_seen_learn_trigger",
-      "type": "uint8",
-      "reader": "000139c4"
-    },
-    "ffffa748": {
-      "alias": "knock_seen_counter",
-      "type": "uint16",
-      "reader": "0001391c"
-    },
-    "ffffa744": {
-      "alias": "knock_recovery_target",
-      "type": "float",
-      "reader": "00013a60"
-    },
-    "ffffa74a": {
-      "alias": "knock_recovery_counter_a",
-      "type": "uint8",
-      "reader": "00013b40"
-    },
-    "ffffa74b": {
-      "alias": "knock_recovery_counter_b",
-      "type": "uint8",
-      "reader": "00013b40"
-    },
-    "ffffa74c": {
-      "alias": "knock_active_previous",
-      "type": "uint8",
-      "reader": "00013a60"
-    },
-    "ffffa738": {
-      "alias": "knock_retard_mirror",
-      "type": "float",
-      "reader": "000125f6"
-    },
-    "ffffa324": {
-      "alias": "knock_detected",
-      "type": "uint8",
-      "reader": "000336c4"
-    },
-    "ffffa384": {
-      "alias": "knock_rotor_index",
-      "type": "uint8",
-      "reader": "0000c8dc"
-    },
-    "ffffc078": {
-      "alias": "knock_detected_latched",
-      "type": "uint8",
-      "reader": "00033970"
-    },
-    "ffffc05c": {
-      "alias": "knock_attack_condition",
-      "type": "uint8",
-      "reader": "00013a60"
-    },
-    "ffffc05d": {
-      "alias": "knock_transient_flag",
-      "type": "uint8",
-      "reader": "00013b40"
-    },
-    "ffffc060": {
-      "alias": "knock_filter_coeff_a",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffc064": {
-      "alias": "knock_filter_coeff_b",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffc068": {
-      "alias": "knock_filter_coeff_c",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa328": {
-      "alias": "knock_level_threshold",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa37e": {
-      "alias": "knock_ignition_threshold_a",
-      "type": "uint16",
-      "reader": "0000c7ba"
-    },
-    "ffffa37c": {
-      "alias": "knock_ignition_threshold_b",
-      "type": "uint16",
-      "reader": "0000c7ba"
-    },
-    "ffffc090": {
-      "alias": "knock_threshold_a_raw",
-      "type": "uint16",
-      "reader": "00033970"
-    },
-    "ffffc092": {
-      "alias": "knock_threshold_b_raw",
-      "type": "uint16",
-      "reader": "000336c4"
-    },
-    "ffffc0ac": {
-      "alias": "knock_transient_hold_counter",
-      "type": "uint16",
-      "reader": "000336c4"
-    },
-    "ffffa378": {
-      "alias": "knock_voltage_sample",
-      "type": "uint16",
-      "reader": "0000c486"
-    },
-    "ffffa326": {
-      "alias": "knock_voltage_reference",
-      "type": "uint16",
-      "reader": "0000c486"
-    },
-    "ffffa37a": {
-      "alias": "knock_adc_raw",
-      "type": "uint16",
-      "reader": "0000c3ce"
-    },
-    "ffffa374": {
-      "alias": "knock_adc_filtered",
-      "type": "float",
-      "reader": "0000c3ce"
-    },
-    "ffffa370": {
-      "alias": "knock_voltage",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa330": {
-      "alias": "knock_magnitude",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa32c": {
-      "alias": "knock_noise_filtered",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa344": {
-      "alias": "knock_integrator_step",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa348": {
-      "alias": "knock_baseline_slow",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa34c": {
-      "alias": "knock_level_combined",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa334": {
-      "alias": "knock_level_running",
-      "type": "float[2]",
-      "reader": "0000c486"
-    },
-    "ffffa33c": {
-      "alias": "knock_level_integrator",
-      "type": "float[2]",
-      "reader": "0000c486"
-    },
-    "ffffa350": {
-      "alias": "knock_noise_threshold",
-      "type": "float[2]",
-      "reader": "0000c486"
-    },
-    "ffffa358": {
-      "alias": "knock_noise_floor",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa360": {
-      "alias": "knock_noise_excess",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa364": {
-      "alias": "knock_threshold_command_base",
-      "type": "float",
-      "reader": "0000c486"
-    },
-    "ffffa368": {
-      "alias": "knock_threshold_command",
-      "type": "float[2]",
-      "reader": "0000c8dc"
-    },
-    "ffffa387": {
-      "alias": "knock_reference_voltage",
-      "type": "uint8[2]",
-      "reader": "0000c8dc"
-    },
-    "ffffa389": {
-      "alias": "knock_reference_voltage_latched",
-      "type": "uint8[2]",
-      "reader": "0000c486"
-    },
-    "ffffa381": {
-      "alias": "knock_command_code",
-      "type": "uint8[2]",
-      "reader": "0000c486"
-    },
-    "ffffa380": {
-      "alias": "knock_command_code_current",
-      "type": "uint8",
-      "reader": "0000c8dc"
-    },
-    "ffffa38c": {
-      "alias": "knock_state_mode",
-      "type": "uint8",
-      "reader": "0000c116"
-    },
-    "ffffa386": {
-      "alias": "high_rpm_10k_flag",
-      "type": "uint8",
-      "reader": "0000c8dc"
-    },
-    "ffffa325": {
-      "alias": "knock_sensor_fault_status",
-      "type": "uint8",
-      "reader": "00049fac"
-    },
-    "ffffcd64": {
-      "alias": "knock_sensor_healthy_a",
-      "type": "uint8",
-      "reader": "0001388a"
-    },
-    "ffffcd66": {
-      "alias": "knock_sensor_healthy_b",
-      "type": "uint8",
-      "reader": "0001388a"
-    },
-    "ffffcd65": {
-      "alias": "knock_sensor_fault_a",
-      "type": "uint8",
-      "reader": "0004a084"
-    },
-    "ffffcd67": {
-      "alias": "knock_sensor_fault_b",
-      "type": "uint8",
-      "reader": "0004a084"
-    },
-    "ffffcd68": {
-      "alias": "knock_sensor_healthy_counter",
-      "type": "uint16",
-      "reader": "00049fac"
-    },
-    "ffffcd6a": {
-      "alias": "knock_sensor_fault_counter_a",
-      "type": "uint16",
-      "reader": "00049fac"
-    },
-    "ffffcd6c": {
-      "alias": "knock_sensor_fault_counter_b",
-      "type": "uint16",
-      "reader": "00049fac"
-    },
-    "ffffa6ac": {
-      "alias": "rough_knock_correction_leading",
-      "type": "float",
-      "reader": "000125bc"
-    },
-    "ffffa6b0": {
-      "alias": "rough_knock_correction_trailing",
-      "type": "float",
-      "reader": "000125f6"
-    },
-    "ffffa750": {
-      "alias": "coolant_timing_derate_leading",
-      "type": "float",
-      "reader": "000125bc"
-    },
-    "ffffa754": {
-      "alias": "coolant_timing_derate_trailing",
-      "type": "float",
-      "reader": "000125f6"
-    },
-    "ffffa648": {
-      "alias": "leading_timing_correction_total",
-      "type": "float",
-      "reader": "000123ba"
-    },
-    "ffffa658": {
-      "alias": "trailing_timing_correction_total",
-      "type": "float",
-      "reader": "000123ca"
-    },
-    "ffffa634": {
-      "alias": "leading_timing_with_corrections",
-      "type": "float",
-      "reader": "00012300"
-    },
-    "ffffa63c": {
-      "alias": "trailing_timing_with_corrections",
-      "type": "float",
-      "reader": "00012300"
-    },
-    "ffffb288": {
-      "alias": "ac_compressor_leading_timing_retard",
-      "type": "float",
-      "reader": "000125bc"
-    },
-    "ffffb28c": {
-      "alias": "ac_compressor_trailing_timing_retard",
-      "type": "float",
-      "reader": "000125f6"
-    },
-    "ffffc9a0": {
-      "alias": "cold_start_timing_reduction_leading",
-      "type": "float",
-      "reader": "000125bc"
-    },
-    "ffffc9a4": {
-      "alias": "cold_start_timing_reduction_trailing",
-      "type": "float",
-      "reader": "000125f6"
-    },
-    "ffff9f80": {
-      "alias": "engine_speed_rpm_raw",
-      "type": "float",
-      "reader": "0000c3ce"
-    },
-    "ffff9f88": {
-      "alias": "crank_period_accumulator",
-      "type": "float",
-      "reader": "0000c7ba"
-    },
-    "ffff9ef8": {
-      "alias": "knock_sensor_adc_raw",
-      "type": "uint16",
-      "reader": "0000c3ce"
-    },
-    "ffffb12a": {
-      "alias": "open_loop_request",
-      "type": "uint8",
-      "reader": "0001ee30"
-    },
-    "ffffb12c": {
-      "alias": "open_loop_active",
-      "type": "uint8",
-      "reader": "0001c13c"
-    },
-    "ffffae1e": {
-      "alias": "closed_loop_allowed",
-      "type": "uint8",
-      "reader": "0005535e"
-    },
-    "ffffae1f": {
-      "alias": "closed_loop_active",
-      "type": "uint8",
-      "reader": "0005535e"
-    },
-    "ffffb120": {
-      "alias": "open_loop_fuel_target",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffb12d": {
-      "alias": "safe_mode",
-      "type": "uint8",
-      "reader": "00011f00"
-    },
-    "ffffaa80": {
-      "alias": "lambda_in_target_band",
-      "type": "uint8",
-      "reader": "0001c13c"
-    },
-    "ffffcd60": {
-      "alias": "safe_mode",
-      "type": "uint8",
-      "reader": "0001ee4a"
-    },
-    "ffffc150": {
-      "alias": "engine_load_delta",
-      "type": "float",
-      "reader": "0001391c"
-    },
-    "ffffaddc": {
-      "alias": "intake_air_temperature",
-      "type": "float",
-      "reader": "0001a086"
-    },
-    "ffffa424": {
-      "alias": "engine_running_timer",
-      "type": "uint16",
-      "reader": "00013826"
-    },
-    "ffffa428": {
-      "alias": "engine_running",
-      "type": "uint8",
-      "reader": "00013210"
-    },
-    "ffffa426": {
-      "alias": "engine_on_time_counter",
-      "type": "uint16",
-      "reader": "00021cde"
-    },
-    "ffffa42c": {
-      "alias": "engine_injectors_off",
-      "type": "uint8",
-      "reader": "0003d010"
-    },
-    "ffffbed0": {
-      "alias": "fuel_load_scale",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbed4": {
-      "alias": "fuel_load_compensation",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbf1c": {
-      "alias": "fuel_coolant_compensation",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbf14": {
-      "alias": "fuel_correction_sum",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbeac": {
-      "alias": "fuel_volume_scaled",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbeb0": {
-      "alias": "fuel_volume_final",
-      "type": "float",
-      "reader": "000306e8"
-    },
-    "ffffbf68": {
-      "alias": "airflow_rpm_load_product",
-      "type": "float",
-      "reader": "000314d0"
-    },
-    "ffffbf44": {
-      "alias": "airflow_corrected",
-      "type": "float",
-      "reader": "000314d0"
-    },
-    "ffffbf4c": {
-      "alias": "air_density_ratio",
-      "type": "float",
-      "reader": "000314d0"
-    },
-    "ffffbf50": {
-      "alias": "air_charge_per_cycle",
-      "type": "float",
-      "reader": "000314d0"
-    },
-    "ffffbf54": {
-      "alias": "air_charge_filtered",
-      "type": "float",
-      "reader": "000314d0"
-    },
-    "ffffbec8": {
-      "alias": "fuel_amount_per_rotation_a",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbeec": {
-      "alias": "fuel_amount_per_rotation_b",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbed8": {
-      "alias": "fuel_amount_per_rotation_c",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbedc": {
-      "alias": "fuel_amount_per_rotation_d",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbee0": {
-      "alias": "fuel_amount_per_rotation_e",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbee4": {
-      "alias": "fuel_ratio_a",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbee8": {
-      "alias": "fuel_ratio_b",
-      "type": "float",
-      "reader": "00030948"
-    },
-    "ffffbe24": {
-      "alias": "injector_pulse_time",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe28": {
-      "alias": "injector_pulse_time_base",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe2c": {
-      "alias": "injector_pulse_time_ch1",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe30": {
-      "alias": "injector_pulse_time_ch2",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe34": {
-      "alias": "injector_pulse_time_ch3",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe38": {
-      "alias": "injector_pulse_time_ch4",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe3c": {
-      "alias": "cranking_decay_counter",
-      "type": "uint8",
-      "reader": "0002fea8"
-    },
-    "ffffbe40": {
-      "alias": "injector_latency_secondary",
-      "type": "float",
-      "reader": "0002ff78"
-    },
-    "ffffbe44": {
-      "alias": "injector_latency_primary",
-      "type": "float",
-      "reader": "0002ff78"
-    },
-    "ffffbe58": {
-      "alias": "injector_pulse_crank",
-      "type": "float",
-      "reader": "00030678"
-    },
-    "ffffbe5c": {
-      "alias": "injector_pulse_crank_base",
-      "type": "float",
-      "reader": "0002fea8"
-    },
-    "ffffbe94": {
-      "alias": "cranking_pulse_adder",
-      "type": "float",
-      "reader": "00030678"
-    },
-    "ffffa094": {
-      "alias": "injector_latency_ch0",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa098": {
-      "alias": "injector_latency_ch1",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa09c": {
-      "alias": "injector_latency_ch2",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa0a0": {
-      "alias": "injector_latency_ch0_mirror",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa0a4": {
-      "alias": "injector_latency_ch1_mirror",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa0a8": {
-      "alias": "injector_latency_ch2_mirror",
-      "type": "float",
-      "reader": "000086f8"
-    },
-    "ffffa0ac": {
-      "alias": "injector_zero_offset_ch0",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa0b0": {
-      "alias": "injector_zero_offset_ch1",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa0b4": {
-      "alias": "injector_zero_offset_ch2",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa0b8": {
-      "alias": "injector_zero_offset_ch0_mirror",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa0bc": {
-      "alias": "injector_zero_offset_ch1_mirror",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa0c0": {
-      "alias": "injector_zero_offset_ch2_mirror",
-      "type": "float",
-      "reader": "000086ac"
-    },
-    "ffffa010": {
-      "alias": "injector_fuel_request_array",
-      "type": "int",
-      "reader": "00008a68"
-    },
-    "ffffa014": {
-      "alias": "injector_start_angle_array",
-      "type": "short",
-      "reader": "00008a68"
-    },
-    "ffffa017": {
-      "alias": "injector_channel_enable_flag",
-      "type": "uint8",
-      "reader": "000085e4"
-    },
-    "ffffa018": {
-      "alias": "injector_channel_tier_flag",
-      "type": "uint8",
-      "reader": "000085e4"
-    },
-    "ffffc010": {
-      "alias": "warmup_complete_flag",
-      "type": "uint8",
-      "reader": "00032e08"
-    },
-    "ffffc014": {
-      "alias": "warmup_load_multiplier",
-      "type": "float",
-      "reader": "00032e08"
-    },
-    "ffffc018": {
-      "alias": "warmup_rpm_multiplier",
-      "type": "float",
-      "reader": "00032e08"
-    },
-    "ffffc00c": {
-      "alias": "warmup_enrichment_total",
-      "type": "float",
-      "reader": "00032e08"
-    },
-    "ffffb124": {
-      "alias": "open_loop_changeover_enrichment",
-      "type": "float",
-      "reader": "0002024c"
-    },
-    "ffffc158": {
-      "alias": "load_delta_input",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc138": {
-      "alias": "load_delta_scale",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc13c": {
-      "alias": "load_scale_2d",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc134": {
-      "alias": "load_delta_enrichment",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc110": {
-      "alias": "tip_in_decay",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc140": {
-      "alias": "tip_in_enrichment",
-      "type": "float",
-      "reader": "00033ec4"
-    },
-    "ffffc14c": {
-      "alias": "tip_in_mode_flag",
-      "type": "uint8",
-      "reader": "00033ec4"
-    },
-    "ffffbeb4": {
-      "alias": "closed_loop_trim_raw",
-      "type": "float",
-      "reader": "000307e0"
-    },
-    "ffffbeb8": {
-      "alias": "closed_loop_trim_filtered",
-      "type": "float",
-      "reader": "000307e0"
-    },
-    "ffffbf20": {
-      "alias": "cl_coolant_compensation",
-      "type": "float",
-      "reader": "000307e0"
-    },
-    "ffffc0b0": {
-      "alias": "engine_load_raw",
-      "type": "float",
-      "reader": "00033ad2"
-    },
-    "ffffc0b8": {
-      "alias": "engine_load_max",
-      "type": "float",
-      "reader": "00033ad2"
-    },
-    "ffffc0c4": {
-      "alias": "load_filter_fast_flag",
-      "type": "uint8",
-      "reader": "00033ad2"
-    },
-    "ffffc0c5": {
-      "alias": "injectors_off_previous",
-      "type": "uint8",
-      "reader": "00033ad2"
-    },
-    "ffff9eea": {
-      "alias": "maf_adc_raw",
-      "type": "uint16",
-      "reader": "00007438"
-    },
-    "ffff9f78": {
-      "alias": "maf_scaled",
-      "type": "float",
-      "reader": "00007438"
-    },
-    "ffff9f7c": {
-      "alias": "maf_fault_status",
-      "type": "uint8",
-      "reader": "00007438"
-    },
-    "ffffaa2c": {
-      "alias": "maf_voltage",
-      "type": "float",
-      "reader": "00019f4e"
-    },
-    "ffffaa35": {
-      "alias": "maf_high_fault_counter",
-      "type": "uint8",
-      "reader": "00019f4e"
-    },
-    "ffffaa36": {
-      "alias": "maf_low_fault_counter",
-      "type": "uint8",
-      "reader": "00019f4e"
-    },
-    "ffffa9e4": {
-      "alias": "maf_voltage_latched",
-      "type": "float",
-      "reader": "00019f4e"
-    },
-    "ffffa9e8": {
-      "alias": "maf_scaled_latched",
-      "type": "float",
-      "reader": "00019f4e"
-    },
-    "ffffaa54": {
-      "alias": "maf_filter_coeff",
-      "type": "float",
-      "reader": "0001a418"
-    },
-    "ffffaa48": {
-      "alias": "maf_filter_state",
-      "type": "float",
-      "reader": "0001a418"
-    },
-    "ffffaa3c": {
-      "alias": "maf_per_rotation",
-      "type": "float",
-      "reader": "0001a418"
-    },
-    "ffffaa38": {
-      "alias": "maf_per_rotation_filtered",
-      "type": "float",
-      "reader": "0001a418"
-    },
-    "ffffaa4c": {
-      "alias": "maf_filter_mode",
-      "type": "uint8",
-      "reader": "0001a418"
-    },
-    "ffffb0fe": {
-      "alias": "maf_range_index",
-      "type": "uint8",
-      "reader": "0001e842"
-    },
-    "ffffb101": {
-      "alias": "maf_band_low",
-      "type": "uint8",
-      "reader": "0001e842"
-    },
-    "ffffb102": {
-      "alias": "maf_band_mid",
-      "type": "uint8",
-      "reader": "0001e842"
-    },
-    "ffffb103": {
-      "alias": "maf_band_high",
-      "type": "uint8",
-      "reader": "0001e842"
-    },
-    "ffffa434": {
-      "alias": "max_injection_angle_1",
-      "type": "float",
-      "reader": "0000e48e"
-    },
-    "ffffa438": {
-      "alias": "max_injection_angle_2",
-      "type": "float",
-      "reader": "0000e48e"
-    },
-    "ffffa43c": {
-      "alias": "max_injection_angle_3",
-      "type": "float",
-      "reader": "0000e48e"
-    },
-    "ffffa41c": {
-      "alias": "engine_stopped_latch",
-      "type": "uint8",
-      "reader": "0000e2a8"
-    },
-    "ffffa444": {
-      "alias": "fuel_cut_flag_a",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa445": {
-      "alias": "fuel_cut_flag_b",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa464": {
-      "alias": "fuel_cut_request_a",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa465": {
-      "alias": "fuel_cut_request_b",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa4a2": {
-      "alias": "fuel_cut_request_a_prev",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa4a3": {
-      "alias": "fuel_cut_request_b_prev",
-      "type": "uint8",
-      "reader": "0000edc4"
-    },
-    "ffffa964": {
-      "alias": "fuel_cut_allowed",
-      "type": "uint8",
-      "reader": "00018cfe"
-    },
-    "ffffa97c": {
-      "alias": "rpm_above_2500_flag",
-      "type": "uint8",
-      "reader": "00018cfe"
-    },
-    "ffffa97d": {
-      "alias": "rpm_above_1700_flag",
-      "type": "uint8",
-      "reader": "00018cfe"
-    },
-    "ffffa96a": {
-      "alias": "decel_cut_request_a",
-      "type": "uint8",
-      "reader": "00018cfe"
-    },
-    "ffffa96c": {
-      "alias": "decel_cut_request_b",
-      "type": "uint8",
-      "reader": "00018cfe"
-    },
-    "ffffa4a6": {
-      "alias": "coolant_below_18c_flag",
-      "type": "uint8",
-      "reader": "0000ee82"
-    },
-    "ffffa4aa": {
-      "alias": "rev_limit_countdown_active",
-      "type": "uint8",
-      "reader": "0000ee82"
-    },
-    "ffffa4ad": {
-      "alias": "rev_limit_mode_previous",
-      "type": "uint8",
-      "reader": "0000ee82"
-    },
-    "ffffa4ae": {
-      "alias": "rev_limit_countdown",
-      "type": "uint8",
-      "reader": "0000ee82"
-    },
-    "ffffa4a4": {
-      "alias": "rev_limit_state_a",
-      "type": "uint8",
-      "reader": "0000ee64"
-    },
-    "ffffa4a5": {
-      "alias": "rev_limit_state_b",
-      "type": "uint8",
-      "reader": "0000ee64"
-    },
-    "ffffa4a8": {
-      "alias": "rev_limit_state_c",
-      "type": "uint8",
-      "reader": "0000ee64"
-    },
-    "ffffb11c": {
-      "alias": "fuel_blend_weight",
-      "type": "float",
-      "reader": "000200c6"
-    },
-    "ffffb118": {
-      "alias": "timing_blend_weight",
-      "type": "float",
-      "reader": "000200c6"
-    },
-    "ffffb1d0": {
-      "alias": "coolant_plausible_flag",
-      "type": "uint8",
-      "reader": "000200c6"
-    },
-    "ffffb170": {
-      "alias": "ol_baro_base_correction",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb174": {
-      "alias": "ol_rich_limit",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb190": {
-      "alias": "ol_tip_in_target",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb194": {
-      "alias": "ol_target_3d",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb198": {
-      "alias": "ol_tip_in_implausible",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb19c": {
-      "alias": "ol_target_implausible_3d",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb130": {
-      "alias": "ol_fuel_target_main",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb134": {
-      "alias": "ol_coolant_correction",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb138": {
-      "alias": "ol_fuel_target_implausible",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb13c": {
-      "alias": "ol_temperature_correction_b",
-      "type": "float",
-      "reader": "0001ee4a"
-    },
-    "ffffb150": {
-      "alias": "ol_target_select",
-      "type": "uint8",
-      "reader": "0001ee4a"
-    },
-    "ffffb15c": {
-      "alias": "cl_throttle_threshold",
-      "type": "float",
-      "reader": "0001f0c4"
-    },
-    "ffffb160": {
-      "alias": "cl_load_threshold_a",
-      "type": "float",
-      "reader": "0001f0c4"
-    },
-    "ffffb164": {
-      "alias": "cl_load_threshold_b",
-      "type": "float",
-      "reader": "0001f0c4"
-    },
-    "ffffb168": {
-      "alias": "cl_load_threshold_c",
-      "type": "float",
-      "reader": "0001f0c4"
-    },
-    "ffffb16c": {
-      "alias": "cl_unknown_threshold_a",
-      "type": "float",
-      "reader": "0001f0c4"
-    },
-    "ffffb1b6": {
-      "alias": "cl_load_a_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4"
-    },
-    "ffffb1b7": {
-      "alias": "cl_load_b_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4"
-    },
-    "ffffb1b8": {
-      "alias": "cl_load_c_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4"
-    },
-    "ffffb1b1": {
-      "alias": "coolant_above_78_flag",
-      "type": "uint8",
-      "reader": "0001f0c4"
-    },
-    "ffffb178": {
-      "alias": "cl_load_threshold_2d_a",
-      "type": "float",
-      "reader": "0001ff38"
-    },
-    "ffffb17c": {
-      "alias": "cl_load_threshold_2d_b",
-      "type": "float",
-      "reader": "0001ff38"
-    },
-    "ffffb1b9": {
-      "alias": "load_above_thresh_a",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb1bb": {
-      "alias": "load_above_thresh_b",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb1ba": {
-      "alias": "rpm_above_800_flag",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb1bc": {
-      "alias": "rpm_above_5300_flag",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb1d8": {
-      "alias": "coolant_above_97_flag",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb144": {
-      "alias": "ol_condition_timer",
-      "type": "uint16",
-      "reader": "0001ff38"
-    },
-    "ffffb154": {
-      "alias": "ol_band_condition",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb159": {
-      "alias": "ol_timer_expired",
-      "type": "uint8",
-      "reader": "0001ff38"
-    },
-    "ffffb180": {
-      "alias": "cl_load_threshold_2d_c",
-      "type": "float",
-      "reader": "0001f6ae"
-    },
-    "ffffb184": {
-      "alias": "cl_load_threshold_2d_d",
-      "type": "float",
-      "reader": "0001f6ae"
-    },
-    "ffffb188": {
-      "alias": "cl_load_threshold_2d_e",
-      "type": "float",
-      "reader": "0001f6ae"
-    },
-    "ffffb18c": {
-      "alias": "cl_load_threshold_2d_f",
-      "type": "float",
-      "reader": "0001f6ae"
-    },
-    "ffffb1c6": {
-      "alias": "load_above_thresh_c",
-      "type": "uint8",
-      "reader": "0001f6ae"
-    },
-    "ffffb1ca": {
-      "alias": "load_above_thresh_d",
-      "type": "uint8",
-      "reader": "0001f6ae"
-    },
-    "ffffb1c7": {
-      "alias": "rpm_above_5300_flag_b",
-      "type": "uint8",
-      "reader": "0001f6ae"
-    },
-    "ffffb1cb": {
-      "alias": "rpm_above_9800_flag",
-      "type": "uint8",
-      "reader": "0001f6ae"
-    },
-    "ffffb142": {
-      "alias": "ol_decay_enable_a",
-      "type": "uint8",
-      "reader": "000200c6"
-    },
-    "ffffb152": {
-      "alias": "ol_decay_enable_b",
-      "type": "uint8",
-      "reader": "000200c6"
-    },
-    "ffffb157": {
-      "alias": "ol_decay_enable_c",
-      "type": "uint8",
-      "reader": "000200c6"
-    },
-    "ffffaa6c": {
-      "alias": "diag_afr_word_a",
-      "type": "float",
-      "reader": "000556ec"
-    },
-    "ffffaa7c": {
-      "alias": "diag_afr_word_b",
-      "type": "float",
-      "reader": "00055702"
-    },
-    "ffffb2b0": {
-      "alias": "ssv_diag_override_result",
-      "type": "uint8",
-      "reader": "0002178c"
-    },
-    "ffffb2b2": {
-      "alias": "ssv_on_counter",
-      "type": "uint8",
-      "reader": "0002178c"
-    },
-    "ffffb2b4": {
-      "alias": "ssv_coolant_hot_flag",
-      "type": "uint8",
-      "reader": "0002178c"
-    },
-    "ffffb2b5": {
-      "alias": "ssv_was_enabled",
-      "type": "uint8",
-      "reader": "0002178c"
-    },
-    "ffffc1c0": {
-      "alias": "vdi_command",
-      "type": "uint8",
-      "reader": "00034844"
-    },
-    "ffffc1c4": {
-      "alias": "vfad_command",
-      "type": "uint8",
-      "reader": "0003493c"
-    },
-    "ffffa960": {
-      "alias": "secondary_air_request_final",
-      "type": "uint8",
-      "reader": "000187b8"
-    },
-    "ffffa961": {
-      "alias": "sec_air_load_high",
-      "type": "uint8",
-      "reader": "000187b8"
-    },
-    "ffffa962": {
-      "alias": "sec_air_rpm_high",
-      "type": "uint8",
-      "reader": "000187b8"
-    },
-    "ffffbf6c": {
-      "alias": "secondary_air_pump_request",
-      "type": "uint8",
-      "reader": "000316f8"
-    },
-    "ffffbf84": {
-      "alias": "apv_command_percent",
-      "type": "float",
-      "reader": "00031bec"
-    },
-    "ffffbf88": {
-      "alias": "apv_position_dwell_counter",
-      "type": "uint16",
-      "reader": "00031ece"
-    },
-    "ffffbf8a": {
-      "alias": "apv_drive_counter",
-      "type": "uint8",
-      "reader": "00031f0a"
-    },
-    "ffffbf8b": {
-      "alias": "apv_direction_flag",
-      "type": "uint8",
-      "reader": "00031bec"
-    },
-    "ffffbf8d": {
-      "alias": "apv_target_state",
-      "type": "uint8",
-      "reader": "00031c6c"
-    },
-    "ffffbf8e": {
-      "alias": "apv_target_state_prev",
-      "type": "uint8",
-      "reader": "00031c6c"
-    },
-    "ffffbf92": {
-      "alias": "apv_counter_92",
-      "type": "uint8",
-      "reader": "00031c6c"
-    },
-    "ffffbf98": {
-      "alias": "apv_rpm_high_flag",
-      "type": "uint8",
-      "reader": "00031f32"
-    },
-    "ffffbf99": {
-      "alias": "apv_rpm_low_flag",
-      "type": "uint8",
-      "reader": "00031c6c"
-    },
-    "ffffa1c4": {
-      "alias": "apv_pwm_forward_ticks",
-      "type": "uint16",
-      "reader": "0000aa90"
-    },
-    "ffffa1c6": {
-      "alias": "apv_pwm_reverse_ticks",
-      "type": "uint16",
-      "reader": "0000aa90"
-    },
-    "ffffa1c0": {
-      "alias": "apv_pwm_forward_latched",
-      "type": "uint16",
-      "reader": "0000a936"
-    },
-    "ffffa1c2": {
-      "alias": "apv_pwm_reverse_latched",
-      "type": "uint16",
-      "reader": "0000a936"
-    },
-    "ffffa1bc": {
-      "alias": "apv_drive_status",
-      "type": "uint8",
-      "reader": "0000aac4"
-    },
-    "ffffcab0": {
-      "alias": "apv_position_voltage",
-      "type": "float",
-      "reader": "00043a86"
-    },
-    "ffff9ef0": {
-      "alias": "adc6_raw_apv_position",
-      "type": "uint16",
-      "reader": "00043a86"
-    }
+  "0001388a": {
+   "alias": "knock_sensor_health_gate",
+   "confidence": "high"
   },
-  "lookup_aliases": {
-    "DAT_0006af54": "tbl_knock_enable_load_floor_0006af54",
-    "PTR_DAT_0006af68": "tbl_knock_retard_clamp_min_0006af68",
-    "PTR_DAT_0006af7c": "tbl_knock_retard_clamp_min_alt_0006af7c",
-    "DAT_0006af90": "tbl_knock_retard_clamp_max_0006af90",
-    "DAT_0006afa4": "tbl_knock_recovery_target_0006afa4",
-    "DAT_0006afb8": "tbl_knock_learned_retard_scale_0006afb8",
-    "PTR_DAT_0006b264": "tbl_knock_transient_hold_0006b264",
-    "PTR_DAT_0006b27c": "tbl_ignition_timing_threshold_a_alt_0006b27c",
-    "PTR_DAT_0006b294": "tbl_ignition_timing_threshold_b_alt_0006b294",
-    "DAT_0006b2b8": "tbl_knock_level_3d_a_0006b2b8",
-    "DAT_0006b2d4": "tbl_knock_level_3d_b_0006b2d4",
-    "DAT_0006b2f0": "tbl_knock_level_3d_c_0006b2f0",
-    "DAT_0006b304": "tbl_knock_level_3d_d_0006b304",
-    "DAT_0006990c": "tbl_closed_loop_warmup_time_0006990c",
-    "tbl_table_2d_304_check_datatype_0006990c": "tbl_closed_loop_warmup_time_0006990c",
-    "DAT_0006ac38": "tbl_fuel_coolant_compensation_0006ac38"
+  "000138b2": {
+   "alias": "knock_active_gate",
+   "confidence": "high"
   },
-  "fix_00013bd2": {
-    "address": "00013bd2",
-    "before": "void FUN_00013bd2(float param_1) { ... rx8_clamp_float(param_1,arg1,arg2); return; }",
-    "after": "float FUN_00013bd2(float param_1) { ... return rx8_clamp_float(param_1,arg1,arg2); }",
-    "disassembly": "0x13bd2-0x13c26: fr4 (param) saved 0x13be2; descriptor select 0x6af7c/0x6af68; min lookup -> fr14 (0x13c0a); max lookup 0x6af90 -> fr6 (0x13c12); jsr rx8_clamp_float (0x2404) at 0x13c18, delay slot fmov.s @r15,fr4 restores fr4=param, fr5=min, fr6=max; rts 0x13c24 returns fr0 = clamp result (SH float return)",
-    "callers": [
-      "000139c4",
-      "00013a60",
-      "00013b40"
-    ],
-    "signature_replacements": 0,
-    "return_replacements": 0,
-    "views": [
-      "decompiled/functions/00013bd2_FUN_00013bd2.c",
-      "decompiled/firmware_decompiled.c",
-      "named/firmware_named.c"
-    ]
+  "000139c4": {
+   "alias": "knock_retard_learn_to_eeprom",
+   "confidence": "high"
   },
-  "snapshot_local_renames": {
-    "snapshot_DAT_ffffbeb0": {
-      "new": "snapshot_fuel_volume_final_ffffbeb0",
-      "occurrences": 3
-    }
+  "00013a60": {
+   "alias": "knock_retard_attack",
+   "confidence": "high"
   },
-  "snapshot_local_rename_total": 3,
-  "misnomer_corrections": {
-    "0001ee30": {
-      "old": "ref_setClosedLoopBool",
-      "new": "set_open_loop_flag",
-      "note": "sets the OPEN-loop flag b12c = (b12a != 0); blocks closed loop in 0x1c13c"
-    },
-    "0000c116": {
-      "old": "ref_enableDisableCruiseControl__",
-      "new": "reset_knock_state_on_mode_change",
-      "note": "only resets knock rotor index / detection state on mode change"
-    }
+  "00013b40": {
+   "alias": "knock_retard_slow_recovery",
+   "confidence": "high"
   },
-  "polarity_correction": {
-    "ffffb12a": "open_loop_request (set by 0x1f0c4 from closed-loop fuelling threshold tables)",
-    "ffffb12c": "open_loop_active = (b12a != 0), set by 0x1ee30; 1 = open loop, blocks closed loop",
-    "note": "earlier sessions labeled b12a/b12c as closed-loop flags; OBD PID 0x0003 handler 0x568ca and the 0x1c13c/0x1ee4a logic establish the opposite polarity"
+  "00013bd2": {
+   "alias": "knock_retard_clamp",
+   "confidence": "high"
   },
-  "backup": "backups/pre_knock_loop_labels.zip",
-  "rom_unchanged": true,
-  "ghidra_database_updated": false
+  "000125bc": {
+   "alias": "knock_retard_apply_leading",
+   "confidence": "high"
+  },
+  "000125f6": {
+   "alias": "knock_retard_apply_trailing",
+   "confidence": "high"
+  },
+  "000123ba": {
+   "alias": "leading_timing_add_corrections",
+   "confidence": "high"
+  },
+  "000123ca": {
+   "alias": "trailing_timing_add_corrections",
+   "confidence": "high"
+  },
+  "00011f00": {
+   "alias": "leading_base_timing_calc",
+   "confidence": "high"
+  },
+  "0001206c": {
+   "alias": "trailing_base_timing_calc",
+   "confidence": "high"
+  },
+  "00049fac": {
+   "alias": "knock_sensor_health_persistence",
+   "confidence": "high"
+  },
+  "0004a084": {
+   "alias": "knock_sensor_dtc_report",
+   "confidence": "high"
+  },
+  "000336c4": {
+   "alias": "knock_threshold_setup",
+   "confidence": "high"
+  },
+  "00033632": {
+   "alias": "knock_filter_constants_init",
+   "confidence": "high"
+  },
+  "00033970": {
+   "alias": "knock_attack_condition",
+   "confidence": "high"
+  },
+  "000335e4": {
+   "alias": "knock_condition_snapshots_init",
+   "confidence": "high"
+  },
+  "0000c486": {
+   "alias": "knock_magnitude_integrate",
+   "confidence": "high"
+  },
+  "0000c8dc": {
+   "alias": "knock_sensor_sci_command",
+   "confidence": "high"
+  },
+  "0000c3ce": {
+   "alias": "knock_voltage_sample",
+   "confidence": "high"
+  },
+  "0000c276": {
+   "alias": "knock_reference_adc_read",
+   "confidence": "high"
+  },
+  "0000c116": {
+   "alias": "reset_knock_state_on_mode_change",
+   "confidence": "high"
+  },
+  "000339ea": {
+   "alias": "knock_state_reset_rpm_window",
+   "confidence": "high"
+  },
+  "0001c13c": {
+   "alias": "closed_loop_enable_condition",
+   "confidence": "high"
+  },
+  "0001f0c4": {
+   "alias": "open_loop_request_condition",
+   "confidence": "high"
+  },
+  "0001ee30": {
+   "alias": "set_open_loop_flag",
+   "confidence": "high"
+  },
+  "0001ee4a": {
+   "alias": "open_loop_fueling_targets",
+   "confidence": "high"
+  },
+  "0005535e": {
+   "alias": "diag_ol_status_byte",
+   "confidence": "high"
+  },
+  "000553d8": {
+   "alias": "diag_ol_status_low_byte",
+   "confidence": "high"
+  },
+  "000142a4": {
+   "alias": "ignition_timing_main_task",
+   "confidence": "high"
+  },
+  "000145c8": {
+   "alias": "timing_retard_fast_task",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: ROM pointer at 0x116e0 (task table) + caller slow_background_task 0x11534; body uses interrupt-mask wrapper (sh_raise_interrupt_mask 0x10) - fast timing-retard path"
+  },
+  "000390b8": {
+   "alias": "knock_sensor_monitor_task",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: ROM pointer at 0x11978 (task table near 0x11744 task chain); caller 0x11744; byte-exact function match in 3/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "000064ba": {
+   "alias": "knock_sensor_fault_task",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: ROM pointer to 0x64ba at 0x4a28 (task/IVT table region) - scheduled entry, not jsr-called; body 46 B re-read; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv); still candidate_ in function_index (D6)"
+  },
+  "0001467c": {
+   "alias": "knock_rough_correction_update",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: ROM pointer at 0x11a84 (task table) + caller dtc_fault_service_batch 0x118d0; interrupt-mask wrapper body"
+  },
+  "00013034": {
+   "alias": "knock_rough_correction_targets",
+   "confidence": "high"
+  },
+  "0003d010": {
+   "alias": "o2_monitor_integrator",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: body re-read 2026-11-05: catalyst-temp model lookup (tbl 0x6b610/0x6b61c vs a998) + vehicle_speed > 95.88 branch - consistent with O2/catalyst monitor integrator; no ROM pointer (called via 0x3ccec/0x3cd06 jsr)"
+  },
+  "00022144": {
+   "alias": "evap_open_loop_condition",
+   "confidence": "medium",
+   "evidence": "; 2026-11-05: body re-read 2026-11-05: gates on open_loop_active_ffffb12c (fuel open-loop flag, high label) && DAT_ffffbe00 >= 66.5 && closed_loop_active ae1f==0 -> sets b319 and clamps b308 = min(b308, 0) - this is a FUEL open-loop condition, the \"evap\" in the name is doubtful; ROM pointer at 0x21bfc; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  }
+ },
+ "ram_aliases": {
+  "ffffd1ea": {
+   "alias": "diag22_current_identifier",
+   "type": "uint16",
+   "reader": "00057858"
+  },
+  "ffffbb04": {
+   "alias": "can201_prepared_engine_rpm",
+   "type": "float",
+   "reader": "00029340"
+  },
+  "ffffbb08": {
+   "alias": "can201_previous_engine_rpm",
+   "type": "float",
+   "reader": "00029340"
+  },
+  "ffffbafc": {
+   "alias": "can201_encoded_rpm",
+   "type": "uint16",
+   "reader": "00029236"
+  },
+  "ffffbb00": {
+   "alias": "can201_encoded_vehicle_speed",
+   "type": "uint16",
+   "reader": "0002927c"
+  },
+  "ffffbaf4": {
+   "alias": "can201_tx_payload",
+   "type": "uint8[8]",
+   "reader": "000291dc"
+  },
+  "ffffbad4": {
+   "alias": "can216_unpacked_field_0",
+   "type": "uint16",
+   "reader": "00028eb8"
+  },
+  "ffffbad6": {
+   "alias": "can216_unpacked_field_1",
+   "type": "uint16",
+   "reader": "00028eb8"
+  },
+  "ffffbad8": {
+   "alias": "can216_unpacked_field_2",
+   "type": "uint8",
+   "reader": "00028eb8"
+  },
+  "ffffbada": {
+   "alias": "can216_unpacked_field_3",
+   "type": "uint16",
+   "reader": "00028eb8"
+  },
+  "ffffbadc": {
+   "alias": "can216_unpacked_field_4",
+   "type": "uint8",
+   "reader": "00028eb8"
+  },
+  "ffffa73d": {
+   "alias": "knock_enable",
+   "type": "uint8",
+   "reader": "0001388a"
+  },
+  "ffffa73e": {
+   "alias": "knock_sensors_healthy",
+   "type": "uint8",
+   "reader": "0001388a"
+  },
+  "ffffa73c": {
+   "alias": "knock_active",
+   "type": "uint8",
+   "reader": "00013b40"
+  },
+  "ffffa73f": {
+   "alias": "knock_seen_learn_trigger",
+   "type": "uint8",
+   "reader": "000139c4"
+  },
+  "ffffa748": {
+   "alias": "knock_seen_counter",
+   "type": "uint16",
+   "reader": "0001391c"
+  },
+  "ffffa744": {
+   "alias": "knock_recovery_target",
+   "type": "float",
+   "reader": "00013a60"
+  },
+  "ffffa74a": {
+   "alias": "knock_recovery_counter_a",
+   "type": "uint8",
+   "reader": "00013b40"
+  },
+  "ffffa74b": {
+   "alias": "knock_recovery_counter_b",
+   "type": "uint8",
+   "reader": "00013b40"
+  },
+  "ffffa74c": {
+   "alias": "knock_active_previous",
+   "type": "uint8",
+   "reader": "00013a60"
+  },
+  "ffffa738": {
+   "alias": "knock_retard_mirror",
+   "type": "float",
+   "reader": "000125f6"
+  },
+  "ffffa324": {
+   "alias": "knock_detected",
+   "type": "uint8",
+   "reader": "000336c4"
+  },
+  "ffffa384": {
+   "alias": "knock_rotor_index",
+   "type": "uint8",
+   "reader": "0000c8dc"
+  },
+  "ffffc078": {
+   "alias": "knock_detected_latched",
+   "type": "uint8",
+   "reader": "00033970"
+  },
+  "ffffc05c": {
+   "alias": "knock_attack_condition",
+   "type": "uint8",
+   "reader": "00013a60"
+  },
+  "ffffc05d": {
+   "alias": "knock_transient_flag",
+   "type": "uint8",
+   "reader": "00013b40"
+  },
+  "ffffc060": {
+   "alias": "knock_filter_coeff_a",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffc064": {
+   "alias": "knock_filter_coeff_b",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffc068": {
+   "alias": "knock_filter_coeff_c",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa328": {
+   "alias": "knock_level_threshold",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa37e": {
+   "alias": "knock_ignition_threshold_a",
+   "type": "uint16",
+   "reader": "0000c7ba"
+  },
+  "ffffa37c": {
+   "alias": "knock_ignition_threshold_b",
+   "type": "uint16",
+   "reader": "0000c7ba"
+  },
+  "ffffc090": {
+   "alias": "knock_threshold_a_raw",
+   "type": "uint16",
+   "reader": "00033970"
+  },
+  "ffffc092": {
+   "alias": "knock_threshold_b_raw",
+   "type": "uint16",
+   "reader": "000336c4"
+  },
+  "ffffc0ac": {
+   "alias": "knock_transient_hold_counter",
+   "type": "uint16",
+   "reader": "000336c4"
+  },
+  "ffffa378": {
+   "alias": "knock_voltage_sample",
+   "type": "uint16",
+   "reader": "0000c486"
+  },
+  "ffffa326": {
+   "alias": "knock_voltage_reference",
+   "type": "uint16",
+   "reader": "0000c486"
+  },
+  "ffffa37a": {
+   "alias": "knock_adc_raw",
+   "type": "uint16",
+   "reader": "0000c3ce"
+  },
+  "ffffa374": {
+   "alias": "knock_adc_filtered",
+   "type": "float",
+   "reader": "0000c3ce"
+  },
+  "ffffa370": {
+   "alias": "knock_voltage",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa330": {
+   "alias": "knock_magnitude",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa32c": {
+   "alias": "knock_noise_filtered",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa344": {
+   "alias": "knock_integrator_step",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa348": {
+   "alias": "knock_baseline_slow",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa34c": {
+   "alias": "knock_level_combined",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa334": {
+   "alias": "knock_level_running",
+   "type": "float[2]",
+   "reader": "0000c486"
+  },
+  "ffffa33c": {
+   "alias": "knock_level_integrator",
+   "type": "float[2]",
+   "reader": "0000c486"
+  },
+  "ffffa350": {
+   "alias": "knock_noise_threshold",
+   "type": "float[2]",
+   "reader": "0000c486"
+  },
+  "ffffa358": {
+   "alias": "knock_noise_floor",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa360": {
+   "alias": "knock_noise_excess",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa364": {
+   "alias": "knock_threshold_command_base",
+   "type": "float",
+   "reader": "0000c486"
+  },
+  "ffffa368": {
+   "alias": "knock_threshold_command",
+   "type": "float[2]",
+   "reader": "0000c8dc"
+  },
+  "ffffa387": {
+   "alias": "knock_reference_voltage",
+   "type": "uint8[2]",
+   "reader": "0000c8dc"
+  },
+  "ffffa389": {
+   "alias": "knock_reference_voltage_latched",
+   "type": "uint8[2]",
+   "reader": "0000c486"
+  },
+  "ffffa381": {
+   "alias": "knock_command_code",
+   "type": "uint8[2]",
+   "reader": "0000c486"
+  },
+  "ffffa380": {
+   "alias": "knock_command_code_current",
+   "type": "uint8",
+   "reader": "0000c8dc"
+  },
+  "ffffa38c": {
+   "alias": "knock_state_mode",
+   "type": "uint8",
+   "reader": "0000c116"
+  },
+  "ffffa386": {
+   "alias": "high_rpm_10k_flag",
+   "type": "uint8",
+   "reader": "0000c8dc"
+  },
+  "ffffa325": {
+   "alias": "knock_sensor_fault_status",
+   "type": "uint8",
+   "reader": "00049fac"
+  },
+  "ffffcd64": {
+   "alias": "knock_sensor_healthy_a",
+   "type": "uint8",
+   "reader": "0001388a"
+  },
+  "ffffcd66": {
+   "alias": "knock_sensor_healthy_b",
+   "type": "uint8",
+   "reader": "0001388a"
+  },
+  "ffffcd65": {
+   "alias": "knock_sensor_fault_a",
+   "type": "uint8",
+   "reader": "0004a084"
+  },
+  "ffffcd67": {
+   "alias": "knock_sensor_fault_b",
+   "type": "uint8",
+   "reader": "0004a084"
+  },
+  "ffffcd68": {
+   "alias": "knock_sensor_healthy_counter",
+   "type": "uint16",
+   "reader": "00049fac"
+  },
+  "ffffcd6a": {
+   "alias": "knock_sensor_fault_counter_a",
+   "type": "uint16",
+   "reader": "00049fac"
+  },
+  "ffffcd6c": {
+   "alias": "knock_sensor_fault_counter_b",
+   "type": "uint16",
+   "reader": "00049fac"
+  },
+  "ffffa6ac": {
+   "alias": "rough_knock_correction_leading",
+   "type": "float",
+   "reader": "000125bc"
+  },
+  "ffffa6b0": {
+   "alias": "rough_knock_correction_trailing",
+   "type": "float",
+   "reader": "000125f6"
+  },
+  "ffffa750": {
+   "alias": "coolant_timing_derate_leading",
+   "type": "float",
+   "reader": "000125bc"
+  },
+  "ffffa754": {
+   "alias": "coolant_timing_derate_trailing",
+   "type": "float",
+   "reader": "000125f6"
+  },
+  "ffffa648": {
+   "alias": "leading_timing_correction_total",
+   "type": "float",
+   "reader": "000123ba"
+  },
+  "ffffa658": {
+   "alias": "trailing_timing_correction_total",
+   "type": "float",
+   "reader": "000123ca"
+  },
+  "ffffa634": {
+   "alias": "leading_timing_with_corrections",
+   "type": "float",
+   "reader": "00012300"
+  },
+  "ffffa63c": {
+   "alias": "trailing_timing_with_corrections",
+   "type": "float",
+   "reader": "00012300"
+  },
+  "ffffb288": {
+   "alias": "ac_compressor_leading_timing_retard",
+   "type": "float",
+   "reader": "000125bc"
+  },
+  "ffffb28c": {
+   "alias": "ac_compressor_trailing_timing_retard",
+   "type": "float",
+   "reader": "000125f6"
+  },
+  "ffffc9a0": {
+   "alias": "cold_start_timing_reduction_leading",
+   "type": "float",
+   "reader": "000125bc"
+  },
+  "ffffc9a4": {
+   "alias": "cold_start_timing_reduction_trailing",
+   "type": "float",
+   "reader": "000125f6"
+  },
+  "ffff9f80": {
+   "alias": "engine_speed_rpm_raw",
+   "type": "float",
+   "reader": "0000c3ce"
+  },
+  "ffff9f88": {
+   "alias": "crank_period_accumulator",
+   "type": "float",
+   "reader": "0000c7ba"
+  },
+  "ffff9ef8": {
+   "alias": "knock_sensor_adc_raw",
+   "type": "uint16",
+   "reader": "0000c3ce"
+  },
+  "ffffb12a": {
+   "alias": "open_loop_request",
+   "type": "uint8",
+   "reader": "0001ee30"
+  },
+  "ffffb12c": {
+   "alias": "open_loop_active",
+   "type": "uint8",
+   "reader": "0001c13c"
+  },
+  "ffffae1e": {
+   "alias": "closed_loop_allowed",
+   "type": "uint8",
+   "reader": "0005535e"
+  },
+  "ffffae1f": {
+   "alias": "closed_loop_active",
+   "type": "uint8",
+   "reader": "0005535e"
+  },
+  "ffffb120": {
+   "alias": "open_loop_fuel_target",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffb12d": {
+   "alias": "safe_mode",
+   "type": "uint8",
+   "reader": "00011f00"
+  },
+  "ffffaa80": {
+   "alias": "lambda_in_target_band",
+   "type": "uint8",
+   "reader": "0001c13c"
+  },
+  "ffffcd60": {
+   "alias": "safe_mode",
+   "type": "uint8",
+   "reader": "0001ee4a"
+  },
+  "ffffc150": {
+   "alias": "engine_load_delta",
+   "type": "float",
+   "reader": "0001391c"
+  },
+  "ffffaddc": {
+   "alias": "intake_air_temperature",
+   "type": "float",
+   "reader": "0001a086"
+  },
+  "ffffa424": {
+   "alias": "engine_running_timer",
+   "type": "uint16",
+   "reader": "00013826"
+  },
+  "ffffa428": {
+   "alias": "engine_running",
+   "type": "uint8",
+   "reader": "00013210"
+  },
+  "ffffa426": {
+   "alias": "engine_on_time_counter",
+   "type": "uint16",
+   "reader": "00021cde"
+  },
+  "ffffa42c": {
+   "alias": "engine_injectors_off",
+   "type": "uint8",
+   "reader": "0003d010"
+  },
+  "ffffbed0": {
+   "alias": "fuel_load_scale",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbed4": {
+   "alias": "fuel_load_compensation",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbf1c": {
+   "alias": "fuel_coolant_compensation",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbf14": {
+   "alias": "fuel_correction_sum",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbeac": {
+   "alias": "fuel_volume_scaled",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbeb0": {
+   "alias": "fuel_volume_final",
+   "type": "float",
+   "reader": "000306e8"
+  },
+  "ffffbf68": {
+   "alias": "airflow_rpm_load_product",
+   "type": "float",
+   "reader": "000314d0"
+  },
+  "ffffbf44": {
+   "alias": "airflow_corrected",
+   "type": "float",
+   "reader": "000314d0"
+  },
+  "ffffbf4c": {
+   "alias": "air_density_ratio",
+   "type": "float",
+   "reader": "000314d0"
+  },
+  "ffffbf50": {
+   "alias": "air_charge_per_cycle",
+   "type": "float",
+   "reader": "000314d0"
+  },
+  "ffffbf54": {
+   "alias": "air_charge_filtered",
+   "type": "float",
+   "reader": "000314d0"
+  },
+  "ffffbec8": {
+   "alias": "fuel_amount_per_rotation_a",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbeec": {
+   "alias": "fuel_amount_per_rotation_b",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbed8": {
+   "alias": "fuel_amount_per_rotation_c",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbedc": {
+   "alias": "fuel_amount_per_rotation_d",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbee0": {
+   "alias": "fuel_amount_per_rotation_e",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbee4": {
+   "alias": "fuel_ratio_a",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbee8": {
+   "alias": "fuel_ratio_b",
+   "type": "float",
+   "reader": "00030948"
+  },
+  "ffffbe24": {
+   "alias": "injector_pulse_time",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe28": {
+   "alias": "injector_pulse_time_base",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe2c": {
+   "alias": "injector_pulse_time_ch1",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe30": {
+   "alias": "injector_pulse_time_ch2",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe34": {
+   "alias": "injector_pulse_time_ch3",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe38": {
+   "alias": "injector_pulse_time_ch4",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe3c": {
+   "alias": "cranking_decay_counter",
+   "type": "uint8",
+   "reader": "0002fea8"
+  },
+  "ffffbe40": {
+   "alias": "injector_latency_secondary",
+   "type": "float",
+   "reader": "0002ff78"
+  },
+  "ffffbe44": {
+   "alias": "injector_latency_primary",
+   "type": "float",
+   "reader": "0002ff78"
+  },
+  "ffffbe58": {
+   "alias": "injector_pulse_crank",
+   "type": "float",
+   "reader": "00030678"
+  },
+  "ffffbe5c": {
+   "alias": "injector_pulse_crank_base",
+   "type": "float",
+   "reader": "0002fea8"
+  },
+  "ffffbe94": {
+   "alias": "cranking_pulse_adder",
+   "type": "float",
+   "reader": "00030678"
+  },
+  "ffffa094": {
+   "alias": "injector_latency_ch0",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa098": {
+   "alias": "injector_latency_ch1",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa09c": {
+   "alias": "injector_latency_ch2",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa0a0": {
+   "alias": "injector_latency_ch0_mirror",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa0a4": {
+   "alias": "injector_latency_ch1_mirror",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa0a8": {
+   "alias": "injector_latency_ch2_mirror",
+   "type": "float",
+   "reader": "000086f8"
+  },
+  "ffffa0ac": {
+   "alias": "injector_zero_offset_ch0",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa0b0": {
+   "alias": "injector_zero_offset_ch1",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa0b4": {
+   "alias": "injector_zero_offset_ch2",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa0b8": {
+   "alias": "injector_zero_offset_ch0_mirror",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa0bc": {
+   "alias": "injector_zero_offset_ch1_mirror",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa0c0": {
+   "alias": "injector_zero_offset_ch2_mirror",
+   "type": "float",
+   "reader": "000086ac"
+  },
+  "ffffa010": {
+   "alias": "injector_fuel_request_array",
+   "type": "int",
+   "reader": "00008a68"
+  },
+  "ffffa014": {
+   "alias": "injector_start_angle_array",
+   "type": "short",
+   "reader": "00008a68"
+  },
+  "ffffa017": {
+   "alias": "injector_channel_enable_flag",
+   "type": "uint8",
+   "reader": "000085e4"
+  },
+  "ffffa018": {
+   "alias": "injector_channel_tier_flag",
+   "type": "uint8",
+   "reader": "000085e4"
+  },
+  "ffffc010": {
+   "alias": "warmup_complete_flag",
+   "type": "uint8",
+   "reader": "00032e08"
+  },
+  "ffffc014": {
+   "alias": "warmup_load_multiplier",
+   "type": "float",
+   "reader": "00032e08"
+  },
+  "ffffc018": {
+   "alias": "warmup_rpm_multiplier",
+   "type": "float",
+   "reader": "00032e08"
+  },
+  "ffffc00c": {
+   "alias": "warmup_enrichment_total",
+   "type": "float",
+   "reader": "00032e08"
+  },
+  "ffffb124": {
+   "alias": "open_loop_changeover_enrichment",
+   "type": "float",
+   "reader": "0002024c"
+  },
+  "ffffc158": {
+   "alias": "load_delta_input",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc138": {
+   "alias": "load_delta_scale",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc13c": {
+   "alias": "load_scale_2d",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc134": {
+   "alias": "load_delta_enrichment",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc110": {
+   "alias": "tip_in_decay",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc140": {
+   "alias": "tip_in_enrichment",
+   "type": "float",
+   "reader": "00033ec4"
+  },
+  "ffffc14c": {
+   "alias": "tip_in_mode_flag",
+   "type": "uint8",
+   "reader": "00033ec4"
+  },
+  "ffffbeb4": {
+   "alias": "closed_loop_trim_raw",
+   "type": "float",
+   "reader": "000307e0"
+  },
+  "ffffbeb8": {
+   "alias": "closed_loop_trim_filtered",
+   "type": "float",
+   "reader": "000307e0"
+  },
+  "ffffbf20": {
+   "alias": "cl_coolant_compensation",
+   "type": "float",
+   "reader": "000307e0"
+  },
+  "ffffc0b0": {
+   "alias": "engine_load_raw",
+   "type": "float",
+   "reader": "00033ad2"
+  },
+  "ffffc0b8": {
+   "alias": "engine_load_max",
+   "type": "float",
+   "reader": "00033ad2"
+  },
+  "ffffc0c4": {
+   "alias": "load_filter_fast_flag",
+   "type": "uint8",
+   "reader": "00033ad2"
+  },
+  "ffffc0c5": {
+   "alias": "injectors_off_previous",
+   "type": "uint8",
+   "reader": "00033ad2"
+  },
+  "ffff9eea": {
+   "alias": "maf_adc_raw",
+   "type": "uint16",
+   "reader": "00007438"
+  },
+  "ffff9f78": {
+   "alias": "maf_scaled",
+   "type": "float",
+   "reader": "00007438"
+  },
+  "ffff9f7c": {
+   "alias": "maf_fault_status",
+   "type": "uint8",
+   "reader": "00007438"
+  },
+  "ffffaa2c": {
+   "alias": "maf_voltage",
+   "type": "float",
+   "reader": "00019f4e"
+  },
+  "ffffaa35": {
+   "alias": "maf_high_fault_counter",
+   "type": "uint8",
+   "reader": "00019f4e"
+  },
+  "ffffaa36": {
+   "alias": "maf_low_fault_counter",
+   "type": "uint8",
+   "reader": "00019f4e"
+  },
+  "ffffa9e4": {
+   "alias": "maf_voltage_latched",
+   "type": "float",
+   "reader": "00019f4e"
+  },
+  "ffffa9e8": {
+   "alias": "maf_scaled_latched",
+   "type": "float",
+   "reader": "00019f4e"
+  },
+  "ffffaa54": {
+   "alias": "maf_filter_coeff",
+   "type": "float",
+   "reader": "0001a418"
+  },
+  "ffffaa48": {
+   "alias": "maf_filter_state",
+   "type": "float",
+   "reader": "0001a418"
+  },
+  "ffffaa3c": {
+   "alias": "maf_per_rotation",
+   "type": "float",
+   "reader": "0001a418"
+  },
+  "ffffaa38": {
+   "alias": "maf_per_rotation_filtered",
+   "type": "float",
+   "reader": "0001a418"
+  },
+  "ffffaa4c": {
+   "alias": "maf_filter_mode",
+   "type": "uint8",
+   "reader": "0001a418"
+  },
+  "ffffb0fe": {
+   "alias": "maf_range_index",
+   "type": "uint8",
+   "reader": "0001e842"
+  },
+  "ffffb101": {
+   "alias": "maf_band_low",
+   "type": "uint8",
+   "reader": "0001e842"
+  },
+  "ffffb102": {
+   "alias": "maf_band_mid",
+   "type": "uint8",
+   "reader": "0001e842"
+  },
+  "ffffb103": {
+   "alias": "maf_band_high",
+   "type": "uint8",
+   "reader": "0001e842"
+  },
+  "ffffa434": {
+   "alias": "max_injection_angle_1",
+   "type": "float",
+   "reader": "0000e48e"
+  },
+  "ffffa438": {
+   "alias": "max_injection_angle_2",
+   "type": "float",
+   "reader": "0000e48e"
+  },
+  "ffffa43c": {
+   "alias": "max_injection_angle_3",
+   "type": "float",
+   "reader": "0000e48e"
+  },
+  "ffffa41c": {
+   "alias": "engine_stopped_latch",
+   "type": "uint8",
+   "reader": "0000e2a8"
+  },
+  "ffffa444": {
+   "alias": "fuel_cut_flag_a",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa445": {
+   "alias": "fuel_cut_flag_b",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa464": {
+   "alias": "fuel_cut_request_a",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa465": {
+   "alias": "fuel_cut_request_b",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa4a2": {
+   "alias": "fuel_cut_request_a_prev",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa4a3": {
+   "alias": "fuel_cut_request_b_prev",
+   "type": "uint8",
+   "reader": "0000edc4"
+  },
+  "ffffa964": {
+   "alias": "fuel_cut_allowed",
+   "type": "uint8",
+   "reader": "00018cfe"
+  },
+  "ffffa97c": {
+   "alias": "rpm_above_2500_flag",
+   "type": "uint8",
+   "reader": "00018cfe"
+  },
+  "ffffa97d": {
+   "alias": "rpm_above_1700_flag",
+   "type": "uint8",
+   "reader": "00018cfe"
+  },
+  "ffffa96a": {
+   "alias": "decel_cut_request_a",
+   "type": "uint8",
+   "reader": "00018cfe"
+  },
+  "ffffa96c": {
+   "alias": "decel_cut_request_b",
+   "type": "uint8",
+   "reader": "00018cfe"
+  },
+  "ffffa4a6": {
+   "alias": "coolant_below_18c_flag",
+   "type": "uint8",
+   "reader": "0000ee82"
+  },
+  "ffffa4aa": {
+   "alias": "rev_limit_countdown_active",
+   "type": "uint8",
+   "reader": "0000ee82"
+  },
+  "ffffa4ad": {
+   "alias": "rev_limit_mode_previous",
+   "type": "uint8",
+   "reader": "0000ee82"
+  },
+  "ffffa4ae": {
+   "alias": "rev_limit_countdown",
+   "type": "uint8",
+   "reader": "0000ee82"
+  },
+  "ffffa4a4": {
+   "alias": "rev_limit_state_a",
+   "type": "uint8",
+   "reader": "0000ee64"
+  },
+  "ffffa4a5": {
+   "alias": "rev_limit_state_b",
+   "type": "uint8",
+   "reader": "0000ee64"
+  },
+  "ffffa4a8": {
+   "alias": "rev_limit_state_c",
+   "type": "uint8",
+   "reader": "0000ee64"
+  },
+  "ffffb11c": {
+   "alias": "fuel_blend_weight",
+   "type": "float",
+   "reader": "000200c6"
+  },
+  "ffffb118": {
+   "alias": "timing_blend_weight",
+   "type": "float",
+   "reader": "000200c6"
+  },
+  "ffffb1d0": {
+   "alias": "coolant_plausible_flag",
+   "type": "uint8",
+   "reader": "000200c6"
+  },
+  "ffffb170": {
+   "alias": "ol_baro_base_correction",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb174": {
+   "alias": "ol_rich_limit",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb190": {
+   "alias": "ol_tip_in_target",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb194": {
+   "alias": "ol_target_3d",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb198": {
+   "alias": "ol_tip_in_implausible",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb19c": {
+   "alias": "ol_target_implausible_3d",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb130": {
+   "alias": "ol_fuel_target_main",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb134": {
+   "alias": "ol_coolant_correction",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb138": {
+   "alias": "ol_fuel_target_implausible",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb13c": {
+   "alias": "ol_temperature_correction_b",
+   "type": "float",
+   "reader": "0001ee4a"
+  },
+  "ffffb150": {
+   "alias": "ol_target_select",
+   "type": "uint8",
+   "reader": "0001ee4a"
+  },
+  "ffffb15c": {
+   "alias": "cl_throttle_threshold",
+   "type": "float",
+   "reader": "0001f0c4"
+  },
+  "ffffb160": {
+   "alias": "cl_load_threshold_a",
+   "type": "float",
+   "reader": "0001f0c4"
+  },
+  "ffffb164": {
+   "alias": "cl_load_threshold_b",
+   "type": "float",
+   "reader": "0001f0c4"
+  },
+  "ffffb168": {
+   "alias": "cl_load_threshold_c",
+   "type": "float",
+   "reader": "0001f0c4"
+  },
+  "ffffb16c": {
+   "alias": "cl_unknown_threshold_a",
+   "type": "float",
+   "reader": "0001f0c4"
+  },
+  "ffffb1b6": {
+   "alias": "cl_load_a_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4"
+  },
+  "ffffb1b7": {
+   "alias": "cl_load_b_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4"
+  },
+  "ffffb1b8": {
+   "alias": "cl_load_c_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4"
+  },
+  "ffffb1b1": {
+   "alias": "coolant_above_78_flag",
+   "type": "uint8",
+   "reader": "0001f0c4"
+  },
+  "ffffb178": {
+   "alias": "cl_load_threshold_2d_a",
+   "type": "float",
+   "reader": "0001ff38"
+  },
+  "ffffb17c": {
+   "alias": "cl_load_threshold_2d_b",
+   "type": "float",
+   "reader": "0001ff38"
+  },
+  "ffffb1b9": {
+   "alias": "load_above_thresh_a",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb1bb": {
+   "alias": "load_above_thresh_b",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb1ba": {
+   "alias": "rpm_above_800_flag",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb1bc": {
+   "alias": "rpm_above_5300_flag",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb1d8": {
+   "alias": "coolant_above_97_flag",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb144": {
+   "alias": "ol_condition_timer",
+   "type": "uint16",
+   "reader": "0001ff38"
+  },
+  "ffffb154": {
+   "alias": "ol_band_condition",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb159": {
+   "alias": "ol_timer_expired",
+   "type": "uint8",
+   "reader": "0001ff38"
+  },
+  "ffffb180": {
+   "alias": "cl_load_threshold_2d_c",
+   "type": "float",
+   "reader": "0001f6ae"
+  },
+  "ffffb184": {
+   "alias": "cl_load_threshold_2d_d",
+   "type": "float",
+   "reader": "0001f6ae"
+  },
+  "ffffb188": {
+   "alias": "cl_load_threshold_2d_e",
+   "type": "float",
+   "reader": "0001f6ae"
+  },
+  "ffffb18c": {
+   "alias": "cl_load_threshold_2d_f",
+   "type": "float",
+   "reader": "0001f6ae"
+  },
+  "ffffb1c6": {
+   "alias": "load_above_thresh_c",
+   "type": "uint8",
+   "reader": "0001f6ae"
+  },
+  "ffffb1ca": {
+   "alias": "load_above_thresh_d",
+   "type": "uint8",
+   "reader": "0001f6ae"
+  },
+  "ffffb1c7": {
+   "alias": "rpm_above_5300_flag_b",
+   "type": "uint8",
+   "reader": "0001f6ae"
+  },
+  "ffffb1cb": {
+   "alias": "rpm_above_9800_flag",
+   "type": "uint8",
+   "reader": "0001f6ae"
+  },
+  "ffffb142": {
+   "alias": "ol_decay_enable_a",
+   "type": "uint8",
+   "reader": "000200c6"
+  },
+  "ffffb152": {
+   "alias": "ol_decay_enable_b",
+   "type": "uint8",
+   "reader": "000200c6"
+  },
+  "ffffb157": {
+   "alias": "ol_decay_enable_c",
+   "type": "uint8",
+   "reader": "000200c6"
+  },
+  "ffffaa6c": {
+   "alias": "diag_afr_word_a",
+   "type": "float",
+   "reader": "000556ec"
+  },
+  "ffffaa7c": {
+   "alias": "diag_afr_word_b",
+   "type": "float",
+   "reader": "00055702"
+  },
+  "ffffb2b0": {
+   "alias": "ssv_diag_override_result",
+   "type": "uint8",
+   "reader": "0002178c"
+  },
+  "ffffb2b2": {
+   "alias": "ssv_on_counter",
+   "type": "uint8",
+   "reader": "0002178c"
+  },
+  "ffffb2b4": {
+   "alias": "ssv_coolant_hot_flag",
+   "type": "uint8",
+   "reader": "0002178c"
+  },
+  "ffffb2b5": {
+   "alias": "ssv_was_enabled",
+   "type": "uint8",
+   "reader": "0002178c"
+  },
+  "ffffc1c0": {
+   "alias": "vdi_command",
+   "type": "uint8",
+   "reader": "00034844"
+  },
+  "ffffc1c4": {
+   "alias": "vfad_command",
+   "type": "uint8",
+   "reader": "0003493c"
+  },
+  "ffffa960": {
+   "alias": "secondary_air_request_final",
+   "type": "uint8",
+   "reader": "000187b8"
+  },
+  "ffffa961": {
+   "alias": "sec_air_load_high",
+   "type": "uint8",
+   "reader": "000187b8"
+  },
+  "ffffa962": {
+   "alias": "sec_air_rpm_high",
+   "type": "uint8",
+   "reader": "000187b8"
+  },
+  "ffffbf6c": {
+   "alias": "secondary_air_pump_request",
+   "type": "uint8",
+   "reader": "000316f8"
+  },
+  "ffffbf84": {
+   "alias": "apv_command_percent",
+   "type": "float",
+   "reader": "00031bec"
+  },
+  "ffffbf88": {
+   "alias": "apv_position_dwell_counter",
+   "type": "uint16",
+   "reader": "00031ece"
+  },
+  "ffffbf8a": {
+   "alias": "apv_drive_counter",
+   "type": "uint8",
+   "reader": "00031f0a"
+  },
+  "ffffbf8b": {
+   "alias": "apv_direction_flag",
+   "type": "uint8",
+   "reader": "00031bec"
+  },
+  "ffffbf8d": {
+   "alias": "apv_target_state",
+   "type": "uint8",
+   "reader": "00031c6c"
+  },
+  "ffffbf8e": {
+   "alias": "apv_target_state_prev",
+   "type": "uint8",
+   "reader": "00031c6c"
+  },
+  "ffffbf92": {
+   "alias": "apv_counter_92",
+   "type": "uint8",
+   "reader": "00031c6c"
+  },
+  "ffffbf98": {
+   "alias": "apv_rpm_high_flag",
+   "type": "uint8",
+   "reader": "00031f32"
+  },
+  "ffffbf99": {
+   "alias": "apv_rpm_low_flag",
+   "type": "uint8",
+   "reader": "00031c6c"
+  },
+  "ffffa1c4": {
+   "alias": "apv_pwm_forward_ticks",
+   "type": "uint16",
+   "reader": "0000aa90"
+  },
+  "ffffa1c6": {
+   "alias": "apv_pwm_reverse_ticks",
+   "type": "uint16",
+   "reader": "0000aa90"
+  },
+  "ffffa1c0": {
+   "alias": "apv_pwm_forward_latched",
+   "type": "uint16",
+   "reader": "0000a936"
+  },
+  "ffffa1c2": {
+   "alias": "apv_pwm_reverse_latched",
+   "type": "uint16",
+   "reader": "0000a936"
+  },
+  "ffffa1bc": {
+   "alias": "apv_drive_status",
+   "type": "uint8",
+   "reader": "0000aac4"
+  },
+  "ffffcab0": {
+   "alias": "apv_position_voltage",
+   "type": "float",
+   "reader": "00043a86"
+  },
+  "ffff9ef0": {
+   "alias": "adc6_raw_apv_position",
+   "type": "uint16",
+   "reader": "00043a86"
+  }
+ },
+ "lookup_aliases": {
+  "DAT_0006af54": "tbl_knock_enable_load_floor_0006af54",
+  "PTR_DAT_0006af68": "tbl_knock_retard_clamp_min_0006af68",
+  "PTR_DAT_0006af7c": "tbl_knock_retard_clamp_min_alt_0006af7c",
+  "DAT_0006af90": "tbl_knock_retard_clamp_max_0006af90",
+  "DAT_0006afa4": "tbl_knock_recovery_target_0006afa4",
+  "DAT_0006afb8": "tbl_knock_learned_retard_scale_0006afb8",
+  "PTR_DAT_0006b264": "tbl_knock_transient_hold_0006b264",
+  "PTR_DAT_0006b27c": "tbl_ignition_timing_threshold_a_alt_0006b27c",
+  "PTR_DAT_0006b294": "tbl_ignition_timing_threshold_b_alt_0006b294",
+  "DAT_0006b2b8": "tbl_knock_level_3d_a_0006b2b8",
+  "DAT_0006b2d4": "tbl_knock_level_3d_b_0006b2d4",
+  "DAT_0006b2f0": "tbl_knock_level_3d_c_0006b2f0",
+  "DAT_0006b304": "tbl_knock_level_3d_d_0006b304",
+  "DAT_0006990c": "tbl_closed_loop_warmup_time_0006990c",
+  "tbl_table_2d_304_check_datatype_0006990c": "tbl_closed_loop_warmup_time_0006990c",
+  "DAT_0006ac38": "tbl_fuel_coolant_compensation_0006ac38"
+ },
+ "fix_00013bd2": {
+  "address": "00013bd2",
+  "before": "void FUN_00013bd2(float param_1) { ... rx8_clamp_float(param_1,arg1,arg2); return; }",
+  "after": "float FUN_00013bd2(float param_1) { ... return rx8_clamp_float(param_1,arg1,arg2); }",
+  "disassembly": "0x13bd2-0x13c26: fr4 (param) saved 0x13be2; descriptor select 0x6af7c/0x6af68; min lookup -> fr14 (0x13c0a); max lookup 0x6af90 -> fr6 (0x13c12); jsr rx8_clamp_float (0x2404) at 0x13c18, delay slot fmov.s @r15,fr4 restores fr4=param, fr5=min, fr6=max; rts 0x13c24 returns fr0 = clamp result (SH float return)",
+  "callers": [
+   "000139c4",
+   "00013a60",
+   "00013b40"
+  ],
+  "signature_replacements": 0,
+  "return_replacements": 0,
+  "views": [
+   "decompiled/functions/00013bd2_FUN_00013bd2.c",
+   "decompiled/firmware_decompiled.c",
+   "named/firmware_named.c"
+  ]
+ },
+ "snapshot_local_renames": {
+  "snapshot_DAT_ffffbeb0": {
+   "new": "snapshot_fuel_volume_final_ffffbeb0",
+   "occurrences": 3
+  }
+ },
+ "snapshot_local_rename_total": 3,
+ "misnomer_corrections": {
+  "0001ee30": {
+   "old": "ref_setClosedLoopBool",
+   "new": "set_open_loop_flag",
+   "note": "sets the OPEN-loop flag b12c = (b12a != 0); blocks closed loop in 0x1c13c"
+  },
+  "0000c116": {
+   "old": "ref_enableDisableCruiseControl__",
+   "new": "reset_knock_state_on_mode_change",
+   "note": "only resets knock rotor index / detection state on mode change"
+  }
+ },
+ "polarity_correction": {
+  "ffffb12a": "open_loop_request (set by 0x1f0c4 from closed-loop fuelling threshold tables)",
+  "ffffb12c": "open_loop_active = (b12a != 0), set by 0x1ee30; 1 = open loop, blocks closed loop",
+  "note": "earlier sessions labeled b12a/b12c as closed-loop flags; OBD PID 0x0003 handler 0x568ca and the 0x1c13c/0x1ee4a logic establish the opposite polarity"
+ },
+ "backup": "backups/pre_knock_loop_labels.zip",
+ "rom_unchanged": true,
+ "ghidra_database_updated": false
 }

@@ -33,7 +33,7 @@
     "raw": "00020200fffc0000000568b4",
     "semantic": "active_cal_id_field",
     "confidence": "medium",
-    "evidence": "reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block"
+    "evidence": "reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block; TLV tag table at ROM 0x5edbc lists tag 2 len 2; reader chain 0x55316 -> 0x61af4/0x6071e (cal-descriptor scan over DAT_0007e704) -> 0x54994 TLV extract re-read in decompiled C; returns 0 in emu boot state (scan finds no entry); handler byte-matched in 6 ROMs; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389412,
@@ -214,8 +214,8 @@
     "handler": 354866,
     "raw": "00150200fffc000000056a32",
     "semantic": "o2s2_voltage_trim",
-    "confidence": "medium",
-    "evidence": "0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2"
+    "confidence": "high",
+    "evidence": "0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389580,
@@ -279,8 +279,8 @@
     "handler": 355004,
     "raw": "002e0100fffc000000056abc",
     "semantic": "ram_b2f0_pct",
-    "confidence": "medium",
-    "evidence": "0x55616: DAT_ffffb2f0*0.392157"
+    "confidence": "high",
+    "evidence": "0x55616: DAT_ffffb2f0*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389640,
@@ -292,8 +292,8 @@
     "handler": 355026,
     "raw": "002f0100fffc000000056ad2",
     "semantic": "ram_d287_raw",
-    "confidence": "medium",
-    "evidence": "0x5562c: DAT_ffffd287 raw byte"
+    "confidence": "high",
+    "evidence": "0x5562c: DAT_ffffd287 raw byte; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389652,
@@ -305,8 +305,8 @@
     "handler": 355046,
     "raw": "00300100fffc000000056ae6",
     "semantic": "gear_or_vin_byte",
-    "confidence": "medium",
-    "evidence": "0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff"
+    "confidence": "high",
+    "evidence": "0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389664,
@@ -318,8 +318,8 @@
     "handler": 355066,
     "raw": "00310200fffc000000056afa",
     "semantic": "ram_90fc_float",
-    "confidence": "medium",
-    "evidence": "0x556b0: DAT_ffff90fc float*1.0"
+    "confidence": "high",
+    "evidence": "0x556b0: DAT_ffff90fc float*1.0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: ffff90fc is in the checksummed window - wrote float + valid checksum (u16@+4 = ~(u16@+2 + hi16(bits))): 100.0 -> 0x0064, 7.5 -> 0x0008, exact enc_u16 step 1.0"
    },
    {
     "record": 389676,
@@ -331,8 +331,8 @@
     "handler": 355086,
     "raw": "00330100fffc000000056b0e",
     "semantic": "ram_ad10_scaled",
-    "confidence": "medium",
-    "evidence": "0x556ce: DAT_ffffad10*25.325+0.0182"
+    "confidence": "high",
+    "evidence": "0x556ce: DAT_ffffad10*25.325+0.0182; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389688,
@@ -357,8 +357,8 @@
     "handler": 355138,
     "raw": "003c0200fffc000000056b42",
     "semantic": "ram_c644_scaled",
-    "confidence": "medium",
-    "evidence": "0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)"
+    "confidence": "high",
+    "evidence": "0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389712,
@@ -422,8 +422,8 @@
     "handler": 355250,
     "raw": "00450100fffc000000056bb2",
     "semantic": "ram_ad48_pct",
-    "confidence": "medium",
-    "evidence": "0x55774: DAT_ffffad48*0.392157"
+    "confidence": "high",
+    "evidence": "0x55774: DAT_ffffad48*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389772,
@@ -435,8 +435,8 @@
     "handler": 355270,
     "raw": "00470100fffc000000056bc6",
     "semantic": "ram_ad5e_pedal",
-    "confidence": "medium",
-    "evidence": "0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157"
+    "confidence": "high",
+    "evidence": "0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05 physical chain: ADC AN19 raw 16384 -> 0x6884 (ADDR19H) -> ffff9f0a -> 0x1afb0 -> ffffad5e -> PID 0x47 wire 0x40 = 25.1% (exact model match); plus sentinel sweep"
    },
    {
     "record": 389784,
@@ -448,8 +448,8 @@
     "handler": 355290,
     "raw": "00490100fffc000000056bda",
     "semantic": "ram_a9c4_pedal",
-    "confidence": "medium",
-    "evidence": "0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157"
+    "confidence": "high",
+    "evidence": "0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: sentinel sweep exact at 3 points; cell ffff a9c4 pedal volts chain (0x470d0/0x1b14c writers)"
    },
    {
     "record": 389796,
@@ -461,8 +461,8 @@
     "handler": 355448,
     "raw": "004a0100fffc000000056c78",
     "semantic": "ram_a9c6_pedal",
-    "confidence": "medium",
-    "evidence": "0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157"
+    "confidence": "high",
+    "evidence": "0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: sentinel sweep exact at 3 points; cell ffffa9c6"
    },
    {
     "record": 389808,
@@ -474,8 +474,8 @@
     "handler": 355468,
     "raw": "004c0100fffc000000056c8c",
     "semantic": "ram_b410_pct",
-    "confidence": "medium",
-    "evidence": "0x55864: DAT_ffffb410*100/84*0.392157"
+    "confidence": "high",
+    "evidence": "0x55864: DAT_ffffb410*100/84*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389820,
@@ -526,8 +526,8 @@
     "handler": 355560,
     "raw": "09140200fffc000000056ce8",
     "semantic": "ram_a9c4_scaled_s16",
-    "confidence": "medium",
-    "evidence": "0x54884(a9c4) helper = (x-p3)/p2+0.5 s16"
+    "confidence": "high",
+    "evidence": "0x54884(a9c4) helper = (x-p3)/p2+0.5 s16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389868,
@@ -539,8 +539,8 @@
     "handler": 355610,
     "raw": "09150200fffc000000056d1a",
     "semantic": "ram_a9c6_scaled_s16",
-    "confidence": "medium",
-    "evidence": "0x54884(a9c6)"
+    "confidence": "high",
+    "evidence": "0x54884(a9c6); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389880,
@@ -552,8 +552,8 @@
     "handler": 355660,
     "raw": "09170200fffc000000056d4c",
     "semantic": "ram_ad5c_scaled_s16",
-    "confidence": "medium",
-    "evidence": "0x54884(ad5c)"
+    "confidence": "high",
+    "evidence": "0x54884(ad5c); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: physical chain AN18->ffffad5c->PID 0x917 s16 div exact (0x0a00 at 32768); sentinel sweep exact"
    },
    {
     "record": 389892,
@@ -565,8 +565,8 @@
     "handler": 355764,
     "raw": "09180200fffc000000056db4",
     "semantic": "ram_ad5e_scaled_s16",
-    "confidence": "medium",
-    "evidence": "0x54884(ad5e)"
+    "confidence": "high",
+    "evidence": "0x54884(ad5e); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: physical chain AN19->ffffad5e->PID 0x918 exact; sentinel sweep exact"
    },
    {
     "record": 389904,
@@ -578,8 +578,8 @@
     "handler": 355814,
     "raw": "091a0200fffc000000056de6",
     "semantic": "ram_b410_raw_512",
-    "confidence": "medium",
-    "evidence": "DAT_ffffb410*0.00195312 (1/512)"
+    "confidence": "high",
+    "evidence": "DAT_ffffb410*0.00195312 (1/512); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389916,
@@ -604,8 +604,8 @@
     "handler": 355874,
     "raw": "096e0200fffc000000056e22",
     "semantic": "ram_a7ac_quarter",
-    "confidence": "medium",
-    "evidence": "DAT_ffffa7ac*0.25"
+    "confidence": "high",
+    "evidence": "DAT_ffffa7ac*0.25; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389940,
@@ -617,8 +617,8 @@
     "handler": 355904,
     "raw": "097c0200fffc000000056e40",
     "semantic": "ram_b59c_div2048",
-    "confidence": "medium",
-    "evidence": "DAT_ffffb59c*0.000488281 (1/2048)"
+    "confidence": "high",
+    "evidence": "DAT_ffffb59c*0.000488281 (1/2048); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389952,
@@ -630,8 +630,8 @@
     "handler": 355934,
     "raw": "114a0200fffc000000056e5e",
     "semantic": "ram_add4_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffadd4*7.62939e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffadd4*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389964,
@@ -643,8 +643,8 @@
     "handler": 355964,
     "raw": "114d0200fffc000000056e7c",
     "semantic": "ram_a984_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffa984*7.62939e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffa984*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389976,
@@ -656,8 +656,8 @@
     "handler": 355994,
     "raw": "11530200fffc000000056e9a",
     "semantic": "ram_a834_lambda",
-    "confidence": "medium",
-    "evidence": "DAT_ffffa834*3.05176e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffa834*3.05176e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 389988,
@@ -669,8 +669,8 @@
     "handler": 356024,
     "raw": "11540200fffc000000056eb8",
     "semantic": "throttle_raw_ad5c",
-    "confidence": "medium",
-    "evidence": "raw DAT_ffffad5c u16"
+    "confidence": "high",
+    "evidence": "raw DAT_ffffad5c u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05 physical chain: ADC AN18 raw 32768 -> 0x6884 (ADDR18H) -> ffff9f08 -> 0x1afb0 -> ffffad5c -> PID 0x1154 raw 0x8000 passthrough exact; PID 0x11 (high) wire 0x80 = 50.2% at the same time"
    },
    {
     "record": 390000,
@@ -682,8 +682,8 @@
     "handler": 356092,
     "raw": "11690200fffc000000056efc",
     "semantic": "ram_807c_scaled",
-    "confidence": "medium",
-    "evidence": "0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05"
+    "confidence": "high",
+    "evidence": "0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: ffff807c checksummed window cell - with valid checksum written, 25.0 -> 0x3333 and 50.0 -> 0x6666, exact enc_u16((f/25), step 7.62939e-05); without valid checksum the ROM returns the default 15.0 -> 0x1eb8 (observed)"
    },
    {
     "record": 390012,
@@ -708,8 +708,8 @@
     "handler": 356174,
     "raw": "13400100fffc000000056f4e",
     "semantic": "ram_a9bc_pct",
-    "confidence": "medium",
-    "evidence": "DAT_ffffa9bc*0.392157"
+    "confidence": "high",
+    "evidence": "DAT_ffffa9bc*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390036,
@@ -734,8 +734,8 @@
     "handler": 356234,
     "raw": "163e0200fffc000000056f8a",
     "semantic": "ram_b074_scaled_s16",
-    "confidence": "medium",
-    "evidence": "0x54884(ffffb074)"
+    "confidence": "high",
+    "evidence": "0x54884(ffffb074); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390060,
@@ -747,8 +747,8 @@
     "handler": 356266,
     "raw": "16b30200fffc000000056faa",
     "semantic": "ram_ad10_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffad10*7.62939e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffad10*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390072,
@@ -760,8 +760,8 @@
     "handler": 356296,
     "raw": "16e80200fffc000000056fc8",
     "semantic": "ram_b5ac_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffb5ac*0.00305176"
+    "confidence": "high",
+    "evidence": "DAT_ffffb5ac*0.00305176; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390084,
@@ -773,8 +773,8 @@
     "handler": 356326,
     "raw": "16e90200fffc000000056fe6",
     "semantic": "ram_b654_eighth",
-    "confidence": "medium",
-    "evidence": "DAT_ffffb654*0.125"
+    "confidence": "high",
+    "evidence": "DAT_ffffb654*0.125; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390096,
@@ -799,8 +799,8 @@
     "handler": 356444,
     "raw": "a2160200fffc00000005705c",
     "semantic": "ram_bc30_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffbc30*7.62939e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffbc30*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390120,
@@ -825,8 +825,8 @@
     "handler": 356504,
     "raw": "17820200fffc000000057098",
     "semantic": "ram_c6ac_raw",
-    "confidence": "medium",
-    "evidence": "DAT_ffffc6ac*7.62939e-05"
+    "confidence": "high",
+    "evidence": "DAT_ffffc6ac*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390144,
@@ -838,8 +838,8 @@
     "handler": 356534,
     "raw": "17a60100fffc0000000570b6",
     "semantic": "ram_d1ac_scaled",
-    "confidence": "medium",
-    "evidence": "decode_u8(128,0,ffffd1ac)/1000*0.1"
+    "confidence": "high",
+    "evidence": "decode_u8(128,0,ffffd1ac)/1000*0.1; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390156,
@@ -851,8 +851,8 @@
     "handler": 356590,
     "raw": "172a0100fffc0000000570ee",
     "semantic": "ram_c4c8_temp_c",
-    "confidence": "medium",
-    "evidence": "DAT_ffffc4c8*1.0-40"
+    "confidence": "high",
+    "evidence": "DAT_ffffc4c8*1.0-40; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390168,
@@ -864,8 +864,8 @@
     "handler": 356620,
     "raw": "172d0100fffc00000005710c",
     "semantic": "ram_a8f4_raw",
-    "confidence": "medium",
-    "evidence": "raw DAT_ffffa8f4 u8"
+    "confidence": "high",
+    "evidence": "raw DAT_ffffa8f4 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390180,
@@ -890,8 +890,8 @@
     "handler": 356664,
     "raw": "09680200fffc000000057138",
     "semantic": "io_status_b5b4_bc35",
-    "confidence": "medium",
-    "evidence": "0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0"
+    "confidence": "high",
+    "evidence": "0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390204,
@@ -903,8 +903,8 @@
     "handler": 356780,
     "raw": "09d30200155c0000000571ac",
     "semantic": "pedr_bit10_status",
-    "confidence": "medium",
-    "evidence": "PEDR_W & 0x400 -> 0x579a8; appends u8 + 0"
+    "confidence": "high",
+    "evidence": "PEDR_W & 0x400 -> 0x579a8; appends u8 + 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390216,
@@ -916,8 +916,8 @@
     "handler": 356836,
     "raw": "11010100fffc0000000571e4",
     "semantic": "io_status_bf3c_ad18_cdd8",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390228,
@@ -929,8 +929,8 @@
     "handler": 356902,
     "raw": "11020100fffc000000057226",
     "semantic": "io_status_bdb8",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffbdb8"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffbdb8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390240,
@@ -942,8 +942,8 @@
     "handler": 356936,
     "raw": "11030100fffc000000057248",
     "semantic": "io_status_pedr_cab4_d1a",
-    "confidence": "medium",
-    "evidence": "0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1"
+    "confidence": "high",
+    "evidence": "0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390252,
@@ -955,8 +955,8 @@
     "handler": 357072,
     "raw": "11040100fffc0000000572d0",
     "semantic": "io_status_pjdr_bf6c",
-    "confidence": "medium",
-    "evidence": "0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c"
+    "confidence": "high",
+    "evidence": "0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390264,
@@ -968,8 +968,8 @@
     "handler": 357134,
     "raw": "16310100fffc00000005730e",
     "semantic": "tol_status_b570_b584",
-    "confidence": "medium",
-    "evidence": "0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584"
+    "confidence": "high",
+    "evidence": "0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv); 2026-11-05: bit mapping confirmed - b570 outside tolerance band (0x3727c5ac = 1e-5 about 0) -> out bit 0x01, b584 != 0 -> bit 0x02 (subpid table 0x5f5b2 records for PID 0x1631: summands 0x01/0x02); observed 00->03 transitions"
    },
    {
     "record": 390276,
@@ -981,8 +981,8 @@
     "handler": 357194,
     "raw": "16810100fffc00000005734a",
     "semantic": "io_status_ce1c",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffce1c -> 0x40"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffce1c -> 0x40; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390288,
@@ -994,8 +994,8 @@
     "handler": 357228,
     "raw": "16880100fffc00000005736c",
     "semantic": "secondary_air_status_bit",
-    "confidence": "medium",
-    "evidence": "0x579a8 over secondary_air_request_final_ffffa960 -> 0x20"
+    "confidence": "high",
+    "evidence": "0x579a8 over secondary_air_request_final_ffffa960 -> 0x20; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390300,
@@ -1007,8 +1007,8 @@
     "handler": 357262,
     "raw": "a2110200fffc00000005738e",
     "semantic": "status_b53b_aa62_bf9c",
-    "confidence": "medium",
-    "evidence": "0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8"
+    "confidence": "high",
+    "evidence": "0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390312,
@@ -1020,8 +1020,8 @@
     "handler": 357360,
     "raw": "17110100fffc0000000573f0",
     "semantic": "pedr_bit1_status",
-    "confidence": "medium",
-    "evidence": "0x579a8 over PEDR_W & 2 -> 0x80"
+    "confidence": "high",
+    "evidence": "0x579a8 over PEDR_W & 2 -> 0x80; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390324,
@@ -1033,8 +1033,8 @@
     "handler": 357406,
     "raw": "17060100fffc00000005741e",
     "semantic": "io_status_a8f5",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffa8f5 -> 4"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffa8f5 -> 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390336,
@@ -1046,8 +1046,8 @@
     "handler": 357440,
     "raw": "17180100fffc000000057440",
     "semantic": "pedr_bit2_status",
-    "confidence": "medium",
-    "evidence": "0x579a8 over PEDR_W & 4"
+    "confidence": "high",
+    "evidence": "0x579a8 over PEDR_W & 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390348,
@@ -1059,8 +1059,8 @@
     "handler": 357486,
     "raw": "17150100fffc00000005746e",
     "semantic": "pedr_pddr_status",
-    "confidence": "medium",
-    "evidence": "0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80"
+    "confidence": "high",
+    "evidence": "0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390360,
@@ -1072,8 +1072,8 @@
     "handler": 357558,
     "raw": "17de0100fffc0000000574b6",
     "semantic": "io_status_ce32",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffce32"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffce32; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390372,
@@ -1151,7 +1151,7 @@
     "raw": "17100700fffc000000057594",
     "semantic": "sensor_snapshot_7byte",
     "confidence": "medium",
-    "evidence": "7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine"
+    "evidence": "7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine; 2026-11-05: sensor block ffff9150-916c is checksummed (ref_readValue_float_DEFAULTVAL_ADDRESS validates ~(u16@+2 + u16@+0) at +4/+6) so direct writes revert; response bytes 1-3 match enc_u8 of the boot values (00 28 80); handler byte-matched in 6 ROMs; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390444,
@@ -1163,8 +1163,8 @@
     "handler": 358068,
     "raw": "c11501003bfc0000000576b4",
     "semantic": "ram_c1d2_raw",
-    "confidence": "medium",
-    "evidence": "raw DAT_ffffc1d2 u8"
+    "confidence": "high",
+    "evidence": "raw DAT_ffffc1d2 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 5 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390456,
@@ -1176,8 +1176,8 @@
     "handler": 358082,
     "raw": "c11604003bfc0000000576c2",
     "semantic": "dtc_state_machine",
-    "confidence": "medium",
-    "evidence": "thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code"
+    "confidence": "high",
+    "evidence": "thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; 2026-11-05: cold path sets DAT_ffffd1e8=0x80 (header-only response) - asserted by test_mode22_dispatch_full_sweep in tests/test_phase1_dynamic.py; body of 0x37358 re-read (DTC state machine)"
    },
    {
     "record": 390468,
@@ -1189,8 +1189,8 @@
     "handler": 358148,
     "raw": "c11704003bfc000000057704",
     "semantic": "ram_c1d3_c1d4",
-    "confidence": "medium",
-    "evidence": "appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0"
+    "confidence": "high",
+    "evidence": "appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 6 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390480,
@@ -1202,8 +1202,8 @@
     "handler": 358200,
     "raw": "c12401003bfc000000057738",
     "semantic": "diag_status_bits",
-    "confidence": "medium",
-    "evidence": "0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4"
+    "confidence": "high",
+    "evidence": "0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 6 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390492,
@@ -1215,8 +1215,8 @@
     "handler": 358532,
     "raw": "ff1004000001000000057884",
     "semantic": "dtc_status_c1d5_c1d8",
-    "confidence": "medium",
-    "evidence": "0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8"
+    "confidence": "high",
+    "evidence": "0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 6 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390504,
@@ -1280,8 +1280,8 @@
     "handler": 358766,
     "raw": "ff500200000100000005796e",
     "semantic": "ram_d3a0_raw",
-    "confidence": "medium",
-    "evidence": "raw DAT_ffffd3a0 u16"
+    "confidence": "high",
+    "evidence": "raw DAT_ffffd3a0 u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 6 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    },
    {
     "record": 390564,
@@ -1293,8 +1293,8 @@
     "handler": 358772,
     "raw": "ff4402000001000000057974",
     "semantic": "ram_ce30_raw",
-    "confidence": "medium",
-    "evidence": "raw DAT_ffffce30 u16"
+    "confidence": "high",
+    "evidence": "raw DAT_ffffce30 u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points; handler byte-identical in 6 other ROMs for the same PID (cross_rom_mode22_pid_handlers.tsv)"
    }
   ]
  },
@@ -1907,23 +1907,23 @@
   },
   "00037358": {
    "alias": "dtc_state_machine_step",
-   "confidence": "medium",
-   "evidence": "DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)"
+   "confidence": "high",
+   "evidence": "DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116); 2026-11-05: PID 0xc116 cold path (DAT_ffffc25f==0, no pending DTCs) sets DAT_ffffd1e8=0x80 - header-only response asserted in test_mode22_dispatch_full_sweep; full body re-read (DTC state machine, sets d1e8=0x80/0xff, appends c27e/c27f/c280/c281)"
   },
   "00037546": {
    "alias": "diag_status_bit_pack",
-   "confidence": "medium",
-   "evidence": "0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124)"
+   "confidence": "high",
+   "evidence": "0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124); 2026-11-05: PID 0xc124 sweep exact - DAT_ffffc1d0==1 -> 0x40, DAT_ffffc274==1 -> 0x04 (sentinel2 resp 0x40 matched); byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00054884": {
    "alias": "diag_encode_s16_div",
-   "confidence": "medium",
-   "evidence": "s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers"
+   "confidence": "high",
+   "evidence": "s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0914 handler; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00055316": {
    "alias": "diag_read_active_cal_field",
    "confidence": "medium",
-   "evidence": "0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes"
+   "evidence": "0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes; PID 0x0002 record stays medium (TLV tag table at ROM 0x5edbc lists tag 2 len 2; reader chain 0x55316 -> 0x61af4/); byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000553dc": {
    "alias": "diag_read_calc_load_pct",
@@ -1987,13 +1987,13 @@
   },
   "00055586": {
    "alias": "diag_encode_o2s2",
-   "confidence": "medium",
-   "evidence": "PID 0x15: ffffad1c decode*0.005"
+   "confidence": "high",
+   "evidence": "PID 0x15: ffffad1c decode*0.005; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0015 handler; byte-exact function match in 6/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000555ac": {
    "alias": "diag_encode_trim_b074",
-   "confidence": "medium",
-   "evidence": "PID 0x15: ffffb074*100*0.7813-100"
+   "confidence": "high",
+   "evidence": "PID 0x15: ffffb074*100*0.7813-100; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0015 handler; byte-exact function match in 6/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000555ca": {
    "alias": "diag_read_obd_standard_const",
@@ -2012,33 +2012,33 @@
   },
   "00055616": {
    "alias": "diag_encode_b2f0",
-   "confidence": "medium",
-   "evidence": "PID 0x2e: ffffb2f0*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x2e: ffffb2f0*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x002e handler; byte-exact function match in 6/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005562c": {
    "alias": "diag_read_d287",
-   "confidence": "medium",
-   "evidence": "PID 0x2f: ffffd287"
+   "confidence": "high",
+   "evidence": "PID 0x2f: ffffd287; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x002f handler; byte-exact function match in 6/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00055632": {
    "alias": "diag_read_gear_byte",
-   "confidence": "medium",
-   "evidence": "PID 0x30: 0x61d14 (ffff8788) clamp 0xff"
+   "confidence": "high",
+   "evidence": "PID 0x30: 0x61d14 (ffff8788) clamp 0xff; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0030 handler; no cross-ROM byte match"
   },
   "000556b0": {
    "alias": "diag_read_90fc",
-   "confidence": "medium",
-   "evidence": "PID 0x31: ffff90fc"
+   "confidence": "high",
+   "evidence": "PID 0x31: ffff90fc; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0031 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000556ce": {
    "alias": "diag_encode_ad10",
-   "confidence": "medium",
-   "evidence": "PID 0x33: ffffad10*25.325+0.0182"
+   "confidence": "high",
+   "evidence": "PID 0x33: ffffad10*25.325+0.0182; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0033 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005571a": {
    "alias": "diag_encode_c644",
-   "confidence": "medium",
-   "evidence": "PID 0x3c: ffffc644*0.1-40"
+   "confidence": "high",
+   "evidence": "PID 0x3c: ffffc644*0.1-40; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x003c handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00055732": {
    "alias": "diag_encode_battery_v",
@@ -2057,28 +2057,28 @@
   },
   "00055774": {
    "alias": "diag_encode_ad48",
-   "confidence": "medium",
-   "evidence": "PID 0x45: ffffad48*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x45: ffffad48*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0045 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005578a": {
    "alias": "diag_encode_ad5e",
-   "confidence": "medium",
-   "evidence": "PID 0x47: ffffad5e decode*20*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x47: ffffad5e decode*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0047 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000557b6": {
    "alias": "diag_encode_a9c4",
-   "confidence": "medium",
-   "evidence": "PID 0x49: ffffa9c4 decode*20*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x49: ffffa9c4 decode*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x0049 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00055838": {
    "alias": "diag_encode_a9c6",
-   "confidence": "medium",
-   "evidence": "PID 0x4a: ffffa9c6 decode*20*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x4a: ffffa9c6 decode*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x004a handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00055864": {
    "alias": "diag_encode_b410",
-   "confidence": "medium",
-   "evidence": "PID 0x4c: ffffb410*100/84*0.392157"
+   "confidence": "high",
+   "evidence": "PID 0x4c: ffffb410*100/84*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x004c handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000558ac": {
    "alias": "uds_service_14_clear_diagnostic_information",
@@ -2092,8 +2092,8 @@
   },
   "000565e8": {
    "alias": "uds_service_b1_mazda_specific",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)"
+   "confidence": "high",
+   "evidence": "service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function); 2026-11-05: router 0x68dac reached handler at session bit 0 (r0=177) - Mazda-specific service 0xB1; ref_UDSServiceB1Function confirmed, 2026-11-05 router test in emulator; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "000567e8": {
    "alias": "uds_service_22_read_data_by_identifier",
@@ -2177,8 +2177,8 @@
   },
   "00056a32": {
    "alias": "diag22_pid0015_o2s2_voltage_trim",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0015"
   },
   "00056a58": {
    "alias": "diag22_pid001c_obd_standard",
@@ -2202,28 +2202,28 @@
   },
   "00056abc": {
    "alias": "diag22_pid002e_ram_b2f0_pct",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x002e"
   },
   "00056ad2": {
    "alias": "diag22_pid002f_ram_d287_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x002f"
   },
   "00056ae6": {
    "alias": "diag22_pid0030_gear_or_vin_byte",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0030"
   },
   "00056afa": {
    "alias": "diag22_pid0031_ram_90fc_float",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0031"
   },
   "00056b0e": {
    "alias": "diag22_pid0033_ram_ad10_scaled",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0033"
   },
   "00056b22": {
    "alias": "diag22_pid0034_afr_lambda_words",
@@ -2232,8 +2232,8 @@
   },
   "00056b42": {
    "alias": "diag22_pid003c_ram_c644_scaled",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x003c"
   },
   "00056b56": {
    "alias": "diag22_pid0040_pids_supported_41_60",
@@ -2257,28 +2257,28 @@
   },
   "00056bb2": {
    "alias": "diag22_pid0045_ram_ad48_pct",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0045"
   },
   "00056bc6": {
    "alias": "diag22_pid0047_ram_ad5e_pedal",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0047"
   },
   "00056bda": {
    "alias": "diag22_pid0049_ram_a9c4_pedal",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0049"
   },
   "00056c78": {
    "alias": "diag22_pid004a_ram_a9c6_pedal",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x004a"
   },
   "00056c8c": {
    "alias": "diag22_pid004c_ram_b410_pct",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x004c"
   },
   "00056ca0": {
    "alias": "diag22_pid0200_dtc_count_stored",
@@ -2297,28 +2297,28 @@
   },
   "00056ce8": {
    "alias": "diag22_pid0914_ram_a9c4_scaled_s16",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0914"
   },
   "00056d1a": {
    "alias": "diag22_pid0915_ram_a9c6_scaled_s16",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0915"
   },
   "00056d4c": {
    "alias": "diag22_pid0917_ram_ad5c_scaled_s16",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0917"
   },
   "00056db4": {
    "alias": "diag22_pid0918_ram_ad5e_scaled_s16",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0918"
   },
   "00056de6": {
    "alias": "diag22_pid091a_ram_b410_raw_512",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x091a"
   },
   "00056e04": {
    "alias": "diag22_pid093c_throttle_position_raw",
@@ -2327,38 +2327,38 @@
   },
   "00056e22": {
    "alias": "diag22_pid096e_ram_a7ac_quarter",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x096e"
   },
   "00056e40": {
    "alias": "diag22_pid097c_ram_b59c_div2048",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x097c"
   },
   "00056e5e": {
    "alias": "diag22_pid114a_ram_add4_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x114a"
   },
   "00056e7c": {
    "alias": "diag22_pid114d_ram_a984_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x114d"
   },
   "00056e9a": {
    "alias": "diag22_pid1153_ram_a834_lambda",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1153"
   },
   "00056eb8": {
    "alias": "diag22_pid1154_throttle_raw_ad5c",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1154"
   },
   "00056efc": {
    "alias": "diag22_pid1169_ram_807c_scaled",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1169; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points via PID 0x1169 handler; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00056f30": {
    "alias": "diag22_pid1177_maf_voltage_latched_v",
@@ -2367,33 +2367,33 @@
   },
   "00056f4e": {
    "alias": "diag22_pid1340_ram_a9bc_pct",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1340"
   },
   "00056f6c": {
    "alias": "diag22_pid1410_injector_pulse_time",
    "confidence": "high",
-   "evidence": "dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)"
+   "evidence": "dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale); 2026-11-05 D10 resolved: PID 0x1410 handler reads float injector_pulse_time_ffffbe24, enc_u16 step 8.0 (0x41000000) - 80.0 -> 0x000a, 800.0 -> 0x0064 exact in emulator; response independent of ffffad5c (throttle) with ad5c=0xf000; byte-matched handler labeled high in 60E0E500/60E0E700_N3YLEE/60E1C500_N3J6EB (cross_rom_mode22_pid_handlers.tsv); no cross-ROM byte match"
   },
   "00056f8a": {
    "alias": "diag22_pid163e_ram_b074_scaled_s16",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x163e"
   },
   "00056faa": {
    "alias": "diag22_pid16b3_ram_ad10_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x16b3"
   },
   "00056fc8": {
    "alias": "diag22_pid16e8_ram_b5ac_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x16e8"
   },
   "00056fe6": {
    "alias": "diag22_pid16e9_ram_b654_eighth",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x16e9"
   },
   "00057004": {
    "alias": "diag22_pid16f0_tire_revolutions_per_mile",
@@ -2402,8 +2402,8 @@
   },
   "0005705c": {
    "alias": "diag22_pida216_ram_bc30_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xa216"
   },
   "0005707a": {
    "alias": "diag22_pid1746_knock_retard_deg",
@@ -2412,23 +2412,23 @@
   },
   "00057098": {
    "alias": "diag22_pid1782_ram_c6ac_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1782"
   },
   "000570b6": {
    "alias": "diag22_pid17a6_ram_d1ac_scaled",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x17a6"
   },
   "000570ee": {
    "alias": "diag22_pid172a_ram_c4c8_temp_c",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x172a"
   },
   "0005710c": {
    "alias": "diag22_pid172d_ram_a8f4_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x172d"
   },
   "0005711a": {
    "alias": "diag22_pid1634_apv_position_voltage",
@@ -2437,78 +2437,78 @@
   },
   "00057138": {
    "alias": "diag22_pid0968_io_status_b5b4_bc35",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x0968"
   },
   "000571ac": {
    "alias": "diag22_pid09d3_pedr_bit10_status",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x09d3"
   },
   "000571e4": {
    "alias": "diag22_pid1101_io_status_bf3c_ad18_cdd8",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8); dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1101"
   },
   "00057226": {
    "alias": "diag22_pid1102_io_status_bdb8",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1102"
   },
   "00057248": {
    "alias": "diag22_pid1103_io_status_pedr_cab4_d1a",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1103"
   },
   "000572d0": {
    "alias": "diag22_pid1104_io_status_pjdr_bf6c",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1104"
   },
   "0005730e": {
    "alias": "diag22_pid1631_tol_status_b570_b584",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1631"
   },
   "0005734a": {
    "alias": "diag22_pid1681_io_status_ce1c",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1681"
   },
   "0005736c": {
    "alias": "diag22_pid1688_secondary_air_status_bit",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1688"
   },
   "0005738e": {
    "alias": "diag22_pida211_status_b53b_aa62_bf9c",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xa211"
   },
   "000573f0": {
    "alias": "diag22_pid1711_pedr_bit1_status",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1711"
   },
   "0005741e": {
    "alias": "diag22_pid1706_io_status_a8f5",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1706"
   },
   "00057440": {
    "alias": "diag22_pid1718_pedr_bit2_status",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1718"
   },
   "0005746e": {
    "alias": "diag22_pid1715_pedr_pddr_status",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x1715"
   },
   "000574b6": {
    "alias": "diag22_pid17de_io_status_ce32",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0x17de"
   },
   "000574d8": {
    "alias": "diag22_pide21b_cal_id_chunk_0",
@@ -2542,28 +2542,28 @@
   },
   "000576b4": {
    "alias": "diag22_pidc115_ram_c1d2_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xc115"
   },
   "000576c2": {
    "alias": "diag22_pidc116_dtc_state_machine",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xc116"
   },
   "00057704": {
    "alias": "diag22_pidc117_ram_c1d3_c1d4",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xc117"
   },
   "00057738": {
    "alias": "diag22_pidc124_diag_status_bits",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xc124"
   },
   "00057884": {
    "alias": "diag22_pidff10_dtc_status_c1d5_c1d8",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xff10"
   },
   "000578e8": {
    "alias": "diag22_pidff40_fw_id_chunk_15",
@@ -2587,13 +2587,13 @@
   },
   "0005796e": {
    "alias": "diag22_pidff50_ram_d3a0_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xff50"
   },
   "00057974": {
    "alias": "diag22_pidff44_ram_ce30_raw",
-   "confidence": "medium",
-   "evidence": "dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16"
+   "confidence": "high",
+   "evidence": "dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16; dynamically verified 2026-11-05 in the SH-2E emulator (profile 60E15120_N3J1E): drove the ROM diag22 dispatcher 0x5774c with the source cell(s) at 0/sentinel/sentinel2 and the 0xffffd962 response-ring payload matched an exact float32 model of the handler encoder at all 3 points for PID 0xff44"
   },
   "000579a8": {
    "alias": "diag22_subpid_supported_mask",
@@ -2612,8 +2612,8 @@
   },
   "00057db0": {
    "alias": "uds_service_18",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0"
+   "confidence": "high",
+   "evidence": "service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0; 2026-11-05: router 0x68dac reached handler at session bit 0 (r0=24), 2026-11-05 router test in emulator; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005af54": {
    "alias": "uds_service_11_ecu_reset",
@@ -2622,13 +2622,13 @@
   },
   "0005b094": {
    "alias": "uds_service_12",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094"
+   "confidence": "high",
+   "evidence": "service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094; 2026-11-05: router 0x68dac reached handler at session bit 0 (r0=18), 2026-11-05 router test in emulator; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005b414": {
    "alias": "uds_service_21_read_data_by_local_id",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)"
+   "confidence": "high",
+   "evidence": "service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function); 2026-11-05: router 0x68dac reached handler at session bit 0 (r0=33) - ref_UDSService21Function confirmed as ReadDataByLocalId, 2026-11-05 router test in emulator; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005b750": {
    "alias": "uds_service_23_read_memory_by_address",
@@ -2662,8 +2662,8 @@
   },
   "0005d8b4": {
    "alias": "uds_service_3b",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4"
+   "confidence": "high",
+   "evidence": "service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4; 2026-11-05: router 0x68dac reached handler with session bits 1-3 (record param 0x0e) (r0=59), 2026-11-05 router test in emulator; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005dc44": {
    "alias": "uds_service_85_control_dtc_setting",
@@ -2677,13 +2677,13 @@
   },
   "0005e024": {
    "alias": "uds_service_32",
-   "confidence": "medium",
-   "evidence": "service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024"
+   "confidence": "high",
+   "evidence": "service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024; 2026-11-05: router 0x68dac reached handler at session bit 0 (r0=50), 2026-11-05 router test in emulator; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005fab2": {
    "alias": "dtc_count_stored",
-   "confidence": "medium",
-   "evidence": "0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)"
+   "confidence": "high",
+   "evidence": "0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0); caller diag22_pid0200_dtc_count_stored 0x56ca0 (high); byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "0005fb08": {
    "alias": "dtc_count_ram_table",
@@ -2757,13 +2757,13 @@
   },
   "00068a86": {
    "alias": "uds_rx_channel_alloc",
-   "confidence": "medium",
-   "evidence": "finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10"
+   "confidence": "high",
+   "evidence": "finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10; 2026-11-05: exercised on every Mode 22 dispatch in the emulator sweep (harness.call 0x68b10 channel bind chain calls 0x68a86 alloc); callers isotp_single_frame_accept 0x68548 / isotp_first_frame_accept 0x6859e; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00068b10": {
    "alias": "uds_rx_channel_set_service",
-   "confidence": "medium",
-   "evidence": "DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer"
+   "confidence": "high",
+   "evidence": "DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer; 2026-11-05: called 58x per sweep via harness.call(0x68b10, r_args=(0,0x22)) binding ch0<-service 0x22 - every Mode 22 PID response in the sweep went through it; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
   },
   "00068dac": {
    "alias": "uds_service_dispatch_table_scan",
@@ -2776,7 +2776,7 @@
    "alias": "inferred_throttle_sensor_volts_ffffad5c",
    "type": "uint16",
    "reader": "0005553e",
-   "evidence": "Read by diag_encode_throttle_pct 0x5553e (PID 0x11) and handlers 0x56d58 (PID 0x0917) / 0x56eb8 (PID 0x1154); also in the APP/throttle chain (literals at 0x1b0e6/0x4561c/0x47186); decode 7.62939e-05 V/count *20 -> %"
+   "evidence": "Read by diag_encode_throttle_pct 0x5553e (PID 0x11) and handlers 0x56d58 (PID 0x0917) / 0x56eb8 (PID 0x1154); also in the APP/throttle chain (literals at 0x1b0e6/0x4561c/0x47186); decode 7.62939e-05 V/count *20 -> %; 2026-11-05: producer chain proven dynamically: ADC AN18 (ADDR18H 0xfffff820) -> 0x6884 -> ffff9f08 -> 0x1afb0 -> ffffad5c (raw passthrough observed 32768); PID 0x11 wire 0x80 = 50.2% at raw 32768"
   },
   "ffffadec": {
    "alias": "inferred_lambda_actual_ffffadec",
@@ -2794,7 +2794,7 @@
    "alias": "inferred_trim_b074_ffffb074",
    "type": "float",
    "reader": "000555ac",
-   "evidence": "PID 0x15/0x163e: x*100*0.7813-100"
+   "evidence": "PID 0x15/0x163e: x*100*0.7813-100; 2026-11-05: written by ref_calculateRearO2SomethingIntegrator__ 0x1dccc (rear O2 integrator) among fuel-trim writers 0x3f288/0x3f510/0x3f5e0; PIDs 0x15/0x163e exact"
   },
   "ffffad1c": {
    "alias": "inferred_o2s2_ffffad1c",
@@ -2842,7 +2842,7 @@
    "alias": "inferred_pedal_volts_ffffad5e",
    "type": "uint16",
    "reader": "0005578a",
-   "evidence": "PID 0x47/0x0918"
+   "evidence": "PID 0x47/0x0918; 2026-11-05: producer chain proven dynamically: ADC AN19 (ADDR19H) -> 0x6884 -> ffff9f0a -> 0x1afb0 -> ffffad5e; PID 0x47 wire 0x40 = 25.1% at raw 16384"
   },
   "ffffa9c4": {
    "alias": "inferred_pedal_volts_ffffa9c4",
@@ -2884,13 +2884,13 @@
    "alias": "inferred_ram_add4_ffffadd4",
    "type": "float",
    "reader": "00056e5e",
-   "evidence": "PID 0x114a *7.63e-05"
+   "evidence": "PID 0x114a *7.63e-05; 2026-11-05: written by ref_adcIAT2Volts 0x1be32 - IAT2 volts raw; PID 0x114a exact"
   },
   "ffffa984": {
    "alias": "inferred_ram_a984_ffffa984",
    "type": "float",
    "reader": "00056e7c",
-   "evidence": "PID 0x114d"
+   "evidence": "PID 0x114d; 2026-11-05: written by ref_adcCoolantTemp2Volts 0x18e62 - coolant-temp-2 volts raw; PID 0x114d exact"
   },
   "ffffa834": {
    "alias": "inferred_ram_a834_ffffa834",
@@ -2908,19 +2908,19 @@
    "alias": "inferred_ram_a9bc_ffffa9bc",
    "type": "float",
    "reader": "00056f4e",
-   "evidence": "PID 0x1340 *0.392157"
+   "evidence": "PID 0x1340 *0.392157; 2026-11-05: written by ref_calculateThrottlePercentDuringLift 0x429fc - throttle % during lift; PID 0x1340 exact"
   },
   "ffffbc30": {
    "alias": "inferred_ram_bc30_ffffbc30",
    "type": "float",
    "reader": "0005705c",
-   "evidence": "PID 0xa216"
+   "evidence": "PID 0xa216; 2026-11-05: written by ref_calculateCruiseControlSwitchVolt 0x2be18 - cruise switch volts; PID 0xa216 exact"
   },
   "ffffc6ac": {
    "alias": "inferred_ram_c6ac_ffffc6ac",
    "type": "float",
    "reader": "00057098",
-   "evidence": "PID 0x1782"
+   "evidence": "PID 0x1782; 2026-11-05: written by ref_pcmBoardTempADCtoVolts 0x3ebbc - PCM board temp volts; PID 0x1782 exact"
   },
   "ffffd1ac": {
    "alias": "inferred_ram_d1ac_ffffd1ac",
@@ -2962,13 +2962,13 @@
    "alias": "inferred_ram_ce1c_ffffce1c",
    "type": "uint8",
    "reader": "0005734a",
-   "evidence": "PID 0x1681 -> 0x40"
+   "evidence": "PID 0x1681 -> 0x40; 2026-11-05: read by leading/trailing_final_timing_clamp_output 0x121fc/0x12300 - timing clamp status; PID 0x1681 bit 0x40 exact"
   },
   "ffffce32": {
    "alias": "inferred_ram_ce32_ffffce32",
    "type": "uint8",
    "reader": "000574b6",
-   "evidence": "PID 0x17de"
+   "evidence": "PID 0x17de; 2026-11-05: written by ref_calcDiagFuelInjectorTrim 0x4bc80 - fuel injector trim; PID 0x17de exact"
   },
   "ffffce30": {
    "alias": "inferred_ram_ce30_ffffce30",
@@ -2998,7 +2998,7 @@
    "alias": "inferred_ram_bdb8_ffffbdb8",
    "type": "uint8",
    "reader": "00057226",
-   "evidence": "PID 0x1102"
+   "evidence": "PID 0x1102; 2026-11-05: written by ref_getACSwitchStatus 0x2f868 - A/C switch status; PID 0x1102 exact"
   },
   "ffffbf3c": {
    "alias": "inferred_ram_bf3c_ffffbf3c",
@@ -3124,7 +3124,7 @@
    "alias": "inferred_ram_b5ac_ffffb5ac",
    "type": "float",
    "reader": "00056fc8",
-   "evidence": "PID 0x16e8"
+   "evidence": "PID 0x16e8; 2026-11-05: written by ref_calculateAlternatorDiagDCOutput 0x26624 - alternator DC output; PID 0x16e8 exact"
   },
   "ffffb654": {
    "alias": "inferred_ram_b654_ffffb654",
