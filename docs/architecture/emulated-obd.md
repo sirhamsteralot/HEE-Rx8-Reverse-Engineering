@@ -25,7 +25,7 @@ for the "fast RAM logging" patch.
   12-byte table at 0x5f10c–0x5f5af** (router 0x5774c; e.g. PID 0x43 = engine load g/rev
   × 1/255, handler 0x56b8a `diag22_pid0043_engine_load_g_rev`; cross-ROM: 0x5fa0c-area
   in 60E0FC00). Full labeling:
-  [`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md),
+  [[`docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md),
   `data/labels/60E15120_N3J1E/diagnostic_dispatch_named.tsv` + `uds_service_dispatch.tsv`.
 - Firmware side: CAN RX → interrupt vector → `ref_resetOBDCAN_`/CAN handlers →
   UDS entry 0x680a0 → service router 0x68dac → service handler (0x22 → 0x567e8 → PID

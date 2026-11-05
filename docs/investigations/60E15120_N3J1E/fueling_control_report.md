@@ -113,7 +113,7 @@ def-matched).
 - Pipeline: `scripts/review_fueling_labels.py` (idempotent, wired into
   `scripts/rebuild.sh`); record `metadata/fueling_labels.json`; backup
   `backups/pre_fueling_labels.zip`.
-- Design doc updated: `design/README.md` §5.8.
+- Design doc updated: [`design/README.md`](../../architecture/design/README.md) §5.8.
 
 ## 5. Corrections made in this pass
 

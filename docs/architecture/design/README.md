@@ -83,7 +83,7 @@ the name is inherited from the reference project.
 ## 4. Runtime architecture: scheduler and tasks
 
 The scheduler/OS, IVT and CAN/UDS transport are labeled from
-emulator execution — see `docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`
+emulator execution — see [`docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md`](../../investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
 (os_init 0x3e10, os_dispatch 0x3c2a, os_switch_to_task 0x375c, wake 0x3db0,
 IVT at VBR 0x7fc50, CAN RX interrupt IVT 0x378). The full scheduling model
 (task loops, message queues, crank-angle-synchronous tick, timers) is documented
@@ -171,7 +171,7 @@ Named control routines reached from these workers include
 `ref_getRotorNumberForControl_`, `ref_functionDrivingTiming`.
 Control decisions read calibrated tables through the lookup layer (5.4) and
 share state through the named RAM aliases (`engine_speed_rpm_ffffb548`,
-`inferred_*` candidates — see `named/README.md`).
+`inferred_*` candidates — see [`named/README.md`](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/README.md)).
 
 ### 5.2 CAN stack
 
@@ -190,7 +190,7 @@ Verified encoders: 0x29236 (RPM: 0.25 RPM/count, cap 0xfffe, fault 0xffff),
 0x2927c (speed: `(speed+100)/0.01`, cap 40000), 0x291dc (packs CAN 0x201,
 length 8, buffer 0xffffbaf4; RPM bytes 0–1, speed bytes 4–5), 0x29340
 (RPM preparation with conditional filter, RAM 0xffffbb04/0xffffbb08).
-See `source_review/README.md`.
+See [`source_review/README.md`](../../investigations/60E15120_N3J1E/source_review/README.md).
 
 ### 5.3 Diagnostics / UDS over SCI0
 
@@ -213,7 +213,7 @@ memory services (all critical-section masked):
 ```
 
 15 of 22 RomRaider logger entries match 14 distinct dispatch handlers
-(`cross_ecu/README.md`); the engine-speed PID 0x000c selects handler 0x56982,
+([`cross_ecu/README.md`](../../investigations/60E15120_N3J1E/cross_ecu/README.md)); the engine-speed PID 0x000c selects handler 0x56982,
 reading `engine_speed_rpm_ffffb548` with scalar 0.25.
 
 ### 5.4 Calibration lookup layer
@@ -242,7 +242,7 @@ Variable-shift dispatchers recovered from ROM data: FUN_000043c8 (`shar`,
 32 cases) and FUN_000044e0 (`shlr`, 32 cases) — see the [EXPORT CLEANUP]
 notes. Also: forward byte copy 0x42b0, insertion sort 0x6689e,
 critical-section pair `sh_raise_interrupt_mask_return_previous` (0x3920) /
-`ref_setSR` (0x3934) — 184 callers each. Details in `math_units/README.md`.
+`ref_setSR` (0x3934) — 184 callers each. Details in [`math_units/README.md`](../../investigations/60E15120_N3J1E/math_units/README.md).
 
 ### 5.6 Peripherals and watchdogs
 
@@ -255,7 +255,7 @@ idiom, routing unverified (`cross_ecu/symbol_aliases.tsv`). Peripheral access:
 
 ### 5.7 Knock control and loop mode
 
-Labeled and traced in `reviews/knock_control/README.md`. The
+Labeled and traced in [`reviews/knock_control/README.md`](../../investigations/60E15120_N3J1E/reviews/knock_control/README.md). The
 chain is loop-mode independent: **knock control applies in open loop as well as
 closed loop** — none of its functions read the loop-mode flags; its gates are
 engine conditions only (run time, coolant, load, RPM, sensor health,
@@ -326,7 +326,7 @@ handlers are `set_open_loop_flag` (0x1ee30) and
 
 ### 5.8 Fueling (air -> fuel request -> injector pulses)
 
-Labeled and traced in `reviews/fueling/README.md`. Loop mode
+Labeled and traced in [`reviews/fueling/README.md`](../../investigations/60E15120_N3J1E/reviews/fueling/README.md). Loop mode
 selects the fuel *target* (OL tables vs closed-loop trim); the request math
 and injector output are common to both modes.
 
@@ -374,7 +374,7 @@ diag: PID 0x0034 AFR 0x56b22 (aa6c/aa7c), 0x0043 load 0x56b8a (c0b4),
 
 ### 5.9 Intake solenoid actuators (SSV / VDI / VFAD / APV / secondary air)
 
-Labeled and traced in `reviews/intake_solenoids/README.md`. All
+Labeled and traced in [`reviews/intake_solenoids/README.md`](../../investigations/60E15120_N3J1E/reviews/intake_solenoids/README.md). All
 solenoid controls run in the task 0x64f6 -> 0x11744 chain (wrappers 0x21766 /
 0x348ea / 0x34916, mask 0x10), each with a UDS diagnostic override.
 GPIO bits verified in the disassembly; package pins from the supplied SH7055F
@@ -461,7 +461,7 @@ Top fan-in hubs: `ref_setSR` (184), `sh_raise_interrupt_mask_return_previous`
   154 functions carry categorized decompiler warnings
   (`decompiled/decompiler_issues.tsv`).
 - **No execution evidence**: scheduling order, interrupt load, stack depth and
-  worst-case timing are unmeasured (see `reviews/reset_at_10000_rpm.md` for
+  worst-case timing are unmeasured (see [`reviews/reset_at_10000_rpm.md`](../../investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md) for
   the open reset investigation).
 
 ## 9. Evidence and limits
@@ -473,7 +473,7 @@ ROM (`metadata/input.json` hash). Regenerate with
 `python3 scripts/design_graph_stats.py`. Structural interpretations (task
 masks, scheduler timing records, descriptor layouts) are candidates unless a
 review folder says otherwise. Section 5.7 follows
-`reviews/knock_control/README.md`; the earlier targeted review
-`reviews/reset_at_10000_rpm.md` covers the 10,000 RPM knock-sensor reference
+[`reviews/knock_control/README.md`](../../investigations/60E15120_N3J1E/reviews/knock_control/README.md); the earlier targeted review
+[`reviews/reset_at_10000_rpm.md`](../../investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md) covers the 10,000 RPM knock-sensor reference
 table selection. The saved Ghidra database predates the review
 annotations; the canonical C carries the newest names.

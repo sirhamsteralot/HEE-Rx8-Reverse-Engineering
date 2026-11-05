@@ -42,7 +42,7 @@ for their content; our repo references them rather than duplicating files:
 
 - `submodules/Mazda_RX8_PCM_ReverseEngineering` — github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering,
   pinned at `492193ba8548869b91915be55133d85ab7a8722a`:
-  `Stock_ROMs/` (10 stock ROMs — referenced from `binaries/README.md`),
+  `Stock_ROMs/` (10 stock ROMs — referenced from [`binaries/README.md`](../../binaries/README.md)),
   `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
   `Utilities/` (upstream patcher scripts)
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs, pinned at
@@ -63,7 +63,7 @@ Related but not submoduled (not git repos in the intake, URL only):
   https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual
 - Renesas **SH-2E software (ISA) manual** (opcode encodings — the reference for the
   emulator): mirror https://evoecu.logic.net/mirror/cpudocs/sh7055f/rej09b0316_sh_2esm.pdf
-  (canonical via renesas.com); see also `utilities/scripts/emu/README.md` on why we
+  (canonical via renesas.com); see also [`utilities/scripts/emu/README.md`](../../utilities/scripts/emu/README.md) on why we
   don't use QEMU/Unicorn (SH-4 only / no SH) and use a custom exact core instead.
 
 ## Community material

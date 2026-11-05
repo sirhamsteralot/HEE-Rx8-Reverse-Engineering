@@ -4,7 +4,7 @@ Target ROM:
 `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). Static-analysis disclaimer: findings come from the canonical export +
-disassembly + ROM bytes, the RX8Club thread extract §9 (`docs/references/rx8club-user-guide-thread.md`),
+disassembly + ROM bytes, the RX8Club thread extract §9 ([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)),
 and **dynamic execution in the SH-2E emulator** (`utilities/scripts/emu/harness.py`,
 tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,

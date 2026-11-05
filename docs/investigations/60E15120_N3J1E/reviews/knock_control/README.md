@@ -77,7 +77,7 @@ candidate_timing_retard_fast_task
 - 0xc8dc `knock_sensor_sci_command`: on the ATU window interrupt, alternates
   the rotor index (`knock_rotor_index_ffffa384` = 0/1, init 0xff), picks the
   per-channel reference bytes from ROM 0x7a750 (below 10k) or 0x7a752 (at/above;
-  both contain `01 01` in this ROM — see `reviews/reset_at_10000_rpm.md`),
+  both contain `01 01` in this ROM — see [`reviews/reset_at_10000_rpm.md`](../reset_at_10000_rpm.md)),
   maps the per-rotor threshold command `knock_threshold_command_ffffa368[i]`
   to a command code (`knock_command_code_ffffa381[i]` / `..._a380`: 6 if <64,
   5 if <96, 4 if <128, 2 if <192, 0 if >=192) and sends it over SCI0
@@ -414,7 +414,7 @@ RX8Defs descriptors (`cross_ecu/romraider_descriptor_matches.json`), RomRaider
 logger matches (`cross_ecu/romraider_logger_matches.json`: OL Status PID 0x0003
 -> 0x568ca; Knock Retard PID 0x1746 -> 0x5707a), wiring
 (`hardware/pcm_connections.tsv`), and the related reviews
-(`reviews/reset_at_10000_rpm.md`, `source_review/`, `cross_ecu/`). Function names
+([`reviews/reset_at_10000_rpm.md`](../reset_at_10000_rpm.md), `source_review/`, `cross_ecu/`). Function names
 inherited from the reference project remain hypotheses where marked `ref_`;
 `candidate_` names are unproven. No hardware execution was performed.
 

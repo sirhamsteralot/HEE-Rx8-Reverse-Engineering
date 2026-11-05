@@ -4,7 +4,10 @@
 (plus all 10 stock ROMs + the own 60E0G500 factory dump). Static analysis of ROM bytes only;
 no firmware was modified.
 
-**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1).
+**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1);
+the corpus-wide [flash-memory-layout.md](../../architecture/flash-memory-layout.md) builds on
+this report's cal-region/descriptor detection (its §4 cal-start families; the
+descriptor-array spans are cross-checked against this report's §9 in its §8).
 
 ## 1. Executive summary
 

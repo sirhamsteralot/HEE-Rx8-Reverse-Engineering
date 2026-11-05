@@ -11,7 +11,7 @@ reverse-engineering effort. Read [`README.md`](README.md) first, plus
 - `binaries/` — immutable dumps of **our own acquisitions** only, with `manifest.csv` (recursive SHA-256 + provenance). Upstream ROMs/captures are referenced via `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/`, never duplicated.
 - `reverse-engineered/` — `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, per-function files, indexes, `named/` views), `reimplementation/` (compilable C11 + host tests). Live Ghidra `.gpr/.rep` project DBs are never committed; `.gar` archives stay in the submodule.
 - `docs/investigations/<rom-id>/` — per-ROM evidence: root `*_report.md` subsystem reports, `reviews/`, `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`, `backups/` (pre-change zips, LFS).
-- `docs/architecture/` — memory maps, `hardware/` (pinout + wiring), `design/` (firmware design doc), emulator docs incl. **`emulator-re-guide.md` — how to test firmware in the simulator with the real-car datalogs; read it before any emulator-based validation work**.
+- `docs/architecture/` — memory maps, `hardware/` (pinout + wiring), `design/` (firmware design doc), emulator docs incl. **[`emulator-re-guide.md`](docs/architecture/emulator-re-guide.md) — how to test firmware in the simulator with the real-car datalogs; read it before any emulator-based validation work**.
 - `docs/references/` — reference PDFs with trust notes and upstream repo links.
 - [`docs/learnings.md`](docs/learnings.md) — session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
 - `data/definitions/` — RomRaider/ECUFlash XML ECU definitions (provenance in its README).

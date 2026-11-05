@@ -407,7 +407,7 @@ carry ref_/candidate_ names from earlier passes).
     yield → dispatch → idle loop reproduced end to end.
 - **Targeted report validation**: `validate_reports.py` currently crashes on
   `main` before reaching any report because the pre-existing
-  `uds_mode22_dispatch_report.md` contains a non-UTF-8 byte (0x97, cp1252 dash) —
+  [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md) contains a non-UTF-8 byte (0x97, cp1252 dash) —
   reproduced on clean `main`, not caused by this branch. Running the same checks
   (required sections, ROM SHA, memory-map addresses/names vs `function_index.tsv`
   + `accepted_ram_aliases.tsv`/`integrated_names.json`, ROM bounds) against this
@@ -576,7 +576,7 @@ carry ref_/candidate_ names from earlier passes).
 - Software timers are named only for the examples traced to their owning tasks
   (§1); a full timer-cell inventory is future work (register D6 stays open).
 - `validate_reports.py` could not run end-to-end on this branch because of the
-  pre-existing non-UTF-8 byte in `uds_mode22_dispatch_report.md` on `main`;
+  pre-existing non-UTF-8 byte in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md) on `main`;
   equivalent checks were run against this report only (§9).
 
 

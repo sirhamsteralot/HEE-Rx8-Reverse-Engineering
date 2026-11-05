@@ -8,7 +8,7 @@ runs offline; no hardware is touched.
 
 Status: implemented and tested (38/38 in `python -m pytest tests/`).
 Companion docs: [`emulator-ui.md`](emulator-ui.md) (browser UI), [`emulated-obd.md`](emulated-obd.md) (virtual OBD
-port), `utilities/scripts/emu/README.md` (core), ROADMAP.md (limits E1–E7).
+port), [`utilities/scripts/emu/README.md`](../../utilities/scripts/emu/README.md) (core), ROADMAP.md (limits E1–E7).
 
 ## 1. Where things live
 
@@ -25,7 +25,7 @@ Primary ROM: `60E15120_N3J1E` (profile `60E15120_N3J1E`). Other profiles exist
 (60E0FC00, 60E0G500, 60E1B900). Note: 60E1B900 uses an
 opcode outside the 60E15120 corpus (stops at 0x957a @ 0x10ae) — regenerate
 `opdec.py` from that ROM's disassembly first (`gen_opdec.py`, see
-`profiles/README.md` step 5).
+[`profiles/README.md`](../../utilities/scripts/emu/profiles/README.md) step 5).
 
 ## 2. Quick start (command line)
 
@@ -160,7 +160,7 @@ Note the dispatcher (0x3c2a) never rts — use `stop_at=(0x3DAC,)`.
   divergence). Golden boot trace: `tests/fixtures/boot-60E15120_N3J1E-200k.trace`
   (self-check MATCH). **Renesas Simulator Debugger
   cross-check is still pending** — the licensed tool isn't installed on the
-  current machine; when available, follow `utilities/scripts/emu/README.md`
+  current machine; when available, follow [`utilities/scripts/emu/README.md`](../../utilities/scripts/emu/README.md)
   §cross-check workflow and record the result in the investigation doc.
 - Debugger: breakpoints/watchpoints (read+write), single-step, regs/mem/disasm
   (`debug.py` REPL or UI `/api/debug`); the SH7055 UBC is modeled
@@ -200,7 +200,7 @@ end to end there in the emulator.
   state (harness `ram=` is for setting a callee's documented input globals, and say
   so in the test).
 - Discrepancies are documented, never silently resolved (ROADMAP register).
-- Emulator limits E1–E7 are in ROADMAP.md / `utilities/scripts/emu/README.md` —
+- Emulator limits E1–E7 are in ROADMAP.md / [`utilities/scripts/emu/README.md`](../../utilities/scripts/emu/README.md) —
   read them before claiming fidelity (host-double FPU, cycles ≠ real time, etc.).
 - Pipeline validators run from the repo root (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py`): `validate_export.py`,
