@@ -9,7 +9,7 @@ entries 0x6592 / 0x65b2 / 0x65cc / 0x65da / 0x65e8, which call:
   task[13] 0x65b2 -> 0x7298 (IAT scaling), 0x73a0 (CLT scaling), 0x118d0
   task[14] 0x65cc -> 0x11adc (-> 0x26868 alternator main, ...)
   task[15] 0x65da -> 0x11b08 (-> 0x3eb3a cat temp, ...)
-  task[16] 0x65e8 -> 0x11b22 (-> 0x5de74 tire-size DID, 0x37ef0 DID reads, ...)
+  task[16] 0x65e8 -> 0x11b22 (-> 0x5de74 tire-size E2 parameter (id 0x9a), 0x37ef0 E2 parameter reads, ...)
   each ending in ref_taskEndRoutine_ 0x3d58.
 
 This test boots the profile to idle, then harness-calls each task entry and
