@@ -3,10 +3,10 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000065e8 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000065e8(void)
+void task16_uds_diag_utility_entry(void)
 
 {
-  FUN_00011b22();
+  uds_diag_utility_batch();
   ref_taskEndRoutine_();
   return;
 }

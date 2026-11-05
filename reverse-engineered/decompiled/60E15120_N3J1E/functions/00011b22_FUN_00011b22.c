@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00011b9a (86 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00011b22(void)
+void uds_diag_utility_batch(void)
 
 {
   FUN_00059164();

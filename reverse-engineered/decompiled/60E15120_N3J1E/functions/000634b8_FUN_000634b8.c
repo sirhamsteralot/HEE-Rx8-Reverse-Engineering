@@ -9,9 +9,9 @@ void FUN_000634b8(ushort param_1)
   uint uVar1;
   int iVar2;
   
-  uVar1 = (uint)DAT_ffff8900._0_2_;
+  uVar1 = (uint)dtc_master_current_index_ffff8900._0_2_;
   iVar2 = uVar1 * 0x10;
-  (&DAT_ffff87b0)[uVar1 * 8] = 0xffff;
+  (&dtc_master_table_21_ffff87b0)[uVar1 * 8] = 0xffff;
   (&DAT_ffff87b2)[uVar1 * 8] = 0xffff;
   (&DAT_ffff87b4)[uVar1 * 8] = 0xffff;
   (&DAT_ffff87b6)[iVar2] = 0;

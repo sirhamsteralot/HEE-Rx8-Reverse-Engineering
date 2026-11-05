@@ -6,7 +6,7 @@
 void FUN_0000a2a8(void)
 
 {
-  DAT_ffffa188 = 0;
+  task12_alive_counter_ffffa188 = 0;
   DAT_ffffa18a = 1;
   return;
 }

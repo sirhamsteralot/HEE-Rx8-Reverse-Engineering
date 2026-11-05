@@ -14,14 +14,14 @@ undefined2 * FUN_00007398(void)
   coolant_temperature_ffff9f70 = lookup_2d_descriptor_scaled(uVar1,&tbl_clt_sensor_scaling_0006977c);
   if (DAT_ffff9f76 < 0xfd00) {
     if (DAT_ffff9f76 < 0x9ff) {
-      DAT_ffff9f74 = 2;
+      clt_range_fault_ffff9f74 = 2;
     }
     else {
-      DAT_ffff9f74 = 0;
+      clt_range_fault_ffff9f74 = 0;
     }
   }
   else {
-    DAT_ffff9f74 = 1;
+    clt_range_fault_ffff9f74 = 1;
   }
   return &DAT_0006c152;
 }

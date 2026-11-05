@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00011b80 (26 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00011b08(void)
+void catalyst_temp_monitor_batch(void)
 
 {
   FUN_00039ca8();

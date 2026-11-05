@@ -12,7 +12,7 @@ void FUN_000424be(void)
   short *unaff_r13;
   short unaff_r14;
   
-  if (DAT_ffffa1dd == '\x01') {
+  if (adc_pair_correlation_fault_ffffa1dd == '\x01') {
     if (*unaff_r12 == 4) {
       DAT_ffffc97c = 1;
     }
@@ -21,7 +21,7 @@ void FUN_000424be(void)
     *unaff_r11 = unaff_r14;
   }
   else {
-    if (DAT_ffffa1dd != '\x02') {
+    if (adc_pair_correlation_fault_ffffa1dd != '\x02') {
       if (*unaff_r13 == 8) {
         DAT_ffffc97e = 1;
       }

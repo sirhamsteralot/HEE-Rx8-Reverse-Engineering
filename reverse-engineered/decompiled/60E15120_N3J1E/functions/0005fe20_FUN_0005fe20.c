@@ -24,7 +24,7 @@ uint FUN_0005fe20(uint param_1,undefined4 param_2,short param_3)
   else {
     uVar3 = FUN_0005ff5a(param_1);
   }
-  uVar4 = (uint)DAT_ffffd688;
+  uVar4 = (uint)dtc_eval_enable_ffffd688;
   if (uVar4 == 1) {
     uVar4 = ref_faultConfirmationSomething_(iVar6,(int)sVar2);
     uVar4 = uVar4 & 0xff;

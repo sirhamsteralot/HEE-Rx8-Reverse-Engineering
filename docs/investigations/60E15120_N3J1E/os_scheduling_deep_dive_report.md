@@ -243,11 +243,11 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 | 9 | 0x64ba (`candidate_knock_sensor_fault_task`) | 0x02 | `ref_main__`, 0x6842, 0x94fc, `ref_knockSensorADCFault`, 0x1150e (→ 0x199d4 → `ref_calculateEngineRunningTimer` 0xe21c), 0x9fb2(0) → taskEnd |
 | 10 | 0x64f6 | 0x02 | 0x6846, `ref_getBaroSensorVal`, 0x11744 → taskEnd (intake chain) |
 | 11 | 0x6584 | 0x02 | 0x117ac → taskEnd (fueling task) |
-| 12 | 0x6592 | 0x02 | 0xa4b6, 0xaee8, 0x11880, 0xb308 → taskEnd |
-| 13 | 0x65b2 | 0x02 | 0x7298, 0x73a0, 0x118d0 → taskEnd |
-| 14 | 0x65cc | 0x02 | 0x11adc → taskEnd |
-| 15 | 0x65da | 0x02 | 0x11b08 → taskEnd |
-| 16 | 0x65e8 | 0x02 | 0x11b22 → taskEnd |
+| 12 | 0x6592 `task12_adc_feedback_pwm_entry` | 0x02 | 0xa4b6 `task12_alive_counter_clear`, 0xaee8 `adc_pair_correlation_fault_compute` (via thunk 0xad2a), 0x11880 `candidate_monitor_service_batch`, 0xb308 `atu_ch7d_pwm_enable` → taskEnd — §14 |
+| 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | 0x02 | 0x7298 `iat_sensor_scaling_fault`, 0x73a0 `clt_sensor_scaling_fault`, 0x118d0 `dtc_fault_service_batch` → taskEnd — §14 |
+| 14 | 0x65cc `task14_charging_control_entry` | 0x02 | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) → taskEnd — §14 |
+| 15 | 0x65da `task15_catalyst_temp_entry` | 0x02 | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) → taskEnd — §14 |
+| 16 | 0x65e8 `task16_uds_diag_utility_entry` | 0x02 | 0x11b22 `uds_diag_utility_batch` (incl. `ref_getTireSize` 0x5de74, E2 parameter reads via 0x37ef0) → taskEnd — §14 |
 | 17 | 0x60c8 (`ref_getSensorStuff__`) | 0x01 | sensor task: ADC sweep 0x6884, `vehicle_inputs_poll_pfdr_phdr` 0x6744 (→ 0xffff9ec8), ATU ch3/4 PWM, … → taskEnd |
 | 18 | 0x64e8 | 0x02 | thunk → **slow/background task 0x11534** (29 calls: 0x2e5c6, torque params, 0x38f3e, 0x21186, `candidate_timing_retard_fast_task`, …, `ref_calculateDiagModeTimer` 0x55d42, `ref_runImmoRelatedCounter`, …, 0x2a290, 0x16b50) → taskEnd |
 
@@ -328,8 +328,9 @@ Not labeled (deliberately left at FUN_/ref_ level): the LAB_ addresses 0x32f4 /
 0x3848 (epilogue switch / first-entry tails — verified but label-as-function not
 applied), 0x803e (see §7 — pre-VBR vector target, name kept), the ch3/ch9
 compare handlers 0x567a/0x57c6/0x5b14 and IRQ-flag handler 0x53f6 (role clear,
-naming left for a future pass), and the task entries 0x65f6–0x65e8 (already
-carry ref_/candidate_ names from earlier passes).
+naming left for a future pass). The task entries 0x65f6/0x661e carry ref_ names
+from earlier passes; **0x6592–0x65e8 were still unnamed here and are identified
+in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
 
 ## 7. Corrections made in this pass
 
@@ -474,11 +475,21 @@ carry ref_/candidate_ names from earlier passes).
 | 0x0064e8 | `slow_task_entry` (task[18] thunk) |
 | 0x0064f6 | `FUN_000064f6` (task[10]) |
 | 0x006584 | `FUN_00006584` (task[11], fueling) |
-| 0x006592 | `FUN_00006592` (task[12]) |
-| 0x0065b2 | `FUN_000065b2` (task[13]) |
-| 0x0065cc | `FUN_000065cc` (task[14]) |
-| 0x0065da | `FUN_000065da` (task[15]) |
-| 0x0065e8 | `FUN_000065e8` (task[16]) |
+| 0x006592 | `task12_adc_feedback_pwm_entry` (task[12], §14) |
+| 0x0000a4b6 | `task12_alive_counter_clear` (clears 0xffffa188, §14) |
+| 0x0000aee8 | `adc_pair_correlation_fault_compute` (AN23/AN11 pair, §14) |
+| 0x0000b308 | `atu_ch7d_pwm_enable` (TO7D/PB7 PWM, §14) |
+| 0x00007298 | `iat_sensor_scaling_fault` (tbl 0x69824, §14) |
+| 0x000073a0 | `clt_sensor_scaling_fault` (tbl 0x6977c, §14) |
+| 0x00011880 | `candidate_monitor_service_batch` (task[12] batch, §14) |
+| 0x000118d0 | `dtc_fault_service_batch` (task[13] batch, §14) |
+| 0x00011adc | `charging_control_batch` (task[14], §14) |
+| 0x00011b08 | `catalyst_temp_monitor_batch` (task[15], §14) |
+| 0x00011b22 | `uds_diag_utility_batch` (task[16], §14) |
+| 0x0065b2 | `task13_temp_sensor_dtc_entry` (task[13], §14) |
+| 0x000065cc | `task14_charging_control_entry` (task[14], §14) |
+| 0x000065da | `task15_catalyst_temp_entry` (task[15], §14) |
+| 0x000065e8 | `task16_uds_diag_utility_entry` (task[16], §14) |
 | 0x0065f6 | `ref_task1_` (task[5]) |
 | 0x00661e | `ref_task2_` (task[6], ignition) |
 | 0x006648 | `FUN_00006648` (grp1[0] handler) |
@@ -540,6 +551,18 @@ carry ref_/candidate_ names from earlier passes).
 | 0xffffa424 | `engine_running_timer` |
 | 0xffffddc8 | `uds_rx_buffer` |
 | 0xffffddd0 | `uds_tx_buffer` |
+| 0xffff9f64 | `iat_range_fault` (0/1/2, set by 0x7298, §14) |
+| 0xffff9f74 | `clt_range_fault` (0/1/2, set by 0x73a0, §14) |
+| 0xffffa188 | `task12_alive_counter` (cleared by 0xa4b6, §14) |
+| 0xffffa1fa/a1fc | `adc_an23_sample_a/b` (word @0xfffff836 ADDR23H, §14) |
+| 0xffffa1fe/a200 | `adc_an11_sample_a/b` (word @0xfffff816 ADDR11H, §14) |
+| 0xffffa202 | `adc_pair_second_sample_ready` (gates 0xaee8, §14) |
+| 0xffffa1d8 | `adc_pair_ratio_raw` (float, §14) |
+| 0xffffa1d4 | `adc_pair_ratio_filtered` (float, -> 0xffffaa78 via 0x1ac00, §14) |
+| 0xffffa1dc | `adc_pair_range_fault` (§14) |
+| 0xffffa1dd | `adc_pair_correlation_fault` (§14) |
+| 0xffffa210 | `ch7d_pwm_duty_q16` (BFR7D = duty*32000>>16, §14) |
+| 0xffffa214 | `ch7d_pwm_enabled` (once-only flag, 0xb308, §14) |
 
 #### ROM data tables
 
@@ -606,3 +629,52 @@ byte-identical to HEAD (surrogateescape round-trip). `validate_export.py`,
 `verify_readability.py`, `verify_math_units.py` and the targeted report checks all
 PASS; `hash_binaries.py --check` OK. Not run there: `pytest tests/` (pytest not
 installed in that environment).
+
+## 14. Task handlers 12–16 identified (ROADMAP C item 7, 2026-11-05)
+
+The last unnamed task entries are now identified; the task-level subsystem map
+in §4 is complete (all 19 records named or ref_-labeled). Binary-level evidence:
+task-table records 12–16 at ROM 0x4a50–0x4a98 read back as
+`{param 0x04000100, ctx 0xffff7468+8·i, entry, weight 0x02}` with entries
+0x6592/0x65b2/0x65cc/0x65da/0x65e8; each wrapper's PC-relative literal pool
+(0x66bc–0x66e8) and each handler's jsr pool (0x7300–0x7330, 0x7408–0x7438,
+0xb13c–0xb17f, 0xb202–0xb23b, 0xb36c–0xb397; batches 0x11a40–0x11a70, 0x11a74–0x11ad8,
+0x11ca6–0x11d87) was dumped from the raw ROM and
+matches the decompiled call lists. Dynamic evidence: `tests/test_c7_task_handlers.py`
+(8 passed) boots the 60E15120_N3J1E profile to idle and harness-calls each
+entry — task[12]/[14]/[15] run their full handler chain into `taskEnd` 0x3d58 →
+idle 0x3dac with side effects observed (0xffffa188 cleared by mov.w in 0xa4b6,
+0xffffa214 set by 0xb308, IAT/CLT result + fault cells 0xffff9f60/9f70/9f64/9f74
+written by 0x7298/0x73a0); task[13]/[16] visit all their direct handlers and
+then stop at pre-existing emulator opdec gaps 0x50de0 (word 0xff07 =
+`fmov.s fr0,@(r0,r15)`, inside `FUN_00050d98` ← 0x3957c) and 0x674ac (inside
+`FUN_00067476` ← 0x622e0 ← 0x60318 ← 0x3de70) — corpus-table limitations (cf. E8), not ROM findings.
+
+| Task | Entry | Identity | Wrapped handlers (ROM-verified pools) |
+|---|---|---|---|
+| 12 | 0x6592 `task12_adc_feedback_pwm_entry` | ADC-pair feedback + TO7D PWM service: samples ADC AN23 (ADDR23H 0xfffff836) / AN11 (ADDR11H 0xfffff816) twice (0xb0a6/0xb1da, called from ADC EOC bank1 0x6b60), computes correlation/range faults and a filtered ratio (0xaee8 → 0xffffa1d8/a1d4, consumed by the lambda/duty loops 0x1ac00/0x22630), stages ATU-II compare outputs (0xb114, called from the 0xb0a6 sample path: GR1G/H 0xfffff450/0xfffff452, DCNT8G/H 0xfffff64c/0xfffff64e, DCNT8P 0xfffff65e, OCR2H 0xfffff622), drives the ch7D (TO7D = PB7 PWM) output with duty 0xffffa210 q16 over a 32000-count period (0xb308/0xb2c0, duty % from 0x25198), clears its alive counter (0xa4b6 → 0xffffa188), runs the monitor batch 0x11880 (vehicle speed/accel filters, knock rpm window, diag mode, coolant plausibility). Physical actuator/sensor mapping not pinned (board routing = D2) — structural label, high confidence | 0xa4b6, 0xad2a→0xaee8, 0x11880, 0xb308 |
+| 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | Temperature-sensor conditioning + DTC/fault service | 0x7298 `iat_sensor_scaling_fault` (tbl_iat_sensor_scaling_00069824, fault 0xffff9f64), 0x73a0 `clt_sensor_scaling_fault` (tbl_clt_sensor_scaling_0006977c, fault 0xffff9f74), 0x118d0 `dtc_fault_service_batch` (26 calls incl. candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, 0x5a188 distance-while-MIL, ref_getVehicleSpeedThreshold 0x59fb6) |
+| 14 | 0x65cc `task14_charging_control_entry` | Alternator / charging control | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) |
+| 15 | 0x65da `task15_catalyst_temp_entry` | Catalyst temperature monitoring | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) |
+| 16 | 0x65e8 `task16_uds_diag_utility_entry` | UDS/diagnostic utility service (E2-stored parameter reads, memory R/W, timers, idle target) | 0x11b22 `uds_diag_utility_batch` (15 calls incl. `ref_getTireSize` 0x5de74 (E2 id 0x9a), E2 ids 0x9f/0x100/0x68/0x6a/0x6c via 0x37ef0, 0x54cf8 (0xa5-unlock checksum verify of area 0xffff8fe8), 0x3de70 UDS memory read/write by address, 0x5fc40 idle target, 0x59164/0x5a162 timers) |
+
+**Labels applied** (record
+`data/labels/60E15120_N3J1E/os_task_12_16_labels.json`; rows appended to
+`source_review/accepted_{function,ram}_aliases.tsv`; applied via
+`integrate_reviewed_names.py`; pre-change state is the branch parent commit —
+backup zips are not kept in-tree since 9ba75728): **15 functions** — the five entries
+plus 0xa4b6, 0xaee8, 0xb308, 0x11880 (`candidate_` prefix: medium confidence),
+0x7298, 0x73a0, 0x118d0, 0x11adc, 0x11b08, 0x11b22 — and **14 RAM cells**
+(0xffff9f64/9f74, 0xffffa188, 0xffffa1fa/a1fc/a1fe/a200/a202/a1d8/a1d4/a1dc/a1dd,
+0xffffa210/a214). Re-check after integration: no duplicate names in
+`function_index.tsv`; all 15 names present in `named/firmware_named.c`;
+3,355 function bodies verified intact by the integrator. ROM untouched
+(`hash_binaries.py --check` OK; ROM SHA-256 unchanged).
+
+**Limits:** the physical identity of the AN23/AN11 pair and the TO7D/PB7
+actuator behind task[12] is not pinned — package-pin ↔ connector-terminal
+routing is board-level and untraced (D2); the correlation-ratio consumers
+(0x1ac00 lambda band, 0x22630 duty loop) are cited, not re-derived. The
+task[13]/[16] deep-batch execution is bounded by the two opdec gaps above.
+Callees inside the five batches remain `FUN_` where not already named — that
+is C item 8 territory, not task-level.

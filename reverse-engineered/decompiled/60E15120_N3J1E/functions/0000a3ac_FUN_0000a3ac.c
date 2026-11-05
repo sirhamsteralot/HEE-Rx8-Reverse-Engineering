@@ -11,8 +11,8 @@ undefined4 FUN_0000a3ac(void)
   undefined4 local_c [2];
   
   ref_setSR_PARAM(local_c,0xe0);
-  DAT_ffffa188 = DAT_ffffa188 + 1;
-  if (300 < DAT_ffffa188) {
+  task12_alive_counter_ffffa188 = task12_alive_counter_ffffa188 + 1;
+  if (300 < task12_alive_counter_ffffa188) {
     FUN_0000a438(0xca,0xffffffff);
     FUN_0000a4be();
   }

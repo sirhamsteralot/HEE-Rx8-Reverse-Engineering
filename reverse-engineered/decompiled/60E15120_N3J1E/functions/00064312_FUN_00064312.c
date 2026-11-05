@@ -8,7 +8,7 @@ uint FUN_00064312(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)(byte)(&DAT_ffff87b6)[(uint)DAT_ffff8900._0_2_ * 0x10];
+  uVar1 = (uint)(byte)(&DAT_ffff87b6)[(uint)dtc_master_current_index_ffff8900._0_2_ * 0x10];
   if (((uVar1 == 0) || (0x3f < uVar1)) && ((uVar1 < 0x81 || (0xbf < uVar1)))) {
     if (uVar1 == 0xc0) {
       uVar1 = FUN_00062fa0(0x50);

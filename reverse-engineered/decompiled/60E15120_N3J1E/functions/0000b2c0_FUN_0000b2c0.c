@@ -8,10 +8,10 @@ uint FUN_0000b2c0(float param_1,byte param_2)
 {
   uint uVar1;
   
-  (&DAT_ffffa210)[param_2] = (int)(param_1 * 65536.0);
-  uVar1 = (uint)(byte)(&DAT_ffffa214)[param_2];
+  (&ch7d_pwm_duty_q16_ffffa210)[param_2] = (int)(param_1 * 65536.0);
+  uVar1 = (uint)(byte)(&ch7d_pwm_enabled_ffffa214)[param_2];
   if ((uVar1 == 1) && (param_2 == 0)) {
-    uVar1 = rx8_mul_s32_shift16_saturate(DAT_ffffa210,DAT_ffff9f50);
+    uVar1 = rx8_mul_s32_shift16_saturate(ch7d_pwm_duty_q16_ffffa210,DAT_ffff9f50);
     ATUII_BFR7D_W = (short)uVar1;
   }
   return uVar1;

@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00011b54 (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00011adc(void)
+void charging_control_batch(void)
 
 {
   FUN_00019d8a();

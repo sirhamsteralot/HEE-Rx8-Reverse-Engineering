@@ -10,7 +10,7 @@ undefined4 FUN_0000b290(void)
   undefined4 local_8 [2];
   
   ref_setSR_PARAM(local_8,0xe0);
-  if (DAT_ffffa214 == '\x01') {
+  if (ch7d_pwm_enabled_ffffa214 == '\x01') {
     ATUII_CYLR7D_W = 32000;
     DAT_ffff9f50 = 32000;
   }

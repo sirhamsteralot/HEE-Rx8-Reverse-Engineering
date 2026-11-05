@@ -391,3 +391,17 @@ ffffd286	mil_lamp_flag	uint8	0005a130	MIL flag: set by 0x5a130 when stored+enabl
 ffffd688	dtc_eval_enable	uint8	0005fd4a	1 = fault evaluation active; set at init by 0x5fd6c via 0x5fd4a(1); selects path in 0x5fe20.
 ffffd930	dtc_status_bits	uint32	00066a00	Status bits ANDed with low16 of ROM mask table 0x7e934 in ref_getFaultStatus__ (0x66a00).
 ffffd3c2	dtc_eval_state_cache	uint8[0x8c]	0005ff5a	Per-fault-id cached eval-state argument written by 0x5ff5a.
+ffff9f64	iat_range_fault	uint8	00007298	0 = in band, 1 = raw >= 0xf6c9, 2 = raw < 0x51e; set in iat_sensor_scaling_fault 0x7298 (task[13]).
+ffff9f74	clt_range_fault	uint8	000073a0	0 = in band, 1 = raw >= 0xfd00, 2 = raw < 0x9ff; set in clt_sensor_scaling_fault 0x73a0 (task[13]).
+ffffa188	task12_alive_counter	uint16	0000a3ac	Cleared (mov.w #0) by 0xa4b6 on every task[12] run; incremented in 0xa3ac, reset when > 300.
+ffffa1fa	adc_an23_sample_a	uint16	0000b0a6	Word @0xfffff836 (ADDR23H, ADC AN23) sampled in the ADC EOC bank1 chain (0x6b60 -> 0xb0a6).
+ffffa1fc	adc_an23_sample_b	uint16	0000b1da	Second AN23 sample (0xb1da, same pool word 0xfffff836).
+ffffa1fe	adc_an11_sample_a	uint16	0000b0a6	Word @0xfffff816 (ADDR11H, ADC AN11; pool word 0xfffff836 + add -0x20, ROM-verified at 0xb0d2).
+ffffa200	adc_an11_sample_b	uint16	0000b1da	Second AN11 sample.
+ffffa202	adc_pair_second_sample_ready	uint8	0000aee8	Set to 1 by 0xb1da once both channels sampled; gates the compute in 0xaee8.
+ffffa1d8	adc_pair_ratio_raw	float	0000aee8	|dAN23|*5/65536 / |d(AN23-AN11)/200| - 16.25; consumed by 0x1ac00 and 0x22630.
+ffffa1d4	adc_pair_ratio_filtered	float	0000aee8	first_order_filter(a1d8, a1d4, 0.25); copied to 0xffffaa78 by 0x1ac00.
+ffffa1dc	adc_pair_range_fault	uint8	0000aee8	2 = AN23 raw < 0x5c29, 1 = > 0xc28f, 0 = in band.
+ffffa1dd	adc_pair_correlation_fault	uint8	0000aee8	2 = inter-channel delta < -0.005, 1 = > +0.005, 0 = ok.
+ffffa210	ch7d_pwm_duty_q16	uint32	0000b2c0	Duty percent * 65536, written by 0xb2c0 (from 0x25198, clamp 0-100% of DAT_ffffb354); BFR7D = duty*32000>>16 (0xb308/0xb2c0).
+ffffa214	ch7d_pwm_enabled	uint8	0000b308	Once-only enable flag for the ch7D (TO7D/PB7) PWM setup in 0xb308.
