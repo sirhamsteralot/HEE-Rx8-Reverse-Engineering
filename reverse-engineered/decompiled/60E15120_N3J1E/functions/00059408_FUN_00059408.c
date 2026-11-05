@@ -21,7 +21,7 @@ void FUN_00059408(void)
       if (cVar4 == '\x01') {
         if ((DAT_ffffd27a == 0) || (DAT_ffffd27a == 1)) {
           DAT_ffffd277 = DAT_ffffd277 + '\x01';
-          uVar2 = FUN_0005f8cc((int)DAT_ffffd3c0);
+          uVar2 = FUN_0005f8cc((int)dtc_first_stored_code_ffffd3c0);
           uVar3 = FUN_0005f95a(uVar2);
         }
         else {

@@ -1,6 +1,6 @@
 /* ROM address: 0x000118d0; body bytes: 158; decompiled */
 
-void FUN_000118d0(void)
+void dtc_fault_service_batch(void)
 
 {
   FUN_00019d24();

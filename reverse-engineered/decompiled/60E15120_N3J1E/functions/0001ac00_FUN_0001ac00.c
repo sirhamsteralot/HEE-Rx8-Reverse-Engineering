@@ -3,17 +3,17 @@
 char FUN_0001ac00(void)
 
 {
-  DAT_ffffaa78 = DAT_ffffa1d4;
-  if (50.0 < DAT_ffffa1d4) {
-    if (55.0 < DAT_ffffa1d4) {
+  DAT_ffffaa78 = adc_pair_ratio_filtered_ffffa1d4;
+  if (50.0 < adc_pair_ratio_filtered_ffffa1d4) {
+    if (55.0 < adc_pair_ratio_filtered_ffffa1d4) {
       DAT_ffffaa81 = 0;
     }
   }
   else {
     DAT_ffffaa81 = 1;
   }
-  if (50.0 <= DAT_ffffa1d4) {
-    if (55.0 <= DAT_ffffa1d4) {
+  if (50.0 <= adc_pair_ratio_filtered_ffffa1d4) {
+    if (55.0 <= adc_pair_ratio_filtered_ffffa1d4) {
       DAT_ffffad0b = '\x01';
     }
   }

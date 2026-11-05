@@ -8,7 +8,7 @@ void FUN_00063026(char param_1)
 {
   int iVar1;
   
-  iVar1 = (uint)DAT_ffff8900._0_2_ * 0x10;
+  iVar1 = (uint)dtc_master_current_index_ffff8900._0_2_ * 0x10;
   (&DAT_ffff87be)[iVar1] = (&DAT_ffff87be)[iVar1] + ((&DAT_ffff87bb)[iVar1] - param_1);
   (&DAT_ffff87bb)[iVar1] = param_1;
   return;

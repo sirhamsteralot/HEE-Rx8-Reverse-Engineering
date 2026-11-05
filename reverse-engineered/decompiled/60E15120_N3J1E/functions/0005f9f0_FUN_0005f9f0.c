@@ -12,12 +12,12 @@ undefined4 FUN_0005f9f0(uint param_1,char param_2)
   uVar2 = 0;
   param_1 = param_1 & 0xffff;
   if (param_2 == '\0') {
-    if ((&DAT_ffffd5fc)[param_1] == -0x40) {
+    if ((&dtc_state_array_ffffd5fc)[param_1] == -0x40) {
       uVar2 = 1;
     }
   }
   else if (param_2 == '\x01') {
-    cVar1 = (&DAT_ffffd5fc)[param_1];
+    cVar1 = (&dtc_state_array_ffffd5fc)[param_1];
     if (((cVar1 == -0x40) || (cVar1 == -0x3f)) || (cVar1 == 'p')) {
       uVar2 = 1;
     }

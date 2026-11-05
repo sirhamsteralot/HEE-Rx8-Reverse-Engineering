@@ -10,13 +10,13 @@ uint FUN_000615c6(char param_1,char param_2,int param_3)
   uint uVar5;
   ushort *puVar6;
   
-  uVar3 = DAT_ffff8900._0_2_;
+  uVar3 = dtc_master_current_index_ffff8900._0_2_;
   uVar4 = 0;
   uVar5 = 0;
   do {
     if (uVar5 != uVar3) {
       bVar2 = (&DAT_ffff87b6)[uVar5 * 0x10];
-      uVar1 = (&DAT_ffff87b0)[uVar5 * 8];
+      uVar1 = (&dtc_master_table_21_ffff87b0)[uVar5 * 8];
       if (((param_2 == '\0') ||
           ((param_2 == '\x01' && ((&CAL_DTC_0300_Enable_Disable_1_1129)[uVar1] == '\x01')))) ||
          ((param_2 == '\x02' && ((&DAT_0007e704)[uVar1] == '\x01')))) {

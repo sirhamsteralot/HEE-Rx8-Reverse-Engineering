@@ -69,9 +69,9 @@
       "rom_claims": 0
     },
     "os_scheduling_deep_dive_report.md": {
-      "fn_checked": 77,
-      "ram_checked": 20,
-      "rom_refs": 115,
+      "fn_checked": 87,
+      "ram_checked": 32,
+      "rom_refs": 137,
       "rom_claims": 0
     },
     "uds_mode22_dispatch_report.md": {

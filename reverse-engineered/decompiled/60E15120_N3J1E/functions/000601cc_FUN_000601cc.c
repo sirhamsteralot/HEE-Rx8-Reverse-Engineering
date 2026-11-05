@@ -13,8 +13,8 @@ undefined * FUN_000601cc(uint param_1,byte param_2,short param_3)
      (puVar1 == (undefined *)((int)&vector_Poweron_Reset + 1))) {
     puVar1 = &dtc_ram_flag_table_ffffd570_ffffd570;
     (&dtc_ram_flag_table_ffffd570_ffffd570)[*(ushort *)(&DAT_0007df42 + (param_1 & 0xffff) * 2)] = 1;
-    if (DAT_ffffd3c0 == 0) {
-      DAT_ffffd3c0 = param_3;
+    if (dtc_first_stored_code_ffffd3c0 == 0) {
+      dtc_first_stored_code_ffffd3c0 = param_3;
     }
   }
   return puVar1;

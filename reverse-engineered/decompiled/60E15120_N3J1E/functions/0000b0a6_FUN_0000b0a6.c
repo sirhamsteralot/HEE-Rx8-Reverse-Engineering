@@ -11,10 +11,10 @@ void FUN_0000b0a6(void)
     DAT_ffffa206 = 0;
   }
   if (DAT_ffffa206 == 0) {
-    DAT_ffffa1fa = ADDR23H_B;
-    DAT_ffffa1fe = ADDR11H_B;
-    if (1000.0 < DAT_ffffa1d8) {
-      if (1050.0 < DAT_ffffa1d8) {
+    adc_an23_sample_a_ffffa1fa = ADDR23H_B;
+    adc_an11_sample_a_ffffa1fe = ADDR11H_B;
+    if (1000.0 < adc_pair_ratio_raw_ffffa1d8) {
+      if (1050.0 < adc_pair_ratio_raw_ffffa1d8) {
         DAT_ffffa204 = '\0';
       }
     }

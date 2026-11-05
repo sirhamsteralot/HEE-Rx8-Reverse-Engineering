@@ -19,7 +19,7 @@ uint FUN_0005a188(void)
   if (DAT_ffffd280 < 0.0) {
     DAT_ffffd280 = DAT_ffffd280 + 0.09968603;
   }
-  if ((((DAT_ffffd290 == '\0') && (bVar3 == 1)) || (DAT_ffffd286 == '\0')) || (cVar1 == '\x01')) {
+  if ((((DAT_ffffd290 == '\0') && (bVar3 == 1)) || (mil_lamp_flag_ffffd286 == '\0')) || (cVar1 == '\x01')) {
     uVar2 = ref_updateMemoryAtAddress_float_VAL_ADDR(uVar7,&distance_mil_on_ffff90f4_ffff90f4);
   }
   else {
