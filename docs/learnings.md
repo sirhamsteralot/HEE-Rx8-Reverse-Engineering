@@ -453,3 +453,30 @@ Session gotchas worth keeping:
 - **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
   on re-run (writes the file even when normalization-only) — check `git diff` after
   running it.
+
+## Write-time citation rules + verify_claims.py (post-PR #30 self-review, 2026-11-05)
+
+The C item 7 pass (PR #30) shipped four hand-written evidence mistakes that a
+self-review caught only because everything was re-read: a wrong peripheral
+register letter (DCNT8E claimed at 0xfffff64c, actually DCNT8G — derive register
+names from `symbols.tsv`, never mental stride arithmetic), a wrong batch call
+count (24 vs 26 in 0x118d0 — count `jsr`/`bsr`/tail-`jmp` in the disassembly, and
+note the last batch call is a tail `jmp @rN`, not `jsr`), a loose literal-pool
+range (0x11a40–0x11d0c spans code — use the exact ranges from
+`non_instruction_ranges_classified.tsv`), and a callee misclassified from
+call-site shape (0x37ef0 is the E2RAM parameter read, not a DID dispatcher —
+open the callee body) plus a wrong discrepancy-ID citation (0x54cf8 is the
+0xa5-unlock checksum of 0xffff8fe8, not D3's 0x5a3f4 flash checksum — grep
+ROADMAP before citing D/E ids). Rules now in AGENTS.md rule 7: cite only what
+you re-read this session; write counts/names/ranges from the artifacts, never
+hand-typed or copy-pasted between the TSV, the labels JSON and the report.
+`utilities/scripts/rx8-pcm-pipeline/verify_claims.py` enforces the mechanical
+part (call counts, register name↔address pairs incl. `GR1G/H`-style grouped
+forms, pool ranges + resolved call targets, labels-JSON↔TSV coverage) over all
+root `*_report.md` and the `accepted_function_aliases.tsv` evidence; it runs in
+`tests/test_verify_claims.py` and already caught one pre-existing typo
+(0x6fb0 evidence cited ADDR24H_B at 0xfffff848; the code reads 0xfffff840).
+Gotcha: the pipeline scripts assume a latin-1-ish locale for the two TSVs with
+cp1252 bytes — run them with `LC_ALL=aa_DJ.iso88591 PYTHONUTF8=0
+PYTHONCOERCECLOCALE=0` (verify_claims.py itself reads with
+`errors='surrogateescape'` and is locale-independent).

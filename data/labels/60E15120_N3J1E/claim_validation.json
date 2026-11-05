@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-05",
+  "rom": "60E15120_N3J1E.bin",
+  "checks": {
+    "reports": {
+      "calibration_extraction_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "decompiler_triage_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "dtc_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "free_resources_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "fueling_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "ignition_timing_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "intake_solenoids_report.md": {
+        "reg_pairs": 13,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "knock_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "live_tuning_feasibility_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "load_fueling_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "os_scheduler_can_ivt_report.md": {
+        "reg_pairs": 11,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "os_scheduling_deep_dive_report.md": {
+        "reg_pairs": 8,
+        "call_claims": 0,
+        "pool_claims": 1
+      },
+      "uds_mode22_dispatch_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "accepted_function_aliases.tsv": {
+        "reg_pairs": 9,
+        "call_claims": 0,
+        "pool_claims": 0
+      }
+    },
+    "tsv_rows": 367,
+    "labels_json_checked": 7
+  },
+  "notes": [
+    "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",
+    "fueling_labels.json: function 00056b9e record alias 'diag_lambda_target' vs TSV 'diag22_pid0044_lambda_target' (later refinement)",
+    "fueling_labels.json: function 00056b22 record alias 'diag_air_fuel_ratio' vs TSV 'diag22_pid0034_afr_lambda_words' (later refinement)",
+    "fueling_labels.json: function 00056f6c record alias 'diag_injector_pulse_time' vs TSV 'diag22_pid1410_injector_pulse_time' (later refinement)",
+    "fueling_labels.json: function 000556ec record alias 'diag_afr_word_a' vs TSV 'diag_read_afr_word_a' (later refinement)",
+    "fueling_labels.json: function 00055702 record alias 'diag_afr_word_b' vs TSV 'diag_read_afr_word_b' (later refinement)"
+  ],
+  "failures": [],
+  "result": "PASS"
+}
