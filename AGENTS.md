@@ -69,10 +69,19 @@ dumping it at the root.
    re-check labels against the raw ROM/disassembly (literal pools incl. shared pools,
    `mov.w`/`mov.l`/`mov #imm`/base+offset idioms, GPIO reg+mask+helper, descriptor
    bytes), then run the pipeline verifiers (`validate_export.py`,
-   `validate_reports.py`, `verify_readability.py`, `verify_math_units.py` from
+   `validate_reports.py`, `verify_readability.py`, `verify_math_units.py`,
+   `verify_claims.py` from
    `utilities/scripts/rx8-pcm-pipeline/`). Record what was checked in the review
    folder's `README`/`REVIEW_NOTES` + `validation.json`. Never let a label stand on
-   decompiled C alone.
+   decompiled C alone. **Write-time citation rule** (added after the PR #30
+   self-review): cite only what you re-read this session — register names from
+   `symbols.tsv`, callee roles from the callee *body* (call-site argument shape is
+   not evidence), discrepancy IDs by grepping `ROADMAP.md`. Hand-written prose
+   claims are machine-checked by `verify_claims.py`: batch call counts vs the
+   disassembly, peripheral name↔address pairs vs `symbols.tsv`, literal-pool
+   ranges vs `non_instruction_ranges_classified.tsv` + resolved call targets, and
+   labels-JSON↔TSV coverage — write such numbers from those artifacts, never
+   hand-typed or copy-pasted between files.
 8. **Reports follow the 10-section subsystem format** (template:
    [`docs/investigations/60E15120_N3J1E/knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)):
    header with ROM SHA-256 + static-analysis disclaimer, executive summary followed
@@ -174,6 +183,8 @@ its own branch and is delivered as a pull request for the user to review and mer
 - Pipeline validators run from the **repo root** (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py`): `validate_export.py` (ROM hash +
   instruction bytes + matches), `validate_reports.py` (report sections, ROM hash,
-  every address in report memory maps vs index/TSVs/ROM), `verify_readability.py`,
+  every address in report memory maps vs index/TSVs/ROM), `verify_claims.py`
+  (prose claims: call counts, register name↔address pairs, pool ranges, record↔TSV
+  coverage), `verify_readability.py`,
   `verify_math_units.py`. The Ghidra-dependent steps in `rebuild.sh` need `GHIDRA_HOME`
   (Ghidra 12.1.3) and a JDK; project DBs are not committed.
