@@ -168,7 +168,7 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 | Review validation record | `reviews/knock_control/validation.json` |
 | Rename map + fix evidence | `metadata/knock_loop_labels.json` |
 | Integrated rename manifest | `metadata/integrated_names.json` |
-| Design document (subsystem map, §5.7) | `design/README.md` |
+| Design document (subsystem map, §5.7) | [`design/README.md`](../../architecture/design/README.md) |
 | Pipeline scripts (idempotent, in `scripts/rebuild.sh`) | `scripts/review_knock_loop_labels.py`, `scripts/merge_reviewed_lookup_aliases.py`, `scripts/review_knock_loop_labels_apply.py` |
 | Pre-change backup | `backups/pre_knock_loop_labels.zip` |
 

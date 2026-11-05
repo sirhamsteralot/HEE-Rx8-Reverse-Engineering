@@ -251,7 +251,7 @@ The fueling-chain labeling integrated **39 function aliases,
 (`data/labels/60E15120_N3J1E/fueling_labels.json`;
 `source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`;
 `integrated_names.json`; evidence in `reviews/load_fueling_model/` incl.
-`REVIEW_NOTES.md` + `validation.json`; backup
+[`REVIEW_NOTES.md`](reviews/load_fueling_model/REVIEW_NOTES.md) + `validation.json`; backup
 `backups/pre_fueling_labels.zip`). Key named rows: `calculate_engine_load`
 (RAM 0xffffc0b4), injector pulse path 0x8a68/0x30948/0x2fea8, MAF scaling
 0x69788, latency tables 0x6aa80/0x6aa64, warmup family 0x6ae28-0x6ae74.

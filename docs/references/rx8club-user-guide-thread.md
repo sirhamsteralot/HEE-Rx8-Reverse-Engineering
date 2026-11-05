@@ -126,14 +126,14 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
   compensation, cranking angle timing, **knock retard**, **DSC torque-request
   derates** (from the EBCM; thought to apply to the leading rotor only). The forum
   itself says knock-retard and cranking-angle logic were "still under development" —
-  **our `knock_control_report.md` is ahead** (retard negative, clamp [−10, 0]°,
+  **our [`knock_control_report.md`](../investigations/60E15120_N3J1E/knock_control_report.md) is ahead** (retard negative, clamp [−10, 0]°,
   attack −1.0°/cycle, recovery +0.35°/62 counts).
 - **Open-loop fueling chain**: all lambda tables store the decimal part (1 is added
   back late in the math). `Final = max(OL target, TipIn×BaroCorr) × CLTCorr`; safe-mode
   mirrors it; implausible-ECT mode adds A/B table sets (identical in OEM cal) with
   changeover-enrichment blend; **cat-warmup fueling** rides a catalyst-temperature
   model (load-based + ×compensation, cold RPM-based below 5 °C ECT). Cross-check
-  against our `fueling_control_report.md`.
+  against our [`fueling_control_report.md`](../investigations/60E15120_N3J1E/fueling_control_report.md).
 - **Load axis debate:** one poster reverse-engineered maps purely from OBD/CAN logs
   (Excel "map generator") and found table axes match better in **VolEf** (assuming
   STP density 1.18 kg/m³) than g/rev — contradicts the g/rev claim above; worth a
@@ -199,4 +199,4 @@ text — verify before use). Useful finds:
 - Cross-ROM RAM map: engine-speed/vehicle-moving addresses differ per ROM — extend
   `data/labels/` per ROM.
 - Verify load-calc claims (item 6) against our fueling report
-  (`docs/investigations/60E15120_N3J1E/fueling_control_report.md`).
+  ([`docs/investigations/60E15120_N3J1E/fueling_control_report.md`](../investigations/60E15120_N3J1E/fueling_control_report.md)).

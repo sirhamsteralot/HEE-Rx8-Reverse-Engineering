@@ -124,7 +124,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
   `named/firmware_named.c`, index/callgraph/symbols, `integrated_names.json`).
   Medium-confidence names carry `candidate_` in the views. Record:
   `metadata/intake_labels.json`; backup: `backups/pre_intake_labels.zip`.
-- Design doc updated: `design/README.md` §5.9.
+- Design doc updated: [`design/README.md`](../../architecture/design/README.md) §5.9.
 
 ## 6. Corrections made in this pass
 
@@ -144,7 +144,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 | Review validation record | `reviews/intake_solenoids/validation.json` |
 | Rename/record manifest | `metadata/intake_labels.json` |
 | Pipeline script (idempotent, in `rebuild.sh`) | `scripts/review_intake_labels.py` |
-| Design doc subsystem map | `design/README.md` §5.9 |
+| Design doc subsystem map | [`design/README.md`](../../architecture/design/README.md) §5.9 |
 | Pre-change backup | `backups/pre_intake_labels.zip` |
 | Hardware manual (pin source) | `Sh7055h.pdf` (workspace root; SH7055F HW manual ADE 602-155B) |
 
@@ -240,11 +240,11 @@ terminal 1L). Stock ROMs are never modified — the patcher writes new
 `<name>_<act>_<open>_<close>.bin` files and asserts input SHA-256 unchanged,
 diff confined to the function's logic region + pool. Patched code
 decode-verified word-by-word. Setpoints live in the cal area as a RomRaider table (descriptor 0x7fb90, data 0x7fba4: cell0=open, cell1=close float32 RPM; def added to RX8Defs_Copy rx8_defs.xml for 60E15120; emitted per-run as <output>.xml) — edit with RomRaider or a hex editor at 0x07FBA4 without re-patching. Static validation only; flash with `Rx8Man/`.
-See `Utilities/PATCHER_intake_rpm_window.md`.
+See [`Utilities/PATCHER_intake_rpm_window.md`](../../../utilities/scripts/patchers/PATCHER_intake_rpm_window.md).
 
 ## 11. Rev-limiter behavior patcher (see SPEC)
 
-`Utilities/patch_limiter_behavior.py` (+`PATCHER_limiter_behavior.md`, RE notes in
+`Utilities/patch_limiter_behavior.py` (+[`PATCHER_limiter_behavior.md`](../../../utilities/scripts/patchers/PATCHER_limiter_behavior.md), RE notes in
 [`reviews/limiter/README.md`](reviews/limiter/README.md)): repoints the 0xedc4 call site to a cave that runs the
 stock limiter then rewrites the shared cut flags a444/a445 per mode —
 stock/hard/soft (soft alternates rotors via a cal-block state cell), gating fuel
@@ -259,7 +259,7 @@ SKIP). Static validation only; flash with Rx8Man.
 FSM pinout cross-check ([mazda-rx-8-pcm-pinout-series-1.md](../../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)): colours resolved for all used terminals except 5L/5Z; wire colours — injectors 2M LG/R, 2J LG/B, 2G G/R, 2D L/B, 3A L/B ³, 3D W/G ³, all with a shared W/L +12V feed; SSV 1L L/Y, 1D L; AIR 1O G; VDI 1W L/B (confirmed); APV 3J L/R, 3G G/B ³, 3B R/G ³, 1S R/W; purge 2P R/Y *; 5Z unread. Applied to the decompiled code annotations. Still no chip-pin data in it, so the pin↔terminal hop stays board-level unresolved.
 
 Static analysis only; no hardware execution. Package-pin → connector-terminal
-is board routing (unresolved here, per `hardware/README.md`). SSV
+is board routing (unresolved here, per [`hardware/README.md`](../../architecture/hardware/README.md)). SSV
 position-switch input (1D) and purge solenoid (2P) GPIO not identified.
 APV motor direction and PH12/13 meaning are candidates. `candidate_` names
 are unproven hypotheses. ROM untouched.

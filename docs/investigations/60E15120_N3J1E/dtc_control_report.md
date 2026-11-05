@@ -8,7 +8,7 @@ emulator** (`utilities/scripts/emu/`); every dynamically-cited claim names the e
 observation in [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_control/dynamic_validation_log.txt).
 All 11 ROM binaries were audited for the defs-accuracy half (§5). Full evidence:
 [`reviews/dtc_control/README.md`](reviews/dtc_control/README.md) +
-`REVIEW_NOTES.md` + `defs_audit_detail.json`; extracted tables in [`data/dtc/`](../../../data/dtc/README.md);
+[`REVIEW_NOTES.md`](reviews/dtc_control/REVIEW_NOTES.md) + `defs_audit_detail.json`; extracted tables in [`data/dtc/`](../../../data/dtc/README.md);
 labels in [`data/labels/60E15120_N3J1E/dtc_engine_labels.tsv`](../../../data/labels/60E15120_N3J1E/dtc_engine_labels.tsv).
 
 **Related reports:** dispatch plumbing (service table 0x5eb40, PID table 0x5f10c) in
@@ -325,10 +325,10 @@ the def uses the Mazda assignment (RX-8-specific).
 ## 6. Files
 
 - `docs/investigations/60E15120_N3J1E/dtc_control_report.md` — this report.
-- `docs/investigations/60E15120_N3J1E/reviews/dtc_control/` — `README.md`,
-  `REVIEW_NOTES.md`, `validation.json`, `defs_audit_detail.json`,
+- `docs/investigations/60E15120_N3J1E/reviews/dtc_control/` — [`README.md`](reviews/dtc_control/README.md),
+  [`REVIEW_NOTES.md`](reviews/dtc_control/REVIEW_NOTES.md), `validation.json`, `defs_audit_detail.json`,
   `extract_dtc_tables.py`, `dynamic_validation.py`, `dynamic_validation_log.txt`.
-- `data/dtc/README.md` + `data/dtc/<rom-id>.tsv` (11 ROMs) + `data/dtc/defs_audit.tsv` —
+- [`data/dtc/README.md`](../../../data/dtc/README.md) + `data/dtc/<rom-id>.tsv` (11 ROMs) + `data/dtc/defs_audit.tsv` —
   extracted DTC tables and the defs audit (new folder, proposed here per AGENTS.md).
 - `data/labels/60E15120_N3J1E/dtc_engine_labels.tsv` — DTC engine labels.
 

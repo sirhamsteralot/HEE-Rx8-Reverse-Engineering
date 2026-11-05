@@ -1,7 +1,7 @@
 # Learnings — RX-8 PCM RE know-how
 
 Practical lessons for work on `60E15120_N3J1E` (knock, fueling, intake,
-patcher passes). See `AGENTS.md` for the standing rules; this file is the
+patcher passes). See [`AGENTS.md`](../AGENTS.md) for the standing rules; this file is the
 working know-how. Everything here is backed by artifacts in
 `reverse_engineered/60E15120_N3J1E/` (reviews, metadata, validation JSONs).
 
@@ -10,7 +10,7 @@ working know-how. Everything here is backed by artifacts in
 - **Branch + PR delivery**: every work unit runs on its own
   `feat|research|docs|fix/<slug>` branch off `main` and lands via a PR that the
   user reviews and merges — no direct commits to `main` (standing rules in
-  `AGENTS.md` §Branch & PR workflow).
+  [`AGENTS.md`](../AGENTS.md) §Branch & PR workflow).
 - **Chain-first reviews**: start from the task table (0x4998) / dispatch table
   (0x5f10c), trace through the canonical C, cross-match RX8Defs descriptors and
   logger PIDs, then label via `source_review/accepted_*.tsv` + an idempotent
@@ -92,10 +92,10 @@ working know-how. Everything here is backed by artifacts in
 
 ## Reports
 
-- Root `*_report.md` files follow `knock_control_report.md`'s 10-section format,
+- Root `*_report.md` files follow [`knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)'s 10-section format,
   with a mandatory memory map (function + RAM address tables) and a plain-language
   §1a after the executive summary (AGENTS.md rule 8;
-  style example `ignition_timing_report.md` §1a). Reports state current
+  style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
   findings — don't append dated change-log addenda (git history records how
   they changed).
 - `scripts/validate_reports.py` checks every report (sections, ROM hash, all
@@ -227,7 +227,7 @@ Hardware facts the emulator must get right:
   address + referencing function/literal pointer, not just the value.
 - Cross-ROM: identical bits ⇒ identical value; an absent pattern means a real
   difference (60E0E700_N3YLEE secondary injector flow 475.93 → 608.0/626.224).
-- Pitfall: some report files are UTF-8, at least one (`uds_mode22_dispatch_report.md`)
+- Pitfall: some report files are UTF-8, at least one ([`uds_mode22_dispatch_report.md`](investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md))
   is cp1252 — `validate_reports.py` reads with the default encoding, so on a
   Windows cp1252 box it crashes either way (0x90 / 0x97 bytes). Run with
   `PYTHONUTF8=1` and tolerate the cp1252 file, or normalize encodings first.

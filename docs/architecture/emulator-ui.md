@@ -9,7 +9,7 @@ browser, run/step the emulator, and watch outputs — plus replay real-car logs 
 
 - Cross-platform (Windows dev machine included), zero dependencies: Python stdlib
   `http.server` + a static HTML/JS page, no framework.
-- Same port family as the virtual OBD port (`docs/architecture/emulated-obd.md`),
+- Same port family as the virtual OBD port ([`docs/architecture/emulated-obd.md`](emulated-obd.md)),
   so one `emu.py --ui` serves both the UI and (later) the OBD TCP endpoint.
 
 ## Architecture
