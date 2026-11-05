@@ -26,7 +26,7 @@
   "00011880": {
    "alias": "monitor_service_batch",
    "confidence": "medium",
-   "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x5658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule)."
+   "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x65658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule)."
   },
   "000065b2": {
    "alias": "task13_temp_sensor_dtc_entry",
