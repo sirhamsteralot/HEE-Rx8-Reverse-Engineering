@@ -13,25 +13,34 @@ map: A = P3 (calibration extraction), B = P1 residual (emulator fidelity), C = P
 residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E = P4
 (reimplementation), F = P6 (toward hardware).
 
+Groups A, B and D are complete. Group C (static labeling & gap closure) is
+**reopened**: items 1–7 closed (7 on 2026-11-05), a 2026-11-04 coverage audit
+found new gaps (items 8–10) — pick those up first; C item 10 pairs naturally
+with **E item 1** (reimplementation coverage), then F (gated). The audit
+snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
+`FUN_` (function_index.tsv figures of 2026-11-04,
+`reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
+
 ## Open work — pick up here
 
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
-and where artifacts live. Groups A, B and D are complete. Group C (static
-labeling & gap closure) is **reopened**: items 1–6 closed 2026-10-31, a
-2026-11-04 coverage audit found new gaps (items 7–10) — pick those up first;
-C item 10 pairs naturally with **E item 1** (reimplementation coverage),
-then F (gated). The audit snapshot: 3,355 functions in the 60E15120_N3J1E
-export, 833 named + 2,522 `FUN_` (function_index.tsv figures of 2026-11-04,
-`reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
+and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 7–10)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 8–10)
 
-- **C item 7 (open)** — identify scheduler task handlers 12–16. Task entries
-  0x6592 (task[12]), 0x65b2 (task[13]), 0x65cc (task[14]), 0x65da (task[15]),
-  0x65e8 (task[16]) from the [scheduler deep-dive memory map](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
-  wrap unnamed handlers (0x11880/0xb308/0xa4b6, 0x7298/0x73a0/0x118d0,
-  0x11adc, 0x11b08, 0x11b22). Smallest open unit; completes the task-level
-  subsystem map (all other tasks already have labels).
+- **C item 7 (CLOSED 2026-11-05)** — scheduler task handlers 12–16 identified
+  and labeled: task[12] 0x6592 `task12_adc_feedback_pwm_entry` (ADC AN23/AN11
+  pair correlation + faults 0xaee8, TO7D/ch7D PWM 0xb308, monitor batch
+  0x11880, counter clear 0xa4b6), task[13] 0x65b2 `task13_temp_sensor_dtc_entry`
+  (IAT 0x7298 / CLT 0x73a0 scaling + fault codes, DTC batch 0x118d0),
+  task[14] 0x65cc `task14_charging_control_entry` (0x11adc → alternator
+  0x26868), task[15] 0x65da `task15_catalyst_temp_entry` (0x11b08 →
+  `ref_catTempRelated` 0x3eb3a), task[16] 0x65e8 `task16_uds_diag_utility_entry`
+  (0x11b22 → DID reads/memory R/W/timers). ROM-byte + emulator verified; see
+  [os_scheduling_deep_dive_report.md §14](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md),
+  `data/labels/60E15120_N3J1E/os_task_12_16_labels.json`,
+  `tests/test_c7_task_handlers.py` (8 passed). Task-level subsystem map
+  complete.
 - **C item 8 (open)** — identify and label the large unlabeled control bodies:
   0x3fb9e (4,884 B; 3-D lookups + tolerance bands + saturating adds, called
   from 0x38f3e), 0x4ca7e (2,200 B; 2-D lookups + first-order filter),

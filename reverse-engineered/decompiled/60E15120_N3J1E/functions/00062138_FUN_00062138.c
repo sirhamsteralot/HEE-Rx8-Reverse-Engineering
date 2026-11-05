@@ -8,7 +8,7 @@ undefined1 * FUN_00062138(void)
 {
   undefined1 *puVar1;
   
-  if ((&DAT_ffff87b6)[(uint)DAT_ffff8900._0_2_ * 0x10] == -0x40) {
+  if ((&DAT_ffff87b6)[(uint)dtc_master_current_index_ffff8900._0_2_ * 0x10] == -0x40) {
     puVar1 = (undefined1 *)FUN_00062f2e(0);
     return puVar1;
   }

@@ -9,7 +9,7 @@ void ref_getFaultEvalState(void)
   uint uVar1;
   
   uVar1 = ref_setFaultEvalState_();
-  DAT_ffffd930 = uVar1 & 0xffff;
+  dtc_status_bits_ffffd930 = uVar1 & 0xffff;
   return;
 }
 

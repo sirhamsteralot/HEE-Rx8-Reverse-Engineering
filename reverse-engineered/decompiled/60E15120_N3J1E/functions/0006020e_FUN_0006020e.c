@@ -19,7 +19,7 @@ void FUN_0006020e(void)
     puVar4 = puVar4 + -1;
     uVar1 = *puVar4;
     uVar3 = FUN_00061800((int)(short)uVar1);
-    (&DAT_ffffd5fc)[uVar1] = uVar3;
+    (&dtc_state_array_ffffd5fc)[uVar1] = uVar3;
   }
   return;
 }

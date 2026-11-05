@@ -11,7 +11,7 @@ uint FUN_00064174(ushort *param_1)
   int iVar3;
   
   bVar1 = *(byte *)(param_1 + 3);
-  iVar3 = (uint)DAT_ffff8900._0_2_ * 0x10;
+  iVar3 = (uint)dtc_master_current_index_ffff8900._0_2_ * 0x10;
   if ((bVar1 == 0) || (0x3f < bVar1)) {
     if (bVar1 == 0xc0) {
       uVar2 = (uint)(byte)(&DAT_ffff87b8)[iVar3];

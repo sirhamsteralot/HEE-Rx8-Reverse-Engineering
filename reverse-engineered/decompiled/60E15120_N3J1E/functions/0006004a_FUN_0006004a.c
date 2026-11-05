@@ -7,7 +7,7 @@ void FUN_0006004a(void)
   ushort uVar2;
   
   uVar2 = 0;
-  puVar1 = &DAT_ffffd4e4;
+  puVar1 = &dtc_transition_state_array_ffffd4e4;
   do {
     uVar2 = uVar2 + 1;
     *puVar1 = 0;

@@ -10,10 +10,10 @@ uint ref_faultSomething0x1(void)
   
   uVar1 = FUN_00061450(0x80);
   if (((uVar1 & 0xffff) == 0) || (uVar1 = (uint)DAT_ffffd1c5, uVar1 == 1)) {
-    DAT_ffffd286 = 0;
+    mil_lamp_flag_ffffd286 = 0;
   }
   else {
-    DAT_ffffd286 = 1;
+    mil_lamp_flag_ffffd286 = 1;
   }
   return uVar1;
 }

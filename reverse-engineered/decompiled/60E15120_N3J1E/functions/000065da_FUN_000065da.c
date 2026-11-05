@@ -3,10 +3,10 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000065da (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000065da(void)
+void task15_catalyst_temp_entry(void)
 
 {
-  FUN_00011b08();
+  catalyst_temp_monitor_batch();
   ref_taskEndRoutine_();
   return;
 }

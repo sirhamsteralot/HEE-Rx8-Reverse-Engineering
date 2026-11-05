@@ -19,13 +19,13 @@ undefined ** FUN_00060e10(ushort *param_1)
      (ppuVar2 = (undefined **)(uint)(byte)(&DAT_ffff8d54)[(uint)*param_1 * 2],
      ppuVar2 != &vector_Illegal_instr)) {
     if (bVar1 == 0xc0) {
-      ppuVar2 = (undefined **)(uint)(byte)(&DAT_ffff87b8)[(uint)DAT_ffff8900._0_2_ * 0x10];
+      ppuVar2 = (undefined **)(uint)(byte)(&DAT_ffff87b8)[(uint)dtc_master_current_index_ffff8900._0_2_ * 0x10];
       if ((undefined **)(uint)(byte)(&DAT_0007e442)[*param_1] <= ppuVar2) {
         ppuVar2 = (undefined **)FUN_00062dd8(0xc1);
       }
     }
     else if ((bVar1 == 0xc1) &&
-            (ppuVar2 = (undefined **)(uint)(byte)(&DAT_ffff87b9)[(uint)DAT_ffff8900._0_2_ * 0x10],
+            (ppuVar2 = (undefined **)(uint)(byte)(&DAT_ffff87b9)[(uint)dtc_master_current_index_ffff8900._0_2_ * 0x10],
             (undefined **)(uint)(byte)(&DAT_0007e4ce)[*param_1] <= ppuVar2)) {
       FUN_00062dd8(0);
       ppuVar2 = (undefined **)FUN_0006310a(8);

@@ -16,7 +16,7 @@ void FUN_000601b2(void)
     *puVar1 = 0;
     puVar1 = puVar1 + 1;
   } while (uVar2 < 0x8c);
-  DAT_ffffd3c0 = 0;
+  dtc_first_stored_code_ffffd3c0 = 0;
   return;
 }
 

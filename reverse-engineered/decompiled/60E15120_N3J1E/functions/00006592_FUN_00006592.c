@@ -3,13 +3,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00006592 (32 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00006592(void)
+void task12_adc_feedback_pwm_entry(void)
 
 {
-  FUN_0000a4b6();
+  task12_alive_counter_clear();
   thunk_FUN_0000aee8();
-  FUN_00011880();
-  FUN_0000b308();
+  candidate_monitor_service_batch();
+  atu_ch7d_pwm_enable();
   ref_taskEndRoutine_();
   return;
 }

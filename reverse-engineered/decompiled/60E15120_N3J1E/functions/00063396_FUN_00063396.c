@@ -14,7 +14,7 @@ undefined1 FUN_00063396(undefined4 param_1,byte param_2,undefined2 *param_3)
   undefined1 local_20;
   
   local_20 = 3;
-  uVar2 = (uint)DAT_ffff8900._0_2_;
+  uVar2 = (uint)dtc_master_current_index_ffff8900._0_2_;
   bVar3 = DAT_ffff87bd;
   if (uVar2 == 0) {
     bVar3 = DAT_ffff87cd;
@@ -43,7 +43,7 @@ undefined1 FUN_00063396(undefined4 param_1,byte param_2,undefined2 *param_3)
     uVar1 = uVar1 + 1;
   } while ((int)uVar1 < 0x15);
   if (param_2 < bVar3) {
-    *param_3 = (&DAT_ffff87b0)[(uVar4 & 0xffff) * 8];
+    *param_3 = (&dtc_master_table_21_ffff87b0)[(uVar4 & 0xffff) * 8];
     _DAT_ffff8904 = rx8_pack_u16_with_complement(uVar4);
     local_20 = 2;
   }

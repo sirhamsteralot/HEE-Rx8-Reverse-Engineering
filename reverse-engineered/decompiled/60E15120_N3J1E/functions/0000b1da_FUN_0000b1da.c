@@ -7,9 +7,9 @@ void FUN_0000b1da(void)
 
 {
   if (DAT_ffffa205 == '\0') {
-    DAT_ffffa1fc = ADDR23H_B;
-    DAT_ffffa200 = ADDR11H_B;
-    DAT_ffffa202 = 1;
+    adc_an23_sample_b_ffffa1fc = ADDR23H_B;
+    adc_an11_sample_b_ffffa200 = ADDR11H_B;
+    adc_pair_second_sample_ready_ffffa202 = 1;
   }
   DAT_ffffa207 = 0;
   return;

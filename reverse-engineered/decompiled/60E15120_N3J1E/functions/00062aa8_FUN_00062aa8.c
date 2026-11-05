@@ -14,7 +14,7 @@ void FUN_00062aa8(void)
     DAT_ffff8e6e = rx8_pack_u8_with_complement((int)DAT_ffff8e70);
   }
   if (DAT_ffff87a6._0_1_ == '\0') {
-    DAT_ffff8900 = rx8_pack_u16_with_complement((int)DAT_ffff8904);
+    dtc_master_current_index_ffff8900 = rx8_pack_u16_with_complement((int)DAT_ffff8904);
   }
   if (DAT_ffff87a8._0_1_ == '\0') {
     DAT_ffff8d4c = rx8_pack_u16_with_complement((int)DAT_ffff8d50);

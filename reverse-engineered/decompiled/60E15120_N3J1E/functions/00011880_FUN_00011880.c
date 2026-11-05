@@ -1,6 +1,6 @@
 /* ROM address: 0x00011880; body bytes: 80; decompiled */
 
-void FUN_00011880(void)
+void candidate_monitor_service_batch(void)
 
 {
   FUN_00019cf4();
