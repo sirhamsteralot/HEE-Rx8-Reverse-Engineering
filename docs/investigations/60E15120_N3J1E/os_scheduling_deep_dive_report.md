@@ -45,7 +45,7 @@ hand-rolled dispatcher:
   **0x3d58**, which restores the weight byte, clears the context state byte and
   re-enters 0x3c2a — a **cooperative round-robin with explicit yield**.
 - **Interrupts**: VBR = **0x7fc50** (set at 0xd206). Every used vector points to
-  a 14-byte trampoline (0x2710–0x31f0) that calls `interrupt_entry_save_context`
+  a 16-byte trampoline (plus an 8-byte pool {handler, 0x3238}), 0x2710–0x3220, that calls `interrupt_entry_save_context`
   **0x3238** (saves r2–r7/fr0–fr11/fpscr/fpul, raises SR mask to ctrl+0x10 = 0xb0,
   bumps the nesting counter ctrl+8), jumps to the handler, and returns through
   the epilogue at **0x3280**, which on exit checks whether a higher-priority
@@ -214,7 +214,7 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 
 | Address | Name | Contents |
 |---|---|---|
-| 0x7fc50 | IVT (VBR target, set at 0xd206) | 236 u32 vector slots (0x0–0x3ac); used ones point to trampolines 0x2710–0x31f0 (ctx save 0x3238 + handler) or, for reserved vec 0–63, to fatal-trap stubs 0x53a0+ |
+| 0x7fc50 | IVT (VBR target, set at 0xd206) | 236 u32 vector slots (0x0–0x3ac); used ones point to trampolines 0x2710–0x3220 (ctx save 0x3238 + handler) or, for reserved vec 0–63, to fatal-trap stubs 0x53a0+ |
 | 0x4990 | task table | 19 × 16 B records {param, ctx ptr, entry, weight}, terminator 0x4ac0 = {0x04ffffff, 1, …}; entries listed in §4 |
 | 0x4b34 | dispatch jump table | {0x37c4, 0x3818, 0x37c8, 0x381c} — resume-restore variants indexed by ctx[0] − param.b0 |
 | 0x4aec–0x4b30 | OS init tables | 0x4aec = per-class base 0x4ac4; 0x4af4 = init task list 0x4af0 = {17, 0}; 0x4b24 → 0xffff7678 = 0x4b1d order table |
@@ -257,10 +257,15 @@ back — dynamically observed (task[3] ctx[3] 0x1e → 0x1d on post).
 
 ## 5. Interrupt sources (the timing loops)
 
-117 vectors (offsets 0x100–0x39c, vec 64–230) point at real trampolines
-(byte-verified against ROM at 0x7fc50+off; every trampoline's first pool word =
-0x3238). Of these, **98 end in the fatal trap** `fatal_interrupt_trap` (clear a
-peripheral flag, report a code via 0xa330, spin at 0x535a forever) — any
+119 vectors (offsets 0x100–0x39c, vec 64–231) point at real trampolines
+(byte-verified against ROM at 0x7fc50+off; every trampoline's second pool word
+= 0x3238, its `jsr` target — the two tail vectors 0x7ffd0→0x3220 and
+0x7ffec→0x3208 were missed by the earlier 0x31f0 range clamp; see
+[reviews/cross_report_consistency](reviews/cross_report_consistency/README.md)).
+Of these, **99 end in the fatal trap** `fatal_interrupt_trap` (clear a
+peripheral flag, report a code via 0xa330, spin at 0x535a forever) — including
+the tail handler 0x5ec8 (vec 224, direct `bra 0x5348`) — one tail handler
+(0x5ef4, vec 231 → dispatch via 0x9c9c) is pending classification — any
 unexpected interrupt is a deliberate halt. The **19 with real handlers**:
 
 | IVT off | vec | handler | role |
@@ -337,16 +342,20 @@ carry ref_/candidate_ names from earlier passes).
   OCR10B is reloaded per crank sector from table 0xd76d indexed by sector
   0xffff9f95 (0x00–0x24), TCNT10B cleared on rearm (0x7b58) — so CMI10B fires per
   sector, with per-sector intervals in ROM, not every N µs.
-- **0x5348 is a fatal trap, not a dispatcher.** The vec 0–63 stubs and 98 of
-  the 117 real-trampoline vectors call it; it raises SR to 0xe0, reports the
-  code via 0xa330 and spins at 0x535a forever. Only 19 vectors have real
-  handlers (§5): CMI10B tick, the six ATU-II ch8 injector-compare vectors,
+- **0x5348 is a fatal trap, not a dispatcher.** The vec 0–63 stubs and 99 of
+  the 119 real-trampoline vectors call it (incl. tail handler 0x5ec8, vec 224); it raises SR to 0xe0, reports the
+  code via 0xa330 and spins at 0x535a forever. 19 vectors have real
+  handlers (§5), one tail handler (0x5ef4 → dispatch via 0x9c9c) is pending
+  classification: CMI10B tick, the six ATU-II ch8 injector-compare vectors,
   knock-ADC trigger, ch3/ch9 compares, three ADC EOC banks, CMCSR1, one IRQ
   flag vector, and the CAN vectors.
-- **Vector count corrected**: 117 vectors (IVT 0x100–0x39c) have real
-  trampolines, not 114 — the earlier count mis-parsed the 0x378 trampoline's
-  pool word (re-derived with correct mov.l disp extraction, all 117 ctx words
-  = 0x3238).
+- **Vector count corrected**: 119 vectors (IVT 0x100–0x39c) have real
+  trampolines, not 114 or 117 — the 114 count mis-parsed the 0x378 trampoline's
+  pool word, and the 117 count stopped its trampoline range scan at 0x31f0,
+  missing the two tail vectors (slots 0x7ffd0→0x3220 and 0x7ffec→0x3208;
+  re-derived with correct mov.l disp extraction and an open range, all 119 ctx
+  words = 0x3238; see
+  [reviews/cross_report_consistency](reviews/cross_report_consistency/README.md)).
 - **Fresh-task entry is `rte`, not a jump**: 0x3848 sets r15 = ctrl+0xc, pushes
   SR=0 and the entry address, and executes `rte` (disasm 0x3848–0x3850) —
   new tasks start with interrupt mask 0.

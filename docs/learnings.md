@@ -371,14 +371,21 @@ Full scheduler model in
 Session gotchas worth keeping:
 
 - **IVT trampoline parsing**: each used IVT slot (VBR 0x7fc50 + off) points at a
-  14-byte trampoline at 0x2710-0x31f0; the `mov.l @(disp,pc)` disp is the **low byte
+  16-byte trampoline (code only; pools add an 8-byte {handler, 0x3238} pair) at
+  0x2710-0x3220; the `mov.l @(disp,pc)` disp is the **low byte
   of the opcode word at the instruction's own address**, EA = ((pc+4)&~3) + disp*4.
   Reading the disp from the *next* word mis-parses some trampolines (e.g. 0x378's)
-  — that's how an earlier count said 114 real vectors; the correct count is **117**
-  (all with ctx word 0x3238), of which **98 end in the fatal trap 0x5348** and 19
+  — that's how an earlier count said 114 real vectors; a later open-range
+  re-scan makes the correct count **119** (all with ctx word
+  0x3238), of which **99 end in the fatal trap 0x5348** (incl. tail handler
+  0x5ec8, vec 224) and 19
   have real handlers (CMI10B 0x5b3c, 6x ATU ch8 injector compares 0x59a4-0x59ea,
   knock ADC 0x5a4c, ch3/ch9, 3x ADC EOC, CMCSR1 0x5cee, IRQ 0x53f6, CAN
-  0x378/0x37c/0x398). Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
+  0x378/0x37c/0x398); tail handler 0x5ef4 (vec 231, dispatch via 0x9c9c) is
+  pending classification. Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
+  The intermediate 117-count (0x2710-0x31f0 range clamp, missing tail slots
+  0x7ffd0/0x7ffec) is recorded in
+  [`docs/investigations/60E15120_N3J1E/reviews/cross_report_consistency/README.md`](investigations/60E15120_N3J1E/reviews/cross_report_consistency/README.md).
 - **0x803e is the pre-VBR (VBR=0) CMI10B vector target**: base IVT slot 0x2c8 (u32 at
   ROM 0x2c8 = 0x803e) — that's where the inherited `vector_INT_ATU101_CMI10B` label comes
   from; after `ldc vbr, 0x7fc50` (0xd206) the relocated table's trampoline 0x2ec0 →

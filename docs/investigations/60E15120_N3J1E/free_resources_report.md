@@ -166,6 +166,10 @@ semantics for the 60E15120 corpus.
   | SBL-region run 0xb0e–0xfff 1,234 B | 0xb0e–0xfdf 1,234 B (0xfe0–0xfff is the vector area, not 0xFF) | yes |
   | never-written RAM 0xffff8000–0xffff92ff 4,864 B after 2M-cycle boot | identical | yes |
   | largest runs excl. labeled cells 0xffff8901–0xffff90f3 2,035 B / 0xffff807d–0xffff8787 1,803 B | identical (0xffff8901 len 2035, 0xffff807d len 1803) | yes |
+
+  The feasibility report's SBL-run claim quoted above has since been corrected
+  in that report (end 0xfdf, not 0xfff) — see
+  [reviews/cross_report_consistency/README.md](reviews/cross_report_consistency/README.md).
 - Every ROM's SHA-256 re-computed during the scan and quoted in §3; the
   reference ROM hash in the header equals the submodule ROM's hash.
 - The [flash-memory-layout report](../../architecture/flash-memory-layout.md)
