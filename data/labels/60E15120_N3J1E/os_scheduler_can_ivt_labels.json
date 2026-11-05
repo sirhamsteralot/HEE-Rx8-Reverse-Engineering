@@ -3,261 +3,261 @@
  "pass": "os_scheduler_can_ivt_labeling_from_emulator_findings",
  "source": "SH-2E emulator dynamic execution (utilities/scripts/emu, tests/test_phase1_dynamic.py) + ROM bytes + Sh7055h.pdf",
  "function_aliases": {
-  "00003238": {
-   "alias": "interrupt_entry_save_context",
-   "confidence": "high",
-   "evidence": "jsr target of every IVT trampoline at 0x28c0-0x30d0 (literals all = 0x3238). Dynamically executed on every cpu.interrupt in the emulator: saves r2-r7, fr0-fr11, fpscr, fpul (0x324a-0x326e), raises SR mask from ctrl block field +0x10, bumps counter at +0x8, rts to LAB_00003280 restore path."
-  },
-  "00003e10": {
-   "alias": "os_init",
-   "confidence": "high",
-   "evidence": "Called via literal at 0x9f38 during boot. Sets DAT_ffff7648=0xb0, task table ptr DAT_ffff7650=&DAT_00004990, current task DAT_ffff764c=&DAT_ffff7408, then calls dispatcher 0x3c2a. Emulator boot trace passes through it before reaching idle 0x3dac."
-  },
-  "00003c2a": {
-   "alias": "os_dispatch",
-   "confidence": "high",
-   "evidence": "If ctrl+6 (0xffff763e) != -1 then 0x3c68 runs a task; else inits ctrl block (0x80000000, 0xffff, task table 0x4990) and enters idle loop 0x3dac. Emulator: harness.call(0x3c2a, stop_at=0x3dac) reaches idle."
-  },
-  "00003c68": {
-   "alias": "os_dispatch_next_task",
-   "confidence": "high",
-   "evidence": "Tail-calls 0x375c(ctrl, *(short*)(ctrl+6))."
-  },
-  "0000375c": {
-   "alias": "os_switch_to_task",
-   "confidence": "high",
-   "evidence": "Sets ctrl+4 = task index, ctrl+0x18 = task record (0x4990 + idx*0x10), ctrl+0x14 = stack ptr from PTR_DAT_00004994[idx], then computed jump via PTR_FUN_00004998[idx] (task table 0x4998). Emulator: vec-0x378 handler reaches it via 0x9630."
-  },
-  "00003db0": {
-   "alias": "os_wake_check_context_switch",
-   "confidence": "high",
-   "evidence": "Called from ref_setSR (0x3934, call-site literal 0x3950). If DAT_ffff763c != DAT_ffff763e and (DAT_ffff7640 & 0x1000)==0: sets 0xffff7640=0x100, calls 0x3bf4 (context switch). Task-dispatch wake on ISR exit."
-  },
-  "00011d88": {
-   "alias": "can_rx_poll_move_to_uds_buffer",
-   "confidence": "high",
-   "evidence": "Emulator dynamic: after can.inject(0x7e0, 02 10 03 ...) raises IVT 0x378, a plain emu.run executes 0x11d88 which calls 0x9c8e/0xce24 (pending = byteswap(~MBIMR & RXPR)), ref_placeCANRX(0x4dffc) copies MD14 into 0xffffddc8 (observed 02100300), clears RXPR; with latch DAT_ffff9ec8 bit0 set it tail-calls 0x680a0(0x7e0)."
-  },
-  "00009c8e": {
-   "alias": "can_rx_pending_check",
-   "confidence": "high",
-   "evidence": "Wrapper: r0 = 0xce24(0); called at 0x11dba/0x11e4c in the CAN RX poll."
-  },
-  "0000ce24": {
-   "alias": "can_rx_pending_bits",
-   "confidence": "high",
-   "evidence": "returns byteswap(~HCAN0_MBIMR_W & *(u16*)0xffffe40e) = byteswap(~MBIMR & RXPR). Emulator: inject sets RXPR=0x40 so this returns 0x4000."
-  },
-  "0000cee8": {
-   "alias": "can_mailbox_reg_addr",
-   "confidence": "high",
-   "evidence": "reg + 0x200 if mb > 0x1f (HCAN1 block at 0xffffe600); else reg. Used by all mailbox accessors."
-  },
-  "0000cf12": {
-   "alias": "can_mailbox_bitmask",
-   "confidence": "high",
-   "evidence": "returns *(i16*)(0xd914 + (mb&0xf)*2) from the ROM mask table; mask = 1<<((mb+8)&0xf), e.g. mb14 -> 0x40, mb15 -> 0x80 (verified vs ROM bytes at 0xd914 and emulator RXPR bits)."
-  },
-  "0000ccda": {
-   "alias": "can_mailbox_write_payload",
-   "confidence": "high",
-   "evidence": "FUN_00009e26(len, 0, payload, MD(mb)) - copies payload into mailbox data (TX side of ref_txCAN_EventBased 0x99b0)."
-  },
-  "0000cca4": {
-   "alias": "can_mailbox_read_payload",
-   "confidence": "high",
-   "evidence": "FUN_00009dfc(len, 0, payload, MD(mb)) - copies mailbox data out (RX side of ref_placeCANRX 0x9890)."
-  },
-  "0000cd40": {
-   "alias": "can_mailbox_dlc",
-   "confidence": "high",
-   "evidence": "returns MC[mb][0] & 0xf (DLC stored in MC byte 0 by FUN_00001ed0). Emulator: TX of desc 0x4e00c emitted an 8-byte frame on 0x7e8."
-  },
-  "000680a0": {
-   "alias": "uds_service_entry",
-   "confidence": "high",
-   "evidence": "Emulator dynamic: harness.call(0x680a0, r4=0x7e0) after buffer fill -> PCI byte check via 0x683d4, service dispatch 0x6842c, then 0x684b4(0x7e0) schedules the UDS service task via ref_osTaskScheduler(2,0,&local)."
-  },
-  "000684b4": {
-   "alias": "uds_request_schedule_service_task",
-   "confidence": "high",
-   "evidence": "Calls 0x68b22(DAT_ffffddec), 0x68bc6(1,0x28), thunk 0x54b2c, ref_osTaskScheduler(2,0,&local_14). Executed in emulator while serving 10 03."
-  },
-  "00009890": {
-   "alias": "can_rx_copy_mailbox_to_buffer",
-   "confidence": "high",
-   "evidence": "was ref_placeCANRX. Emulator dynamic: returns 0 and copies MD14 into desc buffer 0xffffddc8, clears RXPR, when RXPR bit set and UMSR bit clear; W1C semantics of RXPR/UMSR confirmed."
-  },
-  "000008cc": {
-   "alias": "boot_wait_nmi_pin_high",
-   "confidence": "high",
-   "evidence": "Contains the poll at 0x8ea: mov.w @(0xffffed18) & 0x8000 (ICR_W bit15 = NMI pin level, Sh7055h.pdf 7.3.2) until set. Emulator: with NMI modeled low, boot hangs exactly here (pc 0x8ea, 1 mmio write); with SYSC nmi_level=1 boot reaches idle 0x3dac."
-  },
-  "000009c0": {
-   "alias": "can_enter_reset_mode",
-   "confidence": "high",
-   "evidence": "MCR |= 1 then waits GSR bit3 (0x08) set, 4000-iteration timeout. Emulator: with the GSR handshake modeled, boot passes; without it boot spun here forever."
-  },
-  "000009de": {
-   "alias": "can_exit_reset_mode",
-   "confidence": "high",
-   "evidence": "MCR &= ~1, waits GSR bit3 clear. Pairs with 0x9c0 (HCAN1 copies at 0x1e94/0x1eb2)."
-  },
-  "000077f0": {
-   "alias": "crank_capture_poll",
-   "confidence": "high",
-   "evidence": "Reads ATUII_ICR0AH_W (0xfffff434) into 0xffff9fb8 and ATUII_ICR10AH_W (0xfffff6d0) into 0xffff9fb0, computes period into 0xffff9fa8. Emulator: ICR values tracked the virtual crank wheel (set_rpm) when called via harness."
-  },
-  "0000803e": {
-   "alias": "crank_isr_compute_rpm",
-   "confidence": "high",
-   "evidence": "was ref_INT_ATU101_IMI10AG (misnomer). Vector 0x2c8 (CMI10B; IVT at VBR 0x7fc50). Sums the 6-entry ring at 0xffff9fd0 into crank_period_accumulator_ffff9f88, sets engine_speed_rpm_raw_ffff9f80 = 1.2e8/sum. Emulator: fired via cpu.interrupt(0x2c8), executed, returned to idle."
-  },
-  "00007778": {
-   "alias": "atu_ch10b_tick_enable",
-   "confidence": "high",
-   "evidence": "was ref_setInterruptTimer. Clears TSR10 (write 0xb), calls 0x7b58 (OCR10B from table 0xd76d[DAT_ffff9f95*2]&0x7f, TCNT10B=0), sets TIER10 bit2 (CMFB). OS tick setup; ch10 started by TSTR3 bit0 (0xfffff402)."
-  },
-  "00006884": {
-   "alias": "adc_scan_sweep_all_channels",
-   "confidence": "high",
-   "evidence": "was ref_sensorADCRead. Starts ADCSR0/1/2 scans, ADST via ADCR 0x20, busy-waits ADCSR bit7 (ADF), then copies ADDR0H..ADDR31H into 0xffff9ee4..0xffff9f22 (maf ADDR3H -> 0xffff9eea, apv ADDR6H -> 0xffff9ef0, knock ADDR10H -> 0xffff9ef8). Emulator: harness.call(0x6884) landed scripted channels in those RAM cells."
-  },
-  "00006744": {
-   "alias": "vehicle_inputs_poll_pfdr_phdr",
-   "confidence": "high",
-   "evidence": "was ref_getVehicleStatusInputs_. DAT_ffff9ec8 = PFDR_W (0xfffff74e), DAT_ffff9eca = PHDR_W, plus 3 GPIO inputs. Emulator: PFDR bit0 scripted high via GPIO inputs; read observed during the CAN-RX tick."
-  },
-  "00006fb0": {
-   "alias": "adc_read_result_bank2",
-   "confidence": "high",
-   "evidence": "was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff848); bank-2 channel select (ADCSR2 at 0xfffff858).; 2026-11-05: body re-read 2026-11-05: polls ADC bank-2 control regs ADCSR2_B/ADCR2_B (clear SCAN/ADF, manage ADST) then reads results; caller knock_reference_adc_read 0xc276; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
-  },
-  "00006cdc": {
-   "alias": "adc_read_ect_iat_group",
-   "confidence": "high",
-   "evidence": "was ref_readADCs_coolantTempInHere__. Reads ADDR24H-ADDR31H into 0xffff9f14-0xffff9f22 when DAT_ffff9f31 selects the group (ECT ADDR28H -> 0xffff9f1c, IAT ADDR29H -> 0xffff9f1e per fueling labels).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): with ADC group selector ffff9f31=8, AN28-31 raw values land exactly in ffff9f1c/9f1e/9f20/9f22 (9000/2500/111/222 observed) - ECT/IAT group read; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
-  }
+ "00003238": {
+  "alias": "interrupt_entry_save_context",
+  "confidence": "high",
+  "evidence": "jsr target of every IVT trampoline at 0x28c0-0x30d0 (literals all = 0x3238). Dynamically executed on every cpu.interrupt in the emulator: saves r2-r7, fr0-fr11, fpscr, fpul (0x324a-0x326e), raises SR mask from ctrl block field +0x10, bumps counter at +0x8, rts to LAB_00003280 restore path."
+ },
+ "00003e10": {
+  "alias": "os_init",
+  "confidence": "high",
+  "evidence": "Called via literal at 0x9f38 during boot. Sets DAT_ffff7648=0xb0, task table ptr DAT_ffff7650=&DAT_00004990, current task DAT_ffff764c=&DAT_ffff7408, then calls dispatcher 0x3c2a. Emulator boot trace passes through it before reaching idle 0x3dac."
+ },
+ "00003c2a": {
+  "alias": "os_dispatch",
+  "confidence": "high",
+  "evidence": "If ctrl+6 (0xffff763e) != -1 then 0x3c68 runs a task; else inits ctrl block (0x80000000, 0xffff, task table 0x4990) and enters idle loop 0x3dac. Emulator: harness.call(0x3c2a, stop_at=0x3dac) reaches idle."
+ },
+ "00003c68": {
+  "alias": "os_dispatch_next_task",
+  "confidence": "high",
+  "evidence": "Tail-calls 0x375c(ctrl, *(short*)(ctrl+6))."
+ },
+ "0000375c": {
+  "alias": "os_switch_to_task",
+  "confidence": "high",
+  "evidence": "Sets ctrl+4 = task index, ctrl+0x18 = task record (0x4990 + idx*0x10), ctrl+0x14 = stack ptr from PTR_DAT_00004994[idx], then computed jump via PTR_FUN_00004998[idx] (task table 0x4998). Emulator: vec-0x378 handler reaches it via 0x9630."
+ },
+ "00003db0": {
+  "alias": "os_wake_check_context_switch",
+  "confidence": "high",
+  "evidence": "Called from ref_setSR (0x3934, call-site literal 0x3950). If DAT_ffff763c != DAT_ffff763e and (DAT_ffff7640 & 0x1000)==0: sets 0xffff7640=0x100, calls 0x3bf4 (context switch). Task-dispatch wake on ISR exit."
+ },
+ "00011d88": {
+  "alias": "can_rx_poll_move_to_uds_buffer",
+  "confidence": "high",
+  "evidence": "Emulator dynamic: after can.inject(0x7e0, 02 10 03 ...) raises IVT 0x378, a plain emu.run executes 0x11d88 which calls 0x9c8e/0xce24 (pending = byteswap(~MBIMR & RXPR)), ref_placeCANRX(0x4dffc) copies MD14 into 0xffffddc8 (observed 02100300), clears RXPR; with latch DAT_ffff9ec8 bit0 set it tail-calls 0x680a0(0x7e0)."
+ },
+ "00009c8e": {
+  "alias": "can_rx_pending_check",
+  "confidence": "high",
+  "evidence": "Wrapper: r0 = 0xce24(0); called at 0x11dba/0x11e4c in the CAN RX poll."
+ },
+ "0000ce24": {
+  "alias": "can_rx_pending_bits",
+  "confidence": "high",
+  "evidence": "returns byteswap(~HCAN0_MBIMR_W & *(u16*)0xffffe40e) = byteswap(~MBIMR & RXPR). Emulator: inject sets RXPR=0x40 so this returns 0x4000."
+ },
+ "0000cee8": {
+  "alias": "can_mailbox_reg_addr",
+  "confidence": "high",
+  "evidence": "reg + 0x200 if mb > 0x1f (HCAN1 block at 0xffffe600); else reg. Used by all mailbox accessors."
+ },
+ "0000cf12": {
+  "alias": "can_mailbox_bitmask",
+  "confidence": "high",
+  "evidence": "returns *(i16*)(0xd914 + (mb&0xf)*2) from the ROM mask table; mask = 1<<((mb+8)&0xf), e.g. mb14 -> 0x40, mb15 -> 0x80 (verified vs ROM bytes at 0xd914 and emulator RXPR bits)."
+ },
+ "0000ccda": {
+  "alias": "can_mailbox_write_payload",
+  "confidence": "high",
+  "evidence": "FUN_00009e26(len, 0, payload, MD(mb)) - copies payload into mailbox data (TX side of ref_txCAN_EventBased 0x99b0)."
+ },
+ "0000cca4": {
+  "alias": "can_mailbox_read_payload",
+  "confidence": "high",
+  "evidence": "FUN_00009dfc(len, 0, payload, MD(mb)) - copies mailbox data out (RX side of ref_placeCANRX 0x9890)."
+ },
+ "0000cd40": {
+  "alias": "can_mailbox_dlc",
+  "confidence": "high",
+  "evidence": "returns MC[mb][0] & 0xf (DLC stored in MC byte 0 by FUN_00001ed0). Emulator: TX of desc 0x4e00c emitted an 8-byte frame on 0x7e8."
+ },
+ "000680a0": {
+  "alias": "uds_service_entry",
+  "confidence": "high",
+  "evidence": "Emulator dynamic: harness.call(0x680a0, r4=0x7e0) after buffer fill -> PCI byte check via 0x683d4, service dispatch 0x6842c, then 0x684b4(0x7e0) schedules the UDS service task via ref_osTaskScheduler(2,0,&local)."
+ },
+ "000684b4": {
+  "alias": "uds_request_schedule_service_task",
+  "confidence": "high",
+  "evidence": "Calls 0x68b22(DAT_ffffddec), 0x68bc6(1,0x28), thunk 0x54b2c, ref_osTaskScheduler(2,0,&local_14). Executed in emulator while serving 10 03."
+ },
+ "00009890": {
+  "alias": "can_rx_copy_mailbox_to_buffer",
+  "confidence": "high",
+  "evidence": "was ref_placeCANRX. Emulator dynamic: returns 0 and copies MD14 into desc buffer 0xffffddc8, clears RXPR, when RXPR bit set and UMSR bit clear; W1C semantics of RXPR/UMSR confirmed."
+ },
+ "000008cc": {
+  "alias": "boot_wait_nmi_pin_high",
+  "confidence": "high",
+  "evidence": "Contains the poll at 0x8ea: mov.w @(0xffffed18) & 0x8000 (ICR_W bit15 = NMI pin level, Sh7055h.pdf 7.3.2) until set. Emulator: with NMI modeled low, boot hangs exactly here (pc 0x8ea, 1 mmio write); with SYSC nmi_level=1 boot reaches idle 0x3dac."
+ },
+ "000009c0": {
+  "alias": "can_enter_reset_mode",
+  "confidence": "high",
+  "evidence": "MCR |= 1 then waits GSR bit3 (0x08) set, 4000-iteration timeout. Emulator: with the GSR handshake modeled, boot passes; without it boot spun here forever."
+ },
+ "000009de": {
+  "alias": "can_exit_reset_mode",
+  "confidence": "high",
+  "evidence": "MCR &= ~1, waits GSR bit3 clear. Pairs with 0x9c0 (HCAN1 copies at 0x1e94/0x1eb2)."
+ },
+ "000077f0": {
+  "alias": "crank_capture_poll",
+  "confidence": "high",
+  "evidence": "Reads ATUII_ICR0AH_W (0xfffff434) into 0xffff9fb8 and ATUII_ICR10AH_W (0xfffff6d0) into 0xffff9fb0, computes period into 0xffff9fa8. Emulator: ICR values tracked the virtual crank wheel (set_rpm) when called via harness."
+ },
+ "0000803e": {
+  "alias": "crank_isr_compute_rpm",
+  "confidence": "high",
+  "evidence": "was ref_INT_ATU101_IMI10AG (misnomer). Vector 0x2c8 (CMI10B; IVT at VBR 0x7fc50). Sums the 6-entry ring at 0xffff9fd0 into crank_period_accumulator_ffff9f88, sets engine_speed_rpm_raw_ffff9f80 = 1.2e8/sum. Emulator: fired via cpu.interrupt(0x2c8), executed, returned to idle."
+ },
+ "00007778": {
+  "alias": "atu_ch10b_tick_enable",
+  "confidence": "high",
+  "evidence": "was ref_setInterruptTimer. Clears TSR10 (write 0xb), calls 0x7b58 (OCR10B from table 0xd76d[DAT_ffff9f95*2]&0x7f, TCNT10B=0), sets TIER10 bit2 (CMFB). OS tick setup; ch10 started by TSTR3 bit0 (0xfffff402)."
+ },
+ "00006884": {
+  "alias": "adc_scan_sweep_all_channels",
+  "confidence": "high",
+  "evidence": "was ref_sensorADCRead. Starts ADCSR0/1/2 scans, ADST via ADCR 0x20, busy-waits ADCSR bit7 (ADF), then copies ADDR0H..ADDR31H into 0xffff9ee4..0xffff9f22 (maf ADDR3H -> 0xffff9eea, apv ADDR6H -> 0xffff9ef0, knock ADDR10H -> 0xffff9ef8). Emulator: harness.call(0x6884) landed scripted channels in those RAM cells."
+ },
+ "00006744": {
+  "alias": "vehicle_inputs_poll_pfdr_phdr",
+  "confidence": "high",
+  "evidence": "was ref_getVehicleStatusInputs_. DAT_ffff9ec8 = PFDR_W (0xfffff74e), DAT_ffff9eca = PHDR_W, plus 3 GPIO inputs. Emulator: PFDR bit0 scripted high via GPIO inputs; read observed during the CAN-RX tick."
+ },
+ "00006fb0": {
+  "alias": "adc_read_result_bank2",
+  "confidence": "high",
+  "evidence": "was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff848); bank-2 channel select (ADCSR2 at 0xfffff858).; body re-read polls ADC bank-2 control regs ADCSR2_B/ADCR2_B (clear SCAN/ADF, manage ADST) then reads results; caller knock_reference_adc_read 0xc276; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+ },
+ "00006cdc": {
+  "alias": "adc_read_ect_iat_group",
+  "confidence": "high",
+  "evidence": "was ref_readADCs_coolantTempInHere__. Reads ADDR24H-ADDR31H into 0xffff9f14-0xffff9f22 when DAT_ffff9f31 selects the group (ECT ADDR28H -> 0xffff9f1c, IAT ADDR29H -> 0xffff9f1e per fueling labels).; dynamically verified in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): with ADC group selector ffff9f31=8, AN28-31 raw values land exactly in ffff9f1c/9f1e/9f20/9f22 (9000/2500/111/222 observed) - ECT/IAT group read; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+ }
  },
  "ram_aliases": {
-  "ffff7638": {
-   "alias": "os_ctrl_block",
-   "type": "uint8[0x20]",
-   "reader": "0000375c"
-  },
-  "ffff763c": {
-   "alias": "os_scheduled_count",
-   "type": "uint16",
-   "reader": "00003db0"
-  },
-  "ffff763e": {
-   "alias": "os_dispatched_count",
-   "type": "uint16",
-   "reader": "00003db0"
-  },
-  "ffff7640": {
-   "alias": "os_state_flags",
-   "type": "uint16",
-   "reader": "00003238"
-  },
-  "ffff764c": {
-   "alias": "os_current_task_record_ptr",
-   "type": "ptr",
-   "reader": "00003e10"
-  },
-  "ffff7650": {
-   "alias": "os_task_table_ptr",
-   "type": "ptr",
-   "reader": "00003e10"
-  },
-  "ffff7408": {
-   "alias": "os_task_stack_base",
-   "type": "ptr",
-   "reader": "00003e10"
-  },
-  "ffff9ec8": {
-   "alias": "vehicle_inputs_pfdr_latch",
-   "type": "uint8",
-   "reader": "00006744"
-  },
-  "ffff9ed8": {
-   "alias": "vehicle_inputs_pfdr_prev",
-   "type": "uint8",
-   "reader": "00006796"
-  },
-  "ffff9eca": {
-   "alias": "vehicle_inputs_phdr_latch",
-   "type": "uint8",
-   "reader": "00006744"
-  },
-  "ffff9eda": {
-   "alias": "vehicle_inputs_phdr_prev",
-   "type": "uint8",
-   "reader": "00006796"
-  },
-  "ffffddc8": {
-   "alias": "uds_rx_buffer",
-   "type": "uint8[8]",
-   "reader": "00011d88"
-  },
-  "ffffddd0": {
-   "alias": "uds_tx_buffer",
-   "type": "uint8[8]",
-   "reader": "000099b0"
-  },
-  "ffff9fb0": {
-   "alias": "crank_icr10ah_sample",
-   "type": "uint16",
-   "reader": "000077f0"
-  },
-  "ffff9fb8": {
-   "alias": "crank_icr0ah_sample",
-   "type": "uint16",
-   "reader": "000077f0"
-  },
-  "ffff9fa8": {
-   "alias": "crank_period_last",
-   "type": "uint32",
-   "reader": "000077f0"
-  }
+ "ffff7638": {
+  "alias": "os_ctrl_block",
+  "type": "uint8[0x20]",
+  "reader": "0000375c"
+ },
+ "ffff763c": {
+  "alias": "os_scheduled_count",
+  "type": "uint16",
+  "reader": "00003db0"
+ },
+ "ffff763e": {
+  "alias": "os_dispatched_count",
+  "type": "uint16",
+  "reader": "00003db0"
+ },
+ "ffff7640": {
+  "alias": "os_state_flags",
+  "type": "uint16",
+  "reader": "00003238"
+ },
+ "ffff764c": {
+  "alias": "os_current_task_record_ptr",
+  "type": "ptr",
+  "reader": "00003e10"
+ },
+ "ffff7650": {
+  "alias": "os_task_table_ptr",
+  "type": "ptr",
+  "reader": "00003e10"
+ },
+ "ffff7408": {
+  "alias": "os_task_stack_base",
+  "type": "ptr",
+  "reader": "00003e10"
+ },
+ "ffff9ec8": {
+  "alias": "vehicle_inputs_pfdr_latch",
+  "type": "uint8",
+  "reader": "00006744"
+ },
+ "ffff9ed8": {
+  "alias": "vehicle_inputs_pfdr_prev",
+  "type": "uint8",
+  "reader": "00006796"
+ },
+ "ffff9eca": {
+  "alias": "vehicle_inputs_phdr_latch",
+  "type": "uint8",
+  "reader": "00006744"
+ },
+ "ffff9eda": {
+  "alias": "vehicle_inputs_phdr_prev",
+  "type": "uint8",
+  "reader": "00006796"
+ },
+ "ffffddc8": {
+  "alias": "uds_rx_buffer",
+  "type": "uint8[8]",
+  "reader": "00011d88"
+ },
+ "ffffddd0": {
+  "alias": "uds_tx_buffer",
+  "type": "uint8[8]",
+  "reader": "000099b0"
+ },
+ "ffff9fb0": {
+  "alias": "crank_icr10ah_sample",
+  "type": "uint16",
+  "reader": "000077f0"
+ },
+ "ffff9fb8": {
+  "alias": "crank_icr0ah_sample",
+  "type": "uint16",
+  "reader": "000077f0"
+ },
+ "ffff9fa8": {
+  "alias": "crank_period_last",
+  "type": "uint32",
+  "reader": "000077f0"
+ }
  },
  "lookup_aliases": {
-  "00007fc50": {
-   "alias": "ivt_base_vbr",
-   "evidence": "u32[236] vector table; VBR set to this at 0xd206"
-  },
-  "00004998": {
-   "alias": "os_task_table",
-   "evidence": "18 x 16-byte task records {entry, mask, param, stack}; stacks 0xffff7410-0xffff7498"
-  },
-  "00004990": {
-   "alias": "os_task_record_base",
-   "evidence": "task control records base used by 0x375c"
-  },
-  "0000d914": {
-   "alias": "can_mailbox_mask_table",
-   "evidence": "16 x u16; mask = 1<<((mb+8)&0xf); verified vs ROM bytes"
-  },
-  "0000d7d4": {
-   "alias": "injector_channel_map",
-   "evidence": "6 x 12-byte records {DCNT8x ptr, GR1x ptr, TIER mask}; dynamically confirmed via 0x8a68 (ch0 -> DCNT8A/GR1A ... ch5 -> DCNT8F/GR1F)"
-  },
-  "00004dffc": {
-   "alias": "can_rx_desc_id07e0",
-   "evidence": "Rx8CanMessageDescriptor id=0x7e0 mb=14 dlc=8 buf=0xffffddc8"
-  },
-  "00004dfec": {
-   "alias": "can_rx_desc_id07df",
-   "evidence": "Rx8CanMessageDescriptor id=0x7df mb=13 dlc=8 buf=0xffffddc8 (functional)"
-  },
-  "00004e00c": {
-   "alias": "can_tx_desc_id07e8",
-   "evidence": "Rx8CanMessageDescriptor id=0x7e8 mb=15 dlc=8 buf=0xffffddd0; emulator TX via 0x99b0 emitted 0x7e8 frames from 0xffffddd0"
-  },
-  "00005f10c": {
-   "alias": "diag22_dispatch_table",
-   "evidence": "99 x 12-byte Rx8DiagnosticRecord {identifier, resp_len, _, availability_mask, _, handler}; PID 0x43 record at 0x5f268 -> handler 0x56b8a"
-  }
+ "00007fc50": {
+  "alias": "ivt_base_vbr",
+  "evidence": "u32[236] vector table; VBR set to this at 0xd206"
+ },
+ "00004998": {
+  "alias": "os_task_table",
+  "evidence": "18 x 16-byte task records {entry, mask, param, stack}; stacks 0xffff7410-0xffff7498"
+ },
+ "00004990": {
+  "alias": "os_task_record_base",
+  "evidence": "task control records base used by 0x375c"
+ },
+ "0000d914": {
+  "alias": "can_mailbox_mask_table",
+  "evidence": "16 x u16; mask = 1<<((mb+8)&0xf); verified vs ROM bytes"
+ },
+ "0000d7d4": {
+  "alias": "injector_channel_map",
+  "evidence": "6 x 12-byte records {DCNT8x ptr, GR1x ptr, TIER mask}; dynamically confirmed via 0x8a68 (ch0 -> DCNT8A/GR1A ... ch5 -> DCNT8F/GR1F)"
+ },
+ "00004dffc": {
+  "alias": "can_rx_desc_id07e0",
+  "evidence": "Rx8CanMessageDescriptor id=0x7e0 mb=14 dlc=8 buf=0xffffddc8"
+ },
+ "00004dfec": {
+  "alias": "can_rx_desc_id07df",
+  "evidence": "Rx8CanMessageDescriptor id=0x7df mb=13 dlc=8 buf=0xffffddc8 (functional)"
+ },
+ "00004e00c": {
+  "alias": "can_tx_desc_id07e8",
+  "evidence": "Rx8CanMessageDescriptor id=0x7e8 mb=15 dlc=8 buf=0xffffddd0; emulator TX via 0x99b0 emitted 0x7e8 frames from 0xffffddd0"
+ },
+ "00005f10c": {
+  "alias": "diag22_dispatch_table",
+  "evidence": "99 x 12-byte Rx8DiagnosticRecord {identifier, resp_len, _, availability_mask, _, handler}; PID 0x43 record at 0x5f268 -> handler 0x56b8a"
+ }
  },
  "rom_unchanged": true
 }

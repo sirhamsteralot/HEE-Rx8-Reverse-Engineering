@@ -5,1131 +5,1131 @@
  "date": "2026-11-02",
  "key": "lookup descriptor address (tbl_XXXXXXXX name in data/maps/<rom>/index.tsv)",
  "entries": {
-  "0x6af54": {
-   "name": "Knock Enable Load Floor (RPM)",
-   "category": "Knock Control",
-   "note": "12 cells, 0.5 flat; axis 0x795e8 (RPM 800-9600); gates knock enable 0xffffa73d (0x13826).",
-   "desc": "Lowest engine load at which knock control is enabled, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
-   "confidence": "high",
-   "alias": "tbl_knock_enable_load_floor_0006af54"
-  },
-  "0x6af68": {
-   "name": "Knock Retard Clamp Min (RPM)",
-   "category": "Knock Control",
-   "note": "u8 cells x mult + offset(-64): -10..0 deg; axis 0x79624 (RPM 2000-5000); clamped by 0x13bd2 = [-10,0] deg (bug fixed 2026-10-29).",
-   "desc": "Most negative knock retard allowed (lower clamp), vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_retard_clamp_min_0006af68"
-  },
-  "0x6af7c": {
-   "name": "Knock Retard Clamp Min Alt (RPM)",
-   "category": "Knock Control",
-   "note": "alt min: -10/-7.5/-5x4/0; axis 0x79648.",
-   "desc": "Alternate lower knock retard clamp, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_retard_clamp_min_alt_0006af7c"
-  },
-  "0x6af90": {
-   "name": "Knock Retard Clamp Max (RPM)",
-   "category": "Knock Control",
-   "note": "0.0 deg x15; axis 0x7966c (RPM 800-6400).",
-   "desc": "Upper knock retard clamp, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_retard_clamp_max_0006af90"
-  },
-  "0x6afa4": {
-   "name": "Knock Recovery Target (RPM)",
-   "category": "Knock Control",
-   "note": "fail-safe target -10..0 deg; axis 0x796b8 (RPM 500-5500); written to 0xffffa744.",
-   "desc": "Knock retard recovery target in fail-safe, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_recovery_target_0006afa4"
-  },
-  "0x6afb8": {
-   "name": "Knock Learned Retard Scale",
-   "category": "Knock Control",
-   "note": "0.0 x13; axis 0x79704 = learned retard -8.4..+8.4 deg.",
-   "desc": "Scale applied to learned knock retard.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_learned_retard_scale_0006afb8"
-  },
-  "0x6b264": {
-   "name": "Knock Transient Hold (cycles)",
-   "category": "Knock Control",
-   "note": "raw u8 0x0a -> <<1 = 20-cycle hold (0xffffc0ac).",
-   "desc": "Number of cycles knock retard is held after a transient.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_transient_hold_0006b264"
-  },
-  "0x6b27c": {
-   "name": "Knock Ignition Threshold A Alt (RPM)",
-   "category": "Knock Control",
-   "note": "raw u16 vs RPM (alt) -> 0xffffc090 -> 0xffffa37e.",
-   "desc": "Alternate knock ignition-retard threshold A, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_ignition_timing_threshold_a_alt_0006b27c"
-  },
-  "0x6b294": {
-   "name": "Knock Ignition Threshold B Alt (RPM)",
-   "category": "Knock Control",
-   "note": "raw u16 vs RPM (alt) -> 0xffffc092 -> 0xffffa37c.",
-   "desc": "Alternate knock ignition-retard threshold B, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_ignition_timing_threshold_b_alt_0006b294"
-  },
-  "0x6b2b8": {
-   "name": "Knock Level 3D A (load x RPM)",
-   "category": "Knock Control",
-   "note": "3D knock level vs load/RPM (20x12 scaled).",
-   "desc": "Knock level map vs load and RPM (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_level_3d_a_0006b2b8"
-  },
-  "0x6b2d4": {
-   "name": "Knock Level 3D B (load x RPM)",
-   "category": "Knock Control",
-   "note": "3D knock level vs load/RPM.",
-   "desc": "Knock level map vs load and RPM (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_level_3d_b_0006b2d4"
-  },
-  "0x6b2f0": {
-   "name": "Knock Level 3D C (load x RPM)",
-   "category": "Knock Control",
-   "note": "3D knock level vs load/RPM.",
-   "desc": "Knock level map vs load and RPM (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_level_3d_c_0006b2f0"
-  },
-  "0x6b304": {
-   "name": "Knock Level 3D D (load x RPM)",
-   "category": "Knock Control",
-   "note": "3D knock level vs load/RPM (1x1 raw).",
-   "desc": "Knock level map vs load and RPM (variant D).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": "tbl_knock_level_3d_d_0006b304"
-  },
-  "0x6990c": {
-   "name": "Closed Loop Warmup Time",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "raw u16 x15 s; axis 0x6f7e0, data 0x6f81c; dispatch helper tbl_table_2d_304_check_datatype.",
-   "desc": "Time after start during which closed-loop fuelling is inhibited.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
-   "confidence": "high",
-   "alias": "tbl_closed_loop_warmup_time_0006990c"
-  },
-  "0x6ac38": {
-   "name": "Fuel Coolant Compensation (candidate)",
-   "category": "Fuel Injection",
-   "note": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim; descriptor unmatched in RX8Defs.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis.; descriptor bytes at 0x6ac38 re-verified 2026-11-05: type=0x0009 dims=(2048,7) next16=000908000007844c0007847038000000",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_labels.json; fueling_control_report.md §7.3",
-   "confidence": "candidate",
-   "alias": "tbl_fuel_coolant_compensation_0006ac38"
-  },
-  "0x69208": {
-   "name": "Idle Base Timing - Cranking (candidate)",
-   "category": "Idle Control",
-   "note": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1).",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' — name is a hypothesis (descriptor not in romraider_descriptor_matches).; descriptor bytes at 0x69208 re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006d8c00006d8e43f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_idle_base_timing_cranking_00069208"
-  },
-  "0x6921c": {
-   "name": "Idle Base Timing - Cold Low Load (candidate)",
-   "category": "Idle Control",
-   "note": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.; descriptor bytes at 0x6921c re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006d8f00006d9143f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_idle_base_timing_cold_lowload_0006921c"
-  },
-  "0x69230": {
-   "name": "Idle Base Timing - Warm High Load (candidate)",
-   "category": "Idle Control",
-   "note": "2D u8 n=4, data 0x6d930; 0x14100 else branch.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=4, data 0x6d930; 0x14100 else branch.; descriptor bytes at 0x69230 re-verified 2026-11-05: type=0x0004 dims=(1024,6) next16=000404000006d9200006d9303f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_idle_base_timing_warm_highload_00069230"
-  },
-  "0x691a4": {
-   "name": "Min Advance vs Coolant A (candidate)",
-   "category": "Ignition Timing",
-   "note": "2D u8 n=8, data 0x6d7f0; 0x12630 lookup_2d(ECT,...) cranking+out-of-band branch.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'.; descriptor bytes at 0x691a4 re-verified 2026-11-05: type=0x0008 dims=(1024,6) next16=000804000006d7d00006d7f03f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_min_advance_vs_coolant_a_000691a4"
-  },
-  "0x691b8": {
-   "name": "Min Advance vs Coolant B (candidate)",
-   "category": "Ignition Timing",
-   "note": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance).",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance).; descriptor bytes at 0x691b8 re-verified 2026-11-05: type=0x0008 dims=(1024,6) next16=000804000006d7f80006d8183f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_min_advance_vs_coolant_b_000691b8"
-  },
-  "0x69190": {
-   "name": "Max Advance vs RPM - Leading (candidate)",
-   "category": "Ignition Leading",
-   "note": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance (65.0 deg observed at 3000 rpm in emulator).; descriptor bytes at 0x69190 re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006d7a00006d7c43f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_max_advance_vs_rpm_leading_00069190"
-  },
-  "0x691cc": {
-   "name": "Max Advance vs RPM - Trailing (candidate)",
-   "category": "Ignition Trailing",
-   "note": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance.; descriptor bytes at 0x691cc re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006d8200006d8443f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_max_advance_vs_rpm_trailing_000691cc"
-  },
-  "0x69040": {
-   "name": "Off-Throttle Leading Timing 3D (candidate)",
-   "category": "Ignition Leading",
-   "note": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040).",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040).; descriptor bytes at 0x69040 re-verified 2026-11-05: type=0x0010 dims=(11,6) next16=0010000b0006c7dc0006c81c0006c848",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_offthrottle_leading_3d_00069040"
-  },
-  "0x6905c": {
-   "name": "Leading Advance 3D Alt (candidate)",
-   "category": "Ignition Leading",
-   "note": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by b-weight.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by coolant table a618.; descriptor bytes at 0x6905c re-verified 2026-11-05: type=0x000a dims=(8,6) next16=000a00080006c8f80006c9200006c940",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_leading_advance_3d_alt_0006905c"
-  },
-  "0x69018": {
-   "name": "Coolant Timing Multiplier - Leading (candidate)",
-   "category": "Ignition Leading",
-   "note": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018).",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018).; descriptor bytes at 0x69018 re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006c77c0006c7a03c23d70a",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_coolant_timing_multiplier_leading_00069018"
-  },
-  "0x6902c": {
-   "name": "Coolant Timing Multiplier - Trailing (candidate)",
-   "category": "Ignition Trailing",
-   "note": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror.; descriptor bytes at 0x6902c re-verified 2026-11-05: type=0x0009 dims=(1024,6) next16=000904000006c7ac0006c7d03c23d70a",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_coolant_timing_multiplier_trailing_0006902c"
-  },
-  "0x69094": {
-   "name": "Safe Mode Cap - Single (candidate)",
-   "category": "Ignition Leading",
-   "note": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D.; descriptor bytes at 0x69094 re-verified 2026-11-05: type=0x0001 dims=(1,6) next16=000100010006cb900006cb940006cb98",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_safe_mode_cap_single_00069094"
-  },
-  "0x690b0": {
-   "name": "Safe Mode Advance Cap 3D - Leading (candidate)",
-   "category": "Ignition Leading",
-   "note": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap.; descriptor bytes at 0x690b0 re-verified 2026-11-05: type=0x0014 dims=(18,6) next16=001400120006cb9c0006cbec0006cc34",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_safe_mode_advance_cap_000690b0"
-  },
-  "0x690e8": {
-   "name": "Off-Throttle Trailing Timing 3D (candidate)",
-   "category": "Ignition Trailing",
-   "note": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040.; descriptor bytes at 0x690e8 re-verified 2026-11-05: type=0x0010 dims=(11,6) next16=0010000b0006cf9c0006cfdc0006d008",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_offthrottle_trailing_3d_000690e8"
-  },
-  "0x69104": {
-   "name": "Trailing Advance 3D Alt (candidate)",
-   "category": "Ignition Trailing",
-   "note": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.; descriptor bytes at 0x69104 re-verified 2026-11-05: type=0x000a dims=(8,6) next16=000a00080006d0b80006d0e00006d100",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_trailing_advance_3d_alt_00069104"
-  },
-  "0x6913c": {
-   "name": "Safe Mode Cap - Single Trailing (candidate)",
-   "category": "Ignition Trailing",
-   "note": "1-cell float, data 0x6d354; 0x1206c safe-mode cap.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "1-cell float, data 0x6d354; 0x1206c safe-mode cap.; descriptor bytes at 0x6913c re-verified 2026-11-05: type=0x0001 dims=(1,6) next16=000100010006d3500006d3540006d358",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_safe_mode_cap_single_trailing_0006913c"
-  },
-  "0x69158": {
-   "name": "Safe Mode Advance Cap 3D - Trailing (candidate)",
-   "category": "Ignition Trailing",
-   "note": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.; descriptor bytes at 0x69158 re-verified 2026-11-05: type=0x0014 dims=(18,6) next16=001400120006d35c0006d3ac0006d3f4",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
-   "confidence": "candidate",
-   "alias": "candidate_tbl_safe_mode_advance_cap_trailing_00069158"
-  },
-  "0x6b250": {
-   "name": "Knock Voltage To Magnitude Scale",
-   "category": "Knock Control",
-   "note": "knock voltage -> magnitude scale.",
-   "desc": "Scales knock sensor voltage to knock magnitude.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b270": {
-   "name": "Knock Ignition Threshold A (RPM)",
-   "category": "Knock Control",
-   "note": "raw u16 vs RPM (normal) -> 0xffffc090 -> 0xffffa37e; default 94 (0xc1f8).",
-   "desc": "Knock level threshold that triggers ignition retard, channel A, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b288": {
-   "name": "Knock Ignition Threshold B (RPM)",
-   "category": "Knock Control",
-   "note": "raw u16 vs RPM (normal) -> 0xffffc092 -> 0xffffa37c; default 193.",
-   "desc": "Knock level threshold that triggers ignition retard, channel B, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b2a0": {
-   "name": "Knock Noise Threshold Min",
-   "category": "Knock Control",
-   "note": "clamp floor for 0xffffa350[2].",
-   "desc": "Minimum knock noise threshold (clamp floor).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b2ac": {
-   "name": "Knock Noise Floor (RPM)",
-   "category": "Knock Control",
-   "note": "lookup vs raw RPM -> 0xffffa358.",
-   "desc": "Knock noise floor vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b83c": {
-   "name": "Cold-Start Advance Reduction (RPM)",
-   "category": "Ignition Timing",
-   "note": "min(c9a8, lookup(RPM)) in 0x12630 (cranking + out-of-band path).",
-   "desc": "Cold-start ignition advance reduction, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69078": {
-   "name": "Ignition Leading - Base Timing",
-   "category": "Ignition Leading",
-   "note": "3D float, deg; main leading base map, read by 0x11f00.",
-   "desc": "Main leading (front rotor) base ignition timing vs load and RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x690cc": {
-   "name": "Ignition Leading Advance Cap",
-   "category": "Ignition Leading",
-   "note": "cap applied by 0x11f00.",
-   "desc": "Maximum allowed leading ignition advance.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69120": {
-   "name": "Ignition Trailing - Base Timing",
-   "category": "Ignition Trailing",
-   "note": "trailing base map, read by 0x1206c.",
-   "desc": "Trailing (rear rotor) base ignition timing map.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69174": {
-   "name": "Ignition Trailing Advance",
-   "category": "Ignition Trailing",
-   "note": "trailing advance, read by 0x1206c.",
-   "desc": "Trailing ignition advance adder.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a060": {
-   "name": "Idle Error Timing Correction - Leading Off (deg)",
-   "category": "Ignition Leading",
-   "note": "bool false/true bank, leading; 0x135b4.",
-   "desc": "Idle speed error correction to leading timing (idle control off).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a074": {
-   "name": "Idle Error Timing Correction - Leading On (deg)",
-   "category": "Ignition Leading",
-   "note": "bool true bank, leading; 0x135b4.",
-   "desc": "Idle speed error correction to leading timing (idle control on).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a088": {
-   "name": "Idle Error Timing Correction - Trailing Off (deg)",
-   "category": "Ignition Trailing",
-   "note": "bool false bank, trailing; 0x136e4.",
-   "desc": "Idle speed error correction to trailing timing (idle control off).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a09c": {
-   "name": "Idle Error Timing Correction - Trailing On (deg)",
-   "category": "Ignition Trailing",
-   "note": "bool true bank, trailing; 0x136e4.",
-   "desc": "Idle speed error correction to trailing timing (idle control on).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a0d8": {
-   "name": "IAT Compensation - On Throttle (deg)",
-   "category": "Ignition Timing",
-   "note": "0x14090.",
-   "desc": "Intake-air-temperature correction to timing on throttle.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a0ec": {
-   "name": "IAT Compensation - Cranking (deg) (candidate)",
-   "category": "Ignition Timing",
-   "note": "upstream 'Table 2D - 113'; 0x14090 cranking branch.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "descriptor bytes at 0x6a0ec re-verified 2026-11-05: type=0x0009 dims=(1024,7) next16=0009040000072650000726743f000000",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "candidate",
-   "alias": null
-  },
-  "0x6af2c": {
-   "name": "Ignition Leading - Cranking Timing Advance (ECT)",
-   "category": "Ignition Leading",
-   "note": "deg vs ECT; 0x43934 via 0x6b630.",
-   "desc": "Cranking ignition advance adder vs coolant temperature, leading.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b644": {
-   "name": "Ignition Trailing - Cranking Timing Advance (ECT)",
-   "category": "Ignition Trailing",
-   "note": "deg vs ECT; 0x439b2 via 0x6b630.",
-   "desc": "Cranking ignition advance adder vs coolant temperature, trailing.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b630": {
-   "name": "Off-Throttle Leading Timing vs ECT (deg)",
-   "category": "Ignition Leading",
-   "note": "upstream 'Off Throttle Leading Timing Realted'; 0x43934.",
-   "desc": "Off-throttle leading timing vs coolant temperature.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a7a4": {
-   "name": "Ignition Leading - DSC Mode A Base",
-   "category": "Ignition Leading",
-   "note": "0x2cc2c.",
-   "desc": "Leading base timing in DSC mode A.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6957c": {
-   "name": "Ignition Leading - DSC Mode A Map 4",
-   "category": "Ignition Leading",
-   "note": "0x1815c.",
-   "desc": "Leading timing map 4 in DSC mode A.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x68ef8": {
-   "name": "Injector Max Open Angle 1 (deg)",
-   "category": "Fuel Injection",
-   "note": "per-injector max open-angle degrees, consumer 0xff32; upstream name 'Max Injection Angle1???' was a guess - ROM scale is deg x2.",
-   "desc": "Maximum injector open angle, stage 1, in degrees.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7, §10 (0x68ef8/f0c/f20 = per-injector max open-angle)",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x68f0c": {
-   "name": "Injector Max Open Angle 2 (deg)",
-   "category": "Fuel Injection",
-   "note": "per-injector max open-angle degrees, consumer 0xff32.",
-   "desc": "Maximum injector open angle, stage 2, in degrees.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x68f20": {
-   "name": "Injector Max Open Angle 3 (deg)",
-   "category": "Fuel Injection",
-   "note": "per-injector max open-angle degrees, consumer 0xff32.",
-   "desc": "Maximum injector open angle, stage 3, in degrees.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69788": {
-   "name": "MAF Scaling",
-   "category": "Sensors",
-   "note": "MAF volts -> g/s (ADC AN3 via 0x6884 sweep).",
-   "desc": "MAF sensor voltage to air mass flow (g/s).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69794": {
-   "name": "MAF Density-Cap Window vs RPM (candidate)",
-   "category": "Engine Load",
-   "note": "read by 0x1a086.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "descriptor bytes at 0x69794 re-verified 2026-11-05: type=0x0001 dims=(0,6) next16=000100000006f0d00006f0d4000a0800",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "candidate",
-   "alias": null
-  },
-  "0x697a0": {
-   "name": "Transient-Detection Threshold vs Throttle (candidate)",
-   "category": "Engine Load",
-   "note": "read by 0x1a1dc.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "descriptor bytes at 0x697a0 re-verified 2026-11-05: type=0x000a dims=(2048,6) next16=000a08000006f1080006f1303c23d70a",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "candidate",
-   "alias": null
-  },
-  "0x697b4": {
-   "name": "MAF Filter Coefficient vs RPM (candidate)",
-   "category": "Engine Load",
-   "note": "read by 0x1a418.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "descriptor bytes at 0x697b4 re-verified 2026-11-05: type=0x000a dims=(2048,6) next16=000a08000006f1440006f16c3a83126e",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "candidate",
-   "alias": null
-  },
-  "0x69cac": {
-   "name": "OL Fuelling Base Correction - Baro",
-   "category": "Fuel Injection - Open Loop",
-   "note": "0x1ee4a: b170 = lookup(baro) [safe-mode pair with 0x69cc0]; b130 = max(b170*b190, b194).",
-   "desc": "Open-loop fuelling base correction vs barometric pressure.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69cc0": {
-   "name": "OL Fuelling Base Correction - Baro [Safe Mode]",
-   "category": "Fuel Injection - Open Loop",
-   "note": "safe-mode pair of 0x69cac.",
-   "desc": "Open-loop fuelling base correction vs barometric pressure (safe mode).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69cd4": {
-   "name": "OL Target - Coolant Temperature Correction",
-   "category": "Fuel Injection - Open Loop",
-   "note": "b134 = lookup(coolant); b120 = b130*b134.",
-   "desc": "Open-loop target lambda correction vs coolant temperature.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69ce8": {
-   "name": "OL Fuelling Rich Limit",
-   "category": "Fuel Injection - Open Loop",
-   "note": "rich-limit pair with 0x69cfc [safe mode].",
-   "desc": "Rich limit for open-loop fuelling.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69cfc": {
-   "name": "OL Fuelling Rich Limit [Safe Mode]",
-   "category": "Fuel Injection - Open Loop",
-   "note": "safe-mode pair of 0x69ce8.",
-   "desc": "Rich limit for open-loop fuelling (safe mode).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d10": {
-   "name": "OL Temperature Correction #B",
-   "category": "Fuel Injection - Open Loop",
-   "note": "",
-   "desc": "Open-loop fuelling temperature correction B.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69e00": {
-   "name": "OL Changeover Enrichment",
-   "category": "Fuel Injection - Open Loop",
-   "note": "",
-   "desc": "Fuel enrichment during open-loop changeover.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69e80": {
-   "name": "OL Target - Throttle Tip In",
-   "category": "Fuel Injection - Open Loop",
-   "note": "b190 = lookup(rpm, tps) [safe-mode pair 0x69eb8].",
-   "desc": "Open-loop target lambda during throttle tip-in, vs RPM and throttle.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69eb8": {
-   "name": "OL Target - Throttle Tip In [Safe Mode]",
-   "category": "Fuel Injection - Open Loop",
-   "note": "safe-mode pair of 0x69e80.",
-   "desc": "Open-loop target lambda during throttle tip-in (safe mode).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69e9c": {
-   "name": "OL Target - Main (load x RPM)",
-   "category": "Fuel Injection - Open Loop",
-   "note": "b194 = lookup_3d(load, rpm); stores lambda-1 (the +1.0 is added at the 0x1cc34 clamp [0.85,1.05]); [safe-mode pair 0x69ed4].",
-   "desc": "Main open-loop target lambda vs engine load and RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8; load_fueling_report.md",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69ed4": {
-   "name": "OL Target - Main [Safe Mode]",
-   "category": "Fuel Injection - Open Loop",
-   "note": "safe-mode pair of 0x69e9c; lambda-1 storage.",
-   "desc": "Main open-loop target lambda vs engine load and RPM (safe mode).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69ef0": {
-   "name": "OL Target - Tip In - Coolant Implausible B",
-   "category": "Fuel Injection - Open Loop",
-   "note": "implausible-coolant blend A/B by fuel_blend_weight_ffffb11c.",
-   "desc": "Tip-in target lambda for implausible coolant reading (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69f28": {
-   "name": "OL Target - Tip In - Coolant Implausible A",
-   "category": "Fuel Injection - Open Loop",
-   "note": "",
-   "desc": "Tip-in target lambda for implausible coolant reading (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69f0c": {
-   "name": "OL Target - Coolant Implausible - Gear 5-6",
-   "category": "Fuel Injection - Open Loop",
-   "note": "gear 1-4 counterpart 0x69f44.",
-   "desc": "Open-loop target lambda for implausible coolant reading, gears 5-6.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69f44": {
-   "name": "OL Target - Coolant Implausible - Gear 1-4",
-   "category": "Fuel Injection - Open Loop",
-   "note": "",
-   "desc": "Open-loop target lambda for implausible coolant reading, gears 1-4.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x699b8": {
-   "name": "Closed Loop WOT Enrichment",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "upstream name had '??'.",
-   "desc": "Closed-loop fuel enrichment at wide-open throttle.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69a60": {
-   "name": "Closed Loop Target Bank A (3D)",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "upstream 'Table 3D - 29'; CL lambda target bank.",
-   "desc": "Closed-loop target lambda bank A vs load and RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69a7c": {
-   "name": "Closed Loop Target Bank B (3D)",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "upstream 'Table 3D - 30'; CL lambda target bank.",
-   "desc": "Closed-loop target lambda bank B vs load and RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ac88": {
-   "name": "Fuel Injection - Engine Load Compensation (base fuel map)",
-   "category": "Fuel Injection",
-   "note": "THE RPM x load base fuel map (18x20 u16 scaled); bed4 in 0x306e8 fuel-volume calc.",
-   "desc": "Base fuel map vs RPM and engine load.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4; fueling_control_report.md §10.7",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a9a4": {
-   "name": "Primary Injector Weighted Engine Temp Multiplier",
-   "category": "Fuel Injection",
-   "note": "temp x load injector multiplier.",
-   "desc": "Engine-temperature multiplier for primary injector pulse width.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a9c0": {
-   "name": "Secondary 1 Injector Weighted Engine Temp Multiplier",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Engine-temperature multiplier for secondary injector 1 pulse width.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6a9dc": {
-   "name": "Secondary 2 Injector Weighted Engine Temp Multiplier",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Engine-temperature multiplier for secondary injector 2 pulse width.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa0c": {
-   "name": "Injector Manifold Vacuum Multiplier A",
-   "category": "Fuel Injection",
-   "note": "vacuum (relative pressure) multiplier.",
-   "desc": "Manifold vacuum correction to injection volume (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa20": {
-   "name": "Injector Manifold Vacuum Multiplier B",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Manifold vacuum correction to injection volume (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa34": {
-   "name": "Injector Manifold Vacuum Multiplier C",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Manifold vacuum correction to injection volume (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa48": {
-   "name": "Estimated Manifold Pressure (RPM x load)",
-   "category": "Engine Load",
-   "note": "RPM x load -> estimated MAP.",
-   "desc": "Estimated manifold pressure vs RPM and engine load.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa64": {
-   "name": "Injector Latency - Secondary",
-   "category": "Fuel Injection",
-   "note": "latency vs estimated MAP x battery.",
-   "desc": "Secondary injector dead time vs estimated manifold pressure and battery voltage.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa80": {
-   "name": "Injector Latency - Primary",
-   "category": "Fuel Injection",
-   "note": "latency vs estimated MAP x battery.",
-   "desc": "Primary injector dead time vs estimated manifold pressure and battery voltage.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6aa9c": {
-   "name": "Max Per-Channel Injection Time vs RPM (candidate)",
-   "category": "Fuel Injection",
-   "note": "read by 0x30030.",
-   "desc": "Purpose not fully verified (candidate label).",
-   "evidence": "descriptor bytes at 0x6aa9c re-verified 2026-11-05: type=0x0006 dims=(1024,7) next16=0006040000077f2800077f40447a0000",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "candidate",
-   "alias": null
-  },
-  "0x6ab48": {
-   "name": "Primary Cranking Pulse Width",
-   "category": "Fuel Injection",
-   "note": "cranking pulse family with 0x6ab98/0x6abc8/0x6bab0.",
-   "desc": "Cranking injection pulse width (primary).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ab98": {
-   "name": "Cranking Pulse Width B",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Cranking injection pulse width (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6abc8": {
-   "name": "Cranking Pulse Width C",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Cranking injection pulse width (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6bab0": {
-   "name": "Primary Cranking Decay Time",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Cranking pulse decay time.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ae28": {
-   "name": "Warmup Fueling A",
-   "category": "Fuel Injection",
-   "note": "warmup family 0x6ae28/3c/58/74.",
-   "desc": "Warmup fuel enrichment (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ae3c": {
-   "name": "Warmup Fueling B",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Warmup fuel enrichment (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ae58": {
-   "name": "Warmup Fueling C",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Warmup fuel enrichment (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ae74": {
-   "name": "Warmup Fueling D",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Warmup fuel enrichment (variant D).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b0c0": {
-   "name": "Load Delta / Tip-In A",
-   "category": "Fuel Injection",
-   "note": "load-delta/tip-in family 0x6b0c0/0x6b124/0x6b160/0x6b17c.",
-   "desc": "Load-delta / tip-in fuel correction (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b124": {
-   "name": "Load Delta / Tip-In B",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Load-delta / tip-in fuel correction (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b160": {
-   "name": "Load Delta / Tip-In C",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Load-delta / tip-in fuel correction (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b17c": {
-   "name": "Load Delta / Tip-In D",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Load-delta / tip-in fuel correction (variant D).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b1ec": {
-   "name": "RPM-Based Max Engine Load",
-   "category": "Engine Load",
-   "note": "load ceiling vs RPM; x 0x6b200 (IAT) x 0x6b214 (baro) = 0.58-1.29 cell units = 0.92-2.03 g/rev (D5).",
-   "desc": "Maximum engine load ceiling vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4 (2026-10-31 addendum, D5 closed)",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b200": {
-   "name": "Max Engine Load - IAT Correction",
-   "category": "Engine Load",
-   "note": "multiplier in the max-load clamp with 0x6b1ec/0x6b214.",
-   "desc": "Intake-air-temperature multiplier in the max engine load clamp.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md (D5)",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6b214": {
-   "name": "Max Engine Load - Baro Correction",
-   "category": "Engine Load",
-   "note": "multiplier in the max-load clamp with 0x6b1ec/0x6b200.",
-   "desc": "Barometric-pressure multiplier in the max engine load clamp.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md (D5)",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ad30": {
-   "name": "Air Flow x Battery A",
-   "category": "Fuel Injection",
-   "note": "air-flow x battery family 0x6ad30/0x6ad44.",
-   "desc": "Air-flow x battery-voltage correction (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ad44": {
-   "name": "Air Flow x Battery B",
-   "category": "Fuel Injection",
-   "note": "",
-   "desc": "Air-flow x battery-voltage correction (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x6ac4c": {
-   "name": "Per-Rotation Fuel Scale",
-   "category": "Fuel Injection",
-   "note": "per-rotation scale in the fuel-volume path.",
-   "desc": "Per-rotation fuel scale in the fuel-volume calculation.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d24": {
-   "name": "Closed Loop Fuelling Threshold A",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "open-loop request conditions, read by 0x1f0c4; range 0x69d24-0x69d74.",
-   "desc": "Closed-loop fuelling enable threshold (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; fueling_control_report.md §7.3",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d38": {
-   "name": "Closed Loop Fuelling Threshold B",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "",
-   "desc": "Closed-loop fuelling enable threshold (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d4c": {
-   "name": "Closed Loop Fuelling Threshold C",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "",
-   "desc": "Closed-loop fuelling enable threshold (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d60": {
-   "name": "Closed Loop Fuelling Threshold D",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "",
-   "desc": "Closed-loop fuelling enable threshold (variant D).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  },
-  "0x69d74": {
-   "name": "Closed Loop Fuelling Threshold E",
-   "category": "Fuel Target (Closed Loop)",
-   "note": "",
-   "desc": "Closed-loop fuelling enable threshold (variant E).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
-   "confidence": "high",
-   "alias": null
-  }
+ "0x6af54": {
+  "name": "Knock Enable Load Floor (RPM)",
+  "category": "Knock Control",
+  "note": "12 cells, 0.5 flat; axis 0x795e8 (RPM 800-9600); gates knock enable 0xffffa73d (0x13826).",
+  "desc": "Lowest engine load at which knock control is enabled, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
+  "confidence": "high",
+  "alias": "tbl_knock_enable_load_floor_0006af54"
+ },
+ "0x6af68": {
+  "name": "Knock Retard Clamp Min (RPM)",
+  "category": "Knock Control",
+  "note": "u8 cells x mult + offset(-64): -10..0 deg; axis 0x79624 (RPM 2000-5000); clamped by 0x13bd2 = [-10,0] deg (bug fixed 2026-10-29).",
+  "desc": "Most negative knock retard allowed (lower clamp), vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_retard_clamp_min_0006af68"
+ },
+ "0x6af7c": {
+  "name": "Knock Retard Clamp Min Alt (RPM)",
+  "category": "Knock Control",
+  "note": "alt min: -10/-7.5/-5x4/0; axis 0x79648.",
+  "desc": "Alternate lower knock retard clamp, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_retard_clamp_min_alt_0006af7c"
+ },
+ "0x6af90": {
+  "name": "Knock Retard Clamp Max (RPM)",
+  "category": "Knock Control",
+  "note": "0.0 deg x15; axis 0x7966c (RPM 800-6400).",
+  "desc": "Upper knock retard clamp, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_retard_clamp_max_0006af90"
+ },
+ "0x6afa4": {
+  "name": "Knock Recovery Target (RPM)",
+  "category": "Knock Control",
+  "note": "fail-safe target -10..0 deg; axis 0x796b8 (RPM 500-5500); written to 0xffffa744.",
+  "desc": "Knock retard recovery target in fail-safe, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_recovery_target_0006afa4"
+ },
+ "0x6afb8": {
+  "name": "Knock Learned Retard Scale",
+  "category": "Knock Control",
+  "note": "0.0 x13; axis 0x79704 = learned retard -8.4..+8.4 deg.",
+  "desc": "Scale applied to learned knock retard.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_learned_retard_scale_0006afb8"
+ },
+ "0x6b264": {
+  "name": "Knock Transient Hold (cycles)",
+  "category": "Knock Control",
+  "note": "raw u8 0x0a -> <<1 = 20-cycle hold (0xffffc0ac).",
+  "desc": "Number of cycles knock retard is held after a transient.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_transient_hold_0006b264"
+ },
+ "0x6b27c": {
+  "name": "Knock Ignition Threshold A Alt (RPM)",
+  "category": "Knock Control",
+  "note": "raw u16 vs RPM (alt) -> 0xffffc090 -> 0xffffa37e.",
+  "desc": "Alternate knock ignition-retard threshold A, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_ignition_timing_threshold_a_alt_0006b27c"
+ },
+ "0x6b294": {
+  "name": "Knock Ignition Threshold B Alt (RPM)",
+  "category": "Knock Control",
+  "note": "raw u16 vs RPM (alt) -> 0xffffc092 -> 0xffffa37c.",
+  "desc": "Alternate knock ignition-retard threshold B, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_ignition_timing_threshold_b_alt_0006b294"
+ },
+ "0x6b2b8": {
+  "name": "Knock Level 3D A (load x RPM)",
+  "category": "Knock Control",
+  "note": "3D knock level vs load/RPM (20x12 scaled).",
+  "desc": "Knock level map vs load and RPM (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_level_3d_a_0006b2b8"
+ },
+ "0x6b2d4": {
+  "name": "Knock Level 3D B (load x RPM)",
+  "category": "Knock Control",
+  "note": "3D knock level vs load/RPM.",
+  "desc": "Knock level map vs load and RPM (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_level_3d_b_0006b2d4"
+ },
+ "0x6b2f0": {
+  "name": "Knock Level 3D C (load x RPM)",
+  "category": "Knock Control",
+  "note": "3D knock level vs load/RPM.",
+  "desc": "Knock level map vs load and RPM (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_level_3d_c_0006b2f0"
+ },
+ "0x6b304": {
+  "name": "Knock Level 3D D (load x RPM)",
+  "category": "Knock Control",
+  "note": "3D knock level vs load/RPM (1x1 raw).",
+  "desc": "Knock level map vs load and RPM (variant D).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": "tbl_knock_level_3d_d_0006b304"
+ },
+ "0x6990c": {
+  "name": "Closed Loop Warmup Time",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "raw u16 x15 s; axis 0x6f7e0, data 0x6f81c; dispatch helper tbl_table_2d_304_check_datatype.",
+  "desc": "Time after start during which closed-loop fuelling is inhibited.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
+  "confidence": "high",
+  "alias": "tbl_closed_loop_warmup_time_0006990c"
+ },
+ "0x6ac38": {
+  "name": "Fuel Coolant Compensation (candidate)",
+  "category": "Fuel Injection",
+  "note": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim; descriptor unmatched in RX8Defs.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis.; descriptor bytes at 0x6ac38 re-verified type=0x0009 dims=(2048,7) next16=000908000007844c0007847038000000",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_labels.json; fueling_control_report.md §7.3",
+  "confidence": "candidate",
+  "alias": "tbl_fuel_coolant_compensation_0006ac38"
+ },
+ "0x69208": {
+  "name": "Idle Base Timing - Cranking (candidate)",
+  "category": "Idle Control",
+  "note": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1).",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' — name is a hypothesis (descriptor not in romraider_descriptor_matches).; descriptor bytes at 0x69208 re-verified type=0x0009 dims=(1024,6) next16=000904000006d8c00006d8e43f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_idle_base_timing_cranking_00069208"
+ },
+ "0x6921c": {
+  "name": "Idle Base Timing - Cold Low Load (candidate)",
+  "category": "Idle Control",
+  "note": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.; descriptor bytes at 0x6921c re-verified type=0x0009 dims=(1024,6) next16=000904000006d8f00006d9143f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_idle_base_timing_cold_lowload_0006921c"
+ },
+ "0x69230": {
+  "name": "Idle Base Timing - Warm High Load (candidate)",
+  "category": "Idle Control",
+  "note": "2D u8 n=4, data 0x6d930; 0x14100 else branch.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=4, data 0x6d930; 0x14100 else branch.; descriptor bytes at 0x69230 re-verified type=0x0004 dims=(1024,6) next16=000404000006d9200006d9303f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_idle_base_timing_warm_highload_00069230"
+ },
+ "0x691a4": {
+  "name": "Min Advance vs Coolant A (candidate)",
+  "category": "Ignition Timing",
+  "note": "2D u8 n=8, data 0x6d7f0; 0x12630 lookup_2d(ECT,...) cranking+out-of-band branch.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'.; descriptor bytes at 0x691a4 re-verified type=0x0008 dims=(1024,6) next16=000804000006d7d00006d7f03f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_min_advance_vs_coolant_a_000691a4"
+ },
+ "0x691b8": {
+  "name": "Min Advance vs Coolant B (candidate)",
+  "category": "Ignition Timing",
+  "note": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance).",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=8, data 0x6d818; 0x12630 else branch (normal running min advance).; descriptor bytes at 0x691b8 re-verified type=0x0008 dims=(1024,6) next16=000804000006d7f80006d8183f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_min_advance_vs_coolant_b_000691b8"
+ },
+ "0x69190": {
+  "name": "Max Advance vs RPM - Leading (candidate)",
+  "category": "Ignition Leading",
+  "note": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6d7c4; 0x121fc: a660 = lookup_2d(rpm, 0x69190) = leading max advance (65.0 deg observed at 3000 rpm in emulator).; descriptor bytes at 0x69190 re-verified type=0x0009 dims=(1024,6) next16=000904000006d7a00006d7c43f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_max_advance_vs_rpm_leading_00069190"
+ },
+ "0x691cc": {
+  "name": "Max Advance vs RPM - Trailing (candidate)",
+  "category": "Ignition Trailing",
+  "note": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6d844; 0x12300 trailing max advance.; descriptor bytes at 0x691cc re-verified type=0x0009 dims=(1024,6) next16=000904000006d8200006d8443f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_max_advance_vs_rpm_trailing_000691cc"
+ },
+ "0x69040": {
+  "name": "Off-Throttle Leading Timing 3D (candidate)",
+  "category": "Ignition Leading",
+  "note": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040).",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=16, data 0x6c81c; 0x11f00: a608 = lookup_3d(a7ac, a834, 0x69040).; descriptor bytes at 0x69040 re-verified type=0x0010 dims=(11,6) next16=0010000b0006c7dc0006c81c0006c848",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_offthrottle_leading_3d_00069040"
+ },
+ "0x6905c": {
+  "name": "Leading Advance 3D Alt (candidate)",
+  "category": "Ignition Leading",
+  "note": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by b-weight.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=10, data 0x6c920; 0x11f00: a60c = lookup_3d(load, rpm, 0x6905c), multiplied by coolant table a618.; descriptor bytes at 0x6905c re-verified type=0x000a dims=(8,6) next16=000a00080006c8f80006c9200006c940",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_leading_advance_3d_alt_0006905c"
+ },
+ "0x69018": {
+  "name": "Coolant Timing Multiplier - Leading (candidate)",
+  "category": "Ignition Leading",
+  "note": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018).",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6c7a0; 0x11f00: a618 = lookup_2d(ECT, 0x69018).; descriptor bytes at 0x69018 re-verified type=0x0009 dims=(1024,6) next16=000904000006c77c0006c7a03c23d70a",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_coolant_timing_multiplier_leading_00069018"
+ },
+ "0x6902c": {
+  "name": "Coolant Timing Multiplier - Trailing (candidate)",
+  "category": "Ignition Trailing",
+  "note": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "2D u8 n=9, data 0x6c7d0; 0x1206c trailing mirror.; descriptor bytes at 0x6902c re-verified type=0x0009 dims=(1024,6) next16=000904000006c7ac0006c7d03c23d70a",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_coolant_timing_multiplier_trailing_0006902c"
+ },
+ "0x69094": {
+  "name": "Safe Mode Cap - Single (candidate)",
+  "category": "Ignition Leading",
+  "note": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "1-cell float, data 0x6cb94; 0x11f00 safe-mode (cd60) cap lookup 3D.; descriptor bytes at 0x69094 re-verified type=0x0001 dims=(1,6) next16=000100010006cb900006cb940006cb98",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_safe_mode_cap_single_00069094"
+ },
+ "0x690b0": {
+  "name": "Safe Mode Advance Cap 3D - Leading (candidate)",
+  "category": "Ignition Leading",
+  "note": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=20, data 0x6cbec; 0x11f00 safe-mode (b12d) advance cap.; descriptor bytes at 0x690b0 re-verified type=0x0014 dims=(18,6) next16=001400120006cb9c0006cbec0006cc34",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_safe_mode_advance_cap_000690b0"
+ },
+ "0x690e8": {
+  "name": "Off-Throttle Trailing Timing 3D (candidate)",
+  "category": "Ignition Trailing",
+  "note": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=16, data 0x6cfdc; 0x1206c trailing mirror of 0x69040.; descriptor bytes at 0x690e8 re-verified type=0x0010 dims=(11,6) next16=0010000b0006cf9c0006cfdc0006d008",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_offthrottle_trailing_3d_000690e8"
+ },
+ "0x69104": {
+  "name": "Trailing Advance 3D Alt (candidate)",
+  "category": "Ignition Trailing",
+  "note": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=10, data 0x6d0e0; 0x1206c trailing mirror of 0x6905c.; descriptor bytes at 0x69104 re-verified type=0x000a dims=(8,6) next16=000a00080006d0b80006d0e00006d100",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_trailing_advance_3d_alt_00069104"
+ },
+ "0x6913c": {
+  "name": "Safe Mode Cap - Single Trailing (candidate)",
+  "category": "Ignition Trailing",
+  "note": "1-cell float, data 0x6d354; 0x1206c safe-mode cap.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "1-cell float, data 0x6d354; 0x1206c safe-mode cap.; descriptor bytes at 0x6913c re-verified type=0x0001 dims=(1,6) next16=000100010006d3500006d3540006d358",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_safe_mode_cap_single_trailing_0006913c"
+ },
+ "0x69158": {
+  "name": "Safe Mode Advance Cap 3D - Trailing (candidate)",
+  "category": "Ignition Trailing",
+  "note": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "3D float n=20, data 0x6d3ac; 0x1206c safe-mode advance cap.; descriptor bytes at 0x69158 re-verified type=0x0014 dims=(18,6) next16=001400120006d35c0006d3ac0006d3f4",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3; ignition_timing_labels.json",
+  "confidence": "candidate",
+  "alias": "candidate_tbl_safe_mode_advance_cap_trailing_00069158"
+ },
+ "0x6b250": {
+  "name": "Knock Voltage To Magnitude Scale",
+  "category": "Knock Control",
+  "note": "knock voltage -> magnitude scale.",
+  "desc": "Scales knock sensor voltage to knock magnitude.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b270": {
+  "name": "Knock Ignition Threshold A (RPM)",
+  "category": "Knock Control",
+  "note": "raw u16 vs RPM (normal) -> 0xffffc090 -> 0xffffa37e; default 94 (0xc1f8).",
+  "desc": "Knock level threshold that triggers ignition retard, channel A, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b288": {
+  "name": "Knock Ignition Threshold B (RPM)",
+  "category": "Knock Control",
+  "note": "raw u16 vs RPM (normal) -> 0xffffc092 -> 0xffffa37c; default 193.",
+  "desc": "Knock level threshold that triggers ignition retard, channel B, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b2a0": {
+  "name": "Knock Noise Threshold Min",
+  "category": "Knock Control",
+  "note": "clamp floor for 0xffffa350[2].",
+  "desc": "Minimum knock noise threshold (clamp floor).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b2ac": {
+  "name": "Knock Noise Floor (RPM)",
+  "category": "Knock Control",
+  "note": "lookup vs raw RPM -> 0xffffa358.",
+  "desc": "Knock noise floor vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b83c": {
+  "name": "Cold-Start Advance Reduction (RPM)",
+  "category": "Ignition Timing",
+  "note": "min(c9a8, lookup(RPM)) in 0x12630 (cranking + out-of-band path).",
+  "desc": "Cold-start ignition advance reduction, vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69078": {
+  "name": "Ignition Leading - Base Timing",
+  "category": "Ignition Leading",
+  "note": "3D float, deg; main leading base map, read by 0x11f00.",
+  "desc": "Main leading (front rotor) base ignition timing vs load and RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x690cc": {
+  "name": "Ignition Leading Advance Cap",
+  "category": "Ignition Leading",
+  "note": "cap applied by 0x11f00.",
+  "desc": "Maximum allowed leading ignition advance.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69120": {
+  "name": "Ignition Trailing - Base Timing",
+  "category": "Ignition Trailing",
+  "note": "trailing base map, read by 0x1206c.",
+  "desc": "Trailing (rear rotor) base ignition timing map.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69174": {
+  "name": "Ignition Trailing Advance",
+  "category": "Ignition Trailing",
+  "note": "trailing advance, read by 0x1206c.",
+  "desc": "Trailing ignition advance adder.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a060": {
+  "name": "Idle Error Timing Correction - Leading Off (deg)",
+  "category": "Ignition Leading",
+  "note": "bool false/true bank, leading; 0x135b4.",
+  "desc": "Idle speed error correction to leading timing (idle control off).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a074": {
+  "name": "Idle Error Timing Correction - Leading On (deg)",
+  "category": "Ignition Leading",
+  "note": "bool true bank, leading; 0x135b4.",
+  "desc": "Idle speed error correction to leading timing (idle control on).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a088": {
+  "name": "Idle Error Timing Correction - Trailing Off (deg)",
+  "category": "Ignition Trailing",
+  "note": "bool false bank, trailing; 0x136e4.",
+  "desc": "Idle speed error correction to trailing timing (idle control off).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a09c": {
+  "name": "Idle Error Timing Correction - Trailing On (deg)",
+  "category": "Ignition Trailing",
+  "note": "bool true bank, trailing; 0x136e4.",
+  "desc": "Idle speed error correction to trailing timing (idle control on).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a0d8": {
+  "name": "IAT Compensation - On Throttle (deg)",
+  "category": "Ignition Timing",
+  "note": "0x14090.",
+  "desc": "Intake-air-temperature correction to timing on throttle.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a0ec": {
+  "name": "IAT Compensation - Cranking (deg) (candidate)",
+  "category": "Ignition Timing",
+  "note": "upstream 'Table 2D - 113'; 0x14090 cranking branch.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "descriptor bytes at 0x6a0ec re-verified type=0x0009 dims=(1024,7) next16=0009040000072650000726743f000000",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "candidate",
+  "alias": null
+ },
+ "0x6af2c": {
+  "name": "Ignition Leading - Cranking Timing Advance (ECT)",
+  "category": "Ignition Leading",
+  "note": "deg vs ECT; 0x43934 via 0x6b630.",
+  "desc": "Cranking ignition advance adder vs coolant temperature, leading.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b644": {
+  "name": "Ignition Trailing - Cranking Timing Advance (ECT)",
+  "category": "Ignition Trailing",
+  "note": "deg vs ECT; 0x439b2 via 0x6b630.",
+  "desc": "Cranking ignition advance adder vs coolant temperature, trailing.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b630": {
+  "name": "Off-Throttle Leading Timing vs ECT (deg)",
+  "category": "Ignition Leading",
+  "note": "upstream 'Off Throttle Leading Timing Realted'; 0x43934.",
+  "desc": "Off-throttle leading timing vs coolant temperature.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a7a4": {
+  "name": "Ignition Leading - DSC Mode A Base",
+  "category": "Ignition Leading",
+  "note": "0x2cc2c.",
+  "desc": "Leading base timing in DSC mode A.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6957c": {
+  "name": "Ignition Leading - DSC Mode A Map 4",
+  "category": "Ignition Leading",
+  "note": "0x1815c.",
+  "desc": "Leading timing map 4 in DSC mode A.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/ignition_timing_report.md §3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x68ef8": {
+  "name": "Injector Max Open Angle 1 (deg)",
+  "category": "Fuel Injection",
+  "note": "per-injector max open-angle degrees, consumer 0xff32; upstream name 'Max Injection Angle1???' was a guess - ROM scale is deg x2.",
+  "desc": "Maximum injector open angle, stage 1, in degrees.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7, §10 (0x68ef8/f0c/f20 = per-injector max open-angle)",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x68f0c": {
+  "name": "Injector Max Open Angle 2 (deg)",
+  "category": "Fuel Injection",
+  "note": "per-injector max open-angle degrees, consumer 0xff32.",
+  "desc": "Maximum injector open angle, stage 2, in degrees.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x68f20": {
+  "name": "Injector Max Open Angle 3 (deg)",
+  "category": "Fuel Injection",
+  "note": "per-injector max open-angle degrees, consumer 0xff32.",
+  "desc": "Maximum injector open angle, stage 3, in degrees.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69788": {
+  "name": "MAF Scaling",
+  "category": "Sensors",
+  "note": "MAF volts -> g/s (ADC AN3 via 0x6884 sweep).",
+  "desc": "MAF sensor voltage to air mass flow (g/s).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69794": {
+  "name": "MAF Density-Cap Window vs RPM (candidate)",
+  "category": "Engine Load",
+  "note": "read by 0x1a086.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "descriptor bytes at 0x69794 re-verified type=0x0001 dims=(0,6) next16=000100000006f0d00006f0d4000a0800",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "candidate",
+  "alias": null
+ },
+ "0x697a0": {
+  "name": "Transient-Detection Threshold vs Throttle (candidate)",
+  "category": "Engine Load",
+  "note": "read by 0x1a1dc.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "descriptor bytes at 0x697a0 re-verified type=0x000a dims=(2048,6) next16=000a08000006f1080006f1303c23d70a",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "candidate",
+  "alias": null
+ },
+ "0x697b4": {
+  "name": "MAF Filter Coefficient vs RPM (candidate)",
+  "category": "Engine Load",
+  "note": "read by 0x1a418.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "descriptor bytes at 0x697b4 re-verified type=0x000a dims=(2048,6) next16=000a08000006f1440006f16c3a83126e",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "candidate",
+  "alias": null
+ },
+ "0x69cac": {
+  "name": "OL Fuelling Base Correction - Baro",
+  "category": "Fuel Injection - Open Loop",
+  "note": "0x1ee4a: b170 = lookup(baro) [safe-mode pair with 0x69cc0]; b130 = max(b170*b190, b194).",
+  "desc": "Open-loop fuelling base correction vs barometric pressure.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69cc0": {
+  "name": "OL Fuelling Base Correction - Baro [Safe Mode]",
+  "category": "Fuel Injection - Open Loop",
+  "note": "safe-mode pair of 0x69cac.",
+  "desc": "Open-loop fuelling base correction vs barometric pressure (safe mode).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69cd4": {
+  "name": "OL Target - Coolant Temperature Correction",
+  "category": "Fuel Injection - Open Loop",
+  "note": "b134 = lookup(coolant); b120 = b130*b134.",
+  "desc": "Open-loop target lambda correction vs coolant temperature.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69ce8": {
+  "name": "OL Fuelling Rich Limit",
+  "category": "Fuel Injection - Open Loop",
+  "note": "rich-limit pair with 0x69cfc [safe mode].",
+  "desc": "Rich limit for open-loop fuelling.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69cfc": {
+  "name": "OL Fuelling Rich Limit [Safe Mode]",
+  "category": "Fuel Injection - Open Loop",
+  "note": "safe-mode pair of 0x69ce8.",
+  "desc": "Rich limit for open-loop fuelling (safe mode).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d10": {
+  "name": "OL Temperature Correction #B",
+  "category": "Fuel Injection - Open Loop",
+  "note": "",
+  "desc": "Open-loop fuelling temperature correction B.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69e00": {
+  "name": "OL Changeover Enrichment",
+  "category": "Fuel Injection - Open Loop",
+  "note": "",
+  "desc": "Fuel enrichment during open-loop changeover.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69e80": {
+  "name": "OL Target - Throttle Tip In",
+  "category": "Fuel Injection - Open Loop",
+  "note": "b190 = lookup(rpm, tps) [safe-mode pair 0x69eb8].",
+  "desc": "Open-loop target lambda during throttle tip-in, vs RPM and throttle.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69eb8": {
+  "name": "OL Target - Throttle Tip In [Safe Mode]",
+  "category": "Fuel Injection - Open Loop",
+  "note": "safe-mode pair of 0x69e80.",
+  "desc": "Open-loop target lambda during throttle tip-in (safe mode).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69e9c": {
+  "name": "OL Target - Main (load x RPM)",
+  "category": "Fuel Injection - Open Loop",
+  "note": "b194 = lookup_3d(load, rpm); stores lambda-1 (the +1.0 is added at the 0x1cc34 clamp [0.85,1.05]); [safe-mode pair 0x69ed4].",
+  "desc": "Main open-loop target lambda vs engine load and RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8; load_fueling_report.md",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69ed4": {
+  "name": "OL Target - Main [Safe Mode]",
+  "category": "Fuel Injection - Open Loop",
+  "note": "safe-mode pair of 0x69e9c; lambda-1 storage.",
+  "desc": "Main open-loop target lambda vs engine load and RPM (safe mode).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69ef0": {
+  "name": "OL Target - Tip In - Coolant Implausible B",
+  "category": "Fuel Injection - Open Loop",
+  "note": "implausible-coolant blend A/B by fuel_blend_weight_ffffb11c.",
+  "desc": "Tip-in target lambda for implausible coolant reading (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69f28": {
+  "name": "OL Target - Tip In - Coolant Implausible A",
+  "category": "Fuel Injection - Open Loop",
+  "note": "",
+  "desc": "Tip-in target lambda for implausible coolant reading (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69f0c": {
+  "name": "OL Target - Coolant Implausible - Gear 5-6",
+  "category": "Fuel Injection - Open Loop",
+  "note": "gear 1-4 counterpart 0x69f44.",
+  "desc": "Open-loop target lambda for implausible coolant reading, gears 5-6.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69f44": {
+  "name": "OL Target - Coolant Implausible - Gear 1-4",
+  "category": "Fuel Injection - Open Loop",
+  "note": "",
+  "desc": "Open-loop target lambda for implausible coolant reading, gears 1-4.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.8",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x699b8": {
+  "name": "Closed Loop WOT Enrichment",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "upstream name had '??'.",
+  "desc": "Closed-loop fuel enrichment at wide-open throttle.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69a60": {
+  "name": "Closed Loop Target Bank A (3D)",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "upstream 'Table 3D - 29'; CL lambda target bank.",
+  "desc": "Closed-loop target lambda bank A vs load and RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69a7c": {
+  "name": "Closed Loop Target Bank B (3D)",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "upstream 'Table 3D - 30'; CL lambda target bank.",
+  "desc": "Closed-loop target lambda bank B vs load and RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ac88": {
+  "name": "Fuel Injection - Engine Load Compensation (base fuel map)",
+  "category": "Fuel Injection",
+  "note": "THE RPM x load base fuel map (18x20 u16 scaled); bed4 in 0x306e8 fuel-volume calc.",
+  "desc": "Base fuel map vs RPM and engine load.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4; fueling_control_report.md §10.7",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a9a4": {
+  "name": "Primary Injector Weighted Engine Temp Multiplier",
+  "category": "Fuel Injection",
+  "note": "temp x load injector multiplier.",
+  "desc": "Engine-temperature multiplier for primary injector pulse width.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a9c0": {
+  "name": "Secondary 1 Injector Weighted Engine Temp Multiplier",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Engine-temperature multiplier for secondary injector 1 pulse width.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6a9dc": {
+  "name": "Secondary 2 Injector Weighted Engine Temp Multiplier",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Engine-temperature multiplier for secondary injector 2 pulse width.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa0c": {
+  "name": "Injector Manifold Vacuum Multiplier A",
+  "category": "Fuel Injection",
+  "note": "vacuum (relative pressure) multiplier.",
+  "desc": "Manifold vacuum correction to injection volume (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa20": {
+  "name": "Injector Manifold Vacuum Multiplier B",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Manifold vacuum correction to injection volume (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa34": {
+  "name": "Injector Manifold Vacuum Multiplier C",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Manifold vacuum correction to injection volume (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa48": {
+  "name": "Estimated Manifold Pressure (RPM x load)",
+  "category": "Engine Load",
+  "note": "RPM x load -> estimated MAP.",
+  "desc": "Estimated manifold pressure vs RPM and engine load.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa64": {
+  "name": "Injector Latency - Secondary",
+  "category": "Fuel Injection",
+  "note": "latency vs estimated MAP x battery.",
+  "desc": "Secondary injector dead time vs estimated manifold pressure and battery voltage.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa80": {
+  "name": "Injector Latency - Primary",
+  "category": "Fuel Injection",
+  "note": "latency vs estimated MAP x battery.",
+  "desc": "Primary injector dead time vs estimated manifold pressure and battery voltage.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6aa9c": {
+  "name": "Max Per-Channel Injection Time vs RPM (candidate)",
+  "category": "Fuel Injection",
+  "note": "read by 0x30030.",
+  "desc": "Purpose not fully verified (candidate label).",
+  "evidence": "descriptor bytes at 0x6aa9c re-verified type=0x0006 dims=(1024,7) next16=0006040000077f2800077f40447a0000",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "candidate",
+  "alias": null
+ },
+ "0x6ab48": {
+  "name": "Primary Cranking Pulse Width",
+  "category": "Fuel Injection",
+  "note": "cranking pulse family with 0x6ab98/0x6abc8/0x6bab0.",
+  "desc": "Cranking injection pulse width (primary).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ab98": {
+  "name": "Cranking Pulse Width B",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Cranking injection pulse width (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6abc8": {
+  "name": "Cranking Pulse Width C",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Cranking injection pulse width (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6bab0": {
+  "name": "Primary Cranking Decay Time",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Cranking pulse decay time.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ae28": {
+  "name": "Warmup Fueling A",
+  "category": "Fuel Injection",
+  "note": "warmup family 0x6ae28/3c/58/74.",
+  "desc": "Warmup fuel enrichment (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ae3c": {
+  "name": "Warmup Fueling B",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Warmup fuel enrichment (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ae58": {
+  "name": "Warmup Fueling C",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Warmup fuel enrichment (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ae74": {
+  "name": "Warmup Fueling D",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Warmup fuel enrichment (variant D).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b0c0": {
+  "name": "Load Delta / Tip-In A",
+  "category": "Fuel Injection",
+  "note": "load-delta/tip-in family 0x6b0c0/0x6b124/0x6b160/0x6b17c.",
+  "desc": "Load-delta / tip-in fuel correction (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b124": {
+  "name": "Load Delta / Tip-In B",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Load-delta / tip-in fuel correction (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b160": {
+  "name": "Load Delta / Tip-In C",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Load-delta / tip-in fuel correction (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b17c": {
+  "name": "Load Delta / Tip-In D",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Load-delta / tip-in fuel correction (variant D).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b1ec": {
+  "name": "RPM-Based Max Engine Load",
+  "category": "Engine Load",
+  "note": "load ceiling vs RPM; x 0x6b200 (IAT) x 0x6b214 (baro) = 0.58-1.29 cell units = 0.92-2.03 g/rev (D5).",
+  "desc": "Maximum engine load ceiling vs RPM.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md §4 (2026-10-31 addendum, D5 closed)",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b200": {
+  "name": "Max Engine Load - IAT Correction",
+  "category": "Engine Load",
+  "note": "multiplier in the max-load clamp with 0x6b1ec/0x6b214.",
+  "desc": "Intake-air-temperature multiplier in the max engine load clamp.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md (D5)",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6b214": {
+  "name": "Max Engine Load - Baro Correction",
+  "category": "Engine Load",
+  "note": "multiplier in the max-load clamp with 0x6b1ec/0x6b200.",
+  "desc": "Barometric-pressure multiplier in the max engine load clamp.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/load_fueling_report.md (D5)",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ad30": {
+  "name": "Air Flow x Battery A",
+  "category": "Fuel Injection",
+  "note": "air-flow x battery family 0x6ad30/0x6ad44.",
+  "desc": "Air-flow x battery-voltage correction (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ad44": {
+  "name": "Air Flow x Battery B",
+  "category": "Fuel Injection",
+  "note": "",
+  "desc": "Air-flow x battery-voltage correction (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x6ac4c": {
+  "name": "Per-Rotation Fuel Scale",
+  "category": "Fuel Injection",
+  "note": "per-rotation scale in the fuel-volume path.",
+  "desc": "Per-rotation fuel scale in the fuel-volume calculation.",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d24": {
+  "name": "Closed Loop Fuelling Threshold A",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "open-loop request conditions, read by 0x1f0c4; range 0x69d24-0x69d74.",
+  "desc": "Closed-loop fuelling enable threshold (variant A).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; fueling_control_report.md §7.3",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d38": {
+  "name": "Closed Loop Fuelling Threshold B",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "",
+  "desc": "Closed-loop fuelling enable threshold (variant B).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d4c": {
+  "name": "Closed Loop Fuelling Threshold C",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "",
+  "desc": "Closed-loop fuelling enable threshold (variant C).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d60": {
+  "name": "Closed Loop Fuelling Threshold D",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "",
+  "desc": "Closed-loop fuelling enable threshold (variant D).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ },
+ "0x69d74": {
+  "name": "Closed Loop Fuelling Threshold E",
+  "category": "Fuel Target (Closed Loop)",
+  "note": "",
+  "desc": "Closed-loop fuelling enable threshold (variant E).",
+  "evidence": "",
+  "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+  "confidence": "high",
+  "alias": null
+ }
  },
  "counts": {
-  "total": 112,
-  "high": 89,
-  "candidate": 23,
-  "categorized": 112
+ "total": 112,
+ "high": 89,
+ "candidate": 23,
+ "categorized": 112
  }
 }
