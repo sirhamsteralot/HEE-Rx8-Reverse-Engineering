@@ -378,14 +378,14 @@ Session gotchas worth keeping:
   — that's how an earlier count said 114 real vectors; a later open-range
   re-scan makes the correct count **119** (all with ctx word
   0x3238), of which **99 end in the fatal trap 0x5348** (incl. tail handler
-  0x5ec8, vec 224) and 19
+  0x5ec8, vec 224) and 20
   have real handlers (CMI10B 0x5b3c, 6x ATU ch8 injector compares 0x59a4-0x59ea,
   knock ADC 0x5a4c, ch3/ch9, 3x ADC EOC, CMCSR1 0x5cee, IRQ 0x53f6, CAN
-  0x378/0x37c/0x398); tail handler 0x5ef4 (vec 231, dispatch via 0x9c9c) is
-  pending classification. Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
-  The intermediate 117-count (0x2710-0x31f0 range clamp, missing tail slots
-  0x7ffd0/0x7ffec) is recorded in
-  [`docs/investigations/60E15120_N3J1E/reviews/cross_report_consistency/README.md`](investigations/60E15120_N3J1E/reviews/cross_report_consistency/README.md).
+  0x378/0x37c/0x398 and tail vec 231). Tail handler 0x5ef4 (vec 231,
+  dispatch via 0x9c9c) was settled dynamically: `harness.call(bus, cpu, 0x5ef4)`
+  post-boot returns ~111 steps in — it sets bit0 of HCAN flag 0xffffe612, then
+  0x9c9c → 0xa19e → post 0x9630(1,11) → inline 0x11ea8 → UDS-session dispatch
+  0x680de on DAT_ffffdde1. Reserved vec 0-63 -> stubs 0x53a0-0x53c2 -> 0x5348.
 - **0x803e is the pre-VBR (VBR=0) CMI10B vector target**: base IVT slot 0x2c8 (u32 at
   ROM 0x2c8 = 0x803e) — that's where the inherited `vector_INT_ATU101_CMI10B` label comes
   from; after `ldc vbr, 0x7fc50` (0xd206) the relocated table's trampoline 0x2ec0 →

@@ -260,13 +260,14 @@ back — dynamically observed (task[3] ctx[3] 0x1e → 0x1d on post).
 119 vectors (offsets 0x100–0x39c, vec 64–231) point at real trampolines
 (byte-verified against ROM at 0x7fc50+off; every trampoline's second pool word
 = 0x3238, its `jsr` target — the two tail vectors 0x7ffd0→0x3220 and
-0x7ffec→0x3208 were missed by the earlier 0x31f0 range clamp; see
-[reviews/cross_report_consistency](reviews/cross_report_consistency/README.md)).
+0x7ffec→0x3208 were missed by the earlier 0x31f0 range clamp).
 Of these, **99 end in the fatal trap** `fatal_interrupt_trap` (clear a
 peripheral flag, report a code via 0xa330, spin at 0x535a forever) — including
-the tail handler 0x5ec8 (vec 224, direct `bra 0x5348`) — one tail handler
-(0x5ef4, vec 231 → dispatch via 0x9c9c) is pending classification — any
-unexpected interrupt is a deliberate halt. The **19 with real handlers**:
+the tail handler 0x5ec8 (vec 224, direct `bra 0x5348`) — the remaining 20
+are real handlers (the tail handler 0x5ef4, vec 231, is one of them:
+HCAN1-region flag write 0xffffe612 + scheduler post 0x9630(1,11), see the
+table below) — any
+unexpected interrupt is a deliberate halt. The **20 with real handlers**:
 
 | IVT off | vec | handler | role |
 |---|---|---|---|
@@ -280,8 +281,9 @@ unexpected interrupt is a deliberate halt. The **19 with real handlers**:
 | 0x110 | 68 | 0x53f6 | ISR_W = 0xf7 (external IRQ flags) → 0xb6b2 |
 | 0x378 | 222 | 0x5e78 → 0x9c86 | **CAN RX**: inline 0x9630(1,12) → 0x11d88 CAN poll → UDS buffer 0xffffddc8 (dynamically traced §9) |
 | 0x37c | 223 | 0x5ebc | HCAN0 IRR bit0 → 0x9c9c (CAN status/error path) |
+| 0x39c | 231 | 0x5ef4 → 0x9c9c | second HCAN flag entry: sets 0xffffe612 bit0 → 0x9c9c → 0xa19e → post 0x9630(1,11) → inline 0x11ea8 (UDS-session dispatch 0x680de on DAT_ffffdde1) — dynamically verified: harness call returns |
 | 0x398 | 230 | 0x5eee → 0x9c86 | second CAN-related entry |
-| 0x358 | 214 | 0x5e0c → 0x5348(0xd6) | WDT overflow = **fatal trap** (Sh7055h.pdf table 7.3; E3) — counted among the 98 |
+| 0x358 | 214 | 0x5e0c → 0x5348(0xd6) | WDT overflow = **fatal trap** (Sh7055h.pdf table 7.3; E3) — counted among the 99 |
 | 0x0–0xfc | 0–63 | stubs 0x53a0–0x53c2 | reserved vectors: load a code into r4, bra 0x5348 → fatal trap |
 
 So the *live* timing loops are: **CMI10B per crank sector** (OS tick),
@@ -344,18 +346,19 @@ carry ref_/candidate_ names from earlier passes).
   sector, with per-sector intervals in ROM, not every N µs.
 - **0x5348 is a fatal trap, not a dispatcher.** The vec 0–63 stubs and 99 of
   the 119 real-trampoline vectors call it (incl. tail handler 0x5ec8, vec 224); it raises SR to 0xe0, reports the
-  code via 0xa330 and spins at 0x535a forever. 19 vectors have real
-  handlers (§5), one tail handler (0x5ef4 → dispatch via 0x9c9c) is pending
-  classification: CMI10B tick, the six ATU-II ch8 injector-compare vectors,
+  code via 0xa330 and spins at 0x535a forever. The remaining 20 vectors have real
+  handlers (§5): CMI10B tick, the six ATU-II ch8 injector-compare vectors,
   knock-ADC trigger, ch3/ch9 compares, three ADC EOC banks, CMCSR1, one IRQ
-  flag vector, and the CAN vectors.
+  flag vector, and the CAN vectors (incl. tail handler 0x5ef4, vec 231 —
+  HCAN flag 0xffffe612 + scheduler post 0x9630(1,11) → inline 0x11ea8 →
+  0x680de UDS-session dispatch; dynamically verified via a harness call that
+  returns).
 - **Vector count corrected**: 119 vectors (IVT 0x100–0x39c) have real
   trampolines, not 114 or 117 — the 114 count mis-parsed the 0x378 trampoline's
   pool word, and the 117 count stopped its trampoline range scan at 0x31f0,
   missing the two tail vectors (slots 0x7ffd0→0x3220 and 0x7ffec→0x3208;
   re-derived with correct mov.l disp extraction and an open range, all 119 ctx
-  words = 0x3238; see
-  [reviews/cross_report_consistency](reviews/cross_report_consistency/README.md)).
+  words = 0x3238).
 - **Fresh-task entry is `rte`, not a jump**: 0x3848 sets r15 = ctrl+0xc, pushes
   SR=0 and the entry address, and executes `rte` (disasm 0x3848–0x3850) —
   new tasks start with interrupt mask 0.

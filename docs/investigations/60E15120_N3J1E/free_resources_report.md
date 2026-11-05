@@ -168,8 +168,7 @@ semantics for the 60E15120 corpus.
   | largest runs excl. labeled cells 0xffff8901–0xffff90f3 2,035 B / 0xffff807d–0xffff8787 1,803 B | identical (0xffff8901 len 2035, 0xffff807d len 1803) | yes |
 
   The feasibility report's SBL-run claim quoted above has since been corrected
-  in that report (end 0xfdf, not 0xfff) — see
-  [reviews/cross_report_consistency/README.md](reviews/cross_report_consistency/README.md).
+  in that report (end 0xfdf, not 0xfff).
 - Every ROM's SHA-256 re-computed during the scan and quoted in §3; the
   reference ROM hash in the header equals the submodule ROM's hash.
 - The [flash-memory-layout report](../../architecture/flash-memory-layout.md)

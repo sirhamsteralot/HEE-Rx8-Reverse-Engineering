@@ -219,12 +219,14 @@ traces:
   `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG` is a misnomer for that legacy handler.
 - **Unused/fatal vectors**: 119 IVT slots (0x100–0x39c) have real trampolines (all ctx
   word = 0x3238; the two tail slots 0x7ffd0→0x3220 and 0x7ffec→0x3208 were missed
-  by the earlier 0x31f0 upper bound — see
-  [reviews/cross_report_consistency](reviews/cross_report_consistency/README.md));
+  by the earlier 0x31f0 upper bound);
   99 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
   report via 0xa330, halt 0xa4be / spin 0x535a) — including the tail handler
-  0x5ec8 (vec 224), while tail handler 0x5ef4 (vec 231, dispatches via 0x9c9c)
-  is pending classification. Only 19 have real handlers: CMI10B
+  0x5ec8 (vec 224). The tail handler 0x5ef4 (vec 231) is real: it sets bit 0 of
+  the HCAN1-region register 0xffffe612 and posts scheduler event (1,11) via
+  wrapper 0xa19e → 0x9630 (dynamically verified, harness call returns;
+  group-1 record 11 = {target −1, handler 0x11ea8} → UDS-session dispatch
+  0x11ea8 → 0x680de on DAT_ffffdde1). Only 20 have real handlers: CMI10B
   0x5b3c, six ATU-II ch8 injector compares 0x59a4–0x59ea →
   `candidate_injector_pulse_set_dispatch(0..5)`, knock-ADC trigger 0x5a4c, ch3/ch9
   compares, three ADC EOC banks, CMCSR1 0x5cee, IRQ flags 0x53f6, CAN 0x378/0x37c/0x398.
