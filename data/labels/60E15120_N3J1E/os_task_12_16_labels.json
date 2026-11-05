@@ -1,103 +1,173 @@
 {
- "date": "2026-11-05",
+ "date": "",
  "pass": "os_task_handlers_12_16_labeling (ROADMAP C item 7)",
  "source": "os_scheduling_deep_dive_report.md section 4 task table + ROM/disassembly byte verification of task records 0x4a50-0x4a98, wrapper literal pools (0x66bc-0x66e8), handler pools (0x7300-0x7330, 0x7408-0x7438, 0xb13c-0xb394, 0xb212-0xb238, 0x11a40-0x11d10), and SH-2E emulator dynamic runs of the five task entries (tests/test_c7_task_handlers.py, 8 passed)",
  "function_aliases": {
-  "00006592": {
-   "alias": "task12_adc_feedback_pwm_entry",
-   "confidence": "high",
-   "evidence": "Task table rec[12] @ROM 0x4a50 entry (bytes: 0400 0100 ffff7468 00006592 0200 0000); pool 0x66c0-0x66cc = {0xa4b6, 0xad2a thunk->0xaee8, 0x11880, 0xb308}, tail jmp pool 0x66bc = 0x3d58 taskEnd. Dynamic: harness call visits all four handlers, clears 0xffffa188 (mov.w), sets 0xffffa214=1, reaches taskEnd -> idle 0x3dac."
-  },
-  "0000a4b6": {
-   "alias": "task12_alive_counter_clear",
-   "confidence": "high",
-   "evidence": "8-byte body: mov #0,r3; mov.w r3,@(pool 0xa4d0 = 0xffffa188); rts. Called only from task[12] 0x6592 (callgraph). Counter incremented in 0xa3ac, reset when > 300."
-  },
-  "0000aee8": {
-   "alias": "adc_pair_correlation_fault_compute",
-   "confidence": "high",
-   "evidence": "Gated by 0xffffa202; sample cells written by 0xb0a6/0xb1da (ADC EOC bank1 chain 0x6b60): 0xffffa1fa/a1fc = word @0xfffff836 (ADDR23H/AN23), 0xffffa1fe/a200 = word @0xfffff816 (ADDR11H/AN11; pool word 0xfffff836 + add -0x20 at 0xb0d2, ROM-verified). Math: |dV|*5/65536 -> 0xffffa1f0, (AN23-AN11)*5/65536/200 -> 0xffffa1e4/a1e8, ratio-16.25 -> 0xffffa1d8, filtered 0.25 -> 0xffffa1d4; faults 0xffffa1dc (range 0x5c29/0xc28f) and 0xffffa1dd (+/-0.005). Consumers: 0x1ac00 (a1d4 -> 0xffffaa78, lambda band), 0x22630 (duty tables + closed loop vs 30.0)."
-  },
-  "0000b308": {
-   "alias": "atu_ch7d_pwm_enable",
-   "confidence": "high",
-   "evidence": "Once-only (0xffffa214==0): TSTR2 0xfffff400 bit7 clr/set; CYLR7D 0xfffff58e = TCNT7D 0xfffff586 = BFR7D 0xfffff596 = DTR7D 0xfffff59e = 32000 (0x7d00); BFR7D = rx8_mul_s32_shift16_saturate(0xffffa210, 32000). Pool 0xb36c-0xb394 bytes verified. TO7D = PB7 PWM (reviews/fueling/injector_pin_mapping.md, PBCRL=0x4000). Duty from 0xb2c0 (0x25198: clamp DAT_ffffb354 0-100%)."
-  },
-  "00011880": {
-   "alias": "monitor_service_batch",
-   "confidence": "medium",
-   "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x65658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule)."
-  },
-  "000065b2": {
-   "alias": "task13_temp_sensor_dtc_entry",
-   "confidence": "high",
-   "evidence": "rec[13] @ROM 0x4a60 entry; pool 0x66d0-0x66d8 = {0x7298, 0x73a0, 0x118d0}, tail 0x66bc = taskEnd. Dynamic: harness call visits all three handlers and writes 0xffff9f60/9f70/9f64/9f74."
-  },
-  "00007298": {
-   "alias": "iat_sensor_scaling_fault",
-   "confidence": "high",
-   "evidence": "Blend DAT_ffff9f66 <- DAT_ffff9f1e (0x100/256 via 0x2510), affine 0x38a00000 (0x24c0), lookup_2d vs descriptor 0x69824 (bytes @ROM 0x69824 verified; tbl_iat_sensor_scaling_00069824) -> intake_air_temperature_ffff9f60; range fault 0xffff9f64 (raw<0x51e->2, >=0xf6c9->1). Pool 0x7300-0x7330 verified."
-  },
-  "000073a0": {
-   "alias": "clt_sensor_scaling_fault",
-   "confidence": "high",
-   "evidence": "Same pattern vs descriptor 0x6977c (@ROM 0x6977c verified; tbl_clt_sensor_scaling_0006977c) -> coolant_temperature_ffff9f70; range fault 0xffff9f74 (raw<0x9ff->2, >=0xfd00->1). Pool 0x7408-0x7438 verified."
-  },
-  "000118d0": {
-   "alias": "dtc_fault_service_batch",
-   "confidence": "high",
-   "evidence": "26-call batch, pool 0x11a74-0x11ad8 ROM-verified; includes candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, ref_faultSomething0x1 0x5a130, 0x5a188 dtc_distance_mil_accumulator (dtc_control_report.md), ref_getVehicleSpeedThreshold 0x59fb6, ref_checkIfDeviceControl_ 0x5fc18, ref_getCoolantTempConditional 0x5fcbc. Called only from task[13]."
-  },
-  "000065cc": {
-   "alias": "task14_charging_control_entry",
-   "confidence": "high",
-   "evidence": "rec[14] @ROM 0x4a70 entry; pool 0x66dc = 0x11adc. Dynamic: harness call visits 0x11adc and ref_alternatorControlMain_00026868, reaches taskEnd -> idle 0x3dac."
-  },
-  "00011adc": {
-   "alias": "charging_control_batch",
-   "confidence": "high",
-   "evidence": "7-call batch, pool 0x11ca8-0x11cc0 ROM-verified: 0x19d8a, 0x39b08, 0x2145e, ref_alternatorControlMain_00026868, 0x2224e, 0x59ab0, 0x16c56. Called only from task[14]."
-  },
-  "000065da": {
-   "alias": "task15_catalyst_temp_entry",
-   "confidence": "high",
-   "evidence": "rec[15] @ROM 0x4a80 entry; pool 0x66e0 = 0x11b08. Dynamic: harness call visits 0x11b08 and ref_catTempRelated 0x3eb3a, reaches taskEnd -> idle 0x3dac."
-  },
-  "00011b08": {
-   "alias": "catalyst_temp_monitor_batch",
-   "confidence": "high",
-   "evidence": "4-call batch, pool 0x11cc4-0x11cd0 ROM-verified: 0x39ca8, 0x146a6, ref_catTempRelated 0x3eb3a, 0x16fb6. Called only from task[15]."
-  },
-  "000065e8": {
-   "alias": "task16_uds_diag_utility_entry",
-   "confidence": "high",
-   "evidence": "rec[16] @ROM 0x4a90 entry; pool 0x66e4 = 0x11b22. Dynamic: harness call visits 0x11b22 and ref_getTireSize 0x5de74."
-  },
-  "00011b22": {
-   "alias": "uds_diag_utility_batch",
-   "confidence": "high",
-   "evidence": "15-call batch, pool 0x11cd4-0x11d0c ROM-verified: 0x59164 (timer 0xffffd240), 0x5a162 (engine runtime 0xffffd284), ref_getTireSize 0x5de74 (E2 id 0x9a), 0x5e748 (E2 id 0x9f), 0x5e664 (E2 ids 0x100/0x68/0x6a/0x6c) via 0x37ef0, 0x54cf8 (0xa5-unlock checksum verify of area 0xffff8fe8), 0x5e7e4, 0x19da2, 0x39cf0, 0x21476, 0x3176e, 0x2a3bc, 0x5fc40 (idle target lookup), 0x602fc, 0x3de70 (UDS read/write memory by address). Called only from task[16]."
-  }
+ "00006592": {
+  "alias": "task12_adc_feedback_pwm_entry",
+  "confidence": "high",
+  "evidence": "Task table rec[12] @ROM 0x4a50 entry (bytes: 0400 0100 ffff7468 00006592 0200 0000); pool 0x66c0-0x66cc = {0xa4b6, 0xad2a thunk->0xaee8, 0x11880, 0xb308}, tail jmp pool 0x66bc = 0x3d58 taskEnd. Dynamic: harness call visits all four handlers, clears 0xffffa188 (mov.w), sets 0xffffa214=1, reaches taskEnd -> idle 0x3dac."
+ },
+ "0000a4b6": {
+  "alias": "task12_alive_counter_clear",
+  "confidence": "high",
+  "evidence": "8-byte body: mov #0,r3; mov.w r3,@(pool 0xa4d0 = 0xffffa188); rts. Called only from task[12] 0x6592 (callgraph). Counter incremented in 0xa3ac, reset when > 300."
+ },
+ "0000aee8": {
+  "alias": "adc_pair_correlation_fault_compute",
+  "confidence": "high",
+  "evidence": "Gated by 0xffffa202; sample cells written by 0xb0a6/0xb1da (ADC EOC bank1 chain 0x6b60): 0xffffa1fa/a1fc = word @0xfffff836 (ADDR23H/AN23), 0xffffa1fe/a200 = word @0xfffff816 (ADDR11H/AN11; pool word 0xfffff836 + add -0x20 at 0xb0d2, ROM-verified). Math: |dV|*5/65536 -> 0xffffa1f0, (AN23-AN11)*5/65536/200 -> 0xffffa1e4/a1e8, ratio-16.25 -> 0xffffa1d8, filtered 0.25 -> 0xffffa1d4; faults 0xffffa1dc (range 0x5c29/0xc28f) and 0xffffa1dd (+/-0.005). Consumers: 0x1ac00 (a1d4 -> 0xffffaa78, lambda band), 0x22630 (duty tables + closed loop vs 30.0)."
+ },
+ "0000b308": {
+  "alias": "atu_ch7d_pwm_enable",
+  "confidence": "high",
+  "evidence": "Once-only (0xffffa214==0): TSTR2 0xfffff400 bit7 clr/set; CYLR7D 0xfffff58e = TCNT7D 0xfffff586 = BFR7D 0xfffff596 = DTR7D 0xfffff59e = 32000 (0x7d00); BFR7D = rx8_mul_s32_shift16_saturate(0xffffa210, 32000). Pool 0xb36c-0xb394 bytes verified. TO7D = PB7 PWM (reviews/fueling/injector_pin_mapping.md, PBCRL=0x4000). Duty from 0xb2c0 (0x25198: clamp DAT_ffffb354 0-100%)."
+ },
+ "00011880": {
+  "alias": "monitor_service_batch",
+  "confidence": "high",
+  "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x65658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule).; caller task12_adc_feedback_pwm_entry 0x6592 (high, ROM-byte + emulator verified per C item 7, tests/test_c7_task_handlers.py); monitor batch"
+ },
+ "000065b2": {
+  "alias": "task13_temp_sensor_dtc_entry",
+  "confidence": "high",
+  "evidence": "rec[13] @ROM 0x4a60 entry; pool 0x66d0-0x66d8 = {0x7298, 0x73a0, 0x118d0}, tail 0x66bc = taskEnd. Dynamic: harness call visits all three handlers and writes 0xffff9f60/9f70/9f64/9f74."
+ },
+ "00007298": {
+  "alias": "iat_sensor_scaling_fault",
+  "confidence": "high",
+  "evidence": "Blend DAT_ffff9f66 <- DAT_ffff9f1e (0x100/256 via 0x2510), affine 0x38a00000 (0x24c0), lookup_2d vs descriptor 0x69824 (bytes @ROM 0x69824 verified; tbl_iat_sensor_scaling_00069824) -> intake_air_temperature_ffff9f60; range fault 0xffff9f64 (raw<0x51e->2, >=0xf6c9->1). Pool 0x7300-0x7330 verified."
+ },
+ "000073a0": {
+  "alias": "clt_sensor_scaling_fault",
+  "confidence": "high",
+  "evidence": "Same pattern vs descriptor 0x6977c (@ROM 0x6977c verified; tbl_clt_sensor_scaling_0006977c) -> coolant_temperature_ffff9f70; range fault 0xffff9f74 (raw<0x9ff->2, >=0xfd00->1). Pool 0x7408-0x7438 verified."
+ },
+ "000118d0": {
+  "alias": "dtc_fault_service_batch",
+  "confidence": "high",
+  "evidence": "26-call batch, pool 0x11a74-0x11ad8 ROM-verified; includes candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, ref_faultSomething0x1 0x5a130, 0x5a188 dtc_distance_mil_accumulator (dtc_control_report.md), ref_getVehicleSpeedThreshold 0x59fb6, ref_checkIfDeviceControl_ 0x5fc18, ref_getCoolantTempConditional 0x5fcbc. Called only from task[13]."
+ },
+ "000065cc": {
+  "alias": "task14_charging_control_entry",
+  "confidence": "high",
+  "evidence": "rec[14] @ROM 0x4a70 entry; pool 0x66dc = 0x11adc. Dynamic: harness call visits 0x11adc and ref_alternatorControlMain_00026868, reaches taskEnd -> idle 0x3dac."
+ },
+ "00011adc": {
+  "alias": "charging_control_batch",
+  "confidence": "high",
+  "evidence": "7-call batch, pool 0x11ca8-0x11cc0 ROM-verified: 0x19d8a, 0x39b08, 0x2145e, ref_alternatorControlMain_00026868, 0x2224e, 0x59ab0, 0x16c56. Called only from task[14]."
+ },
+ "000065da": {
+  "alias": "task15_catalyst_temp_entry",
+  "confidence": "high",
+  "evidence": "rec[15] @ROM 0x4a80 entry; pool 0x66e0 = 0x11b08. Dynamic: harness call visits 0x11b08 and ref_catTempRelated 0x3eb3a, reaches taskEnd -> idle 0x3dac."
+ },
+ "00011b08": {
+  "alias": "catalyst_temp_monitor_batch",
+  "confidence": "high",
+  "evidence": "4-call batch, pool 0x11cc4-0x11cd0 ROM-verified: 0x39ca8, 0x146a6, ref_catTempRelated 0x3eb3a, 0x16fb6. Called only from task[15]."
+ },
+ "000065e8": {
+  "alias": "task16_uds_diag_utility_entry",
+  "confidence": "high",
+  "evidence": "rec[16] @ROM 0x4a90 entry; pool 0x66e4 = 0x11b22. Dynamic: harness call visits 0x11b22 and ref_getTireSize 0x5de74."
+ },
+ "00011b22": {
+  "alias": "uds_diag_utility_batch",
+  "confidence": "high",
+  "evidence": "15-call batch, pool 0x11cd4-0x11d0c ROM-verified: 0x59164 (timer 0xffffd240), 0x5a162 (engine runtime 0xffffd284), ref_getTireSize 0x5de74 (E2 id 0x9a), 0x5e748 (E2 id 0x9f), 0x5e664 (E2 ids 0x100/0x68/0x6a/0x6c) via 0x37ef0, 0x54cf8 (0xa5-unlock checksum verify of area 0xffff8fe8), 0x5e7e4, 0x19da2, 0x39cf0, 0x21476, 0x3176e, 0x2a3bc, 0x5fc40 (idle target lookup), 0x602fc, 0x3de70 (UDS read/write memory by address). Called only from task[16]."
+ }
  },
  "ram_aliases": {
-  "ffff9f64": {"alias": "iat_range_fault", "type": "uint8", "reader": "00007298", "evidence": "0/1/2 range fault from raw thresholds 0x51e/0xf6c9 in iat_sensor_scaling_fault 0x7298 (task[13])."},
-  "ffff9f74": {"alias": "clt_range_fault", "type": "uint8", "reader": "000073a0", "evidence": "0/1/2 range fault from raw thresholds 0x9ff/0xfd00 in clt_sensor_scaling_fault 0x73a0 (task[13])."},
-  "ffffa188": {"alias": "task12_alive_counter", "type": "uint16", "reader": "0000a3ac", "evidence": "Cleared (mov.w #0) by 0xa4b6 each task[12] run; incremented in 0xa3ac, reset when > 300."},
-  "ffffa1fa": {"alias": "adc_an23_sample_a", "type": "uint16", "reader": "0000b0a6", "evidence": "Word @0xfffff836 (ADDR23H/AN23), sampled from ADC EOC bank1 chain 0x6b60 -> 0xb0a6."},
-  "ffffa1fc": {"alias": "adc_an23_sample_b", "type": "uint16", "reader": "0000b1da", "evidence": "Second AN23 sample (0xb1da)."},
-  "ffffa1fe": {"alias": "adc_an11_sample_a", "type": "uint16", "reader": "0000b0a6", "evidence": "Word @0xfffff816 (ADDR11H/AN11; pool 0xfffff836 + add -0x20 at 0xb0d2)."},
-  "ffffa200": {"alias": "adc_an11_sample_b", "type": "uint16", "reader": "0000b1da", "evidence": "Second AN11 sample (0xb1da)."},
-  "ffffa202": {"alias": "adc_pair_second_sample_ready", "type": "uint8", "reader": "0000aee8", "evidence": "Set to 1 by 0xb1da once both channels sampled; gates 0xaee8."},
-  "ffffa1d8": {"alias": "adc_pair_ratio_raw", "type": "float", "reader": "0000aee8", "evidence": "|dAN23|*5/65536 / |d(AN23-AN11)/200| - 16.25; consumers 0x1ac00/0x22630."},
-  "ffffa1d4": {"alias": "adc_pair_ratio_filtered", "type": "float", "reader": "0000aee8", "evidence": "first_order_filter(a1d8, a1d4, 0.25); copied to 0xffffaa78 by 0x1ac00."},
-  "ffffa1dc": {"alias": "adc_pair_range_fault", "type": "uint8", "reader": "0000aee8", "evidence": "2 = AN23 raw < 0x5c29, 1 = > 0xc28f, 0 = in band."},
-  "ffffa1dd": {"alias": "adc_pair_correlation_fault", "type": "uint8", "reader": "0000aee8", "evidence": "2 = inter-channel delta < -0.005, 1 = > +0.005."},
-  "ffffa210": {"alias": "ch7d_pwm_duty_q16", "type": "uint32", "reader": "0000b2c0", "evidence": "Duty percent * 65536 from 0x25198 (clamp 0-100% of 0xffffb354); BFR7D = duty*32000>>16."},
-  "ffffa214": {"alias": "ch7d_pwm_enabled", "type": "uint8", "reader": "0000b308", "evidence": "Once-only enable flag for the ch7D (TO7D/PB7) PWM setup in 0xb308."}
+ "ffff9f64": {
+  "alias": "iat_range_fault",
+  "type": "uint8",
+  "reader": "00007298",
+  "evidence": "0/1/2 range fault from raw thresholds 0x51e/0xf6c9 in iat_sensor_scaling_fault 0x7298 (task[13])."
+ },
+ "ffff9f74": {
+  "alias": "clt_range_fault",
+  "type": "uint8",
+  "reader": "000073a0",
+  "evidence": "0/1/2 range fault from raw thresholds 0x9ff/0xfd00 in clt_sensor_scaling_fault 0x73a0 (task[13])."
+ },
+ "ffffa188": {
+  "alias": "task12_alive_counter",
+  "type": "uint16",
+  "reader": "0000a3ac",
+  "evidence": "Cleared (mov.w #0) by 0xa4b6 each task[12] run; incremented in 0xa3ac, reset when > 300."
+ },
+ "ffffa1fa": {
+  "alias": "adc_an23_sample_a",
+  "type": "uint16",
+  "reader": "0000b0a6",
+  "evidence": "Word @0xfffff836 (ADDR23H/AN23), sampled from ADC EOC bank1 chain 0x6b60 -> 0xb0a6."
+ },
+ "ffffa1fc": {
+  "alias": "adc_an23_sample_b",
+  "type": "uint16",
+  "reader": "0000b1da",
+  "evidence": "Second AN23 sample (0xb1da)."
+ },
+ "ffffa1fe": {
+  "alias": "adc_an11_sample_a",
+  "type": "uint16",
+  "reader": "0000b0a6",
+  "evidence": "Word @0xfffff816 (ADDR11H/AN11; pool 0xfffff836 + add -0x20 at 0xb0d2)."
+ },
+ "ffffa200": {
+  "alias": "adc_an11_sample_b",
+  "type": "uint16",
+  "reader": "0000b1da",
+  "evidence": "Second AN11 sample (0xb1da)."
+ },
+ "ffffa202": {
+  "alias": "adc_pair_second_sample_ready",
+  "type": "uint8",
+  "reader": "0000aee8",
+  "evidence": "Set to 1 by 0xb1da once both channels sampled; gates 0xaee8."
+ },
+ "ffffa1d8": {
+  "alias": "adc_pair_ratio_raw",
+  "type": "float",
+  "reader": "0000aee8",
+  "evidence": "|dAN23|*5/65536 / |d(AN23-AN11)/200| - 16.25; consumers 0x1ac00/0x22630."
+ },
+ "ffffa1d4": {
+  "alias": "adc_pair_ratio_filtered",
+  "type": "float",
+  "reader": "0000aee8",
+  "evidence": "first_order_filter(a1d8, a1d4, 0.25); copied to 0xffffaa78 by 0x1ac00."
+ },
+ "ffffa1dc": {
+  "alias": "adc_pair_range_fault",
+  "type": "uint8",
+  "reader": "0000aee8",
+  "evidence": "2 = AN23 raw < 0x5c29, 1 = > 0xc28f, 0 = in band."
+ },
+ "ffffa1dd": {
+  "alias": "adc_pair_correlation_fault",
+  "type": "uint8",
+  "reader": "0000aee8",
+  "evidence": "2 = inter-channel delta < -0.005, 1 = > +0.005."
+ },
+ "ffffa210": {
+  "alias": "ch7d_pwm_duty_q16",
+  "type": "uint32",
+  "reader": "0000b2c0",
+  "evidence": "Duty percent * 65536 from 0x25198 (clamp 0-100% of 0xffffb354); BFR7D = duty*32000>>16."
+ },
+ "ffffa214": {
+  "alias": "ch7d_pwm_enabled",
+  "type": "uint8",
+  "reader": "0000b308",
+  "evidence": "Once-only enable flag for the ch7D (TO7D/PB7) PWM setup in 0xb308."
+ }
  },
  "dynamic_validation": {
-  "test": "tests/test_c7_task_handlers.py (8 passed, python -m pytest)",
-  "notes": "task[12]/[14]/[15] run to taskEnd 0x3d58 -> idle 0x3dac; task[13]/[16] visit all direct handlers then stop at pre-existing opdec gaps 0x50de0 (word 0xff07 fmov.s fr0,@(r0,r15), inside FUN_00050d98 <- 0x3957c) and 0x674ac (inside FUN_00067476 <- 0x622e0) - emulator corpus-table limitation (cf. E8), not a ROM finding."
+ "test": "tests/test_c7_task_handlers.py (8 passed, python -m pytest)",
+ "notes": "task[12]/[14]/[15] run to taskEnd 0x3d58 -> idle 0x3dac; task[13]/[16] visit all direct handlers then stop at pre-existing opdec gaps 0x50de0 (word 0xff07 fmov.s fr0,@(r0,r15), inside FUN_00050d98 <- 0x3957c) and 0x674ac (inside FUN_00067476 <- 0x622e0) - emulator corpus-table limitation (cf. E8), not a ROM finding."
  },
  "rom_unchanged": true,
  "backup": "ephemeral local pre_name_integration.zip (not committed; backups are not kept in-tree since 9ba75728) - pre-change state recoverable from git history of this branch's parent"
