@@ -637,8 +637,9 @@ in §4 is complete (all 19 records named or ref_-labeled). Binary-level evidence
 task-table records 12–16 at ROM 0x4a50–0x4a98 read back as
 `{param 0x04000100, ctx 0xffff7468+8·i, entry, weight 0x02}` with entries
 0x6592/0x65b2/0x65cc/0x65da/0x65e8; each wrapper's PC-relative literal pool
-(0x66bc–0x66e8) and each batch handler's jsr pool (0x7300–0x7330, 0x7408–0x7438,
-0xb13c–0xb178, 0xb1f8–0xb238, 0xb36c–0xb394, 0x11a40–0x11d0c) was dumped from the raw ROM and
+(0x66bc–0x66e8) and each handler's jsr pool (0x7300–0x7330, 0x7408–0x7438,
+0xb13c–0xb17f, 0xb202–0xb23b, 0xb36c–0xb397; batches 0x11a40–0x11a70, 0x11a74–0x11ad8,
+0x11ca6–0x11d87) was dumped from the raw ROM and
 matches the decompiled call lists. Dynamic evidence: `tests/test_c7_task_handlers.py`
 (8 passed) boots the 60E15120_N3J1E profile to idle and harness-calls each
 entry — task[12]/[14]/[15] run their full handler chain into `taskEnd` 0x3d58 →
