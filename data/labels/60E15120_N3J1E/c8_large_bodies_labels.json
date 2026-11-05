@@ -1,0 +1,188 @@
+{
+ "date": "",
+ "pass": "c8_large_control_bodies_labeling (ROADMAP C item 8)",
+ "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Reports: o2_sensor_monitor_report.md, cruise_control_report.md, e2ram_nv_storage_report.md, idle_target_control_report.md, can_mailbox_config_report.md.",
+ "function_aliases": {
+  "0003fb9e": {
+   "alias": "o2_response_monitor_accumulate",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. 4-channel filtered-lambda/AFR delta accumulator: snapshots 0xffffc708/0c/10/14, shifts 10-entry rings 0xffffc7f4 (float) and 0xffffc870 (u16), reloads per-channel counters 0xffffc7ba-0xffffc7d8 from 3-D tbl descriptor 0x6b66c (nx=9 ny=9 ax=0x7ad48 ay=0x7ad6c data=0x7ad90 type=0, ROM bytes verified) on (engine_load 0xffffc0b4, engine_speed_rpm 0xffffb548); accumulates max/min deltas 0xffffc724-0xffffc77c, sign/deviation bits 0xffffc7de-0xffffc7e5, tolerance band float 1e-5 (0x3727c5ac) via mova pool 0x41220 (refs 0x41140/0x41156/0x4116a/0x4117e). Outputs ratios 0xffffc6f0/c6f4/c780/c784 and flag 0xffffc701, consumed by 0x4128e. Called from slow-task batch 0x38f3e (jsr at 0x38f74; pool word 0x390b0 = 0x3fb9e). Channel inputs filtered by 0x3f924 (called from 0x38dca)."
+  },
+  "0004128e": {
+   "alias": "o2_response_monitor_evaluate",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Evaluates the 0x3fb9e accumulators: thresholds from 3-D tbl descriptors 0x6b680/0x6b69c/0x6b6b8/0x6b6d4 (load,rpm; ROM bytes verified) -> 0xffffc6f8/c6fc/c798/c79c; ratio<=threshold sets pass flags 0xffffc7ea-0xffffc7e9, else fail flags 0xffffc7e6-0xffffc7e9; any-fail -> 0x5fd38(0x1c,1) pending, all-four-fail -> 0x5fd38(0x1c,2) confirmed. Fault id 0x1c -> id2slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133 front HO2S slow response (data/dtc/60E15120_N3J1E.tsv slot 1b). Mode-06 test results written by 0x58262 (0xffffc6f0) and 0x5831c (0xffffc6f4) via 0x5904a. Called from 0x38f3e (jsr at 0x38f7a)."
+  },
+  "0003f924": {
+   "alias": "o2_channel_filter_update",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. First-order filters (epsilon 1e-5) of diag AFR word 0xffffaa6c (factors 1.0 -> 0xffffc708, 0.5 -> 0xffffc70c) and actual lambda 0xffffadec (0.1 -> 0xffffc710, 0.03125 -> 0xffffc714); latches 0xffffc900/0xffffc902 edges from 0xffffae1a/ae1c. Feeds 0x3fb9e. Called from 0x38dca (pool-verified jsr)."
+  },
+  "0004ca7e": {
+   "alias": "cruise_speed_error_filter_stage",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c."
+  },
+  "0002d83c": {
+   "alias": "cruise_set_speed_adjust_integrator",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Integrates cruise set-speed adjustment 0xffffbd08 clamped [0,100]: +/- steps from 3-D tbl descriptors 0x6a8e4/0x6a8f8 (nx=2 ny=5) and 0x6a8d0/0x6a90c/0x6a920 (nx=10/9/5 ny=5; ax 0x77198-0x77410 ay 0x771c0-0x77424 data 0x771d4-0x77438 type 0; ROM bytes verified) on (0xffffbfa4/0xffffbfa0, 0xffffcf1c); band-selected 2-D ramps tbl 0x6a880-0x6a8b0 (n=31, data 0x76c50-0x77030) by 0xffffcf1c bands 2.0/3.0/4.0/5.0/6.0; gates on cruise flags 0xffffbfb0-0xffffbfba, delta 8.0 on 0xffffbd1c = 0xffffbfa0-0xffffbfa4, 0xffffbccc, 0xffffbbc8/bbc9 (0xfd/0xfe); sets accel/decel flags 0xffffbcfc/0xffffbcfd. Consumer 0x2df62: 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100). Called from 0x2e5c6 (jsr via pool 0x2e790 at 0x2e63c), itself called from slow task 0x11534 (task[18] entry 0x64e8)."
+  },
+  "00023844": {
+   "alias": "e2ram_block_decode",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Decodes the E2RAM staging block (read into 0xffffb478, payload decoded from 0xffffb47a) into working RAM: u16 affine step 0.0305176 (0x3cfa0000) of 0xffffb47a/0x47c -> 0xffffb4b0/b4, step 0.0048828 (0x38a00000) of 0xffffb498/49a/49c -> 0xffffb4c0/c4/c8; raw bytes 0xffffb47e-0xffffb497 copied to 0xffffb4cc-0xffffb4db; u8 affine 0.078125 (0x3da00000) -> 0xffffb4b8, signed 0.78125 (0x3f480000, sign from 0xffffb489 bit7) -> 0xffffb4bc; 7 bytes 0xffffb48a-0xffffb490 unpacked bit-wise via 0x24b00 (20-byte helper) into DTC/history flags 0xffffb4ec-0xffffb51b. Called from 0x2376c (jsr via pool 0x237bc at 0x2376e)."
+  },
+  "000244bc": {
+   "alias": "e2ram_block_encode",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0.00048828 = 0x39a00000) -> 0xffffb448, ref_readValue_float_DEFAULTVAL_ADDRESS(16.0) of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796)."
+  },
+  "0001506c": {
+   "alias": "idle_target_rpm_calculate",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94."
+  },
+  "0002a4f8": {
+   "alias": "hcan_mailbox_config_compare",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Compares a desired HCAN mailbox descriptor array (param_2: 16 x 16-byte records for channel 0, 6 for channel 1) against live registers: HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 expect 0x83e; MBCR/MBIMR rebuilt from record bytes and compared (HCAN0_MBCR_W 0xffffe404, HCAN0_MBIMR_W 0xffffe414, HCAN1_MBCR_W 0xffffe604, HCAN1_MBIMR_W 0xffffe614); HCAN0_IMR_W 0xffffe416 / HCAN1_IMR_W 0xffffe616 expect 0xfcfe; HCAN0_LAFMH_W 0xffffe41e + HCAN0_LAFML_W 0xffffe41c (and HCAN1_LAFMH_W 0xffffe61e / HCAN1_LAFML_W 0xffffe61c) must be nonzero; per-mailbox MC control/data bytes checked at HCAN0_MC0[1]_B 0xffffe420 + 8*(mb&0xf) (MC0[5]/MC0[6]/MC0[7]/MC0[8] hold ID/DLC fields). Returns nonzero on any mismatch. Called from ref_canSetup 0xd9f4 (jsr @r13 at 0xda3e/0xda4e; pool 0xdb20 = 0x2a4f8) in a <=2-iteration retry loop with ref_CANControllerSetup(0, 0x4e01c or 0x4e11c, 0x10) and (1, 0x4e21c, 6); after >1 tries sets error flag 0xffffa410."
+  },
+  "0002376c": {
+   "alias": "e2ram_load_decode_entry",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Calls 0x23844 (block decode) then 0x23f4e (stored DTC replay, 38 x 0x5fd38 calls); called from 0x235c8 and 0x235f8 after E2RAM read (0xb99c into 0xffffb440 / 0xb958 into 0xffffb478) with magic 0x5aa5 and checksum verification."
+  },
+  "0002377a": {
+   "alias": "e2ram_save_encode_entry",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Interrupt-masked wrapper (sh_raise_interrupt_mask 0x10 / ref_setSR): calls 0x242ae (fault status collect) then 0x244bc (block encode); called from 0x236cc, which then writes magic 0xa55a (mov.w via pool 0x23734) at 0xffffb440, checksum (sum of 0x1b u16, loop at 0x236f0-0x236fe) at +0x36, and writes 0x1c u16 via E2RAM write 0xb886 (pool 0x23738), setting 0xffffb43b on success."
+  },
+  "00023f4e": {
+   "alias": "e2ram_stored_dtc_replay",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Maps stored flag bits 0xffffb4ec-0xffffb51b (unpacked by 0x23844) to 38 set_fault calls 0x5fd38(id, 1|2) for ids 0x13,0x14,0x21,0x22,0x42,0x47,0x4f,0x5b-0x5d,0x5f,0x60,0x61,0x65,0x6a,0x6b,0x83,0x84,100; restores the DTC history stored in E2RAM at load."
+  },
+  "000242ae": {
+   "alias": "e2ram_fault_status_collect",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Collects live fault status into E2RAM staging bytes 0xffffb4dc-0xffffb4eb via 18 calls of ref_getFaultStatus__ 0x66a00; called from 0x2377a before 0x244bc encodes the block."
+  },
+  "0004c828": {
+   "alias": "cruise_switch_code_decode",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Decodes cruise switch code 0xffffbaed (values 1-6) into individual flags 0xffffcf47-0xffffcf4c; first call of cruise batch 0x2e692 (jsr at 0x2e698)."
+  },
+  "0002df62": {
+   "alias": "cruise_set_speed_apply",
+   "confidence": "high",
+   "evidence": "ROADMAP C item 8. Applies the integrator output to the cruise set speed: when cruise active (0xffffbced set, 0xffffbd3e set) 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100); 0xffffbcf8 is the set speed compared against vehicle speed 0xffffa9b4 by 0x4c896 (enable flag 0xffffcf34)."
+  }
+ },
+ "ram_aliases": {
+  "ffffc6f0": {
+   "alias": "o2_monitor_ratio_ch0",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Accumulated amplitude ratio channel 0 (0xffffc758/0xffffc728) from 0x3fb9e; compared vs threshold 0xffffc6f8 in 0x4128e; mode-06 result via 0x58262 (encode step 0.0039062)."
+  },
+  "ffffc6f4": {
+   "alias": "o2_monitor_ratio_ch1",
+   "type": "float",
+   "reader": "0005831c",
+   "evidence": "Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c."
+  },
+  "ffffc780": {
+   "alias": "o2_monitor_ratio_ch2",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Ratio channel 2 (0xffffc770/0xffffc740); compared vs 0xffffc798."
+  },
+  "ffffc784": {
+   "alias": "o2_monitor_ratio_ch3",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Ratio channel 3 (0xffffc77c/0xffffc74c); compared vs 0xffffc79c."
+  },
+  "ffffc701": {
+   "alias": "o2_monitor_fluctuation_detected",
+   "type": "uint8",
+   "reader": "0004128e",
+   "evidence": "Set by 0x3fb9e when the counter window completes (0xffffc904==0); gates the ratio evaluation in 0x4128e."
+  },
+  "ffffc708": {
+   "alias": "o2_channel_afr_fast",
+   "type": "float",
+   "reader": "0003f924",
+   "evidence": "First-order filtered diag AFR word 0xffffaa6c, factor 1.0 (0x3f800000); snapshot input to 0x3fb9e."
+  },
+  "ffffc710": {
+   "alias": "o2_channel_lambda_slow",
+   "type": "float",
+   "reader": "0003fb9e",
+   "evidence": "First-order filtered actual lambda 0xffffadec, factor 0.1; one of the four channels delta-accumulated in 0x3fb9e."
+  },
+  "ffffb440": {
+   "alias": "e2ram_staging_block",
+   "type": "uint16[28]",
+   "reader": "000236cc",
+   "evidence": "E2RAM staging block: u16[0] = magic 0xa55a (mov.w via pool 0x23734 at 0x236ec), payload u16[1..26], u16[27] at +0x36 = checksum (sum of 0x1b u16, loop 0x236f0-0x236fe); 0x1c u16 written to E2RAM via 0xb886."
+  },
+  "ffffb478": {
+   "alias": "e2ram_read_staging",
+   "type": "uint16[28]",
+   "reader": "000235f8",
+   "evidence": "E2RAM read landing buffer (0xb958, 0x1c u16); magic checked byte-swapped as 0x5aa5 at +0, checksum at +0x36 (0xffffb4ae)."
+  },
+  "ffffb47a": {
+   "alias": "e2ram_payload_raw",
+   "type": "uint8[34]",
+   "reader": "00023844",
+   "evidence": "Decode source: raw payload bytes of the stored block (0xffffb47a-0xffffb49c) affine-decoded by 0x23844 into 0xffffb4b0+."
+  },
+  "ffffb4ec": {
+   "alias": "stored_dtc_flag_bits",
+   "type": "uint8",
+   "reader": "00023f4e",
+   "evidence": "Unpacked DTC history flags (0xffffb4ec-0xffffb51b) decoded by 0x23844 via 0x24b00; replayed by 0x23f4e through 0x5fd38."
+  },
+  "ffffa7f4": {
+   "alias": "idle_target_rpm",
+   "type": "float",
+   "reader": "0001506c",
+   "evidence": "Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94."
+  },
+  "ffffbd08": {
+   "alias": "cruise_set_speed_adjust",
+   "type": "float",
+   "reader": "0002df62",
+   "evidence": "Integrator output of 0x2d83c, clamped [0,100]; folded into set speed by 0x2df62 as 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100)."
+  },
+  "ffffbcf8": {
+   "alias": "cruise_set_speed",
+   "type": "float",
+   "reader": "0004c896",
+   "evidence": "Cruise set speed; copied to 0xffffcf18 and compared with vehicle speed 0xffffa9b4 for the enable flag 0xffffcf34 in 0x4c896."
+  },
+  "ffffbaed": {
+   "alias": "cruise_switch_code",
+   "type": "uint8",
+   "reader": "0004c828",
+   "evidence": "Cruise switch enum (1-6) decoded into flags 0xffffcf47-0xffffcf4c by 0x4c828; written near ref_calculateCruiseControlSwitchVolt 0x2be18 / 0x2c15a."
+  },
+  "ffffcef4": {
+   "alias": "cruise_filtered_speed_error",
+   "type": "float",
+   "reader": "0004d700",
+   "evidence": "Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700."
+  },
+  "ffffcee4": {
+   "alias": "cruise_speed_error_mean12",
+   "type": "float",
+   "reader": "0004ca7e",
+   "evidence": "Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e."
+  }
+ },
+ "rom_unchanged": true,
+ "ghidra_database_updated": false
+}

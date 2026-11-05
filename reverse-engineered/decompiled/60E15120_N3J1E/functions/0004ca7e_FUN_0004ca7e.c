@@ -13,7 +13,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x0004d2f0) */
 
-void FUN_0004ca7e(void)
+void cruise_speed_error_filter_stage(void)
 
 {
   char cVar1;
@@ -224,7 +224,7 @@ LAB_0004d1ca:
   DAT_ffffcf28 = fVar16;
   if ((DAT_ffffcf4d != '\x01') || (fVar12 = fVar16, fVar13 = fVar16, DAT_ffffcf4e != '\0')) {
     if (DAT_ffffcf65 != '\0') goto LAB_0004d356;
-    DAT_ffffcee8 = rx8_clamp_float(DAT_ffffcee4,-15.0,15.0);
+    DAT_ffffcee8 = rx8_clamp_float(cruise_speed_error_mean12_ffffcee4,-15.0,15.0);
     if (DAT_ffffcf64 == '\0') {
       if (DAT_ffffcee8 <= DAT_ffffceec) {
         DAT_ffffceec = rx8_max_float(DAT_ffffceec - 1.0,DAT_ffffcee8);
@@ -250,19 +250,19 @@ LAB_0004d356:
   fVar16 = (float)lookup_2d_descriptor_scaled(snapshot_vehicle_speed_ffffbbb4,&tbl_table_2d_402_check_datatype_0006bc64);
   fVar15 = (float)lookup_2d_descriptor_scaled(snapshot_vehicle_speed_ffffbbb4,&tbl_table_2d_403_check_datatype_0006bc70);
   if ((cVar11 == '\x01') || (DAT_ffffcf59 != '\0')) {
-    DAT_ffffcef4 = DAT_ffffcef0 + fVar12;
+    cruise_filtered_speed_error_ffffcef4 = DAT_ffffcef0 + fVar12;
   }
   else if ((cVar10 == '\x01') || (DAT_ffffcf56 != '\0')) {
-    DAT_ffffcef4 = DAT_ffffcef0 + fVar13;
+    cruise_filtered_speed_error_ffffcef4 = DAT_ffffcef0 + fVar13;
   }
   else if ((cVar9 == '\x01') || (DAT_ffffcf53 != '\0')) {
-    DAT_ffffcef4 = DAT_ffffcef0 + fVar14;
+    cruise_filtered_speed_error_ffffcef4 = DAT_ffffcef0 + fVar14;
   }
   else {
     if ((cVar8 != '\x01') && (DAT_ffffcf50 == '\0')) {
       fVar16 = fVar15;
     }
-    DAT_ffffcef4 = DAT_ffffcef0 + fVar16;
+    cruise_filtered_speed_error_ffffcef4 = DAT_ffffcef0 + fVar16;
   }
   DAT_ffffcf6a = cVar7;
   DAT_ffffcf6b = cVar8;

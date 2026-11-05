@@ -19,8 +19,8 @@ undefined4 FUN_000235f8(void)
   else {
     DAT_ffffb438 = 0;
     cVar5 = DAT_ffffa228 == '\x02';
-    FUN_0000b958(&DAT_ffffb478,0x1c);
-    DAT_ffffb43d = DAT_ffffb478 != 0x5aa5;
+    FUN_0000b958(&e2ram_read_staging_ffffb478,0x1c);
+    DAT_ffffb43d = e2ram_read_staging_ffffb478 != 0x5aa5;
     sVar4 = 0;
     if ((bool)DAT_ffffb43d) {
       cVar5 = cVar5 + '\x01';
@@ -29,7 +29,7 @@ undefined4 FUN_000235f8(void)
     iVar2 = 0;
     do {
       bVar3 = bVar3 + 1;
-      sVar4 = sVar4 + *(short *)((int)&DAT_ffffb478 + iVar2);
+      sVar4 = sVar4 + *(short *)((int)&e2ram_read_staging_ffffb478 + iVar2);
       iVar2 = iVar2 + 2;
     } while (bVar3 < 0x1b);
     DAT_ffffb43e = sVar4 != DAT_ffffb4ae;
@@ -39,7 +39,7 @@ undefined4 FUN_000235f8(void)
     uVar1 = 0x36;
     if (cVar5 == '\0') {
       DAT_ffffb43a = 0;
-      uVar1 = FUN_0002376c();
+      uVar1 = e2ram_load_decode_entry();
       return uVar1;
     }
     DAT_ffffb43a = 1;

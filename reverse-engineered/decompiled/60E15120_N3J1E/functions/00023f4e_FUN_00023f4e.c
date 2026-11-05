@@ -1,6 +1,6 @@
 /* ROM address: 0x00023f4e; body bytes: 772; decompiled */
 
-uint FUN_00023f4e(void)
+uint e2ram_stored_dtc_replay(void)
 
 {
   uint uVar1;

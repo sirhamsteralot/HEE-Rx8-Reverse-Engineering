@@ -24,8 +24,8 @@ void FUN_0002e5c6(void)
   FUN_000329fc();
   FUN_0002d5e4();
   FUN_0002d638();
-  FUN_0002d83c();
-  FUN_0002df62();
+  cruise_set_speed_adjust_integrator();
+  cruise_set_speed_apply();
   FUN_0002dfd6();
   FUN_0002e2cc();
   FUN_0002cf48();

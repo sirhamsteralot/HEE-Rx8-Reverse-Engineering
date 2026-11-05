@@ -8,6 +8,18 @@
       "rom_refs": 0,
       "rom_claims": 0
     },
+    "can_mailbox_config_report.md": {
+      "fn_checked": 2,
+      "ram_checked": 3,
+      "rom_refs": 5,
+      "rom_claims": 0
+    },
+    "cruise_control_report.md": {
+      "fn_checked": 9,
+      "ram_checked": 8,
+      "rom_refs": 17,
+      "rom_claims": 0
+    },
     "decompiler_triage_report.md": {
       "fn_checked": 5,
       "ram_checked": 0,
@@ -20,6 +32,12 @@
       "rom_refs": 51,
       "rom_claims": 0
     },
+    "e2ram_nv_storage_report.md": {
+      "fn_checked": 10,
+      "ram_checked": 7,
+      "rom_refs": 17,
+      "rom_claims": 0
+    },
     "free_resources_report.md": {
       "fn_checked": 3,
       "ram_checked": 2,
@@ -30,6 +48,12 @@
       "fn_checked": 44,
       "ram_checked": 21,
       "rom_refs": 95,
+      "rom_claims": 0
+    },
+    "idle_target_control_report.md": {
+      "fn_checked": 6,
+      "ram_checked": 5,
+      "rom_refs": 11,
       "rom_claims": 0
     },
     "ignition_timing_report.md": {
@@ -60,6 +84,12 @@
       "fn_checked": 0,
       "ram_checked": 0,
       "rom_refs": 0,
+      "rom_claims": 0
+    },
+    "o2_sensor_monitor_report.md": {
+      "fn_checked": 7,
+      "ram_checked": 7,
+      "rom_refs": 14,
       "rom_claims": 0
     },
     "os_scheduler_can_ivt_report.md": {

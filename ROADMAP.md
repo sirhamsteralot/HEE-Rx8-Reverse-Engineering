@@ -15,7 +15,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
 **reopened**: items 1–7 closed (7 on 2026-11-05), a 2026-11-04 coverage audit
-found new gaps (items 8–10) — pick those up first; C item 10 pairs naturally
+found new gaps (items 8–10) — item 8 closed, pick up 9–10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -26,7 +26,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 8–10)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 9–10)
 
 - **C item 7 (CLOSED 2026-11-05)** — scheduler task handlers 12–16 identified
   and labeled: task[12] 0x6592 `task12_adc_feedback_pwm_entry` (ADC AN23/AN11
@@ -41,12 +41,22 @@ and where artifacts live.
   `data/labels/60E15120_N3J1E/os_task_12_16_labels.json`,
   `tests/test_c7_task_handlers.py` (8 passed). Task-level subsystem map
   complete.
-- **C item 8 (open)** — identify and label the large unlabeled control bodies:
-  0x3fb9e (4,884 B; 3-D lookups + tolerance bands + saturating adds, called
-  from 0x38f3e), 0x4ca7e (2,200 B; 2-D lookups + first-order filter),
-  0x23844 (1,562 B), 0x1506c (1,530 B), 0x2d83c (1,444 B), 0x244bc (1,408 B),
-  0x2a4f8 (1,218 B) — the biggest chunks of unnamed control logic left in the
-  corpus. Each identified subsystem gets a 10-section report (AGENTS.md rule 8).
+- **C item 8 (CLOSED)** — the large unlabeled control bodies are identified and
+  labeled: 0x3fb9e `o2_response_monitor_accumulate` + 0x4128e
+  `o2_response_monitor_evaluate` (front HO2S slow-response monitor → P0133,
+  fault id 0x1c → slot 0x1b), 0x4ca7e `cruise_speed_error_filter_stage` + 0x2d83c
+  `cruise_set_speed_adjust_integrator`, 0x23844 `e2ram_block_decode` + 0x244bc
+  `e2ram_block_encode` (28-u16 E2RAM block, magic 0xa55a + checksum, DTC history
+  replay via 0x23f4e), 0x1506c `idle_target_rpm_calculate`, 0x2a4f8
+  `hcan_mailbox_config_compare`. ROM-byte + disassembly verified (62 scripted
+  checks), labels in
+  `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` + accepted TSVs,
+  reports: [o2_sensor_monitor_report.md](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md),
+  [cruise_control_report.md](docs/investigations/60E15120_N3J1E/cruise_control_report.md),
+  [e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md),
+  [idle_target_control_report.md](docs/investigations/60E15120_N3J1E/idle_target_control_report.md),
+  [can_mailbox_config_report.md](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md),
+  `tests/test_c8_large_bodies.py` (10 passed).
 - **C item 9 (open)** — subsystem reports for areas with only inherited
   `ref_` seed labels and no report: idle speed control
   (`ref_updateIdleControl__` 0x167c0), alternator/charging

@@ -76,7 +76,7 @@ ushort open_loop_fueling_targets(void)
       goto LAB_0001ef92;
     }
   }
-  else if (3 < DAT_ffffbaed) {
+  else if (3 < cruise_switch_code_ffffbaed) {
     safe_mode_ffffb12d = '\0';
     goto LAB_0001ef92;
   }

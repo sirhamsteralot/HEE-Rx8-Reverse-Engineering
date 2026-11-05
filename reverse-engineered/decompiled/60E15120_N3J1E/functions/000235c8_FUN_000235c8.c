@@ -8,11 +8,11 @@ uint FUN_000235c8(void)
 {
   uint uVar1;
   
-  FUN_0002377a();
-  uVar1 = FUN_0000b99c(&DAT_ffffb440,&DAT_ffffb478,0x1c);
+  e2ram_save_encode_entry();
+  uVar1 = FUN_0000b99c(&e2ram_staging_block_ffffb440,&e2ram_read_staging_ffffb478,0x1c);
   if ((uVar1 & 0xff) == 0) {
     DAT_ffffb43c = 0;
-    uVar1 = FUN_0002376c();
+    uVar1 = e2ram_load_decode_entry();
     return uVar1;
   }
   DAT_ffffb43c = 1;

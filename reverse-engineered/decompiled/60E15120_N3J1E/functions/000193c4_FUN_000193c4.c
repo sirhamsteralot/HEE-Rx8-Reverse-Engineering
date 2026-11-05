@@ -45,7 +45,7 @@ undefined4 FUN_000193c4(void)
     uVar1 = extraout_r0_00;
   }
   else {
-    fVar2 = rx8_max_float(DAT_ffffa9b4,DAT_ffffbcf8);
+    fVar2 = rx8_max_float(DAT_ffffa9b4,cruise_set_speed_ffffbcf8);
     fVar2 = rx8_min_float(fVar2,DAT_ffffc028);
     if (DAT_ffffa914 == '\x01') {
       fVar3 = 13.5;

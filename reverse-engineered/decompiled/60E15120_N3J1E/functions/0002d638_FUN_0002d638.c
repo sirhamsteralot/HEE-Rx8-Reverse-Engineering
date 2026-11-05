@@ -76,7 +76,7 @@ uint FUN_0002d638(void)
 LAB_0002d77c:
   if ((100.0 <= fVar9) || (fVar9 < -100.0)) {
     fVar9 = DAT_ffffbd00;
-    if (DAT_ffffa9b4 <= DAT_ffffbcf8) {
+    if (DAT_ffffa9b4 <= cruise_set_speed_ffffbcf8) {
       if (DAT_ffffbbcb != 1) {
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;

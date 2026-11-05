@@ -1,6 +1,6 @@
 /* ROM address: 0x0002a4f8; body bytes: 1218; decompiled */
 
-bool FUN_0002a4f8(char param_1,uint *param_2)
+bool hcan_mailbox_config_compare(char param_1,uint *param_2)
 
 {
   short sVar1;

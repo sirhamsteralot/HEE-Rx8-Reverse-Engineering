@@ -10,7 +10,7 @@
  */
 /* ROM address: 0x0004128e; body bytes: 610; decompiled */
 
-undefined4 * FUN_0004128e(void)
+undefined4 * o2_response_monitor_evaluate(void)
 
 {
   undefined4 *puVar1;
@@ -62,26 +62,26 @@ undefined4 * FUN_0004128e(void)
         DAT_ffffc798 = DAT_ffffc7a8 / fVar2;
         DAT_ffffc79c = DAT_ffffc7ac / fVar2;
       }
-      if (DAT_ffffc701 == '\x01') {
-        if (DAT_ffffc6f0 <= DAT_ffffc6f8) {
+      if (o2_monitor_fluctuation_detected_ffffc701 == '\x01') {
+        if (o2_monitor_ratio_ch0_ffffc6f0 <= DAT_ffffc6f8) {
           DAT_ffffc7ea = '\x01';
         }
         else {
           DAT_ffffc7e6 = '\x01';
         }
-        if (DAT_ffffc6f4 <= DAT_ffffc6fc) {
+        if (o2_monitor_ratio_ch1_ffffc6f4 <= DAT_ffffc6fc) {
           DAT_ffffc7eb = '\x01';
         }
         else {
           DAT_ffffc7e7 = '\x01';
         }
-        if (DAT_ffffc780 <= DAT_ffffc798) {
+        if (o2_monitor_ratio_ch2_ffffc780 <= DAT_ffffc798) {
           DAT_ffffc7ec = '\x01';
         }
         else {
           DAT_ffffc7e8 = '\x01';
         }
-        if (DAT_ffffc784 <= DAT_ffffc79c) {
+        if (o2_monitor_ratio_ch3_ffffc784 <= DAT_ffffc79c) {
           DAT_ffffc7ed = '\x01';
         }
         else {
@@ -104,7 +104,7 @@ undefined4 * FUN_0004128e(void)
       }
     }
     puVar1 = &DAT_000415e0;
-    DAT_ffffc6ec = (DAT_ffffc6f0 + DAT_ffffc6f4) * 0.5;
+    DAT_ffffc6ec = (o2_monitor_ratio_ch0_ffffc6f0 + o2_monitor_ratio_ch1_ffffc6f4) * 0.5;
   }
   return puVar1;
 }
