@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-05",
+  "review": "cross_report_consistency",
+  "scope": "docs-wide cross-report fact audit (walked the PR #28 link graph)",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "scans": {
+    "range_size_arithmetic": {
+      "claims_checked": 338,
+      "violations": 2,
+      "details": "live_tuning_feasibility_report.md SBL run 0xb0e-0xfff (spans 1266 B, claimed 1234 B) x2 occurrences with 0xfff end"
+    },
+    "anchor_crossdoc_comparison": {
+      "anchors": 60,
+      "conflicts_found": 3,
+      "details": "SBL gap end; IVT trampoline range (0x28c0-0x30d0 vs 0x2710-0x31f0 vs binary); trampoline/vector counts (117/98 vs binary 119/99)"
+    },
+    "binary_verification": {
+      "sbl_gap": "0xb0e-0xfdf all-0xFF (1234 B); 0xfe0-0xfff not erased",
+      "ivt_trampolines": "119 slots match 16-byte code pattern + pool {handler, 0x3238}; targets 0x2710-0x3220; tail slots 0x7ffd0->0x3220 (handler 0x5ec8, bra 0x5348 = fatal class), 0x7ffec->0x3208 (handler 0x5ef4 -> dispatch 0x9c9c)",
+      "task_table": "0x4990 base, {param, stack, entry, mask} x16 B, rec[0].entry 0x4998, terminator 0x4ac0 (confirmed, no change needed)"
+    }
+  },
+  "handlers_classified": {
+    "fatal": 99,
+    "real": 19,
+    "pending": 1,
+    "total_trampoline_vectors": 119,
+    "pending_detail": "0x5ef4 (vec 231) clears a peripheral flag then dispatches via 0x9c9c indirect jump; chain end not verified"
+  },
+  "docs_updated": [
+    "docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md",
+    "docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md",
+    "docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md",
+    "docs/learnings.md",
+    "docs/architecture/design/README.md",
+    "docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv",
+    "docs/investigations/60E15120_N3J1E/free_resources_report.md"
+  ],
+  "validations": {
+    "validate_reports": "PASS",
+    "hash_binaries_check": "OK (no binary touched)",
+    "disasm_tool": "hee_disasm_rom used for 0x2710/0x28c0/0x2ec0/0x31c0/0x31f0/0x3208/0x3220/0x53c6/0x5ec8/0x5ef4/0x9c9c"
+  }
+}

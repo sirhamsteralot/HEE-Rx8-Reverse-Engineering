@@ -20,7 +20,7 @@ The Phase 1 fidelity-hardening emulator pass produced dynamically verified
 knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled code:
 
 - The IVT lives at **VBR = 0x7fc50** (set at 0xd206); ROM vector slot = 0x7fc50 + offset.
-  All IVT trampolines (0x28c0-0x30d0) jsr the common context-save **0x3238**
+  All IVT trampolines (0x2710–0x3220) jsr the common context-save **0x3238**
   (`interrupt_entry_save_context`), which saves r2-r7/fr0-fr11/fpscr/fpul, raises the
   SR mask, and returns to the restore path at 0x3280. Unused vectors end in a deliberate
   halt loop at **0xa4be**.
@@ -217,9 +217,14 @@ traces:
   the pre-relocation CMI10B entry, inactive once VBR=0x7fc50 is set at 0xd206. It
   duplicates 0x7fcc's rpm math for that pre-VBR entry, so
   `crank_isr_compute_rpm`/`ref_INT_ATU101_IMI10AG` is a misnomer for that legacy handler.
-- **Unused/fatal vectors**: 117 IVT slots (0x100–0x39c) have real trampolines (all ctx
-  word = 0x3238); 98 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
-  report via 0xa330, halt 0xa4be / spin 0x535a). Only 19 have real handlers: CMI10B
+- **Unused/fatal vectors**: 119 IVT slots (0x100–0x39c) have real trampolines (all ctx
+  word = 0x3238; the two tail slots 0x7ffd0→0x3220 and 0x7ffec→0x3208 were missed
+  by the earlier 0x31f0 upper bound — see
+  [reviews/cross_report_consistency](reviews/cross_report_consistency/README.md));
+  99 of their handlers end in the fatal trap 0x5348 (raise mask 0xe0,
+  report via 0xa330, halt 0xa4be / spin 0x535a) — including the tail handler
+  0x5ec8 (vec 224), while tail handler 0x5ef4 (vec 231, dispatches via 0x9c9c)
+  is pending classification. Only 19 have real handlers: CMI10B
   0x5b3c, six ATU-II ch8 injector compares 0x59a4–0x59ea →
   `candidate_injector_pulse_set_dispatch(0..5)`, knock-ADC trigger 0x5a4c, ch3/ch9
   compares, three ADC EOC banks, CMCSR1 0x5cee, IRQ flags 0x53f6, CAN 0x378/0x37c/0x398.

@@ -71,7 +71,8 @@ is fully reversed and the ROM has measured free space.
   exists in the app. A patch in the covered range just changes the reported CVN
   (Rx8Man already fixes this host-side; the algorithm is documented so our
   patcher can recompute it), and 120 B of CVN-neutral cave (0x7fb08–0x7fb7f)
-  plus the SBL-region run (0xb0e–0xfff, 1,234 B, outside the checksum range) are
+  plus the SBL-region run (0xb0e–0xfdf, 1,234 B, outside the checksum range; the
+remaining 32 B of the SBL block at 0xfe0–0xfff are not erased) are
   available for code that must not move the CVN.
 - **Safety:** SH-2E aligned 32-bit stores are single bus cycles, so per-cell
   writes to the shadow are tear-free (an interpolation may mix old/new adjacent
@@ -139,7 +140,7 @@ at 20–50 Hz plus occasional table writes.
 #        else: NRC 0x31
 #   c) checksum: CVN recomputed at runtime (0x5a3f4) -> reported CVN changes; host
 #      tool may fix up per Rx8Man pattern (D3 algorithm documented); CVN-neutral
-#      caves available (0x7fb08-0x7fb7f, SBL 0xb0e-0xfff) for code that must not.
+#      caves available (0x7fb08-0x7fb7f, SBL 0xb0e-0xfdf) for code that must not.
 #
 # ---- PC-side tool (new work, utilities/scripts/) ----
 # python tool: ISO-TP/UDS over J2534 (car) or emu obd_port TCP (dev)
@@ -173,7 +174,7 @@ Free flash (0xFF runs ≥16 B scanned from ROM bytes, SHA-256 above):
 | 0x6bc7c–0x6bfff | 900 B | yes (descriptor-area gap) |
 | 0x6c061–0x6c0df | 127 B | yes (cal area) |
 | 0x5f026–0x5f03f, 0x6e280–0x6e297, 0x7e317–0x7e329, 0x7e652–0x7e677 | 26/24/19/38 B | yes (code-area gaps) |
-| 0xb0e–0xfff | 1,234 B | **no** (SBL region, below 0x2000) — CVN-neutral, but respect flash block layout |
+| 0xb0e–0xfdf | 1,234 B | **no** (SBL region, below 0x2000) — CVN-neutral, but respect flash block layout; the block's last 32 B (0xfe0–0xfff) are not erased |
 
 Total cave space ≈ 3.5 KB, of which ≈ 2.2 KB sits in the app image next to the
 cal area (the patchers' established location) and 120 B + 1.2 KB are
