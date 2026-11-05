@@ -121,7 +121,7 @@
   "0001a418": {
    "alias": "maf_per_rotation_calc",
    "confidence": "high",
-   "evidence": "aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0.; 2026-11-05: already dynamically verified: tests/test_fuel_chain_dynamic.py::test_maf_per_rotation_calc (aa3c = min(maf*60/rpm, 5.0), raw-MAF mode) + this pass re-ran it (2026-11-05); caller 0x197be; tbl 0x697b4 filter coefficient used in raw mode bypass"
+   "evidence": "aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0.; 2026-11-05: dynamically verified 2026-11-05: tests/test_fuel_chain_dynamic.py::test_maf_per_rotation_calc (aa3c = min(maf*60/rpm, 5.0), raw-MAF mode); caller 0x197be; tbl 0x697b4 filter coefficient used in raw mode bypass"
   },
   "0001e842": {
    "alias": "maf_operating_range",
