@@ -13,7 +13,7 @@ uint FUN_000643b8(ushort *param_1)
   uVar2 = (uint)(byte)(&DAT_ffff8d54)[(uint)*param_1 * 2];
   if ((uVar2 != 0x11) &&
      ((((bVar1 == 0 || (uVar2 = (uint)bVar1, 0x3f < uVar2)) && ((bVar1 < 0x81 || (0xbf < bVar1))))
-      || ((byte)(&DAT_ffff87ba)[(uint)DAT_ffff8900._0_2_ * 0x10] < 0x50)))) {
+      || ((byte)(&DAT_ffff87ba)[(uint)dtc_master_current_index_ffff8900._0_2_ * 0x10] < 0x50)))) {
     return uVar2;
   }
   uVar2 = FUN_00063098(0);

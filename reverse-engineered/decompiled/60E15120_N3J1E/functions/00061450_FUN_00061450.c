@@ -10,12 +10,12 @@ int FUN_00061450(char param_1,char param_2)
   uVar3 = 0;
   iVar2 = 0;
   do {
-    if (uVar3 != DAT_ffff8900._0_2_) {
+    if (uVar3 != dtc_master_current_index_ffff8900._0_2_) {
       bVar1 = (&DAT_ffff87b6)[uVar3 * 0x10];
       if (((param_2 == '\0') ||
           ((param_2 == '\x01' &&
-           ((&CAL_DTC_0300_Enable_Disable_1_1129)[(ushort)(&DAT_ffff87b0)[uVar3 * 8]] == '\x01'))))
-         || ((param_2 == '\x02' && ((&DAT_0007e704)[(ushort)(&DAT_ffff87b0)[uVar3 * 8]] == '\x01')))
+           ((&CAL_DTC_0300_Enable_Disable_1_1129)[(ushort)(&dtc_master_table_21_ffff87b0)[uVar3 * 8]] == '\x01'))))
+         || ((param_2 == '\x02' && ((&DAT_0007e704)[(ushort)(&dtc_master_table_21_ffff87b0)[uVar3 * 8]] == '\x01')))
          ) {
         if (param_1 == '\0') {
           if (bVar1 == 0) {

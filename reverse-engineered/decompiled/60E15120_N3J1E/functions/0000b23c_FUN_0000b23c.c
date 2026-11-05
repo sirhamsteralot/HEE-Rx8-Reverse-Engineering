@@ -10,8 +10,8 @@ void FUN_0000b23c(void)
   byte bVar1;
   undefined4 local_10 [2];
   
-  DAT_ffffa214 = 0;
-  DAT_ffffa210 = 0;
+  ch7d_pwm_enabled_ffffa214 = 0;
+  ch7d_pwm_duty_q16_ffffa210 = 0;
   ref_setSR_PARAM(local_10,0xe0);
   bVar1 = ATUII_TSTR2_B;
   ATUII_TSTR2_B = bVar1 & 0x7f;

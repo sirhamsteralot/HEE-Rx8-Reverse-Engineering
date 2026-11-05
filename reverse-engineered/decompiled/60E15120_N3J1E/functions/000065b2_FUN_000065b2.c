@@ -3,12 +3,12 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000065b2 (26 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000065b2(void)
+void task13_temp_sensor_dtc_entry(void)
 
 {
-  FUN_00007298();
-  FUN_000073a0();
-  FUN_000118d0();
+  iat_sensor_scaling_fault();
+  clt_sensor_scaling_fault();
+  dtc_fault_service_batch();
   ref_taskEndRoutine_();
   return;
 }

@@ -13,12 +13,12 @@ undefined4 FUN_00062c10(void)
   char *pcVar5;
   undefined4 uVar6;
   
-  sVar2 = FUN_00002034(&DAT_ffff8900);
+  sVar2 = FUN_00002034(&dtc_master_current_index_ffff8900);
   if ((sVar2 == 0) && (sVar2 = FUN_00002034(&DAT_ffff8904), sVar2 == 0)) {
     uVar6 = 0;
     for (uVar3 = 0; cVar4 = '\0', (int)uVar3 < 0x15; uVar3 = uVar3 + 1) {
-      pcVar5 = (char *)(&DAT_ffff87b0 + uVar3 * 8);
-      if ((DAT_ffff8798._0_1_ == '\0') || (uVar3 != DAT_ffff8900._0_2_)) {
+      pcVar5 = (char *)(&dtc_master_table_21_ffff87b0 + uVar3 * 8);
+      if ((DAT_ffff8798._0_1_ == '\0') || (uVar3 != dtc_master_current_index_ffff8900._0_2_)) {
         do {
           cVar1 = *pcVar5;
           pcVar5 = pcVar5 + 1;

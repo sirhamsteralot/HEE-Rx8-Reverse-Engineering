@@ -32,7 +32,7 @@ void FUN_000627a0(void)
     DAT_ffff8e6e = rx8_pack_u8_with_complement((int)DAT_ffff8e70);
   }
   if (cVar3 == '\0') {
-    DAT_ffff8900 = rx8_pack_u16_with_complement((int)DAT_ffff8904);
+    dtc_master_current_index_ffff8900 = rx8_pack_u16_with_complement((int)DAT_ffff8904);
   }
   if (cVar4 == '\0') {
     DAT_ffff8d4c = rx8_pack_u16_with_complement((int)DAT_ffff8d50);

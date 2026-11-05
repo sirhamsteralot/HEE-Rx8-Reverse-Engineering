@@ -25,7 +25,7 @@ void FUN_0000ad40(void)
     }
     DAT_ffffa1f8 = local_20;
     DAT_ffffa1e0 = (float)local_20 * -0.625 * 7.6293945e-05 + 1.75;
-    if (((DAT_ffffa208 < 0x14) && (DAT_ffffa203 == '\x01')) && (15233.0 <= DAT_ffffa1d8)) {
+    if (((DAT_ffffa208 < 0x14) && (DAT_ffffa203 == '\x01')) && (15233.0 <= adc_pair_ratio_raw_ffffa1d8)) {
       DAT_ffffa208 = DAT_ffffa208 + 1;
       DAT_ffffa1f4 = DAT_ffffa1f4 + DAT_ffffa1e0;
       fVar1 = rx8_clamp_float(DAT_ffffa1f4 / ((float)DAT_ffffa208 + 1.0),0.0,0.0);

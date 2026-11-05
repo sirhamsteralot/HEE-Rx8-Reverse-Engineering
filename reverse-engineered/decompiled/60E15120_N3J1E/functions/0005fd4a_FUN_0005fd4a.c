@@ -7,10 +7,10 @@ char FUN_0005fd4a(char param_1)
 
 {
   if (param_1 == '\x01') {
-    DAT_ffffd688 = 1;
+    dtc_eval_enable_ffffd688 = 1;
   }
   else if (param_1 == '\0') {
-    DAT_ffffd688 = 0;
+    dtc_eval_enable_ffffd688 = 0;
   }
   return param_1;
 }

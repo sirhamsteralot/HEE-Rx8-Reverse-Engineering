@@ -9,9 +9,9 @@ undefined4 FUN_00062ca0(void)
 {
   undefined4 *puVar1;
   
-  DAT_ffff8900 = rx8_pack_u16_with_complement(0);
+  dtc_master_current_index_ffff8900 = rx8_pack_u16_with_complement(0);
   _DAT_ffff8904 = rx8_pack_u16_with_complement(1);
-  puVar1 = (undefined4 *)&DAT_ffff87b0;
+  puVar1 = (undefined4 *)&dtc_master_table_21_ffff87b0;
   do {
     *(undefined2 *)puVar1 = 0xffff;
     *(undefined2 *)((int)puVar1 + 2) = 0xffff;
@@ -26,7 +26,7 @@ undefined4 FUN_00062ca0(void)
     *(undefined1 *)((int)puVar1 + 0xd) = 8;
     *(undefined1 *)((int)puVar1 + 0xe) = 0x28;
     puVar1 = puVar1 + 4;
-  } while (puVar1 < &DAT_ffff8900);
+  } while (puVar1 < &dtc_master_current_index_ffff8900);
   return 0x28;
 }
 

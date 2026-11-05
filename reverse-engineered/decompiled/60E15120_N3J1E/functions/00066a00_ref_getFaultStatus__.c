@@ -11,7 +11,7 @@ bool ref_getFaultStatus__(uint param_1)
   bool bVar3;
   
   iVar2 = (param_1 & 0xffff) * 4;
-  bVar3 = (*(uint *)(&DAT_0007e934 + iVar2) & DAT_ffffd930 & 0xffff) != 0;
+  bVar3 = (*(uint *)(&DAT_0007e934 + iVar2) & dtc_status_bits_ffffd930 & 0xffff) != 0;
   if ((!bVar3) &&
      (uVar1 = FUN_00066a58(), (*(uint *)(&DAT_0007e934 + iVar2) & uVar1 & 0xffff0000) != 0)) {
     bVar3 = true;

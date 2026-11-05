@@ -20,7 +20,7 @@ undefined4 FUN_00062420(char param_1)
     DAT_ffff87a6 = rx8_pack_u8_with_complement(1);
     cVar1 = FUN_00062d2c(iVar3);
     if (cVar1 == '\0') {
-      sh_copy_bytes_forward_r0_r1_r2(&DAT_ffff87b0);
+      sh_copy_bytes_forward_r0_r1_r2(&dtc_master_table_21_ffff87b0);
       FUN_00062dae(iVar3);
     }
     else if (cVar1 == '\x01') {

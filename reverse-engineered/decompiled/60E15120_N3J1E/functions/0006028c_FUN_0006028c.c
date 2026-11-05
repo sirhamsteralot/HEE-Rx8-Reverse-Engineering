@@ -9,7 +9,7 @@ void FUN_0006028c(void)
   undefined1 *puVar1;
   ushort uVar2;
   
-  puVar1 = &DAT_ffffd5fc;
+  puVar1 = &dtc_state_array_ffffd5fc;
   uVar2 = 0;
   do {
     *puVar1 = 0;

@@ -14,14 +14,14 @@ undefined2 * FUN_00007290(void)
   intake_air_temperature_ffff9f60 = lookup_2d_descriptor_scaled(uVar1,&tbl_iat_sensor_scaling_00069824);
   if (DAT_ffff9f66 < 0xf6c9) {
     if (DAT_ffff9f66 < 0x51e) {
-      DAT_ffff9f64 = 2;
+      iat_range_fault_ffff9f64 = 2;
     }
     else {
-      DAT_ffff9f64 = 0;
+      iat_range_fault_ffff9f64 = 0;
     }
   }
   else {
-    DAT_ffff9f64 = 1;
+    iat_range_fault_ffff9f64 = 1;
   }
   return &DAT_0006c146;
 }
