@@ -1,1114 +1,1114 @@
 {
-  "date": "2026-10-30",
-  "pass": "fueling_chain_labeling",
-  "basis": "source_review_fueling",
-  "function_aliases": {
-    "00021246": {
-      "alias": "fueling_slow_task",
-      "confidence": "high",
-      "evidence": "Task[11] worker (0x6584 -> 0x117ac) under interrupt mask 0x10: open_loop_request_condition, set_open_loop_flag, open_loop_fueling_targets, open_loop_changeover_enrichment (0x2024c), warmup_fueling_compensation (0x32e08), 0x20298/0x2048c/0x20288, rear-O2 chain (0x1d6b4/0x1d772/0x1d850/0x1d8dc/0x1e134), maf_operating_range (0x1e842), 0x1e448, LTFT-for-CAN (0x1e900), 0x1ea56/0x1e99c/0x1eae0/0x1eba6/0x1ecee, 0x188a4, fuel_cut_rpm_condition (0x18cfe), rev_limit_conditionals (0xee82)."
-    },
-    "000211fe": {
-      "alias": "fueling_condition_flags_task",
-      "confidence": "high",
-      "evidence": "Task 0x64f6 -> 0x11744 chain under mask 0x10: load/RPM band flags 0x1ff38, throttle/load band flags 0x1f6ae, 0x1fd48, blend_weight_update (0x200c6), off-throttle fuel-cut resume base 0xe560 (tbl 0x68f48), 0x3133c (tbl 0x6aca4), calculate_air_charge (0x314d0), secondary-air enrichment (0x31624), injector_temp_multiplier_lookup (0x2fd3e)."
-    },
-    "00020e40": {
-      "alias": "fueling_main_task",
-      "confidence": "high",
-      "evidence": "Called from ref_engineControlTASK 0x11ba4; three masked blocks: enrichments + injection_angle_limit_lookup (0xe48e) + load_delta_enrichment (0x33ec4) + cranking_pulse_adder (0x30678); fuel core: calc_fuel_volume_request (0x306e8), calculate_fuel_amount_per_rotation (0x30948), injector_pulse_time_arbitrate (0x2fea8), cold_start_enrichment (0x1ddfc); closed-loop conditions (0x1c13c chain)."
-    },
-    "000200c6": {
-      "alias": "blend_weight_update",
-      "confidence": "high",
-      "evidence": "Sets DAT_ffffb11c/b118: 1.0 in normal conditions (no c590/cca1 fault, coolant plausible b1d0, c644<=1000, mode flags clear), decays -0.0667/call while open_loop_active with b142/b154/b157/b159 set, else 0.0. Consumed by open_loop_fueling_targets (0x1ee4a: OL target blend) and leading/trailing_base_timing_calc (0x11f00/0x1206c: base-timing blend). Resolves knock-review unresolved item 2."
-    },
-    "000306e8": {
-      "alias": "calc_fuel_volume_request",
-      "confidence": "high",
-      "evidence": "Core fuel-mass calc: bed0 = engine_load*0.07196; bed4 = tbl 0x6ac88 'Fuel Injection - Engine Load Compensation'(RPM); bf1c = tbl DAT_0006ac38(coolant); bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; beac = FUN_0005c024(bf14); beb0 = beac*bed0."
-    },
-    "000314d0": {
-      "alias": "calculate_air_charge",
-      "confidence": "high",
-      "evidence": "bf68 = rpm*load/38.07; bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V); bf4c = baro*353.0163/((IAT+273)*101.32) (density ratio); bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0) air charge per cycle; bf54 = first-order-filtered bf50/load, clamp 50."
-    },
-    "00030948": {
-      "alias": "calculate_fuel_amount_per_rotation",
-      "confidence": "high",
-      "evidence": "Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios."
-    },
-    "0002fea8": {
-      "alias": "injector_pulse_time_arbitrate",
-      "confidence": "high",
-      "evidence": "Cranking (!engine_running): be30 = be38 = be5c + latency be44; running: be30 = be50+be44, be38 = be54+be44; be28 = be24 = (cranking? be58 : be4c) + latency be40; be2c = be30, be34 = be38; cranking decay counter be3c from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant), decrementing while running."
-    },
-    "00008a68": {
-      "alias": "injector_pulse_set_channel",
-      "confidence": "high",
-      "evidence": "Per-channel ATU-II output program: Per-channel fuel request array, 0x18-byte stride from a010 (= base a004+0xc); pulse = (latency a094[ch] + a010[ch*0x18]) >> 4 per disasm 0x8a8e-0x8aa0.; start compare = a014[ch*0x18] (or TCNT1A+3 if within 0x7fff) -> GR1A; clears a016/a018 and the channel TIER bit."
-    },
-    "00008340": {
-      "alias": "injector_pulse_set_dispatch",
-      "confidence": "medium",
-      "evidence": "4-byte thunk to injector_pulse_set_channel (0x8a68); called from six wrappers 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea (per-injector dispatch, one per channel)."
-    },
-    "000086f8": {
-      "alias": "set_fuel_injector_latency",
-      "confidence": "high",
-      "evidence": "param_1 ch 0/1/2 -> a094/a0a0, a098/a0a4, a09c/a0a8 (latency value + mirror pair per channel); called by injector_latency_cal_lookup (0x2ff78) with ch0 = secondary, ch1/2 = primary."
-    },
-    "000086ac": {
-      "alias": "injector_zero_offset_set",
-      "confidence": "medium",
-      "evidence": "param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_."
-    },
-    "000085e4": {
-      "alias": "injector_channel_disable",
-      "confidence": "high",
-      "evidence": "Per-channel off: clears channel TIER bit, GR1A = TCNT1A-1, DCNT8A = 0 (FUN_0000a8a4), a017 = 0. Wiring review: six injector channels on 2M/2J/2G/2D/3A/3D; firmware index-to-terminal mapping unresolved."
-    },
-    "0002ff78": {
-      "alias": "injector_latency_cal_lookup",
-      "confidence": "high",
-      "evidence": "be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP be04/be08, battery V b590); be44 = 3D tbl 0x6aa80 'Injector Latency Primary'; quantized /0.25 to int -> set_fuel_injector_latency(0, secondary), (1, primary), (2, primary)."
-    },
-    "0002fd3e": {
-      "alias": "injector_temp_multiplier_lookup",
-      "confidence": "high",
-      "evidence": "bde4/bde8/bdec = 3D weighted-engine-temp x load multipliers for primary / secondary-1 / secondary-2 injectors (tbls 0x6a9a4/0x6a9c0/0x6a9dc); consumed by calculate_fuel_amount_per_rotation (0x30948)."
-    },
-    "00032e08": {
-      "alias": "warmup_fueling_compensation",
-      "confidence": "high",
-      "evidence": "c014 = tbl 0x6ae28 'Warmup Fueling - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, catalyst-temp model); c018 = 3D tbl 0x6ae58 (or coolant-fault variant 0x6ae74)(rpm, coolant); c00c = c014 + c018; c010 = warmup-complete flag (catalyst-temp model >= 5 C, or >= 200 C when ce33)."
-    },
-    "0002024c": {
-      "alias": "open_loop_changeover_enrichment",
-      "confidence": "high",
-      "evidence": "b124 = 0 when b146 == 0, else tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM); b124 feeds calc_fuel_volume_request (0x306e8) via max(ae10, b124)."
-    },
-    "00033ec4": {
-      "alias": "load_delta_enrichment",
-      "confidence": "high",
-      "evidence": "c138 = tbl 0x6b124(load delta c158); c13c = tbl 0x6b0c0(load); c134 = c138*1.0*c13c when c158 >= 0 else 0; c140 = 3D tip-in tbl 0x6b160 (or 0x6b17c when warmup c010) (rpm, coolant); injectors off (a42c) -> c140 = 0; c110 decays toward 1.0 at -0.0078125 when c14c set."
-    },
-    "000307e0": {
-      "alias": "closed_loop_fuel_trim",
-      "confidence": "high",
-      "evidence": "Closed loop (ae1f): beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), open_loop_fuel_target b120) + 1.0) * ad ecc - 1.0, -1, 2); filtered (0.0625) into beb8; open loop: beb4 = 0. STFT-style trim around lambda target."
-    },
-    "00033ad2": {
-      "alias": "calculate_engine_load",
-      "confidence": "high",
-      "evidence": "engine_load c0b4 = min(first_order_filter(c0b0, c0b4, 0.2 or 1.0 by c0c4), c0b8); forced 0.525 when a41c or (c0c5==0 && injectors off a42c); c0c5 = previous a42c. PID 0x0043 'Engine Load' encodes c0b4 (handler 0x56b8a)."
-    },
-    "00007438": {
-      "alias": "maf_sensor_scaling",
-      "confidence": "high",
-      "evidence": "9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1."
-    },
-    "00019f4e": {
-      "alias": "maf_voltage_and_fault_counters",
-      "confidence": "medium",
-      "evidence": "aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched)."
-    },
-    "00019f40": {
-      "alias": "maf_filtered_update",
-      "confidence": "medium",
-      "evidence": "mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8."
-    },
-    "0001a418": {
-      "alias": "maf_per_rotation_calc",
-      "confidence": "medium",
-      "evidence": "aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0."
-    },
-    "0001e842": {
-      "alias": "maf_operating_range",
-      "confidence": "high",
-      "evidence": "b0fe = MAF range index 0..3 from mass_air_flow a9ec bands (<1, <9, <22, else) with hysteresis flags b101/b102/b103."
-    },
-    "0000e48e": {
-      "alias": "injection_angle_limit_lookup",
-      "confidence": "medium",
-      "evidence": "a434/a438/a43c = max injection angle 1/2/3 vs RPM (defs 0x68ef8/0x68f0c/0x68f20 'Fuel Injector - Unknown - Max Injection Angle', x2 deg MAYBE)."
-    },
-    "00030678": {
-      "alias": "cranking_pulse_adder",
-      "confidence": "high",
-      "evidence": "When cranking && injectors off (a42c) && ce32: be94 += be58 (cranking pulse adder accumulated into pulse arbitration)."
-    },
-    "0000e2a8": {
-      "alias": "update_injectors_off_flag",
-      "confidence": "high",
-      "evidence": "engine_injectors_off a42c = 1 iff !engine_running (a428) && !a41c."
-    },
-    "0000ee64": {
-      "alias": "rev_limit_fuel_cut_init",
-      "confidence": "high",
-      "evidence": "When DAT_ffff9f8c == 1: clears rev-limit state a4a4/a4a5/a4a8."
-    },
-    "0000edc4": {
-      "alias": "fuel_cut_arbitration",
-      "confidence": "medium",
-      "evidence": "Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4."
-    },
-    "00018cfe": {
-      "alias": "fuel_cut_rpm_condition",
-      "confidence": "medium",
-      "evidence": "a97c = rpm >= 2500 (clear below 1700), a97d = rpm >= 1700 (clear below 1100); a964 fuel_cut_allowed = (a96a && a97c) || (a96c && a97d)."
-    },
-    "0000ee82": {
-      "alias": "rev_limit_conditionals",
-      "confidence": "medium",
-      "evidence": "a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec)."
-    },
-    "0001ddfc": {
-      "alias": "cold_start_enrichment",
-      "confidence": "medium",
-      "evidence": "Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0)."
-    },
-    "00056b8a": {
-      "alias": "diag_engine_load",
-      "confidence": "high",
-      "evidence": "RomRaider PID 0x0043 'Engine Load' handler: encodes engine_load_ffffc0b4 via rx8_encode_u16_affine_saturate (step 0x3b808080 ~ 0.00392) as u16 BE."
-    },
-    "00056b9e": {
-      "alias": "diag_lambda_target",
-      "confidence": "high",
-      "evidence": "RomRaider PID 0x0044 'Lambda Target' handler: encodes lambda_target_ffffadfc (step 0x38000000) as u16 BE."
-    },
-    "00056b22": {
-      "alias": "diag_air_fuel_ratio",
-      "confidence": "high",
-      "evidence": "RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words."
-    },
-    "00056f6c": {
-      "alias": "diag_injector_pulse_time",
-      "confidence": "medium",
-      "evidence": "PID 0x1410 handler (logger def conflicts: 'Injector Pulse Time' vs 'Throttle Pedal Position' - do not trust either name): encodes DAT_ffffbe24 with step 8 (0x41000000); logger expr x*8*0.001 ms."
-    },
-    "000556ec": {
-      "alias": "diag_afr_word_a",
-      "confidence": "medium",
-      "evidence": "Encodes DAT_ffffaa6c (step 0x38000000) as the high u16 word of PID 0x0034 'Air Fuel Ratio'."
-    },
-    "00055702": {
-      "alias": "diag_afr_word_b",
-      "confidence": "medium",
-      "evidence": "Encodes DAT_ffffaa7c (mult 0x3b800000, offset 0xc3000000 = -96.0) as the low u16 word of PID 0x0034."
-    }
+ "date": "2026-10-30",
+ "pass": "fueling_chain_labeling",
+ "basis": "source_review_fueling",
+ "function_aliases": {
+  "00021246": {
+   "alias": "fueling_slow_task",
+   "confidence": "high",
+   "evidence": "Task[11] worker (0x6584 -> 0x117ac) under interrupt mask 0x10: open_loop_request_condition, set_open_loop_flag, open_loop_fueling_targets, open_loop_changeover_enrichment (0x2024c), warmup_fueling_compensation (0x32e08), 0x20298/0x2048c/0x20288, rear-O2 chain (0x1d6b4/0x1d772/0x1d850/0x1d8dc/0x1e134), maf_operating_range (0x1e842), 0x1e448, LTFT-for-CAN (0x1e900), 0x1ea56/0x1e99c/0x1eae0/0x1eba6/0x1ecee, 0x188a4, fuel_cut_rpm_condition (0x18cfe), rev_limit_conditionals (0xee82)."
   },
-  "ram_aliases": {
-    "ffffbed0": {
-      "alias": "fuel_load_scale",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "bed0 = engine_load_ffffc0b4 * 0.07196; multiplied into final fuel volume beb0 = beac * bed0."
-    },
-    "ffffbed4": {
-      "alias": "fuel_load_compensation",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "bed4 = lookup_3d tbl 0x6ac88 'Fuel Injection - Engine Load Compensation'(RPM); multiplier in bf14."
-    },
-    "ffffbf1c": {
-      "alias": "fuel_coolant_compensation",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "bf1c = lookup_2d tbl DAT_0006ac38(coolant); added via min(bf1c, c00c + open_loop_fuel_target b120) in bf14."
-    },
-    "ffffbf14": {
-      "alias": "fuel_correction_sum",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; scaled by FUN_0005c024 into beac."
-    },
-    "ffffbeac": {
-      "alias": "fuel_volume_scaled",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0."
-    },
-    "ffffbeb0": {
-      "alias": "fuel_volume_final",
-      "type": "float",
-      "reader": "000306e8",
-      "evidence": "beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0."
-    },
-    "ffffbf68": {
-      "alias": "airflow_rpm_load_product",
-      "type": "float",
-      "reader": "000314d0",
-      "evidence": "bf68 = rpm * load / 38.07; axis for tbl 0x6ad44 in calculate_air_charge."
-    },
-    "ffffbf44": {
-      "alias": "airflow_corrected",
-      "type": "float",
-      "reader": "000314d0",
-      "evidence": "bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V b590)."
-    },
-    "ffffbf4c": {
-      "alias": "air_density_ratio",
-      "type": "float",
-      "reader": "000314d0",
-      "evidence": "bf4c = baro*353.0163 / ((IAT+273)*101.32): pressure/temperature density ratio."
-    },
-    "ffffbf50": {
-      "alias": "air_charge_per_cycle",
-      "type": "float",
-      "reader": "000314d0",
-      "evidence": "bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0); 2.0 when rpm ~ 0."
-    },
-    "ffffbf54": {
-      "alias": "air_charge_filtered",
-      "type": "float",
-      "reader": "000314d0",
-      "evidence": "bf54 = first_order_filter(bf50/load, bf54, 1.0, 1e-05) clamped to 50.0."
-    },
-    "ffffbec8": {
-      "alias": "fuel_amount_per_rotation_a",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation."
-    },
-    "ffffbeec": {
-      "alias": "fuel_amount_per_rotation_b",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "beec = (bdec*be14 path) * 475.93; see 0x30948."
-    },
-    "ffffbed8": {
-      "alias": "fuel_amount_per_rotation_c",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bed8 = (6e7/rpm - 608 - be40) / fVar7 * 369.472; latency-compensated variant."
-    },
-    "ffffbedc": {
-      "alias": "fuel_amount_per_rotation_d",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bedc = (6e7/rpm - 608 - be44) / fVar4 * 475.93."
-    },
-    "ffffbee0": {
-      "alias": "fuel_amount_per_rotation_e",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93."
-    },
-    "ffffbee4": {
-      "alias": "fuel_ratio_a",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts."
-    },
-    "ffffbee8": {
-      "alias": "fuel_ratio_b",
-      "type": "float",
-      "reader": "00030948",
-      "evidence": "bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4)."
-    },
-    "ffffbe24": {
-      "alias": "injector_pulse_time",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "Final arbitrated pulse time be24 = be28; encoded by diag PID 0x1410 handler 0x56f6c (step 8; logger x*8*0.001 ms)."
-    },
-    "ffffbe28": {
-      "alias": "injector_pulse_time_base",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "be28 = (cranking? be58 : be4c) + injector_latency_primary be40; copied to be24."
-    },
-    "ffffbe2c": {
-      "alias": "injector_pulse_time_ch1",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "be2c = be30 (running: be50 + be44; cranking: be5c + be44)."
-    },
-    "ffffbe30": {
-      "alias": "injector_pulse_time_ch2",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "be30 = running? be50 + be44 : be5c + be44 (latency be44 added)."
-    },
-    "ffffbe34": {
-      "alias": "injector_pulse_time_ch3",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "be34 = be38."
-    },
-    "ffffbe38": {
-      "alias": "injector_pulse_time_ch4",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "be38 = running? be54 + be44 : be5c + be44."
-    },
-    "ffffbe3c": {
-      "alias": "cranking_decay_counter",
-      "type": "uint8",
-      "reader": "0002fea8",
-      "evidence": "Cranking: loaded from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant); decrements while running."
-    },
-    "ffffbe40": {
-      "alias": "injector_latency_secondary",
-      "type": "float",
-      "reader": "0002ff78",
-      "evidence": "be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP, battery V), quantized /0.25; added to pulse times in 0x2fea8."
-    },
-    "ffffbe44": {
-      "alias": "injector_latency_primary",
-      "type": "float",
-      "reader": "0002ff78",
-      "evidence": "be44 = 3D tbl 0x6aa80 'Injector Latency Primary'(MRP, battery V), quantized /0.25."
-    },
-    "ffffbe58": {
-      "alias": "injector_pulse_crank",
-      "type": "float",
-      "reader": "00030678",
-      "evidence": "Cranking pulse base; added into be94 by cranking_pulse_adder (0x30678) and into be28 by 0x2fea8."
-    },
-    "ffffbe5c": {
-      "alias": "injector_pulse_crank_base",
-      "type": "float",
-      "reader": "0002fea8",
-      "evidence": "Cranking base for be30/be38 while engine not running."
-    },
-    "ffffbe94": {
-      "alias": "cranking_pulse_adder",
-      "type": "float",
-      "reader": "00030678",
-      "evidence": "be94 += be58 when cranking && injectors off && ce32 (diag cranking pulse adder)."
-    },
-    "ffffa094": {
-      "alias": "injector_latency_ch0",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Latency channel 0 (secondary) value; pair a0a0 mirror; read in injector_pulse_set_channel (0x8a68) pulse = a094[ch] + (a010[ch*0x18]>>4)."
-    },
-    "ffffa098": {
-      "alias": "injector_latency_ch1",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Latency channel 1 (primary); pair a0a4 mirror."
-    },
-    "ffffa09c": {
-      "alias": "injector_latency_ch2",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Latency channel 2 (primary); pair a0a8 mirror."
-    },
-    "ffffa0a0": {
-      "alias": "injector_latency_ch0_mirror",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Mirror of a094 written by the same call."
-    },
-    "ffffa0a4": {
-      "alias": "injector_latency_ch1_mirror",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Mirror of a098."
-    },
-    "ffffa0a8": {
-      "alias": "injector_latency_ch2_mirror",
-      "type": "float",
-      "reader": "000086f8",
-      "evidence": "Mirror of a09c."
-    },
-    "ffffa0ac": {
-      "alias": "injector_zero_offset_ch0",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Zero/offset channel 0; pair a0b8 mirror; caller 0x10208 ref_setAllInjectorto0_."
-    },
-    "ffffa0b0": {
-      "alias": "injector_zero_offset_ch1",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Zero/offset channel 1; pair a0bc."
-    },
-    "ffffa0b4": {
-      "alias": "injector_zero_offset_ch2",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Zero/offset channel 2; pair a0c0."
-    },
-    "ffffa0b8": {
-      "alias": "injector_zero_offset_ch0_mirror",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Mirror of a0ac."
-    },
-    "ffffa0bc": {
-      "alias": "injector_zero_offset_ch1_mirror",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Mirror of a0b0."
-    },
-    "ffffa0c0": {
-      "alias": "injector_zero_offset_ch2_mirror",
-      "type": "float",
-      "reader": "000086ac",
-      "evidence": "Mirror of a0b4."
-    },
-    "ffffa010": {
-      "alias": "injector_fuel_request_array",
-      "type": "int",
-      "reader": "00008a68",
-      "evidence": "Per-channel fuel request array, 0x18-byte stride from a010 (= base a004+0xc); pulse = (latency a094[ch] + a010[ch*0x18]) >> 4 per disasm 0x8a8e-0x8aa0."
-    },
-    "ffffa014": {
-      "alias": "injector_start_angle_array",
-      "type": "short",
-      "reader": "00008a68",
-      "evidence": "Per-channel start compare, 0x18-byte stride from a014; written to ATU-II GR1A."
-    },
-    "ffffa017": {
-      "alias": "injector_channel_enable_flag",
-      "type": "uint8",
-      "reader": "000085e4",
-      "evidence": "Checked/cleared per channel (0x18 stride) by injector_channel_disable (0x85e4)."
-    },
-    "ffffa018": {
-      "alias": "injector_channel_tier_flag",
-      "type": "uint8",
-      "reader": "000085e4",
-      "evidence": "Per-channel ATU-II TIER enable mirror; cleared when channel disabled or pulsed."
-    },
-    "ffffc010": {
-      "alias": "warmup_complete_flag",
-      "type": "uint8",
-      "reader": "00032e08",
-      "evidence": "c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair."
-    },
-    "ffffc014": {
-      "alias": "warmup_load_multiplier",
-      "type": "float",
-      "reader": "00032e08",
-      "evidence": "c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model)."
-    },
-    "ffffc018": {
-      "alias": "warmup_rpm_multiplier",
-      "type": "float",
-      "reader": "00032e08",
-      "evidence": "c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant)."
-    },
-    "ffffc00c": {
-      "alias": "warmup_enrichment_total",
-      "type": "float",
-      "reader": "00032e08",
-      "evidence": "c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0)."
-    },
-    "ffffb124": {
-      "alias": "open_loop_changeover_enrichment",
-      "type": "float",
-      "reader": "0002024c",
-      "evidence": "b124 = tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM) when b146 != 0 else 0; feeds 0x306e8 via max(ae10, b124)."
-    },
-    "ffffc158": {
-      "alias": "load_delta_input",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0."
-    },
-    "ffffc138": {
-      "alias": "load_delta_scale",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c138 = lookup_2d tbl 0x6b124(c158)."
-    },
-    "ffffc13c": {
-      "alias": "load_scale_2d",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c13c = lookup_2d tbl 0x6b0c0(engine_load)."
-    },
-    "ffffc134": {
-      "alias": "load_delta_enrichment",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c134 = c138 * c13c (0 when load delta < 0)."
-    },
-    "ffffc110": {
-      "alias": "tip_in_decay",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c110 = max(c110 - 0.0078125, 1.0) when c14c set."
-    },
-    "ffffc140": {
-      "alias": "tip_in_enrichment",
-      "type": "float",
-      "reader": "00033ec4",
-      "evidence": "c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off."
-    },
-    "ffffc14c": {
-      "alias": "tip_in_mode_flag",
-      "type": "uint8",
-      "reader": "00033ec4",
-      "evidence": "c14c gates the c110 decay in load_delta_enrichment."
-    },
-    "ffffbeb4": {
-      "alias": "closed_loop_trim_raw",
-      "type": "float",
-      "reader": "000307e0",
-      "evidence": "beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), b120) + 1)*ad ecc - 1, -1, 2) in closed loop; 0 in open loop."
-    },
-    "ffffbeb8": {
-      "alias": "closed_loop_trim_filtered",
-      "type": "float",
-      "reader": "000307e0",
-      "evidence": "beb8 = first_order_filter(beb4, beb8, 0.0625, 1e-05); STFT-style trim."
-    },
-    "ffffbf20": {
-      "alias": "cl_coolant_compensation",
-      "type": "float",
-      "reader": "000307e0",
-      "evidence": "bf20 = lookup_2d tbl DAT_0006ac38(coolant); used in closed_loop_fuel_trim."
-    },
-    "ffffc0b0": {
-      "alias": "engine_load_raw",
-      "type": "float",
-      "reader": "00033ad2",
-      "evidence": "c0b0 = raw load input filtered into engine_load c0b4 (coeff 0.2, or 1.0 when c0c4 set)."
-    },
-    "ffffc0b8": {
-      "alias": "engine_load_max",
-      "type": "float",
-      "reader": "00033ad2",
-      "evidence": "c0b8 = clamp maximum for engine_load c0b4 = min(filter(c0b0,...), c0b8)."
-    },
-    "ffffc0c4": {
-      "alias": "load_filter_fast_flag",
-      "type": "uint8",
-      "reader": "00033ad2",
-      "evidence": "c0c4 selects filter coefficient 1.0 vs 0.2 in calculate_engine_load."
-    },
-    "ffffc0c5": {
-      "alias": "injectors_off_previous",
-      "type": "uint8",
-      "reader": "00033ad2",
-      "evidence": "c0c5 = previous engine_injectors_off a42c; forces load 0.525 on injector-off edge."
-    },
-    "ffff9eea": {
-      "alias": "maf_adc_raw",
-      "type": "uint16",
-      "reader": "00007438",
-      "evidence": "Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2."
-    },
-    "ffff9f78": {
-      "alias": "maf_scaled",
-      "type": "float",
-      "reader": "00007438",
-      "evidence": "9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e)."
-    },
-    "ffff9f7c": {
-      "alias": "maf_fault_status",
-      "type": "uint8",
-      "reader": "00007438",
-      "evidence": "9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high)."
-    },
-    "ffffaa2c": {
-      "alias": "maf_voltage",
-      "type": "float",
-      "reader": "00019f4e",
-      "evidence": "aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault."
-    },
-    "ffffaa35": {
-      "alias": "maf_high_fault_counter",
-      "type": "uint8",
-      "reader": "00019f4e",
-      "evidence": "Saturating counter incremented while raw >= 0xf852."
-    },
-    "ffffaa36": {
-      "alias": "maf_low_fault_counter",
-      "type": "uint8",
-      "reader": "00019f4e",
-      "evidence": "Saturating counter incremented while raw < 0x7ae; cleared otherwise."
-    },
-    "ffffa9e4": {
-      "alias": "maf_voltage_latched",
-      "type": "float",
-      "reader": "00019f4e",
-      "evidence": "a9e4 = aa2c when MAF faulted (>2 on either counter or raw in 0x7ae..0xf852 window)."
-    },
-    "ffffa9e8": {
-      "alias": "maf_scaled_latched",
-      "type": "float",
-      "reader": "00019f4e",
-      "evidence": "a9e8 = 9f78 (maf_scaled) on fault; becomes mass_air_flow a9ec via 0x19f40."
-    },
-    "ffffaa54": {
-      "alias": "maf_filter_coeff",
-      "type": "float",
-      "reader": "0001a418",
-      "evidence": "aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc."
-    },
-    "ffffaa48": {
-      "alias": "maf_filter_state",
-      "type": "float",
-      "reader": "0001a418",
-      "evidence": "aa48 = first_order_filter(maf, aa48, aa54)."
-    },
-    "ffffaa3c": {
-      "alias": "maf_per_rotation",
-      "type": "float",
-      "reader": "0001a418",
-      "evidence": "aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm)."
-    },
-    "ffffaa38": {
-      "alias": "maf_per_rotation_filtered",
-      "type": "float",
-      "reader": "0001a418",
-      "evidence": "aa38 = filtered maf*60/rpm; 0.1560058 when rpm ~ 0."
-    },
-    "ffffaa4c": {
-      "alias": "maf_filter_mode",
-      "type": "uint8",
-      "reader": "0001a418",
-      "evidence": "aa4c selects filtered vs instantaneous MAF for the per-rotation calc."
-    },
-    "ffffb0fe": {
-      "alias": "maf_range_index",
-      "type": "uint8",
-      "reader": "0001e842",
-      "evidence": "b0fe = 0..3 MAF operating range from mass_air_flow bands (<1, <9, <22)."
-    },
-    "ffffb101": {
-      "alias": "maf_band_low",
-      "type": "uint8",
-      "reader": "0001e842",
-      "evidence": "b101 = maf < 1 (hysteresis 0.4)."
-    },
-    "ffffb102": {
-      "alias": "maf_band_mid",
-      "type": "uint8",
-      "reader": "0001e842",
-      "evidence": "b102 = maf < 9 (hysteresis 8.4)."
-    },
-    "ffffb103": {
-      "alias": "maf_band_high",
-      "type": "uint8",
-      "reader": "0001e842",
-      "evidence": "b103 = maf < 22 (hysteresis 21.4); all clear -> range 3."
-    },
-    "ffffa434": {
-      "alias": "max_injection_angle_1",
-      "type": "float",
-      "reader": "0000e48e",
-      "evidence": "a434 = tbl 0x68ef8(rpm) 'Max Injection Angle1???'."
-    },
-    "ffffa438": {
-      "alias": "max_injection_angle_2",
-      "type": "float",
-      "reader": "0000e48e",
-      "evidence": "a438 = tbl 0x68f0c(rpm) 'Max Injection Angle2???'."
-    },
-    "ffffa43c": {
-      "alias": "max_injection_angle_3",
-      "type": "float",
-      "reader": "0000e48e",
-      "evidence": "a43c = tbl 0x68f20(rpm) 'Max Injection Angle3???'."
-    },
-    "ffffa41c": {
-      "alias": "engine_stopped_latch",
-      "type": "uint8",
-      "reader": "0000e2a8",
-      "evidence": "a41c blocks the injectors-off flag a42c; also forces load 0.525 in calculate_engine_load (0x33ad2)."
-    },
-    "ffffa444": {
-      "alias": "fuel_cut_flag_a",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Set by fuel_cut_arbitration (0xedc4) from request a464 / mode param."
-    },
-    "ffffa445": {
-      "alias": "fuel_cut_flag_b",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Second fuel-cut flag set alongside a444 in 0xedc4."
-    },
-    "ffffa464": {
-      "alias": "fuel_cut_request_a",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Input request: when set, a444 = a445 = 1 unconditionally."
-    },
-    "ffffa465": {
-      "alias": "fuel_cut_request_b",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Input request: with a4a3/a4a2 mirrors gates a444 by param_1 band (0/12 vs 6/18)."
-    },
-    "ffffa4a2": {
-      "alias": "fuel_cut_request_a_prev",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Mirror of a464 stored at end of 0xedc4."
-    },
-    "ffffa4a3": {
-      "alias": "fuel_cut_request_b_prev",
-      "type": "uint8",
-      "reader": "0000edc4",
-      "evidence": "Mirror of a465 stored at end of 0xedc4."
-    },
-    "ffffa964": {
-      "alias": "fuel_cut_allowed",
-      "type": "uint8",
-      "reader": "00018cfe",
-      "evidence": "a964 = (a96a && rpm>=2500) || (a96c && rpm>=1700); set by fuel_cut_rpm_condition (0x18cfe)."
-    },
-    "ffffa97c": {
-      "alias": "rpm_above_2500_flag",
-      "type": "uint8",
-      "reader": "00018cfe",
-      "evidence": "a97c = rpm >= 2500 (clear below 1700) - hysteresis."
-    },
-    "ffffa97d": {
-      "alias": "rpm_above_1700_flag",
-      "type": "uint8",
-      "reader": "00018cfe",
-      "evidence": "a97d = rpm >= 1700 (clear below 1100) - hysteresis."
-    },
-    "ffffa96a": {
-      "alias": "decel_cut_request_a",
-      "type": "uint8",
-      "reader": "00018cfe",
-      "evidence": "a96a: decel/overrun cut request input to fuel_cut_rpm_condition (0x18cfe)."
-    },
-    "ffffa96c": {
-      "alias": "decel_cut_request_b",
-      "type": "uint8",
-      "reader": "00018cfe",
-      "evidence": "a96c: second request input; pairs with a96a in the a964 OR."
-    },
-    "ffffa4a6": {
-      "alias": "coolant_below_18c_flag",
-      "type": "uint8",
-      "reader": "0000ee82",
-      "evidence": "a4a6 = coolant < 18 C (clear at 20) - cold-engine rev-limit derate condition."
-    },
-    "ffffa4aa": {
-      "alias": "rev_limit_countdown_active",
-      "type": "uint8",
-      "reader": "0000ee82",
-      "evidence": "a4aa = (a4ae != 0); set by rev_limit_conditionals (0xee82)."
-    },
-    "ffffa4ad": {
-      "alias": "rev_limit_mode_previous",
-      "type": "uint8",
-      "reader": "0000ee82",
-      "evidence": "a4ad = previous DAT_ffffbaec (mode) for change detection."
-    },
-    "ffffa4ae": {
-      "alias": "rev_limit_countdown",
-      "type": "uint8",
-      "reader": "0000ee82",
-      "evidence": "a4ae = 0x0f on mode change (b534==0 && baec active && a4ad==0 && baec != 7), decremented while a4aa."
-    },
-    "ffffa4a4": {
-      "alias": "rev_limit_state_a",
-      "type": "uint8",
-      "reader": "0000ee64",
-      "evidence": "Cleared by rev_limit_fuel_cut_init (0xee64) when 9f8c==1."
-    },
-    "ffffa4a5": {
-      "alias": "rev_limit_state_b",
-      "type": "uint8",
-      "reader": "0000ee64",
-      "evidence": "Cleared by 0xee64."
-    },
-    "ffffa4a8": {
-      "alias": "rev_limit_state_c",
-      "type": "uint8",
-      "reader": "0000ee64",
-      "evidence": "Cleared by 0xee64."
-    },
-    "ffffb11c": {
-      "alias": "fuel_blend_weight",
-      "type": "float",
-      "reader": "000200c6",
-      "evidence": "Set with b118 by blend_weight_update (0x200c6): 1.0 normal, decays -0.0667 in open loop, 0 on faults; weights the implausible-coolant OL target branch in 0x1ee4a."
-    },
-    "ffffb118": {
-      "alias": "timing_blend_weight",
-      "type": "float",
-      "reader": "000200c6",
-      "evidence": "Same producer as b11c (0x200c6); blends base ignition timing with the open-loop cap in 0x11f00/0x1206c."
-    },
-    "ffffb1d0": {
-      "alias": "coolant_plausible_flag",
-      "type": "uint8",
-      "reader": "000200c6",
-      "evidence": "b1d0 = 1 when coolant >= -40 C (clear below -43); gates blend-weight set in 0x200c6."
-    },
-    "ffffb170": {
-      "alias": "ol_baro_base_correction",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b170 = tbl 0x69cac/0x69cc0 'Open Loop Fuelling Base Correction (Throttle)'(baro) (safe-mode variant selected by cd60==0)."
-    },
-    "ffffb174": {
-      "alias": "ol_rich_limit",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b174 = tbl 0x69ce8/0x69cfc 'Open Loop Fuelling Rich Limit'(baro) (safe-mode pair)."
-    },
-    "ffffb190": {
-      "alias": "ol_tip_in_target",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b190 = 3D tbl 0x69e80/0x69eb8 'Open Loop Target - Throttle Tip In'(rpm, throttle)."
-    },
-    "ffffb194": {
-      "alias": "ol_target_3d",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b194 = 3D tbl 0x69e9c/0x69ed4 'Open Loop Target'(load, rpm)."
-    },
-    "ffffb198": {
-      "alias": "ol_tip_in_implausible",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b198 = 3D tip-in vs coolant-implausible tables 0x69ef0/0x69f28 (gear 5-6 vs 1-4 select by safe_mode b12d)."
-    },
-    "ffffb19c": {
-      "alias": "ol_target_implausible_3d",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b19c = 3D 'Open Loop Target - Coolant Temp Implausible'(load, rpm) 0x69f0c/0x69f44."
-    },
-    "ffffb130": {
-      "alias": "ol_fuel_target_main",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b130 = max(b170*b190, b194); normal OL target product."
-    },
-    "ffffb134": {
-      "alias": "ol_coolant_correction",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b134 = tbl 0x69cd4 'Open Loop Target - Coolant Temperature Correction'(coolant)."
-    },
-    "ffffb138": {
-      "alias": "ol_fuel_target_implausible",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b138 = max(b174*b198, b19c); coolant-implausible OL target product."
-    },
-    "ffffb13c": {
-      "alias": "ol_temperature_correction_b",
-      "type": "float",
-      "reader": "0001ee4a",
-      "evidence": "b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant)."
-    },
-    "ffffb150": {
-      "alias": "ol_target_select",
-      "type": "uint8",
-      "reader": "0001ee4a",
-      "evidence": "b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c."
-    },
-    "ffffb15c": {
-      "alias": "cl_throttle_threshold",
-      "type": "float",
-      "reader": "0001f0c4",
-      "evidence": "b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition."
-    },
-    "ffffb160": {
-      "alias": "cl_load_threshold_a",
-      "type": "float",
-      "reader": "0001f0c4",
-      "evidence": "b160 = tbl 0x69d24 'Closed Loop Fuelling Threshold (Engine Load A)'(rpm)."
-    },
-    "ffffb164": {
-      "alias": "cl_load_threshold_b",
-      "type": "float",
-      "reader": "0001f0c4",
-      "evidence": "b164 = tbl 0x69d38 (Engine Load B)(rpm)."
-    },
-    "ffffb168": {
-      "alias": "cl_load_threshold_c",
-      "type": "float",
-      "reader": "0001f0c4",
-      "evidence": "b168 = tbl 0x69d4c (Engine Load C)(rpm)."
-    },
-    "ffffb16c": {
-      "alias": "cl_unknown_threshold_a",
-      "type": "float",
-      "reader": "0001f0c4",
-      "evidence": "b16c = tbl 0x69d60 'Closed Loop Fuelling Threshold (Unknown A)'(rpm)."
-    },
-    "ffffb1b6": {
-      "alias": "cl_load_a_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4",
-      "evidence": "b1b6 = load >= b160 (hysteresis -0.04) in 0x1f0c4."
-    },
-    "ffffb1b7": {
-      "alias": "cl_load_b_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4",
-      "evidence": "b1b7 = load >= b164 (hysteresis) in 0x1f0c4."
-    },
-    "ffffb1b8": {
-      "alias": "cl_load_c_exceeded",
-      "type": "uint8",
-      "reader": "0001f0c4",
-      "evidence": "b1b8 = load >= b168 (hysteresis) in 0x1f0c4."
-    },
-    "ffffb1b1": {
-      "alias": "coolant_above_78_flag",
-      "type": "uint8",
-      "reader": "0001f0c4",
-      "evidence": "b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition."
-    },
-    "ffffb178": {
-      "alias": "cl_load_threshold_2d_a",
-      "type": "float",
-      "reader": "0001ff38",
-      "evidence": "b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9."
-    },
-    "ffffb17c": {
-      "alias": "cl_load_threshold_2d_b",
-      "type": "float",
-      "reader": "0001ff38",
-      "evidence": "b17c = tbl 0x69d9c(rpm) -> b1bb."
-    },
-    "ffffb1b9": {
-      "alias": "load_above_thresh_a",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b1b9 = load >= b178 (hysteresis -0.04); part of OL band condition in 0x1ff38."
-    },
-    "ffffb1bb": {
-      "alias": "load_above_thresh_b",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b1bb = load > b17c (hysteresis) in 0x1ff38."
-    },
-    "ffffb1ba": {
-      "alias": "rpm_above_800_flag",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b1ba = rpm >= 1000 (clear below 800) in 0x1ff38."
-    },
-    "ffffb1bc": {
-      "alias": "rpm_above_5300_flag",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b1bc = rpm > 5500 (clear below 5300) in 0x1ff38."
-    },
-    "ffffb1d8": {
-      "alias": "coolant_above_97_flag",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b1d8 = coolant >= 100 (clear below 97) in 0x1ff38."
-    },
-    "ffffb144": {
-      "alias": "ol_condition_timer",
-      "type": "uint16",
-      "reader": "0001ff38",
-      "evidence": "b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag."
-    },
-    "ffffb154": {
-      "alias": "ol_band_condition",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6)."
-    },
-    "ffffb159": {
-      "alias": "ol_timer_expired",
-      "type": "uint8",
-      "reader": "0001ff38",
-      "evidence": "b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition."
-    },
-    "ffffb180": {
-      "alias": "cl_load_threshold_2d_c",
-      "type": "float",
-      "reader": "0001f6ae",
-      "evidence": "b180 = tbl 0x69db0(rpm); throttle/load band compares -> b1be/b1c2 in 0x1f6ae."
-    },
-    "ffffb184": {
-      "alias": "cl_load_threshold_2d_d",
-      "type": "float",
-      "reader": "0001f6ae",
-      "evidence": "b184 = tbl 0x69dc4(rpm)."
-    },
-    "ffffb188": {
-      "alias": "cl_load_threshold_2d_e",
-      "type": "float",
-      "reader": "0001f6ae",
-      "evidence": "b188 = tbl 0x69dd8(rpm) -> b1c6."
-    },
-    "ffffb18c": {
-      "alias": "cl_load_threshold_2d_f",
-      "type": "float",
-      "reader": "0001f6ae",
-      "evidence": "b18c = tbl 0x69dec(rpm) -> b1ca."
-    },
-    "ffffb1c6": {
-      "alias": "load_above_thresh_c",
-      "type": "uint8",
-      "reader": "0001f6ae",
-      "evidence": "b1c6 = load >= b188 (hysteresis) in 0x1f6ae."
-    },
-    "ffffb1ca": {
-      "alias": "load_above_thresh_d",
-      "type": "uint8",
-      "reader": "0001f6ae",
-      "evidence": "b1ca = load > b18c (hysteresis) in 0x1f6ae."
-    },
-    "ffffb1c7": {
-      "alias": "rpm_above_5300_flag_b",
-      "type": "uint8",
-      "reader": "0001f6ae",
-      "evidence": "b1c7 = rpm > 5500 (clear below 5300); second copy in 0x1f6ae."
-    },
-    "ffffb1cb": {
-      "alias": "rpm_above_9800_flag",
-      "type": "uint8",
-      "reader": "0001f6ae",
-      "evidence": "b1cb = rpm > 10000 (clear below 9800) in 0x1f6ae."
-    },
-    "ffffb142": {
-      "alias": "ol_decay_enable_a",
-      "type": "uint8",
-      "reader": "000200c6",
-      "evidence": "b142 checked (with b157) in the blend_weight_update decay condition 0x200c6."
-    },
-    "ffffb152": {
-      "alias": "ol_decay_enable_b",
-      "type": "uint8",
-      "reader": "000200c6",
-      "evidence": "b152 checked in the fault branch of 0x200c6."
-    },
-    "ffffb157": {
-      "alias": "ol_decay_enable_c",
-      "type": "uint8",
-      "reader": "000200c6",
-      "evidence": "b157 must be set (with b142) for the b11c/b118 decay branch in 0x200c6."
-    },
-    "ffffaa6c": {
-      "alias": "diag_afr_word_a",
-      "type": "float",
-      "reader": "000556ec",
-      "evidence": "Encoded (step 0x38000000) as high word of PID 0x0034 'Air Fuel Ratio'."
-    },
-    "ffffaa7c": {
-      "alias": "diag_afr_word_b",
-      "type": "float",
-      "reader": "00055702",
-      "evidence": "Encoded (mult 0.0625, offset -96.0) as low word of PID 0x0034."
-    }
+  "000211fe": {
+   "alias": "fueling_condition_flags_task",
+   "confidence": "high",
+   "evidence": "Task 0x64f6 -> 0x11744 chain under mask 0x10: load/RPM band flags 0x1ff38, throttle/load band flags 0x1f6ae, 0x1fd48, blend_weight_update (0x200c6), off-throttle fuel-cut resume base 0xe560 (tbl 0x68f48), 0x3133c (tbl 0x6aca4), calculate_air_charge (0x314d0), secondary-air enrichment (0x31624), injector_temp_multiplier_lookup (0x2fd3e)."
   },
-  "lookup_aliases": {
-    "DAT_0006ac38": {
-      "alias": "tbl_fuel_coolant_compensation_0006ac38",
-      "evidence": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis."
-    }
+  "00020e40": {
+   "alias": "fueling_main_task",
+   "confidence": "high",
+   "evidence": "Called from ref_engineControlTASK 0x11ba4; three masked blocks: enrichments + injection_angle_limit_lookup (0xe48e) + load_delta_enrichment (0x33ec4) + cranking_pulse_adder (0x30678); fuel core: calc_fuel_volume_request (0x306e8), calculate_fuel_amount_per_rotation (0x30948), injector_pulse_time_arbitrate (0x2fea8), cold_start_enrichment (0x1ddfc); closed-loop conditions (0x1c13c chain)."
   },
-  "backup": "backups/pre_fueling_labels.zip",
-  "rom_unchanged": true,
-  "ghidra_database_updated": false,
-  "notes": "Fueling chain: MAF->load->air charge->fuel volume->per-rotation amounts->pulse arbitration->ATU-II injector outputs; OL/CL target selection; warmup/changeover/tip-in enrichments; fuel cut and rev limit; diag PIDs 0x0034/0x0043/0x0044/0x1410. Resolves knock-review unresolved item 2 (blend weights b11c/b118 producer 0x200c6)."
+  "000200c6": {
+   "alias": "blend_weight_update",
+   "confidence": "high",
+   "evidence": "Sets DAT_ffffb11c/b118: 1.0 in normal conditions (no c590/cca1 fault, coolant plausible b1d0, c644<=1000, mode flags clear), decays -0.0667/call while open_loop_active with b142/b154/b157/b159 set, else 0.0. Consumed by open_loop_fueling_targets (0x1ee4a: OL target blend) and leading/trailing_base_timing_calc (0x11f00/0x1206c: base-timing blend). Resolves knock-review unresolved item 2."
+  },
+  "000306e8": {
+   "alias": "calc_fuel_volume_request",
+   "confidence": "high",
+   "evidence": "Core fuel-mass calc: bed0 = engine_load*0.07196; bed4 = tbl 0x6ac88 'Fuel Injection - Engine Load Compensation'(RPM); bf1c = tbl DAT_0006ac38(coolant); bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; beac = FUN_0005c024(bf14); beb0 = beac*bed0."
+  },
+  "000314d0": {
+   "alias": "calculate_air_charge",
+   "confidence": "high",
+   "evidence": "bf68 = rpm*load/38.07; bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V); bf4c = baro*353.0163/((IAT+273)*101.32) (density ratio); bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0) air charge per cycle; bf54 = first-order-filtered bf50/load, clamp 50."
+  },
+  "00030948": {
+   "alias": "calculate_fuel_amount_per_rotation",
+   "confidence": "high",
+   "evidence": "Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios."
+  },
+  "0002fea8": {
+   "alias": "injector_pulse_time_arbitrate",
+   "confidence": "high",
+   "evidence": "Cranking (!engine_running): be30 = be38 = be5c + latency be44; running: be30 = be50+be44, be38 = be54+be44; be28 = be24 = (cranking? be58 : be4c) + latency be40; be2c = be30, be34 = be38; cranking decay counter be3c from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant), decrementing while running."
+  },
+  "00008a68": {
+   "alias": "injector_pulse_set_channel",
+   "confidence": "high",
+   "evidence": "Per-channel ATU-II output program: Per-channel fuel request array, 0x18-byte stride from a010 (= base a004+0xc); pulse = (latency a094[ch] + a010[ch*0x18]) >> 4 per disasm 0x8a8e-0x8aa0.; start compare = a014[ch*0x18] (or TCNT1A+3 if within 0x7fff) -> GR1A; clears a016/a018 and the channel TIER bit."
+  },
+  "00008340": {
+   "alias": "injector_pulse_set_dispatch",
+   "confidence": "high",
+   "evidence": "4-byte thunk to injector_pulse_set_channel (0x8a68); called from six wrappers 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea (per-injector dispatch, one per channel).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): 4-byte thunk to injector_pulse_set_channel 0x8a68 (itself dynamically verified in tests/test_phase1_dynamic.py::test_injector_channel_map_dynamic via DCNT8x/GR1x map 0xd7d4); callers are the six ATU ch8 compare ISRs atu_ch8_cmp_isr_ch0/1/2/3/4/5 (0x59a4/0x59c0/0x59dc/0x59b2/0x59ce/0x59ea) = per-injector pulse events; byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "000086f8": {
+   "alias": "set_fuel_injector_latency",
+   "confidence": "high",
+   "evidence": "param_1 ch 0/1/2 -> a094/a0a0, a098/a0a4, a09c/a0a8 (latency value + mirror pair per channel); called by injector_latency_cal_lookup (0x2ff78) with ch0 = secondary, ch1/2 = primary."
+  },
+  "000086ac": {
+   "alias": "injector_zero_offset_set",
+   "confidence": "high",
+   "evidence": "param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): r4=ch selects the zero/offset pair - ch0 -> ffff a0ac/a0b8, ch1 -> a0b0/a0bc, ch2 -> a0b4/a0c0 each written 0xffff (observed per channel); caller 0x10208 ref_setAllInjectorto0_; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "000085e4": {
+   "alias": "injector_channel_disable",
+   "confidence": "high",
+   "evidence": "Per-channel off: clears channel TIER bit, GR1A = TCNT1A-1, DCNT8A = 0 (FUN_0000a8a4), a017 = 0. Wiring review: six injector channels on 2M/2J/2G/2D/3A/3D; firmware index-to-terminal mapping unresolved."
+  },
+  "0002ff78": {
+   "alias": "injector_latency_cal_lookup",
+   "confidence": "high",
+   "evidence": "be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP be04/be08, battery V b590); be44 = 3D tbl 0x6aa80 'Injector Latency Primary'; quantized /0.25 to int -> set_fuel_injector_latency(0, secondary), (1, primary), (2, primary)."
+  },
+  "0002fd3e": {
+   "alias": "injector_temp_multiplier_lookup",
+   "confidence": "high",
+   "evidence": "bde4/bde8/bdec = 3D weighted-engine-temp x load multipliers for primary / secondary-1 / secondary-2 injectors (tbls 0x6a9a4/0x6a9c0/0x6a9dc); consumed by calculate_fuel_amount_per_rotation (0x30948)."
+  },
+  "00032e08": {
+   "alias": "warmup_fueling_compensation",
+   "confidence": "high",
+   "evidence": "c014 = tbl 0x6ae28 'Warmup Fueling - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, catalyst-temp model); c018 = 3D tbl 0x6ae58 (or coolant-fault variant 0x6ae74)(rpm, coolant); c00c = c014 + c018; c010 = warmup-complete flag (catalyst-temp model >= 5 C, or >= 200 C when ce33)."
+  },
+  "0002024c": {
+   "alias": "open_loop_changeover_enrichment",
+   "confidence": "high",
+   "evidence": "b124 = 0 when b146 == 0, else tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM); b124 feeds calc_fuel_volume_request (0x306e8) via max(ae10, b124)."
+  },
+  "00033ec4": {
+   "alias": "load_delta_enrichment",
+   "confidence": "high",
+   "evidence": "c138 = tbl 0x6b124(load delta c158); c13c = tbl 0x6b0c0(load); c134 = c138*1.0*c13c when c158 >= 0 else 0; c140 = 3D tip-in tbl 0x6b160 (or 0x6b17c when warmup c010) (rpm, coolant); injectors off (a42c) -> c140 = 0; c110 decays toward 1.0 at -0.0078125 when c14c set."
+  },
+  "000307e0": {
+   "alias": "closed_loop_fuel_trim",
+   "confidence": "high",
+   "evidence": "Closed loop (ae1f): beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), open_loop_fuel_target b120) + 1.0) * ad ecc - 1.0, -1, 2); filtered (0.0625) into beb8; open loop: beb4 = 0. STFT-style trim around lambda target."
+  },
+  "00033ad2": {
+   "alias": "calculate_engine_load",
+   "confidence": "high",
+   "evidence": "engine_load c0b4 = min(first_order_filter(c0b0, c0b4, 0.2 or 1.0 by c0c4), c0b8); forced 0.525 when a41c or (c0c5==0 && injectors off a42c); c0c5 = previous a42c. PID 0x0043 'Engine Load' encodes c0b4 (handler 0x56b8a)."
+  },
+  "00007438": {
+   "alias": "maf_sensor_scaling",
+   "confidence": "high",
+   "evidence": "9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1."
+  },
+  "00019f4e": {
+   "alias": "maf_voltage_and_fault_counters",
+   "confidence": "high",
+   "evidence": "aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): maf_adc_raw 9eea=32768 -> aa2c = 2.5 V exactly (5/65536 V/count, 0x38a00000); 9eea=0xffff -> aa2c saturates 4.9999 and fault counter aa35=1 (raw >= 0xf852); callers 0x19806/0x19ef8; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00019f40": {
+   "alias": "maf_filtered_update",
+   "confidence": "high",
+   "evidence": "mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): a9e8=42.0 -> a9ec=42.0 and a9f4=42.0 (mass_air_flow latch exact); caller 0x1975c; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "0001a418": {
+   "alias": "maf_per_rotation_calc",
+   "confidence": "high",
+   "evidence": "aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0.; 2026-11-05: already dynamically verified: tests/test_fuel_chain_dynamic.py::test_maf_per_rotation_calc (aa3c = min(maf*60/rpm, 5.0), raw-MAF mode) + this pass re-ran it (2026-11-05); caller 0x197be; tbl 0x697b4 filter coefficient used in raw mode bypass"
+  },
+  "0001e842": {
+   "alias": "maf_operating_range",
+   "confidence": "high",
+   "evidence": "b0fe = MAF range index 0..3 from mass_air_flow a9ec bands (<1, <9, <22, else) with hysteresis flags b101/b102/b103."
+  },
+  "0000e48e": {
+   "alias": "injection_angle_limit_lookup",
+   "confidence": "high",
+   "evidence": "a434/a438/a43c = max injection angle 1/2/3 vs RPM (defs 0x68ef8/0x68f0c/0x68f20 'Fuel Injector - Unknown - Max Injection Angle', x2 deg MAYBE).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): rpm 1000 -> a434/a438/a43c = 120.0, rpm 6000 -> 60.0; matches extracted cal tables tbl_068ef8/068f0c/068f20 (axis 800-6800 rpm, u8 60..30) x2.0 exactly; caller fueling_main_task 0x20e40; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00030678": {
+   "alias": "cranking_pulse_adder",
+   "confidence": "high",
+   "evidence": "When cranking && injectors off (a42c) && ce32: be94 += be58 (cranking pulse adder accumulated into pulse arbitration)."
+  },
+  "0000e2a8": {
+   "alias": "update_injectors_off_flag",
+   "confidence": "high",
+   "evidence": "engine_injectors_off a42c = 1 iff !engine_running (a428) && !a41c."
+  },
+  "0000ee64": {
+   "alias": "rev_limit_fuel_cut_init",
+   "confidence": "high",
+   "evidence": "When DAT_ffff9f8c == 1: clears rev-limit state a4a4/a4a5/a4a8."
+  },
+  "0000edc4": {
+   "alias": "fuel_cut_arbitration",
+   "confidence": "high",
+   "evidence": "Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): with request a464=1, mode param 0 -> fuel-cut flags a444=1, a445=1 (observed); calls FUN_0000e2d4; byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00018cfe": {
+   "alias": "fuel_cut_rpm_condition",
+   "confidence": "high",
+   "evidence": "a97c = rpm >= 2500 (clear below 1700), a97d = rpm >= 1700 (clear below 1100); a964 fuel_cut_allowed = (a96a && a97c) || (a96c && a97d).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): rpm thresholds exact - 3000 -> a97c=1 (>=2500) a97d=1 (>=1700), 1500 -> a97c=0 a97d=1, 900 -> both 0; caller fueling_slow_task 0x21246; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "0000ee82": {
+   "alias": "rev_limit_conditionals",
+   "confidence": "high",
+   "evidence": "a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): coolant cell ffffa98c hysteresis exact - 10C -> a4a6=1, 19C holds, 25C -> 0, 19C holds, 10C -> 1; countdown arms when b534==0 && baec!=0/7 && a4ad==0 (a4aa=1, a4ad=baec, decrement per call observed 0x0b->0x0a); caller fueling_slow_task 0x21246; byte-exact function match in 8/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "0001ddfc": {
+   "alias": "cold_start_enrichment",
+   "confidence": "high",
+   "evidence": "Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0).; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): b0c4 = 0.0 stored on both cranking branches (observed), running branch max(b0c4-0,0); feeds calc_fuel_volume_request 0x306e8 and closed_loop_fuel_trim 0x307e0; caller fueling_main_task 0x20e40; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00056b8a": {
+   "alias": "diag_engine_load",
+   "confidence": "high",
+   "evidence": "RomRaider PID 0x0043 'Engine Load' handler: encodes engine_load_ffffc0b4 via rx8_encode_u16_affine_saturate (step 0x3b808080 ~ 0.00392) as u16 BE."
+  },
+  "00056b9e": {
+   "alias": "diag_lambda_target",
+   "confidence": "high",
+   "evidence": "RomRaider PID 0x0044 'Lambda Target' handler: encodes lambda_target_ffffadfc (step 0x38000000) as u16 BE."
+  },
+  "00056b22": {
+   "alias": "diag_air_fuel_ratio",
+   "confidence": "high",
+   "evidence": "RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words."
+  },
+  "00056f6c": {
+   "alias": "diag_injector_pulse_time",
+   "confidence": "high",
+   "evidence": "PID 0x1410 handler (logger def conflicts: 'Injector Pulse Time' vs 'Throttle Pedal Position' - do not trust either name): encodes DAT_ffffbe24 with step 8 (0x41000000); logger expr x*8*0.001 ms.; 2026-11-05: dynamically verified 2026-11-05 in the SH-2E emulator (harness.call, profile 60E15120_N3J1E) D10 resolved: PID 0x1410 reads float injector_pulse_time_ffffbe24, enc_u16 step 8.0 - 80.0 -> 0x000a, 800.0 -> 0x0064 exact; independent of ffffad5c throttle (ad5c=0xf000 left response unchanged); byte-matched handler high in 60E0E500/60E0E700/60E1C500; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "000556ec": {
+   "alias": "diag_afr_word_a",
+   "confidence": "high",
+   "evidence": "Encodes DAT_ffffaa6c (step 0x38000000) as the high u16 word of PID 0x0034 'Air Fuel Ratio'.; 2026-11-05: called from diag_air_fuel_ratio 0x56b22 (high) as PID 0x0034 high word from DAT_ffffaa6c; byte-exact match renamed diag_read_afr_word_a (high) in 60E0G500 at 0x55e90; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
+  },
+  "00055702": {
+   "alias": "diag_afr_word_b",
+   "confidence": "high",
+   "evidence": "Encodes DAT_ffffaa7c (mult 0x3b800000, offset 0xc3000000 = -96.0) as the low u16 word of PID 0x0034.; 2026-11-05: called from diag_air_fuel_ratio 0x56b22 (high) as PID 0x0034 low word from DAT_ffffaa7c (mult 0x3b800000, offset -96.0); byte-exact match renamed diag_read_afr_word_b (high) in 60E0G500 at 0x55ea6; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
+  }
+ },
+ "ram_aliases": {
+  "ffffbed0": {
+   "alias": "fuel_load_scale",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "bed0 = engine_load_ffffc0b4 * 0.07196; multiplied into final fuel volume beb0 = beac * bed0."
+  },
+  "ffffbed4": {
+   "alias": "fuel_load_compensation",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "bed4 = lookup_3d tbl 0x6ac88 'Fuel Injection - Engine Load Compensation'(RPM); multiplier in bf14."
+  },
+  "ffffbf1c": {
+   "alias": "fuel_coolant_compensation",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "bf1c = lookup_2d tbl DAT_0006ac38(coolant); added via min(bf1c, c00c + open_loop_fuel_target b120) in bf14."
+  },
+  "ffffbf14": {
+   "alias": "fuel_correction_sum",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; scaled by FUN_0005c024 into beac."
+  },
+  "ffffbeac": {
+   "alias": "fuel_volume_scaled",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0."
+  },
+  "ffffbeb0": {
+   "alias": "fuel_volume_final",
+   "type": "float",
+   "reader": "000306e8",
+   "evidence": "beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0."
+  },
+  "ffffbf68": {
+   "alias": "airflow_rpm_load_product",
+   "type": "float",
+   "reader": "000314d0",
+   "evidence": "bf68 = rpm * load / 38.07; axis for tbl 0x6ad44 in calculate_air_charge."
+  },
+  "ffffbf44": {
+   "alias": "airflow_corrected",
+   "type": "float",
+   "reader": "000314d0",
+   "evidence": "bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V b590)."
+  },
+  "ffffbf4c": {
+   "alias": "air_density_ratio",
+   "type": "float",
+   "reader": "000314d0",
+   "evidence": "bf4c = baro*353.0163 / ((IAT+273)*101.32): pressure/temperature density ratio."
+  },
+  "ffffbf50": {
+   "alias": "air_charge_per_cycle",
+   "type": "float",
+   "reader": "000314d0",
+   "evidence": "bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0); 2.0 when rpm ~ 0."
+  },
+  "ffffbf54": {
+   "alias": "air_charge_filtered",
+   "type": "float",
+   "reader": "000314d0",
+   "evidence": "bf54 = first_order_filter(bf50/load, bf54, 1.0, 1e-05) clamped to 50.0."
+  },
+  "ffffbec8": {
+   "alias": "fuel_amount_per_rotation_a",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation."
+  },
+  "ffffbeec": {
+   "alias": "fuel_amount_per_rotation_b",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "beec = (bdec*be14 path) * 475.93; see 0x30948."
+  },
+  "ffffbed8": {
+   "alias": "fuel_amount_per_rotation_c",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bed8 = (6e7/rpm - 608 - be40) / fVar7 * 369.472; latency-compensated variant."
+  },
+  "ffffbedc": {
+   "alias": "fuel_amount_per_rotation_d",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bedc = (6e7/rpm - 608 - be44) / fVar4 * 475.93."
+  },
+  "ffffbee0": {
+   "alias": "fuel_amount_per_rotation_e",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93."
+  },
+  "ffffbee4": {
+   "alias": "fuel_ratio_a",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts."
+  },
+  "ffffbee8": {
+   "alias": "fuel_ratio_b",
+   "type": "float",
+   "reader": "00030948",
+   "evidence": "bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4)."
+  },
+  "ffffbe24": {
+   "alias": "injector_pulse_time",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "Final arbitrated pulse time be24 = be28; encoded by diag PID 0x1410 handler 0x56f6c (step 8; logger x*8*0.001 ms)."
+  },
+  "ffffbe28": {
+   "alias": "injector_pulse_time_base",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "be28 = (cranking? be58 : be4c) + injector_latency_primary be40; copied to be24."
+  },
+  "ffffbe2c": {
+   "alias": "injector_pulse_time_ch1",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "be2c = be30 (running: be50 + be44; cranking: be5c + be44)."
+  },
+  "ffffbe30": {
+   "alias": "injector_pulse_time_ch2",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "be30 = running? be50 + be44 : be5c + be44 (latency be44 added)."
+  },
+  "ffffbe34": {
+   "alias": "injector_pulse_time_ch3",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "be34 = be38."
+  },
+  "ffffbe38": {
+   "alias": "injector_pulse_time_ch4",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "be38 = running? be54 + be44 : be5c + be44."
+  },
+  "ffffbe3c": {
+   "alias": "cranking_decay_counter",
+   "type": "uint8",
+   "reader": "0002fea8",
+   "evidence": "Cranking: loaded from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant); decrements while running."
+  },
+  "ffffbe40": {
+   "alias": "injector_latency_secondary",
+   "type": "float",
+   "reader": "0002ff78",
+   "evidence": "be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP, battery V), quantized /0.25; added to pulse times in 0x2fea8."
+  },
+  "ffffbe44": {
+   "alias": "injector_latency_primary",
+   "type": "float",
+   "reader": "0002ff78",
+   "evidence": "be44 = 3D tbl 0x6aa80 'Injector Latency Primary'(MRP, battery V), quantized /0.25."
+  },
+  "ffffbe58": {
+   "alias": "injector_pulse_crank",
+   "type": "float",
+   "reader": "00030678",
+   "evidence": "Cranking pulse base; added into be94 by cranking_pulse_adder (0x30678) and into be28 by 0x2fea8."
+  },
+  "ffffbe5c": {
+   "alias": "injector_pulse_crank_base",
+   "type": "float",
+   "reader": "0002fea8",
+   "evidence": "Cranking base for be30/be38 while engine not running."
+  },
+  "ffffbe94": {
+   "alias": "cranking_pulse_adder",
+   "type": "float",
+   "reader": "00030678",
+   "evidence": "be94 += be58 when cranking && injectors off && ce32 (diag cranking pulse adder)."
+  },
+  "ffffa094": {
+   "alias": "injector_latency_ch0",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Latency channel 0 (secondary) value; pair a0a0 mirror; read in injector_pulse_set_channel (0x8a68) pulse = a094[ch] + (a010[ch*0x18]>>4)."
+  },
+  "ffffa098": {
+   "alias": "injector_latency_ch1",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Latency channel 1 (primary); pair a0a4 mirror."
+  },
+  "ffffa09c": {
+   "alias": "injector_latency_ch2",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Latency channel 2 (primary); pair a0a8 mirror."
+  },
+  "ffffa0a0": {
+   "alias": "injector_latency_ch0_mirror",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Mirror of a094 written by the same call."
+  },
+  "ffffa0a4": {
+   "alias": "injector_latency_ch1_mirror",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Mirror of a098."
+  },
+  "ffffa0a8": {
+   "alias": "injector_latency_ch2_mirror",
+   "type": "float",
+   "reader": "000086f8",
+   "evidence": "Mirror of a09c."
+  },
+  "ffffa0ac": {
+   "alias": "injector_zero_offset_ch0",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Zero/offset channel 0; pair a0b8 mirror; caller 0x10208 ref_setAllInjectorto0_."
+  },
+  "ffffa0b0": {
+   "alias": "injector_zero_offset_ch1",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Zero/offset channel 1; pair a0bc."
+  },
+  "ffffa0b4": {
+   "alias": "injector_zero_offset_ch2",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Zero/offset channel 2; pair a0c0."
+  },
+  "ffffa0b8": {
+   "alias": "injector_zero_offset_ch0_mirror",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Mirror of a0ac."
+  },
+  "ffffa0bc": {
+   "alias": "injector_zero_offset_ch1_mirror",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Mirror of a0b0."
+  },
+  "ffffa0c0": {
+   "alias": "injector_zero_offset_ch2_mirror",
+   "type": "float",
+   "reader": "000086ac",
+   "evidence": "Mirror of a0b4."
+  },
+  "ffffa010": {
+   "alias": "injector_fuel_request_array",
+   "type": "int",
+   "reader": "00008a68",
+   "evidence": "Per-channel fuel request array, 0x18-byte stride from a010 (= base a004+0xc); pulse = (latency a094[ch] + a010[ch*0x18]) >> 4 per disasm 0x8a8e-0x8aa0."
+  },
+  "ffffa014": {
+   "alias": "injector_start_angle_array",
+   "type": "short",
+   "reader": "00008a68",
+   "evidence": "Per-channel start compare, 0x18-byte stride from a014; written to ATU-II GR1A."
+  },
+  "ffffa017": {
+   "alias": "injector_channel_enable_flag",
+   "type": "uint8",
+   "reader": "000085e4",
+   "evidence": "Checked/cleared per channel (0x18 stride) by injector_channel_disable (0x85e4)."
+  },
+  "ffffa018": {
+   "alias": "injector_channel_tier_flag",
+   "type": "uint8",
+   "reader": "000085e4",
+   "evidence": "Per-channel ATU-II TIER enable mirror; cleared when channel disabled or pulsed."
+  },
+  "ffffc010": {
+   "alias": "warmup_complete_flag",
+   "type": "uint8",
+   "reader": "00032e08",
+   "evidence": "c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair."
+  },
+  "ffffc014": {
+   "alias": "warmup_load_multiplier",
+   "type": "float",
+   "reader": "00032e08",
+   "evidence": "c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model)."
+  },
+  "ffffc018": {
+   "alias": "warmup_rpm_multiplier",
+   "type": "float",
+   "reader": "00032e08",
+   "evidence": "c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant)."
+  },
+  "ffffc00c": {
+   "alias": "warmup_enrichment_total",
+   "type": "float",
+   "reader": "00032e08",
+   "evidence": "c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0)."
+  },
+  "ffffb124": {
+   "alias": "open_loop_changeover_enrichment",
+   "type": "float",
+   "reader": "0002024c",
+   "evidence": "b124 = tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM) when b146 != 0 else 0; feeds 0x306e8 via max(ae10, b124)."
+  },
+  "ffffc158": {
+   "alias": "load_delta_input",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0."
+  },
+  "ffffc138": {
+   "alias": "load_delta_scale",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c138 = lookup_2d tbl 0x6b124(c158)."
+  },
+  "ffffc13c": {
+   "alias": "load_scale_2d",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c13c = lookup_2d tbl 0x6b0c0(engine_load)."
+  },
+  "ffffc134": {
+   "alias": "load_delta_enrichment",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c134 = c138 * c13c (0 when load delta < 0)."
+  },
+  "ffffc110": {
+   "alias": "tip_in_decay",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c110 = max(c110 - 0.0078125, 1.0) when c14c set."
+  },
+  "ffffc140": {
+   "alias": "tip_in_enrichment",
+   "type": "float",
+   "reader": "00033ec4",
+   "evidence": "c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off."
+  },
+  "ffffc14c": {
+   "alias": "tip_in_mode_flag",
+   "type": "uint8",
+   "reader": "00033ec4",
+   "evidence": "c14c gates the c110 decay in load_delta_enrichment."
+  },
+  "ffffbeb4": {
+   "alias": "closed_loop_trim_raw",
+   "type": "float",
+   "reader": "000307e0",
+   "evidence": "beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), b120) + 1)*ad ecc - 1, -1, 2) in closed loop; 0 in open loop."
+  },
+  "ffffbeb8": {
+   "alias": "closed_loop_trim_filtered",
+   "type": "float",
+   "reader": "000307e0",
+   "evidence": "beb8 = first_order_filter(beb4, beb8, 0.0625, 1e-05); STFT-style trim."
+  },
+  "ffffbf20": {
+   "alias": "cl_coolant_compensation",
+   "type": "float",
+   "reader": "000307e0",
+   "evidence": "bf20 = lookup_2d tbl DAT_0006ac38(coolant); used in closed_loop_fuel_trim."
+  },
+  "ffffc0b0": {
+   "alias": "engine_load_raw",
+   "type": "float",
+   "reader": "00033ad2",
+   "evidence": "c0b0 = raw load input filtered into engine_load c0b4 (coeff 0.2, or 1.0 when c0c4 set)."
+  },
+  "ffffc0b8": {
+   "alias": "engine_load_max",
+   "type": "float",
+   "reader": "00033ad2",
+   "evidence": "c0b8 = clamp maximum for engine_load c0b4 = min(filter(c0b0,...), c0b8)."
+  },
+  "ffffc0c4": {
+   "alias": "load_filter_fast_flag",
+   "type": "uint8",
+   "reader": "00033ad2",
+   "evidence": "c0c4 selects filter coefficient 1.0 vs 0.2 in calculate_engine_load."
+  },
+  "ffffc0c5": {
+   "alias": "injectors_off_previous",
+   "type": "uint8",
+   "reader": "00033ad2",
+   "evidence": "c0c5 = previous engine_injectors_off a42c; forces load 0.525 on injector-off edge."
+  },
+  "ffff9eea": {
+   "alias": "maf_adc_raw",
+   "type": "uint16",
+   "reader": "00007438",
+   "evidence": "Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2."
+  },
+  "ffff9f78": {
+   "alias": "maf_scaled",
+   "type": "float",
+   "reader": "00007438",
+   "evidence": "9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e)."
+  },
+  "ffff9f7c": {
+   "alias": "maf_fault_status",
+   "type": "uint8",
+   "reader": "00007438",
+   "evidence": "9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high)."
+  },
+  "ffffaa2c": {
+   "alias": "maf_voltage",
+   "type": "float",
+   "reader": "00019f4e",
+   "evidence": "aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault."
+  },
+  "ffffaa35": {
+   "alias": "maf_high_fault_counter",
+   "type": "uint8",
+   "reader": "00019f4e",
+   "evidence": "Saturating counter incremented while raw >= 0xf852."
+  },
+  "ffffaa36": {
+   "alias": "maf_low_fault_counter",
+   "type": "uint8",
+   "reader": "00019f4e",
+   "evidence": "Saturating counter incremented while raw < 0x7ae; cleared otherwise."
+  },
+  "ffffa9e4": {
+   "alias": "maf_voltage_latched",
+   "type": "float",
+   "reader": "00019f4e",
+   "evidence": "a9e4 = aa2c when MAF faulted (>2 on either counter or raw in 0x7ae..0xf852 window)."
+  },
+  "ffffa9e8": {
+   "alias": "maf_scaled_latched",
+   "type": "float",
+   "reader": "00019f4e",
+   "evidence": "a9e8 = 9f78 (maf_scaled) on fault; becomes mass_air_flow a9ec via 0x19f40."
+  },
+  "ffffaa54": {
+   "alias": "maf_filter_coeff",
+   "type": "float",
+   "reader": "0001a418",
+   "evidence": "aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc."
+  },
+  "ffffaa48": {
+   "alias": "maf_filter_state",
+   "type": "float",
+   "reader": "0001a418",
+   "evidence": "aa48 = first_order_filter(maf, aa48, aa54)."
+  },
+  "ffffaa3c": {
+   "alias": "maf_per_rotation",
+   "type": "float",
+   "reader": "0001a418",
+   "evidence": "aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm)."
+  },
+  "ffffaa38": {
+   "alias": "maf_per_rotation_filtered",
+   "type": "float",
+   "reader": "0001a418",
+   "evidence": "aa38 = filtered maf*60/rpm; 0.1560058 when rpm ~ 0."
+  },
+  "ffffaa4c": {
+   "alias": "maf_filter_mode",
+   "type": "uint8",
+   "reader": "0001a418",
+   "evidence": "aa4c selects filtered vs instantaneous MAF for the per-rotation calc."
+  },
+  "ffffb0fe": {
+   "alias": "maf_range_index",
+   "type": "uint8",
+   "reader": "0001e842",
+   "evidence": "b0fe = 0..3 MAF operating range from mass_air_flow bands (<1, <9, <22)."
+  },
+  "ffffb101": {
+   "alias": "maf_band_low",
+   "type": "uint8",
+   "reader": "0001e842",
+   "evidence": "b101 = maf < 1 (hysteresis 0.4)."
+  },
+  "ffffb102": {
+   "alias": "maf_band_mid",
+   "type": "uint8",
+   "reader": "0001e842",
+   "evidence": "b102 = maf < 9 (hysteresis 8.4)."
+  },
+  "ffffb103": {
+   "alias": "maf_band_high",
+   "type": "uint8",
+   "reader": "0001e842",
+   "evidence": "b103 = maf < 22 (hysteresis 21.4); all clear -> range 3."
+  },
+  "ffffa434": {
+   "alias": "max_injection_angle_1",
+   "type": "float",
+   "reader": "0000e48e",
+   "evidence": "a434 = tbl 0x68ef8(rpm) 'Max Injection Angle1???'."
+  },
+  "ffffa438": {
+   "alias": "max_injection_angle_2",
+   "type": "float",
+   "reader": "0000e48e",
+   "evidence": "a438 = tbl 0x68f0c(rpm) 'Max Injection Angle2???'."
+  },
+  "ffffa43c": {
+   "alias": "max_injection_angle_3",
+   "type": "float",
+   "reader": "0000e48e",
+   "evidence": "a43c = tbl 0x68f20(rpm) 'Max Injection Angle3???'."
+  },
+  "ffffa41c": {
+   "alias": "engine_stopped_latch",
+   "type": "uint8",
+   "reader": "0000e2a8",
+   "evidence": "a41c blocks the injectors-off flag a42c; also forces load 0.525 in calculate_engine_load (0x33ad2)."
+  },
+  "ffffa444": {
+   "alias": "fuel_cut_flag_a",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Set by fuel_cut_arbitration (0xedc4) from request a464 / mode param."
+  },
+  "ffffa445": {
+   "alias": "fuel_cut_flag_b",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Second fuel-cut flag set alongside a444 in 0xedc4."
+  },
+  "ffffa464": {
+   "alias": "fuel_cut_request_a",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Input request: when set, a444 = a445 = 1 unconditionally."
+  },
+  "ffffa465": {
+   "alias": "fuel_cut_request_b",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Input request: with a4a3/a4a2 mirrors gates a444 by param_1 band (0/12 vs 6/18)."
+  },
+  "ffffa4a2": {
+   "alias": "fuel_cut_request_a_prev",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Mirror of a464 stored at end of 0xedc4."
+  },
+  "ffffa4a3": {
+   "alias": "fuel_cut_request_b_prev",
+   "type": "uint8",
+   "reader": "0000edc4",
+   "evidence": "Mirror of a465 stored at end of 0xedc4."
+  },
+  "ffffa964": {
+   "alias": "fuel_cut_allowed",
+   "type": "uint8",
+   "reader": "00018cfe",
+   "evidence": "a964 = (a96a && rpm>=2500) || (a96c && rpm>=1700); set by fuel_cut_rpm_condition (0x18cfe)."
+  },
+  "ffffa97c": {
+   "alias": "rpm_above_2500_flag",
+   "type": "uint8",
+   "reader": "00018cfe",
+   "evidence": "a97c = rpm >= 2500 (clear below 1700) - hysteresis."
+  },
+  "ffffa97d": {
+   "alias": "rpm_above_1700_flag",
+   "type": "uint8",
+   "reader": "00018cfe",
+   "evidence": "a97d = rpm >= 1700 (clear below 1100) - hysteresis."
+  },
+  "ffffa96a": {
+   "alias": "decel_cut_request_a",
+   "type": "uint8",
+   "reader": "00018cfe",
+   "evidence": "a96a: decel/overrun cut request input to fuel_cut_rpm_condition (0x18cfe)."
+  },
+  "ffffa96c": {
+   "alias": "decel_cut_request_b",
+   "type": "uint8",
+   "reader": "00018cfe",
+   "evidence": "a96c: second request input; pairs with a96a in the a964 OR."
+  },
+  "ffffa4a6": {
+   "alias": "coolant_below_18c_flag",
+   "type": "uint8",
+   "reader": "0000ee82",
+   "evidence": "a4a6 = coolant < 18 C (clear at 20) - cold-engine rev-limit derate condition."
+  },
+  "ffffa4aa": {
+   "alias": "rev_limit_countdown_active",
+   "type": "uint8",
+   "reader": "0000ee82",
+   "evidence": "a4aa = (a4ae != 0); set by rev_limit_conditionals (0xee82)."
+  },
+  "ffffa4ad": {
+   "alias": "rev_limit_mode_previous",
+   "type": "uint8",
+   "reader": "0000ee82",
+   "evidence": "a4ad = previous DAT_ffffbaec (mode) for change detection."
+  },
+  "ffffa4ae": {
+   "alias": "rev_limit_countdown",
+   "type": "uint8",
+   "reader": "0000ee82",
+   "evidence": "a4ae = 0x0f on mode change (b534==0 && baec active && a4ad==0 && baec != 7), decremented while a4aa."
+  },
+  "ffffa4a4": {
+   "alias": "rev_limit_state_a",
+   "type": "uint8",
+   "reader": "0000ee64",
+   "evidence": "Cleared by rev_limit_fuel_cut_init (0xee64) when 9f8c==1."
+  },
+  "ffffa4a5": {
+   "alias": "rev_limit_state_b",
+   "type": "uint8",
+   "reader": "0000ee64",
+   "evidence": "Cleared by 0xee64."
+  },
+  "ffffa4a8": {
+   "alias": "rev_limit_state_c",
+   "type": "uint8",
+   "reader": "0000ee64",
+   "evidence": "Cleared by 0xee64."
+  },
+  "ffffb11c": {
+   "alias": "fuel_blend_weight",
+   "type": "float",
+   "reader": "000200c6",
+   "evidence": "Set with b118 by blend_weight_update (0x200c6): 1.0 normal, decays -0.0667 in open loop, 0 on faults; weights the implausible-coolant OL target branch in 0x1ee4a."
+  },
+  "ffffb118": {
+   "alias": "timing_blend_weight",
+   "type": "float",
+   "reader": "000200c6",
+   "evidence": "Same producer as b11c (0x200c6); blends base ignition timing with the open-loop cap in 0x11f00/0x1206c."
+  },
+  "ffffb1d0": {
+   "alias": "coolant_plausible_flag",
+   "type": "uint8",
+   "reader": "000200c6",
+   "evidence": "b1d0 = 1 when coolant >= -40 C (clear below -43); gates blend-weight set in 0x200c6."
+  },
+  "ffffb170": {
+   "alias": "ol_baro_base_correction",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b170 = tbl 0x69cac/0x69cc0 'Open Loop Fuelling Base Correction (Throttle)'(baro) (safe-mode variant selected by cd60==0)."
+  },
+  "ffffb174": {
+   "alias": "ol_rich_limit",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b174 = tbl 0x69ce8/0x69cfc 'Open Loop Fuelling Rich Limit'(baro) (safe-mode pair)."
+  },
+  "ffffb190": {
+   "alias": "ol_tip_in_target",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b190 = 3D tbl 0x69e80/0x69eb8 'Open Loop Target - Throttle Tip In'(rpm, throttle)."
+  },
+  "ffffb194": {
+   "alias": "ol_target_3d",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b194 = 3D tbl 0x69e9c/0x69ed4 'Open Loop Target'(load, rpm)."
+  },
+  "ffffb198": {
+   "alias": "ol_tip_in_implausible",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b198 = 3D tip-in vs coolant-implausible tables 0x69ef0/0x69f28 (gear 5-6 vs 1-4 select by safe_mode b12d)."
+  },
+  "ffffb19c": {
+   "alias": "ol_target_implausible_3d",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b19c = 3D 'Open Loop Target - Coolant Temp Implausible'(load, rpm) 0x69f0c/0x69f44."
+  },
+  "ffffb130": {
+   "alias": "ol_fuel_target_main",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b130 = max(b170*b190, b194); normal OL target product."
+  },
+  "ffffb134": {
+   "alias": "ol_coolant_correction",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b134 = tbl 0x69cd4 'Open Loop Target - Coolant Temperature Correction'(coolant)."
+  },
+  "ffffb138": {
+   "alias": "ol_fuel_target_implausible",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b138 = max(b174*b198, b19c); coolant-implausible OL target product."
+  },
+  "ffffb13c": {
+   "alias": "ol_temperature_correction_b",
+   "type": "float",
+   "reader": "0001ee4a",
+   "evidence": "b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant)."
+  },
+  "ffffb150": {
+   "alias": "ol_target_select",
+   "type": "uint8",
+   "reader": "0001ee4a",
+   "evidence": "b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c."
+  },
+  "ffffb15c": {
+   "alias": "cl_throttle_threshold",
+   "type": "float",
+   "reader": "0001f0c4",
+   "evidence": "b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition."
+  },
+  "ffffb160": {
+   "alias": "cl_load_threshold_a",
+   "type": "float",
+   "reader": "0001f0c4",
+   "evidence": "b160 = tbl 0x69d24 'Closed Loop Fuelling Threshold (Engine Load A)'(rpm)."
+  },
+  "ffffb164": {
+   "alias": "cl_load_threshold_b",
+   "type": "float",
+   "reader": "0001f0c4",
+   "evidence": "b164 = tbl 0x69d38 (Engine Load B)(rpm)."
+  },
+  "ffffb168": {
+   "alias": "cl_load_threshold_c",
+   "type": "float",
+   "reader": "0001f0c4",
+   "evidence": "b168 = tbl 0x69d4c (Engine Load C)(rpm)."
+  },
+  "ffffb16c": {
+   "alias": "cl_unknown_threshold_a",
+   "type": "float",
+   "reader": "0001f0c4",
+   "evidence": "b16c = tbl 0x69d60 'Closed Loop Fuelling Threshold (Unknown A)'(rpm)."
+  },
+  "ffffb1b6": {
+   "alias": "cl_load_a_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4",
+   "evidence": "b1b6 = load >= b160 (hysteresis -0.04) in 0x1f0c4."
+  },
+  "ffffb1b7": {
+   "alias": "cl_load_b_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4",
+   "evidence": "b1b7 = load >= b164 (hysteresis) in 0x1f0c4."
+  },
+  "ffffb1b8": {
+   "alias": "cl_load_c_exceeded",
+   "type": "uint8",
+   "reader": "0001f0c4",
+   "evidence": "b1b8 = load >= b168 (hysteresis) in 0x1f0c4."
+  },
+  "ffffb1b1": {
+   "alias": "coolant_above_78_flag",
+   "type": "uint8",
+   "reader": "0001f0c4",
+   "evidence": "b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition."
+  },
+  "ffffb178": {
+   "alias": "cl_load_threshold_2d_a",
+   "type": "float",
+   "reader": "0001ff38",
+   "evidence": "b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9."
+  },
+  "ffffb17c": {
+   "alias": "cl_load_threshold_2d_b",
+   "type": "float",
+   "reader": "0001ff38",
+   "evidence": "b17c = tbl 0x69d9c(rpm) -> b1bb."
+  },
+  "ffffb1b9": {
+   "alias": "load_above_thresh_a",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b1b9 = load >= b178 (hysteresis -0.04); part of OL band condition in 0x1ff38."
+  },
+  "ffffb1bb": {
+   "alias": "load_above_thresh_b",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b1bb = load > b17c (hysteresis) in 0x1ff38."
+  },
+  "ffffb1ba": {
+   "alias": "rpm_above_800_flag",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b1ba = rpm >= 1000 (clear below 800) in 0x1ff38."
+  },
+  "ffffb1bc": {
+   "alias": "rpm_above_5300_flag",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b1bc = rpm > 5500 (clear below 5300) in 0x1ff38."
+  },
+  "ffffb1d8": {
+   "alias": "coolant_above_97_flag",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b1d8 = coolant >= 100 (clear below 97) in 0x1ff38."
+  },
+  "ffffb144": {
+   "alias": "ol_condition_timer",
+   "type": "uint16",
+   "reader": "0001ff38",
+   "evidence": "b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag."
+  },
+  "ffffb154": {
+   "alias": "ol_band_condition",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6)."
+  },
+  "ffffb159": {
+   "alias": "ol_timer_expired",
+   "type": "uint8",
+   "reader": "0001ff38",
+   "evidence": "b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition."
+  },
+  "ffffb180": {
+   "alias": "cl_load_threshold_2d_c",
+   "type": "float",
+   "reader": "0001f6ae",
+   "evidence": "b180 = tbl 0x69db0(rpm); throttle/load band compares -> b1be/b1c2 in 0x1f6ae."
+  },
+  "ffffb184": {
+   "alias": "cl_load_threshold_2d_d",
+   "type": "float",
+   "reader": "0001f6ae",
+   "evidence": "b184 = tbl 0x69dc4(rpm)."
+  },
+  "ffffb188": {
+   "alias": "cl_load_threshold_2d_e",
+   "type": "float",
+   "reader": "0001f6ae",
+   "evidence": "b188 = tbl 0x69dd8(rpm) -> b1c6."
+  },
+  "ffffb18c": {
+   "alias": "cl_load_threshold_2d_f",
+   "type": "float",
+   "reader": "0001f6ae",
+   "evidence": "b18c = tbl 0x69dec(rpm) -> b1ca."
+  },
+  "ffffb1c6": {
+   "alias": "load_above_thresh_c",
+   "type": "uint8",
+   "reader": "0001f6ae",
+   "evidence": "b1c6 = load >= b188 (hysteresis) in 0x1f6ae."
+  },
+  "ffffb1ca": {
+   "alias": "load_above_thresh_d",
+   "type": "uint8",
+   "reader": "0001f6ae",
+   "evidence": "b1ca = load > b18c (hysteresis) in 0x1f6ae."
+  },
+  "ffffb1c7": {
+   "alias": "rpm_above_5300_flag_b",
+   "type": "uint8",
+   "reader": "0001f6ae",
+   "evidence": "b1c7 = rpm > 5500 (clear below 5300); second copy in 0x1f6ae."
+  },
+  "ffffb1cb": {
+   "alias": "rpm_above_9800_flag",
+   "type": "uint8",
+   "reader": "0001f6ae",
+   "evidence": "b1cb = rpm > 10000 (clear below 9800) in 0x1f6ae."
+  },
+  "ffffb142": {
+   "alias": "ol_decay_enable_a",
+   "type": "uint8",
+   "reader": "000200c6",
+   "evidence": "b142 checked (with b157) in the blend_weight_update decay condition 0x200c6."
+  },
+  "ffffb152": {
+   "alias": "ol_decay_enable_b",
+   "type": "uint8",
+   "reader": "000200c6",
+   "evidence": "b152 checked in the fault branch of 0x200c6."
+  },
+  "ffffb157": {
+   "alias": "ol_decay_enable_c",
+   "type": "uint8",
+   "reader": "000200c6",
+   "evidence": "b157 must be set (with b142) for the b11c/b118 decay branch in 0x200c6."
+  },
+  "ffffaa6c": {
+   "alias": "diag_afr_word_a",
+   "type": "float",
+   "reader": "000556ec",
+   "evidence": "Encoded (step 0x38000000) as high word of PID 0x0034 'Air Fuel Ratio'."
+  },
+  "ffffaa7c": {
+   "alias": "diag_afr_word_b",
+   "type": "float",
+   "reader": "00055702",
+   "evidence": "Encoded (mult 0.0625, offset -96.0) as low word of PID 0x0034."
+  }
+ },
+ "lookup_aliases": {
+  "DAT_0006ac38": {
+   "alias": "tbl_fuel_coolant_compensation_0006ac38",
+   "evidence": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis."
+  }
+ },
+ "backup": "backups/pre_fueling_labels.zip",
+ "rom_unchanged": true,
+ "ghidra_database_updated": false,
+ "notes": "Fueling chain: MAF->load->air charge->fuel volume->per-rotation amounts->pulse arbitration->ATU-II injector outputs; OL/CL target selection; warmup/changeover/tip-in enrichments; fuel cut and rev limit; diag PIDs 0x0034/0x0043/0x0044/0x1410. Resolves knock-review unresolved item 2 (blend weights b11c/b118 producer 0x200c6)."
 }
