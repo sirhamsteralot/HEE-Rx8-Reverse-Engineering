@@ -1,4 +1,4 @@
-"""Low-confidence label proof pass, 2026-11-05 (ROADMAP C item 10 / D6 / D10).
+"""Low-confidence label proof pass (ROADMAP C item 10 / D6 / D10).
 
 Dynamically proves the medium-confidence labels in
 data/labels/60E15120_N3J1E/*.json by driving the real ROM code in the SH-2E
