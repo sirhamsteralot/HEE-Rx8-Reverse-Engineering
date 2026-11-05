@@ -8,7 +8,7 @@ per-channel struct at `0xffffa004 + ch*0x18`) drives which physical injector
 All firmware-side links below are verified against the raw ROM
 (`60E15120_N3J1E.bin`, SHA-256 a7cd953c…f264f1, untouched) and the disassembly.
 The final hop — SH7055 package pin → PCM connector terminal — is board routing
-and remains unresolved in this workspace (see `hardware/README.md`).
+and remains unresolved in this workspace (see [`hardware/README.md`](../../../../architecture/hardware/README.md)).
 
 ## 1. Firmware channel → ATU-II channel (verified from ROM)
 
@@ -116,7 +116,7 @@ each block (channels 0 and 3) with flag 1 — candidate "primary-1" markers.
   `Sh7055h.pdf` Tables 1.2/1.3 + §20.3.21 (PKCR) + ATU-II chapter (channel 8
   one-shot pulse output, GR1x as one-shot offset with DCNT8x).
 - **Not established:** package pin → PCM connector terminal (2M/2J/2G/2D/3A/
-  3D) — that is board routing (`hardware/README.md` lists it as unresolved;
+  3D) — that is board routing ([`hardware/README.md`](../../../../architecture/hardware/README.md) lists it as unresolved;
   external ECU pinout pages are 403-blocked). So the fw-channel → terminal table is **candidate-only**
   until a board trace or an accessible Denso RX-8 PCM pinout confirms which
   of pins 195/197-201 land on which terminal.

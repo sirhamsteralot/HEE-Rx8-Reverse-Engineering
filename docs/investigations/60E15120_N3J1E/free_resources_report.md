@@ -17,7 +17,10 @@ idle-free window.
 against this scan in §7), [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)
 §12.1 (D3 checksum range/hole), [learnings.md](../../learnings.md) (patcher
 free-run pattern), [calibration_extraction_report.md](calibration_extraction_report.md)
-(cal-region layout per ROM).
+(cal-region layout per ROM), [flash-memory-layout.md](../../architecture/flash-memory-layout.md)
+(the corpus-wide memory-layout report these free-space numbers feed; its §3/§4.3
+chart the per-ROM free-app-flash runs, and its §8 re-verifies the cave/SBL-gap
+bytes against this scan's §3).
 
 ## 1. Executive summary
 
@@ -147,6 +150,9 @@ semantics for the 60E15120 corpus.
 - This report: `docs/investigations/60E15120_N3J1E/free_resources_report.md`
 - `docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md` — §3/§7
   now cross-reference this scan (verification of its numbers)
+- `docs/architecture/flash-memory-layout.md` — downstream corpus-wide layout
+  report; consumes this scan's free-flash totals (§3) and RAM window (§10),
+  and re-verifies the cave/SBL-gap bytes in its §8
 - Raw measurement JSON: session scratchpad (`/tmp/free_res_scan.json` flash/RAM
   scan, `/tmp/ram_static.json` static allocation analysis), methods in §2/§10;
   no binaries touched.
@@ -162,6 +168,10 @@ semantics for the 60E15120 corpus.
   | largest runs excl. labeled cells 0xffff8901–0xffff90f3 2,035 B / 0xffff807d–0xffff8787 1,803 B | identical (0xffff8901 len 2035, 0xffff807d len 1803) | yes |
 - Every ROM's SHA-256 re-computed during the scan and quoted in §3; the
   reference ROM hash in the header equals the submodule ROM's hash.
+- The [flash-memory-layout report](../../architecture/flash-memory-layout.md)
+  pass (its §8) independently re-verified this scan's bytes across all 11
+  ROMs: cave 0x7fb8c–0x7fc4f and SBL gap 0xb0e–0xfdf all-0xFF, and its
+  free-flash totals match §3.
 - §10 static analysis re-run deterministically from the committed disassembly
   (`firmware_disassembly.asm`) and ROM bytes: 4,546 point refs + 768 intervals,
   392/393 labeled aliases matched, 308 window refs — quoted above.
@@ -200,7 +210,10 @@ semantics for the 60E15120 corpus.
 - **0xFF scan ≠ usable cave:** runs inside the cal region are fine for cal
   blocks; code caves must be decode-verified word-by-word (patcher pattern),
   and flash block boundaries (SBL vs app blocks) matter for what the SBL
-  erases/programs — check before flashing anything (ROADMAP F gating).
+  erases/programs — the shared skeleton (8 KiB SBL block vs app image) is
+  charted in [flash-memory-layout.md](../../architecture/flash-memory-layout.md)
+  §3, but erase/program granularity inside it is not verified — check before
+  flashing anything (ROADMAP F gating).
 - The 7 ROMs without committed profiles were booted on a clone of the
   60E15120 profile (rom path/sha swapped); per-ROM sensor/UDS addresses differ
   and their diag path is not dynamically executable yet (E8) — irrelevant for

@@ -1,7 +1,7 @@
 # Sceptical re-review of the knock control report — findings and corrections
 
 Scope: an independent, deliberately sceptical re-check of
-`knock_control_report.md` and this folder's [`README.md`](README.md) against the ground
+[`knock_control_report.md`](../../knock_control_report.md) and this folder's [`README.md`](README.md) against the ground
 truth — the untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`, 512 KiB,
 SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
@@ -9,7 +9,7 @@ the disassembly (`decompiled/firmware_disassembly.asm`), the canonical export
 (`decompiled/`) and both def sets (`RX8Defs/RomRaider/rx8_defs.xml`, ROM block
 lines 26245–28033 for xmlid 60E15120/N3J1E; `RX8Defs/RomRaider/logger_rx8_defs.xml`).
 Defs and labelling were treated as hypotheses throughout, per the evidence rules
-in `AGENTS.md` (`ref_`/`CAL_`/`inferred_`/`candidate_` are not facts).
+in [`AGENTS.md`](../../../../../AGENTS.md) (`ref_`/`CAL_`/`inferred_`/`candidate_` are not facts).
 
 **Verdict: the report is substantially accurate** — the knock-control strategy,
 every calibration table (byte-exact), the control signs and polarities, both
@@ -161,8 +161,8 @@ via the CLF threshold tables).
 
 | File | Fixes |
 |---|---|
-| `knock_control_report.md` | revision note; §2 sensing task attribution, command formula, threshold_a source (c090), idle_base_term caveat, diagnostics paragraph (DTC firmware-inferred, PID always 0, logger desc); §6 REVIEW_NOTES row; §8.1 rows (0xc276 callers, 0xc290 thresholds, 0xc3ce caller, level 3.6875, 0x13210 not per-rotor); §8.1 task note (0x661e calls 0xc3ce); §8.3 RAM rows (a98c, c0b4, a5e0/a5e4, a5e8/a5ec, a5fc, a640/a644, a66c/a670); §8.4 "2D"→"raw u16 vs RPM", constants row 0x7a234–0x7a248, fault-threshold values at 0x6c17c/0x6c17e; §9 unresolved a5e0/a5e4/a5dc |
-| `reviews/knock_control/README.md` | revision note; §1 chain diagram (0xc486 added under 0xc338; 0xc276 moved under 0xc8dc with 0x5a4c; 0xc3ce moved to task[6]; 0x13b40/0x13bd2 removed from 0x142a4, clamp noted under 0x13a60/0x13b40/0x139c4); §1.1 caller notes; §1.2 noise-filter literal + command formula; §1.3 cd60 polarity, constants, 0xc1f8 name, thresholdA source; §1.6 not-per-rotor wording + a5e0 writer caveat; §1.6 coolant derate wording; §1.7 fault thresholds + DTC firmware-inferred; §1.8 degenerate PID + logger def; §3 task table; §5 unresolved items 6–7 |
+| [`knock_control_report.md`](../../knock_control_report.md) | revision note; §2 sensing task attribution, command formula, threshold_a source (c090), idle_base_term caveat, diagnostics paragraph (DTC firmware-inferred, PID always 0, logger desc); §6 REVIEW_NOTES row; §8.1 rows (0xc276 callers, 0xc290 thresholds, 0xc3ce caller, level 3.6875, 0x13210 not per-rotor); §8.1 task note (0x661e calls 0xc3ce); §8.3 RAM rows (a98c, c0b4, a5e0/a5e4, a5e8/a5ec, a5fc, a640/a644, a66c/a670); §8.4 "2D"→"raw u16 vs RPM", constants row 0x7a234–0x7a248, fault-threshold values at 0x6c17c/0x6c17e; §9 unresolved a5e0/a5e4/a5dc |
+| [`reviews/knock_control/README.md`](README.md) | revision note; §1 chain diagram (0xc486 added under 0xc338; 0xc276 moved under 0xc8dc with 0x5a4c; 0xc3ce moved to task[6]; 0x13b40/0x13bd2 removed from 0x142a4, clamp noted under 0x13a60/0x13b40/0x139c4); §1.1 caller notes; §1.2 noise-filter literal + command formula; §1.3 cd60 polarity, constants, 0xc1f8 name, thresholdA source; §1.6 not-per-rotor wording + a5e0 writer caveat; §1.6 coolant derate wording; §1.7 fault thresholds + DTC firmware-inferred; §1.8 degenerate PID + logger def; §3 task table; §5 unresolved items 6–7 |
 | `source_review/accepted_ram_aliases.tsv` | c060/c064/c068 values, a32c literal coefficient, a364 formula, a325 fault thresholds, a6ac not-per-rotor, a37e row (reads c090 directly) |
 | `source_review/accepted_function_aliases.tsv` | 0x125bc/0x125f6 idle/base term caveat, 0x142a4 callee list, 0x33632 constants, 0x33970 thresholdA source, 0xc3ce caller, 0xc276 callers, 0x64ba fault thresholds |
 | `decompiled/functions/0000c486_FUN_0000c486.c` | c060/c064/c068 comment values, a32c literal coefficient, a364 formula |
