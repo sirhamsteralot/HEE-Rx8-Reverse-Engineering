@@ -247,7 +247,7 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 | 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | 0x02 | 0x7298 `iat_sensor_scaling_fault`, 0x73a0 `clt_sensor_scaling_fault`, 0x118d0 `dtc_fault_service_batch` → taskEnd — §14 |
 | 14 | 0x65cc `task14_charging_control_entry` | 0x02 | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) → taskEnd — §14 |
 | 15 | 0x65da `task15_catalyst_temp_entry` | 0x02 | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) → taskEnd — §14 |
-| 16 | 0x65e8 `task16_uds_diag_utility_entry` | 0x02 | 0x11b22 `uds_diag_utility_batch` (incl. `ref_getTireSize` 0x5de74, DID reads via 0x37ef0) → taskEnd — §14 |
+| 16 | 0x65e8 `task16_uds_diag_utility_entry` | 0x02 | 0x11b22 `uds_diag_utility_batch` (incl. `ref_getTireSize` 0x5de74, E2 parameter reads via 0x37ef0) → taskEnd — §14 |
 | 17 | 0x60c8 (`ref_getSensorStuff__`) | 0x01 | sensor task: ADC sweep 0x6884, `vehicle_inputs_poll_pfdr_phdr` 0x6744 (→ 0xffff9ec8), ATU ch3/4 PWM, … → taskEnd |
 | 18 | 0x64e8 | 0x02 | thunk → **slow/background task 0x11534** (29 calls: 0x2e5c6, torque params, 0x38f3e, 0x21186, `candidate_timing_retard_fast_task`, …, `ref_calculateDiagModeTimer` 0x55d42, `ref_runImmoRelatedCounter`, …, 0x2a290, 0x16b50) → taskEnd |
 
@@ -638,7 +638,7 @@ task-table records 12–16 at ROM 0x4a50–0x4a98 read back as
 `{param 0x04000100, ctx 0xffff7468+8·i, entry, weight 0x02}` with entries
 0x6592/0x65b2/0x65cc/0x65da/0x65e8; each wrapper's PC-relative literal pool
 (0x66bc–0x66e8) and each batch handler's jsr pool (0x7300–0x7330, 0x7408–0x7438,
-0xb13c–0xb394, 0xb212–0xb238, 0x11a40–0x11d10) was dumped from the raw ROM and
+0xb13c–0xb178, 0xb1f8–0xb238, 0xb36c–0xb394, 0x11a40–0x11d0c) was dumped from the raw ROM and
 matches the decompiled call lists. Dynamic evidence: `tests/test_c7_task_handlers.py`
 (8 passed) boots the 60E15120_N3J1E profile to idle and harness-calls each
 entry — task[12]/[14]/[15] run their full handler chain into `taskEnd` 0x3d58 →
@@ -647,15 +647,15 @@ idle 0x3dac with side effects observed (0xffffa188 cleared by mov.w in 0xa4b6,
 written by 0x7298/0x73a0); task[13]/[16] visit all their direct handlers and
 then stop at pre-existing emulator opdec gaps 0x50de0 (word 0xff07 =
 `fmov.s fr0,@(r0,r15)`, inside `FUN_00050d98` ← 0x3957c) and 0x674ac (inside
-`FUN_00067476` ← 0x622e0) — corpus-table limitations (cf. E8), not ROM findings.
+`FUN_00067476` ← 0x622e0 ← 0x60318 ← 0x3de70) — corpus-table limitations (cf. E8), not ROM findings.
 
 | Task | Entry | Identity | Wrapped handlers (ROM-verified pools) |
 |---|---|---|---|
-| 12 | 0x6592 `task12_adc_feedback_pwm_entry` | ADC-pair feedback + TO7D PWM service: samples ADC AN23 (ADDR23H 0xfffff836) / AN11 (ADDR11H 0xfffff816) twice (0xb0a6/0xb1da, called from ADC EOC bank1 0x6b60), computes correlation/range faults and a filtered ratio (0xaee8 → 0xffffa1d8/a1d4, consumed by the lambda/duty loops 0x1ac00/0x22630), stages ATU-II compare outputs (0xb114 → GR1G/H 0xfffff450/452, DCNT8E/F 0xfffff64c/64e, OCR2H 0xfffff622), drives the ch7D (TO7D = PB7 PWM) output with duty 0xffffa210 q16 over a 32000-count period (0xb308/0xb2c0, duty % from 0x25198), clears its alive counter (0xa4b6 → 0xffffa188), runs the monitor batch 0x11880 (vehicle speed/accel filters, knock rpm window, diag mode, coolant plausibility). Physical actuator/sensor mapping not pinned (board routing = D2) — structural label, high confidence | 0xa4b6, 0xad2a→0xaee8, 0x11880, 0xb308 |
-| 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | Temperature-sensor conditioning + DTC/fault service | 0x7298 `iat_sensor_scaling_fault` (tbl_iat_sensor_scaling_00069824, fault 0xffff9f64), 0x73a0 `clt_sensor_scaling_fault` (tbl_clt_sensor_scaling_0006977c, fault 0xffff9f74), 0x118d0 `dtc_fault_service_batch` (24 calls incl. candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, 0x5a188 distance-while-MIL, ref_getVehicleSpeedThreshold 0x59fb6) |
+| 12 | 0x6592 `task12_adc_feedback_pwm_entry` | ADC-pair feedback + TO7D PWM service: samples ADC AN23 (ADDR23H 0xfffff836) / AN11 (ADDR11H 0xfffff816) twice (0xb0a6/0xb1da, called from ADC EOC bank1 0x6b60), computes correlation/range faults and a filtered ratio (0xaee8 → 0xffffa1d8/a1d4, consumed by the lambda/duty loops 0x1ac00/0x22630), stages ATU-II compare outputs (0xb114, called from the 0xb0a6 sample path: GR1G/H 0xfffff450/0xfffff452, DCNT8G/H 0xfffff64c/0xfffff64e, DCNT8P 0xfffff65e, OCR2H 0xfffff622), drives the ch7D (TO7D = PB7 PWM) output with duty 0xffffa210 q16 over a 32000-count period (0xb308/0xb2c0, duty % from 0x25198), clears its alive counter (0xa4b6 → 0xffffa188), runs the monitor batch 0x11880 (vehicle speed/accel filters, knock rpm window, diag mode, coolant plausibility). Physical actuator/sensor mapping not pinned (board routing = D2) — structural label, high confidence | 0xa4b6, 0xad2a→0xaee8, 0x11880, 0xb308 |
+| 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | Temperature-sensor conditioning + DTC/fault service | 0x7298 `iat_sensor_scaling_fault` (tbl_iat_sensor_scaling_00069824, fault 0xffff9f64), 0x73a0 `clt_sensor_scaling_fault` (tbl_clt_sensor_scaling_0006977c, fault 0xffff9f74), 0x118d0 `dtc_fault_service_batch` (26 calls incl. candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, 0x5a188 distance-while-MIL, ref_getVehicleSpeedThreshold 0x59fb6) |
 | 14 | 0x65cc `task14_charging_control_entry` | Alternator / charging control | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) |
 | 15 | 0x65da `task15_catalyst_temp_entry` | Catalyst temperature monitoring | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) |
-| 16 | 0x65e8 `task16_uds_diag_utility_entry` | UDS/diagnostic utility service (DID reads, memory R/W, timers, idle target) | 0x11b22 `uds_diag_utility_batch` (15 calls incl. `ref_getTireSize` 0x5de74 DID 0x9a via 0x37ef0, DIDs 0x9f/0x100/0x68/0x6a/0x6c, 0x54cf8 security-gated checksum (D3), 0x3de70 UDS memory read/write by address, 0x5fc40 idle target, 0x59164/0x5a162 timers) |
+| 16 | 0x65e8 `task16_uds_diag_utility_entry` | UDS/diagnostic utility service (E2-stored parameter reads, memory R/W, timers, idle target) | 0x11b22 `uds_diag_utility_batch` (15 calls incl. `ref_getTireSize` 0x5de74 (E2 id 0x9a), E2 ids 0x9f/0x100/0x68/0x6a/0x6c via 0x37ef0, 0x54cf8 (0xa5-unlock checksum verify of area 0xffff8fe8), 0x3de70 UDS memory read/write by address, 0x5fc40 idle target, 0x59164/0x5a162 timers) |
 
 **Labels applied** (record
 `data/labels/60E15120_N3J1E/os_task_12_16_labels.json`; rows appended to

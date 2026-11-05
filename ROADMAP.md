@@ -36,7 +36,7 @@ and where artifacts live.
   task[14] 0x65cc `task14_charging_control_entry` (0x11adc → alternator
   0x26868), task[15] 0x65da `task15_catalyst_temp_entry` (0x11b08 →
   `ref_catTempRelated` 0x3eb3a), task[16] 0x65e8 `task16_uds_diag_utility_entry`
-  (0x11b22 → DID reads/memory R/W/timers). ROM-byte + emulator verified; see
+  (0x11b22 → E2 parameter reads/memory R/W/timers). ROM-byte + emulator verified; see
   [os_scheduling_deep_dive_report.md §14](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md),
   `data/labels/60E15120_N3J1E/os_task_12_16_labels.json`,
   `tests/test_c7_task_handlers.py` (8 passed). Task-level subsystem map
