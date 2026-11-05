@@ -96,7 +96,7 @@ CMI10B tick (IVT 0x2c8 -> 0x5b3c, per crank sector: OCR10B = tbl 0xd76d[sector],
   -> on crank edge 0xcf96 -> 0xa156 -> ref_osTaskScheduler 0x9630(1,9,..)
 CAN RX (IVT 0x378 -> 0x5e78 -> 0x9c86) -> 0x9630(1,12,..) target -1 -> 0x11d88 inline
 other live vectors: 6x ATU ch8 injector compares (0x59a4-0x59ea), knock ADC 0x5a4c,
-  ch3/ch9, 3x ADC EOC, CMCSR1, IRQ flags; 98 of 117 vectors = fatal trap 0x5348
+  ch3/ch9, 3x ADC EOC, CMCSR1, IRQ flags; 99 of 119 vectors = fatal trap 0x5348
         |
   ref_osTaskScheduler (0x9630)  group descriptor tables via ptr table 0xd87c
     -> target -1: call handler inline (ISR context)

@@ -352,7 +352,7 @@ address	alias	confidence	evidence
 000064e8	slow_task_entry	high	Task rec[18] entry (ROM 0x4ab8): thunk {jsr 0x11534; jmp 0x3d58}.
 00011534	slow_background_task	high	29-call slow/background task: 0x2e5c6, ref_calculateTorqueRelatedParams, 0x38f3e, 0x21186, candidate_timing_retard_fast_task, ..., ref_calculateDiagModeTimer 0x55d42, ref_runImmoRelatedCounter, ..., 0x2a290, 0x16b50.
 00011c98	crank_tick_message_handler	high	Group-1 record[9] handler (ROM 0xd98c); posted by crank tick path (0xcf96 -> 0xa156); calls 0x287aa (fuel/load update chain) and 0x3a0bc. Executed dynamically via consumer task 0x96de.
-00005348	fatal_interrupt_trap	high	Fatal trap for reserved/unexpected vectors: raises SR mask to 0xe0 (ref_setSR_PARAM), calls 0xa330(code), spins at 0x535a (disasm 0x5348-0x535c). 98 of 117 real-trampoline IVT handlers + vec 0-63 stubs 0x53a0-0x53c2 call it.
+00005348	fatal_interrupt_trap	high	Fatal trap for reserved/unexpected vectors: raises SR mask to 0xe0 (ref_setSR_PARAM), calls 0xa330(code), spins at 0x535a (disasm 0x5348-0x535c). 99 of 119 real-trampoline IVT handlers + vec 0-63 stubs 0x53a0-0x53c2 call it; the 20 real handlers incl. vec-231 0x5ef4 (harness-verified) do not.
 0000a330	fatal_trap_report_halt	high	Fatal report/halt core called by 0x5348 with the vector code in r4; calls halt loop 0xa4be (bsr at 0xa300/0xa344/0xa382/0xa3d4).
 00005e0c	wdt_iti_fatal_trap	high	WDT overflow ITI (IVT 0x358 -> trampoline 0x30b8): calls 0x5348(0xd6) - deliberate halt; WDT is serviced by polling (0x31c), OVF is flag-only (E3).
 000059a4	atu_ch8_cmp_isr_ch0	high	IVT 0x260 (vec 152): TSR8=0xfffe, candidate_injector_pulse_set_dispatch(0).
