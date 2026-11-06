@@ -24,7 +24,7 @@ in **DTC P0133** ("front HO2S circuit slow response", Mazda manual wording). Fou
 first-order-filtered channels of the AFR word and the actual lambda signal
 (0x3f924) are delta-accumulated per evaluation window by **0x3fb9e**
 (4,884 B — the largest unlabeled body). When a window
-completes, 0x3fb9e publishes four amplitude ratios (0xffffc6f0/c6f4/c780/c784).
+completes, 0x3fb9e publishes four amplitude ratios (`o2_monitor_ratio_ch0..ch3` 0xffffc6f0/c6f4/c780/c784).
 **0x4128e** then compares them against load/rpm-indexed 3-D thresholds; if any
 channel exceeds its threshold the fault is set pending (0x5fd38(0x1c,1)), if all
 four exceed it is confirmed (0x5fd38(0x1c,2)) — fault id 0x1c maps to slot 0x1b,
@@ -47,8 +47,8 @@ the check-engine lamp per the usual DTC rules.
 # channel filters — 0x3f924, called from 0x38dca (init/monitor chain 0x11ba4)
 c708 = filter(diag_afr_word_a 0xffffaa6c, c708, 1.0)      # fast AFR
 c70c = filter(diag_afr_word_a 0xffffaa6c, c70c, 0.5)
-c710 = filter(lambda_actual   0xffffadec, c710, 0.1)      # slow lambda
-c714 = filter(lambda_actual   0xffffadec, c714, 0.03125)
+c710 = filter(lambda_actual   `inferred_lambda_actual_ffffadec` 0xffffadec, c710, 0.1)      # slow lambda
+c714 = filter(lambda_actual   `inferred_lambda_actual_ffffadec` 0xffffadec, c714, 0.03125)
 
 # accumulator — o2_response_monitor_accumulate 0x3fb9e (batch 0x38f3e, jsr at 0x38f74)
 if ++c8fc == 2:                       # every 2nd run
@@ -62,7 +62,7 @@ c718 = c710 - c81c; c71c = c714 - c898          # channel deltas, sign bits c7de
 # c754/c760/c76c/c778; on transition move them into c728/c758, c734/c764, c740/c770, c74c/c77c
 if window complete (c904 == 0):
     c701 = 1
-    c6f0 = c758/c728; c6f4 = c764/c734; c780 = c770/c740; c784 = c77c/c74c   # 1e-5 guard (pool 0x41220)
+    c6f0 = c758/c728; c6f4 = c764/c734; c780 = c770/c740; c784 = c77c/c74c   # o2_monitor_ratio_ch0..ch3 0xffffc6f0/c6f4/c780/c784; 1e-5 guard (pool 0x41220)
 
 # evaluation — o2_response_monitor_evaluate 0x4128e (jsr at 0x38f7a)
 c6f8/c6fc/c798/c79c = running avg of lookup_3d(load, rpm, tbl 0x6b680/0x6b69c/0x6b6b8/0x6b6d4)
@@ -71,7 +71,7 @@ if c701:
     if any_fail:  0x5fd38(0x1c, 1)      # pending
     if all_fail:  0x5fd38(0x1c, 2)      # confirmed
     # id 0x1c -> slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133
-# Mode-06: 0x58262 encodes c6f0, 0x5831c encodes c6f4 via 0x5904a
+# Mode-06: 0x58262 encodes `o2_monitor_ratio_ch0` c6f0, 0x5831c encodes `o2_monitor_ratio_ch1` c6f4 via 0x5904a
 ```
 
 ## 3. Key calibrated tables
@@ -140,7 +140,7 @@ different monitor and was not touched.)
 | 0x0003f924 | `o2_channel_filter_update` | 4 first-order filters of AFR/lambda |
 | 0x00038f3e | `FUN_00038f3e` | slow-task batch hosting 0x3fb9e/0x4128e |
 | 0x00038dca | `FUN_00038dca` | calls 0x3f924 |
-| 0x00058262 / 0x0005831c | `FUN_00058262` / `FUN_0005831c` | Mode-06 encoders of c6f0/c6f4 |
+| 0x00058262 / 0x0005831c | `FUN_00058262` / `FUN_0005831c` | Mode-06 encoders of `o2_monitor_ratio_ch0/ch1` 0xffffc6f0/c6f4 |
 | 0x0005fd38 | `FUN_0005fd38` | set_fault thunk (see [dtc_control_report.md](dtc_control_report.md)) |
 
 ### 8.2 Data and entry points (ROM)
@@ -158,7 +158,7 @@ different monitor and was not touched.)
 | Address | Name | Meaning |
 |---|---|---|
 | 0xffffc708 / 0xffffc70c / 0xffffc710 / 0xffffc714 | `o2_channel_afr_fast` … | filtered channel values (0x3f924) |
-| 0xffffc6f0 / 0xffffc6f4 / 0xffffc780 / 0xffffc784 | `o2_monitor_ratio_ch0..3` | window amplitude ratios |
+| 0xffffc6f0 / 0xffffc6f4 / 0xffffc780 / 0xffffc784 | `o2_monitor_ratio_ch0` / `_ch1` / `_ch2` / `_ch3` | window amplitude ratios |
 | 0xffffc701 | `o2_monitor_fluctuation_detected` | window complete flag |
 | 0xffffc6f8 / … / 0xffffc79c | `DAT_ffffc6f8` … `DAT_ffffc79c` | running-average thresholds |
 | 0xffffc724–0xffffc77c | `DAT_ffffc724`–`DAT_ffffc77c` | max/min delta accumulators |
