@@ -28,7 +28,7 @@ int FUN_00017f20(void)
   fVar2 = rx8_absolute_difference(arg0,DAT_ffffbac4);
   iVar1 = extraout_r0;
   if (((fVar3 < 400.0) && (fVar3 <= arg0)) &&
-     ((4.9 <= fVar2 && (iVar1 = (int)DAT_ffffb534, iVar1 == 0)))) {
+     ((4.9 <= fVar2 && (iVar1 = (int)automatic_transmission_ffffb534, iVar1 == 0)))) {
     arg1 = rx8_max_float(arg0 - fVar3,arg1);
     iVar1 = extraout_r0_00;
   }

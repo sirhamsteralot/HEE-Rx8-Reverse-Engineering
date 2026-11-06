@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd286 mil_lamp_flag (uint8): MIL flag: set by 0x5a130 when stored+enabled DTC exists (disasm 0x5a130 verified; emulator MIL=1 case in reviews/dtc_control/dynamic_validation_log.txt); gates 0x5a188 distance-MIL and 0x55278 CAN status.
+ */
 /* ROM address: 0x0005a130; body bytes: 50; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000588e8 (50 bytes). Names prefixed ref_

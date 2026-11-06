@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * atu_ch8_cmp_isr_ch4 [high]: IVT 0x26c (vec 155): TSR8=0xfff7, candidate_injector_pulse_set_dispatch(4).
+ */
 /* ROM address: 0x000059ce; body bytes: 14; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000059ce (14 bytes). Names prefixed ref_

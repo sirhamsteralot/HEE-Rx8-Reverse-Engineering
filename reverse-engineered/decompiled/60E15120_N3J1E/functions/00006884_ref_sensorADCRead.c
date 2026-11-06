@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * adc_scan_sweep_all_channels [high]: was ref_sensorADCRead. Starts ADCSR0/1/2 scans, ADST via ADCR 0x20, busy-waits ADCSR bit7 (ADF), then copies ADDR0H..ADDR31H into 0xffff9ee4..0xffff9f22 (maf ADDR3H -> 0xffff9eea, apv ADDR6H -> 0xffff9ef0, knock ADDR10H -> 0xffff9ef8). Emulator: harness.call(0x6884) landed scripted channels in those RAM cells.
+ */
 /* ROM address: 0x00006884; body bytes: 350; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006884 (350 bytes). Names prefixed ref_

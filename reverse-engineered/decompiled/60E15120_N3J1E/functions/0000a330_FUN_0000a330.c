@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * fatal_trap_report_halt [high]: Fatal report/halt core called by 0x5348 with the vector code in r4; calls halt loop 0xa4be (bsr at 0xa300/0xa344/0xa382/0xa3d4).
+ */
 /* ROM address: 0x0000a330; body bytes: 32; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000a330 (32 bytes). Names prefixed ref_

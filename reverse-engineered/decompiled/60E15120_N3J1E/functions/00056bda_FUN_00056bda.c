@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0049_ram_a9c4_pedal [medium]: dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157
+ */
 /* ROM address: 0x00056bda; body bytes: 20; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f2a0 and register-save prologue. Heuristic

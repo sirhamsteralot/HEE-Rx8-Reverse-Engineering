@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode07_pending_dtc [high]: service table record 0x5eb7c (service 0x07) -> handler; ROM bytes verified; OBD Mode 07
+ */
 /* ROM address: 0x000661ec; body bytes: 180; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00064adc (180 bytes). Names prefixed ref_

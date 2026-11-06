@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd458 dtc_eval_state_array (uint8[0x8c]): Per-slot eval state (1/2/4) written by 0x5ff5a; read by 0x60478.
+ * RAM 0xffffd3c2 dtc_eval_state_cache (uint8[0x8c]): Per-fault-id cached eval-state argument written by 0x5ff5a.
+ */
 /* ROM address: 0x0005ff5a; body bytes: 218; decompiled */
 
 int FUN_0005ff5a(uint param_1,char param_2)

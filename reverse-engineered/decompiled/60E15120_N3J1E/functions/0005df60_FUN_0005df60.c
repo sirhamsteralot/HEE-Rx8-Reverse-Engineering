@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_31_routine_control [high]: service table record 0x5ec3c (service 0x31) -> handler; ROM bytes verified; UDS 0x31
+ */
 /* ROM address: 0x0005df60; body bytes: 196; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5ec40 and register-save prologue. Heuristic

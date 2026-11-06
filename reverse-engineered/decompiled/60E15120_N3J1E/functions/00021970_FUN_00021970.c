@@ -15,7 +15,7 @@ undefined4 * FUN_00021970(void)
   float snapshot_DAT_ffffbac8;
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (DAT_ffffbc41 == '\x01') {
       DAT_ffffb2cc = 1;
       DAT_ffffb2cd = 0;
@@ -54,7 +54,7 @@ undefined4 * FUN_00021970(void)
         DAT_ffffb2cd = 0;
         DAT_ffffb2ce = 1;
       }
-      inferred_throttle_position_ffffb2d4 = DAT_ffffb2a4 + DAT_ffffb38c;
+      inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + DAT_ffffb38c;
       snapshot_DAT_ffffbac8 = DAT_ffffbac8;
       snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
       DAT_ffffb2c0 = lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,engine_speed_rpm_ffffb548,&tbl_throttle_position_to_torque_0006a180);
@@ -62,7 +62,7 @@ undefined4 * FUN_00021970(void)
       DAT_ffffb2dc = DAT_ffffb2c0;
       DAT_ffffb2c4 = lookup_3d_descriptor_scaled(snapshot_DAT_ffffbac8,snapshot_engine_speed_rpm_ffffb548,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
       DAT_ffffb2e0 = DAT_ffffb2c4;
-      if ((DAT_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < snapshot_DAT_ffffbac8)) {
+      if ((automatic_transmission_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < snapshot_DAT_ffffbac8)) {
         puVar1 = &DAT_00021b40;
         DAT_ffffb2c4 = 0x42c80000;
       }

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode02_freeze_frame [high]: service table record 0x5eb4c (service 0x02) -> handler; ROM bytes verified; OBD Mode 02
+ */
 /* ROM address: 0x00065c88; body bytes: 462; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00064578 (462 bytes). Names prefixed ref_

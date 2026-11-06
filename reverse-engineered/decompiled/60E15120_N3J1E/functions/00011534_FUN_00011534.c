@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * slow_background_task [high]: 29-call slow/background task: 0x2e5c6, ref_calculateTorqueRelatedParams, 0x38f3e, 0x21186, candidate_timing_retard_fast_task, ..., ref_calculateDiagModeTimer 0x55d42, ref_runImmoRelatedCounter, ..., 0x2a290, 0x16b50.
+ */
 /* ROM address: 0x00011534; body bytes: 176; decompiled */
 
 void slow_background_task(void)

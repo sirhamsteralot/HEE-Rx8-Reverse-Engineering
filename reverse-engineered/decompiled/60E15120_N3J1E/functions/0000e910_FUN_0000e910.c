@@ -124,7 +124,7 @@ uint FUN_0000e910(void)
   else if (DAT_ffffa49a == '\x01') {
     iVar8 = 1;
   }
-  if ((DAT_ffffb534 == '\0') && (DAT_ffffca4c == '\x01')) {
+  if ((automatic_transmission_ffffb534 == '\0') && (DAT_ffffca4c == '\x01')) {
     if (DAT_ffffa49f != '\x01') {
       DAT_ffffa48e = 0;
       goto LAB_0000ebd0;

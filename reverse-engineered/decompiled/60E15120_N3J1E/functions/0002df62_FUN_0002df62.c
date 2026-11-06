@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_set_speed_apply [high]: Applies the integrator output to the cruise set speed: when cruise active (0xffffbced set, 0xffffbd3e set) 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100); 0xffffbcf8 is the set speed compared against vehicle speed 0xffffa9b4 by 0x4c896 (enable flag 0xffffcf34).
+ * RAM 0xffffbd08 cruise_set_speed_adjust (float): Integrator output of 0x2d83c, clamped [0,100]; folded into set speed by 0x2df62 as 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100).
+ */
 /* ROM address: 0x0002df62; body bytes: 116; decompiled */
 
 void cruise_set_speed_apply(void)

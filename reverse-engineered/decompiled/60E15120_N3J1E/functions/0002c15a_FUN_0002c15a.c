@@ -8,7 +8,7 @@ uint FUN_0002c15a(void)
   undefined1 uVar3;
   
   uVar3 = 0;
-  if (DAT_ffffb534 == 1) {
+  if (automatic_transmission_ffffb534 == 1) {
     if (vehicle_speed_ffffbbb4 < 0.0) {
       if (vehicle_speed_ffffbbb4 < -2.0) {
         DAT_ffffbc56 = '\0';
@@ -64,7 +64,7 @@ uint FUN_0002c15a(void)
     DAT_ffffbc41 = 0;
     uVar2 = (uint)cruise_switch_code_ffffbaed;
     DAT_ffffbc42 = 0;
-    uVar1 = (uint)DAT_ffffb534;
+    uVar1 = (uint)automatic_transmission_ffffb534;
     DAT_ffffbc43 = uVar3;
     if (uVar2 != 0) {
       uVar1 = uVar2;

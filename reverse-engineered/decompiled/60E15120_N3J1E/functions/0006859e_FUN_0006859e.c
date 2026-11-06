@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * isotp_first_frame_accept [high]: FF: total len=(pci&0xf)*256+buf[2], service=buf[3], starts reassembly
+ */
 /* ROM address: 0x0006859e; body bytes: 130; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00066e8e (130 bytes). Names prefixed ref_

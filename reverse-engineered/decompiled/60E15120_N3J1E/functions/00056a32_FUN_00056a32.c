@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0015_o2s2_voltage_trim [medium]: dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2
+ */
 /* ROM address: 0x00056a32; body bytes: 38; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f1c8 and register-save prologue. Heuristic

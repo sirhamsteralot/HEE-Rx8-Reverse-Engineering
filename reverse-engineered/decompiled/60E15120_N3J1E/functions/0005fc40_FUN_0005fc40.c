@@ -13,7 +13,7 @@ void FUN_0005fc40(void)
   undefined **ppuVar1;
   float fVar2;
   
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     ppuVar1 = &tbl_idle_target_g_000693e8;
   }
   else {

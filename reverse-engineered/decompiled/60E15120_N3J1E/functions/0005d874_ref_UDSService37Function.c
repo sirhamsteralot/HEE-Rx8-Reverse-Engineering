@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_37_request_transfer_exit [high]: service table record 0x5ec78 (service 0x37) -> handler; ROM bytes verified; UDS 0x37 (ref_UDSService37Function)
+ */
 /* ROM address: 0x0005d874; body bytes: 50; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005c064 (50 bytes). Names prefixed ref_

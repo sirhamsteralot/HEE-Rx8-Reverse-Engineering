@@ -55,7 +55,7 @@ undefined4 FUN_00022a14(void)
   else {
     DAT_ffffb3ed = '\x01';
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (cVar1 == '\x01') {
       puVar5 = &tbl_throttle_pedal_percent_decreasing_filter_factor_0006a354;
     }
@@ -108,7 +108,7 @@ LAB_00022b5c:
     DAT_ffffb3e0 = 0.25;
     goto LAB_00022c9a;
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (cVar1 == '\x01') {
       puVar5 = &tbl_table_2d_139_0006a3f4;
     }
