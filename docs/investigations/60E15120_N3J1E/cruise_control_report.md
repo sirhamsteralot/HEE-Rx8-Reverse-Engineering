@@ -114,7 +114,7 @@ were left untouched; they remain unverified hypotheses.
   parsed from ROM, 3.2f located at 0x7d0c8/0x7d0cc via pointer pools 0x4ce14/0x4ce1c,
   8.0/2.0–6.0 band constants, clamp [0,100] in 0x2df62. Scripted checks 62/62 PASS.
 - `validate_reports.py` / `verify_claims.py` / `validate_export.py` from repo
-  root; `tests/test_large_control_bodies.py`.
+  root; `tests/test_cruise_control.py`.
 
 ## 8. Memory map for validation
 

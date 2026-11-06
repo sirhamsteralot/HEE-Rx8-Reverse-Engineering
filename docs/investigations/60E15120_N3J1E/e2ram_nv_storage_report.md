@@ -114,7 +114,7 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
   = 0xb886 with r5 = 0x1c; jsr pool 0x2372c = 0x2377a; flag write 0xffffb43b
   (pool 0x23728 word 0xb43b). Load-side magic 0x5aa5 and checksum in 0x235f8;
   call sites pool 0x237bc (0x23844) / 0x237c8 (0x244bc). Scripted checks 62/62 PASS.
-- `validate_reports.py` / `verify_claims.py` / `validate_export.py`; `tests/test_large_control_bodies.py`.
+- `validate_reports.py` / `verify_claims.py` / `validate_export.py`; `tests/test_e2ram_nv_storage.py`.
 
 ## 8. Memory map for validation
 

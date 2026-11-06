@@ -97,7 +97,7 @@ None — previously unlabeled `FUN_0002a4f8`.
   `symbols.tsv`; first descriptor record bytes at 0x4e01c read from ROM
   (0000 0201 00 01 08 00 ffffbaf4 0100 0000). Scripted checks 62/62 PASS.
 - `validate_reports.py` / `verify_claims.py` / `validate_export.py`;
-  `tests/test_large_control_bodies.py`.
+  `tests/test_can_mailbox_config.py`.
 
 ## 8. Memory map for validation
 
