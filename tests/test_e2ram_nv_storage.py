@@ -80,6 +80,10 @@ def test_labels_in_artifacts():
     for addr, alias in EXPECTED_RAM.items():
         assert ram.get(addr) == alias
         assert data["ram_aliases"][addr]["alias"] == alias
+    # the labels JSON covers exactly this pass's rows overall (15 fn + 17 RAM);
+    # each subsystem file checks its own subset against the artifacts
+    assert len(data["function_aliases"]) == 15
+    assert len(data["ram_aliases"]) == 17
 
 
 def test_call_site_pool_words():
