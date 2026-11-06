@@ -37066,7 +37066,7 @@ void alternator_pwm_channel_init(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * alternator_field_pwm_output [high]: Final field PWM duty: 0xffff9f48 = rx8_mul_s32_shift16_saturate((clamp(0xffffb5ac,0,100)/100.0)*65536, period u16 at 0xffff9f44). Disasm: pool 0x2578c = 0xffff9f44 (u32 address), 0x25788 = f32 100.0, mov.w @r5 reads period, mov.w r0,@(0x4,r2) stores duty at 0xffff9f48. Called from 0x267c6 via pool 0x268a8.
+ * alternator_field_pwm_output [high]: Final field PWM duty: 0xffff9f48 = rx8_mul_s32_shift16_saturate((clamp(0xffffb5ac,0,100)/100.0)*65536, period u16 at 0xffff9f44). Disasm: pool 0x2578c = 0xffff9f44 (u32 address), 0x25780 = f32 100.0, 0x25788 = f32 65536.0, mov.w @r5 reads period, mov.w r0,@(0x4,r2) stores duty at 0xffff9f48. Called from 0x267c6 via pool 0x268a8.
  */
 /* ROM address: 0x00025710; body bytes: 68; decompiled */
 
@@ -45976,7 +45976,7 @@ void fan_output_gpio_init(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * fan_output_gpio [high]: Fan relay GPIO output: PEDR_W 0xfffff754 bit 0x800 (PE11, SH7055F pkg pin 21) from 0x5c724(0xffffbda1) and bit 0x10 (PE4, pkg pin 12) from 0x5c648(0xffffbda2), each via ref_setRegister_REG_BIT_VAL 0x4bbc under mask 0xe0 (ref_setSR_PARAM 0x2054). Pool words: 0x2f240=0xf754, 0x2f242=0x800, 0x2f244=0xbda1, 0x2f246=0x10, 0x2f248=0xbda2, 0x2f24c=0x2054, 0x2f250=0x4bbc, 0x2f254=0x2064, 0x2f258=0x5c724, 0x2f25c=0x5c648. PEDR_W at symbols.tsv 0xfffff754. Harness terminals: cooling fan relay 5X/5AD (pinout v3).
+ * fan_output_gpio [high]: Fan relay GPIO output: PEDR_W 0xfffff754 bit 0x800 (PE11, SH7055F pkg pin 21) from 0x5c724(0xffffbda1) and bit 0x10 (PE4, pkg pin 12) from 0x5c648(0xffffbda2), each via ref_setRegister_REG_BIT_VAL 0x4bbc under mask 0xe0 (ref_setSR_PARAM 0x2054). Pool words: 0x2f240=0xe0, 0x2f242=0xf754, 0x2f244=0xbda1, 0x2f246=0x800, 0x2f248=0xbda2, 0x2f24c=0x2054, 0x2f250=0x4bbc, 0x2f254=0x2064, 0x2f258=0x5c724, 0x2f25c=0x5c648. The PE4 mask 0x10 is mov #0x10 at 0x2f222, not a pool word. PEDR_W at symbols.tsv 0xfffff754. Harness terminals: cooling fan relay 5X/5AD (pinout v3).
  * RAM 0xffffbda1 fan_low_speed_cmd (uint8): Fan 1 (low-speed relay) command computed by 0x2f51a (coolant 94/97 C hysteresis, engine-off/APV/SSV and A/C conditions, DTC gates); written to PEDR_W 0xfffff754 bit 0x800 (PE11) by 0x2f188/0x2f1dc via diag override 0x5c724.
  * RAM 0xffffbda2 fan_high_speed_cmd (uint8): Fan 2 (high-speed relay) command computed by 0x2f65c (needs bda1 && counter bda8 > 0x5c plus coolant 98/101 C / load / vspeed / A/C conditions); written to PEDR_W bit 0x10 (PE4) by 0x2f188/0x2f1dc via diag override 0x5c648.
  */

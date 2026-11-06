@@ -57,6 +57,16 @@ working know-how. Everything here is backed by artifacts in
   0x13bd2 fix lives in `review_knock_loop_labels_apply.py` for that reason.
 - Report tables: grouped rows (`a/b`), unnamed `DAT_` rows and base-pointer rows
   are legitimate — `validate_reports.py` knows them.
+- Evidence strings in `review_*.py` are hand-written prose that fan out into the
+  TSVs, labels JSONs and export comments — one transcription slip lands in ~9
+  artifacts. Write them from the ROM/disassembly artifacts, and let
+  `verify_claims.py` machine-check them: it scans the root reports, the
+  investigations README, all `reviews/*/README.md` and the accepted TSV evidence
+  for pool word `0xA=0xV` assignments, `N callees` counts, quoted ROM byte
+  strings, mailbox descriptor ID/ctrl/buffer fields and descriptor Axis/Data
+  table rows (plus the older call-count/reg-pair/pool-range/labels-TSV checks).
+  `tests/test_verify_claims.py` carries negative tests embedding the exact
+  errors each class caught.
 
 ## Hardware documents
 

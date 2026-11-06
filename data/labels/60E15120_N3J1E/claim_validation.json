@@ -6,7 +6,8 @@
       "alternator_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 3
       },
       "calibration_extraction_report.md": {
         "reg_pairs": 0,
@@ -16,12 +17,15 @@
       "can_mailbox_config_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 3,
+        "desc_claims": 1
       },
       "cooling_fan_control_report.md": {
         "reg_pairs": 2,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 16
       },
       "cruise_control_report.md": {
         "reg_pairs": 0,
@@ -31,12 +35,15 @@
       "decompiler_triage_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 2
       },
       "dsc_can_arbitration_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 3
+        "pool_claims": 3,
+        "word_assigns": 2,
+        "desc_claims": 1
       },
       "dtc_control_report.md": {
         "reg_pairs": 0,
@@ -46,12 +53,14 @@
       "e2ram_device_layer_report.md": {
         "reg_pairs": 13,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 4
       },
       "e2ram_nv_storage_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 1
       },
       "free_resources_report.md": {
         "reg_pairs": 0,
@@ -66,7 +75,8 @@
       "idle_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 3
+        "pool_claims": 3,
+        "word_assigns": 13
       },
       "idle_target_control_report.md": {
         "reg_pairs": 0,
@@ -81,7 +91,8 @@
       "intake_solenoids_report.md": {
         "reg_pairs": 13,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 2
       },
       "knock_control_report.md": {
         "reg_pairs": 0,
@@ -101,7 +112,8 @@
       "o2_sensor_monitor_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 1
       },
       "os_scheduler_can_ivt_report.md": {
         "reg_pairs": 11,
@@ -111,9 +123,77 @@
       "os_scheduling_deep_dive_report.md": {
         "reg_pairs": 16,
         "call_claims": 0,
-        "pool_claims": 1
+        "pool_claims": 1,
+        "word_assigns": 3
       },
       "uds_mode22_dispatch_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 1
+      },
+      "README.md": {
+        "reg_pairs": 1,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/alternator_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 24
+      },
+      "reviews/cooling_fan_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 1,
+        "word_assigns": 13
+      },
+      "reviews/dsc_can_arbitration/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 15,
+        "hex_strings": 1
+      },
+      "reviews/dtc_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/e2ram_device_layer/README.md": {
+        "reg_pairs": 7,
+        "call_claims": 0,
+        "pool_claims": 3,
+        "word_assigns": 2
+      },
+      "reviews/fueling/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/idle_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 2,
+        "word_assigns": 39
+      },
+      "reviews/intake_solenoids/README.md": {
+        "reg_pairs": 5,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/knock_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/limiter/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/load_fueling_model/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0
@@ -121,7 +201,9 @@
       "accepted_function_aliases.tsv": {
         "reg_pairs": 37,
         "call_claims": 7,
-        "pool_claims": 15
+        "pool_claims": 15,
+        "word_assigns": 114,
+        "desc_claims": 1
       }
     },
     "tsv_rows": 489,

@@ -36,7 +36,7 @@
   "ghidra_database_updated": false,
   "binary_level_verification": {
     "batch_pools_resolved": {"0x267c6": "0x26888-0x268b0", "0x2680e": "0x268b4-0x268d0", "0x26868": "0x268d8"},
-    "pwm_output_pool": {"0x2578c": "0xffff9f44 (period cell)", "0x25788": "0x47800000 (100.0f)"},
+    "pwm_output_pool": {"0x2578c": "0xffff9f44 (period cell)", "0x25780": "0x42c80000 (100.0f)", "0x25788": "0x47800000 (65536.0f)"},
     "atu_registers_from_symbols_tsv": {"ATUII_TCNT5_W": "0xfffff4e0", "ATUII_GR5B_W": "0xfffff4e4", "ATUII_TIOR5A_B": "0xfffff4eb", "ATUII_TSR3_W": "0xfffff480"},
     "dtc_slot_chain": {"0x7b": "code_id 0x71 -> 0x2502 P2502", "0x7c": "code_id 0x72 -> 0x2503 P2503", "0x7d": "code_id 0x73 -> 0x2504 P2504", "tables": ["0x7df42 (slot->code_id)", "0x7e560 (code_id->code)"]},
     "float_literals": "area 0x74978-0x74a44 (thresholds 18.471/15.938/16.973/10.938/8.486699, 2.08 @0x74990, 859.0 @0x74994, 93.0/0.43, 14.2 @0x749c8, 0.1244/0.9672, 406.25/700.0)"
