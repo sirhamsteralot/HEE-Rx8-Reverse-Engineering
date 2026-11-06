@@ -1,5 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * os_wake_check_context_switch [high]: Called from ref_setSR (0x3934, call-site literal 0x3950). If DAT_ffff763c != DAT_ffff763e and (DAT_ffff7640 & 0x1000)==0: sets 0xffff7640=0x100, calls 0x3bf4 (context switch). Task-dispatch wake on ISR exit.
+ * RAM 0xffff763c os_scheduled_count (uint16): 
+ * RAM 0xffff763e os_dispatched_count (uint16): 
  */
 /* ROM address: 0x00003db0; body bytes: 76; decompiled_with_warnings */
 

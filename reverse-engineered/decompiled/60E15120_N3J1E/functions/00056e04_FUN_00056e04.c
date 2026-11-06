@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid093c_throttle_position_raw [high]: dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_throttle_position_ffffad44; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

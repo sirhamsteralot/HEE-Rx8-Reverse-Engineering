@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
+ * RAM 0xffffa718 idle_leading_timing_error_correction (float): 
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a060: Ignition Leading - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).

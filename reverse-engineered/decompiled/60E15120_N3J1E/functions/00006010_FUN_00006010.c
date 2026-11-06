@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_queue_dequeue_record [high]: dequeues 20-byte (5 u32) record from queue table PTR_DAT_0000d74c, ring in DAT_ffff9305/9306
+ */
 /* ROM address: 0x00006010; body bytes: 164; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006010 (164 bytes). Names prefixed ref_

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_secondary_air_status [high]: PID 0x12: 1 or 4
+ */
 /* ROM address: 0x0005556a; body bytes: 22; decompiled */
 
 undefined4 diag_read_secondary_air_status(void)

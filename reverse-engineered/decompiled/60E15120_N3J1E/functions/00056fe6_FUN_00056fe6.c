@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid16e9_ram_b654_eighth [medium]: dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125
+ * RAM 0xffffb654 inferred_ram_b654_ffffb654 (float): PID 0x16e9 *0.125
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): DAT_ffffb654; decode = raw * 0.125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

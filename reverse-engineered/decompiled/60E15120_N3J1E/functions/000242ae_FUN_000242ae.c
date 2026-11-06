@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_fault_status_collect [high]: Collects live fault status into E2RAM staging bytes 0xffffb4dc-0xffffb4eb via 18 calls of ref_getFaultStatus__ 0x66a00; called from 0x2377a before 0x244bc encodes the block.
+ */
 /* ROM address: 0x000242ae; body bytes: 476; decompiled */
 
 undefined1 * e2ram_fault_status_collect(void)

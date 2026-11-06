@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_85_control_dtc_setting [high]: service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

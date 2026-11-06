@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_o2s2 [medium]: PID 0x15: ffffad1c decode*0.005
+ * RAM 0xffffad1c inferred_o2s2_ffffad1c (uint16): PID 0x15: decode(7.63e-05)*0.005
+ */
 /* ROM address: 0x00055586; body bytes: 38; decompiled */
 
 void candidate_diag_encode_o2s2(void)

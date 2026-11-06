@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_14_clear_diagnostic_information [high]: service table record 0x5ec24 (service 0x14) -> handler; ROM bytes verified; UDS 0x14 (ref_ClearFaults_)
+ */
 /* ROM address: 0x000558ac; body bytes: 150; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00053bc8 (150 bytes). Names prefixed ref_

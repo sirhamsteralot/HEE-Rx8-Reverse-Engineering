@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * fan2_diag_override [medium]: UDS actuator-test arbitration for fan 2: DID 0x17c4; result feeds 0x2f1dc's PE4 write.
+ */
 /* ROM address: 0x0005c648; body bytes: 186; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005ae38 (186 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0005c648(uint param_1)
+uint candidate_fan2_diag_override(uint param_1)
 
 {
   if (DAT_ffffd319 == '\0') {

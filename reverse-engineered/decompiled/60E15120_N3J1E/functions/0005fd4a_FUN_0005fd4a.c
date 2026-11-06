@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd688 dtc_eval_enable (uint8): 1 = fault evaluation active; set at init by 0x5fd6c via 0x5fd4a(1); selects path in 0x5fe20.
+ */
 /* ROM address: 0x0005fd4a; body bytes: 34; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005e656 (34 bytes). Names prefixed ref_

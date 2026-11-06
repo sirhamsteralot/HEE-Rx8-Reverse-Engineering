@@ -1,5 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_timing_cranking_blend [high]: Trailing mirror: a650 = a5ec*a654 + (a5f4 + a71c + caa0)*(1-a654) + a784 - a77c. Dynamically verified bit-exact in the emulator (a650=18.115 for scripted inputs).
+ * RAM 0xffffa5ec trailing_base_timing_final (float): 
+ * RAM 0xffffa654 cranking_timing_multiplier_trailing (float): 
  */
 /* ROM address: 0x000124d6; body bytes: 164; decompiled */
 

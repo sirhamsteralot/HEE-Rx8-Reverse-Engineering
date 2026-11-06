@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * isotp_single_frame_accept [high]: SF: service=buf[1], channel=0x68a86(service), pack_for_OBD_response
+ */
 /* ROM address: 0x00068548; body bytes: 86; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00066e38 (86 bytes). Names prefixed ref_

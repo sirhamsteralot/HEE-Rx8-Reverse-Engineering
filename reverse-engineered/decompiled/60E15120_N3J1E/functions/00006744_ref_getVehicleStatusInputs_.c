@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * vehicle_inputs_poll_pfdr_phdr [high]: was ref_getVehicleStatusInputs_. DAT_ffff9ec8 = PFDR_W (0xfffff74e), DAT_ffff9eca = PHDR_W, plus 3 GPIO inputs. Emulator: PFDR bit0 scripted high via GPIO inputs; read observed during the CAN-RX tick.
+ * RAM 0xffff9ec8 vehicle_inputs_pfdr_latch (uint8): 
+ * RAM 0xffff9eca vehicle_inputs_phdr_latch (uint8): 
+ */
 /* ROM address: 0x00006744; body bytes: 82; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006744 (82 bytes). Names prefixed ref_

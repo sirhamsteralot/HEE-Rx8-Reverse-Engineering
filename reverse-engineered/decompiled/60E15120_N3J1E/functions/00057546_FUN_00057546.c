@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pide21e_cal_id_chunk_3 [high]: dispatch record 0x5f508 -> handler verified in ROM bytes + function_index; appends 'B'
+ */
 /* ROM address: 0x00057546; body bytes: 22; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00057554) */

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffbcf8 cruise_set_speed (float): Cruise set speed; copied to 0xffffcf18 and compared with vehicle speed 0xffffa9b4 for the enable flag 0xffffcf34 in 0x4c896.
+ */
 /* ROM address: 0x0004c896; body bytes: 46; decompiled */
 
 void FUN_0004c896(void)

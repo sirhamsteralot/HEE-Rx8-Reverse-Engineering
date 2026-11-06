@@ -131,6 +131,18 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
+## Cooling fan control labeling
+
+`scripts/review_fan_control_labels.py` labels the fan chain: task wrapper
+`fan_control_task` 0x2f266 (from 0x117ac), decisions `fan_low_speed_decision`
+0x2f51a (coolant 94/97 C) and `fan_high_speed_decision` 0x2f65c (coolant 98/101 C,
+load/vspeed/A/C conditions, counter gate 0xffffbda8 > 0x5c), and the GPIO
+writers `fan_output_gpio` 0x2f1dc / `fan_output_gpio_init` 0x2f188 →
+`PEDR_W` 0xfffff754 bit 0x800 (PE11, pin 21) / bit 0x10 (PE4, pin 12), with UDS
+overrides DID 0x17c3/0x17c4 (0x5c724/0x5c648). 8 functions, 3 RAM cells.
+Write-up: [`cooling_fan_control_report.md`](cooling_fan_control_report.md) +
+`reviews/cooling_fan_control/`; record: `metadata/fan_control_labels.json`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

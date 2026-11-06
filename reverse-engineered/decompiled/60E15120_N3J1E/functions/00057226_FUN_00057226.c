@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1102_io_status_bdb8 [medium]: dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8
+ * RAM 0xffffbdb8 inferred_ram_bdb8_ffffbdb8 (uint8): PID 0x1102
+ */
 /* ROM address: 0x00057226; body bytes: 34; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f45c and register-save prologue. Heuristic
