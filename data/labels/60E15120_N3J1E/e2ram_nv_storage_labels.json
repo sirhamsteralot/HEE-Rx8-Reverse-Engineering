@@ -1,0 +1,65 @@
+{
+ "date": "",
+ "rom_unchanged": true,
+ "ghidra_database_updated": false,
+ "pass": "e2ram_nv_storage_labeling",
+ "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Report: e2ram_nv_storage_report.md.",
+ "function_aliases": {
+  "00023844": {
+   "alias": "e2ram_block_decode",
+   "confidence": "high",
+   "evidence": "Decodes the E2RAM staging block (read into 0xffffb478, payload decoded from 0xffffb47a) into working RAM: u16 affine step 0.0305176 (0x3cfa0000) of 0xffffb47a/0x47c -> 0xffffb4b0/b4, step 0x38a00000 = 7.62939453125e-05 of 0xffffb498/49a/49c -> 0xffffb4c0/c4/c8; raw bytes 0xffffb47e-0xffffb497 copied to 0xffffb4cc-0xffffb4db; u8 affine 0.078125 (0x3da00000) -> 0xffffb4b8, signed 0.78125 (0x3f480000, sign from 0xffffb489 bit7) -> 0xffffb4bc; 7 bytes 0xffffb48a-0xffffb490 unpacked bit-wise via 0x24b00 (20-byte helper) into DTC/history flags 0xffffb4ec-0xffffb51b. Called from 0x2376c (jsr via pool 0x237bc at 0x2376e)."
+  },
+  "000244bc": {
+   "alias": "e2ram_block_encode",
+   "confidence": "high",
+   "evidence": "Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0x39a00000 = 0.00030517578125) -> 0xffffb448, ref_readValue_float of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796)."
+  },
+  "0002376c": {
+   "alias": "e2ram_load_decode_entry",
+   "confidence": "high",
+   "evidence": "Calls 0x23844 (block decode) then 0x23f4e (stored DTC replay, 38 x 0x5fd38 calls); called from 0x235c8 and 0x235f8 after E2RAM read (0xb99c into 0xffffb440 / 0xb958 into 0xffffb478) with magic 0x5aa5 and checksum verification."
+  },
+  "0002377a": {
+   "alias": "e2ram_save_encode_entry",
+   "confidence": "high",
+   "evidence": "Interrupt-masked wrapper (sh_raise_interrupt_mask 0x10 / ref_setSR): calls 0x242ae (fault status collect) then 0x244bc (block encode); called from 0x236cc, which then writes magic 0xa55a (mov.w via pool 0x23734) at 0xffffb440, checksum (sum of 0x1b u16, loop at 0x236f0-0x236fe) at +0x36, and writes 0x1c u16 via E2RAM write 0xb886 (pool 0x23738), setting 0xffffb43b on success."
+  },
+  "00023f4e": {
+   "alias": "e2ram_stored_dtc_replay",
+   "confidence": "high",
+   "evidence": "Maps stored flag bits 0xffffb4ec-0xffffb51b (unpacked by 0x23844) to 38 set_fault calls 0x5fd38(id, 1|2) for ids 0x13,0x14,0x21,0x22,0x42,0x47,0x4f,0x5b-0x5d,0x5f,0x60,0x61,0x65,0x6a,0x6b,0x83,0x84,100; restores the DTC history stored in E2RAM at load."
+  },
+  "000242ae": {
+   "alias": "e2ram_fault_status_collect",
+   "confidence": "high",
+   "evidence": "Collects live fault status into E2RAM staging bytes 0xffffb4dc-0xffffb4eb via 18 calls of ref_getFaultStatus__ 0x66a00; called from 0x2377a before 0x244bc encodes the block."
+  }
+ },
+ "ram_aliases": {
+  "ffffb440": {
+   "alias": "e2ram_staging_block",
+   "type": "uint16[28]",
+   "reader": "000236cc",
+   "evidence": "E2RAM staging block: u16[0] = magic 0xa55a (mov.w via pool 0x23734 at 0x236ec), payload u16[1..26], u16[27] at +0x36 = checksum (sum of 0x1b u16, loop 0x236f0-0x236fe); 0x1c u16 written to E2RAM via 0xb886."
+  },
+  "ffffb478": {
+   "alias": "e2ram_read_staging",
+   "type": "uint16[28]",
+   "reader": "000235f8",
+   "evidence": "E2RAM read landing buffer (0xb958, 0x1c u16); magic checked byte-swapped as 0x5aa5 at +0, checksum at +0x36 (0xffffb4ae)."
+  },
+  "ffffb47a": {
+   "alias": "e2ram_payload_raw",
+   "type": "uint8[34]",
+   "reader": "00023844",
+   "evidence": "Decode source: raw payload bytes of the stored block (0xffffb47a-0xffffb49c) affine-decoded by 0x23844 into 0xffffb4b0+."
+  },
+  "ffffb4ec": {
+   "alias": "stored_dtc_flag_bits",
+   "type": "uint8",
+   "reader": "00023f4e",
+   "evidence": "Unpacked DTC history flags (0xffffb4ec-0xffffb51b) decoded by 0x23844 via 0x24b00; replayed by 0x23f4e through 0x5fd38."
+  }
+ }
+}

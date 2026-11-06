@@ -4,7 +4,7 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+recorded in `data/labels/60E15120_N3J1E/idle_target_control_labels.json`.
 
 **Related reports:** task structure and task[10] in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); the
@@ -74,7 +74,7 @@ the names match the RX8Defs cross-ECU annotations already in the function header
 
 RAM alias: `idle_target_rpm` (0xffffa7f4). Evidence:
 `source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`,
-`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/idle_target_control_labels.json`.
 
 ## 5. Corrections made in this pass
 
@@ -86,7 +86,7 @@ inherited name (an unverified hypothesis).
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0001506c_*.c`
   (symbol renamed in place; filename keeps the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
-- `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
+- `data/labels/60E15120_N3J1E/idle_target_control_labels.json`
 
 ## 7. Validation
 

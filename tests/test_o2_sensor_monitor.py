@@ -74,17 +74,16 @@ def test_labels_in_artifacts():
     ram = {r["address"]: r["alias"] for r in
            csv.DictReader(open(os.path.join(INV, "source_review", "accepted_ram_aliases.tsv"),
                                newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
-    data = json.load(open(os.path.join(LAB, "large_control_bodies_labels.json")))
+    data = json.load(open(os.path.join(LAB, "o2_sensor_monitor_labels.json")))
     for addr, name in EXPECTED_FN.items():
         assert fn.get(addr) == name
         assert data["function_aliases"][addr]["alias"] == name
     for addr, alias in EXPECTED_RAM.items():
         assert ram.get(addr) == alias
         assert data["ram_aliases"][addr]["alias"] == alias
-    # the labels JSON covers exactly this pass's rows overall (15 fn + 17 RAM);
-    # each subsystem file checks its own subset against the artifacts
-    assert len(data["function_aliases"]) == 15
-    assert len(data["ram_aliases"]) == 17
+    # the per-body labels JSON covers exactly this subsystem's rows
+    assert len(data["function_aliases"]) == 3
+    assert len(data["ram_aliases"]) == 7
 
 
 def test_call_site_pool_words():
