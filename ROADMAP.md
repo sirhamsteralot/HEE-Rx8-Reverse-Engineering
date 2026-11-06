@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–13 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–15 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–13)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–15)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -111,6 +111,32 @@ and where artifacts live.
   this sweep; do that one first, then batch the rest per subsystem (one work
   unit per subsystem, per AGENTS.md rule 11). Run the pipeline validators +
   `python -m pytest tests/` after each batch.
+- **C item 14 (open)** — sweep all decompiled function definitions and their
+  header comments for merge/reduce/apply opportunities. Every file under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` now stacks several
+  comment blocks (`[ADDITIONAL SOURCE REVIEW]`, `[CROSS-ECU / RX8DEFS REVIEW]`,
+  `[READABILITY RECONSTRUCTION]`, `[ROM address: ...]`), and the same bodies
+  appear in the monolithic
+  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
+  — with C item 13 landing more review comments, some statements are now
+  duplicated across blocks. Go through all of them: merge or drop redundant
+  comment lines, apply the ones that belong in the canonical export (via the
+  re-runnable pipeline passes, not hand edits), and keep the per-function files
+  and the two monoliths in sync. Any rename/relabel still needs rule-7
+  binary-level verification; run the pipeline validators + `python -m pytest
+  tests/` after the pass.
+- **C item 15 (open)** — verify all claims in the reports added today:
+  [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)
+  (+ `reviews/dsc_can_arbitration/`, merged today) and
+  [idle_control_report.md](docs/investigations/60E15120_N3J1E/idle_control_report.md)
+  (+ `reviews/idle_control/`, open PR branch). For each: re-check every
+  machine-checkable claim with `verify_claims.py` / `validate_reports.py`,
+  plus the rule-7 binary-level pass over prose claims (ROM bytes, literal
+  pools, mailbox/descriptor bytes, call counts vs the disassembly), and record
+  the outcome in the report's `reviews/<subsystem>/validation.json`. Fix any
+  factual error in *all* artifacts (report + label JSON/TSV evidence), per
+  AGENTS.md rule 11.
 
 ### E. Reimplementation coverage (P4)
 
