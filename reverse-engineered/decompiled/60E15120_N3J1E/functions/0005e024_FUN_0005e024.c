@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_32 [medium]: service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024
+ */
 /* ROM address: 0x0005e024; body bytes: 170; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5ec4c and register-save prologue. Heuristic

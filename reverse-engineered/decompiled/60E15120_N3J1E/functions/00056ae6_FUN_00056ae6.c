@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0030_gear_or_vin_byte [medium]: dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff
+ */
 /* ROM address: 0x00056ae6; body bytes: 20; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f21c and register-save prologue. Heuristic

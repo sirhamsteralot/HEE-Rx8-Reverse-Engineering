@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffff9fd0 crank_period_ring (uint32[6]): 0x7fcc appends crank_period_last_ffff9fa8, sums 6 entries into crank_period_accumulator_ffff9f88; rpm = 1.2e8/sum -> engine_speed_rpm_raw_ffff9f80.
+ */
 /* ROM address: 0x00007fcc; body bytes: 114; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00007fcc (114 bytes). Names prefixed ref_

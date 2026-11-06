@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * crank_sector_advance [high]: 0xffff9f95 = tbl 0xd76c[0xffff9f95*2] (next sector, wrap 0x24 = 36 sectors/720deg), plus period/angle accumulators 0xffff9fbc/9fc1/9fc2/9fc5; re-init if > 0x24.
+ * RAM 0xffff9f95 crank_sector_index (uint8): Advanced by 0x787a via tbl 0xd76c (wrap 0x24 = 36 sectors/720 deg); indexes OCR10B reload tbl 0xd76d in 0x7b58 and edge matching in 0xcf96.
+ */
 /* ROM address: 0x0000787a; body bytes: 470; decompiled */
 
 undefined4 * crank_sector_advance(void)

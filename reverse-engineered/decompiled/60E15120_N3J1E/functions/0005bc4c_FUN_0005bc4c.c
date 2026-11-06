@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_2f_input_output_control [high]: service table record 0x5ec30 (service 0x2f) -> handler; ROM bytes verified; UDS 0x2F
+ */
 /* ROM address: 0x0005bc4c; body bytes: 464; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5ec34 and register-save prologue. Heuristic

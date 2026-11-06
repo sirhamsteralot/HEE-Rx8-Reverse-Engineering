@@ -1,6 +1,10 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_torque_extract [medium]: 0xffffbbc8 = 0xffffbbf2 (torque-related signal from the 0x212 payload); called from 0x2b29c.
+ * RAM 0xffffbbc8 can212_torque_signal (uint8): Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc.
+ */
 /* ROM address: 0x0002b816; body bytes: 170; decompiled */
 
-uint FUN_0002b816(void)
+uint candidate_can212_torque_extract(void)
 
 {
   uint uVar1;
@@ -8,7 +12,7 @@ uint FUN_0002b816(void)
   
   bVar2 = DAT_ffffbbf2 == -1;
   if (!bVar2) {
-    DAT_ffffbbc8 = DAT_ffffbbf2;
+    can212_torque_signal_ffffbbc8 = DAT_ffffbbf2;
   }
   if (DAT_ffffbbf3 == -1) {
     bVar2 = true;

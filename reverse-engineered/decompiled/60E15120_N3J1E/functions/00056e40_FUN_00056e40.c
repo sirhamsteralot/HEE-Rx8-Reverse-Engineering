@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid097c_ram_b59c_div2048 [medium]: dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)
+ * RAM 0xffffb59c inferred_ram_b59c_ffffb59c (float): PID 0x097c /2048
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): DAT_ffffb59c; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

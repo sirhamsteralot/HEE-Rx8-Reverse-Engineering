@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_ad5e [medium]: PID 0x47: ffffad5e decode*20*0.392157
+ * RAM 0xffffad5e inferred_pedal_volts_ffffad5e (uint16): PID 0x47/0x0918
+ */
 /* ROM address: 0x0005578a; body bytes: 44; decompiled */
 
 void candidate_diag_encode_ad5e(void)

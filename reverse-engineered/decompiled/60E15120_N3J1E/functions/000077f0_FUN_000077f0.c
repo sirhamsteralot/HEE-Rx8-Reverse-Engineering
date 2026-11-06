@@ -1,5 +1,8 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * crank_capture_poll [high]: Reads ATUII_ICR0AH_W (0xfffff434) into 0xffff9fb8 and ATUII_ICR10AH_W (0xfffff6d0) into 0xffff9fb0, computes period into 0xffff9fa8. Emulator: ICR values tracked the virtual crank wheel (set_rpm) when called via harness.
+ * RAM 0xffff9fb0 crank_icr10ah_sample (uint16): 
+ * RAM 0xffff9fb8 crank_icr0ah_sample (uint16): 
+ * RAM 0xffff9fa8 crank_period_last (uint32): 
  */
 /* ROM address: 0x000077f0; body bytes: 138; decompiled */
 

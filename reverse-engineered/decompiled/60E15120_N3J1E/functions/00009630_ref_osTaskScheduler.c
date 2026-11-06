@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_schedule_task_event [high]: The scheduler API: looks up group descriptor (ptr table 0xd87c[group] + idx*8 = {i16 target, u16 nargs, u32 handler}); target -1 -> call handler inline in caller context, else 0x5f1c posts {handler,args} to queue slot 'target' and wakes the consumer task. Upgrades inherited ref_osTaskScheduler. Dynamic: 0x9630(1,9,..) posted to slot 2 and 0x9630(1,12,..) ran 0x11d88 inline from the CAN RX ISR. Wrappers at 0xa0de-0xa22c.
+ */
 /* ROM address: 0x00009630; body bytes: 110; decompiled_with_warnings */
 
 /* WARNING: Type propagation algorithm not settling */

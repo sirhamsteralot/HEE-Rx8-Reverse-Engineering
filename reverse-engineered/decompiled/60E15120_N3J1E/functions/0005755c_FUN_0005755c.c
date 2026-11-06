@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pide611_sw_name_string [high]: dispatch record 0x5f514 -> handler verified in ROM bytes + function_index; appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)
+ */
 /* ROM address: 0x0005755c; body bytes: 46; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f51c and register-save prologue. Heuristic
