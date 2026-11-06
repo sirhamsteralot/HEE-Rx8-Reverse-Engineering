@@ -9,7 +9,7 @@ char FUN_0005e7a0(void)
   char cVar1;
   undefined2 local_c;
   
-  cVar1 = FUN_00037ef0(0x78,&local_c,2);
+  cVar1 = e2ram_cached_byte_read(0x78,&local_c,2);
   if (cVar1 == '\0') {
     cVar1 = (char)local_c;
   }

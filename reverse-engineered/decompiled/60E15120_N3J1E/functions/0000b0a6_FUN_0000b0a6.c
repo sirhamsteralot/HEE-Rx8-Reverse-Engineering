@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa1fa adc_an23_sample_a (uint16): Word @0xfffff836 (ADDR23H, ADC AN23) sampled in the ADC EOC bank1 chain (0x6b60 -> 0xb0a6).
+ * RAM 0xffffa1fe adc_an11_sample_a (uint16): Word @0xfffff816 (ADDR11H, ADC AN11; pool word 0xfffff836 + add -0x20, ROM-verified at 0xb0d2).
+ */
 /* ROM address: 0x0000b0a6; body bytes: 110; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000b0a6 (110 bytes). Names prefixed ref_

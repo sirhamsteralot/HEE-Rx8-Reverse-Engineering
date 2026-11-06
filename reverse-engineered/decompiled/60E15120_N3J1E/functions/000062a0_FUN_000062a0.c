@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * task0_background_loop [high]: Task-table rec[0] entry (ROM 0x4998 = 0x62a0); do-while(true) calling 18 functions, never calls taskEnd - the never-yielding background loop; dispatch parks in idle 0x3dac when ctrl+6 == -1.
+ */
 /* ROM address: 0x000062a0; body bytes: 192; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000062a0 (192 bytes). Names prefixed ref_

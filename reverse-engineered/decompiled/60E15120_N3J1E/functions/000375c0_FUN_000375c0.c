@@ -38,13 +38,13 @@ undefined1 * FUN_000375c0(void)
       if (DAT_ffffc284 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
         unaff_r14 = &uStack_2c;
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
           puStack_44 = &local_34;
-          local_34 = FUN_0000bdfa(0x6010000);
-          local_32 = FUN_0000bdfa(0x6020000);
-          local_30 = FUN_0000bdfa(0x6030000);
-          local_2e = FUN_0000bdfa(0x6040000);
+          local_34 = e2ram_read_word(0x6010000);
+          local_32 = e2ram_read_word(0x6020000);
+          local_30 = e2ram_read_word(0x6030000);
+          local_2e = e2ram_read_word(0x6040000);
           cStack_2b = (char)((ushort)local_34 >> 8);
           cStack_2a = (char)local_34;
           cStack_29 = (char)((ushort)local_32 >> 8);
@@ -73,10 +73,10 @@ undefined1 * FUN_000375c0(void)
       }
       if (DAT_ffffc285 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
-          unaff_r14 = (undefined1 *)FUN_0000bdfa(0x60b0000);
-          uVar3 = FUN_0000bdfa(0x60c0000);
+          unaff_r14 = (undefined1 *)e2ram_read_word(0x60b0000);
+          uVar3 = e2ram_read_word(0x60c0000);
           puStack_44 = (undefined2 *)((uint)uVar3 << 0x10);
           DAT_ffffc285 = '\x01';
         }
@@ -93,9 +93,9 @@ undefined1 * FUN_000375c0(void)
       }
       if (DAT_ffffc286 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
-          FUN_0000bdfa(0x6050000);
+          e2ram_read_word(0x6050000);
           DAT_ffffc286 = '\x01';
           puStack_44._0_1_ = extraout_var;
         }

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode06_test_results [high]: service table record 0x5eb70 (service 0x06) -> handler; ROM bytes verified; OBD Mode 06
+ */
 /* ROM address: 0x0006725c; body bytes: 144; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00065b4c (144 bytes). Names prefixed ref_

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch10b_compare_rearm [high]: OCR10B = tbl 0xd76d[0xffff9f95*2] & 0x7f, TCNT10B = 0, mirrors value to 0xffff9fc3 (decompiled + ROM table bytes). Per-sector tick interval.
+ */
 /* ROM address: 0x00007b58; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00007b58 (44 bytes). Names prefixed ref_

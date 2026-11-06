@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1154_throttle_raw_ad5c [medium]: dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16
+ */
 /* ROM address: 0x00056eb8; body bytes: 14; decompiled */
 
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f364. Table purpose inferred from

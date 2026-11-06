@@ -8,7 +8,7 @@ void ref_grablast28ByteFromE2(char param_1)
 {
   undefined1 auStack_88 [132];
   
-  FUN_00037ef0(0x80,auStack_88,0xffffff80);
+  e2ram_cached_byte_read(0x80,auStack_88,0xffffff80);
   ref_setupForUdsResponse_((int)param_1,auStack_88,0x80);
   return;
 }

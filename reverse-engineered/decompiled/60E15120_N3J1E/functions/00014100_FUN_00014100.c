@@ -1,5 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_base_timing_select [high]: a780 = lookup_2d(tbl 0x69208) when cranking (aa62==1); else tbl 0x6921c if ECT<90 or load<0.5, else tbl 0x69230; mirrors to a784. Feeds the +a780/a784 term of the 0x123da/0x124d6 blend.
+ * RAM 0xffffa780 idle_base_timing_leading (float): 
+ * RAM 0xffffa784 idle_base_timing_trailing (float): 
  */
 /* ROM address: 0x00014100; body bytes: 86; decompiled */
 

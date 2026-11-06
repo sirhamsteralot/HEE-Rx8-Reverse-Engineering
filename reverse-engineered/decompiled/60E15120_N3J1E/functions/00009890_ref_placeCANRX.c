@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * can_rx_copy_mailbox_to_buffer [high]: was can_rx_copy_mailbox_to_buffer. Emulator dynamic: returns 0 and copies MD14 into desc buffer 0xffffddc8, clears RXPR, when RXPR bit set and UMSR bit clear; W1C semantics of RXPR/UMSR confirmed.
+ * can_rx_copy_mailbox_to_buffer [high]: was ref_placeCANRX. Emulator dynamic: returns 0 and copies MD14 into desc buffer 0xffffddc8, clears RXPR, when RXPR bit set and UMSR bit clear; W1C semantics of RXPR/UMSR confirmed.
  */
 /* ROM address: 0x00009890; body bytes: 262; decompiled */
 

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode01_current_data [high]: service table record 0x5eb40 (service 0x01) -> handler; ROM bytes verified; OBD Mode 01 handler (caseD_27)
+ */
 /* ROM address: 0x0006581c; body bytes: 282; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0006410c (282 bytes). Names prefixed ref_

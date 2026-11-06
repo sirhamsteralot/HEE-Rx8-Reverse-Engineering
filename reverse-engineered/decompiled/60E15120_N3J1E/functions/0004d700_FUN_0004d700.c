@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffcef4 cruise_filtered_speed_error (float): Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006bbec: Table 2D - 392 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc04: Table 2D - 394 Check DataType (RX8Defs data pointer, axes and dimensions match).

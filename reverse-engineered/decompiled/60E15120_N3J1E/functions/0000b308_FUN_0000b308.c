@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * atu_ch7d_pwm_enable [high]: Once-only (0xffffa214==0): TSTR2 0xfffff400 bit7 clear/set, CYLR7D 0xfffff58e = TCNT7D 0xfffff586 = BFR7D 0xfffff596 = DTR7D 0xfffff59e = 32000 (0x7d00), then BFR7D = rx8_mul_s32_shift16_saturate(0xffffa210 duty q16, 32000); pool 0xb36c-0xb394 bytes verified. TO7D = PB7 PWM per reviews/fueling/injector_pin_mapping.md (PBCRL=0x4000). Duty written by 0xb2c0 from 0x25198 (clamp 0-100% of DAT_ffffb354).
+ * RAM 0xffffa214 ch7d_pwm_enabled (uint8): Once-only enable flag for the ch7D (TO7D/PB7) PWM setup in 0xb308.
+ */
 /* ROM address: 0x0000b308; body bytes: 100; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000b308 (100 bytes). Names prefixed ref_

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid163e_ram_b074_scaled_s16 [medium]: dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)
+ */
 /* ROM address: 0x00056f8a; body bytes: 32; decompiled */
 
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3a0. Table purpose inferred from

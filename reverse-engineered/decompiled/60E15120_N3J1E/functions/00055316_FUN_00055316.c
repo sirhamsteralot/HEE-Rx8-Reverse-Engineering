@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_active_cal_field [medium]: 0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes
+ */
 /* ROM address: 0x00055316; body bytes: 72; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005346a (72 bytes). Names prefixed ref_

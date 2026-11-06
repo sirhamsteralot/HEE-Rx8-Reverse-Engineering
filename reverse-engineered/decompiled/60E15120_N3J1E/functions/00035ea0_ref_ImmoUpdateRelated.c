@@ -8,13 +8,13 @@ void ref_ImmoUpdateRelated(void)
 {
   if (DAT_ffffc265 == '\0') {
     if (DAT_ffffc266 == '\0') {
-      if (DAT_ffffc268 == 'Z') {
+      if (e2ram_param_block_ffffc268 == 'Z') {
         DAT_ffffc265 = '\x01';
       }
       else {
-        DAT_ffffc268 = 'Z';
+        e2ram_param_block_ffffc268 = 'Z';
         DAT_ffffc261 = '\f';
-        FUN_00035a8c(0xc);
+        candidate_e2ram_param_write_dispatch(0xc);
         DAT_ffffc267 = '\x01';
         DAT_ffffc266 = '\x01';
       }
@@ -25,7 +25,7 @@ void ref_ImmoUpdateRelated(void)
         DAT_ffffc262 = 0;
         DAT_ffffc267 = 0;
         DAT_ffffc261 = 3;
-        FUN_00035a8c(3);
+        candidate_e2ram_param_write_dispatch(3);
         return;
       }
     }

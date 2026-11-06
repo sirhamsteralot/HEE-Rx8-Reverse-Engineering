@@ -8,7 +8,7 @@ undefined4 FUN_0005b482(void)
 {
   undefined4 uVar1;
   
-  uVar1 = ref_E2IntoRAM_(100,0x9c);
+  uVar1 = e2ram_bulk_read_into_shadow(100,0x9c);
   return uVar1;
 }
 
