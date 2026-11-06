@@ -26,7 +26,7 @@ undefined2 * FUN_0000e560(void)
   
   snapshot_DAT_ffffbf3c = inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   cVar2 = DAT_ffffb53a;
-  cVar1 = DAT_ffffb534;
+  cVar1 = automatic_transmission_ffffb534;
   if ((DAT_ffffa4a1 == '\x01') && (DAT_ffffb53a == '\0')) {
     DAT_ffffa48c = 0x58;
   }
@@ -39,7 +39,7 @@ undefined2 * FUN_0000e560(void)
   if (DAT_ffffa48c != 0) {
     DAT_ffffa48c = DAT_ffffa48c + -1;
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     DAT_ffffa461 = DAT_ffffbc3d;
   }
   else if (DAT_ffffbc41 == '\x01') {

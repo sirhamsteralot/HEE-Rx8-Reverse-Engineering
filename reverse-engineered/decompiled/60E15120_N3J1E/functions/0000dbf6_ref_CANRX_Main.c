@@ -9,7 +9,7 @@ void ref_CANRX_Main(void)
   if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (DAT_ffffa410 == '\0')) {
     can212_rx_main();
     ref_CAN216RX_Main();
-    if (DAT_ffffb534 == '\0') {
+    if (automatic_transmission_ffffb534 == '\0') {
       ref_CAN231TX_Main();
     }
     ref_CAN430RX_Main();

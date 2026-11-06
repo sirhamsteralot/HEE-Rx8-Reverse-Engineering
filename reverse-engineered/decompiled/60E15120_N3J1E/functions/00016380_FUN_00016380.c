@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_aux_air_term [medium]: When 0xffffb2f6==1: 0xffffa89c = clamp(0xffffb1dc * 0.6345 * tbl 0x6a13c(0xffffb220) * 60 / rpm, 0, 0.2), else 0. Called from 0x167c0 via pool 0x168d4.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a13c: Table 2D - 117 (RX8Defs data pointer, axes and dimensions match).
  */
@@ -7,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00016184 (118 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00016380(void)
+uint candidate_idle_aux_air_term(void)
 
 {
   uint uVar1;

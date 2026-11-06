@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
+ * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x000692d0: Table 2D - 17 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000692e4: Table 2D - 18 (RX8Defs data pointer, axes and dimensions match).
@@ -13,7 +17,7 @@
  */
 /* ROM address: 0x00014d10; body bytes: 456; decompiled */
 
-undefined4 FUN_00014d10(void)
+undefined4 candidate_idle_stall_flags(void)
 
 {
   char cVar1;
@@ -28,7 +32,7 @@ undefined4 FUN_00014d10(void)
   float fVar6;
   float snapshot_DAT_ffffa838;
   
-  cVar3 = DAT_ffffbd69;
+  cVar3 = ac_clutch_on_ffffbd69;
   cVar2 = DAT_ffffb53c;
   cVar1 = DAT_ffffa8a8;
   if (vehicle_speed_ffffbbb4 < 10.0) {
@@ -41,7 +45,7 @@ undefined4 FUN_00014d10(void)
   }
   if ((engine_stopped_latch_ffffa41c == '\x01') ||
      ((DAT_ffffa7a8 < 0.0 &&
-      (((DAT_ffffbd69 == '\0' && (DAT_ffffa828 == '\x01')) ||
+      (((ac_clutch_on_ffffbd69 == '\0' && (DAT_ffffa828 == '\x01')) ||
        ((DAT_ffffb53c == '\0' && (DAT_ffffa829 == '\x01')))))))) {
     uVar4 = 1;
     DAT_ffffa7a8 = 0.0;
@@ -57,7 +61,7 @@ undefined4 FUN_00014d10(void)
     }
   }
   else {
-    snapshot_DAT_ffffa838 = DAT_ffffa838;
+    snapshot_DAT_ffffa838 = idle_air_calc_total_ffffa838;
     if (((DAT_ffffa7b6 == '\0') && (DAT_ffffb53a == '\0')) && (DAT_ffffa82b == '\x01')) {
       uVar4 = inferred_coolant_temperature_ffffa990;
       DAT_ffffa7e4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa990,&tbl_table_2d_19_000692f8);

@@ -1,10 +1,13 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00014944; body bytes: 516; decompiled */
 
-undefined2 * FUN_00014944(void)
+undefined2 * candidate_idle_drive_flags(void)
 
 {
   char cVar1;
@@ -15,9 +18,9 @@ undefined2 * FUN_00014944(void)
   undefined4 uVar6;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  cVar3 = DAT_ffffbd69;
+  cVar3 = ac_clutch_on_ffffbd69;
   snapshot_DAT_ffffb53a = DAT_ffffb53a;
-  cVar1 = DAT_ffffb534;
+  cVar1 = automatic_transmission_ffffb534;
   if (vehicle_speed_ffffbbb4 <= 4.0) {
     if (vehicle_speed_ffffbbb4 <= 3.0) {
       DAT_ffffa827 = '\0';

@@ -10,11 +10,11 @@ char ref_setGearBools(void)
   
   cVar1 = '\x01';
   if (DAT_ffffc61e != '\x01') {
-    if (DAT_ffffb534 != '\x01') {
+    if (automatic_transmission_ffffb534 != '\x01') {
       DAT_ffffbc3e = 0;
       DAT_ffffbc3f = 0;
       DAT_ffffbc40 = 0;
-      return DAT_ffffb534;
+      return automatic_transmission_ffffb534;
     }
     cVar1 = DAT_ffffbc3c;
     if ((DAT_ffffbc3c != '\x01') && (DAT_ffffbc3c != '\x02')) {
