@@ -12,7 +12,7 @@ void ref_calculateTorqueRelatedParams(void)
   ref_getRPMBasedTorqueAdder();
   ref_getDesiredTorqueCalcVar2();
   ref_getDesiredTorqueCalcVar3();
-  FUN_0002ce18();
+  candidate_alternator_drag_torque_calc();
   FUN_0002ce64();
   FUN_0002cd9c();
   ref_getRPMLoadBasedMult();
