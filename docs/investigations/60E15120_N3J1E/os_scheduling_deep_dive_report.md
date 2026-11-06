@@ -640,7 +640,7 @@ task-table records 12–16 at ROM 0x4a50–0x4a98 read back as
 (0x66bc–0x66e8) and each handler's jsr pool (0x7300–0x7330, 0x7408–0x7438,
 0xb13c–0xb17f, 0xb202–0xb23b, 0xb36c–0xb397; batches 0x11a40–0x11a70, 0x11a74–0x11ad8,
 0x11ca6–0x11d87) was dumped from the raw ROM and
-matches the decompiled call lists. Dynamic evidence: `tests/test_c7_task_handlers.py`
+matches the decompiled call lists. Dynamic evidence: `tests/test_os_task_handlers_12_16.py`
 (8 passed) boots the 60E15120_N3J1E profile to idle and harness-calls each
 entry — task[12]/[14]/[15] run their full handler chain into `taskEnd` 0x3d58 →
 idle 0x3dac with side effects observed (0xffffa188 cleared by mov.w in 0xa4b6,

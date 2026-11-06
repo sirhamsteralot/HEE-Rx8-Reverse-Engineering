@@ -1,0 +1,22 @@
+{
+ "date": "",
+ "rom_unchanged": true,
+ "ghidra_database_updated": false,
+ "pass": "idle_target_control_labeling",
+ "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Report: idle_target_control_report.md.",
+ "function_aliases": {
+  "0001506c": {
+   "alias": "idle_target_rpm_calculate",
+   "confidence": "high",
+   "evidence": "Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94."
+  }
+ },
+ "ram_aliases": {
+  "ffffa7f4": {
+   "alias": "idle_target_rpm",
+   "type": "float",
+   "reader": "0001506c",
+   "evidence": "Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94."
+  }
+ }
+}

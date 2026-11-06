@@ -17,7 +17,7 @@ void ref_updateIdleControl__(void)
   FUN_00015f5c();
   FUN_00014944();
   FUN_00014baa();
-  FUN_0001506c();
+  idle_target_rpm_calculate();
   FUN_00014d10();
   FUN_00014f6c();
   FUN_00016432();

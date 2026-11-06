@@ -100,6 +100,29 @@ dumping it at the root.
     note; flag risky steps in your summary. Pushing a work-unit branch and opening a
     PR is the standard authorized delivery flow; any other push (to `main`, tags,
     shared branches, force-push) needs explicit approval first.
+11. **Deliverables in reader-facing form, not backlog form.** Big labeling/analysis
+    blocks are delivered as per-subsystem pieces, and user-facing text never carries
+    backlog bookkeeping:
+    - Name files, tests and label records after the subsystem they cover
+      (`tests/test_o2_sensor_monitor.py`,
+      `data/labels/<rom-id>/o2_sensor_monitor_labels.json`), never after a ROADMAP
+      item ID — `test_c8_*`, `c8_*`-style names are forbidden. Split monolithic
+      test files and label JSONs into one standalone file per subsystem/body: each
+      test file must pass alone via `python -m pytest tests/test_<name>.py`, and
+      each label record must cover exactly its own body's rows.
+    - Reports, review notes, label evidence strings, test docstrings and PR bodies
+      must not reference ROADMAP item IDs, PR numbers, discrepancy IDs or pass
+      dates — backlog tags churn and are noise to readers. ROADMAP.md itself keeps
+      its tags: prune CLOSED items from it (full records stay in that file's git
+      history; never reuse an ID) and keep open IDs stable so cross-references
+      resolve.
+    - When renaming or splitting anything, update every reference in the same
+      change (reports, review notes, ROADMAP links, tests, PR body).
+    - A factual error found in review/validation is fixed in *all* artifacts
+      (report + label JSON/TSV evidence), not just the report.
+    - After renames/splits re-run the pipeline validators, the full pytest suite,
+      and a link + non-empty-size check on every touched doc — the validators only
+      scan `*_report.md`, so a truncated review file is not caught automatically.
 
 ## Branch & PR workflow (how work is delivered)
 
@@ -118,7 +141,9 @@ its own branch and is delivered as a pull request for the user to review and mer
   title follows the commit-subject style; body: plain-language summary first (2–5
   sentences a non-specialist can read: what changes, why, and what it deliberately
   does *not* do), then what + why, doc links, key `0x` addresses, validation
-  artifacts, the ROADMAP item(s) closed, and open questions.
+  artifacts, and open questions. Describe the change itself — no ROADMAP item IDs,
+  PR numbers or pass dates in the body (rule 11; that bookkeeping lives in
+  ROADMAP.md and the commit messages).
 - **Review & merge:** the user reviews and merges (merge commit or squash — the
   reviewer's choice). Agents never merge, never push to `main`, never force-push.
   After a merge, delete the branch and re-sync: `git checkout main && git pull`.

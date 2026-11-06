@@ -14,7 +14,7 @@ void FUN_00058262(void)
   
   uVar2 = 0;
   uVar1 = 0x3b7fff29;
-  local_1c = rx8_encode_u16_affine_saturate(DAT_ffffc6f0,0x3b7fff29,0);
+  local_1c = rx8_encode_u16_affine_saturate(o2_monitor_ratio_ch0_ffffc6f0,0x3b7fff29,0);
   uStack_1a = rx8_encode_u16_affine_saturate(DAT_ffffc6f8,uVar1,uVar2);
   uStack_18 = 0xffff;
   FUN_0005904a(&DAT_ffff9014,&local_1c);

@@ -61,54 +61,54 @@ undefined1 * FUN_0004d700(void)
   }
   else {
     if ((DAT_ffffcf50 != '\0') ||
-       (((DAT_ffffcf51 != '\0' && (DAT_ffffcf52 != '\0')) && (fVar14 <= DAT_ffffcef4)))) {
+       (((DAT_ffffcf51 != '\0' && (DAT_ffffcf52 != '\0')) && (fVar14 <= cruise_filtered_speed_error_ffffcef4)))) {
       DAT_ffffcf51 = '>';
       DAT_ffffcf52 = '>';
     }
     else {
-      if ((DAT_ffffcef4 <= DAT_ffffcefc) && (DAT_ffffcf51 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= DAT_ffffcefc) && (DAT_ffffcf51 != '\0')) {
         DAT_ffffcf51 = DAT_ffffcf51 + -1;
       }
-      if ((DAT_ffffcef4 <= fVar10) && (DAT_ffffcf52 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= fVar10) && (DAT_ffffcf52 != '\0')) {
         DAT_ffffcf52 = DAT_ffffcf52 + -1;
       }
     }
     if ((DAT_ffffcf53 != '\0') ||
-       (((DAT_ffffcf54 != '\0' && (DAT_ffffcf55 != '\0')) && (fVar15 <= DAT_ffffcef4)))) {
+       (((DAT_ffffcf54 != '\0' && (DAT_ffffcf55 != '\0')) && (fVar15 <= cruise_filtered_speed_error_ffffcef4)))) {
       DAT_ffffcf54 = '>';
       DAT_ffffcf55 = '>';
     }
     else {
-      if ((DAT_ffffcef4 <= DAT_ffffcf04) && (DAT_ffffcf54 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= DAT_ffffcf04) && (DAT_ffffcf54 != '\0')) {
         DAT_ffffcf54 = DAT_ffffcf54 + -1;
       }
-      if ((DAT_ffffcef4 <= fVar11) && (DAT_ffffcf55 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= fVar11) && (DAT_ffffcf55 != '\0')) {
         DAT_ffffcf55 = DAT_ffffcf55 + -1;
       }
     }
     if ((DAT_ffffcf56 != '\0') ||
-       (((DAT_ffffcf57 != '\0' && (DAT_ffffcf58 != '\0')) && (fVar16 <= DAT_ffffcef4)))) {
+       (((DAT_ffffcf57 != '\0' && (DAT_ffffcf58 != '\0')) && (fVar16 <= cruise_filtered_speed_error_ffffcef4)))) {
       DAT_ffffcf57 = '>';
       DAT_ffffcf58 = '>';
     }
     else {
-      if ((DAT_ffffcef4 <= DAT_ffffcf0c) && (DAT_ffffcf57 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= DAT_ffffcf0c) && (DAT_ffffcf57 != '\0')) {
         DAT_ffffcf57 = DAT_ffffcf57 + -1;
       }
-      if ((DAT_ffffcef4 <= fVar12) && (DAT_ffffcf58 != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= fVar12) && (DAT_ffffcf58 != '\0')) {
         DAT_ffffcf58 = DAT_ffffcf58 + -1;
       }
     }
     if ((DAT_ffffcf59 != '\0') ||
-       (((DAT_ffffcf5a != '\0' && (DAT_ffffcf5b != 0)) && (fVar17 <= DAT_ffffcef4)))) {
+       (((DAT_ffffcf5a != '\0' && (DAT_ffffcf5b != 0)) && (fVar17 <= cruise_filtered_speed_error_ffffcef4)))) {
       DAT_ffffcf5a = '>';
       DAT_ffffcf5b = 0x3e;
     }
     else {
-      if ((DAT_ffffcef4 <= DAT_ffffcf14) && (DAT_ffffcf5a != '\0')) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= DAT_ffffcf14) && (DAT_ffffcf5a != '\0')) {
         DAT_ffffcf5a = DAT_ffffcf5a + -1;
       }
-      if ((DAT_ffffcef4 <= fVar13) && (DAT_ffffcf5b != 0)) {
+      if ((cruise_filtered_speed_error_ffffcef4 <= fVar13) && (DAT_ffffcf5b != 0)) {
         DAT_ffffcf5b = DAT_ffffcf5b - 1;
       }
     }

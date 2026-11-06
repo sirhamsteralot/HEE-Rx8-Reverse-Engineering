@@ -1,4 +1,4 @@
-"""ROADMAP C item 7: dynamic validation of scheduler task handlers 12-16
+"""Dynamic validation of the scheduler task handlers 12-16
 (60E15120_N3J1E).
 
 Static identification (os_scheduling_deep_dive_report.md section 4, extended by
@@ -17,7 +17,7 @@ asserts (a) the expected handler addresses execute, (b) the run reaches
 taskEnd 0x3d58 and lands in the idle spin 0x3dac, and (c) the task table ROM
 bytes hold the entries (rule 7 binary check against the raw ROM file).
 
-Run: python -m pytest tests/test_c7_task_handlers.py
+Run: python -m pytest tests/test_os_task_handlers_12_16.py
 """
 import os
 import struct
@@ -48,11 +48,11 @@ EXPECTED_HANDLERS = {
 TASKEND = 0x3D58
 IDLE = 0x3DAC
 
-# Pre-existing emulator opdec gaps (corpus table, cf. ROADMAP E8): these two
-# words decode to valid SH-2E (0xff07 = fmov.s fr0,@(r0,r15)) but are missing
-# from the opdec table, so deep callees of the task[13]/task[16] batches stop
-# the emulated run. The task-level handlers all execute before the gap.
-KNOWN_DECODE_GAPS = {13: 0x50DE0, 16: 0x674AC}  # inside FUN_00050d98 / FUN_00067476
+# Former decode gaps for task[13]/task[16] (words 0x50de0 / 0x674ac inside
+# FUN_00050d98 / FUN_00067476, fmov.s frN,@( r0,r15 )) are closed: the operand
+# regexes in sh2e.py now accept the disassembler's spaced "@( r0,rN )" form,
+# so those runs complete to taskEnd + idle.
+KNOWN_DECODE_GAPS = {}
 
 
 @pytest.fixture(scope="module")

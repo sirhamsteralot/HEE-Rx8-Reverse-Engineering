@@ -33,8 +33,8 @@ _REG = re.compile(r"^r(\d+)$")
 _FREG = re.compile(r"^fr(\d+)$")
 _IMM = re.compile(r"^#(-?0x[0-9a-fA-F]+|-?\d+)$")
 _DISP_PC = re.compile(r"^@\((0x[0-9a-fA-F]+),pc\)$")
-_DISP_REG = re.compile(r"^@\((0x[0-9a-fA-F]+),r(\d+)\)$")
-_R0_REG = re.compile(r"^@\(r0,r(\d+)\)$")
+_DISP_REG = re.compile(r"^@\(\s*(0x[0-9a-fA-F]+)\s*,\s*r(\d+)\s*\)$")
+_R0_REG = re.compile(r"^@\(\s*r0\s*,\s*r(\d+)\s*\)$")
 
 
 def _is_imm(tok):

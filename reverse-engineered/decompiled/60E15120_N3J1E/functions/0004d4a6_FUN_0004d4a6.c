@@ -38,34 +38,34 @@ void FUN_0004d4a6(void)
   else {
     if (DAT_ffffcf50 != '\0') {
       if (DAT_ffffcf72 == '\0') {
-        DAT_ffffcef8 = DAT_ffffcef4;
+        DAT_ffffcef8 = cruise_filtered_speed_error_ffffcef4;
       }
       else {
-        DAT_ffffcef8 = rx8_min_float(DAT_ffffcef4,DAT_ffffcef8);
+        DAT_ffffcef8 = rx8_min_float(cruise_filtered_speed_error_ffffcef4,DAT_ffffcef8);
       }
     }
     if (DAT_ffffcf53 != '\0') {
       if (DAT_ffffcf73 == '\0') {
-        DAT_ffffcf00 = DAT_ffffcef4;
+        DAT_ffffcf00 = cruise_filtered_speed_error_ffffcef4;
       }
       else {
-        DAT_ffffcf00 = rx8_min_float(DAT_ffffcef4,DAT_ffffcf00);
+        DAT_ffffcf00 = rx8_min_float(cruise_filtered_speed_error_ffffcef4,DAT_ffffcf00);
       }
     }
     if (DAT_ffffcf56 != '\0') {
       if (DAT_ffffcf74 == '\0') {
-        DAT_ffffcf08 = DAT_ffffcef4;
+        DAT_ffffcf08 = cruise_filtered_speed_error_ffffcef4;
       }
       else {
-        DAT_ffffcf08 = rx8_min_float(DAT_ffffcef4,DAT_ffffcf08);
+        DAT_ffffcf08 = rx8_min_float(cruise_filtered_speed_error_ffffcef4,DAT_ffffcf08);
       }
     }
     if (DAT_ffffcf59 != '\0') {
       if (DAT_ffffcf75 == '\0') {
-        DAT_ffffcf10 = DAT_ffffcef4;
+        DAT_ffffcf10 = cruise_filtered_speed_error_ffffcef4;
       }
       else {
-        DAT_ffffcf10 = rx8_min_float(DAT_ffffcef4,DAT_ffffcf10);
+        DAT_ffffcf10 = rx8_min_float(cruise_filtered_speed_error_ffffcef4,DAT_ffffcf10);
       }
     }
   }

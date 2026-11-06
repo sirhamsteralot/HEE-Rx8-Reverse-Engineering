@@ -1,10 +1,10 @@
 /* ROM address: 0x0002376c; body bytes: 14; decompiled */
 
-void FUN_0002376c(void)
+void e2ram_load_decode_entry(void)
 
 {
-  FUN_00023844();
-  FUN_00023f4e();
+  e2ram_block_decode();
+  e2ram_stored_dtc_replay();
   return;
 }
 
