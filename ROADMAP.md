@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–18)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–19)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -184,6 +184,22 @@ and where artifacts live.
   `data/labels/60E15120_N3J1E/defs_table_labels.json`. Sequencing: after C
   items 13/16 so the defs pick up verified labels, and re-run the defs-merge
   checks + pipeline validators afterwards.
+- **C item 19 (open)** — resolve what the 14-byte indirect-call stub at
+  0x35d36 actually is. The inherited upstream name
+  `ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN`
+  ([rx8defs-analysis/function_labels.tsv](docs/investigations/60E15120_N3J1E/rx8defs-analysis/function_labels.tsv))
+  currently carries our `e2ram_write_thunk` (medium) label from the E2RAM
+  device-layer pass (open PR branch;
+  [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
+  §9 Limits). The body is a bare register-indirect call (`(*unaff_r14)()`,
+  14 bytes, exact-byte match to 60E0FC00 0x36456), called only from the
+  write dispatcher 0x35a8c — so "THUNK" may just be the upstream "not sure
+  what this calls" marker, not a semantic name. Trace r14 at the 0x35a8c call
+  site (dispatch pools 0x35b70–0x35b84) against the raw ROM, decide whether
+  the target is `e2ram_shadow_byte_write` 0x37ea4 or a device-write path,
+  then keep or demote the label per rule 6 (never keep a plausible name): if
+  it is only an uncertainty marker, rename to a `candidate_*` indirect-call
+  label and record the evidence in the report + label TSV/JSON.
 
 ### E. Reimplementation coverage (P4)
 
