@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–19)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–20)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -200,6 +200,22 @@ and where artifacts live.
   then keep or demote the label per rule 6 (never keep a plausible name): if
   it is only an uncertainty marker, rename to a `candidate_*` indirect-call
   label and record the evidence in the report + label TSV/JSON.
+- **C item 20 (open)** — map what it takes to *author* a new DTC in this
+  firmware: the full path from a detection site to MIL indication and
+  persistence across key-off. Starting from
+  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
+  (+ `reviews/dtc_control/`), document the chain end to end: raising a code
+  (slot → code_id → P-code mapping, e.g. the charging DTCs 0x7b–0x7d →
+  P2502/P2503/P2504 via tables 0x7df42/0x7e560), the MIL/warning-lamp driver
+  (e.g. `ref_setAlternatorWarningLight` 0x26760), storage into the E2RAM
+  fault block (see
+  [e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)
+  and the E2RAM device-layer report on the open PR branch) so the code
+  survives key-off, plus pending/confirmed/stored state transitions and
+  Mode 22/UDS readout (0x18/0x19/0x1A services). Deliverable: a "how to add
+  a DTC" section (or a small addendum report) with the concrete register/RAM/
+  table addresses a new code would need to touch, and any gaps marked for
+  further investigation.
 
 ### E. Reimplementation coverage (P4)
 
