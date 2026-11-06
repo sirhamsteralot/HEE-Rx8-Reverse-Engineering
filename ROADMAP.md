@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–12 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–13 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–12)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–13)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -93,6 +93,24 @@ and where artifacts live.
   [ignition_timing_report.md](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
   — its §4/§8 memory map still uses raw `a5e8`-style cell names. Pairs with
   E item 1 (ignition timing is a remaining reimplementation subsystem).
+- **C item 13 (open)** — sweep and apply the `[ADDITIONAL SOURCE REVIEW]`
+  comments that landed with the DSC CAN report (PR #55, branch
+  `research/c9-dsc-can-report`): 311 decompiled function files under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` carry new review
+  headers with 268 function-level alias descriptions and 164
+  `RAM <addr> <alias>` lines. Today they exist only as header comments — not
+  yet in `source_review/accepted_function_aliases.tsv` /
+  `accepted_ram_aliases.tsv`, not in the per-subsystem labels JSON under
+  [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/), and not reflected
+  in the subsystem reports. For each: evaluate (keep the label ladder —
+  `candidate_` stays until proven), re-verify against the raw ROM/disassembly
+  (AGENTS.md rule 7), then apply — promote into the TSVs + the matching
+  per-subsystem labels JSON, and update the relevant
+  [investigation reports](docs/investigations/60E15120_N3J1E/) where the new
+  names change the memory maps. C item 12 is the ignition-timing subset of
+  this sweep; do that one first, then batch the rest per subsystem (one work
+  unit per subsystem, per AGENTS.md rule 11). Run the pipeline validators +
+  `python -m pytest tests/` after each batch.
 
 ### E. Reimplementation coverage (P4)
 
