@@ -184,22 +184,27 @@ and where artifacts live.
   `data/labels/60E15120_N3J1E/defs_table_labels.json`. Sequencing: after C
   items 13/16 so the defs pick up verified labels, and re-run the defs-merge
   checks + pipeline validators afterwards.
-- **C item 19 (open)** — resolve what the 14-byte indirect-call stub at
-  0x35d36 actually is. The inherited upstream name
-  `ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN`
-  ([rx8defs-analysis/function_labels.tsv](docs/investigations/60E15120_N3J1E/rx8defs-analysis/function_labels.tsv))
-  currently carries our `e2ram_write_thunk` (medium) label from the E2RAM
-  device-layer pass (open PR branch;
+- **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
+  53 rows in
+  [rx8defs-analysis/function_labels.tsv](docs/investigations/60E15120_N3J1E/rx8defs-analysis/function_labels.tsv)
+  carry a `thunk` name — 51 generic `thunk_FUN_xxxxx` indirect-call stubs
+  plus 0x35d36 `ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN` and 0x5fd3c
+  `ref_updateFaultStatusTHUNKNoR6_`. Determine what "thunk" means upstream:
+  the bodies are bare register-indirect calls (e.g. 0x35d36 is
+  `(*unaff_r14)()`, 14 bytes, exact-byte match to 60E0FC00 0x36456), so the
+  name may just be a "not sure what this calls" marker, not a semantic label.
+  For each, trace the indirect register at its call site(s) against the raw
+  ROM (start with 0x35d36, called only from the write dispatcher 0x35a8c via
+  dispatch pools 0x35b70–0x35b84, and 0x5fd3c from the fault-status path),
+  resolve the real target where possible, then keep or demote each label per
+  rule 6 (never keep a plausible name): rename pure uncertainty markers to
+  `candidate_*` indirect-call labels and record the evidence in the relevant
+  report + label TSV/JSON. The 0x35d36 case currently carries our
+  `e2ram_write_thunk` (medium) label from the E2RAM device-layer pass (open
+  PR branch;
   [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
-  §9 Limits). The body is a bare register-indirect call (`(*unaff_r14)()`,
-  14 bytes, exact-byte match to 60E0FC00 0x36456), called only from the
-  write dispatcher 0x35a8c — so "THUNK" may just be the upstream "not sure
-  what this calls" marker, not a semantic name. Trace r14 at the 0x35a8c call
-  site (dispatch pools 0x35b70–0x35b84) against the raw ROM, decide whether
-  the target is `e2ram_shadow_byte_write` 0x37ea4 or a device-write path,
-  then keep or demote the label per rule 6 (never keep a plausible name): if
-  it is only an uncertainty marker, rename to a `candidate_*` indirect-call
-  label and record the evidence in the report + label TSV/JSON.
+  §9 Limits) — decide whether the target is `e2ram_shadow_byte_write`
+  0x37ea4 or a device-write path.
 - **C item 20 (open)** — map what it takes to *author* a new DTC in this
   firmware: the full path from a detection site to MIL indication and
   persistence across key-off. Starting from
