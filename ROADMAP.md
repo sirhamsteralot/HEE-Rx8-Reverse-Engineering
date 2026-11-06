@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–11 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–12 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–11)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–12)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -65,6 +65,34 @@ and where artifacts live.
     physical meaning of the four filtered channels 0xffffc708–0x14; gating
     conditions of 0xffffc704 / 0xffffae21 on the threshold averages
     0x6b680–0x6b6d4.
+- **C item 12 (open)** — fold the leading/trailing timing-correction findings
+  that landed with the DSC CAN report (PR #55, branch
+  `research/c9-dsc-can-report`) into the label records and the ignition timing
+  report. That pass added `[ADDITIONAL SOURCE REVIEW]` RAM aliases on the
+  leading/trailing timing chain — but only as decompiled header comments, not
+  yet in `source_review/accepted_ram_aliases.tsv` or the labels JSON:
+  0x11f00/0x1206c coolant terms (`leading_coolant_scaled_advance_term`
+  0xffffa5f0, `trailing_...` 0xffffa5f4), 0x123da/0x124d6 cranking blends
+  (`leading_base_timing_final` 0xffffa5e8, `trailing_base_timing_final`
+  0xffffa5ec, `cranking_timing_multiplier_leading` 0xffffa644 /
+  `_trailing` 0xffffa654), 0x12630/0x12754 min-advance clamps
+  (`leading_min_advance_clamp` 0xffffa64c, `trailing_min_advance_clamp`
+  0xffffa65c), 0x121fc/0x12300 max-advance + pre-clamp cells
+  (`leading_max_advance` 0xffffa660, `trailing_max_advance` 0xffffa664,
+  `leading_timing_with_corrections` 0xffffa634,
+  `trailing_timing_with_corrections` 0xffffa63c), idle error corrections
+  0x135b4/0x136e4 (`idle_leading_timing_error_correction` 0xffffa718,
+  `idle_trailing_timing_error_correction` 0xffffa71c), IAT compensation
+  0x14090 (`iat_timing_compensation_leading` 0xffffa778 /
+  `_trailing` 0xffffa77c), idle base select 0x14100
+  (`idle_base_timing_leading` 0xffffa780 / `_trailing` 0xffffa784).
+  Investigate: re-verify each cell against the raw ROM/disassembly (AGENTS.md
+  rule 7), promote into
+  [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/) +
+  `source_review/accepted_ram_aliases.tsv`, and update
+  [ignition_timing_report.md](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
+  — its §4/§8 memory map still uses raw `a5e8`-style cell names. Pairs with
+  E item 1 (ignition timing is a remaining reimplementation subsystem).
 
 ### E. Reimplementation coverage (P4)
 
