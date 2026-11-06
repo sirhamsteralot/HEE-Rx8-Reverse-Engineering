@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1681_io_status_ce1c [medium]: dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40
+ * RAM 0xffffce1c inferred_ram_ce1c_ffffce1c (uint8): PID 0x1681 -> 0x40
+ */
 /* ROM address: 0x0005734a; body bytes: 34; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f48c and register-save prologue. Heuristic

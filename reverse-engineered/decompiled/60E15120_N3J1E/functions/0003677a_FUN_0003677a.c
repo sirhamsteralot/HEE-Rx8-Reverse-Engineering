@@ -11,7 +11,7 @@ void FUN_0003677a(void)
        (((DAT_ffffc243 == '\0' && (DAT_ffffc227 == '\0')) && (DAT_ffffc261 == '\0')))) {
       DAT_ffffc227 = '\x01';
       DAT_ffffc261 = '\x0e';
-      FUN_00035a8c(0xe);
+      candidate_e2ram_param_write_dispatch(0xe);
       DAT_ffffc243 = '\x01';
       DAT_ffffc242 = '\0';
     }

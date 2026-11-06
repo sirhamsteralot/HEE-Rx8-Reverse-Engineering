@@ -19,7 +19,7 @@ void FUN_00027b8e(void)
   if ((((DAT_ffffba23 == '\0') && (DAT_ffffc6b4 == '\x01')) ||
       ((DAT_ffffba22 == '\0' &&
        (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff865c,0), cVar1 == '\0')))) &&
-     (cVar1 = ref_E2IntoRAM_(0x20,0x44), cVar1 == '\0')) {
+     (cVar1 = e2ram_bulk_read_into_shadow(0x20,0x44), cVar1 == '\0')) {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff865a,1);
     fVar7 = 1.0;
     iVar4 = 0;
@@ -29,7 +29,7 @@ void FUN_00027b8e(void)
     uVar8 = 0xc27c0000;
     uVar9 = 0x3f000000;
     do {
-      cVar1 = FUN_00037ef0(iVar3 + 0x20,&local_34,2);
+      cVar1 = e2ram_cached_byte_read(iVar3 + 0x20,&local_34,2);
       if (cVar1 == '\0') {
         fVar6 = (float)rx8_decode_u8_affine(uVar9,uVar8,(int)local_34);
         if (local_33 == -1) {

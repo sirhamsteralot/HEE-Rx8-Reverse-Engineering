@@ -3974,10 +3974,10 @@ address	name	type	source
 0000bda0	FUN_0000bda0	Function	DEFAULT
 0000bdbc	FUN_0000bdbc	Function	DEFAULT
 0000bdec	LAB_0000bdec	Label	DEFAULT
-0000bdfa	FUN_0000bdfa	Function	DEFAULT
-0000be30	FUN_0000be30	Function	DEFAULT
-0000be5e	FUN_0000be5e	Function	DEFAULT
-0000be8c	FUN_0000be8c	Function	DEFAULT
+0000bdfa	e2ram_read_word	Function	DEFAULT
+0000be30	e2ram_send_command2	Function	DEFAULT
+0000be5e	candidate_e2ram_send_command4_a	Function	DEFAULT
+0000be8c	candidate_e2ram_send_command4_b	Function	DEFAULT
 0000beba	DAT_0000beba	Label	DEFAULT
 0000bebc	DAT_0000bebc	Label	DEFAULT
 0000bebe	DAT_0000bebe	Label	DEFAULT
@@ -3989,9 +3989,9 @@ address	name	type	source
 0000becc	PTR_ref_setSR_PARAM_0000becc	Label	DEFAULT
 0000bed0	PTR_FUN_0000bed0	Label	DEFAULT
 0000bed4	PTR_ref_setRegister_REG_BIT_VAL_0000bed4	Label	DEFAULT
-0000bed8	FUN_0000bed8	Function	DEFAULT
-0000bf3a	FUN_0000bf3a	Function	DEFAULT
-0000bfa0	FUN_0000bfa0	Function	DEFAULT
+0000bed8	e2ram_busy_status_read	Function	DEFAULT
+0000bf3a	e2ram_cs_port_setup	Function	DEFAULT
+0000bfa0	sci4_send_bytes	Function	DEFAULT
 0000bfc0	LAB_0000bfc0	Label	DEFAULT
 0000bfd8	LAB_0000bfd8	Label	DEFAULT
 0000bfe2	LAB_0000bfe2	Label	DEFAULT
@@ -4013,7 +4013,7 @@ address	name	type	source
 0000c020	PTR_FUN_0000c020	Label	DEFAULT
 0000c024	PTR_LAB_0000fdfe+1_0000c024	Label	DEFAULT
 0000c028	DAT_0000c028	Label	DEFAULT
-0000c02c	FUN_0000c02c	Function	DEFAULT
+0000c02c	sci4_read_u16	Function	DEFAULT
 0000c06c	LAB_0000c06c	Label	DEFAULT
 0000c094	LAB_0000c094	Label	DEFAULT
 0000c0d6	DAT_0000c0d6	Label	DEFAULT
@@ -20560,7 +20560,7 @@ address	name	type	source
 00035990	PTR_DAT_00035990	Label	DEFAULT
 00035994	PTR_DAT_00035994	Label	DEFAULT
 00035998	PTR_ref_E2IntoRAM__00035998	Label	DEFAULT
-0003599c	ref_getDataFromE2RAM	Function	USER_DEFINED
+0003599c	e2ram_boot_param_read	Function	USER_DEFINED
 00035a40	DAT_00035a40	Label	DEFAULT
 00035a42	DAT_00035a42	Label	DEFAULT
 00035a44	DAT_00035a44	Label	DEFAULT
@@ -20581,7 +20581,7 @@ address	name	type	source
 00035a80	PTR_DAT_00035a80	Label	DEFAULT
 00035a84	PTR_DAT_00035a84	Label	DEFAULT
 00035a88	PTR_DAT_00035a88	Label	DEFAULT
-00035a8c	FUN_00035a8c	Function	DEFAULT
+00035a8c	candidate_e2ram_param_write_dispatch	Function	DEFAULT
 00035ae2	LAB_00035ae2	Label	DEFAULT
 00035aec	LAB_00035aec	Label	DEFAULT
 00035af6	LAB_00035af6	Label	DEFAULT
@@ -20630,7 +20630,7 @@ address	name	type	source
 00035ca0	PTR_DAT_00035ca0	Label	DEFAULT
 00035ca4	PTR_DAT_00035ca4	Label	DEFAULT
 00035ca8	LAB_00035ca8	Label	DEFAULT
-00035d36	ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN	Function	USER_DEFINED
+00035d36	candidate_e2ram_write_thunk	Function	USER_DEFINED
 00035d3a	LAB_00035d3a	Label	DEFAULT
 00035d44	DAT_00035d44	Label	DEFAULT
 00035d46	DAT_00035d46	Label	DEFAULT
@@ -21203,7 +21203,7 @@ address	name	type	source
 000379d8	PTR_DAT_000379d8	Label	DEFAULT
 000379dc	PTR_DAT_000379dc	Label	DEFAULT
 000379e0	PTR_ref_setSR_000379e0	Label	DEFAULT
-000379e4	FUN_000379e4	Function	DEFAULT
+000379e4	candidate_e2ram_verify_state_machine	Function	DEFAULT
 00037a26	LAB_00037a26	Label	DEFAULT
 00037a42	LAB_00037a42	Label	DEFAULT
 00037a58	LAB_00037a58	Label	DEFAULT
@@ -21267,7 +21267,7 @@ address	name	type	source
 00037ccc	DAT_00037ccc	Label	DEFAULT
 00037cd0	PTR_FUN_00037cd0	Label	DEFAULT
 00037cd4	PTR_ref_setSR_00037cd4	Label	DEFAULT
-00037cd8	ref_E2IntoRAM_	Function	USER_DEFINED
+00037cd8	e2ram_bulk_read_into_shadow	Function	USER_DEFINED
 00037d18	LAB_00037d18	Label	DEFAULT
 00037d24	LAB_00037d24	Label	DEFAULT
 00037d6e	LAB_00037d6e	Label	DEFAULT
@@ -21282,10 +21282,10 @@ address	name	type	source
 00037e72	LAB_00037e72	Label	DEFAULT
 00037e78	LAB_00037e78	Label	DEFAULT
 00037e88	LAB_00037e88	Label	DEFAULT
-00037ea4	ref_writeToE2RAMArea_INDEX_ADDR_LEN	Function	USER_DEFINED
+00037ea4	e2ram_shadow_byte_write	Function	USER_DEFINED
 00037ec2	LAB_00037ec2	Label	DEFAULT
 00037ed6	LAB_00037ed6	Label	DEFAULT
-00037ef0	FUN_00037ef0	Function	DEFAULT
+00037ef0	e2ram_cached_byte_read	Function	DEFAULT
 00037f1c	LAB_00037f1c	Label	DEFAULT
 00037f3c	LAB_00037f3c	Label	DEFAULT
 00037f6c	PTR_FUN_00037f6c	Label	DEFAULT
@@ -46115,7 +46115,7 @@ ffffc262	DAT_ffffc262	Label	DEFAULT
 ffffc265	DAT_ffffc265	Label	DEFAULT
 ffffc266	DAT_ffffc266	Label	DEFAULT
 ffffc267	DAT_ffffc267	Label	DEFAULT
-ffffc268	DAT_ffffc268	Label	DEFAULT
+ffffc268	e2ram_param_block_ffffc268	Label	DEFAULT
 ffffc26c	DAT_ffffc26c	Label	DEFAULT
 ffffc270	DAT_ffffc270	Label	DEFAULT
 ffffc274	inferred_ram_c274_ffffc274_ffffc274	Label	DEFAULT
@@ -46141,9 +46141,9 @@ ffffc28a	DAT_ffffc28a	Label	DEFAULT
 ffffc28b	DAT_ffffc28b	Label	DEFAULT
 ffffc28c	DAT_ffffc28c	Label	DEFAULT
 ffffc28d	DAT_ffffc28d	Label	DEFAULT
-ffffc28e	DAT_ffffc28e	Label	DEFAULT
+ffffc28e	e2ram_shadow_data_ffffc28e	Label	DEFAULT
 ffffc28f	DAT_ffffc28f	Label	DEFAULT
-ffffc38e	DAT_ffffc38e	Label	DEFAULT
+ffffc38e	e2ram_shadow_complement_ffffc38e	Label	DEFAULT
 ffffc38f	DAT_ffffc38f	Label	DEFAULT
 ffffc48e	DAT_ffffc48e	Label	DEFAULT
 ffffc490	DAT_ffffc490	Label	DEFAULT

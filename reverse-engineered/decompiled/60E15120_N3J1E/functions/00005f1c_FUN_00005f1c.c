@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_post_message [high]: Posts 5-word {handler, arg1..4} message into queue slot: buf = ROM 0xd74c+8*slot, state at 0xffff9304+3*slot {wr, rd, count}, depth from ROM record; returns 2 if full. Dynamic: 0x9630(1,9,{0xdeadbeef}) wrote {0x11c98, 0xdeadbeef,0,0,0} at 0xffff94a0, count 0->1, wr 0->1, r0=0; then 0x6010 dequeued (rd 0->1, count 1->0).
+ * RAM 0xffff9304 queue_state_base (uint8[12]): 0x5f1c/0x6010 index 0xffff9304+3*slot as {wr, rd, count} for the 4 message queues (ROM records 0xd74c+8*slot). Dynamic: post to slot 2 set count 0->1, wr 0->1; dequeue set rd 0->1, count 1->0.
+ */
 /* ROM address: 0x00005f1c; body bytes: 218; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00005f1c (218 bytes). Names prefixed ref_

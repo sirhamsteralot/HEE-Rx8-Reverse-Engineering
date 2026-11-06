@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * sci4_read_u16 [high]: SCI4 receive of 2 bytes assembled into a u16: PLIR_W 0xfffff75c |= 0x200, SCI_SCR4_B |= 0x30 (TE|RE), dummy write SCI_TDR4_B = 0, wait SCI_SSR4_B bit 0x40 (RDRF), read SCI_RDR4_B 0xfffff025, repeat for second byte. Register names from symbols.tsv.
+ */
 /* ROM address: 0x0000c02c; body bytes: 170; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000c02c (170 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_0000c02c(void)
+int sci4_read_u16(void)
 
 {
   byte bVar1;

@@ -15,8 +15,8 @@ uint FUN_0004b5b6(void)
   else {
     DAT_ffffce34 = rx8_max_float(inferred_coolant_temperature_ffffa98c,5.0);
   }
-  ref_E2IntoRAM_(0x7a,2);
-  FUN_00037ef0(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
+  e2ram_bulk_read_into_shadow(0x7a,2);
+  e2ram_cached_byte_read(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
   DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   DAT_ffffce38 = 0;
   uVar2 = ((int)inferred_ram_ce30_ffffce30_ffffce30 & (uint)&PTR_ref_LongFunc_0000ff00) >> 8;

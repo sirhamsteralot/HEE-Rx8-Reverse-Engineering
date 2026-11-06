@@ -8,7 +8,7 @@ undefined4 ref_loadDatafromE2intoRAM_(void)
 {
   undefined4 uVar1;
   
-  uVar1 = ref_E2IntoRAM_(0,0x20);
+  uVar1 = e2ram_bulk_read_into_shadow(0,0x20);
   return uVar1;
 }
 

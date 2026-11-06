@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_distance_mil [high]: PID 0x21: ffff90f4
+ * RAM 0xffff90f4 distance_mil_on_ffff90f4 (float): PID 0x21 (OBD PID 21)
+ */
 /* ROM address: 0x000555f8; body bytes: 30; decompiled */
 
 void diag_read_distance_mil(void)

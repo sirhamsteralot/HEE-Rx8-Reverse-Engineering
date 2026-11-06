@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1169_ram_807c_scaled [medium]: dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05
+ * RAM 0xffff807c inferred_ram_807c_ffff807c (float): PID 0x1169, default 15.0
+ */
 /* ROM address: 0x00056efc; body bytes: 52; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f378 and register-save prologue. Heuristic

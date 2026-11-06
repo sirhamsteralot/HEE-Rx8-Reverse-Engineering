@@ -15,7 +15,7 @@ uint ref_afterImmo_2(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x04';
-    FUN_00035a8c(4);
+    candidate_e2ram_param_write_dispatch(4);
     DAT_ffffc250 = 1;
     DAT_ffffc24f = '\0';
   }

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd930 dtc_status_bits (uint32): Status bits ANDed with low16 of ROM mask table 0x7e934 in ref_getFaultStatus__ (0x66a00).
+ */
 /* ROM address: 0x00066a00; body bytes: 70; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000652f0 (70 bytes). Names prefixed ref_

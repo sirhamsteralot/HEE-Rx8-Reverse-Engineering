@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * msg_queue_task_slot3 [high]: Task rec[4] entry: dequeue slot 3 (&0xffffa154) -> call handler -> taskEnd.
+ * RAM 0xffffa154 msg_dequeue_scratch_slot3 (uint32[5]): Dequeue output buffer of consumer task 0x96fe (slot 3).
+ */
 /* ROM address: 0x000096fe; body bytes: 32; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000096fe (32 bytes). Names prefixed ref_

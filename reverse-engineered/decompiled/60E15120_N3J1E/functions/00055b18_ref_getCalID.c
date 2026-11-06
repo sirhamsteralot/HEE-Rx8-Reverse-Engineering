@@ -34,13 +34,13 @@ int ref_getCalID(undefined4 param_1)
     pcVar3 = pcVar3 + 1;
   } while (bVar4 < 9);
   puStack_34 = &DAT_0005f6e8;
-  FUN_00037ef0(100,auStack_23,3);
+  e2ram_cached_byte_read(100,auStack_23,3);
   puStack_34 = &DAT_0005f6f4;
-  FUN_00037ef0(0x68,&uStack_20,1);
+  e2ram_cached_byte_read(0x68,&uStack_20,1);
   puStack_34 = &DAT_0005f700;
-  FUN_00037ef0(0x6a,auStack_1f,2);
+  e2ram_cached_byte_read(0x6a,auStack_1f,2);
   puStack_34 = &DAT_0005f70c;
-  FUN_00037ef0(0x6c,auStack_1d,1);
+  e2ram_cached_byte_read(0x6c,auStack_1d,1);
   bVar4 = 0;
   pcVar3 = pcStack_30;
   do {

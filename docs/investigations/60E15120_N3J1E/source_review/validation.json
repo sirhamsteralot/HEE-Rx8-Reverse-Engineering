@@ -1,7 +1,7 @@
 {
   "date": "2026-10-30",
-  "function_annotations": 115,
-  "ram_aliases": 271,
+  "function_annotations": 412,
+  "ram_aliases": 426,
   "ghidra_database_updated": false,
   "sources": [
     {
@@ -19,6 +19,7 @@
       "files": {
         "rx8.dbc": "1aef4f4192974c55f0670704bbe06e643fa043186a3cc416f524d92b26dea8b1"
       }
-    }
+    },
+    "source_review_e2ram_device"
   ]
 }

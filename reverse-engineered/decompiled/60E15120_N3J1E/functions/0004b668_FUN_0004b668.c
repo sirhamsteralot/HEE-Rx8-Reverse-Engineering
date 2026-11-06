@@ -13,7 +13,7 @@ uint FUN_0004b668(void)
   DAT_ffffce38 = (vehicle_speed_ffffbbb4 * 1024.0) / 3.6e+06 + DAT_ffffce38;
   if (inferred_ram_ce30_ffffce30_ffffce30 != DAT_ffffce46) {
     DAT_ffffce4c = 1;
-    ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
+    e2ram_shadow_byte_write(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
     DAT_ffffce4a = FUN_000378dc(0x7a,2);
     DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   }

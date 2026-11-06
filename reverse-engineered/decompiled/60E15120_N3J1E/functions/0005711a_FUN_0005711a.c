@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1634_apv_position_voltage [high]: dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): apv_position_voltage_ffffcab0; decode = raw * 0.01953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

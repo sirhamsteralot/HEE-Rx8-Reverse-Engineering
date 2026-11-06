@@ -38,7 +38,7 @@ uint ref_OBDModeFunc_Unsure(char param_1,uint param_2)
   switch(bVar9) {
   case 0:
     puStack_30 = (uint *)param_2;
-    FUN_00037ef0(0x80,local_2c);
+    e2ram_cached_byte_read(0x80,local_2c);
     local_34 = (undefined *)((uint)local_34 & 0xffffff);
     uVar7 = ref_updateRAM__(puStack_30,&local_34,1);
     bVar9 = 0;
@@ -65,13 +65,13 @@ uint ref_OBDModeFunc_Unsure(char param_1,uint param_2)
       puVar4 = (uint *)((int)puVar4 + 1);
     } while (bVar9 < 9);
     local_34 = &DAT_0005f6e8;
-    FUN_00037ef0(100,auStack_23,3);
+    e2ram_cached_byte_read(100,auStack_23,3);
     local_34 = &DAT_0005f6f4;
-    FUN_00037ef0(0x68,&uStack_20,1);
+    e2ram_cached_byte_read(0x68,&uStack_20,1);
     local_34 = &DAT_0005f700;
-    FUN_00037ef0(0x6a,auStack_1f,2);
+    e2ram_cached_byte_read(0x6a,auStack_1f,2);
     local_34 = &DAT_0005f70c;
-    FUN_00037ef0(0x6c,&uStack_1d,1);
+    e2ram_cached_byte_read(0x6c,&uStack_1d,1);
     bVar9 = 0;
     puVar4 = puStack_30;
     do {

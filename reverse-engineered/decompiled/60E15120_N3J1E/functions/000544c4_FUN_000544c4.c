@@ -17,7 +17,7 @@ char FUN_000544c4(void)
   uVar4 = 0x80;
   sVar3 = 0;
   do {
-    cVar2 = FUN_00037ef0(uVar4,&local_24,2);
+    cVar2 = e2ram_cached_byte_read(uVar4,&local_24,2);
     if (cVar2 == '\x01') {
       bVar1 = true;
     }

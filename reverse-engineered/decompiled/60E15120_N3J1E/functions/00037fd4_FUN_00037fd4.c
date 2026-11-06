@@ -3,7 +3,7 @@
 undefined1 * FUN_00037fd4(void)
 
 {
-  return &DAT_ffffc28e;
+  return &e2ram_shadow_data_ffffc28e;
 }
 
 

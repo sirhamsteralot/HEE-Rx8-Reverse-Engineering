@@ -14,7 +14,7 @@ uint ref_getTireSize(void)
   undefined1 local_20;
   undefined1 uStack_1f;
   
-  uVar1 = FUN_00037ef0(0x9a,&local_20,2);
+  uVar1 = e2ram_cached_byte_read(0x9a,&local_20,2);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     tire_revolutions_per_mile_ffffd380 = CONCAT11(local_20,uStack_1f);

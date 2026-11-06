@@ -422,3 +422,6 @@ ffffbcf8	cruise_set_speed	float	0004c896	Cruise set speed; copied to 0xffffcf18 
 ffffbaed	cruise_switch_code	uint8	0004c828	Cruise switch enum (1-6) decoded into flags 0xffffcf47-0xffffcf4c by 0x4c828; written near ref_calculateCruiseControlSwitchVolt 0x2be18 / 0x2c15a.
 ffffcef4	cruise_filtered_speed_error	float	0004d700	Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
 ffffcee4	cruise_speed_error_mean12	float	0004ca7e	Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
+ffffc28e	e2ram_shadow_data	uint8[256]	00037ef0	E2RAM byte shadow cache: written by 0x37ea4/0x37ef0/0x37cd8, read back for cached reads (0x37ef0 compares against the complement at 0xffffc38e).
+ffffc38e	e2ram_shadow_complement	uint8[256]	00037ef0	Complement shadow of 0xffffc28e (0xffffc38e[i] = ~data[i]); match means cache valid, mismatch triggers a device read via 0xbdfa in 0x37ef0.
+ffffc268	e2ram_param_block	uint8[32]	0003599c	Boot parameter block 0xffffc268-0xffffc282 filled by 0x3599c via 0x37ef0 (19 indexed fields); source cells for the write dispatch 0x35a8c.
