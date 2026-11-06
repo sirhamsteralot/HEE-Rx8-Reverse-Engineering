@@ -30,7 +30,7 @@ The chain is:
 1. **Target**: `idle_target_rpm_calculate` 0x1506c (see
    [`idle_target_control_report.md`](idle_target_control_report.md)) filters the
    target and writes float `idle_target_rpm` 0xffffa7f4, then encodes it through
-   `idle_target_encode_u16` 0x5ca94 to a u16 at 0.25 rpm/LSB into 0xffffa7ac —
+   `idle_target_encode_u16` 0x5ca94 to a u16 at 0.25 rpm/LSB into `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac —
    which is exactly the Mode 22 **PID 0x096e** source (handler 0x56e22, ×0.25).
    0x5ca94 also mirrors the value into the diagnostic override cell 0xffffd34d
    when the active DID is 0x96e; it is **not** an actuator register.
@@ -39,7 +39,7 @@ The chain is:
    select (0x16900), aux term (0x16380), summed/filtered into the
    0xffffa8xx workspace.
 3. **Feedback**: `idle_air_feedback_calc` 0x15a9a compares actual rpm
-   (0xffffb548) with the quantized target (0xffffa7ac) and computes the required
+   (0xffffb548) with the quantized target (`inferred_ram_a7ac_ffffa7ac` 0xffffa7ac) and computes the required
    idle air (0xffffa838 = min(baro × IAT × airflow term, rpm-error term)).
 4. **Output**: `idle_air_output_clamp` 0x216f8 clamps 0xffffa838 between
    coolant-indexed tables into `idle_air_required` 0xffffb2a4, which the
@@ -71,14 +71,14 @@ with 0.25 rpm resolution.
 # task[10]: 0x64f6 -> 0x11744 -> ... -> idle_control_calc_batch 0x167c0 (mask 0x10)
 idle_control_calc_batch:                    # 0x167c0, 28-call batch
   prev_sr = sh_raise_interrupt_mask_return_previous(0x10)   # jsr 0x167c6 -> 0x3920
-  idle_target_term_lookup(a7ac)             # 0x148a4: a7a0 = tbl 0x692bc(a7ac)
+  idle_target_term_lookup(a7ac)             # 0x148a4: a7a0 = tbl 0x692bc(a7ac = inferred_ram_a7ac_ffffa7ac 0xffffa7ac)
   idle_ac_load_calc()                       # 0x16748: tbl 0x69530 | 3D 0x69544 -> a8c4, filter a8c8
   idle_baro_comp()                          # 0x16358: a898 = 3D 0x6a814(baro, a834)
-  idle_air_correction_select()              # 0x16900: a8cc/a8d0 from tbls 0x69244..0x692a8 by bd69/b534/b53c/b540/bdb8
+  idle_air_correction_select()              # 0x16900: a8cc/a8d0 from tbls 0x69244..0x692a8 by bd69/b534/b53c/b540/`inferred_ram_bdb8_ffffbdb8` bdb8
   idle_maf_airflow_term()                   # 0x148c4: a7a4 = tbl(0x6a100/0x6a114/0x6a128)(b5a8)*0.6345*60/a7ac
   idle_air_terms_sum()                      # 0x15f5c: a888 = a8cc + a7a4
   ... flag/timer bodies 0x14944, 0x14baa ...
-  idle_target_rpm_calculate()               # 0x1506c: target -> 0xffffa7f4 -> 0x5ca94 -> 0xffffa7ac (PID 0x096e)
+  idle_target_rpm_calculate()               # 0x1506c: target -> 0xffffa7f4 -> 0x5ca94 -> `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac (PID 0x096e)
   ... 0x14d10, 0x14f6c, 0x16432, 0x165d6, 0x16672, 0x15ffc (stall/learn flags) ...
   idle_trim_integrator()                    # 0x1617e: learn trim into 0xffff8040/8048 when a890
   idle_trim_load()                          # 0x15fa0: a88c = read(0xffff8040 | 0xffff8048)
@@ -105,13 +105,13 @@ Descriptors parsed from ROM (`>HBBII`, type 4 = u8 data, type 8 = u16):
 | 0x69440 / 0x69454 | 9 / 9 | 4 | coolant 0x6df64 / 0x6df94 | 0x6df88 / 0x6dfb8 | feedback clamp tables (0x15a9a) |
 | 0x694a4 | 6 | 4 | coolant 0x6e040 | 0x6e058 | cranking correction (0x15a9a) |
 | 0x69244–0x692a8 | 6 × 2-D | — | — | — | idle air correction select (0x16900) |
-| 0x692bc | 2-D | — | 0xffffa7ac | — | target term (0x148a4) |
+| 0x692bc | 2-D | — | 0xffffa7ac `inferred_ram_a7ac_ffffa7ac` | — | target term (0x148a4) |
 | 0x6a100 / 0x6a114 / 0x6a128 | 2-D | — | 0xffffb5a8 | — | MAF airflow term (0x148c4) |
 | 0x6a814 / 0x6a830 / 0x6a13c | 3-D / 2-D | — | baro / IAT / 0xffffb220 | — | baro, IAT, aux comps |
 | 0x69530 / 0x69544 | 2-D / 3-D | — | coolant / catalyst | — | A/C load (0x16748) |
 | 0x69424 | 3-D | — | coolant, baro | — | trim ramp floor (0x14f6c) |
 | 0x694cc | 2-D | — | coolant | — | A/C request term (0x16432) |
-| 0x69768 | 2-D | — | 0xffffa6ac | — | fuel-cut resume threshold (0x15a40) |
+| 0x69768 | 2-D | — | 0xffffa6ac `rough_knock_correction_leading` | — | fuel-cut resume threshold (0x15a40) |
 | 0x6b318 / 0x6b32c | 2-D | — | vspeed / rpm | — | vehicle-speed flags (0x34650) |
 | 0x6af18 / 0x6af40 | 2-D | — | coolant / 0xffffc04c | — | ratio calcs (0x3337c) |
 
@@ -165,7 +165,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
   cell already carried the inferred PID-0x1102 alias, kept), 0xffffbd69 = A/C
   clutch-on (0x2e9a4 gating chain), 0xffffb534 = automatic transmission
   (`ref_getAutoTransCal__` 0x24b44 sets 1), 0xffffb5b3 = high-load flag
-  (0x264f0, filtered 0xffffb5e0 ≥ 40, hysteresis 30).
+  (0x264f0 `electrical_load_flag_calc`, filtered `electrical_load_raw` 0xffffb5e0 ≥ 40, hysteresis 30).
 
 ## 6. Files
 
@@ -224,7 +224,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x00034814 | `FUN_00034814` | VDI wrapper called from the batch |
 | 0x00003920 / 0x00003934 | `sh_raise_interrupt_mask_return_previous` / `ref_setSR` | mask raise / restore |
 | 0x00021a80 | `ref_throttlePlatePosToTorqueOutput_` | reads 0xffffb2a4 (output path) |
-| 0x00024b44 / 0x0002f868 / 0x0002e9a4 / 0x000264f0 / 0x0002633e | `ref_getAutoTransCal__` / `ref_getACSwitchStatus` / `FUN_0002e9a4` / `FUN_000264f0` / `FUN_0002633e` | select-flag producers |
+| 0x00024b44 / 0x0002f868 / 0x0002e9a4 / 0x000264f0 / 0x0002633e | `ref_getAutoTransCal__` / `ref_getACSwitchStatus` / `FUN_0002e9a4` / `electrical_load_flag_calc` / `FUN_0002633e` | select-flag producers |
 | 0x00056e22 | `candidate_diag22_pid096e_ram_a7ac_quarter` | Mode 22 PID 0x096e handler |
 
 ### 8.2 Data and entry points (ROM)
@@ -243,14 +243,14 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | Address | Name | Meaning |
 |---|---|---|
 | 0xffffa7f4 | `idle_target_rpm` | filtered idle target rpm (float) |
-| 0xffffa7ac | `DAT_ffffa7ac` | quantized target u16; PID 0x096e source (×0.25) |
+| 0xffffa7ac | `inferred_ram_a7ac_ffffa7ac` | quantized target u16; PID 0x096e source (×0.25) |
 | 0xffffb2a4 | `idle_air_required` | clamped idle air output → 0x21a80 |
 | 0xffffa838 | `idle_air_calc_total` | unclamped idle air from 0x15a9a |
 | 0xffffa890 | `idle_trim_learn_active` | trim learn enable (0x15ffc) |
 | 0xffffbd69 | `ac_clutch_on` | A/C clutch-on (producer 0x2e9a4) |
 | 0xffffb534 | `automatic_transmission` | AT flag (producer 0x24b44) |
 | 0xffffb5b3 | `high_load_flag` | filtered-load ≥40 flag (producer 0x264f0) |
-| 0xffffbdb8 | `DAT_ffffbdb8` | A/C switch input (PID 0x1102 cell; producer 0x2f868) |
+| 0xffffbdb8 | `inferred_ram_bdb8_ffffbdb8` | A/C switch input (PID 0x1102 cell; producer 0x2f868) |
 | 0xffff8040 / 0xffff8048 | `DAT_ffff8040` / `DAT_ffff8048` | E2RAM-backed idle trim cells |
 
 ## 9. Limits
@@ -258,7 +258,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 - Static analysis only; no emulator/datalog run of the idle loop in this pass.
 - 0xffffb53c's exact meaning is still not pinned (cleared in the AT branch of
   0x24b8c; MT producer not traced here).
-- 0xffffb5b3's underlying quantity sits in the alternator domain (0xffffb5a4 ratio
+- `high_load_flag` 0xffffb5b3's underlying quantity sits in the alternator domain (`electrical_load_filtered` 0xffffb5a4 ratio
   in 0x2ce18); its physical meaning is deferred to the alternator/charging report.
 - The throttle-plate motor drive itself (0x218c4 chain) and the
   package-pin↔connector-terminal hop (terminals 1B/1C) are outside this pass.
