@@ -1,10 +1,9 @@
-# Review pass over the five C item 8 reports (PR #33)
+# Review of the five large-control-bodies reports
 
-Double-check of the reports added by ROADMAP C item 8 (PR #33), per AGENTS.md
-rule 7 (binary-level verification mandatory) and rule 8 (10-section format,
-cross-references). ROM 60E15120_N3J1E, SHA-256
-`a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1` (re-hashed this
-pass, matches the report headers).
+Double-check of the reports covering the seven largest previously unlabeled
+control bodies. ROM 60E15120_N3J1E, SHA-256
+`a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1` (re-hashed during
+this review, matches the report headers).
 
 Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md),
 [`cruise_control_report.md`](../cruise_control_report.md),
@@ -15,19 +14,19 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
 ## Format checks (all five reports)
 
 - Header carries target ROM path + SHA-256 + static-analysis disclaimer, and a
-  `**Related reports:**` line with working `.md` links (verified every link
-  target exists on disk; no bare `.md` code spans).
+  `**Related reports:**` line with working `.md` links (every link target
+  verified to exist on disk; no bare `.md` code spans).
 - Sections 1, 1a (plain language), 2 (pseudocode), 3 (tables), 4 (labeling),
   5 (corrections), 6 (files), 7 (validation), 8 (memory map 8.1/8.2/8.3),
-  9 (limits) all present; `validate_reports.py` re-run this pass: PASS
-  (fn/ram/rom addresses in each report's memory map checked vs index/TSVs/ROM).
+  9 (limits) all present; `validate_reports.py` re-run: PASS (fn/ram/rom
+  addresses in each report's memory map checked vs index/TSVs/ROM).
 - Label artifacts consistent: `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
   covers exactly the 15 function + 17 RAM rows of
   `source_review/accepted_{function,ram}_aliases.tsv`, which match
   `function_index.tsv` / `symbols.tsv` (asserted by
-  `tests/test_c8_large_bodies.py`, 10 passed this pass).
+  `tests/test_c8_large_bodies.py`, 10 passed).
 
-## Binary-level re-verification (independent of the PR's own test, re-read from ROM + disassembly this pass)
+## Binary-level re-verification (independent of the reports' own test, re-read from ROM + disassembly)
 
 - Call sites: pool words and jsr/mov pairs at 0x38f72→0x38f74 (pool 0x390b0 =
   0x3fb9e), 0x38f78→0x38f7a (pool = 0x4128e), 0x2e6c6 (pool 0x2e7dc = 0x4ca7e),
@@ -59,8 +58,8 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
   0x693fc/0x69410; 500.0 floor float at pool 0x15354.
 - CAN: first mailbox record at 0x4e01c = `0000 0201 00 01 08 00 ffffbaf4
   0100 0000` (id 0x201, mb 1, ctrl 0x08, buffer 0xffffbaf4); BCR compare vs
-  0x83e (decompiled −0x7fc2), IMR vs 0xfcfe (pool 0x2a6f0 at 0x2a686/0x2a698,
-  decompiled −0x302); MBCR bit build `(mb+8)&0xf`; counts 0x10/0x6; HCAN
+  0x803e (pool 0x2a5f0 = 0x0000803e), IMR vs 0xfcfe (pool 0x2a6f0 at
+  0x2a686/0x2a698); MBCR bit build `(mb+8)&0xf`; counts 0x10/0x6; HCAN
   register symbols all present in `symbols.tsv`.
 
 ## Corrections made in this review
@@ -84,23 +83,11 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
 3. §6 of four reports said "(renamed by integrate_reviewed_names.py)" — the
    script renames symbols in place; filenames keep the `FUN_` prefix. Wording
    corrected.
+4. `can_mailbox_config_report.md` §2 gave the BCR compare value as 0x83e; the
+   pool word is 0x0000803e (0x803e), confirmed dynamically (the ROM's own
+   setup writes 0x803e). Corrected.
 
-## Validators / tests re-run this pass (repo root)
-
-- `validate_export.py`, `validate_reports.py`, `verify_readability.py`,
-  `verify_math_units.py`, `verify_claims.py` — all exit 0
-  (`validate_export`/`verify_readability` report the informational
-  `semantic_equivalence_verified`/`whole_firmware_compilable` = false, same as
-  on main without a Ghidra DB; ROM hash + 3,355 function files + instruction
-  bytes verified). Run with the documented latin-1 locale
-  (`LC_ALL=aa_DJ.iso88591 PYTHONUTF8=0 PYTHONCOERCECLOCALE=0`).
-- `python -m pytest tests/` — 117 passed.
-- `tests/test_c8_large_bodies.py` — 10 passed (incl. the new descriptor/float
-  anchors above).
-- `hash_binaries.py --check` not re-run (no `binaries/` changes); ROM untouched
-  (SHA-256 re-verified).
-
-## Dynamic validation (added after the static review, ROADMAP C item 11)
+## Dynamic validation
 
 `tests/test_c8_dynamic.py` (11 passed) harness-calls each of the seven bodies
 in the emulator after boot and checks outputs against ROM constants / the
@@ -124,21 +111,34 @@ ROM's own lookup helpers:
   850 rpm floor with the idle latch, d26a override path.
 - 0x2a4f8 CAN compare: r0 == 0 when the live HCAN registers match the
   descriptor-built image (both channels), r0 != 0 on MC[1]/BCR/IMR
-  corruption. This dynamically corrected the report: BCR expect is
-  **0x803e** (pool 0x2a5f0), not 0x83e — §2 fixed.
+  corruption.
 
 Emulator fix required for this pass: `sh2e.py` operand regexes now accept the
 disassembler's spaced `@( r0,rN )` form (131 sites in the ROM); this also
-closed the two former C7 KNOWN_DECODE_GAPS (task[13]/task[16] now run to
-taskEnd + idle). Boot trace re-diffed vs the golden fixture: MATCH
-(319,731 steps). Renesas Simulator Debugger differential run still pending
-(tool not installed). Full suite: 128 passed.
+closed two former decode gaps in the task-handler tests (task[13]/[16] now
+run to taskEnd + idle). Boot trace re-diffed vs the golden fixture: MATCH
+(319,731 steps). A Renesas Simulator Debugger differential run is still
+pending (tool not installed). Full suite: 128 passed.
+
+## Validators / tests re-run (repo root)
+
+- `validate_export.py`, `validate_reports.py`, `verify_readability.py`,
+  `verify_math_units.py`, `verify_claims.py` — all exit 0
+  (`validate_export`/`verify_readability` report the informational
+  `semantic_equivalence_verified`/`whole_firmware_compilable` = false, same as
+  without a Ghidra DB; ROM hash + 3,355 function files + instruction
+  bytes verified). Run with the documented latin-1 locale
+  (`LC_ALL=aa_DJ.iso88591 PYTHONUTF8=0 PYTHONCOERCECLOCALE=0`).
+- `python -m pytest tests/` — 128 passed.
+- `tests/test_c8_large_bodies.py` — 10 passed (incl. the descriptor/float
+  anchors above).
+- ROM untouched (SHA-256 re-verified).
 
 ## Limits of this review
 
 - The idle report's battery-gate constants (0.03125, 13.016 V, 12.0 V) match
   the decompiled export but are not present as float pool words in the 0x1506c/
   0x167c0 pool region (likely built via FP ops); left as export-derived.
-- Remaining C item 11 bullets (per-subsystem open questions: cruise 0xffffbcf8
-  units, E2RAM payload attribution + save cadence, CAN record bytes +12..+15,
-  idle flag meanings + 0x5ca94 output, O2 channel meanings) are still open.
+- Still open per subsystem (report §9 Limits): cruise 0xffffbcf8 units,
+  E2RAM payload attribution + save cadence, CAN record bytes +12..+15,
+  idle flag meanings + 0x5ca94 output, O2 channel meanings.

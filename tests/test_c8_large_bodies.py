@@ -1,6 +1,6 @@
-"""ROADMAP C item 8: identify/label the seven large unlabeled control bodies.
+"""Identify and label the seven large unlabeled control bodies.
 
-Static binary-level checks (rule 7) for the labels applied in this pass:
+Static binary-level checks for the labels applied in this pass:
   0x3fb9e o2_response_monitor_accumulate   (slow-task batch 0x38f3e)
   0x4128e o2_response_monitor_evaluate     (P0133 path: id 0x1c -> slot 0x1b)
   0x4ca7e cruise_speed_error_filter_stage   (batch 0x2e692 in task[10] 0x11744)

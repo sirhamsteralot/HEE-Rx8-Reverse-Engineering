@@ -6,7 +6,7 @@ untouched). All findings are from static analysis of the canonical export
 (`reverse-engineered/decompiled/60E15120_N3J1E/`), the disassembly
 (`reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm`) and the
 raw ROM bytes. No hardware execution was performed. Labels recorded in
-`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` (ROADMAP C item 8).
+`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
 
 **Related reports:** DTC set path and the fault-id → slot map are documented in
 [`dtc_control_report.md`](dtc_control_report.md) (0x5fd38 → 0x5fe20, id2slot table
@@ -23,7 +23,7 @@ The PCM runs an **OBD front-O2-sensor response (slow-response) monitor** that en
 in **DTC P0133** ("front HO2S circuit slow response", Mazda manual wording). Four
 first-order-filtered channels of the AFR word and the actual lambda signal
 (0x3f924) are delta-accumulated per evaluation window by **0x3fb9e**
-(4,884 B — the largest unlabeled body, ROADMAP C item 8). When a window
+(4,884 B — the largest unlabeled body). When a window
 completes, 0x3fb9e publishes four amplitude ratios (0xffffc6f0/c6f4/c780/c784).
 **0x4128e** then compares them against load/rpm-indexed 3-D thresholds; if any
 channel exceeds its threshold the fault is set pending (0x5fd38(0x1c,1)), if all

@@ -4,19 +4,18 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` (ROADMAP
-C item 8).
+recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
 
 **Related reports:** task structure and task[10] in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); the
 idle task entry itself is the inherited `ref_updateIdleControl__` 0x167c0
-(ROADMAP C item 9 — this pass identifies its largest inner body 0x1506c);
-coolant/IAT scaling in the C item 7 evidence (0x7298/0x73a0);
+(this report identifies its largest inner body 0x1506c);
+coolant/IAT scaling (0x7298/0x73a0);
 alternator load interaction via `ref_alternatorControl` 0x2680e in the same task.
 
 ## 1. Executive summary
 
-**0x1506c** (1,530 B — ROADMAP C item 8) is the **idle target RPM calculation**
+**0x1506c** (1,530 B) is the **idle target RPM calculation**
 inside the idle-control task body `ref_updateIdleControl__` 0x167c0 (itself
 called from task[10] body 0x11744; task table rec[10] entry 0x64f6 at ROM
 0x4a38). It filters battery voltage (0xffffa7c8, factor 0.03125, gates at 13.016
@@ -80,7 +79,7 @@ RAM alias: `idle_target_rpm` (0xffffa7f4). Evidence:
 ## 5. Corrections made in this pass
 
 None — 0x1506c was unlabeled. `ref_updateIdleControl__` 0x167c0 keeps its
-inherited name (C item 9 will verify it).
+inherited name (an unverified hypothesis).
 
 ## 6. Files
 

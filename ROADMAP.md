@@ -79,7 +79,7 @@ and where artifacts live.
 - **C item 11 (open)** — open items left by C item 8 (PR #33). The
   dynamic/emulator validation of the seven newly labeled bodies is **done**
   (`tests/test_c8_dynamic.py`, 11 passed; pairs with C item 10 / E item 1 —
-  see [reviews/c8_reports_review.md](docs/investigations/60E15120_N3J1E/reviews/c8_reports_review.md);
+  see [reviews/large_control_bodies_review.md](docs/investigations/60E15120_N3J1E/reviews/large_control_bodies_review.md);
   it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
   emulator decode gaps). Still open, per subsystem (report §9 Limits):
   - cruise ([cruise_control_report.md](docs/investigations/60E15120_N3J1E/cruise_control_report.md)):
