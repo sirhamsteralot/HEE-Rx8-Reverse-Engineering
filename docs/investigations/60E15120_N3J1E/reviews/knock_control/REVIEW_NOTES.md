@@ -92,7 +92,7 @@ via the CLF threshold tables).
 10. **DTC 0x23/0x24 not def-corroborated**: this ROM's def block has no DTC
     0023/0024 enable/disable tables (only 0030/0031/0032/0037/0038/0076/0077
     among the 00xx codes) and no DTC description list. The DTC claim rests
-    solely on firmware dataflow (`FUN_0005fd38(0x23/0x24)` from the knock
+    solely on firmware dataflow (`dtc_set_fault_x0(0x23/0x24)` from the knock
     health monitor) — now labelled firmware-inferred in the report.
 
 ### Unexplained terms / misattribution

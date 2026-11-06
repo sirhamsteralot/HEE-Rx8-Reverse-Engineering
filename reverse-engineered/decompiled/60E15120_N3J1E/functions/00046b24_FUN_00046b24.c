@@ -53,10 +53,10 @@ void FUN_00046b24(void)
   DAT_ffffcc5e = 0;
 LAB_00046c74:
   if (uVar4 == 1) {
-    FUN_0005fd38(99,1);
+    dtc_set_fault_x0(99,1);
   }
   else if (DAT_ffffcc5d == '\x01') {
-    FUN_0005fd38(99,2);
+    dtc_set_fault_x0(99,2);
   }
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8744,uVar1);
   return;

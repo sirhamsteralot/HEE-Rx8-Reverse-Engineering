@@ -230,6 +230,16 @@ decompiled artifact was modified.
 - **Status-mask table is arg-indexed** (0x7e934 + 4*arg in 0x66a00), while the code/
   enable/type tables are slot-indexed — a new DTC must get both indexings right
   (§3 rows 3, 7, 8).
+- **The set-fault "thunks" are verified direct trampolines, not indirect calls:**
+  0x5fd38 is `bra 0x5fe20` + delay `mov #0,r6` (x fixed to 0; 71 callers) and 0x5fd3c
+  defaults r6 to 0xffff (pool 0x5fe0c) before the same tail-call; 0x5fe20's only
+  callers are these two. 0x5fd4a is a plain setter of the eval-enable flag 0xffffd688
+  (pool 0x5fe10). Labels promoted from `FUN_0005fd38` /
+  `ref_updateFaultStatusTHUNKNoR6_` (a misnomer — the body is set_fault, not a status
+  update) to `dtc_set_fault_x0` / `dtc_set_fault_xdefault` / `dtc_set_eval_enable`
+  (record: `data/labels/60E15120_N3J1E/dtc_thunk_labels.json`, aliases in
+  `source_review/accepted_function_aliases.tsv`, applied to the export; test
+  `tests/test_dtc_set_fault_thunk.py`).
 
 ## 6. Files
 
@@ -274,8 +284,9 @@ decompiled artifact was modified.
 
 | Address | Label | Role in the DTC path |
 |---|---|---|
-| 0x0005fd38 | `FUN_0005fd38` — set_fault thunk | raise entry, 71 callers; (arg, mode) |
-| 0x0005fd3c | `ref_updateFaultStatusTHUNKNoR6_` | variant passing param_3 |
+| 0x0005fd38 | `dtc_set_fault_x0` — set-fault trampoline (x=0) | raise entry, 71 callers; (arg, mode) |
+| 0x0005fd3c | `dtc_set_fault_xdefault` — trampoline defaulting x to 0xffff when r6==0 | 2 callers (0x44724, 0x44cec) |
+| 0x0005fd4a | `dtc_set_eval_enable` | writes 0xffffd688; callers 0x5fd6c (boot), 0x5dde8 (UDS 0x85) |
 | 0x0005fe20 | `FUN_0005fe20` — dtc_set_fault | core set path; arg→slot via pool 0x5ff1c = 0x7df42 |
 | 0x00060062 | `FUN_00060062` — dtc_state_transition | modes 1/2/4 (r5), type via pool 0x60138 = 0x7e32a |
 | 0x000601cc | `FUN_000601cc` — dtc_mark_stored | 0xffffd570[slot]=1, first code 0xffffd3c0 (pool 0x60278) |

@@ -45,15 +45,15 @@
       "rom_claims": 0
     },
     "dtc_authoring_report.md": {
-      "fn_checked": 30,
+      "fn_checked": 31,
       "ram_checked": 18,
-      "rom_refs": 48,
+      "rom_refs": 49,
       "rom_claims": 0
     },
     "dtc_control_report.md": {
-      "fn_checked": 40,
+      "fn_checked": 41,
       "ram_checked": 11,
-      "rom_refs": 51,
+      "rom_refs": 52,
       "rom_claims": 0
     },
     "e2ram_device_layer_report.md": {
