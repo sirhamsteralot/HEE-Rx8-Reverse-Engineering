@@ -35,11 +35,67 @@
   "record": "metadata/dsc_can_labels.json",
   "ghidra_database_updated": false,
   "binary_level_verification": {
-    "batch_call_count_rechecked": {"0x2a2ae": 15, "0x2b29c": 8},
-    "batch_pool": {"range": "0x2a3e0-0x2a4f4 (u32_table)", "callees": ["0x2b314", "0x2b3b8", "0x2b496", "0x2b6a4", "0x2b6c2", "0x2b754", "0x2b788", "0x2b7a6", "0x2b7c4", "0x2b046", "0x2b156", "0x2b17e", "0x2b1aa"]},
-    "can212_mailbox_descriptor": {"rom": "0x4e21c/0x4e224", "id": "0x212", "dlc": 8, "buffer": "0xffffbbc0"},
-    "reader_pool_scan": {"0xffffbbd8": ["0x1827c -> 0x1815c dsc_timing_derate_select", "0x18024 -> 0x17f20"], "0xffffbbb8": ["0x166ee -> 0x165d6"]},
-    "affine_constants": {"wheelspeed_u16": "step 0x3c23d70a offset 0xc2c80000", "torque_u8": "step 0x3ec99326"}
+    "batch_call_count_rechecked": {
+      "0x2a2ae": 15,
+      "0x2b29c": 8
+    },
+    "batch_pool": {
+      "range": "0x2a3e0-0x2a4f4 (u32_table)",
+      "callees": [
+        "0x2b314",
+        "0x2b3b8",
+        "0x2b496",
+        "0x2b6a4",
+        "0x2b6c2",
+        "0x2b754",
+        "0x2b788",
+        "0x2b7a6",
+        "0x2b7c4",
+        "0x2b046",
+        "0x2b156",
+        "0x2b17e",
+        "0x2b1aa"
+      ]
+    },
+    "can212_mailbox_descriptor": {
+      "rom": "0x4e21c/0x4e224",
+      "id": "0x212",
+      "dlc": 8,
+      "buffer": "0xffffbbc0"
+    },
+    "reader_pool_scan": {
+      "0xffffbbd8": [
+        "0x1827c -> 0x1815c dsc_timing_derate_select",
+        "0x18024 -> 0x17f20"
+      ],
+      "0xffffbbb8": [
+        "0x166ee -> 0x165d6"
+      ]
+    },
+    "affine_constants": {
+      "wheelspeed_u16": "step 0x3c23d70a offset 0xc2c80000",
+      "torque_u8": "step 0x3ec99326"
+    }
   },
-  "limits": "Static analysis only. 0x212 origin module inferred from content. Mode-bit semantics not pinned. TX side covered by the CAN mailbox report."
+  "limits": "Static analysis only. 0x212 origin module inferred from content. Mode-bit semantics not pinned. TX side covered by the CAN mailbox report.",
+  "claim_verification": {
+    "result": "PASS after fixes",
+    "machine_validators": "verify_claims.py PASS; validate_reports.py PASS; validate_export.py PASS (ROM SHA-256 a7cd953c..., 3,355 function files, 168,592 instructions, 337,184 instruction bytes, 1,833 exact reference matches); verify_readability.py PASS (3,355 bodies consistent); verify_math_units.py PASS; python -m pytest tests/ 134 passed",
+    "binary_level_recheck": "every ROM-byte, literal-pool, mailbox-descriptor and call-count claim in the report and this folder re-read from the raw ROM + firmware_disassembly.asm: 0x2a2ae = 14 jsr + 1 tail jmp = 15 calls, first jsr 0x2a2b4, mov #0x10 at 0x2a2b6, 13 callee pool words 0x2a468-0x2a498 plus 0x2a448=0x3920 / 0x2a454=0x3934; 0x2b29c body 104 B with 8 jsr (sole caller 0xdbf6 in ref_canSetup); mailbox record at ROM 0x4e21c = 00000212 01210700 ffffbbc0 01000000 (ID 0x212, ctrl byte r[6]=0x07 at 0x4e222 = DLC 7, buffer 0xffffbbc0); reader pool words 0x1827c (in 0x1815c dsc_timing_derate_select), 0x18024 (in 0x17f20), 0x166ee (in 0x165d6 candidate_idle_ac_clutch_gate); affine consts 0x3c23d70a/0xc2c80000 in 0x2b046 (pools 0x2b10c/0x2b110), 0x3ec99326 in 0x2b3b8 (pool 0x2b468) and 0x2b496 (pool 0x2b5b8); validity reload 0x1f at 0x2b324; timeout/staleness threshold word 0x1f at 0x7bc54/0x7bc56 (cmp/hs, so bbf0>=0x1f == the prose '> 0x1e'); vspeed 4.0/5.0 f32 at 0x78c84/0x78c88; torque clamp 0.0/512.0 f32 in 0x2b3b8 (pools 0x2b460/0x2b478)",
+    "fixes_applied": [
+      "0x212 mailbox descriptor DLC corrected 8 -> 7 (ctrl byte 0x07 at ROM 0x4e222); the quoted record bytes now cover exactly the 16-byte record at 0x4e21c (was offset by one word)",
+      "0x2a2ae callee count corrected 12 -> 13 (14 jsr + 1 tail jmp = 15 calls)"
+    ],
+    "fixes_landed_in": [
+      "dsc_can_arbitration_report.md",
+      "reviews/dsc_can_arbitration/README.md",
+      "reviews/dsc_can_arbitration/validation.json",
+      "data/labels/60E15120_N3J1E/dsc_can_labels.json",
+      "source_review/accepted_function_aliases.tsv",
+      "utilities/scripts/rx8-pcm-pipeline/review_dsc_can_labels.py",
+      "decompiled/functions/0002b29c_ref_CAN212RX_Main.c",
+      "decompiled/firmware_decompiled.c",
+      "decompiled/named/firmware_named.c"
+    ]
+  }
 }

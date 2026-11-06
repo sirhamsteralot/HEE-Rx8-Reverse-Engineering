@@ -126,17 +126,6 @@ and where artifacts live.
   and the two monoliths in sync. Any rename/relabel still needs rule-7
   binary-level verification; run the pipeline validators + `python -m pytest
   tests/` after the pass.
-- **C item 15 (open)** — verify all claims in the reports added today:
-  [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)
-  (+ `reviews/dsc_can_arbitration/`, merged today) and
-  [idle_control_report.md](docs/investigations/60E15120_N3J1E/idle_control_report.md)
-  (+ `reviews/idle_control/`, open PR branch). For each: re-check every
-  machine-checkable claim with `verify_claims.py` / `validate_reports.py`,
-  plus the rule-7 binary-level pass over prose claims (ROM bytes, literal
-  pools, mailbox/descriptor bytes, call counts vs the disassembly), and record
-  the outcome in the report's `reviews/<subsystem>/validation.json`. Fix any
-  factual error in *all* artifacts (report + label JSON/TSV evidence), per
-  AGENTS.md rule 11.
 - **C item 16 (open)** — apply all of today's findings to the decompiled C
   code itself. Today's passes (the DSC CAN arbitration labeling, merged, and
   the idle speed control labeling, open PR branch) produced new function

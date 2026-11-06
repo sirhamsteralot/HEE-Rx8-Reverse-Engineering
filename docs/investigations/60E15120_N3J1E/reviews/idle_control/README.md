@@ -55,9 +55,9 @@ diagnostic readout; it does not drive an actuator register.
   `a834*a7ac/rpm`; tables 0x6947c/0x69490/0x694b8 (rpm), 0x69440/0x69454 (coolant),
   0x694a4 (cranking); constants pool 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892,
   0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850…0xffffa838.
-- 0x216f8 `idle_air_output_clamp` (70 B): pool 0x21740-0x2175c words 0x21744=0x6a218,
-  0x21748=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac,
-  0x2175c=0x2404; `0xffffb2a4 = clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant))`.
+- 0x216f8 `idle_air_output_clamp` (70 B): pool 0x21740-0x2175c words 0x21744=0x2068
+  (lookup helper), 0x21748=0x6a218, 0x2174c=0x6a240, 0x21750=0xffffb2a8,
+  0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404 (clamp); `0xffffb2a4 = clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant))`.
   Descriptors parsed: 0x6a218 n=21 type 4 axis 0x732dc data 0x73330;
   0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0.
 - Output path: 0xffffb2a4 is read via mov.w pool words 0x1ba80 (0x1b988 in 0x1b940),
@@ -95,6 +95,11 @@ diagnostic readout; it does not drive an actuator register.
 | 0xffffb53c | 0x24b8c (partial) | cleared in the AT branch; MT producer not traced in this pass |
 
 ## 6. Validation
+
+A follow-up claims-verification pass re-ran the machine validators and re-read
+every binary-level claim from the raw ROM/disassembly (see `validation.json`
+`claim_verification`); it corrected the 0x216f8 pool-word citations (0x21744=0x2068,
+0x21748=0x6a218, 0x2174c=0x6a240).
 
 See `validation.json` in this folder: `validate_export.py` (ROM SHA-256,
 168,592 instruction bytes, 1,833 exact reference matches), `verify_claims.py`,
