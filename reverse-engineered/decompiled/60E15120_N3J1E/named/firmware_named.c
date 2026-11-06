@@ -17823,7 +17823,7 @@ void ref_CANRX_Main(void)
 
 {
   if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (DAT_ffffa410 == '\0')) {
-    ref_CAN212RX_Main();
+    can212_rx_main();
     ref_CAN216RX_Main();
     if (automatic_transmission_ffffb534 == '\0') {
       ref_CAN231TX_Main();
@@ -21294,7 +21294,7 @@ void FUN_00011744(void)
   candidate_vdi_control_task_wrapper();
   candidate_vfad_control_task_wrapper();
   FUN_000288f4();
-  ref_updateDSCRelatedCANStuff__();
+  dsc_can_arbitration_batch();
   ref_getFaultEvalState();
   FUN_00016b82();
   return;
@@ -25223,6 +25223,7 @@ void candidate_idle_ac_request_calc(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_ac_clutch_gate [medium]: 0xffffa8bc = 0 when (bd69==0 && a8bf) or engine-running timer < 0x80 or flags 0xffffbbb8/a7b6/c5e6/c5db/c5d7/c61e set; else 1; mirrors bd69 into a8bf. Called from 0x167c0 via pool 0x168bc.
  * RAM 0xffffbd69 ac_clutch_on (uint8): Set by 0x2e9a4 under a gating chain (engine-running timer 0xffffa424, injectors-off 0xffffa42c, rpm < 7800, coolant < 118 C, flags bd72/bd73/bd76/bd92/bd96/bd97/bd98/0xffffc5e6); adjacent to ref_calculateACClutchOn__ 0x2e89c; consumed as A/C-clutch select in the idle chain (0x16900/0x165d6/0x14944).
+ * RAM 0xffffbbb8 vehicle_not_moving (uint8): Set by 0x2b156 when vspeed <= 4 km/h (hyst 5); read in the idle A/C clutch gate 0x165d6 (pool 0x166ee at 0x16626).
  */
 /* ROM address: 0x000165d6; body bytes: 120; decompiled */
 
@@ -25233,7 +25234,7 @@ void candidate_idle_ac_clutch_gate(void)
     DAT_ffffa8bc = 0;
   }
   else if (((engine_running_timer_ffffa424 < 0x80) ||
-           (((DAT_ffffbbb8 != '\x01' || (DAT_ffffa7b6 != '\0')) || (DAT_ffffc5e6 != '\0')))) ||
+           (((vehicle_not_moving_ffffbbb8 != '\x01' || (DAT_ffffa7b6 != '\0')) || (DAT_ffffc5e6 != '\0')))) ||
           (((DAT_ffffc5db != '\0' || (DAT_ffffc5d7 != '\0')) || (DAT_ffffc61e != '\0')))) {
     DAT_ffffa8bc = 0;
   }
@@ -26694,11 +26695,11 @@ int FUN_00017f20(void)
   float fVar3;
   float arg0;
   
-  fVar3 = DAT_ffffbbd8;
+  fVar3 = engine_max_torque_allowed_ffffbbd8;
   arg0 = DAT_ffffbca0;
-  fVar2 = rx8_absolute_difference(DAT_ffffbca0,DAT_ffffbbd8);
+  fVar2 = rx8_absolute_difference(DAT_ffffbca0,engine_max_torque_allowed_ffffbbd8);
   arg1 = 0.0;
-  if ((((DAT_ffffbbc8 == -2) || (DAT_ffffbbcb != '\x01')) || (arg0 < fVar3)) || (fVar2 < 4.9)) {
+  if ((((can212_torque_signal_ffffbbc8 == -2) || (DAT_ffffbbcb != '\x01')) || (arg0 < fVar3)) || (fVar2 < 4.9)) {
     DAT_ffffa92c = 0.0;
   }
   else {
@@ -26803,6 +26804,7 @@ void FUN_000180c8(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
  * RAM 0xffffa91c dsc_timing_derate_leading (float): 
+ * RAM 0xffffbbd8 engine_max_torque_allowed (float): Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
  */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
@@ -26827,7 +26829,7 @@ undefined4 dsc_timing_derate_select(void)
   snapshot_DAT_ffffbc98 = DAT_ffffbc98;
   fVar11 = dsc_mode_a_base_timing_ffffbc94;
   cVar1 = DAT_ffffbc83;
-  fVar8 = DAT_ffffbbd8;
+  fVar8 = engine_max_torque_allowed_ffffbbd8;
   iVar7 = (int)DAT_ffffbc83;
   snapshot_DAT_ffffbc90 = DAT_ffffbc90;
   fVar10 = DAT_ffffbac4;
@@ -41232,7 +41234,7 @@ void FUN_0002a082(void)
 
 {
   if (((inferred_ram_a9bc_ffffa9bc_ffffa9bc < 65.0) || (engine_speed_rpm_ffffb548 < 5500.0)) || (engine_running_ffffa428 != '\0')) {
-    if (((DAT_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
+    if (((can212_status_word_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
       DAT_ffffbb5c = 900000;
     }
     else if ((cranking_active_ffffaa62_ffffaa62 == '\0') && (DAT_ffffbb5c != 0)) {
@@ -41242,13 +41244,13 @@ void FUN_0002a082(void)
   else {
     DAT_ffffbb5c = 0;
   }
-  if (((DAT_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
+  if (((can212_status_word_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
     DAT_ffffbb49 = 1;
   }
   else {
     DAT_ffffbb49 = 0;
   }
-  DAT_ffffbb62 = DAT_ffffbbde;
+  DAT_ffffbb62 = can212_status_word_ffffbbde;
   return;
 }
 
@@ -41373,30 +41375,33 @@ void FUN_0002a290(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_can_arbitration_batch [high]: 15-call batch (13 jsr + tail jmp) under interrupt mask 0x10, called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2a2ae). Pool words in classified pool 0x2a3e0-0x2a4f4 read from ROM: 0x2a448=0x3920 sh_raise_interrupt_mask_return_previous, 0x2a454=0x3934 ref_setSR (tail), 0x2a468=0x2b314, 0x2a46c=0x2b3b8, 0x2a470=0x2b496, 0x2a474=0x2b6a4, 0x2a478=0x2b6c2, 0x2a47c=0x2b754, 0x2a480=0x2b788, 0x2a484=0x2b7a6, 0x2a488=0x2b7c4, 0x2a48c=0x2b046, 0x2a490=0x2b156, 0x2a494=0x2b17e, 0x2a498=0x2b1aa. Inherited ref_updateDSCRelatedCANStuff__ confirmed: CAN 0x212 signal validity, max-torque-allowed, DSC mode bits, vehicle-moving and wheelspeed validity.
+ */
 /* ROM address: 0x0002a2ae; body bytes: 96; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002aa02 (96 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_updateDSCRelatedCANStuff__(void)
+void dsc_can_arbitration_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_can212RXSignalValidity__();
-  ref_calculateEngineMaxTorqueAllowed___();
-  FUN_0002b496();
-  FUN_0002b6a4();
-  ref_DSC_checkIfMode_x80();
-  ref_DSC_checkIfMode_x40();
-  ref_DSC_checkIfMode_x20();
-  ref_DSC_checkIfMode_x10();
-  FUN_0002b7c4();
-  FUN_0002b046();
-  ref_calculateIfVehicleMoving();
-  ref_calculateWheelspeed_LR_Validity();
-  ref_calculateWheelspeed_RR_Validity();
+  can212_rx_signal_validity();
+  engine_max_torque_allowed_calc();
+  candidate_dsc_desired_torque_calc();
+  candidate_dsc_mode_bit08_check();
+  candidate_dsc_mode_bit80_check();
+  candidate_dsc_mode_bit40_check();
+  candidate_dsc_mode_bit20_check();
+  candidate_dsc_mode_bit10_check();
+  candidate_can212_timeout_flag();
+  candidate_wheelspeed_rear_avg_calc();
+  vehicle_moving_calc();
+  wheelspeed_lr_validity();
+  wheelspeed_rr_validity();
   ref_setSR(uVar1);
   return;
 }
@@ -42011,7 +42016,7 @@ uint ref_CAN4B0RX_Main(void)
   cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e24c);
   if (cVar2 == '\0') {
     FUN_0000e038();
-    ref_canrx4b0related();
+    candidate_can4b0_wheelspeed_extract();
     uVar1 = FUN_0002b220();
     DAT_ffffbbbc = 0;
     DAT_ffffbbbe = 0;
@@ -42028,9 +42033,14 @@ uint ref_CAN4B0RX_Main(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_rear_avg_calc [medium]: Averages the two rear wheelspeed signals from CAN (0xffffbbac/0xffffbbae, written by 0x2b1d6 from payload bytes bba4-bba7): decode_u16_affine(0x3c23d70a, 0xc2c80000, x) each, mean, re-encode saturate; 0xffff (invalid) handling when either is -1 or 0xffffbbbc < 6 or 0xffffc61e set. Pool 0x2a48c.
+ * RAM 0xffffbbac wheelspeed_lr_raw (uint16): Raw LR wheelspeed from CAN payload (0x2b1d6: bba4*0x100+bba5); validity flag 0xffffbbb9 by 0x2b17e; averaged in 0x2b046.
+ * RAM 0xffffbbae wheelspeed_rr_raw (uint16): Raw RR wheelspeed (0x2b1d6: bba6*0x100+bba7); validity flag 0xffffbbba by 0x2b1aa; averaged in 0x2b046.
+ */
 /* ROM address: 0x0002b046; body bytes: 216; decompiled */
 
-undefined4 * FUN_0002b046(void)
+undefined4 * candidate_wheelspeed_rear_avg_calc(void)
 
 {
   undefined4 *puVar1;
@@ -42047,14 +42057,14 @@ undefined4 * FUN_0002b046(void)
   puVar1 = &DAT_0002b110;
   uVar8 = 0xc2c80000;
   if (((DAT_ffffc61e == '\0') && (puVar1 = (undefined4 *)0x6, DAT_ffffbbbc < 6)) &&
-     ((DAT_ffffbbac != -1 || (puVar1 = (undefined4 *)0x6, DAT_ffffbbae != -1)))) {
+     ((wheelspeed_lr_raw_ffffbbac != -1 || (puVar1 = (undefined4 *)0x6, wheelspeed_rr_raw_ffffbbae != -1)))) {
     puVar1 = (undefined4 *)0x6;
-    puVar3 = (undefined4 *)(int)DAT_ffffbbae;
-    if ((DAT_ffffbbac != -1) &&
-       (puVar1 = (undefined4 *)0x6, puVar3 = (undefined4 *)(int)DAT_ffffbbac, DAT_ffffbbae != -1)) {
+    puVar3 = (undefined4 *)(int)wheelspeed_rr_raw_ffffbbae;
+    if ((wheelspeed_lr_raw_ffffbbac != -1) &&
+       (puVar1 = (undefined4 *)0x6, puVar3 = (undefined4 *)(int)wheelspeed_lr_raw_ffffbbac, wheelspeed_rr_raw_ffffbbae != -1)) {
       fVar4 = (float)rx8_decode_u16_affine
-                               (0x3c23d70a,0xc2c80000,(undefined4 *)(int)DAT_ffffbbac);
-      fVar5 = (float)rx8_decode_u16_affine(uVar7,uVar8,(int)DAT_ffffbbae);
+                               (0x3c23d70a,0xc2c80000,(undefined4 *)(int)wheelspeed_lr_raw_ffffbbac);
+      fVar5 = (float)rx8_decode_u16_affine(uVar7,uVar8,(int)wheelspeed_rr_raw_ffffbbae);
       puVar1 = (undefined4 *)
                rx8_encode_u16_affine_saturate((fVar4 + fVar5) * 0.5,uVar7,uVar8);
       puVar3 = puVar1;
@@ -42079,74 +42089,88 @@ undefined4 * FUN_0002b046(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * vehicle_moving_calc [high]: 0xffffbbb8 = 1 when vehicle_speed 0xffffbbb4 <= 4.0 (clears only at >= 5.0) — vehicle-not-moving flag; read by 0x165d6 (pool 0x166ee at 0x16626) in the idle A/C gate. Pool 0x2a490.
+ */
 /* ROM address: 0x0002b156; body bytes: 40; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8aa (40 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateIfVehicleMoving(void)
+void vehicle_moving_calc(void)
 
 {
   if (4.0 < vehicle_speed_ffffbbb4) {
     if (5.0 <= vehicle_speed_ffffbbb4) {
-      DAT_ffffbbb8 = 0;
+      vehicle_not_moving_ffffbbb8 = 0;
     }
   }
   else {
-    DAT_ffffbbb8 = 1;
+    vehicle_not_moving_ffffbbb8 = 1;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_lr_validity [high]: 0xffffbbb9 = 1 when 0xffffbbac == -1 (invalid) or 0xffffbbbe > 0x1e (stale). Pool 0x2a494.
+ * RAM 0xffffbbb9 wheelspeed_lr_invalid (uint8): LR wheelspeed invalid/stale flag from 0x2b17e (0xffffbbac == -1 || 0xffffbbbe > 0x1e).
+ */
 /* ROM address: 0x0002b17e; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8d2 (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateWheelspeed_LR_Validity(void)
+void wheelspeed_lr_validity(void)
 
 {
-  if ((DAT_ffffbbac == -1) || (0x1e < DAT_ffffbbbe)) {
-    DAT_ffffbbb9 = 1;
+  if ((wheelspeed_lr_raw_ffffbbac == -1) || (0x1e < DAT_ffffbbbe)) {
+    wheelspeed_lr_invalid_ffffbbb9 = 1;
   }
   else {
-    DAT_ffffbbb9 = 0;
+    wheelspeed_lr_invalid_ffffbbb9 = 0;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_rr_validity [high]: 0xffffbbba = 1 when 0xffffbbae == -1 or 0xffffbbbe > 0x1e. Pool 0x2a498.
+ * RAM 0xffffbbba wheelspeed_rr_invalid (uint8): RR wheelspeed invalid/stale flag from 0x2b1aa (0xffffbbae == -1 || 0xffffbbbe > 0x1e).
+ */
 /* ROM address: 0x0002b1aa; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8fe (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateWheelspeed_RR_Validity(void)
+void wheelspeed_rr_validity(void)
 
 {
-  if ((DAT_ffffbbae == -1) || (0x1e < DAT_ffffbbbe)) {
-    DAT_ffffbbba = 1;
+  if ((wheelspeed_rr_raw_ffffbbae == -1) || (0x1e < DAT_ffffbbbe)) {
+    wheelspeed_rr_invalid_ffffbbba = 1;
   }
   else {
-    DAT_ffffbbba = 0;
+    wheelspeed_rr_invalid_ffffbbba = 0;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can4b0_wheelspeed_extract [medium]: 0xffffbbac = bba4*0x100 + bba5; 0xffffbbae = bba6*0x100 + bba7 (two u16 wheelspeed signals from a CAN payload buffer at 0xffffbba4).
+ */
 /* ROM address: 0x0002b1d6; body bytes: 74; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b92a (74 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_canrx4b0related(void)
+void candidate_can4b0_wheelspeed_extract(void)
 
 {
   DAT_ffffbba8 = (ushort)DAT_ffffbba0 * 0x100 + (ushort)DAT_ffffbba1;
   DAT_ffffbbaa = (ushort)DAT_ffffbba2 * 0x100 + (ushort)DAT_ffffbba3;
-  DAT_ffffbbac = (ushort)DAT_ffffbba4 * 0x100 + (ushort)DAT_ffffbba5;
-  DAT_ffffbbae = (ushort)DAT_ffffbba6 * 0x100 + (ushort)DAT_ffffbba7;
+  wheelspeed_lr_raw_ffffbbac = (ushort)DAT_ffffbba4 * 0x100 + (ushort)DAT_ffffbba5;
+  wheelspeed_rr_raw_ffffbbae = (ushort)DAT_ffffbba6 * 0x100 + (ushort)DAT_ffffbba7;
   return;
 }
 
@@ -42191,12 +42215,16 @@ void thunk_FUN_0002b8f4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_main [high]: CAN 0x212 RX handler: can_rx_copy_mailbox_to_buffer(&DAT_0004e21c) (mailbox descriptor at ROM 0x4e21c: bytes 00000000 00000212 01210700 ffffbbc0 01000000 = ID 0x212, DLC 8, buffer 0xffffbbc0); on success calls 0xe038, 0x2b7e2 (unpack), 0x2b816 (0xffffbbc8 = 0xffffbbf2), 0x2b8f4 and resets 0xffffbbee/0xffffbbf0; on failure counts 0xffffbbee (every 4th -> 0xffffbbf0) and 0xffffbbc7. 8 calls total.
+ * RAM 0xffffbbf0 can212_timeout_counter (uint16): 0x212 RX failure counter incremented in 0x2b29c on mailbox-copy failure (every 4th failure); 0xffffbbd0 = (0x1e < bbf0) timeout flag by 0x2b7c4.
+ */
 /* ROM address: 0x0002b29c; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b9f0 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_CAN212RX_Main(void)
+void can212_rx_main(void)
 
 {
   char cVar1;
@@ -42204,16 +42232,16 @@ void ref_CAN212RX_Main(void)
   cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e21c);
   if (cVar1 == '\0') {
     FUN_0000e038();
-    ref_can212RXUnpack();
-    FUN_0002b816();
+    can212_rx_unpack();
+    candidate_can212_torque_extract();
     FUN_0002b8f4();
     DAT_ffffbbee = 0;
-    DAT_ffffbbf0 = 0;
+    can212_timeout_counter_ffffbbf0 = 0;
   }
   else {
     DAT_ffffbbee = rx8_add_u16_saturate((int)(short)DAT_ffffbbee,1);
     if ((DAT_ffffbbee & 3) == 0) {
-      DAT_ffffbbf0 = rx8_add_u16_saturate((int)DAT_ffffbbf0,1);
+      can212_timeout_counter_ffffbbf0 = rx8_add_u16_saturate((int)can212_timeout_counter_ffffbbf0,1);
     }
     DAT_ffffbbc7 = rx8_add_u8_saturate((int)DAT_ffffbbc7,1);
   }
@@ -42236,12 +42264,15 @@ void FUN_0002b304(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_signal_validity [high]: Validity timers for three 0x212 signals: when 0xffffbbf2/bbf3/bbf4 != -1 reload counters 0xffffbbe8/bbea/bbec = 0x1f, else count down; a signal is stale when its counter reaches 0. Called from 0x2a2ae via pool 0x2a468.
+ */
 /* ROM address: 0x0002b314; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002ba68 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 ref_can212RXSignalValidity__(void)
+undefined4 can212_rx_signal_validity(void)
 
 {
   if (DAT_ffffbbf2 == -1) {
@@ -42272,12 +42303,15 @@ undefined4 ref_can212RXSignalValidity__(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * engine_max_torque_allowed_calc [high]: 0xffffbbd8 = clamp((0xffffbb20 * decode_u8_affine(0x3ec99326, 0, 0xffffbbc8)/100.0 - 0xffffbcb8) - 0xffffbcbc, 0, 512.0); 512.0 (failsafe) when engine running and validity/fault flags clear, else decode of the 0x212 torque byte. Read by 0x17f20 and 0x1815c dsc_timing_derate_select (pool 0x1827c at 0x18188). Called from 0x2a2ae via pool 0x2a46c.
+ */
 /* ROM address: 0x0002b3b8; body bytes: 148; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bb0c (148 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateEngineMaxTorqueAllowed___(void)
+void engine_max_torque_allowed_calc(void)
 
 {
   float fVar1;
@@ -42286,12 +42320,12 @@ void ref_calculateEngineMaxTorqueAllowed___(void)
   arg1 = 0.0;
   if ((((DAT_ffffbb24 == '\0') && (DAT_ffffbb28 == '\0')) && (engine_running_ffffa428 == '\x01')) &&
      (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (DAT_ffffa40a == '\0')))) {
-    fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)DAT_ffffbbc8);
+    fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)can212_torque_signal_ffffbbc8);
   }
   else {
     fVar1 = 512.0;
   }
-  DAT_ffffbbd8 = rx8_clamp_float(((DAT_ffffbb20 * fVar1) / 100.0 - DAT_ffffbcb8) - DAT_ffffbcbc,arg1
+  engine_max_torque_allowed_ffffbbd8 = rx8_clamp_float(((DAT_ffffbb20 * fVar1) / 100.0 - DAT_ffffbcb8) - DAT_ffffbcbc,arg1
                                  ,512.0);
   return;
 }
@@ -42366,9 +42400,12 @@ void FUN_0002b480(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006adb4: Engine Torque Max - Barometric Pressure Compensation (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_desired_torque_calc [medium]: 0xffffbbe0 = 0xffffbca0 - ((bb20 * decode(bbc9))/100 - bcb8 - bcbc); filter 0xffffbbf8 = first_order_filter(decode(bbc9), bbf8, 0.25, 0.19685039) -> 0xffffbbf7 = encode_u8_affine_saturate(bbf8); 0xffffbbc9 = -2 when engine stopped, 0xfe = 0xfe when validity/fault flags. Called from 0x2a2ae via pool 0x2a470.
+ */
 /* ROM address: 0x0002b496; body bytes: 440; decompiled */
 
-void FUN_0002b496(void)
+void candidate_dsc_desired_torque_calc(void)
 
 {
   char cVar1;
@@ -42425,18 +42462,22 @@ void FUN_0002b496(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit08_check [medium]: 0xffffbbcf = ((0xffffbbde & 8) == 8). Called from 0x2a2ae via pool 0x2a474.
+ * RAM 0xffffbbde can212_status_word (uint16): u16 from CAN 0x212 payload bytes 4-5 (0x2b7e2: bbc4*0x100+bbc5); bit 0x08 checked by 0x2b6a4 -> 0xffffbbcf.
+ */
 /* ROM address: 0x0002b6a4; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bdf8 (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined2 FUN_0002b6a4(void)
+undefined2 candidate_dsc_mode_bit08_check(void)
 
 {
   bool bVar1;
   undefined2 uVar2;
   
-  bVar1 = (DAT_ffffbbde & 8) != 8;
+  bVar1 = (can212_status_word_ffffbbde & 8) != 8;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42448,17 +42489,21 @@ undefined2 FUN_0002b6a4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit80_check [medium]: 0xffffbbcb = 1 when (0xffffbbf6 & 0x80) == 0x80 && engine running. Called from 0x2a2ae via pool 0x2a478.
+ * RAM 0xffffbbf6 dsc_mode_byte (uint8): DSC/ABS mode byte from CAN 0x212 payload byte 6 (via 0x2b7e2: bbf6 = bbc6); bits 0x80/0x40/0x20/0x10 checked by 0x2b6c2/0x2b754/0x2b788/0x2b7a6 -> 0xffffbbcb-ce.
+ */
 /* ROM address: 0x0002b6c2; body bytes: 64; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002be16 (64 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 * ref_DSC_checkIfMode_x80(void)
+undefined1 * candidate_dsc_mode_bit80_check(void)
 
 {
   undefined1 *puVar1;
   
-  if ((DAT_ffffbbf6 & 0x80) == 0x80) {
+  if ((dsc_mode_byte_ffffbbf6 & 0x80) == 0x80) {
     puVar1 = (undefined1 *)(uint)engine_running_ffffa428;
     if (puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) {
       DAT_ffffbbcb = 1;
@@ -42473,17 +42518,20 @@ undefined1 * ref_DSC_checkIfMode_x80(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit40_check [medium]: 0xffffbbcc = 1 when (0xffffbbf6 & 0x40) == 0x40 && engine running. Pool 0x2a47c.
+ */
 /* ROM address: 0x0002b754; body bytes: 52; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bea8 (52 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-byte ref_DSC_checkIfMode_x40(void)
+byte candidate_dsc_mode_bit40_check(void)
 
 {
   byte bVar1;
   
-  bVar1 = DAT_ffffbbf6 & 0x40;
+  bVar1 = dsc_mode_byte_ffffbbf6 & 0x40;
   if ((bVar1 == 0x40) && (bVar1 = engine_running_ffffa428, engine_running_ffffa428 == 1)) {
     DAT_ffffbbcc = 1;
   }
@@ -42494,18 +42542,21 @@ byte ref_DSC_checkIfMode_x40(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit20_check [medium]: 0xffffbbcd = ((0xffffbbf6 & 0x20) == 0x20). Pool 0x2a480.
+ */
 /* ROM address: 0x0002b788; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bedc (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 ref_DSC_checkIfMode_x20(void)
+undefined1 candidate_dsc_mode_bit20_check(void)
 
 {
   bool bVar1;
   undefined1 uVar2;
   
-  bVar1 = (DAT_ffffbbf6 & 0x20) != 0x20;
+  bVar1 = (dsc_mode_byte_ffffbbf6 & 0x20) != 0x20;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42517,18 +42568,21 @@ undefined1 ref_DSC_checkIfMode_x20(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit10_check [medium]: 0xffffbbce = ((0xffffbbf6 & 0x10) == 0x10). Pool 0x2a484.
+ */
 /* ROM address: 0x0002b7a6; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002befa (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 ref_DSC_checkIfMode_x10(void)
+undefined1 candidate_dsc_mode_bit10_check(void)
 
 {
   bool bVar1;
   undefined1 uVar2;
   
-  bVar1 = (DAT_ffffbbf6 & 0x10) != 0x10;
+  bVar1 = (dsc_mode_byte_ffffbbf6 & 0x10) != 0x10;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42540,40 +42594,50 @@ undefined1 ref_DSC_checkIfMode_x10(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_timeout_flag [medium]: 0xffffbbd0 = (0x1e < 0xffffbbf0) — 0x212 RX timeout flag from the failure counter. Pool 0x2a488.
+ */
 /* ROM address: 0x0002b7c4; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bf18 (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined2 * FUN_0002b7c4(void)
+undefined2 * candidate_can212_timeout_flag(void)
 
 {
-  DAT_ffffbbd0 = 0x1e < DAT_ffffbbf0;
+  DAT_ffffbbd0 = 0x1e < can212_timeout_counter_ffffbbf0;
   return &DAT_0007bc56;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_unpack [high]: Unpacks CAN 0x212 payload buffer 0xffffbbc0-0xffffbbc6 into working cells: 0xffffbbf2=bbc0, bbf3=bbc1, bbf4=bbc2, bbf5=bbc3, 0xffffbbde = bbc4*0x100+bbc5 (u16), 0xffffbbf6=bbc6 (mode byte). Called from 0x2b29c.
+ */
 /* ROM address: 0x0002b7e2; body bytes: 52; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bf36 (52 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_can212RXUnpack(void)
+void can212_rx_unpack(void)
 
 {
   DAT_ffffbbf2 = DAT_ffffbbc0;
   DAT_ffffbbf3 = DAT_ffffbbc1;
   DAT_ffffbbf4 = DAT_ffffbbc2;
   DAT_ffffbbf5 = DAT_ffffbbc3;
-  DAT_ffffbbde = (ushort)DAT_ffffbbc4 * 0x100 + (ushort)DAT_ffffbbc5;
-  DAT_ffffbbf6 = DAT_ffffbbc6;
+  can212_status_word_ffffbbde = (ushort)DAT_ffffbbc4 * 0x100 + (ushort)DAT_ffffbbc5;
+  dsc_mode_byte_ffffbbf6 = DAT_ffffbbc6;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_torque_extract [medium]: 0xffffbbc8 = 0xffffbbf2 (torque-related signal from the 0x212 payload); called from 0x2b29c.
+ * RAM 0xffffbbc8 can212_torque_signal (uint8): Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc.
+ */
 /* ROM address: 0x0002b816; body bytes: 170; decompiled */
 
-uint FUN_0002b816(void)
+uint candidate_can212_torque_extract(void)
 
 {
   uint uVar1;
@@ -42581,7 +42645,7 @@ uint FUN_0002b816(void)
   
   bVar2 = DAT_ffffbbf2 == -1;
   if (!bVar2) {
-    DAT_ffffbbc8 = DAT_ffffbbf2;
+    can212_torque_signal_ffffbbc8 = DAT_ffffbbf2;
   }
   if (DAT_ffffbbf3 == -1) {
     bVar2 = true;
@@ -44682,7 +44746,7 @@ LAB_0002d77c:
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;
       }
-      if ((0xfd < DAT_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
+      if ((0xfd < can212_torque_signal_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbc9;
       }
@@ -44763,7 +44827,7 @@ void cruise_set_speed_adjust_integrator(void)
   cVar14 = DAT_ffffbceb;
   cVar13 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   DAT_ffffbd1c = DAT_ffffbfa0 - DAT_ffffbfa4;
   fVar21 = DAT_ffffbfa4 - DAT_ffffbfa0;
   snapshot_DAT_ffffa9b4 = DAT_ffffa9b4;
@@ -44780,7 +44844,7 @@ void cruise_set_speed_adjust_integrator(void)
       DAT_ffffbd10 = rx8_add_u16_saturate((int)DAT_ffffbd10,1);
     }
     else if ((DAT_ffffa9b4 <= cruise_set_speed_ffffbcf8) &&
-            ((DAT_ffffbbcb == '\0' || ((0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
+            ((DAT_ffffbbcb == '\0' || ((0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
       DAT_ffffbd10 = 0;
     }
   }
@@ -45142,7 +45206,7 @@ undefined4 FUN_0002e33c(void)
   if ((((((DAT_ffffcca1 != '\x01') && (DAT_ffffbcd8 != '\x01')) && (DAT_ffffbd58 != '\x01')) &&
        ((DAT_ffffb516 != '\x01' &&
         (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8738,0), cVar1 != '\x01')))) &&
-      ((DAT_ffffbbb9 != '\x01' && ((DAT_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
+      ((wheelspeed_lr_invalid_ffffbbb9 != '\x01' && ((wheelspeed_rr_invalid_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
      (DAT_ffffc616 != '\x01')) {
     DAT_ffffbd5c = 0;
     return 0;
@@ -49148,7 +49212,7 @@ void FUN_00033138(void)
   cVar4 = DAT_ffffc030;
   cVar3 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   fVar6 = DAT_ffffbfa0 - DAT_ffffc02c;
   fVar7 = DAT_ffffc02c - DAT_ffffbfa0;
   arg2 = 100.0;
@@ -49156,7 +49220,7 @@ void FUN_00033138(void)
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
       fVar5 = DAT_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
-         ((arg0 = DAT_ffffc034, 0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
+         ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
       }
       DAT_ffffc034 = rx8_clamp_float(arg0,0.0,100.0);

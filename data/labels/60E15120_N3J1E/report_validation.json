@@ -26,6 +26,12 @@
       "rom_refs": 12,
       "rom_claims": 0
     },
+    "dsc_can_arbitration_report.md": {
+      "fn_checked": 12,
+      "ram_checked": 9,
+      "rom_refs": 21,
+      "rom_claims": 0
+    },
     "dtc_control_report.md": {
       "fn_checked": 40,
       "ram_checked": 11,

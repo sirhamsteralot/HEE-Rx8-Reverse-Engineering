@@ -17,7 +17,7 @@ void FUN_00011744(void)
   candidate_vdi_control_task_wrapper();
   candidate_vfad_control_task_wrapper();
   FUN_000288f4();
-  ref_updateDSCRelatedCANStuff__();
+  dsc_can_arbitration_batch();
   ref_getFaultEvalState();
   FUN_00016b82();
   return;
