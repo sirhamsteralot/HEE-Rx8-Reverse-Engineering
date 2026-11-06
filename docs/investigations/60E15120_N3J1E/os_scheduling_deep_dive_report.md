@@ -97,7 +97,7 @@ hand-rolled dispatcher:
   is the time base). Examples: `engine_running_timer` 0xffffa424 (0xe21c, saturating
   +1 while engine running, called from task[9] chain 0x64ba → 0x1150e → 0x199d4),
   `rev_limit_countdown` 0xffffa4ae (0xee82), `ol_condition_timer` 0xffffb144,
-  APV PWM tick counters 0xffffa1c4/a1c6, CAN RX timeouts (0x28df2, 0x4bdac),
+  APV PWM tick counters `apv_pwm_forward_ticks` 0xffffa1c4/a1c6, CAN RX timeouts (0x28df2, 0x4bdac),
   diag-mode timer (0x55d42), engine-off timer (0x31922), fuel-cut-after-reset
   (0x4a9c0).
 
@@ -233,9 +233,9 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 |---|---|---|---|
 | 0 | 0x62a0 | 0x01 | **background loop, never yields** (do-while): 0xa50e, 0x4cb6, 0x7088, 0x69e2, 0x74b0, ATU ch3/4 PWM reconfig, 0x2064, 0xb5a0, 0xbdbc, 0x7568, 0xac02, 0xc176, 0x8268, 0x8f94, 0xb290, 0x1122a, 0xd46c, 0x9f0c(1) |
 | 1 | 0x969e | 0x0a | consume queue slot 0 (scratch 0xffffa118) → call handler → taskEnd |
-| 2 | 0x96be (`uds_service_task_entry`) | 0x0a | consume slot 1 (0xffffa12c) → handler → taskEnd |
-| 3 | 0x96de | 0x1e | consume slot 2 (0xffffa140) → handler → taskEnd (crank-tick messages land here) |
-| 4 | 0x96fe | 0x64 | consume slot 3 (0xffffa154) → handler → taskEnd |
+| 2 | 0x96be (`uds_service_task_entry`) | 0x0a | consume slot 1 (`msg_dequeue_scratch_slot1` 0xffffa12c) → handler → taskEnd |
+| 3 | 0x96de | 0x1e | consume slot 2 (`msg_dequeue_scratch_slot2` 0xffffa140) → handler → taskEnd (crank-tick messages land here) |
+| 4 | 0x96fe | 0x64 | consume slot 3 (`msg_dequeue_scratch_slot3` 0xffffa154) → handler → taskEnd |
 | 5 | 0x65f6 (`ref_task1_`) | 0x02 | rotor-0 timing: `ref_getRotorNumberForControl_`(0), `ref_functionDrivingTiming`, 0x82d8, 0x9038, 0x11b7e → taskEnd |
 | 6 | 0x661e (`ref_task2_`) | 0x02 | rotor-1 engine control: rotor(1), `knock_voltage_sample`, `ref_engineControlTASK`, 0x8320, `ref_getIgnitionDwellTime_00009110` → taskEnd (ignition task) |
 | 7 | 0x63f0 (`ref_interruptSetup___`) | 0x02 | MAF scaling, ADC helpers, GPIO 0xfffff746 bit4, `candidate_apv_pwm_service` → taskEnd |
@@ -245,7 +245,7 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 | 11 | 0x6584 | 0x02 | 0x117ac → taskEnd (fueling task) |
 | 12 | 0x6592 `task12_adc_feedback_pwm_entry` | 0x02 | 0xa4b6 `task12_alive_counter_clear`, 0xaee8 `adc_pair_correlation_fault_compute` (via thunk 0xad2a), 0x11880 `candidate_monitor_service_batch`, 0xb308 `atu_ch7d_pwm_enable` → taskEnd — §14 |
 | 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | 0x02 | 0x7298 `iat_sensor_scaling_fault`, 0x73a0 `clt_sensor_scaling_fault`, 0x118d0 `dtc_fault_service_batch` → taskEnd — §14 |
-| 14 | 0x65cc `task14_charging_control_entry` | 0x02 | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) → taskEnd — §14 |
+| 14 | 0x65cc `task14_charging_control_entry` | 0x02 | 0x11adc `charging_control_batch` (incl. 0x26868 `alternator_pid_task`, inherited `ref_alternatorControlMain_00026868`; u32 call target at ROM 0x11cb4 re-read) → taskEnd — §14 |
 | 15 | 0x65da `task15_catalyst_temp_entry` | 0x02 | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) → taskEnd — §14 |
 | 16 | 0x65e8 `task16_uds_diag_utility_entry` | 0x02 | 0x11b22 `uds_diag_utility_batch` (incl. `ref_getTireSize` 0x5de74, E2 parameter reads via 0x37ef0) → taskEnd — §14 |
 | 17 | 0x60c8 (`ref_getSensorStuff__`) | 0x01 | sensor task: ADC sweep 0x6884, `vehicle_inputs_poll_pfdr_phdr` 0x6744 (→ 0xffff9ec8), ATU ch3/4 PWM, … → taskEnd |
@@ -319,7 +319,7 @@ backup `backups/pre_os_scheduling_labels.zip`):
 - **10 RAM cells**: 0xffff9304 `queue_state_base`, 0xffff9f95
   `crank_sector_index`, 0xffffa3fc `crank_tick_flag`, 0xffff7668
   `os_ready_bitmap`, 0xffff74a0 `os_ready_ring`, 0xffff9fd0 `crank_period_ring`,
-  0xffffa118/a12c/a140/a154 `msg_dequeue_scratch_slot0..3`.
+  0xffffa118/a12c/a140/a154 `msg_dequeue_scratch_slot0` / `_slot1` / `_slot2` / `_slot3` (pools 0x973a/0x973e/0x9742 re-read).
 - **6 tables**: `tbl_os_queue_records_0000d74c`, `tbl_os_schedule_group_ptrs_0000d87c`,
   `tbl_crank_next_sector_0000d76c`, `tbl_crank_sector_ocr10b_0000d76d`,
   `tbl_os_resume_jumptable_00004b34`, `tbl_os_class_bit_00003d48`.
@@ -547,7 +547,7 @@ in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
 | 0xffff9fd0 | DAT_ffff9fd0 crank period ring [6] |
 | 0xffff9ec8 | `vehicle_inputs_pfdr_latch` |
 | 0xffffa3fc | DAT_ffffa3fc tick flag (0xd716) |
-| 0xffffa118 | DAT_ffffa118 dequeue scratch (slot 0; slots 1–3 at 0xffffa12c/a140/a154) |
+| 0xffffa118 | `msg_dequeue_scratch_slot0` (slots 1–3: `msg_dequeue_scratch_slot1/2/3` 0xffffa12c/a140/a154) |
 | 0xffffa424 | `engine_running_timer` |
 | 0xffffddc8 | `uds_rx_buffer` |
 | 0xffffddd0 | `uds_tx_buffer` |
@@ -654,7 +654,7 @@ then stop at pre-existing emulator opdec gaps 0x50de0 (word 0xff07 =
 |---|---|---|---|
 | 12 | 0x6592 `task12_adc_feedback_pwm_entry` | ADC-pair feedback + TO7D PWM service: samples ADC AN23 (ADDR23H 0xfffff836) / AN11 (ADDR11H 0xfffff816) twice (0xb0a6/0xb1da, called from ADC EOC bank1 0x6b60), computes correlation/range faults and a filtered ratio (0xaee8 → 0xffffa1d8/a1d4, consumed by the lambda/duty loops 0x1ac00/0x22630), stages ATU-II compare outputs (0xb114, called from the 0xb0a6 sample path: GR1G/H 0xfffff450/0xfffff452, DCNT8G/H 0xfffff64c/0xfffff64e, DCNT8P 0xfffff65e, OCR2H 0xfffff622), drives the ch7D (TO7D = PB7 PWM) output with duty 0xffffa210 q16 over a 32000-count period (0xb308/0xb2c0, duty % from 0x25198), clears its alive counter (0xa4b6 → 0xffffa188), runs the monitor batch 0x11880 (vehicle speed/accel filters, knock rpm window, diag mode, coolant plausibility). Physical actuator/sensor mapping not pinned (board routing = D2) — structural label, high confidence | 0xa4b6, 0xad2a→0xaee8, 0x11880, 0xb308 |
 | 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | Temperature-sensor conditioning + DTC/fault service | 0x7298 `iat_sensor_scaling_fault` (tbl_iat_sensor_scaling_00069824, fault 0xffff9f64), 0x73a0 `clt_sensor_scaling_fault` (tbl_clt_sensor_scaling_0006977c, fault 0xffff9f74), 0x118d0 `dtc_fault_service_batch` (26 calls incl. candidate_knock_rough_correction_update 0x1467c, ref_setOBDCANTXVars 0x2a39e, 0x5a188 distance-while-MIL, ref_getVehicleSpeedThreshold 0x59fb6) |
-| 14 | 0x65cc `task14_charging_control_entry` | Alternator / charging control | 0x11adc `charging_control_batch` (incl. `ref_alternatorControlMain_00026868`) |
+| 14 | 0x65cc `task14_charging_control_entry` | Alternator / charging control | 0x11adc `charging_control_batch` (incl. 0x26868 `alternator_pid_task`) |
 | 15 | 0x65da `task15_catalyst_temp_entry` | Catalyst temperature monitoring | 0x11b08 `catalyst_temp_monitor_batch` (incl. `ref_catTempRelated` 0x3eb3a) |
 | 16 | 0x65e8 `task16_uds_diag_utility_entry` | UDS/diagnostic utility service (E2-stored parameter reads, memory R/W, timers, idle target) | 0x11b22 `uds_diag_utility_batch` (15 calls incl. `ref_getTireSize` 0x5de74 (E2 id 0x9a), E2 ids 0x9f/0x100/0x68/0x6a/0x6c via 0x37ef0, 0x54cf8 (0xa5-unlock checksum verify of area 0xffff8fe8), 0x3de70 UDS memory read/write by address, 0x5fc40 idle target, 0x59164/0x5a162 timers) |
 
