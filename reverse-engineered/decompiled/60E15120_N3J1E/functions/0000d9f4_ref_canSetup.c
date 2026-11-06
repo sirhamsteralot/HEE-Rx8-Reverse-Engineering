@@ -11,7 +11,7 @@ void ref_canSetup(void)
   undefined *puVar3;
   
   for (DAT_ffffa40e = 0; DAT_ffffa40e < 2; DAT_ffffa40e = DAT_ffffa40e + 1) {
-    if (DAT_ffffb534 == '\x01') {
+    if (automatic_transmission_ffffb534 == '\x01') {
       ref_CANControllerSetup(0,&DAT_0004e01c,0x10);
       puVar3 = &DAT_0004e01c;
     }

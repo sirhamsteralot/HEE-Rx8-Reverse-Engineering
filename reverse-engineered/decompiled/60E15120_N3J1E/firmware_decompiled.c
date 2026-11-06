@@ -7904,9 +7904,14 @@ void FUN_000057b8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_pwm_service [high]: ATU-II ch5B PWM service: splits duty 0xffff9f48 vs period 0xffff9f44 into compare windows (0x7e margin) into 0xffff9f46/0xffff9f4a, then GR5B_W = TCNT5_W + compare with TIOR5A_B output config toggled (0x10/0x20); clears TSR3_W 0x77ff; called via pool 0x2b88 (load at 0x2b82) from the ch5B compare interrupt path. Registers from symbols.tsv: ATUII_TCNT5_W 0xfffff4e0, ATUII_GR5B_W 0xfffff4e4, ATUII_TIOR5A_B 0xfffff4eb, ATUII_TSR3_W 0xfffff480.
+ * RAM 0xffff9f44 alternator_pwm_period (uint16): ATU-II ch5B PWM period, init 1000 by 0x25674; duty fraction computed against it in 0x25710 (mov.w @r5 at 0x2573c) and split into compare windows in 0x57c6.
+ * RAM 0xffff9f48 alternator_pwm_duty (uint16): ATU-II ch5B PWM duty counts, written by 0x25710 (mov.w r0,@(0x4,r2) at 0x2574a with base 0xffff9f44) from 0xffffb5ac percent; consumed by 0x57c6 into GR5B 0xfffff4e4.
+ */
 /* ROM address: 0x000057c6; body bytes: 242; decompiled */
 
-void FUN_000057c6(void)
+void alternator_pwm_service(void)
 
 {
   short sVar1;
@@ -7918,17 +7923,17 @@ void FUN_000057c6(void)
   
   ATUII_TSR3_W = 0x77ff;
   if (DAT_ffff9f4d == '\x01') {
-    if (DAT_ffff9f48 < 0x7e) {
+    if (alternator_pwm_duty_ffff9f48 < 0x7e) {
       DAT_ffff9f46 = 0;
-      DAT_ffff9f4a = DAT_ffff9f44;
+      DAT_ffff9f4a = alternator_pwm_period_ffff9f44;
     }
-    else if ((ushort)(DAT_ffff9f44 - DAT_ffff9f48) < 0x7e) {
-      DAT_ffff9f46 = DAT_ffff9f44;
+    else if ((ushort)(alternator_pwm_period_ffff9f44 - alternator_pwm_duty_ffff9f48) < 0x7e) {
+      DAT_ffff9f46 = alternator_pwm_period_ffff9f44;
       DAT_ffff9f4a = 0;
     }
     else {
-      DAT_ffff9f46 = DAT_ffff9f48;
-      DAT_ffff9f4a = DAT_ffff9f44 - DAT_ffff9f48;
+      DAT_ffff9f46 = alternator_pwm_duty_ffff9f48;
+      DAT_ffff9f4a = alternator_pwm_period_ffff9f44 - alternator_pwm_duty_ffff9f48;
     }
   }
   sVar2 = ATUII_GR5B_W;
@@ -17694,7 +17699,7 @@ void ref_canSetup(void)
   undefined *puVar3;
   
   for (DAT_ffffa40e = 0; DAT_ffffa40e < 2; DAT_ffffa40e = DAT_ffffa40e + 1) {
-    if (DAT_ffffb534 == '\x01') {
+    if (automatic_transmission_ffffb534 == '\x01') {
       ref_CANControllerSetup(0,&DAT_0004e01c,0x10);
       puVar3 = &DAT_0004e01c;
     }
@@ -17726,7 +17731,7 @@ void ref_resetCANTimers(void)
   FUN_000291d4();
   FUN_00029444();
   FUN_00029cb8();
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     FUN_0002c5a0();
   }
   FUN_0004be3c();
@@ -17799,7 +17804,7 @@ undefined1 * ref_CANTX_Main(void)
     ref_can201TX_getAndPack();
     FUN_0002941a();
     ref_can251TX_getAndPack();
-    if (DAT_ffffb534 == '\x01') {
+    if (automatic_transmission_ffffb534 == '\x01') {
       ref_can231TX_getAndPack();
     }
     ref_can240TX_getAndPack();
@@ -17823,9 +17828,9 @@ void ref_CANRX_Main(void)
 
 {
   if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (DAT_ffffa410 == '\0')) {
-    ref_CAN212RX_Main();
+    can212_rx_main();
     ref_CAN216RX_Main();
-    if (DAT_ffffb534 == '\0') {
+    if (automatic_transmission_ffffb534 == '\0') {
       ref_CAN231TX_Main();
     }
     ref_CAN430RX_Main();
@@ -18467,7 +18472,7 @@ void FUN_0000e4f4(void)
   if (DAT_ffffb53a == '\x01') {
     DAT_ffffa460 = rx8_lookup_2d_raw_u8(&tbl_table_2d_288_check_datatype_00068f5c);
   }
-  else if (DAT_ffffb534 == '\x01') {
+  else if (automatic_transmission_ffffb534 == '\x01') {
     uVar2 = rx8_decode_u8_affine(0x3f800000,0,(int)DAT_ffffa461);
     DAT_ffffa460 = rx8_lookup_3d_raw_u8(engine_speed_rpm_ffffb548,uVar2,&tbl_table_3d_103_00068f94);
   }
@@ -18512,7 +18517,7 @@ undefined2 * FUN_0000e560(void)
   
   snapshot_DAT_ffffbf3c = inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   cVar2 = DAT_ffffb53a;
-  cVar1 = DAT_ffffb534;
+  cVar1 = automatic_transmission_ffffb534;
   if ((DAT_ffffa4a1 == '\x01') && (DAT_ffffb53a == '\0')) {
     DAT_ffffa48c = 0x58;
   }
@@ -18525,7 +18530,7 @@ undefined2 * FUN_0000e560(void)
   if (DAT_ffffa48c != 0) {
     DAT_ffffa48c = DAT_ffffa48c + -1;
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     DAT_ffffa461 = DAT_ffffbc3d;
   }
   else if (DAT_ffffbc41 == '\x01') {
@@ -18739,7 +18744,7 @@ uint FUN_0000e910(void)
   else if (DAT_ffffa49a == '\x01') {
     iVar8 = 1;
   }
-  if ((DAT_ffffb534 == '\0') && (DAT_ffffca4c == '\x01')) {
+  if ((automatic_transmission_ffffb534 == '\0') && (DAT_ffffca4c == '\x01')) {
     if (DAT_ffffa49f != '\x01') {
       DAT_ffffa48e = 0;
       goto LAB_0000ebd0;
@@ -18902,7 +18907,7 @@ void candidate_rev_limit_conditionals(void)
   else {
     coolant_below_18c_flag_ffffa4a6 = 1;
   }
-  if ((((DAT_ffffb534 == '\0') && (DAT_ffffbaec != '\0')) && (rev_limit_mode_previous_ffffa4ad == '\0')) &&
+  if ((((automatic_transmission_ffffb534 == '\0') && (DAT_ffffbaec != '\0')) && (rev_limit_mode_previous_ffffa4ad == '\0')) &&
      (DAT_ffffbaec != '\a')) {
     rev_limit_countdown_ffffa4ae = '\f';
   }
@@ -21208,7 +21213,7 @@ void FUN_000114d0(void)
   FUN_00019950();
   FUN_00038e12();
   FUN_0001447a();
-  ref_alternatorControlMain_000267c6();
+  alternator_control_main_batch();
   FUN_0002374e();
   ref_CANHandler();
   FUN_00034a04();
@@ -21285,8 +21290,10 @@ void FUN_00011744(void)
   candidate_knock_sensor_monitor_task();
   fueling_condition_flags_task();
   FUN_00014628();
-  ref_alternatorControl();
+  alternator_monitor_batch();
   ref_updateIdleControl__();
+  ref_alternatorControl();
+  idle_control_calc_batch();
   FUN_0003eaf8();
   apv_control_task();
   FUN_00016f80();
@@ -21294,7 +21301,7 @@ void FUN_00011744(void)
   candidate_vdi_control_task_wrapper();
   candidate_vfad_control_task_wrapper();
   FUN_000288f4();
-  ref_updateDSCRelatedCANStuff__();
+  dsc_can_arbitration_batch();
   ref_getFaultEvalState();
   FUN_00016b82();
   return;
@@ -21422,7 +21429,7 @@ void charging_control_batch(void)
   FUN_00019d8a();
   FUN_00039b08();
   FUN_0002145e();
-  ref_alternatorControlMain_00026868();
+  alternator_pid_task();
   FUN_0002224e();
   FUN_00059ab0();
   FUN_00016c56();
@@ -22262,7 +22269,7 @@ char FUN_00012938(void)
 {
   char cVar1;
   
-  if (((((DAT_ffffb534 != '\x01') && (cVar1 = DAT_ffffca4c, DAT_ffffca4c != '\x01')) ||
+  if (((((automatic_transmission_ffffb534 != '\x01') && (cVar1 = DAT_ffffca4c, DAT_ffffca4c != '\x01')) ||
        (cVar1 = cranking_active_ffffaa62_ffffaa62, cranking_active_ffffaa62_ffffaa62 != '\x01')) ||
       (((DAT_ffffa69f != '\x01' || (cVar1 = '\0', fuel_cut_flag_a_ffffa444 != '\0')) &&
        ((cVar1 = DAT_ffffa6a0, DAT_ffffa6a0 != '\x01' || (fuel_cut_flag_b_ffffa445 != '\0')))))) ||
@@ -22844,7 +22851,7 @@ uint idle_leading_timing_error_correction(void)
   DAT_ffffa728 = engine_speed_rpm_ffffb548 - DAT_ffffb554;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   fVar3 = engine_speed_rpm_ffffb548;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (DAT_ffffb53c == '\0') {
       puVar2 = &tbl_ignition_leading_idle_error_timing_correction_unknown_bool_false_0006a060;
     }
@@ -22913,7 +22920,7 @@ uint idle_trailing_timing_error_correction(void)
   DAT_ffffa72c = engine_speed_rpm_ffffb548 - DAT_ffffb554;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   fVar3 = engine_speed_rpm_ffffb548;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (DAT_ffffb53c == '\0') {
       puVar2 = &tbl_ignition_trailing_idle_error_timing_correction_unknown_bool_false_0006a088;
     }
@@ -23207,7 +23214,7 @@ float knock_retard_clamp(float param_1)
   float arg2;
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   
-  if ((DAT_ffffb534 == '\x01') && (4 < DAT_ffffbc3d)) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (4 < DAT_ffffbc3d)) {
     ppuVar1 = &tbl_knock_retard_clamp_min_alt_0006af7c;
   }
   else {
@@ -23941,9 +23948,12 @@ void ref_getEngineCrankingState__(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x000692bc: Table 2D - 16 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_target_term_lookup [medium]: 0xffffa7a0 = tbl 0x692bc(0xffffa7ac). Called from 0x167c0 via pool 0x1688c.
+ */
 /* ROM address: 0x000148a4; body bytes: 20; decompiled */
 
-void FUN_000148a4(void)
+void candidate_idle_target_term_lookup(void)
 
 {
   DAT_ffffa7a0 = lookup_2d_descriptor_scaled(inferred_ram_a7ac_ffffa7ac_ffffa7ac,&tbl_table_2d_16_000692bc);
@@ -23956,18 +23966,21 @@ void FUN_000148a4(void)
  * Descriptor 0x0006a114: Table 2D - 115 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a128: Table 2D - 116 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_maf_airflow_term [medium]: 0xffffa7a4 = tbl(0x6a100 if b534==1 else 0x6a114/0x6a128 by b53c)(0xffffb5a8) * 0.6345 * 60 / 0xffffa7ac via divide-with-zero-fallback (0.6345 at shared pool 0x7a088). Called from 0x167c0 via pool 0x1689c.
+ */
 /* ROM address: 0x000148c4; body bytes: 88; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00014824 (88 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000148c4(void)
+void candidate_idle_maf_airflow_term(void)
 
 {
   undefined **ppuVar1;
   float fVar2;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     fVar2 = (float)lookup_2d_descriptor_scaled(&tbl_table_2d_114_0006a100);
   }
   else {
@@ -23988,9 +24001,12 @@ void FUN_000148c4(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
+ */
 /* ROM address: 0x00014944; body bytes: 516; decompiled */
 
-undefined2 * FUN_00014944(void)
+undefined2 * candidate_idle_drive_flags(void)
 
 {
   char cVar1;
@@ -24001,9 +24017,9 @@ undefined2 * FUN_00014944(void)
   undefined4 uVar6;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  cVar3 = DAT_ffffbd69;
+  cVar3 = ac_clutch_on_ffffbd69;
   snapshot_DAT_ffffb53a = DAT_ffffb53a;
-  cVar1 = DAT_ffffb534;
+  cVar1 = automatic_transmission_ffffb534;
   if (vehicle_speed_ffffbbb4 <= 4.0) {
     if (vehicle_speed_ffffbbb4 <= 3.0) {
       DAT_ffffa827 = '\0';
@@ -24074,14 +24090,17 @@ undefined2 * FUN_00014944(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_mode_timers [medium]: Countdowns 0xffffa80c/a80e (reload 0x1f on bd69/b53c change), 0xffffa810=0xc / 0xffffa812=0x5c on 0xffffad18 edges. Called from 0x167c0 via pool 0x168a8.
+ */
 /* ROM address: 0x00014baa; body bytes: 250; decompiled */
 
-undefined2 * FUN_00014baa(void)
+undefined2 * candidate_idle_mode_timers(void)
 
 {
   undefined2 *puVar1;
   
-  if (DAT_ffffa823 == DAT_ffffbd69) {
+  if (DAT_ffffa823 == ac_clutch_on_ffffbd69) {
     if (DAT_ffffa80c != 0) {
       DAT_ffffa80c = DAT_ffffa80c + -1;
     }
@@ -24121,7 +24140,7 @@ undefined2 * FUN_00014baa(void)
   else {
     DAT_ffffa7b5 = 1;
   }
-  DAT_ffffa823 = DAT_ffffbd69;
+  DAT_ffffa823 = ac_clutch_on_ffffbd69;
   DAT_ffffa824 = DAT_ffffb53c;
   DAT_ffffa825 = inferred_ram_ad18_ffffad18_ffffad18;
   return puVar1;
@@ -24141,9 +24160,13 @@ undefined2 * FUN_00014baa(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
+ * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
+ */
 /* ROM address: 0x00014d10; body bytes: 456; decompiled */
 
-undefined4 FUN_00014d10(void)
+undefined4 candidate_idle_stall_flags(void)
 
 {
   char cVar1;
@@ -24158,7 +24181,7 @@ undefined4 FUN_00014d10(void)
   float fVar6;
   float snapshot_DAT_ffffa838;
   
-  cVar3 = DAT_ffffbd69;
+  cVar3 = ac_clutch_on_ffffbd69;
   cVar2 = DAT_ffffb53c;
   cVar1 = DAT_ffffa8a8;
   if (vehicle_speed_ffffbbb4 < 10.0) {
@@ -24171,7 +24194,7 @@ undefined4 FUN_00014d10(void)
   }
   if ((engine_stopped_latch_ffffa41c == '\x01') ||
      ((DAT_ffffa7a8 < 0.0 &&
-      (((DAT_ffffbd69 == '\0' && (DAT_ffffa828 == '\x01')) ||
+      (((ac_clutch_on_ffffbd69 == '\0' && (DAT_ffffa828 == '\x01')) ||
        ((DAT_ffffb53c == '\0' && (DAT_ffffa829 == '\x01')))))))) {
     uVar4 = 1;
     DAT_ffffa7a8 = 0.0;
@@ -24187,7 +24210,7 @@ undefined4 FUN_00014d10(void)
     }
   }
   else {
-    snapshot_DAT_ffffa838 = DAT_ffffa838;
+    snapshot_DAT_ffffa838 = idle_air_calc_total_ffffa838;
     if (((DAT_ffffa7b6 == '\0') && (DAT_ffffb53a == '\0')) && (DAT_ffffa82b == '\x01')) {
       uVar4 = inferred_coolant_temperature_ffffa990;
       DAT_ffffa7e4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa990,&tbl_table_2d_19_000692f8);
@@ -24232,12 +24255,15 @@ undefined4 FUN_00014d10(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069424: Table 3D - 12 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trim_ramp [medium]: 0xffffa7c0 ramped down by 0.00087 (pool 0x6dabc) toward 3-D floor tbl 0x69424(coolant, baro) when 0xffffa7b4==0; counters 0xffffa814/a816 gated by a7b4/a7b5. Called from 0x167c0 via pool 0x168b4.
+ */
 /* ROM address: 0x00014f6c; body bytes: 202; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00014ecc (202 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00014f6c(void)
+uint candidate_idle_trim_ramp(void)
 
 {
   uint uVar1;
@@ -24289,6 +24315,7 @@ uint FUN_00014f6c(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_target_rpm_calculate [high]: Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94.
  * RAM 0xffffa7f4 idle_target_rpm (float): Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94.
+ * RAM 0xffffb5b3 high_load_flag (uint8): Set by 0x264f0 when filtered 0xffffb5e0 >= 40.0 (clears below 30.0); 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335) in 0x2633e; 0xffffb5a4/0xffffb5a0 ratio appears in the alternator domain (0x2ce18); selects an idle-target table path in 0x1506c.
  */
 /* ROM address: 0x0001506c; body bytes: 1530; decompiled_with_warnings */
 
@@ -24323,11 +24350,11 @@ void idle_target_rpm_calculate(void)
   
   cVar9 = DAT_ffffc61e;
   cVar8 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
-  cVar7 = DAT_ffffbd69;
+  cVar7 = ac_clutch_on_ffffbd69;
   cVar6 = DAT_ffffbad0;
-  cVar5 = DAT_ffffb5b3;
+  cVar5 = high_load_flag_ffffb5b3;
   cVar4 = DAT_ffffb53c;
-  cVar3 = DAT_ffffb534;
+  cVar3 = automatic_transmission_ffffb534;
   cVar1 = engine_injectors_off_ffffa42c;
   cVar2 = engine_running_ffffa428;
   arg3 = 1e-05;
@@ -24548,7 +24575,7 @@ LAB_000156a2:
     }
   }
   idle_target_rpm_ffffa7f4 = fVar13;
-  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)FUN_0005ca94(idle_target_rpm_ffffa7f4);
+  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)idle_target_encode_u16(idle_target_rpm_ffffa7f4);
   return;
 }
 
@@ -24614,7 +24641,7 @@ uint FUN_00015934(byte param_1)
   float extraout_fr0;
   
   uVar1 = (uint)param_1;
-  if ((uVar1 == (DAT_ffffb534 == '\0')) || (cranking_active_ffffaa62_ffffaa62 == '\0')) {
+  if ((uVar1 == (automatic_transmission_ffffb534 == '\0')) || (cranking_active_ffffaa62_ffffaa62 == '\0')) {
     DAT_ffffa7b8 = 0;
     DAT_ffffa7cc = 500.0;
     DAT_ffffa7d0 = 500.0;
@@ -24628,7 +24655,7 @@ uint FUN_00015934(byte param_1)
       DAT_ffffa7d0 = extraout_fr0;
     }
     else {
-      DAT_ffffa7b8 = (bool)param_1 != (DAT_ffffb534 == '\0');
+      DAT_ffffa7b8 = (bool)param_1 != (automatic_transmission_ffffb534 == '\0');
       if ((bool)DAT_ffffa7b8) {
         DAT_ffffa7cc = DAT_ffffa7d0;
       }
@@ -24648,12 +24675,15 @@ uint FUN_00015934(byte param_1)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069768: Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * fuel_cut_resume_threshold [medium]: 0xffffa830 = tbl 0x69768(rough knock correction leading 0xffffa6ac) when 0xffffa6b7/a6b8/a6b9 are clear, else 0. Called from 0x167c0 via pool 0x168d0.
+ */
 /* ROM address: 0x00015a40; body bytes: 60; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00015844 (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 * FUN_00015a40(void)
+undefined1 * candidate_fuel_cut_resume_threshold(void)
 
 {
   undefined1 *puVar1;
@@ -24693,6 +24723,9 @@ void FUN_00015a90(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
+ */
 /* ROM address: 0x00015a9a; body bytes: 938; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00015ad4) */
@@ -24704,7 +24737,7 @@ void FUN_00015a90(void)
 /* WARNING: Removing unreachable block (ram,0x00015b16) */
 /* WARNING: Removing unreachable block (ram,0x00015b3e) */
 
-undefined4 FUN_00015a9a(void)
+undefined4 idle_air_feedback_calc(void)
 
 {
   char cVar1;
@@ -24810,7 +24843,7 @@ undefined4 FUN_00015a9a(void)
     DAT_ffffa83c = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548 - snapshot_DAT_ffffa7ac,&tbl_table_2d_40_000694b8);
   }
   DAT_ffffa840 = 0x402e147b;
-  DAT_ffffa838 = rx8_min_float(DAT_ffffa898 * DAT_ffffa8c0 * DAT_ffffa848 - 0.0,DAT_ffffa83c);
+  idle_air_calc_total_ffffa838 = rx8_min_float(DAT_ffffa898 * DAT_ffffa8c0 * DAT_ffffa848 - 0.0,DAT_ffffa83c);
   if (DAT_ffffa884 != '\0') {
     DAT_ffffa884 = DAT_ffffa884 + -1;
   }
@@ -24819,12 +24852,15 @@ undefined4 FUN_00015a9a(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_terms_sum [medium]: 0xffffa888 = 0xffffa8cc + 0xffffa7a4. Called from 0x167c0 via pool 0x168a0.
+ */
 /* ROM address: 0x00015f5c; body bytes: 16; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00015d60 (16 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00015f5c(void)
+void candidate_idle_air_terms_sum(void)
 
 {
   DAT_ffffa888 = DAT_ffffa8cc + DAT_ffffa7a4;
@@ -24863,17 +24899,20 @@ void FUN_00015f8e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trim_load [medium]: 0xffffa88c = learned idle trim read from 0xffff8040 (when 0xffffb534==1) or 0xffff8048 (MT: 0xffffb53c selects; addresses as sign-extended mov.w -0x7fc0/-0x7fb8) via ref_readValue_float_DEFAULTVAL_ADDRESS. Called from 0x167c0 via pool 0x168cc.
+ */
 /* ROM address: 0x00015fa0; body bytes: 70; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00015da4 (70 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00015fa0(void)
+void candidate_idle_trim_load(void)
 
 {
   short sVar1;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     DAT_ffffa88c = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8040);
   }
   else {
@@ -24893,9 +24932,12 @@ void FUN_00015fa0(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
+ */
 /* ROM address: 0x00015ffc; body bytes: 302; decompiled */
 
-uint FUN_00015ffc(void)
+uint candidate_idle_learn_condition(void)
 
 {
   byte snapshot_DAT_ffffa7b4;
@@ -24908,7 +24950,7 @@ uint FUN_00015ffc(void)
   cVar2 = DAT_ffffa7b5;
   snapshot_DAT_ffffa7b4 = DAT_ffffa7b4;
   fVar5 = rx8_absolute_difference(inferred_ram_a7ac_ffffa7ac_ffffa7ac,DAT_ffffb550);
-  snapshot_DAT_ffffa838 = DAT_ffffa838;
+  snapshot_DAT_ffffa838 = idle_air_calc_total_ffffa838;
   cVar3 = rx8_is_outside_tolerance_band(DAT_ffffa8cc,0,0x3727c5ac);
   uVar4 = (uint)snapshot_DAT_ffffa7b4;
   if (((((uVar4 != 1) || (DAT_ffffa892 < 0x138)) || (cVar2 != '\0')) ||
@@ -24916,10 +24958,10 @@ uint FUN_00015ffc(void)
         ((60.0 <= intake_air_temperature_ffffaddc || ((37.0 < fVar5 || (cVar3 != '\0')))))) || (0.035 < DAT_ffffa7a4)))
       ) || ((((35.0 < inferred_ram_b2f0_ffffb2f0_ffffb2f0 || (snapshot_DAT_ffffa838 <= DAT_ffffa840)) || (DAT_ffffa83c <= snapshot_DAT_ffffa838)) ||
             ((DAT_ffffa7b7 != '\0' || (DAT_ffffcc91 != '\0')))))) {
-    DAT_ffffa890 = 0;
+    idle_trim_learn_active_ffffa890 = 0;
   }
   else {
-    DAT_ffffa890 = 1;
+    idle_trim_learn_active_ffffa890 = 1;
   }
   if (uVar4 == 1) {
     uVar4 = rx8_add_u16_saturate((int)(short)DAT_ffffa892,1);
@@ -24939,11 +24981,15 @@ uint FUN_00015ffc(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trim_integrator [medium]: Long-term idle trim: reads learned trim floats 0xffff8040/0xffff8048 (mov.w pools 0x16260/0x16262, sign-extended) via 0x3dcd0/0x3dc22 ref_readValue_float_DEFAULTVAL_ADDRESS, nudges by 1e-5 toward the sign of 0xffffa7a8 when learn flag 0xffffa890==1 (pool 0x16264 at 0x161cc), clamps to [-0.12, 0.12], writes back via ref_updateMemoryAtAddress_float; 0xffffb534/0xffffb53c select which cell. Called from 0x167c0 via pool 0x168c8.
+ * RAM 0xffffa890 idle_trim_learn_active (uint8): Learn-enable flag computed by 0x15ffc (counters a892/a894 reload 0x138; coolant/IAT/error gates); gates the trim integration in 0x1617e (read via pool 0x16264 at 0x161cc).
+ */
 /* ROM address: 0x0001617e; body bytes: 408; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x000161a4) */
 
-undefined4 FUN_0001617e(void)
+undefined4 candidate_idle_trim_integrator(void)
 
 {
   short sVar1;
@@ -24957,8 +25003,8 @@ undefined4 FUN_0001617e(void)
   fVar4 = DAT_ffffa7a8;
   fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8040);
   fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar5,&DAT_ffff8048);
-  if (DAT_ffffb534 == '\0') {
-    if (DAT_ffffa890 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\0') {
+    if (idle_trim_learn_active_ffffa890 == '\x01') {
       if (DAT_ffffb53c == '\0') {
         if (fVar4 < 0.005) {
           if (fVar4 <= -0.005) {
@@ -25019,7 +25065,7 @@ undefined4 FUN_0001617e(void)
     }
   }
   else {
-    if (DAT_ffffa890 == '\x01') {
+    if (idle_trim_learn_active_ffffa890 == '\x01') {
       if (fVar4 < 0.005) {
         if (fVar4 <= -0.005) {
           fVar2 = fVar2 - 1e-05;
@@ -25039,12 +25085,15 @@ undefined4 FUN_0001617e(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a814: Table 3D - 63 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_baro_comp [medium]: 0xffffa898 = 3-D tbl 0x6a814(baro 0xffffad14, 0xffffa834). Called from 0x167c0 via pool 0x16894.
+ */
 /* ROM address: 0x00016358; body bytes: 24; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001615c (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00016358(void)
+void candidate_idle_baro_comp(void)
 
 {
   DAT_ffffa898 = lookup_3d_descriptor_scaled(inferred_barometric_pressure_ffffad14,inferred_ram_a834_ffffa834_ffffa834,&tbl_table_3d_63_0006a814);
@@ -25055,13 +25104,16 @@ void FUN_00016358(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a13c: Table 2D - 117 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_aux_air_term [medium]: When 0xffffb2f6==1: 0xffffa89c = clamp(0xffffb1dc * 0.6345 * tbl 0x6a13c(0xffffb220) * 60 / rpm, 0, 0.2), else 0. Called from 0x167c0 via pool 0x168d4.
+ */
 /* ROM address: 0x00016380; body bytes: 118; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x0001639a) */
 /* Unique exact-byte match to related 60E0FC00 function at 00016184 (118 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00016380(void)
+uint candidate_idle_aux_air_term(void)
 
 {
   uint uVar1;
@@ -25090,7 +25142,7 @@ uint FUN_00016380(void)
 void FUN_00016428(void)
 
 {
-  DAT_ffffa8bf = DAT_ffffbd69;
+  DAT_ffffa8bf = ac_clutch_on_ffffbd69;
   return;
 }
 
@@ -25104,9 +25156,12 @@ void FUN_00016428(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
+ */
 /* ROM address: 0x00016432; body bytes: 344; decompiled */
 
-void FUN_00016432(void)
+void candidate_idle_ac_request_calc(void)
 
 {
   char cVar1;
@@ -25172,23 +25227,28 @@ void FUN_00016432(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_clutch_gate [medium]: 0xffffa8bc = 0 when (bd69==0 && a8bf) or engine-running timer < 0x80 or flags 0xffffbbb8/a7b6/c5e6/c5db/c5d7/c61e set; else 1; mirrors bd69 into a8bf. Called from 0x167c0 via pool 0x168bc.
+ * RAM 0xffffbd69 ac_clutch_on (uint8): Set by 0x2e9a4 under a gating chain (engine-running timer 0xffffa424, injectors-off 0xffffa42c, rpm < 7800, coolant < 118 C, flags bd72/bd73/bd76/bd92/bd96/bd97/bd98/0xffffc5e6); adjacent to ref_calculateACClutchOn__ 0x2e89c; consumed as A/C-clutch select in the idle chain (0x16900/0x165d6/0x14944).
+ * RAM 0xffffbbb8 vehicle_not_moving (uint8): Set by 0x2b156 when vspeed <= 4 km/h (hyst 5); read in the idle A/C clutch gate 0x165d6 (pool 0x166ee at 0x16626).
+ */
 /* ROM address: 0x000165d6; body bytes: 120; decompiled */
 
-void FUN_000165d6(void)
+void candidate_idle_ac_clutch_gate(void)
 
 {
-  if ((DAT_ffffbd69 == '\0') && (DAT_ffffa8bf == '\x01')) {
+  if ((ac_clutch_on_ffffbd69 == '\0') && (DAT_ffffa8bf == '\x01')) {
     DAT_ffffa8bc = 0;
   }
   else if (((engine_running_timer_ffffa424 < 0x80) ||
-           (((DAT_ffffbbb8 != '\x01' || (DAT_ffffa7b6 != '\0')) || (DAT_ffffc5e6 != '\0')))) ||
+           (((vehicle_not_moving_ffffbbb8 != '\x01' || (DAT_ffffa7b6 != '\0')) || (DAT_ffffc5e6 != '\0')))) ||
           (((DAT_ffffc5db != '\0' || (DAT_ffffc5d7 != '\0')) || (DAT_ffffc61e != '\0')))) {
     DAT_ffffa8bc = 0;
   }
   else {
     DAT_ffffa8bc = 1;
   }
-  DAT_ffffa8bf = DAT_ffffbd69;
+  DAT_ffffa8bf = ac_clutch_on_ffffbd69;
   return;
 }
 
@@ -25197,12 +25257,15 @@ void FUN_000165d6(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
+ */
 /* ROM address: 0x00016672; body bytes: 120; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00016476 (120 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char FUN_00016672(void)
+char candidate_idle_stall_detect(void)
 
 {
   char cVar1;
@@ -25227,9 +25290,12 @@ char FUN_00016672(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a830: Table 2D - 163 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_iat_comp [medium]: 0xffffa8c0 = tbl 0x6a830(IAT 0xffffaddc). Called from 0x167c0 via pool 0x168d8.
+ */
 /* ROM address: 0x00016720; body bytes: 20; decompiled */
 
-void FUN_00016720(void)
+void candidate_idle_iat_comp(void)
 
 {
   DAT_ffffa8c0 = lookup_2d_descriptor_scaled(intake_air_temperature_ffffaddc,&tbl_table_2d_163_0006a830);
@@ -25251,12 +25317,16 @@ void FUN_00016740(void)
  * Descriptor 0x00069530: Table 2D - 46 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069544: Table 3D - 13 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_load_calc [medium]: A/C load term: b534==1 -> tbl 0x69530, else 3-D tbl 0x69544(coolant, catalyst temp model 0xffffa998); result 0xffffa8c4, filtered into 0xffffa8c8 (updates only when below a8c8+20.0). Called from 0x167c0 via pool 0x16890.
+ * RAM 0xffffb534 automatic_transmission (uint8): Set to 1 by ref_getAutoTransCal__ 0x24b44 (store at 0x24b58 via pool 0x24b5e); 0x24b8c clears 0xffffb53c/b53e/b540 when b534==1; selects AT vs MT table paths across the idle batch (0x16748/0x148c4/0x16900/0x15fa0/0x3354e/0x34650).
+ */
 /* ROM address: 0x00016748; body bytes: 68; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001654c (68 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_00016748(void)
+undefined4 candidate_idle_ac_load_calc(void)
 
 {
   undefined4 uVar1;
@@ -25264,7 +25334,7 @@ undefined4 FUN_00016748(void)
   float extraout_fr0_00;
   float fVar2;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     uVar1 = lookup_2d_descriptor_scaled(&tbl_table_2d_46_00069530);
     fVar2 = extraout_fr0;
   }
@@ -25295,43 +25365,46 @@ void FUN_000167ac(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_control_calc_batch [high]: 28-call batch (27 jsr + 1 tail jmp in the 174-byte body) under interrupt mask 0x10, called from task[10] body 0x11744 (task rec[10].entry thunk 0x64f6 at ROM 0x4a38). First jsr 0x167c6 -> 0x3920 sh_raise_interrupt_mask_return_previous with r4=0x10; callees via pool 0x16888-0x168fc (classified mixed_pool) words read from ROM: 0x1688c=0x148a4, 0x16890=0x16748, 0x16894=0x16358, 0x16898=0x16900, 0x1689c=0x148c4, 0x168a0=0x15f5c, 0x168a4=0x14944, 0x168a8=0x14baa, 0x168ac=0x1506c idle_target_rpm_calculate, 0x168b0=0x14d10, 0x168b4=0x14f6c, 0x168b8=0x16432, 0x168bc=0x165d6, 0x168c0=0x16672, 0x168c4=0x15ffc, 0x168c8=0x1617e, 0x168cc=0x15fa0, 0x168d0=0x15a40, 0x168d4=0x16380, 0x168d8=0x16720, 0x168dc=0x3337c, 0x168e0=0x3354e, 0x168e4=0x34650, 0x168e8=0x34814, 0x168ec=0x15a9a, 0x168f0=0x216f8; tail jmp 0x1686a -> 0x3934 ref_setSR. Callee set is the idle air/target/trim chain (inherited name confirmed).
+ */
 /* ROM address: 0x000167c0; body bytes: 174; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000165c4 (174 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_updateIdleControl__(void)
+void idle_control_calc_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000148a4();
-  FUN_00016748();
-  FUN_00016358();
-  FUN_00016900();
-  FUN_000148c4();
-  FUN_00015f5c();
-  FUN_00014944();
-  FUN_00014baa();
+  candidate_idle_target_term_lookup();
+  candidate_idle_ac_load_calc();
+  candidate_idle_baro_comp();
+  candidate_idle_air_correction_select();
+  candidate_idle_maf_airflow_term();
+  candidate_idle_air_terms_sum();
+  candidate_idle_drive_flags();
+  candidate_idle_mode_timers();
   idle_target_rpm_calculate();
-  FUN_00014d10();
-  FUN_00014f6c();
-  FUN_00016432();
-  FUN_000165d6();
-  FUN_00016672();
-  FUN_00015ffc();
-  FUN_0001617e();
-  FUN_00015fa0();
-  FUN_00015a40();
-  FUN_00016380();
-  FUN_00016720();
-  FUN_0003337c();
-  FUN_0003354e();
-  FUN_00034650();
+  candidate_idle_stall_flags();
+  candidate_idle_trim_ramp();
+  candidate_idle_ac_request_calc();
+  candidate_idle_ac_clutch_gate();
+  candidate_idle_stall_detect();
+  candidate_idle_learn_condition();
+  candidate_idle_trim_integrator();
+  candidate_idle_trim_load();
+  candidate_fuel_cut_resume_threshold();
+  candidate_idle_aux_air_term();
+  candidate_idle_iat_comp();
+  candidate_idle_ratio_calcs();
+  candidate_idle_ac_blend_ramp();
+  candidate_idle_vehicle_speed_flags();
   FUN_00034814();
-  FUN_00015a9a();
-  FUN_000216f8();
+  idle_air_feedback_calc();
+  idle_air_output_clamp();
   ref_setSR(uVar1);
   return;
 }
@@ -25365,12 +25438,15 @@ void thunk_FUN_00015f8e(void)
  * Descriptor 0x00069294: Table 2D - 14 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000692a8: Table 2D - 15 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_correction_select [medium]: Selects idle air correction 0xffffa8cc/0xffffa8d0 from 2-D tables 0x69244/0x69258/0x6926c/0x69280/0x69294/0x692a8 by flags 0xffffbd69/0xffffb534/0xffffb53c/0xffffb540/0xffffbdb8; bd69==0 forces a8cc=0. Called from 0x167c0 via pool 0x16898.
+ */
 /* ROM address: 0x00016900; body bytes: 162; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00016704 (162 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * FUN_00016900(void)
+undefined4 * candidate_idle_air_correction_select(void)
 
 {
   undefined4 *puVar1;
@@ -25379,12 +25455,12 @@ undefined4 * FUN_00016900(void)
   undefined4 extraout_fr0_00;
   undefined4 extraout_fr0_01;
   
-  if (DAT_ffffbd69 == '\0') {
+  if (ac_clutch_on_ffffbd69 == '\0') {
     puVar1 = &DAT_ffffa8cc;
     DAT_ffffa8cc = 0;
   }
   else {
-    if ((DAT_ffffb534 == '\x01') || (DAT_ffffb53c == '\0')) {
+    if ((automatic_transmission_ffffb534 == '\x01') || (DAT_ffffb53c == '\0')) {
       if (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\0') {
         puVar2 = &tbl_table_2d_10_00069244;
       }
@@ -26626,11 +26702,11 @@ int FUN_00017f20(void)
   float fVar3;
   float arg0;
   
-  fVar3 = DAT_ffffbbd8;
+  fVar3 = engine_max_torque_allowed_ffffbbd8;
   arg0 = DAT_ffffbca0;
-  fVar2 = rx8_absolute_difference(DAT_ffffbca0,DAT_ffffbbd8);
+  fVar2 = rx8_absolute_difference(DAT_ffffbca0,engine_max_torque_allowed_ffffbbd8);
   arg1 = 0.0;
-  if ((((DAT_ffffbbc8 == -2) || (DAT_ffffbbcb != '\x01')) || (arg0 < fVar3)) || (fVar2 < 4.9)) {
+  if ((((can212_torque_signal_ffffbbc8 == -2) || (DAT_ffffbbcb != '\x01')) || (arg0 < fVar3)) || (fVar2 < 4.9)) {
     DAT_ffffa92c = 0.0;
   }
   else {
@@ -26640,7 +26716,7 @@ int FUN_00017f20(void)
   fVar2 = rx8_absolute_difference(arg0,DAT_ffffbac4);
   iVar1 = extraout_r0;
   if (((fVar3 < 400.0) && (fVar3 <= arg0)) &&
-     ((4.9 <= fVar2 && (iVar1 = (int)DAT_ffffb534, iVar1 == 0)))) {
+     ((4.9 <= fVar2 && (iVar1 = (int)automatic_transmission_ffffb534, iVar1 == 0)))) {
     arg1 = rx8_max_float(arg0 - fVar3,arg1);
     iVar1 = extraout_r0_00;
   }
@@ -26735,6 +26811,7 @@ void FUN_000180c8(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
  * RAM 0xffffa91c dsc_timing_derate_leading (float): 
+ * RAM 0xffffbbd8 engine_max_torque_allowed (float): Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
  */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
@@ -26759,7 +26836,7 @@ undefined4 dsc_timing_derate_select(void)
   snapshot_DAT_ffffbc98 = DAT_ffffbc98;
   fVar11 = dsc_mode_a_base_timing_ffffbc94;
   cVar1 = DAT_ffffbc83;
-  fVar8 = DAT_ffffbbd8;
+  fVar8 = engine_max_torque_allowed_ffffbbd8;
   iVar7 = (int)DAT_ffffbc83;
   snapshot_DAT_ffffbc90 = DAT_ffffbc90;
   fVar10 = DAT_ffffbac4;
@@ -27175,7 +27252,7 @@ undefined1 * FUN_000189f8(void)
   }
   puVar1 = (undefined1 *)(uint)DAT_ffffb53a;
   if (((puVar1 == (undefined1 *)0x1) ||
-      ((DAT_ffffb534 == '\0' && (puVar1 = &DAT_ffffcc91, 2 < DAT_ffffcc91)))) &&
+      ((automatic_transmission_ffffb534 == '\0' && (puVar1 = &DAT_ffffcc91, 2 < DAT_ffffcc91)))) &&
      ((DAT_ffffa97e == '\0' &&
       (((DAT_ffffa401 == '\0' || (puVar1 = &DAT_ffffa402, DAT_ffffa402 == '\0')) &&
        ((puVar1 = (undefined1 *)0x1, DAT_ffffa97f == '\x01' ||
@@ -29537,7 +29614,7 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   else {
     inferred_throttle_position_ffffad44 = DAT_ffffad38;
   }
-  DAT_ffffad40 = rx8_max_float(arg0,inferred_throttle_position_ffffad44 - DAT_ffffb2a4);
+  DAT_ffffad40 = rx8_max_float(arg0,inferred_throttle_position_ffffad44 - idle_air_required_ffffb2a4);
   fVar1 = (float)rx8_divide_with_zero_fallback(inferred_throttle_position_ffffad44,0x42a80000);
   inferred_ram_ad48_ffffad48_ffffad48 = fVar1 * 100.0;
   DAT_ffffad4c = DAT_ffffad40 - DAT_ffffadac;
@@ -31848,7 +31925,7 @@ ushort open_loop_fueling_targets(void)
   ol_target_3d_ffffb194 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,puVar4);
   ol_fuel_target_main_ffffb130 = rx8_max_float(ol_baro_base_correction_ffffb170 * ol_tip_in_target_ffffb190,ol_target_3d_ffffb194);
   ol_coolant_correction_ffffb134 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_open_loop_target_coolant_temperature_correction_00069cd4);
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (4 < DAT_ffffbc3d) {
       safe_mode_ffffb12d = '\0';
       goto LAB_0001ef92;
@@ -33687,22 +33764,26 @@ uint ref_acCompressorTrailingTimingRetard(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_output_clamp [high]: Final idle air output: 0xffffb2a4 = clamp(tbl 0x6a218(0xffffa838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)) via 0x2404 rx8_clamp_float; pool 0x21740-0x2175c (classified mixed_pool) words: 0x21744=0x6a218, 0x21748=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404; descriptors parsed (0x6a218 n=21 type 4 axis 0x732dc data 0x73330; 0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0). 0xffffb2a4 is read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88) - the electronic-throttle torque chain, plus 0x1b940/0x233ec/0x29d4c/0x48558.
+ * RAM 0xffffb2a4 idle_air_required (float): Clamped idle air output of 0x216f8: clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)). Read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88 -> electronic throttle torque chain, terminals 1B/1C), also 0x1b940/0x233ec/0x29d4c/0x48558.
+ */
 /* ROM address: 0x000216f8; body bytes: 70; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00022064 (70 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000216f8(void)
+void idle_air_output_clamp(void)
 
 {
   float arg0;
   undefined4 snapshot_inferred_coolant_temperature_ffffa990;
   
   snapshot_inferred_coolant_temperature_ffffa990 = inferred_coolant_temperature_ffffa990;
-  arg0 = (float)lookup_2d_descriptor_scaled(DAT_ffffa838,&tbl_table_2d_121_0006a218);
+  arg0 = (float)lookup_2d_descriptor_scaled(idle_air_calc_total_ffffa838,&tbl_table_2d_121_0006a218);
   DAT_ffffb2a8 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa990,&tbl_table_2d_123_0006a240);
   DAT_ffffb2ac = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa990,&tbl_table_2d_122_0006a22c);
-  DAT_ffffb2a4 = rx8_clamp_float(arg0,DAT_ffffb2a8,DAT_ffffb2ac);
+  idle_air_required_ffffb2a4 = rx8_clamp_float(arg0,DAT_ffffb2a8,DAT_ffffb2ac);
   return;
 }
 
@@ -33864,7 +33945,7 @@ undefined4 * FUN_00021970(void)
   float snapshot_DAT_ffffbac8;
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (DAT_ffffbc41 == '\x01') {
       DAT_ffffb2cc = 1;
       DAT_ffffb2cd = 0;
@@ -33903,7 +33984,7 @@ undefined4 * FUN_00021970(void)
         DAT_ffffb2cd = 0;
         DAT_ffffb2ce = 1;
       }
-      inferred_throttle_position_ffffb2d4 = DAT_ffffb2a4 + DAT_ffffb38c;
+      inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + DAT_ffffb38c;
       snapshot_DAT_ffffbac8 = DAT_ffffbac8;
       snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
       DAT_ffffb2c0 = lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,engine_speed_rpm_ffffb548,&tbl_throttle_position_to_torque_0006a180);
@@ -33911,7 +33992,7 @@ undefined4 * FUN_00021970(void)
       DAT_ffffb2dc = DAT_ffffb2c0;
       DAT_ffffb2c4 = lookup_3d_descriptor_scaled(snapshot_DAT_ffffbac8,snapshot_engine_speed_rpm_ffffb548,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
       DAT_ffffb2e0 = DAT_ffffb2c4;
-      if ((DAT_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < snapshot_DAT_ffffbac8)) {
+      if ((automatic_transmission_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < snapshot_DAT_ffffbac8)) {
         puVar1 = &DAT_00021b40;
         DAT_ffffb2c4 = 0x42c80000;
       }
@@ -33942,13 +34023,13 @@ undefined4 * ref_throttlePlatePosToTorqueOutput_(void)
   float in_fr14;
   undefined4 in_fr15;
   
-  inferred_throttle_position_ffffb2d4 = DAT_ffffb2a4 + DAT_ffffb38c;
+  inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + DAT_ffffb38c;
   DAT_ffffb2c0 = lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,&tbl_throttle_position_to_torque_0006a180);
   DAT_ffffb2d8 = in_fr14;
   DAT_ffffb2dc = DAT_ffffb2c0;
   DAT_ffffb2c4 = lookup_3d_descriptor_scaled(in_fr14,in_fr15,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
   DAT_ffffb2e0 = DAT_ffffb2c4;
-  if ((DAT_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < in_fr14)) {
+  if ((automatic_transmission_ffffb534 != '\0') || (puVar1 = &DAT_00021b3c, 256.0 < in_fr14)) {
     puVar1 = &DAT_00021b40;
     DAT_ffffb2c4 = 0x42c80000;
   }
@@ -34765,7 +34846,7 @@ undefined4 FUN_00022a14(void)
   else {
     DAT_ffffb3ed = '\x01';
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (cVar1 == '\x01') {
       puVar5 = &tbl_throttle_pedal_percent_decreasing_filter_factor_0006a354;
     }
@@ -34818,7 +34899,7 @@ LAB_00022b5c:
     DAT_ffffb3e0 = 0.25;
     goto LAB_00022c9a;
   }
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     if (cVar1 == '\x01') {
       puVar5 = &tbl_table_2d_139_0006a3f4;
     }
@@ -35241,8 +35322,8 @@ void FUN_000233ec(void)
   undefined4 snapshot_intake_air_temperature_ffffaddc;
   float arg0;
   
-  arg0 = DAT_ffffb38c + DAT_ffffb2a4;
-  fVar3 = DAT_ffffb2a4;
+  arg0 = DAT_ffffb38c + idle_air_required_ffffb2a4;
+  fVar3 = idle_air_required_ffffb2a4;
   snapshot_intake_air_temperature_ffffaddc = intake_air_temperature_ffffaddc;
   DAT_ffffb418 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_table_2d_144_0006a4c8);
   uVar2 = 0;
@@ -36127,7 +36208,7 @@ void FUN_00024b00(byte param_1,byte *param_2,byte *param_3)
 void ref_getAutoTransCal__(void)
 
 {
-  DAT_ffffb534 = 1;
+  automatic_transmission_ffffb534 = 1;
   return;
 }
 
@@ -36158,7 +36239,7 @@ char FUN_00024b8c(void)
   cVar3 = DAT_ffffbaec;
   cVar2 = DAT_ffffb53f;
   cVar4 = DAT_ffffb53d;
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     cVar4 = '\x01';
     if ((inferred_ram_b53b_ffffb53b_ffffb53b == '\x01') || (cVar4 = inferred_ram_bf9c_ffffbf9c_ffffbf9c, inferred_ram_bf9c_ffffbf9c_ffffbf9c == '\x01')) {
       DAT_ffffb53a = 1;
@@ -36914,12 +36995,15 @@ void ref_filterBatteryVoltage(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_pwm_channel_init [high]: ATU-II ch5B channel init: 0xffff9f44 = 1000 (period), 0xffff9f48 = 0 (duty), ATUII_GR5B_W 0xfffff4e4 = TCNT5 0xfffff4e0 + 1, TIOR5A_B 0xfffff4eb = (b & 0x8f) | 0x10, TSR3_W 0xfffff480 = 0xf7ff, TIER3 |= 0x800. Register names from symbols.tsv.
+ */
 /* ROM address: 0x00025674; body bytes: 156; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00025efc (156 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00025674(void)
+void alternator_pwm_channel_init(void)
 
 {
   ushort uVar1;
@@ -36931,8 +37015,8 @@ void FUN_00025674(void)
   
   uStack_18 = rx8_mul_s32_shift16_saturate(0,1000);
   ref_setSR_PARAM(&local_1c,0xe0);
-  DAT_ffff9f48 = uStack_18;
-  DAT_ffff9f44 = 1000;
+  alternator_pwm_duty_ffff9f48 = uStack_18;
+  alternator_pwm_period_ffff9f44 = 1000;
   DAT_ffff9f4e = 0;
   DAT_ffff9f4c = 0;
   DAT_ffff9f4d = 1;
@@ -36957,12 +37041,15 @@ void FUN_00025674(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_field_pwm_output [high]: Final field PWM duty: 0xffff9f48 = rx8_mul_s32_shift16_saturate((clamp(0xffffb5ac,0,100)/100.0)*65536, period u16 at 0xffff9f44). Disasm: pool 0x2578c = 0xffff9f44 (u32 address), 0x25788 = f32 100.0, mov.w @r5 reads period, mov.w r0,@(0x4,r2) stores duty at 0xffff9f48. Called from 0x267c6 via pool 0x268a8.
+ */
 /* ROM address: 0x00025710; body bytes: 68; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00025f98 (68 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateOutputforAlternator(void)
+void alternator_field_pwm_output(void)
 
 {
   float fVar1;
@@ -36970,7 +37057,7 @@ void ref_calculateOutputforAlternator(void)
   
   fVar2 = 100.0;
   fVar1 = rx8_clamp_float(inferred_ram_b5ac_ffffb5ac_ffffb5ac,0.0,100.0);
-  DAT_ffff9f48 = rx8_mul_s32_shift16_saturate((int)((fVar1 / fVar2) * 65536.0),DAT_ffff9f44);
+  alternator_pwm_duty_ffff9f48 = rx8_mul_s32_shift16_saturate((int)((fVar1 / fVar2) * 65536.0),alternator_pwm_period_ffff9f44);
   return;
 }
 
@@ -36982,16 +37069,20 @@ void FUN_00025790(void)
 {
   DAT_ffffb608 = 0x138;
   DAT_ffffb60a = 0x138;
-  FUN_00025ba4();
-  FUN_00025c6c();
+  candidate_battery_temp_model();
+  candidate_alternator_voltage_target_select();
   DAT_ffffb60e = 0x138;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_timer_a [medium]: 0xffffb608 = 0x138 when (b654 > 18.471 || b658 > 15.938 || engine stopped || b638 < 0x3f || b645==0 || (b645==1 && b63a < 0x3f)), else counts down; counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4.
+ * RAM 0xffffb658 system_voltage_alt (float): Second voltage rail used in the charging DTC timers (thresholds 15.938/10.938 pools 0x7497c/0x7498c/0x74984) by 0x257b4/0x2590a; distinct from filtered battery volts 0xffffb590.
+ */
 /* ROM address: 0x000257b4; body bytes: 280; decompiled */
 
-undefined2 * FUN_000257b4(void)
+undefined2 * candidate_charging_dtc_timer_a(void)
 
 {
   undefined2 *puVar1;
@@ -37005,7 +37096,7 @@ undefined2 * FUN_000257b4(void)
   else {
     DAT_ffffb645 = '\x01';
   }
-  if ((18.471 < inferred_ram_b654_ffffb654_ffffb654) || (15.938 < DAT_ffffb658)) {
+  if ((18.471 < inferred_ram_b654_ffffb654_ffffb654) || (15.938 < system_voltage_alt_ffffb658)) {
     puVar2 = (undefined2 *)0x0;
   }
   else {
@@ -37050,9 +37141,12 @@ undefined2 * FUN_000257b4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_timer_b [medium]: 0xffffb60a = 0x138 when (b654 <= 16.973 (pool 0x74980) || b658 >= 10.938 (pool 0x74984) || engine stopped || b63c < 0x3f || b646==0 || (b646==1 && b63e < 0x3f)), else counts down. Called from 0x2680e via pool 0x268b8.
+ */
 /* ROM address: 0x0002590a; body bytes: 226; decompiled */
 
-void FUN_0002590a(void)
+void candidate_charging_dtc_timer_b(void)
 
 {
   if (inferred_battery_voltage_ffffb590 < 10.0) {
@@ -37063,7 +37157,7 @@ void FUN_0002590a(void)
   else {
     DAT_ffffb646 = '\x01';
   }
-  if (((((inferred_ram_b654_ffffb654_ffffb654 <= 16.973) || (10.938 <= DAT_ffffb658)) || (engine_running_ffffa428 == '\0')) ||
+  if (((((inferred_ram_b654_ffffb654_ffffb654 <= 16.973) || (10.938 <= system_voltage_alt_ffffb658)) || (engine_running_ffffa428 == '\0')) ||
       ((engine_running_ffffa428 == '\x01' && (DAT_ffffb63c < 0x3f)))) ||
      ((DAT_ffffb646 == '\0' || ((DAT_ffffb646 == '\x01' && (DAT_ffffb63e < 0x3f)))))) {
     DAT_ffffb60a = 0x138;
@@ -37087,22 +37181,29 @@ void FUN_0002590a(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_ok_latch [medium]: 0xffffb5b1 = (0xffffb60a == 0). Called from 0x267c6 via pool 0x2688c.
+ * RAM 0xffffb5b1 charging_ok_latch (uint8): Set by 0x25a22 = (0xffffb60a == 0), i.e. P2502 confirmation timer fully counted down; gates P2502 raise in 0x545bc and the warning flag in 0x26760.
+ */
 /* ROM address: 0x00025a22; body bytes: 26; decompiled */
 
-void FUN_00025a22(void)
+void candidate_charging_ok_latch(void)
 
 {
-  DAT_ffffb5b1 = DAT_ffffb60a == 0;
+  charging_ok_latch_ffffb5b1 = DAT_ffffb60a == 0;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * overvoltage_flags [medium]: 0xffffb612 = 1 when 0xffffb654 >= 18.471 (pool 0x74978/0x74988) or 0xffffb658 >= 15.938 (pool 0x7497c/0x7498c). Called from 0x267c6 via pool 0x26890.
+ */
 /* ROM address: 0x00025a3c; body bytes: 44; decompiled */
 
-void FUN_00025a3c(void)
+void candidate_overvoltage_flags(void)
 
 {
-  if ((18.471 <= inferred_ram_b654_ffffb654_ffffb654) || (15.938 <= DAT_ffffb658)) {
+  if ((18.471 <= inferred_ram_b654_ffffb654_ffffb654) || (15.938 <= system_voltage_alt_ffffb658)) {
     DAT_ffffb612 = 1;
   }
   else {
@@ -37112,9 +37213,12 @@ void FUN_00025a3c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_speed_calc [high]: 0xffffb598 = engine_speed_rpm 0xffffb548 * 2.08 (belt ratio, f32 @ shared pool 0x74990); 0xffffb613 = alternator speed >= 859.0 (pool 0x74994, lower bound folded). Called from 0x267c6 via pool 0x26894.
+ */
 /* ROM address: 0x00025a68; body bytes: 56; decompiled */
 
-void FUN_00025a68(void)
+void alternator_speed_calc(void)
 
 {
   inferred_alternator_speed_ffffb598 = engine_speed_rpm_ffffb548 * 2.08;
@@ -37130,9 +37234,12 @@ void FUN_00025a68(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * hot_engine_dtc_timer [medium]: 0xffffb648 = coolant >= 60 (hyst 55); 0xffffb60c = 100 when engine stopped && coolant hot, else counts down. Called from 0x2680e via pool 0x268bc.
+ */
 /* ROM address: 0x00025aa0; body bytes: 90; decompiled */
 
-void FUN_00025aa0(void)
+void candidate_hot_engine_dtc_timer(void)
 
 {
   if (inferred_coolant_temperature_ffffa98c < 60.0) {
@@ -37169,7 +37276,7 @@ uint FUN_00025b36(void)
     DAT_ffffb649 = 0;
   }
   uVar1 = (uint)cranking_active_ffffaa62_ffffaa62;
-  if ((((uVar1 != 1) || (uVar1 = (uint)DAT_ffffb649, uVar1 != 1)) || (DAT_ffffb658 < 10.0)) ||
+  if ((((uVar1 != 1) || (uVar1 = (uint)DAT_ffffb649, uVar1 != 1)) || (system_voltage_alt_ffffb658 < 10.0)) ||
      (uVar1 = (uint)DAT_ffffb60c, uVar1 != 0)) {
     DAT_ffffb614 = 0;
   }
@@ -37183,9 +37290,12 @@ uint FUN_00025b36(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a524: Battery Temperature Model - Decay Amount (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * battery_temp_model [medium]: Battery temperature estimate 0xffffb5c4 = IAT + max((coolant 0xffffa98c - 93.0)*0.43, 0) (pools 0x749b0/0x749b4) + filtered/clamped term (tbl 0x6a524(vspeed) decay, first_order_filter 2e-5, clamp [-7.2, 4.4]); 66.25 when 0xffffc5db set. Called from 0x267c6 via pool 0x2689c.
+ */
 /* ROM address: 0x00025ba4; body bytes: 134; decompiled */
 
-void FUN_00025ba4(void)
+void candidate_battery_temp_model(void)
 
 {
   float arg0;
@@ -37218,9 +37328,14 @@ void FUN_00025ba4(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_voltage_target_select [medium]: Target voltage 0xffffb61c: 14.2 (pool 0x749c8) when c6ac<=0 && b64c; tbl 0x6a5b0(battery temp b5c4) + clamp(b59c ± 0.2 hysteresis, b624) in cold mode (b617); tbl 0x6a59c + min(b59c+0.2, b624) in mode b618; then 0xffffb59c = ref_alternatorPIDsomething(0x5cba4)(b61c). Coolant/IAT 145/150 C flags b64a/b64b/b64c. Called from 0x26868 via pool 0x268d8 and from 0x25790.
+ * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
+ * RAM 0xffffb5a4 electrical_load_filtered (float): first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
+ */
 /* ROM address: 0x00025c6c; body bytes: 1008; decompiled */
 
-void FUN_00025c6c(void)
+void candidate_alternator_voltage_target_select(void)
 
 {
   char cVar1;
@@ -37267,6 +37382,9 @@ void FUN_00025c6c(void)
   }
   if ((((DAT_ffffb64a == '\x01') || (DAT_ffffb64b == '\x01')) ||
       ((DAT_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+     (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
+       ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
      (((((DAT_ffffb610 == 0 || (DAT_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
        ((DAT_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
     DAT_ffffb616 = '\x01';
@@ -37280,7 +37398,7 @@ void FUN_00025c6c(void)
   else if (DAT_ffffb610 != 0) {
     DAT_ffffb610 = DAT_ffffb610 + -1;
   }
-  fVar5 = DAT_ffffb658;
+  fVar5 = system_voltage_alt_ffffb658;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   DAT_ffffb624 = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_desired_charge_voltage_0006a538);
   DAT_ffffb628 = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_table_2d_152_0006a574);
@@ -37288,7 +37406,7 @@ void FUN_00025c6c(void)
   cVar4 = DAT_ffffb619;
   if (((((((cVar2 == '\x01') && (DAT_ffffb644 < 4)) || (DAT_ffffb616 == '\x01')) ||
         (inferred_ram_ad18_ffffad18_ffffad18 == '\x01')) || ((cVar1 == '\x01' && (cVar3 == '\x01')))) ||
-      ((snapshot_vehicle_speed_ffffbbb4 < 20.0 || ((DAT_ffffb5fc < 20.0 || (20.0 <= DAT_ffffb5a4)))))) ||
+      ((snapshot_vehicle_speed_ffffbbb4 < 20.0 || ((DAT_ffffb5fc < 20.0 || (20.0 <= electrical_load_filtered_ffffb5a4)))))) ||
      (fVar5 < DAT_ffffb624 - DAT_ffffb62c)) {
     DAT_ffffb617 = '\0';
 LAB_00025f56:
@@ -37299,7 +37417,7 @@ LAB_00025f56:
     }
   }
   else if (cVar2 == '\x01') {
-    if ((((3 < DAT_ffffb644) && (50.0 <= DAT_ffffb5fc)) && (DAT_ffffb5a4 < 50.0)) &&
+    if ((((3 < DAT_ffffb644) && (50.0 <= DAT_ffffb5fc)) && (electrical_load_filtered_ffffb5a4 < 50.0)) &&
        (DAT_ffffb624 - DAT_ffffb628 <= fVar5)) {
       DAT_ffffb617 = '\x01';
     }
@@ -37339,7 +37457,7 @@ LAB_00025f94:
     fVar5 = rx8_max_float(inferred_ram_b59c_ffffb59c_ffffb59c - 0.2,DAT_ffffb624);
     DAT_ffffb61c = fVar5 - DAT_ffffb634;
   }
-  inferred_ram_b59c_ffffb59c_ffffb59c = (float)ref_alternatorPIDsomething(DAT_ffffb61c);
+  inferred_ram_b59c_ffffb59c_ffffb59c = (float)candidate_alternator_target_encode_u16(DAT_ffffb61c);
   if (cVar2 == '\x01') {
     DAT_ffffb644 = rx8_add_u8_saturate((int)(char)DAT_ffffb644,1);
   }
@@ -37350,9 +37468,15 @@ LAB_00025f94:
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_voltage_error_calc [medium]: Voltage error: 0xffffb5c8 = clamp(0xffffb59c - 0xffffb65c, -2.5, 2.5) (2.5 at pool 0x2623c), delta 0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(alt speed) when b613, else 0; ramp (rpm - b600)/(b604 - b600) clamp [0.1, 1.0] with b600/b604 = 406.25/700.0 (pools 0x749ec/0x749e4, AT-in-neutral selects 406.25 when b534==1 && b53a==0); integral terms 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), 0xffffb5d8 accumulates. Called from 0x267c6 via pool 0x268a0.
+ * RAM 0xffffb5a0 alternator_target_field (float): Target field drive from tbl 0x6a54c(alt speed 0xffffb598) when b613, else 0; written by 0x2616e; used as band reference in 0x26624/0x2ce18.
+ * RAM 0xffffb5e0 electrical_load_raw (float): Raw electrical-load quantity filtered into 0xffffb5a4 (0x2633e) and thresholded at 40/30 in 0x264f0 -> 0xffffb5b3; compared against b5a0 band in 0x26624.
+ * RAM 0xffffb65c battery_voltage_filtered (float): Filtered battery voltage subtracted from the target 0xffffb59c in 0x2616e to form the charging error 0xffffb5c8 (clamp ±2.5).
+ */
 /* ROM address: 0x0002616e; body bytes: 392; decompiled */
 
-void FUN_0002616e(void)
+void candidate_alternator_voltage_error_calc(void)
 
 {
   float *pfVar1;
@@ -37363,18 +37487,18 @@ void FUN_0002616e(void)
   
   fVar4 = 2.5;
   fVar5 = -2.5;
-  fVar2 = rx8_clamp_float(inferred_ram_b59c_ffffb59c_ffffb59c - DAT_ffffb65c,-2.5,2.5);
+  fVar2 = rx8_clamp_float(inferred_ram_b59c_ffffb59c_ffffb59c - battery_voltage_filtered_ffffb65c,-2.5,2.5);
   fVar3 = fVar2 - DAT_ffffb5c8;
   DAT_ffffb5c8 = fVar2;
   DAT_ffffb5cc = rx8_clamp_float(fVar3,fVar5,fVar4);
   fVar2 = 0.0;
   if (DAT_ffffb613 == '\x01') {
-    DAT_ffffb5a0 = (float)lookup_2d_descriptor_scaled(inferred_alternator_speed_ffffb598,&DAT_0006a54c);
+    alternator_target_field_ffffb5a0 = (float)lookup_2d_descriptor_scaled(inferred_alternator_speed_ffffb598,&DAT_0006a54c);
   }
   else {
-    DAT_ffffb5a0 = 0.0;
+    alternator_target_field_ffffb5a0 = 0.0;
   }
-  if ((DAT_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
     pfVar1 = (float *)&DAT_000749f0;
     DAT_ffffb600 = 406.25;
   }
@@ -37384,20 +37508,20 @@ void FUN_0002616e(void)
   }
   DAT_ffffb604 = *pfVar1;
   if (engine_running_timer_ffffa424 == 0) {
-    DAT_ffffb5d0 = DAT_ffffb5a0 * 0.5;
+    DAT_ffffb5d0 = alternator_target_field_ffffb5a0 * 0.5;
   }
   else {
     fVar3 = (float)rx8_divide_with_zero_fallback
                              (engine_speed_rpm_ffffb548 - DAT_ffffb600,DAT_ffffb604 - DAT_ffffb600);
     fVar3 = rx8_clamp_float(fVar3,0.1,1.0);
-    DAT_ffffb5d0 = DAT_ffffb5a0 * fVar3;
+    DAT_ffffb5d0 = alternator_target_field_ffffb5a0 * fVar3;
   }
   fVar4 = DAT_ffffb5c8 * 0.2;
   fVar3 = DAT_ffffb5cc * 0.0;
   if (DAT_ffffb614 == '\x01') {
     DAT_ffffb5d4 = rx8_clamp_float(DAT_ffffb5c8 * 10.0,-125.0,4.8828);
     fVar4 = rx8_clamp_float(fVar4,-0.1,0.0343);
-    DAT_ffffb5d8 = rx8_clamp_float(DAT_ffffb5d8 + fVar4,fVar2,DAT_ffffb5a0);
+    DAT_ffffb5d8 = rx8_clamp_float(DAT_ffffb5d8 + fVar4,fVar2,alternator_target_field_ffffb5a0);
     fVar4 = 249.02;
     fVar5 = -125.0;
   }
@@ -37405,11 +37529,11 @@ void FUN_0002616e(void)
     fVar5 = -125.0;
     DAT_ffffb5d4 = rx8_clamp_float(DAT_ffffb5c8 * 10.0,-125.0,125.0);
     fVar4 = rx8_clamp_float(fVar4,fVar5,125.0);
-    DAT_ffffb5d8 = rx8_clamp_float(DAT_ffffb5d8 + fVar4,fVar2,DAT_ffffb5a0);
+    DAT_ffffb5d8 = rx8_clamp_float(DAT_ffffb5d8 + fVar4,fVar2,alternator_target_field_ffffb5a0);
     fVar4 = 125.0;
   }
   DAT_ffffb5dc = rx8_clamp_float(fVar3,fVar5,fVar4);
-  DAT_ffffb5e0 = rx8_clamp_float(DAT_ffffb5d4 + DAT_ffffb5d8 + DAT_ffffb5dc,fVar2,DAT_ffffb5d0);
+  electrical_load_raw_ffffb5e0 = rx8_clamp_float(DAT_ffffb5d4 + DAT_ffffb5d8 + DAT_ffffb5dc,fVar2,DAT_ffffb5d0);
   return;
 }
 
@@ -37422,7 +37546,7 @@ void FUN_0002616e(void)
 void FUN_0002633e(void)
 
 {
-  DAT_ffffb5a4 = rx8_first_order_filter(DAT_ffffb5e0,DAT_ffffb5a4,0.035335,1e-05);
+  electrical_load_filtered_ffffb5a4 = rx8_first_order_filter(electrical_load_raw_ffffb5e0,electrical_load_filtered_ffffb5a4,0.035335,1e-05);
   return;
 }
 
@@ -37431,9 +37555,12 @@ void FUN_0002633e(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
+ */
 /* ROM address: 0x0002635c; body bytes: 264; decompiled */
 
-void FUN_0002635c(void)
+void candidate_low_voltage_dtc_timer(void)
 
 {
   float snapshot_DAT_ffffb654;
@@ -37446,7 +37573,7 @@ void FUN_0002635c(void)
   else {
     DAT_ffffb647 = '\x01';
   }
-  if (((((8.486699 <= inferred_ram_b654_ffffb654_ffffb654) || (DAT_ffffb5e0 <= 19.531)) || (engine_running_ffffa428 == '\0')) ||
+  if (((((8.486699 <= inferred_ram_b654_ffffb654_ffffb654) || (electrical_load_raw_ffffb5e0 <= 19.531)) || (engine_running_ffffa428 == '\0')) ||
       ((engine_running_ffffa428 == '\x01' && (DAT_ffffb640 < 0x3f)))) ||
      ((DAT_ffffb647 == '\0' || ((DAT_ffffb647 == '\x01' && (DAT_ffffb642 < 0x3f)))))) {
     DAT_ffffb60e = 0x138;
@@ -37468,21 +37595,24 @@ void FUN_0002635c(void)
     DAT_ffffb642 = rx8_add_u16_saturate((int)(short)DAT_ffffb642,1);
   }
   if (DAT_ffffb60e == 0) {
-    DAT_ffffb5b2 = 1;
+    low_voltage_latch_ffffb5b2 = 1;
   }
   else if (8.486699 <= snapshot_DAT_ffffb654) {
-    DAT_ffffb5b2 = 0;
+    low_voltage_latch_ffffb5b2 = 0;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * electrical_load_flag_calc [medium]: 0xffffb5b3 = 1 when filtered 0xffffb5e0 >= 40.0, 0 below 30.0; 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335, 1e-5) maintained by 0x2633e; 0xffffb5a8 tracks b5ec = b5e0 * clamp((b5e0-b5e8)/50.0, 0, 1) with -124.51 decay. Called from 0x2680e via pool 0x268c4. Feeds idle high-load select (idle_control_report) and the drag ratio in 0x2ce18.
+ */
 /* ROM address: 0x000264f0; body bytes: 238; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00026e14 (238 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000264f0(void)
+void candidate_electrical_load_flag_calc(void)
 
 {
   float fVar1;
@@ -37492,9 +37622,9 @@ void FUN_000264f0(void)
   
   uVar2 = 0x42480000;
   fVar3 = 30.0;
-  DAT_ffffb5e4 = DAT_ffffb5a4;
-  arg0 = DAT_ffffb5e0;
-  DAT_ffffb5e8 = rx8_first_order_filter(DAT_ffffb5e0,DAT_ffffb5e8,1.0,1e-05);
+  DAT_ffffb5e4 = electrical_load_filtered_ffffb5a4;
+  arg0 = electrical_load_raw_ffffb5e0;
+  DAT_ffffb5e8 = rx8_first_order_filter(electrical_load_raw_ffffb5e0,DAT_ffffb5e8,1.0,1e-05);
   fVar1 = (float)rx8_divide_with_zero_fallback((arg0 - 0.0) - DAT_ffffb5e8,uVar2);
   fVar1 = rx8_clamp_float(fVar1,0.0,1.0);
   DAT_ffffb5ec = arg0 * fVar1;
@@ -37515,11 +37645,11 @@ void FUN_000264f0(void)
   }
   if (DAT_ffffb5e4 < 40.0) {
     if (DAT_ffffb5e4 < fVar3) {
-      DAT_ffffb5b3 = 0;
+      high_load_flag_ffffb5b3 = 0;
     }
   }
   else {
-    DAT_ffffb5b3 = 1;
+    high_load_flag_ffffb5b3 = 1;
   }
   return;
 }
@@ -37532,12 +37662,15 @@ void FUN_000264f0(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_calc [medium]: Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4.
+ */
 /* ROM address: 0x00026624; body bytes: 238; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00026f48 (238 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateAlternatorDiagDCOutput(void)
+void candidate_alternator_duty_calc(void)
 
 {
   char cVar1;
@@ -37550,8 +37683,8 @@ void ref_calculateAlternatorDiagDCOutput(void)
   
   arg3 = 1e-05;
   fVar4 = DAT_ffffb5f4;
-  snapshot_DAT_ffffb5e0 = DAT_ffffb5e0;
-  cVar1 = rx8_is_outside_tolerance_band(DAT_ffffb5e0,DAT_ffffb5a0,0x3727c5ac);
+  snapshot_DAT_ffffb5e0 = electrical_load_raw_ffffb5e0;
+  cVar1 = rx8_is_outside_tolerance_band(electrical_load_raw_ffffb5e0,alternator_target_field_ffffb5a0,0x3727c5ac);
   arg1 = 0.0;
   cVar2 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffb5e0,0,arg3);
   fVar3 = arg1;
@@ -37573,21 +37706,24 @@ void ref_calculateAlternatorDiagDCOutput(void)
     arg1 = rx8_clamp_float(fVar4,arg1,100.0);
   }
   DAT_ffffb620 = arg1;
-  inferred_ram_b5ac_ffffb5ac_ffffb5ac = ref_diagAlternatorSignalthing(DAT_ffffb620);
+  inferred_ram_b5ac_ffffb5ac_ffffb5ac = candidate_alternator_duty_encode_u16(DAT_ffffb620);
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_warning_light_flag [medium]: 0xffffb5b4 = 1 when (b613==0 || b5b0==1 || b5b1==1 || b5b2==1 || 0xffffc5db==1). Flag is exported, not GPIO-driven from here: read by 0x28c78 (packed into CAN status word 0xffffbab2 bit 0x40 via pool 0x28d70 at 0x28cfe) and by Mode 22 PID 0x0968 handler 0x57138 (pool 0x5717e). Called from 0x2680e via pool 0x268c8.
+ */
 /* ROM address: 0x00026760; body bytes: 74; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00027084 (74 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_setAlternatorWarningLight(void)
+void candidate_alternator_warning_light_flag(void)
 
 {
-  if ((((DAT_ffffb613 == '\0') || (DAT_ffffb5b0 == '\x01')) || (DAT_ffffb5b1 == '\x01')) ||
-     ((DAT_ffffb5b2 == '\x01' || (DAT_ffffc5db == '\x01')))) {
+  if ((((DAT_ffffb613 == '\0') || (DAT_ffffb5b0 == '\x01')) || (charging_ok_latch_ffffb5b1 == '\x01')) ||
+     ((low_voltage_latch_ffffb5b2 == '\x01' || (DAT_ffffc5db == '\x01')))) {
     inferred_ram_b5b4_ffffb5b4_ffffb5b4 = 1;
   }
   else {
@@ -37606,55 +37742,61 @@ void FUN_000267b8(void)
 
 {
   FUN_00025790();
-  FUN_00025674();
+  alternator_pwm_channel_init();
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_control_main_batch [high]: Mask-0x10 batch called from 0x114d0 (callgraph 0x114d0 -> 0x267c6). Pool words 0x26888-0x268b0 read from ROM: 0x26888=0x3920 sh_raise_interrupt_mask_return_previous (r4=0x10), 0x2688c=0x25a22, 0x26890=0x25a3c, 0x26894=0x25a68, 0x26898=0x25b36, 0x2689c=0x25ba4, 0x268a0=0x2616e, 0x268a4=0x26624, 0x268a8=0x25710, 0x268ac=0x545bc, tail jmp via 0x268b0=0x3934 ref_setSR. Inherited ref_alternatorControlMain confirmed: speed/voltage/battery-temp/error/duty/PWM-output calc + P2502 DTC raise.
+ */
 /* ROM address: 0x000267c6; body bytes: 72; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000270ea (72 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_alternatorControlMain_000267c6(void)
+void alternator_control_main_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00025a22();
-  FUN_00025a3c();
-  FUN_00025a68();
+  candidate_charging_ok_latch();
+  candidate_overvoltage_flags();
+  alternator_speed_calc();
   FUN_00025b36();
-  FUN_00025ba4();
-  FUN_0002616e();
-  ref_calculateAlternatorDiagDCOutput();
-  ref_calculateOutputforAlternator();
-  FUN_000545bc();
+  candidate_battery_temp_model();
+  candidate_alternator_voltage_error_calc();
+  candidate_alternator_duty_calc();
+  alternator_field_pwm_output();
+  candidate_charging_dtc_raise_p2502();
   ref_setSR(uVar1);
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_monitor_batch [high]: Mask-0x10 batch called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2680e). Pool words 0x268b4-0x268d0: 0x268b4=0x257b4, 0x268b8=0x2590a, 0x268bc=0x25aa0, 0x268c0=0x2635c, 0x268c4=0x264f0, 0x268c8=0x26760, 0x268cc=0x54590, 0x268d0=0x545a6, tail via 0x268b0=0x3934. Inherited ref_alternatorControl confirmed: DTC confirmation timers, high-load flag, warning-light flag, P2503/P2504 raises.
+ */
 /* ROM address: 0x0002680e; body bytes: 66; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00027132 (66 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_alternatorControl(void)
+void alternator_monitor_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000257b4();
-  FUN_0002590a();
-  FUN_00025aa0();
-  FUN_0002635c();
-  FUN_000264f0();
-  ref_setAlternatorWarningLight();
-  FUN_00054590();
-  FUN_000545a6();
+  candidate_charging_dtc_timer_a();
+  candidate_charging_dtc_timer_b();
+  candidate_hot_engine_dtc_timer();
+  candidate_low_voltage_dtc_timer();
+  candidate_electrical_load_flag_calc();
+  candidate_alternator_warning_light_flag();
+  candidate_charging_dtc_raise_p2503();
+  candidate_charging_dtc_raise_p2504();
   ref_setSR(uVar1);
   return;
 }
@@ -37677,18 +37819,21 @@ void FUN_00026850(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_pid_task [high]: Mask-0x10 wrapper calling only 0x25c6c (pool 0x268d8=0x25c6c, 0x26888=0x3920 mask, 0x268b0=0x3934 tail ref_setSR); called from task[14] body 0x11adc (charging_control_batch; its batch pool starts at 0x11ca8 with 7 entries). Inherited ref_alternatorControlMain confirmed as the voltage-target/PID task.
+ */
 /* ROM address: 0x00026868; body bytes: 24; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002718c (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_alternatorControlMain_00026868(void)
+void alternator_pid_task(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00025c6c();
+  candidate_alternator_voltage_target_select();
   ref_setSR(uVar1);
   return;
 }
@@ -37716,7 +37861,7 @@ void FUN_000268dc(void)
 void FUN_000268f8(void)
 
 {
-  DAT_ffffb658 = DAT_ffffb58c + 0.1172;
+  system_voltage_alt_ffffb658 = DAT_ffffb58c + 0.1172;
   return;
 }
 
@@ -37729,7 +37874,7 @@ void FUN_000268f8(void)
 void FUN_00026908(void)
 
 {
-  DAT_ffffb65c = DAT_ffffb58c + 0.1172;
+  battery_voltage_filtered_ffffb65c = DAT_ffffb58c + 0.1172;
   return;
 }
 
@@ -41003,7 +41148,7 @@ undefined4 FUN_00029d4c(void)
 LAB_00029df4:
   arg1 = 0.0;
   DAT_ffffbb4c = rx8_clamp_float(arg0,0.0,84.0);
-  DAT_ffffbb44 = rx8_clamp_float(((DAT_ffffb2a4 + DAT_ffffbb4c) * 100.0) / 84.0,arg1,100.0);
+  DAT_ffffbb44 = rx8_clamp_float(((idle_air_required_ffffb2a4 + DAT_ffffbb4c) * 100.0) / 84.0,arg1,100.0);
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8744,0);
   if (((cVar2 != '\x01') &&
       (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8728,0), cVar2 != '\x01')) &&
@@ -41160,7 +41305,7 @@ void FUN_0002a082(void)
 
 {
   if (((inferred_ram_a9bc_ffffa9bc_ffffa9bc < 65.0) || (engine_speed_rpm_ffffb548 < 5500.0)) || (engine_running_ffffa428 != '\0')) {
-    if (((DAT_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
+    if (((can212_status_word_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
       DAT_ffffbb5c = 900000;
     }
     else if ((cranking_active_ffffaa62_ffffaa62 == '\0') && (DAT_ffffbb5c != 0)) {
@@ -41170,13 +41315,13 @@ void FUN_0002a082(void)
   else {
     DAT_ffffbb5c = 0;
   }
-  if (((DAT_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
+  if (((can212_status_word_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
     DAT_ffffbb49 = 1;
   }
   else {
     DAT_ffffbb49 = 0;
   }
-  DAT_ffffbb62 = DAT_ffffbbde;
+  DAT_ffffbb62 = can212_status_word_ffffbbde;
   return;
 }
 
@@ -41301,30 +41446,33 @@ void FUN_0002a290(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_can_arbitration_batch [high]: 15-call batch (13 jsr + tail jmp) under interrupt mask 0x10, called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2a2ae). Pool words in classified pool 0x2a3e0-0x2a4f4 read from ROM: 0x2a448=0x3920 sh_raise_interrupt_mask_return_previous, 0x2a454=0x3934 ref_setSR (tail), 0x2a468=0x2b314, 0x2a46c=0x2b3b8, 0x2a470=0x2b496, 0x2a474=0x2b6a4, 0x2a478=0x2b6c2, 0x2a47c=0x2b754, 0x2a480=0x2b788, 0x2a484=0x2b7a6, 0x2a488=0x2b7c4, 0x2a48c=0x2b046, 0x2a490=0x2b156, 0x2a494=0x2b17e, 0x2a498=0x2b1aa. Inherited ref_updateDSCRelatedCANStuff__ confirmed: CAN 0x212 signal validity, max-torque-allowed, DSC mode bits, vehicle-moving and wheelspeed validity.
+ */
 /* ROM address: 0x0002a2ae; body bytes: 96; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002aa02 (96 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_updateDSCRelatedCANStuff__(void)
+void dsc_can_arbitration_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_can212RXSignalValidity__();
-  ref_calculateEngineMaxTorqueAllowed___();
-  FUN_0002b496();
-  FUN_0002b6a4();
-  ref_DSC_checkIfMode_x80();
-  ref_DSC_checkIfMode_x40();
-  ref_DSC_checkIfMode_x20();
-  ref_DSC_checkIfMode_x10();
-  FUN_0002b7c4();
-  FUN_0002b046();
-  ref_calculateIfVehicleMoving();
-  ref_calculateWheelspeed_LR_Validity();
-  ref_calculateWheelspeed_RR_Validity();
+  can212_rx_signal_validity();
+  engine_max_torque_allowed_calc();
+  candidate_dsc_desired_torque_calc();
+  candidate_dsc_mode_bit08_check();
+  candidate_dsc_mode_bit80_check();
+  candidate_dsc_mode_bit40_check();
+  candidate_dsc_mode_bit20_check();
+  candidate_dsc_mode_bit10_check();
+  candidate_can212_timeout_flag();
+  candidate_wheelspeed_rear_avg_calc();
+  vehicle_moving_calc();
+  wheelspeed_lr_validity();
+  wheelspeed_rr_validity();
   ref_setSR(uVar1);
   return;
 }
@@ -41939,7 +42087,7 @@ uint ref_CAN4B0RX_Main(void)
   cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e24c);
   if (cVar2 == '\0') {
     FUN_0000e038();
-    ref_canrx4b0related();
+    candidate_can4b0_wheelspeed_extract();
     uVar1 = FUN_0002b220();
     DAT_ffffbbbc = 0;
     DAT_ffffbbbe = 0;
@@ -41956,9 +42104,14 @@ uint ref_CAN4B0RX_Main(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_rear_avg_calc [medium]: Averages the two rear wheelspeed signals from CAN (0xffffbbac/0xffffbbae, written by 0x2b1d6 from payload bytes bba4-bba7): decode_u16_affine(0x3c23d70a, 0xc2c80000, x) each, mean, re-encode saturate; 0xffff (invalid) handling when either is -1 or 0xffffbbbc < 6 or 0xffffc61e set. Pool 0x2a48c.
+ * RAM 0xffffbbac wheelspeed_lr_raw (uint16): Raw LR wheelspeed from CAN payload (0x2b1d6: bba4*0x100+bba5); validity flag 0xffffbbb9 by 0x2b17e; averaged in 0x2b046.
+ * RAM 0xffffbbae wheelspeed_rr_raw (uint16): Raw RR wheelspeed (0x2b1d6: bba6*0x100+bba7); validity flag 0xffffbbba by 0x2b1aa; averaged in 0x2b046.
+ */
 /* ROM address: 0x0002b046; body bytes: 216; decompiled */
 
-undefined4 * FUN_0002b046(void)
+undefined4 * candidate_wheelspeed_rear_avg_calc(void)
 
 {
   undefined4 *puVar1;
@@ -41975,14 +42128,14 @@ undefined4 * FUN_0002b046(void)
   puVar1 = &DAT_0002b110;
   uVar8 = 0xc2c80000;
   if (((DAT_ffffc61e == '\0') && (puVar1 = (undefined4 *)0x6, DAT_ffffbbbc < 6)) &&
-     ((DAT_ffffbbac != -1 || (puVar1 = (undefined4 *)0x6, DAT_ffffbbae != -1)))) {
+     ((wheelspeed_lr_raw_ffffbbac != -1 || (puVar1 = (undefined4 *)0x6, wheelspeed_rr_raw_ffffbbae != -1)))) {
     puVar1 = (undefined4 *)0x6;
-    puVar3 = (undefined4 *)(int)DAT_ffffbbae;
-    if ((DAT_ffffbbac != -1) &&
-       (puVar1 = (undefined4 *)0x6, puVar3 = (undefined4 *)(int)DAT_ffffbbac, DAT_ffffbbae != -1)) {
+    puVar3 = (undefined4 *)(int)wheelspeed_rr_raw_ffffbbae;
+    if ((wheelspeed_lr_raw_ffffbbac != -1) &&
+       (puVar1 = (undefined4 *)0x6, puVar3 = (undefined4 *)(int)wheelspeed_lr_raw_ffffbbac, wheelspeed_rr_raw_ffffbbae != -1)) {
       fVar4 = (float)rx8_decode_u16_affine
-                               (0x3c23d70a,0xc2c80000,(undefined4 *)(int)DAT_ffffbbac);
-      fVar5 = (float)rx8_decode_u16_affine(uVar7,uVar8,(int)DAT_ffffbbae);
+                               (0x3c23d70a,0xc2c80000,(undefined4 *)(int)wheelspeed_lr_raw_ffffbbac);
+      fVar5 = (float)rx8_decode_u16_affine(uVar7,uVar8,(int)wheelspeed_rr_raw_ffffbbae);
       puVar1 = (undefined4 *)
                rx8_encode_u16_affine_saturate((fVar4 + fVar5) * 0.5,uVar7,uVar8);
       puVar3 = puVar1;
@@ -42007,74 +42160,88 @@ undefined4 * FUN_0002b046(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * vehicle_moving_calc [high]: 0xffffbbb8 = 1 when vehicle_speed 0xffffbbb4 <= 4.0 (clears only at >= 5.0) — vehicle-not-moving flag; read by 0x165d6 (pool 0x166ee at 0x16626) in the idle A/C gate. Pool 0x2a490.
+ */
 /* ROM address: 0x0002b156; body bytes: 40; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8aa (40 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateIfVehicleMoving(void)
+void vehicle_moving_calc(void)
 
 {
   if (4.0 < vehicle_speed_ffffbbb4) {
     if (5.0 <= vehicle_speed_ffffbbb4) {
-      DAT_ffffbbb8 = 0;
+      vehicle_not_moving_ffffbbb8 = 0;
     }
   }
   else {
-    DAT_ffffbbb8 = 1;
+    vehicle_not_moving_ffffbbb8 = 1;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_lr_validity [high]: 0xffffbbb9 = 1 when 0xffffbbac == -1 (invalid) or 0xffffbbbe > 0x1e (stale). Pool 0x2a494.
+ * RAM 0xffffbbb9 wheelspeed_lr_invalid (uint8): LR wheelspeed invalid/stale flag from 0x2b17e (0xffffbbac == -1 || 0xffffbbbe > 0x1e).
+ */
 /* ROM address: 0x0002b17e; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8d2 (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateWheelspeed_LR_Validity(void)
+void wheelspeed_lr_validity(void)
 
 {
-  if ((DAT_ffffbbac == -1) || (0x1e < DAT_ffffbbbe)) {
-    DAT_ffffbbb9 = 1;
+  if ((wheelspeed_lr_raw_ffffbbac == -1) || (0x1e < DAT_ffffbbbe)) {
+    wheelspeed_lr_invalid_ffffbbb9 = 1;
   }
   else {
-    DAT_ffffbbb9 = 0;
+    wheelspeed_lr_invalid_ffffbbb9 = 0;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * wheelspeed_rr_validity [high]: 0xffffbbba = 1 when 0xffffbbae == -1 or 0xffffbbbe > 0x1e. Pool 0x2a498.
+ * RAM 0xffffbbba wheelspeed_rr_invalid (uint8): RR wheelspeed invalid/stale flag from 0x2b1aa (0xffffbbae == -1 || 0xffffbbbe > 0x1e).
+ */
 /* ROM address: 0x0002b1aa; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b8fe (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateWheelspeed_RR_Validity(void)
+void wheelspeed_rr_validity(void)
 
 {
-  if ((DAT_ffffbbae == -1) || (0x1e < DAT_ffffbbbe)) {
-    DAT_ffffbbba = 1;
+  if ((wheelspeed_rr_raw_ffffbbae == -1) || (0x1e < DAT_ffffbbbe)) {
+    wheelspeed_rr_invalid_ffffbbba = 1;
   }
   else {
-    DAT_ffffbbba = 0;
+    wheelspeed_rr_invalid_ffffbbba = 0;
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can4b0_wheelspeed_extract [medium]: 0xffffbbac = bba4*0x100 + bba5; 0xffffbbae = bba6*0x100 + bba7 (two u16 wheelspeed signals from a CAN payload buffer at 0xffffbba4).
+ */
 /* ROM address: 0x0002b1d6; body bytes: 74; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b92a (74 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_canrx4b0related(void)
+void candidate_can4b0_wheelspeed_extract(void)
 
 {
   DAT_ffffbba8 = (ushort)DAT_ffffbba0 * 0x100 + (ushort)DAT_ffffbba1;
   DAT_ffffbbaa = (ushort)DAT_ffffbba2 * 0x100 + (ushort)DAT_ffffbba3;
-  DAT_ffffbbac = (ushort)DAT_ffffbba4 * 0x100 + (ushort)DAT_ffffbba5;
-  DAT_ffffbbae = (ushort)DAT_ffffbba6 * 0x100 + (ushort)DAT_ffffbba7;
+  wheelspeed_lr_raw_ffffbbac = (ushort)DAT_ffffbba4 * 0x100 + (ushort)DAT_ffffbba5;
+  wheelspeed_rr_raw_ffffbbae = (ushort)DAT_ffffbba6 * 0x100 + (ushort)DAT_ffffbba7;
   return;
 }
 
@@ -42119,12 +42286,16 @@ void thunk_FUN_0002b8f4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_main [high]: CAN 0x212 RX handler: can_rx_copy_mailbox_to_buffer(&DAT_0004e21c) (mailbox descriptor at ROM 0x4e21c: bytes 00000000 00000212 01210700 ffffbbc0 01000000 = ID 0x212, DLC 8, buffer 0xffffbbc0); on success calls 0xe038, 0x2b7e2 (unpack), 0x2b816 (0xffffbbc8 = 0xffffbbf2), 0x2b8f4 and resets 0xffffbbee/0xffffbbf0; on failure counts 0xffffbbee (every 4th -> 0xffffbbf0) and 0xffffbbc7. 8 calls total.
+ * RAM 0xffffbbf0 can212_timeout_counter (uint16): 0x212 RX failure counter incremented in 0x2b29c on mailbox-copy failure (every 4th failure); 0xffffbbd0 = (0x1e < bbf0) timeout flag by 0x2b7c4.
+ */
 /* ROM address: 0x0002b29c; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002b9f0 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_CAN212RX_Main(void)
+void can212_rx_main(void)
 
 {
   char cVar1;
@@ -42132,16 +42303,16 @@ void ref_CAN212RX_Main(void)
   cVar1 = can_rx_copy_mailbox_to_buffer(&DAT_0004e21c);
   if (cVar1 == '\0') {
     FUN_0000e038();
-    ref_can212RXUnpack();
-    FUN_0002b816();
+    can212_rx_unpack();
+    candidate_can212_torque_extract();
     FUN_0002b8f4();
     DAT_ffffbbee = 0;
-    DAT_ffffbbf0 = 0;
+    can212_timeout_counter_ffffbbf0 = 0;
   }
   else {
     DAT_ffffbbee = rx8_add_u16_saturate((int)(short)DAT_ffffbbee,1);
     if ((DAT_ffffbbee & 3) == 0) {
-      DAT_ffffbbf0 = rx8_add_u16_saturate((int)DAT_ffffbbf0,1);
+      can212_timeout_counter_ffffbbf0 = rx8_add_u16_saturate((int)can212_timeout_counter_ffffbbf0,1);
     }
     DAT_ffffbbc7 = rx8_add_u8_saturate((int)DAT_ffffbbc7,1);
   }
@@ -42164,12 +42335,15 @@ void FUN_0002b304(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_signal_validity [high]: Validity timers for three 0x212 signals: when 0xffffbbf2/bbf3/bbf4 != -1 reload counters 0xffffbbe8/bbea/bbec = 0x1f, else count down; a signal is stale when its counter reaches 0. Called from 0x2a2ae via pool 0x2a468.
+ */
 /* ROM address: 0x0002b314; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002ba68 (104 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 ref_can212RXSignalValidity__(void)
+undefined4 can212_rx_signal_validity(void)
 
 {
   if (DAT_ffffbbf2 == -1) {
@@ -42200,12 +42374,15 @@ undefined4 ref_can212RXSignalValidity__(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * engine_max_torque_allowed_calc [high]: 0xffffbbd8 = clamp((0xffffbb20 * decode_u8_affine(0x3ec99326, 0, 0xffffbbc8)/100.0 - 0xffffbcb8) - 0xffffbcbc, 0, 512.0); 512.0 (failsafe) when engine running and validity/fault flags clear, else decode of the 0x212 torque byte. Read by 0x17f20 and 0x1815c dsc_timing_derate_select (pool 0x1827c at 0x18188). Called from 0x2a2ae via pool 0x2a46c.
+ */
 /* ROM address: 0x0002b3b8; body bytes: 148; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bb0c (148 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateEngineMaxTorqueAllowed___(void)
+void engine_max_torque_allowed_calc(void)
 
 {
   float fVar1;
@@ -42214,12 +42391,12 @@ void ref_calculateEngineMaxTorqueAllowed___(void)
   arg1 = 0.0;
   if ((((DAT_ffffbb24 == '\0') && (DAT_ffffbb28 == '\0')) && (engine_running_ffffa428 == '\x01')) &&
      (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (DAT_ffffa40a == '\0')))) {
-    fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)DAT_ffffbbc8);
+    fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)can212_torque_signal_ffffbbc8);
   }
   else {
     fVar1 = 512.0;
   }
-  DAT_ffffbbd8 = rx8_clamp_float(((DAT_ffffbb20 * fVar1) / 100.0 - DAT_ffffbcb8) - DAT_ffffbcbc,arg1
+  engine_max_torque_allowed_ffffbbd8 = rx8_clamp_float(((DAT_ffffbb20 * fVar1) / 100.0 - DAT_ffffbcb8) - DAT_ffffbcbc,arg1
                                  ,512.0);
   return;
 }
@@ -42294,9 +42471,12 @@ void FUN_0002b480(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006adb4: Engine Torque Max - Barometric Pressure Compensation (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_desired_torque_calc [medium]: 0xffffbbe0 = 0xffffbca0 - ((bb20 * decode(bbc9))/100 - bcb8 - bcbc); filter 0xffffbbf8 = first_order_filter(decode(bbc9), bbf8, 0.25, 0.19685039) -> 0xffffbbf7 = encode_u8_affine_saturate(bbf8); 0xffffbbc9 = -2 when engine stopped, 0xfe = 0xfe when validity/fault flags. Called from 0x2a2ae via pool 0x2a470.
+ */
 /* ROM address: 0x0002b496; body bytes: 440; decompiled */
 
-void FUN_0002b496(void)
+void candidate_dsc_desired_torque_calc(void)
 
 {
   char cVar1;
@@ -42353,18 +42533,22 @@ void FUN_0002b496(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit08_check [medium]: 0xffffbbcf = ((0xffffbbde & 8) == 8). Called from 0x2a2ae via pool 0x2a474.
+ * RAM 0xffffbbde can212_status_word (uint16): u16 from CAN 0x212 payload bytes 4-5 (0x2b7e2: bbc4*0x100+bbc5); bit 0x08 checked by 0x2b6a4 -> 0xffffbbcf.
+ */
 /* ROM address: 0x0002b6a4; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bdf8 (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined2 FUN_0002b6a4(void)
+undefined2 candidate_dsc_mode_bit08_check(void)
 
 {
   bool bVar1;
   undefined2 uVar2;
   
-  bVar1 = (DAT_ffffbbde & 8) != 8;
+  bVar1 = (can212_status_word_ffffbbde & 8) != 8;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42376,17 +42560,21 @@ undefined2 FUN_0002b6a4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit80_check [medium]: 0xffffbbcb = 1 when (0xffffbbf6 & 0x80) == 0x80 && engine running. Called from 0x2a2ae via pool 0x2a478.
+ * RAM 0xffffbbf6 dsc_mode_byte (uint8): DSC/ABS mode byte from CAN 0x212 payload byte 6 (via 0x2b7e2: bbf6 = bbc6); bits 0x80/0x40/0x20/0x10 checked by 0x2b6c2/0x2b754/0x2b788/0x2b7a6 -> 0xffffbbcb-ce.
+ */
 /* ROM address: 0x0002b6c2; body bytes: 64; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002be16 (64 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 * ref_DSC_checkIfMode_x80(void)
+undefined1 * candidate_dsc_mode_bit80_check(void)
 
 {
   undefined1 *puVar1;
   
-  if ((DAT_ffffbbf6 & 0x80) == 0x80) {
+  if ((dsc_mode_byte_ffffbbf6 & 0x80) == 0x80) {
     puVar1 = (undefined1 *)(uint)engine_running_ffffa428;
     if (puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1)) {
       DAT_ffffbbcb = 1;
@@ -42401,17 +42589,20 @@ undefined1 * ref_DSC_checkIfMode_x80(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit40_check [medium]: 0xffffbbcc = 1 when (0xffffbbf6 & 0x40) == 0x40 && engine running. Pool 0x2a47c.
+ */
 /* ROM address: 0x0002b754; body bytes: 52; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bea8 (52 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-byte ref_DSC_checkIfMode_x40(void)
+byte candidate_dsc_mode_bit40_check(void)
 
 {
   byte bVar1;
   
-  bVar1 = DAT_ffffbbf6 & 0x40;
+  bVar1 = dsc_mode_byte_ffffbbf6 & 0x40;
   if ((bVar1 == 0x40) && (bVar1 = engine_running_ffffa428, engine_running_ffffa428 == 1)) {
     DAT_ffffbbcc = 1;
   }
@@ -42422,18 +42613,21 @@ byte ref_DSC_checkIfMode_x40(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit20_check [medium]: 0xffffbbcd = ((0xffffbbf6 & 0x20) == 0x20). Pool 0x2a480.
+ */
 /* ROM address: 0x0002b788; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bedc (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 ref_DSC_checkIfMode_x20(void)
+undefined1 candidate_dsc_mode_bit20_check(void)
 
 {
   bool bVar1;
   undefined1 uVar2;
   
-  bVar1 = (DAT_ffffbbf6 & 0x20) != 0x20;
+  bVar1 = (dsc_mode_byte_ffffbbf6 & 0x20) != 0x20;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42445,18 +42639,21 @@ undefined1 ref_DSC_checkIfMode_x20(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dsc_mode_bit10_check [medium]: 0xffffbbce = ((0xffffbbf6 & 0x10) == 0x10). Pool 0x2a484.
+ */
 /* ROM address: 0x0002b7a6; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002befa (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 ref_DSC_checkIfMode_x10(void)
+undefined1 candidate_dsc_mode_bit10_check(void)
 
 {
   bool bVar1;
   undefined1 uVar2;
   
-  bVar1 = (DAT_ffffbbf6 & 0x10) != 0x10;
+  bVar1 = (dsc_mode_byte_ffffbbf6 & 0x10) != 0x10;
   if (bVar1) {
     uVar2 = 0;
   }
@@ -42468,40 +42665,50 @@ undefined1 ref_DSC_checkIfMode_x10(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_timeout_flag [medium]: 0xffffbbd0 = (0x1e < 0xffffbbf0) — 0x212 RX timeout flag from the failure counter. Pool 0x2a488.
+ */
 /* ROM address: 0x0002b7c4; body bytes: 30; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bf18 (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined2 * FUN_0002b7c4(void)
+undefined2 * candidate_can212_timeout_flag(void)
 
 {
-  DAT_ffffbbd0 = 0x1e < DAT_ffffbbf0;
+  DAT_ffffbbd0 = 0x1e < can212_timeout_counter_ffffbbf0;
   return &DAT_0007bc56;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_rx_unpack [high]: Unpacks CAN 0x212 payload buffer 0xffffbbc0-0xffffbbc6 into working cells: 0xffffbbf2=bbc0, bbf3=bbc1, bbf4=bbc2, bbf5=bbc3, 0xffffbbde = bbc4*0x100+bbc5 (u16), 0xffffbbf6=bbc6 (mode byte). Called from 0x2b29c.
+ */
 /* ROM address: 0x0002b7e2; body bytes: 52; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002bf36 (52 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_can212RXUnpack(void)
+void can212_rx_unpack(void)
 
 {
   DAT_ffffbbf2 = DAT_ffffbbc0;
   DAT_ffffbbf3 = DAT_ffffbbc1;
   DAT_ffffbbf4 = DAT_ffffbbc2;
   DAT_ffffbbf5 = DAT_ffffbbc3;
-  DAT_ffffbbde = (ushort)DAT_ffffbbc4 * 0x100 + (ushort)DAT_ffffbbc5;
-  DAT_ffffbbf6 = DAT_ffffbbc6;
+  can212_status_word_ffffbbde = (ushort)DAT_ffffbbc4 * 0x100 + (ushort)DAT_ffffbbc5;
+  dsc_mode_byte_ffffbbf6 = DAT_ffffbbc6;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * can212_torque_extract [medium]: 0xffffbbc8 = 0xffffbbf2 (torque-related signal from the 0x212 payload); called from 0x2b29c.
+ * RAM 0xffffbbc8 can212_torque_signal (uint8): Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc.
+ */
 /* ROM address: 0x0002b816; body bytes: 170; decompiled */
 
-uint FUN_0002b816(void)
+uint candidate_can212_torque_extract(void)
 
 {
   uint uVar1;
@@ -42509,7 +42716,7 @@ uint FUN_0002b816(void)
   
   bVar2 = DAT_ffffbbf2 == -1;
   if (!bVar2) {
-    DAT_ffffbbc8 = DAT_ffffbbf2;
+    can212_torque_signal_ffffbbc8 = DAT_ffffbbf2;
   }
   if (DAT_ffffbbf3 == -1) {
     bVar2 = true;
@@ -43095,11 +43302,11 @@ char ref_setGearBools(void)
   
   cVar1 = '\x01';
   if (DAT_ffffc61e != '\x01') {
-    if (DAT_ffffb534 != '\x01') {
+    if (automatic_transmission_ffffb534 != '\x01') {
       DAT_ffffbc3e = 0;
       DAT_ffffbc3f = 0;
       DAT_ffffbc40 = 0;
-      return DAT_ffffb534;
+      return automatic_transmission_ffffb534;
     }
     cVar1 = DAT_ffffbc3c;
     if ((DAT_ffffbc3c != '\x01') && (DAT_ffffbc3c != '\x02')) {
@@ -43138,7 +43345,7 @@ uint FUN_0002c15a(void)
   undefined1 uVar3;
   
   uVar3 = 0;
-  if (DAT_ffffb534 == 1) {
+  if (automatic_transmission_ffffb534 == 1) {
     if (vehicle_speed_ffffbbb4 < 0.0) {
       if (vehicle_speed_ffffbbb4 < -2.0) {
         DAT_ffffbc56 = '\0';
@@ -43194,7 +43401,7 @@ uint FUN_0002c15a(void)
     DAT_ffffbc41 = 0;
     uVar2 = (uint)cruise_switch_code_ffffbaed;
     DAT_ffffbc42 = 0;
-    uVar1 = (uint)DAT_ffffb534;
+    uVar1 = (uint)automatic_transmission_ffffb534;
     DAT_ffffbc43 = uVar3;
     if (uVar2 != 0) {
       uVar1 = uVar2;
@@ -43226,7 +43433,7 @@ uint ref_calculateGearRPMbased(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffb534;
+  uVar1 = (uint)automatic_transmission_ffffb534;
   if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffb53a, uVar1 == 0)) {
     if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 110.741) {
       if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 71.887) {
@@ -43423,8 +43630,8 @@ char FUN_0002c5e4(void)
   char cVar1;
   char cVar2;
   
-  cVar1 = DAT_ffffb534;
-  if ((DAT_ffffb534 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a != '\x01')) {
+  cVar1 = automatic_transmission_ffffb534;
+  if ((automatic_transmission_ffffb534 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a != '\x01')) {
     cVar2 = '\x0f';
   }
   else {
@@ -43791,7 +43998,7 @@ void ref_calculateTorqueRelatedParams(void)
   ref_getRPMBasedTorqueAdder();
   ref_getDesiredTorqueCalcVar2();
   ref_getDesiredTorqueCalcVar3();
-  FUN_0002ce18();
+  candidate_alternator_drag_torque_calc();
   FUN_0002ce64();
   FUN_0002cd9c();
   ref_getRPMLoadBasedMult();
@@ -44031,12 +44238,16 @@ void ref_getDesiredTorqueCalcVar3(void)
  * Confidence: lookup and ratio multiplication verified; torque units upstream.
  * Descriptor 6a790 (data 75cc8, five uint16 values) is indexed by inferred alternator speed ffffb598. Near-zero ffffb5a0 forces ffffbcc4 to zero; otherwise lookup result is multiplied by ffffb5a4/ffffb5a0 and assigned to ffffbcc4. This supports a speed-dependent maximum modulated by a ratio, but does not establish Nm or the ratio's physical meanings.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_drag_torque_calc [medium]: 0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Called from the 0x25xxx alternator chain.
+ * RAM 0xffffbcc4 alternator_drag_torque (float): Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate for drivability compensation.
+ */
 /* ROM address: 0x0002ce18; body bytes: 76; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002d4bc (76 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0002ce18(void)
+undefined4 candidate_alternator_drag_torque_calc(void)
 
 {
   char cVar2;
@@ -44045,16 +44256,16 @@ undefined4 FUN_0002ce18(void)
   float fVar3;
   
   fVar3 = 0.0;
-  uVar1 = DAT_ffffb5a0;
-  cVar2 = rx8_is_outside_tolerance_band(DAT_ffffb5a0,0,0x3727c5ac);
+  uVar1 = alternator_target_field_ffffb5a0;
+  cVar2 = rx8_is_outside_tolerance_band(alternator_target_field_ffffb5a0,0,0x3727c5ac);
   if (cVar2 == '\0') {
     uVar1 = 0;
-    DAT_ffffbcc4 = fVar3;
+    alternator_drag_torque_ffffbcc4 = fVar3;
   }
   else {
     fVar3 = (float)lookup_2d_descriptor_scaled(inferred_alternator_speed_ffffb598,&tbl_table_2d_162_0006a790);
-    uVar1 = rx8_divide_with_zero_fallback(DAT_ffffb5a4,uVar1);
-    DAT_ffffbcc4 = fVar3 * extraout_fr0;
+    uVar1 = rx8_divide_with_zero_fallback(electrical_load_filtered_ffffb5a4,uVar1);
+    alternator_drag_torque_ffffbcc4 = fVar3 * extraout_fr0;
   }
   return uVar1;
 }
@@ -44069,10 +44280,10 @@ char FUN_0002ce64(void)
 
 {
   if (DAT_ffffbd68 == '\x01') {
-    DAT_ffffbcc8 = DAT_ffffbcc4 + 9.1;
+    DAT_ffffbcc8 = alternator_drag_torque_ffffbcc4 + 9.1;
   }
   else {
-    DAT_ffffbcc8 = DAT_ffffbcc4;
+    DAT_ffffbcc8 = alternator_drag_torque_ffffbcc4;
   }
   return DAT_ffffbd68;
 }
@@ -44610,7 +44821,7 @@ LAB_0002d77c:
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;
       }
-      if ((0xfd < DAT_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
+      if ((0xfd < can212_torque_signal_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbc9;
       }
@@ -44691,7 +44902,7 @@ void cruise_set_speed_adjust_integrator(void)
   cVar14 = DAT_ffffbceb;
   cVar13 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   DAT_ffffbd1c = DAT_ffffbfa0 - DAT_ffffbfa4;
   fVar21 = DAT_ffffbfa4 - DAT_ffffbfa0;
   snapshot_DAT_ffffa9b4 = DAT_ffffa9b4;
@@ -44708,7 +44919,7 @@ void cruise_set_speed_adjust_integrator(void)
       DAT_ffffbd10 = rx8_add_u16_saturate((int)DAT_ffffbd10,1);
     }
     else if ((DAT_ffffa9b4 <= cruise_set_speed_ffffbcf8) &&
-            ((DAT_ffffbbcb == '\0' || ((0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
+            ((DAT_ffffbbcb == '\0' || ((0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
       DAT_ffffbd10 = 0;
     }
   }
@@ -45070,7 +45281,7 @@ undefined4 FUN_0002e33c(void)
   if ((((((DAT_ffffcca1 != '\x01') && (DAT_ffffbcd8 != '\x01')) && (DAT_ffffbd58 != '\x01')) &&
        ((DAT_ffffb516 != '\x01' &&
         (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8738,0), cVar1 != '\x01')))) &&
-      ((DAT_ffffbbb9 != '\x01' && ((DAT_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
+      ((wheelspeed_lr_invalid_ffffbbb9 != '\x01' && ((wheelspeed_rr_invalid_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
      (DAT_ffffc616 != '\x01')) {
     DAT_ffffbd5c = 0;
     return 0;
@@ -45362,7 +45573,7 @@ void ref_calculateACClutchOn__(void)
   else {
     DAT_ffffbd95 = '\x01';
   }
-  if (DAT_ffffbd69 == '\0') {
+  if (ac_clutch_on_ffffbd69 == '\0') {
     if ((((4 < DAT_ffffbd86) || (DAT_ffffbd94 == '\0')) || (DAT_ffffbd95 == '\x01')) ||
        ((DAT_ffffbd72 == '\x01' || (DAT_ffffbd73 == '\x01')))) {
       DAT_ffffbd68 = 0;
@@ -45443,10 +45654,10 @@ undefined1 * FUN_0002e9a4(void)
       ((DAT_ffffbd73 == '\0' &&
        (puVar2 = (undefined1 *)(uint)DAT_ffffbd76,
        puVar2 == (undefined1 *)((int)&vector_Poweron_Reset + 1))))))) {
-    DAT_ffffbd69 = 1;
+    ac_clutch_on_ffffbd69 = 1;
   }
   else {
-    DAT_ffffbd69 = 0;
+    ac_clutch_on_ffffbd69 = 0;
   }
   if (snapshot_engine_injectors_off_ffffa42c == 0) {
     puVar2 = (undefined1 *)rx8_add_u8_saturate((int)(char)DAT_ffffbd92,1);
@@ -45518,7 +45729,7 @@ undefined4 FUN_0002ebda(void)
   cVar6 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
   cVar5 = inferred_ram_b53b_ffffb53b_ffffb53b;
   cVar4 = DAT_ffffb53a;
-  cVar3 = DAT_ffffb534;
+  cVar3 = automatic_transmission_ffffb534;
   snapshot_inferred_throttle_position_ffffad44 = inferred_throttle_position_ffffad44;
   cVar1 = cranking_active_ffffaa62_ffffaa62;
   snapshot_DAT_ffffa7ac = inferred_ram_a7ac_ffffa7ac_ffffa7ac;
@@ -49097,7 +49308,7 @@ void FUN_00033138(void)
   cVar4 = DAT_ffffc030;
   cVar3 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   fVar6 = DAT_ffffbfa0 - DAT_ffffc02c;
   fVar7 = DAT_ffffc02c - DAT_ffffbfa0;
   arg2 = 100.0;
@@ -49105,7 +49316,7 @@ void FUN_00033138(void)
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
       fVar5 = DAT_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
-         ((arg0 = DAT_ffffc034, 0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
+         ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
       }
       DAT_ffffc034 = rx8_clamp_float(arg0,0.0,100.0);
@@ -49155,9 +49366,12 @@ void FUN_00033138(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
+ */
 /* ROM address: 0x0003337c; body bytes: 392; decompiled */
 
-undefined4 * FUN_0003337c(void)
+undefined4 * candidate_idle_ratio_calcs(void)
 
 {
   char cVar1;
@@ -49174,9 +49388,9 @@ undefined4 * FUN_0003337c(void)
   
   snapshot_DAT_ffffbaec = DAT_ffffbaec;
   cVar1 = DAT_ffffb53c;
-  puVar3 = (undefined4 *)&DAT_ffffb534;
+  puVar3 = (undefined4 *)&automatic_transmission_ffffb534;
   arg1 = 0.0;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (engine_running_ffffa428 == '\x01') {
       DAT_ffffc04c = DAT_ffffbacc / inferred_ram_a7ac_ffffa7ac_ffffa7ac;
     }
@@ -49233,18 +49447,21 @@ undefined4 * FUN_0003337c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_blend_ramp [medium]: 0xffffc048: MT (b534==0) 0 when b53c==0, 0.04 when c05b==0, else decays 0.0008 to 0; AT (b534==1) forces 0. Called from 0x167c0 via pool 0x168e0.
+ */
 /* ROM address: 0x0003354e; body bytes: 88; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00033876 (88 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0003354e(void)
+void candidate_idle_ac_blend_ramp(void)
 
 {
   char cVar1;
   
   cVar1 = DAT_ffffb53c;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (DAT_ffffb53c == '\0') {
       DAT_ffffc048 = 0.0;
     }
@@ -50204,9 +50421,12 @@ undefined4 * FUN_00034364(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
+ */
 /* ROM address: 0x00034650; body bytes: 356; decompiled */
 
-uint FUN_00034650(void)
+uint candidate_idle_vehicle_speed_flags(void)
 
 {
   uint uVar1;
@@ -50218,7 +50438,7 @@ uint FUN_00034650(void)
   float fVar5;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  uVar1 = (uint)DAT_ffffb534;
+  uVar1 = (uint)automatic_transmission_ffffb534;
   fVar5 = DAT_ffffc1ac;
   if (uVar1 == 1) {
     snapshot_inferred_coolant_temperature_ffffa990 = inferred_coolant_temperature_ffffa990;
@@ -50281,10 +50501,10 @@ char FUN_00034814(void)
 
 {
   DAT_ffffc19c = DAT_ffffc1ac;
-  if (DAT_ffffb534 != '\x01') {
+  if (automatic_transmission_ffffb534 != '\x01') {
     DAT_ffffc19c = 0;
   }
-  return DAT_ffffb534;
+  return automatic_transmission_ffffb534;
 }
 
 
@@ -57840,7 +58060,7 @@ undefined1 * FUN_0003d512(void)
     }
     if (DAT_ffffc622 == '\x01') {
       DAT_ffffc620 = '\b';
-      puVar2 = (undefined1 *)(uint)DAT_ffffb534;
+      puVar2 = (undefined1 *)(uint)automatic_transmission_ffffb534;
       if (puVar2 == (undefined1 *)0x1) {
         uVar3 = ref_getFaultStatus__(0x4c);
         puVar2 = (undefined1 *)(uVar3 & 0xff);
@@ -57860,7 +58080,7 @@ undefined1 * FUN_0003d512(void)
           uVar3 = ref_getFaultStatus__(0x4c);
           puVar2 = (undefined1 *)(uVar3 & 0xff);
           if ((puVar2 == (undefined1 *)0x0) &&
-             (puVar2 = (undefined1 *)(uint)DAT_ffffb534, puVar2 == (undefined1 *)0x1)) {
+             (puVar2 = (undefined1 *)(uint)automatic_transmission_ffffb534, puVar2 == (undefined1 *)0x1)) {
             DAT_ffffc62a = 1;
             DAT_ffffc62b = 0;
           }
@@ -57903,8 +58123,8 @@ char FUN_0003d62c(void)
     }
     if (DAT_ffffc626 == '\x01') {
       DAT_ffffc621 = '\n';
-      cVar3 = DAT_ffffb534;
-      if (DAT_ffffb534 == '\x01') {
+      cVar3 = automatic_transmission_ffffb534;
+      if (automatic_transmission_ffffb534 == '\x01') {
         cVar3 = ref_getFaultStatus__(0x4b);
         if (cVar3 == '\0') {
           DAT_ffffc629 = 1;
@@ -57918,8 +58138,8 @@ char FUN_0003d62c(void)
         if (DAT_ffffc621 != '\0') {
           DAT_ffffc621 = DAT_ffffc621 + -1;
         }
-        cVar3 = DAT_ffffb534;
-        if (DAT_ffffb534 == '\x01') {
+        cVar3 = automatic_transmission_ffffb534;
+        if (automatic_transmission_ffffb534 == '\x01') {
           cVar3 = ref_getFaultStatus__(0x4b);
           if ((cVar3 == '\0') && (DAT_ffffc621 == '\0')) {
             DAT_ffffc628 = 1;
@@ -61966,10 +62186,10 @@ undefined4 * ref_calculateDriverConditions(void)
 {
   undefined4 *puVar1;
   
-  if (((DAT_ffffb534 != '\x01') || (puVar1 = (undefined4 *)0x1, DAT_ffffb53a != '\0')) &&
+  if (((automatic_transmission_ffffb534 != '\x01') || (puVar1 = (undefined4 *)0x1, DAT_ffffb53a != '\0')) &&
      ((puVar1 = &DAT_ffffbfa0, DAT_ffffbfa0 <= 15.0 ||
       ((DAT_ffffca40 == '\0' || (puVar1 = (undefined4 *)&inferred_ram_ad18_ffffad18_ffffad18, inferred_ram_ad18_ffffad18_ffffad18 != '\0')))))) {
-    if ((DAT_ffffb534 != '\0') ||
+    if ((automatic_transmission_ffffb534 != '\0') ||
        (puVar1 = (undefined4 *)(uint)DAT_ffffca4c, puVar1 != (undefined4 *)0x1)) {
       DAT_ffffca47 = 0;
       return puVar1;
@@ -62733,7 +62953,7 @@ char FUN_000436a6(void)
   char cVar2;
   
   cVar2 = DAT_ffffca4e;
-  if ((DAT_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
     DAT_ffffca4e = 1;
     bVar1 = true;
   }
@@ -67032,7 +67252,7 @@ void FUN_00048558(void)
   if ((((snapshot_DAT_ffffcc92 < 3) || (DAT_ffffccb1 != '\0')) || (cVar2 != '\x01')) &&
      (((2 < DAT_ffffccb0 || (snapshot_DAT_ffffcc92 < 3)) || (cVar2 != '\x01')))) {
     if (DAT_ffffccae < 0x40) {
-      DAT_ffffcca8 = rx8_min_float(arg0,DAT_ffffb2a4 + fVar3);
+      DAT_ffffcca8 = rx8_min_float(arg0,idle_air_required_ffffb2a4 + fVar3);
       DAT_ffffccae = rx8_add_u16_saturate((int)(short)DAT_ffffccae,1);
     }
     else {
@@ -67040,7 +67260,7 @@ void FUN_00048558(void)
     }
   }
   else {
-    DAT_ffffcca8 = rx8_min_float(arg0,DAT_ffffb2a4 + fVar3);
+    DAT_ffffcca8 = rx8_min_float(arg0,idle_air_required_ffffb2a4 + fVar3);
     DAT_ffffccae = 0;
   }
   DAT_ffffccb1 = cVar2;
@@ -69499,7 +69719,7 @@ char FUN_0004adfa(void)
 void FUN_0004ae24(void)
 
 {
-  if ((((DAT_ffffb534 == '\0') && (DAT_ffffcddb == '\0')) && (DAT_ffffb53a == '\0')) &&
+  if ((((automatic_transmission_ffffb534 == '\0') && (DAT_ffffcddb == '\0')) && (DAT_ffffb53a == '\0')) &&
      (((int)DAT_ffffce20 & 0x80U) == 0)) {
     DAT_ffffcdd9 = 1;
   }
@@ -77285,14 +77505,17 @@ void FUN_0005455e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_raise_p2503 [medium]: FUN_0005fd38(0x7c, b5b2==0 ? 2 : 1): slot 0x7c -> code_id 0x72 -> raw 0x2503 = P2503 (charging system voltage low). Called from 0x2680e via pool 0x268cc.
+ */
 /* ROM address: 0x00054590; body bytes: 22; decompiled */
 
-void FUN_00054590(void)
+void candidate_charging_dtc_raise_p2503(void)
 
 {
   undefined4 uVar1;
   
-  if (DAT_ffffb5b2 == '\0') {
+  if (low_voltage_latch_ffffb5b2 == '\0') {
     uVar1 = 2;
   }
   else {
@@ -77303,9 +77526,12 @@ void FUN_00054590(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_raise_p2504 [medium]: FUN_0005fd38(0x7d, b5b0==0 ? 2 : 1): slot 0x7d -> code_id 0x73 -> raw 0x2504 = P2504 (charging system voltage high). Called from 0x2680e via pool 0x268d0.
+ */
 /* ROM address: 0x000545a6; body bytes: 22; decompiled */
 
-void FUN_000545a6(void)
+void candidate_charging_dtc_raise_p2504(void)
 
 {
   undefined4 uVar1;
@@ -77321,14 +77547,17 @@ void FUN_000545a6(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_raise_p2502 [medium]: FUN_0005fd38(0x7b, b5b1==0 ? 2 : 1): slot 0x7b -> code_id 0x71 (u16 at ROM 0x7df42+0xf6) -> raw 0x2502 at ROM 0x7e560+0xe2 = P2502 (charging system voltage problem). Called from 0x267c6 via pool 0x268ac.
+ */
 /* ROM address: 0x000545bc; body bytes: 22; decompiled */
 
-void FUN_000545bc(void)
+void candidate_charging_dtc_raise_p2502(void)
 
 {
   undefined4 uVar1;
   
-  if (DAT_ffffb5b1 == '\0') {
+  if (charging_ok_latch_ffffb5b1 == '\0') {
     uVar1 = 2;
   }
   else {
@@ -87468,13 +87697,16 @@ uint candidate_fan1_diag_override(uint param_1)
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_encode_u16 [medium]: Diag-override-aware u16 encoder for the field duty %, DID 0x16e8 (mask 0x40, cell 0xffffd347): step f32 0x3b480000 via 0x2490; decode via 0x24c0. Sole caller 0x26624 stores result into 0xffffb5ac (also Mode 22 PID 0x16e8 source, handler 0x56fc8).
+ */
 /* ROM address: 0x0005c800; body bytes: 226; decompiled_with_warnings */
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Unique exact-byte match to related 60E0FC00 function at 0005aff0 (226 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_diagAlternatorSignalthing(undefined4 param_1)
+uint candidate_alternator_duty_encode_u16(undefined4 param_1)
 
 {
   uint uVar1;
@@ -87600,11 +87832,14 @@ uint candidate_ssv_diag_override(uint param_1)
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_target_encode_u16 [high]: Encodes idle_target_rpm (fr4) to u16 with step 0.25 (f32 0x3e800000 at ROM 0x5cb64, loaded by mova at 0x5cb1a) through 0x2490 rx8_encode_u16_affine_saturate when diag override state 0xffffd319==0 and the active DID 0xffffd314==0x96e (word at pool 0x5cb42) passes mask 0xc0 (word at 0x5cb3e) on 0xffffd36c; result stored to 0xffffd34d (base 0xffffd335 + 0x18); otherwise decodes override cell 0xffffd34d via 0x24c0. Pool words of the function (classified mixed_pool starting 0x5cb3e): 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb68=0x2490. Sole caller 0x1506c stores the u16 to 0xffffa7ac, the Mode 22 PID 0x096e source (handler 0x56e22, encode *0.25). Not an actuator register.
+ */
 /* ROM address: 0x0005ca94; body bytes: 226; decompiled_with_warnings */
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-uint FUN_0005ca94(undefined4 param_1)
+uint idle_target_encode_u16(undefined4 param_1)
 
 {
   uint uVar1;
@@ -87645,13 +87880,16 @@ uint FUN_0005ca94(undefined4 param_1)
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_target_encode_u16 [medium]: Diag-override-aware u16 encoder for the voltage target, DID 0x97c (mask 0x60 on 0xffffd36c, state 0xffffd319/0xffffd328, cell 0xffffd34f): step f32 0x3a000000 via 0x2490 rx8_encode_u16_affine_saturate; decode via 0x24c0. Same pattern as 0x5ca94 (PID 0x096e). Sole caller 0x25c6c stores result into 0xffffb59c.
+ */
 /* ROM address: 0x0005cba4; body bytes: 226; decompiled_with_warnings */
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Unique exact-byte match to related 60E0FC00 function at 0005b394 (226 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_alternatorPIDsomething(undefined4 param_1)
+uint candidate_alternator_target_encode_u16(undefined4 param_1)
 
 {
   uint uVar1;
@@ -89233,7 +89471,7 @@ void ref_getBrakingOrInNeutral(void)
     DAT_ffffd388 = DAT_ffffd388 + '@';
   }
   DAT_ffffd389 = 0;
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     puVar1 = &DAT_0007df1a;
     DAT_ffffd38a = 0x65;
   }
@@ -89836,7 +90074,7 @@ void FUN_0005fc40(void)
   undefined **ppuVar1;
   float fVar2;
   
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     ppuVar1 = &tbl_idle_target_g_000693e8;
   }
   else {

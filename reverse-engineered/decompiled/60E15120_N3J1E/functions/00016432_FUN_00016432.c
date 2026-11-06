@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x000694cc: Table 2D - 41 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069508: Table 2D - 44 (RX8Defs data pointer, axes and dimensions match).
@@ -9,7 +12,7 @@
  */
 /* ROM address: 0x00016432; body bytes: 344; decompiled */
 
-void FUN_00016432(void)
+void candidate_idle_ac_request_calc(void)
 
 {
   char cVar1;

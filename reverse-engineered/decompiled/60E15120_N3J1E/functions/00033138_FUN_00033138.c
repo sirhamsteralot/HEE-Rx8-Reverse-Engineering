@@ -24,7 +24,7 @@ void FUN_00033138(void)
   cVar4 = DAT_ffffc030;
   cVar3 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   fVar6 = DAT_ffffbfa0 - DAT_ffffc02c;
   fVar7 = DAT_ffffc02c - DAT_ffffbfa0;
   arg2 = 100.0;
@@ -32,7 +32,7 @@ void FUN_00033138(void)
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
       fVar5 = DAT_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
-         ((arg0 = DAT_ffffc034, 0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
+         ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
       }
       DAT_ffffc034 = rx8_clamp_float(arg0,0.0,100.0);

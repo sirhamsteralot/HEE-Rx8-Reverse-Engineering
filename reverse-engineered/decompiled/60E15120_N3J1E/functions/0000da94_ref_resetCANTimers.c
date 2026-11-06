@@ -9,7 +9,7 @@ void ref_resetCANTimers(void)
   FUN_000291d4();
   FUN_00029444();
   FUN_00029cb8();
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     FUN_0002c5a0();
   }
   FUN_0004be3c();

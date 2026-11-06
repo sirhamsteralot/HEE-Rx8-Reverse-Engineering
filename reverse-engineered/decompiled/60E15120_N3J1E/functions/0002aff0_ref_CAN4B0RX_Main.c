@@ -12,7 +12,7 @@ uint ref_CAN4B0RX_Main(void)
   cVar2 = can_rx_copy_mailbox_to_buffer(&DAT_0004e24c);
   if (cVar2 == '\0') {
     FUN_0000e038();
-    ref_canrx4b0related();
+    candidate_can4b0_wheelspeed_extract();
     uVar1 = FUN_0002b220();
     DAT_ffffbbbc = 0;
     DAT_ffffbbbe = 0;

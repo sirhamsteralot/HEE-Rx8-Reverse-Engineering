@@ -24,7 +24,7 @@ void ref_getBrakingOrInNeutral(void)
     DAT_ffffd388 = DAT_ffffd388 + '@';
   }
   DAT_ffffd389 = 0;
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     puVar1 = &DAT_0007df1a;
     DAT_ffffd38a = 0x65;
   }

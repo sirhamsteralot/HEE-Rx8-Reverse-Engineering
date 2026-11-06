@@ -1,0 +1,45 @@
+{
+  "pass": "dsc_can_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_claims": "PASS",
+  "verify_readability": "PASS (3355 function bodies consistent)",
+  "verify_math_units": "PASS",
+  "validate_reports": "PASS",
+  "pytest": "134 passed",
+  "labels_applied": {
+    "functions": 18,
+    "ram": 10,
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "metadata/integrated_names.json"
+    ],
+    "export_files_renamed": 29,
+    "function_bodies_verified_intact": 3355
+  },
+  "pipeline_scripts": "review_dsc_can_labels.py (idempotent; wired into rebuild.sh) + annotate_source_review.py + integrate_reviewed_names.py",
+  "record": "metadata/dsc_can_labels.json",
+  "ghidra_database_updated": false,
+  "binary_level_verification": {
+    "batch_call_count_rechecked": {"0x2a2ae": 15, "0x2b29c": 8},
+    "batch_pool": {"range": "0x2a3e0-0x2a4f4 (u32_table)", "callees": ["0x2b314", "0x2b3b8", "0x2b496", "0x2b6a4", "0x2b6c2", "0x2b754", "0x2b788", "0x2b7a6", "0x2b7c4", "0x2b046", "0x2b156", "0x2b17e", "0x2b1aa"]},
+    "can212_mailbox_descriptor": {"rom": "0x4e21c/0x4e224", "id": "0x212", "dlc": 8, "buffer": "0xffffbbc0"},
+    "reader_pool_scan": {"0xffffbbd8": ["0x1827c -> 0x1815c dsc_timing_derate_select", "0x18024 -> 0x17f20"], "0xffffbbb8": ["0x166ee -> 0x165d6"]},
+    "affine_constants": {"wheelspeed_u16": "step 0x3c23d70a offset 0xc2c80000", "torque_u8": "step 0x3ec99326"}
+  },
+  "limits": "Static analysis only. 0x212 origin module inferred from content. Mode-bit semantics not pinned. TX side covered by the CAN mailbox report."
+}

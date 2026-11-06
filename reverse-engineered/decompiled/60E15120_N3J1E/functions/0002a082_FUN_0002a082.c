@@ -7,7 +7,7 @@ void FUN_0002a082(void)
 
 {
   if (((inferred_ram_a9bc_ffffa9bc_ffffa9bc < 65.0) || (engine_speed_rpm_ffffb548 < 5500.0)) || (engine_running_ffffa428 != '\0')) {
-    if (((DAT_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
+    if (((can212_status_word_ffffbbde & 0x800) == 0x800) && ((DAT_ffffbb62 & 0x800) != 0x800)) {
       DAT_ffffbb5c = 900000;
     }
     else if ((cranking_active_ffffaa62_ffffaa62 == '\0') && (DAT_ffffbb5c != 0)) {
@@ -17,13 +17,13 @@ void FUN_0002a082(void)
   else {
     DAT_ffffbb5c = 0;
   }
-  if (((DAT_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
+  if (((can212_status_word_ffffbbde & 0x800) == 0x800) && (DAT_ffffbb5c == 0)) {
     DAT_ffffbb49 = 1;
   }
   else {
     DAT_ffffbb49 = 0;
   }
-  DAT_ffffbb62 = DAT_ffffbbde;
+  DAT_ffffbb62 = can212_status_word_ffffbbde;
   return;
 }
 

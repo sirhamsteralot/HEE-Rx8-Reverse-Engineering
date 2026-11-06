@@ -9,8 +9,8 @@ char FUN_0002c5e4(void)
   char cVar1;
   char cVar2;
   
-  cVar1 = DAT_ffffb534;
-  if ((DAT_ffffb534 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a != '\x01')) {
+  cVar1 = automatic_transmission_ffffb534;
+  if ((automatic_transmission_ffffb534 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a != '\x01')) {
     cVar2 = '\x0f';
   }
   else {

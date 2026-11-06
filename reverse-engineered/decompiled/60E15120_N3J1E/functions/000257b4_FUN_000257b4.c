@@ -1,6 +1,10 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * charging_dtc_timer_a [medium]: 0xffffb608 = 0x138 when (b654 > 18.471 || b658 > 15.938 || engine stopped || b638 < 0x3f || b645==0 || (b645==1 && b63a < 0x3f)), else counts down; counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4.
+ * RAM 0xffffb658 system_voltage_alt (float): Second voltage rail used in the charging DTC timers (thresholds 15.938/10.938 pools 0x7497c/0x7498c/0x74984) by 0x257b4/0x2590a; distinct from filtered battery volts 0xffffb590.
+ */
 /* ROM address: 0x000257b4; body bytes: 280; decompiled */
 
-undefined2 * FUN_000257b4(void)
+undefined2 * candidate_charging_dtc_timer_a(void)
 
 {
   undefined2 *puVar1;
@@ -14,7 +18,7 @@ undefined2 * FUN_000257b4(void)
   else {
     DAT_ffffb645 = '\x01';
   }
-  if ((18.471 < inferred_ram_b654_ffffb654_ffffb654) || (15.938 < DAT_ffffb658)) {
+  if ((18.471 < inferred_ram_b654_ffffb654_ffffb654) || (15.938 < system_voltage_alt_ffffb658)) {
     puVar2 = (undefined2 *)0x0;
   }
   else {

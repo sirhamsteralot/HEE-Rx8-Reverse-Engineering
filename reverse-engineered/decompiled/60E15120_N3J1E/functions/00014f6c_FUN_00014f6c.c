@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trim_ramp [medium]: 0xffffa7c0 ramped down by 0.00087 (pool 0x6dabc) toward 3-D floor tbl 0x69424(coolant, baro) when 0xffffa7b4==0; counters 0xffffa814/a816 gated by a7b4/a7b5. Called from 0x167c0 via pool 0x168b4.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069424: Table 3D - 12 (RX8Defs data pointer, axes and dimensions match).
  */
@@ -6,7 +9,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00014ecc (202 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00014f6c(void)
+uint candidate_idle_trim_ramp(void)
 
 {
   uint uVar1;

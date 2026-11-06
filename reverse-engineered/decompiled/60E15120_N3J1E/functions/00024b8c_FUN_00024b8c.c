@@ -11,7 +11,7 @@ char FUN_00024b8c(void)
   cVar3 = DAT_ffffbaec;
   cVar2 = DAT_ffffb53f;
   cVar4 = DAT_ffffb53d;
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     cVar4 = '\x01';
     if ((inferred_ram_b53b_ffffb53b_ffffb53b == '\x01') || (cVar4 = inferred_ram_bf9c_ffffbf9c_ffffbf9c, inferred_ram_bf9c_ffffbf9c_ffffbf9c == '\x01')) {
       DAT_ffffb53a = 1;

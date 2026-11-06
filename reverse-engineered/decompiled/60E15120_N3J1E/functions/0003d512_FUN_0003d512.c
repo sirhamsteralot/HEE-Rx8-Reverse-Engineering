@@ -22,7 +22,7 @@ undefined1 * FUN_0003d512(void)
     }
     if (DAT_ffffc622 == '\x01') {
       DAT_ffffc620 = '\b';
-      puVar2 = (undefined1 *)(uint)DAT_ffffb534;
+      puVar2 = (undefined1 *)(uint)automatic_transmission_ffffb534;
       if (puVar2 == (undefined1 *)0x1) {
         uVar3 = ref_getFaultStatus__(0x4c);
         puVar2 = (undefined1 *)(uVar3 & 0xff);
@@ -42,7 +42,7 @@ undefined1 * FUN_0003d512(void)
           uVar3 = ref_getFaultStatus__(0x4c);
           puVar2 = (undefined1 *)(uVar3 & 0xff);
           if ((puVar2 == (undefined1 *)0x0) &&
-             (puVar2 = (undefined1 *)(uint)DAT_ffffb534, puVar2 == (undefined1 *)0x1)) {
+             (puVar2 = (undefined1 *)(uint)automatic_transmission_ffffb534, puVar2 == (undefined1 *)0x1)) {
             DAT_ffffc62a = 1;
             DAT_ffffc62b = 0;
           }

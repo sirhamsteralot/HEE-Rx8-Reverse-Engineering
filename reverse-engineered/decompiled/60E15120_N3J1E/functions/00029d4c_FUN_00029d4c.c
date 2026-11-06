@@ -38,7 +38,7 @@ undefined4 FUN_00029d4c(void)
 LAB_00029df4:
   arg1 = 0.0;
   DAT_ffffbb4c = rx8_clamp_float(arg0,0.0,84.0);
-  DAT_ffffbb44 = rx8_clamp_float(((DAT_ffffb2a4 + DAT_ffffbb4c) * 100.0) / 84.0,arg1,100.0);
+  DAT_ffffbb44 = rx8_clamp_float(((idle_air_required_ffffb2a4 + DAT_ffffbb4c) * 100.0) / 84.0,arg1,100.0);
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8744,0);
   if (((cVar2 != '\x01') &&
       (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8728,0), cVar2 != '\x01')) &&
