@@ -143,6 +143,53 @@ TX/RX, CS on `PFDR_W` 0xfffff74e bit 0x400, busy on `PBDR_W` 0xfffff738 bit
 0x800; device addresses 0x6000000 + page*0x10000). 15 functions, 3 RAM cells.
 Write-up: [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md) +
 `reviews/e2ram_device_layer/`; record: `metadata/e2ram_device_labels.json`.
+## Cooling fan control labeling
+
+`scripts/review_fan_control_labels.py` labels the fan chain: task wrapper
+`fan_control_task` 0x2f266 (from 0x117ac), decisions `fan_low_speed_decision`
+0x2f51a (coolant 94/97 C) and `fan_high_speed_decision` 0x2f65c (coolant 98/101 C,
+load/vspeed/A/C conditions, counter gate 0xffffbda8 > 0x5c), and the GPIO
+writers `fan_output_gpio` 0x2f1dc / `fan_output_gpio_init` 0x2f188 →
+`PEDR_W` 0xfffff754 bit 0x800 (PE11, pin 21) / bit 0x10 (PE4, pin 12), with UDS
+overrides DID 0x17c3/0x17c4 (0x5c724/0x5c648). 8 functions, 3 RAM cells.
+Write-up: [`cooling_fan_control_report.md`](cooling_fan_control_report.md) +
+`reviews/cooling_fan_control/`; record: `metadata/fan_control_labels.json`.
+## Alternator / charging control labeling
+
+`scripts/review_alternator_labels.py` labels the three inherited
+`ref_alternator*` batches — `alternator_control_main_batch` 0x267c6,
+`alternator_monitor_batch` 0x2680e, `alternator_pid_task` 0x26868 — plus the
+voltage target/PID chain and the field PWM output on ATU-II ch5B (period
+0xffff9f44 = 1000, duty 0xffff9f48; service 0x57c6 → GR5B 0xfffff4e4). Charging
+DTCs resolved to P2502/P2503/P2504 (slots 0x7b/0x7c/0x7d via tables 0x7df42/0x7e560);
+warning flag 0xffffb5b4 exported via CAN word 0xffffbab2 bit 0x40 and PID 0x0968.
+25 functions, 10 RAM cells. Write-up:
+[`alternator_control_report.md`](alternator_control_report.md) +
+`reviews/alternator_control/`; record: `metadata/alternator_labels.json`.
+## Idle speed control labeling
+
+`scripts/review_idle_control_labels.py` labels the task[10] idle batch
+`idle_control_calc_batch` 0x167c0 (26 callees, 28-call batch under mask 0x10) and
+the idle air chain: feedback 0x15a9a, output clamp 0x216f8 -> 0xffffb2a4 (read by
+the electronic-throttle torque chain 0x21a80), target encoder 0x5ca94 (= Mode 22
+PID 0x096e source 0xffffa7ac at 0.25 rpm/LSB, plus diag cell 0xffffd34d), and the
+E2RAM-backed trim learn/load 0x1617e/0x15fa0 on 0xffff8040/8048. 26 functions,
+6 RAM cells; select-flag producers pinned (0xffffb534 AT, 0xffffbdb8 A/C switch,
+0xffffbd69 A/C clutch, 0xffffb5b3 high-load flag). Write-up:
+[`idle_control_report.md`](idle_control_report.md) + `reviews/idle_control/`;
+record: `metadata/idle_control_labels.json`.
+## DSC-related CAN arbitration labeling
+
+`scripts/review_dsc_can_labels.py` labels the inherited
+`ref_updateDSCRelatedCANStuff__` 0x2a2ae as `dsc_can_arbitration_batch` (15-call
+mask-0x10 batch from task[10] 0x11744) plus the CAN 0x212 RX chain
+(`can212_rx_main` 0x2b29c, `can212_rx_unpack` 0x2b7e2; mailbox descriptor at ROM
+0x4e21c, buffer 0xffffbbc0) and the derived-signal helpers (validity timers,
+`engine_max_torque_allowed_calc` 0x2b3b8 → 0xffffbbd8, DSC mode bits of
+0xffffbbf6, `vehicle_moving_calc` 0x2b156 → 0xffffbbb8, wheelspeed validity).
+18 functions, 10 RAM cells. Write-up:
+[`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md) +
+`reviews/dsc_can_arbitration/`; record: `metadata/dsc_can_labels.json`.
 
 ## Hardware pinout cross-checks
 

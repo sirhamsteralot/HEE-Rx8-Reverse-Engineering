@@ -28,8 +28,8 @@ char FUN_0003d62c(void)
     }
     if (DAT_ffffc626 == '\x01') {
       DAT_ffffc621 = '\n';
-      cVar3 = DAT_ffffb534;
-      if (DAT_ffffb534 == '\x01') {
+      cVar3 = automatic_transmission_ffffb534;
+      if (automatic_transmission_ffffb534 == '\x01') {
         cVar3 = ref_getFaultStatus__(0x4b);
         if (cVar3 == '\0') {
           DAT_ffffc629 = 1;
@@ -43,8 +43,8 @@ char FUN_0003d62c(void)
         if (DAT_ffffc621 != '\0') {
           DAT_ffffc621 = DAT_ffffc621 + -1;
         }
-        cVar3 = DAT_ffffb534;
-        if (DAT_ffffb534 == '\x01') {
+        cVar3 = automatic_transmission_ffffb534;
+        if (automatic_transmission_ffffb534 == '\x01') {
           cVar3 = ref_getFaultStatus__(0x4b);
           if ((cVar3 == '\0') && (DAT_ffffc621 == '\0')) {
             DAT_ffffc628 = 1;

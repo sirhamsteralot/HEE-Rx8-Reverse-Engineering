@@ -18,7 +18,7 @@ void FUN_0000e4f4(void)
   if (DAT_ffffb53a == '\x01') {
     DAT_ffffa460 = rx8_lookup_2d_raw_u8(&tbl_table_2d_288_check_datatype_00068f5c);
   }
-  else if (DAT_ffffb534 == '\x01') {
+  else if (automatic_transmission_ffffb534 == '\x01') {
     uVar2 = rx8_decode_u8_affine(0x3f800000,0,(int)DAT_ffffa461);
     DAT_ffffa460 = rx8_lookup_3d_raw_u8(engine_speed_rpm_ffffb548,uVar2,&tbl_table_3d_103_00068f94);
   }

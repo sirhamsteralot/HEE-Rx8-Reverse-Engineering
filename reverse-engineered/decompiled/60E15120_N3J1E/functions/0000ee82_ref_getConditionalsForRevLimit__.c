@@ -21,7 +21,7 @@ void candidate_rev_limit_conditionals(void)
   else {
     coolant_below_18c_flag_ffffa4a6 = 1;
   }
-  if ((((DAT_ffffb534 == '\0') && (DAT_ffffbaec != '\0')) && (rev_limit_mode_previous_ffffa4ad == '\0')) &&
+  if ((((automatic_transmission_ffffb534 == '\0') && (DAT_ffffbaec != '\0')) && (rev_limit_mode_previous_ffffa4ad == '\0')) &&
      (DAT_ffffbaec != '\a')) {
     rev_limit_countdown_ffffa4ae = '\f';
   }

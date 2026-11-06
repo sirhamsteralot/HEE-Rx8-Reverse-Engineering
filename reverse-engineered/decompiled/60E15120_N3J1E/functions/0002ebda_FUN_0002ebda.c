@@ -29,7 +29,7 @@ undefined4 FUN_0002ebda(void)
   cVar6 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
   cVar5 = inferred_ram_b53b_ffffb53b_ffffb53b;
   cVar4 = DAT_ffffb53a;
-  cVar3 = DAT_ffffb534;
+  cVar3 = automatic_transmission_ffffb534;
   snapshot_inferred_throttle_position_ffffad44 = inferred_throttle_position_ffffad44;
   cVar1 = cranking_active_ffffaa62_ffffaa62;
   snapshot_DAT_ffffa7ac = inferred_ram_a7ac_ffffa7ac_ffffa7ac;

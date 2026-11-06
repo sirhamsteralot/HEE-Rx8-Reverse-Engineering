@@ -60,10 +60,10 @@ undefined1 * FUN_0002e9a4(void)
       ((DAT_ffffbd73 == '\0' &&
        (puVar2 = (undefined1 *)(uint)DAT_ffffbd76,
        puVar2 == (undefined1 *)((int)&vector_Poweron_Reset + 1))))))) {
-    DAT_ffffbd69 = 1;
+    ac_clutch_on_ffffbd69 = 1;
   }
   else {
-    DAT_ffffbd69 = 0;
+    ac_clutch_on_ffffbd69 = 0;
   }
   if (snapshot_engine_injectors_off_ffffa42c == 0) {
     puVar2 = (undefined1 *)rx8_add_u8_saturate((int)(char)DAT_ffffbd92,1);

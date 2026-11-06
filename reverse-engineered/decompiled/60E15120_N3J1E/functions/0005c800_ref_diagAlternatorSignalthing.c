@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_encode_u16 [medium]: Diag-override-aware u16 encoder for the field duty %, DID 0x16e8 (mask 0x40, cell 0xffffd347): step f32 0x3b480000 via 0x2490; decode via 0x24c0. Sole caller 0x26624 stores result into 0xffffb5ac (also Mode 22 PID 0x16e8 source, handler 0x56fc8).
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
@@ -7,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005aff0 (226 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_diagAlternatorSignalthing(undefined4 param_1)
+uint candidate_alternator_duty_encode_u16(undefined4 param_1)
 
 {
   uint uVar1;
