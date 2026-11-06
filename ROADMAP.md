@@ -76,10 +76,12 @@ and where artifacts live.
   `candidate_evap_open_loop_condition` 0x22144,
   `candidate_knock_sensor_fault_task` 0x64ba). Dynamic validation
   (`harness.call()` + datalog replay) pairs naturally with E item 1.
-- **C item 11 (open)** — open items left by C item 8 (PR #33; that pass was
-  static-only, no emulator run). Dynamic/emulator validation of the seven
-  newly labeled bodies pairs with C item 10 / E item 1. Per subsystem
-  (report §9 Limits):
+- **C item 11 (open)** — open items left by C item 8 (PR #33). The
+  dynamic/emulator validation of the seven newly labeled bodies is **done**
+  (`tests/test_c8_dynamic.py`, 11 passed; pairs with C item 10 / E item 1 —
+  see [reviews/c8_reports_review.md](docs/investigations/60E15120_N3J1E/reviews/c8_reports_review.md);
+  it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
+  emulator decode gaps). Still open, per subsystem (report §9 Limits):
   - cruise ([cruise_control_report.md](docs/investigations/60E15120_N3J1E/cruise_control_report.md)):
     units of `cruise_set_speed` 0xffffbcf8 (km/h vs % — inferred from the
     [0,100] clamp + 20–200 km/h axes, not proven against a scanner PID); the

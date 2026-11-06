@@ -100,10 +100,45 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
 - `hash_binaries.py --check` not re-run (no `binaries/` changes); ROM untouched
   (SHA-256 re-verified).
 
+## Dynamic validation (added after the static review, ROADMAP C item 11)
+
+`tests/test_c8_dynamic.py` (11 passed) harness-calls each of the seven bodies
+in the emulator after boot and checks outputs against ROM constants / the
+ROM's own lookup helpers:
+
+- 0x3f924 filter: exact float32 results (fmac semantics) for k = 1.0/0.5/0.1/0.03125.
+- 0x3fb9e accumulate: window reload c7b2 == raw-u16 3-D lookup (18 @ load 0.3,
+  2000 rpm); window-complete publish c701 = 1, c6f0 = c758/c728 = 0.5.
+- 0x4128e evaluate: thresholds == ROM 3-D lookups, with 0x6b6b8/0x6b6d4
+  dynamically confirmed as 1×1 constants = −1.0; pass/fail flags; pending
+  (c703) vs confirmed (c702) decision cells. The id→slot→code P0133 chain is
+  static-verified; the DTC engine's RAM write needs more enable bits than the
+  test sets, so the set_fault side effect itself was not asserted.
+- 0x4c828 switch decode (code 3 → cf49, code 6 → cf4c), 0x4ca7e filter stage
+  (±15 clamp, ±1 rate limit, k=0.1 filter, cef4 = cef0 + vss-offset lookup),
+  0x2d83c integrator (bd10 counter, bd24..bd34 == ROM 3-D lookups), 0x2df62
+  apply (clamp [0,100]: 110→100, 90, −10→0, gate-off→0).
+- 0x23844/0x244bc E2RAM codec: affine decodes/encodes bit-exact (incl. signed
+  encode, readValue checksum cells, rpm step, fault-bit packing).
+- 0x1506c idle: a800 == lookup_2d(0x69370, coolant) (1700/1450/810 rpm),
+  850 rpm floor with the idle latch, d26a override path.
+- 0x2a4f8 CAN compare: r0 == 0 when the live HCAN registers match the
+  descriptor-built image (both channels), r0 != 0 on MC[1]/BCR/IMR
+  corruption. This dynamically corrected the report: BCR expect is
+  **0x803e** (pool 0x2a5f0), not 0x83e — §2 fixed.
+
+Emulator fix required for this pass: `sh2e.py` operand regexes now accept the
+disassembler's spaced `@( r0,rN )` form (131 sites in the ROM); this also
+closed the two former C7 KNOWN_DECODE_GAPS (task[13]/task[16] now run to
+taskEnd + idle). Boot trace re-diffed vs the golden fixture: MATCH
+(319,731 steps). Renesas Simulator Debugger differential run still pending
+(tool not installed). Full suite: 128 passed.
+
 ## Limits of this review
 
-- Static re-verification only; no emulator run of the seven bodies (that stays
-  open as ROADMAP C item 11, logged from PR #33's open questions).
 - The idle report's battery-gate constants (0.03125, 13.016 V, 12.0 V) match
   the decompiled export but are not present as float pool words in the 0x1506c/
   0x167c0 pool region (likely built via FP ops); left as export-derived.
+- Remaining C item 11 bullets (per-subsystem open questions: cruise 0xffffbcf8
+  units, E2RAM payload attribution + save cadence, CAN record bytes +12..+15,
+  idle flag meanings + 0x5ca94 output, O2 channel meanings) are still open.
