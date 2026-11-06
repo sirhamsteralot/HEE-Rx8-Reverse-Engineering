@@ -101,7 +101,7 @@ Descriptors parsed from ROM (`>HBBII`, type 4 = u8 data, type 8 = u16):
 |---|---|---|---|---|---|
 | 0x6a218 | 21 | 4 | 0x732dc | 0x73330 | idle air output base (indexed by 0xffffa838) |
 | 0x6a22c / 0x6a240 | 13 / 13 | 4 | 0x73348 / 0x7338c | 0x7337c / 0x733c0 | idle air clamp min/max (coolant axis) |
-| 0x6947c / 0x69490 / 0x694b8 | 9 / 5 / 14 | 4 | rpm axes | 0x6dff4 / 0x6e024 / 0x6e060 | feedback correction tables (0x15a9a) |
+| 0x6947c / 0x69490 / 0x694b8 | 9 / 5 / 14 | 4 | 0x6dff4 / 0x6e024 / 0x6e060 (rpm) | 0x6e018 / 0x6e038 / 0x6e098 | feedback correction tables (0x15a9a) |
 | 0x69440 / 0x69454 | 9 / 9 | 4 | coolant 0x6df64 / 0x6df94 | 0x6df88 / 0x6dfb8 | feedback clamp tables (0x15a9a) |
 | 0x694a4 | 6 | 4 | coolant 0x6e040 | 0x6e058 | cranking correction (0x15a9a) |
 | 0x69244–0x692a8 | 6 × 2-D | — | — | — | idle air correction select (0x16900) |
@@ -190,6 +190,14 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
   reference matches), `verify_claims.py`, `verify_readability.py`,
   `verify_math_units.py`, `validate_reports.py` — all PASS;
   `data/labels/60E15120_N3J1E/{validation,claim_validation,report_validation}.json`.
+- Follow-up claims-verification pass: every machine-checkable claim re-run
+  (`verify_claims.py` / `validate_reports.py` PASS) and every binary-level claim
+  re-read from the raw ROM and disassembly (see
+  [`reviews/idle_control/validation.json`](reviews/idle_control/validation.json)
+  `claim_verification`). Two errors found and fixed in all artifacts: the 0x216f8
+  pool words were cited one word off (0x21744 = 0x2068, 0x21748 = 0x6a218,
+  0x2174c = 0x6a240), and the §3 feedback-table row listed the axis addresses
+  (0x6dff4/0x6e024/0x6e060) as data — the data cells are 0x6e018/0x6e038/0x6e098.
 
 ## 8. Memory map for validation
 
@@ -225,7 +233,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 |---|---|
 | 0x16888-0x168fc | 0x167c0 literal pool (call targets + helpers) |
 | 0x5cb3e-0x5cb6b | 0x5ca94 pool (0x5cb42 = 0x96e, 0x5cb64 = f32 0.25, 0x5cb68 = 0x2490) |
-| 0x21740-0x2175c | 0x216f8 pool (0x21744 = 0x6a218, 0x2175c = 0x2404) |
+| 0x21740-0x2175c | 0x216f8 pool (0x21744 = 0x2068, 0x21748 = 0x6a218, 0x2174c = 0x6a240, 0x2175c = 0x2404) |
 | 0x4a38 | task table rec[10].entry = 0x64f6 (base 0x4990 + 10*16 + 8) |
 | 0x6a218, 0x6a22c, 0x6a240, 0x69440-0x694b8, 0x69530, 0x69544, 0x69424, 0x692bc, 0x69244-0x692a8, 0x6a100-0x6a13c, 0x6a814, 0x6a830, 0x69768, 0x6b318, 0x6b32c, 0x6af18, 0x6af40, 0x694cc | idle calibration descriptors (see §3) |
 | 0x6df44-0x6df60, 0x7a088, 0x6dabc | float constants (see §3) |

@@ -7,12 +7,12 @@
     "0002a2ae": {
       "alias": "dsc_can_arbitration_batch",
       "confidence": "high",
-      "evidence": "15-call batch (13 jsr + tail jmp) under interrupt mask 0x10, called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2a2ae). Pool words in classified pool 0x2a3e0-0x2a4f4 read from ROM: 0x2a448=0x3920 sh_raise_interrupt_mask_return_previous, 0x2a454=0x3934 ref_setSR (tail), 0x2a468=0x2b314, 0x2a46c=0x2b3b8, 0x2a470=0x2b496, 0x2a474=0x2b6a4, 0x2a478=0x2b6c2, 0x2a47c=0x2b754, 0x2a480=0x2b788, 0x2a484=0x2b7a6, 0x2a488=0x2b7c4, 0x2a48c=0x2b046, 0x2a490=0x2b156, 0x2a494=0x2b17e, 0x2a498=0x2b1aa. Inherited ref_updateDSCRelatedCANStuff__ confirmed: CAN 0x212 signal validity, max-torque-allowed, DSC mode bits, vehicle-moving and wheelspeed validity."
+      "evidence": "15-call batch (14 jsr + 1 tail jmp; 13 signal callees + mask/SR helpers) under interrupt mask 0x10, called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2a2ae). Pool words in classified pool 0x2a3e0-0x2a4f4 read from ROM: 0x2a448=0x3920 sh_raise_interrupt_mask_return_previous, 0x2a454=0x3934 ref_setSR (tail), 0x2a468=0x2b314, 0x2a46c=0x2b3b8, 0x2a470=0x2b496, 0x2a474=0x2b6a4, 0x2a478=0x2b6c2, 0x2a47c=0x2b754, 0x2a480=0x2b788, 0x2a484=0x2b7a6, 0x2a488=0x2b7c4, 0x2a48c=0x2b046, 0x2a490=0x2b156, 0x2a494=0x2b17e, 0x2a498=0x2b1aa. Inherited ref_updateDSCRelatedCANStuff__ confirmed: CAN 0x212 signal validity, max-torque-allowed, DSC mode bits, vehicle-moving and wheelspeed validity."
     },
     "0002b29c": {
       "alias": "can212_rx_main",
       "confidence": "high",
-      "evidence": "CAN 0x212 RX handler: can_rx_copy_mailbox_to_buffer(&DAT_0004e21c) (mailbox descriptor at ROM 0x4e21c: bytes 00000000 00000212 01210700 ffffbbc0 01000000 = ID 0x212, DLC 8, buffer 0xffffbbc0); on success calls 0xe038, 0x2b7e2 (unpack), 0x2b816 (0xffffbbc8 = 0xffffbbf2), 0x2b8f4 and resets 0xffffbbee/0xffffbbf0; on failure counts 0xffffbbee (every 4th -> 0xffffbbf0) and 0xffffbbc7. 8 calls total."
+      "evidence": "CAN 0x212 RX handler: can_rx_copy_mailbox_to_buffer(&DAT_0004e21c) (mailbox descriptor at ROM 0x4e21c: bytes 00000212 01210700 ffffbbc0 01000000 = ID 0x212, ctrl 0x07 = DLC 7, buffer 0xffffbbc0); on success calls 0xe038, 0x2b7e2 (unpack), 0x2b816 (0xffffbbc8 = 0xffffbbf2), 0x2b8f4 and resets 0xffffbbee/0xffffbbf0; on failure counts 0xffffbbee (every 4th -> 0xffffbbf0) and 0xffffbbc7. 8 calls total."
     },
     "0002b7e2": {
       "alias": "can212_rx_unpack",
