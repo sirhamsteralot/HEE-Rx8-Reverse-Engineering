@@ -6,7 +6,7 @@ void FUN_00046028(void)
   char cVar1;
   char cVar2;
   
-  cVar2 = DAT_ffffb4ec;
+  cVar2 = stored_dtc_flag_bits_ffffb4ec;
   cVar1 = inferred_ram_ad18_ffffad18_ffffad18;
   if (DAT_ffffcc0c != '\0') {
     if (DAT_ffffcc0c != '\x01') {
@@ -14,8 +14,8 @@ void FUN_00046028(void)
       DAT_ffffcc13 = cVar2;
       return;
     }
-    if ((inferred_ram_ad18_ffffad18_ffffad18 == DAT_ffffcc12) && (DAT_ffffb4ec == DAT_ffffcc13)) {
-      if (inferred_ram_ad18_ffffad18_ffffad18 != DAT_ffffb4ec) {
+    if ((inferred_ram_ad18_ffffad18_ffffad18 == DAT_ffffcc12) && (stored_dtc_flag_bits_ffffb4ec == DAT_ffffcc13)) {
+      if (inferred_ram_ad18_ffffad18_ffffad18 != stored_dtc_flag_bits_ffffb4ec) {
         DAT_ffffcc10 = 0;
         DAT_ffffcc0e = rx8_add_u16_saturate((int)DAT_ffffcc0e,1);
         DAT_ffffcc12 = cVar1;

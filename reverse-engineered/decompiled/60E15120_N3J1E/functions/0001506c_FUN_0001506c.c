@@ -21,7 +21,7 @@
 /* WARNING: Removing unreachable block (ram,0x0001572c) */
 /* WARNING: Removing unreachable block (ram,0x0001575c) */
 
-void FUN_0001506c(void)
+void idle_target_rpm_calculate(void)
 
 {
   char cVar1;
@@ -258,8 +258,8 @@ LAB_000156a2:
   DAT_ffffa81e = 0;
   DAT_ffffa82a = cVar4;
   if (DAT_ffffd26a == '\x01') {
-    DAT_ffffa7f4 = DAT_ffffd244;
-    fVar13 = DAT_ffffa7f4;
+    idle_target_rpm_ffffa7f4 = DAT_ffffd244;
+    fVar13 = idle_target_rpm_ffffa7f4;
   }
   else {
     fVar13 = rx8_first_order_filter(DAT_ffffa7b0,inferred_ram_a7ac_ffffa7ac_ffffa7ac,DAT_ffffa7bc,arg3);
@@ -267,8 +267,8 @@ LAB_000156a2:
       fVar13 = rx8_max_float(fVar13,850.0);
     }
   }
-  DAT_ffffa7f4 = fVar13;
-  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)FUN_0005ca94(DAT_ffffa7f4);
+  idle_target_rpm_ffffa7f4 = fVar13;
+  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)FUN_0005ca94(idle_target_rpm_ffffa7f4);
   return;
 }
 

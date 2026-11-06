@@ -1,6 +1,6 @@
 /* ROM address: 0x000242ae; body bytes: 476; decompiled */
 
-undefined1 * FUN_000242ae(void)
+undefined1 * e2ram_fault_status_collect(void)
 
 {
   char cVar2;

@@ -1,7 +1,7 @@
 {
  "date": "",
- "pass": "os_task_handlers_12_16_labeling (ROADMAP C item 7)",
- "source": "os_scheduling_deep_dive_report.md section 4 task table + ROM/disassembly byte verification of task records 0x4a50-0x4a98, wrapper literal pools (0x66bc-0x66e8), handler pools (0x7300-0x7330, 0x7408-0x7438, 0xb13c-0xb394, 0xb212-0xb238, 0x11a40-0x11d10), and SH-2E emulator dynamic runs of the five task entries (tests/test_c7_task_handlers.py, 8 passed)",
+ "pass": "os_task_handlers_12_16_labeling",
+ "source": "os_scheduling_deep_dive_report.md section 4 task table + ROM/disassembly byte verification of task records 0x4a50-0x4a98, wrapper literal pools (0x66bc-0x66e8), handler pools (0x7300-0x7330, 0x7408-0x7438, 0xb13c-0xb394, 0xb212-0xb238, 0x11a40-0x11d10), and SH-2E emulator dynamic runs of the five task entries (tests/test_os_task_handlers_12_16.py, 8 passed)",
  "function_aliases": {
  "00006592": {
   "alias": "task12_adc_feedback_pwm_entry",
@@ -26,7 +26,7 @@
  "00011880": {
   "alias": "monitor_service_batch",
   "confidence": "high",
-  "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x65658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule).; caller task12_adc_feedback_pwm_entry 0x6592 (high, ROM-byte + emulator verified per C item 7, tests/test_c7_task_handlers.py); monitor batch"
+  "evidence": "13-call batch, pool 0x11a40-0x11a70 ROM-verified incl. 0x19cf4 (vehicle speed/accel filters + knock_state_reset_rpm_window), ref_diagControlModeSomething 0x5bf9c, ref_coolantTempPlausibilityCheck___ 0x65658. Called only from task[12]. Applied as candidate_monitor_service_batch (medium -> candidate_ prefix per integrator rule).; caller task12_adc_feedback_pwm_entry 0x6592 (high, ROM-byte + emulator verified, tests/test_os_task_handlers_12_16.py); monitor batch"
  },
  "000065b2": {
   "alias": "task13_temp_sensor_dtc_entry",
@@ -166,7 +166,7 @@
  }
  },
  "dynamic_validation": {
- "test": "tests/test_c7_task_handlers.py (8 passed, python -m pytest)",
+ "test": "tests/test_os_task_handlers_12_16.py (8 passed, python -m pytest)",
  "notes": "task[12]/[14]/[15] run to taskEnd 0x3d58 -> idle 0x3dac; task[13]/[16] visit all direct handlers then stop at pre-existing opdec gaps 0x50de0 (word 0xff07 fmov.s fr0,@(r0,r15), inside FUN_00050d98 <- 0x3957c) and 0x674ac (inside FUN_00067476 <- 0x622e0) - emulator corpus-table limitation (cf. E8), not a ROM finding."
  },
  "rom_unchanged": true,

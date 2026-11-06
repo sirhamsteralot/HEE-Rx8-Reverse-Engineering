@@ -23,7 +23,7 @@ uint FUN_0002e3dc(void)
   snapshot_DAT_ffffbfa0 = DAT_ffffbfa0;
   fVar4 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff866c);
   fVar5 = DAT_ffffbfac - 0.5;
-  if ((((DAT_ffffbced == '\0') || (DAT_ffffbcf8 < DAT_ffffa9b4)) ||
+  if ((((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < DAT_ffffa9b4)) ||
       ((cVar2 == '\0' && (snapshot_DAT_ffffbfb5 == 0)))) ||
      ((snapshot_DAT_ffffbfb5 == 1 &&
       (((0.0 <= snapshot_DAT_ffffbfa0 - fVar4 && (snapshot_DAT_ffffbfa0 - fVar4 <= 1.6)) ||

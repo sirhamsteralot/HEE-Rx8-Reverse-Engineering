@@ -62,7 +62,7 @@ uint FUN_0002c15a(void)
   }
   else {
     DAT_ffffbc41 = 0;
-    uVar2 = (uint)DAT_ffffbaed;
+    uVar2 = (uint)cruise_switch_code_ffffbaed;
     DAT_ffffbc42 = 0;
     uVar1 = (uint)DAT_ffffb534;
     DAT_ffffbc43 = uVar3;

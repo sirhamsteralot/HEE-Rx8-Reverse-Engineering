@@ -13,7 +13,7 @@ void FUN_00038dca(void)
   FUN_0003a4be();
   ref_setFuelingRequestPointer();
   FUN_0003c106();
-  FUN_0003f924();
+  o2_channel_filter_update();
   FUN_00043bb0();
   ref_setSR(uVar1);
   return;

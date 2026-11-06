@@ -1,6 +1,6 @@
 /* ROM address: 0x00023844; body bytes: 1562; decompiled */
 
-void FUN_00023844(void)
+void e2ram_block_decode(void)
 
 {
   float fVar1;
@@ -9,7 +9,7 @@ void FUN_00023844(void)
   
   uVar3 = 0;
   uVar2 = 0x3cfa0000;
-  DAT_ffffb4b0 = rx8_decode_u16_affine(0x3cfa0000,0,(int)DAT_ffffb47a);
+  DAT_ffffb4b0 = rx8_decode_u16_affine(0x3cfa0000,0,(int)e2ram_payload_raw_ffffb47a);
   DAT_ffffb4b4 = rx8_decode_u16_affine(uVar2,uVar3,(int)DAT_ffffb47c);
   DAT_ffffb4cc = DAT_ffffb47e;
   DAT_ffffb4ce = DAT_ffffb480;
@@ -26,7 +26,7 @@ void FUN_00023844(void)
     DAT_ffffb4bc = -fVar1;
   }
   FUN_00024b00((int)DAT_ffffb48a,&DAT_ffffb52d,&DAT_ffffb526);
-  DAT_ffffb4ec = (DAT_ffffb526 & 1) == 1;
+  stored_dtc_flag_bits_ffffb4ec = (DAT_ffffb526 & 1) == 1;
   DAT_ffffb4ed = (DAT_ffffb526 & 2) != 0;
   DAT_ffffb4ee = (DAT_ffffb526 & 4) != 0;
   DAT_ffffb4ef = (DAT_ffffb526 & 8) != 0;
