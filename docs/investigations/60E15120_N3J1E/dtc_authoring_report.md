@@ -153,6 +153,12 @@ UDS 0x85 -> 0x5dc44: DTC setting on/off (0xffffd688)
 
 Everything below is ROM-verified this session (dump:
 [`reviews/dtc_authoring/tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt)).
+A working example that applies this checklist to a ROM copy — new code on free slot
+0x79 / arg 0x83 plus a cave trigger hooked into the periodic DTC service batch —
+lives in
+[`utilities/scripts/patchers/patch_new_dtc_trigger.py`](../../../utilities/scripts/patchers/patch_new_dtc_trigger.py)
+(spec: [`PATCHER_new_dtc_trigger.md`](../../../utilities/scripts/patchers/PATCHER_new_dtc_trigger.md),
+tests: [`tests/test_dtc_trigger_patcher.py`](../../../tests/test_dtc_trigger_patcher.py)).
 
 | # | Touch | Address (60E15120_N3J1E) | Notes |
 |---|---|---|---|
@@ -236,6 +242,10 @@ decompiled artifact was modified.
   `validation.json` (validator results).
 - Cross-links added to [`dtc_control_report.md`](dtc_control_report.md) and
   [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) (Related reports).
+- `utilities/scripts/patchers/patch_new_dtc_trigger.py` +
+  [`PATCHER_new_dtc_trigger.md`](../../../utilities/scripts/patchers/PATCHER_new_dtc_trigger.md) —
+  example patcher implementing this report's checklist (emulator-validated by
+  [`tests/test_dtc_trigger_patcher.py`](../../../tests/test_dtc_trigger_patcher.py)).
 
 ## 7. Validation
 
