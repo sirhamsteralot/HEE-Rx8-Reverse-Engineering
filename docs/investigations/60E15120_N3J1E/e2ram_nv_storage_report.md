@@ -10,7 +10,7 @@ recorded in `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`.
 `ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4 (inherited `ref_` — unverified hypothesis)
 and the knock-learn consumer 0x139c4 in
 [`knock_control_report.md`](knock_control_report.md); DTC engine (set_fault thunk
-0x5fd38, stored-flag table 0xffffd570) in
+0x5fd38, stored-flag table `dtc_ram_flag_table_ffffd570` 0xffffd570) in
 [`dtc_control_report.md`](dtc_control_report.md); OS boot/init ordering in
 [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md).
 
@@ -64,8 +64,8 @@ checksum, and writes the block out again.
          0xb886(0xffffb440, 0x1c)      # write 28 u16; success -> 0xffffb43b = 1
 
 # 0x244bc e2ram_block_encode: b442/b444 = enc(b40c, 0x3cfa0000, pool 0x2452c); b446 = signed enc(b414);
-#   b448 = enc(b594, 0x39a00000 = 0.00030517578125, pool 0x24684); b44a/b44c = enc(readValue_float of 0xffff807c/0xffff8084);
-#   b44e = pedal volts 0xffffa9c4; rpm 0xffffb548 (step 0x3e480000 = 0.1953125, pool 0x24b40); fault bits -> b459..b45b
+#   b448 = enc(b594, 0x39a00000 = 0.00030517578125, pool 0x24684); b44a/b44c = enc(readValue_float of `inferred_ram_807c_ffff807c` 0xffff807c/0xffff8084);
+#   b44e = pedal volts `inferred_pedal_volts_ffffa9c4` 0xffffa9c4; rpm 0xffffb548 (step 0x3e480000 = 0.1953125, pool 0x24b40); fault bits -> b459..b45b
 ```
 
 ## 3. Key calibrated tables
@@ -155,7 +155,7 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 ## 9. Limits
 
 - Static analysis only. Which learned value each payload u16 holds is only
-  partially known (rpm 0xffffb548 step 0.1953125, pedal volts 0xffffa9c4, two
+  partially known (rpm 0xffffb548 step 0.1953125, pedal volts `inferred_pedal_volts_ffffa9c4` 0xffffa9c4, two
   readValue floats, plus the DTC flag bytes); the remaining cells are not
   individually attributed in this pass.
 - The E2RAM device protocol (PLDR_W/ISR_W bit-banging in 0xb99c/0xb886) is
