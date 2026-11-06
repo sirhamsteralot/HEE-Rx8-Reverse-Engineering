@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–16 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–17 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–16)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–17)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -152,6 +152,23 @@ and where artifacts live.
   per AGENTS.md rule 7 and run the pipeline validators + `python -m pytest
   tests/`; keep the passes re-runnable (rule 6c) rather than hand-editing the
   export.
+- **C item 17 (open)** — update and review all existing documentation with the
+  new insights. Today's passes (DSC CAN arbitration, merged; idle speed
+  control, open PR branch; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment
+  sets) changed labels and cross-subsystem links — e.g. 0xffffbbb8
+  `vehicle_not_moving` is now known to feed the idle A/C clutch gate 0x165d6,
+  and `engine_max_torque_allowed` 0xffffbbd8 feeds the DSC timing derate
+  0x1815c in the ignition report. Go through
+  [docs/investigations/60E15120_N3J1E/](docs/investigations/60E15120_N3J1E/)
+  (the README index, every existing `*_report.md`'s **Related reports:** line
+  and §9 Limits/open questions), [`docs/learnings.md`](docs/learnings.md), and
+  this ROADMAP's cross-references: add the new links, refresh stale statements
+  that the new evidence supersedes, and fix any broken `.md` links (rule 8:
+  cross-reference everywhere, never leave a bare code span). Factual changes
+  must land in all artifacts at once (rule 11). Validate afterwards with
+  `validate_reports.py` + `verify_claims.py` and a link + non-empty-size check
+  on every touched doc. Sequencing: do this after C items 13–16 so the docs
+  reflect the applied labels, not just the raw comments.
 
 ### E. Reimplementation coverage (P4)
 
