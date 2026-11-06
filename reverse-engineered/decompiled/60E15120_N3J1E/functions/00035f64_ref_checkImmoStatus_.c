@@ -8,10 +8,10 @@ uint ref_checkImmoStatus_(void)
 {
   uint uVar1;
   
-  if (DAT_ffffc268 != 'Z') {
-    DAT_ffffc268 = '\0';
+  if (e2ram_param_block_ffffc268 != 'Z') {
+    e2ram_param_block_ffffc268 = '\0';
   }
-  if (DAT_ffffc268 == 'Z') {
+  if (e2ram_param_block_ffffc268 == 'Z') {
     if ((DAT_ffffc275 & 0xfc) != 0) {
       DAT_ffffc275 = 0;
     }

@@ -1,0 +1,45 @@
+{
+  "pass": "e2ram_device_layer_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_claims": "PASS",
+  "verify_readability": "PASS (3355 function bodies consistent)",
+  "verify_math_units": "PASS",
+  "validate_reports": "PASS",
+  "pytest": "134 passed",
+  "labels_applied": {
+    "functions": 15,
+    "ram": 3,
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "metadata/integrated_names.json"
+    ],
+    "export_files_renamed": 60,
+    "function_bodies_verified_intact": 3355
+  },
+  "pipeline_scripts": "review_e2ram_labels.py (idempotent; wired into rebuild.sh) + annotate_source_review.py + integrate_reviewed_names.py",
+  "record": "metadata/e2ram_device_labels.json",
+  "ghidra_database_updated": false,
+  "binary_level_verification": {
+    "call_counts_rechecked": {"0x3599c": 19, "0x37ef0": 3, "0x37ea4": 2, "0x37cd8": 5, "0xbdfa": 6, "0xbe30": 5, "0x35a8c": 30},
+    "pool_words": {"0x37f84": "0x6000000 (device base)", "0x37f7c": "0xffffc28e (shadow)", "0x37f80": "0xffffc38e (complement)", "0x35a48": "0x37ef0", "0x37bd4": "0x4c00000 (command)", "0xbecc": "0x2054", "0xbed4": "0x4bbc", "0xbed0": "0x2064"},
+    "pool_ranges_classified": ["0x35a40-0x35a8b u32_table", "0x35b66-0x35b87 mixed_pool"],
+    "registers_from_symbols_tsv": {"SCI_SCR4_B": "0xfffff022", "SCI_TDR4_B": "0xfffff023", "SCI_SSR4_B": "0xfffff024", "SCI_RDR4_B": "0xfffff025", "PFDR_W": "0xfffff74e", "PBDR_W": "0xfffff738", "PBCRH_W": "0xfffff732", "PLIR_W": "0xfffff75c"},
+    "correction": "decompiled C mislabels 0xfffff74e as PLDR_W; symbols.tsv name is PFDR_W (used in all evidence)"
+  },
+  "limits": "Static analysis only. Shadow->device flush path only partially traced (0x379e4). Relationship to the 28-u16 block primitives (0xb886/0xb958/0xb99c) unreconciled. Package-pin -> terminal hop not verified."
+}

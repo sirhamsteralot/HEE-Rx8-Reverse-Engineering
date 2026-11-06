@@ -22,13 +22,13 @@ void FUN_0005a714(void)
   undefined1 uStack_24;
   undefined1 uStack_23;
   
-  FUN_00037ef0(100,local_2c,3,in_r7,&DAT_0005f6e8,local_2c);
+  e2ram_cached_byte_read(100,local_2c,3,in_r7,&DAT_0005f6e8,local_2c);
   uVar3 = 0xff;
   uStack_29 = uVar3;
-  FUN_00037ef0(0x68,&uStack_28,1);
+  e2ram_cached_byte_read(0x68,&uStack_28,1);
   uStack_27 = uVar3;
-  FUN_00037ef0(0x6a,auStack_26,2);
-  FUN_00037ef0(0x6c,&uStack_24,1);
+  e2ram_cached_byte_read(0x6a,auStack_26,2);
+  e2ram_cached_byte_read(0x6c,&uStack_24,1);
   psVar6 = &DAT_ffffd2b2;
   psVar5 = &DAT_ffffd2b0;
   uVar7 = 0;

@@ -12,7 +12,7 @@ char ref_afterImmo_8(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\n';
-    FUN_00035a8c(10);
+    candidate_e2ram_param_write_dispatch(10);
     DAT_ffffc25c = '\x01';
     DAT_ffffc25b = '\0';
   }

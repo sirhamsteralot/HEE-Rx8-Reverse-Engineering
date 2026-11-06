@@ -15879,12 +15879,15 @@ undefined4 FUN_0000bdbc(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_read_word [high]: Device read of one u16: 0xbf3a() CS/port setup, 0xbfa0(addr, 2) sends the 2 address bytes over SCI4, 0xc02c() clocks in the u16 from SCI_RDR4_B 0xfffff025, then CS down via ref_setRegister_REG_BIT_VAL 0x4bbc on PFDR_W 0xfffff74e bit 0x400 (pools 0xbecc=0x2054, 0xbed4=0x4bbc, 0xbed0=0x2064).
+ */
 /* ROM address: 0x0000bdfa; body bytes: 54; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000bdfa (54 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_0000bdfa(undefined4 param_1)
+int e2ram_read_word(undefined4 param_1)
 
 {
   short sVar1;
@@ -15892,9 +15895,9 @@ int FUN_0000bdfa(undefined4 param_1)
   undefined4 uStack_8;
   
   uStack_8 = param_1;
-  FUN_0000bf3a();
-  FUN_0000bfa0(uStack_8,2);
-  sVar1 = FUN_0000c02c();
+  e2ram_cs_port_setup();
+  sci4_send_bytes(uStack_8,2);
+  sVar1 = sci4_read_u16();
   uStack_8._0_2_ = sVar1;
   ref_setSR_PARAM(&local_c,0xe0);
   ref_setRegister_REG_BIT_VAL(0xfffff74e,0x400,0);
@@ -15903,12 +15906,15 @@ int FUN_0000bdfa(undefined4 param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_send_command2 [high]: Send a 2-byte command frame: 0xbf3a() CS up, 0xbfa0(cmd, 2), CS down (same helper pools 0xbecc/0xbed4/0xbed0). Used with 0x4c00000 (from 0x379e4, pool 0x37bd4).
+ */
 /* ROM address: 0x0000be30; body bytes: 46; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000be30 (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0000be30(undefined4 param_1)
+undefined4 e2ram_send_command2(undefined4 param_1)
 
 {
   undefined4 uVar1;
@@ -15916,8 +15922,8 @@ undefined4 FUN_0000be30(undefined4 param_1)
   undefined4 uStack_8;
   
   uStack_8 = param_1;
-  FUN_0000bf3a();
-  FUN_0000bfa0(uStack_8,2);
+  e2ram_cs_port_setup();
+  sci4_send_bytes(uStack_8,2);
   ref_setSR_PARAM(&local_c,0xe0);
   ref_setRegister_REG_BIT_VAL(0xfffff74e,0x400,0);
   uVar1 = FUN_00002064(local_c);
@@ -15925,12 +15931,15 @@ undefined4 FUN_0000be30(undefined4 param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_send_command4_a [medium]: Send a 4-byte frame: 0xbf3a() CS up, 0xbfa0(cmd, 4), CS down. Called from 0x379e4.
+ */
 /* ROM address: 0x0000be5e; body bytes: 46; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000be5e (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0000be5e(undefined4 param_1)
+undefined4 candidate_e2ram_send_command4_a(undefined4 param_1)
 
 {
   undefined4 uVar1;
@@ -15938,8 +15947,8 @@ undefined4 FUN_0000be5e(undefined4 param_1)
   undefined4 uStack_8;
   
   uStack_8 = param_1;
-  FUN_0000bf3a();
-  FUN_0000bfa0(uStack_8,4);
+  e2ram_cs_port_setup();
+  sci4_send_bytes(uStack_8,4);
   ref_setSR_PARAM(&local_c,0xe0);
   ref_setRegister_REG_BIT_VAL(0xfffff74e,0x400,0);
   uVar1 = FUN_00002064(local_c);
@@ -15947,12 +15956,15 @@ undefined4 FUN_0000be5e(undefined4 param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_send_command4_b [medium]: Send a 4-byte frame: same shape as 0xbe5e (0xbf3a + 0xbfa0(cmd,4) + CS down).
+ */
 /* ROM address: 0x0000be8c; body bytes: 46; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000be8c (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0000be8c(undefined4 param_1)
+undefined4 candidate_e2ram_send_command4_b(undefined4 param_1)
 
 {
   undefined4 uVar1;
@@ -15960,8 +15972,8 @@ undefined4 FUN_0000be8c(undefined4 param_1)
   undefined4 uStack_8;
   
   uStack_8 = param_1;
-  FUN_0000bf3a();
-  FUN_0000bfa0(uStack_8,4);
+  e2ram_cs_port_setup();
+  sci4_send_bytes(uStack_8,4);
   ref_setSR_PARAM(&local_c,0xe0);
   ref_setRegister_REG_BIT_VAL(0xfffff74e,0x400,0);
   uVar1 = FUN_00002064(local_c);
@@ -15969,12 +15981,15 @@ undefined4 FUN_0000be8c(undefined4 param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_busy_status_read [high]: E2RAM status/busy read: pulse PFDR_W 0xfffff74e bit 0x400 high then low (via 0x4bbc, pools 0xc014-0xc020), wait 0x239c (sh_busy_wait_count_times_8(1)), read PBDR_W 0xfffff738, return (val & 0x800) == 0. PBDR_W at symbols.tsv 0xfffff738.
+ */
 /* ROM address: 0x0000bed8; body bytes: 98; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000bed8 (98 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-bool FUN_0000bed8(void)
+bool e2ram_busy_status_read(void)
 
 {
   ushort uVar1;
@@ -15993,12 +16008,15 @@ bool FUN_0000bed8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_cs_port_setup [high]: E2RAM chip-select/port setup: PLIR_W 0xfffff75c &= ~0x200, PBCRH_W 0xfffff732 &= ~0x30, PBDR_W 0xfffff738 bit 0x400 = 0 (via 0x4bbc), PFDR_W 0xfffff74e bit 0x400 = 1 (CS high), PBCRH_W |= 0x10. Registers from symbols.tsv.
+ */
 /* ROM address: 0x0000bf3a; body bytes: 102; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000bf3a (102 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000bf3a(void)
+void e2ram_cs_port_setup(void)
 
 {
   ushort uVar1;
@@ -16021,12 +16039,15 @@ void FUN_0000bf3a(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * sci4_send_bytes [high]: SCI4 byte transmit: SCI_SCR4_B 0xfffff022 |= 0x20 (TE), loop over len bytes: wait SCI_SSR4_B 0xfffff024 bit 0x80 (TDRE), write SCI_TDR4_B 0xfffff023, clear TDRE (SSR4 = b & 0x7f | 0x78); end wait bit 0x4 (TEND), SCR4 &= 0xb. Register names from symbols.tsv.
+ */
 /* ROM address: 0x0000bfa0; body bytes: 92; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000bfa0 (92 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000bfa0(undefined4 param_1,uint param_2)
+void sci4_send_bytes(undefined4 param_1,uint param_2)
 
 {
   undefined1 uVar1;
@@ -16058,12 +16079,15 @@ void FUN_0000bfa0(undefined4 param_1,uint param_2)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * sci4_read_u16 [high]: SCI4 receive of 2 bytes assembled into a u16: PLIR_W 0xfffff75c |= 0x200, SCI_SCR4_B |= 0x30 (TE|RE), dummy write SCI_TDR4_B = 0, wait SCI_SSR4_B bit 0x40 (RDRF), read SCI_RDR4_B 0xfffff025, repeat for second byte. Register names from symbols.tsv.
+ */
 /* ROM address: 0x0000c02c; body bytes: 170; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000c02c (170 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int FUN_0000c02c(void)
+int sci4_read_u16(void)
 
 {
   byte bVar1;
@@ -21291,8 +21315,8 @@ void FUN_00011744(void)
   fueling_condition_flags_task();
   FUN_00014628();
   alternator_monitor_batch();
-  ref_updateIdleControl__();
-  ref_alternatorControl();
+  idle_control_calc_batch();
+  alternator_monitor_batch();
   idle_control_calc_batch();
   FUN_0003eaf8();
   apv_control_task();
@@ -37381,12 +37405,12 @@ void candidate_alternator_voltage_target_select(void)
     DAT_ffffb61a = '\0';
   }
   if ((((DAT_ffffb64a == '\x01') || (DAT_ffffb64b == '\x01')) ||
-      ((DAT_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
      (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
        ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
       ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
-     (((((DAT_ffffb610 == 0 || (DAT_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
-       ((DAT_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
+     (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
+       ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
     DAT_ffffb616 = '\x01';
   }
   else {
@@ -38842,7 +38866,7 @@ uint FUN_000279d8(void)
         uVar8 = ref_readValue_float_DEFAULTVAL_ADDRESS(uVar11,puVar7);
         local_30 = rx8_encode_u8_affine_saturate(uVar8,uVar10,uVar9);
         local_2f = ref_readValue_8bit_ADDRESS_VAL(puVar5,0);
-        ref_writeToE2RAMArea_INDEX_ADDR_LEN(iVar6 + 0x20,&local_30,2);
+        e2ram_shadow_byte_write(iVar6 + 0x20,&local_30,2);
         uVar4 = uVar4 + 1;
         iVar6 = iVar6 + 2;
         puVar5 = puVar5 + 2;
@@ -38900,7 +38924,7 @@ void FUN_00027b8e(void)
   if ((((DAT_ffffba23 == '\0') && (DAT_ffffc6b4 == '\x01')) ||
       ((DAT_ffffba22 == '\0' &&
        (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff865c,0), cVar1 == '\0')))) &&
-     (cVar1 = ref_E2IntoRAM_(0x20,0x44), cVar1 == '\0')) {
+     (cVar1 = e2ram_bulk_read_into_shadow(0x20,0x44), cVar1 == '\0')) {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff865a,1);
     fVar7 = 1.0;
     iVar4 = 0;
@@ -38910,7 +38934,7 @@ void FUN_00027b8e(void)
     uVar8 = 0xc27c0000;
     uVar9 = 0x3f000000;
     do {
-      cVar1 = FUN_00037ef0(iVar3 + 0x20,&local_34,2);
+      cVar1 = e2ram_cached_byte_read(iVar3 + 0x20,&local_34,2);
       if (cVar1 == '\0') {
         fVar6 = (float)rx8_decode_u8_affine(uVar9,uVar8,(int)local_34);
         if (local_33 == -1) {
@@ -38975,7 +38999,7 @@ undefined1 * FUN_00027d06(void)
         do {
           local_30 = rx8_encode_u8_affine_saturate(uVar8,uVar7,uVar6);
           local_2f = 0;
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN((int)(short)(sVar5 + 0x20),&local_30,2);
+          e2ram_shadow_byte_write((int)(short)(sVar5 + 0x20),&local_30,2);
           uVar4 = uVar4 + 1;
           sVar5 = sVar5 + 2;
         } while (uVar4 < 0x22);
@@ -50660,7 +50684,7 @@ void ref_ImmoSomethingOrOther__(void)
 
 {
   ref_loadDatafromE2intoRAM_();
-  ref_getDataFromE2RAM();
+  e2ram_boot_param_read();
   ref_checkImmoStatus_();
   ref_Immo_Keygen_related_ADC();
   ref_immoRelatedMaybe__();
@@ -51549,45 +51573,52 @@ undefined4 ref_loadDatafromE2intoRAM_(void)
 {
   undefined4 uVar1;
   
-  uVar1 = ref_E2IntoRAM_(0,0x20);
+  uVar1 = e2ram_bulk_read_into_shadow(0,0x20);
   return uVar1;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_boot_param_read [high]: 19 calls to 0x37ef0 (pool 0x35a48) reading indexed params into RAM 0xffffc268-0xffffc282 (dest pools 0x35a48-0x35a88: 0x35a48=0x37ef0, 0x35a4c=0xffffc268, 0x35a50=0xffffc26c, 0x35a54=0xffffc270, ... 0x35a7c=0xffffc27f etc.); indexes 0,2,6,10,0xc,0xd,0xe,0xf,0x10,0x16,0x18,0x12,0x13,0x14,0x1a,0x1b,0x1c,0x1d,0x1e. Called from 0x349e4 (callgraph), itself called from the boot fan-out 0x1102a. Inherited ref_getDataFromE2RAM confirmed as the boot parameter-block read.
+ * RAM 0xffffc268 e2ram_param_block (uint8[32]): Boot parameter block 0xffffc268-0xffffc282 filled by 0x3599c via 0x37ef0 (19 indexed fields); source cells for the write dispatch 0x35a8c.
+ */
 /* ROM address: 0x0003599c; body bytes: 164; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000360bc (164 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getDataFromE2RAM(void)
+void e2ram_boot_param_read(void)
 
 {
-  FUN_00037ef0(0,&DAT_ffffc268,1);
-  FUN_00037ef0(2,&DAT_ffffc26c,4);
-  FUN_00037ef0(6,&DAT_ffffc270,4);
-  FUN_00037ef0(10,&inferred_ram_c274_ffffc274_ffffc274,1);
-  FUN_00037ef0(0xc,&DAT_ffffc275,1);
-  FUN_00037ef0(0xd,&DAT_ffffc276,1);
-  FUN_00037ef0(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-  FUN_00037ef0(0xf,&DAT_ffffc277,1);
-  FUN_00037ef0(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
-  FUN_00037ef0(0x16,&DAT_ffffc27a,2);
-  FUN_00037ef0(0x18,&DAT_ffffc27c,2);
-  FUN_00037ef0(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-  FUN_00037ef0(0x13,&DAT_ffffc278,1);
-  FUN_00037ef0(0x14,&DAT_ffffc279,1);
-  FUN_00037ef0(0x1a,&DAT_ffffc27e,1);
-  FUN_00037ef0(0x1b,&DAT_ffffc27f,1);
-  FUN_00037ef0(0x1c,&DAT_ffffc280,1);
-  FUN_00037ef0(0x1d,&DAT_ffffc281,1);
-  FUN_00037ef0(0x1e,&DAT_ffffc282,1);
+  e2ram_cached_byte_read(0,&e2ram_param_block_ffffc268,1);
+  e2ram_cached_byte_read(2,&DAT_ffffc26c,4);
+  e2ram_cached_byte_read(6,&DAT_ffffc270,4);
+  e2ram_cached_byte_read(10,&inferred_ram_c274_ffffc274_ffffc274,1);
+  e2ram_cached_byte_read(0xc,&DAT_ffffc275,1);
+  e2ram_cached_byte_read(0xd,&DAT_ffffc276,1);
+  e2ram_cached_byte_read(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+  e2ram_cached_byte_read(0xf,&DAT_ffffc277,1);
+  e2ram_cached_byte_read(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+  e2ram_cached_byte_read(0x16,&DAT_ffffc27a,2);
+  e2ram_cached_byte_read(0x18,&DAT_ffffc27c,2);
+  e2ram_cached_byte_read(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
+  e2ram_cached_byte_read(0x13,&DAT_ffffc278,1);
+  e2ram_cached_byte_read(0x14,&DAT_ffffc279,1);
+  e2ram_cached_byte_read(0x1a,&DAT_ffffc27e,1);
+  e2ram_cached_byte_read(0x1b,&DAT_ffffc27f,1);
+  e2ram_cached_byte_read(0x1c,&DAT_ffffc280,1);
+  e2ram_cached_byte_read(0x1d,&DAT_ffffc281,1);
+  e2ram_cached_byte_read(0x1e,&DAT_ffffc282,1);
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_param_write_dispatch [medium]: Dispatch on param id (0..N) to 0x37ea4 / thunk 0x35d36 with (index, &src cell in 0xffffc268-0xffffc282, len): e.g. id 2 -> (2, 0xffffc26c, 8), id 0xd -> (0x1e, 0xffffc282, 1), id 3 -> (0, 0xffffc268, 1), id 4 -> (0xc/0xe/0x10), id 7 -> (0x16/0x18, 2). 30 calls total; pool 0x35b70-0x35b84. Called from 0x35ea0, 0x360c8, 0x36142, 0x361e4, 0x3665a, 0x36700, 0x3677a, 0x36830, 0x36acc, 0x36c3c, 0x36ed4, 0x3703c, 0x37134, 0x3728c, 0x374be.
+ */
 /* ROM address: 0x00035a8c; body bytes: 592; decompiled */
 
-uint FUN_00035a8c(uint param_1)
+uint candidate_e2ram_param_write_dispatch(uint param_1)
 
 {
   uint uVar1;
@@ -51595,116 +51626,119 @@ uint FUN_00035a8c(uint param_1)
   param_1 = param_1 & 0xff;
   if (param_1 != 1) {
     if (param_1 == 2) {
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(2,&DAT_ffffc26c,8);
+      uVar1 = candidate_e2ram_write_thunk(2,&DAT_ffffc26c,8);
       return uVar1;
     }
     if (param_1 == 0xd) {
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x1e,&DAT_ffffc282,1);
+      uVar1 = candidate_e2ram_write_thunk(0x1e,&DAT_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 3) {
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0,&DAT_ffffc268,1);
+      uVar1 = candidate_e2ram_write_thunk(0,&e2ram_param_block_ffffc268,1);
       return uVar1;
     }
     if (param_1 == 4) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xc,&DAT_ffffc275,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+      e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
+      e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+      uVar1 = candidate_e2ram_write_thunk(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
       return uVar1;
     }
     if (param_1 == 5) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x13,&DAT_ffffc278,1);
+      e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
+      uVar1 = candidate_e2ram_write_thunk(0x13,&DAT_ffffc278,1);
       return uVar1;
     }
     if (param_1 == 6) {
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+      uVar1 = candidate_e2ram_write_thunk(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
       return uVar1;
     }
     if (param_1 == 7) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x16,&DAT_ffffc27a,2);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x18,&DAT_ffffc27c,2);
+      e2ram_shadow_byte_write(0x16,&DAT_ffffc27a,2);
+      uVar1 = candidate_e2ram_write_thunk(0x18,&DAT_ffffc27c,2);
       return uVar1;
     }
     if (param_1 == 8) {
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x14,&DAT_ffffc279,1);
+      uVar1 = candidate_e2ram_write_thunk(0x14,&DAT_ffffc279,1);
       return uVar1;
     }
     if (param_1 == 0xc) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xc,&DAT_ffffc275,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xd,&DAT_ffffc276,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xf,&DAT_ffffc277,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x14,&DAT_ffffc279,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x13,&DAT_ffffc278,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1a,&DAT_ffffc27e,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1b,&DAT_ffffc27f,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1c,&DAT_ffffc280,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1d,&DAT_ffffc281,1);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x1e,&DAT_ffffc282,1);
+      e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
+      e2ram_shadow_byte_write(0xd,&DAT_ffffc276,1);
+      e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+      e2ram_shadow_byte_write(0xf,&DAT_ffffc277,1);
+      e2ram_shadow_byte_write(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+      e2ram_shadow_byte_write(0x14,&DAT_ffffc279,1);
+      e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
+      e2ram_shadow_byte_write(0x13,&DAT_ffffc278,1);
+      e2ram_shadow_byte_write(0x1a,&DAT_ffffc27e,1);
+      e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
+      e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
+      e2ram_shadow_byte_write(0x1d,&DAT_ffffc281,1);
+      uVar1 = candidate_e2ram_write_thunk(0x1e,&DAT_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 9) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xc,&DAT_ffffc275,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x13,&DAT_ffffc278,1);
+      e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
+      e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+      e2ram_shadow_byte_write(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+      e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
+      uVar1 = candidate_e2ram_write_thunk(0x13,&DAT_ffffc278,1);
       return uVar1;
     }
     if (param_1 == 10) {
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1a,&DAT_ffffc27e,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1b,&DAT_ffffc27f,1);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1c,&DAT_ffffc280,1);
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0x1d,&DAT_ffffc281,1);
+      e2ram_shadow_byte_write(0x1a,&DAT_ffffc27e,1);
+      e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
+      e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
+      uVar1 = candidate_e2ram_write_thunk(0x1d,&DAT_ffffc281,1);
       return uVar1;
     }
     if (param_1 != 0xb) {
       if (param_1 == 0xe) {
-        uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0xd,&DAT_ffffc276,1);
+        uVar1 = candidate_e2ram_write_thunk(0xd,&DAT_ffffc276,1);
         return uVar1;
       }
       if (param_1 != 0xf) {
         if (param_1 == 0xff) {
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0,&DAT_ffffc268,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(2,&DAT_ffffc26c,8);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(10,&inferred_ram_c274_ffffc274_ffffc274,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xc,&DAT_ffffc275,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xd,&DAT_ffffc276,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0xf,&DAT_ffffc277,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x13,&DAT_ffffc278,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x16,&DAT_ffffc27a,2);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x18,&DAT_ffffc27c,2);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x14,&DAT_ffffc279,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1a,&DAT_ffffc27e,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1b,&DAT_ffffc27f,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1c,&DAT_ffffc280,1);
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1d,&DAT_ffffc281,1);
-          param_1 = ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x1e,&DAT_ffffc282,1);
+          e2ram_shadow_byte_write(0,&e2ram_param_block_ffffc268,1);
+          e2ram_shadow_byte_write(2,&DAT_ffffc26c,8);
+          e2ram_shadow_byte_write(10,&inferred_ram_c274_ffffc274_ffffc274,1);
+          e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
+          e2ram_shadow_byte_write(0xd,&DAT_ffffc276,1);
+          e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+          e2ram_shadow_byte_write(0xf,&DAT_ffffc277,1);
+          e2ram_shadow_byte_write(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+          e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
+          e2ram_shadow_byte_write(0x13,&DAT_ffffc278,1);
+          e2ram_shadow_byte_write(0x16,&DAT_ffffc27a,2);
+          e2ram_shadow_byte_write(0x18,&DAT_ffffc27c,2);
+          e2ram_shadow_byte_write(0x14,&DAT_ffffc279,1);
+          e2ram_shadow_byte_write(0x1a,&DAT_ffffc27e,1);
+          e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
+          e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
+          e2ram_shadow_byte_write(0x1d,&DAT_ffffc281,1);
+          param_1 = e2ram_shadow_byte_write(0x1e,&DAT_ffffc282,1);
         }
         return param_1;
       }
-      uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(0xf,&DAT_ffffc277,1);
+      uVar1 = candidate_e2ram_write_thunk(0xf,&DAT_ffffc277,1);
       return uVar1;
     }
-    ref_writeToE2RAMArea_INDEX_ADDR_LEN(2,&DAT_ffffc26c,8);
+    e2ram_shadow_byte_write(2,&DAT_ffffc26c,8);
   }
-  uVar1 = ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(10,&inferred_ram_c274_ffffc274_ffffc274,1);
+  uVar1 = candidate_e2ram_write_thunk(10,&inferred_ram_c274_ffffc274_ffffc274,1);
   return uVar1;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_write_thunk [medium]: 4-byte thunk calling the write area via register-indirect call; called from 0x35a8c (callgraph 0x35a8c -> 0x35d36). Inherited ref_writeToE2RAMAreaTHUNK confirmed.
+ */
 /* ROM address: 0x00035d36; body bytes: 14; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00036456 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN(void)
+void candidate_e2ram_write_thunk(void)
 
 {
   code *unaff_r14;
@@ -51811,13 +51845,13 @@ void ref_ImmoUpdateRelated(void)
 {
   if (DAT_ffffc265 == '\0') {
     if (DAT_ffffc266 == '\0') {
-      if (DAT_ffffc268 == 'Z') {
+      if (e2ram_param_block_ffffc268 == 'Z') {
         DAT_ffffc265 = '\x01';
       }
       else {
-        DAT_ffffc268 = 'Z';
+        e2ram_param_block_ffffc268 = 'Z';
         DAT_ffffc261 = '\f';
-        FUN_00035a8c(0xc);
+        candidate_e2ram_param_write_dispatch(0xc);
         DAT_ffffc267 = '\x01';
         DAT_ffffc266 = '\x01';
       }
@@ -51828,7 +51862,7 @@ void ref_ImmoUpdateRelated(void)
         DAT_ffffc262 = 0;
         DAT_ffffc267 = 0;
         DAT_ffffc261 = 3;
-        FUN_00035a8c(3);
+        candidate_e2ram_param_write_dispatch(3);
         return;
       }
     }
@@ -51856,10 +51890,10 @@ uint ref_checkImmoStatus_(void)
 {
   uint uVar1;
   
-  if (DAT_ffffc268 != 'Z') {
-    DAT_ffffc268 = '\0';
+  if (e2ram_param_block_ffffc268 != 'Z') {
+    e2ram_param_block_ffffc268 = '\0';
   }
-  if (DAT_ffffc268 == 'Z') {
+  if (e2ram_param_block_ffffc268 == 'Z') {
     if ((DAT_ffffc275 & 0xfc) != 0) {
       DAT_ffffc275 = 0;
     }
@@ -51939,7 +51973,7 @@ char FUN_000360c8(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x02';
-    FUN_00035a8c(2);
+    candidate_e2ram_param_write_dispatch(2);
     DAT_ffffc22e = '\x01';
     DAT_ffffc22d = '\0';
   }
@@ -51972,7 +52006,7 @@ char FUN_00036142(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x01';
-    FUN_00035a8c(1);
+    candidate_e2ram_param_write_dispatch(1);
     DAT_ffffc22c = '\x01';
     DAT_ffffc22b = '\0';
   }
@@ -52005,7 +52039,7 @@ char FUN_000361e4(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\r';
-    FUN_00035a8c(0xd);
+    candidate_e2ram_param_write_dispatch(0xd);
     DAT_ffffc230 = '\x01';
     DAT_ffffc22f = '\0';
   }
@@ -52267,7 +52301,7 @@ char FUN_0003665a(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\t';
-    FUN_00035a8c(9);
+    candidate_e2ram_param_write_dispatch(9);
     DAT_ffffc23f = '\x01';
     DAT_ffffc23e = '\0';
   }
@@ -52300,7 +52334,7 @@ char FUN_00036700(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\b';
-    FUN_00035a8c(8);
+    candidate_e2ram_param_write_dispatch(8);
     DAT_ffffc241 = '\x01';
     DAT_ffffc240 = '\0';
   }
@@ -52332,7 +52366,7 @@ void FUN_0003677a(void)
        (((DAT_ffffc243 == '\0' && (DAT_ffffc227 == '\0')) && (DAT_ffffc261 == '\0')))) {
       DAT_ffffc227 = '\x01';
       DAT_ffffc261 = '\x0e';
-      FUN_00035a8c(0xe);
+      candidate_e2ram_param_write_dispatch(0xe);
       DAT_ffffc243 = '\x01';
       DAT_ffffc242 = '\0';
     }
@@ -52361,7 +52395,7 @@ char FUN_00036830(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x0f';
-    FUN_00035a8c(0xf);
+    candidate_e2ram_param_write_dispatch(0xf);
     DAT_ffffc245 = '\x01';
     DAT_ffffc244 = '\0';
   }
@@ -52540,7 +52574,7 @@ uint ref_afterImmo_1(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x06';
-    FUN_00035a8c(6);
+    candidate_e2ram_param_write_dispatch(6);
     DAT_ffffc24e = 1;
     DAT_ffffc24d = '\0';
   }
@@ -52612,7 +52646,7 @@ uint ref_afterImmo_2(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x04';
-    FUN_00035a8c(4);
+    candidate_e2ram_param_write_dispatch(4);
     DAT_ffffc250 = 1;
     DAT_ffffc24f = '\0';
   }
@@ -52725,7 +52759,7 @@ uint ref_afterImmo_3(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\a';
-    FUN_00035a8c(7);
+    candidate_e2ram_param_write_dispatch(7);
     DAT_ffffc252 = 1;
     DAT_ffffc251 = '\0';
   }
@@ -52802,7 +52836,7 @@ uint ref_afterImmo_4(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x05';
-    FUN_00035a8c(5);
+    candidate_e2ram_param_write_dispatch(5);
     DAT_ffffc254 = 1;
     DAT_ffffc253 = '\0';
   }
@@ -52856,7 +52890,7 @@ char ref_afterImmo_5(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\x06';
-    FUN_00035a8c(6);
+    candidate_e2ram_param_write_dispatch(6);
     DAT_ffffc256 = '\x01';
     DAT_ffffc255 = '\0';
   }
@@ -52932,7 +52966,7 @@ uint ref_afterImmo_7(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\v';
-    FUN_00035a8c(0xb);
+    candidate_e2ram_param_write_dispatch(0xb);
     DAT_ffffc25a = 1;
     DAT_ffffc259 = '\0';
   }
@@ -53034,7 +53068,7 @@ char ref_afterImmo_8(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\n';
-    FUN_00035a8c(10);
+    candidate_e2ram_param_write_dispatch(10);
     DAT_ffffc25c = '\x01';
     DAT_ffffc25b = '\0';
   }
@@ -53141,13 +53175,13 @@ undefined1 * FUN_000375c0(void)
       if (DAT_ffffc284 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
         unaff_r14 = &uStack_2c;
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
           puStack_44 = &local_34;
-          local_34 = FUN_0000bdfa(0x6010000);
-          local_32 = FUN_0000bdfa(0x6020000);
-          local_30 = FUN_0000bdfa(0x6030000);
-          local_2e = FUN_0000bdfa(0x6040000);
+          local_34 = e2ram_read_word(0x6010000);
+          local_32 = e2ram_read_word(0x6020000);
+          local_30 = e2ram_read_word(0x6030000);
+          local_2e = e2ram_read_word(0x6040000);
           cStack_2b = (char)((ushort)local_34 >> 8);
           cStack_2a = (char)local_34;
           cStack_29 = (char)((ushort)local_32 >> 8);
@@ -53176,10 +53210,10 @@ undefined1 * FUN_000375c0(void)
       }
       if (DAT_ffffc285 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
-          unaff_r14 = (undefined1 *)FUN_0000bdfa(0x60b0000);
-          uVar3 = FUN_0000bdfa(0x60c0000);
+          unaff_r14 = (undefined1 *)e2ram_read_word(0x60b0000);
+          uVar3 = e2ram_read_word(0x60c0000);
           puStack_44 = (undefined2 *)((uint)uVar3 << 0x10);
           DAT_ffffc285 = '\x01';
         }
@@ -53196,9 +53230,9 @@ undefined1 * FUN_000375c0(void)
       }
       if (DAT_ffffc286 == '\0') {
         uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-        cVar4 = FUN_0000bed8();
+        cVar4 = e2ram_busy_status_read();
         if (cVar4 == '\0') {
-          FUN_0000bdfa(0x6050000);
+          e2ram_read_word(0x6050000);
           DAT_ffffc286 = '\x01';
           puStack_44._0_1_ = extraout_var;
         }
@@ -53286,9 +53320,12 @@ undefined4 FUN_000378dc(ushort param_1,byte param_2,char param_3)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_verify_state_machine [medium]: State machine over 0xffffc49c (states 1-4): busy-check 0xbed8, issue command 0x4c00000 via 0xbe30 (pools 0x37bd4/0x37bd8), then read-back verify with 0xbdfa(0x6000000 + (byte)0xffffc498*0x10000) (pools 0x37be8/0x37bec) comparing against 0xffffc49a; status cells 0xffffc4a0-a6. Called from 0x38082.
+ */
 /* ROM address: 0x000379e4; body bytes: 626; decompiled */
 
-void FUN_000379e4(void)
+void candidate_e2ram_verify_state_machine(void)
 
 {
   undefined4 uVar1;
@@ -53299,11 +53336,11 @@ void FUN_000379e4(void)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   if ((((DAT_ffffc49c != '\x01') && (DAT_ffffc49c != '\x02')) && (DAT_ffffc49c != '\x03')) &&
      (DAT_ffffc49c != '\x04')) goto LAB_00037c9a;
-  cVar3 = FUN_0000bed8();
+  cVar3 = e2ram_busy_status_read();
   if (cVar3 == '\0') {
     DAT_ffffc4a0 = 0;
     if (DAT_ffffc4a2 == '\0') {
-      FUN_0000be30(0x4c00000);
+      e2ram_send_command2(0x4c00000);
       DAT_ffffc4a2 = '\x01';
     }
     else if (DAT_ffffc4a3 == '\0') {
@@ -53311,7 +53348,7 @@ void FUN_000379e4(void)
         DAT_ffffc4a4 = '\0';
       }
       else {
-        uVar2 = FUN_0000bdfa((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
+        uVar2 = e2ram_read_word((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
         if (uVar2 != DAT_ffffc49a) {
           if (DAT_ffffc4a5 != '\x01') {
             DAT_ffffc4a5 = '\x01';
@@ -53326,11 +53363,11 @@ LAB_00037aa4:
         if (DAT_ffffc4a6 == '\0') {
           DAT_ffffc498 = (ushort)DAT_ffffc49f * 0x80 + DAT_ffffc48e;
           iVar4 = ((int)(short)DAT_ffffc48e & 0x7fffU) * 2;
-          DAT_ffffc49a = (ushort)(byte)(&DAT_ffffc28e)[iVar4] * 0x100 +
+          DAT_ffffc49a = (ushort)(byte)(&e2ram_shadow_data_ffffc28e)[iVar4] * 0x100 +
                          (ushort)(byte)(&DAT_ffffc28f)[iVar4];
-          uVar2 = FUN_0000bdfa((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
+          uVar2 = e2ram_read_word((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
           if (uVar2 != DAT_ffffc49a) {
-            FUN_0000be5e((uint)(byte)DAT_ffffc498 * 0x10000 + (uint)DAT_ffffc49a + 0x5000000);
+            candidate_e2ram_send_command4_a((uint)(byte)DAT_ffffc498 * 0x10000 + (uint)DAT_ffffc49a + 0x5000000);
           }
           if (DAT_ffffc49f == 0xff) {
             DAT_ffffc49f = 0;
@@ -53345,14 +53382,14 @@ LAB_00037aa4:
         }
         else {
           DAT_ffffc4a1 = 0;
-          FUN_0000be30(0x4000000);
+          e2ram_send_command2(0x4000000);
           DAT_ffffc4a3 = '\0';
           DAT_ffffc4a2 = '\0';
         }
       }
     }
     else {
-      uVar2 = FUN_0000bdfa((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
+      uVar2 = e2ram_read_word((uint)(byte)DAT_ffffc498 * 0x10000 + 0x6000000);
       if (uVar2 == DAT_ffffc49a) {
 LAB_00037b88:
         DAT_ffffc4a5 = '\0';
@@ -53378,7 +53415,7 @@ LAB_00037b88:
           DAT_ffffc49c = '\0';
         }
         DAT_ffffc4a1 = 0;
-        FUN_0000be30(0x4000000);
+        e2ram_send_command2(0x4000000);
         DAT_ffffc4a3 = '\0';
         DAT_ffffc4a2 = '\0';
       }
@@ -53408,6 +53445,9 @@ LAB_00037c9a:
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_bulk_read_into_shadow [high]: Bulk device->shadow fill (inherited ref_E2IntoRAM_ confirmed): double busy-check 0xbed8 (pool 0x37f70), then for each u16 page p in [start>>1 .. (start+len-1)>>1] read word 0xbdfa(0x6000000 + p*0x10000) (pools 0x37f84/0x37f88) and store high byte at 0xffffc28e[2p], low byte at 0xffffc28f[2p], with complements at 0xffffc38e/0xffffc38f (pools 0x37f7c/0x37f80). Counters 0xffffc492/0xffffc494. Callers: 0x27b8e, 0x35956, 0x4b5b6, 0x5b482.
+ */
 /* ROM address: 0x00037cd8; body bytes: 460; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00037dc2) */
@@ -53425,7 +53465,7 @@ LAB_00037c9a:
 /* Unique exact-byte match to related 60E0FC00 function at 000383f8 (460 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int ref_E2IntoRAM_(ushort param_1,byte param_2)
+int e2ram_bulk_read_into_shadow(ushort param_1,byte param_2)
 
 {
   byte bVar1;
@@ -53439,8 +53479,8 @@ int ref_E2IntoRAM_(ushort param_1,byte param_2)
   
   uVar2 = sh_raise_interrupt_mask_return_previous(0x10);
   iVar7 = 0;
-  cVar5 = FUN_0000bed8();
-  if ((cVar5 == '\x01') && (cVar5 = FUN_0000bed8(), cVar5 == '\x01')) {
+  cVar5 = e2ram_busy_status_read();
+  if ((cVar5 == '\x01') && (cVar5 = e2ram_busy_status_read(), cVar5 == '\x01')) {
     iVar7 = 1;
   }
   if (iVar7 == 0) {
@@ -53449,11 +53489,11 @@ int ref_E2IntoRAM_(ushort param_1,byte param_2)
     uStack_38 = (ushort)((int)(uint)param_1 >> 1);
     DAT_ffffc492 = uStack_38;
     for (; uStack_38 <= DAT_ffffc494; uStack_38 = uStack_38 + 1) {
-      uVar4 = FUN_0000bdfa((uint)(byte)uStack_38 * 0x10000 + 0x6000000);
+      uVar4 = e2ram_read_word((uint)(byte)uStack_38 * 0x10000 + 0x6000000);
       bVar1 = (byte)((ushort)uVar4 >> 8);
       uVar6 = (int)(short)uStack_38 << 1;
-      (&DAT_ffffc28e)[uVar6 & 0xffff] = bVar1;
-      (&DAT_ffffc38e)[uVar6 & 0xffff] = ~bVar1;
+      (&e2ram_shadow_data_ffffc28e)[uVar6 & 0xffff] = bVar1;
+      (&e2ram_shadow_complement_ffffc38e)[uVar6 & 0xffff] = ~bVar1;
       (&DAT_ffffc28f)[uVar6 & 0xffff] = (byte)uVar4;
       (&DAT_ffffc38f)[uVar6 & 0xffff] = ~(byte)uVar4;
     }
@@ -53463,12 +53503,15 @@ int ref_E2IntoRAM_(ushort param_1,byte param_2)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_shadow_byte_write [high]: Indexed shadow write under mask 0x10 (pools 0x37f6c=0x3920, 0x37f8c=0x3934): for len bytes, 0xffffc28e[i] = src byte and 0xffffc38e[i] = ~byte (pools 0x37f7c/0x37f80). Callers: 0x279d8, 0x27d06, 0x35a8c, 0x4b668, 0x5d9d8, 0x5e8a4 (callgraph). Inherited ref_writeToE2RAMArea_INDEX_ADDR_LEN confirmed as the RAM shadow writer (data + complement).
+ */
 /* ROM address: 0x00037ea4; body bytes: 76; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000385c4 (76 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_writeToE2RAMArea_INDEX_ADDR_LEN(uint param_1,byte *param_2,char param_3)
+void e2ram_shadow_byte_write(uint param_1,byte *param_2,char param_3)
 
 {
   byte bVar1;
@@ -53480,18 +53523,23 @@ void ref_writeToE2RAMArea_INDEX_ADDR_LEN(uint param_1,byte *param_2,char param_3
     uVar3 = param_1 & 0xffff;
     bVar1 = *param_2;
     param_2 = param_2 + 1;
-    (&DAT_ffffc28e)[uVar3] = bVar1;
+    (&e2ram_shadow_data_ffffc28e)[uVar3] = bVar1;
     param_1 = param_1 + 1;
-    (&DAT_ffffc38e)[uVar3] = ~(&DAT_ffffc28e)[uVar3];
+    (&e2ram_shadow_complement_ffffc38e)[uVar3] = ~(&e2ram_shadow_data_ffffc28e)[uVar3];
   }
   ref_setSR(uVar2);
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_cached_byte_read [high]: Cached indexed byte read: if shadow 0xffffc28e[i] == ~0xffffc38e[i] (pools 0x37f7c/0x37f80) return shadow; else busy-check 0xbed8 (pool 0x37f70), then device read 0xbdfa (pool 0x37f88) at address 0x6000000 + ((i>>1)&0xff)*0x10000 (base pool 0x37f84 = 0x6000000); even index takes the high byte (big-endian u16). Updates shadow data+complement. Under mask 0x10 (pool 0x37f6c=0x3920, tail 0x3934). Returns error flag.
+ * RAM 0xffffc28e e2ram_shadow_data (uint8[256]): E2RAM byte shadow cache: written by 0x37ea4/0x37ef0/0x37cd8, read back for cached reads (0x37ef0 compares against the complement at 0xffffc38e).
+ * RAM 0xffffc38e e2ram_shadow_complement (uint8[256]): Complement shadow of 0xffffc28e (0xffffc38e[i] = ~data[i]); match means cache valid, mismatch triggers a device read via 0xbdfa in 0x37ef0.
+ */
 /* ROM address: 0x00037ef0; body bytes: 190; decompiled */
 
-undefined1 FUN_00037ef0(uint param_1,byte *param_2,char param_3)
+undefined1 e2ram_cached_byte_read(uint param_1,byte *param_2,char param_3)
 
 {
   undefined4 uVar1;
@@ -53505,19 +53553,19 @@ undefined1 FUN_00037ef0(uint param_1,byte *param_2,char param_3)
   uStack_24 = 0;
   for (; param_3 != '\0'; param_3 = param_3 + -1) {
     uVar5 = param_1 & 0xffff;
-    if ((&DAT_ffffc28e)[uVar5] == (undefined1)~(&DAT_ffffc38e)[uVar5]) {
-      *param_2 = (&DAT_ffffc28e)[uVar5];
+    if ((&e2ram_shadow_data_ffffc28e)[uVar5] == (undefined1)~(&e2ram_shadow_complement_ffffc38e)[uVar5]) {
+      *param_2 = (&e2ram_shadow_data_ffffc28e)[uVar5];
     }
     else {
-      cVar3 = FUN_0000bed8();
+      cVar3 = e2ram_busy_status_read();
       if (cVar3 == '\0') {
-        uVar2 = FUN_0000bdfa(((int)(param_1 & 0xffff) >> 1 & 0xffU) * 0x10000 + 0x6000000);
+        uVar2 = e2ram_read_word(((int)(param_1 & 0xffff) >> 1 & 0xffU) * 0x10000 + 0x6000000);
         if ((param_1 & 1) == 0) {
           uVar2 = (uVar2 & 0xffff) >> 8;
         }
-        pbVar4 = &DAT_ffffc28e + uVar5;
+        pbVar4 = &e2ram_shadow_data_ffffc28e + uVar5;
         *pbVar4 = (byte)uVar2;
-        (&DAT_ffffc38e)[uVar5] = ~*pbVar4;
+        (&e2ram_shadow_complement_ffffc38e)[uVar5] = ~*pbVar4;
         *param_2 = *pbVar4;
       }
       else {
@@ -53537,7 +53585,7 @@ undefined1 FUN_00037ef0(uint param_1,byte *param_2,char param_3)
 undefined1 * FUN_00037fd4(void)
 
 {
-  return &DAT_ffffc28e;
+  return &e2ram_shadow_data_ffffc28e;
 }
 
 
@@ -53600,7 +53648,7 @@ void FUN_00038082(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000379e4();
+  candidate_e2ram_verify_state_machine();
   ref_setSR(uVar1);
   return;
 }
@@ -70168,8 +70216,8 @@ uint FUN_0004b5b6(void)
   else {
     DAT_ffffce34 = rx8_max_float(inferred_coolant_temperature_ffffa98c,5.0);
   }
-  ref_E2IntoRAM_(0x7a,2);
-  FUN_00037ef0(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
+  e2ram_bulk_read_into_shadow(0x7a,2);
+  e2ram_cached_byte_read(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
   DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   DAT_ffffce38 = 0;
   uVar2 = ((int)inferred_ram_ce30_ffffce30_ffffce30 & (uint)&PTR_ref_LongFunc_0000ff00) >> 8;
@@ -70206,7 +70254,7 @@ uint FUN_0004b668(void)
   DAT_ffffce38 = (vehicle_speed_ffffbbb4 * 1024.0) / 3.6e+06 + DAT_ffffce38;
   if (inferred_ram_ce30_ffffce30_ffffce30 != DAT_ffffce46) {
     DAT_ffffce4c = 1;
-    ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
+    e2ram_shadow_byte_write(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
     DAT_ffffce4a = FUN_000378dc(0x7a,2);
     DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   }
@@ -77402,7 +77450,7 @@ char ref_getTireSizeChecksumthing_(void)
   char cVar1;
   char local_8 [8];
   
-  cVar1 = FUN_00037ef0(0x95,local_8,1);
+  cVar1 = e2ram_cached_byte_read(0x95,local_8,1);
   if (cVar1 == '\0') {
     if (local_8[0] == '*') {
       DAT_ffffd1b5 = 0;
@@ -77472,7 +77520,7 @@ char FUN_000544c4(void)
   uVar4 = 0x80;
   sVar3 = 0;
   do {
-    cVar2 = FUN_00037ef0(uVar4,&local_24,2);
+    cVar2 = e2ram_cached_byte_read(uVar4,&local_24,2);
     if (cVar2 == '\x01') {
       bVar1 = true;
     }
@@ -78452,7 +78500,7 @@ uint FUN_00054d90(char param_1,uint param_2)
     return 0;
   case 0x22:
     puStack_30 = (uint *)param_2;
-    FUN_00037ef0(0x80,auStack_2c);
+    e2ram_cached_byte_read(0x80,auStack_2c);
     puStack_34 = (undefined *)((uint)puStack_34 & 0xffffff);
     uVar7 = ref_updateRAM__(puStack_30,&puStack_34,1);
     bVar9 = 0;
@@ -78479,13 +78527,13 @@ uint FUN_00054d90(char param_1,uint param_2)
       puVar4 = (uint *)((int)puVar4 + 1);
     } while (bVar9 < 9);
     puStack_34 = &DAT_0005f6e8;
-    FUN_00037ef0(100,auStack_23,3);
+    e2ram_cached_byte_read(100,auStack_23,3);
     puStack_34 = &DAT_0005f6f4;
-    FUN_00037ef0(0x68,&uStack_20,1);
+    e2ram_cached_byte_read(0x68,&uStack_20,1);
     puStack_34 = &DAT_0005f700;
-    FUN_00037ef0(0x6a,auStack_1f,2);
+    e2ram_cached_byte_read(0x6a,auStack_1f,2);
     puStack_34 = &DAT_0005f70c;
-    FUN_00037ef0(0x6c,&uStack_1d,1);
+    e2ram_cached_byte_read(0x6c,&uStack_1d,1);
     bVar9 = 0;
     puVar4 = puStack_30;
     do {
@@ -79549,7 +79597,7 @@ uint ref_OBDModeFunc_Unsure(char param_1,uint param_2)
   switch(bVar9) {
   case 0:
     puStack_30 = (uint *)param_2;
-    FUN_00037ef0(0x80,local_2c);
+    e2ram_cached_byte_read(0x80,local_2c);
     local_34 = (undefined *)((uint)local_34 & 0xffffff);
     uVar7 = ref_updateRAM__(puStack_30,&local_34,1);
     bVar9 = 0;
@@ -79576,13 +79624,13 @@ uint ref_OBDModeFunc_Unsure(char param_1,uint param_2)
       puVar4 = (uint *)((int)puVar4 + 1);
     } while (bVar9 < 9);
     local_34 = &DAT_0005f6e8;
-    FUN_00037ef0(100,auStack_23,3);
+    e2ram_cached_byte_read(100,auStack_23,3);
     local_34 = &DAT_0005f6f4;
-    FUN_00037ef0(0x68,&uStack_20,1);
+    e2ram_cached_byte_read(0x68,&uStack_20,1);
     local_34 = &DAT_0005f700;
-    FUN_00037ef0(0x6a,auStack_1f,2);
+    e2ram_cached_byte_read(0x6a,auStack_1f,2);
     local_34 = &DAT_0005f70c;
-    FUN_00037ef0(0x6c,&uStack_1d,1);
+    e2ram_cached_byte_read(0x6c,&uStack_1d,1);
     bVar9 = 0;
     puVar4 = puStack_30;
     do {
@@ -79708,13 +79756,13 @@ int ref_getCalID(undefined4 param_1)
     pcVar3 = pcVar3 + 1;
   } while (bVar4 < 9);
   puStack_34 = &DAT_0005f6e8;
-  FUN_00037ef0(100,auStack_23,3);
+  e2ram_cached_byte_read(100,auStack_23,3);
   puStack_34 = &DAT_0005f6f4;
-  FUN_00037ef0(0x68,&uStack_20,1);
+  e2ram_cached_byte_read(0x68,&uStack_20,1);
   puStack_34 = &DAT_0005f700;
-  FUN_00037ef0(0x6a,auStack_1f,2);
+  e2ram_cached_byte_read(0x6a,auStack_1f,2);
   puStack_34 = &DAT_0005f70c;
-  FUN_00037ef0(0x6c,auStack_1d,1);
+  e2ram_cached_byte_read(0x6c,auStack_1d,1);
   bVar4 = 0;
   pcVar3 = pcStack_30;
   do {
@@ -85938,13 +85986,13 @@ void FUN_0005a714(void)
   undefined1 uStack_24;
   undefined1 uStack_23;
   
-  FUN_00037ef0(100,local_2c,3,in_r7,&DAT_0005f6e8,local_2c);
+  e2ram_cached_byte_read(100,local_2c,3,in_r7,&DAT_0005f6e8,local_2c);
   uVar3 = 0xff;
   uStack_29 = uVar3;
-  FUN_00037ef0(0x68,&uStack_28,1);
+  e2ram_cached_byte_read(0x68,&uStack_28,1);
   uStack_27 = uVar3;
-  FUN_00037ef0(0x6a,auStack_26,2);
-  FUN_00037ef0(0x6c,&uStack_24,1);
+  e2ram_cached_byte_read(0x6a,auStack_26,2);
+  e2ram_cached_byte_read(0x6c,&uStack_24,1);
   psVar6 = &DAT_ffffd2b2;
   psVar5 = &DAT_ffffd2b0;
   uVar7 = 0;
@@ -86547,7 +86595,7 @@ undefined4 FUN_0005b482(void)
 {
   undefined4 uVar1;
   
-  uVar1 = ref_E2IntoRAM_(100,0x9c);
+  uVar1 = e2ram_bulk_read_into_shadow(100,0x9c);
   return uVar1;
 }
 
@@ -86635,7 +86683,7 @@ void ref_grablast28ByteFromE2(char param_1)
 {
   undefined1 auStack_88 [132];
   
-  FUN_00037ef0(0x80,auStack_88,0xffffff80);
+  e2ram_cached_byte_read(0x80,auStack_88,0xffffff80);
   ref_setupForUdsResponse_((int)param_1,auStack_88,0x80);
   return;
 }
@@ -86651,7 +86699,7 @@ void FUN_0005b60e(char param_1)
 {
   undefined1 auStack_c [8];
   
-  FUN_00037ef0(100,auStack_c,3);
+  e2ram_cached_byte_read(100,auStack_c,3);
   ref_setupForUdsResponse_((int)param_1,auStack_c,3);
   return;
 }
@@ -86670,7 +86718,7 @@ void FUN_0005b644(char param_1)
   undefined1 uStack_c;
   
   cStack_10 = param_1;
-  FUN_00037ef0(0x68,auStack_14,1);
+  e2ram_cached_byte_read(0x68,auStack_14,1);
   uStack_c = 1;
   ref_setupForUdsResponse_((int)cStack_10,auStack_14,1);
   return;
@@ -86687,7 +86735,7 @@ void FUN_0005b698(char param_1)
 {
   undefined1 auStack_c [8];
   
-  FUN_00037ef0(0x6a,auStack_c,2);
+  e2ram_cached_byte_read(0x6a,auStack_c,2);
   ref_setupForUdsResponse_((int)param_1,auStack_c,2);
   return;
 }
@@ -86706,7 +86754,7 @@ void FUN_0005b6ce(char param_1)
   undefined1 uStack_c;
   
   cStack_10 = param_1;
-  FUN_00037ef0(0x6c,auStack_14,1);
+  e2ram_cached_byte_read(0x6c,auStack_14,1);
   uStack_c = 1;
   ref_setupForUdsResponse_((int)cStack_10,auStack_14,1);
   return;
@@ -86723,7 +86771,7 @@ void FUN_0005b704(char param_1)
 {
   undefined1 auStack_14 [16];
   
-  FUN_00037ef0(0x6e,auStack_14,9);
+  e2ram_cached_byte_read(0x6e,auStack_14,9);
   ref_setupForUdsResponse_((int)param_1,auStack_14,9);
   return;
 }
@@ -88679,7 +88727,7 @@ uint FUN_0005d9d8(void)
   if (uVar1 == 1) {
     if (DAT_ffffd376 == '\x01') {
       ref_udsServiceResponse(0x3b,local_9c,(int)(short)DAT_ffffd370);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN
+      e2ram_shadow_byte_write
                 ((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],local_9c,
                  (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc]);
       DAT_ffffd376 = '\0';
@@ -88695,7 +88743,7 @@ uint FUN_0005d9d8(void)
             *puVar2 = 0xff;
             puVar2 = puVar2 + 1;
           }
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN
+          e2ram_shadow_byte_write
                     ((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],local_9c,
                      (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc]);
           uVar1 = FUN_0005dc06();
@@ -89003,7 +89051,7 @@ uint ref_getTireSize(void)
   undefined1 local_20;
   undefined1 uStack_1f;
   
-  uVar1 = FUN_00037ef0(0x9a,&local_20,2);
+  uVar1 = e2ram_cached_byte_read(0x9a,&local_20,2);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     tire_revolutions_per_mile_ffffd380 = CONCAT11(local_20,uStack_1f);
@@ -89551,21 +89599,21 @@ char FUN_0005e664(void)
   byte bStack_12;
   byte bStack_11;
   
-  cVar1 = FUN_00037ef0(100,&local_14,3);
+  cVar1 = e2ram_cached_byte_read(100,&local_14,3);
   if (cVar1 == '\0') {
     DAT_ffffd394 = ((uint)local_14 * 0x100 + (uint)bStack_13) * 0x10000 +
                    ((uint)bStack_12 * 0x100 + (uint)bStack_11 & (uint)&PTR_ref_LongFunc_0000ff00) +
                    0x20;
   }
-  cVar1 = FUN_00037ef0(0x68,&local_14,1);
+  cVar1 = e2ram_cached_byte_read(0x68,&local_14,1);
   if (cVar1 == '\0') {
     DAT_ffffd39a = local_14;
   }
-  cVar1 = FUN_00037ef0(0x6a,&local_14,2);
+  cVar1 = e2ram_cached_byte_read(0x6a,&local_14,2);
   if (cVar1 == '\0') {
     DAT_ffffd398 = (ushort)local_14 * 0x100 + (ushort)bStack_13;
   }
-  cVar1 = FUN_00037ef0(0x6c,&local_14,1);
+  cVar1 = e2ram_cached_byte_read(0x6c,&local_14,1);
   if (cVar1 == '\0') {
     DAT_ffffd39b = local_14;
   }
@@ -89584,7 +89632,7 @@ uint FUN_0005e748(void)
   uint uVar1;
   char local_8 [8];
   
-  uVar1 = FUN_00037ef0(0x9f,local_8,1);
+  uVar1 = e2ram_cached_byte_read(0x9f,local_8,1);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     uVar1 = (int)local_8[0] & 1;
@@ -89610,7 +89658,7 @@ char FUN_0005e7a0(void)
   char cVar1;
   undefined2 local_c;
   
-  cVar1 = FUN_00037ef0(0x78,&local_c,2);
+  cVar1 = e2ram_cached_byte_read(0x78,&local_c,2);
   if (cVar1 == '\0') {
     cVar1 = (char)local_c;
   }
@@ -89688,7 +89736,7 @@ int FUN_0005e8a4(void)
       if (DAT_ffffd3af == '\x02') {
         local_24 = (undefined1)((ushort)DAT_ffffd3a8 >> 8);
         uStack_23 = (undefined1)DAT_ffffd3a8;
-        ref_writeToE2RAMArea_INDEX_ADDR_LEN(0x78,&local_24,2);
+        e2ram_shadow_byte_write(0x78,&local_24,2);
         DAT_ffffd3b0 = FUN_000378dc(0x78,2);
         DAT_ffffd3ae = '\x02';
       }

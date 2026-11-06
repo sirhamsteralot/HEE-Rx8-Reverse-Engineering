@@ -9,7 +9,7 @@ char ref_getTireSizeChecksumthing_(void)
   char cVar1;
   char local_8 [8];
   
-  cVar1 = FUN_00037ef0(0x95,local_8,1);
+  cVar1 = e2ram_cached_byte_read(0x95,local_8,1);
   if (cVar1 == '\0') {
     if (local_8[0] == '*') {
       DAT_ffffd1b5 = 0;

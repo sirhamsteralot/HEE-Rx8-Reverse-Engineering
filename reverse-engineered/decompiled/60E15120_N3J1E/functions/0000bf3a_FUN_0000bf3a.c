@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_cs_port_setup [high]: E2RAM chip-select/port setup: PLIR_W 0xfffff75c &= ~0x200, PBCRH_W 0xfffff732 &= ~0x30, PBDR_W 0xfffff738 bit 0x400 = 0 (via 0x4bbc), PFDR_W 0xfffff74e bit 0x400 = 1 (CS high), PBCRH_W |= 0x10. Registers from symbols.tsv.
+ */
 /* ROM address: 0x0000bf3a; body bytes: 102; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000bf3a (102 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000bf3a(void)
+void e2ram_cs_port_setup(void)
 
 {
   ushort uVar1;

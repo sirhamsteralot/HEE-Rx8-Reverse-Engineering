@@ -36,7 +36,7 @@ undefined1 * FUN_00027d06(void)
         do {
           local_30 = rx8_encode_u8_affine_saturate(uVar8,uVar7,uVar6);
           local_2f = 0;
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN((int)(short)(sVar5 + 0x20),&local_30,2);
+          e2ram_shadow_byte_write((int)(short)(sVar5 + 0x20),&local_30,2);
           uVar4 = uVar4 + 1;
           sVar5 = sVar5 + 2;
         } while (uVar4 < 0x22);
