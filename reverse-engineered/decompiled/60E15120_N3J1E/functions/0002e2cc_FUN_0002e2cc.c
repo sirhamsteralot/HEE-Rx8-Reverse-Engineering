@@ -13,10 +13,10 @@ void FUN_0002e2cc(void)
     DAT_ffffbd5a = rx8_add_u16_saturate((int)(short)DAT_ffffbd5a,1);
   }
   if (DAT_ffffbd58 == '\x01') {
-    FUN_0005fd38(0x3f,1);
+    dtc_set_fault_x0(0x3f,1);
     return;
   }
-  FUN_0005fd38(0x3f,2);
+  dtc_set_fault_x0(0x3f,2);
   return;
 }
 

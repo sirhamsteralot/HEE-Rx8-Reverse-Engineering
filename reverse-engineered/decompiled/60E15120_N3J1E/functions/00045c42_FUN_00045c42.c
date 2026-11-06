@@ -29,11 +29,11 @@ uint FUN_00045c42(void)
   }
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8732,0);
   if (cVar2 == '\x01') {
-    uVar1 = FUN_0005fd38(0x66,1);
+    uVar1 = dtc_set_fault_x0(0x66,1);
     return uVar1;
   }
   if (DAT_ffffcbf5 == 1) {
-    uVar1 = FUN_0005fd38(0x66,2);
+    uVar1 = dtc_set_fault_x0(0x66,2);
     return uVar1;
   }
   return (uint)DAT_ffffcbf5;
