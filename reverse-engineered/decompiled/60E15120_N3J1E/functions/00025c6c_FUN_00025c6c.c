@@ -65,6 +65,9 @@ void candidate_alternator_voltage_target_select(void)
       ((DAT_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
      (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
        ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+     (((((DAT_ffffb610 == 0 || (DAT_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
+       ((DAT_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
     DAT_ffffb616 = '\x01';
   }
   else {

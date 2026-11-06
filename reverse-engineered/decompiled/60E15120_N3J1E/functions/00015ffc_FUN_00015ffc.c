@@ -1,10 +1,13 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00015ffc; body bytes: 302; decompiled */
 
-uint FUN_00015ffc(void)
+uint candidate_idle_learn_condition(void)
 
 {
   byte snapshot_DAT_ffffa7b4;
@@ -17,7 +20,7 @@ uint FUN_00015ffc(void)
   cVar2 = DAT_ffffa7b5;
   snapshot_DAT_ffffa7b4 = DAT_ffffa7b4;
   fVar5 = rx8_absolute_difference(inferred_ram_a7ac_ffffa7ac_ffffa7ac,DAT_ffffb550);
-  snapshot_DAT_ffffa838 = DAT_ffffa838;
+  snapshot_DAT_ffffa838 = idle_air_calc_total_ffffa838;
   cVar3 = rx8_is_outside_tolerance_band(DAT_ffffa8cc,0,0x3727c5ac);
   uVar4 = (uint)snapshot_DAT_ffffa7b4;
   if (((((uVar4 != 1) || (DAT_ffffa892 < 0x138)) || (cVar2 != '\0')) ||
@@ -25,10 +28,10 @@ uint FUN_00015ffc(void)
         ((60.0 <= intake_air_temperature_ffffaddc || ((37.0 < fVar5 || (cVar3 != '\0')))))) || (0.035 < DAT_ffffa7a4)))
       ) || ((((35.0 < inferred_ram_b2f0_ffffb2f0_ffffb2f0 || (snapshot_DAT_ffffa838 <= DAT_ffffa840)) || (DAT_ffffa83c <= snapshot_DAT_ffffa838)) ||
             ((DAT_ffffa7b7 != '\0' || (DAT_ffffcc91 != '\0')))))) {
-    DAT_ffffa890 = 0;
+    idle_trim_learn_active_ffffa890 = 0;
   }
   else {
-    DAT_ffffa890 = 1;
+    idle_trim_learn_active_ffffa890 = 1;
   }
   if (uVar4 == 1) {
     uVar4 = rx8_add_u16_saturate((int)(short)DAT_ffffa892,1);

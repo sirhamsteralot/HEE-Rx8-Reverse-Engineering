@@ -26,7 +26,7 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   else {
     inferred_throttle_position_ffffad44 = DAT_ffffad38;
   }
-  DAT_ffffad40 = rx8_max_float(arg0,inferred_throttle_position_ffffad44 - DAT_ffffb2a4);
+  DAT_ffffad40 = rx8_max_float(arg0,inferred_throttle_position_ffffad44 - idle_air_required_ffffb2a4);
   fVar1 = (float)rx8_divide_with_zero_fallback(inferred_throttle_position_ffffad44,0x42a80000);
   inferred_ram_ad48_ffffad48_ffffad48 = fVar1 * 100.0;
   DAT_ffffad4c = DAT_ffffad40 - DAT_ffffadac;

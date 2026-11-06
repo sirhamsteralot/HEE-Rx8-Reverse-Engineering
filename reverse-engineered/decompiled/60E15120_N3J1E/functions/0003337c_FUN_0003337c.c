@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006af18: Table 2D - 204 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006af2c: Ignition Leading - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
@@ -9,7 +12,7 @@
  */
 /* ROM address: 0x0003337c; body bytes: 392; decompiled */
 
-undefined4 * FUN_0003337c(void)
+undefined4 * candidate_idle_ratio_calcs(void)
 
 {
   char cVar1;
@@ -26,9 +29,9 @@ undefined4 * FUN_0003337c(void)
   
   snapshot_DAT_ffffbaec = DAT_ffffbaec;
   cVar1 = DAT_ffffb53c;
-  puVar3 = (undefined4 *)&DAT_ffffb534;
+  puVar3 = (undefined4 *)&automatic_transmission_ffffb534;
   arg1 = 0.0;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (engine_running_ffffa428 == '\x01') {
       DAT_ffffc04c = DAT_ffffbacc / inferred_ram_a7ac_ffffa7ac_ffffa7ac;
     }

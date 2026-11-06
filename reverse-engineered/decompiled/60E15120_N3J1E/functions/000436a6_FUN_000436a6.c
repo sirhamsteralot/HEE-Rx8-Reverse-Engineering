@@ -10,7 +10,7 @@ char FUN_000436a6(void)
   char cVar2;
   
   cVar2 = DAT_ffffca4e;
-  if ((DAT_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
     DAT_ffffca4e = 1;
     bVar1 = true;
   }
