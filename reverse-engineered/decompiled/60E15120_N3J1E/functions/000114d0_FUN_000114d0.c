@@ -6,7 +6,7 @@ void FUN_000114d0(void)
   FUN_00019950();
   FUN_00038e12();
   FUN_0001447a();
-  ref_alternatorControlMain_000267c6();
+  alternator_control_main_batch();
   FUN_0002374e();
   ref_CANHandler();
   FUN_00034a04();

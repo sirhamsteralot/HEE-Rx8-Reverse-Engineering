@@ -3,7 +3,7 @@
 void FUN_00016428(void)
 
 {
-  DAT_ffffa8bf = DAT_ffffbd69;
+  DAT_ffffa8bf = ac_clutch_on_ffffbd69;
   return;
 }
 

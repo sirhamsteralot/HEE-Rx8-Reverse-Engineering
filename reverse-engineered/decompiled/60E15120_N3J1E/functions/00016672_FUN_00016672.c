@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
@@ -7,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00016476 (120 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char FUN_00016672(void)
+char candidate_idle_stall_detect(void)
 
 {
   char cVar1;

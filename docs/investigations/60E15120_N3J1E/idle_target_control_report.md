@@ -8,15 +8,15 @@ recorded in `data/labels/60E15120_N3J1E/idle_target_control_labels.json`.
 
 **Related reports:** task structure and task[10] in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); the
-idle task entry itself is the inherited `ref_updateIdleControl__` 0x167c0
-(this report identifies its largest inner body 0x1506c);
+idle task entry `idle_control_calc_batch` 0x167c0 (this report identifies
+its largest inner body 0x1506c; see [`idle_control_report.md`](idle_control_report.md));
 coolant/IAT scaling (0x7298/0x73a0);
 alternator load interaction via `ref_alternatorControl` 0x2680e in the same task.
 
 ## 1. Executive summary
 
 **0x1506c** (1,530 B) is the **idle target RPM calculation**
-inside the idle-control task body `ref_updateIdleControl__` 0x167c0 (itself
+inside the idle-control batch `idle_control_calc_batch` 0x167c0 (itself
 called from task[10] body 0x11744; task table rec[10] entry 0x64f6 at ROM
 0x4a38). It filters battery voltage (0xffffa7c8, factor 0.03125, gates at 13.016
 and 12.0 V), tracks engine-running/cranking timers, selects between open-loop
@@ -25,7 +25,7 @@ ramp (0x15818, floor 500 rpm, tbl 0x69384) and running modes (0x15934, tbl
 (descriptors 0x69370 base / 0x693d4 F / 0x693e8 G / 0x693fc H / 0x69410 vehicle
 moving-AT) with hard floors of 500 and 790–840 rpm, takes the max of the
 candidates, applies a first-order filter whose factor comes from tbl 0x6935c, and
-writes the **idle target rpm to 0xffffa7f4**, which 0x5ca94 converts to the
+writes the **idle target rpm to 0xffffa7f4**, which `idle_target_encode_u16` 0x5ca94 converts to the
 actuator output.
 
 ## 1a. Plain-language summary
@@ -39,7 +39,7 @@ idle air control then chases.
 ## 2. How it works (condensed pseudocode)
 
 ```
-# ref_updateIdleControl__ 0x167c0 (task[10] body 0x11744) calls ... 0x1506c (jsr pool 0x168ac at 0x167fa) ...
+# idle_control_calc_batch 0x167c0 (task[10] body 0x11744) calls ... 0x1506c (jsr pool 0x168ac at 0x167fa) ...
 # idle_target_rpm_calculate 0x1506c:
 a7c8 = filter(battery_voltage 0xffffb590, a7c8, 0.03125)      # V
 # engine-running gates: a804/a806/a808 counters, a818/a81a decay (0x753/0x271), a7b7 latch
@@ -50,7 +50,7 @@ a7d4 = target base (floors 500.0 / 790-840 rpm by flags bd69/bdb8/b5b3/b53c)
 a7b0 = max(a800, a7cc, a7d4)
 a7bc = (a81c==0) ? lookup_2d(a7b0 - a7ac, tbl 0x6935c filter factor) : 1.0
 a7f4 = filter(a7b0, a7ac, a7bc)          # -> idle_target_rpm; min 850 if a7b7
-out = 0x5ca94(a7f4)                       # actuator conversion
+out = idle_target_encode_u16(a7f4)       # 0x5ca94: u16 @0.25 rpm/LSB -> 0xffffa7ac (PID 0x096e)
 ```
 
 ## 3. Key calibrated tables
@@ -78,8 +78,8 @@ RAM alias: `idle_target_rpm` (0xffffa7f4). Evidence:
 
 ## 5. Corrections made in this pass
 
-None — 0x1506c was unlabeled. `ref_updateIdleControl__` 0x167c0 keeps its
-inherited name (an unverified hypothesis).
+None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
+[`idle_control_report.md`](idle_control_report.md).
 
 ## 6. Files
 
@@ -104,11 +104,11 @@ inherited name (an unverified hypothesis).
 | Address | Name | Role |
 |---|---|---|
 | 0x0001506c | `idle_target_rpm_calculate` | target rpm computation |
-| 0x000167c0 | `ref_updateIdleControl__` | idle task body (inherited name) |
+| 0x000167c0 | `idle_control_calc_batch` | idle calc batch (task[10] callee) |
 | 0x00011744 | `FUN_00011744` | task[10] body, calls 0x167c0 |
 | 0x000064f6 | `FUN_000064f6` | task[10] entry thunk → 0x11744 |
 | 0x00015818 / 0x00015934 | `FUN_00015818` / `FUN_00015934` | open-loop ramp / mode select |
-| 0x0005ca94 | `FUN_0005ca94` | target → actuator output |
+| 0x0005ca94 | `idle_target_encode_u16` | target → u16 (0xffffa7ac, PID 0x096e) |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -133,5 +133,7 @@ inherited name (an unverified hypothesis).
 - Static analysis only; no emulator run of the idle loop in this pass.
 - The meaning of each select flag (0xffffb534/b53c/b5b3/bd69/bdb8, e.g. A/C or
   AT) is inferred from context and the table names, not from the flag producers.
-- 0x5ca94's output path (which actuator register it drives) is outside this
-  pass's scope.
+- 0x5ca94's role is settled in [`idle_control_report.md`](idle_control_report.md):
+  it encodes the target to 0xffffa7ac (Mode 22 PID 0x096e) and the diag override
+  cell 0xffffd34d; the actuator path runs via 0xffffb2a4 → 0x21a80 (electronic
+  throttle).

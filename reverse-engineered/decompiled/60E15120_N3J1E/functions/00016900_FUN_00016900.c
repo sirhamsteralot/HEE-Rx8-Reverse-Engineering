@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_correction_select [medium]: Selects idle air correction 0xffffa8cc/0xffffa8d0 from 2-D tables 0x69244/0x69258/0x6926c/0x69280/0x69294/0x692a8 by flags 0xffffbd69/0xffffb534/0xffffb53c/0xffffb540/0xffffbdb8; bd69==0 forces a8cc=0. Called from 0x167c0 via pool 0x16898.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069244: Table 2D - 10 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069258: Table 2D - 11 (RX8Defs data pointer, axes and dimensions match).
@@ -11,7 +14,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00016704 (162 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * FUN_00016900(void)
+undefined4 * candidate_idle_air_correction_select(void)
 
 {
   undefined4 *puVar1;
@@ -20,12 +23,12 @@ undefined4 * FUN_00016900(void)
   undefined4 extraout_fr0_00;
   undefined4 extraout_fr0_01;
   
-  if (DAT_ffffbd69 == '\0') {
+  if (ac_clutch_on_ffffbd69 == '\0') {
     puVar1 = &DAT_ffffa8cc;
     DAT_ffffa8cc = 0;
   }
   else {
-    if ((DAT_ffffb534 == '\x01') || (DAT_ffffb53c == '\0')) {
+    if ((automatic_transmission_ffffb534 == '\x01') || (DAT_ffffb53c == '\0')) {
       if (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\0') {
         puVar2 = &tbl_table_2d_10_00069244;
       }
