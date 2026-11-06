@@ -9,7 +9,7 @@ void FUN_00011744(void)
   fueling_condition_flags_task();
   FUN_00014628();
   ref_alternatorControl();
-  ref_updateIdleControl__();
+  idle_control_calc_batch();
   FUN_0003eaf8();
   apv_control_task();
   FUN_00016f80();

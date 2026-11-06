@@ -1,0 +1,49 @@
+{
+  "pass": "idle_control_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_claims": "PASS (423 TSV rows scanned, 14 labels JSONs checked; idle_control_report.md pool_claims 3)",
+  "verify_readability": "PASS (3355 function bodies consistent)",
+  "verify_math_units": "PASS",
+  "validate_reports": {
+    "result": "PASS",
+    "idle_control_report": {"fn_checked": 21, "ram_checked": 10, "rom_refs": 31, "rom_claims": 0}
+  },
+  "pytest": "134 passed",
+  "labels_applied": {
+    "functions": 26,
+    "ram": 6,
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "metadata/integrated_names.json"
+    ],
+    "export_files_renamed": 72,
+    "function_bodies_verified_intact": 3355
+  },
+  "pipeline_scripts": "review_idle_control_labels.py (idempotent; wired into rebuild.sh after review_intake_labels.py) + annotate_source_review.py + integrate_reviewed_names.py",
+  "record": "metadata/idle_control_labels.json",
+  "ghidra_database_updated": false,
+  "binary_level_verification": {
+    "batch_call_count_rechecked": {"function": "0x167c0", "jsr": 27, "tail_jmp": 1, "total": 28},
+    "pool_words_resolved_from_rom": {"pool": "0x16888-0x168fc", "callees": 26},
+    "five_ca94_pool_words": {"0x5cb42": "0x096e (DID compare)", "0x5cb64": "0x3e800000 (0.25f step)", "0x5cb68": "0x2490 (encoder)", "0x5cb44": "0xffffd319 (diag state)", "0x5cb54": "0xffffd314 (active DID)"},
+    "descriptors_parsed": ["0x6a218", "0x6a22c", "0x6a240", "0x69440", "0x69454", "0x69468", "0x6947c", "0x69490", "0x694a4", "0x694b8"],
+    "ram_reader_pool_scan": {"0xffffb2a4": ["0x21b10 -> 0x21a80 ref_throttlePlatePosToTorqueOutput_", "0x1ba80 -> 0x1b940", "0x23450 -> 0x233ec", "0x29ec6 -> 0x29d4c", "0x4863c -> 0x48558"]},
+    "select_flag_producers": {"0xffffb534": "0x24b44 store at 0x24b58", "0xffffbdb8": "0x2f868 store at 0x2f882", "0xffffbd69": "0x2e9a4", "0xffffb5b3": "0x264f0 store at 0x265ce"}
+  },
+  "limits": "Static analysis only. candidate_ names are hypotheses. 0xffffb53c meaning and the physical meaning of 0xffffb5b3's source quantity remain open. Package-pin -> connector-terminal hop not verified (board routing)."
+}

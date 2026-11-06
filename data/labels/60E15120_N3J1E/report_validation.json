@@ -56,6 +56,12 @@
       "rom_refs": 95,
       "rom_claims": 0
     },
+    "idle_control_report.md": {
+      "fn_checked": 21,
+      "ram_checked": 10,
+      "rom_refs": 31,
+      "rom_claims": 0
+    },
     "idle_target_control_report.md": {
       "fn_checked": 6,
       "ram_checked": 5,

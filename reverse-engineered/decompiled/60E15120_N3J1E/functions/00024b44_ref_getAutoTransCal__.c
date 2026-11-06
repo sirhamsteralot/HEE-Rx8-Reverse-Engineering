@@ -7,7 +7,7 @@
 void ref_getAutoTransCal__(void)
 
 {
-  DAT_ffffb534 = 1;
+  automatic_transmission_ffffb534 = 1;
   return;
 }
 

@@ -1,11 +1,14 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_mode_timers [medium]: Countdowns 0xffffa80c/a80e (reload 0x1f on bd69/b53c change), 0xffffa810=0xc / 0xffffa812=0x5c on 0xffffad18 edges. Called from 0x167c0 via pool 0x168a8.
+ */
 /* ROM address: 0x00014baa; body bytes: 250; decompiled */
 
-undefined2 * FUN_00014baa(void)
+undefined2 * candidate_idle_mode_timers(void)
 
 {
   undefined2 *puVar1;
   
-  if (DAT_ffffa823 == DAT_ffffbd69) {
+  if (DAT_ffffa823 == ac_clutch_on_ffffbd69) {
     if (DAT_ffffa80c != 0) {
       DAT_ffffa80c = DAT_ffffa80c + -1;
     }
@@ -45,7 +48,7 @@ undefined2 * FUN_00014baa(void)
   else {
     DAT_ffffa7b5 = 1;
   }
-  DAT_ffffa823 = DAT_ffffbd69;
+  DAT_ffffa823 = ac_clutch_on_ffffbd69;
   DAT_ffffa824 = DAT_ffffb53c;
   DAT_ffffa825 = inferred_ram_ad18_ffffad18_ffffad18;
   return puVar1;

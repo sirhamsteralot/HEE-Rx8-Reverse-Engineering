@@ -1,0 +1,181 @@
+{
+  "date": "",
+  "pass": "idle_control_labeling",
+  "basis": "source_review_idle_control",
+  "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Report: idle_control_report.md.",
+  "function_aliases": {
+    "000167c0": {
+      "alias": "idle_control_calc_batch",
+      "confidence": "high",
+      "evidence": "28-call batch (27 jsr + 1 tail jmp in the 174-byte body) under interrupt mask 0x10, called from task[10] body 0x11744 (task rec[10].entry thunk 0x64f6 at ROM 0x4a38). First jsr 0x167c6 -> 0x3920 sh_raise_interrupt_mask_return_previous with r4=0x10; callees via pool 0x16888-0x168fc (classified mixed_pool) words read from ROM: 0x1688c=0x148a4, 0x16890=0x16748, 0x16894=0x16358, 0x16898=0x16900, 0x1689c=0x148c4, 0x168a0=0x15f5c, 0x168a4=0x14944, 0x168a8=0x14baa, 0x168ac=0x1506c idle_target_rpm_calculate, 0x168b0=0x14d10, 0x168b4=0x14f6c, 0x168b8=0x16432, 0x168bc=0x165d6, 0x168c0=0x16672, 0x168c4=0x15ffc, 0x168c8=0x1617e, 0x168cc=0x15fa0, 0x168d0=0x15a40, 0x168d4=0x16380, 0x168d8=0x16720, 0x168dc=0x3337c, 0x168e0=0x3354e, 0x168e4=0x34650, 0x168e8=0x34814, 0x168ec=0x15a9a, 0x168f0=0x216f8; tail jmp 0x1686a -> 0x3934 ref_setSR. Callee set is the idle air/target/trim chain (inherited name confirmed)."
+    },
+    "00015a9a": {
+      "alias": "idle_air_feedback_calc",
+      "confidence": "high",
+      "evidence": "Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a)."
+    },
+    "000216f8": {
+      "alias": "idle_air_output_clamp",
+      "confidence": "high",
+      "evidence": "Final idle air output: 0xffffb2a4 = clamp(tbl 0x6a218(0xffffa838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)) via 0x2404 rx8_clamp_float; pool 0x21740-0x2175c (classified mixed_pool) words: 0x21744=0x6a218, 0x21748=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404; descriptors parsed (0x6a218 n=21 type 4 axis 0x732dc data 0x73330; 0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0). 0xffffb2a4 is read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88) - the electronic-throttle torque chain, plus 0x1b940/0x233ec/0x29d4c/0x48558."
+    },
+    "0005ca94": {
+      "alias": "idle_target_encode_u16",
+      "confidence": "high",
+      "evidence": "Encodes idle_target_rpm (fr4) to u16 with step 0.25 (f32 0x3e800000 at ROM 0x5cb64, loaded by mova at 0x5cb1a) through 0x2490 rx8_encode_u16_affine_saturate when diag override state 0xffffd319==0 and the active DID 0xffffd314==0x96e (word at pool 0x5cb42) passes mask 0xc0 (word at 0x5cb3e) on 0xffffd36c; result stored to 0xffffd34d (base 0xffffd335 + 0x18); otherwise decodes override cell 0xffffd34d via 0x24c0. Pool words of the function (classified mixed_pool starting 0x5cb3e): 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb68=0x2490. Sole caller 0x1506c stores the u16 to 0xffffa7ac, the Mode 22 PID 0x096e source (handler 0x56e22, encode *0.25). Not an actuator register."
+    },
+    "0001617e": {
+      "alias": "idle_trim_integrator",
+      "confidence": "medium",
+      "evidence": "Long-term idle trim: reads learned trim floats 0xffff8040/0xffff8048 (mov.w pools 0x16260/0x16262, sign-extended) via 0x3dcd0/0x3dc22 ref_readValue_float_DEFAULTVAL_ADDRESS, nudges by 1e-5 toward the sign of 0xffffa7a8 when learn flag 0xffffa890==1 (pool 0x16264 at 0x161cc), clamps to [-0.12, 0.12], writes back via ref_updateMemoryAtAddress_float; 0xffffb534/0xffffb53c select which cell. Called from 0x167c0 via pool 0x168c8."
+    },
+    "00015fa0": {
+      "alias": "idle_trim_load",
+      "confidence": "medium",
+      "evidence": "0xffffa88c = learned idle trim read from 0xffff8040 (when 0xffffb534==1) or 0xffff8048 (MT: 0xffffb53c selects; addresses as sign-extended mov.w -0x7fc0/-0x7fb8) via ref_readValue_float_DEFAULTVAL_ADDRESS. Called from 0x167c0 via pool 0x168cc."
+    },
+    "00016900": {
+      "alias": "idle_air_correction_select",
+      "confidence": "medium",
+      "evidence": "Selects idle air correction 0xffffa8cc/0xffffa8d0 from 2-D tables 0x69244/0x69258/0x6926c/0x69280/0x69294/0x692a8 by flags 0xffffbd69/0xffffb534/0xffffb53c/0xffffb540/0xffffbdb8; bd69==0 forces a8cc=0. Called from 0x167c0 via pool 0x16898."
+    },
+    "00016748": {
+      "alias": "idle_ac_load_calc",
+      "confidence": "medium",
+      "evidence": "A/C load term: b534==1 -> tbl 0x69530, else 3-D tbl 0x69544(coolant, catalyst temp model 0xffffa998); result 0xffffa8c4, filtered into 0xffffa8c8 (updates only when below a8c8+20.0). Called from 0x167c0 via pool 0x16890."
+    },
+    "00016358": {
+      "alias": "idle_baro_comp",
+      "confidence": "medium",
+      "evidence": "0xffffa898 = 3-D tbl 0x6a814(baro 0xffffad14, 0xffffa834). Called from 0x167c0 via pool 0x16894."
+    },
+    "000148c4": {
+      "alias": "idle_maf_airflow_term",
+      "confidence": "medium",
+      "evidence": "0xffffa7a4 = tbl(0x6a100 if b534==1 else 0x6a114/0x6a128 by b53c)(0xffffb5a8) * 0.6345 * 60 / 0xffffa7ac via divide-with-zero-fallback (0.6345 at shared pool 0x7a088). Called from 0x167c0 via pool 0x1689c."
+    },
+    "000148a4": {
+      "alias": "idle_target_term_lookup",
+      "confidence": "medium",
+      "evidence": "0xffffa7a0 = tbl 0x692bc(0xffffa7ac). Called from 0x167c0 via pool 0x1688c."
+    },
+    "00015f5c": {
+      "alias": "idle_air_terms_sum",
+      "confidence": "medium",
+      "evidence": "0xffffa888 = 0xffffa8cc + 0xffffa7a4. Called from 0x167c0 via pool 0x168a0."
+    },
+    "00016720": {
+      "alias": "idle_iat_comp",
+      "confidence": "medium",
+      "evidence": "0xffffa8c0 = tbl 0x6a830(IAT 0xffffaddc). Called from 0x167c0 via pool 0x168d8."
+    },
+    "00016380": {
+      "alias": "idle_aux_air_term",
+      "confidence": "medium",
+      "evidence": "When 0xffffb2f6==1: 0xffffa89c = clamp(0xffffb1dc * 0.6345 * tbl 0x6a13c(0xffffb220) * 60 / rpm, 0, 0.2), else 0. Called from 0x167c0 via pool 0x168d4."
+    },
+    "00015a40": {
+      "alias": "fuel_cut_resume_threshold",
+      "confidence": "medium",
+      "evidence": "0xffffa830 = tbl 0x69768(rough knock correction leading 0xffffa6ac) when 0xffffa6b7/a6b8/a6b9 are clear, else 0. Called from 0x167c0 via pool 0x168d0."
+    },
+    "00014944": {
+      "alias": "idle_drive_flags",
+      "confidence": "medium",
+      "evidence": "Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4."
+    },
+    "00014baa": {
+      "alias": "idle_mode_timers",
+      "confidence": "medium",
+      "evidence": "Countdowns 0xffffa80c/a80e (reload 0x1f on bd69/b53c change), 0xffffa810=0xc / 0xffffa812=0x5c on 0xffffad18 edges. Called from 0x167c0 via pool 0x168a8."
+    },
+    "00014d10": {
+      "alias": "idle_stall_flags",
+      "confidence": "medium",
+      "evidence": "Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0."
+    },
+    "00014f6c": {
+      "alias": "idle_trim_ramp",
+      "confidence": "medium",
+      "evidence": "0xffffa7c0 ramped down by 0.00087 (pool 0x6dabc) toward 3-D floor tbl 0x69424(coolant, baro) when 0xffffa7b4==0; counters 0xffffa814/a816 gated by a7b4/a7b5. Called from 0x167c0 via pool 0x168b4."
+    },
+    "00016432": {
+      "alias": "idle_ac_request_calc",
+      "confidence": "medium",
+      "evidence": "0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8."
+    },
+    "000165d6": {
+      "alias": "idle_ac_clutch_gate",
+      "confidence": "medium",
+      "evidence": "0xffffa8bc = 0 when (bd69==0 && a8bf) or engine-running timer < 0x80 or flags 0xffffbbb8/a7b6/c5e6/c5db/c5d7/c61e set; else 1; mirrors bd69 into a8bf. Called from 0x167c0 via pool 0x168bc."
+    },
+    "00016672": {
+      "alias": "idle_stall_detect",
+      "confidence": "medium",
+      "evidence": "0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0."
+    },
+    "00015ffc": {
+      "alias": "idle_learn_condition",
+      "confidence": "medium",
+      "evidence": "0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4."
+    },
+    "0003337c": {
+      "alias": "idle_ratio_calcs",
+      "confidence": "medium",
+      "evidence": "0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc."
+    },
+    "0003354e": {
+      "alias": "idle_ac_blend_ramp",
+      "confidence": "medium",
+      "evidence": "0xffffc048: MT (b534==0) 0 when b53c==0, 0.04 when c05b==0, else decays 0.0008 to 0; AT (b534==1) forces 0. Called from 0x167c0 via pool 0x168e0."
+    },
+    "00034650": {
+      "alias": "idle_vehicle_speed_flags",
+      "confidence": "medium",
+      "evidence": "AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4."
+    }
+  },
+  "ram_aliases": {
+    "ffffb2a4": {
+      "alias": "idle_air_required",
+      "type": "float",
+      "reader": "000216f8",
+      "evidence": "Clamped idle air output of 0x216f8: clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)). Read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88 -> electronic throttle torque chain, terminals 1B/1C), also 0x1b940/0x233ec/0x29d4c/0x48558."
+    },
+    "ffffa838": {
+      "alias": "idle_air_calc_total",
+      "type": "float",
+      "reader": "00014d10",
+      "evidence": "Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706)."
+    },
+    "ffffa890": {
+      "alias": "idle_trim_learn_active",
+      "type": "uint8",
+      "reader": "0001617e",
+      "evidence": "Learn-enable flag computed by 0x15ffc (counters a892/a894 reload 0x138; coolant/IAT/error gates); gates the trim integration in 0x1617e (read via pool 0x16264 at 0x161cc)."
+    },
+    "ffffbd69": {
+      "alias": "ac_clutch_on",
+      "type": "uint8",
+      "reader": "000165d6",
+      "evidence": "Set by 0x2e9a4 under a gating chain (engine-running timer 0xffffa424, injectors-off 0xffffa42c, rpm < 7800, coolant < 118 C, flags bd72/bd73/bd76/bd92/bd96/bd97/bd98/0xffffc5e6); adjacent to ref_calculateACClutchOn__ 0x2e89c; consumed as A/C-clutch select in the idle chain (0x16900/0x165d6/0x14944)."
+    },
+    "ffffb534": {
+      "alias": "automatic_transmission",
+      "type": "uint8",
+      "reader": "00016748",
+      "evidence": "Set to 1 by ref_getAutoTransCal__ 0x24b44 (store at 0x24b58 via pool 0x24b5e); 0x24b8c clears 0xffffb53c/b53e/b540 when b534==1; selects AT vs MT table paths across the idle batch (0x16748/0x148c4/0x16900/0x15fa0/0x3354e/0x34650)."
+    },
+    "ffffb5b3": {
+      "alias": "high_load_flag",
+      "type": "uint8",
+      "reader": "0001506c",
+      "evidence": "Set by 0x264f0 when filtered 0xffffb5e0 >= 40.0 (clears below 30.0); 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335) in 0x2633e; 0xffffb5a4/0xffffb5a0 ratio appears in the alternator domain (0x2ce18); selects an idle-target table path in 0x1506c."
+    }
+  },
+  "notes": {
+    "ffffbdb8": "Producer identified: ref_getACSwitchStatus 0x2f868 writes inferred_ram_bdb8 (PID 0x1102 cell) = (0xffff9ecd & 4) == 0, i.e. A/C switch input. TSV row keeps the existing inferred_ alias (already integrated into the export); the semantic is recorded here and in idle_control_report.md."
+  },
+  "rom_unchanged": true,
+  "ghidra_database_updated": false
+}

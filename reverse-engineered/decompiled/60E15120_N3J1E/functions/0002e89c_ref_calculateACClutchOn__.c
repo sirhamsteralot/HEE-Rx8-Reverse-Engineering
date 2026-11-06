@@ -22,7 +22,7 @@ void ref_calculateACClutchOn__(void)
   else {
     DAT_ffffbd95 = '\x01';
   }
-  if (DAT_ffffbd69 == '\0') {
+  if (ac_clutch_on_ffffbd69 == '\0') {
     if ((((4 < DAT_ffffbd86) || (DAT_ffffbd94 == '\0')) || (DAT_ffffbd95 == '\x01')) ||
        ((DAT_ffffbd72 == '\x01' || (DAT_ffffbd73 == '\x01')))) {
       DAT_ffffbd68 = 0;

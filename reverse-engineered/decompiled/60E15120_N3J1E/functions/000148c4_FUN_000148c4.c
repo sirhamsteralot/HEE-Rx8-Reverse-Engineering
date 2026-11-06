@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_maf_airflow_term [medium]: 0xffffa7a4 = tbl(0x6a100 if b534==1 else 0x6a114/0x6a128 by b53c)(0xffffb5a8) * 0.6345 * 60 / 0xffffa7ac via divide-with-zero-fallback (0.6345 at shared pool 0x7a088). Called from 0x167c0 via pool 0x1689c.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a100: Table 2D - 114 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a114: Table 2D - 115 (RX8Defs data pointer, axes and dimensions match).
@@ -8,13 +11,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00014824 (88 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000148c4(void)
+void candidate_idle_maf_airflow_term(void)
 
 {
   undefined **ppuVar1;
   float fVar2;
   
-  if (DAT_ffffb534 == '\x01') {
+  if (automatic_transmission_ffffb534 == '\x01') {
     fVar2 = (float)lookup_2d_descriptor_scaled(&tbl_table_2d_114_0006a100);
   }
   else {

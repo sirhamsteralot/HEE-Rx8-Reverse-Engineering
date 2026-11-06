@@ -57,7 +57,7 @@ void FUN_00025c6c(void)
     DAT_ffffb61a = '\0';
   }
   if ((((DAT_ffffb64a == '\x01') || (DAT_ffffb64b == '\x01')) ||
-      ((DAT_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
      (((((DAT_ffffb610 == 0 || (DAT_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
        ((DAT_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
     DAT_ffffb616 = '\x01';

@@ -18,7 +18,7 @@ undefined1 * ref_CANTX_Main(void)
     ref_can201TX_getAndPack();
     FUN_0002941a();
     ref_can251TX_getAndPack();
-    if (DAT_ffffb534 == '\x01') {
+    if (automatic_transmission_ffffb534 == '\x01') {
       ref_can231TX_getAndPack();
     }
     ref_can240TX_getAndPack();
