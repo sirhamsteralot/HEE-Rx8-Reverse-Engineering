@@ -116,6 +116,13 @@ dumping it at the root.
       its tags: prune CLOSED items from it (full records stay in that file's git
       history; never reuse an ID) and keep open IDs stable so cross-references
       resolve.
+    - Before adding a new item to ROADMAP.md (open-work groups or the
+      discrepancy register), search the file for an existing open item covering
+      the same or a substantially similar work. If one exists, do **not** add a
+      duplicate and do **not** merge, reword or renumber the existing item —
+      leave it untouched and mention the overlap in the commit message (or ask
+      the user if the existing item looks stale). New items get the next free ID
+      in their group only when nothing similar is open.
     - When renaming or splitting anything, update every reference in the same
       change (reports, review notes, ROADMAP links, tests, PR body).
     - A factual error found in review/validation is fixed in *all* artifacts
