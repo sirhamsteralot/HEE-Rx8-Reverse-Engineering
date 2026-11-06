@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0012_secondary_air_status [high]: dispatch record 0x5f1a8 -> handler verified in ROM bytes + function_index; 0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12
+ */
 /* ROM address: 0x00056a06; body bytes: 22; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f1b0 and register-save prologue. Heuristic

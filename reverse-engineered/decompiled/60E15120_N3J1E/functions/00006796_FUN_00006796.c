@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffff9ed8 vehicle_inputs_pfdr_prev (uint8): 
+ * RAM 0xffff9eda vehicle_inputs_phdr_prev (uint8): 
+ */
 /* ROM address: 0x00006796; body bytes: 172; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006796 (172 bytes). Names prefixed ref_

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode09_vehicle_info [high]: service table record 0x5eb88 (service 0x09) -> handler; ROM bytes verified; OBD Mode 09 (ref_OBDMode9Fuction)
+ */
 /* ROM address: 0x000662c0; body bytes: 444; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00064bb0 (444 bytes). Names prefixed ref_

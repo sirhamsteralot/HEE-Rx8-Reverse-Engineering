@@ -17904,8 +17904,8 @@ address	name	type	source
 0002f17c	PTR_ref_calculateACClutchOn___0002f17c	Label	DEFAULT
 0002f180	PTR_FUN_0002f180	Label	DEFAULT
 0002f184	PTR_ref_setSR_0002f184	Label	DEFAULT
-0002f188	ref_initFanControl_0002f188	Function	USER_DEFINED
-0002f1dc	ref_setFanOutputGPIO	Function	USER_DEFINED
+0002f188	fan_output_gpio_init	Function	USER_DEFINED
+0002f1dc	fan_output_gpio	Function	USER_DEFINED
 0002f240	DAT_0002f240	Label	DEFAULT
 0002f242	DAT_0002f242	Label	DEFAULT
 0002f244	DAT_0002f244	Label	DEFAULT
@@ -17916,8 +17916,8 @@ address	name	type	source
 0002f254	PTR_FUN_0002f254	Label	DEFAULT
 0002f258	PTR_FUN_0002f258	Label	DEFAULT
 0002f25c	PTR_FUN_0002f25c	Label	DEFAULT
-0002f260	ref_initFanControl_0002f260	Function	DEFAULT
-0002f266	FUN_0002f266	Function	DEFAULT
+0002f260	candidate_fan_init_thunk	Function	DEFAULT
+0002f266	fan_control_task	Function	DEFAULT
 0002f290	PTR_ref_initFanControl_0002f290	Label	DEFAULT
 0002f294	PTR_FUN_0002f294	Label	DEFAULT
 0002f298	PTR_FUN_0002f298	Label	DEFAULT
@@ -17982,7 +17982,7 @@ address	name	type	source
 0002f4c2	LAB_0002f4c2	Label	DEFAULT
 0002f4e4	LAB_0002f4e4	Label	DEFAULT
 0002f504	LAB_0002f504	Label	DEFAULT
-0002f51a	FUN_0002f51a	Function	DEFAULT
+0002f51a	fan_low_speed_decision	Function	DEFAULT
 0002f542	LAB_0002f542	Label	DEFAULT
 0002f54a	LAB_0002f54a	Label	DEFAULT
 0002f558	DAT_0002f558	Label	DEFAULT
@@ -18020,7 +18020,7 @@ address	name	type	source
 0002f652	DAT_0002f652	Label	DEFAULT
 0002f654	DAT_0002f654	Label	DEFAULT
 0002f658	PTR_DAT_0002f658	Label	DEFAULT
-0002f65c	FUN_0002f65c	Function	DEFAULT
+0002f65c	fan_high_speed_decision	Function	DEFAULT
 0002f6a8	LAB_0002f6a8	Label	DEFAULT
 0002f6b2	LAB_0002f6b2	Label	DEFAULT
 0002f6c0	LAB_0002f6c0	Label	DEFAULT
@@ -35050,7 +35050,7 @@ address	name	type	source
 0005c63c	PTR_DAT_0005c63c	Label	DEFAULT
 0005c640	PTR_DAT_0005c640	Label	DEFAULT
 0005c644	PTR_DAT_0005c644	Label	DEFAULT
-0005c648	FUN_0005c648	Function	DEFAULT
+0005c648	candidate_fan2_diag_override	Function	DEFAULT
 0005c69e	LAB_0005c69e	Label	DEFAULT
 0005c6a6	LAB_0005c6a6	Label	DEFAULT
 0005c6b2	LAB_0005c6b2	Label	DEFAULT
@@ -35068,7 +35068,7 @@ address	name	type	source
 0005c718	PTR_DAT_0005c718	Label	DEFAULT
 0005c71c	PTR_DAT_0005c71c	Label	DEFAULT
 0005c720	PTR_DAT_0005c720	Label	DEFAULT
-0005c724	FUN_0005c724	Function	DEFAULT
+0005c724	candidate_fan1_diag_override	Function	DEFAULT
 0005c77a	LAB_0005c77a	Label	DEFAULT
 0005c782	LAB_0005c782	Label	DEFAULT
 0005c78e	LAB_0005c78e	Label	DEFAULT
@@ -45626,11 +45626,11 @@ ffffbd9b	DAT_ffffbd9b	Label	DEFAULT
 ffffbd9c	DAT_ffffbd9c	Label	DEFAULT
 ffffbd9d	DAT_ffffbd9d	Label	DEFAULT
 ffffbda0	DAT_ffffbda0	Label	DEFAULT
-ffffbda1	DAT_ffffbda1	Label	DEFAULT
-ffffbda2	DAT_ffffbda2	Label	DEFAULT
+ffffbda1	fan_low_speed_cmd_ffffbda1	Label	DEFAULT
+ffffbda2	fan_high_speed_cmd_ffffbda2	Label	DEFAULT
 ffffbda4	DAT_ffffbda4	Label	DEFAULT
 ffffbda6	DAT_ffffbda6	Label	DEFAULT
-ffffbda8	DAT_ffffbda8	Label	DEFAULT
+ffffbda8	fan_low_speed_timer_ffffbda8	Label	DEFAULT
 ffffbdaa	DAT_ffffbdaa	Label	DEFAULT
 ffffbdab	DAT_ffffbdab	Label	DEFAULT
 ffffbdac	DAT_ffffbdac	Label	DEFAULT

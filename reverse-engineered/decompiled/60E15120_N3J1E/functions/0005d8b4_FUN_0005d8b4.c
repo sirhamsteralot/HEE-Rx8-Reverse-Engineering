@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_3b [medium]: service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4
+ */
 /* ROM address: 0x0005d8b4; body bytes: 244; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005c0a4 (244 bytes). Names prefixed ref_

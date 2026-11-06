@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * fan1_diag_override [medium]: UDS actuator-test arbitration for fan 1: DID 0x17c3 (mask 0xc0 on 0xffffd36c, state 0xffffd319/0xffffd323, output cell 0xffffd345); result feeds 0x2f1dc's PE11 write.
+ */
 /* ROM address: 0x0005c724; body bytes: 186; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005af14 (186 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0005c724(uint param_1)
+uint candidate_fan1_diag_override(uint param_1)
 
 {
   if (DAT_ffffd319 == '\0') {

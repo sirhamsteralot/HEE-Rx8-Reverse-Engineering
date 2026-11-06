@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_21_read_data_by_local_id [medium]: service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+ */
 /* ROM address: 0x0005b414; body bytes: 110; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00059c04 (110 bytes). Names prefixed ref_

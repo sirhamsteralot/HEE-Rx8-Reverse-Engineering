@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_b2f0 [medium]: PID 0x2e: ffffb2f0*0.392157
+ * RAM 0xffffb2f0 inferred_ram_b2f0_ffffb2f0 (float): PID 0x2e
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): DAT_ffffb2f0; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

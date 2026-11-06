@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_context_switch [high]: Saves ctx ptr to ctrl+0xc, writes state 4, calls os_dispatch_next_task (0x3c68); called from 0x3db0 (ISR-exit wake) and 0x3854.
+ */
 /* ROM address: 0x00003bf4; body bytes: 54; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00003bf4 (54 bytes). Names prefixed ref_

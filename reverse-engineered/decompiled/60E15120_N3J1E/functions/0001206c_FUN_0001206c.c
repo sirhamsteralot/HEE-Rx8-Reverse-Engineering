@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
+ * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): 
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069120: Ignition Timing Trailing Base (RX8Defs data pointer, axes and dimensions match).

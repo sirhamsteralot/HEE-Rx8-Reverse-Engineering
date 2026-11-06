@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffb478 e2ram_read_staging (uint16[28]): E2RAM read landing buffer (0xb958, 0x1c u16); magic checked byte-swapped as 0x5aa5 at +0, checksum at +0x36 (0xffffb4ae).
+ */
 /* ROM address: 0x000235f8; body bytes: 170; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00023e6c (170 bytes). Names prefixed ref_

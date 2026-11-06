@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_runtime_s [high]: PID 0x1f: ffffd284 via 0x409c clamp 0xffff
+ * RAM 0xffffd284 engine_runtime_counter_ffffd284 (uint32): PID 0x1f via 0x409c, clamp 0xffff (OBD PID 1F s)
+ */
 /* ROM address: 0x000555d0; body bytes: 40; decompiled */
 
 uint diag_read_runtime_s(void)

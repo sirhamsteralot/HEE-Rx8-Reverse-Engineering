@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * dtc_state_machine_step [medium]: DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)
+ */
 /* ROM address: 0x00037358; body bytes: 278; decompiled */
 
 /* Function candidate recovered from ROM pointer at 57700 and register-save prologue. Heuristic

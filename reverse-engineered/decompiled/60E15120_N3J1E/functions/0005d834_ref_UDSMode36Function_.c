@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_36_transfer_data [high]: service table record 0x5ec6c (service 0x36) -> handler; ROM bytes verified; UDS 0x36 (ref_UDSMode36Function_)
+ */
 /* ROM address: 0x0005d834; body bytes: 50; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005c024 (50 bytes). Names prefixed ref_
