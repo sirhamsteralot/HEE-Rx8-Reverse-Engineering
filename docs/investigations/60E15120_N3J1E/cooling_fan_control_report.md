@@ -61,10 +61,10 @@ fan_output_gpio()            # 0x2f1dc -> PEDR_W 0xfffff754 bits 0x800/0x10
 bda1 = (bdaa || (bdab && b0cd)) || (aa68==0 && bda0 && !ccc6 && !a8ea && !bf8d)
        || bd68 || bd6a, gated by !d040 && !d0a8 && !(d264&&d269...) && !d263
 
-# 0x2f65c: bdac = coolant >= 101 / < 98; bdb2 = c6ac >= 1.94 / < 1.84;
+# 0x2f65c: bdac = coolant >= 101 / < 98; bdb2 = c6ac (`inferred_ram_c6ac_ffffc6ac` 0xffffc6ac) >= 1.94 / < 1.84;
 #          bdb3 = coolant >= 80 / < 77; bdb4 = vspeed >= 10 / < 8
 bda8 = bda1 ? saturate_add(bda8,1) : 0
-bda2 = (bda1 && bda8 > 0x5c && (bdac || (bd68 && bdb8) || (aa68==0 && bda0 &&
+bda2 = (bda1 && bda8 > 0x5c && (bdac || (bd68 && bdb8 `inferred_ram_bdb8_ffffbdb8` 0xffffbdb8) || (aa68==0 && bda0 &&
        !ccc6 && !a8ea && !bf8d) || bd6a || (bdb2==0 && bdb3 && !bdb4)))
        || c5e6 || (d264 && !d269), gated by !d263
 
@@ -77,7 +77,7 @@ bda2 = (bda1 && bda8 > 0x5c && (bdac || (bd68 && bdb8) || (aa68==0 && bda0 &&
 
 No lookup tables in this subsystem — all thresholds are inline constants:
 coolant 94/97 °C (fan 1), 98/101 °C and 77/80 °C (fan 2), load 1.84/1.94 on
-0xffffc6ac, vehicle speed 8/10 km/h, high-speed delay counter threshold 0x5c
+`inferred_ram_c6ac_ffffc6ac` 0xffffc6ac, vehicle speed 8/10 km/h, high-speed delay counter threshold 0x5c
 (92 counts) on 0xffffbda8.
 
 ## 4. Labeling applied
@@ -184,6 +184,6 @@ Actuator/GPIO conventions and pin table in
 [`intake_solenoids_report.md`](intake_solenoids_report.md); UDS actuator-test
 arbitration pattern in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md);
 task scheduling in [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md);
-A/C switch input (0xffffbdb8) feeds the fan-2 condition — see
+A/C switch input (`inferred_ram_bdb8_ffffbdb8` 0xffffbdb8) feeds the fan-2 condition — see
 [`alternator_control_report.md`](alternator_control_report.md) for that flag's
 producer.
