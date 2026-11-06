@@ -1,0 +1,46 @@
+{
+  "pass": "fan_control_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_claims": "PASS",
+  "verify_readability": "PASS (3355 function bodies consistent)",
+  "verify_math_units": "PASS",
+  "validate_reports": "PASS",
+  "pytest": "134 passed",
+  "labels_applied": {
+    "functions": 8,
+    "ram": 3,
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "metadata/integrated_names.json"
+    ],
+    "export_files_renamed": 10,
+    "function_bodies_verified_intact": 3355
+  },
+  "pipeline_scripts": "review_fan_control_labels.py (idempotent; wired into rebuild.sh after review_intake_labels.py) + annotate_source_review.py + integrate_reviewed_names.py",
+  "record": "metadata/fan_control_labels.json",
+  "ghidra_database_updated": false,
+  "binary_level_verification": {
+    "shared_pool_0x2f240_0x2f25f": {"0x2f240": "0xf754 (PEDR_W low16)", "0x2f242": "0x800 (PE11 mask)", "0x2f244": "0xbda1", "0x2f246": "0x10 (PE4 mask)", "0x2f248": "0xbda2", "0x2f24c": "0x2054", "0x2f250": "0x4bbc (ref_setRegister_REG_BIT_VAL)", "0x2f254": "0x2064", "0x2f258": "0x5c724", "0x2f25c": "0x5c648"},
+    "task_pool_0x2f290_0x2f2ab": {"0x2f29c": "0x2f51a", "0x2f2a0": "0x2f65c", "0x2f2a4": "0x2f1dc"},
+    "caller_edges": {"0x117ac -> 0x2f266": "pool 0x11a04", "0x1102a -> 0x2f260 -> 0x2f188": "callgraph"},
+    "gpio_reg": {"PEDR_W": "0xfffff754 (symbols.tsv)"},
+    "package_pins_sh7055h_table_1_3": {"PE4": 12, "PE11": 21},
+    "harness_terminals": ["5X (R/G)", "5AD (L/W) cooling fan relay"]
+  },
+  "limits": "Static analysis only. Gate-flag producers not traced. Package-pin -> terminal hop not verified (board routing)."
+}

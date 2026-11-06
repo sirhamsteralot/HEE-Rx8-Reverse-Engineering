@@ -20,6 +20,12 @@
       "rom_refs": 5,
       "rom_claims": 0
     },
+    "cooling_fan_control_report.md": {
+      "fn_checked": 9,
+      "ram_checked": 4,
+      "rom_refs": 13,
+      "rom_claims": 0
+    },
     "cruise_control_report.md": {
       "fn_checked": 9,
       "ram_checked": 8,
