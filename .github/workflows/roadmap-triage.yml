@@ -1,0 +1,28 @@
+name: roadmap-triage
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  issues:
+    types: [labeled, unlabeled, edited, reopened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    name: Scan, classify and prune roadmap tickets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run roadmap triage
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python utilities/scripts/roadmap_triage.py --repo "$GITHUB_REPOSITORY" --apply --stale-days 120
