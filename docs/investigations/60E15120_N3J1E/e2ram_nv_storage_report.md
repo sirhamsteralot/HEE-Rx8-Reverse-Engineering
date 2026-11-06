@@ -4,7 +4,7 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+recorded in `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`.
 
 **Related reports:** E2RAM read/write layer `ref_getDataFromE2RAM` 0x3599c /
 `ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4 (inherited `ref_` — unverified hypothesis)
@@ -91,7 +91,7 @@ tables. Literal-pool floats referenced from the codec (ROM-verified):
 RAM aliases: `e2ram_staging_block` (0xffffb440), `e2ram_read_staging` (0xffffb478),
 `e2ram_payload_raw` (0xffffb47a), `stored_dtc_flag_bits` (0xffffb4ec). Evidence in
 `source_review/accepted_{function,ram}_aliases.tsv` and
-`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`.
 
 ## 5. Corrections made in this pass
 
@@ -103,7 +103,7 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/00023844_*.c`,
   `000244bc_*.c`, `0002376c_*.c`, `0002377a_*.c`, `00023f4e_*.c`, `000242ae_*.c`
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
-- `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
+- `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`
 
 ## 7. Validation
 

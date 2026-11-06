@@ -4,7 +4,7 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+recorded in `data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`.
 
 **Related reports:** HCAN register map and boot CAN init in
 [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) (HCAN0 at
@@ -76,7 +76,7 @@ Not calibration — ROM descriptor blocks (mailbox config):
 | 0x2a4f8 | `hcan_mailbox_config_compare` | high |
 
 Evidence: `source_review/accepted_function_aliases.tsv`,
-`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`.
 
 ## 5. Corrections made in this pass
 
@@ -87,7 +87,7 @@ None — previously unlabeled `FUN_0002a4f8`.
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0002a4f8_*.c`
   (symbol renamed in place; filename keeps the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
-- `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
+- `data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`
 
 ## 7. Validation
 

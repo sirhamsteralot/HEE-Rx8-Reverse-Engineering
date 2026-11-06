@@ -20,7 +20,7 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
   5 (corrections), 6 (files), 7 (validation), 8 (memory map 8.1/8.2/8.3),
   9 (limits) all present; `validate_reports.py` re-run: PASS (fn/ram/rom
   addresses in each report's memory map checked vs index/TSVs/ROM).
-- Label artifacts consistent: `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
+- Label artifacts consistent: per-body label JSONs (`data/labels/60E15120_N3J1E/{o2_sensor_monitor,cruise_control,e2ram_nv_storage,idle_target_control,can_mailbox_config}_labels.json`)
   covers exactly the 15 function + 17 RAM rows of
   `source_review/accepted_{function,ram}_aliases.tsv`, which match
   `function_index.tsv` / `symbols.tsv` (asserted by

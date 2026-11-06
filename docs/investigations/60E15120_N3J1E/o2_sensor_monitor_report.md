@@ -6,7 +6,7 @@ untouched). All findings are from static analysis of the canonical export
 (`reverse-engineered/decompiled/60E15120_N3J1E/`), the disassembly
 (`reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm`) and the
 raw ROM bytes. No hardware execution was performed. Labels recorded in
-`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`.
 
 **Related reports:** DTC set path and the fault-id → slot map are documented in
 [`dtc_control_report.md`](dtc_control_report.md) (0x5fd38 → 0x5fe20, id2slot table
@@ -99,7 +99,7 @@ RAM aliases: `o2_monitor_ratio_ch0..ch3` (0xffffc6f0/c6f4/c780/c784),
 `o2_channel_lambda_slow` (0xffffc710). Full evidence strings:
 `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
 and `accepted_ram_aliases.tsv`; record:
-`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`.
 
 ## 5. Corrections made in this pass
 
@@ -113,7 +113,7 @@ different monitor and was not touched.)
   `0004128e_*.c`, `0003f924_*.c` (symbol renamed in place by
   `integrate_reviewed_names.py`; filenames keep the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
-- `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`,
+- `data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`,
   `data/labels/60E15120_N3J1E/integrated_names.json`
 
 ## 7. Validation

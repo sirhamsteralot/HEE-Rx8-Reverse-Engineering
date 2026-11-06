@@ -1,0 +1,68 @@
+{
+ "date": "",
+ "rom_unchanged": true,
+ "ghidra_database_updated": false,
+ "pass": "o2_sensor_monitor_labeling",
+ "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Report: o2_sensor_monitor_report.md.",
+ "function_aliases": {
+  "0003fb9e": {
+   "alias": "o2_response_monitor_accumulate",
+   "confidence": "high",
+   "evidence": "4-channel filtered-lambda/AFR delta accumulator: snapshots 0xffffc708/0c/10/14, shifts 10-entry rings 0xffffc7f4 (float) and 0xffffc870 (u16), reloads per-channel counters 0xffffc7ba-0xffffc7d8 from 3-D tbl descriptor 0x6b66c (nx=9 ny=9 ax=0x7ad48 ay=0x7ad6c data=0x7ad90 type=0, ROM bytes verified) on (engine_load 0xffffc0b4, engine_speed_rpm 0xffffb548); accumulates max/min deltas 0xffffc724-0xffffc77c, sign/deviation bits 0xffffc7de-0xffffc7e5, tolerance band float 1e-5 (0x3727c5ac) via mova pool 0x41220 (refs 0x41140/0x41156/0x4116a/0x4117e). Outputs ratios 0xffffc6f0/c6f4/c780/c784 and flag 0xffffc701, consumed by 0x4128e. Called from slow-task batch 0x38f3e (jsr at 0x38f74; pool word 0x390b0 = 0x3fb9e). Channel inputs filtered by 0x3f924 (called from 0x38dca)."
+  },
+  "0004128e": {
+   "alias": "o2_response_monitor_evaluate",
+   "confidence": "high",
+   "evidence": "Evaluates the 0x3fb9e accumulators: thresholds from 3-D tbl descriptors 0x6b680/0x6b69c/0x6b6b8/0x6b6d4 (load,rpm; ROM bytes verified) -> 0xffffc6f8/c6fc/c798/c79c; ratio<=threshold sets pass flags 0xffffc7ea-0xffffc7e9, else fail flags 0xffffc7e6-0xffffc7e9; any-fail -> 0x5fd38(0x1c,1) pending, all-four-fail -> 0x5fd38(0x1c,2) confirmed. Fault id 0x1c -> id2slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133 front HO2S slow response (data/dtc/60E15120_N3J1E.tsv slot 1b). Mode-06 test results written by 0x58262 (0xffffc6f0) and 0x5831c (0xffffc6f4) via 0x5904a. Called from 0x38f3e (jsr at 0x38f7a)."
+  },
+  "0003f924": {
+   "alias": "o2_channel_filter_update",
+   "confidence": "high",
+   "evidence": "First-order filters (epsilon 1e-5) of diag AFR word 0xffffaa6c (factors 1.0 -> 0xffffc708, 0.5 -> 0xffffc70c) and actual lambda 0xffffadec (0.1 -> 0xffffc710, 0.03125 -> 0xffffc714); latches 0xffffc900/0xffffc902 edges from 0xffffae1a/ae1c. Feeds 0x3fb9e. Called from 0x38dca (pool-verified jsr)."
+  }
+ },
+ "ram_aliases": {
+  "ffffc6f0": {
+   "alias": "o2_monitor_ratio_ch0",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Accumulated amplitude ratio channel 0 (0xffffc758/0xffffc728) from 0x3fb9e; compared vs threshold 0xffffc6f8 in 0x4128e; mode-06 result via 0x58262 (encode step 0.0039062)."
+  },
+  "ffffc6f4": {
+   "alias": "o2_monitor_ratio_ch1",
+   "type": "float",
+   "reader": "0005831c",
+   "evidence": "Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c."
+  },
+  "ffffc780": {
+   "alias": "o2_monitor_ratio_ch2",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Ratio channel 2 (0xffffc770/0xffffc740); compared vs 0xffffc798."
+  },
+  "ffffc784": {
+   "alias": "o2_monitor_ratio_ch3",
+   "type": "float",
+   "reader": "0004128e",
+   "evidence": "Ratio channel 3 (0xffffc77c/0xffffc74c); compared vs 0xffffc79c."
+  },
+  "ffffc701": {
+   "alias": "o2_monitor_fluctuation_detected",
+   "type": "uint8",
+   "reader": "0004128e",
+   "evidence": "Set by 0x3fb9e when the counter window completes (0xffffc904==0); gates the ratio evaluation in 0x4128e."
+  },
+  "ffffc708": {
+   "alias": "o2_channel_afr_fast",
+   "type": "float",
+   "reader": "0003f924",
+   "evidence": "First-order filtered diag AFR word 0xffffaa6c, factor 1.0 (0x3f800000); snapshot input to 0x3fb9e."
+  },
+  "ffffc710": {
+   "alias": "o2_channel_lambda_slow",
+   "type": "float",
+   "reader": "0003fb9e",
+   "evidence": "First-order filtered actual lambda 0xffffadec, factor 0.1; one of the four channels delta-accumulated in 0x3fb9e."
+  }
+ }
+}
