@@ -28,7 +28,7 @@ void FUN_00048558(void)
   if ((((snapshot_DAT_ffffcc92 < 3) || (DAT_ffffccb1 != '\0')) || (cVar2 != '\x01')) &&
      (((2 < DAT_ffffccb0 || (snapshot_DAT_ffffcc92 < 3)) || (cVar2 != '\x01')))) {
     if (DAT_ffffccae < 0x40) {
-      DAT_ffffcca8 = rx8_min_float(arg0,DAT_ffffb2a4 + fVar3);
+      DAT_ffffcca8 = rx8_min_float(arg0,idle_air_required_ffffb2a4 + fVar3);
       DAT_ffffccae = rx8_add_u16_saturate((int)(short)DAT_ffffccae,1);
     }
     else {
@@ -36,7 +36,7 @@ void FUN_00048558(void)
     }
   }
   else {
-    DAT_ffffcca8 = rx8_min_float(arg0,DAT_ffffb2a4 + fVar3);
+    DAT_ffffcca8 = rx8_min_float(arg0,idle_air_required_ffffb2a4 + fVar3);
     DAT_ffffccae = 0;
   }
   DAT_ffffccb1 = cVar2;

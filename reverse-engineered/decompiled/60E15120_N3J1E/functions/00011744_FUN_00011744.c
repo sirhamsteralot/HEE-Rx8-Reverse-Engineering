@@ -10,6 +10,8 @@ void FUN_00011744(void)
   FUN_00014628();
   alternator_monitor_batch();
   ref_updateIdleControl__();
+  ref_alternatorControl();
+  idle_control_calc_batch();
   FUN_0003eaf8();
   apv_control_task();
   FUN_00016f80();
@@ -17,7 +19,7 @@ void FUN_00011744(void)
   candidate_vdi_control_task_wrapper();
   candidate_vfad_control_task_wrapper();
   FUN_000288f4();
-  ref_updateDSCRelatedCANStuff__();
+  dsc_can_arbitration_batch();
   ref_getFaultEvalState();
   FUN_00016b82();
   return;

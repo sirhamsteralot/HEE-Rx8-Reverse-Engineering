@@ -65,7 +65,7 @@ void cruise_set_speed_adjust_integrator(void)
   cVar14 = DAT_ffffbceb;
   cVar13 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = DAT_ffffbbc8;
+  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
   DAT_ffffbd1c = DAT_ffffbfa0 - DAT_ffffbfa4;
   fVar21 = DAT_ffffbfa4 - DAT_ffffbfa0;
   snapshot_DAT_ffffa9b4 = DAT_ffffa9b4;
@@ -82,7 +82,7 @@ void cruise_set_speed_adjust_integrator(void)
       DAT_ffffbd10 = rx8_add_u16_saturate((int)DAT_ffffbd10,1);
     }
     else if ((DAT_ffffa9b4 <= cruise_set_speed_ffffbcf8) &&
-            ((DAT_ffffbbcb == '\0' || ((0xfd < DAT_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
+            ((DAT_ffffbbcb == '\0' || ((0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
       DAT_ffffbd10 = 0;
     }
   }

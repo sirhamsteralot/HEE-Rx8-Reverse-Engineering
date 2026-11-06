@@ -39,11 +39,11 @@ void candidate_electrical_load_flag_calc(void)
   }
   if (DAT_ffffb5e4 < 40.0) {
     if (DAT_ffffb5e4 < fVar3) {
-      DAT_ffffb5b3 = 0;
+      high_load_flag_ffffb5b3 = 0;
     }
   }
   else {
-    DAT_ffffb5b3 = 1;
+    high_load_flag_ffffb5b3 = 1;
   }
   return;
 }
