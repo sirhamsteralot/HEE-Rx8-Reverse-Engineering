@@ -48,11 +48,11 @@ EXPECTED_HANDLERS = {
 TASKEND = 0x3D58
 IDLE = 0x3DAC
 
-# Pre-existing emulator opdec gaps (corpus table, cf. ROADMAP E8): these two
-# words decode to valid SH-2E (0xff07 = fmov.s fr0,@(r0,r15)) but are missing
-# from the opdec table, so deep callees of the task[13]/task[16] batches stop
-# the emulated run. The task-level handlers all execute before the gap.
-KNOWN_DECODE_GAPS = {13: 0x50DE0, 16: 0x674AC}  # inside FUN_00050d98 / FUN_00067476
+# Former decode gaps for task[13]/task[16] (words 0x50de0 / 0x674ac inside
+# FUN_00050d98 / FUN_00067476, fmov.s frN,@( r0,r15 )) are closed: the operand
+# regexes in sh2e.py now accept the disassembler's spaced "@( r0,rN )" form,
+# so those runs complete to taskEnd + idle.
+KNOWN_DECODE_GAPS = {}
 
 
 @pytest.fixture(scope="module")

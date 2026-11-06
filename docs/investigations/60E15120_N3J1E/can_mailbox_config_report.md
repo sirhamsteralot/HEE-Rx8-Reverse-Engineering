@@ -48,7 +48,7 @@ for 0xffffa40e in 0..1:
 if 0xffffa40e > 1: 0xffffa410 = 1                   # setup error flag
 
 # 0x2a4f8 hcan_mailbox_config_compare(channel, recs):
-mismatch = (BCR != 0x83e)                            # HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602
+mismatch = (BCR != 0x803e)                           # HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 (pool 0x2a5f0 = 0x0000803e; confirmed by emulator: setup writes 0x803e)
 for each 16-byte record r (16 or 6):
     mb = r[5] & 0xf
     MBCR |= 1 << ((mb + 8) & 0xf);  expected MBIMR from last record
