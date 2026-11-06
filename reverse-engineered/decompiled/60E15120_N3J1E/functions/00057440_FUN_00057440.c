@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1718_pedr_bit2_status [medium]: dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4
+ */
 /* ROM address: 0x00057440; body bytes: 46; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f4c8 and register-save prologue. Heuristic

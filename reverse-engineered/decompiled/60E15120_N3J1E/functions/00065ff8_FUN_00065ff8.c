@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode03_stored_dtc [high]: service table record 0x5eb58 (service 0x03) -> handler; ROM bytes verified; OBD Mode 03
+ */
 /* ROM address: 0x00065ff8; body bytes: 180; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000648e8 (180 bytes). Names prefixed ref_

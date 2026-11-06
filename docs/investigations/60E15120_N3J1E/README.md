@@ -131,6 +131,19 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
+## Idle speed control labeling
+
+`scripts/review_idle_control_labels.py` labels the task[10] idle batch
+`idle_control_calc_batch` 0x167c0 (26 callees, 28-call batch under mask 0x10) and
+the idle air chain: feedback 0x15a9a, output clamp 0x216f8 -> 0xffffb2a4 (read by
+the electronic-throttle torque chain 0x21a80), target encoder 0x5ca94 (= Mode 22
+PID 0x096e source 0xffffa7ac at 0.25 rpm/LSB, plus diag cell 0xffffd34d), and the
+E2RAM-backed trim learn/load 0x1617e/0x15fa0 on 0xffff8040/8048. 26 functions,
+6 RAM cells; select-flag producers pinned (0xffffb534 AT, 0xffffbdb8 A/C switch,
+0xffffbd69 A/C clutch, 0xffffb5b3 high-load flag). Write-up:
+[`idle_control_report.md`](idle_control_report.md) + `reviews/idle_control/`;
+record: `metadata/idle_control_labels.json`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

@@ -22,7 +22,7 @@ void FUN_0002616e(void)
   else {
     DAT_ffffb5a0 = 0.0;
   }
-  if ((DAT_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (DAT_ffffb53a == '\0')) {
     pfVar1 = (float *)&DAT_000749f0;
     DAT_ffffb600 = 406.25;
   }

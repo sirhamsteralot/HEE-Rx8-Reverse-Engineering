@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * isotp_frame_type_dispatch [high]: switch on frame type: SF->0x68548, FF->0x6859e, CF->0x6872c, FC->0x68764
+ */
 /* ROM address: 0x0006842c; body bytes: 136; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00066d1c (136 bytes). Names prefixed ref_

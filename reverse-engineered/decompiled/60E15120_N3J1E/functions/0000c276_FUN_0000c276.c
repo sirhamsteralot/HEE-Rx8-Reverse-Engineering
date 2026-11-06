@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_reference_adc_read [high]: a326 = adc_read_result_bank2(): knock reference-channel ADC; called from 0xc8dc (knock_sensor_sci_command) and 0x5a4c.
+ * knock_reference_adc_read [high]: a326 = ref_readADCResult(): knock reference-channel ADC; called from 0xc8dc (knock_sensor_sci_command) and 0x5a4c.
  */
 /* ROM address: 0x0000c276; body bytes: 26; decompiled */
 

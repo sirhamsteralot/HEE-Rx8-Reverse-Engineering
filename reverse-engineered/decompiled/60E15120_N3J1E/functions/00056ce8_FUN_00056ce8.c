@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0914_ram_a9c4_scaled_s16 [medium]: dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16
+ */
 /* ROM address: 0x00056ce8; body bytes: 50; decompiled */
 
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f2e0. Table purpose inferred from

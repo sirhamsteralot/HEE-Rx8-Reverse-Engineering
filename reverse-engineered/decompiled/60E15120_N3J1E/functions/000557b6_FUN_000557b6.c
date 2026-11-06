@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_a9c4 [medium]: PID 0x49: ffffa9c4 decode*20*0.392157
+ * RAM 0xffffa9c4 inferred_pedal_volts_ffffa9c4 (uint16): PID 0x49/0x0914
+ */
 /* ROM address: 0x000557b6; body bytes: 44; decompiled */
 
 void candidate_diag_encode_a9c4(void)

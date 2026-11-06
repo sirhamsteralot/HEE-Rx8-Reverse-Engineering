@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069440: Table 2D - 34 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069454: Table 2D - 35 (RX8Defs data pointer, axes and dimensions match).
@@ -21,7 +24,7 @@
 /* WARNING: Removing unreachable block (ram,0x00015b16) */
 /* WARNING: Removing unreachable block (ram,0x00015b3e) */
 
-undefined4 FUN_00015a9a(void)
+undefined4 idle_air_feedback_calc(void)
 
 {
   char cVar1;
@@ -127,7 +130,7 @@ undefined4 FUN_00015a9a(void)
     DAT_ffffa83c = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548 - snapshot_DAT_ffffa7ac,&tbl_table_2d_40_000694b8);
   }
   DAT_ffffa840 = 0x402e147b;
-  DAT_ffffa838 = rx8_min_float(DAT_ffffa898 * DAT_ffffa8c0 * DAT_ffffa848 - 0.0,DAT_ffffa83c);
+  idle_air_calc_total_ffffa838 = rx8_min_float(DAT_ffffa898 * DAT_ffffa8c0 * DAT_ffffa848 - 0.0,DAT_ffffa83c);
   if (DAT_ffffa884 != '\0') {
     DAT_ffffa884 = DAT_ffffa884 + -1;
   }

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_34_request_download [high]: service table record 0x5ec60 (service 0x34) -> handler; ROM bytes verified; UDS 0x34 (ref_UDSMode34Func)
+ */
 /* ROM address: 0x0005d7bc; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005bfac (104 bytes). Names prefixed ref_

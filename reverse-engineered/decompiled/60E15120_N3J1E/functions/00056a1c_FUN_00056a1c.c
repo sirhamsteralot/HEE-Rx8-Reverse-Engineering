@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0013_o2_sensors_present [high]: dispatch record 0x5f1b4 -> handler verified in ROM bytes + function_index; const 2 = OBD PID 13 bitmap (bank1 sensors)
+ */
 /* ROM address: 0x00056a1c; body bytes: 22; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f1bc and register-save prologue. Heuristic

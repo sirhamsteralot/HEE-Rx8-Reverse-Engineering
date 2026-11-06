@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_target_rpm_calculate [high]: Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94.
+ * RAM 0xffffa7f4 idle_target_rpm (float): Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94.
+ * RAM 0xffffb5b3 high_load_flag (uint8): Set by 0x264f0 when filtered 0xffffb5e0 >= 40.0 (clears below 30.0); 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335) in 0x2633e; 0xffffb5a4/0xffffb5a0 ratio appears in the alternator domain (0x2ce18); selects an idle-target table path in 0x1506c.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006935c: Idle Target Filter Factor (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069370: Idle Target - Base (RX8Defs data pointer, axes and dimensions match).
@@ -43,11 +48,11 @@ void idle_target_rpm_calculate(void)
   
   cVar9 = DAT_ffffc61e;
   cVar8 = inferred_ram_bdb8_ffffbdb8_ffffbdb8;
-  cVar7 = DAT_ffffbd69;
+  cVar7 = ac_clutch_on_ffffbd69;
   cVar6 = DAT_ffffbad0;
-  cVar5 = DAT_ffffb5b3;
+  cVar5 = high_load_flag_ffffb5b3;
   cVar4 = DAT_ffffb53c;
-  cVar3 = DAT_ffffb534;
+  cVar3 = automatic_transmission_ffffb534;
   cVar1 = engine_injectors_off_ffffa42c;
   cVar2 = engine_running_ffffa428;
   arg3 = 1e-05;
@@ -268,7 +273,7 @@ LAB_000156a2:
     }
   }
   idle_target_rpm_ffffa7f4 = fVar13;
-  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)FUN_0005ca94(idle_target_rpm_ffffa7f4);
+  inferred_ram_a7ac_ffffa7ac_ffffa7ac = (float)idle_target_encode_u16(idle_target_rpm_ffffa7f4);
   return;
 }
 
