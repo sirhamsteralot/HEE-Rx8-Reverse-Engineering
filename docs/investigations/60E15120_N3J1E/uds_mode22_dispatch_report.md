@@ -353,8 +353,9 @@ this report's §12 SBL/security + CVN facts feed the
 Functions: dispatch 0x5774c, PID handlers 0x56890-0x57974 (per-record table in section 3),
 service router 0x68dac, service handlers per table in section 3, ISO-TP 0x683d4/0x6842c/
 0x68548/0x6859e/0x6872c/0x68764/0x68a86/0x68b10, entry/scheduler 0x680a0/0x684b4/0x6010/
-0x96be, helpers 0x579a8/0x5fb08/0x5fab2/0x54884/0x55316/0x37358/0x37546/0x57858/0x57a0c/0x57a2e.
-RAM: 0xffffd1ea/d1e8/d1ec diag22 state; 0xffffd3b4 permission mask; 0xffffddc8 UDS RX buf;
+0x96be, helpers 0x579a8/0x5fb08/0x5fab2/0x54884/0x55316/0x37358/0x37546/0x57858/0x57a0c/0x57a2e,
+SCI0 byte exchange 0x71ea `sci0_exchange_byte_wait_rdrf` (RDRF 0x40 poll at 0x721c-0x7224).
+RAM: 0xffffd1ea `diag22_current_identifier`/d1e8/d1ec diag22 state; 0xffffd3b4 permission mask; 0xffffddc8 UDS RX buf;
 0xffffd962 ch0 response ring (pos 0xffffd95c); 0xffffddf5 UDS flags; 0xffffddec/ddea/dde6
 channel/service/length; 0xffff9ec8 vehicle-present latch; 0xffffd570 DTC flag table;
 plus the 63 named cells appended to `accepted_ram_aliases.tsv` (0xffffad5c/adec/ad10/ad48/

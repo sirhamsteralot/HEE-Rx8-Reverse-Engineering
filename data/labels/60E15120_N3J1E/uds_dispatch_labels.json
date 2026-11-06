@@ -2769,7 +2769,32 @@
   "alias": "uds_service_dispatch_table_scan",
   "confidence": "high",
   "evidence": "scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02"
- }
+ },
+  "0005774c": {
+    "alias": "diag22_find_and_dispatch_identifier",
+    "confidence": "high",
+    "evidence": "Linear scan of 99 x 12-byte records at ROM 0x5f10c (pool 0x57848 = 0x5f10c; record stride 12 via shll/add/shll2 at 0x5776e-0x5777a), compares record u16 at +0 against 0xffffd1ea (pool 0x5784c), checks availability mask at +4, then jsr record[8] handler with service 0x22. Re-verified against ROM bytes + disassembly this pass; dynamic check test_mode22_dispatch_table_payloads drives it."
+  },
+  "00057858": {
+    "alias": "diag22_append_positive_response_header",
+    "confidence": "high",
+    "evidence": "mov #0x62 at 0x5785a, then identifier u16 from 0xffffd1ea (pool 0x57994) written high-then-low at buffer+1/+2, append helper 0x68124 (pool 0x57998) called with r6=3 length, r4=0x22 service. Emits 0x62 + 2-byte DID. Re-verified this pass."
+  },
+  "00057a0c": {
+    "alias": "diag_append_u16_be",
+    "confidence": "high",
+    "evidence": "extu.w r5 + shlr8 puts the high byte first at buffer+0, low byte at +1, append helper (pool 0x57a54) with r6=2 (mov #0x2 at 0x57a1a). Big-endian u16 append. Re-verified this pass."
+  },
+  "00057a2e": {
+    "alias": "diag_append_u8",
+    "confidence": "high",
+    "evidence": "mov.b r5 to buffer, append helper (pool 0x57a54) with r6=1 (mov #0x1 at 0x57a2e). One-byte append. Re-verified this pass."
+  },
+  "000071ea": {
+    "alias": "sci0_exchange_byte_wait_rdrf",
+    "confidence": "high",
+    "evidence": "SCI0 byte exchange: writes tx byte, polls SCI0 SSR with tst #0x40 RDRF wait loop at 0x721c-0x7224 (bt/s back), then reads RDR (pool 0x7262); register addresses via pools 0x725c/0x7260. RDRF mask 0x40 per SH7055 I/O app note 2.20. Re-verified this pass."
+  }
  },
  "ram_aliases": {
  "ffffad5c": {
@@ -3149,7 +3174,13 @@
   "type": "float[7]",
   "reader": "00057594",
   "evidence": "PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b"
- }
+ },
+  "ffffd1ea": {
+   "alias": "diag22_current_identifier",
+   "type": "uint16",
+   "reader": "00057858",
+   "evidence": "Read from the request by 0x567e8, matched by 0x5774c (pool 0x5784c), echoed big-endian in the 0x62 positive-response header by 0x57858 (pool 0x57994). Re-verified against ROM pools this pass."
+  }
  },
  "rom_unchanged": true
 }
