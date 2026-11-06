@@ -15,7 +15,8 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
 **reopened**: items 1–7 closed (7 on 2026-11-05), a 2026-11-04 coverage audit
-found new gaps (items 8–10) — item 8 closed, pick up 9–10 first; C item 10 pairs naturally
+found new gaps (items 8–10) — item 8 closed (PR #33), its open follow-ups are
+logged as item 11; pick up 9–10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -26,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 9–10)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 9–11)
 
 - **C item 7 (CLOSED 2026-11-05)** — scheduler task handlers 12–16 identified
   and labeled: task[12] 0x6592 `task12_adc_feedback_pwm_entry` (ADC AN23/AN11
@@ -75,6 +76,32 @@ and where artifacts live.
   `candidate_evap_open_loop_condition` 0x22144,
   `candidate_knock_sensor_fault_task` 0x64ba). Dynamic validation
   (`harness.call()` + datalog replay) pairs naturally with E item 1.
+- **C item 11 (open)** — open items left by C item 8 (PR #33; that pass was
+  static-only, no emulator run). Dynamic/emulator validation of the seven
+  newly labeled bodies pairs with C item 10 / E item 1. Per subsystem
+  (report §9 Limits):
+  - cruise ([cruise_control_report.md](docs/investigations/60E15120_N3J1E/cruise_control_report.md)):
+    units of `cruise_set_speed` 0xffffbcf8 (km/h vs % — inferred from the
+    [0,100] clamp + 20–200 km/h axes, not proven against a scanner PID); the
+    control law consuming 0xffffcf51–0xffffcf5b downstream of 0x4ca7e/0x4d4a6/
+    0x4d700; producer of the band selector 0xffffcf1c.
+  - E2RAM ([e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)):
+    attribute the remaining payload u16s of the 28-u16 block (only rpm
+    0xffffb548, pedal volts 0xffffa9c4, two readValue floats and the DTC flag
+    bytes are attributed); save cadence/trigger — the caller of 0x1150e was
+    not traced beyond the callgraph. (The deeper E2RAM device protocol layer
+    stays with C item 9: 0x3599c/0x37ea4.)
+  - CAN mailbox ([can_mailbox_config_report.md](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md)):
+    attribute record bytes +12..+15 of the 16-byte mailbox descriptors; whether
+    `ref_canSetup` 0xd9f4 runs once at boot or also on CAN error recovery.
+  - idle ([idle_target_control_report.md](docs/investigations/60E15120_N3J1E/idle_target_control_report.md)):
+    meaning of the select flags 0xffffb534/b53c/b5b3/bd69/bdb8 (inferred, not
+    proven from producers); output path of 0x5ca94 (which actuator register it
+    drives).
+  - O2 monitor ([o2_sensor_monitor_report.md](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)):
+    physical meaning of the four filtered channels 0xffffc708–0x14; gating
+    conditions of 0xffffc704 / 0xffffae21 on the threshold averages
+    0x6b680–0x6b6d4.
 
 ### E. Reimplementation coverage (P4) — depends on C items 1–6 (done)
 
@@ -151,6 +178,7 @@ flash before any read), not the test path.
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D11 | CLOSED | literal-pool scalar constants are extracted into `data/maps/` by `utilities/scripts/extract_scalars.py`: 14 binary-verified float32 seeds located by exact bit pattern per ROM (`data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`), asserting the reference-ROM addresses (base fuel scalar 0.07196 = 0x3d935fc4 @0x78170 -> `fuel_load_scale_ffffbed0`, load cell 0.6345 @0x7a088, ...); cross-ROM: 475.93 cc/min secondary flow absent in 60E0E700_N3YLEE (uses 608.0/626.224 @0x76ccc-0x76cd0). per-ROM RomRaider defs expose stoich_afr 14.7 + fuel_load_scale 0.07196 as editable 1-cell scalar tables (extend_defs_all_roms.py injects per-ROM storageaddress, asserted vs ROM bytes). Tests `tests/test_extract_scalars.py` (6, pass). See [calibration extraction section 6a](docs/investigations/60E15120_N3J1E/calibration_extraction_report.md) + [data/maps README](data/maps/README.md) |
 | D10 | CLOSED 2026-11-05 | PID 0x221410 double-claim settled: PID 0x1410 handler 0x56f6c reads float `injector_pulse_time_ffffbe24` with step 8.0 — dynamically exact in the emulator (80.0→0x000a, 800.0→0x0064) and independent of throttle cell `ffffad5c`; byte-matched handler labeled high in 60E0E500/60E0E700_N3YLEE/60E1C500_N3J6EB; throttle/pedal are PID 0x0011/0x093c and physically proven via AN18/AN19→ffffad5c/ad5e→PID 0x11/0x47 (AN18 raw 32768 → 0x80 = 50.2 %). See [reviews/low_confidence_proof_pass_2026-11-05.md](docs/investigations/60E15120_N3J1E/reviews/low_confidence_proof_pass_2026-11-05.md) + `tests/test_lowconf_dynamic_proof.py` |
+| D12 | open | `annotate_source_review.py` fails on clean main too: 38 pre-existing 4-field rows in `docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv` (row count verified on main and on the PR #33 head). Noted in PR #33 and deliberately left as-is there (no drive-by fix, AGENTS.md rule 9); fixing the parser/rows is its own work unit |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.
