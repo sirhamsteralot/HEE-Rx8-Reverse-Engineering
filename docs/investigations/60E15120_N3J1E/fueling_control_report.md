@@ -178,7 +178,7 @@ entries below.
 | 0x000307e0 | `closed_loop_fuel_trim` | beb4/beb8 CL trim (clamp −1..2, filter 0.0625) |
 | 0x00033ad2 | `calculate_engine_load` | c0b4 = min(filter(c0b0), c0b8); 0.525 if injectors off |
 | 0x00007438 | `maf_sensor_scaling` | 9f78 = tbl 0x69788(raw·5/65536); fault 9f7c |
-| 0x00019f4e / 0x00019f40 / 0x0001a418 | `candidate_maf_voltage_and_fault_counters` / `…_filtered_update` / `…_per_rotation_calc` | MAF voltage, latching, per-rotation |
+| 0x00019f4e / 0x00019f40 / 0x0001a418 | `candidate_maf_voltage_and_fault_counters` / `…_filtered_update` / `maf_per_rotation_calc` | MAF voltage, latching, per-rotation |
 | 0x0001e842 | `maf_operating_range` | b0fe range 0-3 from a9ec |
 | 0x0000e48e | `candidate_injection_angle_limit_lookup` | a434..a43c max injection angle (tbls 0x68ef8/f0c/f20) |
 | 0x00030678 | `cranking_pulse_adder` | be94 += be58 when cranking |
@@ -206,12 +206,12 @@ entries below.
 | 0xffffb11c / b118 | `fuel_blend_weight` / `timing_blend_weight` | 0x200c6 producer |
 | 0xffffc0b0 / c0b8 / c0c4 / c0c5 | `engine_load_raw` / `engine_load_max` / `load_filter_fast_flag` / `injectors_off_previous` | 0x33ad2 |
 | 0xffff9eea / 9f78 / 9f7c | `maf_adc_raw` / `maf_scaled` / `maf_fault_status` | 0x7438 |
-| 0xffffa9e4 / a9e8 / aa2c / aa35 / aa36 | MAF latched voltage/scaled/fault counters | 0x19f4e |
-| 0xffffaa38 / aa3c / aa48 / aa54 / aa4c | MAF per-rotation filtered/value/filter | 0x1a418 |
+| 0xffffa9e4 / a9e8 / aa2c / aa35 / aa36 | `maf_voltage_latched` / `maf_scaled_latched` / `maf_voltage` / `maf_high_fault_counter` / `maf_low_fault_counter` | 0x19f4e |
+| 0xffffaa38 / aa3c / aa48 / aa54 / aa4c | `maf_per_rotation_filtered` / `maf_per_rotation` / `maf_filter_state` / `maf_filter_coeff` / `maf_filter_mode` | 0x1a418 |
 | 0xffffb0fe / b101-b103 | `maf_range_index` / band flags | 0x1e842 |
 | 0xffffa094..a0c0 | `injector_latency_ch0-2`(+mirrors) / `injector_zero_offset_ch0-2`(+mirrors) | 0x86f8/0x86ac |
 | 0xffffa004 base (+0xc=a010, +0x10=a014, +0x13=a017, +0x14=a018) | injector channel struct, 0x18 stride | 0x8a68/0x85e4 |
-| 0xffffa444/a445/a464/a465/a4a2/a4a3, a964/a97c/a97d/a96a/a96c, a4a4-a4ae | fuel-cut flags/requests/rpm gates/rev-limit state | 0xedc4/0x18cfe/0xee82/0xee64 |
+| 0xffffa444/a445/a464/a465/a4a2/a4a3, a964/a97c/a97d/a96a/a96c, a4a4-a4ae | `fuel_cut_flag_a`/`fuel_cut_flag_b`/`fuel_cut_request_a`/`fuel_cut_request_b`/hysteresis latches, rpm gates/rev-limit state | 0xedc4/0x18cfe/0xee82/0xee64 |
 | 0xffffaa6c / aa7c | `diag_afr_word_a/b` | PID 0x0034 |
 
 ### 7.3 ROM tables/data and entry points
@@ -295,15 +295,15 @@ confirm the thread's claim that **lambda tables store the decimal part (λ−1) 
 
 ### 10.2 Fuel-cut arbitration — resolved
 
-0xedc4 `candidate_fuel_cut_arbitration(param)`: request A (0xffffa464) → both
-flags set (a444=a445=1); request B (a465) only on its rising edge, and unless
+0xedc4 `candidate_fuel_cut_arbitration(param)`: request A (`fuel_cut_request_a` 0xffffa464) → both
+flags set (`fuel_cut_flag_a/b` a444=a445=1); request B (a465) only on its rising edge, and unless
 the caller is source 0x06/0x12, sets (a444=0, a445=1); otherwise a444=0, a445=0.
 Hysteresis via prev-request latches a4a2/a4a3; then calls 0xe2d4. RPM gates
 0x18cfe `candidate_fuel_cut_rpm_condition`: `fuel_cut_allowed_ffffa964` =
 (decel_a a96a && rpm>2500) || (decel_b a96c && rpm>1700), with hysteresis flags
 a97c/a97d (1700/2500). Rev-limit conditionals 0xee82: coolant<18 °C flag a4a6 and
 a 12-cycle rev-limit countdown a4ae on mode edge (prev a4ad). Still open: the
-requesters of a464/a465 (0xf960 `ref_somethingFuelCutRelated`, tables
+requesters of `fuel_cut_request_a/b` 0xffffa464/a465 (0xf960 `ref_somethingFuelCutRelated`, tables
 0x4e27c/0x4e2c8 — candidate level).
 
 ### 10.3 Injection-angle semantics — resolved
@@ -339,10 +339,11 @@ in [load_fueling_report.md](load_fueling_report.md) (cal-area u16 0x6c102/0x6c10
 
 0x375c `os_switch_to_task` loads its base from pool 0x37b0 → **0x4990** (not
 0x4998), stride 16 (`shll2`×2). Records at 0x4990+i·16 have layout
-{param, stack, entry, mask}: rec[0..18] are valid (stacks 0xffff7408–0xffff7498,
+{param, stack, entry, mask}: rec[0..18] are valid (stacks `os_task_stack_base` 0xffff7408–0xffff7498,
 entries 0x62a0…0x64e8), and 0x4ac0 holds the terminator {0x04ffffff, 0x00000001, …}.
-**0x4ab8 is the entry field of rec[18] → 0x64e8**, a thunk {jsr 0x11534; jmp
-0x3d58 taskEnd}; 0x11534 is the 29-call slow/background task (torque params,
+**0x4ab8 is the entry field of rec[18] → 0x64e8 `slow_task_entry`** (u32 at ROM 0x4ab8
+= 0x64e8, re-read this pass), a thunk {jsr 0x11534; jmp
+0x3d58 taskEnd}; 0x11534 `slow_background_task` is the 29-call slow/background task (torque params,
 diag timers, immo counter, …). So the task table is **19 records based at
 0x4990**, correcting [os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md)'s
 "0x4998, 18 × {entry, mask, param, stack}" (0x4998 is rec[0].entry; count/layout
@@ -395,7 +396,7 @@ in §9 of the reference check out against the ROM; the load-side units are settl
 ### 10.9 Dynamic verification (emulator, harness.py)
 
 `tests/test_fuel_chain_dynamic.py` (new; 65/65 `python -m pytest tests/`):
-- 0x1a418: `maf_per_rotation = min(maf·60/rpm, 5.0)` — 100 g/s @ 3000 rpm → 2.0;
+- 0x1a418 `maf_per_rotation_calc`: `maf_per_rotation` 0xffffaa3c = min(maf·60/rpm, 5.0)` — 100 g/s @ 3000 rpm → 2.0;
   1000 g/s @ 1000 rpm → 5.0 (cap).
 - 0x33a6c: `engine_load_raw = aa3c × 0.6345` — bit-exact vs ROM float 0x3f226e98.
 - 0x33ad2: filter+clamp — filter(0.8, 0.5, 0.2) → 0.56, min vs c0b8; clamp case →
@@ -421,14 +422,14 @@ in §9 of the reference check out against the ROM; the load-side units are settl
 | 0x0000e48e / 0x0000ff32 | candidate_injection_angle_limit_lookup / ref_fuelInjectionRelated | max injection angle tables → struct (§10.3) |
 | 0x0001ddfc | candidate_cold_start_enrichment | degenerate 0.0 body (§10.4) |
 | 0x00019f4e / 0x00019f40 | candidate_maf_voltage_and_fault_counters / candidate_maf_filtered_update | MAF latch (§10.5) |
-| 0x000064e8 / 0x00011534 | FUN_000064e8 / FUN_00011534 | task rec[18] entry → slow task (§10.6) |
+| 0x000064e8 / 0x00011534 | `slow_task_entry` / `slow_background_task` | task rec[18] entry → slow task (§10.6) |
 
 ### 10.11 Limits of this update
 
 - Static + emulator evidence only (no hardware). Producer semantics of the
   c0cc/c144 term cells (c0e0/c0ec/c0d0/c0dc/c0f0/c0fc, c124/c130/c110/c114/c120)
   are read from the decompiled dataflow, not individually re-derived; the
-  requesters of fuel-cut a464/a465 (0xf960, tables 0x4e27c/0x4e2c8) and the exact
+  requesters of `fuel_cut_request_a/b` 0xffffa464/a465 (0xf960, tables 0x4e27c/0x4e2c8) and the exact
   transform of 0x5c024 on bf14 remain candidate-level. Channel→connector-terminal
-  hop still board-level (D2). The task-table correction in §10.6 is recorded as a
+  hop still board-level. The task-table correction in §10.6 is recorded as a
   dated note in [os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md).

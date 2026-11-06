@@ -100,8 +100,8 @@
     },
     "knock_control_report.md": {
       "fn_checked": 48,
-      "ram_checked": 56,
-      "rom_refs": 131,
+      "ram_checked": 57,
+      "rom_refs": 132,
       "rom_claims": 0
     },
     "live_tuning_feasibility_report.md": {
