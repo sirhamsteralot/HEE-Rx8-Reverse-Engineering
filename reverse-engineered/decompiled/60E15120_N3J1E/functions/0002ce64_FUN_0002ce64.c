@@ -7,10 +7,10 @@ char FUN_0002ce64(void)
 
 {
   if (DAT_ffffbd68 == '\x01') {
-    DAT_ffffbcc8 = DAT_ffffbcc4 + 9.1;
+    DAT_ffffbcc8 = alternator_drag_torque_ffffbcc4 + 9.1;
   }
   else {
-    DAT_ffffbcc8 = DAT_ffffbcc4;
+    DAT_ffffbcc8 = alternator_drag_torque_ffffbcc4;
   }
   return DAT_ffffbd68;
 }
