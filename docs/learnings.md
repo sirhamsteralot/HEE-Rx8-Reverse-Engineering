@@ -3,9 +3,11 @@
 Practical lessons for work on `60E15120_N3J1E` (knock, fueling, intake,
 patcher passes). See [`AGENTS.md`](../AGENTS.md) for the standing rules; this file is the
 working know-how. Everything here is backed by artifacts in
-`reverse_engineered/60E15120_N3J1E/` (reviews, metadata, validation JSONs).
+`reverse-engineered/decompiled/60E15120_N3J1E/`, [`data/labels/60E15120_N3J1E/`](../data/labels/60E15120_N3J1E/)
+and [`docs/investigations/60E15120_N3J1E/`](investigations/60E15120_N3J1E/) (reviews, label records,
+validation JSONs).
 
-## Working method that scaled
+## Working method
 
 - **Branch + PR delivery**: every work unit runs on its own
   `feat|research|docs|fix/<slug>` branch off `main` and lands via a PR that the
@@ -57,6 +59,53 @@ working know-how. Everything here is backed by artifacts in
   0x13bd2 fix lives in `review_knock_loop_labels_apply.py` for that reason.
 - Report tables: grouped rows (`a/b`), unnamed `DAT_` rows and base-pointer rows
   are legitimate — `validate_reports.py` knows them.
+- Evidence strings in `review_*.py` are hand-written prose that fan out into the
+  TSVs, labels JSONs and export comments — one transcription slip lands in ~9
+  artifacts. Write them from the ROM/disassembly artifacts, and let
+  `verify_claims.py` machine-check them: it scans the root reports, the
+  investigations README, all `reviews/*/README.md` and the accepted TSV evidence
+  for pool word `0xA=0xV` assignments, `N callees` counts, quoted ROM byte
+  strings, mailbox descriptor ID/ctrl/buffer fields and descriptor Axis/Data
+  table rows (plus the older call-count/reg-pair/pool-range/labels-TSV checks).
+  `tests/test_verify_claims.py` carries negative tests embedding the exact
+  errors each class caught.
+
+## Reports, citation rules and verify_claims.py
+
+- Root `*_report.md` files follow [`knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)'s 10-section format,
+  with a mandatory memory map (function + RAM address tables) and a plain-language
+  §1a after the executive summary (AGENTS.md rule 8;
+  style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
+  findings — don't append dated change-log addenda (git history records how
+  they changed).
+- `utilities/scripts/rx8-pcm-pipeline/validate_reports.py` checks every report (sections, ROM hash, all
+  memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
+
+Write-time citation rules (AGENTS.md rule 7) — lessons from a past self-review.
+One labeling pass shipped four hand-written evidence mistakes that a self-review
+caught only because everything was re-read: a wrong peripheral
+register letter (DCNT8E claimed at 0xfffff64c, actually DCNT8G — derive register
+names from `symbols.tsv`, never mental stride arithmetic), a wrong batch call
+count (24 vs 26 in 0x118d0 — count `jsr`/`bsr`/tail-`jmp` in the disassembly, and
+note the last batch call is a tail `jmp @rN`, not `jsr`), a loose literal-pool
+range (0x11a40–0x11d0c spans code — use the exact ranges from
+`non_instruction_ranges_classified.tsv`), and a callee misclassified from
+call-site shape (0x37ef0 is the E2RAM parameter read, not a DID dispatcher —
+open the callee body) plus a wrong discrepancy-ID citation (0x54cf8 is the
+0xa5-unlock checksum of 0xffff8fe8, not the 0x5a3f4 flash checksum — discrepancy
+IDs live only in ROADMAP.md and are never cited in artifacts). Rules now in AGENTS.md rule 7: cite only what
+you re-read this session; write counts/names/ranges from the artifacts, never
+hand-typed or copy-pasted between the TSV, the labels JSON and the report.
+`utilities/scripts/rx8-pcm-pipeline/verify_claims.py` enforces the mechanical
+part over all root `*_report.md`, the investigations README, all
+`reviews/*/README.md` and the `accepted_function_aliases.tsv` evidence: batch call
+counts, register name↔address pairs (incl. `GR1G/H`-style grouped forms), pool
+ranges + resolved call targets, labels-JSON↔TSV coverage, pool word `0xA=0xV`
+assignments, `N callees` counts, quoted ROM byte strings, mailbox descriptor
+ID/ctrl/buffer fields and descriptor Axis/Data table rows. It runs in
+`tests/test_verify_claims.py` (with negative tests for each class) and has already
+caught pre-existing typos (0x6fb0 evidence cited ADDR24H_B at 0xfffff848; the code
+reads 0xfffff840).
 
 ## Hardware documents
 
@@ -73,7 +122,7 @@ working know-how. Everything here is backed by artifacts in
 - Wiring annotations flow: `firmware_annotations.tsv` → `AnnotateHardware.java`
   (Ghidra rebuild) → per-function plate comments; edit the TSV + views together.
 
-## Patchers (Utilities/)
+## Patchers
 
 - Pattern: byte-match locate the function body in the reference ROM (unique match
   required, else SKIP), relocate ROM-internal pool pointers by the found delta,
@@ -90,18 +139,7 @@ working know-how. Everything here is backed by artifacts in
 - Never modify stock `.bin`s; flash outputs with `Rx8Man/`; static validation
   only — hardware stages are the user's validation plan.
 
-## Reports
-
-- Root `*_report.md` files follow [`knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)'s 10-section format,
-  with a mandatory memory map (function + RAM address tables) and a plain-language
-  §1a after the executive summary (AGENTS.md rule 8;
-  style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
-  findings — don't append dated change-log addenda (git history records how
-  they changed).
-- `scripts/validate_reports.py` checks every report (sections, ROM hash, all
-  memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
-
-## Emulator build-out (Phase 1 fidelity)
+## Emulator, harness and trace cross-check
 
 Hardware facts the emulator must get right:
 
@@ -162,10 +200,9 @@ Hardware facts the emulator must get right:
   headers (vcruntime.h) are not installed; mingw has no gcc. Host C tests
   (AGENTS.md `cc …` pattern) need a machine with a working toolchain; the
   emulator cross-check uses a float32 Python port of `rx8_math.c` meanwhile.
-- **Emulator FPU is host double** (E1): `fmac` behaves as fused; results can
+- **Emulator FPU is host double**: `fmac` behaves as fused; results can
   differ from strict float32 SH semantics in the last ulp — compare with
   tolerance for filter-style code, bit-exact for min/max/clamp/absdiff.
-- 60E1B900_N3ZBEH uses opcode 0x957a (outside the 60E15120 corpus) → unknown-opcode
 - **IVT lives at VBR=0x7fc50** (set at 0xd206): ROM vector slot = 0x7fc50 + offset.
   Useful offsets: CMI10B 0x2c8 (crank/rpm path 0x803e), CAN-RX/scheduler 0x378
   (handler polls HCAN0 RXPR/MBIMR, runs CAN RX poll 0x11d88 + ref_osTaskScheduler
@@ -178,61 +215,17 @@ Hardware facts the emulator must get right:
   then moves the frame to the UDS buffer 0xffffddc8 by itself during a plain run.
   UDS service dispatch (FUN_000680a0) is gated by the vehicle-input latch
   DAT_ffff9ec8 bit0 (PFDR bit0, debounced by 0x6744/0x6796) and the OS task
-  context switch (0x3db0, called from ref_setSR on ISR exit) - the remaining E6
-  gap; until then drive the profile `uds` entry points (0x11d88/0x680a0/0x3c2a).
+  context switch (0x3db0, called from ref_setSR on ISR exit); until the vehicle-latch + tick path is modeled,
+  drive the profile `uds` entry points (0x11d88/0x680a0/0x3c2a).
 - `tst Rm,Rn` sets T=1 when (Rn & Rm) == 0 - easy to get backwards when reading
   branch conditions by hand.
 - Vector sweep method for "which interrupt does X": boot to idle, then for each
   IVT entry call `cpu.interrupt(off, priority)` once and grep the PC trace for
   the target function - cheap and decisive.
+- 60E1B900_N3ZBEH uses opcode 0x957a (outside the 60E15120 corpus) → unknown-opcode;
+  regenerate `opdec.py` from that ROM's disassembly before running it.
 
-  stop; regenerate `opdec.py` from that ROM's disassembly before running it.
-
-## Calibration descriptor scan (P3)
-
-- **Cal region auto-detect**: find `Copr.DENSO` in the ROM above 0x60000; the
-  0x1000-aligned block containing it is the cal start (0x6c000 for most ROMs,
-  0x6d000 for 60E0FB00/60E0FC00/60E1B900, 0x71000 for 60E32000). The region
-  between code-end and cal-start holds the packed descriptor array.
-- **Descriptor formats** (big-endian): 2D base 12 B `>HBBII` (n, type, res=0,
-  axis_ptr, data_ptr); 2D scaled +8 B. 3D base 20 B `>HHIIIB`+3 pad (nx, ny,
-  ax, ay, data, type). Type codes: 0=f32, 4=u8, 8=u16, 12=s8, 16=s16 (dispatch
-  tables 0x2098/0x210c). Axes are always float32.
-- **Scan every 4 B**, validate count/type/pointers-into-cal-region/bounds, then
-  resolve overlaps by walking sorted addresses with a next-free cursor (base
-  span 12/20 B) — descriptors are packed, so a candidate inside another's span
-  is a false positive (dropped 1 in N3J1E out of 588).
-- **Monotonic-axis check** is a strong false-positive filter: 0 non-monotonic
-  axes across all 587 N3J1E tables and all 10 stock ROMs.
-- **Scaled vs base** is NOT reliably detectable in packed arrays (the trailing
-  8 B can look like the next descriptor); don't use the scaled flag for span.
-- Scan window: [cal_start−0x8000, cal_start) — 32 KB covers all observed layouts.
-- Cross-ROM matching by (dim, counts, type, axis values) is structural only;
-  same-shape/different-meaning pairs exist (huge float diffs in the report are
-  those, not real calibration changes).
-
-## Scalar constants — literal pools (ROADMAP D11)
-
-- The descriptor scan only finds lookup **tables**. Single float32 calibration
-  constants live in **shared literal pools** in the code region (e.g. 0x78170)
-  and are referenced by literal pointers (e.g. 0x30830 → 0x78170 from 0x306e8).
-  `utilities/scripts/extract_scalars.py` locates a curated, binary-verified seed
-  list by exact big-endian bit pattern (`rom.find`) and writes
-  `data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`.
-- On the reference ROM the script **asserts** every documented seed address — a
-  layout change fails loudly instead of mis-mapping. Tests:
-  `tests/test_extract_scalars.py`.
-- Common values (60.0, 5.0, 300.0 …) occur in hundreds of pool slots; only
-  address-anchored occurrences are meaningful — always record the reference
-  address + referencing function/literal pointer, not just the value.
-- Cross-ROM: identical bits ⇒ identical value; an absent pattern means a real
-  difference (60E0E700_N3YLEE secondary injector flow 475.93 → 608.0/626.224).
-- Pitfall: some report files are UTF-8, at least one ([`uds_mode22_dispatch_report.md`](investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md))
-  is cp1252 — `validate_reports.py` reads with the default encoding, so on a
-  Windows cp1252 box it crashes either way (0x90 / 0x97 bytes). Run with
-  `PYTHONUTF8=1` and tolerate the cp1252 file, or normalize encodings first.
-
-## Emulator fidelity hardening (ROADMAP group B)
+### Emulator fidelity hardening
 
 - **DIV1 needs the Q/M SR bits** (bit8=Q, bit9=M per Sh7055h.pdf fig 2.2) — it
   must do the full arithmetic, not just set T; the ROM's 161 div1 sites (32-bit
@@ -249,7 +242,7 @@ Hardware facts the emulator must get right:
 - **Interrupt masking**: prioritized interrupts with level <= SR.I3-I0 are
   deferred, delivered when ldc/rte lower the mask (SH-2E manual 7.2.5) — never
   fire an interrupt immediately regardless of mask.
-- **E6 trace findings**: CAN RX ISR exits via plain RTE (no ref_setSR call), so
+- **CAN RX ISR trace findings**: CAN RX ISR exits via plain RTE (no ref_setSR call), so
   the 0x3db0 wake check never runs on that path. OS tick (ATU-II ch10B CMI10B
   0x2c8) never fires: ROM arms it from task[8] (0x648e→0x759e→0x7778→0x7b58,
   OCR10B = ROM table 0xd76d[ffff9f95*2] & 0x7f) which needs a scheduler pass
@@ -258,7 +251,7 @@ Hardware facts the emulator must get right:
   With tick + latch, uds_entry fires autonomously; response TX still needs the
   service task dispatched.
 
-## Renesas Simulator Debugger cross-check (ROADMAP group B)
+### Renesas Simulator Debugger cross-check
 
 HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
 `utilities/scripts/emu/` via `compare_traces.py`. Setup + recipes live in
@@ -294,10 +287,50 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   after every branch (`sh2e.py` `_branch`), so a taken branch is two entries
   (branch + delay slot). Golden fixture
   `tests/fixtures/boot-60E15120_N3J1E-200k.trace` regenerated (319731 entries,
-  header documents the format); re-verified MATCH after the E1/E7/interrupt/
+  header documents the format); re-verified MATCH after the interrupt-masking and
   delay-slot changes.
 
-## Decompiler triage (group C item 2)
+## Calibration extraction (tables and scalar constants)
+
+- **Cal region auto-detect**: find `Copr.DENSO` in the ROM above 0x60000; the
+  0x1000-aligned block containing it is the cal start (0x6c000 for most ROMs,
+  0x6d000 for 60E0FB00/60E0FC00/60E1B900, 0x71000 for 60E32000). The region
+  between code-end and cal-start holds the packed descriptor array.
+- **Descriptor formats** (big-endian): 2D base 12 B `>HBBII` (n, type, res=0,
+  axis_ptr, data_ptr); 2D scaled +8 B. 3D base 20 B `>HHIIIB`+3 pad (nx, ny,
+  ax, ay, data, type). Type codes: 0=f32, 4=u8, 8=u16, 12=s8, 16=s16 (dispatch
+  tables 0x2098/0x210c). Axes are always float32.
+- **Scan every 4 B**, validate count/type/pointers-into-cal-region/bounds, then
+  resolve overlaps by walking sorted addresses with a next-free cursor (base
+  span 12/20 B) — descriptors are packed, so a candidate inside another's span
+  is a false positive (dropped 1 in N3J1E out of 588).
+- **Monotonic-axis check** is a strong false-positive filter: 0 non-monotonic
+  axes across all 587 N3J1E tables and all 10 stock ROMs.
+- **Scaled vs base** is NOT reliably detectable in packed arrays (the trailing
+  8 B can look like the next descriptor); don't use the scaled flag for span.
+- Scan window: [cal_start−0x8000, cal_start) — 32 KB covers all observed layouts.
+- Cross-ROM matching by (dim, counts, type, axis values) is structural only;
+  same-shape/different-meaning pairs exist (huge float diffs in the report are
+  those, not real calibration changes).
+
+### Scalar constants — shared literal pools
+
+- The descriptor scan only finds lookup **tables**. Single float32 calibration
+  constants live in **shared literal pools** in the code region (e.g. 0x78170)
+  and are referenced by literal pointers (e.g. 0x30830 → 0x78170 from 0x306e8).
+  `utilities/scripts/extract_scalars.py` locates a curated, binary-verified seed
+  list by exact big-endian bit pattern (`rom.find`) and writes
+  `data/maps/<rom-id>/scalars.{json,tsv}` + `cross_rom_scalars.json`.
+- On the reference ROM the script **asserts** every documented seed address — a
+  layout change fails loudly instead of mis-mapping. Tests:
+  `tests/test_extract_scalars.py`.
+- Common values (60.0, 5.0, 300.0 …) occur in hundreds of pool slots; only
+  address-anchored occurrences are meaningful — always record the reference
+  address + referencing function/literal pointer, not just the value.
+- Cross-ROM: identical bits ⇒ identical value; an absent pattern means a real
+  difference (60E0E700_N3YLEE secondary injector flow 475.93 → 608.0/626.224).
+
+## Decompiler triage
 
 - `triage_export.py` classifies every `non_instruction_ranges.tsv` blob by content AND by
   referrers: the disassembly's `@(0xEA,pc)` operand is the **computed EA**, so grep/scan
@@ -314,55 +347,6 @@ HEW 9.4.3 SH-2E simulator (`Sdsh2e.dll`, SH7055F) used as an external oracle for
   as UDS 0x5eb18/0x5eb40) — recover by reading the pool word, then the records to key==0.
 - 0x33b6 is a 2-byte orphan (`7638` + illegal 0x0000): no u32 ref, no branch target, no
   callers — treat 0x33b6-0x348f as data, keep the FUN_ label address-only.
-
-## Fueling deepening + D5 (group C items 3-4)
-
-- Task table is based at **0x4990**, 19 x 16-byte records {param, stack, entry,
-  mask}, terminator at 0x4ac0 — NOT "0x4998, 18 records {entry,mask,param,stack}".
-  Proof: 0x375c loads base from pool 0x37b0 (=0x4990), stride shll2 x2. 0x4ab8 is
-  rec[18].entry -> 0x64e8 thunk -> slow task 0x11534.
-- Load cell units: 0x1a418 aa3c = min(MAF x 60/rpm, 5.0) [g/rev cap 5.0];
-  0x33a6c c0b0 = aa3c x 0.6345 (f32 @0x7a088 via pool 0x33b70) = VolEf
-  (1/(1.308L x 1.205 g/L)); 0x33ad2 c0b4 = min(filter(c0b0, 0.2), c0b8) or 0.525.
-  PID 0x43 (0x56b8a -> 0x55748) encodes c0b4 x 255 (step 0x3b808080 @0x55824).
-  Decisive numeric check: max-load tables give 0.58-1.29 in cell units, matching
-  load axes in data/maps (tbl_06aa48 y 0.0625-1.25) — so the cell is VolEf.
-- Lambda tables store lambda-1; the +1.0 is added in 0x1cc34's target clamp
-  (clamp [0.85, 1.05]) and at the end of the bf14 sum in 0x306e8.
-- OL chain 0x1ee4a: b130 = max(baro_corr x tipin, ol_target_3d); b120 = b130 x
-  coolant_corr; implausible-coolant A/B sets blend by fuel_blend_weight b11c.
-- Cold-start 0x1ddfc is degenerate: pool floats 0x71060/0x71064 are literal 0.0.
-- Dynamic harness pattern for RAM cells: ram={0xFFFFC0B4: (4, harness.bits(x))},
-  read back with struct.unpack('>f', struct.pack('>I', bus.read32(a))); compare
-  floats with f32() (1.2 is not exact in f32 — assert against f32(1.2)).
-- Windows Python here defaults to cp1252 for pathlib read_text/write_text —
-  use encoding='utf-8' or the edit tool when appending non-ASCII (→, ×) to docs,
-  else write_text truncates the file on UnicodeEncodeError.
-
-## Cross-ROM Mode 22 mapping (ROADMAP group D)
-
-- The Mode 22 dispatch table is NOT at a fixed address: family A (60E0E500/
-  60E0E700/60E15120/60E1C500/60E1D400/60E0G500 dumps) has 99 records at
-  0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0; family B (60E0FB00/60E0FC00/
-  60E1B900/60E32000_N3N5EB) has 110 records at 0x5d994/0x5dc2c/0x64d0c;
-  60E32000_N3M5E has 113 at 0x651bc. Locate by: run-scan for >=30 stride-12
-  records (ascending u16 pid, even handlers in [0x40,0x6c000)) filtered by a u32
-  pool ref, then record count = unique N with rom[table+N*12]==N AND that address
-  u32-referenced (the dispatcher loads the count from a pool word pointing at the
-  byte right after the table). Sub-PID table = count byte + 2, also pool-referenced.
-- The dispatcher itself is findable per ROM by matching the 20-byte prologue of
-  base 0x5774c (unique in every ROM, e.g. 60E0FC00 -> 0x55c14, 60E0G500 dump -> 0x57ef0).
-- Diag RAM cells are NOT fixed across ROMs: 60E0G500 uses pid cell 0xffffd226,
-  response code 0xffffd224, permission mask 0xffffd3f0 (base: 0xffffd1ea/d1e8/d3b4).
-  Always read them from the dispatcher's pool words before a dynamic check.
-- E8 gotcha: opdec.OPMNEM is keyed on full 16-bit words from the 60E15120 corpus
-  only. Family-B ROMs use mov.l @(disp,pc) encodings absent from it (467-888
-  distinct words per ROM in the code region) -> UnknownOpcode if executed; the
-  boot path avoids them, so family-B profiles boot fine but diag dispatch does not.
-- Dynamic sweep pattern that works: harness.call(bus, cpu, DISP, stop_at=(handler,))
-  proves the dispatcher reaches the mapped handler; a second call without stop_at
-  returns r0 = response_len + 3. Non-table PIDs return r0 = 3 (NRC 0x31).
-- bus.write16 truncates to 16 bits — do not test 'negative' PIDs above 0xffff.
 
 ## OS scheduling deep dive
 
@@ -420,7 +404,59 @@ Session gotchas worth keeping:
   {param, stack, entry, mask} (terminator 0x4ac0 excluded); all 6 cross-checks
   pass.
 
-## DTC codes & def labels (ROADMAP D item 6)
+## Fueling chain
+
+- Task table is based at **0x4990**, 19 x 16-byte records {param, stack, entry,
+  mask}, terminator at 0x4ac0 — NOT "0x4998, 18 records {entry,mask,param,stack}".
+  Proof: 0x375c loads base from pool 0x37b0 (=0x4990), stride shll2 x2. 0x4ab8 is
+  rec[18].entry -> 0x64e8 thunk -> slow task 0x11534.
+- Load cell units: 0x1a418 aa3c = min(MAF x 60/rpm, 5.0) [g/rev cap 5.0];
+  0x33a6c c0b0 = aa3c x 0.6345 (f32 @0x7a088 via pool 0x33b70) = VolEf
+  (1/(1.308L x 1.205 g/L)); 0x33ad2 c0b4 = min(filter(c0b0, 0.2), c0b8) or 0.525.
+  PID 0x43 (0x56b8a -> 0x55748) encodes c0b4 x 255 (step 0x3b808080 @0x55824).
+  Decisive numeric check: max-load tables give 0.58-1.29 in cell units, matching
+  load axes in data/maps (tbl_06aa48 y 0.0625-1.25) — so the cell is VolEf.
+- Lambda tables store lambda-1; the +1.0 is added in 0x1cc34's target clamp
+  (clamp [0.85, 1.05]) and at the end of the bf14 sum in 0x306e8.
+- OL chain 0x1ee4a: b130 = max(baro_corr x tipin, ol_target_3d); b120 = b130 x
+  coolant_corr; implausible-coolant A/B sets blend by fuel_blend_weight b11c.
+- Cold-start 0x1ddfc is degenerate: pool floats 0x71060/0x71064 are literal 0.0.
+- Dynamic harness pattern for RAM cells: ram={0xFFFFC0B4: (4, harness.bits(x))},
+  read back with struct.unpack('>f', struct.pack('>I', bus.read32(a))); compare
+  floats with f32() (1.2 is not exact in f32 — assert against f32(1.2)).
+- Encoding gotcha (Windows): the root `*_report.md` files are UTF-8 but several contain
+  `→`, which fails under a cp1252 default-locale read — run `validate_reports.py` with
+  `PYTHONUTF8=1`. The decompiled `.c` files and two TSVs do contain cp1252 bytes, so
+  `validate_export.py` and the TSV readers must keep default-locale/`errors='surrogateescape'`
+  reads. When appending non-ASCII to docs, write with `encoding='utf-8'` — a bare
+  `pathlib.write_text` on a cp1252 box truncates the file on UnicodeEncodeError.
+
+## Cross-ROM Mode 22 mapping
+
+- The Mode 22 dispatch table is NOT at a fixed address: family A (60E0E500/
+  60E0E700/60E15120/60E1C500/60E1D400/60E0G500 dumps) has 99 records at
+  0x5e4e8/0x5e740/0x5f10c/0x5e7b8/0x5fb48/0x5f8b0; family B (60E0FB00/60E0FC00/
+  60E1B900/60E32000_N3N5EB) has 110 records at 0x5d994/0x5dc2c/0x64d0c;
+  60E32000_N3M5E has 113 at 0x651bc. Locate by: run-scan for >=30 stride-12
+  records (ascending u16 pid, even handlers in [0x40,0x6c000)) filtered by a u32
+  pool ref, then record count = unique N with rom[table+N*12]==N AND that address
+  u32-referenced (the dispatcher loads the count from a pool word pointing at the
+  byte right after the table). Sub-PID table = count byte + 2, also pool-referenced.
+- The dispatcher itself is findable per ROM by matching the 20-byte prologue of
+  base 0x5774c (unique in every ROM, e.g. 60E0FC00 -> 0x55c14, 60E0G500 dump -> 0x57ef0).
+- Diag RAM cells are NOT fixed across ROMs: 60E0G500 uses pid cell 0xffffd226,
+  response code 0xffffd224, permission mask 0xffffd3f0 (base: 0xffffd1ea/d1e8/d3b4).
+  Always read them from the dispatcher's pool words before a dynamic check.
+- Gotcha: opdec.OPMNEM is keyed on full 16-bit words from the 60E15120 corpus
+  only. Family-B ROMs use mov.l @(disp,pc) encodings absent from it (467-888
+  distinct words per ROM in the code region) -> UnknownOpcode if executed; the
+  boot path avoids them, so family-B profiles boot fine but diag dispatch does not.
+- Dynamic sweep pattern that works: harness.call(bus, cpu, DISP, stop_at=(handler,))
+  proves the dispatcher reaches the mapped handler; a second call without stop_at
+  returns r0 = response_len + 3. Non-table PIDs return r0 = 3 (NRC 0x31).
+- bus.write16 truncates to 16 bits — do not test 'negative' PIDs above 0xffff.
+
+## DTC codes & def labels
 
 - **ROM DTC encoding:** the code table (60E15120 @ 0x7e560, per-ROM bases in
   `data/dtc/*.tsv`) stores the two OBD **mode-03 response bytes** per slot as BE
@@ -453,30 +489,3 @@ Session gotchas worth keeping:
 - **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
   on re-run (writes the file even when normalization-only) — check `git diff` after
   running it.
-
-## Write-time citation rules + verify_claims.py (post-PR #30 self-review, 2026-11-05)
-
-The C item 7 pass (PR #30) shipped four hand-written evidence mistakes that a
-self-review caught only because everything was re-read: a wrong peripheral
-register letter (DCNT8E claimed at 0xfffff64c, actually DCNT8G — derive register
-names from `symbols.tsv`, never mental stride arithmetic), a wrong batch call
-count (24 vs 26 in 0x118d0 — count `jsr`/`bsr`/tail-`jmp` in the disassembly, and
-note the last batch call is a tail `jmp @rN`, not `jsr`), a loose literal-pool
-range (0x11a40–0x11d0c spans code — use the exact ranges from
-`non_instruction_ranges_classified.tsv`), and a callee misclassified from
-call-site shape (0x37ef0 is the E2RAM parameter read, not a DID dispatcher —
-open the callee body) plus a wrong discrepancy-ID citation (0x54cf8 is the
-0xa5-unlock checksum of 0xffff8fe8, not D3's 0x5a3f4 flash checksum — grep
-ROADMAP before citing D/E ids). Rules now in AGENTS.md rule 7: cite only what
-you re-read this session; write counts/names/ranges from the artifacts, never
-hand-typed or copy-pasted between the TSV, the labels JSON and the report.
-`utilities/scripts/rx8-pcm-pipeline/verify_claims.py` enforces the mechanical
-part (call counts, register name↔address pairs incl. `GR1G/H`-style grouped
-forms, pool ranges + resolved call targets, labels-JSON↔TSV coverage) over all
-root `*_report.md` and the `accepted_function_aliases.tsv` evidence; it runs in
-`tests/test_verify_claims.py` and already caught one pre-existing typo
-(0x6fb0 evidence cited ADDR24H_B at 0xfffff848; the code reads 0xfffff840).
-Gotcha: the pipeline scripts assume a latin-1-ish locale for the two TSVs with
-cp1252 bytes — run them with `LC_ALL=aa_DJ.iso88591 PYTHONUTF8=0
-PYTHONCOERCECLOCALE=0` (verify_claims.py itself reads with
-`errors='surrogateescape'` and is locale-independent).

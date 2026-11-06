@@ -9,7 +9,8 @@ record: `data/labels/60E15120_N3J1E/dsc_can_labels.json`.
 
 ## 1. The batch 0x2a2ae (renamed `dsc_can_arbitration_batch`)
 
-15 calls (13 jsr + tail jmp) under mask 0x10, from task[10] 0x11744. Pool words
+15 calls (14 jsr + 1 tail jmp; 13 signal callees + mask/SR helpers 0x3920/0x3934)
+under mask 0x10, from task[10] 0x11744. Pool words
 in classified u32_table 0x2a3e0-0x2a4f4, read from ROM:
 
 ```
@@ -24,9 +25,9 @@ in classified u32_table 0x2a3e0-0x2a4f4, read from ROM:
 
 ## 2. CAN 0x212 RX chain
 
-- Mailbox descriptor at ROM 0x4e21c (and 0x4e224): bytes
-  `00000000 00000212 01210700 ffffbbc0 01000000` = ID 0x212, DLC 8, RAM buffer
-  0xffffbbc0.
+- Mailbox descriptor record at ROM 0x4e21c (16 bytes; buffer field at 0x4e224):
+  `00000212 01210700 ffffbbc0 01000000` = ID 0x212, ctrl byte r[6]=0x07 at
+  0x4e222 (DLC 7), RAM buffer 0xffffbbc0.
 - 0x2b29c `can212_rx_main` (8 calls): copy mailbox via descriptor 0x4e21c; on
   success 0xe038 → 0x2b7e2 → 0x2b816 (0xffffbbc8 = 0xffffbbf2) → 0x2b8f4, reset
   0xffffbbee/0xffffbbf0; on failure count bbee (every 4th increments bbf0), bbc7.
@@ -55,6 +56,11 @@ in classified u32_table 0x2a3e0-0x2a4f4, read from ROM:
 - 0x2b17e/0x2b1aa: bbb9/bbba = (bbac/bbae == -1) || (bbbe > 0x1e).
 
 ## 4. Validation
+
+A follow-up claims-verification pass re-ran the machine validators and re-read
+every binary-level claim from the raw ROM/disassembly (see `validation.json`
+`claim_verification`); it corrected the 0x212 descriptor DLC (7, not 8 — ctrl
+byte 0x07 at ROM 0x4e222) and the 0x2a2ae callee count (13, not 12).
 
 See `validation.json` in this folder: `validate_export.py` (ROM SHA-256, 168,592
 instruction bytes, 1,833 exact reference matches), `verify_claims.py`,

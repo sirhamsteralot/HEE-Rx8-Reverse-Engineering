@@ -41,7 +41,7 @@ All three are mask-0x10 batch wrappers (`sh_raise_interrupt_mask_return_previous
   (0x74a44))/0x3d065950, 0, 3.75); percent 0xffffb620 = clamp(tbl 0x6a560(b5f8),
   0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = 0x5c800(b620).
 - 0x25710: `0xffff9f48 = mul_s32_shift16_saturate((clamp(b5ac,0,100)/100)*65536,
-  period@0xffff9f44)`. Disasm: pool 0x2578c = 0xffff9f44, 0x25788 = f32 100.0;
+  period@0xffff9f44)`. Disasm: pool 0x2578c = 0xffff9f44, 0x25780 = f32 100.0, 0x25788 = f32 65536.0;
   `mov.w @r5,r5` reads period (0x2573c), `mov.w r0,@(0x4,r2)` stores duty (0x2574a).
 
 ## 3. Output hardware path — ATU-II channel 5B

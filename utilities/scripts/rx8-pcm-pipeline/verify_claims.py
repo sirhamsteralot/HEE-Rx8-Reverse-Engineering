@@ -25,6 +25,21 @@ this script). The mechanical checks:
      ram_aliases entry in data/labels/<rom-id>/*.json must have a TSV row for
      the same address (recorded-but-not-applied is a failure; later alias
      refinement is a note, not a failure).
+  5. pool word value assignments ("0x2a448=0x3920", "0x5cb64 = f32 0.25"):
+     the claimed word inside a classified pool must hold the claimed value
+     in the ROM (u32 at 4-aligned addresses, u16 at 2-aligned, f32 for
+     float literals).
+  6. "N callees" claims: resolved call targets of the named batch function,
+     excluding the mask/SR helpers 0x3920/0x3934, must number N.
+  7. quoted ROM byte strings (backticked hex near "ROM 0x..", "at ROM 0x..:
+     bytes ..", "at 0x.. read from ROM (..)"): the bytes at that ROM address
+     must equal the quoted string exactly.
+  8. mailbox descriptor field claims ("ID 0x212, DLC 7, buffer 0xffffbbc0"):
+     the 16-byte record at the cited ROM address must have that id, ctrl
+     byte r[6] (= DLC) and buffer pointer; descriptor tables (header with
+     Descriptor+Type+Axis+Data columns) are re-parsed (>HBBII) and the
+     1-D rows' Axis/Data cells must contain the descriptor's axis/data
+     addresses.
 
 Scans docs/investigations/<rom-id>/*_report.md and the evidence column of
 source_review/accepted_function_aliases.tsv.
@@ -135,6 +150,91 @@ pool_list = re.compile(r'pools?\s*\(([^)]*)\)')
 pool_direct = re.compile(r'pools?\s+(0x[0-9a-f]{4,6})[–-](0x[0-9a-f]{4,6})')
 fn_addr = re.compile(r'0x([0-9a-f]{6})\b')
 
+# --- claim classes 5-8 (see module docstring) ---
+word_assign = re.compile(r'(?<![\w/])0x([0-9a-f]{4,6})\s*=\s*(?:f32\s+)?(0x[0-9a-f]+|\d+\.\d+f?)(?![0-9a-f])')
+callee_claim = re.compile(r'\b(\d+) callees\b')
+desc_claim = re.compile(r'[Ii][Dd] 0x([0-9a-f]+),\s*(?:mailbox (\d+),\s*)?(?:ctrl 0x([0-9a-f]+)|DLC (\d+))(?:\s*=\s*DLC (\d+))?,\s*buffer (0xffff[0-9a-f]+)')
+hex_backtick = re.compile(r'`((?:[0-9a-f]{2,8}[ ])+[0-9a-f]{2,8})`')
+hex_bytes_kw = re.compile(r'\bat ROM (0x[0-9a-f]{4,6}): bytes ((?:[0-9a-f]{4,8}[ ]?)+)')
+hex_readfrom = re.compile(r'\bat (0x[0-9a-f]{4,6}) read from ROM \(([0-9a-f ]+)\)')
+rom_at = re.compile(r'\bROM (0x[0-9a-f]{4,6})')
+MASK_SR = {0x3920, 0x3934}  # sh_raise_interrupt_mask_return_previous / ref_setSR: batch plumbing, not signal callees
+
+
+def in_pool(a):
+    return any(ps <= a <= pe for ps, pe, _c in pool_ranges)
+
+
+def scan_text(src, text):
+    """Text-level checks needing multi-line/table context: quoted ROM byte
+    strings (class 7) and descriptor Axis/Data table rows (class 8)."""
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        for m in hex_backtick.finditer(line):
+            hexs = m.group(1).replace(' ', '')
+            if len(hexs) < 8 or len(hexs) % 2:
+                continue
+            prefix = '\n'.join(lines[max(0, i - 2):i]) + '\n' + line[:m.start()]
+            rm = list(rom_at.finditer(prefix))
+            if not rm:
+                continue
+            a = int(rm[-1].group(1), 16)
+            if a >= 0x80000 or a + len(hexs) // 2 > len(ROM):
+                continue
+            s = stats['reports'].setdefault(src, {})
+            s['hex_strings'] = s.get('hex_strings', 0) + 1
+            if ROM[a:a + len(hexs) // 2].hex() != hexs:
+                failures.append(f'{src}: quoted bytes at ROM 0x{a:x} are {ROM[a:a + len(hexs) // 2].hex()} but the claim says {hexs}')
+        for m in hex_bytes_kw.finditer(line):  # address is inside the match: "at ROM 0x..: bytes .."
+            a = int(m.group(1), 16)
+            hexs = m.group(2).replace(' ', '')
+            if a >= 0x80000 or len(hexs) < 8 or len(hexs) % 2 or a + len(hexs) // 2 > len(ROM):
+                continue
+            s = stats['reports'].setdefault(src, {})
+            s['hex_strings'] = s.get('hex_strings', 0) + 1
+            if ROM[a:a + len(hexs) // 2].hex() != hexs:
+                failures.append(f'{src}: quoted bytes at ROM 0x{a:x} are {ROM[a:a + len(hexs) // 2].hex()} but the claim says {hexs}')
+        for m in hex_readfrom.finditer(line):
+            a = int(m.group(1), 16)
+            hexs = m.group(2).replace(' ', '')
+            if a >= 0x80000 or len(hexs) < 8 or len(hexs) % 2 or a + len(hexs) // 2 > len(ROM):
+                continue
+            s = stats['reports'].setdefault(src, {})
+            s['hex_strings'] = s.get('hex_strings', 0) + 1
+            if ROM[a:a + len(hexs) // 2].hex() != hexs:
+                failures.append(f'{src}: quoted bytes at ROM 0x{a:x} are {ROM[a:a + len(hexs) // 2].hex()} but the claim says {hexs}')
+    # descriptor tables: header row with Descriptor+Type+Axis+Data columns; check 1-D rows (Type 4/8)
+    i = 0
+    while i < len(lines):
+        if lines[i].startswith('|') and 'Descriptor' in lines[i]:
+            header = [c.strip() for c in lines[i].strip('|').split('|')]
+            if 'Type' in header and any(c.startswith('Axis') for c in header) and any(c.startswith('Data') for c in header):
+                ti = header.index('Type')
+                ai = next(j for j, c in enumerate(header) if c.startswith('Axis'))
+                di = next(j for j, c in enumerate(header) if c.startswith('Data'))
+                j = i + 2
+                while j < len(lines) and lines[j].startswith('|'):
+                    cells = [c.strip() for c in lines[j].strip('|').split('|')]
+                    if len(cells) > max(ti, ai, di) and cells[0] and not set(cells[0]) <= set('-: ') and cells[ti] in ('4', '8'):
+                        for da in re.findall(r'0x([0-9a-f]{6})', cells[0]):
+                            a = int(da, 16)
+                            if a + 12 > len(ROM):
+                                continue
+                            _n, _u, _t, axis, data = struct.unpack('>HBBII', ROM[a:a + 12])
+                            ax_cell = cells[ai]
+                            d_cell = cells[di]
+                            s = stats['reports'].setdefault(src, {})
+                            s['desc_rows'] = s.get('desc_rows', 0) + 1
+                            if axis < 0x80000 and re.search(r'0x[0-9a-f]', ax_cell) and f'0x{axis:x}' not in ax_cell.lower():
+                                failures.append(f'{src}: descriptor 0x{a:x} axis 0x{axis:x} missing from Axis cell {ax_cell!r} (row {cells[0]!r})')
+                            if data < 0x80000 and re.search(r'0x[0-9a-f]', d_cell) and f'0x{data:x}' not in d_cell.lower():
+                                failures.append(f'{src}: descriptor 0x{a:x} data 0x{data:x} missing from Data cell {d_cell!r} (row {cells[0]!r})')
+                    j += 1
+                i = j
+                continue
+        i += 1
+
+
 
 def reg_match(name, addr):
     sym = symbols.get(addr)
@@ -189,10 +289,8 @@ def scan_line(src, line, fn_hint=None):
             if z <= a or a >= 0x80000:
                 continue
             s['pool_claims'] += 1
-            if z % 4:
-                z += 4 - (z % 4)
             raw = m.group(0)
-            if not any(a >= ps and z + 3 <= pe for ps, pe, _c in pool_ranges):
+            if not any(a >= ps and z <= pe for ps, pe, _c in pool_ranges):
                 failures.append(f'{src}: claimed pool {raw} not inside a classified pool range')
                 continue
             before = fn_addr.findall(line[:pos])
@@ -204,12 +302,61 @@ def scan_line(src, line, fn_hint=None):
             for t in fc['targets']:
                 if t not in words:
                     failures.append(f'{src}: function 0x{cand} call target 0x{t:x} missing from claimed pool {raw}')
+    # class 5: pool word value assignments (ROM pool words only)
+    for m in word_assign.finditer(line):
+        a = int(m.group(1), 16)
+        v = m.group(2)
+        if a >= 0x80000 or not in_pool(a):
+            continue
+        s['word_assigns'] = s.get('word_assigns', 0) + 1
+        if v.startswith('0x'):
+            vv = int(v, 16)
+            ok = (a % 4 == 0 and struct.unpack('>I', ROM[a:a + 4])[0] == vv) or \
+                 (a % 2 == 0 and struct.unpack('>H', ROM[a:a + 2])[0] == vv)
+        else:
+            fv = float(v.rstrip('f'))
+            ok = a % 4 == 0 and abs(struct.unpack('>f', ROM[a:a + 4])[0] - fv) <= max(abs(fv) * 1e-6, 1e-9)
+        if not ok:
+            failures.append(f'{src}: claimed pool word 0x{a:x} = {v} but the ROM word there differs')
+    # class 6: "N callees" (batch callees excluding mask/SR helpers)
+    for m in callee_claim.finditer(line):
+        claimed = int(m.group(1))
+        before = fn_addr.findall(line[:m.start()])
+        cand = next((x for x in reversed(before) if x in index), fn_hint)
+        if cand is None or cand not in index:
+            continue
+        s['callee_claims'] = s.get('callee_claims', 0) + 1
+        n = len([t for t in fn_calls.get(int(cand, 16), {}).get('targets', []) if t not in MASK_SR])
+        if n != claimed:
+            failures.append(f'{src}: 0x{cand} claimed {claimed} callees but the disassembly resolves {n} (excl. mask/SR helpers)')
+    # class 8a: mailbox descriptor field claims on one line
+    for m in desc_claim.finditer(line):
+        claimed_id = int(m.group(1), 16)
+        cands = [int(x, 16) for x in re.findall(r'0x([0-9a-f]{5,6})', line[:m.start()]) if int(x, 16) < 0x80000]
+        if not cands:
+            continue
+        s['desc_claims'] = s.get('desc_claims', 0) + 1
+        base = [a for a in cands if a + 12 <= len(ROM) and struct.unpack('>I', ROM[a:a + 4])[0] == claimed_id]
+        if not base:
+            failures.append(f'{src}: claimed mailbox ID 0x{claimed_id:x} but no cited ROM address holds a record with that id')
+            continue
+        a = base[-1]
+        ctrl = ROM[a + 6]
+        buf = struct.unpack('>I', ROM[a + 8:a + 12])[0]
+        mb = ROM[a + 5] & 0xf
+        dlc = int(m.group(3), 16) if m.group(3) else int(m.group(4) or m.group(5) or 0)
+        if ctrl != dlc or buf != int(m.group(6), 16) or (m.group(2) is not None and mb != int(m.group(2))):
+            failures.append(f'{src}: descriptor record at 0x{a:x} is ctrl 0x{ctrl:02x} (DLC {ctrl}) buffer 0x{buf:08x}; claim said DLC {dlc} buffer {m.group(6)}')
 
 
-for rep in REPORTS:
-    text = (REPORTS_DIR / rep).read_bytes().decode('utf-8', errors='surrogateescape')
+SOURCES = [(rep, (REPORTS_DIR / rep).read_bytes().decode('utf-8', errors='surrogateescape')) for rep in REPORTS]
+for extra in [INV / 'README.md'] + sorted(INV.glob('reviews/*/README.md')):
+    name = extra.name if extra.parent == INV else f'reviews/{extra.parent.name}/README.md'
+    SOURCES.append((name, extra.read_bytes().decode('utf-8', errors='surrogateescape')))
+for src, text in SOURCES:
     for line in text.splitlines():
-        scan_line(rep, line)
+        scan_line(src, line)
+    scan_text(src, text)
 
 # label TSV evidence lines, with the row address as function hint
 tsv_path = b / 'source_review/accepted_function_aliases.tsv'
