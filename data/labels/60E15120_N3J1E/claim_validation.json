@@ -45,6 +45,12 @@
         "word_assigns": 2,
         "desc_claims": 1
       },
+      "dtc_authoring_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 2
+      },
       "dtc_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -155,6 +161,11 @@
         "pool_claims": 0,
         "word_assigns": 15,
         "hex_strings": 1
+      },
+      "reviews/dtc_authoring/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
       },
       "reviews/dtc_control/README.md": {
         "reg_pairs": 0,

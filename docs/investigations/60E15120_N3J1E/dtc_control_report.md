@@ -16,7 +16,10 @@ labels in [`data/labels/60E15120_N3J1E/dtc_engine_labels.tsv`](../../../data/lab
 (group-2 diag events at 0x67d00, `os_schedule_task_event` 0x9630) in
 [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md); defs merge/inheritance
 issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
-[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md).
+[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md);
+the end-to-end "how to author a new DTC" map (raise → MIL → E2RAM key-off persistence →
+readout, with every address a new code must touch) in
+[dtc_authoring_report.md](dtc_authoring_report.md).
 
 ## 1. Executive summary
 
