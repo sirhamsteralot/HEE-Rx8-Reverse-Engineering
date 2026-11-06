@@ -14,7 +14,7 @@ Covered: 0x3f924 o2_channel_filter_update, 0x3fb9e o2_response_monitor_accumulat
 e2ram_block_encode, 0x1506c idle_target_rpm_calculate, 0x2a4f8
 hcan_mailbox_config_compare.
 
-Run: python -m pytest tests/test_c8_dynamic.py
+Run: python -m pytest tests/test_large_control_bodies_dynamic.py
 """
 import math
 import os

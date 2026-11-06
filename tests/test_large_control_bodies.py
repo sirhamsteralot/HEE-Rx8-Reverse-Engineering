@@ -15,7 +15,7 @@ bytes for descriptors / literals / DTC chain / task table, (c) the new labels
 are present in function_index.tsv, symbols.tsv and the accepted TSVs, and the
 labels-pass JSON covers exactly the new TSV rows (mirrors verify_claims.py).
 
-Run: python -m pytest tests/test_c8_large_bodies.py
+Run: python -m pytest tests/test_large_control_bodies.py
 """
 import csv
 import json
@@ -118,7 +118,7 @@ def test_accepted_tsv_rows():
 
 
 def test_labels_json_covers_tsv_rows():
-    data = json.load(open(os.path.join(LAB, "c8_large_bodies_labels.json")))
+    data = json.load(open(os.path.join(LAB, "large_control_bodies_labels.json")))
     for addr, entry in data["function_aliases"].items():
         assert addr in EXPECTED_FN and EXPECTED_FN[addr] == entry["alias"]
     for addr, entry in data["ram_aliases"].items():

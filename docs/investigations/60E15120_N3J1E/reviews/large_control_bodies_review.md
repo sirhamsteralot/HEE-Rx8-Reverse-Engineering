@@ -20,11 +20,11 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
   5 (corrections), 6 (files), 7 (validation), 8 (memory map 8.1/8.2/8.3),
   9 (limits) all present; `validate_reports.py` re-run: PASS (fn/ram/rom
   addresses in each report's memory map checked vs index/TSVs/ROM).
-- Label artifacts consistent: `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
+- Label artifacts consistent: `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
   covers exactly the 15 function + 17 RAM rows of
   `source_review/accepted_{function,ram}_aliases.tsv`, which match
   `function_index.tsv` / `symbols.tsv` (asserted by
-  `tests/test_c8_large_bodies.py`, 10 passed).
+  `tests/test_large_control_bodies.py`, 10 passed).
 
 ## Binary-level re-verification (independent of the reports' own test, re-read from ROM + disassembly)
 
@@ -70,7 +70,7 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
    are 1×1 u16 constants (data 0, mult 0.000152587890625, off −1.0 → −1.0);
    0x6b680/0x6b69c are the 9×9 ones (axes @0x7ae34/0x7ae58, data @0x7ae7c).
    §3 table corrected; regression asserts added to
-   `tests/test_c8_large_bodies.py`.
+   `tests/test_large_control_bodies.py`.
 2. `e2ram_nv_storage_report.md` §2/§3 mislabeled the decimal values of two
    literal-pool floats: 0x38a00000 = 7.62939453125e-05 (report said 0.0048828)
    and 0x39a00000 = 0.00030517578125 (report said 0.00048828); both pool words
@@ -89,7 +89,7 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
 
 ## Dynamic validation
 
-`tests/test_c8_dynamic.py` (11 passed) harness-calls each of the seven bodies
+`tests/test_large_control_bodies_dynamic.py` (11 passed) harness-calls each of the seven bodies
 in the emulator after boot and checks outputs against ROM constants / the
 ROM's own lookup helpers:
 
@@ -130,7 +130,7 @@ pending (tool not installed). Full suite: 128 passed.
   bytes verified). Run with the documented latin-1 locale
   (`LC_ALL=aa_DJ.iso88591 PYTHONUTF8=0 PYTHONCOERCECLOCALE=0`).
 - `python -m pytest tests/` — 128 passed.
-- `tests/test_c8_large_bodies.py` — 10 passed (incl. the descriptor/float
+- `tests/test_large_control_bodies.py` — 10 passed (incl. the descriptor/float
   anchors above).
 - ROM untouched (SHA-256 re-verified).
 

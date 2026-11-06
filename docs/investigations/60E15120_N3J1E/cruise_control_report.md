@@ -5,7 +5,7 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 untouched). All findings are from static analysis of the canonical export
 (`reverse-engineered/decompiled/60E15120_N3J1E/`), the disassembly and the raw ROM
 bytes. No hardware execution was performed. Labels recorded in
-`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
 
 **Related reports:** task table and task[10]/slow-task structure in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); vehicle
@@ -90,7 +90,7 @@ RAM aliases: `cruise_switch_code` (0xffffbaed), `cruise_set_speed` (0xffffbcf8),
 `cruise_set_speed_adjust` (0xffffbd08), `cruise_filtered_speed_error`
 (0xffffcef4), `cruise_speed_error_mean12` (0xffffcee4). Evidence:
 `source_review/accepted_{function,ram}_aliases.tsv`,
-`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
+`data/labels/60E15120_N3J1E/large_control_bodies_labels.json`.
 
 ## 5. Corrections made in this pass
 
@@ -104,7 +104,7 @@ were left untouched; they remain unverified hypotheses.
   `0002d83c_*.c`, `0004c828_*.c`, `0002df62_*.c` (symbol renamed in place;
   filenames keep the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
-- `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
+- `data/labels/60E15120_N3J1E/large_control_bodies_labels.json`
 
 ## 7. Validation
 
@@ -114,7 +114,7 @@ were left untouched; they remain unverified hypotheses.
   parsed from ROM, 3.2f located at 0x7d0c8/0x7d0cc via pointer pools 0x4ce14/0x4ce1c,
   8.0/2.0–6.0 band constants, clamp [0,100] in 0x2df62. Scripted checks 62/62 PASS.
 - `validate_reports.py` / `verify_claims.py` / `validate_export.py` from repo
-  root; `tests/test_c8_large_bodies.py`.
+  root; `tests/test_large_control_bodies.py`.
 
 ## 8. Memory map for validation
 

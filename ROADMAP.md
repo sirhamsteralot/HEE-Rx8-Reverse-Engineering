@@ -50,7 +50,7 @@ and where artifacts live.
 - **C item 11 (open)** — follow-ups from the large-control-bodies labeling pass
   (PR #33, closed — record in git history). The
   dynamic/emulator validation of the seven newly labeled bodies is **done**
-  (`tests/test_c8_dynamic.py`, 11 passed; pairs with C item 10 / E item 1 —
+  (`tests/test_large_control_bodies_dynamic.py`, 11 passed; pairs with C item 10 / E item 1 —
   see [reviews/large_control_bodies_review.md](docs/investigations/60E15120_N3J1E/reviews/large_control_bodies_review.md);
   it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
   emulator decode gaps). Still open, per subsystem (report §9 Limits):
