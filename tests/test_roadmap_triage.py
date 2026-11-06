@@ -149,6 +149,25 @@ def test_render_comment_mentions_status(tmp_path):
     assert "status/ready" in out and "ready" in out
 
 
+def test_in_progress_label_is_preserved(tmp_path):
+    root = make_root(tmp_path)
+    issue = make_issue(labels=["roadmap", "group-q", "status/in-progress"])
+    t = rt.classify(issue, "Q7", {"Q7"}, set(), root, REPO, set(), 0)
+    assert t.status == "status/in-progress"
+
+
+def test_select_next_orders_by_milestone_then_number():
+    def pair(num, milestone_number, status):
+        issue = {"number": num, "milestone": {"number": milestone_number}}
+        t = rt.Triage(number=num, item_id="Q%d" % num, title="t", status=status)
+        return (issue, t)
+
+    pairs = [pair(9, 2, "status/ready"), pair(4, 1, "status/ready"), pair(5, 1, "status/blocked")]
+    issue, t = rt.select_next(pairs)
+    assert issue["number"] == 4
+    assert rt.select_next([pair(5, 1, "status/blocked")]) is None
+
+
 def test_missing_setup_flags(tmp_path):
     root = make_root(tmp_path)
     issue = make_issue(labels=["roadmap"], milestone=None)

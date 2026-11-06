@@ -6,6 +6,11 @@ on:
   workflow_dispatch:
   issues:
     types: [labeled, unlabeled, edited, reopened]
+  pull_request:
+    types: [closed]
+  push:
+    branches: [main]
+    paths: [ROADMAP.md]
 
 permissions:
   contents: read

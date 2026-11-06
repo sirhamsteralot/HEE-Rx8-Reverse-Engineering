@@ -4,16 +4,20 @@
 Scans every open issue labeled `roadmap` and checks it against ROADMAP.md and
 the artifacts its body links to, then assigns one status label:
 
-  status/ready    in the roadmap, unblocked, all linked artifacts check out
-  status/pending  open, but missing linked files / incomplete reports / setup
-  status/blocked  gated (hardware safety) or waiting on another open ticket
-  status/pruned   no longer referenced by ROADMAP.md, or a duplicate (closed)
-  status/stale    no activity for --stale-days (informational, stays open)
+  status/ready        in the roadmap, unblocked, all linked artifacts check out
+  status/pending      open, but missing linked files / incomplete reports / setup
+  status/blocked      gated (hardware safety) or waiting on another open ticket
+  status/in-progress  claimed by an agent via --pick; PR work ongoing
+  status/pruned       no longer referenced by ROADMAP.md, or a duplicate (closed)
+  status/stale        no activity for --stale-days (informational, stays open)
 
 Without --apply the run is a dry run and only prints the plan.
+--pick selects the top status/ready ticket (milestone order, then issue
+number) and prints it as a context pack for an agent session; with --apply
+it also claims the ticket by moving it to status/in-progress.
 
 Usage:
-  python utilities/scripts/roadmap_triage.py --repo owner/repo [--apply] [--stale-days N]
+  python utilities/scripts/roadmap_triage.py --repo owner/repo [--apply] [--stale-days N] [--pick]
 """
 import argparse
 import json
@@ -32,6 +36,7 @@ STATUS_LABELS = {
     "status/ready": ("2ea043", "triage: ready to pick up"),
     "status/pending": ("d29922", "triage: open, missing pieces before pickup"),
     "status/blocked": ("d73a4a", "triage: gated or waiting on another ticket"),
+    "status/in-progress": ("8250df", "triage: claimed by an agent, PR work ongoing"),
     "status/pruned": ("6e7781", "triage: pruned (left the roadmap or duplicate)"),
     "status/stale": ("0969da", "triage: no activity for a long time"),
 }
@@ -158,6 +163,10 @@ def classify(issue, roadmap_text, open_item_ids, duplicate_numbers, root, repo, 
     if item_id is None:
         t.missing.append("title carries no item id")
         return t
+    label_names = {l["name"] for l in issue.get("labels", [])}
+    if "status/in-progress" in label_names:
+        t.status = "status/in-progress"
+        return t
     t.feasibility = feasibility_for(issue, item_id)
     if not in_roadmap(item_id, roadmap_text):
         t.status = "status/pruned"
@@ -167,7 +176,6 @@ def classify(issue, roadmap_text, open_item_ids, duplicate_numbers, root, repo, 
         t.status = "status/pruned"
         t.missing.append(f"duplicate of a lower-numbered ticket for {item_id}")
         return t
-    label_names = {l["name"] for l in issue.get("labels", [])}
     body = issue.get("body", "")
     t.blockers = [d for d in DEPENDS.get(item_id, []) if d in open_item_ids]
     if "gated" in label_names:
@@ -200,6 +208,13 @@ def classify(issue, roadmap_text, open_item_ids, duplicate_numbers, root, repo, 
             if dt < datetime.now(timezone.utc) - timedelta(days=stale_days):
                 t.stale = True
     return t
+
+
+def select_next(pairs):
+    ready = [(i, t) for i, t in pairs if t.status == "status/ready"]
+    if not ready:
+        return None
+    return min(ready, key=lambda p: ((p[0].get("milestone") or {}).get("number", 10**9), p[0]["number"]))
 
 
 def render_comment(t):
@@ -265,12 +280,28 @@ def apply_triage(repo, issue, t, comment_always=False):
         os.unlink(path)
 
 
+def claim_ticket(repo, issue, t):
+    gh("issue", "edit", str(t.number), "--repo", repo, "--remove-label", "status/ready", "--add-label", "status/in-progress")
+    body = (
+        "Claimed for pickup (`roadmap_triage.py --pick`).\n\n"
+        "An agent works this ticket on its own branch per AGENTS.md (branch + PR against `main`, never direct commits); "
+        "the PR link is posted here when opened. The next triage run leaves this ticket at `status/in-progress` until the item is pruned from ROADMAP.md, which closes the ticket as `status/pruned`.\n\n"
+        + render_comment(t)
+    )
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as f:
+        f.write(body + "\n")
+        path = f.name
+    gh("issue", "comment", str(t.number), "--repo", repo, "--body-file", path)
+    os.unlink(path)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--repo", default=os.environ.get("GITHUB_REPOSITORY", "sirhamsteralot/HEE-Rx8-Reverse-Engineering"))
     ap.add_argument("--apply", action="store_true", help="apply labels/comments/closes (default: dry run)")
     ap.add_argument("--stale-days", type=int, default=0)
     ap.add_argument("--comment-always", action="store_true")
+    ap.add_argument("--pick", action="store_true", help="print the top status/ready ticket as an agent context pack (with --apply: claim it as status/in-progress)")
     args = ap.parse_args()
 
     roadmap_text = (ROOT / "ROADMAP.md").read_text()
@@ -285,11 +316,39 @@ def main():
     duplicate_numbers = {n for nums in by_id.values() if len(nums) > 1 for n in sorted(nums)[1:]}
     open_item_ids = set(by_id)
 
+    sorted_issues = sorted(issues, key=lambda i: i["number"])
     triages = []
-    for issue in sorted(issues, key=lambda i: i["number"]):
+    for issue in sorted_issues:
         triages.append(classify(issue, roadmap_text, open_item_ids, duplicate_numbers, ROOT, args.repo, known_addresses, args.stale_days))
 
-    order = {"status/ready": 0, "status/pending": 1, "status/blocked": 2, "status/pruned": 3}
+    if args.pick:
+        sel = select_next(list(zip(sorted_issues, triages)))
+        if sel is None:
+            print("no status/ready ticket available")
+            return 0
+        issue, t = sel
+        pack = {
+            "issue": issue["number"],
+            "url": issue.get("url"),
+            "title": t.title,
+            "item_id": t.item_id,
+            "milestone": (issue.get("milestone") or {}).get("title"),
+            "feasibility": t.feasibility,
+            "linked_paths": extract_repo_paths(issue.get("body", ""), args.repo),
+            "report_problems": t.report_problems,
+            "missing": t.missing,
+            "unverified": t.unverified,
+            "blockers": t.blockers,
+            "body": issue.get("body", ""),
+        }
+        print(json.dumps(pack, indent=2))
+        if args.apply:
+            ensure_labels(args.repo)
+            claim_ticket(args.repo, issue, t)
+            print(f"claimed #{t.number} -> status/in-progress")
+        return 0
+
+    order = {"status/ready": 0, "status/pending": 1, "status/in-progress": 2, "status/blocked": 3, "status/pruned": 4}
     lines = ["## Roadmap triage plan", ""]
     for t in sorted(triages, key=lambda t: (order.get(t.status, 9), t.number)):
         lines.append(f"- #{t.number} `{t.item_id or '?'}` -> **{t.status}**" + (" (stale)" if t.stale else ""))
@@ -312,7 +371,7 @@ def main():
 
     if args.apply:
         ensure_labels(args.repo)
-        for issue, t in zip(sorted(issues, key=lambda i: i["number"]), triages):
+        for issue, t in zip(sorted_issues, triages):
             apply_triage(args.repo, issue, t, comment_always=args.comment_always)
         print(f"applied to {len(triages)} ticket(s)")
     else:
