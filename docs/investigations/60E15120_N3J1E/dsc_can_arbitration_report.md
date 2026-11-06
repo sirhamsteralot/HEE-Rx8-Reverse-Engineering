@@ -24,7 +24,7 @@ confirmed). It arbitrates the signals received from the DSC/ABS module over
 **CAN ID 0x212**:
 
 - RX path: `can212_rx_main` 0x2b29c copies the 0x212 mailbox (descriptor at ROM
-  0x4e21c, buffer 0xffffbbc0, DLC 8) and unpacks it (`can212_rx_unpack` 0x2b7e2:
+  0x4e21c, buffer 0xffffbbc0, DLC 7) and unpacks it (`can212_rx_unpack` 0x2b7e2:
   payload bytes → 0xffffbbf2-bbf6, u16 status 0xffffbbde, mode byte 0xffffbbf6),
   with failure counters 0xffffbbee/0xffffbbf0 (timeout flag 0xffffbbd0 via
   0x2b7c4 when 0xffffbbf0 > 0x1e).
@@ -50,7 +50,7 @@ rest of the engine control uses (idle A/C gating, timing derate).
 ## 2. How it works (condensed pseudocode)
 
 ```
-# CAN 0x212 RX (mailbox descriptor ROM 0x4e21c -> buffer 0xffffbbc0, DLC 8)
+# CAN 0x212 RX (mailbox descriptor ROM 0x4e21c -> buffer 0xffffbbc0, DLC 7)
 can212_rx_main 0x2b29c:
   if can_rx_copy_mailbox_to_buffer(&desc@0x4e21c) == 0:
       0xe038(); can212_rx_unpack 0x2b7e2(); 0x2b816(); 0x2b8f4()
@@ -111,9 +111,9 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 ## 5. Corrections made in this pass
 
 - `ref_updateDSCRelatedCANStuff__` 0x2a2ae confirmed as the DSC/CAN signal
-  arbitration batch (not a TX function): its 12 callees all process the 0x212 RX
+  arbitration batch (not a TX function): its 13 callees all process the 0x212 RX
   signals and derived flags; renamed `dsc_can_arbitration_batch`.
-- The 0x212 mailbox descriptor was pinned at ROM 0x4e21c/0x4e224 (ID 0x212, DLC 8,
+- The 0x212 mailbox descriptor was pinned at ROM 0x4e21c/0x4e224 (ID 0x212, DLC 7,
   buffer 0xffffbbc0) — the RX landing zone for the DSC module message.
 
 ## 6. Files
@@ -129,14 +129,21 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 ## 7. Validation
 
 - Binary-level: 0x2a2ae call count re-counted in the disassembly (15 jsr+bsr+jmp);
-  pool 0x2a3e0-0x2a4f4 words read from ROM and resolved to the 12 callees +
-  0x3920/0x3934; mailbox descriptor bytes at ROM 0x4e21c read (ID 0x212, buffer
-  0xffffbbc0); 0x2b29c call count 8; reader pool-scan for 0xffffbbd8 (0x1827c →
+  pool 0x2a3e0-0x2a4f4 words read from ROM and resolved to the 13 callees +
+  0x3920/0x3934; mailbox descriptor bytes at ROM 0x4e21c read (ID 0x212, ctrl
+  byte 0x07 at 0x4e222 = DLC 7, buffer 0xffffbbc0); 0x2b29c call count 8; reader pool-scan for 0xffffbbd8 (0x1827c →
   0x1815c `dsc_timing_derate_select`, 0x18024 → 0x17f20) and 0xffffbbb8
   (0x166ee → 0x165d6).
 - `validate_export.py` (ROM SHA-256 + 168,592 instruction bytes + 1,833 exact
   reference matches), `verify_claims.py`, `verify_readability.py`,
   `verify_math_units.py`, `validate_reports.py` — all PASS.
+- Follow-up claims-verification pass: every machine-checkable claim re-run
+  (`verify_claims.py` / `validate_reports.py` PASS) and every binary-level claim
+  re-read from the raw ROM and disassembly (see
+  [`reviews/dsc_can_arbitration/validation.json`](reviews/dsc_can_arbitration/validation.json)
+  `claim_verification`). Two errors found and fixed in all artifacts: the 0x212
+  descriptor is DLC 7 (ctrl byte 0x07 at ROM 0x4e222), not 8, and the 0x2a2ae pool
+  holds 13 callees (14 `jsr` + 1 tail `jmp` = 15 calls), not 12.
 
 ## 8. Memory map for validation
 
@@ -161,8 +168,8 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 | Address | Content |
 |---|---|
-| 0x2a3e0-0x2a4f4 | 0x2a2ae pool (0x2a448=0x3920, 0x2a454=0x3934, 0x2a468-0x2a498 = 12 callees) |
-| 0x4e21c / 0x4e224 | CAN 0x212 RX mailbox descriptors (ID 0x212, DLC 8, buffer 0xffffbbc0) |
+| 0x2a3e0-0x2a4f4 | 0x2a2ae pool (0x2a448=0x3920, 0x2a454=0x3934, 0x2a468-0x2a498 = 13 callees) |
+| 0x4e21c / 0x4e224 | CAN 0x212 RX mailbox descriptor record (ID 0x212, ctrl 0x07 = DLC 7, buffer 0xffffbbc0) |
 
 ### 8.3 RAM (0xffff…)
 

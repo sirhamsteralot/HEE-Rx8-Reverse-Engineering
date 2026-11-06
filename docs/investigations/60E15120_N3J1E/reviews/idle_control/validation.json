@@ -16,7 +16,12 @@
   "verify_math_units": "PASS",
   "validate_reports": {
     "result": "PASS",
-    "idle_control_report": {"fn_checked": 21, "ram_checked": 10, "rom_refs": 31, "rom_claims": 0}
+    "idle_control_report": {
+      "fn_checked": 21,
+      "ram_checked": 10,
+      "rom_refs": 31,
+      "rom_claims": 0
+    }
   },
   "pytest": "134 passed",
   "labels_applied": {
@@ -38,12 +43,67 @@
   "record": "metadata/idle_control_labels.json",
   "ghidra_database_updated": false,
   "binary_level_verification": {
-    "batch_call_count_rechecked": {"function": "0x167c0", "jsr": 27, "tail_jmp": 1, "total": 28},
-    "pool_words_resolved_from_rom": {"pool": "0x16888-0x168fc", "callees": 26},
-    "five_ca94_pool_words": {"0x5cb42": "0x096e (DID compare)", "0x5cb64": "0x3e800000 (0.25f step)", "0x5cb68": "0x2490 (encoder)", "0x5cb44": "0xffffd319 (diag state)", "0x5cb54": "0xffffd314 (active DID)"},
-    "descriptors_parsed": ["0x6a218", "0x6a22c", "0x6a240", "0x69440", "0x69454", "0x69468", "0x6947c", "0x69490", "0x694a4", "0x694b8"],
-    "ram_reader_pool_scan": {"0xffffb2a4": ["0x21b10 -> 0x21a80 ref_throttlePlatePosToTorqueOutput_", "0x1ba80 -> 0x1b940", "0x23450 -> 0x233ec", "0x29ec6 -> 0x29d4c", "0x4863c -> 0x48558"]},
-    "select_flag_producers": {"0xffffb534": "0x24b44 store at 0x24b58", "0xffffbdb8": "0x2f868 store at 0x2f882", "0xffffbd69": "0x2e9a4", "0xffffb5b3": "0x264f0 store at 0x265ce"}
+    "batch_call_count_rechecked": {
+      "function": "0x167c0",
+      "jsr": 27,
+      "tail_jmp": 1,
+      "total": 28
+    },
+    "pool_words_resolved_from_rom": {
+      "pool": "0x16888-0x168fc",
+      "callees": 26
+    },
+    "five_ca94_pool_words": {
+      "0x5cb42": "0x096e (DID compare)",
+      "0x5cb64": "0x3e800000 (0.25f step)",
+      "0x5cb68": "0x2490 (encoder)",
+      "0x5cb44": "0xffffd319 (diag state)",
+      "0x5cb54": "0xffffd314 (active DID)"
+    },
+    "descriptors_parsed": [
+      "0x6a218",
+      "0x6a22c",
+      "0x6a240",
+      "0x69440",
+      "0x69454",
+      "0x69468",
+      "0x6947c",
+      "0x69490",
+      "0x694a4",
+      "0x694b8"
+    ],
+    "ram_reader_pool_scan": {
+      "0xffffb2a4": [
+        "0x21b10 -> 0x21a80 ref_throttlePlatePosToTorqueOutput_",
+        "0x1ba80 -> 0x1b940",
+        "0x23450 -> 0x233ec",
+        "0x29ec6 -> 0x29d4c",
+        "0x4863c -> 0x48558"
+      ]
+    },
+    "select_flag_producers": {
+      "0xffffb534": "0x24b44 store at 0x24b58",
+      "0xffffbdb8": "0x2f868 store at 0x2f882",
+      "0xffffbd69": "0x2e9a4",
+      "0xffffb5b3": "0x264f0 store at 0x265ce"
+    }
   },
-  "limits": "Static analysis only. candidate_ names are hypotheses. 0xffffb53c meaning and the physical meaning of 0xffffb5b3's source quantity remain open. Package-pin -> connector-terminal hop not verified (board routing)."
+  "limits": "Static analysis only. candidate_ names are hypotheses. 0xffffb53c meaning and the physical meaning of 0xffffb5b3's source quantity remain open. Package-pin -> connector-terminal hop not verified (board routing).",
+  "claim_verification": {
+    "result": "PASS after fixes",
+    "machine_validators": "verify_claims.py PASS; validate_reports.py PASS; validate_export.py PASS (ROM SHA-256 a7cd953c..., 3,355 function files, 168,592 instructions, 337,184 instruction bytes, 1,833 exact reference matches); verify_readability.py PASS (3,355 bodies consistent); verify_math_units.py PASS; python -m pytest tests/ 134 passed",
+    "binary_level_recheck": "every ROM-byte, literal-pool, table-descriptor and call-count claim in the report and this folder re-read from the raw ROM + firmware_disassembly.asm: 0x167c0 = 27 jsr + 1 tail jmp = 28 calls, body 0x167c0-0x1686e = 174 B, first jsr 0x167c6, mov #0x10 at 0x167c8, tail jmp 0x1686a via pool 0x168f4=0x3934, all pool words 0x16888-0x168fc match (26 callees 0x1688c-0x168f0 + 0x16888=0x3920 + 0x168f8/0x168fc unreachable); task rec[10].entry at 0x4a38 = 0x64f6 (base 0x4990 + 10*16 + 8); 0x5ca94 pool words 0x5cb3e=0xc0, 0x5cb42=0x96e, 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb64=0x3e800000 (0.25f), 0x5cb68=0x2490, 0x5cc8c=0x24c0; dispatch record 0x5f328 -> handler 0x56e22 at 0x5f330; 0x216f8 pool 0x21740-0x2175c: 0x21744=0x2068, 0x21748=0x6a218, 0x2174c=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404, axis word 0x2173e=0xa990, body 70 B; descriptors re-parsed (>HBBII): 0x6a218 n=21 type 4 axis 0x732dc data 0x73330, 0x6a22c n=13 axis 0x73348 data 0x7337c, 0x6a240 n=13 axis 0x7338c data 0x733c0, 0x6947c n=9 axis 0x6dff4 data 0x6e018, 0x69490 n=5 axis 0x6e024 data 0x6e038, 0x694b8 n=14 axis 0x6e060 data 0x6e098; float consts 0x6df44=312.0, 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, 0x7a088=0.6345, 0x6dabc=0.00087; 0xffffb2a4 mov.w readers at 0x1b988 (0x1b940), 0x21730 (0x216f8 writer), 0x21a88 (0x21a80), 0x23402 (0x233ec), 0x29e08 (0x29d4c), 0x4857c (0x48558) plus pool word 0x6b786; select-flag stores at 0x24b58 (pool 0x24b5e=0xb534), 0x2f882 (pool 0x2f888=0xbdb8; tst 0x4 on 0xffff9ecd via pool 0x2f88c), 0x265ce (pool 0x265f0=0xb5b3; set >= 40.0 at 0x74a38, clear below 40-10 via 0x74a2c=50.0/0x74a3c=10.0); 0x2633e filter 0.035335 at 0x74a0c; trim integrator pools 0x16260/0x16262=0x8040/0x8048, 0x16264=0xa890, 0x16266/0x16268=0xb534/0xb53c, consts 1e-5 at 0x76734, +/-0.12 at 0x76724/0x76728; learn condition gates 80.0/60.0/37.0/35.0 at 0x76710-0x76720 and counter threshold 0x138 at 0x7670e",
+    "fixes_applied": [
+      "0x216f8 pool word addresses corrected (were cited one word off: 0x21744=0x2068 lookup helper, 0x21748=0x6a218, 0x2174c=0x6a240)",
+      "report section 3 feedback-table row corrected: 0x6dff4/0x6e024/0x6e060 are the axis addresses; the data cells are 0x6e018/0x6e038/0x6e098"
+    ],
+    "fixes_landed_in": [
+      "idle_control_report.md",
+      "reviews/idle_control/README.md",
+      "reviews/idle_control/validation.json",
+      "data/labels/60E15120_N3J1E/idle_control_labels.json",
+      "source_review/accepted_function_aliases.tsv",
+      "utilities/scripts/rx8-pcm-pipeline/review_idle_control_labels.py"
+    ]
+  }
 }
