@@ -30,7 +30,7 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled cod
   table at **0x4990**, rec[0].entry at 0x4998) or parks in the idle loop **0x3dac**. Task end (**0x3d58
   `ref_taskEndRoutine_`**) re-enters 0x3c2a. The ISR-exit wake is **0x3db0
   `os_wake_check_context_switch`** (called from `ref_setSR` 0x3934 when
-  0xffff763c != 0xffff763e and 0xffff7640 & 0x1000 == 0).
+  `os_scheduled_count` 0xffff763c != `os_dispatched_count` 0xffff763e and `os_state_flags` 0xffff7640 & 0x1000 == 0).
 - The CAN RX interrupt that drives UDS is **IVT offset 0x378** (trampoline 0x31c0): its
   handler polls HCAN0 RXPR/MBIMR, runs the CAN RX poll **0x11d88
   `can_rx_poll_move_to_uds_buffer`** and the scheduler 0x9630. In the emulator,
@@ -40,13 +40,13 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled cod
   ICR_W bit15 is modeled as the SYSC `nmi_level` peripheral (E5 closed).
 - Crank/rpm: the ch10B compare tick (CMI10B, IVT 0x2c8 at VBR 0x7fc50 → trampoline
   0x2ec0 → **0x5b3c**) chains 0x75f4 → 0x77f0 → 0x7c68 → **0x7fcc `ref_getCrankAngle`**
-  (appends ring 0xffff9fd0 → `crank_period_accumulator_ffff9f88`, rpm = 1.2e8/sum into
-  0xffff9f80); polled path **0x77f0 `crank_capture_poll`** reads ICR0AH/ICR10AH into
-  0xffff9fb8/0xffff9fb0. ATU-II ch10 started by TSTR3 bit0; tick enabled by
+  (appends `crank_period_ring` 0xffff9fd0 → `crank_period_accumulator` 0xffff9f88, rpm = 1.2e8/sum into
+  `engine_speed_rpm_raw` 0xffff9f80); polled path **0x77f0 `crank_capture_poll`** reads ICR0AH/ICR10AH into
+  `crank_icr0ah_sample` 0xffff9fb8 / `crank_icr10ah_sample` 0xffff9fb0. ATU-II ch10 started by TSTR3 bit0; tick enabled by
   **0x7778 `atu_ch10b_tick_enable`** (TIER10 bit2).
 - ADC sweep **0x6884 `adc_scan_sweep_all_channels`** copies ADDR0H-31H → 0xffff9ee4+;
   vehicle inputs **0x6744 `vehicle_inputs_poll_pfdr_phdr`** latches PFDR (0xfffff74e) into
-  0xffff9ec8 (bit0 gates the UDS service branch in 0x11d88).
+  `vehicle_inputs_pfdr_latch` 0xffff9ec8 (bit0 gates the UDS service branch in 0x11d88).
 
 ## 1a. Plain-language summary (the PCM's "plumbing")
 
@@ -100,7 +100,8 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled cod
   (see `os_scheduler_can_ivt_labels.json`; 7 upgraded from `ref_` names with new dynamic
   evidence: 0x9890, 0x803e, 0x7778, 0x6884, 0x6744, 0x6fb0, 0x6cdc).
 - **16 RAM locations** named (`accepted_ram_aliases.tsv`): OS ctrl block
-  0xffff7638/763c/763e/7640/764c/7650/7408; vehicle-input latches 0xffff9ec8/9eca/
+  `os_ctrl_block` 0xffff7638 (+ offsets 763c/763e/7640/764c/7650/7408, accessed via the
+  base pool 0x7638 at 0x327a/0x32ee/0x338a/…); vehicle-input latches 0xffff9ec8/9eca/
   9ed8/9eda; UDS buffers 0xffffddc8/0xffffddd0; crank samples 0xffff9fa8/9fb0/9fb8.
 - **9 lookup tables** named (`accepted_lookup_aliases.tsv`, list in section 3).
 
@@ -154,10 +155,14 @@ Functions (address -> label): 0x3238 interrupt_entry_save_context; 0x3e10 os_ini
 0x6744 vehicle_inputs_poll_pfdr_phdr; 0x6fb0 adc_read_result_bank2; 0x6cdc adc_read_ect_iat_group;
 0xa4be halt_loop_unused_vector (label); 0x31c0 IVT-0x378 trampoline.
 
-RAM: 0xffff7638 os_ctrl_block; 0xffff763c/763e scheduled/dispatched counts;
-0xffff7640 os_state_flags; 0xffff764c/7650 task record/table ptrs; 0xffff7408 task stacks;
-0xffff9ec8/9eca/9ed8/9eda vehicle input latches; 0xffffddc8 uds_rx_buffer; 0xffffddd0
-uds_tx_buffer; 0xffff9fa8/9fb0/9fb8 crank period/samples; 0xffff9f80/9f88 rpm/accumulator.
+RAM: 0xffff7638 `os_ctrl_block`; 0xffff763c/0xffff763e `os_scheduled_count`/`os_dispatched_count`;
+0xffff7640 `os_state_flags`; 0xffff764c/0xffff7650 `os_current_task_record_ptr`/`os_task_table_ptr`;
+0xffff7408 `os_task_stack_base`; 0xffff7668 `os_ready_bitmap`;
+0xffff9ec8/9eca/9ed8/9eda vehicle input latches (`vehicle_inputs_pfdr_latch` 0xffff9ec8);
+0xffffddc8 `uds_rx_buffer`; 0xffffddd0 `uds_tx_buffer`; 0xffff9fa8 `crank_period_last`,
+0xffff9fb0/0xffff9fb8 `crank_icr10ah_sample`/`crank_icr0ah_sample`;
+0xffff9f80 `engine_speed_rpm_raw`, 0xffff9f88 `crank_period_accumulator`, 0xffff9f95 `crank_sector_index`,
+0xffff9fd0 `crank_period_ring`, 0xffff9304 `queue_state_base`.
 
 Registers: ICR_W 0xffffed18 (bit15 NMI); WDT TCSR/TCNT 0xffffec10/11; UBC 0xffffec00;
 DMAC 0xffffecb0 (CHCR0 0xffffeccc); HCAN0 0xffffe400 (RXPR 0xe40e, MBIMR 0xe414, MC 0xe420+,
@@ -210,8 +215,8 @@ traces:
 - **CMI10B handler chain.** The IVT slot
   0x7fc50+0x2c8 points at trampoline 0x2ec0 whose handler is **0x5b3c** (byte-verified:
   TSR10=0xb; then 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc, which does the
-  ring-0xffff9fd0 append and rpm = 1.2e8/Σ → 0xffff9f80; plus 0xd716 and 0xcf96, and
-  0x7b58 rearms OCR10B from tbl 0xd76d[sector 0xffff9f95*2] & 0x7f — the tick is
+  `crank_period_ring` 0xffff9fd0 append and rpm = 1.2e8/Σ → `engine_speed_rpm_raw` 0xffff9f80; plus 0xd716 and 0xcf96, and
+  0x7b58 rearms OCR10B from tbl 0xd76d[sector `crank_sector_index` 0xffff9f95*2] & 0x7f — the tick is
   **crank-angle-synchronous**, 36 sectors/720°). 0x803e has **no callgraph callers**; its only ROM
   reference is the default (VBR=0) vector table slot 0x2c8 (u32 at ROM 0x2c8 = 0x803e) —
   the pre-relocation CMI10B entry, inactive once VBR=0x7fc50 is set at 0xd206. It
