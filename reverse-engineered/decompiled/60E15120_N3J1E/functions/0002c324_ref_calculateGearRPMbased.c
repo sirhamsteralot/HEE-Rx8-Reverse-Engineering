@@ -8,7 +8,7 @@ uint ref_calculateGearRPMbased(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffb534;
+  uVar1 = (uint)automatic_transmission_ffffb534;
   if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffb53a, uVar1 == 0)) {
     if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 110.741) {
       if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 71.887) {

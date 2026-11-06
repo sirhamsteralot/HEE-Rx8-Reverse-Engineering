@@ -7,7 +7,7 @@ void FUN_000267b8(void)
 
 {
   FUN_00025790();
-  FUN_00025674();
+  alternator_pwm_channel_init();
   return;
 }
 

@@ -6,7 +6,7 @@
 void FUN_0004ae24(void)
 
 {
-  if ((((DAT_ffffb534 == '\0') && (DAT_ffffcddb == '\0')) && (DAT_ffffb53a == '\0')) &&
+  if ((((automatic_transmission_ffffb534 == '\0') && (DAT_ffffcddb == '\0')) && (DAT_ffffb53a == '\0')) &&
      (((int)DAT_ffffce20 & 0x80U) == 0)) {
     DAT_ffffcdd9 = 1;
   }

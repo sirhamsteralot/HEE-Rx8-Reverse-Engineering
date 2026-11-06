@@ -12,7 +12,7 @@ void charging_control_batch(void)
   FUN_00019d8a();
   FUN_00039b08();
   FUN_0002145e();
-  ref_alternatorControlMain_00026868();
+  alternator_pid_task();
   FUN_0002224e();
   FUN_00059ab0();
   FUN_00016c56();

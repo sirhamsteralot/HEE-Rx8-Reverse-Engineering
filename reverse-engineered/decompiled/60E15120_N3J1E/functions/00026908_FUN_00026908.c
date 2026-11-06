@@ -6,7 +6,7 @@
 void FUN_00026908(void)
 
 {
-  DAT_ffffb65c = DAT_ffffb58c + 0.1172;
+  battery_voltage_filtered_ffffb65c = DAT_ffffb58c + 0.1172;
   return;
 }
 

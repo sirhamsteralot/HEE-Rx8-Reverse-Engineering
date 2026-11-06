@@ -46,7 +46,7 @@ void FUN_0001102a(void)
   FUN_000167ac();
   FUN_00022f54();
   thunk_FUN_0002e800();
-  ref_initFanControl_0002f260();
+  candidate_fan_init_thunk();
   FUN_0002f948();
   FUN_00031c1c();
   FUN_0003173c();

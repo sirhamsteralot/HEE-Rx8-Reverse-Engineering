@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_voltage_target_select [medium]: Target voltage 0xffffb61c: 14.2 (pool 0x749c8) when c6ac<=0 && b64c; tbl 0x6a5b0(battery temp b5c4) + clamp(b59c ± 0.2 hysteresis, b624) in cold mode (b617); tbl 0x6a59c + min(b59c+0.2, b624) in mode b618; then 0xffffb59c = ref_alternatorPIDsomething(0x5cba4)(b61c). Coolant/IAT 145/150 C flags b64a/b64b/b64c. Called from 0x26868 via pool 0x268d8 and from 0x25790.
+ * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
+ * RAM 0xffffb5a4 electrical_load_filtered (float): first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a538: Desired Charge Voltage (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a574: Table 2D - 152 (RX8Defs data pointer, axes and dimensions match).
@@ -11,7 +16,7 @@
  */
 /* ROM address: 0x00025c6c; body bytes: 1008; decompiled */
 
-void FUN_00025c6c(void)
+void candidate_alternator_voltage_target_select(void)
 
 {
   char cVar1;
@@ -57,9 +62,12 @@ void FUN_00025c6c(void)
     DAT_ffffb61a = '\0';
   }
   if ((((DAT_ffffb64a == '\x01') || (DAT_ffffb64b == '\x01')) ||
-      ((DAT_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
-     (((((DAT_ffffb610 == 0 || (DAT_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
-       ((DAT_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+     (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
+       ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
+      ((automatic_transmission_ffffb534 == '\0' && (DAT_ffffca4c == '\0')))) ||
+     (((((DAT_ffffb610 == 0 || (low_voltage_latch_ffffb5b2 == '\x01')) || (DAT_ffffb5b0 == '\x01')) ||
+       ((charging_ok_latch_ffffb5b1 == '\x01' || (DAT_ffffc5e6 == '\x01')))) || (DAT_ffffc5db == '\x01')))) {
     DAT_ffffb616 = '\x01';
   }
   else {
@@ -71,7 +79,7 @@ void FUN_00025c6c(void)
   else if (DAT_ffffb610 != 0) {
     DAT_ffffb610 = DAT_ffffb610 + -1;
   }
-  fVar5 = DAT_ffffb658;
+  fVar5 = system_voltage_alt_ffffb658;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   DAT_ffffb624 = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_desired_charge_voltage_0006a538);
   DAT_ffffb628 = (float)lookup_2d_descriptor_scaled(inferred_estimated_battery_temperature_ffffb5c4,&tbl_table_2d_152_0006a574);
@@ -79,7 +87,7 @@ void FUN_00025c6c(void)
   cVar4 = DAT_ffffb619;
   if (((((((cVar2 == '\x01') && (DAT_ffffb644 < 4)) || (DAT_ffffb616 == '\x01')) ||
         (inferred_ram_ad18_ffffad18_ffffad18 == '\x01')) || ((cVar1 == '\x01' && (cVar3 == '\x01')))) ||
-      ((snapshot_vehicle_speed_ffffbbb4 < 20.0 || ((DAT_ffffb5fc < 20.0 || (20.0 <= DAT_ffffb5a4)))))) ||
+      ((snapshot_vehicle_speed_ffffbbb4 < 20.0 || ((DAT_ffffb5fc < 20.0 || (20.0 <= electrical_load_filtered_ffffb5a4)))))) ||
      (fVar5 < DAT_ffffb624 - DAT_ffffb62c)) {
     DAT_ffffb617 = '\0';
 LAB_00025f56:
@@ -90,7 +98,7 @@ LAB_00025f56:
     }
   }
   else if (cVar2 == '\x01') {
-    if ((((3 < DAT_ffffb644) && (50.0 <= DAT_ffffb5fc)) && (DAT_ffffb5a4 < 50.0)) &&
+    if ((((3 < DAT_ffffb644) && (50.0 <= DAT_ffffb5fc)) && (electrical_load_filtered_ffffb5a4 < 50.0)) &&
        (DAT_ffffb624 - DAT_ffffb628 <= fVar5)) {
       DAT_ffffb617 = '\x01';
     }
@@ -130,7 +138,7 @@ LAB_00025f94:
     fVar5 = rx8_max_float(inferred_ram_b59c_ffffb59c_ffffb59c - 0.2,DAT_ffffb624);
     DAT_ffffb61c = fVar5 - DAT_ffffb634;
   }
-  inferred_ram_b59c_ffffb59c_ffffb59c = (float)ref_alternatorPIDsomething(DAT_ffffb61c);
+  inferred_ram_b59c_ffffb59c_ffffb59c = (float)candidate_alternator_target_encode_u16(DAT_ffffb61c);
   if (cVar2 == '\x01') {
     DAT_ffffb644 = rx8_add_u8_saturate((int)(char)DAT_ffffb644,1);
   }

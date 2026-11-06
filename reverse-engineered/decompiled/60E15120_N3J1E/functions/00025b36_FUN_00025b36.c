@@ -14,7 +14,7 @@ uint FUN_00025b36(void)
     DAT_ffffb649 = 0;
   }
   uVar1 = (uint)cranking_active_ffffaa62_ffffaa62;
-  if ((((uVar1 != 1) || (uVar1 = (uint)DAT_ffffb649, uVar1 != 1)) || (DAT_ffffb658 < 10.0)) ||
+  if ((((uVar1 != 1) || (uVar1 = (uint)DAT_ffffb649, uVar1 != 1)) || (system_voltage_alt_ffffb658 < 10.0)) ||
      (uVar1 = (uint)DAT_ffffb60c, uVar1 != 0)) {
     DAT_ffffb614 = 0;
   }

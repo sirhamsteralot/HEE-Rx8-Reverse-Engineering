@@ -2,6 +2,12 @@
   "date": "2026-10-30",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "reports": {
+    "alternator_control_report.md": {
+      "fn_checked": 17,
+      "ram_checked": 9,
+      "rom_refs": 27,
+      "rom_claims": 0
+    },
     "calibration_extraction_report.md": {
       "fn_checked": 0,
       "ram_checked": 0,
@@ -14,6 +20,12 @@
       "rom_refs": 5,
       "rom_claims": 0
     },
+    "cooling_fan_control_report.md": {
+      "fn_checked": 9,
+      "ram_checked": 4,
+      "rom_refs": 13,
+      "rom_claims": 0
+    },
     "cruise_control_report.md": {
       "fn_checked": 9,
       "ram_checked": 8,
@@ -24,6 +36,12 @@
       "fn_checked": 5,
       "ram_checked": 0,
       "rom_refs": 12,
+      "rom_claims": 0
+    },
+    "dsc_can_arbitration_report.md": {
+      "fn_checked": 12,
+      "ram_checked": 9,
+      "rom_refs": 21,
       "rom_claims": 0
     },
     "dtc_control_report.md": {
@@ -54,6 +72,12 @@
       "fn_checked": 44,
       "ram_checked": 21,
       "rom_refs": 95,
+      "rom_claims": 0
+    },
+    "idle_control_report.md": {
+      "fn_checked": 21,
+      "ram_checked": 10,
+      "rom_refs": 31,
       "rom_claims": 0
     },
     "idle_target_control_report.md": {

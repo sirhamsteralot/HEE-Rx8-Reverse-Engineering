@@ -27,7 +27,7 @@ uint idle_trailing_timing_error_correction(void)
   DAT_ffffa72c = engine_speed_rpm_ffffb548 - DAT_ffffb554;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   fVar3 = engine_speed_rpm_ffffb548;
-  if (DAT_ffffb534 == '\0') {
+  if (automatic_transmission_ffffb534 == '\0') {
     if (DAT_ffffb53c == '\0') {
       puVar2 = &tbl_ignition_trailing_idle_error_timing_correction_unknown_bool_false_0006a088;
     }

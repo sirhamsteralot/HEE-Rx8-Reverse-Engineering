@@ -3,6 +3,11 @@
   "rom": "60E15120_N3J1E.bin",
   "checks": {
     "reports": {
+      "alternator_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "calibration_extraction_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -10,6 +15,11 @@
       },
       "can_mailbox_config_report.md": {
         "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "cooling_fan_control_report.md": {
+        "reg_pairs": 2,
         "call_claims": 0,
         "pool_claims": 0
       },
@@ -22,6 +32,11 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0
+      },
+      "dsc_can_arbitration_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 3
       },
       "dtc_control_report.md": {
         "reg_pairs": 0,
@@ -47,6 +62,11 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0
+      },
+      "idle_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 3
       },
       "idle_target_control_report.md": {
         "reg_pairs": 0,
@@ -99,13 +119,13 @@
         "pool_claims": 0
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 27,
-        "call_claims": 5,
-        "pool_claims": 11
+        "reg_pairs": 37,
+        "call_claims": 7,
+        "pool_claims": 15
       }
     },
-    "tsv_rows": 412,
-    "labels_json_checked": 14
+    "tsv_rows": 489,
+    "labels_json_checked": 18
   },
   "notes": [
     "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",
