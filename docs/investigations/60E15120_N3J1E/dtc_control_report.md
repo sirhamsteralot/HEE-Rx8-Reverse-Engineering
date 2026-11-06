@@ -54,7 +54,7 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
 - **MIL:** 0x5a130 sets 0xffffd286 = 1 when a *stored, enabled* DTC exists
   (0x61450(0x80, filter=enable#1) ≠ 0 and 0xffffd1c5 ≠ 1) — verified dynamically: MIL=1
   with stored P0101 (enable1[9]=1), MIL=0 when only the disabled slot was stored.
-  0x5a188 accumulates distance-while-MIL-on (0xffff90f4, PID 0x21); 0x55278 puts the
+  0x5a188 accumulates distance-while-MIL-on (`distance_mil_on_ffff90f4` 0xffff90f4, PID 0x21); 0x55278 puts the
   count+0x80 into the CAN status message.
 - **Clear:** UDS 0x14 / Mode 04 → 0x558ac → 0x55992 → 0x61b02 + 0x5fd92/0x5fd84
   (zero 0xffffd570, 0xffffd5fc, …); boot-init 0x5fd6c does the same RAM reset.
@@ -393,7 +393,7 @@ the def uses the Mazda assignment (RX-8-specific).
 | 0x000612ee | `FUN_000612ee` — dtc_aging_sweep | per-type aging state machines |
 | 0x00061092 | `FUN_00061092` — group-2 event-2 handler | set-fault message processing |
 | 0x0005a130 | `ref_faultSomething0x1` — dtc_update_mil_flag | MIL flag 0xffffd286 |
-| 0x0005a188 | `FUN_0005a188` — dtc_distance_mil_accumulator | distance-while-MIL-on 0xffff90f4 |
+| 0x0005a188 | `FUN_0005a188` — dtc_distance_mil_accumulator | distance-while-MIL-on `distance_mil_on_ffff90f4` 0xffff90f4 |
 | 0x00055278 | `FUN_00055278` — CAN MIL status | count|0x80 into CAN message |
 | 0x00066a00 | `ref_getFaultStatus__` — dtc_get_fault_status | 80 callers |
 | 0x00066a58 | `FUN_00066a58` — dtc_status_availability_mask | high-half mask builder |
