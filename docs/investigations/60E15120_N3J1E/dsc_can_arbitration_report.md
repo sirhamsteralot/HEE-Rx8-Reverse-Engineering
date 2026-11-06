@@ -66,7 +66,7 @@ engine_max_torque_allowed_calc 0x2b3b8
                                         # bbd8 = clamp(bb20*decode_u8(bbc8)/100 - bcb8 - bcbc, 0, 512)
 dsc_desired_torque_calc 0x2b496         # bbe0, filter bbf8 -> bbf7
 dsc_mode_bit08_check 0x2b6a4            # bbcf = (bbde & 8) == 8
-dsc_mode_bit80/40/20/10_check 0x2b6c2/0x2b754/0x2b788/0x2b7a6   # bb cb/cc/cd/ce from bbf6
+dsc_mode_bit80/40/20/10_check 0x2b6c2/0x2b754/0x2b788/0x2b7a6   # bb cb/cc/cd/ce from bbf6 (call pools 0x2a478/0x2a47c/0x2a480/0x2a484 re-read this pass)
 can212_timeout_flag 0x2b7c4             # bbd0 = 0x1e < bbf0
 wheelspeed_rear_avg_calc 0x2b046        # avg of decode(bbac), decode(bbae)
 vehicle_moving_calc 0x2b156             # bbb8 = vspeed <= 4 (hyst 5)
@@ -94,7 +94,7 @@ step 0x3c23d70a / offset 0xc2c80000 (in 0x2b046), torque u8 decode step
 | 0x2b816 | `candidate_can212_torque_extract` | medium |
 | 0x2b496 | `candidate_dsc_desired_torque_calc` | medium |
 | 0x2b6a4 | `candidate_dsc_mode_bit08_check` | medium |
-| 0x2b6c2 / 0x2b754 / 0x2b788 / 0x2b7a6 | `candidate_dsc_mode_bit80/40/20/10_check` | medium |
+| 0x2b6c2 / 0x2b754 / 0x2b788 / 0x2b7a6 | `dsc_mode_bit80/40/20/10_check` | medium |
 | 0x2b7c4 | `candidate_can212_timeout_flag` | medium |
 | 0x2b046 | `candidate_wheelspeed_rear_avg_calc` | medium |
 | 0x2b1d6 | `candidate_can4b0_wheelspeed_extract` | medium |
@@ -159,7 +159,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x0002b156 | `vehicle_moving_calc` | → 0xffffbbb8 |
 | 0x0002b17e / 0x0002b1aa | `wheelspeed_lr_validity` / `wheelspeed_rr_validity` | → 0xffffbbb9/bbba |
 | 0x0002b496 / 0x0002b6a4 | `candidate_dsc_desired_torque_calc` / `candidate_dsc_mode_bit08_check` | torque calc / mode bit 0x08 |
-| 0x0002b6c2-0x0002b7a6 | `candidate_dsc_mode_bit80/40/20/10_check` | mode bits → 0xffffbbcb-ce |
+| 0x0002b6c2-0x0002b7a6 | `dsc_mode_bit80/40/20/10_check` | mode bits → 0xffffbbcb-ce |
 | 0x0002b7c4 / 0x0002b046 | `candidate_can212_timeout_flag` / `candidate_wheelspeed_rear_avg_calc` | timeout flag / avg |
 | 0x0002b816 / 0x0002b1d6 | `candidate_can212_torque_extract` / `candidate_can4b0_wheelspeed_extract` | payload extracts |
 | 0x00011744 / 0x0001815c | `FUN_00011744` / `dsc_timing_derate_select` | batch caller / 0xffffbbd8 consumer |
