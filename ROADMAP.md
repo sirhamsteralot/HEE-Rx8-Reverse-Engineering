@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 9–11 — pick up 9–10 first; C item 10 pairs naturally
+**reopened**: open items 10–18 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,19 +27,8 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 9–11)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–20)
 
-- **C item 9 (open)** — subsystem reports for areas with only inherited
-  `ref_` seed labels and no report: idle speed control
-  (`ref_updateIdleControl__` 0x167c0), alternator/charging
-  (`ref_alternatorControlMain` 0x267c6 / `ref_alternatorControl` 0x2680e
-  chain), cooling fan (`ref_initFanControl` 0x2f188 / `ref_setFanOutputGPIO`
-  0x2f1dc), E2RAM read/write layer (`ref_getDataFromE2RAM` 0x3599c /
-  `ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4; serves knock-learn storage,
-  [knock report](docs/investigations/60E15120_N3J1E/knock_control_report.md) 0x139c4),
-  DSC-related CAN arbitration (`ref_updateDSCRelatedCANStuff__` 0x2a2ae).
-  `ref_` names are upstream-inherited hypotheses — binary-verify before
-  upgrading any label (rule 6).
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
   candidates (`candidate_rev_limit_conditionals` 0xee82,
@@ -64,7 +53,7 @@ and where artifacts live.
     0xffffb548, pedal volts 0xffffa9c4, two readValue floats and the DTC flag
     bytes are attributed); save cadence/trigger — the caller of 0x1150e was
     not traced beyond the callgraph. (The deeper E2RAM device protocol layer
-    stays with C item 9: 0x3599c/0x37ea4.)
+    now covered by [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md): 0x3599c/0x37ea4.)
   - CAN mailbox ([can_mailbox_config_report.md](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md)):
     attribute record bytes +12..+15 of the 16-byte mailbox descriptors; whether
     `ref_canSetup` 0xd9f4 runs once at boot or also on CAN error recovery.
@@ -76,6 +65,162 @@ and where artifacts live.
     physical meaning of the four filtered channels 0xffffc708–0x14; gating
     conditions of 0xffffc704 / 0xffffae21 on the threshold averages
     0x6b680–0x6b6d4.
+- **C item 12 (open)** — fold the leading/trailing timing-correction findings
+  that landed with the DSC CAN report (PR #55, branch
+  `research/c9-dsc-can-report`) into the label records and the ignition timing
+  report. That pass added `[ADDITIONAL SOURCE REVIEW]` RAM aliases on the
+  leading/trailing timing chain — but only as decompiled header comments, not
+  yet in `source_review/accepted_ram_aliases.tsv` or the labels JSON:
+  0x11f00/0x1206c coolant terms (`leading_coolant_scaled_advance_term`
+  0xffffa5f0, `trailing_...` 0xffffa5f4), 0x123da/0x124d6 cranking blends
+  (`leading_base_timing_final` 0xffffa5e8, `trailing_base_timing_final`
+  0xffffa5ec, `cranking_timing_multiplier_leading` 0xffffa644 /
+  `_trailing` 0xffffa654), 0x12630/0x12754 min-advance clamps
+  (`leading_min_advance_clamp` 0xffffa64c, `trailing_min_advance_clamp`
+  0xffffa65c), 0x121fc/0x12300 max-advance + pre-clamp cells
+  (`leading_max_advance` 0xffffa660, `trailing_max_advance` 0xffffa664,
+  `leading_timing_with_corrections` 0xffffa634,
+  `trailing_timing_with_corrections` 0xffffa63c), idle error corrections
+  0x135b4/0x136e4 (`idle_leading_timing_error_correction` 0xffffa718,
+  `idle_trailing_timing_error_correction` 0xffffa71c), IAT compensation
+  0x14090 (`iat_timing_compensation_leading` 0xffffa778 /
+  `_trailing` 0xffffa77c), idle base select 0x14100
+  (`idle_base_timing_leading` 0xffffa780 / `_trailing` 0xffffa784).
+  Investigate: re-verify each cell against the raw ROM/disassembly (AGENTS.md
+  rule 7), promote into
+  [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/) +
+  `source_review/accepted_ram_aliases.tsv`, and update
+  [ignition_timing_report.md](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
+  — its §4/§8 memory map still uses raw `a5e8`-style cell names. Pairs with
+  E item 1 (ignition timing is a remaining reimplementation subsystem).
+- **C item 13 (open)** — sweep and apply the `[ADDITIONAL SOURCE REVIEW]`
+  comments that landed with the DSC CAN report (PR #55, branch
+  `research/c9-dsc-can-report`): 311 decompiled function files under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` carry new review
+  headers with 268 function-level alias descriptions and 164
+  `RAM <addr> <alias>` lines. Today they exist only as header comments — not
+  yet in `source_review/accepted_function_aliases.tsv` /
+  `accepted_ram_aliases.tsv`, not in the per-subsystem labels JSON under
+  [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/), and not reflected
+  in the subsystem reports. For each: evaluate (keep the label ladder —
+  `candidate_` stays until proven), re-verify against the raw ROM/disassembly
+  (AGENTS.md rule 7), then apply — promote into the TSVs + the matching
+  per-subsystem labels JSON, and update the relevant
+  [investigation reports](docs/investigations/60E15120_N3J1E/) where the new
+  names change the memory maps. C item 12 is the ignition-timing subset of
+  this sweep; do that one first, then batch the rest per subsystem (one work
+  unit per subsystem, per AGENTS.md rule 11). Run the pipeline validators +
+  `python -m pytest tests/` after each batch.
+- **C item 14 (open)** — sweep all decompiled function definitions and their
+  header comments for merge/reduce/apply opportunities. Every file under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` now stacks several
+  comment blocks (`[ADDITIONAL SOURCE REVIEW]`, `[CROSS-ECU / RX8DEFS REVIEW]`,
+  `[READABILITY RECONSTRUCTION]`, `[ROM address: ...]`), and the same bodies
+  appear in the monolithic
+  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
+  — with C item 13 landing more review comments, some statements are now
+  duplicated across blocks. Go through all of them: merge or drop redundant
+  comment lines, apply the ones that belong in the canonical export (via the
+  re-runnable pipeline passes, not hand edits), and keep the per-function files
+  and the two monoliths in sync. Any rename/relabel still needs rule-7
+  binary-level verification; run the pipeline validators + `python -m pytest
+  tests/` after the pass.
+- **C item 15 (open)** — verify all claims in the reports added today:
+  [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)
+  (+ `reviews/dsc_can_arbitration/`, merged today) and
+  [idle_control_report.md](docs/investigations/60E15120_N3J1E/idle_control_report.md)
+  (+ `reviews/idle_control/`, open PR branch). For each: re-check every
+  machine-checkable claim with `verify_claims.py` / `validate_reports.py`,
+  plus the rule-7 binary-level pass over prose claims (ROM bytes, literal
+  pools, mailbox/descriptor bytes, call counts vs the disassembly), and record
+  the outcome in the report's `reviews/<subsystem>/validation.json`. Fix any
+  factual error in *all* artifacts (report + label JSON/TSV evidence), per
+  AGENTS.md rule 11.
+- **C item 16 (open)** — apply all of today's findings to the decompiled C
+  code itself. Today's passes (the DSC CAN arbitration labeling, merged, and
+  the idle speed control labeling, open PR branch) produced new function
+  aliases, RAM aliases and review comments, but the decompiled artifacts still
+  need a fresh pipeline run so they carry them: re-run the annotation +
+  `integrate_reviewed_names.py` passes from `rebuild.sh` so every file under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/`, the monolithic
+  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
+  reflect the new names/comments (distinct from C item 13, which applies the
+  comments to the label TSVs/JSON + reports, and C item 14, which
+  merges/reduces the comment blocks themselves). Re-verify at the binary level
+  per AGENTS.md rule 7 and run the pipeline validators + `python -m pytest
+  tests/`; keep the passes re-runnable (rule 6c) rather than hand-editing the
+  export.
+- **C item 17 (open)** — update and review all existing documentation with the
+  new insights. Today's passes (DSC CAN arbitration, merged; idle speed
+  control, open PR branch; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment
+  sets) changed labels and cross-subsystem links — e.g. 0xffffbbb8
+  `vehicle_not_moving` is now known to feed the idle A/C clutch gate 0x165d6,
+  and `engine_max_torque_allowed` 0xffffbbd8 feeds the DSC timing derate
+  0x1815c in the ignition report. Go through
+  [docs/investigations/60E15120_N3J1E/](docs/investigations/60E15120_N3J1E/)
+  (the README index, every existing `*_report.md`'s **Related reports:** line
+  and §9 Limits/open questions), [`docs/learnings.md`](docs/learnings.md), and
+  this ROADMAP's cross-references: add the new links, refresh stale statements
+  that the new evidence supersedes, and fix any broken `.md` links (rule 8:
+  cross-reference everywhere, never leave a bare code span). Factual changes
+  must land in all artifacts at once (rule 11). Validate afterwards with
+  `validate_reports.py` + `verify_claims.py` and a link + non-empty-size check
+  on every touched doc. Sequencing: do this after C items 13–16 so the docs
+  reflect the applied labels, not just the raw comments.
+- **C item 18 (open)** — update the ECU definitions in
+  [data/definitions/](data/definitions/) from the new investigations. The
+  recent passes (DSC CAN arbitration, idle speed control, alternator control,
+  the ignition timing chain) confirmed or refined table/scalar semantics and
+  descriptor meanings that the RomRaider XML defs should reflect — e.g. new or
+  corrected table descriptions for the CAN 0x212-derived signals, idle
+  target/air tables and alternator drag-torque tables, and any scalar
+  meanings pinned by the source-review comments. Use the re-runnable defs
+  passes (`extend_defs_all_roms.py` per-ROM regeneration + `relabel_merged_def.py`
+  splice, per AGENTS.md rule 6c): keep `<description>` a short user-facing
+  what-the-table-does sentence with no addresses/provenance/pass markers
+  (rule 6b), and record provenance in
+  `data/labels/60E15120_N3J1E/defs_table_labels.json`. Sequencing: after C
+  items 13/16 so the defs pick up verified labels, and re-run the defs-merge
+  checks + pipeline validators afterwards.
+- **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
+  53 rows in
+  [rx8defs-analysis/function_labels.tsv](docs/investigations/60E15120_N3J1E/rx8defs-analysis/function_labels.tsv)
+  carry a `thunk` name — 51 generic `thunk_FUN_xxxxx` indirect-call stubs
+  plus 0x35d36 `ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN` and 0x5fd3c
+  `ref_updateFaultStatusTHUNKNoR6_`. Determine what "thunk" means upstream:
+  the bodies are bare register-indirect calls (e.g. 0x35d36 is
+  `(*unaff_r14)()`, 14 bytes, exact-byte match to 60E0FC00 0x36456), so the
+  name may just be a "not sure what this calls" marker, not a semantic label.
+  For each, trace the indirect register at its call site(s) against the raw
+  ROM (start with 0x35d36, called only from the write dispatcher 0x35a8c via
+  dispatch pools 0x35b70–0x35b84, and 0x5fd3c from the fault-status path),
+  resolve the real target where possible, then keep or demote each label per
+  rule 6 (never keep a plausible name): rename pure uncertainty markers to
+  `candidate_*` indirect-call labels and record the evidence in the relevant
+  report + label TSV/JSON. The 0x35d36 case currently carries our
+  `e2ram_write_thunk` (medium) label from the E2RAM device-layer pass (open
+  PR branch;
+  [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
+  §9 Limits) — decide whether the target is `e2ram_shadow_byte_write`
+  0x37ea4 or a device-write path.
+- **C item 20 (open)** — map what it takes to *author* a new DTC in this
+  firmware: the full path from a detection site to MIL indication and
+  persistence across key-off. Starting from
+  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
+  (+ `reviews/dtc_control/`), document the chain end to end: raising a code
+  (slot → code_id → P-code mapping, e.g. the charging DTCs 0x7b–0x7d →
+  P2502/P2503/P2504 via tables 0x7df42/0x7e560), the MIL/warning-lamp driver
+  (e.g. `ref_setAlternatorWarningLight` 0x26760), storage into the E2RAM
+  fault block (see
+  [e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)
+  and the E2RAM device-layer report on the open PR branch) so the code
+  survives key-off, plus pending/confirmed/stored state transitions and
+  Mode 22/UDS readout (0x18/0x19/0x1A services). Deliverable: a "how to add
+  a DTC" section (or a small addendum report) with the concrete register/RAM/
+  table addresses a new code would need to touch, and any gaps marked for
+  further investigation.
 
 ### E. Reimplementation coverage (P4)
 
