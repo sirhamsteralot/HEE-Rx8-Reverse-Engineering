@@ -32,7 +32,7 @@ FUNCTIONS = [
     ("00026624", "alternator_duty_calc", "medium",
      "Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4."),
     ("00025710", "alternator_field_pwm_output", "high",
-     "Final field PWM duty: 0xffff9f48 = rx8_mul_s32_shift16_saturate((clamp(0xffffb5ac,0,100)/100.0)*65536, period u16 at 0xffff9f44). Disasm: pool 0x2578c = 0xffff9f44 (u32 address), 0x25788 = f32 100.0, mov.w @r5 reads period, mov.w r0,@(0x4,r2) stores duty at 0xffff9f48. Called from 0x267c6 via pool 0x268a8."),
+     "Final field PWM duty: 0xffff9f48 = rx8_mul_s32_shift16_saturate((clamp(0xffffb5ac,0,100)/100.0)*65536, period u16 at 0xffff9f44). Disasm: pool 0x2578c = 0xffff9f44 (u32 address), 0x25780 = f32 100.0, 0x25788 = f32 65536.0, mov.w @r5 reads period, mov.w r0,@(0x4,r2) stores duty at 0xffff9f48. Called from 0x267c6 via pool 0x268a8."),
     ("00025674", "alternator_pwm_channel_init", "high",
      "ATU-II ch5B channel init: 0xffff9f44 = 1000 (period), 0xffff9f48 = 0 (duty), ATUII_GR5B_W 0xfffff4e4 = TCNT5 0xfffff4e0 + 1, TIOR5A_B 0xfffff4eb = (b & 0x8f) | 0x10, TSR3_W 0xfffff480 = 0xf7ff, TIER3 |= 0x800. Register names from symbols.tsv."),
     ("000057c6", "alternator_pwm_service", "high",

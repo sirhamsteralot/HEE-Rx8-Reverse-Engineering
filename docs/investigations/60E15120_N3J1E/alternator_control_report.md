@@ -96,7 +96,7 @@ alternator_pwm_service()             # 0x57c6: GR5B = TCNT5 + compare(duty, peri
 Verified constants (shared literal area 0x74978-0x74a44): 18.471/15.938/16.973/10.938/8.486699
 voltage thresholds, 2.08 @0x74990, 859.0 @0x74994, 93.0/0.43 @0x749b0/0x749b4,
 14.2 @0x749c8, 0.1244/0.9672 @0x74a40/0x74a44, 406.25/700.0 @0x749ec/0x749e4;
-100.0 @0x25788 in 0x25710's pool; 3.75 @0x26734; 2.5 @0x2623c.
+100.0 @0x25780, 65536.0 @0x25788 in 0x25710's pool; 3.75 @0x26734; 2.5 @0x2623c.
 
 ## 4. Labeling applied
 
@@ -154,7 +154,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 ## 7. Validation
 
 - Binary-level: batch pool words 0x26888-0x268b0 / 0x268b4-0x268d0 / 0x268d8 read
-  from ROM and resolved; 0x25710 pool (0x25788 = 100.0f, 0x2578c = 0xffff9f44)
+  from ROM and resolved; 0x25710 pool (0x25780 = 100.0f, 0x25788 = 65536.0f, 0x2578c = 0xffff9f44)
   verified; ATU-II register names from symbols.tsv (`ATUII_GR5B_W` 0xfffff4e4,
   `ATUII_TCNT5_W` 0xfffff4e0, `ATUII_TIOR5A_B` 0xfffff4eb, `ATUII_TSR3_W` 0xfffff480); DTC slot→code chain read from
   ROM (0x7df42, 0x7e560); constant literals 0x74978-0x74a44 read from ROM.
@@ -192,7 +192,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | Address | Content |
 |---|---|
 | 0x26888-0x268b0, 0x268b4-0x268d0, 0x268d8 | batch pools of 0x267c6 / 0x2680e / 0x26868 |
-| 0x2578c, 0x25788 | 0x25710 pool: 0xffff9f44 ptr, f32 100.0 |
+| 0x25780, 0x2578c, 0x25788 | 0x25710 pool: f32 100.0, 0xffff9f44 ptr, f32 65536.0 |
 | 0x74978-0x74a44 | shared float literals (voltage thresholds, 2.08, 859.0, 14.2, filter factors) |
 | 0x7df42 + slot*2, 0x7e560 + code_id*2 | DTC slot→code_id→code tables (slots 0x7b/0x7c/0x7d) |
 | 0x6a54c, 0x6a5c4, 0x6a560, 0x6a524, 0x6a5b0, 0x6a59c, 0x6a790 | alternator calibration descriptors (§3) |
