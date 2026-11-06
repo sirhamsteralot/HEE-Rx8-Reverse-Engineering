@@ -1,4 +1,4 @@
-"""ROADMAP C item 7: dynamic validation of scheduler task handlers 12-16
+"""Dynamic validation of the scheduler task handlers 12-16
 (60E15120_N3J1E).
 
 Static identification (os_scheduling_deep_dive_report.md section 4, extended by
@@ -17,7 +17,7 @@ asserts (a) the expected handler addresses execute, (b) the run reaches
 taskEnd 0x3d58 and lands in the idle spin 0x3dac, and (c) the task table ROM
 bytes hold the entries (rule 7 binary check against the raw ROM file).
 
-Run: python -m pytest tests/test_c7_task_handlers.py
+Run: python -m pytest tests/test_os_task_handlers_12_16.py
 """
 import os
 import struct
