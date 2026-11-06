@@ -44,6 +44,12 @@
       "rom_refs": 21,
       "rom_claims": 0
     },
+    "dtc_authoring_report.md": {
+      "fn_checked": 30,
+      "ram_checked": 18,
+      "rom_refs": 48,
+      "rom_claims": 0
+    },
     "dtc_control_report.md": {
       "fn_checked": 40,
       "ram_checked": 11,
