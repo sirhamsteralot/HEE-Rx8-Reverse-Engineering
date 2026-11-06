@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–15 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–16 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–15)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–16)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -137,6 +137,21 @@ and where artifacts live.
   the outcome in the report's `reviews/<subsystem>/validation.json`. Fix any
   factual error in *all* artifacts (report + label JSON/TSV evidence), per
   AGENTS.md rule 11.
+- **C item 16 (open)** — apply all of today's findings to the decompiled C
+  code itself. Today's passes (the DSC CAN arbitration labeling, merged, and
+  the idle speed control labeling, open PR branch) produced new function
+  aliases, RAM aliases and review comments, but the decompiled artifacts still
+  need a fresh pipeline run so they carry them: re-run the annotation +
+  `integrate_reviewed_names.py` passes from `rebuild.sh` so every file under
+  `reverse-engineered/decompiled/60E15120_N3J1E/functions/`, the monolithic
+  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
+  reflect the new names/comments (distinct from C item 13, which applies the
+  comments to the label TSVs/JSON + reports, and C item 14, which
+  merges/reduces the comment blocks themselves). Re-verify at the binary level
+  per AGENTS.md rule 7 and run the pipeline validators + `python -m pytest
+  tests/`; keep the passes re-runnable (rule 6c) rather than hand-editing the
+  export.
 
 ### E. Reimplementation coverage (P4)
 
