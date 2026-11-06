@@ -50,6 +50,12 @@
       "rom_refs": 51,
       "rom_claims": 0
     },
+    "e2ram_device_layer_report.md": {
+      "fn_checked": 13,
+      "ram_checked": 5,
+      "rom_refs": 18,
+      "rom_claims": 0
+    },
     "e2ram_nv_storage_report.md": {
       "fn_checked": 10,
       "ram_checked": 7,

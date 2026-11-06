@@ -8,7 +8,7 @@ void FUN_0005b60e(char param_1)
 {
   undefined1 auStack_c [8];
   
-  FUN_00037ef0(100,auStack_c,3);
+  e2ram_cached_byte_read(100,auStack_c,3);
   ref_setupForUdsResponse_((int)param_1,auStack_c,3);
   return;
 }

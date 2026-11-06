@@ -131,6 +131,18 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
+## E2RAM device layer labeling
+
+`scripts/review_e2ram_labels.py` labels the indexed-parameter layer above the
+28-u16 block codec: `e2ram_boot_param_read` 0x3599c (19 fields into
+0xffffc268-0xffffc282), `e2ram_cached_byte_read` 0x37ef0 (shadow
+0xffffc28e/0xffffc38e with device fallback), `e2ram_shadow_byte_write` 0x37ea4,
+`e2ram_bulk_read_into_shadow` 0x37cd8, plus the SCI4 device protocol
+(0xbdfa read word, 0xbe30/0xbe5e/0xbe8c command frames, 0xbfa0/0xc02c SCI4
+TX/RX, CS on `PFDR_W` 0xfffff74e bit 0x400, busy on `PBDR_W` 0xfffff738 bit
+0x800; device addresses 0x6000000 + page*0x10000). 15 functions, 3 RAM cells.
+Write-up: [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md) +
+`reviews/e2ram_device_layer/`; record: `metadata/e2ram_device_labels.json`.
 ## Cooling fan control labeling
 
 `scripts/review_fan_control_labels.py` labels the fan chain: task wrapper

@@ -43,6 +43,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "e2ram_device_layer_report.md": {
+        "reg_pairs": 13,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "e2ram_nv_storage_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -114,13 +119,13 @@
         "pool_claims": 0
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 24,
+        "reg_pairs": 37,
         "call_claims": 7,
-        "pool_claims": 12
+        "pool_claims": 15
       }
     },
-    "tsv_rows": 474,
-    "labels_json_checked": 17
+    "tsv_rows": 489,
+    "labels_json_checked": 18
   },
   "notes": [
     "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",

@@ -7,7 +7,7 @@ void ref_ImmoSomethingOrOther__(void)
 
 {
   ref_loadDatafromE2intoRAM_();
-  ref_getDataFromE2RAM();
+  e2ram_boot_param_read();
   ref_checkImmoStatus_();
   ref_Immo_Keygen_related_ADC();
   ref_immoRelatedMaybe__();

@@ -43,7 +43,7 @@ uint FUN_000279d8(void)
         uVar8 = ref_readValue_float_DEFAULTVAL_ADDRESS(uVar11,puVar7);
         local_30 = rx8_encode_u8_affine_saturate(uVar8,uVar10,uVar9);
         local_2f = ref_readValue_8bit_ADDRESS_VAL(puVar5,0);
-        ref_writeToE2RAMArea_INDEX_ADDR_LEN(iVar6 + 0x20,&local_30,2);
+        e2ram_shadow_byte_write(iVar6 + 0x20,&local_30,2);
         uVar4 = uVar4 + 1;
         iVar6 = iVar6 + 2;
         puVar5 = puVar5 + 2;

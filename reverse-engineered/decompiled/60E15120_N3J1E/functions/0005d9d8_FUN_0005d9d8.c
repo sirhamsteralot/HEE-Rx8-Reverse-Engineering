@@ -15,7 +15,7 @@ uint FUN_0005d9d8(void)
   if (uVar1 == 1) {
     if (DAT_ffffd376 == '\x01') {
       ref_udsServiceResponse(0x3b,local_9c,(int)(short)DAT_ffffd370);
-      ref_writeToE2RAMArea_INDEX_ADDR_LEN
+      e2ram_shadow_byte_write
                 ((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],local_9c,
                  (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc]);
       DAT_ffffd376 = '\0';
@@ -31,7 +31,7 @@ uint FUN_0005d9d8(void)
             *puVar2 = 0xff;
             puVar2 = puVar2 + 1;
           }
-          ref_writeToE2RAMArea_INDEX_ADDR_LEN
+          e2ram_shadow_byte_write
                     ((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],local_9c,
                      (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc]);
           uVar1 = FUN_0005dc06();

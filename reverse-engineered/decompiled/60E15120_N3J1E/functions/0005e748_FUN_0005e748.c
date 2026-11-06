@@ -9,7 +9,7 @@ uint FUN_0005e748(void)
   uint uVar1;
   char local_8 [8];
   
-  uVar1 = FUN_00037ef0(0x9f,local_8,1);
+  uVar1 = e2ram_cached_byte_read(0x9f,local_8,1);
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     uVar1 = (int)local_8[0] & 1;

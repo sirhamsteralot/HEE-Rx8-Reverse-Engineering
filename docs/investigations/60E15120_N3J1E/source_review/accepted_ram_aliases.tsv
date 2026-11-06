@@ -451,3 +451,6 @@ ffffbbba	wheelspeed_rr_invalid	uint8	0002b1aa	RR wheelspeed invalid/stale flag f
 ffffbbf0	can212_timeout_counter	uint16	0002b29c	0x212 RX failure counter incremented in 0x2b29c on mailbox-copy failure (every 4th failure); 0xffffbbd0 = (0x1e < bbf0) timeout flag by 0x2b7c4.
 ffffbbde	can212_status_word	uint16	0002b6a4	u16 from CAN 0x212 payload bytes 4-5 (0x2b7e2: bbc4*0x100+bbc5); bit 0x08 checked by 0x2b6a4 -> 0xffffbbcf.
 ffffbbc8	can212_torque_signal	uint8	0002b816	Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc.
+ffffc28e	e2ram_shadow_data	uint8[256]	00037ef0	E2RAM byte shadow cache: written by 0x37ea4/0x37ef0/0x37cd8, read back for cached reads (0x37ef0 compares against the complement at 0xffffc38e).
+ffffc38e	e2ram_shadow_complement	uint8[256]	00037ef0	Complement shadow of 0xffffc28e (0xffffc38e[i] = ~data[i]); match means cache valid, mismatch triggers a device read via 0xbdfa in 0x37ef0.
+ffffc268	e2ram_param_block	uint8[32]	0003599c	Boot parameter block 0xffffc268-0xffffc282 filled by 0x3599c via 0x37ef0 (19 indexed fields); source cells for the write dispatch 0x35a8c.

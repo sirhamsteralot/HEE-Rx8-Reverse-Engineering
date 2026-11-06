@@ -9,7 +9,7 @@ void FUN_00038082(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000379e4();
+  candidate_e2ram_verify_state_machine();
   ref_setSR(uVar1);
   return;
 }

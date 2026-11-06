@@ -12,7 +12,7 @@ char FUN_00036700(void)
      (DAT_ffffc261 == '\0')) {
     DAT_ffffc227 = '\x01';
     DAT_ffffc261 = '\b';
-    FUN_00035a8c(8);
+    candidate_e2ram_param_write_dispatch(8);
     DAT_ffffc241 = '\x01';
     DAT_ffffc240 = '\0';
   }
