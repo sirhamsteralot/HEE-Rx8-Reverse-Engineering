@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 9–11 — pick up 9–10 first; C item 10 pairs naturally
+**reopened**: open items 10–11 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,19 +27,8 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 9–11)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–11)
 
-- **C item 9 (open)** — subsystem reports for areas with only inherited
-  `ref_` seed labels and no report: idle speed control
-  (`ref_updateIdleControl__` 0x167c0), alternator/charging
-  (`ref_alternatorControlMain` 0x267c6 / `ref_alternatorControl` 0x2680e
-  chain), cooling fan (`ref_initFanControl` 0x2f188 / `ref_setFanOutputGPIO`
-  0x2f1dc), E2RAM read/write layer (`ref_getDataFromE2RAM` 0x3599c /
-  `ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4; serves knock-learn storage,
-  [knock report](docs/investigations/60E15120_N3J1E/knock_control_report.md) 0x139c4),
-  DSC-related CAN arbitration (`ref_updateDSCRelatedCANStuff__` 0x2a2ae).
-  `ref_` names are upstream-inherited hypotheses — binary-verify before
-  upgrading any label (rule 6).
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
   candidates (`candidate_rev_limit_conditionals` 0xee82,
@@ -64,7 +53,7 @@ and where artifacts live.
     0xffffb548, pedal volts 0xffffa9c4, two readValue floats and the DTC flag
     bytes are attributed); save cadence/trigger — the caller of 0x1150e was
     not traced beyond the callgraph. (The deeper E2RAM device protocol layer
-    stays with C item 9: 0x3599c/0x37ea4.)
+    now covered by [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md): 0x3599c/0x37ea4.)
   - CAN mailbox ([can_mailbox_config_report.md](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md)):
     attribute record bytes +12..+15 of the 16-byte mailbox descriptors; whether
     `ref_canSetup` 0xd9f4 runs once at boot or also on CAN error recovery.
