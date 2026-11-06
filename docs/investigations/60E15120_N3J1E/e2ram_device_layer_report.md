@@ -96,7 +96,7 @@ None — fixed device addressing (base 0x6000000, page<<16) and command 0x4c0000
 | 0x35d36 | `candidate_e2ram_write_thunk` | medium |
 | 0x35a8c | `candidate_e2ram_param_write_dispatch` | medium |
 | 0x379e4 | `candidate_e2ram_verify_state_machine` | medium |
-| 0xbe5e / 0xbe8c | `candidate_e2ram_send_command4_a` / `_b` | medium |
+| 0xbe5e / 0xbe8c | `e2ram_send_command4_a` / `e2ram_send_command4_b` | medium |
 
 RAM aliases: `e2ram_shadow_data` 0xffffc28e, `e2ram_shadow_complement`
 0xffffc38e, `e2ram_param_block` 0xffffc268.
@@ -155,7 +155,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x000379e4 | `candidate_e2ram_verify_state_machine` | cmd 0x4c00000 + read-back verify |
 | 0x0000bdfa | `e2ram_read_word` | send addr, clock in u16 |
 | 0x0000be30 | `e2ram_send_command2` | 2-byte command frame |
-| 0x0000be5e / 0x0000be8c | `candidate_e2ram_send_command4_a` / `_b` | 4-byte command frames |
+| 0x0000be5e / 0x0000be8c | `e2ram_send_command4_a` / `e2ram_send_command4_b` | 4-byte command frames (call refs 0x37c06/0x3031e re-read) |
 | 0x0000bfa0 / 0x0000c02c | `sci4_send_bytes` / `sci4_read_u16` | SCI4 TX/RX primitives |
 | 0x0000bf3a / 0x0000bed8 | `e2ram_cs_port_setup` / `e2ram_busy_status_read` | CS/port setup, busy input |
 | 0x000349e4 / 0x00038082 | `ref_ImmoSomethingOrOther__` / `FUN_00038082` | callers of 0x3599c / 0x379e4 |
