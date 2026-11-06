@@ -10,7 +10,7 @@ in [`reviews/alternator_control/README.md`](reviews/alternator_control/README.md
 **Related reports:** task structure in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md) (task[10]
 0x11744, task[14] `charging_control_batch` 0x11adc, 0x114d0); the electrical-load
-flag 0xffffb5b3 feeds idle control in
+flag `high_load_flag` 0xffffb5b3 feeds idle control in
 [`idle_control_report.md`](idle_control_report.md); DTC encoding in
 [`dtc_control_report.md`](dtc_control_report.md) (slots 0x7b/0x7c/0x7d →
 P2502/P2503/P2504); Mode 22 PIDs 0x0968/0x16e8/0x097c in
@@ -28,14 +28,14 @@ Charging control is split across **three mask-0x10 batches**, all inherited
 - `alternator_monitor_batch` 0x2680e (called from task[10] 0x11744): the
   **monitoring/DTC** path — confirmation timers (0x138 counts) for
   P2502/P2503/P2504, the high-load flag (0x264f0) and the warning-light flag
-  (0x26760 → 0xffffb5b4).
+  (0x26760 → `inferred_ram_b5b4_ffffb5b4` 0xffffb5b4).
 - `alternator_pid_task` 0x26868 (called from task[14] 0x11adc): the **voltage
-  target** selection 0x25c6c → 0xffffb59c (target volts, PID 0x097c).
+  target** selection 0x25c6c → `inferred_ram_b59c_ffffb59c` 0xffffb59c (target volts, PID 0x097c).
 
 The field is driven by **ATU-II channel 5B PWM**: init 0x25674 sets period 1000
 (0xffff9f44) and programs `ATUII_GR5B_W` 0xfffff4e4 / `ATUII_TIOR5A_B` 0xfffff4eb / TIER3 bit 0x800;
 the compare-interrupt service 0x57c6 splits duty vs period into GR5B compare
-windows each cycle. 0x25710 converts the duty percent 0xffffb5ac (PID 0x16e8) to
+windows each cycle. 0x25710 converts the duty percent `inferred_ram_b5ac_ffffb5ac` 0xffffb5ac (PID 0x16e8) to
 counts: `duty = (pct/100)*65536 * period >> 16`.
 
 ## 1a. Plain-language summary
@@ -56,7 +56,7 @@ compensate.
 ```
 # alternator_control_main_batch 0x267c6 (from 0x114d0), mask 0x10
 charging_ok_latch()                  # 0x25a22: b5b1 = (b60a == 0)
-overvoltage_flags()                  # 0x25a3c: b612 = b654 >= 18.471 || b658 >= 15.938
+overvoltage_flags()                  # 0x25a3c: b612 = `inferred_ram_b654_ffffb654` b654 >= 18.471 || b658 >= 15.938
 alternator_speed_calc()              # 0x25a68: b598 = rpm * 2.08; b613 = b598 >= 859
 idle_charging_gates()                # 0x25b36: vspeed 16/20 km/h -> b649; b614 = cranking && ...
 battery_temp_model()                 # 0x25ba4: b5c4 = IAT + max((coolant-93)*0.43,0) + filtered tbl 0x6a524(vspeed)
@@ -67,11 +67,11 @@ charging_dtc_raise_p2502()           # 0x545bc: 0x5fd38(0x7b, b5b1==0 ? 2 : 1) -
 
 # alternator_monitor_batch 0x2680e (from task[10] 0x11744), mask 0x10
 charging_dtc_timer_a()               # 0x257b4: b608 = 0x138 reload / countdown, counters b638/b63a
-dtc timer b / hot-engine timer       # 0x2590a (b60a), 0x25aa0 (b648 coolant 55/60, b60c=100)
+dtc timer b / hot-engine timer       # 0x2590a `charging_dtc_timer_b` (b60a), 0x25aa0 (b648 coolant 55/60, b60c=100)
 low_voltage_dtc_timer()              # 0x2635c: b60e countdown; b5b2 = (b60e==0) when b654 >= 8.486699
-electrical_load_flag_calc()          # 0x264f0: b5b3 = filtered b5e0 >= 40 (hyst 30)
-alternator_warning_light_flag()      # 0x26760: b5b4 = b613==0 || b5b0 || b5b1 || b5b2 || c5db
-charging_dtc_raise_p2503/p2504()     # 0x54590 (slot 0x7c -> P2503), 0x545a6 (slot 0x7d -> P2504)
+electrical_load_flag_calc()          # 0x264f0: `high_load_flag` b5b3 = filtered b5e0 >= 40 (hyst 30)
+alternator_warning_light_flag()      # 0x26760: `inferred_ram_b5b4_ffffb5b4` b5b4 = b613==0 || b5b0 || b5b1 || b5b2 || c5db
+charging_dtc_raise_p2503/p2504()     # 0x54590 (slot 0x7c -> P2503), 0x545a6 `charging_dtc_raise_p2504` (slot 0x7d -> P2504)
 
 # alternator_pid_task 0x26868 (from task[14] 0x11adc), mask 0x10
 alternator_voltage_target_select()   # 0x25c6c: b61c = 14.2 | tbl 0x6a5b0(b5c4) ± hysteresis; b59c = 0x5cba4(b61c)
@@ -111,8 +111,8 @@ voltage thresholds, 2.08 @0x74990, 859.0 @0x74994, 93.0/0.43 @0x749b0/0x749b4,
 | 0x57c6 | `alternator_pwm_service` | high |
 | 0x25a3c / 0x25ba4 / 0x2616e / 0x26624 | `candidate_overvoltage_flags` / `candidate_battery_temp_model` / `candidate_alternator_voltage_error_calc` / `candidate_alternator_duty_calc` | medium |
 | 0x26760 / 0x25a22 | `candidate_alternator_warning_light_flag` / `candidate_charging_ok_latch` | medium |
-| 0x257b4 / 0x2590a / 0x25aa0 / 0x2635c | `candidate_charging_dtc_timer_a` / `_b` / `candidate_hot_engine_dtc_timer` / `candidate_low_voltage_dtc_timer` | medium |
-| 0x545bc / 0x54590 / 0x545a6 | `candidate_charging_dtc_raise_p2502` / `_p2503` / `_p2504` | medium |
+| 0x257b4 / 0x2590a / 0x25aa0 / 0x2635c | `candidate_charging_dtc_timer_a` / `charging_dtc_timer_b` / `candidate_hot_engine_dtc_timer` / `candidate_low_voltage_dtc_timer` | medium |
+| 0x545bc / 0x54590 / 0x545a6 | `candidate_charging_dtc_raise_p2502` / `_p2503` / `charging_dtc_raise_p2504` | medium |
 | 0x25c6c | `candidate_alternator_voltage_target_select` | medium |
 | 0x5cba4 / 0x5c800 | `candidate_alternator_target_encode_u16` / `candidate_alternator_duty_encode_u16` | medium |
 | 0x2ce18 / 0x264f0 | `candidate_alternator_drag_torque_calc` / `candidate_electrical_load_flag_calc` | medium |
@@ -134,7 +134,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
   slot*2 → code table 0x7e560 + code_id*2; slots 0x7b/0x7c/0x7d = P2502/P2503/P2504
   (charging system voltage problem/low/high).
 - The output path is ATU-II ch5B PWM (0x57c6 service ← 0x25710 duty write), not a
-  GPIO bit; the warning lamp is only a reported flag (0xffffb5b4 → CAN word
+  GPIO bit; the warning lamp is only a reported flag (`inferred_ram_b5b4_ffffb5b4` 0xffffb5b4 → CAN word
   0xffffbab2 bit 0x40 via 0x28c78, and PID 0x0968) — no dedicated lamp GPIO is
   driven from 0x26760 in this pass.
 - 0x5cba4/0x5c800 are diag-override-aware u16 encoders (DID 0x97c / 0x16e8), the
@@ -179,8 +179,8 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x00025710 | `alternator_field_pwm_output` | duty % → 0xffff9f48 counts |
 | 0x00025674 / 0x000057c6 | `alternator_pwm_channel_init` / `alternator_pwm_service` | ATU-II ch5B init / PWM service |
 | 0x00026760 / 0x00025a22 | `candidate_alternator_warning_light_flag` / `candidate_charging_ok_latch` | warning flag / OK latch |
-| 0x000257b4 / 0x0002590a / 0x00025aa0 / 0x0002635c | `candidate_charging_dtc_timer_a` / `_b` / `candidate_hot_engine_dtc_timer` / `candidate_low_voltage_dtc_timer` | DTC confirmation timers |
-| 0x000545bc / 0x00054590 / 0x000545a6 | `candidate_charging_dtc_raise_p2502` / `_p2503` / `_p2504` | P2502/P2503/P2504 raises |
+| 0x000257b4 / 0x0002590a / 0x00025aa0 / 0x0002635c | `candidate_charging_dtc_timer_a` / `charging_dtc_timer_b` / `candidate_hot_engine_dtc_timer` / `candidate_low_voltage_dtc_timer` | DTC confirmation timers |
+| 0x000545bc / 0x00054590 / 0x000545a6 | `candidate_charging_dtc_raise_p2502` / `_p2503` / `charging_dtc_raise_p2504` | P2502/P2503/P2504 raises |
 | 0x00025c6c | `candidate_alternator_voltage_target_select` | target volts → 0xffffb59c |
 | 0x0005cba4 / 0x0005c800 | `candidate_alternator_target_encode_u16` / `candidate_alternator_duty_encode_u16` | PID 0x097c / 0x16e8 encoders |
 | 0x0002ce18 / 0x000264f0 | `candidate_alternator_drag_torque_calc` / `candidate_electrical_load_flag_calc` | drag torque / load flag |
