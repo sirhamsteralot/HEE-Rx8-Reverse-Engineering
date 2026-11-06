@@ -102,7 +102,8 @@ were left untouched; they remain hypotheses pending ROADMAP C item 9.
 ## 6. Files
 
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0004ca7e_*.c`,
-  `0002d83c_*.c`, `0004c828_*.c`, `0002df62_*.c` (renamed)
+  `0002d83c_*.c`, `0004c828_*.c`, `0002df62_*.c` (symbol renamed in place;
+  filenames keep the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
 

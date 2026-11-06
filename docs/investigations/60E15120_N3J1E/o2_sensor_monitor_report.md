@@ -78,11 +78,13 @@ if c701:
 
 | Descriptor | Dims | Axes (ROM-verified) | Role |
 |---|---|---|---|
-| 0x6b66c | 9×9 | x load 0.125–0.625 @0x7ad48, y rpm 500–4500 @0x7ad6c, data u16 @0x7ad90 | per-window counter reload (0x3fb9e → 0xffffc7b2) |
-| 0x6b680 / 0x6b69c / 0x6b6b8 / 0x6b6d4 | 9×9 | x load 0.125–0.625, y rpm 500–4500 (0x6b680: ax @?, data f32) | per-channel thresholds → 0xffffc6f8/c6fc/c798/c79c |
+| 0x6b66c | 9×9 | x load 0.125–0.625 @0x7ad48, y rpm 500–4500 @0x7ad6c, data @0x7ad90 | per-window counter reload (0x3fb9e → 0xffffc7b2) |
+| 0x6b680 / 0x6b69c | 9×9 | x load 0.125–0.625 @0x7ae34/0x7af20, y rpm 500–4500 @0x7ae58/0x7af44, data u16 (typ 8) @0x7ae7c/0x7af68, scaled ×0.000152587890625 (mult @+20) | per-channel thresholds ch0/ch1 → 0xffffc6f8/c6fc |
+| 0x6b6b8 / 0x6b6d4 | **1×1** | single-point axes 0.125/500 @0x7b00c/0x7b010, data u16 0 @0x7b014/0x7b020, mult 0.000152587890625, off −1.0 → constant −1.0 | constant thresholds ch2/ch3 → 0xffffc798/c79c (1×1 per `data/maps/60E15120_N3J1E/index.tsv` tbl_06b6b8/tbl_06b6d4) |
 
-All four threshold descriptors and 0x6b66c were parsed from ROM bytes
-(`>HHIIIB` 3-D descriptor format, type 0 = f32 / raw u16 lookup for 0x6b66c).
+All five descriptors were parsed from ROM bytes (`>HHIIIB` 3-D base + 3 pad;
+0x6b66c has type byte 0 but is consumed as raw u16 via
+`rx8_lookup_3d_raw_u16`).
 
 ## 4. Labeling applied
 
@@ -108,7 +110,8 @@ different monitor and was not touched.)
 ## 6. Files
 
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0003fb9e_*.c`,
-  `0004128e_*.c`, `0003f924_*.c` (renamed by `integrate_reviewed_names.py`)
+  `0004128e_*.c`, `0003f924_*.c` (symbol renamed in place by
+  `integrate_reviewed_names.py`; filenames keep the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`,
   `data/labels/60E15120_N3J1E/integrated_names.json`

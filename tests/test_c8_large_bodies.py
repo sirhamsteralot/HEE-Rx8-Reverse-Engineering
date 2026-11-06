@@ -149,8 +149,19 @@ def test_o2_monitor_rom_anchors():
     # 3-D descriptor 0x6b66c (load x rpm)
     nx, ny, ax, ay, data, typ = struct.unpack(">HHIIIB", ROM[0x6B66C:0x6B66C + 17])
     assert (nx, ny, typ) == (9, 9, 0) and 0x6C000 <= ax < 0x80000 and 0x6C000 <= data < 0x80000
+    assert (ax, ay, data) == (0x7AD48, 0x7AD6C, 0x7AD90)
+    # threshold descriptors: 0x6b680/0x6b69c are 9x9 u16, 0x6b6b8/0x6b6d4 are 1x1 constants
+    for d in (0x6B680, 0x6B69C):
+        nx, ny, ax, ay, data, typ = struct.unpack(">HHIIIB", ROM[d:d + 17])
+        assert (nx, ny, typ) == (9, 9, 8) and 0x6C000 <= ax < 0x80000 and 0x6C000 <= data < 0x80000
+    assert struct.unpack(">HHIIIB", ROM[0x6B680:0x6B680 + 17])[2:5] == (0x7AE34, 0x7AE58, 0x7AE7C)
+    for d in (0x6B6B8, 0x6B6D4):
+        nx, ny, ax, ay, data, typ = struct.unpack(">HHIIIB", ROM[d:d + 17])
+        assert (nx, ny, typ) == (1, 1, 8) and u16(data) == 0  # constant threshold (scaled: 0*mult-1.0)
     # tolerance float 1e-5 via mova pool 0x41220
     assert u32(0x41220) == 0x3727C5AC and "mova @(0x41220,pc)" in asm_line(0x41140)
+    for a in (0x41156, 0x4116A, 0x4117E):
+        assert "mova" in asm_line(a) and "0x41220" in asm_line(a)
     # fault chain: id 0x1c -> slot 0x1b -> code 0x0133 (P0133)
     assert u16(0x7DF42 + 2 * 0x1C) == 0x1B
     assert u16(0x7E560 + 2 * 0x1B) == 0x0133
@@ -161,6 +172,16 @@ def test_e2ram_block_rom_anchors():
     assert u32(0x23738) == 0xB886                   # E2RAM write call in 0x236cc
     assert u32(0x2372C) == 0x2377A                  # save encode entry
     assert u16(0x23726) == 0xB440                   # staging base 0xffffb440
+    assert u16(0x236AC) == 0x5AA5                   # load-side magic compare (0x235f8)
+    # checksum loop 0x236f0-0x236fe sums 0x1b u16 (r6 = 0x1b set at 0x236de)
+    assert "0x1b" in asm_line(0x236DE) and "jsr" in asm_line(0x2370A)
+    # codec affine-step floats in literal pools (mova sites -> pool words)
+    for mov, pool, word in ((0x2385A, 0x23918, 0x3CFA0000), (0x23F10, 0x24004, 0x38A00000),
+                            (0x2389C, 0x23938, 0x3DA00000), (0x238B0, 0x2393C, 0x3F480000),
+                            (0x244C0, 0x2452C, 0x3CFA0000), (0x24554, 0x24684, 0x39A00000),
+                            (0x24AD8, 0x24B3C, 0x3B800000), (0x24AEC, 0x24B40, 0x3E480000)):
+        assert u32(pool) == word, hex(pool)
+        assert f"0x{pool:x}" in asm_line(mov).replace(" ", "")
 
 
 def test_idle_and_cruise_descriptors():

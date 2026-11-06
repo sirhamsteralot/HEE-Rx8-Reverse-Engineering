@@ -84,7 +84,8 @@ inherited name (C item 9 will verify it).
 
 ## 6. Files
 
-- `reverse-engineered/decompiled/60E15120_N3J1E/functions/0001506c_*.c` (renamed)
+- `reverse-engineered/decompiled/60E15120_N3J1E/functions/0001506c_*.c`
+  (symbol renamed in place; filename keeps the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
 
