@@ -4,11 +4,10 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` (ROADMAP
-C item 8).
+recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
 
 **Related reports:** E2RAM read/write layer `ref_getDataFromE2RAM` 0x3599c /
-`ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4 (inherited `ref_`, ROADMAP C item 9)
+`ref_writeToE2RAMArea_INDEX_ADDR_LEN` 0x37ea4 (inherited `ref_` — unverified hypothesis)
 and the knock-learn consumer 0x139c4 in
 [`knock_control_report.md`](knock_control_report.md); DTC engine (set_fault thunk
 0x5fd38, stored-flag table 0xffffd570) in
@@ -20,7 +19,7 @@ and the knock-learn consumer 0x139c4 in
 The PCM keeps a **28-u16 non-volatile block in the external E2RAM (EEPROM on the
 PLDR/ISR port lines)**: magic 0xa55a, 26 payload u16 (learned values + packed DTC
 history flags), and a checksum (sum of the first 27 u16) at +0x36. Two of the
-seven ROADMAP C item 8 bodies are its codec: **0x23844** (1,562 B) decodes the raw
+seven large unlabeled bodies are its codec: **0x23844** (1,562 B) decodes the raw
 stored block into working RAM (affine u16/u8 decodes + bit-unpack of the DTC flag
 bytes), and **0x244bc** (1,408 B) encodes the live working RAM back into the
 staging block (saturating affine encodes + packing the current fault bits).
@@ -160,6 +159,5 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
   readValue floats, plus the DTC flag bytes); the remaining cells are not
   individually attributed in this pass.
 - The E2RAM device protocol (PLDR_W/ISR_W bit-banging in 0xb99c/0xb886) is
-  described only at the level needed here; the deeper layer belongs to ROADMAP
-  C item 9 (0x3599c/0x37ea4).
+  described only at the level needed here; the deeper layer is covered by 0x3599c/0x37ea4.
 - Save cadence/trigger (who calls 0x1150e) was not traced beyond the callgraph.

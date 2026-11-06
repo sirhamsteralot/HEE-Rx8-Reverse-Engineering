@@ -5,19 +5,18 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 untouched). All findings are from static analysis of the canonical export
 (`reverse-engineered/decompiled/60E15120_N3J1E/`), the disassembly and the raw ROM
 bytes. No hardware execution was performed. Labels recorded in
-`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` (ROADMAP C item 8).
+`data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
 
 **Related reports:** task table and task[10]/slow-task structure in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); vehicle
 speed producer chain `ref_filterVehicleSpeed` 0x320c6 and switch-voltage reader
-`ref_calculateCruiseControlSwitchVolt` 0x2be18 (inherited `ref_` labels, ROADMAP
-C item 9); DTC engine in [`dtc_control_report.md`](dtc_control_report.md);
+`ref_calculateCruiseControlSwitchVolt` 0x2be18 (inherited `ref_` labels — unverified hypotheses); DTC engine in [`dtc_control_report.md`](dtc_control_report.md);
 fuel-cut/arbitration interacting with cruise in
 [`fueling_control_report.md`](fueling_control_report.md).
 
 ## 1. Executive summary
 
-Two of the seven large unlabeled bodies from ROADMAP C item 8 belong to **cruise
+Two of the seven large unlabeled bodies belong to **cruise
 control**: **0x4ca7e** (2,200 B) is the per-run cruise stage inside batch 0x2e692 —
 it debounces the decoded cruise-switch flags (0x4c828 maps switch code
 0xffffbaed, values 1–6, to flags 0xffffcf47–0xffffcf4c), filters the 12-sample
@@ -97,7 +96,7 @@ RAM aliases: `cruise_switch_code` (0xffffbaed), `cruise_set_speed` (0xffffbcf8),
 
 None — the bodies were unlabeled `FUN_`. The inherited `ref_cruise*` labels
 (0x2be18, 0x2c5d0, 0x2d45c, 0x2d520, 0x2e0e8, 0x32104, 0x32326, 0x32378, 0x320c6)
-were left untouched; they remain hypotheses pending ROADMAP C item 9.
+were left untouched; they remain unverified hypotheses.
 
 ## 6. Files
 

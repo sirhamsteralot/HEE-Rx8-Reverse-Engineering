@@ -4,8 +4,7 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export, the
 disassembly and the raw ROM bytes. No hardware execution was performed. Labels
-recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json` (ROADMAP
-C item 8).
+recorded in `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`.
 
 **Related reports:** HCAN register map and boot CAN init in
 [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) (HCAN0 at
@@ -16,7 +15,7 @@ documented there.
 
 ## 1. Executive summary
 
-**0x2a4f8** (1,218 B — ROADMAP C item 8) is the **HCAN mailbox-configuration
+**0x2a4f8** (1,218 B) is the **HCAN mailbox-configuration
 compare**: given a channel (0 = HCAN0 @0xffffe400, 1 = HCAN1 @0xffffe600) and a
 desired descriptor array (16 × 16-byte records for HCAN0, 6 for HCAN1), it
 rebuilds the expected MBCR/MBIMR words and compares them plus BCR, IMR, LAFM and

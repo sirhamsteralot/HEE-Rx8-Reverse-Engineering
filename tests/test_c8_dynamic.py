@@ -1,5 +1,5 @@
-"""ROADMAP C item 11 (dynamic-validation bullet): emulator validation of the
-seven large control bodies labeled in C item 8 (PR #33), 60E15120_N3J1E.
+"""Emulator validation of the seven large unlabeled control bodies,
+60E15120_N3J1E.
 
 Pattern: tests/test_knock_retard_dynamic.py — boot the profile once, set the
 callees' documented RAM input globals explicitly (harness `ram=`/bus writes;
