@@ -95,7 +95,7 @@ inherited name (an unverified hypothesis).
   0x11744 (jsr at 0x6506); all six 2-D descriptors parsed from ROM; base table
   values read (1700 rpm @−40 °C … 810 rpm @80 °C). Scripted checks 62/62 PASS.
 - `validate_reports.py` / `verify_claims.py` / `validate_export.py`;
-  `tests/test_large_control_bodies.py`.
+  `tests/test_idle_target_control.py`.
 
 ## 8. Memory map for validation
 

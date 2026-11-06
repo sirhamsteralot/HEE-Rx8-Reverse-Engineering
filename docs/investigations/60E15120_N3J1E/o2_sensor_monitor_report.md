@@ -126,7 +126,7 @@ different monitor and was not touched.)
   encoders 0x58262/0x5831c. 62/62 scripted ROM/disassembly checks passed.
 - `validate_reports.py`, `verify_claims.py`, `validate_export.py` run from repo
   root (see `data/labels/60E15120_N3J1E/report_validation.json` /
-  `claim_validation.json`); `tests/test_large_control_bodies.py` covers the ROM-byte
+  `claim_validation.json`); `tests/test_o2_sensor_monitor.py` covers the ROM-byte
   anchors above.
 
 ## 8. Memory map for validation
