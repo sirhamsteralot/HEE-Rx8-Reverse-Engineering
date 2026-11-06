@@ -45,7 +45,7 @@ board routing and deliberately not asserted (see §9).
 ## 2. How it works (condensed pseudocode)
 
 ```python
-# --- periodic chain: task 0x64f6 -> 0x11744 -> wrappers 0x21766/0x348ea/0x34916 (mask 0x10) ---
+# --- periodic chain: task 0x64f6 -> 0x11744 -> wrappers 0x21766 `ssv_control_task_wrapper` / 0x348ea `vdi_control_task_wrapper` / 0x34916 `vfad_control_task_wrapper` (mask 0x10; u32 call targets at ROM 0x11998/0x1199c/0x119a0 re-read this pass) ---
 # SSV (GPIO PE7 = PEDR_W 0xfffff754 bit 0x80; pkg pin 16; terminal 1L)
 ssv_coolant_hot = coolant >= 200 (clear < 197)            # b2b4
 if engine_state aa68 == 0 and prev b2b5 == 1: ssv_on_counter b2b2 = 0xbc
@@ -56,11 +56,11 @@ set_bit(PEDR_W, 0x80, ssv_on)
 
 # VDI (PD5 = PDDR_W 0xfffff746 bit 0x20; pin 254; terminal 1W)
 vdi_cmd = rpm >= 7250 (clear < 7062)                      # c1c0; binary: 7250.0 and -188 offset
-set_bit(PDDR_W, 0x20, diag_override(0x5c3c0, vdi_cmd))
+set_bit(PDDR_W, 0x20, diag_override(0x5c3c0 `vdi_diag_override`, vdi_cmd))
 
 # VFAD (PE10 = PEDR_W bit 0x400; pin 19; terminal 5Z)
 vfad_cmd = rpm >= 5250 (clear < 5062)                     # c1c4
-set_bit(PEDR_W, 0x400, diag_override(0x5cdc4, vfad_cmd))
+set_bit(PEDR_W, 0x400, diag_override(0x5cdc4 `vfad_diag_override`, vfad_cmd))
 
 # --- secondary air: task 0x6584 -> 0x117ac ---
 sec_load_high  = load > 0.8 (clear < 0.75)                 # a961
@@ -78,7 +78,7 @@ bf84 = 0  if rpm<2800/3000 or (bf8d==0 and bf88>0x58)
      else 100.0 if bf88<0x32 else 12.5                                             # 0x31f32 (inline float literals; bands u16 @ROM 0x78bb2-0x78bc0)
 bf84 = (bf8b ? -bf84 : bf84) / 100.0                                               # 0x31bec
 fwd,rev = bf84*96 > 0 ? (int)(bf84*96), 0 : 0, (int)(-bf84*96)                   # 0xaa90; period u16 ROM 0x78bb6 = 96
-# 0xa936 software PWM: latch fwd/rev -> a1c0/a1c2 at period boundary, drive PLDR_W
+# 0xa936 software PWM: latch fwd/rev -> `apv_pwm_forward_latched` a1c0 / a1c2 at period boundary (pool 0xa9f6 re-read), drive PLDR_W
 #   bit 0x20 (PL5, pin 221) and bit 0x100 (PL8, pin 224) with opposite polarity
 # status: PHDR_W bits 0x1000/0x2000 (PH12/PH13, pins 79/80) -> a1bc (0xaac4)
 # feedback: ADC6 raw 9ef0 (reg 0xfffff80c, AN6 pin 92) * 5/65536 -> cab0 volts (0x43a86)
@@ -171,11 +171,11 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | Address | Name | Role |
 |---|---|---|
 | 0x0002178c | `ssv_solenoid_control` | SSV solenoid: PEDR PE7; coolant/counter/diag logic |
-| 0x00021760 / 0x00021766 | `candidate_ssv_control_thunk` / `…_task_wrapper` | thunk (pool 0x21780 → 0x2178c) / task 0x11744 wrapper |
-| 0x00034844 | `vdi_solenoid_control` | VDI: PDDR PD5; RPM 7250/7062 → diag 0x5c3c0 |
-| 0x000348e4 / 0x000348ea | `candidate_vdi_control_thunk` / `…_task_wrapper` | thunk (pool 0x34904) / wrapper |
-| 0x0003493c | `vfad_solenoid_control` | VFAD: PEDR PE10; RPM 5250/5062 → diag 0x5cdc4 |
-| 0x00034910 / 0x00034916 | `candidate_vfad_control_thunk` / `…_task_wrapper` | thunk (pool 0x34930) / wrapper |
+| 0x00021760 / 0x00021766 | `candidate_ssv_control_thunk` / `ssv_control_task_wrapper` | thunk (pool 0x21780 → 0x2178c) / task 0x11744 wrapper |
+| 0x00034844 | `vdi_solenoid_control` | VDI: PDDR PD5; RPM 7250/7062 → diag 0x5c3c0 `vdi_diag_override` |
+| 0x000348e4 / 0x000348ea | `candidate_vdi_control_thunk` / `vdi_control_task_wrapper` | thunk (pool 0x34904) / wrapper |
+| 0x0003493c | `vfad_solenoid_control` | VFAD: PEDR PE10; RPM 5250/5062 → diag 0x5cdc4 `vfad_diag_override` |
+| 0x00034910 / 0x00034916 | `candidate_vfad_control_thunk` / `vfad_control_task_wrapper` | thunk (pool 0x34930) / wrapper |
 | 0x00031c20 | `apv_control_task` | APV wrapper: 0x31c6c + 0x31ece + 0x31f0a + 0x31f32 + 0x31bec |
 | 0x00031c6c | `candidate_apv_target_condition` | APV target bf8d (RPM 200/150 bf99, bf92, aa68, MAF, coolant) |
 | 0x00031ece | `candidate_apv_position_voltage_counter` | bf88 dwell counter |
@@ -189,7 +189,7 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0x000187b8 | `secondary_air_solenoid_control` | PEDR PE8; load/RPM/bf6c/d26e → diag 0x5cf7c → a960 |
 | 0x000316f8 | `secondary_air_pump_control` | PBDR PB2 = bf6c |
 | 0x0003174a | `candidate_secondary_air_on_time_task` | 0x3194a + 0x31a24 + 0x316f8 |
-| 0x0005c9ac / 0x0005c3c0 / 0x0005cdc4 / 0x0005cf7c | `candidate_ssv/vdi/vfad/secondary_air_diag_override` | UDS actuator tests (d3xx state machine) |
+| 0x0005c9ac / 0x0005c3c0 / 0x0005cdc4 / 0x0005cf7c | `ssv_diag_override` / `vdi_diag_override` / `vfad_diag_override` / `secondary_air_diag_override` | UDS actuator tests (d3xx state machine) |
 
 ### 9.2 RAM
 
@@ -204,7 +204,7 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0xffffbf6c | `secondary_air_pump_request` | pump PB2 + solenoid condition |
 | 0xffffbf84 / bf88 / bf8a / bf8b | `apv_command_percent` / `…_dwell_counter` / `…_drive_counter` / `…_direction_flag` | APV command chain |
 | 0xffffbf8d / bf8e / bf92 / bf98 / bf99 | `apv_target_state` / `_prev` / `apv_counter_92` / `apv_rpm_high_flag` / `apv_rpm_low_flag` | APV target logic |
-| 0xffffa1c0 / a1c2 / a1c4 / a1c6 | `apv_pwm_forward/reverse_latched` / `_forward/reverse_ticks` | APV PWM tick counts |
+| 0xffffa1c0 / a1c2 / a1c4 / a1c6 | `apv_pwm_forward_latched` / `apv_pwm_reverse_latched` / `apv_pwm_forward_ticks` / `apv_pwm_reverse_ticks` | APV PWM tick counts |
 | 0xffffa1bc | `apv_drive_status` | 0..3 from PH12/13 |
 | 0xffffcab0 | `apv_position_voltage` | feedback volts |
 | 0xffff9ef0 | `adc6_raw_apv_position` | ADC6 raw (AN6) |
