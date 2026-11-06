@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * adc_read_ect_iat_group [medium]: was ref_readADCs_coolantTempInHere__. Reads ADDR24H-ADDR31H into 0xffff9f14-0xffff9f22 when DAT_ffff9f31 selects the group (ECT ADDR28H -> 0xffff9f1c, IAT ADDR29H -> 0xffff9f1e per fueling labels).
+ */
 /* ROM address: 0x00006cdc; body bytes: 114; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006cdc (114 bytes). Names prefixed ref_

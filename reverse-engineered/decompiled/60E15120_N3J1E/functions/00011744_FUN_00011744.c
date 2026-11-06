@@ -8,7 +8,7 @@ void FUN_00011744(void)
   candidate_knock_sensor_monitor_task();
   fueling_condition_flags_task();
   FUN_00014628();
-  ref_alternatorControl();
+  alternator_monitor_batch();
   ref_updateIdleControl__();
   FUN_0003eaf8();
   apv_control_task();

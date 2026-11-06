@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * can_mailbox_read_payload [high]: FUN_00009dfc(len, 0, payload, MD(mb)) - copies mailbox data out (RX side of can_rx_copy_mailbox_to_buffer 0x9890).
+ * can_mailbox_read_payload [high]: FUN_00009dfc(len, 0, payload, MD(mb)) - copies mailbox data out (RX side of ref_placeCANRX 0x9890).
  */
 /* ROM address: 0x0000cca4; body bytes: 54; decompiled */
 

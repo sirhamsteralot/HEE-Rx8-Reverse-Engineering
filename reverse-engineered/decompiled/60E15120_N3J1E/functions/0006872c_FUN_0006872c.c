@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * isotp_consecutive_frame_check [high]: CF: checks DAT_ffffddeb==4 and seq == expected
+ */
 /* ROM address: 0x0006872c; body bytes: 56; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0006701c (56 bytes). Names prefixed ref_

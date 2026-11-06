@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * hot_engine_dtc_timer [medium]: 0xffffb648 = coolant >= 60 (hyst 55); 0xffffb60c = 100 when engine stopped && coolant hot, else counts down. Called from 0x2680e via pool 0x268bc.
+ */
 /* ROM address: 0x00025aa0; body bytes: 90; decompiled */
 
-void FUN_00025aa0(void)
+void candidate_hot_engine_dtc_timer(void)
 
 {
   if (inferred_coolant_temperature_ffffa98c < 60.0) {

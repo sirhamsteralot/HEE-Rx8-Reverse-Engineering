@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_11_ecu_reset [high]: service table record 0x5ebd0 (service 0x11) -> handler; ROM bytes verified; UDS 0x11
+ */
 /* ROM address: 0x0005af54; body bytes: 194; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00059744 (194 bytes). Names prefixed ref_

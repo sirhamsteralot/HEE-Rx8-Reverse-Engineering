@@ -6,7 +6,7 @@
 void FUN_000268f8(void)
 
 {
-  DAT_ffffb658 = DAT_ffffb58c + 0.1172;
+  system_voltage_alt_ffffb658 = DAT_ffffb58c + 0.1172;
   return;
 }
 

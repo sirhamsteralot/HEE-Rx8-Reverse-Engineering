@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd3c0 dtc_first_stored_code (uint16): First stored DTC code, recorded by 0x601cc when flag table goes 0->1.
+ */
 /* ROM address: 0x000601cc; body bytes: 66; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005eabc (66 bytes). Names prefixed ref_

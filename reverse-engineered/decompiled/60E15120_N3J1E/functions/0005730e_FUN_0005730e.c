@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1631_tol_status_b570_b584 [medium]: dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584
+ * RAM 0xffffb570 inferred_ram_b570_ffffb570 (float): PID 0x1631 tolerance-band check
+ * RAM 0xffffb584 inferred_ram_b584_ffffb584 (uint8): PID 0x1631 -> bit 2
+ */
 /* ROM address: 0x0005730e; body bytes: 60; decompiled */
 
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f478. Table purpose inferred from

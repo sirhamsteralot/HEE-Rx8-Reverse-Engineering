@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_s16_div [medium]: s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers
+ */
 /* ROM address: 0x00054884; body bytes: 62; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00052970 (62 bytes). Names prefixed ref_

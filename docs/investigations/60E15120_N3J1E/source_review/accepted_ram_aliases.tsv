@@ -422,3 +422,13 @@ ffffbcf8	cruise_set_speed	float	0004c896	Cruise set speed; copied to 0xffffcf18 
 ffffbaed	cruise_switch_code	uint8	0004c828	Cruise switch enum (1-6) decoded into flags 0xffffcf47-0xffffcf4c by 0x4c828; written near ref_calculateCruiseControlSwitchVolt 0x2be18 / 0x2c15a.
 ffffcef4	cruise_filtered_speed_error	float	0004d700	Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
 ffffcee4	cruise_speed_error_mean12	float	0004ca7e	Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
+ffff9f44	alternator_pwm_period	uint16	000057c6	ATU-II ch5B PWM period, init 1000 by 0x25674; duty fraction computed against it in 0x25710 (mov.w @r5 at 0x2573c) and split into compare windows in 0x57c6.
+ffff9f48	alternator_pwm_duty	uint16	000057c6	ATU-II ch5B PWM duty counts, written by 0x25710 (mov.w r0,@(0x4,r2) at 0x2574a with base 0xffff9f44) from 0xffffb5ac percent; consumed by 0x57c6 into GR5B 0xfffff4e4.
+ffffb5b1	charging_ok_latch	uint8	00025a22	Set by 0x25a22 = (0xffffb60a == 0), i.e. P2502 confirmation timer fully counted down; gates P2502 raise in 0x545bc and the warning flag in 0x26760.
+ffffb5b2	low_voltage_latch	uint8	00025c6c	Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
+ffffb5a0	alternator_target_field	float	0002616e	Target field drive from tbl 0x6a54c(alt speed 0xffffb598) when b613, else 0; written by 0x2616e; used as band reference in 0x26624/0x2ce18.
+ffffb5a4	electrical_load_filtered	float	00025c6c	first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
+ffffb5e0	electrical_load_raw	float	0002616e	Raw electrical-load quantity filtered into 0xffffb5a4 (0x2633e) and thresholded at 40/30 in 0x264f0 -> 0xffffb5b3; compared against b5a0 band in 0x26624.
+ffffbcc4	alternator_drag_torque	float	0002ce18	Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate for drivability compensation.
+ffffb658	system_voltage_alt	float	000257b4	Second voltage rail used in the charging DTC timers (thresholds 15.938/10.938 pools 0x7497c/0x7498c/0x74984) by 0x257b4/0x2590a; distinct from filtered battery volts 0xffffb590.
+ffffb65c	battery_voltage_filtered	float	0002616e	Filtered battery voltage subtracted from the target 0xffffb59c in 0x2616e to form the charging error 0xffffb5c8 (clamp ±2.5).

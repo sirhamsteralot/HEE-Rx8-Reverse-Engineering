@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd4e4 dtc_transition_state_array (uint8[0x8c]): Per-slot transition state written by 0x60062 on mode 1/2/4.
+ */
 /* ROM address: 0x00060062; body bytes: 272; decompiled */
 
 uint FUN_00060062(uint param_1,uint param_2,short param_3)
