@@ -81,7 +81,7 @@ LAB_0002d77c:
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;
       }
-      if ((0xfd < DAT_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
+      if ((0xfd < can212_torque_signal_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
         DAT_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbc9;
       }

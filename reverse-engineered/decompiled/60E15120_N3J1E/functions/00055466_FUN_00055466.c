@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_ltft [high]: PID 0x07: ffffb0d0*100*0.78125-100
+ * RAM 0xffffb0d0 inferred_ltft_bank1_ffffb0d0 (float): PID 0x07: x*100*0.78125-100
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): DAT_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_23_read_memory_by_address [high]: service table record 0x5ebf4 (service 0x23) -> handler; ROM bytes verified; UDS 0x23 (ref_UDSMode23Function)
+ */
 /* ROM address: 0x0005b750; body bytes: 156; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00059f40 (156 bytes). Names prefixed ref_

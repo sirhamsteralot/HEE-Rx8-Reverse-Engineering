@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_rx_channel_alloc [medium]: finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10
+ */
 /* ROM address: 0x00068a86; body bytes: 98; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00067376 (98 bytes). Names prefixed ref_

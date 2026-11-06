@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_ect_c [high]: PID 0x05: coolant_temperature_ffff9f70-40
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f70 = coolant_temperature. Direct C dataflow to handler 0x00056940; semantic candidate, not a recovered original symbol.
  */

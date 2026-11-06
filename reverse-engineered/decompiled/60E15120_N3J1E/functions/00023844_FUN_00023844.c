@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_block_decode [high]: Decodes the E2RAM staging block (read into 0xffffb478, payload decoded from 0xffffb47a) into working RAM: u16 affine step 0.0305176 (0x3cfa0000) of 0xffffb47a/0x47c -> 0xffffb4b0/b4, step 0x38a00000 = 7.62939453125e-05 of 0xffffb498/49a/49c -> 0xffffb4c0/c4/c8; raw bytes 0xffffb47e-0xffffb497 copied to 0xffffb4cc-0xffffb4db; u8 affine 0.078125 (0x3da00000) -> 0xffffb4b8, signed 0.78125 (0x3f480000, sign from 0xffffb489 bit7) -> 0xffffb4bc; 7 bytes 0xffffb48a-0xffffb490 unpacked bit-wise via 0x24b00 (20-byte helper) into DTC/history flags 0xffffb4ec-0xffffb51b. Called from 0x2376c (jsr via pool 0x237bc at 0x2376e).
+ * RAM 0xffffb47a e2ram_payload_raw (uint8[34]): Decode source: raw payload bytes of the stored block (0xffffb47a-0xffffb49c) affine-decoded by 0x23844 into 0xffffb4b0+.
+ */
 /* ROM address: 0x00023844; body bytes: 1562; decompiled */
 
 void e2ram_block_decode(void)

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_dispatch_table_scan [high]: scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02
+ */
 /* ROM address: 0x00068dac; body bytes: 146; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0006769c (32 bytes). Names prefixed ref_

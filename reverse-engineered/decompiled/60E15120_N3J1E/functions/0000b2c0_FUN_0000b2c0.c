@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa210 ch7d_pwm_duty_q16 (uint32): Duty percent * 65536, written by 0xb2c0 (from 0x25198, clamp 0-100% of DAT_ffffb354); BFR7D = duty*32000>>16 (0xb308/0xb2c0).
+ */
 /* ROM address: 0x0000b2c0; body bytes: 72; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000b2c0 (72 bytes). Names prefixed ref_

@@ -1,5 +1,8 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_final_timing_clamp_output [high]: Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638.
+ * RAM 0xffffa634 leading_timing_with_corrections (float): a640 + a648 clamped into leading_ignition_timing_ffffa630 (0x12300).
+ * RAM 0xffffa63c trailing_timing_with_corrections (float): a650 + a658 clamped into trailing_ignition_timing_ffffa638.
+ * RAM 0xffffa664 trailing_max_advance (float): 
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

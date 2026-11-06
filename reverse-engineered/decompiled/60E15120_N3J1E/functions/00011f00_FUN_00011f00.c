@@ -1,6 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * leading_base_timing_calc [high]: RX8Defs 'Ignition Leading - Base Timing' plate; blends calibrated base with open-loop cap by weight b118; safe-mode cap via b12d.
  * RAM 0xffffb12d safe_mode (uint8): 0x1ee4a: 1 unless (b534==1 && 4<bc3d) or (b534==0 && 3<baed); selects Safe Mode CAL tables and the base-timing cap in 0x11f00/0x1206c.
+ * RAM 0xffffa5f0 leading_coolant_scaled_advance_term (float): 
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069078: Ignition Leading - Base Timing (RX8Defs data pointer, axes and dimensions match).

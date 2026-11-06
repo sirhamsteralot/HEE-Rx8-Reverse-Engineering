@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * hcan_mailbox_config_compare [high]: Compares a desired HCAN mailbox descriptor array (param_2: 16 x 16-byte records for channel 0, 6 for channel 1) against live registers: HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 expect 0x803e; MBCR/MBIMR rebuilt from record bytes and compared (HCAN0_MBCR_W 0xffffe404, HCAN0_MBIMR_W 0xffffe414, HCAN1_MBCR_W 0xffffe604, HCAN1_MBIMR_W 0xffffe614); HCAN0_IMR_W 0xffffe416 / HCAN1_IMR_W 0xffffe616 expect 0xfcfe; HCAN0_LAFMH_W 0xffffe41e + HCAN0_LAFML_W 0xffffe41c (and HCAN1_LAFMH_W 0xffffe61e / HCAN1_LAFML_W 0xffffe61c) must be zero; per-mailbox MC control/data bytes checked at HCAN0_MC0[1]_B 0xffffe420 + 8*(mb&0xf) (MC0[5]/MC0[6]/MC0[7]/MC0[8] hold ID/DLC fields). Returns nonzero on any mismatch. Called from ref_canSetup 0xd9f4 (jsr @r13 at 0xda3e/0xda4e; pool 0xdb20 = 0x2a4f8) in a <=2-iteration retry loop with ref_CANControllerSetup(0, 0x4e01c or 0x4e11c, 0x10) and (1, 0x4e21c, 6); after >1 tries sets error flag 0xffffa410.
+ */
 /* ROM address: 0x0002a4f8; body bytes: 1218; decompiled */
 
 bool hcan_mailbox_config_compare(char param_1,uint *param_2)

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid114a_ram_add4_raw [medium]: dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05
+ * RAM 0xffffadd4 inferred_ram_add4_ffffadd4 (float): PID 0x114a *7.63e-05
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): DAT_ffffadd4; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

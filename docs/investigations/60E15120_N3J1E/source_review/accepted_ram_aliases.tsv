@@ -422,3 +422,13 @@ ffffbcf8	cruise_set_speed	float	0004c896	Cruise set speed; copied to 0xffffcf18 
 ffffbaed	cruise_switch_code	uint8	0004c828	Cruise switch enum (1-6) decoded into flags 0xffffcf47-0xffffcf4c by 0x4c828; written near ref_calculateCruiseControlSwitchVolt 0x2be18 / 0x2c15a.
 ffffcef4	cruise_filtered_speed_error	float	0004d700	Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
 ffffcee4	cruise_speed_error_mean12	float	0004ca7e	Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
+ffffbbf6	dsc_mode_byte	uint8	0002b6c2	DSC/ABS mode byte from CAN 0x212 payload byte 6 (via 0x2b7e2: bbf6 = bbc6); bits 0x80/0x40/0x20/0x10 checked by 0x2b6c2/0x2b754/0x2b788/0x2b7a6 -> 0xffffbbcb-ce.
+ffffbbac	wheelspeed_lr_raw	uint16	0002b046	Raw LR wheelspeed from CAN payload (0x2b1d6: bba4*0x100+bba5); validity flag 0xffffbbb9 by 0x2b17e; averaged in 0x2b046.
+ffffbbae	wheelspeed_rr_raw	uint16	0002b046	Raw RR wheelspeed (0x2b1d6: bba6*0x100+bba7); validity flag 0xffffbbba by 0x2b1aa; averaged in 0x2b046.
+ffffbbd8	engine_max_torque_allowed	float	0001815c	Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
+ffffbbb8	vehicle_not_moving	uint8	000165d6	Set by 0x2b156 when vspeed <= 4 km/h (hyst 5); read in the idle A/C clutch gate 0x165d6 (pool 0x166ee at 0x16626).
+ffffbbb9	wheelspeed_lr_invalid	uint8	0002b17e	LR wheelspeed invalid/stale flag from 0x2b17e (0xffffbbac == -1 || 0xffffbbbe > 0x1e).
+ffffbbba	wheelspeed_rr_invalid	uint8	0002b1aa	RR wheelspeed invalid/stale flag from 0x2b1aa (0xffffbbae == -1 || 0xffffbbbe > 0x1e).
+ffffbbf0	can212_timeout_counter	uint16	0002b29c	0x212 RX failure counter incremented in 0x2b29c on mailbox-copy failure (every 4th failure); 0xffffbbd0 = (0x1e < bbf0) timeout flag by 0x2b7c4.
+ffffbbde	can212_status_word	uint16	0002b6a4	u16 from CAN 0x212 payload bytes 4-5 (0x2b7e2: bbc4*0x100+bbc5); bit 0x08 checked by 0x2b6a4 -> 0xffffbbcf.
+ffffbbc8	can212_torque_signal	uint8	0002b816	Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc.

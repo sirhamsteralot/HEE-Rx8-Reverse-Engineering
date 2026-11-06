@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_10_diagnostic_session_control [high]: service table record 0x5ebac (service 0x10) -> handler; ROM bytes verified; UDS 0x10; table record 0x5ebac
+ */
 /* ROM address: 0x00057c8c; body bytes: 160; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005615c (160 bytes). Names prefixed ref_

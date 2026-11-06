@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0918_ram_ad5e_scaled_s16 [medium]: dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e)
+ */
 /* ROM address: 0x00056db4; body bytes: 50; decompiled */
 
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f304. Table purpose inferred from
