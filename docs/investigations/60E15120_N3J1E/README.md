@@ -143,6 +143,18 @@ E2RAM-backed trim learn/load 0x1617e/0x15fa0 on 0xffff8040/8048. 26 functions,
 0xffffbd69 A/C clutch, 0xffffb5b3 high-load flag). Write-up:
 [`idle_control_report.md`](idle_control_report.md) + `reviews/idle_control/`;
 record: `metadata/idle_control_labels.json`.
+## DSC-related CAN arbitration labeling
+
+`scripts/review_dsc_can_labels.py` labels the inherited
+`ref_updateDSCRelatedCANStuff__` 0x2a2ae as `dsc_can_arbitration_batch` (15-call
+mask-0x10 batch from task[10] 0x11744) plus the CAN 0x212 RX chain
+(`can212_rx_main` 0x2b29c, `can212_rx_unpack` 0x2b7e2; mailbox descriptor at ROM
+0x4e21c, buffer 0xffffbbc0) and the derived-signal helpers (validity timers,
+`engine_max_torque_allowed_calc` 0x2b3b8 → 0xffffbbd8, DSC mode bits of
+0xffffbbf6, `vehicle_moving_calc` 0x2b156 → 0xffffbbb8, wheelspeed validity).
+18 functions, 10 RAM cells. Write-up:
+[`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md) +
+`reviews/dsc_can_arbitration/`; record: `metadata/dsc_can_labels.json`.
 
 ## Hardware pinout cross-checks
 

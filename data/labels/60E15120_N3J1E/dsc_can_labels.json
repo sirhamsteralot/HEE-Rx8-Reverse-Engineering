@@ -1,0 +1,162 @@
+{
+  "date": "",
+  "pass": "dsc_can_labeling",
+  "basis": "source_review_dsc_can",
+  "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1). Report: dsc_can_arbitration_report.md.",
+  "function_aliases": {
+    "0002a2ae": {
+      "alias": "dsc_can_arbitration_batch",
+      "confidence": "high",
+      "evidence": "15-call batch (13 jsr + tail jmp) under interrupt mask 0x10, called from task[10] body 0x11744 (callgraph 0x11744 -> 0x2a2ae). Pool words in classified pool 0x2a3e0-0x2a4f4 read from ROM: 0x2a448=0x3920 sh_raise_interrupt_mask_return_previous, 0x2a454=0x3934 ref_setSR (tail), 0x2a468=0x2b314, 0x2a46c=0x2b3b8, 0x2a470=0x2b496, 0x2a474=0x2b6a4, 0x2a478=0x2b6c2, 0x2a47c=0x2b754, 0x2a480=0x2b788, 0x2a484=0x2b7a6, 0x2a488=0x2b7c4, 0x2a48c=0x2b046, 0x2a490=0x2b156, 0x2a494=0x2b17e, 0x2a498=0x2b1aa. Inherited ref_updateDSCRelatedCANStuff__ confirmed: CAN 0x212 signal validity, max-torque-allowed, DSC mode bits, vehicle-moving and wheelspeed validity."
+    },
+    "0002b29c": {
+      "alias": "can212_rx_main",
+      "confidence": "high",
+      "evidence": "CAN 0x212 RX handler: can_rx_copy_mailbox_to_buffer(&DAT_0004e21c) (mailbox descriptor at ROM 0x4e21c: bytes 00000000 00000212 01210700 ffffbbc0 01000000 = ID 0x212, DLC 8, buffer 0xffffbbc0); on success calls 0xe038, 0x2b7e2 (unpack), 0x2b816 (0xffffbbc8 = 0xffffbbf2), 0x2b8f4 and resets 0xffffbbee/0xffffbbf0; on failure counts 0xffffbbee (every 4th -> 0xffffbbf0) and 0xffffbbc7. 8 calls total."
+    },
+    "0002b7e2": {
+      "alias": "can212_rx_unpack",
+      "confidence": "high",
+      "evidence": "Unpacks CAN 0x212 payload buffer 0xffffbbc0-0xffffbbc6 into working cells: 0xffffbbf2=bbc0, bbf3=bbc1, bbf4=bbc2, bbf5=bbc3, 0xffffbbde = bbc4*0x100+bbc5 (u16), 0xffffbbf6=bbc6 (mode byte). Called from 0x2b29c."
+    },
+    "0002b816": {
+      "alias": "can212_torque_extract",
+      "confidence": "medium",
+      "evidence": "0xffffbbc8 = 0xffffbbf2 (torque-related signal from the 0x212 payload); called from 0x2b29c."
+    },
+    "0002b314": {
+      "alias": "can212_rx_signal_validity",
+      "confidence": "high",
+      "evidence": "Validity timers for three 0x212 signals: when 0xffffbbf2/bbf3/bbf4 != -1 reload counters 0xffffbbe8/bbea/bbec = 0x1f, else count down; a signal is stale when its counter reaches 0. Called from 0x2a2ae via pool 0x2a468."
+    },
+    "0002b3b8": {
+      "alias": "engine_max_torque_allowed_calc",
+      "confidence": "high",
+      "evidence": "0xffffbbd8 = clamp((0xffffbb20 * decode_u8_affine(0x3ec99326, 0, 0xffffbbc8)/100.0 - 0xffffbcb8) - 0xffffbcbc, 0, 512.0); 512.0 (failsafe) when engine running and validity/fault flags clear, else decode of the 0x212 torque byte. Read by 0x17f20 and 0x1815c dsc_timing_derate_select (pool 0x1827c at 0x18188). Called from 0x2a2ae via pool 0x2a46c."
+    },
+    "0002b496": {
+      "alias": "dsc_desired_torque_calc",
+      "confidence": "medium",
+      "evidence": "0xffffbbe0 = 0xffffbca0 - ((bb20 * decode(bbc9))/100 - bcb8 - bcbc); filter 0xffffbbf8 = first_order_filter(decode(bbc9), bbf8, 0.25, 0.19685039) -> 0xffffbbf7 = encode_u8_affine_saturate(bbf8); 0xffffbbc9 = -2 when engine stopped, 0xfe = 0xfe when validity/fault flags. Called from 0x2a2ae via pool 0x2a470."
+    },
+    "0002b6a4": {
+      "alias": "dsc_mode_bit08_check",
+      "confidence": "medium",
+      "evidence": "0xffffbbcf = ((0xffffbbde & 8) == 8). Called from 0x2a2ae via pool 0x2a474."
+    },
+    "0002b6c2": {
+      "alias": "dsc_mode_bit80_check",
+      "confidence": "medium",
+      "evidence": "0xffffbbcb = 1 when (0xffffbbf6 & 0x80) == 0x80 && engine running. Called from 0x2a2ae via pool 0x2a478."
+    },
+    "0002b754": {
+      "alias": "dsc_mode_bit40_check",
+      "confidence": "medium",
+      "evidence": "0xffffbbcc = 1 when (0xffffbbf6 & 0x40) == 0x40 && engine running. Pool 0x2a47c."
+    },
+    "0002b788": {
+      "alias": "dsc_mode_bit20_check",
+      "confidence": "medium",
+      "evidence": "0xffffbbcd = ((0xffffbbf6 & 0x20) == 0x20). Pool 0x2a480."
+    },
+    "0002b7a6": {
+      "alias": "dsc_mode_bit10_check",
+      "confidence": "medium",
+      "evidence": "0xffffbbce = ((0xffffbbf6 & 0x10) == 0x10). Pool 0x2a484."
+    },
+    "0002b7c4": {
+      "alias": "can212_timeout_flag",
+      "confidence": "medium",
+      "evidence": "0xffffbbd0 = (0x1e < 0xffffbbf0) \u2014 0x212 RX timeout flag from the failure counter. Pool 0x2a488."
+    },
+    "0002b046": {
+      "alias": "wheelspeed_rear_avg_calc",
+      "confidence": "medium",
+      "evidence": "Averages the two rear wheelspeed signals from CAN (0xffffbbac/0xffffbbae, written by 0x2b1d6 from payload bytes bba4-bba7): decode_u16_affine(0x3c23d70a, 0xc2c80000, x) each, mean, re-encode saturate; 0xffff (invalid) handling when either is -1 or 0xffffbbbc < 6 or 0xffffc61e set. Pool 0x2a48c."
+    },
+    "0002b156": {
+      "alias": "vehicle_moving_calc",
+      "confidence": "high",
+      "evidence": "0xffffbbb8 = 1 when vehicle_speed 0xffffbbb4 <= 4.0 (clears only at >= 5.0) \u2014 vehicle-not-moving flag; read by 0x165d6 (pool 0x166ee at 0x16626) in the idle A/C gate. Pool 0x2a490."
+    },
+    "0002b17e": {
+      "alias": "wheelspeed_lr_validity",
+      "confidence": "high",
+      "evidence": "0xffffbbb9 = 1 when 0xffffbbac == -1 (invalid) or 0xffffbbbe > 0x1e (stale). Pool 0x2a494."
+    },
+    "0002b1aa": {
+      "alias": "wheelspeed_rr_validity",
+      "confidence": "high",
+      "evidence": "0xffffbbba = 1 when 0xffffbbae == -1 or 0xffffbbbe > 0x1e. Pool 0x2a498."
+    },
+    "0002b1d6": {
+      "alias": "can4b0_wheelspeed_extract",
+      "confidence": "medium",
+      "evidence": "0xffffbbac = bba4*0x100 + bba5; 0xffffbbae = bba6*0x100 + bba7 (two u16 wheelspeed signals from a CAN payload buffer at 0xffffbba4)."
+    }
+  },
+  "ram_aliases": {
+    "ffffbbf6": {
+      "alias": "dsc_mode_byte",
+      "type": "uint8",
+      "reader": "0002b6c2",
+      "evidence": "DSC/ABS mode byte from CAN 0x212 payload byte 6 (via 0x2b7e2: bbf6 = bbc6); bits 0x80/0x40/0x20/0x10 checked by 0x2b6c2/0x2b754/0x2b788/0x2b7a6 -> 0xffffbbcb-ce."
+    },
+    "ffffbbac": {
+      "alias": "wheelspeed_lr_raw",
+      "type": "uint16",
+      "reader": "0002b046",
+      "evidence": "Raw LR wheelspeed from CAN payload (0x2b1d6: bba4*0x100+bba5); validity flag 0xffffbbb9 by 0x2b17e; averaged in 0x2b046."
+    },
+    "ffffbbae": {
+      "alias": "wheelspeed_rr_raw",
+      "type": "uint16",
+      "reader": "0002b046",
+      "evidence": "Raw RR wheelspeed (0x2b1d6: bba6*0x100+bba7); validity flag 0xffffbbba by 0x2b1aa; averaged in 0x2b046."
+    },
+    "ffffbbd8": {
+      "alias": "engine_max_torque_allowed",
+      "type": "float",
+      "reader": "0001815c",
+      "evidence": "Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20."
+    },
+    "ffffbbb8": {
+      "alias": "vehicle_not_moving",
+      "type": "uint8",
+      "reader": "000165d6",
+      "evidence": "Set by 0x2b156 when vspeed <= 4 km/h (hyst 5); read in the idle A/C clutch gate 0x165d6 (pool 0x166ee at 0x16626)."
+    },
+    "ffffbbb9": {
+      "alias": "wheelspeed_lr_invalid",
+      "type": "uint8",
+      "reader": "0002b17e",
+      "evidence": "LR wheelspeed invalid/stale flag from 0x2b17e (0xffffbbac == -1 || 0xffffbbbe > 0x1e)."
+    },
+    "ffffbbba": {
+      "alias": "wheelspeed_rr_invalid",
+      "type": "uint8",
+      "reader": "0002b1aa",
+      "evidence": "RR wheelspeed invalid/stale flag from 0x2b1aa (0xffffbbae == -1 || 0xffffbbbe > 0x1e)."
+    },
+    "ffffbbf0": {
+      "alias": "can212_timeout_counter",
+      "type": "uint16",
+      "reader": "0002b29c",
+      "evidence": "0x212 RX failure counter incremented in 0x2b29c on mailbox-copy failure (every 4th failure); 0xffffbbd0 = (0x1e < bbf0) timeout flag by 0x2b7c4."
+    },
+    "ffffbbde": {
+      "alias": "can212_status_word",
+      "type": "uint16",
+      "reader": "0002b6a4",
+      "evidence": "u16 from CAN 0x212 payload bytes 4-5 (0x2b7e2: bbc4*0x100+bbc5); bit 0x08 checked by 0x2b6a4 -> 0xffffbbcf."
+    },
+    "ffffbbc8": {
+      "alias": "can212_torque_signal",
+      "type": "uint8",
+      "reader": "0002b816",
+      "evidence": "Torque-related signal from CAN 0x212 (0x2b816: bbc8 = bbf2); decoded with affine step 0x3ec99326 in 0x2b3b8/0x2b496 for the max-torque-allowed calc."
+    }
+  },
+  "rom_unchanged": true,
+  "ghidra_database_updated": false
+}

@@ -23,6 +23,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "dsc_can_arbitration_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 3
+      },
       "dtc_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
