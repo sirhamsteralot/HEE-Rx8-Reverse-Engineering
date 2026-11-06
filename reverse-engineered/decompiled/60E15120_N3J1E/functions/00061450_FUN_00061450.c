@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffff87b0 dtc_master_table_21 (uint8[0x150]): 21 x 0x10 B master DTC table: u16 slot at +0, state byte at +6, priority at +0x0d; scanned by 0x61450/0x615c6, iterated by 0x6328a.
+ * RAM 0xffff8900 dtc_master_current_index (uint16): Current master-table index; excluded from every scan (0x61450/0x615c6/0x62df8).
+ */
 /* ROM address: 0x00061450; body bytes: 342; decompiled */
 
 int FUN_00061450(char param_1,char param_2)

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_27_security_access [high]: service table record 0x5ebb8 (service 0x27) -> handler; ROM bytes verified; UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it
+ */
 /* ROM address: 0x00057a64; body bytes: 426; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00057ace) */

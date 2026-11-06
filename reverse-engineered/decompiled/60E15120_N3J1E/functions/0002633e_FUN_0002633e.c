@@ -6,7 +6,7 @@
 void FUN_0002633e(void)
 
 {
-  DAT_ffffb5a4 = rx8_first_order_filter(DAT_ffffb5e0,DAT_ffffb5a4,0.035335,1e-05);
+  electrical_load_filtered_ffffb5a4 = rx8_first_order_filter(electrical_load_raw_ffffb5e0,electrical_load_filtered_ffffb5a4,0.035335,1e-05);
   return;
 }
 

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid17de_io_status_ce32 [medium]: dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32
+ * RAM 0xffffce32 inferred_ram_ce32_ffffce32 (uint8): PID 0x17de
+ */
 /* ROM address: 0x000574b6; body bytes: 34; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f4e0 and register-save prologue. Heuristic

@@ -131,6 +131,19 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
+## Alternator / charging control labeling
+
+`scripts/review_alternator_labels.py` labels the three inherited
+`ref_alternator*` batches — `alternator_control_main_batch` 0x267c6,
+`alternator_monitor_batch` 0x2680e, `alternator_pid_task` 0x26868 — plus the
+voltage target/PID chain and the field PWM output on ATU-II ch5B (period
+0xffff9f44 = 1000, duty 0xffff9f48; service 0x57c6 → GR5B 0xfffff4e4). Charging
+DTCs resolved to P2502/P2503/P2504 (slots 0x7b/0x7c/0x7d via tables 0x7df42/0x7e560);
+warning flag 0xffffb5b4 exported via CAN word 0xffffbab2 bit 0x40 and PID 0x0968.
+25 functions, 10 RAM cells. Write-up:
+[`alternator_control_report.md`](alternator_control_report.md) +
+`reviews/alternator_control/`; record: `metadata/alternator_labels.json`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

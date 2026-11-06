@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_calc_load_pct [high]: PID 0x04: load*100/max*0.392157, 0xff if max~0
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

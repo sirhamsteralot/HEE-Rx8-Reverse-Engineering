@@ -2,6 +2,12 @@
   "date": "2026-10-30",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "reports": {
+    "alternator_control_report.md": {
+      "fn_checked": 17,
+      "ram_checked": 9,
+      "rom_refs": 27,
+      "rom_claims": 0
+    },
     "calibration_extraction_report.md": {
       "fn_checked": 0,
       "ram_checked": 0,

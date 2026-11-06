@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * battery_temp_model [medium]: Battery temperature estimate 0xffffb5c4 = IAT + max((coolant 0xffffa98c - 93.0)*0.43, 0) (pools 0x749b0/0x749b4) + filtered/clamped term (tbl 0x6a524(vspeed) decay, first_order_filter 2e-5, clamp [-7.2, 4.4]); 66.25 when 0xffffc5db set. Called from 0x267c6 via pool 0x2689c.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a524: Battery Temperature Model - Decay Amount (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x00025ba4; body bytes: 134; decompiled */
 
-void FUN_00025ba4(void)
+void candidate_battery_temp_model(void)
 
 {
   float arg0;

@@ -3,6 +3,11 @@
   "rom": "60E15120_N3J1E.bin",
   "checks": {
     "reports": {
+      "alternator_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "calibration_extraction_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -94,13 +99,13 @@
         "pool_claims": 0
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 14,
+        "reg_pairs": 22,
         "call_claims": 5,
         "pool_claims": 8
       }
     },
-    "tsv_rows": 397,
-    "labels_json_checked": 13
+    "tsv_rows": 422,
+    "labels_json_checked": 14
   },
   "notes": [
     "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",

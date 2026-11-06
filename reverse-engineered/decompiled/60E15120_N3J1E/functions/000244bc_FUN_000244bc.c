@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_block_encode [high]: Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0x39a00000 = 0.00030517578125) -> 0xffffb448, ref_readValue_float of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796).
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): DAT_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): -DAT_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
