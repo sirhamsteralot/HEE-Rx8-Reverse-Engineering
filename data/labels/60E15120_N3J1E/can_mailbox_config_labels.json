@@ -9,7 +9,63 @@
    "alias": "hcan_mailbox_config_compare",
    "confidence": "high",
    "evidence": "Compares a desired HCAN mailbox descriptor array (param_2: 16 x 16-byte records for channel 0, 6 for channel 1) against live registers: HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 expect 0x803e; MBCR/MBIMR rebuilt from record bytes and compared (HCAN0_MBCR_W 0xffffe404, HCAN0_MBIMR_W 0xffffe414, HCAN1_MBCR_W 0xffffe604, HCAN1_MBIMR_W 0xffffe614); HCAN0_IMR_W 0xffffe416 / HCAN1_IMR_W 0xffffe616 expect 0xfcfe; HCAN0_LAFMH_W 0xffffe41e + HCAN0_LAFML_W 0xffffe41c (and HCAN1_LAFMH_W 0xffffe61e / HCAN1_LAFML_W 0xffffe61c) must be zero; per-mailbox MC control/data bytes checked at HCAN0_MC0[1]_B 0xffffe420 + 8*(mb&0xf) (MC0[5]/MC0[6]/MC0[7]/MC0[8] hold ID/DLC fields). Returns nonzero on any mismatch. Called from ref_canSetup 0xd9f4 (jsr @r13 at 0xda3e/0xda4e; pool 0xdb20 = 0x2a4f8) in a <=2-iteration retry loop with ref_CANControllerSetup(0, 0x4e01c or 0x4e11c, 0x10) and (1, 0x4e21c, 6); after >1 tries sets error flag 0xffffa410."
+  },
+  "00028eb8": {
+    "alias": "can216_unpack_mixed_width_fields",
+    "confidence": "high",
+    "evidence": "Reads RX buffer 0xffffbab8 (pool 0x28fc8): bytes 0-1, 2-3, 5-6 assembled big-endian into u16 cells 0xffffbad4/bad6/bad8 (pools 0x28fcc/0x28fd0/0x28fd8), bytes 4 and 7 stored as u8 at 0xffffbada/badc. Three words + two bytes, not eight raw bytes. Re-verified this pass."
+  },
+  "000291dc": {
+    "alias": "can201_pack_and_queue_payload",
+    "confidence": "high",
+    "evidence": "Packs 8 bytes into 0xffffbaf4 (pool 0x292a4): u16 0xffffbafc (rpm) at +0/+1, u16 0xffffbafe at +2/+3, u16 0xffffbb00 (speed) at +4/+5, bytes from 0xffffbb02/bb03 at +6/+7, then jmp 0x99b0 queue (pool 0x292bc). CAN 0x201 descriptor at ROM 0x4df1c = 0000 0201 0001 0800 ffffbaf4 0100 0000 (BE id 0x201, len 8, buffer 0xffffbaf4) - ROM bytes re-read this pass."
+  },
+  "00029236": {
+    "alias": "can201_encode_rpm_u16",
+    "confidence": "high",
+    "evidence": "Fault flag byte 0xffffcdbc (pool 0x29294) == 1 -> sentinel 0xffff (u32 pool 0x292c0); else float input 0xffffbb04 (pool 0x292c8) converted via helper 0x2490 with scale 0.25 (float const at 0x292c4) RPM/count, capped at 0xfffe (u32 pool 0x29298), written to 0xffffbafc (pool 0x292a0). Re-verified this pass."
+  },
+  "0002927c": {
+    "alias": "can201_encode_vehicle_speed_u16",
+    "confidence": "high",
+    "evidence": "Same shape as 0x29236: fault -> 0xffff sentinel (u32 pool 0x292c0), else input 0xffffbbbb (pool 0x29296) scaled (speed+100)/0.01, normal cap 40000, written to 0xffffbb00 (pool 0x292ac). Re-verified this pass."
+  },
+  "00029340": {
+    "alias": "can201_prepare_rpm_with_conditional_filter",
+    "confidence": "high",
+    "evidence": "Reads engine rpm 0xffffb548 (pool 0x293c2), runs conditional filter (helper 0x23dc, pool 0x293f4) gated on flag bytes 0xffffa428/0xffffaa62 (pools 0x293c4/0x293c6), stores result 0xffffbb04 and previous unfiltered value 0xffffbb08. Re-verified this pass."
   }
  },
- "ram_aliases": {}
+ "ram_aliases": {
+  "ffffbaf4": {
+   "alias": "can201_tx_payload",
+   "type": "uint8[8]",
+   "reader": "000291dc",
+   "evidence": "8-byte CAN 0x201 TX buffer; descriptor at ROM 0x4df1c points here (bytes re-read this pass)."
+  },
+  "ffffbafc": {
+   "alias": "can201_encoded_rpm",
+   "type": "uint16",
+   "reader": "00029236",
+   "evidence": "0.25 RPM/count from 0xffffbb04, cap 0xfffe, 0xffff fault sentinel; packed at payload +0/+1 by 0x291dc."
+  },
+  "ffffbb00": {
+   "alias": "can201_encoded_vehicle_speed",
+   "type": "uint16",
+   "reader": "0002927c",
+   "evidence": "(speed+100)/0.01 from 0xffffbbbb, normal cap 40000, 0xffff fault; packed at payload +4/+5 by 0x291dc."
+  },
+  "ffffbb04": {
+   "alias": "can201_prepared_engine_rpm",
+   "type": "float",
+   "reader": "00029340",
+   "evidence": "Conditionally filtered rpm from 0xffffb548; input to 0x29236 encoder."
+  },
+  "ffffbb08": {
+   "alias": "can201_previous_engine_rpm",
+   "type": "float",
+   "reader": "00029340",
+   "evidence": "Previous unfiltered rpm saved each call by 0x29340."
+  }
+}
 }

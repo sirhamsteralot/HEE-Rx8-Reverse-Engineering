@@ -35,7 +35,22 @@ def asm_line(addr):
     raise AssertionError(f"no disassembly line at 0x{addr:x}")
 
 
-EXPECTED_FN = {"0002a4f8": "hcan_mailbox_config_compare"}
+EXPECTED_FN = {
+    "0002a4f8": "hcan_mailbox_config_compare",
+    # CAN 0x201 TX chain + CAN 0x216 RX unpack (descriptor 0x4df1c, buffer 0xffffbaf4)
+    "00029340": "can201_prepare_rpm_with_conditional_filter",
+    "00029236": "can201_encode_rpm_u16",
+    "0002927c": "can201_encode_vehicle_speed_u16",
+    "000291dc": "can201_pack_and_queue_payload",
+    "00028eb8": "can216_unpack_mixed_width_fields",
+}
+EXPECTED_RAM = {
+    "ffffbaf4": "can201_tx_payload",
+    "ffffbafc": "can201_encoded_rpm",
+    "ffffbb00": "can201_encoded_vehicle_speed",
+    "ffffbb04": "can201_prepared_engine_rpm",
+    "ffffbb08": "can201_previous_engine_rpm",
+}
 
 
 def test_labels_in_artifacts():
@@ -50,9 +65,15 @@ def test_labels_in_artifacts():
     for addr, name in EXPECTED_FN.items():
         assert fn.get(addr) == name
         assert data["function_aliases"][addr]["alias"] == name
+    ram = {r["address"]: r["alias"] for r in
+           csv.DictReader(open(os.path.join(INV, "source_review", "accepted_ram_aliases.tsv"),
+                               newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
+    for addr, name in EXPECTED_RAM.items():
+        assert ram.get(addr) == name
+        assert data["ram_aliases"][addr]["alias"] == name
     # the per-body labels JSON covers exactly this subsystem's rows
-    assert len(data["function_aliases"]) == 1
-    assert len(data["ram_aliases"]) == 0
+    assert len(data["function_aliases"]) == len(EXPECTED_FN)
+    assert len(data["ram_aliases"]) == len(EXPECTED_RAM)
 
 
 def test_call_site_pool_word():

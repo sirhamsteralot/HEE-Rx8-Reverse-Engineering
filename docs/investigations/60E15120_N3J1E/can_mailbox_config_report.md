@@ -107,6 +107,11 @@ None — previously unlabeled `FUN_0002a4f8`.
 |---|---|---|
 | 0x0002a4f8 | `hcan_mailbox_config_compare` | desired-vs-live HCAN mailbox compare |
 | 0x0000d9f4 | `ref_canSetup` | retry loop caller (inherited name) |
+| 0x00029340 | `can201_prepare_rpm_with_conditional_filter` | filtered engine RPM 0xffffbb04 (prev 0xffffbb08) from 0xffffb548 |
+| 0x00029236 | `can201_encode_rpm_u16` | RPM -> 0xffffbafc, 0.25 RPM/count, cap 0xfffe, 0xffff fault |
+| 0x0002927c | `can201_encode_vehicle_speed_u16` | speed -> 0xffffbb00, (v+100)/0.01, cap 40000, 0xffff fault |
+| 0x000291dc | `can201_pack_and_queue_payload` | packs 8 B into 0xffffbaf4, queues via 0x99b0 |
+| 0x00028eb8 | `can216_unpack_mixed_width_fields` | CAN 0x216 RX: 3 u16 + 2 u8 from 0xffffbab8 into 0xffffbad4-badc |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -114,6 +119,7 @@ None — previously unlabeled `FUN_0002a4f8`.
 |---|---|
 | 0xdb20 | pool word = 0x2a4f8 |
 | 0x4e01c / 0x4e11c / 0x4e21c | HCAN0 / alt-HCAN0 / HCAN1 mailbox descriptor blocks |
+| 0x4df1c | CAN 0x201 TX descriptor: `0000 0201 0001 0800 ffffbaf4 0100 0000` (BE id 0x201, len 8, buffer 0xffffbaf4) |
 
 ### 8.3 RAM (0xffff…)
 
@@ -122,6 +128,14 @@ None — previously unlabeled `FUN_0002a4f8`.
 | 0xffffa40e | `DAT_ffffa40e` | setup retry counter |
 | 0xffffa410 | `DAT_ffffa410` | CAN setup error flag (set when retries exhausted) |
 | 0xffffb534 | `DAT_ffffb534` | selects alternate HCAN0 descriptor block |
+| 0xffffbaf4 | `can201_tx_payload` | 8-byte CAN 0x201 TX buffer (descriptor 0x4df1c) |
+| 0xffffbafc | `can201_encoded_rpm` | encoded RPM u16 (payload +0/+1) |
+| 0xffffbb00 | `can201_encoded_vehicle_speed` | encoded speed u16 (payload +4/+5) |
+| 0xffffbb04 / 0xffffbb08 | `can201_prepared_engine_rpm` / `can201_previous_engine_rpm` | filtered / previous RPM floats |
+
+CAN 0x201/0x216 function + RAM aliases recorded in
+[`data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`](../../../data/labels/60E15120_N3J1E/can_mailbox_config_labels.json)
+and `source_review/accepted_*.tsv`; all literal pools re-read from ROM bytes.
 
 Peripheral window (0xffffe400+ HCAN0, 0xffffe600+ HCAN1): BCR/MBCR/MBIMR/IMR/
 LAFM/MC bytes as listed in §2, all symbol-named in `symbols.tsv`.
