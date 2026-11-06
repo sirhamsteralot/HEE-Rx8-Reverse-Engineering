@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * obd_mode04_clear_dtc [high]: service table record 0x5eb64 (service 0x04) -> handler; ROM bytes verified; OBD Mode 04 (also ref_ClearFaults_ at 0x558ac for service 0x14)
+ */
 /* ROM address: 0x000660d0; body bytes: 162; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000649c0 (162 bytes). Names prefixed ref_

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_stored_dtc_replay [high]: Maps stored flag bits 0xffffb4ec-0xffffb51b (unpacked by 0x23844) to 38 set_fault calls 0x5fd38(id, 1|2) for ids 0x13,0x14,0x21,0x22,0x42,0x47,0x4f,0x5b-0x5d,0x5f,0x60,0x61,0x65,0x6a,0x6b,0x83,0x84,100; restores the DTC history stored in E2RAM at load.
+ * RAM 0xffffb4ec stored_dtc_flag_bits (uint8): Unpacked DTC history flags (0xffffb4ec-0xffffb51b) decoded by 0x23844 via 0x24b00; replayed by 0x23f4e through 0x5fd38.
+ */
 /* ROM address: 0x00023f4e; body bytes: 772; decompiled */
 
 uint e2ram_stored_dtc_replay(void)

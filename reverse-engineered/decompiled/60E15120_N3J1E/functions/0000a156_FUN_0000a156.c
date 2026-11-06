@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * post_crank_tick_message [high]: Thunk: 0x9630(1, 9, arg) (disasm 0xa156: mov #9,r5; pool 0xa1fc = 0x9630) -> group1 rec[9] @0xd98c {id=2, n=1, handler=0x11c98} posted to queue slot 2.
+ */
 /* ROM address: 0x0000a156; body bytes: 24; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000a156 (24 bytes). Names prefixed ref_

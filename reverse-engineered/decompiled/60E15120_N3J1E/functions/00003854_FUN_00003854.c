@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_wake_posted_task [high]: Decrements credit byte ctx[3] of target task (PTR_DAT_00004994[slot*4][3]; disasm 0x3878-0x3888) then calls 0x39ba; may context-switch via 0x3bf4. Dynamic: task[3] ctx[3] 0x1e -> 0x1d on post.
+ */
 /* ROM address: 0x00003854; body bytes: 166; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x000038e0) */

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pida216_ram_bc30_raw [medium]: dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05
+ * RAM 0xffffbc30 inferred_ram_bc30_ffffbc30 (float): PID 0xa216
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): DAT_ffffbc30; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

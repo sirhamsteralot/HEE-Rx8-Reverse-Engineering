@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid001c_obd_standard [high]: dispatch record 0x5f1cc -> handler verified in ROM bytes + function_index; const 6 = OBD PID 1C
+ */
 /* ROM address: 0x00056a58; body bytes: 22; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f1d4 and register-save prologue. Heuristic

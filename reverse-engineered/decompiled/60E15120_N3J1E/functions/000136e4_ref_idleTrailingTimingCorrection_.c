@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
+ * RAM 0xffffa71c idle_trailing_timing_error_correction (float): 
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a088: Ignition Trailing - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).

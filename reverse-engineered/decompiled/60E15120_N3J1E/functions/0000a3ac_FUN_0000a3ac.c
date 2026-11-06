@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa188 task12_alive_counter (uint16): Cleared (mov.w #0) by 0xa4b6 on every task[12] run; incremented in 0xa3ac, reset when > 300.
+ */
 /* ROM address: 0x0000a3ac; body bytes: 104; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000a3ac (104 bytes). Names prefixed ref_

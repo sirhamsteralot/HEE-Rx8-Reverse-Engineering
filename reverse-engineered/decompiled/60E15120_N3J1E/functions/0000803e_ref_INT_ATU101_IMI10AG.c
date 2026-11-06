@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * crank_isr_compute_rpm [high]: was ref_INT_ATU101_IMI10AG (misnomer). Vector 0x2c8 (CMI10B; IVT at VBR 0x7fc50). Sums the 6-entry ring at 0xffff9fd0 into crank_period_accumulator_ffff9f88, sets engine_speed_rpm_raw_ffff9f80 = 1.2e8/sum. Emulator: fired via cpu.interrupt(0x2c8), executed, returned to idle.
+ */
 /* ROM address: 0x0000803e; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0000803e (44 bytes). Names prefixed ref_

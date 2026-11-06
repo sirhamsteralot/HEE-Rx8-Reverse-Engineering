@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pide21b_cal_id_chunk_0 [high]: dispatch record 0x5f4e4 -> handler verified in ROM bytes + function_index; appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')
+ */
 /* ROM address: 0x000574d8; body bytes: 46; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f4ec and register-save prologue. Heuristic

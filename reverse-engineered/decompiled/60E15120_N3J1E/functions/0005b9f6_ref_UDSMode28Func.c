@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_28_communication_control [high]: service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
