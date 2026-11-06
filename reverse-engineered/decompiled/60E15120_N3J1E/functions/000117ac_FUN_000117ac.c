@@ -23,7 +23,7 @@ void FUN_000117ac(void)
   FUN_0001465e();
   FUN_00023076();
   ref_acCompressorControlMain___();
-  FUN_0002f266();
+  fan_control_task();
   ref_getOBDFuelModificationRequest();
   candidate_secondary_air_on_time_task();
   secondary_air_solenoid_control();

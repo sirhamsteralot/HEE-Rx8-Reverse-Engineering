@@ -18,6 +18,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "cooling_fan_control_report.md": {
+        "reg_pairs": 2,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "cruise_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -109,13 +114,13 @@
         "pool_claims": 0
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 22,
+        "reg_pairs": 24,
         "call_claims": 7,
-        "pool_claims": 11
+        "pool_claims": 12
       }
     },
-    "tsv_rows": 466,
-    "labels_json_checked": 16
+    "tsv_rows": 474,
+    "labels_json_checked": 17
   },
   "notes": [
     "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",
