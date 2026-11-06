@@ -11,7 +11,7 @@ undefined4 FUN_0002e33c(void)
   if ((((((DAT_ffffcca1 != '\x01') && (DAT_ffffbcd8 != '\x01')) && (DAT_ffffbd58 != '\x01')) &&
        ((DAT_ffffb516 != '\x01' &&
         (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8738,0), cVar1 != '\x01')))) &&
-      ((DAT_ffffbbb9 != '\x01' && ((DAT_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
+      ((wheelspeed_lr_invalid_ffffbbb9 != '\x01' && ((wheelspeed_rr_invalid_ffffbbba != '\x01' && (DAT_ffffbbd0 != '\x01')))))) &&
      (DAT_ffffc616 != '\x01')) {
     DAT_ffffbd5c = 0;
     return 0;

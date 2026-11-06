@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * adc_eoc_isr_bank0 [high]: IVT 0x2f8 (vec 190): clears ADCSR0 bit7 (ADF), returns.
+ */
 /* ROM address: 0x00005ce2; body bytes: 16; decompiled */
 
 byte adc_eoc_isr_bank0(void)

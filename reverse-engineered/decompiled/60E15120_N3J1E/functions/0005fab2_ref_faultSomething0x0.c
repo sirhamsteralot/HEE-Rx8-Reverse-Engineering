@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * dtc_count_stored [medium]: 0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)
+ */
 /* ROM address: 0x0005fab2; body bytes: 60; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005e3be (60 bytes). Names prefixed ref_

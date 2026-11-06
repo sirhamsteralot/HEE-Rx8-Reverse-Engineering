@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_b1_mazda_specific [medium]: service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

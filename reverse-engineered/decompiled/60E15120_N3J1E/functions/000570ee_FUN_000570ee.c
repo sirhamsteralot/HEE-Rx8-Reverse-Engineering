@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid172a_ram_c4c8_temp_c [medium]: dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40
+ * RAM 0xffffc4c8 inferred_temp_c4c8_ffffc4c8 (float): PID 0x172a: x-40
+ */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): DAT_ffffc4c8; decode = raw * 1 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */

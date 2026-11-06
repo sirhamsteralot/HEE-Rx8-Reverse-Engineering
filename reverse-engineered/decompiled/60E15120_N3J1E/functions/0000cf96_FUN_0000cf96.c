@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * crank_edge_period_update [high]: CMI10B sub-handler: matches sector 0xffff9f95 against edge table, reads ICR0AH, computes period 0xffffa3cc into ring 0xffffa390 (x 6666666.0), posts via 0xa156 on match.
+ */
 /* ROM address: 0x0000cf96; body bytes: 342; decompiled */
 
 undefined4 * crank_edge_period_update(void)

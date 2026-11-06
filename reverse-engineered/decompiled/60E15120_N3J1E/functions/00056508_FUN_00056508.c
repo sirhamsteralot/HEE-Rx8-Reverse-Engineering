@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_3e_tester_present [high]: service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

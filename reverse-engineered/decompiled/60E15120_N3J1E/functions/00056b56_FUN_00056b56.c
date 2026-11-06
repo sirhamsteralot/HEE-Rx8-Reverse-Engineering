@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0040_pids_supported_41_60 [high]: dispatch record 0x5f250 -> handler verified in ROM bytes + function_index; handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60
+ */
 /* ROM address: 0x00056b56; body bytes: 32; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f258 and register-save prologue. Heuristic

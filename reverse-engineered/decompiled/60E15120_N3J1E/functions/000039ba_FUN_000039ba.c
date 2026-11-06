@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * os_mark_task_ready [high]: Appends task id to ready ring at ctrl+0x24 (0xffff74a0)[tail], sets class bitmap 0xffff7668 (bit tbl 0x3d48[class&7] in byte class>>3), and if class > ctrl[0] (cmp/hi, unsigned) sets ctrl[0]=class, ctrl+6=task (disasm 0x39f6-0x3a00). Dynamic: bitmap 0x11000000 -> 0x15000000 on post to slot 2 (class 2).
+ * RAM 0xffff7668 os_ready_bitmap (uint32): 0x39ba sets bit tbl 0x3d48[class&7] in byte (class>>3); after boot 0x11000000 (classes 0 and 4 = init tasks {0,17}); after post to queue slot 2 observed 0x15000000 (class 2 added).
+ * RAM 0xffff74a0 os_ready_ring (uint16[]): ctrl+0x24 (0xffff765c) points here; 0x39ba appends the task id at ring[tail] when marking ready.
+ */
 /* ROM address: 0x000039ba; body bytes: 110; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000039ba (110 bytes). Names prefixed ref_

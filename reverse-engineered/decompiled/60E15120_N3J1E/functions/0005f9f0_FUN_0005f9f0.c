@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffd5fc dtc_state_array (uint8[0x8c]): Per-slot DTC state mirror (0xc0/0xc1/0x70/0x60/0); cleared by 0x6028c, written by 0x602c8/0x602a4/0x6020e.
+ */
 /* ROM address: 0x0005f9f0; body bytes: 132; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005e2fc (132 bytes). Names prefixed ref_

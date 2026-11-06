@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * adc_read_result_bank2 [medium]: was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff840); bank-2 channel select (ADCSR2 at 0xfffff858).
+ */
 /* ROM address: 0x00006fb0; body bytes: 174; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00006fb0 (174 bytes). Names prefixed ref_

@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0968_io_status_b5b4_bc35 [medium]: dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0
+ * RAM 0xffffb5b4 inferred_ram_b5b4_ffffb5b4 (uint8): PID 0x0968 -> bit 0
+ * RAM 0xffffbc35 inferred_ram_bc35_ffffbc35 (uint8): PID 0x0968 -> bit 0x20
+ */
 /* ROM address: 0x00057138; body bytes: 56; decompiled */
 
 /* Function candidate recovered from ROM pointer at 5f438 and register-save prologue. Heuristic

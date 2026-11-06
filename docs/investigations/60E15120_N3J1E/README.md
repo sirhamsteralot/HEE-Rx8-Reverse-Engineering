@@ -131,6 +131,19 @@ APV PWM PL5/PL8=221/224 (3J/3G), status PH12/13=79/80, position AN6=92 (3B).
 Write-up: [`intake_solenoids_report.md`](intake_solenoids_report.md) + `reviews/intake_solenoids/`.
 Backup: `backups/pre_intake_labels.zip`; record: `metadata/intake_labels.json`.
 
+## DSC-related CAN arbitration labeling
+
+`scripts/review_dsc_can_labels.py` labels the inherited
+`ref_updateDSCRelatedCANStuff__` 0x2a2ae as `dsc_can_arbitration_batch` (15-call
+mask-0x10 batch from task[10] 0x11744) plus the CAN 0x212 RX chain
+(`can212_rx_main` 0x2b29c, `can212_rx_unpack` 0x2b7e2; mailbox descriptor at ROM
+0x4e21c, buffer 0xffffbbc0) and the derived-signal helpers (validity timers,
+`engine_max_torque_allowed_calc` 0x2b3b8 → 0xffffbbd8, DSC mode bits of
+0xffffbbf6, `vehicle_moving_calc` 0x2b156 → 0xffffbbb8, wheelspeed validity).
+18 functions, 10 RAM cells. Write-up:
+[`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md) +
+`reviews/dsc_can_arbitration/`; record: `metadata/dsc_can_labels.json`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

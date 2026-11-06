@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * clt_sensor_scaling_fault [high]: Same pattern vs tbl_clt_sensor_scaling_0006977c (descriptor @0x6977c verified; pool word 0x7420) -> coolant_temperature_ffff9f70; range fault 0xffff9f74 (raw<0x9ff->2, >=0xfd00->1). Called only from task[13] 0x65b2.
+ * RAM 0xffff9f74 clt_range_fault (uint8): 0 = in band, 1 = raw >= 0xfd00, 2 = raw < 0x9ff; set in clt_sensor_scaling_fault 0x73a0 (task[13]).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006977c: CLT Sensor Scaling (RX8Defs data pointer, axes and dimensions match).
  */
