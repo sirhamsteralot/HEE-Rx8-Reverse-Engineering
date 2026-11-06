@@ -51,9 +51,9 @@ checksum, and writes the block out again.
 0x2376c (e2ram_load_decode_entry): 0x23844(); 0x23f4e()
 
 # 0x23844 e2ram_block_decode: payload from 0xffffb47a
-  b4b0/b4 = decode_u16_affine(raw 0xffffb47a/0x47c, step 0.0305176 = 0x3cfa0000)
-  b4c0/c4/c8 = decode_u16_affine(raw 0xffffb498/49a/49c, step 0.0048828 = 0x38a00000)
-  b4b8 = decode_u8_affine(raw 0xffffb488, 0.078125); b4bc = signed decode (0.78125, sign = bit7 of 0xffffb489)
+  b4b0/b4 = decode_u16_affine(raw 0xffffb47a/0x47c, step 0x3cfa0000 = 0.030517578125, pool 0x23918)
+  b4c0/c4/c8 = decode_u16_affine(raw 0xffffb498/49a/49c, step 0x38a00000 = 7.62939453125e-05, pool 0x24004)
+  b4b8 = decode_u8_affine(raw 0xffffb488, 0x3da00000 = 0.078125, pool 0x23938); b4bc = signed decode (0x3f480000 = 0.78125, pool 0x2393c, sign = bit7 of 0xffffb489)
   b4cc..b4db = raw bytes 0xffffb47e..0xffffb497
   flags b4ec..b51b = bit-unpack of 7 bytes 0xffffb48a..0xffffb490 via 0x24b00 (20-byte helper)
 0x23f4e (e2ram_stored_dtc_replay): 38 calls 0x5fd38(id, 1|2) from flags b4ec..b51b
@@ -64,16 +64,19 @@ checksum, and writes the block out again.
          checksum = sum 0x1b u16 -> +0x36 (loop 0x236f0-0x236fe)
          0xb886(0xffffb440, 0x1c)      # write 28 u16; success -> 0xffffb43b = 1
 
-# 0x244bc e2ram_block_encode: b442/b444 = enc(b40c, 0.0305176); b446 = signed enc(b414);
-#   b448 = enc(b594, 0.00048828); b44a/b44c = enc(readValue_float(16.0) of 0xffff807c/0xffff8084);
-#   b44e = pedal volts 0xffffa9c4; b448+... rpm 0xffffb548 (step 0.1953125); fault bits -> b459..b45b
+# 0x244bc e2ram_block_encode: b442/b444 = enc(b40c, 0x3cfa0000, pool 0x2452c); b446 = signed enc(b414);
+#   b448 = enc(b594, 0x39a00000 = 0.00030517578125, pool 0x24684); b44a/b44c = enc(readValue_float of 0xffff807c/0xffff8084);
+#   b44e = pedal volts 0xffffa9c4; rpm 0xffffb548 (step 0x3e480000 = 0.1953125, pool 0x24b40); fault bits -> b459..b45b
 ```
 
 ## 3. Key calibrated tables
 
-None — the block is raw encoded values with fixed affine steps (literal-pool
-floats 0x3cfa0000, 0x38a00000, 0x3da00000, 0x3f480000, 0x39a00000, 0x3f800000),
-not descriptor tables.
+None — the block is raw encoded values with fixed affine steps, not descriptor
+tables. Literal-pool floats referenced from the codec (ROM-verified):
+0x3cfa0000 = 0.030517578125 (pools 0x23918/0x2452c/0x2467c/0x24b30),
+0x38a00000 = 7.62939453125e-05 (pool 0x24004), 0x3da00000 = 0.078125 (0x23938),
+0x3f480000 = 0.78125 (0x2393c), 0x39a00000 = 0.00030517578125 (0x24684),
+0x3b800000 = 0.00390625 (0x24b3c), 0x3e480000 = 0.1953125 (0x24b40).
 
 ## 4. Labeling applied
 

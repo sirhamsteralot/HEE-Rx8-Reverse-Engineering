@@ -85,7 +85,8 @@ None — previously unlabeled `FUN_0002a4f8`.
 
 ## 6. Files
 
-- `reverse-engineered/decompiled/60E15120_N3J1E/functions/0002a4f8_*.c` (renamed)
+- `reverse-engineered/decompiled/60E15120_N3J1E/functions/0002a4f8_*.c`
+  (symbol renamed in place; filename keeps the `FUN_` prefix)
 - `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
 - `data/labels/60E15120_N3J1E/c8_large_bodies_labels.json`
 
