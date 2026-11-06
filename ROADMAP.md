@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–17 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 10–18 — pick up 10 first; C item 10 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–17)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–18)
 
 - **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
   labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
@@ -169,6 +169,21 @@ and where artifacts live.
   `validate_reports.py` + `verify_claims.py` and a link + non-empty-size check
   on every touched doc. Sequencing: do this after C items 13–16 so the docs
   reflect the applied labels, not just the raw comments.
+- **C item 18 (open)** — update the ECU definitions in
+  [data/definitions/](data/definitions/) from the new investigations. The
+  recent passes (DSC CAN arbitration, idle speed control, alternator control,
+  the ignition timing chain) confirmed or refined table/scalar semantics and
+  descriptor meanings that the RomRaider XML defs should reflect — e.g. new or
+  corrected table descriptions for the CAN 0x212-derived signals, idle
+  target/air tables and alternator drag-torque tables, and any scalar
+  meanings pinned by the source-review comments. Use the re-runnable defs
+  passes (`extend_defs_all_roms.py` per-ROM regeneration + `relabel_merged_def.py`
+  splice, per AGENTS.md rule 6c): keep `<description>` a short user-facing
+  what-the-table-does sentence with no addresses/provenance/pass markers
+  (rule 6b), and record provenance in
+  `data/labels/60E15120_N3J1E/defs_table_labels.json`. Sequencing: after C
+  items 13/16 so the defs pick up verified labels, and re-run the defs-merge
+  checks + pipeline validators afterwards.
 
 ### E. Reimplementation coverage (P4)
 
