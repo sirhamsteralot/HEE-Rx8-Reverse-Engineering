@@ -1,16 +1,19 @@
-# Authoring a new DTC in the RX-8 PCM — end-to-end map — 60E15120_N3J1E (SH7055 / SH-2E)
+# Authoring a new DTC in the RX-8 PCM — checklist + raise path — 60E15120_N3J1E (SH7055 / SH-2E)
 
 Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched — this pass changes documentation only). Findings are from static analysis
 of the canonical export, the disassembly and the raw ROM bytes (re-dumped this session,
 see [`reviews/dtc_authoring/tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt));
-no hardware execution was performed. This report maps the complete path a fault code
-takes — detection site → state machine → MIL → key-off persistence → scanner readout —
-and lists every ROM/RAM address a **new** DTC would have to touch.
+no hardware execution was performed. This report is the **authoring guide**: it lists
+every ROM/RAM address a **new** DTC must touch (§3 checklist) and what its raise call
+triggers (§2). The complete DTC chain — engine, state bytes, MIL/CAN, E2RAM key-off
+persistence, scanner readout, UDS 0x85 — is documented in
+[`dtc_control_report.md`](dtc_control_report.md) §1–§2b and cross-referenced from here.
 
-**Related reports:** the DTC engine itself (slots, state bytes, enable gates, Mode
-03/07/02/06, Mode 22 PIDs 0x0200/0x0202) in
+**Related reports:** the entire DTC chain — engine, slots, state bytes, enable
+gates, MIL/CAN, E2RAM key-off persistence (§2b), end-to-end flowchart (§2a), readout
+services, UDS 0x85 — in
 [`dtc_control_report.md`](dtc_control_report.md); key-off persistence codec in
 [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) and the device layer in
 [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md); a concrete detection
@@ -23,215 +26,97 @@ and Mode 22 dispatcher in
 
 ## 1. Executive summary
 
-- A DTC in this firmware is addressed by a **fault argument** (`arg`, r4 of the
-  set-fault call) that maps to a **slot** through ROM table **0x7df42**
-  (BE u16 per arg, args 0x00–0x8b; many-to-one from arg 0x15 on — several detection
-  conditions share one slot). The slot indexes everything else: OBD code in
-  **0x7e560** (BE u16 per slot, 140 slots), enable switches **0x7e678 / 0x7e704 /
-  0x7e790**, type byte **0x7e32a**, confirmation mask **0x7e81c**, plus RAM arrays
-  0xffffd570/0xffffd5fc/0xffffd458/0xffffd4e4[slot]. The status mask **0x7e934**
-  (u32) and monitor-source mask **0x7e29e** (u8) are indexed by the **arg**, not the
-  slot (`ref_getFaultStatus__` 0x66a00 does `0x7e934 + 4*arg` directly).
-- **All 140 slots already carry a code.** 19 slots are free capacity:
-  **0x79–0x8b hold code 0xffff** with stock enable#1=#2=0. A new code is authored by
-  writing its BE u16 OBD code at `0x7e560 + 2*slot` (e.g. slot 0x79 → 0x7e5f2) and
-  setting that slot's config bytes; alternatively a stock-disabled slot can be
-  repurposed (11 slots carry a real code with stock enable#1=#2=0, e.g. slot 0x71 =
-  P2502 — see §3).
-- **Raise path:** detection code calls **0x5fd38(arg, mode)** (71 call sites;
-  mode 1 = fault active, 2 = healed/clear, 4 = confirm — cf. the charging example
-  0x545bc `0x5fd38(0x7b, b5b1==0 ? 2 : 1)` → slot 0x71 → P2502) → **0x5fe20**
-  `dtc_set_fault` → eval-state 0x5ff5a, gates 0x5f9c2 (conf mask) / 0x5f9b0
-  (enable#3 bits) → **0x60062** `dtc_state_transition` → either direct store
-  **0x601cc** (`0xffffd570[slot]=1`, first code 0xffffd3c0) or OS group-2 event 2 →
-  handler **0x61092** → 21-entry master table **0xffff87b0**; the periodic sweep
-  **0x612ee** runs per-type aging machines 0x60ca6/0x64918/0x64972/0x6400a.
-- **MIL:** automatic once a stored+enabled DTC exists — **0x5a130** (from boot 0x1102a
-  and periodic 0x118d0) sets **0xffffd286**; 0x5a188 accumulates distance-while-MIL
-  0xffff90f4; the CAN status message (builder 0x54d90, case 0) carries
-  **0x55278()** = stored count | 0x80. Separate warning lamps are plain flags, e.g.
-  `ref_setAlternatorWarningLight` **0x26760** → 0xffffb5b4 → CAN word 0xffffbab2
-  bit 0x40 — they do **not** go through the DTC engine.
-- **Key-off persistence is opt-in per arg**, not automatic: only the **19 args
-  hardcoded in 0x23f4e / 0x242ae** (0x13, 0x14, 0x21, 0x22, 0x42, 0x47, 0x4f, 0x5b,
-  0x5c, 0x5d, 0x5f, 0x60, 0x61, 0x64, 0x65, 0x6a, 0x6b, 0x83, 0x84) are saved to and
-  replayed from the 28-u16 E2RAM block. Save: task[9] **0x64ba** → **0x1150e** →
-  0x236cc → 0x2377a → collect **0x242ae** (18 × `ref_getFaultStatus__` 0x66a00 →
-  staging 0xffffb4dc–0xffffb4eb) + encode **0x244bc** (fault bits packed into
-  0xffffb459–0xffffb45d) + magic 0xa55a + checksum → 0xb886 write.
-  Load at boot: 0x1102a/0x114d0 → 0x235c8/0x235f8 → **0x2376c** → decode **0x23844**
-  (raw 0xffffb48a–0xffffb490 → flags 0xffffb4ec–0xffffb51b) → replay **0x23f4e**
-  (38 × `0x5fd38(arg, 1|2)`). **The charging args 0x7b/0x7c/0x7d are not in this
-  list — P2502/2503/2504 do not survive key-off.**
-- **Readout is automatic** once stored: Mode 03 (0x65ff8), Mode 07 (0x661ec), Mode 02
-  freeze frame (0x65c88), Mode 06 (0x6725c), Mode 22 PIDs 0x0200/0x0202 (0x5fab2/0x5fb08
-  via dispatcher 0x5774c, PID table 0x5f10c), Mazda UDS **0x18** (record 0x5ec0c →
-  0x57db0 → 0x58168). The UDS service table **0x5eb40** (29 × 12-byte records, dumped
-  from ROM) contains **no 0x19 and no 0x1a** — ReadDTCInformation is not implemented;
-  unknown services fall to the 0xff default handler 0x6689a (negative response).
-  Clear: Mode 04 / UDS 0x14 → 0x558ac; global DTC-setting off: UDS 0x85 → 0x5dc44
-  (RAM 0xffffd688).
+- A DTC is addressed by a **fault argument** (`arg`, r4 of the set-fault call) that
+  maps to a **slot** through ROM table **0x7df42** (BE u16 per arg, args 0x00–0x8b;
+  many-to-one from arg 0x15 on — e.g. args 0x7b/0x7c/0x7d → slots 0x71/0x72/0x73).
+  The slot indexes the OBD code table **0x7e560** (BE u16 per slot, 140 slots),
+  enable switches **0x7e678 / 0x7e704 / 0x7e790**, type byte **0x7e32a** and
+  confirmation mask **0x7e81c**; the status mask **0x7e934** (u32) and monitor-source
+  mask **0x7e29e** (u8) are **arg**-indexed (`ref_getFaultStatus__` 0x66a00 does
+  `0x7e934 + 4*arg` directly). Table semantics and the runtime chain:
+  [`dtc_control_report.md`](dtc_control_report.md) §1–§2.
+- **Free capacity:** all 140 slots carry a stock code, but slots **0x79–0x8b hold code
+  0xffff** with stock enable#1=#2=0 (19 free slots), and 11 more slots carry a real
+  code with stock enable#1=#2=0 (0x07/0x08/0x35/0x36/0x38/0x3c/0x3d/0x48/0x71/0x72/
+  0x73 = P0076/P0077/P0480/P0481/P0505/P0564/P0571/P1260/P2502/P2503/P2504) and can be
+  repurposed. Authoring a code = write its BE u16 at `0x7e560 + 2*slot`, set the
+  slot's config bytes, bind an arg at `0x7df42 + 2*arg`, call the set-fault thunk —
+  the full checklist is §3.
+- **Raise:** call **0x5fd38(arg, mode)** (71 existing call sites; mode 1 = fault
+  active, 2 = healed, 4 = confirm; charging example 0x545bc
+  `0x5fd38(0x7b, b5b1==0 ? 2 : 1)` → slot 0x71 → P2502). Everything after the call —
+  gates (0xffffd688 eval-on from UDS 0x85, conf mask 0x5f9c2, enable#3 0x5f9b0),
+  transition 0x60062, master table, MIL, readout — is stock engine behavior, mapped
+  end-to-end in [`dtc_control_report.md`](dtc_control_report.md) §2/§2a.
+- **Persistence is opt-in per arg:** only the 19 args hardcoded in 0x242ae/0x23f4e
+  survive key-off (E2RAM; chain in [`dtc_control_report.md`](dtc_control_report.md)
+  §2b). Arg 0x83 — pre-wired to free slot 0x79 — is on the list, so the patcher
+  example below persists; the charging args 0x7b–0x7d are not.
+- **Readout is automatic** once stored (Mode 03/07/02/06, Mode 22 0x0200/0x0202,
+  UDS 0x18; no 0x19/0x1a) — [`dtc_control_report.md`](dtc_control_report.md) §2; the
+  authoring view is checklist row 13.
 
 ## 1a. Plain-language summary
 
-Think of a DTC as a row in a fixed 140-row table. Row *N* (the "slot") has a
-read-only P-code, three one-byte switches, a "how fast should it age" byte and a few
-masks. Monitors don't talk about P-codes at all: they call one small function with a
-fault number and a mode. That number looks up the slot in a second table, and the
-slot drives everything — the check-engine lamp decision, the aging, what a scanner
-sees, and (only if the fault number was added to two specific EEPROM save/load
-routines) whether the code is still there after you turn the key off. So adding a new
-code means: pick a free row (rows 0x79–0x8b are empty), write the P-code into the code
-table, set the row's switches, add a fault-number→row entry, call the set-fault
-function from your monitor, and — if you want it to survive key-off — also add the
-fault number to the EEPROM collect and replay lists, which have free flag bits.
+Think of a DTC as a row in a fixed 140-row table — how the engine treats those rows
+(state bytes, switches, aging) is explained in
+[`dtc_control_report.md`](dtc_control_report.md) §1a. Adding a new code means: pick a
+free row (rows 0x79–0x8b are empty), write the P-code into the code table, set the
+row's switches, bind a fault number to the row in the arg→slot table, and call the
+set-fault function from your monitor with that fault number. If you want the code to
+survive key-off, also add the fault number to the EEPROM collect and replay lists
+(§3 row 12); they have free flag bits. Everything the engine then does — aging, lamp,
+scanner output — happens automatically; the whole chain is diagrammed in
+[`dtc_control_report.md`](dtc_control_report.md) §2a.
 
-## 2. How it works (end-to-end pseudocode)
+## 2. What your raise call triggers (chain slice)
+
+The complete end-to-end chain — detection → set → gates → transition → master table
+→ MIL/CAN → E2RAM persistence → scanner readout → clear/UDS 0x85 — is documented
+with full pseudocode and a flowchart in
+[`dtc_control_report.md`](dtc_control_report.md) §2/§2a/§2b; the ROM tables involved
+are listed in §8.3 below. What an author needs to know about the call itself:
 
 ```python
-# --- ROM tables a DTC lives in (60E15120_N3J1E; all addresses verified in ROM) ---
-id2slot   = u16be @ 0x7df42 + 2*arg        # fault arg -> slot (args 0x00..0x8b; tail entries at 0x7e05a)
+# --- ROM tables a new DTC lives in (semantics in dtc_control_report.md §2; dump in §8.3) ---
+id2slot   = u16be @ 0x7df42 + 2*arg        # fault arg -> slot (args 0x00..0x8b; tail at 0x7e05a unreferenced)
 code_tbl  = u16be @ 0x7e560 + 2*slot       # slot -> OBD code (BE = the two mode-03 response bytes)
-prefix    = u16be @ 0x7e55a                # P0300/P0301/P0302 misfire prefix codes
-enable1   = u8    @ 0x7e678 + slot        # MIL/aging gate (def "Enable/Disable #1")
-enable2   = u8    @ 0x7e704 + slot        # Mode-03 visibility gate (def "#2")
-enable3   = u8    @ 0x7e790 + slot        # behavior BITMASK 0x02/0x04/0x08/0x10/0x20 (def "#3")
-dtc_type  = u8    @ 0x7e32a + slot        # 0..3 -> aging state machine (stock nonzero: slots 0,1,0x1e,0x1f)
-conf_mask = u16be @ 0x7e81c + 2*slot      # confirmation gate
-status_msk= u32be @ 0x7e934 + 4*arg       # arg-indexed; ANDed with RAM 0xffffd930 in 0x66a00
-mon_src   = u8    @ 0x7e29e + arg         # arg-indexed monitor-source mask (0x5fb68)
-related   = u32be @ 0x7e06c + 4*slot      # per-slot related record; low byte = the arg (e.g. slot 0x71 -> ..0x7b)
+enable1   = u8    @ 0x7e678 + slot        # def "Enable/Disable #1" (MIL/aging gate)
+enable2   = u8    @ 0x7e704 + slot        # def "#2" (Mode-03 visibility gate)
+enable3   = u8    @ 0x7e790 + slot        # def "#3" BITMASK 0x02/0x04/0x08/0x10/0x20
+dtc_type  = u8    @ 0x7e32a + slot        # 0..3 -> aging state machine
+conf_mask = u16be @ 0x7e81c + 2*slot      # confirmation gate (0x5f9c2)
+status_msk= u32be @ 0x7e934 + 4*arg       # ARG-indexed; ANDed with RAM 0xffffd930 in 0x66a00
+mon_src   = u8    @ 0x7e29e + arg         # ARG-indexed monitor-source mask (0x5fb68)
+related   = u32be @ 0x7e06c + 4*slot      # per-slot related record; low byte = the arg
 
-# --- 1. detection site: call the set-fault thunk (71 call sites) ---
-0x5fd38(arg, mode)                       # mode 1 = fault active, 2 = healed, 4 = confirm
+# --- detection site: call the set-fault thunk (71 call sites) ---
+0x5fd38(arg, mode)                          # mode 1 = fault active, 2 = healed, 4 = confirm
   -> 0x5fe20 dtc_set_fault(arg, mode, x):
-       slot   = id2slot[arg]
-       eval   = (0xffffd1c5 or 0xffffd958) or dtc_set_eval_state(arg)   # 0x5ff5a -> 0xffffd458
-       if 0xffffd688 == 1:                # DTC setting enabled (UDS 0x85)
-           if conf_mask_ok(slot) and enable3_ok(slot):               # 0x5f9c2 / 0x5f9b0
-               dtc_state_transition(arg, mode, x)                      # 0x60062
-       else:
-           dtc_mark_stored(arg, x)        # 0x601cc: 0xffffd570[slot]=1, first code 0xffffd3c0
-
-# --- 2. state transitions ---
-0x60062(arg, mode, x):                     # r5 = mode
-  mode 2 (heal):  if enable3[slot] bit 0x10 clear and master state != 0 -> clear mirror 0xffffd5fc, 0xffffd4e4[slot]=2
-  mode 4 (confirm): if type in {1,2,3} and 0xffffd4e4[slot] != 4 -> post OS event (group 2, event 2) via 0x60190, 0xffffd4e4[slot]=4
-  mode 1 (active): if not already stored (0x5fb68) -> post OS event (2,2); 0xffffd4e4[slot]=1
-  OS group-2 event 2 handler 0x61092 (event table 0x67d00): insert/update master table entry
-     at 0xffff87b0 (21 x 0x10 B: u16 slot +0, state +6, priority +0x0d; index cell 0xffff8900 skipped),
-     refresh mirror 0xffffd5fc[slot] = map_master_state(slot)   # 0x602a4 / 0x61800 (0x60->0x60, 0x80..->0x70)
-  periodic sweep 0x612ee (from 0x1102a, gated by 0xffff8e7c): per master entry dispatch
-     on dtc_type[slot]: 0->0x60ca6, 1->0x64918, 2->0x64972, 3->0x6400a; then mil_status 0x606be
-
-# --- 3. MIL + CAN ---
-0x5a130 (from 0x1102a boot, 0x118d0 periodic): 0xffffd286 = (0x61450(0x80) != 0 and 0xffffd1c5 != 1)
-0x5a188: distance-while-MIL-on -> 0xffff90f4 (Mode 22 PID 0x21)
-0x54d90 case 0 (CAN status message builder): first word = 0x55278() = stored count | 0x80 (if 0xffff8fd8)
-
-# --- 4. key-off persistence (E2RAM 28-u16 block; ONLY for args listed in 0x242ae/0x23f4e) ---
-save:  task[9] 0x64ba -> 0x1150e -> 0x236cc -> 0x2377a ->
-       0x242ae e2ram_fault_status_collect: 18x ref_getFaultStatus__(0x66a00)(arg) -> 0xffffb4dc..0xffffb4eb
-       0x244bc e2ram_block_encode: pack fault bits -> 0xffffb459..0xffffb45d; magic 0xa55a @0xffffb440;
-       checksum = sum of first 27 u16 @ +0x36; 0xb886(0xffffb440, 0x1c) device write
-load:  boot 0x1102a/0x114d0 -> 0x235c8 (0xb99c read) / 0x235f8 (0xb958 readback, magic 0x5aa5 + checksum)
-       -> 0x2376c -> 0x23844 e2ram_block_decode (raw 0xffffb48a..0xffffb490 -> flags 0xffffb4ec..0xffffb51b)
-       -> 0x23f4e e2ram_stored_dtc_replay: 38x 0x5fd38(arg, 1|2) for args
-          0x13,0x14,0x21,0x22,0x42,0x47,0x4f,0x5b,0x5c,0x5d,0x5f,0x60,0x61,0x64,0x65,0x6a,0x6b,0x83,0x84
-
-# --- 5. scanner readout ---
-mode03 0x65ff8 -> 0x615c6(0x80, filter=enable2) -> 0x667c8 emits codes from 0x7e560 (P0300 first if >1)
-mode07 0x661ec (pending) / mode02 0x65c88 (freeze frame) / mode06 0x6725c
-mode22 PID 0x0200 = 0x5fab2, PID 0x0202 = 0x5fb08, via dispatcher 0x5774c, PID table 0x5f10c
-UDS 0x18 (record 0x5ec0c) -> 0x57db0: sub 1 + status 3 -> 0x58168 sets 0xffffd228 (1/2), response built
-       from the same collect/emit path; UDS 0x19/0x1a: NOT in table 0x5eb40 -> default 0x6689a (NRC)
-mode04 / UDS 0x14 -> 0x558ac -> 0x55992 -> 0x61b02 + 0x5fd92/0x5fd84 (zero 0xffffd570, 0xffffd5fc, ...)
-# UDS 0x85 (ControlDTCSetting) chain, ROM-verified this pass:
-#   record 0x5eba0 (svc 0x85) -> 0x5dc44: sub 1, guard 0x55e3e (0xffffd1cf != 0 -> NRC 0x22),
-#   permission 0xffffd3b4 & 0xfffc (else NRC 0x12) -> 0x5dde8(sub) + 0x5de18 (positive resp 58 85 sub)
-#   0x5dde8 ref_setDiagMode85Bool2: sub 1 -> dtc_set_eval_enable(1) (0x5fd4a) + 0xffffd378=0 (ON);
-#                                   sub 2 -> dtc_set_eval_enable(0) + 0xffffd378=1 (OFF)
-#   0x5ddb4 ref_setDiagMode85Bool_: if 0xffffd37a >= 0x271 and 0xffffd378==1 -> auto re-enable (0x5dde8(1))
-#   0xffffd688 (dtc_eval_enable) gates the set path: 0x5fe20 returns early when != 1
+       slot = id2slot[arg]
+       gates: 0xffffd688 eval on (UDS 0x85)? conf mask 0x5f9c2? enable#3 0x5f9b0?
+       -> 0x60062 dtc_state_transition / 0x601cc direct store / OS event (2,2) -> 0x61092
+       # everything downstream (master table 0xffff87b0, MIL 0x5a130 -> 0xffffd286,
+       # CAN status, E2RAM persistence, scanner readout) is automatic:
+       # dtc_control_report.md §2/§2a/§2b
 ```
 
 ## 2a. End-to-end flowchart
 
-```mermaid
-flowchart TD
-    subgraph DETECT["1. Detection (your monitor)"]
-        MON["monitor sees fault<br/>example: rpm 0xffffb548 > 8000"]
-        SET["call 0x5fd38 dtc_set_fault_x0(arg, mode)<br/>0x5fd3c = xdefault variant"]
-    end
-
-    subgraph ENGINE["2. DTC engine (stock code)"]
-        CORE["0x5fe20 dtc_set_fault(arg, mode, x)"]
-        MAP["arg -> slot: u16 @ 0x7df42 + 2*arg"]
-        GATES{"gates in 0x5fe20:<br/>0xffffd688 eval on (UDS 0x85)?<br/>0xffffd1c5 / 0xffffd958 diag force?<br/>conf mask 0x7e81c, enable#3 0x7e790"}
-        TRANS["0x60062 transition, mode = r5<br/>1 active / 2 heal / 4 confirm"]
-        EV["mode 1: post OS event (2,2) via 0x60190"]
-        HAND["0x61092 event handler:<br/>insert/update master table"]
-        STORE["0x601cc direct store:<br/>0xffffd570[slot]=1, first code 0xffffd3c0"]
-        AGING["0x612ee aging sweep (periodic, from 0x1102a):<br/>per-type machines 0x60ca6/0x64918/0x64972/0x6400a"]
-    end
-
-    subgraph RAM["3. Fault state in RAM"]
-        MASTER["master table 0xffff87b0, 21 x 0x10 B<br/>(u16 slot +0, state +6)"]
-        FLAGS["stored flags 0xffffd570[0x8c]<br/>mirror 0xffffd5fc, transition 0xffffd4e4, eval 0xffffd458"]
-    end
-
-    subgraph LAMP["4. MIL + CAN (automatic)"]
-        MIL["0x5a130 (batch 0x118d0):<br/>0xffffd286 = stored+enable#1 count != 0"]
-        CAN["0x54d90 case 0 -> 0x55278:<br/>CAN status word = count | 0x80<br/>0x5a188 -> distance 0xffff90f4 (PID 0x21)"]
-    end
-
-    subgraph NV["5. Key-off persistence (E2RAM, opt-in per arg)"]
-        SAVE["save: task[9] 0x64ba -> 0x1150e -> 0x236cc"]
-        COLL["0x2377a -> 0x242ae collect: 18x getFaultStatus 0x66a00(arg)<br/>only for the 19 hardcoded args -> 0xffffb4dc..0xffffb4eb"]
-        ENC["0x244bc encode -> packed bits 0xffffb459..0xffffb45d"]
-        BLK["28-u16 block @0xffffb440: magic 0xa55a + payload + checksum @+0x36<br/>write via 0xb886"]
-        LOAD["boot: 0x1102a/0x114d0 -> 0x235c8/0x235f8 -> 0x2376c"]
-        DEC["0x23844 decode: raw 0xffffb48a..0xffffb490 -> flags 0xffffb4ec..0xffffb51b"]
-        REPLAY["0x23f4e replay: 38x 0x5fd38(arg, 1|2) -> engine"]
-    end
-
-    subgraph READ["6. Scanner readout (automatic once stored)"]
-        M03["Mode 03 0x65ff8 -> 0x615c6(0x80, filter=enable#2 0x7e704)<br/>-> 0x667c8 emits code u16 @ 0x7e560 + 2*slot"]
-        M07["Mode 07 0x661ec pending; Mode 02 0x65c88 freeze frame; Mode 06 0x6725c"]
-        M22["Mode 22 PIDs 0x0200/0x0202 via 0x5774c (0x5fab2/0x5fb08)"]
-        U18["UDS 0x18 (record 0x5ec0c) -> 0x57db0 -> 0x58168; 0x19/0x1a NOT implemented"]
-        CLR["clear: Mode 04 / UDS 0x14 -> 0x558ac (zeroes RAM flags)"]
-        M85["UDS 0x85 -> 0x5dc44 -> 0x5dde8 -> dtc_set_eval_enable 0x5fd4a -> 0xffffd688 (global on/off)"]
-    end
-
-    MON --> SET --> CORE --> MAP --> GATES
-    GATES -->|gates pass| TRANS
-    GATES -->|direct-store path| STORE
-    TRANS -->|mode 1| EV --> HAND --> MASTER
-    TRANS -->|mode 2 heal| FLAGS
-    TRANS -->|mode 4 confirm| EV
-    STORE --> MASTER
-    MASTER --> FLAGS
-    AGING --> MASTER
-    MASTER --> MIL --> CAN
-    MASTER -->|save path| SAVE --> COLL --> ENC --> BLK
-    BLK -->|key-off + boot| LOAD --> DEC --> REPLAY --> SET
-    MASTER --> M03
-    MASTER --> M07
-    MASTER --> M22
-    MASTER --> U18
-    M03 --> CLR
-    M85 -.gates.-> GATES
-```
+The end-to-end flowchart of the whole DTC chain (detection → engine → RAM → MIL/CAN
+→ E2RAM persistence → scanner readout, including the UDS 0x85 gate and the clear
+path) is in [`dtc_control_report.md`](dtc_control_report.md) §2a.
 
 **How to add a DTC** (what the example patcher
 [`patch_new_dtc_trigger.py`](../../../utilities/scripts/patchers/patch_new_dtc_trigger.py)
-automates): pick free **slot 0x79** (arg **0x83** is pre-wired to it), write the code at
-`0x7e560+2*0x79` (e.g. 0x1F01 = P1F01), set enable#1/#2 at `0x7e678/0x7e704+0x79` = 1, and
-call `0x5fd38(0x83, 1)` from your monitor — everything in sections 2–6 then happens
-automatically. Because arg 0x83 is already in the 0x242ae/0x23f4e lists, section 5
-(persistence) works too. The patcher hooks the trigger into the periodic
-`dtc_fault_service_batch` 0x118d0 via a code cave, preserving stock behavior.
+automates): pick free **slot 0x79** (arg **0x83** is pre-wired to it), write the code
+at `0x7e560+2*0x79` (e.g. 0x1F01 = P1F01), set enable#1/#2 at `0x7e678/0x7e704+0x79` =
+1, and call `0x5fd38(0x83, 1)` from your monitor — everything downstream then happens
+automatically (chain: [`dtc_control_report.md`](dtc_control_report.md) §2a). Because
+arg 0x83 is already in the 0x242ae/0x23f4e persistence lists, key-off persistence
+works too ([`dtc_control_report.md`](dtc_control_report.md) §2b). The patcher hooks
+the trigger into the periodic `dtc_fault_service_batch` 0x118d0 via a code cave,
+preserving stock behavior.
 
 ## 3. What a new DTC must touch (the authoring checklist)
 
@@ -257,8 +142,8 @@ tests: [`tests/test_dtc_trigger_patcher.py`](../../../tests/test_dtc_trigger_pat
 | 9 | Related record | **0x7e06c + 4*slot** (BE u32) | low byte conventionally = the arg (slot 0x71 → 0x1100007b); nibbles select eval-state caching in 0x5ff5a |
 | 10 | Detection site | call **0x5fd38(arg, mode)** | mode 1 active / 2 healed / 4 confirm; example 0x545bc; 71 existing call sites |
 | 11 | MIL / CAN | nothing to add | automatic via 0x5a130 → 0xffffd286, 0x55278 into the CAN status message (0x54d90); a separate warning lamp is a plain flag like 0x26760 → 0xffffb5b4 |
-| 12 | Key-off persistence (optional) | add the arg to **0x242ae** (collect → staging 0xffffb4dc–0xffffb4eb) **and 0x23f4e** (replay: flag bytes 0xffffb4ec–0xffffb51b → `0x5fd38(arg,1\|2)`); bits packed by 0x244bc into 0xffffb459–0xffffb45d, unpacked by 0x23844 from raw 0xffffb48a–0xffffb490 | only the 19 stock args persist; a new arg needs a free flag bit in both functions |
-| 13 | Readout | nothing to add | Mode 03/07/02/06, Mode 22 0x0200/0x0202, UDS 0x18 all emit from 0x7e560 once stored; **no UDS 0x19/0x1a** — adding ReadDTCInformation would need a new record in service table 0x5eb40 + handler |
+| 12 | Key-off persistence (optional) | add the arg to **0x242ae** (collect) **and 0x23f4e** (replay) with a free flag bit (arg↔flag-byte map below) | only the 19 stock args persist; save/load chain, staging cells and codec in [dtc_control_report.md](dtc_control_report.md) §2b |
+| 13 | Readout | nothing to add | Mode 03/07/02/06, Mode 22 0x0200/0x0202, UDS 0x18 all emit from 0x7e560 once stored (services in [dtc_control_report.md](dtc_control_report.md) §2); **no UDS 0x19/0x1a** — adding ReadDTCInformation would need a new record in service table 0x5eb40 + handler |
 | 14 | Defs | regenerate per-ROM defs (`extend_defs_all_roms.py`) | `DTC xxxx Enable/Disable #N` entries are rebuilt from the ROM tables automatically, so #1/#2/#3 addresses track any slot change |
 
 Persisted-arg ↔ flag-byte map (from decompiled 0x23f4e; mode 1 / mode 2 bits):
@@ -302,7 +187,8 @@ decompiled artifact was modified.
 - **Save trigger traced:** the callgraph shows **0x64ba** (task[9] entry) → **0x1150e**,
   which contains the E2RAM save (thunk → 0x236cc) — the open question "who calls
   0x1150e" from [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) §9 is
-  answered at callgraph level: the save runs inside the task[9] batch.
+  answered at callgraph level: the save runs inside the task[9] batch (chain:
+  [`dtc_control_report.md`](dtc_control_report.md) §2b).
 - **Service table dumped from ROM bytes:** 29 records at 0x5eb40; services 0x19 and
   0x1a are absent (confirming at byte level that ReadDTCInformation is not
   implemented on this PCM — readout is Mode 03/07 + 0x18 + Mode 22 0x0200/0x0202).
@@ -452,10 +338,11 @@ decompiled artifact was modified.
   that CAN word or the PCM drives a GPIO is board-level routing
   ([docs/architecture/hardware/](../../architecture/hardware/)).
 - **UDS 0x19 / 0x1A are not implemented** (absent from the 0x5eb40 service table,
-  ROM-verified): no DTC status-mask / snapshot readout service exists; adding one
-  means a new service-table record + handler. Until then, readout is Mode 03/07/02/06,
-  Mode 22 0x0200/0x0202 and Mazda 0x18.
-- **Key-off persistence covers only the 19 hardcoded args** (§3). A new arg needs
+  ROM-verified; readout services listed in
+  [`dtc_control_report.md`](dtc_control_report.md) §2/§9): adding one means a new
+  service-table record + handler.
+- **Key-off persistence covers only the 19 hardcoded args** (§3; save/load chain in
+  [`dtc_control_report.md`](dtc_control_report.md) §2b). A new arg needs
   edits in both 0x242ae and 0x23f4e plus a free flag bit; the arg→flag-byte map is
   from the decompiled replay, and the packed-bit placement is verified at byte level
   (0xffffb459–0xffffb45d save / 0xffffb48a–0xffffb490 load), not bit-by-bit.

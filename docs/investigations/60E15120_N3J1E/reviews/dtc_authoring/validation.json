@@ -7,7 +7,7 @@
     "method": "raw ROM re-read this session via reviews/dtc_authoring/dump_dtc_authoring_tables.py (output: tables_dump.txt); sha256 matches report headers; DTC tables, UDS service table and literal-pool words dumped byte-exact; disassembly re-read at 0x5fe20/0x60062/0x601cc; call counts from callgraph.tsv (0x5fd38=71, 0x66a00=80, edge 0x64ba->0x1150e)",
     "rom_sha256_match": true
   },
-  "validate_reports": "PASS (dtc_authoring_report.md: fn_checked=30, ram_checked=18, rom_refs=48)",
+  "validate_reports": "PASS (dtc_authoring_report.md: fn_checked=34, ram_checked=20, rom_refs=54)",
   "verify_claims": "PASS",
   "verify_math_units": "PASS",
   "validate_export": "not runnable in this environment (pre-existing UnicodeDecodeError on clean main too, unrelated to this pass)",

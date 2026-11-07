@@ -1,8 +1,10 @@
 # DTC authoring — evidence notes — 60E15120_N3J1E
 
 Evidence for [`../../dtc_authoring_report.md`](../../dtc_authoring_report.md)
-(mapping the full path a new DTC takes: raise → state machine → MIL → E2RAM
-persistence → scanner readout).
+(the authoring checklist: which tables/args/slots a new DTC must touch). The full
+DTC chain (raise → state machine → MIL → E2RAM persistence → scanner readout) is
+documented in [`../../dtc_control_report.md`](../../dtc_control_report.md) §1–§2b;
+this folder's dumps back the checklist addresses and the persistence lists.
 
 ## What was verified, and how
 

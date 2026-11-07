@@ -51,9 +51,9 @@
       "rom_claims": 0
     },
     "dtc_control_report.md": {
-      "fn_checked": 41,
-      "ram_checked": 11,
-      "rom_refs": 52,
+      "fn_checked": 54,
+      "ram_checked": 20,
+      "rom_refs": 74,
       "rom_claims": 0
     },
     "e2ram_device_layer_report.md": {
