@@ -146,7 +146,13 @@ mode22 PID 0x0200 = 0x5fab2, PID 0x0202 = 0x5fb08, via dispatcher 0x5774c, PID t
 UDS 0x18 (record 0x5ec0c) -> 0x57db0: sub 1 + status 3 -> 0x58168 sets 0xffffd228 (1/2), response built
        from the same collect/emit path; UDS 0x19/0x1a: NOT in table 0x5eb40 -> default 0x6689a (NRC)
 mode04 / UDS 0x14 -> 0x558ac -> 0x55992 -> 0x61b02 + 0x5fd92/0x5fd84 (zero 0xffffd570, 0xffffd5fc, ...)
-UDS 0x85 -> 0x5dc44: DTC setting on/off (0xffffd688)
+# UDS 0x85 (ControlDTCSetting) chain, ROM-verified this pass:
+#   record 0x5eba0 (svc 0x85) -> 0x5dc44: sub 1, guard 0x55e3e (0xffffd1cf != 0 -> NRC 0x22),
+#   permission 0xffffd3b4 & 0xfffc (else NRC 0x12) -> 0x5dde8(sub) + 0x5de18 (positive resp 58 85 sub)
+#   0x5dde8 ref_setDiagMode85Bool2: sub 1 -> dtc_set_eval_enable(1) (0x5fd4a) + 0xffffd378=0 (ON);
+#                                   sub 2 -> dtc_set_eval_enable(0) + 0xffffd378=1 (OFF)
+#   0x5ddb4 ref_setDiagMode85Bool_: if 0xffffd37a >= 0x271 and 0xffffd378==1 -> auto re-enable (0x5dde8(1))
+#   0xffffd688 (dtc_eval_enable) gates the set path: 0x5fe20 returns early when != 1
 ```
 
 ## 3. What a new DTC must touch (the authoring checklist)
@@ -312,7 +318,10 @@ decompiled artifact was modified.
 | 0x00061450 / 0x000615c6 | `FUN_00061450` / `FUN_000615c6` | master-table count / list scanners |
 | 0x0005fab2 / 0x0005fb08 | `candidate_dtc_count_stored` / `dtc_count_ram_table` | Mode 22 PIDs 0x0200 / 0x0202 (via 0x5774c, table 0x5f10c) |
 | 0x000558ac | `uds_service_14_clear_diagnostic_information` | clear (Mode 04 shared) |
-| 0x0005dc44 | `uds_service_85_control_dtc_setting` | global DTC setting on/off (0xffffd688) |
+| 0x0005dc44 | `uds_service_85_control_dtc_setting` | UDS 0x85 handler (record 0x5eba0) |
+| 0x0005dde8 | `ref_setDiagMode85Bool2` | 0x85 sub 1/2 -> dtc_set_eval_enable(1/0) + 0xffffd378 |
+| 0x0005ddb4 | `ref_setDiagMode85Bool_` | auto re-enable when 0xffffd37a >= 0x271 and 0xffffd378==1 |
+| 0x0005de18 | `FUN_0005de18` | builds positive response 58 85 sub |
 | 0x00066a58 | `FUN_00066a58` | high-half status mask builder |
 | 0x0005f9b0 / 0x0005f9c2 / 0x0005ff5a / 0x0005fb68 | `ref_faultEnableStatus2` / `ref_faultConfirmationSomething_` / `FUN_0005ff5a` / `FUN_0005fb68` | enable#3, conf-mask, eval-state, monitor-source gates |
 
@@ -331,6 +340,8 @@ decompiled artifact was modified.
 | 0xffffd688 | `dtc_eval_enable` | global eval enable (UDS 0x85) |
 | 0xffffd930 | `dtc_status_bits` | u32 ANDed with 0x7e934 masks in 0x66a00 |
 | 0xffffd228 | `DAT_ffffd228` | UDS 0x18 report selector (0x58168) |
+| 0xffffd378 | `DAT_ffffd378` | UDS 0x85 "setting off" flag (0x5dde8/0x5ddb4) |
+| 0xffffd37a | `DAT_ffffd37a` | UDS 0x85 off-counter, re-enable threshold 0x271 (0x5dd78/0x5de3c) |
 | 0xffff90f4 | `distance_mil_on_ffff90f4` | distance-while-MIL (PID 0x21) |
 | 0xffffb440 / 0xffffb478 | `e2ram_staging_block` / `e2ram_read_staging` | 28-u16 E2RAM block (save / load) |
 | 0xffffb459–0xffffb45d | packed fault bits (encode, 0x244bc) | save side |
