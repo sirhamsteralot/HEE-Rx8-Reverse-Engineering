@@ -155,6 +155,84 @@ mode04 / UDS 0x14 -> 0x558ac -> 0x55992 -> 0x61b02 + 0x5fd92/0x5fd84 (zero 0xfff
 #   0xffffd688 (dtc_eval_enable) gates the set path: 0x5fe20 returns early when != 1
 ```
 
+## 2a. End-to-end flowchart
+
+```mermaid
+flowchart TD
+    subgraph DETECT["1. Detection (your monitor)"]
+        MON["monitor sees fault<br/>example: rpm 0xffffb548 > 8000"]
+        SET["call 0x5fd38 dtc_set_fault_x0(arg, mode)<br/>0x5fd3c = xdefault variant"]
+    end
+
+    subgraph ENGINE["2. DTC engine (stock code)"]
+        CORE["0x5fe20 dtc_set_fault(arg, mode, x)"]
+        MAP["arg -> slot: u16 @ 0x7df42 + 2*arg"]
+        GATES{"gates in 0x5fe20:<br/>0xffffd688 eval on (UDS 0x85)?<br/>0xffffd1c5 / 0xffffd958 diag force?<br/>conf mask 0x7e81c, enable#3 0x7e790"}
+        TRANS["0x60062 transition, mode = r5<br/>1 active / 2 heal / 4 confirm"]
+        EV["mode 1: post OS event (2,2) via 0x60190"]
+        HAND["0x61092 event handler:<br/>insert/update master table"]
+        STORE["0x601cc direct store:<br/>0xffffd570[slot]=1, first code 0xffffd3c0"]
+        AGING["0x612ee aging sweep (periodic, from 0x1102a):<br/>per-type machines 0x60ca6/0x64918/0x64972/0x6400a"]
+    end
+
+    subgraph RAM["3. Fault state in RAM"]
+        MASTER["master table 0xffff87b0, 21 x 0x10 B<br/>(u16 slot +0, state +6)"]
+        FLAGS["stored flags 0xffffd570[0x8c]<br/>mirror 0xffffd5fc, transition 0xffffd4e4, eval 0xffffd458"]
+    end
+
+    subgraph LAMP["4. MIL + CAN (automatic)"]
+        MIL["0x5a130 (batch 0x118d0):<br/>0xffffd286 = stored+enable#1 count != 0"]
+        CAN["0x54d90 case 0 -> 0x55278:<br/>CAN status word = count | 0x80<br/>0x5a188 -> distance 0xffff90f4 (PID 0x21)"]
+    end
+
+    subgraph NV["5. Key-off persistence (E2RAM, opt-in per arg)"]
+        SAVE["save: task[9] 0x64ba -> 0x1150e -> 0x236cc"]
+        COLL["0x2377a -> 0x242ae collect: 18x getFaultStatus 0x66a00(arg)<br/>only for the 19 hardcoded args -> 0xffffb4dc..0xffffb4eb"]
+        ENC["0x244bc encode -> packed bits 0xffffb459..0xffffb45d"]
+        BLK["28-u16 block @0xffffb440: magic 0xa55a + payload + checksum @+0x36<br/>write via 0xb886"]
+        LOAD["boot: 0x1102a/0x114d0 -> 0x235c8/0x235f8 -> 0x2376c"]
+        DEC["0x23844 decode: raw 0xffffb48a..0xffffb490 -> flags 0xffffb4ec..0xffffb51b"]
+        REPLAY["0x23f4e replay: 38x 0x5fd38(arg, 1|2) -> engine"]
+    end
+
+    subgraph READ["6. Scanner readout (automatic once stored)"]
+        M03["Mode 03 0x65ff8 -> 0x615c6(0x80, filter=enable#2 0x7e704)<br/>-> 0x667c8 emits code u16 @ 0x7e560 + 2*slot"]
+        M07["Mode 07 0x661ec pending; Mode 02 0x65c88 freeze frame; Mode 06 0x6725c"]
+        M22["Mode 22 PIDs 0x0200/0x0202 via 0x5774c (0x5fab2/0x5fb08)"]
+        U18["UDS 0x18 (record 0x5ec0c) -> 0x57db0 -> 0x58168; 0x19/0x1a NOT implemented"]
+        CLR["clear: Mode 04 / UDS 0x14 -> 0x558ac (zeroes RAM flags)"]
+        M85["UDS 0x85 -> 0x5dc44 -> 0x5dde8 -> dtc_set_eval_enable 0x5fd4a -> 0xffffd688 (global on/off)"]
+    end
+
+    MON --> SET --> CORE --> MAP --> GATES
+    GATES -->|gates pass| TRANS
+    GATES -->|direct-store path| STORE
+    TRANS -->|mode 1| EV --> HAND --> MASTER
+    TRANS -->|mode 2 heal| FLAGS
+    TRANS -->|mode 4 confirm| EV
+    STORE --> MASTER
+    MASTER --> FLAGS
+    AGING --> MASTER
+    MASTER --> MIL --> CAN
+    MASTER -->|save path| SAVE --> COLL --> ENC --> BLK
+    BLK -->|key-off + boot| LOAD --> DEC --> REPLAY --> SET
+    MASTER --> M03
+    MASTER --> M07
+    MASTER --> M22
+    MASTER --> U18
+    M03 --> CLR
+    M85 -.gates.-> GATES
+```
+
+**How to add a DTC** (what the example patcher
+[`patch_new_dtc_trigger.py`](../../../utilities/scripts/patchers/patch_new_dtc_trigger.py)
+automates): pick free **slot 0x79** (arg **0x83** is pre-wired to it), write the code at
+`0x7e560+2*0x79` (e.g. 0x1F01 = P1F01), set enable#1/#2 at `0x7e678/0x7e704+0x79` = 1, and
+call `0x5fd38(0x83, 1)` from your monitor — everything in sections 2–6 then happens
+automatically. Because arg 0x83 is already in the 0x242ae/0x23f4e lists, section 5
+(persistence) works too. The patcher hooks the trigger into the periodic
+`dtc_fault_service_batch` 0x118d0 via a code cave, preserving stock behavior.
+
 ## 3. What a new DTC must touch (the authoring checklist)
 
 Everything below is ROM-verified this session (dump:
