@@ -16,7 +16,10 @@ labels in [`data/labels/60E15120_N3J1E/dtc_engine_labels.tsv`](../../../data/lab
 (group-2 diag events at 0x67d00, `os_schedule_task_event` 0x9630) in
 [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md); defs merge/inheritance
 issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
-[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md).
+[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md);
+the end-to-end "how to author a new DTC" map (raise → MIL → E2RAM key-off persistence →
+readout, with every address a new code must touch) in
+[dtc_authoring_report.md](dtc_authoring_report.md).
 
 ## 1. Executive summary
 
@@ -39,7 +42,9 @@ issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
   `0x80..0xbf` stored + MIL bit ("0x80" query; mapped to 0x70 in the mirror array) ·
   `0xc0`/`0xc1` confirmed variants. Pending vs stored vs confirmed is exactly what
   OBD modes 07 vs 03 report.
-- **Set path:** monitor code calls thunk **0x5fd38(id, mode)** → **0x5fe20** `dtc_set_fault`
+- **Set path:** monitor code calls **0x5fd38(id, mode)** `dtc_set_fault_x0` (a direct
+  tail-call trampoline: `bra 0x5fe20` + `mov #0,r6`, so x=0 — verified, not an indirect
+  call) → **0x5fe20** `dtc_set_fault`
   (71 call sites) → state transition **0x60062** (uses type byte 0x7e32a + 0xffffd4e4) →
   either **0x601cc** (marks 0xffffd570[slot]=1 = stored, records first code 0xffffd3c0)
   or an OS event (group 2 event 2 → handler **0x61092**, event table 0x67d00) that inserts
@@ -359,8 +364,9 @@ the def uses the Mazda assignment (RX-8-specific).
 
 | Address | Label | Role |
 |---|---|---|
-| 0x0005fd38 | `FUN_0005fd38` — set_fault_thunk | set-fault entry (71 callers) |
-| 0x0005fd3c | `ref_updateFaultStatusTHUNKNoR6_` — set_fault_thunk_param3 | param_3==0 → 0xffff variant |
+| 0x0005fd38 | `dtc_set_fault_x0` — set-fault trampoline, x=0 | set-fault entry (71 callers); `bra 0x5fe20` + `mov #0,r6` |
+| 0x0005fd3c | `dtc_set_fault_xdefault` — set-fault trampoline, x=0xffff if r6==0 | 2 callers (0x44724, 0x44cec); pool 0x5fe0c = 0xffff |
+| 0x0005fd4a | `dtc_set_eval_enable` | writes 1/0 to 0xffffd688 per r4; callers 0x5fd6c (boot), 0x5dde8 (UDS 0x85) |
 | 0x0005fe20 | `FUN_0005fe20` — dtc_set_fault | core set path |
 | 0x00060062 | `FUN_00060062` — dtc_state_transition | mode 1/2/4 transitions |
 | 0x000601cc | `FUN_000601cc` — dtc_mark_stored | 0xffffd570[slot]=1, first code 0xffffd3c0 |

@@ -89,10 +89,10 @@ uint FUN_000455bc(void)
     if (DAT_ffffcbd4 != 1) {
       return (uint)DAT_ffffcbd4;
     }
-    uVar3 = FUN_0005fd38(0x4e,2);
+    uVar3 = dtc_set_fault_x0(0x4e,2);
     return uVar3;
   }
-  uVar3 = FUN_0005fd38(0x4e,1);
+  uVar3 = dtc_set_fault_x0(0x4e,1);
   return uVar3;
 }
 
