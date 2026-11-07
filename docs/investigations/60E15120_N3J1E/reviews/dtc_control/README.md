@@ -1,6 +1,10 @@
 # DTC control deep-dive — evidence folder (60E15120_N3J1E)
 
-Companion evidence for [`../../dtc_control_report.md`](../../dtc_control_report.md).
+Companion evidence for [`../../dtc_control_report.md`](../../dtc_control_report.md),
+which documents the entire DTC chain (engine, MIL/CAN, the §2a end-to-end
+flowchart, the §2b E2RAM key-off save/replay chain, readout services, UDS 0x85).
+The "how to author a new DTC" checklist lives in
+[`../../dtc_authoring_report.md`](../../dtc_authoring_report.md).
 
 ## Contents
 
