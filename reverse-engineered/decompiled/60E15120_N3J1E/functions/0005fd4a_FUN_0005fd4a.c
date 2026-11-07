@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005e656 (34 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char FUN_0005fd4a(char param_1)
+char dtc_set_eval_enable(char param_1)
 
 {
   if (param_1 == '\x01') {

@@ -234,7 +234,7 @@ So the retard lives in [-10, 0] deg and 0 means "no knock retard".
   fault 2 -> cd65, with counters cd6a/cd6c; cleared by DTC 0x23/0x24 active or
   0xffffd1c5.
 - 0x4a084 `knock_sensor_dtc_report`: raises **DTC 0x23 / 0x24** via
-  `FUN_0005fd38` from cd65/cd67 (cd64/cd66 reported as status 2). The codes are
+  `dtc_set_fault_x0` from cd65/cd67 (cd64/cd66 reported as status 2). The codes are
   firmware-inferred: this ROM's def block contains no DTC 0023/0024 enable
   tables and no DTC description list.
 
