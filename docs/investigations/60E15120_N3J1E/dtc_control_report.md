@@ -116,7 +116,7 @@ DTC" checklist and example patcher (which tables/args a new code must touch) in
   [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md)).
 - A scanner reads them back over CAN: OBD mode 03/07 (or Mazda's UDS 0x18 / Mode 22
   PIDs 0x0200/0x0202). The ROM translates each stored slot number into its P-code using
-  the table at 0x7e560 — this pass verified that mapping dynamically in the emulator
+  the table at 0x7e560 — verified dynamically in the emulator
   (slot 9 → `01 01` = P0101 in the response bytes).
 - **About the defs:** the "DTC Enable/Disable" tables in the XML tell a tuner which
   byte switches off which code — but only if the byte address matches the ROM's real
@@ -479,7 +479,7 @@ the def uses the Mazda assignment (RX-8-specific).
   drops disabled P0077; Mode 22 **PID 0x0200 → `62 02 00 01`**, **PID 0x0202 →
   `62 02 02 01`** via dispatcher 0x5774c; MIL flag 0xffffd286 = **1** after 0x5a130;
   set-thunk 0x5fd38 writes 0xffffd458/0xffffd3c2 as expected.
-- Pipeline validators: run from repo root after this pass — `validate_export.py`,
+- Pipeline validators (run from the repo root): `validate_export.py`,
   `validate_reports.py`, `verify_readability.py`, `verify_math_units.py` (results in
   `reviews/dtc_control/validation.json`).
 
@@ -592,13 +592,13 @@ the def uses the Mazda assignment (RX-8-specific).
 
 - The aging/confirmation counters (how many trips until pending→confirmed→stored, and
   the clear-after-N-warm-ups rule) in 0x60ca6/0x64918/0x64972/0x6400a were read
-  statically only — not executed (OS tick not autonomous, ROADMAP E6).
+  statically only — not executed (the OS tick is not autonomous in the emulator).
 - The full set→master-table insertion rides OS group-2 event 2 (0x61092); in the
   emulator the message queue isn't drained autonomously, so the dynamic log plants the
   documented RAM cells directly and proves the *reporting* half end to end.
 - MIL lamp GPIO pin not traced to a package pin (flag 0xffffd286 verified; pin
   routing is board-level, see docs/architecture/hardware/).
-- Renesas simulator cross-check still pending; no emulator code changed by this work.
+- Renesas simulator cross-check still pending; the emulator code itself is unchanged.
 - UDS 0x19 (ReadDTCInformation) is **not** in the service table 0x5eb40 — DTC readout
   on this PCM is via OBD modes 03/07 (+0x0A-style via 0x667c8 mode arg), Mazda 0x18,
   and Mode 22 PIDs 0x0200/0x0202.

@@ -8,7 +8,7 @@ this folder's dumps back the checklist addresses and the persistence lists.
 
 ## What was verified, and how
 
-All checks were re-run against the raw ROM
+All checks run against the raw ROM
 (`submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`,
 SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 matches the hash recorded in every report header) using the re-runnable dump
@@ -61,8 +61,8 @@ output is in [`tables_dump.txt`](tables_dump.txt).
   level; the report states both RAM addresses and does not claim a device offset.
 - The arg→flag-byte map is from the decompiled replay (0x23f4e); the bit-level masks
   inside 0x244bc/0x23844 were read but not re-derived instruction by instruction.
-- No emulator run in this pass; dynamic evidence for the reporting half is the
-  earlier `reviews/dtc_control/dynamic_validation_log.txt`.
+- Dynamic evidence for the reporting half:
+  [`../dtc_control/dynamic_validation_log.txt`](../dtc_control/dynamic_validation_log.txt).
 
 ## Validation
 

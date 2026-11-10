@@ -1,6 +1,6 @@
 # REVIEW_NOTES — DTC control deep dive
 
-Reviewer pass over the DTC findings.
+Reviewer notes on the DTC findings.
 
 ## Binary-level re-checks performed
 
@@ -23,10 +23,10 @@ Reviewer pass over the DTC findings.
    disabled slot. Set-path partially dynamic: 0x5fd38(id, mode) writes
    0xffffd458[slot] and 0xffffd3c2[id] (observed), but the full
    master-table insertion rides OS group-2 event 2 (handler 0x61092) which
-   the emulator does not run autonomously (E6), so the stored-state planting
+   the emulator does not run autonomously, so the stored-state planting
    in the log is done via the documented RAM cells (harness ram= equivalent).
 
-## Corrections made during the pass
+## Corrections made
 
 - The audit derives the enable-block start from the ROM itself (end of the 0xffff
   padding run after the code table), not from the def's minimum address — with the
@@ -68,14 +68,14 @@ exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
 - The aging/confirmation counters (how many drive cycles until
   pending->confirmed->stored, and the 40-warm-up-style clear) live in
   0x60ca6/0x64918/0x64972/0x6400a and were read statically only; not executed
-  dynamically (OS tick E6).
+  dynamically (the OS tick is not autonomous in the emulator).
 - MIL lamp GPIO pin not traced (flag 0xffffd286 verified; the physical output
   write is in the output task, not chased here).
 - Upstream `rx8_defs.xml` child ROMs inheriting `Rx8Base` DTC addresses show
   the expected inheritance drift (97-98 mismatches for 60E0FC00-based blocks);
   already covered by `defs-merge/inheritance_issues.json`.
-- Emulator self-check vs golden boot trace not re-run for this pass (no
-  emulator changes); Renesas cross-check still pending (ROADMAP E-limits).
+- Emulator self-check vs golden boot trace not re-run (no emulator changes);
+  Renesas cross-check still pending.
 
 ## Defs repair
 
