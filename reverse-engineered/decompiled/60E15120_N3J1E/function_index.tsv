@@ -2999,9 +2999,9 @@ address	name	body_bytes	status	file
 0005fcf2	FUN_0005fcf2	6	decompiled	functions/0005fcf2_FUN_0005fcf2.c
 0005fcf8	FUN_0005fcf8	6	decompiled	functions/0005fcf8_FUN_0005fcf8.c
 0005fcfe	FUN_0005fcfe	6	decompiled	functions/0005fcfe_FUN_0005fcfe.c
-0005fd38	FUN_0005fd38	4	decompiled	functions/0005fd38_FUN_0005fd38.c
-0005fd3c	ref_updateFaultStatusTHUNKNoR6_	14	decompiled	functions/0005fd3c_ref_updateFaultStatusTHUNKNoR6_.c
-0005fd4a	FUN_0005fd4a	34	decompiled	functions/0005fd4a_FUN_0005fd4a.c
+0005fd38	dtc_set_fault_x0	4	decompiled	functions/0005fd38_FUN_0005fd38.c
+0005fd3c	dtc_set_fault_xdefault	14	decompiled	functions/0005fd3c_ref_updateFaultStatusTHUNKNoR6_.c
+0005fd4a	dtc_set_eval_enable	34	decompiled	functions/0005fd4a_FUN_0005fd4a.c
 0005fd6c	FUN_0005fd6c	24	decompiled	functions/0005fd6c_FUN_0005fd6c.c
 0005fd84	FUN_0005fd84	14	decompiled	functions/0005fd84_FUN_0005fd84.c
 0005fd92	thunk_FUN_000601b2	4	decompiled	functions/0005fd92_thunk_FUN_000601b2.c

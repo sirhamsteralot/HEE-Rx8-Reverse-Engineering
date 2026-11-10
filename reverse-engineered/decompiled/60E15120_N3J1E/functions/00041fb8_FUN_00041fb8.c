@@ -82,7 +82,7 @@ undefined2 * FUN_00041fb8(void)
     DAT_ffffc930 = cVar5;
     DAT_ffffc946 = uVar7;
     if (cVar5 == '\x01') {
-      puVar2 = (undefined2 *)FUN_0005fd38(0x20,1);
+      puVar2 = (undefined2 *)dtc_set_fault_x0(0x20,1);
     }
     else {
       puVar2 = (undefined2 *)(uint)bStack_28;
@@ -94,7 +94,7 @@ undefined2 * FUN_00041fb8(void)
         else {
           uVar4 = 2;
         }
-        puVar2 = (undefined2 *)FUN_0005fd38(0x20,uVar4);
+        puVar2 = (undefined2 *)dtc_set_fault_x0(0x20,uVar4);
       }
     }
   }

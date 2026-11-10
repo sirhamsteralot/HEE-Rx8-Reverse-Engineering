@@ -48,8 +48,8 @@ knock_ref     = read_adc(knock_reference)                 # 0xc276 -> RAM 0xffff
 # --- magnitude (0xc486, per rotor) ---
 voltage   = (knock_sample - knock_ref) * 5/65536           # RAM 0xffffa370
 magnitude = lookup(tbl_0x6b250, voltage) - command_code*32 # RAM 0xffffa330
-level_integrator[rotor] += min(|noise|, c060*|magnitude - level_running|)  # RAM 0xffffa33c[2]
-noise_threshold[rotor]  += step * c064                    # RAM 0xffffa350[2], adaptive, clamped
+level_integrator[rotor] += min(|noise|, c060*|magnitude - level_running|)  # c060 = knock_filter_coeff_a 0xffffc060; RAM 0xffffa33c[2]
+noise_threshold[rotor]  += step * c064                    # c064 = knock_filter_coeff_b 0xffffc064; RAM 0xffffa350[2], adaptive, clamped
 command[rotor]  = clamp(level_combined + level_threshold*noise_excess, 64, 255) + noise_excess*2  # base RAM 0xffffa364, command RAM 0xffffa368[2]
 send command[rotor] to knock amplifier over SCI0          # 0xc8dc; sensor pins 1F/1T/1G
 knock_detected = (command_base <= magnitude)              # RAM 0xffffa324
@@ -57,12 +57,12 @@ knock_detected = (command_base <= magnitude)              # RAM 0xffffa324
 # --- decision inputs (0x336c4 / 0x33970) ---
 level_threshold = lookup_3d(load, rpm, knock_level_tables)   # RAM 0xffffa328; tables 0x6b2b8/0x6b2d4/0x6b2f0/0x6b304
 attack_condition = knock_detected_latched and engine_running and run_time >= 2.5s \   # RAM 0xffffc078 / 0xffffa428 / 0xffffa424
-                   and leading_timing  > 5 - threshold_a*0.15625 \                      # RAM 0xffffa630; threshold_a = raw u16 0xffffc090 (same value copied to 0xffffa37e)
+                   and leading_timing  > 5 - threshold_a*0.15625 \                      # RAM 0xffffa630; threshold_a = knock_threshold_a_raw 0xffffc090 (= knock_ignition_threshold_a 0xffffa37e)
                    and trailing_timing > 5 - threshold_a*0.15625                          # RAM 0xffffa638
 
 # --- gates (0x13826/0x1388a/0x138b2): engine conditions only ---
 knock_enable = run_time >= 3s and coolant >= 10C and load >= 0.5 and rpm < 5000   # RAM 0xffffa73d
-knock_active = knock_enable and knock_sensors_healthy     # RAM 0xffffa73c = a73d && a73e (0xffffcd64 / 0xffffcd66)
+knock_active = knock_enable and knock_sensors_healthy     # RAM 0xffffa73c = a73d && a73e (knock_sensor_healthy_a/b 0xffffcd64 / 0xffffcd66)
 
 # --- retard state machine (0x13a60 attack, 0x13b40 recovery, 0x13bd2 clamp) ---
 # state: knock_retard = RAM 0xffffa734 (negative deg, [-10, 0]); mirror RAM 0xffffa738
@@ -72,7 +72,7 @@ elif just_activated:            target = lookup(tbl_0x6afb8, learned_eeprom_reta
 elif knock_active and attack_condition:
                                 target = knock_retard - 1.0          # ATTACK: -1 deg/cycle
 elif knock_active and not attack_condition:
-                                target = knock_retard + 0.35         # RECOVER: per 62 cycles (RAM 0xffffa74a/a74b)
+                                target = knock_retard + 0.35         # RECOVER: per 62 cycles (knock_recovery_counter_a/b 0xffffa74a/a74b)
 else:                           target = knock_retard                # hold
 knock_retard = clamp(target, lookup_min(rpm), lookup_max(rpm))      # 0x13bd2; min tbl 0x6af68/0x6af7c, max tbl 0x6af90
 knock_retard_mirror = knock_retard
@@ -82,11 +82,11 @@ if knock_seen_learn_trigger:                                  # RAM 0xffffa73f
     eeprom = filter(knock_retard, eeprom, 0.0039); eeprom_write(eeprom)
 
 # --- apply (0x125bc/0x125f6 -> 0x123ba/0x123ca -> 0x12300) ---
-correction  = (knock_retard - rough_knock_correction)         # rough: RAM 0xffffa6ac / 0xffffa6b0
-correction -= max(coolant_derate, cold_start_reduction)       # RAM 0xffffa750/a754, 0xffffc9a0/c9a4
-correction += idle_base_term + ac_compressor_retard           # idle/base term = RAM 0xffffa5e0 (writer not identified); A/C: RAM 0xffffb288/b28c, -5 deg while ramping
-final_leading  = clamp(base_leading_timing  + correction, limits)   # RAM 0xffffa634 -> output 0xffffa630
-final_trailing = clamp(base_trailing_timing + correction, limits)   # RAM 0xffffa63c -> output 0xffffa638
+correction  = (knock_retard - rough_knock_correction)         # rough: rough_knock_correction_leading/trailing 0xffffa6ac / 0xffffa6b0
+correction -= max(coolant_derate, cold_start_reduction)       # coolant_timing_derate_leading/trailing 0xffffa750/a754, cold_start_timing_reduction_leading/trailing 0xffffc9a0/c9a4
+correction += idle_base_term + ac_compressor_retard           # idle/base term = RAM 0xffffa5e0 (writer not identified); A/C: ac_compressor_leading/trailing_timing_retard 0xffffb288/b28c, -5 deg while ramping
+final_leading  = clamp(base_leading_timing  + correction, limits)   # leading_timing_with_corrections 0xffffa634 -> output leading_ignition_timing_ffffa630 0xffffa630
+final_trailing = clamp(base_trailing_timing + correction, limits)   # trailing_timing_with_corrections 0xffffa63c -> output trailing_ignition_timing_ffffa638 0xffffa638
 ```
 
 Memory addresses for every quantity above are listed in section 8.
@@ -182,6 +182,15 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 - `scripts/verify_math_units.py` — pass.
 - `scripts/design_graph_stats.py` — pass (all 6 cross-checks true).
 - The three new pipeline scripts are idempotent (re-running is a no-op).
+- Source-review sweep (this pass): the accepted-alias RAM/function cells named
+  in §2/§8 were re-located in the raw ROM literal pools this pass — e.g.
+  0xa74a/0xa74b at pools 0x13c3e/0x13c3a (0x13b40 recovery), 0xcd64-cd6c at
+  0x138e4 and 0x4a0a4-0x4a118 (0x1388a/0x49fac), 0xc060/0xc064/0xc068/0xc092 at
+  0x336a6/0x336ae/0x336b6/0x337de (0x336c4), 0xc090 at 0x337ce, 0xa37c at
+  0xc8c6 (0xc7ba), 0x9fd0 at 0x80d2 (0x7fcc ring), 0x9304 at 0x6002/0x60c2
+  (0x5f1c/0x6010), 0xb534 at 0x13c34 — and §2/§8/§9/§11/§12 now use the
+  promoted alias names from `source_review/accepted_*.tsv` instead of raw
+  short cells where an accepted alias exists.
 
 ## 8. Memory map for validation
 
@@ -224,7 +233,7 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x000125f6 | `knock_retard_apply_trailing` | writes 0xffffa658 |
 | 0x000123ba | `leading_timing_add_corrections` | 0xffffa634 = base + corrections |
 | 0x000123ca | `trailing_timing_add_corrections` | 0xffffa63c |
-| 0x00012300 | (timing clamp) | clamps into 0xffffa630/a638 |
+| 0x00012300 | `trailing_final_timing_clamp_output` | clamps into 0xffffa630/a638 |
 | 0x00011f00 | `leading_base_timing_calc` | base-timing plate, blend b118 |
 | 0x0001206c | `trailing_base_timing_calc` | base-timing plate |
 | 0x00013034 | `knock_rough_correction_targets` | rough-knock targets (descriptors 0x69630–0x6974c) |
@@ -253,7 +262,7 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c` (99 × 12 bytes, all labeled); PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg`, PID 0x0003 → handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl` — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) |
 | 0x0006c046 | calibration ID `N3ZHE` |
 | 0x0000d74c / 0x0000d750 | scheduler pointer table / timing records (used by 0x5f1c) |
-| 0x00009630 | `ref_osTaskScheduler` (scheduler; RAM control blocks 0xffff9304) |
+| 0x00009630 | `os_schedule_task_event` (upgrades inherited `ref_osTaskScheduler`; queue state base `queue_state_base` 0xffff9304) |
 
 Task-table entries: 0x65f6 `ref_task1_` (knock sensing), 0x661e `ref_task2_`
 (engine control; also calls 0xc3ce knock_voltage_sample), 0x64ba `candidate_knock_sensor_fault_task`, 0x64f6 (→ 0x390b8
@@ -319,9 +328,10 @@ Sensing, timing and shared state:
 | 0xffffa98c | `inferred_coolant_temperature` | coolant temperature (inferred_ label; gates at 0x13826/0x1c13c) |
 | 0xffffc0b4 | `engine_load` | load input to the 3D knock-level tables (0x336c4) |
 | 0xffffa5e0 / 0xffffa5e4 | (unnamed `DAT_`) | idle/base terms read by 0x125bc/0x125f6; writer not identified |
-| 0xffffa5e8 / 0xffffa5ec | (unnamed `DAT_`) | base timing blended by loop weight b118 (0x11f00/0x1206c) |
+| 0xffffa5e8 / 0xffffa5ec | `leading/trailing_base_timing_final` | base timing blended by loop weight `timing_blend_weight` 0xffffb118 (0x11f00/0x1206c) |
 | 0xffffa5fc | (unnamed `DAT_`) | unweighted base timing sum (0x11f00) |
-| 0xffffa640 / 0xffffa644 | (unnamed `DAT_`) | base timing after trim blend a644 (0x123da) |
+| 0xffffa640 | (unnamed `DAT_`) | base timing after cranking blend (0x123da) |
+| 0xffffa644 | `cranking_timing_multiplier_leading` | cranking blend multiplier (0x123da) |
 | 0xffffa66c / 0xffffa670 | (unnamed `DAT_`) | leading/trailing timing trims, subtracted in 0x125bc/0x125f6 |
 
 Loop mode:
@@ -388,7 +398,7 @@ Full list of all 84 named locations: `source_review/accepted_ram_aliases.tsv`.
 Static analysis only: no hardware/emulator execution, so scheduling order,
 interrupt load and real knock behavior are unmeasured. `candidate_` names are
 unproven hypotheses. Unresolved: the blend weights b11c/b118, the variant/mode
-selectors (b534, bc3d, a415, cd5c, …), the task-record dispatch at ROM 0x4ab8
+selectors (`automatic_transmission` 0xffffb534, bc3d, a415, cd5c, …), the task-record dispatch at ROM 0x4ab8
 (entry 0x64e8), the exact semantics of the two "safe mode" flags
 (b12d/cd60), and the idle/base terms 0xffffa5e0/a5e4/a5dc (read by
 0x125bc/0x125f6/0x306e8 with no identified writer in the export). The saved Ghidra
@@ -424,10 +434,10 @@ callgraph callers; its only ROM reference is the default (VBR=0) IVT slot 0x2c8 
 pre-VBR entry, inactive once VBR=0x7fc50 is set at 0xd206). The
 live path is the CMI10B tick chain 0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle`
 0x7fcc, which writes `crank_period_accumulator_ffff9f88` and
-`engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(0xffff9fd0[6]). Details and emulator
+`engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(`crank_period_ring` 0xffff9fd0[6]). Details and emulator
 evidence: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md) §7/§9.
 
-## 12. Knock reimplementation (ROADMAP E item 1)
+## 12. Knock reimplementation
 
 The retard state machine is
 reimplemented as host-testable C —
@@ -439,7 +449,7 @@ recovery pacing), with `rx8_add_u8_saturate` (0x2478) added to
 dynamically in the emulator against a float32 port of the C
 ([`tests/test_knock_retard_dynamic.py`](../../../tests/test_knock_retard_dynamic.py),
 3 tests: attack/hold/edge/disabled/unhealthy paths, alt clamp-min table via
-0xffffb534/0xffffbc3d, and 62-count recovery pacing incl. counter reset and
+`automatic_transmission` 0xffffb534/0xffffbc3d, and 62-count recovery pacing incl. counter reset and
 clamping) — the ROM's own 0x2068 lookups fed the port, so the comparison covers
 the decision logic, not the interpolation.
 
@@ -456,8 +466,8 @@ ROM literal pools):
   step addend 0.35f is at ROM **0x795dc** / **0x795e4**.
 - **Saturating add 0x2478**: `extu.b` both inputs, `add`, `extu.w`, then
   `cmp/ge` against ROM word **0x00ff** at **0x248e** → clamp to 255.
-- **Alt clamp-min select in 0x13bd2**: `DAT_ffffb534==1` and
-  `DAT_ffffbc3d cmp/hs` ROM byte **0x05** at **0x7959c** (i.e. bc3d > 4)
+- **Alt clamp-min select in 0x13bd2**: `automatic_transmission` 0xffffb534==1 (pool
+  0x13c34) and `DAT_ffffbc3d cmp/hs` ROM byte **0x05** at **0x7959c** (i.e. bc3d > 4)
   selects tbl 0x6af7c instead of 0x6af68; max tbl 0x6af90; clamp via
   0x2404 with args (param fr4, min fr5, max fr6).
 - **0xffffa744 write reachability**: only the sensors-unhealthy (tbl 0x6afa4)

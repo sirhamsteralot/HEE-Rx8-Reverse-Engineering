@@ -18,12 +18,12 @@ uint FUN_00049730(void)
       DAT_ffffcd15 = '\x01';
     }
     if (DAT_ffffcd15 == '\x01') {
-      uVar1 = FUN_0005fd38(0x1e,1);
+      uVar1 = dtc_set_fault_x0(0x1e,1);
       return uVar1;
     }
     uVar1 = (uint)DAT_ffffcd14;
     if (uVar1 == 1) {
-      uVar1 = FUN_0005fd38(0x1e,2);
+      uVar1 = dtc_set_fault_x0(0x1e,2);
       return uVar1;
     }
   }

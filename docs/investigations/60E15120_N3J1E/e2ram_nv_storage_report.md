@@ -11,7 +11,9 @@ recorded in `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`.
 and the knock-learn consumer 0x139c4 in
 [`knock_control_report.md`](knock_control_report.md); DTC engine (set_fault thunk
 0x5fd38, stored-flag table 0xffffd570) in
-[`dtc_control_report.md`](dtc_control_report.md); OS boot/init ordering in
+[`dtc_control_report.md`](dtc_control_report.md); the end-to-end "how to author a
+new DTC" map (which args persist via this block, save trigger 0x64ba → 0x1150e) in
+[`dtc_authoring_report.md`](dtc_authoring_report.md); OS boot/init ordering in
 [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md).
 
 ## 1. Executive summary

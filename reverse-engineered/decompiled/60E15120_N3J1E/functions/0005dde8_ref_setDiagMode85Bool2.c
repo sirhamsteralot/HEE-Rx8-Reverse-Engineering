@@ -8,11 +8,11 @@ uint ref_setDiagMode85Bool2(uint param_1)
 {
   param_1 = param_1 & 0xff;
   if (param_1 == 1) {
-    param_1 = FUN_0005fd4a(1);
+    param_1 = dtc_set_eval_enable(1);
     DAT_ffffd378 = 0;
   }
   else if (param_1 == 2) {
-    param_1 = FUN_0005fd4a(0);
+    param_1 = dtc_set_eval_enable(0);
     DAT_ffffd378 = 1;
   }
   return param_1;

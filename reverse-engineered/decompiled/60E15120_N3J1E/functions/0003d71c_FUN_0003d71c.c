@@ -6,11 +6,11 @@ uint FUN_0003d71c(void)
   uint uVar1;
   
   if (DAT_ffffc62a == '\x01') {
-    uVar1 = FUN_0005fd38(0x4c,1);
+    uVar1 = dtc_set_fault_x0(0x4c,1);
     return uVar1;
   }
   if (DAT_ffffc62b == 1) {
-    uVar1 = FUN_0005fd38(0x4c,2);
+    uVar1 = dtc_set_fault_x0(0x4c,2);
     return uVar1;
   }
   return (uint)DAT_ffffc62b;
