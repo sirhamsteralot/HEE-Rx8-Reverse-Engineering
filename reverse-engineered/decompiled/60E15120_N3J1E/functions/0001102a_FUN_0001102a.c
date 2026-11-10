@@ -53,9 +53,9 @@ void FUN_0001102a(void)
   FUN_00016f30();
   thunk_FUN_0002508c();
   FUN_00021b48();
-  candidate_ssv_control_thunk();
-  candidate_vdi_control_thunk();
-  candidate_vfad_control_thunk();
+  ssv_control_thunk();
+  vdi_control_thunk();
+  vfad_control_thunk();
   thunk_FUN_00025438();
   FUN_00022538();
   FUN_00023740();

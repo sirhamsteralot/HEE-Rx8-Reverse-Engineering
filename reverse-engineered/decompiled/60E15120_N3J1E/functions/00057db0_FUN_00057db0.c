@@ -10,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00056280 (194 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_18(short param_1,uint param_2)
+uint uds_service_18(short param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;

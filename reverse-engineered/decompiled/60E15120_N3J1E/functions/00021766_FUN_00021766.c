@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x00021766; body bytes: 24; decompiled */
 
-void candidate_ssv_control_task_wrapper(void)
+void ssv_control_task_wrapper(void)
 
 {
   undefined4 uVar1;

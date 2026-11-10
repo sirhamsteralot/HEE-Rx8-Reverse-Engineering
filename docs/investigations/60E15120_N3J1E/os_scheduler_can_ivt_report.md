@@ -233,7 +233,7 @@ traces:
   group-1 record 11 = {target −1, handler 0x11ea8} → UDS-session dispatch
   0x11ea8 → 0x680de on DAT_ffffdde1). Only 20 have real handlers: CMI10B
   0x5b3c, six ATU-II ch8 injector compares 0x59a4–0x59ea →
-  `candidate_injector_pulse_set_dispatch(0..5)`, knock-ADC trigger 0x5a4c, ch3/ch9
+  `injector_pulse_set_dispatch(0..5)`, knock-ADC trigger 0x5a4c, ch3/ch9
   compares, three ADC EOC banks, CMCSR1 0x5cee, IRQ flags 0x53f6, CAN 0x378/0x37c/0x398.
   WDT ITI 0x358 → 0x5e0c → fatal trap (as E3 said, overflow is polled-only; the ITI
   firing is deliberate halt). Reserved vectors 0x0–0xfc → stubs 0x53a0–0x53c2 → 0x5348.

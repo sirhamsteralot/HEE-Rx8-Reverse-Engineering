@@ -13,7 +13,7 @@ void ref_evapRelated(void)
   FUN_00021cde();
   FUN_00021d8a();
   FUN_00021efc();
-  candidate_evap_open_loop_condition();
+  candidate_fuel_open_loop_condition();
   FUN_00021c14();
   FUN_00025120();
   ref_setSR(uVar1);

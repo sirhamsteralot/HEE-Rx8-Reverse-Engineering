@@ -7,7 +7,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000323b2 (40 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 candidate_apv_counter_calc(void)
+undefined4 apv_counter_calc(void)
 
 {
   undefined4 uVar1;

@@ -7,7 +7,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00032376 (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_apv_position_voltage_counter(void)
+void apv_position_voltage_counter(void)
 
 {
   if ((apv_direction_flag_ffffbf8b == '\0') || ((0x4e1 < apv_position_dwell_counter_ffffbf88 && (inferred_ram_cab4_ffffcab4_ffffcab4 == '\0')))) {

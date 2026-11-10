@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00055864; body bytes: 38; decompiled */
 
-undefined4 candidate_diag_encode_b410(void)
+undefined4 diag_encode_b410(void)
 
 {
   undefined4 uVar1;

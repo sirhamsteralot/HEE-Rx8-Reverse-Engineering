@@ -31,7 +31,7 @@ undefined4 ref_interruptSetup___(void)
     }
   }
   FUN_00002064(local_8[0]);
-  candidate_apv_pwm_service();
+  apv_pwm_service();
   uVar1 = ref_taskEndRoutine_();
   return uVar1;
 }

@@ -11,7 +11,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000198fa (130 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char candidate_fuel_cut_rpm_condition(void)
+char fuel_cut_rpm_condition(void)
 
 {
   char cVar1;

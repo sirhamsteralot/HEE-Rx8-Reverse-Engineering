@@ -11,7 +11,7 @@
    [WIRING REVIEW 2026-09-08]
    Firmware fact: ADC6 raw 0xffff9ef0 * 5/65536 -> float 0xffffcab0. pinout v3: APV opening-angle signal at PCM 3B (wire R/G, HP ³) — candidate APV feedback; PCM 3B -> AN6 (pkg pin 92) not board-verified. See reconstructed/rx8_apv.c. */
 
-void candidate_apv_position_voltage_scale(void)
+void apv_position_voltage_scale(void)
 
 {
   apv_position_voltage_ffffcab0 = rx8_decode_u16_affine(0x38a00000,0,(int)adc6_raw_apv_position_ffff9ef0);

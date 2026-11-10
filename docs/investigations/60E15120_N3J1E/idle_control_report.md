@@ -225,7 +225,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x00003920 / 0x00003934 | `sh_raise_interrupt_mask_return_previous` / `ref_setSR` | mask raise / restore |
 | 0x00021a80 | `ref_throttlePlatePosToTorqueOutput_` | reads 0xffffb2a4 (output path) |
 | 0x00024b44 / 0x0002f868 / 0x0002e9a4 / 0x000264f0 / 0x0002633e | `ref_getAutoTransCal__` / `ref_getACSwitchStatus` / `FUN_0002e9a4` / `electrical_load_flag_calc` / `FUN_0002633e` | select-flag producers |
-| 0x00056e22 | `candidate_diag22_pid096e_ram_a7ac_quarter` | Mode 22 PID 0x096e handler |
+| 0x00056e22 | `diag22_pid096e_ram_a7ac_quarter` | Mode 22 PID 0x096e handler |
 
 ### 8.2 Data and entry points (ROM)
 

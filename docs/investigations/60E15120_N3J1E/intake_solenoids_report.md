@@ -171,21 +171,21 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | Address | Name | Role |
 |---|---|---|
 | 0x0002178c | `ssv_solenoid_control` | SSV solenoid: PEDR PE7; coolant/counter/diag logic |
-| 0x00021760 / 0x00021766 | `candidate_ssv_control_thunk` / `ssv_control_task_wrapper` | thunk (pool 0x21780 → 0x2178c) / task 0x11744 wrapper |
+| 0x00021760 / 0x00021766 | `ssv_control_thunk` / `ssv_control_task_wrapper` | thunk (pool 0x21780 → 0x2178c) / task 0x11744 wrapper |
 | 0x00034844 | `vdi_solenoid_control` | VDI: PDDR PD5; RPM 7250/7062 → diag 0x5c3c0 `vdi_diag_override` |
-| 0x000348e4 / 0x000348ea | `candidate_vdi_control_thunk` / `vdi_control_task_wrapper` | thunk (pool 0x34904) / wrapper |
+| 0x000348e4 / 0x000348ea | `vdi_control_thunk` / `vdi_control_task_wrapper` | thunk (pool 0x34904) / wrapper |
 | 0x0003493c | `vfad_solenoid_control` | VFAD: PEDR PE10; RPM 5250/5062 → diag 0x5cdc4 `vfad_diag_override` |
-| 0x00034910 / 0x00034916 | `candidate_vfad_control_thunk` / `vfad_control_task_wrapper` | thunk (pool 0x34930) / wrapper |
+| 0x00034910 / 0x00034916 | `vfad_control_thunk` / `vfad_control_task_wrapper` | thunk (pool 0x34930) / wrapper |
 | 0x00031c20 | `apv_control_task` | APV wrapper: 0x31c6c + 0x31ece + 0x31f0a + 0x31f32 + 0x31bec |
 | 0x00031c6c | `candidate_apv_target_condition` | APV target bf8d (RPM 200/150 bf99, bf92, aa68, MAF, coolant) |
-| 0x00031ece | `candidate_apv_position_voltage_counter` | bf88 dwell counter |
-| 0x00031f0a | `candidate_apv_counter_calc` | bf8a drive counter |
-| 0x00031f32 | `candidate_apv_command_calc` | bf84 staged 100.0/12.5 (own pool) by bf88 bands; RPM 3000/2800 bf98 |
+| 0x00031ece | `apv_position_voltage_counter` | bf88 dwell counter |
+| 0x00031f0a | `apv_counter_calc` | bf8a drive counter |
+| 0x00031f32 | `apv_command_calc` | bf84 staged 100.0/12.5 (own pool) by bf88 bands; RPM 3000/2800 bf98 |
 | 0x00031bec | `candidate_apv_command_wrapper` | sign (bf8b) / 100 → 0xaa90 |
 | 0x0000aa90 | `apv_duty_split` | ×96 (ROM 0x78bb6) → fwd a1c4 / rev a1c6 |
-| 0x0000a936 | `candidate_apv_pwm_service` | soft PWM → PLDR 0x20/0x100 (PL5/PL8); calls 0xaac4 |
-| 0x0000aac4 | `candidate_apv_drive_status_sample` | PHDR 0x1000/0x2000 → a1bc |
-| 0x00043a86 | `candidate_apv_position_voltage_scale` | ADC6 9ef0 × 5/65536 → cab0 |
+| 0x0000a936 | `apv_pwm_service` | soft PWM → PLDR 0x20/0x100 (PL5/PL8); calls 0xaac4 |
+| 0x0000aac4 | `apv_drive_status_sample` | PHDR 0x1000/0x2000 → a1bc |
+| 0x00043a86 | `apv_position_voltage_scale` | ADC6 9ef0 × 5/65536 → cab0 |
 | 0x000187b8 | `secondary_air_solenoid_control` | PEDR PE8; load/RPM/bf6c/d26e → diag 0x5cf7c → a960 |
 | 0x000316f8 | `secondary_air_pump_control` | PBDR PB2 = bf6c |
 | 0x0003174a | `candidate_secondary_air_on_time_task` | 0x3194a + 0x31a24 + 0x316f8 |

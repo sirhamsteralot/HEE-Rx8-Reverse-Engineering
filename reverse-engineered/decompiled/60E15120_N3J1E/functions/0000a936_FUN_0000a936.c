@@ -10,7 +10,7 @@
    [WIRING REVIEW 2026-09-08]
    Candidate APV software-PWM service. Firmware fact: drives PLDR_W 0xfffff75e masks 0x0020/0x0100 (PL5 pkg pin 221 / PL8 pkg pin 224) with opposite polarity from pending ticks 0xffffa1c4/a1c6. pinout v3: APV motor control (-) at PCM 3J wire L/R (confirmed), (+) at PCM 3G wire G/B (³) (HP ³); per-bit-to-terminal polarity still unverified. */
 
-undefined2 * candidate_apv_pwm_service(void)
+undefined2 * apv_pwm_service(void)
 
 {
   undefined2 *puVar1;
@@ -58,7 +58,7 @@ undefined2 * candidate_apv_pwm_service(void)
     }
   }
   if (DAT_ffffa1be == 4) {
-    puVar1 = (undefined2 *)candidate_apv_drive_status_sample();
+    puVar1 = (undefined2 *)apv_drive_status_sample();
   }
   return puVar1;
 }

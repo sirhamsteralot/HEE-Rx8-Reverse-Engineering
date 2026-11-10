@@ -44,17 +44,17 @@ task[6] 0x661e ref_task2_ (engine control task)
        -> 0x11f00/0x1206c leading/trailing_base_timing_calc
        -> 0x12300 clamp -> leading/trailing_ignition_timing 0xffffa630/a638
 
-task[9]  0x64ba candidate_knock_sensor_fault_task -> 0xc290 ref_knockSensorADCFault
-task[10] 0x64f6 -> 0x11744 -> 0x390b8 candidate_knock_sensor_monitor_task
+task[9]  0x64ba knock_sensor_fault_task -> 0xc290 ref_knockSensorADCFault
+task[10] 0x64f6 -> 0x11744 -> 0x390b8 knock_sensor_monitor_task
        -> 0x49fac knock_sensor_health_persistence, 0x4a084 knock_sensor_dtc_report
-task[13] 0x65b2 -> 0x118d0 -> 0x1467c candidate_knock_rough_correction_update
+task[13] 0x65b2 -> 0x118d0 -> 0x1467c knock_rough_correction_update
        -> 0x12ed0, 0x13034 knock_rough_correction_targets,
           0x13210 ref_roughKnockCorrection, 0x43870
 task[11] 0x6584 -> 0x117ac -> 0x21246 ref_getFuelingSlowtask_
        -> 0x1f0c4 open_loop_request_condition, 0x1ee30 set_open_loop_flag,
           0x1ee4a open_loop_fueling_targets
 record 0x64e8 (ROM 0x4ab8, dispatch unresolved) -> 0x11534 -> 0x145c8
-candidate_timing_retard_fast_task
+timing_retard_fast_task
        -> 0x1391c knock-seen counter + 0x13b40 knock_retard_slow_recovery (the ONLY
           caller of 0x13b40; 0x13b40 calls 0x13bd2 knock_retard_clamp — fixed: returns
           the clamped value) + throttle/rev-limit/AC retards
@@ -181,7 +181,7 @@ So the retard lives in [-10, 0] deg and 0 means "no knock retard".
   writes it back with `ref_updateMemoryAtAddress_float` — persistent learned
   knock retard.
 - 0x1391c (`ref_calcKnockRAMUpdate_`) increments `knock_seen_counter_ffffa748`
-  on knock-seen events (called from 0x145c8 `candidate_timing_retard_fast_task`,
+  on knock-seen events (called from 0x145c8 `timing_retard_fast_task`,
   which also runs 0x13b40 and the throttle/rev-limit/AC retards).
 - 0x339ea `knock_state_reset_rpm_window` (called from 0x19cf4): 6500/7000 RPM
   hysteresis -> 0xc116 `reset_knock_state_on_mode_change`(1) at/above 7000,
@@ -195,7 +195,7 @@ So the retard lives in [-10, 0] deg and 0 means "no knock retard".
   (not per-rotor) move toward targets `a6bc/a6c0` from 0x13034
   `knock_rough_correction_targets` (RX8Defs "Ignition 4..17" descriptors
   0x69630-0x6974c; nearly all 0 in this ROM); zeroed when the engine
-  is not running. Updated in 0x1467c `candidate_knock_rough_correction_update`.
+  is not running. Updated in 0x1467c `knock_rough_correction_update`.
 - 0x13ecc `ref_getCoolantBasedTimingDerate__` (inherited): leading/trailing
   coolant timing derates `coolant_timing_derate_leading/trailing_ffffa750/a754`.
 - 0x12630/0x12754: cold-start timing reduction
@@ -306,7 +306,7 @@ Task table 0x4998 (18 x 16-byte records), knock-relevant entries:
 |---|---|---|
 | 0x65f6 `ref_task1_` | -> 0xc338 -> 0xc486/0xc8dc/0xc7ba | knock sensing task |
 | 0x661e `ref_task2_` | -> 0xc3ce + 0x11ba4 -> 0x197be/0x142a4/0x20e40 | engine control task |
-| 0x64ba `candidate_knock_sensor_fault_task` | -> 0xc290 | knock sensor fault task |
+| 0x64ba `knock_sensor_fault_task` | -> 0xc290 | knock sensor fault task |
 | 0x64f6 | -> 0x11744 -> 0x390b8 + `ref_OLFueling__` 0x211fe | knock monitor + loop-mode fueling |
 | 0x6584 | -> 0x117ac -> 0x21246 (`ref_getFuelingSlowtask_`) | fueling/emissions slow task |
 | 0x65b2 | -> 0x118d0 -> 0x1467c + 0x3957c | rough correction + catalyst monitor |
@@ -353,7 +353,7 @@ counts. An earlier session had these two swapped.
    entries and no ROM pointer to 0x4998 was found either; the dispatch
    mechanism for both is unresolved. 0x64e8 is a thin wrapper
    (`FUN_00011534(); ref_taskEndRoutine_();`) leading to 0x145c8
-   `candidate_timing_retard_fast_task`.
+   `timing_retard_fast_task`.
 2. **Blend weights b11c/b118** (0xffffb11c/b118): 0..1 weights blending the
    open-loop fuel target (0x1ee4a), the base timing (0x11f00/0x1206c) and gating
    a0d6=0x7d in 0x4c6a4. Their producer 0x200c6 has a complex condition; semantics
@@ -387,9 +387,9 @@ counts. An earlier session had these two swapped.
 
 - 39 functions (`source_review/accepted_function_aliases.tsv`): 33 high
   confidence, 6 medium (integrated with the `candidate_` prefix:
-  `candidate_timing_retard_fast_task`, `candidate_knock_sensor_monitor_task`,
-  `candidate_knock_sensor_fault_task`, `candidate_knock_rough_correction_update`,
-  `candidate_o2_monitor_integrator`, `candidate_evap_open_loop_condition`).
+  `timing_retard_fast_task`, `knock_sensor_monitor_task`,
+  `knock_sensor_fault_task`, `knock_rough_correction_update`,
+  `o2_monitor_integrator`, `candidate_fuel_open_loop_condition`).
 - 84 RAM locations (`source_review/accepted_ram_aliases.tsv`), integrated as
   `<alias>_<address>`; 8 `snapshot_` locals renamed to match (192 occurrences).
 - 15 lookup-table rows (`source_review/accepted_lookup_aliases.tsv`, merged into

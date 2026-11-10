@@ -7,7 +7,7 @@
  */
 /* ROM address: 0x000556ce; body bytes: 30; decompiled */
 
-undefined4 candidate_diag_encode_ad10(void)
+undefined4 diag_encode_ad10(void)
 
 {
   undefined4 uVar1;

@@ -25,7 +25,7 @@ undefined ** FUN_0003cd06(void)
   fVar6 = inferred_coolant_temperature_ffffa98c;
   DAT_ffffc604 = rx8_lookup_2d_raw_u16(inferred_coolant_temperature_catalyst_temp_model_ffffa998,&tbl_closed_loop_warmup_time_0006990c);
   DAT_ffffc600 = engine_running_timer_ffffa424 < DAT_ffffc604;
-  candidate_o2_monitor_integrator();
+  o2_monitor_integrator();
   uVar9 = 0;
   if (cVar3 == '\x01') {
     DAT_ffffc5fc = '\0';

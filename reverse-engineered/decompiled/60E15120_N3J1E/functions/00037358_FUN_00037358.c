@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 57700 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_dtc_state_machine_step(undefined4 param_1)
+void dtc_state_machine_step(undefined4 param_1)
 
 {
   int iVar1;

@@ -6,9 +6,9 @@
 void ref_setAllInjectorto0_(void)
 
 {
-  candidate_injector_zero_offset_set(0,0);
-  candidate_injector_zero_offset_set(1,0);
-  candidate_injector_zero_offset_set(2,0);
+  injector_zero_offset_set(0,0);
+  injector_zero_offset_set(1,0);
+  injector_zero_offset_set(2,0);
   FUN_000074d4(1);
   return;
 }

@@ -126,10 +126,13 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 ## 4. Labeling applied
 
 - **39 functions** named in `source_review/accepted_function_aliases.tsv`
-  (33 high confidence; 6 medium → `candidate_` prefix: `candidate_timing_retard_fast_task`,
-  `candidate_knock_sensor_monitor_task`, `candidate_knock_sensor_fault_task`,
-  `candidate_knock_rough_correction_update`, `candidate_o2_monitor_integrator`,
-  `candidate_evap_open_loop_condition`).
+  (38 high confidence; 1 medium → `candidate_` prefix: `candidate_fuel_open_loop_condition`.
+  The five former `candidate_` task/monitor labels — `timing_retard_fast_task`
+  0x145c8, `knock_sensor_monitor_task` 0x390b8, `knock_sensor_fault_task` 0x64ba,
+  `knock_rough_correction_update` 0x1467c, `o2_monitor_integrator` 0x3d010 —
+  were promoted to high: ROM task-table pointers at 0x116e0/0x11978/0x4a28/
+  0x11a84 verified against the raw ROM, callee chains confirmed in
+  `callgraph.tsv`, byte-exact matches in `cross_rom_function_matches.tsv`).
 - **84 RAM locations** named in `source_review/accepted_ram_aliases.tsv`
   (integrated as `<alias>_<address>`), e.g. `knock_retard_ffffa734` (pre-existing),
   `knock_detected_ffffa324`, `knock_attack_condition_ffffc05c`,
@@ -228,7 +231,7 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x00013bd2 | `knock_retard_clamp` | clamp [min,max](RPM); returns value (bug fixed) |
 | 0x000139c4 | `knock_retard_learn_to_eeprom` | persistent learned retard |
 | 0x0001391c | `ref_calcKnockRAMUpdate_` | knock-seen counter 0xffffa748 |
-| 0x000145c8 | `candidate_timing_retard_fast_task` | 0x1391c + 0x13b40 + throttle/rev-limit/AC retards |
+| 0x000145c8 | `timing_retard_fast_task` | 0x1391c + 0x13b40 + throttle/rev-limit/AC retards |
 | 0x000125bc | `knock_retard_apply_leading` | writes 0xffffa648 |
 | 0x000125f6 | `knock_retard_apply_trailing` | writes 0xffffa658 |
 | 0x000123ba | `leading_timing_add_corrections` | 0xffffa634 = base + corrections |
@@ -238,20 +241,20 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x0001206c | `trailing_base_timing_calc` | base-timing plate |
 | 0x00013034 | `knock_rough_correction_targets` | rough-knock targets (descriptors 0x69630–0x6974c) |
 | 0x00013210 | `ref_roughKnockCorrection` | leading/trailing rough corrections 0xffffa6ac/a6b0 (inherited name; semantic unproven) |
-| 0x0001467c | `candidate_knock_rough_correction_update` | rough-correction task chain |
+| 0x0001467c | `knock_rough_correction_update` | rough-correction task chain |
 | 0x000142a4 | `ignition_timing_main_task` | task[6] timing chain |
 | 0x00049fac | `knock_sensor_health_persistence` | health persistence → 0xffffcd64/cd66 |
 | 0x0004a084 | `knock_sensor_dtc_report` | DTC 0x23/0x24 via 0x5fd38 |
-| 0x000390b8 | `candidate_knock_sensor_monitor_task` | 0x49fac + 0x4a084 |
-| 0x000064ba | `candidate_knock_sensor_fault_task` | task[9]: 0xc290 |
+| 0x000390b8 | `knock_sensor_monitor_task` | 0x49fac + 0x4a084 |
+| 0x000064ba | `knock_sensor_fault_task` | task[9]: 0xc290 |
 | 0x0001f0c4 | `open_loop_request_condition` | sets 0xffffb12a |
 | 0x0001ee30 | `set_open_loop_flag` | sets 0xffffb12c (misnomer corrected) |
 | 0x0001c13c | `closed_loop_enable_condition` | 0xffffae1e / 0xffffae1f |
 | 0x0001ee4a | `open_loop_fueling_targets` | 0xffffb120 |
 | 0x0005535e | `diag_ol_status_byte` | OBD PID 0x0003 status byte |
 | 0x000553d8 | `diag_ol_status_low_byte` | PID 0x0003 low byte (0) |
-| 0x00022144 | `candidate_evap_open_loop_condition` | evap gated on open loop |
-| 0x0003d010 | `candidate_o2_monitor_integrator` | O2/catalyst monitor integrator |
+| 0x00022144 | `candidate_fuel_open_loop_condition` | gates on fuel open-loop flag 0xffffb12c (renamed from `candidate_evap_open_loop_condition`: the "evap" came from the inherited caller name `ref_evapRelated` 0x21b8a, a ref_ hypothesis — unproven) |
+| 0x0003d010 | `o2_monitor_integrator` | O2/catalyst monitor integrator |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -265,7 +268,7 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x00009630 | `os_schedule_task_event` (upgrades inherited `ref_osTaskScheduler`; queue state base `queue_state_base` 0xffff9304) |
 
 Task-table entries: 0x65f6 `ref_task1_` (knock sensing), 0x661e `ref_task2_`
-(engine control; also calls 0xc3ce knock_voltage_sample), 0x64ba `candidate_knock_sensor_fault_task`, 0x64f6 (→ 0x390b8
+(engine control; also calls 0xc3ce knock_voltage_sample), 0x64ba `knock_sensor_fault_task`, 0x64f6 (→ 0x390b8
 + `ref_OLFueling__` 0x211fe), 0x6584 (→ `ref_getFuelingSlowtask_` 0x21246),
 0x65b2 (→ 0x1467c), 0x65cc (→ 0x41964, reads 0xffffae1f). Wrapper 0x64e8 →
 0x11534 → 0x145c8.
