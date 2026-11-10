@@ -43,14 +43,14 @@ idle air control then chases.
 # idle_target_rpm_calculate 0x1506c:
 a7c8 = filter(battery_voltage 0xffffb590, a7c8, 0.03125)      # V
 # engine-running gates: a804/a806/a808 counters, a818/a81a decay (0x753/0x271), a7b7 latch
-if b534 (AT?) : 15818(coolant 0xffffa990)  -> a7e0/a7d8/a7dc open-loop ramps (floor 500, tbl 0x69384)
+if b534 (`automatic_transmission` 0xffffb534, AT?) : 15818(coolant 0xffffa990)  -> a7e0/a7d8/a7dc open-loop ramps (floor 500, tbl 0x69384)
 else           : 15934(...)               -> cranking vs running (tbl 0x693c0)
 a800 = lookup_2d(coolant, tbl 0x69370 base | 0x693d4 F | 0x693e8 G | 0x693fc H | 0x69410 vmoving-AT)
 a7d4 = target base (floors 500.0 / 790-840 rpm by flags bd69/bdb8/b5b3/b53c)
 a7b0 = max(a800, a7cc, a7d4)
-a7bc = (a81c==0) ? lookup_2d(a7b0 - a7ac, tbl 0x6935c filter factor) : 1.0
+a7bc = (a81c==0) ? lookup_2d(a7b0 - a7ac, tbl 0x6935c filter factor) : 1.0   # a7ac = `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac
 a7f4 = filter(a7b0, a7ac, a7bc)          # -> idle_target_rpm; min 850 if a7b7
-out = idle_target_encode_u16(a7f4)       # 0x5ca94: u16 @0.25 rpm/LSB -> 0xffffa7ac (PID 0x096e)
+out = idle_target_encode_u16(a7f4)       # 0x5ca94: u16 @0.25 rpm/LSB -> `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac (PID 0x096e)
 ```
 
 ## 3. Key calibrated tables
@@ -108,7 +108,7 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 | 0x00011744 | `FUN_00011744` | task[10] body, calls 0x167c0 |
 | 0x000064f6 | `FUN_000064f6` | task[10] entry thunk → 0x11744 |
 | 0x00015818 / 0x00015934 | `FUN_00015818` / `FUN_00015934` | open-loop ramp / mode select |
-| 0x0005ca94 | `idle_target_encode_u16` | target → u16 (0xffffa7ac, PID 0x096e) |
+| 0x0005ca94 | `idle_target_encode_u16` | target → u16 (`inferred_ram_a7ac_ffffa7ac` 0xffffa7ac, PID 0x096e) |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -131,9 +131,9 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 ## 9. Limits
 
 - Static analysis only; no emulator run of the idle loop in this pass.
-- The meaning of each select flag (0xffffb534/b53c/b5b3/bd69/bdb8, e.g. A/C or
+- The meaning of each select flag (`automatic_transmission` 0xffffb534/b53c/b5b3/bd69/bdb8, e.g. A/C or
   AT) is inferred from context and the table names, not from the flag producers.
 - 0x5ca94's role is settled in [`idle_control_report.md`](idle_control_report.md):
-  it encodes the target to 0xffffa7ac (Mode 22 PID 0x096e) and the diag override
-  cell 0xffffd34d; the actuator path runs via 0xffffb2a4 → 0x21a80 (electronic
+  it encodes the target to `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac (Mode 22 PID 0x096e) and the diag override
+  cell 0xffffd34d; the actuator path runs via `idle_air_required` 0xffffb2a4 → 0x21a80 (electronic
   throttle).
