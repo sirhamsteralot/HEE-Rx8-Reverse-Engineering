@@ -2,9 +2,9 @@
 
 Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
-untouched — this pass changes documentation only). Findings are from static analysis
-of the canonical export, the disassembly and the raw ROM bytes (re-dumped this session,
-see [`reviews/dtc_authoring/tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt));
+untouched — documentation only). Findings are from static analysis
+of the canonical export, the disassembly and the raw ROM bytes (byte dump:
+[`reviews/dtc_authoring/tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt));
 no hardware execution was performed. This report is the **authoring guide**: it lists
 every ROM/RAM address a **new** DTC must touch (§3 checklist) and what its raise call
 triggers (§2). The complete DTC chain — engine, state bytes, MIL/CAN, E2RAM key-off
@@ -120,7 +120,7 @@ preserving stock behavior.
 
 ## 3. What a new DTC must touch (the authoring checklist)
 
-Everything below is ROM-verified this session (dump:
+Everything below is ROM-verified (byte dump:
 [`reviews/dtc_authoring/tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt)).
 A working example that applies this checklist to a ROM copy — new code on free slot
 0x79 / arg 0x83 plus a cave trigger hooked into the periodic DTC service batch —
@@ -171,13 +171,12 @@ into block bytes 0xffffb459–0xffffb45d.
 
 ## 4. Labeling applied
 
-None — this pass is documentation-only. Every function/RAM/table cited already
-carries a label from the earlier passes (`dtc_engine_labels.tsv`,
-`e2ram_nv_storage_labels.json`, `e2ram_device_labels.json`,
-`alternator_labels.json`); no label was added, renamed or upgraded here, and no
-decompiled artifact was modified.
+None. Every function/RAM/table cited already carries a label
+(`dtc_engine_labels.tsv`, `e2ram_nv_storage_labels.json`,
+`e2ram_device_labels.json`, `alternator_labels.json`); no label was added,
+renamed or upgraded, and no decompiled artifact was modified.
 
-## 5. Corrections and new findings from this pass
+## 5. Corrections and new findings
 
 - **Free slot capacity identified from ROM:** slots 0x79–0x8b hold code 0xffff with
   enable#1=#2=0 (19 slots) — the natural home for a new code; 11 further slots carry
@@ -220,8 +219,8 @@ decompiled artifact was modified.
   [`tables_dump.txt`](reviews/dtc_authoring/tables_dump.txt) (its output),
   [`README.md`](reviews/dtc_authoring/README.md) (evidence notes),
   `validation.json` (validator results).
-- Cross-links added to [`dtc_control_report.md`](dtc_control_report.md) and
-  [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) (Related reports).
+- Cross-links in [`dtc_control_report.md`](dtc_control_report.md) and
+  [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) (Related reports sections).
 - `utilities/scripts/patchers/patch_new_dtc_trigger.py` +
   [`PATCHER_new_dtc_trigger.md`](../../../utilities/scripts/patchers/PATCHER_new_dtc_trigger.md) —
   example patcher implementing this report's checklist (emulator-validated by
@@ -229,8 +228,8 @@ decompiled artifact was modified.
 
 ## 7. Validation
 
-- Binary level (rule 7), all re-run this session against the raw ROM
-  (SHA-256 matches `a7cd953c…`): DTC table region dumped byte-exact
+- Binary level (rule 7), checked against the raw ROM
+  (SHA-256 `a7cd953c…`): DTC table region dumped byte-exact
   (`reviews/dtc_authoring/tables_dump.txt`): id2slot 0x7df42, code table 0x7e560,
   prefix 0x7e55a, enables 0x7e678/0x7e704/0x7e790, type 0x7e32a, conf 0x7e81c,
   status 0x7e934, monitor mask 0x7e29e, related 0x7e06c, service table 0x5eb40;
@@ -241,12 +240,12 @@ decompiled artifact was modified.
   mode dispatch on r5 = 2/4/1/0, store path writing 0xffffd570[slot] and first-code
   0xffffd3c0); call counts from `callgraph.tsv`: 0x5fd38 = 71 callers,
   0x66a00 = 80 callers, 0x64ba → 0x1150e edge present.
-- Pipeline validators run from the repo root after this pass: `validate_export.py`,
+- Pipeline validators run from the repo root: `validate_export.py`,
   `validate_reports.py`, `verify_claims.py`, `verify_readability.py`,
   `verify_math_units.py`, plus `python -m pytest tests/` — results recorded in
   [`reviews/dtc_authoring/validation.json`](reviews/dtc_authoring/validation.json).
-- No emulator run in this pass; the reporting half of the chain was already proven
-  dynamically in [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_control/dynamic_validation_log.txt).
+- Dynamic proof of the reporting half of the chain:
+  [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_control/dynamic_validation_log.txt).
 
 ## 8. Memory map for validation
 
@@ -351,7 +350,7 @@ decompiled artifact was modified.
 - **Aging/confirmation counters** (0x60ca6/0x64918/0x64972/0x6400a) remain
   statically read only — see [dtc_control_report.md](dtc_control_report.md) §9.
 - The **0x7e05a tail** of the arg→slot table exists in ROM but no code references it;
-  treated as unused. If a future pass needs args ≥ 0x8c, the referencing code path
-  must be found first.
-- Static analysis only in this pass; dynamic proof of the reporting half already
-  exists in [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_control/dynamic_validation_log.txt).
+  treated as unused. Using args ≥ 0x8c requires finding the referencing code path
+  first.
+- Static analysis only; dynamic proof of the reporting half:
+  [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_control/dynamic_validation_log.txt).
