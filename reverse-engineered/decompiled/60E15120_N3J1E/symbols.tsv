@@ -36097,10 +36097,10 @@ address	name	type	source
 0005fd2c	PTR_DAT_0005fd2c	Label	DEFAULT
 0005fd30	DAT_0005fd30	Label	DEFAULT
 0005fd34	DAT_0005fd34	Label	DEFAULT
-0005fd38	FUN_0005fd38	Function	DEFAULT
-0005fd3c	ref_updateFaultStatusTHUNKNoR6_	Function	USER_DEFINED
+0005fd38	dtc_set_fault_x0	Function	DEFAULT
+0005fd3c	dtc_set_fault_xdefault	Function	USER_DEFINED
 0005fd46	LAB_0005fd46	Label	DEFAULT
-0005fd4a	FUN_0005fd4a	Function	DEFAULT
+0005fd4a	dtc_set_eval_enable	Function	DEFAULT
 0005fd5e	LAB_0005fd5e	Label	DEFAULT
 0005fd64	LAB_0005fd64	Label	DEFAULT
 0005fd68	LAB_0005fd68	Label	DEFAULT

@@ -256,10 +256,10 @@ the code *can* touch, we extracted every static RAM reference from the
   artifact of one ROM. (mov.w low16 literals are only captured by Method A;
   for other ROMs Method B is a lower bound.)
 - **Method C (dynamic stack):** reset SP = 0xffffdfa0 (vector 4); task contexts
-  at 0xffff7408+8·i grow down from ≈0xffff7498; observed low-water mark during
+  at `os_task_stack_base` 0xffff7408+8·i grow down from ≈0xffff7498; observed low-water mark during
   the 2M idle boot = **0xffff73e8**; static longest-call-chain estimate ≈
   **10,284 B** (largest single frame 8,972 B, chain rooted at 0x61092), i.e.
-  worst-case main-stack bottom ≈ 0xffffb584 — comfortably above the free
+  worst-case main-stack bottom ≈ `inferred_ram_b584_ffffb584` 0xffffb584 — comfortably above the free
   window, but interrupt nesting is not included in that estimate.
 
 **Classification:** static allocations = the 5,351 literal/interval-referenced
@@ -267,16 +267,16 @@ bytes (globals: engine state 0xffffa000–0xffffdxxx bins are densest, EEPROM
 mirror at 0xffff8000–0xffff80ff — 0xffff8000 holds the 0x55aa/0xaa55 EEPROM
 magic, see 0xd408/0xd44c, matching the 256 B 93c56 IC420 dump); dynamic
 allocations = stacks (above) plus the pointer-driven ring buffers (queue state
-0xffff9304+3i, bufs 0xffff9310/0xffff93d8/0xffff94a0/0xffff96f8, diag response
-ring 0xffffd962, UDS RX 0xffffddc8).
+`queue_state_base` 0xffff9304+3i, bufs 0xffff9310/0xffff93d8/0xffff94a0/0xffff96f8, diag response
+ring 0xffffd962, UDS RX `uds_rx_buffer` 0xffffddc8).
 
 ### Latent references inside the idle-free window (60E15120_N3J1E, Method A)
 
 | cluster | bytes | note |
 |---|---:|---|
 | 0xffff8000–0xffff8004, 0xffff802c–0xffff8108 | 195 | EEPROM mirror (magic at 0xffff8000; 93c56 = 256 B) |
-| 0xffff8548, 0xffff8658–0xffff87be | 360 | incl. DTC master table 0xffff87b0 |
-| 0xffff8900–0xffff8910, 0xffff893a | 18 | |
+| 0xffff8548, 0xffff8658–0xffff87be | 360 | incl. `dtc_master_table_21` 0xffff87b0 |
+| 0xffff8900–0xffff8910, 0xffff893a | 18 | incl. `dtc_master_current_index` 0xffff8900 |
 | 0xffff8d4c–0xffff8d56, 0xffff8e6c–0xffff8f97, 0xffff8f98–0xffff8fe8 | 125 | |
 | 0xffff9010–0xffff9110, 0xffff9150–0xffff917e | 304 | incl. labeled 0xffff9150 |
 

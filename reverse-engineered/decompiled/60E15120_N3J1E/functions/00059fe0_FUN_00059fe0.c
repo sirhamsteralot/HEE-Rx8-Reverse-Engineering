@@ -13,7 +13,7 @@ uint FUN_00059fe0(void)
     else {
       uVar2 = 1;
     }
-    uVar1 = FUN_0005fd38(0x3b,uVar2);
+    uVar1 = dtc_set_fault_x0(0x3b,uVar2);
     return uVar1;
   }
   return (uint)DAT_ffffd25d;

@@ -11,22 +11,22 @@ void FUN_000547ee(void)
   else {
     uVar1 = 1;
   }
-  FUN_0005fd38(0x7f,uVar1);
-  FUN_0005fd38(0x80);
+  dtc_set_fault_x0(0x7f,uVar1);
+  dtc_set_fault_x0(0x80);
   if (DAT_ffffa403 == '\0') {
     uVar1 = 2;
   }
   else {
     uVar1 = 1;
   }
-  FUN_0005fd38(0x81,uVar1);
+  dtc_set_fault_x0(0x81,uVar1);
   if (DAT_ffffa404 == '\0') {
     uVar1 = 2;
   }
   else {
     uVar1 = 1;
   }
-  FUN_0005fd38(0x82,uVar1);
+  dtc_set_fault_x0(0x82,uVar1);
   return;
 }
 

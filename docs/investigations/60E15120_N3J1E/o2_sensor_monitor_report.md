@@ -141,7 +141,7 @@ different monitor and was not touched.)
 | 0x00038f3e | `FUN_00038f3e` | slow-task batch hosting 0x3fb9e/0x4128e |
 | 0x00038dca | `FUN_00038dca` | calls 0x3f924 |
 | 0x00058262 / 0x0005831c | `FUN_00058262` / `FUN_0005831c` | Mode-06 encoders of `o2_monitor_ratio_ch0/ch1` 0xffffc6f0/c6f4 |
-| 0x0005fd38 | `FUN_0005fd38` | set_fault thunk (see [dtc_control_report.md](dtc_control_report.md)) |
+| 0x0005fd38 | `dtc_set_fault_x0` | set-fault trampoline, x=0 (see [dtc_control_report.md](dtc_control_report.md)) |
 
 ### 8.2 Data and entry points (ROM)
 
