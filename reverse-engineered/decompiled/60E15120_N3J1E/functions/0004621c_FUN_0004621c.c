@@ -37,11 +37,11 @@ uint FUN_0004621c(void)
 LAB_000462ec:
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0);
   if (cVar2 == '\x01') {
-    uVar1 = FUN_0005fd38(0x62,1);
+    uVar1 = dtc_set_fault_x0(0x62,1);
     return uVar1;
   }
   if (DAT_ffffcc14 == 1) {
-    uVar1 = FUN_0005fd38(0x62,2);
+    uVar1 = dtc_set_fault_x0(0x62,2);
     return uVar1;
   }
   return (uint)DAT_ffffcc14;

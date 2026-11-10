@@ -14,7 +14,7 @@ void candidate_charging_dtc_raise_p2502(void)
   else {
     uVar1 = 1;
   }
-  FUN_0005fd38(0x7b,uVar1);
+  dtc_set_fault_x0(0x7b,uVar1);
   return;
 }
 

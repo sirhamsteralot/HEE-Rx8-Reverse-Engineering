@@ -1539,7 +1539,10 @@
     "FUN_0000bed8": "e2ram_busy_status_read",
     "DAT_ffffc28e": "e2ram_shadow_data_ffffc28e",
     "DAT_ffffc38e": "e2ram_shadow_complement_ffffc38e",
-    "DAT_ffffc268": "e2ram_param_block_ffffc268"
+    "DAT_ffffc268": "e2ram_param_block_ffffc268",
+    "FUN_0005fd38": "dtc_set_fault_x0",
+    "ref_updateFaultStatusTHUNKNoR6_": "dtc_set_fault_xdefault",
+    "FUN_0005fd4a": "dtc_set_eval_enable"
   },
   "function_names_integrated": 490,
   "files_changed_this_run": 0,

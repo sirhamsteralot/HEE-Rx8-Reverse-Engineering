@@ -9,18 +9,18 @@ uint FUN_0003aa98(void)
   uint uVar1;
   
   if (DAT_ffffc56a == '\x01') {
-    FUN_0005fd38(7,1);
+    dtc_set_fault_x0(7,1);
   }
   else if (DAT_ffffc56e == 1) {
-    FUN_0005fd38(7,2);
+    dtc_set_fault_x0(7,2);
   }
   if (DAT_ffffc56b == '\x01') {
-    uVar1 = FUN_0005fd38(8,1);
+    uVar1 = dtc_set_fault_x0(8,1);
   }
   else {
     uVar1 = (uint)DAT_ffffc56e;
     if (uVar1 == 1) {
-      uVar1 = FUN_0005fd38(8,2);
+      uVar1 = dtc_set_fault_x0(8,2);
     }
   }
   return uVar1;

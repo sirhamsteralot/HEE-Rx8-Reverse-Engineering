@@ -7,7 +7,7 @@ void FUN_0005fd6c(void)
   FUN_0006004a();
   FUN_000601b2();
   FUN_0006020e();
-  FUN_0005fd4a(1);
+  dtc_set_eval_enable(1);
   return;
 }
 

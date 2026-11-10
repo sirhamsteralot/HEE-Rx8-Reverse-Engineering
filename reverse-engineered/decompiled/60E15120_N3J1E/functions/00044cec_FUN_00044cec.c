@@ -16,7 +16,7 @@ uint FUN_00044cec(void)
     else {
       uVar3 = 2;
     }
-    uVar1 = ref_updateFaultStatusTHUNKNoR6_(0,uVar3);
+    uVar1 = dtc_set_fault_xdefault(0,uVar3);
   }
   else {
     uVar1 = (uint)DAT_ffffcb9e;
@@ -25,7 +25,7 @@ uint FUN_00044cec(void)
       if ((DAT_ffffcb9c & 2) != 0) {
         bVar4 = bVar4 | 2;
       }
-      uVar1 = ref_updateFaultStatusTHUNKNoR6_(0,1,bVar4);
+      uVar1 = dtc_set_fault_xdefault(0,1,bVar4);
     }
   }
   return uVar1;
