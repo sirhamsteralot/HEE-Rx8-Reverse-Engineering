@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00052970 (62 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_diag_encode_s16_div(float param_1,float param_2,float param_3)
+int diag_encode_s16_div(float param_1,float param_2,float param_3)
 
 {
   int iVar1;

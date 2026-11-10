@@ -132,23 +132,23 @@
  },
  "000145c8": {
   "alias": "timing_retard_fast_task",
-  "confidence": "medium",
-  "evidence": "; ROM pointer at 0x116e0 (task table) + caller slow_background_task 0x11534; body uses interrupt-mask wrapper (sh_raise_interrupt_mask 0x10) - fast timing-retard path"
+  "confidence": "high",
+  "evidence": "ROM pointer at 0x116e0 = 0x000145c8 (ROM-verified); caller 0x11534 slow-background wrapper; callees include 0x1391c ref_calcKnockRAMUpdate_, 0x13b40 knock_retard_slow_recovery, 0x214f8/0x215f8 AC-compressor leading/trailing timing retards, throttle/liftoff plausibility checks (callgraph)."
  },
  "000390b8": {
   "alias": "knock_sensor_monitor_task",
-  "confidence": "medium",
-  "evidence": "; ROM pointer at 0x11978 (task table near 0x11744 task chain); caller 0x11744; byte-exact function match in 3/10 other ROMs (cross_rom_function_matches.tsv)"
+  "confidence": "high",
+  "evidence": "ROM pointer at 0x11978 = 0x000390b8 (ROM-verified); caller 0x11744 in the task chain (callgraph); callees 0x4a084 knock_sensor_dtc_report + 0x49fac knock_sensor_health_persistence; byte-exact match in 3/10 other ROMs (cross_rom_function_matches.tsv)."
  },
  "000064ba": {
   "alias": "knock_sensor_fault_task",
-  "confidence": "medium",
-  "evidence": "; ROM pointer to 0x64ba at 0x4a28 (task/IVT table region) - scheduled entry, not jsr-called; body 46 B re-read; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv); still candidate_ in function_index (D6)"
+  "confidence": "high",
+  "evidence": "ROM task-table record at 0x4a28 holds u32 0x000064ba (ROM-verified); body jsr chain via pools 0x655c-0x6570 = 0xd21e, 0x6842, 0x94fc, 0xc290 ref_knockSensorADCFault, 0x1150e, tail jmp 0x3d58 ref_taskEndRoutine_ (pool words ROM-verified); byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv). Scheduled fault-service task whose knock-specific step is 0xc290."
  },
  "0001467c": {
   "alias": "knock_rough_correction_update",
-  "confidence": "medium",
-  "evidence": "; ROM pointer at 0x11a84 (task table) + caller dtc_fault_service_batch 0x118d0; interrupt-mask wrapper body"
+  "confidence": "high",
+  "evidence": "ROM pointer at 0x11a84 = 0x0001467c (ROM-verified); caller 0x118d0; callees 0x13034 knock_rough_correction_targets + 0x13210 ref_roughKnockCorrection (callgraph)."
  },
  "00013034": {
   "alias": "knock_rough_correction_targets",
@@ -156,13 +156,13 @@
  },
  "0003d010": {
   "alias": "o2_monitor_integrator",
-  "confidence": "medium",
-  "evidence": "; body re-read catalyst-temp model lookup (tbl 0x6b610/0x6b61c vs a998) + vehicle_speed > 95.88 branch - consistent with O2/catalyst monitor integrator; no ROM pointer (called via 0x3ccec/0x3cd06 jsr)"
+  "confidence": "high",
+  "evidence": "Body: integrator DAT_ffffc5ec decays by mass_air_flow_ffffa9ec*0.1 clamped >= 0 (rx8_max_float 0x23e4), loaded from tbl 0x6b61c vs catalyst-temp model 0xffffa998; countdowns c5f8/c5fa gated by vehicle_speed_ffffbbb4 > 95.88; callers 0x3ccec (sets tolerance bounds c5f0=-40.0/c5f4=200.0) and 0x3cd06 (out-of-tolerance sets c5fc/c5fd); literal pools 0x3d0c4-0x3d0ec ROM-verified."
  },
  "00022144": {
-  "alias": "evap_open_loop_condition",
+  "alias": "fuel_open_loop_condition",
   "confidence": "medium",
-  "evidence": "; body re-read gates on open_loop_active_ffffb12c (fuel open-loop flag, high label) && DAT_ffffbe00 >= 66.5 && closed_loop_active ae1f==0 -> sets b319 and clamps b308 = min(b308, 0) - this is a FUEL open-loop condition, the \"evap\" in the name is doubtful; ROM pointer at 0x21bfc; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
+  "evidence": "Body (200 B): DAT_ffffb319 = 1 iff DAT_ffffb318==1 && open_loop_active_ffffb12c==1 && DAT_ffffbe00 >= 66.5 && closed_loop_active_ffffae1f==0 && DAT_ffffb2f6/b0c8/b0c9 clear; pools 0x22218/0x2221c/0x22220 ROM-verified. The gate uses the fuel open-loop flag (high label open_loop_active_ffffb12c, set by set_open_loop_flag 0x1ee30), so the 'evap' attribution inherited from caller ref_evapRelated 0x21b8a (a ref_ hypothesis) is doubtful: renamed to fuel_open_loop_condition, stays candidate_ until the EVAP-chain attribution is proven."
  }
  },
  "ram_aliases": {

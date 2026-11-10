@@ -10,7 +10,7 @@
 /* Function candidate recovered from ROM pointer at 5f414 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid172a_ram_c4c8_temp_c(char param_1)
+void diag22_pid172a_ram_c4c8_temp_c(char param_1)
 
 {
   undefined4 uVar1;

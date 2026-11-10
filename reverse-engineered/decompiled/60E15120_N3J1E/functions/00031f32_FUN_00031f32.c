@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00031f32; body bytes: 230; decompiled */
 
-undefined2 * candidate_apv_command_calc(void)
+undefined2 * apv_command_calc(void)
 
 {
   undefined2 *puVar1;

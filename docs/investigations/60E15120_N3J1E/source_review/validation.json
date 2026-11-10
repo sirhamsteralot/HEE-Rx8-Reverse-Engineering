@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-30",
+  "date": "2026-11-10",
   "function_annotations": 492,
   "ram_aliases": 455,
   "ghidra_database_updated": false,
@@ -8,6 +8,10 @@
       "pass": "source_review_label_sweep_can_uds",
       "note": "Promoted the 10 source-review function aliases that were only in accepted_function_aliases.tsv + decompiled header comments into subsystem label records: uds_dispatch_labels.json (0x5774c diag22_find_and_dispatch_identifier, 0x57858 diag22_append_positive_response_header, 0x57a0c diag_append_u16_be, 0x57a2e diag_append_u8, 0x71ea sci0_exchange_byte_wait_rdrf, RAM 0xffffd1ea diag22_current_identifier) and can_mailbox_config_labels.json (0x28eb8 can216_unpack_mixed_width_fields, 0x291dc can201_pack_and_queue_payload, 0x29236 can201_encode_rpm_u16, 0x2927c can201_encode_vehicle_speed_u16, 0x29340 can201_prepare_rpm_with_conditional_filter, RAM 0xffffbaf4/bafc/bb00/bb04/bb08). Each re-verified this pass against raw ROM literal pools + disassembly (0x62 header emit, BE append, RDRF 0x40 loop 0x721c-0x7224, 0.25 RPM scale + 0xfffe cap + 0xffff sentinel, descriptor 0x4df1c bytes, 12-byte record stride at 0x5776e-0x5777a). Reports touched: can_mailbox_config_report.md, uds_mode22_dispatch_report.md.",
       "rom_unchanged": true
+    },
+    {
+      "pass": "candidate_label_promotions",
+      "note": "Prove-or-demote pass over the export's candidate_* function labels (181 at pickup): 112 promoted to high (prefix dropped in the export via accepted_function_aliases.tsv), 1 renamed (0x22144 -> candidate_fuel_open_loop_condition, stays medium), 68 kept as candidate_ with evidence. Record: data/labels/60E15120_N3J1E/candidate_promotions.json; review: docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md; pass script: utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py (wired into rebuild.sh); tests/test_candidate_label_promotions.py 6 passed."
     }
   ],
   "sources": [

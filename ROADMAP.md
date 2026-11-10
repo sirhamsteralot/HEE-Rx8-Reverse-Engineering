@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 10–19 — pick up 10 first; C item 10 pairs naturally
+**reopened**: open items 11–19 — pick up 11 next; C item 11 pairs naturally
 with **E item 1** (reimplementation coverage), then F (gated). The audit
 snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 `FUN_` (function_index.tsv figures of 2026-11-04,
@@ -27,19 +27,12 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 10–19)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 11–19)
 
-- **C item 10 (open)** — prove or demote the 122 unverified `candidate_*`
-  labels (**D6**): 58 diag22 PID/RAM-meaning labels plus control-path
-  candidates (`candidate_rev_limit_conditionals` 0xee82,
-  `candidate_o2_monitor_integrator` 0x3d010,
-  `candidate_evap_open_loop_condition` 0x22144,
-  `candidate_knock_sensor_fault_task` 0x64ba). Dynamic validation
-  (`harness.call()` + datalog replay) pairs naturally with E item 1.
 - **C item 11 (open)** — follow-ups from the large-control-bodies labeling pass
   (PR #33, closed — record in git history). The
   dynamic/emulator validation of the seven newly labeled bodies is **done**
-  (per-subsystem dynamic tests `tests/test_*_dynamic.py`, 11 passed; pairs with C item 10 / E item 1 —
+  (per-subsystem dynamic tests `tests/test_*_dynamic.py`, 11 passed; pairs with E item 1 —
   see [reviews/large_control_bodies_review.md](docs/investigations/60E15120_N3J1E/reviews/large_control_bodies_review.md);
   it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
   emulator decode gaps). Still open, per subsystem (report §9 Limits):
@@ -255,7 +248,7 @@ flash before any read), not the test path.
 |----|--------|------|
 | D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them ([uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
-| D6 | open (proof pass 2026-11-05 done, renames pending) | 122 `candidate_*` names in the 60E15120_N3J1E export ([function_index.tsv](reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv)); the 2026-11-05 low-confidence proof pass dynamically proved the underlying functions behind many of them (incl. 0xee82, 0x3d010, 0x22144, 0x64ba evidence notes) — see [reviews/low_confidence_proof_pass_2026-11-05.md](docs/investigations/60E15120_N3J1E/reviews/low_confidence_proof_pass_2026-11-05.md); dropping the `candidate_` prefix in the export remains pickup = C item 10 |
+| D6 | closed | 181 `candidate_*` names in the 60E15120_N3J1E export at pickup, all decided: 112 promoted to high (prefix dropped in the export; dynamic proof + cross-ROM byte matches + fresh ROM/task-table verification), 1 renamed (0x22144 → `candidate_fuel_open_loop_condition`, stays medium — the "evap" attribution was an inherited `ref_` caller hypothesis), 68 kept as `candidate_` with evidence recorded. See [reviews/candidate_label_promotions_review.md](docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md) + record [candidate_promotions.json](data/labels/60E15120_N3J1E/candidate_promotions.json); earlier proof evidence: [reviews/low_confidence_proof_pass_2026-11-05.md](docs/investigations/60E15120_N3J1E/reviews/low_confidence_proof_pass_2026-11-05.md) |
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D12 | open | `annotate_source_review.py` fails on clean main too: 38 pre-existing 4-field rows in `docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv` (row count verified on main and on the PR #33 head). Noted in PR #33 and deliberately left as-is there (no drive-by fix, AGENTS.md rule 9); fixing the parser/rows is its own work unit |

@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00067400 (18 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_uds_rx_channel_set_service(byte param_1,undefined1 param_2)
+void uds_rx_channel_set_service(byte param_1,undefined1 param_2)
 
 {
   (&DAT_ffffddf3)[(uint)param_1 * 2] = param_2;

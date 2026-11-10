@@ -98,9 +98,9 @@ uint FUN_00054d90(char param_1,uint param_2)
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = candidate_diag_encode_o2s2();
+    uVar7 = diag_encode_o2s2();
     uVar7 = ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = candidate_diag_encode_trim_b074();
+    uVar2 = diag_encode_trim_b074();
     ref_updateRAM__(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
@@ -116,23 +116,23 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = candidate_diag_encode_b2f0();
+    uVar7 = diag_encode_b2f0();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = candidate_diag_read_d287();
+    uVar7 = diag_read_d287();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
-    uVar7 = candidate_diag_read_gear_byte();
+    uVar7 = diag_read_gear_byte();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = candidate_diag_read_90fc();
+    uVar7 = diag_read_90fc();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = candidate_diag_encode_ad10();
+    uVar7 = diag_encode_ad10();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
@@ -142,7 +142,7 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = candidate_diag_encode_c644();
+    uVar7 = diag_encode_c644();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
@@ -158,23 +158,23 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = candidate_diag_encode_ad48();
+    uVar7 = diag_encode_ad48();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = candidate_diag_encode_ad5e();
+    uVar7 = diag_encode_ad5e();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = candidate_diag_encode_a9c4();
+    uVar7 = diag_encode_a9c4();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = candidate_diag_encode_a9c6();
+    uVar7 = diag_encode_a9c6();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = candidate_diag_encode_b410();
+    uVar7 = diag_encode_b410();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:

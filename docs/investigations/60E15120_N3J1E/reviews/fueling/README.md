@@ -190,12 +190,12 @@ here — upstream repo).
 
 - **39 functions** in `source_review/accepted_function_aliases.tsv`
   (33 high confidence; 6 medium -> `candidate_` prefix in the integrated
-  views: `candidate_injector_pulse_set_dispatch`,
-  `candidate_injector_zero_offset_set`, `candidate_injection_angle_limit_lookup`,
-  `candidate_fuel_cut_arbitration`, `candidate_fuel_cut_rpm_condition`,
-  `candidate_rev_limit_conditionals`, `candidate_cold_start_enrichment`,
-  `candidate_maf_voltage_and_fault_counters`, `candidate_maf_filtered_update`,
-  `candidate_maf_per_rotation_calc`, `candidate_diag_injector_pulse_time`,
+  views: `injector_pulse_set_dispatch`,
+  `injector_zero_offset_set`, `injection_angle_limit_lookup`,
+  `fuel_cut_arbitration`, `fuel_cut_rpm_condition`,
+  `rev_limit_conditionals`, `cold_start_enrichment`,
+  `maf_voltage_and_fault_counters`, `maf_filtered_update`,
+  `maf_per_rotation_calc`, `candidate_diag_injector_pulse_time`,
   `candidate_diag_afr_word_a/b`).
 - **151 RAM locations** in `source_review/accepted_ram_aliases.tsv`
   (integrated as `<alias>_<address>`; snapshot locals renamed by the

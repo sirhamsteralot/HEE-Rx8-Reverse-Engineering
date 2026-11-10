@@ -14,7 +14,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000e492 (48 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_injection_angle_limit_lookup(void)
+void injection_angle_limit_lookup(void)
 
 {
   max_injection_angle_1_ffffa434 = lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_fuel_injector_unknown_max_injection_angle1_00068ef8);

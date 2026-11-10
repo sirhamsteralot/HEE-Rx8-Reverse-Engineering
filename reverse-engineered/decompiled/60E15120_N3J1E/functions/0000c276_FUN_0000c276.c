@@ -11,7 +11,7 @@ void knock_reference_adc_read(void)
 {
   ushort uVar1;
   
-  knock_voltage_reference_ffffa326 = candidate_adc_read_result_bank2();
+  knock_voltage_reference_ffffa326 = adc_read_result_bank2();
   uVar1 = ATUII_TIER8_W;
   ATUII_TIER8_W = uVar1 & 0xefff;
   return;

@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x00034916; body bytes: 24; decompiled */
 
-void candidate_vfad_control_task_wrapper(void)
+void vfad_control_task_wrapper(void)
 
 {
   undefined4 uVar1;

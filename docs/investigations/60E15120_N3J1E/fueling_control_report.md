@@ -167,8 +167,8 @@ entries below.
 | 0x00030948 | `calculate_fuel_amount_per_rotation` | per-injector amounts bec8..bee0 |
 | 0x0002fea8 | `injector_pulse_time_arbitrate` | be24..be38 pulse slots, cranking decay tbl 0x6bab0 |
 | 0x00008a68 | `injector_pulse_set_channel` | ATU-II program: pulse = (a094[ch]+a010[ch])>>4 → DCNT8x |
-| 0x00008340 | `candidate_injector_pulse_set_dispatch` | thunk → 0x8a68; wrappers 0x59a4-0x59ea |
-| 0x000086f8 / 0x000086ac | `set_fuel_injector_latency` / `candidate_injector_zero_offset_set` | a094..a0a8 / a0ac..a0c0 per-channel pairs |
+| 0x00008340 | `injector_pulse_set_dispatch` | thunk → 0x8a68; wrappers 0x59a4-0x59ea |
+| 0x000086f8 / 0x000086ac | `set_fuel_injector_latency` / `injector_zero_offset_set` | a094..a0a8 / a0ac..a0c0 per-channel pairs |
 | 0x000085e4 | `injector_channel_disable` | per-channel off (TIER/GR/DCNT) |
 | 0x0002ff78 | `injector_latency_cal_lookup` | 3D latency tbls 0x6aa80/0x6aa64 vs MRP + battery V, /0.25 |
 | 0x0002fd3e | `injector_temp_multiplier_lookup` | bde4/bde8/bdec 3D temp×load tbls 0x6a9a4/0x6a9c0/0x6a9dc |
@@ -178,13 +178,13 @@ entries below.
 | 0x000307e0 | `closed_loop_fuel_trim` | beb4/beb8 CL trim (clamp −1..2, filter 0.0625) |
 | 0x00033ad2 | `calculate_engine_load` | c0b4 = min(filter(c0b0), c0b8); 0.525 if injectors off |
 | 0x00007438 | `maf_sensor_scaling` | 9f78 = tbl 0x69788(raw·5/65536); fault 9f7c |
-| 0x00019f4e / 0x00019f40 / 0x0001a418 | `candidate_maf_voltage_and_fault_counters` / `…_filtered_update` / `maf_per_rotation_calc` | MAF voltage, latching, per-rotation |
+| 0x00019f4e / 0x00019f40 / 0x0001a418 | `maf_voltage_and_fault_counters` / `…_filtered_update` / `maf_per_rotation_calc` | MAF voltage, latching, per-rotation |
 | 0x0001e842 | `maf_operating_range` | b0fe range 0-3 from a9ec |
-| 0x0000e48e | `candidate_injection_angle_limit_lookup` | a434..a43c max injection angle (tbls 0x68ef8/f0c/f20) |
+| 0x0000e48e | `injection_angle_limit_lookup` | a434..a43c max injection angle (tbls 0x68ef8/f0c/f20) |
 | 0x00030678 | `cranking_pulse_adder` | be94 += be58 when cranking |
 | 0x0000e2a8 / 0x0000ee64 | `update_injectors_off_flag` / `rev_limit_fuel_cut_init` | a42c; clears a4a4/a4a5/a4a8 |
-| 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `candidate_fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
-| 0x0001ddfc | `candidate_cold_start_enrichment` | b0c4 (0.0 in this ROM) |
+| 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
+| 0x0001ddfc | `cold_start_enrichment` | b0c4 (0.0 in this ROM) |
 | 0x00056b22 / 0x00056b8a / 0x00056b9e / 0x00056f6c | `diag22_pid0034_afr_lambda_words` / `diag22_pid0043_engine_load_g_rev` / `diag22_pid0044_lambda_target` / `diag22_pid1410_injector_pulse_time` | PIDs 0x0034/0x0043/0x0044/0x1410 (see [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md)) |
 | 0x000556ec / 0x00055702 | `diag_read_afr_word_a` / `diag_read_afr_word_b` | AFR PID words aa6c/aa7c |
 
@@ -295,11 +295,11 @@ confirm the thread's claim that **lambda tables store the decimal part (λ−1) 
 
 ### 10.2 Fuel-cut arbitration — resolved
 
-0xedc4 `candidate_fuel_cut_arbitration(param)`: request A (`fuel_cut_request_a` 0xffffa464) → both
+0xedc4 `fuel_cut_arbitration(param)`: request A (`fuel_cut_request_a` 0xffffa464) → both
 flags set (`fuel_cut_flag_a/b` a444=a445=1); request B (a465) only on its rising edge, and unless
 the caller is source 0x06/0x12, sets (a444=0, a445=1); otherwise a444=0, a445=0.
 Hysteresis via prev-request latches a4a2/a4a3; then calls 0xe2d4. RPM gates
-0x18cfe `candidate_fuel_cut_rpm_condition`: `fuel_cut_allowed_ffffa964` =
+0x18cfe `fuel_cut_rpm_condition`: `fuel_cut_allowed_ffffa964` =
 (decel_a a96a && rpm>2500) || (decel_b a96c && rpm>1700), with hysteresis flags
 a97c/a97d (1700/2500). Rev-limit conditionals 0xee82: coolant<18 °C flag a4a6 and
 a 12-cycle rev-limit countdown a4ae on mode edge (prev a4ad). Still open: the
@@ -308,7 +308,7 @@ requesters of `fuel_cut_request_a/b` 0xffffa464/a465 (0xf960 `ref_somethingFuelC
 
 ### 10.3 Injection-angle semantics — resolved
 
-0xe48e `candidate_injection_angle_limit_lookup` loads a434/a438/a43c from
+0xe48e `injection_angle_limit_lookup` loads a434/a438/a43c from
 tbl_068ef8 / tbl_068f0c / tbl_068f20 (rpm axis 800–6800, uint8, RX8Defs scale
 "(x·2)+0 deg (MAYBE?)" → 120° at 800 rpm down to 60° at 6800 rpm). Consumer
 0xff32 `ref_fuelInjectionRelated` cmd 1 writes them as `value × 65536`
@@ -319,7 +319,7 @@ secondary 2), shrinking with rpm — not injection *phase*.
 
 ### 10.4 Cold-start degenerate body — resolved (byte-verified)
 
-0x1ddfc `candidate_cold_start_enrichment`: engine-off stores 0.0 (fldi0 fr15) to
+0x1ddfc `cold_start_enrichment`: engine-off stores 0.0 (fldi0 fr15) to
 b0c4 in both coolant/IAT branches; running computes `max(b0c4 − pool, 0.0)` with
 pool word 0x1de64 → float at 0x71064 = `0x00000000` (0.0), and 0x1de60 → 0x71060
 also 0.0. So **b0c4 is hardwired to 0.0 in this ROM** — the cold-start enrichment
@@ -327,11 +327,11 @@ is compiled out; the function only ever freezes/zeros it.
 
 ### 10.5 MAF fault latching — resolved
 
-0x19f4e `candidate_maf_voltage_and_fault_counters`: `maf_voltage_ffffaa2c` =
+0x19f4e `maf_voltage_and_fault_counters`: `maf_voltage_ffffaa2c` =
 raw·5/65536 (step 0x38a00000); saturating u8 counters aa35 (raw ≥ 0xf852) /
 aa36 (raw < 0x7ae); the validated pair a9e4/a9e8 is latched when a counter > 2
 **or** raw is inside the valid band (0x7ae, 0xf852). 0x19f40
-`candidate_maf_filtered_update` copies a9e8 → `mass_air_flow_ffffa9ec` (the cell
+`maf_filtered_update` copies a9e8 → `mass_air_flow_ffffa9ec` (the cell
 the load/fuel chain consumes). The 0.64 V / 4.9 V window fault manager itself is
 in [load_fueling_report.md](load_fueling_report.md) (cal-area u16 0x6c102/0x6c104).
 
@@ -418,10 +418,10 @@ in §9 of the reference check out against the ROM; the load-side units are settl
 | 0x00034230 / 0x000342b0 | FUN_00034230 / FUN_000342b0 | c104 tip-in adder, reset |
 | 0x0004af14 / 0x0004afd6 | FUN_0004af14 / FUN_0004afd6 | cde0 transient adder + decay |
 | 0x0003e980 | FUN_0003e980 | c644 catalyst-temp correction (PID 0x3c) |
-| 0x0000edc4 / 0x00018cfe / 0x0000ee82 | candidate_fuel_cut_arbitration / candidate_fuel_cut_rpm_condition / candidate_rev_limit_conditionals | fuel-cut arbitration (§10.2) |
-| 0x0000e48e / 0x0000ff32 | candidate_injection_angle_limit_lookup / ref_fuelInjectionRelated | max injection angle tables → struct (§10.3) |
-| 0x0001ddfc | candidate_cold_start_enrichment | degenerate 0.0 body (§10.4) |
-| 0x00019f4e / 0x00019f40 | candidate_maf_voltage_and_fault_counters / candidate_maf_filtered_update | MAF latch (§10.5) |
+| 0x0000edc4 / 0x00018cfe / 0x0000ee82 | fuel_cut_arbitration / fuel_cut_rpm_condition / rev_limit_conditionals | fuel-cut arbitration (§10.2) |
+| 0x0000e48e / 0x0000ff32 | injection_angle_limit_lookup / ref_fuelInjectionRelated | max injection angle tables → struct (§10.3) |
+| 0x0001ddfc | cold_start_enrichment | degenerate 0.0 body (§10.4) |
+| 0x00019f4e / 0x00019f40 | maf_voltage_and_fault_counters / maf_filtered_update | MAF latch (§10.5) |
 | 0x000064e8 / 0x00011534 | `slow_task_entry` / `slow_background_task` | task rec[18] entry → slow task (§10.6) |
 
 ### 10.11 Limits of this update

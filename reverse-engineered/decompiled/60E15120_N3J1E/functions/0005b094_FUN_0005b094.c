@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00059884 (154 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_12(ushort param_1,uint param_2)
+uint uds_service_12(ushort param_1,uint param_2)
 
 {
   uint uVar1;

@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x000390b8; body bytes: 42; decompiled */
 
-void candidate_knock_sensor_monitor_task(void)
+void knock_sensor_monitor_task(void)
 
 {
   undefined4 uVar1;

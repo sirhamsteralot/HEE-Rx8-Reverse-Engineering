@@ -15,7 +15,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0001acae (164 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * candidate_maf_voltage_and_fault_counters(void)
+undefined4 * maf_voltage_and_fault_counters(void)
 
 {
   ushort snapshot_maf_adc_raw_ffff9eea;

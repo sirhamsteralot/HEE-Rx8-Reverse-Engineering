@@ -10,7 +10,7 @@ void FUN_000197be(void)
   ref_filterEngineSpeed();
   ref_calculatePredictedEngineSpeed_();
   FUN_0001a1dc();
-  candidate_maf_per_rotation_calc();
+  maf_per_rotation_calc();
   ref_airPerStroke();
   calculate_engine_load();
   knock_threshold_setup();

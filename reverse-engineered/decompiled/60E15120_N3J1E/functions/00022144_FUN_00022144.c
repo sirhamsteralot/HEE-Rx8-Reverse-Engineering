@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00022ab0 (200 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_evap_open_loop_condition(void)
+uint candidate_fuel_open_loop_condition(void)
 
 {
   char cVar1;

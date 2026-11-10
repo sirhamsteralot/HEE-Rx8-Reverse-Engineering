@@ -274,12 +274,12 @@ renamed or upgraded, and no decompiled artifact was modified.
 | 0x0002376c / 0x0002377a | `e2ram_load_decode_entry` / `e2ram_save_encode_entry` | load / save wrappers |
 | 0x000235c8 / 0x000235f8 / 0x000236cc | `FUN_000235c8` / `FUN_000235f8` / `FUN_000236cc` | load / verify / save drivers |
 | 0x0001150e | `FUN_0001150e` | periodic batch containing the save; called from 0x64ba |
-| 0x000064ba | `candidate_knock_sensor_fault_task` | task[9] entry → 0x1150e |
-| 0x00057db0 / 0x00058168 | `candidate_uds_service_18` / `FUN_00058168` | Mazda UDS 0x18 readout (record 0x5ec0c); 0x58168 sets 0xffffd228 |
+| 0x000064ba | `knock_sensor_fault_task` | task[9] entry → 0x1150e |
+| 0x00057db0 / 0x00058168 | `uds_service_18` / `FUN_00058168` | Mazda UDS 0x18 readout (record 0x5ec0c); 0x58168 sets 0xffffd228 |
 | 0x00065ff8 / 0x000661ec / 0x00065c88 / 0x0006725c | `obd_mode03_stored_dtc` / `obd_mode07_pending_dtc` / `obd_mode02_freeze_frame` / `obd_mode06_test_results` | scanner readout |
 | 0x000667c8 | `FUN_000667c8` — dtc_build_response_codes | slot→code emission from 0x7e560 |
 | 0x00061450 / 0x000615c6 | `FUN_00061450` / `FUN_000615c6` | master-table count / list scanners |
-| 0x0005fab2 / 0x0005fb08 | `candidate_dtc_count_stored` / `dtc_count_ram_table` | Mode 22 PIDs 0x0200 / 0x0202 (via 0x5774c, table 0x5f10c) |
+| 0x0005fab2 / 0x0005fb08 | `dtc_count_stored` / `dtc_count_ram_table` | Mode 22 PIDs 0x0200 / 0x0202 (via 0x5774c, table 0x5f10c) |
 | 0x000558ac | `uds_service_14_clear_diagnostic_information` | clear (Mode 04 shared) |
 | 0x0005dc44 | `uds_service_85_control_dtc_setting` | UDS 0x85 handler (record 0x5eba0) |
 | 0x0005dde8 | `ref_setDiagMode85Bool2` | 0x85 sub 1/2 -> dtc_set_eval_enable(1/0) + 0xffffd378 |

@@ -7,7 +7,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f400. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid17a6_ram_d1ac_scaled(char param_1)
+void diag22_pid17a6_ram_d1ac_scaled(char param_1)
 
 {
   float fVar1;

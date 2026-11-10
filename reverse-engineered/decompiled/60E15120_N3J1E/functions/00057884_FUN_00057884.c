@@ -10,7 +10,7 @@
 /* Function candidate recovered from ROM pointer at 5f564 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pidff10_dtc_status_c1d5_c1d8(undefined4 param_1)
+void diag22_pidff10_dtc_status_c1d5_c1d8(undefined4 param_1)
 
 {
   undefined4 uVar1;

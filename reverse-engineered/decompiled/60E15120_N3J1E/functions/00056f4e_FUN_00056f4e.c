@@ -10,7 +10,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f388. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1340_ram_a9bc_pct(char param_1)
+void diag22_pid1340_ram_a9bc_pct(char param_1)
 
 {
   undefined4 uVar1;

@@ -511,7 +511,7 @@ the def uses the Mazda assignment (RX-8-specific).
 | 0x000615c6 | `FUN_000615c6` — dtc_collect_by_state_list | master-table scanner (list, cal filter) |
 | 0x00062df8 | `FUN_00062df8` — dtc_master_lookup_slot | slot lookup in master table |
 | 0x00061800 | `FUN_00061800` — dtc_map_master_state | 1..0x3f→0x60, 0x80..0xbf→0x70 |
-| 0x0005fab2 | `candidate_dtc_count_stored` | PID 0x0200 stored count |
+| 0x0005fab2 | `dtc_count_stored` | PID 0x0200 stored count |
 | 0x0005fb08 | `dtc_count_ram_table` | PID 0x0202 RAM-list count |
 | 0x0005f8fa | `FUN_0005f8fa` — dtc_rotor_adjust_count | rotor-0/1 adjustment for counts |
 | 0x000667c8 | `FUN_000667c8` — dtc_build_response_codes | slot→code emission (table 0x7e560) |
@@ -521,7 +521,7 @@ the def uses the Mazda assignment (RX-8-specific).
 | 0x00065c88 | `obd_mode02_freeze_frame` | Mode 02 handler |
 | 0x0006725c | `obd_mode06_test_results` | Mode 06 handler |
 | 0x0005dc44 | `uds_service_85_control_dtc_setting` | DTC setting on/off |
-| 0x00057db0 | `candidate_uds_service_18` — uds_18_mazda_dtc_readout | Mazda DTC readout (medium confidence) |
+| 0x00057db0 | `uds_service_18` — uds_18_mazda_dtc_readout | Mazda DTC readout (high confidence: router 0x68dac reached it at session bit 0, r0 = 24, in the emulator) |
 | 0x0006328a | `FUN_0006328a` — dtc_master_iterate | 21-entry master-table iterator |
 | 0x00063396 | `FUN_00063396` — dtc_master_pick_priority | priority pick |
 | 0x000612ee | `FUN_000612ee` — dtc_aging_sweep | per-type aging state machines |
@@ -545,7 +545,7 @@ the def uses the Mazda assignment (RX-8-specific).
 | 0x0002376c / 0x0002377a | `e2ram_load_decode_entry` / `e2ram_save_encode_entry` | load / save wrappers |
 | 0x000235c8 / 0x000235f8 / 0x000236cc | `FUN_000235c8` / `FUN_000235f8` / `FUN_000236cc` | load / verify / save drivers (boot 0x1102a/0x114d0; save from 0x1150e) |
 | 0x0001150e | `FUN_0001150e` | periodic batch containing the E2RAM save; called from 0x64ba |
-| 0x000064ba | `candidate_knock_sensor_fault_task` | task[9] entry → 0x1150e |
+| 0x000064ba | `knock_sensor_fault_task` | task[9] entry → 0x1150e |
 
 ### RAM
 

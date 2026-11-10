@@ -8,7 +8,7 @@
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f478. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1631_tol_status_b570_b584(char param_1)
+void diag22_pid1631_tol_status_b570_b584(char param_1)
 
 {
   char cVar2;

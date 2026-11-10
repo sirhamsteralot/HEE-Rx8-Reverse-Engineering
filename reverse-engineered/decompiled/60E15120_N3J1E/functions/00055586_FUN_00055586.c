@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00055586; body bytes: 38; decompiled */
 
-void candidate_diag_encode_o2s2(void)
+void diag_encode_o2s2(void)
 
 {
   undefined4 uVar1;

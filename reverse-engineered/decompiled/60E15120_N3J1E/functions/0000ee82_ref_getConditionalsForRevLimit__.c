@@ -10,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000ee86 (120 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_rev_limit_conditionals(void)
+void rev_limit_conditionals(void)
 
 {
   if (18.0 <= inferred_coolant_temperature_ffffa98c) {
