@@ -4,10 +4,10 @@ void FUN_0005455e(void)
 
 {
   if (DAT_ffffd1b8 == '\x01') {
-    FUN_0005fd38(0x45,1);
+    dtc_set_fault_x0(0x45,1);
     return;
   }
-  FUN_0005fd38(0x45,2);
+  dtc_set_fault_x0(0x45,2);
   return;
 }
 

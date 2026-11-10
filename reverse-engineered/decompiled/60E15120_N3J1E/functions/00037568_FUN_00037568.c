@@ -14,7 +14,7 @@ void FUN_00037568(void)
   else {
     uVar1 = 1;
   }
-  FUN_0005fd38(0x4d,uVar1);
+  dtc_set_fault_x0(0x4d,uVar1);
   return;
 }
 

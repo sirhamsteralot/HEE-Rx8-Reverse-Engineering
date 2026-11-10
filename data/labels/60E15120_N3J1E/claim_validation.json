@@ -45,10 +45,17 @@
         "word_assigns": 2,
         "desc_claims": 1
       },
+      "dtc_authoring_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 2
+      },
       "dtc_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 1
       },
       "e2ram_device_layer_report.md": {
         "reg_pairs": 13,
@@ -156,6 +163,11 @@
         "word_assigns": 15,
         "hex_strings": 1
       },
+      "reviews/dtc_authoring/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "reviews/dtc_control/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -202,11 +214,11 @@
         "reg_pairs": 37,
         "call_claims": 7,
         "pool_claims": 15,
-        "word_assigns": 114,
+        "word_assigns": 116,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 489,
+    "tsv_rows": 492,
     "labels_json_checked": 18
   },
   "notes": [

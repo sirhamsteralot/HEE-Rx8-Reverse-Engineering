@@ -52,7 +52,7 @@
   },
   "pipeline_validators": {
     "validate_export.py": "PASS (run 2026-11-01)",
-    "validate_reports.py": "PASS, 0 failures; dtc_control_report.md checked: 40 fn rows, 11 RAM rows, 51 ROM refs (run with errors=replace decoding wrapper because two pre-existing committed reports mix cp1252/UTF-8 and crash the stock script on Windows; pre-existing, unrelated to this pass)",
+    "validate_reports.py": "PASS, 0 failures; dtc_control_report.md checked: 54 fn rows, 20 RAM rows, 74 ROM refs (run with errors=replace decoding wrapper because two pre-existing committed reports mix cp1252/UTF-8 and crash the stock script on Windows; pre-existing, unrelated to this pass)",
     "verify_readability.py": "PASS (run 2026-11-01)",
     "verify_math_units.py": "PASS (run 2026-11-01)",
     "pytest tests/": "74 passed (run 2026-11-01)",
