@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005e648 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_updateFaultStatusTHUNKNoR6_(undefined4 param_1,undefined4 param_2,uint param_3)
+void dtc_set_fault_xdefault(undefined4 param_1,undefined4 param_2,uint param_3)
 
 {
   if ((param_3 & 0xffff) == 0) {

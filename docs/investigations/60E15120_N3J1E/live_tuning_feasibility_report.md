@@ -59,7 +59,7 @@ is fully reversed and the ROM has measured free space.
   binding constraint: a 2M-cycle emulator boot never writes
   **0xffff8000–0xffff92ff (4,864 B)**, and the static allocation analysis removes
   the 308 B of that window the code can still reference (EEPROM mirror
-  0xffff8000–0xffff80ff, DTC master 0xffff87b0, …), leaving **3,852 B
+  0xffff8000–0xffff80ff, DTC master `dtc_master_table_21` 0xffff87b0, …), leaving **3,852 B
   static-free, largest contiguous run 1,087 B (0xffff8109–0xffff8547)** — enough
   to shadow one hot 3D table or several smaller tables/scalars, not the whole
   80 KiB cal region. Corpus-wide cross-check: the same window and per-ROM
@@ -187,7 +187,7 @@ tracking; "never written" after boot):
 | Run | Length | Note |
 |---|---:|---|
 | 0xffff8000–0xffff92ff | 4,864 B | only never-written run ≥32 B in the 32 KiB RAM (idle boot) |
-| — excl. 8 labeled cells (0xffff8038/0xffff807c/0xffff8788/0xffff87b0/0xffff8900/0xffff90f4/0xffff90fc/0xffff9150) | | idle-boot largest contiguous: 0xffff8901–0xffff90f3 (2,035 B), 0xffff807d–0xffff8787 (1,803 B) |
+| — excl. 8 labeled cells (0xffff8038/`inferred_ram_807c_ffff807c` 0xffff807c/`inferred_ram_8788_ffff8788` 0xffff8788/`dtc_master_table_21` 0xffff87b0/`dtc_master_current_index` 0xffff8900/`distance_mil_on_ffff90f4` 0xffff90f4/`inferred_ram_90fc_ffff90fc` 0xffff90fc/0xffff9150) | | idle-boot largest contiguous: 0xffff8901–0xffff90f3 (2,035 B), 0xffff807d–0xffff8787 (1,803 B) |
 | — excl. the further 308 B the static analysis shows are code-referenced | 3,852 B | static-free; largest contiguous: **0xffff8109–0xffff8547 (1,087 B)**, 0xffff893b–0xffff8d4b (1,041 B) — see [free_resources_report.md](free_resources_report.md) §10 |
 
 ~1 KiB contiguous is statically free (0xffff8109–0xffff8547) — enough for one
@@ -336,13 +336,13 @@ ROMs; the effect on this study's verdict:
   0xffff8000–0xffff92ff 4,864 B). The static allocation analysis
   ([free_resources_report.md](free_resources_report.md) §10) then removes the
   308 B of that window that code can still reference (EEPROM mirror at
-  0xffff8000–0xffff80ff, DTC master 0xffff87b0, …), leaving **3,852 B
+  0xffff8000–0xffff80ff, DTC master `dtc_master_table_21` 0xffff87b0, …), leaving **3,852 B
   static-free, largest contiguous 1,087 B (0xffff8109–0xffff8547) + 1,041 B
   (0xffff893b–0xffff8d4b)** — the shadow budget is ~1 KiB contiguous per run:
   one 16×16 f32 table, or several smaller hot tables/scalars, and it ports to
   every ROM (each has 137–180 latent literals in the same window). Stacks are
   not a conflict: worst-case static chain ≈10.3 KB from reset SP 0xffffdfa0
-  bottoms out ≈0xffffb584, above the window.
+  bottoms out ≈`inferred_ram_b584_ffffb584` 0xffffb584, above the window.
 - **Flash cave budget is per-ROM (899 B–21,956 B app) but never a blocker for
   the patch size needed.** The Tier-1/Tier-2 patch (boot-copy hook + write
   service handler + one dispatch record) needs a few hundred bytes of code. The

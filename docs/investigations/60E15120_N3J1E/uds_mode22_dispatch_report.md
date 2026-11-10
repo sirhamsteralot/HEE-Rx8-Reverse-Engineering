@@ -283,8 +283,8 @@ this report's §12 SBL/security + CVN facts feed the
 - Service 0x33's record points to 0x5e0ce, a real code entry (prologue verified) that is
   **not** in function_index.tsv (Ghidra merged it into 0x5e024's body); it is named in
   `uds_service_dispatch.tsv` only. Service 0xff's handler is a `nop; rts` stub (0x6689a).
-- Verification pass correction: the RAM-alias row for `0xffffad5c` originally cited reader
-  0x555f8 (wrong — that reads 0xffff90f4); corrected to `0x5553e` (PID 0x11 throttle reader;
+- Verification pass correction: the RAM-alias row for `inferred_throttle_sensor_volts_ffffad5c` 0xffffad5c originally cited reader
+  0x555f8 (wrong — that reads `distance_mil_on_ffff90f4` 0xffff90f4); corrected to `0x5553e` (PID 0x11 throttle reader;
   also referenced by handlers 0x56d58/0x56eb8 and the APP chain literals at
   0x1b0e6/0x4561c/0x47186). Found by the disassembly-level RAM check in the verification pass.
 - Checker note (idiom): RAM addresses with high half 0xffff are materialized by
@@ -357,8 +357,8 @@ service router 0x68dac, service handlers per table in section 3, ISO-TP 0x683d4/
 SCI0 byte exchange 0x71ea `sci0_exchange_byte_wait_rdrf` (RDRF 0x40 poll at 0x721c-0x7224).
 RAM: 0xffffd1ea `diag22_current_identifier`/d1e8/d1ec diag22 state; 0xffffd3b4 permission mask; 0xffffddc8 UDS RX buf;
 0xffffd962 ch0 response ring (pos 0xffffd95c); 0xffffddf5 UDS flags; 0xffffddec/ddea/dde6
-channel/service/length; 0xffff9ec8 vehicle-present latch; 0xffffd570 DTC flag table;
-plus the 63 named cells appended to `accepted_ram_aliases.tsv` (0xffffad5c/adec/ad10/ad48/
+channel/service/length; `vehicle_inputs_pfdr_latch` 0xffff9ec8 vehicle-present latch; 0xffffd570 DTC flag table;
+plus the 63 named cells appended to `accepted_ram_aliases.tsv` (`inferred_throttle_sensor_volts_ffffad5c` 0xffffad5c, `inferred_lambda_actual_ffffadec` 0xffffadec, `distance_mil_on_ffff90f4` 0xffff90f4, ad10/ad48/
 ad5e/a9c4/a9c6/a834/a984/add4/807c/a8f4/a8f5/a9bc/b074/b0d0/b2f0/b410/b53b/b570/b584/
 b59c/b5ac/b5b4/b654/bc30/bc35/bdb8/bf3c/bf9c/c1d0-c1d8/c274/c4c8/c644/c6ac/cab4/cdd8/
 ce1c/ce30/ce32/d1a1/d1a2/d284/d287/d3a0/d570/d1ac/d1ea/8788/90f4/90fc/9150/aa62...).

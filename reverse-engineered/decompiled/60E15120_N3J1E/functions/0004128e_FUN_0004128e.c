@@ -104,10 +104,10 @@ undefined4 * o2_response_monitor_evaluate(void)
         DAT_ffffc703 = '\x01';
       }
       if (DAT_ffffc703 == '\x01') {
-        FUN_0005fd38(0x1c,1);
+        dtc_set_fault_x0(0x1c,1);
       }
       else if (DAT_ffffc702 == '\x01') {
-        FUN_0005fd38(0x1c,2);
+        dtc_set_fault_x0(0x1c,2);
       }
     }
     puVar1 = &DAT_000415e0;

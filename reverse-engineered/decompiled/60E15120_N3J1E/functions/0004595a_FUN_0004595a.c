@@ -63,11 +63,11 @@ LAB_00045a24:
 LAB_00045a72:
   cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff872c,0);
   if (cVar2 == '\x01') {
-    uVar1 = FUN_0005fd38(0x6c,1);
+    uVar1 = dtc_set_fault_x0(0x6c,1);
     return uVar1;
   }
   if (DAT_ffffcbec == 1) {
-    uVar1 = FUN_0005fd38(0x6c,2);
+    uVar1 = dtc_set_fault_x0(0x6c,2);
     return uVar1;
   }
   return (uint)DAT_ffffcbec;

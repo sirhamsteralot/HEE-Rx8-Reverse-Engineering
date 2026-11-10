@@ -39,7 +39,7 @@ and otherwise raises a CAN-setup error flag.
 ```
 # ref_canSetup 0xd9f4:
 for 0xffffa40e in 0..1:
-    ref_CANControllerSetup(0, 0x4e01c or 0x4e11c (if 0xffffb534==1), 0x10)
+    ref_CANControllerSetup(0, 0x4e01c or 0x4e11c (if `automatic_transmission` 0xffffb534==1), 0x10)
     c1 = hcan_mailbox_config_compare(0, block)     # jsr @r13 at 0xda3e
     ref_CANControllerSetup(1, 0x4e21c, 6)
     c2 = hcan_mailbox_config_compare(1, block)     # jsr @r13 at 0xda4e
@@ -66,7 +66,7 @@ Not calibration — ROM descriptor blocks (mailbox config):
 | Address | Content |
 |---|---|
 | 0x4e01c | HCAN0 desired mailbox records, 16 × 16 B (first record: id 0x201, mailbox 1, ctrl 0x08, buffer 0xffffbaf4) |
-| 0x4e11c | alternate HCAN0 set used when RAM 0xffffb534 == 1 |
+| 0x4e11c | alternate HCAN0 set used when `automatic_transmission` 0xffffb534 == 1 |
 | 0x4e21c | HCAN1 desired mailbox records, 6 × 16 B |
 
 ## 4. Labeling applied
@@ -111,7 +111,7 @@ None — previously unlabeled `FUN_0002a4f8`.
 | 0x00029236 | `can201_encode_rpm_u16` | RPM -> 0xffffbafc, 0.25 RPM/count, cap 0xfffe, 0xffff fault |
 | 0x0002927c | `can201_encode_vehicle_speed_u16` | speed -> 0xffffbb00, (v+100)/0.01, cap 40000, 0xffff fault |
 | 0x000291dc | `can201_pack_and_queue_payload` | packs 8 B into 0xffffbaf4, queues via 0x99b0 |
-| 0x00028eb8 | `can216_unpack_mixed_width_fields` | CAN 0x216 RX: 3 u16 + 2 u8 from 0xffffbab8 into 0xffffbad4-badc |
+| 0x00028eb8 | `can216_unpack_mixed_width_fields` | CAN 0x216 RX: 3 u16 + 2 u8 from 0xffffbab8 into `can216_unpacked_field_0..4` 0xffffbad4/bad6/bad8/bada/badc (pool 0x28fce re-read) |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -127,7 +127,7 @@ None — previously unlabeled `FUN_0002a4f8`.
 |---|---|---|
 | 0xffffa40e | `DAT_ffffa40e` | setup retry counter |
 | 0xffffa410 | `DAT_ffffa410` | CAN setup error flag (set when retries exhausted) |
-| 0xffffb534 | `DAT_ffffb534` | selects alternate HCAN0 descriptor block |
+| 0xffffb534 | `automatic_transmission` | selects alternate HCAN0 descriptor block |
 | 0xffffbaf4 | `can201_tx_payload` | 8-byte CAN 0x201 TX buffer (descriptor 0x4df1c) |
 | 0xffffbafc | `can201_encoded_rpm` | encoded RPM u16 (payload +0/+1) |
 | 0xffffbb00 | `can201_encoded_vehicle_speed` | encoded speed u16 (payload +4/+5) |

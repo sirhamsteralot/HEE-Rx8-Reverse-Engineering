@@ -45,12 +45,12 @@ uint FUN_0004695a(void)
       DAT_ffffcc56 = 0;
     }
     if (DAT_ffffcc4d == '\x01') {
-      uVar1 = FUN_0005fd38(0x3d,1);
+      uVar1 = dtc_set_fault_x0(0x3d,1);
       return uVar1;
     }
     uVar1 = (uint)DAT_ffffcc4b;
     if (uVar1 == 1) {
-      uVar1 = FUN_0005fd38(0x3d,2);
+      uVar1 = dtc_set_fault_x0(0x3d,2);
       return uVar1;
     }
   }
