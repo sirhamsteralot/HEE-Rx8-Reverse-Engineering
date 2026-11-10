@@ -284,7 +284,7 @@ Cross-check of the RX8Club thread's load/fueling claims against the ROM
 §6/§9) plus the D5 numeric comparison. All constants re-read from the raw ROM
 (SHA-256 unchanged, `a7cd953c…264f1`).
 
-**Byte-verified chain.** 0x1a418 `candidate_maf_per_rotation_calc`:
+**Byte-verified chain.** 0x1a418 `maf_per_rotation_calc`:
 `maf_per_rotation_ffffaa3c = min(maf × 60.0 / rpm, 5.0)` — 60.0 is float32
 `0x42700000` at 0x1a4e8, 5.0 is `0x40a00000` at 0x1a4f4 (g/rev, software cap 5.0).
 0x33a6c `ref_airPerStroke`: `engine_load_raw_ffffc0b0 = maf_per_rotation × 0.6345` —

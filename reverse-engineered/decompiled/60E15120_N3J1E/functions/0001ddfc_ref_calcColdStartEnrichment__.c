@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0001e85c (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * candidate_cold_start_enrichment(void)
+undefined4 * cold_start_enrichment(void)
 
 {
   undefined4 *puVar1;

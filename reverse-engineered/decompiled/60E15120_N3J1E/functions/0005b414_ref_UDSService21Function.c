@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00059c04 (110 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_21_read_data_by_local_id(short param_1,uint param_2)
+uint uds_service_21_read_data_by_local_id(short param_1,uint param_2)
 
 {
   undefined4 uVar1;

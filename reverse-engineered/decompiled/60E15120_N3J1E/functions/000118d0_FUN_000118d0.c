@@ -10,7 +10,7 @@ void dtc_fault_service_batch(void)
   FUN_0003957c();
   FUN_00021bc6();
   FUN_00021434();
-  candidate_knock_rough_correction_update();
+  knock_rough_correction_update();
   FUN_0002253c();
   FUN_00028966();
   ref_setOBDCANTXVars();

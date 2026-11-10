@@ -44,7 +44,7 @@ fr4 = target, fr5 = 0.25, fr6 = 0; result u16 stored to 0xffffd34d (base
 0xffffd335 + 0x18). Decode path: `jsr` via pool 0x5cc8c = 0x24c0
 (`rx8_decode_u16_affine`) on the override cell when active. 0xffffa7ac is the
 Mode 22 PID 0x096e source: dispatch record 0x5f328 → handler 0x56e22
-(`candidate_diag22_pid096e_ram_a7ac_quarter`, DAT_ffffa7ac*0.25, dynamically
+(`diag22_pid096e_ram_a7ac_quarter`, DAT_ffffa7ac*0.25, dynamically
 verified in the diag pass). Conclusion: 0x5ca94 quantizes the target for the
 diagnostic readout; it does not drive an actuator register.
 

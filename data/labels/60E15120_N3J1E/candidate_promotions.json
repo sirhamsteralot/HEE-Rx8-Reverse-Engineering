@@ -1,0 +1,654 @@
+{
+ "pass": "candidate_label_promotions",
+ "rom": "60E15120_N3J1E",
+ "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+ "rom_unchanged": true,
+ "candidate_total": 181,
+ "promoted_to_high": {
+  "000064ba": {
+   "alias": "knock_sensor_fault_task",
+   "name": "candidate_knock_sensor_fault_task",
+   "source": "binary-level re-verification (this pass)"
+  },
+  "00006cdc": {
+   "alias": "adc_read_ect_iat_group",
+   "name": "candidate_adc_read_ect_iat_group",
+   "source": "data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json/function_aliases"
+  },
+  "00006fb0": {
+   "alias": "adc_read_result_bank2",
+   "name": "candidate_adc_read_result_bank2",
+   "source": "data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json/function_aliases"
+  },
+  "00008340": {
+   "alias": "injector_pulse_set_dispatch",
+   "name": "candidate_injector_pulse_set_dispatch",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "000086ac": {
+   "alias": "injector_zero_offset_set",
+   "name": "candidate_injector_zero_offset_set",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "0000a936": {
+   "alias": "apv_pwm_service",
+   "name": "candidate_apv_pwm_service",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "0000aac4": {
+   "alias": "apv_drive_status_sample",
+   "name": "candidate_apv_drive_status_sample",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "0000e48e": {
+   "alias": "injection_angle_limit_lookup",
+   "name": "candidate_injection_angle_limit_lookup",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "0000edc4": {
+   "alias": "fuel_cut_arbitration",
+   "name": "candidate_fuel_cut_arbitration",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "0000ee82": {
+   "alias": "rev_limit_conditionals",
+   "name": "candidate_rev_limit_conditionals",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "00011880": {
+   "alias": "monitor_service_batch",
+   "name": "candidate_monitor_service_batch",
+   "source": "data/labels/60E15120_N3J1E/os_task_12_16_labels.json/function_aliases"
+  },
+  "00012e60": {
+   "alias": "timing_trim_scale_calc",
+   "name": "candidate_timing_trim_scale_calc",
+   "source": "data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases"
+  },
+  "000145c8": {
+   "alias": "timing_retard_fast_task",
+   "name": "candidate_timing_retard_fast_task",
+   "source": "binary-level re-verification (this pass)"
+  },
+  "0001467c": {
+   "alias": "knock_rough_correction_update",
+   "name": "candidate_knock_rough_correction_update",
+   "source": "binary-level re-verification (this pass)"
+  },
+  "00018cfe": {
+   "alias": "fuel_cut_rpm_condition",
+   "name": "candidate_fuel_cut_rpm_condition",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "00019f40": {
+   "alias": "maf_filtered_update",
+   "name": "candidate_maf_filtered_update",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "00019f4e": {
+   "alias": "maf_voltage_and_fault_counters",
+   "name": "candidate_maf_voltage_and_fault_counters",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "0001a418": {
+   "alias": "maf_per_rotation_calc",
+   "name": "candidate_maf_per_rotation_calc",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "0001ddfc": {
+   "alias": "cold_start_enrichment",
+   "name": "candidate_cold_start_enrichment",
+   "source": "data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases"
+  },
+  "00021760": {
+   "alias": "ssv_control_thunk",
+   "name": "candidate_ssv_control_thunk",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00021766": {
+   "alias": "ssv_control_task_wrapper",
+   "name": "candidate_ssv_control_task_wrapper",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00031ece": {
+   "alias": "apv_position_voltage_counter",
+   "name": "candidate_apv_position_voltage_counter",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00031f0a": {
+   "alias": "apv_counter_calc",
+   "name": "candidate_apv_counter_calc",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00031f32": {
+   "alias": "apv_command_calc",
+   "name": "candidate_apv_command_calc",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "000348e4": {
+   "alias": "vdi_control_thunk",
+   "name": "candidate_vdi_control_thunk",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "000348ea": {
+   "alias": "vdi_control_task_wrapper",
+   "name": "candidate_vdi_control_task_wrapper",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00034910": {
+   "alias": "vfad_control_thunk",
+   "name": "candidate_vfad_control_thunk",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00034916": {
+   "alias": "vfad_control_task_wrapper",
+   "name": "candidate_vfad_control_task_wrapper",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00037358": {
+   "alias": "dtc_state_machine_step",
+   "name": "candidate_dtc_state_machine_step",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00037546": {
+   "alias": "diag_status_bit_pack",
+   "name": "candidate_diag_status_bit_pack",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000390b8": {
+   "alias": "knock_sensor_monitor_task",
+   "name": "candidate_knock_sensor_monitor_task",
+   "source": "binary-level re-verification (this pass)"
+  },
+  "0003d010": {
+   "alias": "o2_monitor_integrator",
+   "name": "candidate_o2_monitor_integrator",
+   "source": "binary-level re-verification (this pass)"
+  },
+  "00043a86": {
+   "alias": "apv_position_voltage_scale",
+   "name": "candidate_apv_position_voltage_scale",
+   "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+  },
+  "00054884": {
+   "alias": "diag_encode_s16_div",
+   "name": "candidate_diag_encode_s16_div",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055586": {
+   "alias": "diag_encode_o2s2",
+   "name": "candidate_diag_encode_o2s2",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000555ac": {
+   "alias": "diag_encode_trim_b074",
+   "name": "candidate_diag_encode_trim_b074",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055616": {
+   "alias": "diag_encode_b2f0",
+   "name": "candidate_diag_encode_b2f0",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005562c": {
+   "alias": "diag_read_d287",
+   "name": "candidate_diag_read_d287",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055632": {
+   "alias": "diag_read_gear_byte",
+   "name": "candidate_diag_read_gear_byte",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000556b0": {
+   "alias": "diag_read_90fc",
+   "name": "candidate_diag_read_90fc",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000556ce": {
+   "alias": "diag_encode_ad10",
+   "name": "candidate_diag_encode_ad10",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005571a": {
+   "alias": "diag_encode_c644",
+   "name": "candidate_diag_encode_c644",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055774": {
+   "alias": "diag_encode_ad48",
+   "name": "candidate_diag_encode_ad48",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005578a": {
+   "alias": "diag_encode_ad5e",
+   "name": "candidate_diag_encode_ad5e",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000557b6": {
+   "alias": "diag_encode_a9c4",
+   "name": "candidate_diag_encode_a9c4",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055838": {
+   "alias": "diag_encode_a9c6",
+   "name": "candidate_diag_encode_a9c6",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00055864": {
+   "alias": "diag_encode_b410",
+   "name": "candidate_diag_encode_b410",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000565e8": {
+   "alias": "uds_service_b1_mazda_specific",
+   "name": "candidate_uds_service_b1_mazda_specific",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056a32": {
+   "alias": "diag22_pid0015_o2s2_voltage_trim",
+   "name": "candidate_diag22_pid0015_o2s2_voltage_trim",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056abc": {
+   "alias": "diag22_pid002e_ram_b2f0_pct",
+   "name": "candidate_diag22_pid002e_ram_b2f0_pct",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056ad2": {
+   "alias": "diag22_pid002f_ram_d287_raw",
+   "name": "candidate_diag22_pid002f_ram_d287_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056ae6": {
+   "alias": "diag22_pid0030_gear_or_vin_byte",
+   "name": "candidate_diag22_pid0030_gear_or_vin_byte",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056afa": {
+   "alias": "diag22_pid0031_ram_90fc_float",
+   "name": "candidate_diag22_pid0031_ram_90fc_float",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056b0e": {
+   "alias": "diag22_pid0033_ram_ad10_scaled",
+   "name": "candidate_diag22_pid0033_ram_ad10_scaled",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056b42": {
+   "alias": "diag22_pid003c_ram_c644_scaled",
+   "name": "candidate_diag22_pid003c_ram_c644_scaled",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056bb2": {
+   "alias": "diag22_pid0045_ram_ad48_pct",
+   "name": "candidate_diag22_pid0045_ram_ad48_pct",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056bc6": {
+   "alias": "diag22_pid0047_ram_ad5e_pedal",
+   "name": "candidate_diag22_pid0047_ram_ad5e_pedal",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056bda": {
+   "alias": "diag22_pid0049_ram_a9c4_pedal",
+   "name": "candidate_diag22_pid0049_ram_a9c4_pedal",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056c78": {
+   "alias": "diag22_pid004a_ram_a9c6_pedal",
+   "name": "candidate_diag22_pid004a_ram_a9c6_pedal",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056c8c": {
+   "alias": "diag22_pid004c_ram_b410_pct",
+   "name": "candidate_diag22_pid004c_ram_b410_pct",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056ce8": {
+   "alias": "diag22_pid0914_ram_a9c4_scaled_s16",
+   "name": "candidate_diag22_pid0914_ram_a9c4_scaled_s16",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056d1a": {
+   "alias": "diag22_pid0915_ram_a9c6_scaled_s16",
+   "name": "candidate_diag22_pid0915_ram_a9c6_scaled_s16",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056d4c": {
+   "alias": "diag22_pid0917_ram_ad5c_scaled_s16",
+   "name": "candidate_diag22_pid0917_ram_ad5c_scaled_s16",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056db4": {
+   "alias": "diag22_pid0918_ram_ad5e_scaled_s16",
+   "name": "candidate_diag22_pid0918_ram_ad5e_scaled_s16",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056de6": {
+   "alias": "diag22_pid091a_ram_b410_raw_512",
+   "name": "candidate_diag22_pid091a_ram_b410_raw_512",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056e22": {
+   "alias": "diag22_pid096e_ram_a7ac_quarter",
+   "name": "candidate_diag22_pid096e_ram_a7ac_quarter",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056e40": {
+   "alias": "diag22_pid097c_ram_b59c_div2048",
+   "name": "candidate_diag22_pid097c_ram_b59c_div2048",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056e5e": {
+   "alias": "diag22_pid114a_ram_add4_raw",
+   "name": "candidate_diag22_pid114a_ram_add4_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056e7c": {
+   "alias": "diag22_pid114d_ram_a984_raw",
+   "name": "candidate_diag22_pid114d_ram_a984_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056e9a": {
+   "alias": "diag22_pid1153_ram_a834_lambda",
+   "name": "candidate_diag22_pid1153_ram_a834_lambda",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056eb8": {
+   "alias": "diag22_pid1154_throttle_raw_ad5c",
+   "name": "candidate_diag22_pid1154_throttle_raw_ad5c",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056efc": {
+   "alias": "diag22_pid1169_ram_807c_scaled",
+   "name": "candidate_diag22_pid1169_ram_807c_scaled",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056f4e": {
+   "alias": "diag22_pid1340_ram_a9bc_pct",
+   "name": "candidate_diag22_pid1340_ram_a9bc_pct",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056f8a": {
+   "alias": "diag22_pid163e_ram_b074_scaled_s16",
+   "name": "candidate_diag22_pid163e_ram_b074_scaled_s16",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056faa": {
+   "alias": "diag22_pid16b3_ram_ad10_raw",
+   "name": "candidate_diag22_pid16b3_ram_ad10_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056fc8": {
+   "alias": "diag22_pid16e8_ram_b5ac_raw",
+   "name": "candidate_diag22_pid16e8_ram_b5ac_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00056fe6": {
+   "alias": "diag22_pid16e9_ram_b654_eighth",
+   "name": "candidate_diag22_pid16e9_ram_b654_eighth",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005705c": {
+   "alias": "diag22_pida216_ram_bc30_raw",
+   "name": "candidate_diag22_pida216_ram_bc30_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057098": {
+   "alias": "diag22_pid1782_ram_c6ac_raw",
+   "name": "candidate_diag22_pid1782_ram_c6ac_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000570b6": {
+   "alias": "diag22_pid17a6_ram_d1ac_scaled",
+   "name": "candidate_diag22_pid17a6_ram_d1ac_scaled",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000570ee": {
+   "alias": "diag22_pid172a_ram_c4c8_temp_c",
+   "name": "candidate_diag22_pid172a_ram_c4c8_temp_c",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005710c": {
+   "alias": "diag22_pid172d_ram_a8f4_raw",
+   "name": "candidate_diag22_pid172d_ram_a8f4_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057138": {
+   "alias": "diag22_pid0968_io_status_b5b4_bc35",
+   "name": "candidate_diag22_pid0968_io_status_b5b4_bc35",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000571ac": {
+   "alias": "diag22_pid09d3_pedr_bit10_status",
+   "name": "candidate_diag22_pid09d3_pedr_bit10_status",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000571e4": {
+   "alias": "diag22_pid1101_io_status_bf3c_ad18_cdd8",
+   "name": "candidate_diag22_pid1101_io_status_bf3c_ad18_cdd8",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057226": {
+   "alias": "diag22_pid1102_io_status_bdb8",
+   "name": "candidate_diag22_pid1102_io_status_bdb8",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057248": {
+   "alias": "diag22_pid1103_io_status_pedr_cab4_d1a",
+   "name": "candidate_diag22_pid1103_io_status_pedr_cab4_d1a",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000572d0": {
+   "alias": "diag22_pid1104_io_status_pjdr_bf6c",
+   "name": "candidate_diag22_pid1104_io_status_pjdr_bf6c",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005730e": {
+   "alias": "diag22_pid1631_tol_status_b570_b584",
+   "name": "candidate_diag22_pid1631_tol_status_b570_b584",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005734a": {
+   "alias": "diag22_pid1681_io_status_ce1c",
+   "name": "candidate_diag22_pid1681_io_status_ce1c",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005736c": {
+   "alias": "diag22_pid1688_secondary_air_status_bit",
+   "name": "candidate_diag22_pid1688_secondary_air_status_bit",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005738e": {
+   "alias": "diag22_pida211_status_b53b_aa62_bf9c",
+   "name": "candidate_diag22_pida211_status_b53b_aa62_bf9c",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000573f0": {
+   "alias": "diag22_pid1711_pedr_bit1_status",
+   "name": "candidate_diag22_pid1711_pedr_bit1_status",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005741e": {
+   "alias": "diag22_pid1706_io_status_a8f5",
+   "name": "candidate_diag22_pid1706_io_status_a8f5",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057440": {
+   "alias": "diag22_pid1718_pedr_bit2_status",
+   "name": "candidate_diag22_pid1718_pedr_bit2_status",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005746e": {
+   "alias": "diag22_pid1715_pedr_pddr_status",
+   "name": "candidate_diag22_pid1715_pedr_pddr_status",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000574b6": {
+   "alias": "diag22_pid17de_io_status_ce32",
+   "name": "candidate_diag22_pid17de_io_status_ce32",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000576b4": {
+   "alias": "diag22_pidc115_ram_c1d2_raw",
+   "name": "candidate_diag22_pidc115_ram_c1d2_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "000576c2": {
+   "alias": "diag22_pidc116_dtc_state_machine",
+   "name": "candidate_diag22_pidc116_dtc_state_machine",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057704": {
+   "alias": "diag22_pidc117_ram_c1d3_c1d4",
+   "name": "candidate_diag22_pidc117_ram_c1d3_c1d4",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057738": {
+   "alias": "diag22_pidc124_diag_status_bits",
+   "name": "candidate_diag22_pidc124_diag_status_bits",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057884": {
+   "alias": "diag22_pidff10_dtc_status_c1d5_c1d8",
+   "name": "candidate_diag22_pidff10_dtc_status_c1d5_c1d8",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005796e": {
+   "alias": "diag22_pidff50_ram_d3a0_raw",
+   "name": "candidate_diag22_pidff50_ram_d3a0_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057974": {
+   "alias": "diag22_pidff44_ram_ce30_raw",
+   "name": "candidate_diag22_pidff44_ram_ce30_raw",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00057db0": {
+   "alias": "uds_service_18",
+   "name": "candidate_uds_service_18",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005b094": {
+   "alias": "uds_service_12",
+   "name": "candidate_uds_service_12",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005b414": {
+   "alias": "uds_service_21_read_data_by_local_id",
+   "name": "candidate_uds_service_21_read_data_by_local_id",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005d8b4": {
+   "alias": "uds_service_3b",
+   "name": "candidate_uds_service_3b",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005e024": {
+   "alias": "uds_service_32",
+   "name": "candidate_uds_service_32",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "0005fab2": {
+   "alias": "dtc_count_stored",
+   "name": "candidate_dtc_count_stored",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00068a86": {
+   "alias": "uds_rx_channel_alloc",
+   "name": "candidate_uds_rx_channel_alloc",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  },
+  "00068b10": {
+   "alias": "uds_rx_channel_set_service",
+   "name": "candidate_uds_rx_channel_set_service",
+   "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
+  }
+ },
+ "renamed_staying_medium": {
+  "00022144": {
+   "old": "candidate_evap_open_loop_condition",
+   "new": "candidate_fuel_open_loop_condition",
+   "evidence": "Body (200 B): DAT_ffffb319 = 1 iff DAT_ffffb318==1 && open_loop_active_ffffb12c==1 && DAT_ffffbe00 >= 66.5 && closed_loop_active_ffffae1f==0 && DAT_ffffb2f6/b0c8/b0c9 clear; pools 0x22218/0x2221c/0x22220 ROM-verified. The gate uses the fuel open-loop flag (high label open_loop_active_ffffb12c, set by set_open_loop_flag 0x1ee30), so the 'evap' attribution inherited from caller ref_evapRelated 0x21b8a (a ref_ hypothesis) is doubtful: renamed to fuel_open_loop_condition, stays candidate_ until the EVAP-chain attribution is proven."
+  }
+ },
+ "kept_candidate": {
+  "0000be5e": "candidate_e2ram_send_command4_a",
+  "0000be8c": "candidate_e2ram_send_command4_b",
+  "000148a4": "candidate_idle_target_term_lookup",
+  "000148c4": "candidate_idle_maf_airflow_term",
+  "00014944": "candidate_idle_drive_flags",
+  "00014baa": "candidate_idle_mode_timers",
+  "00014d10": "candidate_idle_stall_flags",
+  "00014f6c": "candidate_idle_trim_ramp",
+  "00015a40": "candidate_fuel_cut_resume_threshold",
+  "00015f5c": "candidate_idle_air_terms_sum",
+  "00015fa0": "candidate_idle_trim_load",
+  "00015ffc": "candidate_idle_learn_condition",
+  "0001617e": "candidate_idle_trim_integrator",
+  "00016358": "candidate_idle_baro_comp",
+  "00016380": "candidate_idle_aux_air_term",
+  "00016432": "candidate_idle_ac_request_calc",
+  "000165d6": "candidate_idle_ac_clutch_gate",
+  "00016672": "candidate_idle_stall_detect",
+  "00016720": "candidate_idle_iat_comp",
+  "00016748": "candidate_idle_ac_load_calc",
+  "00016900": "candidate_idle_air_correction_select",
+  "000257b4": "candidate_charging_dtc_timer_a",
+  "0002590a": "candidate_charging_dtc_timer_b",
+  "00025a22": "candidate_charging_ok_latch",
+  "00025a3c": "candidate_overvoltage_flags",
+  "00025aa0": "candidate_hot_engine_dtc_timer",
+  "00025ba4": "candidate_battery_temp_model",
+  "00025c6c": "candidate_alternator_voltage_target_select",
+  "0002616e": "candidate_alternator_voltage_error_calc",
+  "0002635c": "candidate_low_voltage_dtc_timer",
+  "000264f0": "candidate_electrical_load_flag_calc",
+  "00026624": "candidate_alternator_duty_calc",
+  "00026760": "candidate_alternator_warning_light_flag",
+  "0002b046": "candidate_wheelspeed_rear_avg_calc",
+  "0002b1d6": "candidate_can4b0_wheelspeed_extract",
+  "0002b496": "candidate_dsc_desired_torque_calc",
+  "0002b6a4": "candidate_dsc_mode_bit08_check",
+  "0002b6c2": "candidate_dsc_mode_bit80_check",
+  "0002b754": "candidate_dsc_mode_bit40_check",
+  "0002b788": "candidate_dsc_mode_bit20_check",
+  "0002b7a6": "candidate_dsc_mode_bit10_check",
+  "0002b7c4": "candidate_can212_timeout_flag",
+  "0002b816": "candidate_can212_torque_extract",
+  "0002ce18": "candidate_alternator_drag_torque_calc",
+  "0002f260": "candidate_fan_init_thunk",
+  "0003174a": "candidate_secondary_air_on_time_task",
+  "00031bec": "candidate_apv_command_wrapper",
+  "00031c6c": "candidate_apv_target_condition",
+  "0003337c": "candidate_idle_ratio_calcs",
+  "0003354e": "candidate_idle_ac_blend_ramp",
+  "00034650": "candidate_idle_vehicle_speed_flags",
+  "00035a8c": "candidate_e2ram_param_write_dispatch",
+  "00035d36": "candidate_e2ram_write_thunk",
+  "000379e4": "candidate_e2ram_verify_state_machine",
+  "00054590": "candidate_charging_dtc_raise_p2503",
+  "000545a6": "candidate_charging_dtc_raise_p2504",
+  "000545bc": "candidate_charging_dtc_raise_p2502",
+  "00055316": "candidate_diag_read_active_cal_field",
+  "000568b4": "candidate_diag22_pid0002_active_cal_id_field",
+  "00057594": "candidate_diag22_pid1710_sensor_snapshot_7byte",
+  "0005c3c0": "candidate_vdi_diag_override",
+  "0005c648": "candidate_fan2_diag_override",
+  "0005c724": "candidate_fan1_diag_override",
+  "0005c800": "candidate_alternator_duty_encode_u16",
+  "0005c9ac": "candidate_ssv_diag_override",
+  "0005cba4": "candidate_alternator_target_encode_u16",
+  "0005cdc4": "candidate_vfad_diag_override",
+  "0005cf7c": "candidate_secondary_air_diag_override"
+ },
+ "counts": {
+  "candidate_total": 181,
+  "promoted": 112,
+  "renamed": 1,
+  "kept_candidate": 68
+ },
+ "export_applied_by": "review_candidate_promotions.py --apply-export (scoped surrogateescape pass)",
+ "ghidra_database_updated": false
+}

@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x0001467c; body bytes: 42; decompiled */
 
-void candidate_knock_rough_correction_update(void)
+void knock_rough_correction_update(void)
 
 {
   undefined4 uVar1;

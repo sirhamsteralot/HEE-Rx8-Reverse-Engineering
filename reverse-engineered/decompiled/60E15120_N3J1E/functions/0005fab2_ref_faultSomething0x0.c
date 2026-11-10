@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0005e3be (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_dtc_count_stored(void)
+uint dtc_count_stored(void)
 
 {
   uint uVar1;

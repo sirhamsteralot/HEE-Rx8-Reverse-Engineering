@@ -15,7 +15,7 @@ uint isotp_first_frame_accept(void)
   if ((uVar1 < 0x1000) && (7 < uVar1)) {
     DAT_ffffddf5 = DAT_ffffddf5 | 4;
     FUN_000683b4();
-    DAT_ffffddec = candidate_uds_rx_channel_alloc((int)DAT_ffffddca);
+    DAT_ffffddec = uds_rx_channel_alloc((int)DAT_ffffddca);
     DAT_ffffddeb = 2;
     DAT_ffffdde6 = (undefined2)uVar1;
     DAT_ffffddea = DAT_ffffddca;

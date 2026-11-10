@@ -12,7 +12,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000086ac (36 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_injector_zero_offset_set(int param_1,undefined4 param_2)
+int injector_zero_offset_set(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {

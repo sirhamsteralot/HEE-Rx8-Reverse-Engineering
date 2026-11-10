@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 5f498 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1688_secondary_air_status_bit(char param_1)
+void diag22_pid1688_secondary_air_status_bit(char param_1)
 
 {
   undefined4 uVar1;

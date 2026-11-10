@@ -17,7 +17,7 @@ undefined4 isotp_single_frame_accept(void)
   if (((uVar1 & 0xf) < 8) && ((uds_rx_buffer_ffffddc8 & 0xf) != 0)) {
     DAT_ffffddf5 = DAT_ffffddf5 | 4;
     FUN_000683b4();
-    DAT_ffffddec = candidate_uds_rx_channel_alloc((int)DAT_ffffddc9);
+    DAT_ffffddec = uds_rx_channel_alloc((int)DAT_ffffddc9);
     DAT_ffffddea = DAT_ffffddc9;
     DAT_ffffdde6 = uVar1 & 0xf;
     ref_pack_for_OBD_response_((int)DAT_ffffddec,&DAT_ffffddc9,7);

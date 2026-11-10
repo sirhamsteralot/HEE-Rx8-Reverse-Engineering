@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0001aca0 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_maf_filtered_update(void)
+void maf_filtered_update(void)
 
 {
   mass_air_flow_ffffa9ec = maf_scaled_latched_ffffa9e8;

@@ -42,13 +42,13 @@ address	alias	confidence	evidence
 0005535e	diag_ol_status_byte	high	OBD PID 0x0003 'OL Status' high byte: 2 (closed loop) or 0x10 when ae1f==1, 4 (OL-DTC) when ae1e==0, 8 when coolant >= 35 C, 1 when cold.
 000553d8	diag_ol_status_low_byte	high	Low byte of the 2-byte PID 0x0003 response; always 0 in this ROM; handler 0x568ca packs FUN_0005535e()<<8 | this.
 000142a4	ignition_timing_main_task	high	Task[6] worker chain: runs the knock state machine (0x13826/0x1388a/0x138b2/0x13a60/0x139c4; 0x13b40 and 0x13bd2 are NOT called here — 0x13b40 only from 0x145c8, 0x13bd2 from 0x13a60/0x13b40/0x139c4), correction apply (0x125bc/0x125f6/0x123ba/0x123ca) and base timing (0x11f00/0x1206c) -> leading/trailing_ignition_timing 0xffffa630/a638.
-000145c8	timing_retard_fast_task	medium	0x1391c knock-seen counter + 0x13b40 slow recovery + throttle/rev-limit/AC retards; reached from task-table record 0x64e8 (ROM 0x4ab8, dispatch mechanism unresolved).
-000390b8	knock_sensor_monitor_task	medium	0x49fac health persistence + 0x4a084 DTC report + 0x384de/0x3856c monitor counters; reached from task[10] 0x64f6 -> 0x11744.
-000064ba	knock_sensor_fault_task	medium	Task[9] entry: runs ref_knockSensorADCFault (0xc290: ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c -> a325 fault status).
-0001467c	knock_rough_correction_update	medium	0x12ed0 + 0x13034 targets + 0x13210 rough knock correction toward a6bc/a6c0 + 0x43870; reached from task[13] 0x65b2 -> 0x118d0.
+000145c8	timing_retard_fast_task	high	0x1391c knock-seen counter + 0x13b40 slow recovery + throttle/rev-limit/AC retards; reached from task-table record 0x64e8 (ROM 0x4ab8, dispatch mechanism unresolved). | promoted to high (binary-level re-verification (this pass))
+000390b8	knock_sensor_monitor_task	high	0x49fac health persistence + 0x4a084 DTC report + 0x384de/0x3856c monitor counters; reached from task[10] 0x64f6 -> 0x11744. | promoted to high (binary-level re-verification (this pass))
+000064ba	knock_sensor_fault_task	high	Task[9] entry: runs ref_knockSensorADCFault (0xc290: ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c -> a325 fault status). | promoted to high (binary-level re-verification (this pass))
+0001467c	knock_rough_correction_update	high	0x12ed0 + 0x13034 targets + 0x13210 rough knock correction toward a6bc/a6c0 + 0x43870; reached from task[13] 0x65b2 -> 0x118d0. | promoted to high (binary-level re-verification (this pass))
 00013034	knock_rough_correction_targets	high	a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
-0003d010	o2_monitor_integrator	medium	c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0.
-00022144	evap_open_loop_condition	medium	b319 = 1 iff b318 && b12c==1 (open loop) && be00 >= 66.5 && ae1f==0 && !b2f6 && !b0c8 && !b0c9; reached from ref_evapRelated 0x21b8a.
+0003d010	o2_monitor_integrator	high	c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0. | promoted to high (binary-level re-verification (this pass))
+00022144	fuel_open_loop_condition	medium	b319 = 1 iff b318 && b12c==1 (open loop) && be00 >= 66.5 && ae1f==0 && !b2f6 && !b0c8 && !b0c9; reached from ref_evapRelated 0x21b8a. | renamed: Body (200 B): DAT_ffffb319 = 1 iff DAT_ffffb318==1 && open_loop_active_ffffb12c==1 && DAT_ffffbe00 >= 66.5 && closed_loop_active_ffffae1f==0 && DAT_ffffb2f6/b0c8/b0c9 clear; pools 0x22218/0x2221c/0x22
 00021246	fueling_slow_task	high	Task[11] worker (0x6584 -> 0x117ac) under interrupt mask 0x10: open_loop_request_condition, set_open_loop_flag, open_loop_fueling_targets, open_loop_changeover_enrichment (0x2024c), warmup_fueling_compensation (0x32e08), 0x20298/0x2048c/0x20288, rear-O2 chain (0x1d6b4/0x1d772/0x1d850/0x1d8dc/0x1e134), maf_operating_range (0x1e842), 0x1e448, LTFT-for-CAN (0x1e900), 0x1ea56/0x1e99c/0x1eae0/0x1eba6/0x1ecee, 0x188a4, fuel_cut_rpm_condition (0x18cfe), rev_limit_conditionals (0xee82).
 000211fe	fueling_condition_flags_task	high	Task 0x64f6 -> 0x11744 chain under mask 0x10: load/RPM band flags 0x1ff38, throttle/load band flags 0x1f6ae, 0x1fd48, blend_weight_update (0x200c6), off-throttle fuel-cut resume base 0xe560 (tbl 0x68f48), 0x3133c (tbl 0x6aca4), calculate_air_charge (0x314d0), secondary-air enrichment (0x31624), injector_temp_multiplier_lookup (0x2fd3e).
 00020e40	fueling_main_task	high	Called from ref_engineControlTASK 0x11ba4; three masked blocks: enrichments + injection_angle_limit_lookup (0xe48e) + load_delta_enrichment (0x33ec4) + cranking_pulse_adder (0x30678); fuel core: calc_fuel_volume_request (0x306e8), calculate_fuel_amount_per_rotation (0x30948), injector_pulse_time_arbitrate (0x2fea8), cold_start_enrichment (0x1ddfc); closed-loop conditions (0x1c13c chain).
@@ -58,9 +58,9 @@ address	alias	confidence	evidence
 00030948	calculate_fuel_amount_per_rotation	high	Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios.
 0002fea8	injector_pulse_time_arbitrate	high	Cranking (!engine_running): be30 = be38 = be5c + latency be44; running: be30 = be50+be44, be38 = be54+be44; be28 = be24 = (cranking? be58 : be4c) + latency be40; be2c = be30, be34 = be38; cranking decay counter be3c from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant), decrementing while running.
 00008a68	injector_pulse_set_channel	high	Per-channel ATU-II output program: pulse = (injector_latency a094[ch] + injector_fuel_request a010[ch*0x18]) >> 4 (four shar, disasm 0x8a96-0x8a9e) -> DCNT8A via FUN_0000a8a4; start compare = a014[ch*0x18] (or TCNT1A+3 if within 0x7fff) -> GR1A; clears a016/a018 and the channel TIER bit.
-00008340	injector_pulse_set_dispatch	medium	4-byte thunk to injector_pulse_set_channel (0x8a68); called from six wrappers 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea (per-injector dispatch, one per channel).
+00008340	injector_pulse_set_dispatch	high	4-byte thunk to injector_pulse_set_channel (0x8a68); called from six wrappers 0x59a4/0x59b2/0x59c0/0x59ce/0x59dc/0x59ea (per-injector dispatch, one per channel). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 000086f8	set_fuel_injector_latency	high	param_1 ch 0/1/2 -> a094/a0a0, a098/a0a4, a09c/a0a8 (latency value + mirror pair per channel); called by injector_latency_cal_lookup (0x2ff78) with ch0 = secondary, ch1/2 = primary.
-000086ac	injector_zero_offset_set	medium	param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_.
+000086ac	injector_zero_offset_set	high	param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 000085e4	injector_channel_disable	high	Per-channel off: clears channel TIER bit, GR1A = TCNT1A-1, DCNT8A = 0 (FUN_0000a8a4), a017 = 0. Wiring review: six injector channels on 2M/2J/2G/2D/3A/3D; firmware index-to-terminal mapping unresolved.
 0002ff78	injector_latency_cal_lookup	high	be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP be04/be08, battery V b590); be44 = 3D tbl 0x6aa80 'Injector Latency Primary'; quantized /0.25 to int -> set_fuel_injector_latency(0, secondary), (1, primary), (2, primary).
 0002fd3e	injector_temp_multiplier_lookup	high	bde4/bde8/bdec = 3D weighted-engine-temp x load multipliers for primary / secondary-1 / secondary-2 injectors (tbls 0x6a9a4/0x6a9c0/0x6a9dc); consumed by calculate_fuel_amount_per_rotation (0x30948).
@@ -70,18 +70,18 @@ address	alias	confidence	evidence
 000307e0	closed_loop_fuel_trim	high	Closed loop (ae1f): beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), open_loop_fuel_target b120) + 1.0) * ad ecc - 1.0, -1, 2); filtered (0.0625) into beb8; open loop: beb4 = 0. STFT-style trim around lambda target.
 00033ad2	calculate_engine_load	high	engine_load c0b4 = min(first_order_filter(c0b0, c0b4, 0.2 or 1.0 by c0c4), c0b8); forced 0.525 when a41c or (c0c5==0 && injectors off a42c); c0c5 = previous a42c. PID 0x0043 'Engine Load' encodes c0b4 (handler 0x56b8a).
 00007438	maf_sensor_scaling	high	9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1.
-00019f4e	maf_voltage_and_fault_counters	medium	aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched).
-00019f40	maf_filtered_update	medium	mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8.
-0001a418	maf_per_rotation_calc	medium	aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0.
+00019f4e	maf_voltage_and_fault_counters	high	aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
+00019f40	maf_filtered_update	high	mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
+0001a418	maf_per_rotation_calc	high	aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 0001e842	maf_operating_range	high	b0fe = MAF range index 0..3 from mass_air_flow a9ec bands (<1, <9, <22, else) with hysteresis flags b101/b102/b103.
-0000e48e	injection_angle_limit_lookup	medium	a434/a438/a43c = max injection angle 1/2/3 vs RPM (defs 0x68ef8/0x68f0c/0x68f20 'Fuel Injector - Unknown - Max Injection Angle', x2 deg MAYBE).
+0000e48e	injection_angle_limit_lookup	high	a434/a438/a43c = max injection angle 1/2/3 vs RPM (defs 0x68ef8/0x68f0c/0x68f20 'Fuel Injector - Unknown - Max Injection Angle', x2 deg MAYBE). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 00030678	cranking_pulse_adder	high	When cranking && injectors off (a42c) && ce32: be94 += be58 (cranking pulse adder accumulated into pulse arbitration).
 0000e2a8	update_injectors_off_flag	high	engine_injectors_off a42c = 1 iff !engine_running (a428) && !a41c.
 0000ee64	rev_limit_fuel_cut_init	high	When DAT_ffff9f8c == 1: clears rev-limit state a4a4/a4a5/a4a8.
-0000edc4	fuel_cut_arbitration	medium	Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4.
-00018cfe	fuel_cut_rpm_condition	medium	a97c = rpm >= 2500 (clear below 1700), a97d = rpm >= 1700 (clear below 1100); a964 fuel_cut_allowed = (a96a && a97c) || (a96c && a97d).
-0000ee82	rev_limit_conditionals	medium	a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec).
-0001ddfc	cold_start_enrichment	medium	Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0).
+0000edc4	fuel_cut_arbitration	high	Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
+00018cfe	fuel_cut_rpm_condition	high	a97c = rpm >= 2500 (clear below 1700), a97d = rpm >= 1700 (clear below 1100); a964 fuel_cut_allowed = (a96a && a97c) || (a96c && a97d). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
+0000ee82	rev_limit_conditionals	high	a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
+0001ddfc	cold_start_enrichment	high	Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 00056b8a	diag_engine_load	high	RomRaider PID 0x0043 'Engine Load' handler: encodes engine_load_ffffc0b4 via rx8_encode_u16_affine_saturate (step 0x3b808080 ~ 0.00392) as u16 BE.
 00056b9e	diag_lambda_target	high	RomRaider PID 0x0044 'Lambda Target' handler: encodes lambda_target_ffffadfc (step 0x38000000) as u16 BE.
 00056b22	diag_air_fuel_ratio	high	RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words.
@@ -89,24 +89,24 @@ address	alias	confidence	evidence
 000556ec	diag_afr_word_a	medium	Encodes DAT_ffffaa6c (step 0x38000000) as the high u16 word of PID 0x0034 'Air Fuel Ratio'.
 00055702	diag_afr_word_b	medium	Encodes DAT_ffffaa7c (mult 0x3b800000, offset 0xc3000000 = -96.0) as the low u16 word of PID 0x0034.
 0002178c	ssv_solenoid_control	high	Writes PEDR_W 0xfffff754 bit 0x80 (PE7, SH7055F pkg pin 16) via ref_setRegister_REG_BIT_VAL after diag override 0x5c9ac. On-condition: coolant hysteresis 197/200 C (b2b4), counter b2b2=0xbc, (aa68==0 && b2b5 prev) || becd. Harness: SSV solenoid PCM 1L (position switch is separate, PCM 1D). Reached from task 0x64f6 -> 0x11744 -> 0x21766.
-00021760	ssv_control_thunk	medium	4-byte thunk to 0x2178c; called from init fan-out 0x1102a.
-00021766	ssv_control_task_wrapper	medium	Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain).
+00021760	ssv_control_thunk	high	4-byte thunk to 0x2178c; called from init fan-out 0x1102a. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+00021766	ssv_control_task_wrapper	high	Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain). | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 00034844	vdi_solenoid_control	high	Writes PDDR_W 0xfffff746 bit 0x20 (PD5, pkg pin 254; PD5/TIO1F alternate) after diag override ref_diagControlVDI. On = RPM >= 7250 (hysteresis 7062). Harness: VDI solenoid PCM 1W. Reached from 0x11744 -> 0x348ea.
-000348e4	vdi_control_thunk	medium	4-byte thunk to 0x34844; called from 0x1102a.
-000348ea	vdi_control_task_wrapper	medium	Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744.
+000348e4	vdi_control_thunk	high	4-byte thunk to 0x34844; called from 0x1102a. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+000348ea	vdi_control_task_wrapper	high	Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 0003493c	vfad_solenoid_control	high	Writes PEDR_W bit 0x400 (PE10, pkg pin 19) after diag override ref_diagControlVFADMAYBE. On = RPM >= 5250 (hysteresis 5062). Harness: VFAD solenoid PCM 5Z (high-power only). Reached from 0x11744 -> 0x34916.
-00034910	vfad_control_thunk	medium	4-byte thunk to 0x3493c; called from 0x1102a.
-00034916	vfad_control_task_wrapper	medium	Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744.
+00034910	vfad_control_thunk	high	4-byte thunk to 0x3493c; called from 0x1102a. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+00034916	vfad_control_task_wrapper	high	Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 00031c20	apv_control_task	high	APV wrapper under mask 0x10: calls 0x31c6c (target/condition), ref_apvPositionVoltageCounter (0x31ece), ref_calcAPVCounter (0x31f0a), 0x31f32 (command), ref_setAPVDC_00031bec. Called from 0x11744 (task 0x64f6 chain). Harness: APV motor PCM 3J/3G, signal 3B, ref 1S, return 1U.
 00031c6c	apv_target_condition	medium	Computes APV target state bf8d from RPM >= 150/200 (bf99), counter bf92 > 0x32, aa68; uses MAF a9ec and coolant a98c snapshots.
-00031ece	apv_position_voltage_counter	medium	bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment — position-voltage dwell counter.
-00031f0a	apv_counter_calc	medium	bf8a: 0 when bf8b==1 else saturating u8 increment — APV drive counter.
-00031f32	apv_command_calc	medium	Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset).
+00031ece	apv_position_voltage_counter	high	bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment — position-voltage dwell counter. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+00031f0a	apv_counter_calc	high	bf8a: 0 when bf8b==1 else saturating u8 increment — APV drive counter. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+00031f32	apv_command_calc	high	Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset). | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 00031bec	apv_command_wrapper	medium	bf84 negated when bf8b==1, divided by 100, passed to apv_duty_split (0xaa90) — signed percent command.
 0000aa90	apv_duty_split	high	param * 96.0 (period u16 at ROM 0x78bb6); positive -> a1c4, negative -> a1c6 (other zeroed): signed duty split into forward/reverse tick counts. See reconstructed/rx8_apv.c.
-0000a936	apv_pwm_service	medium	Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4.
-0000aac4	apv_drive_status_sample	medium	Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc.
-00043a86	apv_position_voltage_scale	medium	cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified.
+0000a936	apv_pwm_service	high	Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+0000aac4	apv_drive_status_sample	high	Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
+00043a86	apv_position_voltage_scale	high	cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 000187b8	secondary_air_solenoid_control	high	Writes PEDR_W bit 0x100 (PE8, pkg pin 17) from diag-checked request: load > 0.8 (hyst 0.75, a961), RPM > 4000 (hyst 3900, a962), condition (bf6c && !a961 && !a962) || d26e; override via ref_diagCheckSecondaryAirRequest (0x5cf7c) -> a960. Harness: secondary air injection solenoid PCM 1O. Called from 0x117ac (task 0x6584 chain).
 000316f8	secondary_air_pump_control	high	Writes PBDR_W 0xfffff738 bit 0x4 (PB2, pkg pin 147) = (bf6c == 1): secondary air pump relay/drive output. Called from 0x3174a.
 0003174a	secondary_air_on_time_task	medium	Mask-0x10 task: 0x3194a + 0x31a24 + secondary_air_pump_control (0x316f8).
@@ -139,8 +139,8 @@ address	alias	confidence	evidence
 00007778	atu_ch10b_tick_enable	high	was ref_setInterruptTimer. Clears TSR10 (write 0xb), calls 0x7b58 (OCR10B from table 0xd76d[DAT_ffff9f95*2]&0x7f, TCNT10B=0), sets TIER10 bit2 (CMFB). OS tick setup; ch10 started by TSTR3 bit0 (0xfffff402).
 00006884	adc_scan_sweep_all_channels	high	was ref_sensorADCRead. Starts ADCSR0/1/2 scans, ADST via ADCR 0x20, busy-waits ADCSR bit7 (ADF), then copies ADDR0H..ADDR31H into 0xffff9ee4..0xffff9f22 (maf ADDR3H -> 0xffff9eea, apv ADDR6H -> 0xffff9ef0, knock ADDR10H -> 0xffff9ef8). Emulator: harness.call(0x6884) landed scripted channels in those RAM cells.
 00006744	vehicle_inputs_poll_pfdr_phdr	high	was ref_getVehicleStatusInputs_. DAT_ffff9ec8 = PFDR_W (0xfffff74e), DAT_ffff9eca = PHDR_W, plus 3 GPIO inputs. Emulator: PFDR bit0 scripted high via GPIO inputs; read observed during the CAN-RX tick.
-00006fb0	adc_read_result_bank2	medium	was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff840); bank-2 channel select (ADCSR2 at 0xfffff858).
-00006cdc	adc_read_ect_iat_group	medium	was ref_readADCs_coolantTempInHere__. Reads ADDR24H-ADDR31H into 0xffff9f14-0xffff9f22 when DAT_ffff9f31 selects the group (ECT ADDR28H -> 0xffff9f1c, IAT ADDR29H -> 0xffff9f1e per fueling labels).
+00006fb0	adc_read_result_bank2	high	was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff840); bank-2 channel select (ADCSR2 at 0xfffff858). | promoted to high (data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json/function_aliases)
+00006cdc	adc_read_ect_iat_group	high	was ref_readADCs_coolantTempInHere__. Reads ADDR24H-ADDR31H into 0xffff9f14-0xffff9f22 when DAT_ffff9f31 selects the group (ECT ADDR28H -> 0xffff9f1c, IAT ADDR29H -> 0xffff9f1e per fueling labels). | promoted to high (data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json/function_aliases)
 000123da	leading_timing_cranking_blend	high	Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (DAT_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5).
 000124d6	trailing_timing_cranking_blend	high	Trailing mirror: a650 = a5ec*a654 + (a5f4 + a71c + caa0)*(1-a654) + a784 - a77c. Dynamically verified bit-exact in the emulator (a650=18.115 for scripted inputs).
 000121fc	leading_final_timing_clamp_output	high	a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630.
@@ -155,12 +155,12 @@ address	alias	confidence	evidence
 0002cc2c	dsc_mode_a_base_timing_lookup	high	was ref_getLeadingTimingTCModeA_4_val. bc94 = lookup_3d(load, rpm, tbl 0x6a7a4 'Ignition Timing Leading - DSC Mode A - Base'). Consumed by 0x1815c and torque-loss calc 0x2cc5c/0x2cc7c ((bc94 - actual)^2 * bc90).
 0001815c	dsc_timing_derate_select	high	DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
 00013ecc	coolant_timing_derate_calc	high	was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 � the max() derate subtracted in 0x125bc/0x125f6.
-00012e60	timing_trim_scale_calc	medium	a66c = a67c * a698; a670 = a680 * a698 � the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim).
+00012e60	timing_trim_scale_calc	high	a66c = a67c * a698; a670 = a680 * a698 � the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim). | promoted to high (data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases)
 00006010	os_queue_dequeue_record	high	dequeues 20-byte (5 u32) record from queue table PTR_DAT_0000d74c, ring in DAT_ffff9305/9306
 000096be	uds_service_task_entry	high	task[2] entry (task table 0x49b8): 0x6010(1,&blk) then (*blk.handler)(&blk+1)
-00037358	dtc_state_machine_step	medium	DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)
-00037546	diag_status_bit_pack	medium	0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124)
-00054884	diag_encode_s16_div	medium	s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers
+00037358	dtc_state_machine_step	high	DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00037546	diag_status_bit_pack	high	0x40 if DAT_ffffc1d0==1, |4 if DAT_ffffc274==1 (PID 0xc124) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00054884	diag_encode_s16_div	high	s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00055316	diag_read_active_cal_field	medium	0x61af4->0x6071e selects cal descriptor, 0x54994 TLV tag 2 -> 2 bytes
 000553dc	diag_read_calc_load_pct	high	PID 0x04: load*100/max*0.392157, 0xff if max~0
 0005542a	diag_encode_ect_c	high	PID 0x05: coolant_temperature_ffff9f70-40
@@ -174,28 +174,28 @@ address	alias	confidence	evidence
 0005553e	diag_encode_throttle_pct	high	PID 0x11: ffffad5c*20*0.392157
 0005556a	diag_read_secondary_air_status	high	PID 0x12: 1 or 4
 00055580	diag_read_o2_present_const	high	PID 0x13: const 2
-00055586	diag_encode_o2s2	medium	PID 0x15: ffffad1c decode*0.005
-000555ac	diag_encode_trim_b074	medium	PID 0x15: ffffb074*100*0.7813-100
+00055586	diag_encode_o2s2	high	PID 0x15: ffffad1c decode*0.005 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000555ac	diag_encode_trim_b074	high	PID 0x15: ffffb074*100*0.7813-100 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000555ca	diag_read_obd_standard_const	high	PID 0x1c: const 6
 000555d0	diag_read_runtime_s	high	PID 0x1f: ffffd284 via 0x409c clamp 0xffff
 000555f8	diag_read_distance_mil	high	PID 0x21: ffff90f4
-00055616	diag_encode_b2f0	medium	PID 0x2e: ffffb2f0*0.392157
-0005562c	diag_read_d287	medium	PID 0x2f: ffffd287
-00055632	diag_read_gear_byte	medium	PID 0x30: 0x61d14 (ffff8788) clamp 0xff
-000556b0	diag_read_90fc	medium	PID 0x31: ffff90fc
-000556ce	diag_encode_ad10	medium	PID 0x33: ffffad10*25.325+0.0182
-0005571a	diag_encode_c644	medium	PID 0x3c: ffffc644*0.1-40
+00055616	diag_encode_b2f0	high	PID 0x2e: ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005562c	diag_read_d287	high	PID 0x2f: ffffd287 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00055632	diag_read_gear_byte	high	PID 0x30: 0x61d14 (ffff8788) clamp 0xff | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000556b0	diag_read_90fc	high	PID 0x31: ffff90fc | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000556ce	diag_encode_ad10	high	PID 0x33: ffffad10*25.325+0.0182 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005571a	diag_encode_c644	high	PID 0x3c: ffffc644*0.1-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00055732	diag_encode_battery_v	high	PID 0x42: ffffb590*0.001
 00055748	diag_encode_load_g_rev	high	PID 0x43: engine_load_ffffc0b4*1/255
 0005575e	diag_encode_lambda_target	high	PID 0x44: lambda_target_ffffadfc*3.05e-05
-00055774	diag_encode_ad48	medium	PID 0x45: ffffad48*0.392157
-0005578a	diag_encode_ad5e	medium	PID 0x47: ffffad5e decode*20*0.392157
-000557b6	diag_encode_a9c4	medium	PID 0x49: ffffa9c4 decode*20*0.392157
-00055838	diag_encode_a9c6	medium	PID 0x4a: ffffa9c6 decode*20*0.392157
-00055864	diag_encode_b410	medium	PID 0x4c: ffffb410*100/84*0.392157
+00055774	diag_encode_ad48	high	PID 0x45: ffffad48*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005578a	diag_encode_ad5e	high	PID 0x47: ffffad5e decode*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000557b6	diag_encode_a9c4	high	PID 0x49: ffffa9c4 decode*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00055838	diag_encode_a9c6	high	PID 0x4a: ffffa9c6 decode*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00055864	diag_encode_b410	high	PID 0x4c: ffffb410*100/84*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000558ac	uds_service_14_clear_diagnostic_information	high	service table record 0x5ec24 (service 0x14) -> handler; ROM bytes verified; UDS 0x14 (ref_ClearFaults_)
 00056508	uds_service_3e_tester_present	high	service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
-000565e8	uds_service_b1_mazda_specific	medium	service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function)
+000565e8	uds_service_b1_mazda_specific	high	service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000567e8	uds_service_22_read_data_by_identifier	high	service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
 00056890	diag22_pid0000_pids_supported_01_20	high	dispatch record 0x5f10c -> handler verified in ROM bytes + function_index; handler appends const u16 0xBE1F,0xE813 = OBD supported-PID bitmap 01-20; record bytes at 0x5f10c verified
 000568b4	diag22_pid0002_active_cal_id_field	medium	dispatch record 0x5f118 -> handler verified in ROM bytes + function_index; reader 0x55316: 0x61af4->0x6071e scans cal-descriptor table (DAT_0007e704), 0x54994 TLV-extracts tag 2 (2 bytes) from ROM info block
@@ -212,108 +212,108 @@ address	alias	confidence	evidence
 000569f0	diag22_pid0011_throttle_position_pct	high	dispatch record 0x5f19c -> handler verified in ROM bytes + function_index; 0x5553e: DAT_ffffad5c decode(7.63e-05)*20*0.392157 = OBD PID 11 throttle %
 00056a06	diag22_pid0012_secondary_air_status	high	dispatch record 0x5f1a8 -> handler verified in ROM bytes + function_index; 0x5556a: secondary_air_request_final_ffffa960==1 ? 1 : 4 = OBD PID 12
 00056a1c	diag22_pid0013_o2_sensors_present	high	dispatch record 0x5f1b4 -> handler verified in ROM bytes + function_index; const 2 = OBD PID 13 bitmap (bank1 sensors)
-00056a32	diag22_pid0015_o2s2_voltage_trim	medium	dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2
+00056a32	diag22_pid0015_o2s2_voltage_trim	high	dispatch record 0x5f1c0 -> handler verified in ROM bytes + function_index; 0x55586: DAT_ffffad1c decode(7.63e-05)*0.005 + 0x555ac DAT_ffffb074*100*0.7813-100; OBD PID 15 O2S2 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056a58	diag22_pid001c_obd_standard	high	dispatch record 0x5f1cc -> handler verified in ROM bytes + function_index; const 6 = OBD PID 1C
 00056a6e	diag22_pid001f_engine_runtime_s	high	dispatch record 0x5f1d8 -> handler verified in ROM bytes + function_index; 0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start
 00056a84	diag22_pid0020_pids_supported_21_40	high	dispatch record 0x5f1e4 -> handler verified in ROM bytes + function_index; handler appends const u16 0x8007,0xB011 = supported-PID bitmap 21-40
 00056aa8	diag22_pid0021_distance_while_mil_on	high	dispatch record 0x5f1f0 -> handler verified in ROM bytes + function_index; 0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21
-00056abc	diag22_pid002e_ram_b2f0_pct	medium	dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157
-00056ad2	diag22_pid002f_ram_d287_raw	medium	dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte
-00056ae6	diag22_pid0030_gear_or_vin_byte	medium	dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff
-00056afa	diag22_pid0031_ram_90fc_float	medium	dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0
-00056b0e	diag22_pid0033_ram_ad10_scaled	medium	dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182
+00056abc	diag22_pid002e_ram_b2f0_pct	high	dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056ad2	diag22_pid002f_ram_d287_raw	high	dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056ae6	diag22_pid0030_gear_or_vin_byte	high	dispatch record 0x5f214 -> handler verified in ROM bytes + function_index; 0x55632: 0x61d14 = DAT_ffff8788 u16, clamp 0xff | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056afa	diag22_pid0031_ram_90fc_float	high	dispatch record 0x5f220 -> handler verified in ROM bytes + function_index; 0x556b0: DAT_ffff90fc float*1.0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056b0e	diag22_pid0033_ram_ad10_scaled	high	dispatch record 0x5f22c -> handler verified in ROM bytes + function_index; 0x556ce: DAT_ffffad10*25.325+0.0182 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056b22	diag22_pid0034_afr_lambda_words	high	dispatch record 0x5f238 -> handler verified in ROM bytes + function_index; diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)
-00056b42	diag22_pid003c_ram_c644_scaled	medium	dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)
+00056b42	diag22_pid003c_ram_c644_scaled	high	dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056b56	diag22_pid0040_pids_supported_41_60	high	dispatch record 0x5f250 -> handler verified in ROM bytes + function_index; handler appends const u16 0x7AD0,0x0000 = supported-PID bitmap 41-60
 00056b76	diag22_pid0042_battery_voltage_v	high	dispatch record 0x5f25c -> handler verified in ROM bytes + function_index; 0x55732: inferred_battery_voltage_ffffb590*0.001 = OBD PID 42
 00056b8a	diag22_pid0043_engine_load_g_rev	high	dispatch record 0x5f268 -> handler verified in ROM bytes + function_index; 0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)
 00056b9e	diag22_pid0044_lambda_target	high	dispatch record 0x5f274 -> handler verified in ROM bytes + function_index; 0x5575e: lambda_target_ffffadfc*3.05176e-05 (logger 0x220044)
-00056bb2	diag22_pid0045_ram_ad48_pct	medium	dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157
-00056bc6	diag22_pid0047_ram_ad5e_pedal	medium	dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157
-00056bda	diag22_pid0049_ram_a9c4_pedal	medium	dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157
-00056c78	diag22_pid004a_ram_a9c6_pedal	medium	dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157
-00056c8c	diag22_pid004c_ram_b410_pct	medium	dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157
+00056bb2	diag22_pid0045_ram_ad48_pct	high	dispatch record 0x5f280 -> handler verified in ROM bytes + function_index; 0x55774: DAT_ffffad48*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056bc6	diag22_pid0047_ram_ad5e_pedal	high	dispatch record 0x5f28c -> handler verified in ROM bytes + function_index; 0x5578a: DAT_ffffad5e decode(7.63e-05)*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056bda	diag22_pid0049_ram_a9c4_pedal	high	dispatch record 0x5f298 -> handler verified in ROM bytes + function_index; 0x557b6: DAT_ffffa9c4 decode(7.63e-05)*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056c78	diag22_pid004a_ram_a9c6_pedal	high	dispatch record 0x5f2a4 -> handler verified in ROM bytes + function_index; 0x55838: DAT_ffffa9c6 decode(7.63e-05)*20*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056c8c	diag22_pid004c_ram_b410_pct	high	dispatch record 0x5f2b0 -> handler verified in ROM bytes + function_index; 0x55864: DAT_ffffb410*100/84*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056ca0	diag22_pid0200_dtc_count_stored	high	dispatch record 0x5f2bc -> handler verified in ROM bytes + function_index; ref_faultSomething0x0 0x5fab2: 0x61450(0x80,0) - 0x5f8fa() + 1, clamp 0xff
 00056cb4	diag22_pid0202_dtc_count_ram_list	high	dispatch record 0x5f2c8 -> handler verified in ROM bytes + function_index; 0x5fb08 counts DAT_ffffd570[0..0x8b]==1 minus rotor-0/1 adjustments, clamp 0xff
 00056cc8	diag22_pid0904_trailing_ignition_timing_deg	high	dispatch record 0x5f2d4 -> handler verified in ROM bytes + function_index; trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)
-00056ce8	diag22_pid0914_ram_a9c4_scaled_s16	medium	dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16
-00056d1a	diag22_pid0915_ram_a9c6_scaled_s16	medium	dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6)
-00056d4c	diag22_pid0917_ram_ad5c_scaled_s16	medium	dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c)
-00056db4	diag22_pid0918_ram_ad5e_scaled_s16	medium	dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e)
-00056de6	diag22_pid091a_ram_b410_raw_512	medium	dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512)
+00056ce8	diag22_pid0914_ram_a9c4_scaled_s16	high	dispatch record 0x5f2e0 -> handler verified in ROM bytes + function_index; 0x54884(a9c4) helper = (x-p3)/p2+0.5 s16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056d1a	diag22_pid0915_ram_a9c6_scaled_s16	high	dispatch record 0x5f2ec -> handler verified in ROM bytes + function_index; 0x54884(a9c6) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056d4c	diag22_pid0917_ram_ad5c_scaled_s16	high	dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056db4	diag22_pid0918_ram_ad5e_scaled_s16	high	dispatch record 0x5f304 -> handler verified in ROM bytes + function_index; 0x54884(ad5e) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056de6	diag22_pid091a_ram_b410_raw_512	high	dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056e04	diag22_pid093c_throttle_position_raw	high	dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
-00056e22	diag22_pid096e_ram_a7ac_quarter	medium	dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25
-00056e40	diag22_pid097c_ram_b59c_div2048	medium	dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)
-00056e5e	diag22_pid114a_ram_add4_raw	medium	dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05
-00056e7c	diag22_pid114d_ram_a984_raw	medium	dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05
-00056e9a	diag22_pid1153_ram_a834_lambda	medium	dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05
-00056eb8	diag22_pid1154_throttle_raw_ad5c	medium	dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16
-00056efc	diag22_pid1169_ram_807c_scaled	medium	dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05
+00056e22	diag22_pid096e_ram_a7ac_quarter	high	dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056e40	diag22_pid097c_ram_b59c_div2048	high	dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056e5e	diag22_pid114a_ram_add4_raw	high	dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056e7c	diag22_pid114d_ram_a984_raw	high	dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056e9a	diag22_pid1153_ram_a834_lambda	high	dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056eb8	diag22_pid1154_throttle_raw_ad5c	high	dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056efc	diag22_pid1169_ram_807c_scaled	high	dispatch record 0x5f370 -> handler verified in ROM bytes + function_index; 0x56efc: readFloat(ffff807c, default 15)/25*7.63e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056f30	diag22_pid1177_maf_voltage_latched_v	high	dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
-00056f4e	diag22_pid1340_ram_a9bc_pct	medium	dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157
+00056f4e	diag22_pid1340_ram_a9bc_pct	high	dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00056f6c	diag22_pid1410_injector_pulse_time	high	dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)
-00056f8a	diag22_pid163e_ram_b074_scaled_s16	medium	dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)
-00056faa	diag22_pid16b3_ram_ad10_raw	medium	dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05
-00056fc8	diag22_pid16e8_ram_b5ac_raw	medium	dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176
-00056fe6	diag22_pid16e9_ram_b654_eighth	medium	dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125
+00056f8a	diag22_pid163e_ram_b074_scaled_s16	high	dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056faa	diag22_pid16b3_ram_ad10_raw	high	dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056fc8	diag22_pid16e8_ram_b5ac_raw	high	dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00056fe6	diag22_pid16e9_ram_b654_eighth	high	dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00057004	diag22_pid16f0_tire_revolutions_per_mile	high	dispatch record 0x5f3d0 -> handler verified in ROM bytes + function_index; tire_revolutions_per_mile_ffffd380 raw u16 (logger 0x2216f0)
-0005705c	diag22_pida216_ram_bc30_raw	medium	dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05
+0005705c	diag22_pida216_ram_bc30_raw	high	dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005707a	diag22_pid1746_knock_retard_deg	high	dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
-00057098	diag22_pid1782_ram_c6ac_raw	medium	dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05
-000570b6	diag22_pid17a6_ram_d1ac_scaled	medium	dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1
-000570ee	diag22_pid172a_ram_c4c8_temp_c	medium	dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40
-0005710c	diag22_pid172d_ram_a8f4_raw	medium	dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8
+00057098	diag22_pid1782_ram_c6ac_raw	high	dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000570b6	diag22_pid17a6_ram_d1ac_scaled	high	dispatch record 0x5f400 -> handler verified in ROM bytes + function_index; decode_u8(128,0,ffffd1ac)/1000*0.1 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000570ee	diag22_pid172a_ram_c4c8_temp_c	high	dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005710c	diag22_pid172d_ram_a8f4_raw	high	dispatch record 0x5f418 -> handler verified in ROM bytes + function_index; raw DAT_ffffa8f4 u8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005711a	diag22_pid1634_apv_position_voltage	high	dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
-00057138	diag22_pid0968_io_status_b5b4_bc35	medium	dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0
-000571ac	diag22_pid09d3_pedr_bit10_status	medium	dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0
-000571e4	diag22_pid1101_io_status_bf3c_ad18_cdd8	medium	dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8)
-00057226	diag22_pid1102_io_status_bdb8	medium	dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8
-00057248	diag22_pid1103_io_status_pedr_cab4_d1a	medium	dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1
-000572d0	diag22_pid1104_io_status_pjdr_bf6c	medium	dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c
-0005730e	diag22_pid1631_tol_status_b570_b584	medium	dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584
-0005734a	diag22_pid1681_io_status_ce1c	medium	dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40
-0005736c	diag22_pid1688_secondary_air_status_bit	medium	dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20
-0005738e	diag22_pida211_status_b53b_aa62_bf9c	medium	dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8
-000573f0	diag22_pid1711_pedr_bit1_status	medium	dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80
-0005741e	diag22_pid1706_io_status_a8f5	medium	dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4
-00057440	diag22_pid1718_pedr_bit2_status	medium	dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4
-0005746e	diag22_pid1715_pedr_pddr_status	medium	dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80
-000574b6	diag22_pid17de_io_status_ce32	medium	dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32
+00057138	diag22_pid0968_io_status_b5b4_bc35	high	dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000571ac	diag22_pid09d3_pedr_bit10_status	high	dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000571e4	diag22_pid1101_io_status_bf3c_ad18_cdd8	high	dispatch record 0x5f448 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbf3c(1), ffffad18(2), ffffcdd8(8) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057226	diag22_pid1102_io_status_bdb8	high	dispatch record 0x5f454 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffbdb8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057248	diag22_pid1103_io_status_pedr_cab4_d1a	high	dispatch record 0x5f460 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W bits 0x800/0x10, DAT_ffffcab4, ffffd1a2/d1a1 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000572d0	diag22_pid1104_io_status_pjdr_bf6c	high	dispatch record 0x5f46c -> handler verified in ROM bytes + function_index; 0x579a8 over PJDR_W bit0x80, secondary_air_pump_request_ffffbf6c | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005730e	diag22_pid1631_tol_status_b570_b584	high	dispatch record 0x5f478 -> handler verified in ROM bytes + function_index; 0x579a8 over rx8_is_outside_tolerance_band(ffffb570) and ffffb584 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005734a	diag22_pid1681_io_status_ce1c	high	dispatch record 0x5f484 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce1c -> 0x40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005736c	diag22_pid1688_secondary_air_status_bit	high	dispatch record 0x5f490 -> handler verified in ROM bytes + function_index; 0x579a8 over secondary_air_request_final_ffffa960 -> 0x20 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005738e	diag22_pida211_status_b53b_aa62_bf9c	high	dispatch record 0x5f49c -> handler verified in ROM bytes + function_index; 0x579a8 sub1 over ffffb53b(4)/ffffaa62(0x10), sub2 over ffffbf9c; appends 2 u8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000573f0	diag22_pid1711_pedr_bit1_status	high	dispatch record 0x5f4a8 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 2 -> 0x80 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005741e	diag22_pid1706_io_status_a8f5	high	dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057440	diag22_pid1718_pedr_bit2_status	high	dispatch record 0x5f4c0 -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005746e	diag22_pid1715_pedr_pddr_status	high	dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000574b6	diag22_pid17de_io_status_ce32	high	dispatch record 0x5f4d8 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffce32 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000574d8	diag22_pide21b_cal_id_chunk_0	high	dispatch record 0x5f4e4 -> handler verified in ROM bytes + function_index; appends immediates 'N','3','Z','H' (cal ID at ROM 0x6c046 'N3ZHEB000.HEX')
 00057506	diag22_pide21c_cal_id_chunk_1	high	dispatch record 0x5f4f0 -> handler verified in ROM bytes + function_index; appends '1','8'
 0005752c	diag22_pide21d_cal_id_chunk_2	high	dispatch record 0x5f4fc -> handler verified in ROM bytes + function_index; appends '8','8','1'
 00057546	diag22_pide21e_cal_id_chunk_3	high	dispatch record 0x5f508 -> handler verified in ROM bytes + function_index; appends 'B'
 0005755c	diag22_pide611_sw_name_string	high	dispatch record 0x5f514 -> handler verified in ROM bytes + function_index; appends 24 bytes 'SW-N3ZHEB000.HEX' (ROM 0x6c043)
 00057594	diag22_pid1710_sensor_snapshot_7byte	medium	dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
-000576b4	diag22_pidc115_ram_c1d2_raw	medium	dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8
-000576c2	diag22_pidc116_dtc_state_machine	medium	dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code
-00057704	diag22_pidc117_ram_c1d3_c1d4	medium	dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0
-00057738	diag22_pidc124_diag_status_bits	medium	dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4
-00057884	diag22_pidff10_dtc_status_c1d5_c1d8	medium	dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8
+000576b4	diag22_pidc115_ram_c1d2_raw	high	dispatch record 0x5f52c -> handler verified in ROM bytes + function_index; raw DAT_ffffc1d2 u8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+000576c2	diag22_pidc116_dtc_state_machine	high	dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057704	diag22_pidc117_ram_c1d3_c1d4	high	dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057738	diag22_pidc124_diag_status_bits	high	dispatch record 0x5f550 -> handler verified in ROM bytes + function_index; 0x37546: DAT_ffffc1d0 -> 0x40, DAT_ffffc274 -> 4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057884	diag22_pidff10_dtc_status_c1d5_c1d8	high	dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000578e8	diag22_pidff40_fw_id_chunk_15	high	dispatch record 0x5f568 -> handler verified in ROM bytes + function_index; appends '1','5' (fw id '60E15120' ROM 0x2000; cal area 0x6c05c '15120 ')
 00057902	diag22_pidff41_fw_id_chunk_120	high	dispatch record 0x5f574 -> handler verified in ROM bytes + function_index; appends '1','2','0',' '
 0005792e	diag22_pidff42_rom_id_bytes_ff8	high	dispatch record 0x5f580 -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xff8,0xff9,0xffa (via mov.w literals)
 0005794e	diag22_pidff43_rom_id_bytes_ffb	high	dispatch record 0x5f58c -> handler verified in ROM bytes + function_index; appends ROM bytes at 0xffb,0xffc,0xffd
-0005796e	diag22_pidff50_ram_d3a0_raw	medium	dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16
-00057974	diag22_pidff44_ram_ce30_raw	medium	dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16
+0005796e	diag22_pidff50_ram_d3a0_raw	high	dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00057974	diag22_pidff44_ram_ce30_raw	high	dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 000579a8	diag22_subpid_supported_mask	high	scans 36 x 6-byte records at 0x5f5b2 for current PID+subfunc with mask&DAT_ffffd3b4, ORs byte1 (bit) into result; returns param & mask
 00057a64	uds_service_27_security_access	high	service table record 0x5ebb8 (service 0x27) -> handler; ROM bytes verified; UDS 0x27 (ref_UDSService27Function); seed/key compare lives under it
 00057c8c	uds_service_10_diagnostic_session_control	high	service table record 0x5ebac (service 0x10) -> handler; ROM bytes verified; UDS 0x10; table record 0x5ebac
-00057db0	uds_service_18	medium	service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0
+00057db0	uds_service_18	high	service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005af54	uds_service_11_ecu_reset	high	service table record 0x5ebd0 (service 0x11) -> handler; ROM bytes verified; UDS 0x11
-0005b094	uds_service_12	medium	service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094
-0005b414	uds_service_21_read_data_by_local_id	medium	service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+0005b094	uds_service_12	high	service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005b414	uds_service_21_read_data_by_local_id	high	service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005b750	uds_service_23_read_memory_by_address	high	service table record 0x5ebf4 (service 0x23) -> handler; ROM bytes verified; UDS 0x23 (ref_UDSMode23Function)
 0005b9f6	uds_service_28_communication_control	high	service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
 0005bc4c	uds_service_2f_input_output_control	high	service table record 0x5ec30 (service 0x2f) -> handler; ROM bytes verified; UDS 0x2F
 0005d7bc	uds_service_34_request_download	high	service table record 0x5ec60 (service 0x34) -> handler; ROM bytes verified; UDS 0x34 (ref_UDSMode34Func)
 0005d834	uds_service_36_transfer_data	high	service table record 0x5ec6c (service 0x36) -> handler; ROM bytes verified; UDS 0x36 (ref_UDSMode36Function_)
 0005d874	uds_service_37_request_transfer_exit	high	service table record 0x5ec78 (service 0x37) -> handler; ROM bytes verified; UDS 0x37 (ref_UDSService37Function)
-0005d8b4	uds_service_3b	medium	service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4
+0005d8b4	uds_service_3b	high	service table record 0x5ec00 (service 0x3b) -> handler; ROM bytes verified; record 0x5ec00 -> 0x5d8b4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005dc44	uds_service_85_control_dtc_setting	high	service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
 0005df60	uds_service_31_routine_control	high	service table record 0x5ec3c (service 0x31) -> handler; ROM bytes verified; UDS 0x31
-0005e024	uds_service_32	medium	service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024
-0005fab2	dtc_count_stored	medium	0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)
+0005e024	uds_service_32	high	service table record 0x5ec48 (service 0x32) -> handler; ROM bytes verified; record 0x5ec48 -> 0x5e024 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+0005fab2	dtc_count_stored	high	0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 0005fb08	dtc_count_ram_table	high	counts DAT_ffffd570[0..0x8b]==1, rotor-0/1 adjust, clamp 0xff
 0006581c	obd_mode01_current_data	high	service table record 0x5eb40 (service 0x01) -> handler; ROM bytes verified; OBD Mode 01 handler (caseD_27)
 00065c88	obd_mode02_freeze_frame	high	service table record 0x5eb4c (service 0x02) -> handler; ROM bytes verified; OBD Mode 02
@@ -328,8 +328,8 @@ address	alias	confidence	evidence
 0006859e	isotp_first_frame_accept	high	FF: total len=(pci&0xf)*256+buf[2], service=buf[3], starts reassembly
 0006872c	isotp_consecutive_frame_check	high	CF: checks DAT_ffffddeb==4 and seq == expected
 00068764	isotp_flow_control_check	high	FC: DAT_ffffdde1 != 7
-00068a86	uds_rx_channel_alloc	medium	finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10
-00068b10	uds_rx_channel_set_service	medium	DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer
+00068a86	uds_rx_channel_alloc	high	finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+00068b10	uds_rx_channel_set_service	high	DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
 00068dac	uds_service_dispatch_table_scan	high	scans 12-byte records at 0x5eb40 (literal @0x68ed0): byte0==service, checks record[8] & session mask, jsr record[4]; disasm 0x68dd0-0x68e02
 00055702	diag_read_afr_word_b	high	PID 0x0034 handler second word; encodes diag_afr_word_b_ffffaa7c * 0.00390625 (0x3b800000) offset -128 (0xc3000000); logger 0x220034 AFR
 000556ec	diag_read_afr_word_a	high	PID 0x0034 handler 0x56b22 (diag22_pid0034_afr_lambda_words) calls it; encodes diag_afr_word_a_ffffaa6c * 3.05176e-05 (0x38000000 in pool); logger 0x220034 AFR
@@ -370,7 +370,7 @@ address	alias	confidence	evidence
 0000a4b6	task12_alive_counter_clear	high	8-byte body: mov.w #0 -> 0xffffa188 (pool 0xa4d0); called only from task[12] 0x6592. Counter incremented in 0xa3ac, reset when > 300.
 0000aee8	adc_pair_correlation_fault_compute	high	Gated by 0xffffa202; samples written by 0xb0a6/0xb1da (from ADC EOC bank1 0x6b60): 0xffffa1fa/a1fc = word @0xfffff836 (ADDR23H/AN23), 0xffffa1fe/a200 = word @0xfffff816 (ADDR11H/AN11; add -0x20 from the 0xfffff836 pool word, ROM-verified). Computes |dV|*5/65536 -> 0xffffa1f0, inter-channel delta/200 -> 0xffffa1e4/a1e8, ratio-16.25 -> 0xffffa1d8 (raw), filtered 0.25 -> 0xffffa1d4; range fault 0xffffa1dc (raw<0x5c29->2, >0xc28f->1), correlation fault 0xffffa1dd (+/-0.005 V). Consumed by 0x1ac00 (copies a1d4 -> 0xffffaa78, lambda band logic) and 0x22630 (duty lookups + closed loop vs 30.0).
 0000b308	atu_ch7d_pwm_enable	high	Once-only (0xffffa214==0): TSTR2 0xfffff400 bit7 clear/set, CYLR7D 0xfffff58e = TCNT7D 0xfffff586 = BFR7D 0xfffff596 = DTR7D 0xfffff59e = 32000 (0x7d00), then BFR7D = rx8_mul_s32_shift16_saturate(0xffffa210 duty q16, 32000); pool 0xb36c-0xb394 bytes verified. TO7D = PB7 PWM per reviews/fueling/injector_pin_mapping.md (PBCRL=0x4000). Duty written by 0xb2c0 from 0x25198 (clamp 0-100% of DAT_ffffb354).
-00011880	monitor_service_batch	medium	13-call batch, pool 0x11a40-0x11a70 ROM-verified: 0x19cf4 (ref_filterVehicleSpeed/ref_calculateVehicleAccel/ref_filterVehicleAccel + knock_state_reset_rpm_window), 0x2e6ec, 0x394ee, 0x212fa, 0x26850, 0x3eb16, 0x2894e, 0x2a374, 0x5629e, ref_diagControlModeSomething 0x5bf9c, 0x65630, ref_coolantTempPlausibilityCheck___ 0x65658, 0x16be6. Called only from task[12] 0x6592.
+00011880	monitor_service_batch	high	13-call batch, pool 0x11a40-0x11a70 ROM-verified: 0x19cf4 (ref_filterVehicleSpeed/ref_calculateVehicleAccel/ref_filterVehicleAccel + knock_state_reset_rpm_window), 0x2e6ec, 0x394ee, 0x212fa, 0x26850, 0x3eb16, 0x2894e, 0x2a374, 0x5629e, ref_diagControlModeSomething 0x5bf9c, 0x65630, ref_coolantTempPlausibilityCheck___ 0x65658, 0x16be6. Called only from task[12] 0x6592. | promoted to high (data/labels/60E15120_N3J1E/os_task_12_16_labels.json/function_aliases)
 000065b2	task13_temp_sensor_dtc_entry	high	ROADMAP C item 7. rec[13] @ROM 0x4a60 entry; pool 0x66d0-0x66d8 = {0x7298, 0x73a0, 0x118d0}. Dynamic: harness call 0x65b2 visits all three, writes 0xffff9f60/9f70/9f64/9f74 (test_c7_task_handlers.py).
 00007298	iat_sensor_scaling_fault	high	Blend DAT_ffff9f66 <- DAT_ffff9f1e (weight 0x100/256, 0x2510), affine decode 0x38a00000 (0x24c0), lookup_2d_descriptor_scaled vs tbl_iat_sensor_scaling_00069824 (descriptor bytes @0x69824 verified; pool word 0x731c) -> intake_air_temperature_ffff9f60; range fault 0xffff9f64 (raw<0x51e->2, >=0xf6c9->1).
 000073a0	clt_sensor_scaling_fault	high	Same pattern vs tbl_clt_sensor_scaling_0006977c (descriptor @0x6977c verified; pool word 0x7420) -> coolant_temperature_ffff9f70; range fault 0xffff9f74 (raw<0x9ff->2, >=0xfd00->1). Called only from task[13] 0x65b2.

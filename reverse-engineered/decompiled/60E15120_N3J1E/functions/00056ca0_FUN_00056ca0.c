@@ -11,7 +11,7 @@ void diag22_pid0200_dtc_count_stored(char param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_dtc_count_stored();
+  uVar1 = dtc_count_stored();
   diag_append_u8((int)param_1,uVar1);
   return;
 }

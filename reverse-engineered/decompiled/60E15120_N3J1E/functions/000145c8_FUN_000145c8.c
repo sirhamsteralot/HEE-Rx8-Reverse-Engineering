@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x000145c8; body bytes: 96; decompiled */
 
-void candidate_timing_retard_fast_task(void)
+void timing_retard_fast_task(void)
 
 {
   undefined4 uVar1;

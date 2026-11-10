@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x000348ea; body bytes: 24; decompiled */
 
-void candidate_vdi_control_task_wrapper(void)
+void vdi_control_task_wrapper(void)
 
 {
   undefined4 uVar1;

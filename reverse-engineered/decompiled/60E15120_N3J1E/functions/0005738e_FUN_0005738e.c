@@ -9,7 +9,7 @@
 /* Function candidate recovered from ROM pointer at 5f4a4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pida211_status_b53b_aa62_bf9c(char param_1)
+void diag22_pida211_status_b53b_aa62_bf9c(char param_1)
 
 {
   undefined4 uVar1;

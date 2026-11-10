@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x000556b0; body bytes: 30; decompiled */
 
-void candidate_diag_read_90fc(void)
+void diag_read_90fc(void)
 
 {
   undefined4 uVar1;

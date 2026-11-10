@@ -3,10 +3,10 @@
  */
 /* ROM address: 0x00008340; body bytes: 4; decompiled */
 
-void candidate_injector_pulse_set_dispatch(void)
+void injector_pulse_set_dispatch(void)
 
 {
-  candidate_injector_pulse_set_dispatch();
+  injector_pulse_set_dispatch();
   return;
 }
 

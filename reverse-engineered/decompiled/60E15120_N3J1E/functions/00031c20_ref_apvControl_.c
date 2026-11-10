@@ -16,9 +16,9 @@ void apv_control_task(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   candidate_apv_target_condition();
-  candidate_apv_position_voltage_counter();
-  candidate_apv_counter_calc();
-  candidate_apv_command_calc();
+  apv_position_voltage_counter();
+  apv_counter_calc();
+  apv_command_calc();
   candidate_apv_command_wrapper();
   ref_setSR(uVar1);
   return;
