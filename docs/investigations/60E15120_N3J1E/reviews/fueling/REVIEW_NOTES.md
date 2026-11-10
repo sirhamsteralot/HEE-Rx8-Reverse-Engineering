@@ -38,7 +38,8 @@ confirmations and caveats below.
    from the C. Confirmed as far as static reading goes.
 6. **Cold start enrichment is degenerate in this ROM.** 0x1ddfc stores 0.0
    into b0c4 in both cranking branches; running branch is max(b0c4 - 0.0, 0).
-   Kept as `candidate_cold_start_enrichment` (medium) — the def-side
+   Kept as `cold_start_enrichment` (high since the dynamic proof pass:
+   b0c4 = 0.0 observed in the emulator) — the def-side
    "First Start Oil Injection Timer" etc. are separate.
 7. **Pipeline caveat discovered and fixed this pass:**
    `name_lookup_variables.py` regenerates `named/lookup_aliases.tsv` from raw

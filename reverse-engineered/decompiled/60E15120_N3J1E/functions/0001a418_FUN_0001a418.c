@@ -12,7 +12,7 @@
  */
 /* ROM address: 0x0001a418; body bytes: 174; decompiled */
 
-uint candidate_maf_per_rotation_calc(void)
+uint maf_per_rotation_calc(void)
 
 {
   uint uVar1;

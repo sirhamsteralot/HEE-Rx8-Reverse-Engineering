@@ -14,7 +14,7 @@ int FUN_00019ef8(void)
   int iVar2;
   byte bVar3;
   
-  candidate_maf_voltage_and_fault_counters();
+  maf_voltage_and_fault_counters();
   snapshot_maf_scaled_latched_ffffa9e8 = maf_scaled_latched_ffffa9e8;
   bVar3 = 0;
   iVar2 = 0;

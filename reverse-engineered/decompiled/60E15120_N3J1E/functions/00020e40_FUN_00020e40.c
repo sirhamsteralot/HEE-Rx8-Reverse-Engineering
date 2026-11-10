@@ -10,7 +10,7 @@ void fueling_main_task(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   ref_UnknownFueling1_0000e454();
-  candidate_injection_angle_limit_lookup();
+  injection_angle_limit_lookup();
   FUN_00030274();
   FUN_000302a2();
   FUN_000303f2();
@@ -41,7 +41,7 @@ void fueling_main_task(void)
   FUN_00030f5c();
   FUN_00030030();
   injector_pulse_time_arbitrate();
-  candidate_cold_start_enrichment();
+  cold_start_enrichment();
   FUN_0004af14();
   FUN_0004b190();
   ref_setSR(uVar1);

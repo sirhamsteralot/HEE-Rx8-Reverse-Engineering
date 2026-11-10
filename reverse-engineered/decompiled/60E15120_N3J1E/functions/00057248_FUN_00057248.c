@@ -9,7 +9,7 @@
 /* Function candidate recovered from ROM pointer at 5f468 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
+void diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
 
 {
   ushort uVar1;

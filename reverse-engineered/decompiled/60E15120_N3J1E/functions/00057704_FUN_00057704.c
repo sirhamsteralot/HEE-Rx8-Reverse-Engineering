@@ -8,7 +8,7 @@
 /* Function candidate recovered from ROM pointer at 5f54c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
+void diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
 
 {
   char cVar1;

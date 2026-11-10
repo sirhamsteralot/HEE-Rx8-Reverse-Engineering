@@ -10,7 +10,7 @@ void slow_background_task(void)
   ref_calculateTorqueRelatedParams();
   FUN_00038f3e();
   FUN_00021186();
-  candidate_timing_retard_fast_task();
+  timing_retard_fast_task();
   FUN_00021b4c();
   FUN_000253e8();
   FUN_000288be();

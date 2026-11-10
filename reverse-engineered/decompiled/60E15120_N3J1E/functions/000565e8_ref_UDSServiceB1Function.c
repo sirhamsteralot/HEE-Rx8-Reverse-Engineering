@@ -10,7 +10,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00054904 (234 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_b1_mazda_specific(uint param_1,uint param_2)
+uint uds_service_b1_mazda_specific(uint param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;

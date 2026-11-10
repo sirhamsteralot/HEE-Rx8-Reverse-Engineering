@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000064ba (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_knock_sensor_fault_task(void)
+void knock_sensor_fault_task(void)
 
 {
   ref_main__();

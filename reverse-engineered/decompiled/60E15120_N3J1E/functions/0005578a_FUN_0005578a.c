@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x0005578a; body bytes: 44; decompiled */
 
-void candidate_diag_encode_ad5e(void)
+void diag_encode_ad5e(void)
 
 {
   float fVar1;

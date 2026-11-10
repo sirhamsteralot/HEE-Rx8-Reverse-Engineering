@@ -13,7 +13,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x0003d06a) */
 
-uint candidate_o2_monitor_integrator(void)
+uint o2_monitor_integrator(void)
 
 {
   char cVar1;

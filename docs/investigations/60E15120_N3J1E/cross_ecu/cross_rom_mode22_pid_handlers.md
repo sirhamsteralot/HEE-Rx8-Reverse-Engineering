@@ -137,7 +137,7 @@ rewriting `function_index.tsv` / `callgraph.tsv` / `symbols.tsv` / `functions/*.
 `firmware_decompiled.c` and emitting the synchronized `named/` view
 (`firmware_named.c`, `lookup_aliases.tsv`, `validation.json`). Handler 0x57e66
 (PID 0xc116, pid_match) is a mid-function address with no C identifier — recorded
-as `candidate_diag22_pidc116_dtc_state_machine` in
+as `diag22_pidc116_dtc_state_machine` in
 `data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv` only. Per-ROM Mode 22
 TSVs for all 11 ROMs: `data/labels/cross_rom/mode22/`. Pre-change export backup:
 `docs/investigations/60E0G500_N3ZHEC/backups/pre_crossrom_names.zip` (LFS).

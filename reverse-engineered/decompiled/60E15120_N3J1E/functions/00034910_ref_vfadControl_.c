@@ -3,10 +3,10 @@
  */
 /* ROM address: 0x00034910; body bytes: 6; decompiled */
 
-void candidate_vfad_control_thunk(void)
+void vfad_control_thunk(void)
 
 {
-  candidate_vfad_control_thunk();
+  vfad_control_thunk();
   return;
 }
 

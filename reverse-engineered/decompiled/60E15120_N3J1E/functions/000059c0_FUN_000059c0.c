@@ -10,7 +10,7 @@ void atu_ch8_cmp_isr_ch1(void)
 
 {
   ATUII_TSR8_W = 0xfffb;
-  candidate_injector_pulse_set_dispatch(1);
+  injector_pulse_set_dispatch(1);
   return;
 }
 

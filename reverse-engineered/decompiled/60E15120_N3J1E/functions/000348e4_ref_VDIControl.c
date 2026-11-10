@@ -3,10 +3,10 @@
  */
 /* ROM address: 0x000348e4; body bytes: 6; decompiled */
 
-void candidate_vdi_control_thunk(void)
+void vdi_control_thunk(void)
 
 {
-  candidate_vdi_control_thunk();
+  vdi_control_thunk();
   return;
 }
 

@@ -12,7 +12,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000edc8 (114 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_fuel_cut_arbitration(char param_1)
+void fuel_cut_arbitration(char param_1)
 
 {
   if (fuel_cut_request_a_ffffa464 == '\x01') {

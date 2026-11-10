@@ -8138,7 +8138,7 @@ void atu_ch8_cmp_isr_ch0(void)
 
 {
   ATUII_TSR8_W = 0xfffe;
-  candidate_injector_pulse_set_dispatch(0);
+  injector_pulse_set_dispatch(0);
   return;
 }
 
@@ -8155,7 +8155,7 @@ void atu_ch8_cmp_isr_ch3(void)
 
 {
   ATUII_TSR8_W = 0xfffd;
-  candidate_injector_pulse_set_dispatch(3);
+  injector_pulse_set_dispatch(3);
   return;
 }
 
@@ -8172,7 +8172,7 @@ void atu_ch8_cmp_isr_ch1(void)
 
 {
   ATUII_TSR8_W = 0xfffb;
-  candidate_injector_pulse_set_dispatch(1);
+  injector_pulse_set_dispatch(1);
   return;
 }
 
@@ -8189,7 +8189,7 @@ void atu_ch8_cmp_isr_ch4(void)
 
 {
   ATUII_TSR8_W = 0xfff7;
-  candidate_injector_pulse_set_dispatch(4);
+  injector_pulse_set_dispatch(4);
   return;
 }
 
@@ -8203,7 +8203,7 @@ void atu_ch8_cmp_isr_ch2(void)
 
 {
   ATUII_TSR8_W = 0xffef;
-  candidate_injector_pulse_set_dispatch(2);
+  injector_pulse_set_dispatch(2);
   return;
 }
 
@@ -8217,7 +8217,7 @@ void atu_ch8_cmp_isr_ch5(void)
 
 {
   ATUII_TSR8_W = 0xffdf;
-  candidate_injector_pulse_set_dispatch(5);
+  injector_pulse_set_dispatch(5);
   return;
 }
 
@@ -9386,7 +9386,7 @@ undefined4 ref_interruptSetup___(void)
     }
   }
   FUN_00002064(local_8[0]);
-  candidate_apv_pwm_service();
+  apv_pwm_service();
   uVar1 = ref_taskEndRoutine_();
   return uVar1;
 }
@@ -9419,7 +9419,7 @@ void FUN_0000648e(void)
 /* Unique exact-byte match to related 60E0FC00 function at 000064ba (46 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_knock_sensor_fault_task(void)
+void knock_sensor_fault_task(void)
 
 {
   ref_main__();
@@ -9493,7 +9493,7 @@ void task12_adc_feedback_pwm_entry(void)
 {
   task12_alive_counter_clear();
   thunk_FUN_0000aee8();
-  candidate_monitor_service_batch();
+  monitor_service_batch();
   atu_ch7d_pwm_enable();
   ref_taskEndRoutine_();
   return;
@@ -9900,7 +9900,7 @@ undefined4 FUN_00006a4c(void)
   
   FUN_00006b94();
   FUN_00006c4c();
-  candidate_adc_read_ect_iat_group();
+  adc_read_ect_iat_group();
   if (DAT_ffff9f28 == '\x02') {
     DAT_ffff9ee2 = DAT_ffff9ee2 + '\x01';
 LAB_00006a84:
@@ -10112,7 +10112,7 @@ int FUN_00006cc0(int param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00006cdc (114 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char candidate_adc_read_ect_iat_group(void)
+char adc_read_ect_iat_group(void)
 
 {
   char cVar1;
@@ -10357,7 +10357,7 @@ void FUN_00006f16(int param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00006fb0 (174 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_adc_read_result_bank2(void)
+int adc_read_result_bank2(void)
 
 {
   bool bVar1;
@@ -11938,10 +11938,10 @@ undefined4 FUN_00008320(void)
  */
 /* ROM address: 0x00008340; body bytes: 4; decompiled */
 
-void candidate_injector_pulse_set_dispatch(void)
+void injector_pulse_set_dispatch(void)
 
 {
-  candidate_injector_pulse_set_dispatch();
+  injector_pulse_set_dispatch();
   return;
 }
 
@@ -12138,7 +12138,7 @@ void injector_channel_disable(uint param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 000086ac (36 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_injector_zero_offset_set(int param_1,undefined4 param_2)
+int injector_zero_offset_set(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
@@ -14660,7 +14660,7 @@ void FUN_0000a8dc(void)
    [WIRING REVIEW 2026-09-08]
    Candidate APV software-PWM service. Firmware fact: drives PLDR_W 0xfffff75e masks 0x0020/0x0100 (PL5 pkg pin 221 / PL8 pkg pin 224) with opposite polarity from pending ticks 0xffffa1c4/a1c6. pinout v3: APV motor control (-) at PCM 3J wire L/R (confirmed), (+) at PCM 3G wire G/B (³) (HP ³); per-bit-to-terminal polarity still unverified. */
 
-undefined2 * candidate_apv_pwm_service(void)
+undefined2 * apv_pwm_service(void)
 
 {
   undefined2 *puVar1;
@@ -14708,7 +14708,7 @@ undefined2 * candidate_apv_pwm_service(void)
     }
   }
   if (DAT_ffffa1be == 4) {
-    puVar1 = (undefined2 *)candidate_apv_drive_status_sample();
+    puVar1 = (undefined2 *)apv_drive_status_sample();
   }
   return puVar1;
 }
@@ -14754,7 +14754,7 @@ void apv_duty_split(float param_1)
    [WIRING REVIEW 2026-09-08]
    Candidate APV drive-status sampler. Firmware fact: reads PHDR_W 0x1000/0x2000 (PH12/PH13, pkg pins 79/80). pinout v3: APV opening-angle signal at PCM 3B (wire R/G, HP ³) and position-sensor power at PCM 1S (B/W *); external meaning of the two PH inputs not established. */
 
-void candidate_apv_drive_status_sample(void)
+void apv_drive_status_sample(void)
 
 {
   ushort uVar1;
@@ -16275,7 +16275,7 @@ void knock_reference_adc_read(void)
 {
   ushort uVar1;
   
-  knock_voltage_reference_ffffa326 = candidate_adc_read_result_bank2();
+  knock_voltage_reference_ffffa326 = adc_read_result_bank2();
   uVar1 = ATUII_TIER8_W;
   ATUII_TIER8_W = uVar1 & 0xefff;
   return;
@@ -18466,7 +18466,7 @@ undefined4 * ref_UnknownFueling1_0000e454(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0000e492 (48 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_injection_angle_limit_lookup(void)
+void injection_angle_limit_lookup(void)
 
 {
   max_injection_angle_1_ffffa434 = lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_fuel_injector_unknown_max_injection_angle1_00068ef8);
@@ -18847,7 +18847,7 @@ LAB_0000ebd0:
 /* Unique exact-byte match to related 60E0FC00 function at 0000edc8 (114 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_fuel_cut_arbitration(char param_1)
+void fuel_cut_arbitration(char param_1)
 
 {
   if (fuel_cut_request_a_ffffa464 == '\x01') {
@@ -18920,7 +18920,7 @@ char rev_limit_fuel_cut_init(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0000ee86 (120 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_rev_limit_conditionals(void)
+void rev_limit_conditionals(void)
 
 {
   if (18.0 <= inferred_coolant_temperature_ffffa98c) {
@@ -20172,9 +20172,9 @@ int FUN_000101ac(char param_1)
 void ref_setAllInjectorto0_(void)
 
 {
-  candidate_injector_zero_offset_set(0,0);
-  candidate_injector_zero_offset_set(1,0);
-  candidate_injector_zero_offset_set(2,0);
+  injector_zero_offset_set(0,0);
+  injector_zero_offset_set(1,0);
+  injector_zero_offset_set(2,0);
   FUN_000074d4(1);
   return;
 }
@@ -21106,9 +21106,9 @@ void FUN_0001102a(void)
   FUN_00016f30();
   thunk_FUN_0002508c();
   FUN_00021b48();
-  candidate_ssv_control_thunk();
-  candidate_vdi_control_thunk();
-  candidate_vfad_control_thunk();
+  ssv_control_thunk();
+  vdi_control_thunk();
+  vfad_control_thunk();
   thunk_FUN_00025438();
   FUN_00022538();
   FUN_00023740();
@@ -21275,7 +21275,7 @@ void slow_background_task(void)
   ref_calculateTorqueRelatedParams();
   FUN_00038f3e();
   FUN_00021186();
-  candidate_timing_retard_fast_task();
+  timing_retard_fast_task();
   FUN_00021b4c();
   FUN_000253e8();
   FUN_000288be();
@@ -21311,7 +21311,7 @@ void FUN_00011744(void)
 {
   FUN_00019aa0();
   FUN_0002e692();
-  candidate_knock_sensor_monitor_task();
+  knock_sensor_monitor_task();
   fueling_condition_flags_task();
   FUN_00014628();
   alternator_monitor_batch();
@@ -21321,9 +21321,9 @@ void FUN_00011744(void)
   FUN_0003eaf8();
   apv_control_task();
   FUN_00016f80();
-  candidate_ssv_control_task_wrapper();
-  candidate_vdi_control_task_wrapper();
-  candidate_vfad_control_task_wrapper();
+  ssv_control_task_wrapper();
+  vdi_control_task_wrapper();
+  vfad_control_task_wrapper();
   FUN_000288f4();
   dsc_can_arbitration_batch();
   ref_getFaultEvalState();
@@ -21381,7 +21381,7 @@ void FUN_000117ac(void)
  */
 /* ROM address: 0x00011880; body bytes: 80; decompiled */
 
-void candidate_monitor_service_batch(void)
+void monitor_service_batch(void)
 
 {
   FUN_00019cf4();
@@ -21413,7 +21413,7 @@ void dtc_fault_service_batch(void)
   FUN_0003957c();
   FUN_00021bc6();
   FUN_00021434();
-  candidate_knock_rough_correction_update();
+  knock_rough_correction_update();
   FUN_0002253c();
   FUN_00028966();
   ref_setOBDCANTXVars();
@@ -22503,7 +22503,7 @@ undefined1 * FUN_00012dec(void)
  */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
-void candidate_timing_trim_scale_calc(void)
+void timing_trim_scale_calc(void)
 
 {
   undefined4 uVar1;
@@ -23648,7 +23648,7 @@ void ignition_timing_main_task(void)
   FUN_00013e3e();
   FUN_00012938();
   FUN_00012dec();
-  candidate_timing_trim_scale_calc();
+  timing_trim_scale_calc();
   dsc_timing_derate_select();
   cranking_timing_leading_filter();
   cranking_timing_trailing_filter();
@@ -23752,7 +23752,7 @@ void FUN_0001447a(void)
  */
 /* ROM address: 0x000145c8; body bytes: 96; decompiled */
 
-void candidate_timing_retard_fast_task(void)
+void timing_retard_fast_task(void)
 
 {
   undefined4 uVar1;
@@ -23815,7 +23815,7 @@ void FUN_0001465e(void)
  */
 /* ROM address: 0x0001467c; body bytes: 42; decompiled */
 
-void candidate_knock_rough_correction_update(void)
+void knock_rough_correction_update(void)
 
 {
   undefined4 uVar1;
@@ -27412,7 +27412,7 @@ uint FUN_00018aea(void)
 /* Unique exact-byte match to related 60E0FC00 function at 000198fa (130 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char candidate_fuel_cut_rpm_condition(void)
+char fuel_cut_rpm_condition(void)
 
 {
   char cVar1;
@@ -28008,7 +28008,7 @@ void FUN_0001975c(void)
   FUN_00024e80();
   FUN_00024e9a();
   FUN_00019f20();
-  candidate_maf_filtered_update();
+  maf_filtered_update();
   FUN_0001a1ca();
   FUN_00033a62();
   knock_filter_constants_init();
@@ -28045,7 +28045,7 @@ void FUN_000197be(void)
   ref_filterEngineSpeed();
   ref_calculatePredictedEngineSpeed_();
   FUN_0001a1dc();
-  candidate_maf_per_rotation_calc();
+  maf_per_rotation_calc();
   ref_airPerStroke();
   calculate_engine_load();
   knock_threshold_setup();
@@ -28063,7 +28063,7 @@ void FUN_00019806(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  candidate_maf_voltage_and_fault_counters();
+  maf_voltage_and_fault_counters();
   FUN_0001a02c();
   ref_setSR(uVar1);
   return;
@@ -28155,7 +28155,7 @@ void FUN_00019aa0(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   FUN_0001a614();
-  candidate_apv_position_voltage_scale();
+  apv_position_voltage_scale();
   ref_getApvVoltageRange();
   ref_calculateCruiseControlSwitchVolt();
   FUN_0002be40();
@@ -28345,7 +28345,7 @@ int FUN_00019ef8(void)
   int iVar2;
   byte bVar3;
   
-  candidate_maf_voltage_and_fault_counters();
+  maf_voltage_and_fault_counters();
   snapshot_maf_scaled_latched_ffffa9e8 = maf_scaled_latched_ffffa9e8;
   bVar3 = 0;
   iVar2 = 0;
@@ -28396,7 +28396,7 @@ int FUN_00019f20(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0001aca0 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_maf_filtered_update(void)
+void maf_filtered_update(void)
 
 {
   mass_air_flow_ffffa9ec = maf_scaled_latched_ffffa9e8;
@@ -28422,7 +28422,7 @@ void candidate_maf_filtered_update(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0001acae (164 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * candidate_maf_voltage_and_fault_counters(void)
+undefined4 * maf_voltage_and_fault_counters(void)
 
 {
   ushort snapshot_maf_adc_raw_ffff9eea;
@@ -28661,7 +28661,7 @@ undefined4 FUN_0001a394(void)
  */
 /* ROM address: 0x0001a418; body bytes: 174; decompiled */
 
-uint candidate_maf_per_rotation_calc(void)
+uint maf_per_rotation_calc(void)
 
 {
   uint uVar1;
@@ -31158,7 +31158,7 @@ undefined4 ref_calculateRearO2SomethingIntegrator__(float param_1,float param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0001e85c (82 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * candidate_cold_start_enrichment(void)
+undefined4 * cold_start_enrichment(void)
 
 {
   undefined4 *puVar1;
@@ -33277,7 +33277,7 @@ void FUN_00020df0(uint param_1)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   uVar2 = param_1 & 0xff;
   if ((((uVar2 == 0) || (uVar2 == 0xc)) || (uVar2 == 6)) || (uVar2 == 0x12)) {
-    candidate_fuel_cut_arbitration(param_1);
+    fuel_cut_arbitration(param_1);
     ref_fuelCutSomethingSomething(param_1);
   }
   FUN_0002ca10(param_1);
@@ -33299,7 +33299,7 @@ void fueling_main_task(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   ref_UnknownFueling1_0000e454();
-  candidate_injection_angle_limit_lookup();
+  injection_angle_limit_lookup();
   FUN_00030274();
   FUN_000302a2();
   FUN_000303f2();
@@ -33330,7 +33330,7 @@ void fueling_main_task(void)
   FUN_00030f5c();
   FUN_00030030();
   injector_pulse_time_arbitrate();
-  candidate_cold_start_enrichment();
+  cold_start_enrichment();
   FUN_0004af14();
   FUN_0004b190();
   ref_setSR(uVar1);
@@ -33556,8 +33556,8 @@ void fueling_slow_task(void)
   FUN_0001eba6();
   FUN_0001ecee();
   FUN_000188a4();
-  candidate_fuel_cut_rpm_condition();
-  candidate_rev_limit_conditionals();
+  fuel_cut_rpm_condition();
+  rev_limit_conditionals();
   ref_setSR(uVar1);
   return;
 }
@@ -33817,10 +33817,10 @@ void idle_air_output_clamp(void)
  */
 /* ROM address: 0x00021760; body bytes: 6; decompiled */
 
-void candidate_ssv_control_thunk(void)
+void ssv_control_thunk(void)
 
 {
-  candidate_ssv_control_thunk();
+  ssv_control_thunk();
   return;
 }
 
@@ -33830,7 +33830,7 @@ void candidate_ssv_control_thunk(void)
  */
 /* ROM address: 0x00021766; body bytes: 24; decompiled */
 
-void candidate_ssv_control_task_wrapper(void)
+void ssv_control_task_wrapper(void)
 
 {
   undefined4 uVar1;
@@ -34129,7 +34129,7 @@ void ref_evapRelated(void)
   FUN_00021cde();
   FUN_00021d8a();
   FUN_00021efc();
-  candidate_evap_open_loop_condition();
+  candidate_fuel_open_loop_condition();
   FUN_00021c14();
   FUN_00025120();
   ref_setSR(uVar1);
@@ -34377,7 +34377,7 @@ uint FUN_00021efc(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00022ab0 (200 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_evap_open_loop_condition(void)
+uint candidate_fuel_open_loop_condition(void)
 
 {
   char cVar1;
@@ -48055,9 +48055,9 @@ void apv_control_task(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   candidate_apv_target_condition();
-  candidate_apv_position_voltage_counter();
-  candidate_apv_counter_calc();
-  candidate_apv_command_calc();
+  apv_position_voltage_counter();
+  apv_counter_calc();
+  apv_command_calc();
   candidate_apv_command_wrapper();
   ref_setSR(uVar1);
   return;
@@ -48177,7 +48177,7 @@ void candidate_apv_target_condition(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00032376 (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_apv_position_voltage_counter(void)
+void apv_position_voltage_counter(void)
 
 {
   if ((apv_direction_flag_ffffbf8b == '\0') || ((0x4e1 < apv_position_dwell_counter_ffffbf88 && (inferred_ram_cab4_ffffcab4_ffffcab4 == '\0')))) {
@@ -48199,7 +48199,7 @@ void candidate_apv_position_voltage_counter(void)
 /* Unique exact-byte match to related 60E0FC00 function at 000323b2 (40 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 candidate_apv_counter_calc(void)
+undefined4 apv_counter_calc(void)
 
 {
   undefined4 uVar1;
@@ -48222,7 +48222,7 @@ undefined4 candidate_apv_counter_calc(void)
  */
 /* ROM address: 0x00031f32; body bytes: 230; decompiled */
 
-undefined2 * candidate_apv_command_calc(void)
+undefined2 * apv_command_calc(void)
 
 {
   undefined2 *puVar1;
@@ -50580,10 +50580,10 @@ void vdi_solenoid_control(void)
  */
 /* ROM address: 0x000348e4; body bytes: 6; decompiled */
 
-void candidate_vdi_control_thunk(void)
+void vdi_control_thunk(void)
 
 {
-  candidate_vdi_control_thunk();
+  vdi_control_thunk();
   return;
 }
 
@@ -50593,7 +50593,7 @@ void candidate_vdi_control_thunk(void)
  */
 /* ROM address: 0x000348ea; body bytes: 24; decompiled */
 
-void candidate_vdi_control_task_wrapper(void)
+void vdi_control_task_wrapper(void)
 
 {
   undefined4 uVar1;
@@ -50610,10 +50610,10 @@ void candidate_vdi_control_task_wrapper(void)
  */
 /* ROM address: 0x00034910; body bytes: 6; decompiled */
 
-void candidate_vfad_control_thunk(void)
+void vfad_control_thunk(void)
 
 {
-  candidate_vfad_control_thunk();
+  vfad_control_thunk();
   return;
 }
 
@@ -50623,7 +50623,7 @@ void candidate_vfad_control_thunk(void)
  */
 /* ROM address: 0x00034916; body bytes: 24; decompiled */
 
-void candidate_vfad_control_task_wrapper(void)
+void vfad_control_task_wrapper(void)
 
 {
   undefined4 uVar1;
@@ -52998,7 +52998,7 @@ uint ref_afterImmo_7(void)
 /* Function candidate recovered from ROM pointer at 57700 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_dtc_state_machine_step(undefined4 param_1)
+void dtc_state_machine_step(undefined4 param_1)
 
 {
   int iVar1;
@@ -53098,7 +53098,7 @@ char ref_afterImmo_8(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00037c66 (34 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_diag_status_bit_pack(void)
+uint diag_status_bit_pack(void)
 
 {
   uint uVar1;
@@ -54476,7 +54476,7 @@ void FUN_00038f3e(void)
  */
 /* ROM address: 0x000390b8; body bytes: 42; decompiled */
 
-void candidate_knock_sensor_monitor_task(void)
+void knock_sensor_monitor_task(void)
 
 {
   undefined4 uVar1;
@@ -57639,7 +57639,7 @@ void FUN_0003cc96(float param_1)
 void FUN_0003ccec(void)
 
 {
-  candidate_o2_monitor_integrator();
+  o2_monitor_integrator();
   DAT_ffffc5f0 = 0xc2200000;
   DAT_ffffc5f4 = 0x43480000;
   return;
@@ -57673,7 +57673,7 @@ undefined ** FUN_0003cd06(void)
   fVar6 = inferred_coolant_temperature_ffffa98c;
   DAT_ffffc604 = rx8_lookup_2d_raw_u16(inferred_coolant_temperature_catalyst_temp_model_ffffa998,&tbl_closed_loop_warmup_time_0006990c);
   DAT_ffffc600 = engine_running_timer_ffffa424 < DAT_ffffc604;
-  candidate_o2_monitor_integrator();
+  o2_monitor_integrator();
   uVar9 = 0;
   if (cVar3 == '\x01') {
     DAT_ffffc5fc = '\0';
@@ -57790,7 +57790,7 @@ uint FUN_0003cf7e(void)
 
 /* WARNING: Removing unreachable block (ram,0x0003d06a) */
 
-uint candidate_o2_monitor_integrator(void)
+uint o2_monitor_integrator(void)
 
 {
   char cVar1;
@@ -63296,7 +63296,7 @@ uint cranking_timing_trailing_filter(void)
 void FUN_00043a7c(void)
 
 {
-  candidate_apv_position_voltage_scale();
+  apv_position_voltage_scale();
   ref_getApvVoltageRange();
   return;
 }
@@ -63315,7 +63315,7 @@ void FUN_00043a7c(void)
    [WIRING REVIEW 2026-09-08]
    Firmware fact: ADC6 raw 0xffff9ef0 * 5/65536 -> float 0xffffcab0. pinout v3: APV opening-angle signal at PCM 3B (wire R/G, HP ³) — candidate APV feedback; PCM 3B -> AN6 (pkg pin 92) not board-verified. See reconstructed/rx8_apv.c. */
 
-void candidate_apv_position_voltage_scale(void)
+void apv_position_voltage_scale(void)
 
 {
   apv_position_voltage_ffffcab0 = rx8_decode_u16_affine(0x38a00000,0,(int)adc6_raw_apv_position_ffff9ef0);
@@ -77826,7 +77826,7 @@ void FUN_000547ee(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00052970 (62 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_diag_encode_s16_div(float param_1,float param_2,float param_3)
+int diag_encode_s16_div(float param_1,float param_2,float param_3)
 
 {
   int iVar1;
@@ -78417,9 +78417,9 @@ uint FUN_00054d90(char param_1,uint param_2)
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0xe:
-    uVar7 = candidate_diag_encode_o2s2();
+    uVar7 = diag_encode_o2s2();
     uVar7 = ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
-    uVar2 = candidate_diag_encode_trim_b074();
+    uVar2 = diag_encode_trim_b074();
     ref_updateRAM__(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0xf:
@@ -78435,23 +78435,23 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x12:
-    uVar7 = candidate_diag_encode_b2f0();
+    uVar7 = diag_encode_b2f0();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x13:
-    uVar7 = candidate_diag_read_d287();
+    uVar7 = diag_read_d287();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x14:
-    uVar7 = candidate_diag_read_gear_byte();
+    uVar7 = diag_read_gear_byte();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x15:
-    uVar7 = candidate_diag_read_90fc();
+    uVar7 = diag_read_90fc();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x16:
-    uVar7 = candidate_diag_encode_ad10();
+    uVar7 = diag_encode_ad10();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x17:
@@ -78461,7 +78461,7 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(uVar7,&stack0xfffffff4,uVar2);
     return 0;
   case 0x18:
-    uVar7 = candidate_diag_encode_c644();
+    uVar7 = diag_encode_c644();
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x19:
@@ -78477,23 +78477,23 @@ uint FUN_00054d90(char param_1,uint param_2)
     FUN_000548d0(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1c:
-    uVar7 = candidate_diag_encode_ad48();
+    uVar7 = diag_encode_ad48();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1d:
-    uVar7 = candidate_diag_encode_ad5e();
+    uVar7 = diag_encode_ad5e();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1e:
-    uVar7 = candidate_diag_encode_a9c4();
+    uVar7 = diag_encode_a9c4();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x1f:
-    uVar7 = candidate_diag_encode_a9c6();
+    uVar7 = diag_encode_a9c6();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x20:
-    uVar7 = candidate_diag_encode_b410();
+    uVar7 = diag_encode_b410();
     ref_updateRAM__(param_2,&stack0xfffffff4,uVar7);
     return 0;
   case 0x21:
@@ -79017,7 +79017,7 @@ undefined4 diag_read_o2_present_const(void)
  */
 /* ROM address: 0x00055586; body bytes: 38; decompiled */
 
-void candidate_diag_encode_o2s2(void)
+void diag_encode_o2s2(void)
 
 {
   undefined4 uVar1;
@@ -79039,7 +79039,7 @@ void candidate_diag_encode_o2s2(void)
  */
 /* ROM address: 0x000555ac; body bytes: 30; decompiled */
 
-undefined4 candidate_diag_encode_trim_b074(void)
+undefined4 diag_encode_trim_b074(void)
 
 {
   undefined4 uVar1;
@@ -79108,7 +79108,7 @@ void diag_read_distance_mil(void)
  */
 /* ROM address: 0x00055616; body bytes: 22; decompiled */
 
-undefined4 candidate_diag_encode_b2f0(void)
+undefined4 diag_encode_b2f0(void)
 
 {
   undefined4 uVar1;
@@ -79124,7 +79124,7 @@ undefined4 candidate_diag_encode_b2f0(void)
  */
 /* ROM address: 0x0005562c; body bytes: 6; decompiled */
 
-int candidate_diag_read_d287(void)
+int diag_read_d287(void)
 
 {
   return (int)inferred_ram_d287_ffffd287_ffffd287;
@@ -79136,7 +79136,7 @@ int candidate_diag_read_d287(void)
  */
 /* ROM address: 0x00055632; body bytes: 34; decompiled */
 
-uint candidate_diag_read_gear_byte(void)
+uint diag_read_gear_byte(void)
 
 {
   uint uVar1;
@@ -79155,7 +79155,7 @@ uint candidate_diag_read_gear_byte(void)
  */
 /* ROM address: 0x000556b0; body bytes: 30; decompiled */
 
-void candidate_diag_read_90fc(void)
+void diag_read_90fc(void)
 
 {
   undefined4 uVar1;
@@ -79177,7 +79177,7 @@ void candidate_diag_read_90fc(void)
  */
 /* ROM address: 0x000556ce; body bytes: 30; decompiled */
 
-undefined4 candidate_diag_encode_ad10(void)
+undefined4 diag_encode_ad10(void)
 
 {
   undefined4 uVar1;
@@ -79234,7 +79234,7 @@ undefined4 diag_read_afr_word_b(void)
  */
 /* ROM address: 0x0005571a; body bytes: 24; decompiled */
 
-undefined4 candidate_diag_encode_c644(void)
+undefined4 diag_encode_c644(void)
 
 {
   undefined4 uVar1;
@@ -79313,7 +79313,7 @@ undefined4 diag_encode_lambda_target(void)
  */
 /* ROM address: 0x00055774; body bytes: 22; decompiled */
 
-undefined4 candidate_diag_encode_ad48(void)
+undefined4 diag_encode_ad48(void)
 
 {
   undefined4 uVar1;
@@ -79329,7 +79329,7 @@ undefined4 candidate_diag_encode_ad48(void)
  */
 /* ROM address: 0x0005578a; body bytes: 44; decompiled */
 
-void candidate_diag_encode_ad5e(void)
+void diag_encode_ad5e(void)
 
 {
   float fVar1;
@@ -79348,7 +79348,7 @@ void candidate_diag_encode_ad5e(void)
  */
 /* ROM address: 0x000557b6; body bytes: 44; decompiled */
 
-void candidate_diag_encode_a9c4(void)
+void diag_encode_a9c4(void)
 
 {
   float fVar1;
@@ -79367,7 +79367,7 @@ void candidate_diag_encode_a9c4(void)
  */
 /* ROM address: 0x00055838; body bytes: 44; decompiled */
 
-void candidate_diag_encode_a9c6(void)
+void diag_encode_a9c6(void)
 
 {
   float fVar1;
@@ -79386,7 +79386,7 @@ void candidate_diag_encode_a9c6(void)
  */
 /* ROM address: 0x00055864; body bytes: 38; decompiled */
 
-undefined4 candidate_diag_encode_b410(void)
+undefined4 diag_encode_b410(void)
 
 {
   undefined4 uVar1;
@@ -80531,7 +80531,7 @@ undefined4 thunk_FUN_00056786(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00054904 (234 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_b1_mazda_specific(uint param_1,uint param_2)
+uint uds_service_b1_mazda_specific(uint param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;
@@ -81051,14 +81051,14 @@ void diag22_pid0013_o2_sensors_present(char param_1)
 /* Function candidate recovered from ROM pointer at 5f1c8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0015_o2s2_voltage_trim(char param_1)
+void diag22_pid0015_o2s2_voltage_trim(char param_1)
 
 {
   byte bVar2;
   uint uVar1;
   
-  bVar2 = candidate_diag_encode_o2s2();
-  uVar1 = candidate_diag_encode_trim_b074();
+  bVar2 = diag_encode_o2s2();
+  uVar1 = diag_encode_trim_b074();
   diag_append_u16_be((int)param_1,(uVar1 & 0xff) + (uint)bVar2 * 0x100);
   return;
 }
@@ -81146,12 +81146,12 @@ void diag22_pid0021_distance_while_mil_on(char param_1)
 /* Function candidate recovered from ROM pointer at 5f204 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid002e_ram_b2f0_pct(char param_1)
+void diag22_pid002e_ram_b2f0_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_b2f0();
+  uVar1 = diag_encode_b2f0();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81165,12 +81165,12 @@ void candidate_diag22_pid002e_ram_b2f0_pct(char param_1)
 /* Function candidate recovered from ROM pointer at 5f210 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid002f_ram_d287_raw(char param_1)
+void diag22_pid002f_ram_d287_raw(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_read_d287();
+  uVar1 = diag_read_d287();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81184,12 +81184,12 @@ void candidate_diag22_pid002f_ram_d287_raw(char param_1)
 /* Function candidate recovered from ROM pointer at 5f21c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0030_gear_or_vin_byte(char param_1)
+void diag22_pid0030_gear_or_vin_byte(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_read_gear_byte();
+  uVar1 = diag_read_gear_byte();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81203,12 +81203,12 @@ void candidate_diag22_pid0030_gear_or_vin_byte(char param_1)
 /* Function candidate recovered from ROM pointer at 5f228 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0031_ram_90fc_float(char param_1)
+void diag22_pid0031_ram_90fc_float(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_read_90fc();
+  uVar1 = diag_read_90fc();
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81222,12 +81222,12 @@ void candidate_diag22_pid0031_ram_90fc_float(char param_1)
 /* Function candidate recovered from ROM pointer at 5f234 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0033_ram_ad10_scaled(char param_1)
+void diag22_pid0033_ram_ad10_scaled(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_ad10();
+  uVar1 = diag_encode_ad10();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81265,12 +81265,12 @@ void diag22_pid0034_afr_lambda_words(char param_1)
 /* Function candidate recovered from ROM pointer at 5f24c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid003c_ram_c644_scaled(char param_1)
+void diag22_pid003c_ram_c644_scaled(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_c644();
+  uVar1 = diag_encode_c644();
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81364,12 +81364,12 @@ void diag22_pid0044_lambda_target(char param_1)
 /* Function candidate recovered from ROM pointer at 5f288 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0045_ram_ad48_pct(char param_1)
+void diag22_pid0045_ram_ad48_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_ad48();
+  uVar1 = diag_encode_ad48();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81383,12 +81383,12 @@ void candidate_diag22_pid0045_ram_ad48_pct(char param_1)
 /* Function candidate recovered from ROM pointer at 5f294 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0047_ram_ad5e_pedal(char param_1)
+void diag22_pid0047_ram_ad5e_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_ad5e();
+  uVar1 = diag_encode_ad5e();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81402,12 +81402,12 @@ void candidate_diag22_pid0047_ram_ad5e_pedal(char param_1)
 /* Function candidate recovered from ROM pointer at 5f2a0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0049_ram_a9c4_pedal(char param_1)
+void diag22_pid0049_ram_a9c4_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_a9c4();
+  uVar1 = diag_encode_a9c4();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81421,12 +81421,12 @@ void candidate_diag22_pid0049_ram_a9c4_pedal(char param_1)
 /* Function candidate recovered from ROM pointer at 5f2ac and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid004a_ram_a9c6_pedal(char param_1)
+void diag22_pid004a_ram_a9c6_pedal(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_a9c6();
+  uVar1 = diag_encode_a9c6();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81440,12 +81440,12 @@ void candidate_diag22_pid004a_ram_a9c6_pedal(char param_1)
 /* Function candidate recovered from ROM pointer at 5f2b8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid004c_ram_b410_pct(char param_1)
+void diag22_pid004c_ram_b410_pct(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_b410();
+  uVar1 = diag_encode_b410();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81464,7 +81464,7 @@ void diag22_pid0200_dtc_count_stored(char param_1)
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_dtc_count_stored();
+  uVar1 = dtc_count_stored();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -81523,7 +81523,7 @@ void diag22_pid0904_trailing_ignition_timing_deg(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f2e0. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid0914_ram_a9c4_scaled_s16(char param_1)
+void diag22_pid0914_ram_a9c4_scaled_s16(char param_1)
 
 {
   undefined4 uVar1;
@@ -81531,7 +81531,7 @@ void candidate_diag22_pid0914_ram_a9c4_scaled_s16(char param_1)
   
   uVar2 = 0;
   uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffa9c4_ffffa9c4);
-  uVar1 = candidate_diag_encode_s16_div(uVar1,0x3a800000,uVar2);
+  uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81545,7 +81545,7 @@ void candidate_diag22_pid0914_ram_a9c4_scaled_s16(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f2ec. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid0915_ram_a9c6_scaled_s16(char param_1)
+void diag22_pid0915_ram_a9c6_scaled_s16(char param_1)
 
 {
   undefined4 uVar1;
@@ -81553,7 +81553,7 @@ void candidate_diag22_pid0915_ram_a9c6_scaled_s16(char param_1)
   
   uVar2 = 0;
   uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffa9c6_ffffa9c6);
-  uVar1 = candidate_diag_encode_s16_div(uVar1,0x3a800000,uVar2);
+  uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81567,7 +81567,7 @@ void candidate_diag22_pid0915_ram_a9c6_scaled_s16(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f2f8. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid0917_ram_ad5c_scaled_s16(char param_1)
+void diag22_pid0917_ram_ad5c_scaled_s16(char param_1)
 
 {
   undefined4 uVar1;
@@ -81575,7 +81575,7 @@ void candidate_diag22_pid0917_ram_ad5c_scaled_s16(char param_1)
   
   uVar2 = 0;
   uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_throttle_sensor_volts_ffffad5c_ffffad5c);
-  uVar1 = candidate_diag_encode_s16_div(uVar1,0x3a800000,uVar2);
+  uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81589,7 +81589,7 @@ void candidate_diag22_pid0917_ram_ad5c_scaled_s16(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f304. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
+void diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
 
 {
   undefined4 uVar1;
@@ -81597,7 +81597,7 @@ void candidate_diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
   
   uVar2 = 0;
   uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffad5e_ffffad5e);
-  uVar1 = candidate_diag_encode_s16_div(uVar1,0x3a800000,uVar2);
+  uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81614,7 +81614,7 @@ void candidate_diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f310. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid091a_ram_b410_raw_512(char param_1)
+void diag22_pid091a_ram_b410_raw_512(char param_1)
 
 {
   undefined4 uVar1;
@@ -81659,7 +81659,7 @@ void diag22_pid093c_throttle_position_raw(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f328. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid096e_ram_a7ac_quarter(char param_1)
+void diag22_pid096e_ram_a7ac_quarter(char param_1)
 
 {
   undefined4 uVar1;
@@ -81682,7 +81682,7 @@ void candidate_diag22_pid096e_ram_a7ac_quarter(char param_1)
 /* Function candidate recovered from ROM pointer at 5f33c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid097c_ram_b59c_div2048(char param_1)
+void diag22_pid097c_ram_b59c_div2048(char param_1)
 
 {
   undefined4 uVar1;
@@ -81705,7 +81705,7 @@ void candidate_diag22_pid097c_ram_b59c_div2048(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f340. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid114a_ram_add4_raw(char param_1)
+void diag22_pid114a_ram_add4_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -81728,7 +81728,7 @@ void candidate_diag22_pid114a_ram_add4_raw(char param_1)
 /* Function candidate recovered from ROM pointer at 5f354 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid114d_ram_a984_raw(char param_1)
+void diag22_pid114d_ram_a984_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -81751,7 +81751,7 @@ void candidate_diag22_pid114d_ram_a984_raw(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f358. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1153_ram_a834_lambda(char param_1)
+void diag22_pid1153_ram_a834_lambda(char param_1)
 
 {
   undefined4 uVar1;
@@ -81770,7 +81770,7 @@ void candidate_diag22_pid1153_ram_a834_lambda(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f364. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1154_throttle_raw_ad5c(undefined4 param_1)
+void diag22_pid1154_throttle_raw_ad5c(undefined4 param_1)
 
 {
   diag_append_u16_be(param_1,(int)inferred_throttle_sensor_volts_ffffad5c_ffffad5c);
@@ -81787,7 +81787,7 @@ void candidate_diag22_pid1154_throttle_raw_ad5c(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5f378 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1169_ram_807c_scaled(char param_1)
+void diag22_pid1169_ram_807c_scaled(char param_1)
 
 {
   undefined4 uVar1;
@@ -81834,7 +81834,7 @@ void diag22_pid1177_maf_voltage_latched_v(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f388. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1340_ram_a9bc_pct(char param_1)
+void diag22_pid1340_ram_a9bc_pct(char param_1)
 
 {
   undefined4 uVar1;
@@ -81879,12 +81879,12 @@ void diag22_pid1410_injector_pulse_time(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3a0. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid163e_ram_b074_scaled_s16(char param_1)
+void diag22_pid163e_ram_b074_scaled_s16(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_encode_s16_div(inferred_trim_b074_ffffb074_ffffb074,0x39000000,0);
+  uVar1 = diag_encode_s16_div(inferred_trim_b074_ffffb074_ffffb074,0x39000000,0);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
@@ -81901,7 +81901,7 @@ void candidate_diag22_pid163e_ram_b074_scaled_s16(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3ac. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid16b3_ram_ad10_raw(char param_1)
+void diag22_pid16b3_ram_ad10_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -81924,7 +81924,7 @@ void candidate_diag22_pid16b3_ram_ad10_raw(char param_1)
 /* Function candidate recovered from ROM pointer at 5f3c0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid16e8_ram_b5ac_raw(char param_1)
+void diag22_pid16e8_ram_b5ac_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -81947,7 +81947,7 @@ void candidate_diag22_pid16e8_ram_b5ac_raw(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f3c4. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid16e9_ram_b654_eighth(char param_1)
+void diag22_pid16e9_ram_b654_eighth(char param_1)
 
 {
   undefined4 uVar1;
@@ -81990,7 +81990,7 @@ void diag22_pid16f0_tire_revolutions_per_mile(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5f3e4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pida216_ram_bc30_raw(char param_1)
+void diag22_pida216_ram_bc30_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -82039,7 +82039,7 @@ void diag22_pid1746_knock_retard_deg(char param_1)
 /* Function candidate recovered from ROM pointer at 5f3fc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1782_ram_c6ac_raw(char param_1)
+void diag22_pid1782_ram_c6ac_raw(char param_1)
 
 {
   undefined4 uVar1;
@@ -82059,7 +82059,7 @@ void candidate_diag22_pid1782_ram_c6ac_raw(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f400. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid17a6_ram_d1ac_scaled(char param_1)
+void diag22_pid17a6_ram_d1ac_scaled(char param_1)
 
 {
   float fVar1;
@@ -82085,7 +82085,7 @@ void candidate_diag22_pid17a6_ram_d1ac_scaled(char param_1)
 /* Function candidate recovered from ROM pointer at 5f414 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid172a_ram_c4c8_temp_c(char param_1)
+void diag22_pid172a_ram_c4c8_temp_c(char param_1)
 
 {
   undefined4 uVar1;
@@ -82105,7 +82105,7 @@ void candidate_diag22_pid172a_ram_c4c8_temp_c(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f418. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid172d_ram_a8f4_raw(undefined4 param_1)
+void diag22_pid172d_ram_a8f4_raw(undefined4 param_1)
 
 {
   diag_append_u8(param_1,(int)inferred_ram_a8f4_ffffa8f4_ffffa8f4);
@@ -82145,7 +82145,7 @@ void diag22_pid1634_apv_position_voltage(char param_1)
 /* Function candidate recovered from ROM pointer at 5f438 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid0968_io_status_b5b4_bc35(char param_1)
+void diag22_pid0968_io_status_b5b4_bc35(char param_1)
 
 {
   undefined4 uVar1;
@@ -82170,7 +82170,7 @@ void candidate_diag22_pid0968_io_status_b5b4_bc35(char param_1)
 /* Function candidate recovered from ROM pointer at 5f444 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid09d3_pedr_bit10_status(char param_1)
+void diag22_pid09d3_pedr_bit10_status(char param_1)
 
 {
   ushort uVar1;
@@ -82195,7 +82195,7 @@ void candidate_diag22_pid09d3_pedr_bit10_status(char param_1)
 /* Function candidate recovered from ROM pointer at 5f450 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1101_io_status_bf3c_ad18_cdd8(char param_1)
+void diag22_pid1101_io_status_bf3c_ad18_cdd8(char param_1)
 
 {
   undefined4 uVar1;
@@ -82223,7 +82223,7 @@ void candidate_diag22_pid1101_io_status_bf3c_ad18_cdd8(char param_1)
 /* Function candidate recovered from ROM pointer at 5f45c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1102_io_status_bdb8(char param_1)
+void diag22_pid1102_io_status_bdb8(char param_1)
 
 {
   undefined4 uVar1;
@@ -82245,7 +82245,7 @@ void candidate_diag22_pid1102_io_status_bdb8(char param_1)
 /* Function candidate recovered from ROM pointer at 5f468 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
+void diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
 
 {
   ushort uVar1;
@@ -82282,7 +82282,7 @@ void candidate_diag22_pid1103_io_status_pedr_cab4_d1a(char param_1)
 /* Function candidate recovered from ROM pointer at 5f474 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1104_io_status_pjdr_bf6c(char param_1)
+void diag22_pid1104_io_status_pjdr_bf6c(char param_1)
 
 {
   ushort uVar1;
@@ -82310,7 +82310,7 @@ void candidate_diag22_pid1104_io_status_pjdr_bf6c(char param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f478. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pid1631_tol_status_b570_b584(char param_1)
+void diag22_pid1631_tol_status_b570_b584(char param_1)
 
 {
   char cVar2;
@@ -82337,7 +82337,7 @@ void candidate_diag22_pid1631_tol_status_b570_b584(char param_1)
 /* Function candidate recovered from ROM pointer at 5f48c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1681_io_status_ce1c(char param_1)
+void diag22_pid1681_io_status_ce1c(char param_1)
 
 {
   undefined4 uVar1;
@@ -82360,7 +82360,7 @@ void candidate_diag22_pid1681_io_status_ce1c(char param_1)
 /* Function candidate recovered from ROM pointer at 5f498 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1688_secondary_air_status_bit(char param_1)
+void diag22_pid1688_secondary_air_status_bit(char param_1)
 
 {
   undefined4 uVar1;
@@ -82386,7 +82386,7 @@ void candidate_diag22_pid1688_secondary_air_status_bit(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4a4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pida211_status_b53b_aa62_bf9c(char param_1)
+void diag22_pida211_status_b53b_aa62_bf9c(char param_1)
 
 {
   undefined4 uVar1;
@@ -82415,7 +82415,7 @@ void candidate_diag22_pida211_status_b53b_aa62_bf9c(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4b0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1711_pedr_bit1_status(char param_1)
+void diag22_pid1711_pedr_bit1_status(char param_1)
 
 {
   ushort uVar1;
@@ -82441,7 +82441,7 @@ void candidate_diag22_pid1711_pedr_bit1_status(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4bc and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1706_io_status_a8f5(char param_1)
+void diag22_pid1706_io_status_a8f5(char param_1)
 
 {
   undefined4 uVar1;
@@ -82464,7 +82464,7 @@ void candidate_diag22_pid1706_io_status_a8f5(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4c8 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1718_pedr_bit2_status(char param_1)
+void diag22_pid1718_pedr_bit2_status(char param_1)
 
 {
   ushort uVar1;
@@ -82485,7 +82485,7 @@ void candidate_diag22_pid1718_pedr_bit2_status(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4d4 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid1715_pedr_pddr_status(char param_1)
+void diag22_pid1715_pedr_pddr_status(char param_1)
 
 {
   ushort uVar1;
@@ -82516,7 +82516,7 @@ void candidate_diag22_pid1715_pedr_pddr_status(char param_1)
 /* Function candidate recovered from ROM pointer at 5f4e0 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pid17de_io_status_ce32(char param_1)
+void diag22_pid17de_io_status_ce32(char param_1)
 
 {
   undefined4 uVar1;
@@ -82706,7 +82706,7 @@ void candidate_diag22_pid1710_sensor_snapshot_7byte(undefined4 param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f52c. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pidc115_ram_c1d2_raw(undefined4 param_1)
+void diag22_pidc115_ram_c1d2_raw(undefined4 param_1)
 
 {
   diag_append_u8(param_1,(int)inferred_ram_c1d2_ffffc1d2_ffffc1d2);
@@ -82722,10 +82722,10 @@ void candidate_diag22_pidc115_ram_c1d2_raw(undefined4 param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f538. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pidc116_dtc_state_machine(void)
+void diag22_pidc116_dtc_state_machine(void)
 
 {
-  candidate_dtc_state_machine_step();
+  dtc_state_machine_step();
   return;
 }
 
@@ -82740,7 +82740,7 @@ void candidate_diag22_pidc116_dtc_state_machine(void)
 /* Function candidate recovered from ROM pointer at 5f54c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
+void diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
 
 {
   char cVar1;
@@ -82764,12 +82764,12 @@ void candidate_diag22_pidc117_ram_c1d3_c1d4(undefined4 param_1)
 /* Function candidate recovered from ROM pointer at 5f558 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pidc124_diag_status_bits(char param_1)
+void diag22_pidc124_diag_status_bits(char param_1)
 
 {
   undefined4 uVar1;
   
-  uVar1 = candidate_diag_status_bit_pack();
+  uVar1 = diag_status_bit_pack();
   diag_append_u8((int)param_1,uVar1);
   return;
 }
@@ -82860,7 +82860,7 @@ void diag22_append_positive_response_header(void)
 /* Function candidate recovered from ROM pointer at 5f564 and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-void candidate_diag22_pidff10_dtc_status_c1d5_c1d8(undefined4 param_1)
+void diag22_pidff10_dtc_status_c1d5_c1d8(undefined4 param_1)
 
 {
   undefined4 uVar1;
@@ -82969,7 +82969,7 @@ void diag22_pidff43_rom_id_bytes_ffb(undefined4 param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f598. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pidff50_ram_d3a0_raw(undefined4 param_1)
+void diag22_pidff50_ram_d3a0_raw(undefined4 param_1)
 
 {
   diag_append_u16_be(param_1,(int)inferred_ram_d3a0_ffffd3a0_ffffd3a0);
@@ -82986,7 +82986,7 @@ void candidate_diag22_pidff50_ram_d3a0_raw(undefined4 param_1)
 /* Handler candidate from 12-byte diagnostic dispatch record at 5f5a4. Table purpose inferred from
    neighboring code. */
 
-void candidate_diag22_pidff44_ram_ce30_raw(undefined4 param_1)
+void diag22_pidff44_ram_ce30_raw(undefined4 param_1)
 
 {
   diag_append_u16_be(param_1,(int)inferred_ram_ce30_ffffce30_ffffce30);
@@ -83326,7 +83326,7 @@ undefined4 ref_parseSubFunction(char param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00056280 (194 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_18(short param_1,uint param_2)
+uint uds_service_18(short param_1,uint param_2)
 
 {
   ushort snapshot_DAT_ffffd3b4;
@@ -86314,7 +86314,7 @@ undefined4 FUN_0005b076(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00059884 (154 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_12(ushort param_1,uint param_2)
+uint uds_service_12(ushort param_1,uint param_2)
 
 {
   uint uVar1;
@@ -86554,7 +86554,7 @@ int FUN_0005b33a(char *param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00059c04 (110 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_21_read_data_by_local_id(short param_1,uint param_2)
+uint uds_service_21_read_data_by_local_id(short param_1,uint param_2)
 
 {
   undefined4 uVar1;
@@ -88657,7 +88657,7 @@ uint uds_service_37_request_transfer_exit(undefined4 param_1,uint param_2)
 /* Unique exact-byte match to related 60E0FC00 function at 0005c0a4 (244 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_uds_service_3b(ushort param_1,uint param_2)
+uint uds_service_3b(ushort param_1,uint param_2)
 
 {
   char cVar2;
@@ -89145,7 +89145,7 @@ uint uds_service_31_routine_control(short param_1,uint param_2)
 /* Function candidate recovered from ROM pointer at 5ec4c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint candidate_uds_service_32(short param_1,uint param_2)
+uint uds_service_32(short param_1,uint param_2)
 
 {
   char cVar2;
@@ -89981,7 +89981,7 @@ uint ref_faultSomething0x2(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0005e3be (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_dtc_count_stored(void)
+uint dtc_count_stored(void)
 
 {
   uint uVar1;
@@ -99005,7 +99005,7 @@ undefined4 isotp_single_frame_accept(void)
   if (((uVar1 & 0xf) < 8) && ((uds_rx_buffer_ffffddc8 & 0xf) != 0)) {
     DAT_ffffddf5 = DAT_ffffddf5 | 4;
     FUN_000683b4();
-    DAT_ffffddec = candidate_uds_rx_channel_alloc((int)DAT_ffffddc9);
+    DAT_ffffddec = uds_rx_channel_alloc((int)DAT_ffffddc9);
     DAT_ffffddea = DAT_ffffddc9;
     DAT_ffffdde6 = uVar1 & 0xf;
     ref_pack_for_OBD_response_((int)DAT_ffffddec,&DAT_ffffddc9,7);
@@ -99032,7 +99032,7 @@ uint isotp_first_frame_accept(void)
   if ((uVar1 < 0x1000) && (7 < uVar1)) {
     DAT_ffffddf5 = DAT_ffffddf5 | 4;
     FUN_000683b4();
-    DAT_ffffddec = candidate_uds_rx_channel_alloc((int)DAT_ffffddca);
+    DAT_ffffddec = uds_rx_channel_alloc((int)DAT_ffffddca);
     DAT_ffffddeb = 2;
     DAT_ffffdde6 = (undefined2)uVar1;
     DAT_ffffddea = DAT_ffffddca;
@@ -99429,7 +99429,7 @@ void FUN_00068a44(void)
 /* Unique exact-byte match to related 60E0FC00 function at 00067376 (98 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int candidate_uds_rx_channel_alloc(char param_1)
+int uds_rx_channel_alloc(char param_1)
 
 {
   bool bVar1;
@@ -99451,7 +99451,7 @@ int candidate_uds_rx_channel_alloc(char param_1)
     iVar2 = iVar2 + 1;
   } while (iVar2 < 1);
   if (!bVar1) {
-    candidate_uds_rx_channel_set_service(unaff_r14,(int)param_1);
+    uds_rx_channel_set_service(unaff_r14,(int)param_1);
   }
   return unaff_r14;
 }
@@ -99486,7 +99486,7 @@ int FUN_00068ae8(char param_1)
 /* Unique exact-byte match to related 60E0FC00 function at 00067400 (18 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_uds_rx_channel_set_service(byte param_1,undefined1 param_2)
+void uds_rx_channel_set_service(byte param_1,undefined1 param_2)
 
 {
   (&DAT_ffffddf3)[(uint)param_1 * 2] = param_2;

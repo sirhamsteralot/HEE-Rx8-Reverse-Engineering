@@ -9,7 +9,7 @@
    [WIRING REVIEW 2026-09-08]
    Candidate APV drive-status sampler. Firmware fact: reads PHDR_W 0x1000/0x2000 (PH12/PH13, pkg pins 79/80). pinout v3: APV opening-angle signal at PCM 3B (wire R/G, HP ³) and position-sensor power at PCM 1S (B/W *); external meaning of the two PH inputs not established. */
 
-void candidate_apv_drive_status_sample(void)
+void apv_drive_status_sample(void)
 
 {
   ushort uVar1;

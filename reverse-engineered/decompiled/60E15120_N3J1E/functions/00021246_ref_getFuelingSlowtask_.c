@@ -37,8 +37,8 @@ void fueling_slow_task(void)
   FUN_0001eba6();
   FUN_0001ecee();
   FUN_000188a4();
-  candidate_fuel_cut_rpm_condition();
-  candidate_rev_limit_conditionals();
+  fuel_cut_rpm_condition();
+  rev_limit_conditionals();
   ref_setSR(uVar1);
   return;
 }

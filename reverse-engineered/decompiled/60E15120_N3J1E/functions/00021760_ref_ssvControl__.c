@@ -3,10 +3,10 @@
  */
 /* ROM address: 0x00021760; body bytes: 6; decompiled */
 
-void candidate_ssv_control_thunk(void)
+void ssv_control_thunk(void)
 
 {
-  candidate_ssv_control_thunk();
+  ssv_control_thunk();
   return;
 }
 

@@ -8,7 +8,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00037c66 (34 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint candidate_diag_status_bit_pack(void)
+uint diag_status_bit_pack(void)
 
 {
   uint uVar1;

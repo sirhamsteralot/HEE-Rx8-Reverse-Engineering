@@ -6,7 +6,7 @@
 /* Function candidate recovered from ROM pointer at 5ec4c and register-save prologue. Heuristic
    boundary; inspect disassembly. */
 
-uint candidate_uds_service_32(short param_1,uint param_2)
+uint uds_service_32(short param_1,uint param_2)
 
 {
   char cVar2;

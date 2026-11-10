@@ -3,7 +3,7 @@
 void FUN_00043a7c(void)
 
 {
-  candidate_apv_position_voltage_scale();
+  apv_position_voltage_scale();
   ref_getApvVoltageRange();
   return;
 }
