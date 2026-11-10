@@ -61,16 +61,16 @@ change cannot push load past that product ceiling.
 
 ```python
 # --- MAF acquisition (ADC sweep 0x6884; MAF = channel 3) ---
-maf_raw = adc[3]                                        # RAM 0xffff9eea
+maf_raw = adc[3]                                        # maf_adc_raw 0xffff9eea
 maf_volts = maf_raw * 5/65536                           # 0x7438
-maf_g_s   = lookup(tbl_0x69788, maf_volts)              # "MAF Scaling" -> RAM 0xffff9f78
+maf_g_s   = lookup(tbl_0x69788, maf_volts)              # "MAF Scaling" -> maf_scaled 0xffff9f78
 
 # --- plausibility (0x19f4e, interrupt context via 0x63f0->0x114b0->0x19806) ---
-count_high = count_high + 1 if maf_raw >= 0xf852 else 0        # RAM 0xffffaa35 (saturating u8)
-count_low  = count_low + 1  if maf_raw <  0x7ae  else 0        # RAM 0xffffaa36 (saturating u8)
+count_high = count_high + 1 if maf_raw >= 0xf852 else 0        # maf_high_fault_counter 0xffffaa35 (saturating u8)
+count_low  = count_low + 1  if maf_raw <  0x7ae  else 0        # maf_low_fault_counter 0xffffaa36 (saturating u8)
 if count_high >= 3 or count_low >= 3 or 0x7ae <= maf_raw < 0xf852:
-    maf_volts_validated = maf_raw * 5/65536             # RAM 0xffffa9e4 (gate verified in disassembly)
-    maf_g_s_validated    = maf_g_s                      # RAM 0xffffa9e8
+    maf_volts_validated = maf_raw * 5/65536             # maf_voltage_latched 0xffffa9e4 (gate verified in disassembly)
+    maf_g_s_validated    = maf_g_s                      # maf_scaled_latched 0xffffa9e8
 # 1-2 sample excursions hold the previous values (debounce); sustained
 # excursions propagate so the fault manager can see them.
 
@@ -88,7 +88,7 @@ throttle_fallback = ((tps*0.04 + 0.26) * rpm) / 60.0    # 0x1a13c -> RAM 0xffffa
 
 # --- transient select (0x1a1dc) ---
 use_raw_maf = 1 if throttle/rpm deltas exceed lookup(tbl_0x697a0, tps) thresholds \
-                  or startup else 0                     # RAM 0xffffaa4c
+                  or startup else 0                     # maf_filter_mode 0xffffaa4c
 
 # --- load core (task[6]: 0x661e -> 0x11ba4 -> 0x197be; 0x1a418) ---
 selected = mass_air_flow if use_raw_maf else filter(mass_air_flow, coeff=lookup(tbl_0x697b4, rpm))
@@ -98,7 +98,7 @@ load_unfiltered = air_per_rev * 0.6345                   # ROM 0x7a088 -> RAM 0x
 # --- load filter/clamp (0x33ad2) ---
 if cranking_or_injectors_off: engine_load = 0.525        # RAM 0xffffc0b4
 else: engine_load = min(filter(load_unfiltered, coeff=0.2 or 1.0 if snap_counter),
-                        max_load)                        # snap counter RAM 0xffffc0c4, set to 25 by 0x33a58
+                        max_load)                        # load_filter_fast_flag 0xffffc0c4 (snap counter), set to 25 by 0x33a58
 max_load = lookup(tbl_0x6b200, iat) * lookup(tbl_0x6b214, baro) * lookup(tbl_0x6b1ec, rpm)
                                                           # RAM 0xffffc0b8 (0x33ab0/0x33a7c)
 
@@ -109,19 +109,19 @@ baro   = baro_raw * 25.325 + 0.0182                      # 0xd144 -> RAM 0xffffa
 
 # --- fuel volume request (0x306e8) ---
 load_to_fuel     = engine_load * 0.07196                 # literal @0x78170 -> RAM 0xffffbed0
-base_map_mult    = lookup3d(tbl_0x6ac88, rpm, engine_load)  # RAM 0xffffbed4; load arg verified in fr5
+base_map_mult    = lookup3d(tbl_0x6ac88, rpm, engine_load)  # fuel_load_compensation 0xffffbed4; load arg verified in fr5
 request_pre_trim = (enrichment_sum - subtractors) * fuel_target * base_map_mult
 fuel_target      = 1.0 default; closed-loop trim clamped [max(2D-65, 3D-22, 2D-66), 2D-67]
-                                                          # RAM 0xffffadec (0x1c880)
+                                                          # inferred_lambda_actual_ffffadec 0xffffadec (0x1c880)
 request_trimmed  = request_pre_trim + diag_trim           # 0x5c024: diagnostic id 0x17e0 cmd 7, affine u8 (1/256, -0.5)
-fuel_volume_request = request_trimmed * load_to_fuel      # RAM 0xffffbeb0
+fuel_volume_request = request_trimmed * load_to_fuel      # fuel_volume_final 0xffffbeb0
 
 # --- per-injector split (0x2fd3e / 0x2fe1e / 0x2ff78 / 0x30948 / 0x30030 / 0x2fea8) ---
 mult_primary    = lookup3d(tbl_0x6a9a4, weighted_temp, engine_load)
 mult_secondary1 = lookup3d(tbl_0x6a9c0, weighted_temp, engine_load)
 mult_secondary2 = lookup3d(tbl_0x6a9dc, weighted_temp, engine_load)
 vacuum_mult     = lookup(tbl_0x6aa0c/0x6aa20/0x6aa34, map_rel)
-latency         = lookup3d(tbl_0x6aa80, map_est, battery_voltage)      # per channel, RAM 0xffffa094[]
+latency         = lookup3d(tbl_0x6aa80, map_est, battery_voltage)      # per channel, injector_latency_ch0 0xffffa094[]
 pulse           = clamp(channel_request * vacuum_mult, 1024, lookup(tbl_0x6aa9c, rpm))
 cranking: add cranking pulse products (tbls 0x6ab48/0x6ab98/0x6abc8/0x6bab0)
 
@@ -229,6 +229,14 @@ validators) — is the follow-up work if the candidates are accepted.
   call arguments (RPM/filter/MAF wiring), and the 0x306e8 lookup_3d
   arguments (RPM via delay slot, load in fr5) were each checked against
   `decompiled/firmware_disassembly.asm`.
+- Source-review sweep (this pass): the accepted-alias cells named in §2/§12
+  were re-located in the raw ROM literal pools this pass — 0xbed4 @0x3083a
+  (0x306e8), 0xbeb0 @0x30828 (0x306e8), 0xa094 @0x2093e/0x28200/0x34546
+  (latency lookups), 0xc0c4 @0x33b6a (0x33ad2), 0x9eea @0x748e/0x1a006,
+  0x9f78 @0x749e/0x1a02a, 0xaa35/0xaa36 @0x1a016/0x1a022 (0x19f4e), 0xa9e4/
+  0xa9e8 @0x19ff8/0x19ff2, 0xaa4c @0x1a3f6 (0x1a1dc), 0xadec @0x1c184
+  (0x1c880), 0xad48 @0x1a170/0x3368a — and §2/§12 now use the promoted
+  alias names from `source_review/accepted_ram_aliases.tsv`.
 
 ## 9. Limits
 
@@ -238,7 +246,7 @@ boundaries. Unit interpretations remain **candidates**: the 0.6345 and
 0.07196 scale constants (their numerology is not evidence), the throttle
 fallback affine (0.04/0.26), the 369.472/475.93 timer constants, and the
 grams-per-second reading of the MAF scaling table. Untraced in this pass:
-`DAT_ffffbe1c` (MAP-estimate scale factor), the `DAT_ffffad48` fallback
+`DAT_ffffbe1c` (MAP-estimate scale factor), the `inferred_ram_ad48_ffffad48` 0xffffad48 fallback
 input, the 0x19640 snap-trigger caller, the baro sensor's ADC channel, and
 the output-timer-channel-to-physical-injector mapping. Candidate aliases are
 not factory symbols; they must not be presented as verified names until the
@@ -269,7 +277,7 @@ SHA-256.
 
 ---
 
-## 12. Engine-load units (ROADMAP group C) — D5 closed
+## 12. Engine-load units
 
 Cross-check of the RX8Club thread's load/fueling claims against the ROM
 ([`docs/references/rx8club-user-guide-thread.md`](../../references/rx8club-user-guide-thread.md)

@@ -176,12 +176,12 @@ undefined4 * FUN_00043e64(void)
       }
     }
     if (DAT_ffffcacb == '\x01') {
-      puVar7 = (undefined4 *)FUN_0005fd38(0x2c,1);
+      puVar7 = (undefined4 *)dtc_set_fault_x0(0x2c,1);
     }
     else {
       puVar7 = (undefined4 *)(uint)DAT_ffffcaca;
       if (puVar7 == (undefined4 *)((int)&vector_Poweron_Reset + 1)) {
-        puVar7 = (undefined4 *)FUN_0005fd38(0x2c,2);
+        puVar7 = (undefined4 *)dtc_set_fault_x0(0x2c,2);
       }
     }
   }

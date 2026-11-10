@@ -6,18 +6,18 @@ uint FUN_0003f7de(void)
   uint uVar1;
   
   if (DAT_ffffc6d5 == '\x01') {
-    FUN_0005fd38(0x6e,1);
+    dtc_set_fault_x0(0x6e,1);
   }
   else if (DAT_ffffc6d4 == '\x01') {
-    FUN_0005fd38(0x6e,2);
+    dtc_set_fault_x0(0x6e,2);
   }
   if (DAT_ffffc6d7 == '\x01') {
-    uVar1 = FUN_0005fd38(0x6d,1);
+    uVar1 = dtc_set_fault_x0(0x6d,1);
   }
   else {
     uVar1 = (uint)DAT_ffffc6d6;
     if (uVar1 == 1) {
-      uVar1 = FUN_0005fd38(0x6d,2);
+      uVar1 = dtc_set_fault_x0(0x6d,2);
     }
   }
   return uVar1;

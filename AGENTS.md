@@ -112,7 +112,12 @@ dumping it at the root.
       each label record must cover exactly its own body's rows.
     - Reports, review notes, label evidence strings, test docstrings and PR bodies
       must not reference ROADMAP item IDs, PR numbers, discrepancy IDs or pass
-      dates — backlog tags churn and are noise to readers. ROADMAP.md itself keeps
+      dates — backlog tags churn and are noise to readers. The same applies to
+      process narrative ("this pass", "earlier passes", "re-dumped this session",
+      "run after this pass", "no emulator run in this pass", "pass log", …):
+      state the fact and the artifact that proves it (e.g. "verified dynamically
+      in the emulator — `reviews/dtc_control/dynamic_validation_log.txt`"),
+      never which pass ran when or how often. ROADMAP.md itself keeps
       its tags: prune CLOSED items from it (full records stay in that file's git
       history; never reuse an ID) and keep open IDs stable so cross-references
       resolve.

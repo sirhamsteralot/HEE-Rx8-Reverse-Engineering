@@ -1,6 +1,6 @@
 address	label	kind	evidence
-0x5fd38	set_fault_thunk	function	thunk: FUN_0005fe20(param_1,param_2,0); 71 callers across monitor code; ROM bytes verified
-0x5fd3c	set_fault_thunk_param3	function	ref_updateFaultStatusTHUNKNoR6_: param_3==0 -> 0xffff; tail-calls 0x5fe20; 2 callers (0x44724, 0x44cec)
+0x5fd38	dtc_set_fault_x0	function	bra 0x5fe20 + delay mov #0,r6 (words a072/e600): tail-call trampoline to dtc_set_fault 0x5fe20 with x=0; 71 callers; 0x5fe20's only callers are 0x5fd38/0x5fd3c; ROM bytes verified
+0x5fd3c	dtc_set_fault_xdefault	function	r6==0 -> r6=pool 0x5fe0c=0xffff, then bra 0x5fe20: trampoline to dtc_set_fault with x default 0xffff; 2 callers (0x44724, 0x44cec); inherited ref_updateFaultStatusTHUNKNoR6_ was a misnomer; ROM bytes verified
 0x5fe20	dtc_set_fault	function	core set-fault entry: maps id->slot via ROM 0x7df42, checks eval state 0xffffd688, calls 0x60062 / 0x601cc; decompiled + callgraph
 0x60062	dtc_state_transition	function	transitions on param_2 1/2/4 using ROM type byte 0x7e32a[slot] and RAM 0xffffd4e4[slot]; posts OS event (2,2) via 0x60190
 0x601cc	dtc_mark_stored	function	sets 0xffffd570[slot]=1 (slot from 0x7df42), records first code in 0xffffd3c0; called from 0x5fe20
@@ -8,6 +8,7 @@ address	label	kind	evidence
 0x6028c	dtc_clear_state_array	function	zeroes 0xffffd5fc[0..0x8b]; called from 0x5fd84 and 0x6020e
 0x6020e	dtc_rebuild_state_array	function	recollects 0xf0-state DTCs via 0x615c6 and re-maps them with 0x61800; called from 0x5fd6c
 0x602c8	dtc_set_state_byte	function	direct write 0xffffd5fc[slot]=state; called from 0x60062
+0x5fd4a	dtc_set_eval_enable	function	writes 1/0 to 0xffffd688 (pool 0x5fe10) per r4; callers 0x5fd6c (boot init, sets 1) and 0x5dde8 (UDS 0x85 path); not a thunk; ROM bytes verified
 0x5fd6c	dtc_ram_init	function	boot-time init: 0x5ff30, 0x6004a, clear flags 0x601b2, rebuild 0x6020e, set eval on 0x5fd4a(1); called from task init 0x1102a
 0x558ac	uds_14_clear_diagnostic_information	function	ref_ClearFaults_; UDS 0x14 + OBD mode 04 share it (dispatch record 0x5eb64/0x5ec24); calls 0x55992/0x61b02 clear path
 0x5f9b0	dtc_fault_enable_status2	function	ref_faultEnableStatus2(slot,mask): (mask & ROM 0x7e790[slot])==0; enable#3 bitmask test
