@@ -53,6 +53,7 @@ DIR_MAP = {
     "math_units": INV / "math_units",
     "lookup_family": INV / "lookup_family",
     "readability": INV / "readability",
+    "comment_merge": INV / "comment_merge",
     "backups": INV / "backups",
     "metadata": LABELS,
     "named": DEC / "named",
