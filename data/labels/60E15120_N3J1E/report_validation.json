@@ -63,9 +63,9 @@
       "rom_claims": 0
     },
     "e2ram_nv_storage_report.md": {
-      "fn_checked": 10,
-      "ram_checked": 7,
-      "rom_refs": 17,
+      "fn_checked": 15,
+      "ram_checked": 13,
+      "rom_refs": 28,
       "rom_claims": 0
     },
     "free_resources_report.md": {
@@ -87,9 +87,9 @@
       "rom_claims": 0
     },
     "idle_target_control_report.md": {
-      "fn_checked": 6,
-      "ram_checked": 5,
-      "rom_refs": 11,
+      "fn_checked": 9,
+      "ram_checked": 11,
+      "rom_refs": 25,
       "rom_claims": 0
     },
     "ignition_timing_report.md": {
@@ -123,9 +123,9 @@
       "rom_claims": 0
     },
     "o2_sensor_monitor_report.md": {
-      "fn_checked": 7,
-      "ram_checked": 7,
-      "rom_refs": 14,
+      "fn_checked": 9,
+      "ram_checked": 10,
+      "rom_refs": 23,
       "rom_claims": 0
     },
     "os_scheduler_can_ivt_report.md": {
