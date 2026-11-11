@@ -1,0 +1,70 @@
+{
+ "date": "2026-11-11",
+ "pass": "source_review_dtc_control_ram",
+ "basis": "additional_source_review_comments",
+ "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1, verified unchanged). Report: docs/investigations/60E15120_N3J1E/dtc_control_report.md. These are the DTC-control RAM aliases carried by the [ADDITIONAL SOURCE REVIEW] header comments that had no per-subsystem labels JSON record; each was re-verified against the raw ROM literal pools (mov.l pool words, or sign-extended mov.w pool words) in the cited reader.",
+ "ram_aliases": {
+  "ffff87b0": {
+   "alias": "dtc_master_table_21",
+   "type": "uint8[0x150]",
+   "reader": "00061450",
+   "evidence": "21 x 0x10 B master DTC table: u16 slot at +0, state byte at +6, priority at +0x0d; scanned by 0x61450/0x615c6, iterated by 0x6328a. ROM-verified: mov.l @(0x61558,pc),r3 at 0x6147c in 0x61450, pool 0x61558 = 0xffff87b0."
+  },
+  "ffff8900": {
+   "alias": "dtc_master_current_index",
+   "type": "uint16",
+   "reader": "00061450",
+   "evidence": "Current master-table index; excluded from every scan (0x61450/0x615c6/0x62df8). ROM-verified: mov.l @(0x61554,pc),r3 at 0x61454 in 0x61450, pool 0x61554 = 0xffff8900."
+  },
+  "ffffd286": {
+   "alias": "mil_lamp_flag",
+   "type": "uint8",
+   "reader": "0005a130",
+   "evidence": "MIL flag: set by 0x5a130 when stored+enabled DTC exists (emulator MIL=1 case in reviews/dtc_control/dynamic_validation_log.txt); gates 0x5a188 distance-MIL and 0x55278 CAN status. ROM-verified: mov.w @(0x5a202,pc),r6 at 0x5a140 in 0x5a130, pool word 0xd286 at 0x5a202 sign-extends to 0xffffd286; mov.b r1/r2,@r6 at 0x5a15a/0x5a156 writes 1/0."
+  },
+  "ffffd3c0": {
+   "alias": "dtc_first_stored_code",
+   "type": "uint16",
+   "reader": "000601cc",
+   "evidence": "First stored DTC code, recorded by 0x601cc when flag table goes 0->1. ROM-verified: mov.l @(0x60278,pc),r4 at 0x601fa in 0x601cc, pool 0x60278 = 0xffffd3c0."
+  },
+  "ffffd3c2": {
+   "alias": "dtc_eval_state_cache",
+   "type": "uint8[0x8c]",
+   "reader": "0005ff5a",
+   "evidence": "Per-fault-id cached eval-state argument written by 0x5ff5a. ROM-verified: mov.l @(0x6001c,pc),r12 at 0x5ff6a in 0x5ff5a, pool 0x6001c = 0xffffd3c2."
+  },
+  "ffffd458": {
+   "alias": "dtc_eval_state_array",
+   "type": "uint8[0x8c]",
+   "reader": "0005ff5a",
+   "evidence": "Per-slot eval state (1/2/4) written by 0x5ff5a; read by 0x60478. ROM-verified: mov.l @(0x6012c,pc),r0 at 0x60038/0x6003c in 0x5ff5a, pool 0x6012c = 0xffffd458 (also referenced from 0x5ff48 in 0x5ff30 via pool 0x60020 and from 0x60494 in 0x60478 via pool 0x604f0)."
+  },
+  "ffffd4e4": {
+   "alias": "dtc_transition_state_array",
+   "type": "uint8[0x8c]",
+   "reader": "00060062",
+   "evidence": "Per-slot transition state written by 0x60062 on mode 1/2/4. ROM-verified: mov.l @(0x60130,pc),r12 at 0x60074 in 0x60062, pool 0x60130 = 0xffffd4e4."
+  },
+  "ffffd5fc": {
+   "alias": "dtc_state_array",
+   "type": "uint8[0x8c]",
+   "reader": "0005f9f0",
+   "evidence": "Per-slot DTC state mirror (0xc0/0xc1/0x70/0x60/0); cleared by 0x6028c, written by 0x602c8/0x602a4/0x6020e. ROM-verified: mov.l @(0x5faf8,pc),r0 at 0x5fa1a/0x5fa2a in 0x5f9f0, pool 0x5faf8 = 0xffffd5fc."
+  },
+  "ffffd688": {
+   "alias": "dtc_eval_enable",
+   "type": "uint8",
+   "reader": "0005fd4a",
+   "evidence": "1 = fault evaluation active; set at init by 0x5fd6c via 0x5fd4a(1); selects path in 0x5fe20. ROM-verified: mov.l @(0x5fe10,pc),r5 at 0x5fd4c in 0x5fd4a, pool 0x5fe10 = 0xffffd688."
+  },
+  "ffffd930": {
+   "alias": "dtc_status_bits",
+   "type": "uint32",
+   "reader": "00066a00",
+   "evidence": "Status bits ANDed with low16 of ROM mask table 0x7e934 in ref_getFaultStatus__ (0x66a00). ROM-verified: mov.l @(0x66bf8,pc),r3 at 0x66a0c in 0x66a00, pool 0x66bf8 = 0xffffd930."
+  }
+ },
+ "rom_unchanged": true,
+ "ghidra_database_updated": false
+}

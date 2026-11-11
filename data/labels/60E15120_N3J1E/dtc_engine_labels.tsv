@@ -48,6 +48,7 @@ address	label	kind	evidence
 0xffffd458	dtc_eval_state_array	RAM	0x8c bytes per-slot eval state (1/2/4), written by 0x5ff5a
 0xffffd4e4	dtc_transition_state_array	RAM	0x8c bytes per-slot transition state, written by 0x60062
 0xffffd3c0	dtc_first_stored_code	RAM	u16 first stored DTC code (0x601cc)
+0xffffd3c2	dtc_eval_state_cache	RAM	0x8c bytes per-fault-id cached eval-state argument written by 0x5ff5a (mov.l @(0x6001c,pc) at 0x5ff6a; pool word 0xffffd3c2 ROM-verified)
 0xffffd286	mil_lamp_flag	RAM	1 = MIL on (0x5a130); also gates distance-MIL accumulator 0x5a188 and CAN status 0x55278
 0xffffd688	dtc_eval_enable	RAM	1 = fault evaluation active (0x5fd4a), set at init 0x5fd6c
 0xffffd930	dtc_status_bits	RAM	u32 status bits ANDed with ROM mask table 0x7e934 low16 in 0x66a00
