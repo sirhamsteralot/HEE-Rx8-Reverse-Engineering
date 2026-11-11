@@ -155,6 +155,9 @@ found and fixed during the split (3.2f pool word is 0x404ccccd).
 - The idle report's battery-gate constants (0.03125, 13.016 V, 12.0 V) match
   the decompiled export but are not present as float pool words in the 0x1506c/
   0x167c0 pool region (likely built via FP ops); left as export-derived.
-- Still open per subsystem (report §9 Limits): cruise 0xffffbcf8 units,
-  E2RAM payload attribution + save cadence, CAN record bytes +12..+15,
-  idle flag meanings + 0x5ca94 output, O2 channel meanings.
+- Still open per subsystem (report §9 Limits): E2RAM payload attribution +
+  save cadence, CAN record bytes +12..+15, idle flag meanings + 0x5ca94
+  output, O2 channel meanings. (The cruise 0xffffbcf8 units / 0xffffcf1c
+  producer / 0xffffcf51–0xcf5b consumer questions are resolved in
+  [`cruise_control/`](cruise_control/README.md) —
+  [`cruise_control_report.md`](../cruise_control_report.md) §9.)

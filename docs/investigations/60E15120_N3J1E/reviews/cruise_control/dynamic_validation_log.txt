@@ -1,0 +1,38 @@
+ROM 60E15120_N3J1E.bin, config byte ROM[0x7d07f] = 0x00
+boot: cycle limit 300000 reached
+
+== 1) 0xffffcf1c producer: 0x4de1c = float(gear 0xffffbc3d) on this ROM ==
+  gear=0: cf1c=0.0  (with switch flag cf49=1: 0.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=1: cf1c=1.0  (with switch flag cf49=1: 1.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=2: cf1c=2.0  (with switch flag cf49=1: 2.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=3: cf1c=3.0  (with switch flag cf49=1: 3.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=4: cf1c=4.0  (with switch flag cf49=1: 4.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=5: cf1c=5.0  (with switch flag cf49=1: 5.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+  gear=6: cf1c=6.0  (with switch flag cf49=1: 6.0 -> switch map DISABLED by ROM[0x7d07f]=0)
+
+== 1b) gear chain 0x2c324 (rpm/vss ratio) -> 0x2c3b2 (latch) ==
+  vss=80 km/h, rpm=5752 (ratio 71.9) -> candidate bc3c=2, latched bc3d=2 (expect 2)
+  neutral flag b53a=1 -> bc3d=0 (expect 0)
+
+== 2) 0xffffbcf8 is a percent output, compared against TP% 0xffffa9b4 ==
+  0x4c896: bcf8=50 < a9b4=80 -> cf34=0 (expect 0, pedal override); bcf8=90 > a9b4=80 -> cf34=1 (expect 1)
+  0x193c4: TP%=30, bcf8=70, limiter c028=100 -> a9bc=70.00 (expect 70: max(TP%, cruise output) in the same percent domain)
+
+== 3) set speed in km/h lives in learned cell 0xffff866c (0x32614) ==
+  vss=  80.0 km/h -> 866c= 80.000 km/h, target bfa4= 80.000
+  vss= 250.0 km/h -> 866c=200.000 km/h, target bfa4=200.000
+  vss=  10.0 km/h -> 866c= 27.000 km/h, target bfa4= 27.000
+
+== 4) 0xffffa9b4 tracks AN4 (TP1) as percent via the ADC hardware path ==
+  throttle=  0%  AN4raw=     0  a108=  0.0000  a9b4=   0.000%
+  throttle= 25%  AN4raw= 16375  a108=  7.9219  a9b4=   0.000%
+  throttle= 50%  AN4raw= 32750  a108= 15.8438  a9b4=  39.274%
+  throttle= 75%  AN4raw= 49125  a108= 23.7657  a9b4= 100.000%
+  throttle=100%  AN4raw= 65500  a108= 31.6876  a9b4= 100.000%
+
+== 5) plausibility timers 0x4d700 / stage 0x4db22 still behave ==
+  after 0x4d700 with cf34=1, error=5: cf51..cf5b=[62, 0, 62, 62, 0, 62] (timers armed at 0x3e when error > max+1.5)
+  after 0x4db22: cf35..cf38=[1, 1, 1, 1]
+
+== 6) control-law output 0x2d638 (bd00) uses gear band + speed error ==
+  0x2d638: vss=100, target=90, band=3 -> bd00=-23.9331 (clamp [-100,100] percent-domain control output)
