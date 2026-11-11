@@ -16,10 +16,10 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 11–19 — pick up 11 next; C item 11 pairs naturally
-with **E item 1** (reimplementation coverage), then F (gated). The audit
-snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
-`FUN_` (function_index.tsv figures of 2026-11-04,
+**reopened**: open items 11–14, 16–19 — pick up 11 next; C item 11 pairs
+naturally with **E item 1** (reimplementation coverage), then F (gated). The
+audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
+2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
 `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
 
 ## Open work — pick up here
@@ -27,7 +27,7 @@ snapshot: 3,355 functions in the 60E15120_N3J1E export, 833 named + 2,522
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 11–19)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 11–14, 16–19)
 
 - **C item 11 (open)** — follow-ups from the large-control-bodies labeling pass
   (PR #33, closed — record in git history). The
@@ -56,10 +56,10 @@ and where artifacts live.
     conditions of 0xffffc704 / 0xffffae21 on the threshold averages
     0x6b680–0x6b6d4.
 - **C item 12 (open)** — fold the leading/trailing timing-correction findings
-  that landed with the DSC CAN report (PR #55, branch
-  `research/c9-dsc-can-report`) into the label records and the ignition timing
-  report. That pass added `[ADDITIONAL SOURCE REVIEW]` RAM aliases on the
-  leading/trailing timing chain — but only as decompiled header comments, not
+  that landed with the DSC CAN report (PR #55, merged) into the label
+  records and the ignition timing report. That pass added
+  `[ADDITIONAL SOURCE REVIEW]` RAM aliases on the leading/trailing timing
+  chain — but only as decompiled header comments, not
   yet in `source_review/accepted_ram_aliases.tsv` or the labels JSON:
   0x11f00/0x1206c coolant terms (`leading_coolant_scaled_advance_term`
   0xffffa5f0, `trailing_...` 0xffffa5f4), 0x123da/0x124d6 cranking blends
@@ -84,8 +84,8 @@ and where artifacts live.
   — its §4/§8 memory map still uses raw `a5e8`-style cell names. Pairs with
   E item 1 (ignition timing is a remaining reimplementation subsystem).
 - **C item 13 (open)** — sweep and apply the `[ADDITIONAL SOURCE REVIEW]`
-  comments that landed with the DSC CAN report (PR #55, branch
-  `research/c9-dsc-can-report`): 311 decompiled function files under
+  comments that landed with the DSC CAN report (PR #55, merged): 311
+  decompiled function files under
   `reverse-engineered/decompiled/60E15120_N3J1E/functions/` carry new review
   headers with 268 function-level alias descriptions and 164
   `RAM <addr> <alias>` lines. Today they exist only as header comments — not
@@ -117,9 +117,9 @@ and where artifacts live.
   binary-level verification; run the pipeline validators + `python -m pytest
   tests/` after the pass.
 - **C item 16 (open)** — apply all of today's findings to the decompiled C
-  code itself. Today's passes (the DSC CAN arbitration labeling, merged, and
-  the idle speed control labeling, open PR branch) produced new function
-  aliases, RAM aliases and review comments, but the decompiled artifacts still
+  code itself. Today's passes (the DSC CAN arbitration labeling, merged as
+  PR #55, and the idle speed control labeling, merged as PR #51) produced new
+  function aliases, RAM aliases and review comments, but the decompiled artifacts still
   need a fresh pipeline run so they carry them: re-run the annotation +
   `integrate_reviewed_names.py` passes from `rebuild.sh` so every file under
   `reverse-engineered/decompiled/60E15120_N3J1E/functions/`, the monolithic
@@ -132,8 +132,8 @@ and where artifacts live.
   tests/`; keep the passes re-runnable (rule 6c) rather than hand-editing the
   export.
 - **C item 17 (open)** — update and review all existing documentation with the
-  new insights. Today's passes (DSC CAN arbitration, merged; idle speed
-  control, open PR branch; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment
+  new insights. Today's passes (DSC CAN arbitration and idle speed control,
+  both merged; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment
   sets) changed labels and cross-subsystem links — e.g. 0xffffbbb8
   `vehicle_not_moving` is now known to feed the idle A/C clutch gate 0x165d6,
   and `engine_max_torque_allowed` 0xffffbbd8 feeds the DSC timing derate
@@ -179,8 +179,8 @@ and where artifacts live.
   rule 6 (never keep a plausible name): rename pure uncertainty markers to
   `candidate_*` indirect-call labels and record the evidence in the relevant
   report + label TSV/JSON. The 0x35d36 case currently carries our
-  `e2ram_write_thunk` (medium) label from the E2RAM device-layer pass (open
-  PR branch;
+  `e2ram_write_thunk` (medium) label from the E2RAM device-layer pass
+  (merged as PR #54;
   [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
   §9 Limits) — decide whether the target is `e2ram_shadow_byte_write`
   0x37ea4 or a device-write path.
@@ -210,12 +210,6 @@ flash before any read), not the test path.
 - **F item 2 (open)** — recovery only: BOOT-mode via CN400 needs ~150 Hz square
   wave on pin 3 (thread §8; verify **D9** pinout conflict against `Sh7055h.pdf`
   first).
-- **F item 4 (open)** — reconcile the OBD upload path with our static finding that
-  the app's 0x34/0x36/0x37 handlers (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E) are
-  NRC stubs and real flashing code lives in the SBL BOOT (0x1ad6/0x1c04/0x1d30/
-  0x1d78): check session/security gating of the app handlers and whether an
-  unlocked app 0x34 hands off to the SBL over OBD. Bench-ECU OBD upload is the
-  accepted working path; the ROM-side mechanism is still open.
 - **F item 3 (study done, implementation open)** — live-tuning feasibility:
   stock ROM already supports live logging (Mode 22 PIDs + UDS 0x23 after 0x27
   unlock); live *writes* need a patch (no 0x2E; app 0x34/0x36/0x37 are stubs) —
@@ -226,6 +220,12 @@ flash before any read), not the test path.
   + PC tool over CAN/ISO-TP (J2534 on car, emulator TCP port in dev).
   See [live_tuning_feasibility_report.md](docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md)
   + [free_resources_report.md](docs/investigations/60E15120_N3J1E/free_resources_report.md).
+- **F item 4 (open)** — reconcile the OBD upload path with our static finding that
+  the app's 0x34/0x36/0x37 handlers (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E) are
+  NRC stubs and real flashing code lives in the SBL BOOT (0x1ad6/0x1c04/0x1d30/
+  0x1d78): check session/security gating of the app handlers and whether an
+  unlocked app 0x34 hands off to the SBL over OBD. Bench-ECU OBD upload is the
+  accepted working path; the ROM-side mechanism is still open.
 
 ---
 
@@ -246,7 +246,6 @@ flash before any read), not the test path.
 |----|--------|------|
 | D1 | documented | N3ZHE-vs-N3J1E cal ID — both strings coexist in-ROM: fw id `60E15120` at 0x2000, `N3J1E_1W.Z05` at 0x6c000, `SW-N3ZHEB000.HEX` at 0x6c043/0x6c046, `15120 ` at 0x6c05c; PIDs 0xe611/0xe21b-0xe21e/0xff40-0xff43 return them ([uds_mode22_dispatch_report.md](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)) |
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
-| D6 | closed | 181 `candidate_*` names in the 60E15120_N3J1E export at pickup, all decided: 112 promoted to high (prefix dropped in the export; dynamic proof + cross-ROM byte matches + fresh ROM/task-table verification), 1 renamed (0x22144 → `candidate_fuel_open_loop_condition`, stays medium — the "evap" attribution was an inherited `ref_` caller hypothesis), 68 kept as `candidate_` with evidence recorded. See [reviews/candidate_label_promotions_review.md](docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md) + record [candidate_promotions.json](data/labels/60E15120_N3J1E/candidate_promotions.json); earlier proof evidence: [reviews/low_confidence_proof_pass_2026-11-05.md](docs/investigations/60E15120_N3J1E/reviews/low_confidence_proof_pass_2026-11-05.md) |
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D12 | open | `annotate_source_review.py` fails on clean main too: 38 pre-existing 4-field rows in `docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv` (row count verified on main and on the PR #33 head). Noted in PR #33 and deliberately left as-is there (no drive-by fix, AGENTS.md rule 9); fixing the parser/rows is its own work unit |
