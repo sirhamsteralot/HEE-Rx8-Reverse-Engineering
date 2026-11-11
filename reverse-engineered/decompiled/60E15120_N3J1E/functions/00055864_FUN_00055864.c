@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_b410 [medium]: PID 0x4c: ffffb410*100/84*0.392157
+ * diag_encode_b410 [high]: PID 0x4c: ffffb410*100/84*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb410 inferred_ram_b410_ffffb410 (float): PID 0x4c/0x091a
  */
 /* ROM address: 0x00055864; body bytes: 38; decompiled */

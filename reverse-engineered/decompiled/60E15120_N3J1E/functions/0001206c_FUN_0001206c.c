@@ -1,10 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
- * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): 
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069120: Ignition Timing Trailing Base (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069174: Ignition Timing Trailing Advance (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
+ * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

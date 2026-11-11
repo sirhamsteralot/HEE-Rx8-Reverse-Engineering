@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid163e_ram_b074_scaled_s16 [medium]: dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074)
+ * diag22_pid163e_ram_b074_scaled_s16 [high]: dispatch record 0x5f3a0 -> handler verified in ROM bytes + function_index; 0x54884(ffffb074) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056f8a; body bytes: 32; decompiled */
 

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_sensor_monitor_task [medium]: 0x49fac health persistence + 0x4a084 DTC report + 0x384de/0x3856c monitor counters; reached from task[10] 0x64f6 -> 0x11744.
+ * knock_sensor_monitor_task [high]: 0x49fac health persistence + 0x4a084 DTC report + 0x384de/0x3856c monitor counters; reached from task[10] 0x64f6 -> 0x11744. | promoted to high (binary-level re-verification (this pass))
  */
 /* ROM address: 0x000390b8; body bytes: 42; decompiled */
 

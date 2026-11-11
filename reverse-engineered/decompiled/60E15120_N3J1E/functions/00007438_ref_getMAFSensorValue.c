@@ -4,15 +4,12 @@
  * RAM 0xffff9f78 maf_scaled (float): 9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e).
  * RAM 0xffff9f7c maf_fault_status (uint8): 9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high).
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069788: MAF Scaling (RX8Defs data pointer, axes and dimensions match).
+/* [MATH AND UNITS REVIEW]
+ * 7.6293945e-05 is binary32 5/65536. The MAF lookup input is raw*5/65536, consistent with a 5-V full-scale normalized ADC signal; volts is an inference until ADC representation/reference are verified, not proof of a 16-bit ADC.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * 7.6293945e-05 is binary32 5/65536. The MAF lookup input is raw*5/65536, consistent with a 5-V full-scale normalized ADC signal; volts is an inference until ADC representation/reference are verified, not proof of a 16-bit ADC.
  */
 /* ROM address: 0x00007438; body bytes: 82; decompiled */
 

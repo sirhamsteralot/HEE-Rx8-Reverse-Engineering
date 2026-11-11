@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * monitor_service_batch [medium]: 13-call batch, pool 0x11a40-0x11a70 ROM-verified: 0x19cf4 (ref_filterVehicleSpeed/ref_calculateVehicleAccel/ref_filterVehicleAccel + knock_state_reset_rpm_window), 0x2e6ec, 0x394ee, 0x212fa, 0x26850, 0x3eb16, 0x2894e, 0x2a374, 0x5629e, ref_diagControlModeSomething 0x5bf9c, 0x65630, ref_coolantTempPlausibilityCheck___ 0x65658, 0x16be6. Called only from task[12] 0x6592.
+ * monitor_service_batch [high]: 13-call batch, pool 0x11a40-0x11a70 ROM-verified: 0x19cf4 (ref_filterVehicleSpeed/ref_calculateVehicleAccel/ref_filterVehicleAccel + knock_state_reset_rpm_window), 0x2e6ec, 0x394ee, 0x212fa, 0x26850, 0x3eb16, 0x2894e, 0x2a374, 0x5629e, ref_diagControlModeSomething 0x5bf9c, 0x65630, ref_coolantTempPlausibilityCheck___ 0x65658, 0x16be6. Called only from task[12] 0x6592. | promoted to high (data/labels/60E15120_N3J1E/os_task_12_16_labels.json/function_aliases)
  */
 /* ROM address: 0x00011880; body bytes: 80; decompiled */
 

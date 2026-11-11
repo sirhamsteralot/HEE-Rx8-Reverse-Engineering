@@ -1,10 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ac_load_calc [medium]: A/C load term: b534==1 -> tbl 0x69530, else 3-D tbl 0x69544(coolant, catalyst temp model 0xffffa998); result 0xffffa8c4, filtered into 0xffffa8c8 (updates only when below a8c8+20.0). Called from 0x167c0 via pool 0x16890.
- * RAM 0xffffb534 automatic_transmission (uint8): Set to 1 by ref_getAutoTransCal__ 0x24b44 (store at 0x24b58 via pool 0x24b5e); 0x24b8c clears 0xffffb53c/b53e/b540 when b534==1; selects AT vs MT table paths across the idle batch (0x16748/0x148c4/0x16900/0x15fa0/0x3354e/0x34650).
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069530: Table 2D - 46 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069544: Table 3D - 13 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_load_calc [medium]: A/C load term: b534==1 -> tbl 0x69530, else 3-D tbl 0x69544(coolant, catalyst temp model 0xffffa998); result 0xffffa8c4, filtered into 0xffffa8c8 (updates only when below a8c8+20.0). Called from 0x167c0 via pool 0x16890.
+ * RAM 0xffffb534 automatic_transmission (uint8): Set from the AT calibration byte at ROM 0x74924 by ref_getAutoTransCal__ 0x24b44 (cal byte read at 0x24b46 via pool 0x24b60=0x74924; store mov.b r0/r1,@r4 at 0x24b54/0x24b58 via pool 0x24b5e=0xb534; ROM 0x74924=0x00 on this ROM -> MT); 0x24b8c clears 0xffffb53c/b53e/b540 when b534==1; selects AT vs MT table paths across the idle batch (0x16748/0x148c4/0x16900/0x15fa0/0x3354e/0x34650).
  */
 /* ROM address: 0x00016748; body bytes: 68; decompiled */
 

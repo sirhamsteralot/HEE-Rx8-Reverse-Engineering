@@ -2,9 +2,6 @@
  * iat_sensor_scaling_fault [high]: Blend DAT_ffff9f66 <- DAT_ffff9f1e (weight 0x100/256, 0x2510), affine decode 0x38a00000 (0x24c0), lookup_2d_descriptor_scaled vs tbl_iat_sensor_scaling_00069824 (descriptor bytes @0x69824 verified; pool word 0x731c) -> intake_air_temperature_ffff9f60; range fault 0xffff9f64 (raw<0x51e->2, >=0xf6c9->1).
  * RAM 0xffff9f64 iat_range_fault (uint8): 0 = in band, 1 = raw >= 0xf6c9, 2 = raw < 0x51e; set in iat_sensor_scaling_fault 0x7298 (task[13]).
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069824: IAT Sensor Scaling (RX8Defs data pointer, axes and dimensions match).
- */
 /* ROM address: 0x00007298; body bytes: 104; decompiled */
 
 undefined2 * iat_sensor_scaling_fault(void)

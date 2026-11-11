@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * charging_dtc_raise_p2504 [medium]: FUN_0005fd38(0x7d, b5b0==0 ? 2 : 1): slot 0x7d -> code_id 0x73 -> raw 0x2504 = P2504 (charging system voltage high). Called from 0x2680e via pool 0x268d0.
+ * charging_dtc_raise_p2504 [medium]: dtc_set_fault_x0(0x7d, b5b0==0 ? 2 : 1): slot 0x7d -> code_id 0x73 -> raw 0x2504 = P2504 (charging system voltage high). Called from 0x2680e via pool 0x268d0.
  */
 /* ROM address: 0x000545a6; body bytes: 22; decompiled */
 

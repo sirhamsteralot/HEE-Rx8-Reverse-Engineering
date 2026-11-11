@@ -1,12 +1,9 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0904_trailing_ignition_timing_deg [high]: dispatch record 0x5f2d4 -> handler verified in ROM bytes + function_index; trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x0904: Trailing Ignition Timing. Dispatch identifier match; logger meaning is definition-derived.
  * RX8Defs diagnostic chain suggests RAM 0xffffa638 = trailing_ignition_timing. Direct C dataflow to handler 0x00056cc8; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): trailing_ignition_timing_ffffa638; decode = raw * 0.5 + (-64) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0904_trailing_ignition_timing_deg [high]: dispatch record 0x5f2d4 -> handler verified in ROM bytes + function_index; trailing_ignition_timing_ffffa638*0.5-64 (logger 0x220904)
  */
 /* ROM address: 0x00056cc8; body bytes: 32; decompiled */
 

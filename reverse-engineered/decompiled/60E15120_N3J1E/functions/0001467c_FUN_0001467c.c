@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_rough_correction_update [medium]: 0x12ed0 + 0x13034 targets + 0x13210 rough knock correction toward a6bc/a6c0 + 0x43870; reached from task[13] 0x65b2 -> 0x118d0.
+ * knock_rough_correction_update [high]: 0x12ed0 + 0x13034 targets + 0x13210 rough knock correction toward a6bc/a6c0 + 0x43870; reached from task[13] 0x65b2 -> 0x118d0. | promoted to high (binary-level re-verification (this pass))
  */
 /* ROM address: 0x0001467c; body bytes: 42; decompiled */
 

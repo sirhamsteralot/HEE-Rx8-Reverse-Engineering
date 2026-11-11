@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_decode_u8_affine: Returns offset+(uint8 raw)*step. Float args are scale,offset; integer arg is raw.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_decode_u8_affine: Returns offset+(uint8 raw)*step. Float args are scale,offset; integer arg is raw.
  */
 /* ROM address: 0x00002500; body bytes: 14; decompiled */
 

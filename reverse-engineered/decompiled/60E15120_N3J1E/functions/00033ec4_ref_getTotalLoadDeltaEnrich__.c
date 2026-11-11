@@ -1,3 +1,9 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006b0c0: Table 2D - 216 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006b124: Table 2D - 219 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006b160: Table 3D - 79 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006b17c: Table 3D - 80 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * load_delta_enrichment [high]: c138 = tbl 0x6b124(load delta c158); c13c = tbl 0x6b0c0(load); c134 = c138*1.0*c13c when c158 >= 0 else 0; c140 = 3D tip-in tbl 0x6b160 (or 0x6b17c when warmup c010) (rpm, coolant); injectors off (a42c) -> c140 = 0; c110 decays toward 1.0 at -0.0078125 when c14c set.
  * RAM 0xffffc158 load_delta_input (float): c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0.
@@ -7,12 +13,6 @@
  * RAM 0xffffc110 tip_in_decay (float): c110 = max(c110 - 0.0078125, 1.0) when c14c set.
  * RAM 0xffffc140 tip_in_enrichment (float): c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off.
  * RAM 0xffffc14c tip_in_mode_flag (uint8): c14c gates the c110 decay in load_delta_enrichment.
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006b0c0: Table 2D - 216 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006b124: Table 2D - 219 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006b160: Table 3D - 79 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006b17c: Table 3D - 80 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

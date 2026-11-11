@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_o2s2 [medium]: PID 0x15: ffffad1c decode*0.005
+ * diag_encode_o2s2 [high]: PID 0x15: ffffad1c decode*0.005 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad1c inferred_o2s2_ffffad1c (uint16): PID 0x15: decode(7.63e-05)*0.005
  */
 /* ROM address: 0x00055586; body bytes: 38; decompiled */

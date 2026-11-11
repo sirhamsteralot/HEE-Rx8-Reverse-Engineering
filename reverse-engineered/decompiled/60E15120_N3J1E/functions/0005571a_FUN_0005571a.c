@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_c644 [medium]: PID 0x3c: ffffc644*0.1-40
+ * diag_encode_c644 [high]: PID 0x3c: ffffc644*0.1-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc644 fuel_correction_sum_ffffc644 (float): PID 0x3c: x*0.1-40; ROADMAP group C names this cell fuel_correction_sum
  */
 /* [MATH AND UNITS REVIEW]

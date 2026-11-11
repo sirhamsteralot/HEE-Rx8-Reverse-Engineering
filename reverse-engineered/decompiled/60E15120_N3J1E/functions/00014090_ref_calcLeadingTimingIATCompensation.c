@@ -1,11 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * iat_timing_compensation_on_throttle [high]: was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend.
- * RAM 0xffffa778 iat_timing_compensation_leading (float): 
- * RAM 0xffffa77c iat_timing_compensation_trailing (float): 
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a0d8: Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006a0ec: Table 2D - 113 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * iat_timing_compensation_on_throttle [high]: was ref_calcLeadingTimingIATCompensation. a778 = a77c = lookup_2d(IAT, tbl 0x6a0d8 'Ignition Leading/Trailing - IAT Compensation - On Throttle') when load>=0.5; 0 when load<0.5; cranking uses tbl 0x6a0ec ('Table 2D - 113'). Consumed as -a778/-a77c in the blend.
+ * RAM 0xffffa778 iat_timing_compensation_leading (float): Written by 0x14090 iat_timing_compensation_on_throttle (fmov.s fr5/fr0,@r14 0x140b8/0x140d2/0x140d4 via mov.w pool 0x140e2=0xa778 @0x14098); read by 0x123da (pool 0x1253e @0x124bc).
+ * RAM 0xffffa77c iat_timing_compensation_trailing (float): Written by 0x14090 iat_timing_compensation_on_throttle (fmov.s fr3,@r3 0x140da via mov.w pool 0x140ea=0xa77c @0x140d8); read by 0x124d6 (pool 0x1268c @0x125a0).
  */
 /* ROM address: 0x00014090; body bytes: 82; decompiled_with_warnings */
 

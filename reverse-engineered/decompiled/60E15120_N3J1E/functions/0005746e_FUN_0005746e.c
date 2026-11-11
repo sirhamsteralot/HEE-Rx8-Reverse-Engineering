@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1715_pedr_pddr_status [medium]: dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80
+ * diag22_pid1715_pedr_pddr_status [high]: dispatch record 0x5f4cc -> handler verified in ROM bytes + function_index; 0x579a8 over PEDR_W & 0x80 -> 0x40, PDDR_W & 0x20 -> 0x80 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x0005746e; body bytes: 72; decompiled */
 

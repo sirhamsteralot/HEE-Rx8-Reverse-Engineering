@@ -3,9 +3,6 @@
  * RAM 0xffffcaa0 cranking_angle_timing_trailing_filtered (float): 
  * RAM 0xffffcaa8 cranking_angle_timing_trailing_raw (float): 
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006b644: Ignition Trailing - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_ad10 [medium]: PID 0x33: ffffad10*25.325+0.0182
+ * diag_encode_ad10 [high]: PID 0x33: ffffad10*25.325+0.0182 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad10 inferred_ram_ad10_ffffad10 (float): PID 0x33/0x16b3
  */
 /* [MATH AND UNITS REVIEW]

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * ssv_control_task_wrapper [medium]: Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain).
+ * ssv_control_task_wrapper [high]: Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain). | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  */
 /* ROM address: 0x00021766; body bytes: 24; decompiled */
 

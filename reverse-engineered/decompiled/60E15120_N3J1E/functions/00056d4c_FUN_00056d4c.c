@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0917_ram_ad5c_scaled_s16 [medium]: dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c)
+ * diag22_pid0917_ram_ad5c_scaled_s16 [high]: dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056d4c; body bytes: 50; decompiled */
 

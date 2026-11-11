@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pidff50_ram_d3a0_raw [medium]: dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16
+ * diag22_pidff50_ram_d3a0_raw [high]: dispatch record 0x5f598 -> handler verified in ROM bytes + function_index; raw DAT_ffffd3a0 u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffd3a0 inferred_ram_d3a0_ffffd3a0 (uint16): PID 0xff50 raw
  */
 /* ROM address: 0x0005796e; body bytes: 6; decompiled */

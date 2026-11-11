@@ -1,6 +1,8 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * o2_channel_filter_update [high]: First-order filters (epsilon 1e-5) of diag AFR word 0xffffaa6c (factors 1.0 -> 0xffffc708, 0.5 -> 0xffffc70c) and actual lambda 0xffffadec (0.1 -> 0xffffc710, 0.03125 -> 0xffffc714); latches 0xffffc900/0xffffc902 edges from 0xffffae1a/ae1c. Feeds 0x3fb9e. Called from 0x38dca (pool-verified jsr).
  * RAM 0xffffc708 o2_channel_afr_fast (float): First-order filtered diag AFR word 0xffffaa6c, factor 1.0 (0x3f800000); snapshot input to 0x3fb9e.
+ * RAM 0xffffc70c o2_channel_afr_medium (float): Second AFR-word channel: first_order_filter(diag_afr_word_a 0xffffaa6c, 0xffffc70c, 0.5, 1e-5) in o2_channel_filter_update 0x3f924; delta-accumulated in 0x3fb9e (c768/c774 vs c8f0) into ratio channels ch2/ch3 (0xffffc780/c784).
+ * RAM 0xffffc714 o2_channel_lambda_very_slow (float): Slowest lambda channel: first_order_filter(inferred_lambda_actual_ffffadec 0xffffadec, 0xffffc714, 0.03125, 1e-5) in 0x3f924; ring 0xffffc870 + deltas c738/c744 vs c8f8 into ratio channels ch2/ch3.
  */
 /* ROM address: 0x0003f924; body bytes: 180; decompiled */
 
