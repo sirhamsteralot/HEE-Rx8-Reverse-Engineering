@@ -609,7 +609,7 @@ in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
   µs conversion needs the Pφ/PSCR/TCR10 CKSEL math from Sh7055h.pdf, not derived
   here. The emulator counts 1 ATU count = 1 cycle.
 - Software timers are named only for the examples traced to their owning tasks
-  (§1); a full timer-cell inventory is future work (register D6 stays open).
+  (§1); a full timer-cell inventory is future work.
 - `validate_reports.py` could not run end-to-end on this branch because of the
   pre-existing non-UTF-8 byte in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md) on `main`;
   equivalent checks were run against this report only (§9).
