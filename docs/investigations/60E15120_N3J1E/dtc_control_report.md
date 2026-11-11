@@ -9,7 +9,10 @@ observation in [`reviews/dtc_control/dynamic_validation_log.txt`](reviews/dtc_co
 All 11 ROM binaries were audited for the defs-accuracy half (§5). Full evidence:
 [`reviews/dtc_control/README.md`](reviews/dtc_control/README.md) +
 [`REVIEW_NOTES.md`](reviews/dtc_control/REVIEW_NOTES.md) + `defs_audit_detail.json`; extracted tables in [`data/dtc/`](../../../data/dtc/README.md);
-labels in [`data/labels/60E15120_N3J1E/dtc_engine_labels.tsv`](../../../data/labels/60E15120_N3J1E/dtc_engine_labels.tsv).
+labels in [`data/labels/60E15120_N3J1E/dtc_engine_labels.tsv`](../../../data/labels/60E15120_N3J1E/dtc_engine_labels.tsv)
+and [`data/labels/60E15120_N3J1E/dtc_control_labels.json`](../../../data/labels/60E15120_N3J1E/dtc_control_labels.json)
+(the DTC-control RAM aliases from the `[ADDITIONAL SOURCE REVIEW]` header comments, each
+re-verified against the raw ROM literal pools).
 
 **Related reports:** dispatch plumbing (service table 0x5eb40, PID table 0x5f10c) in
 [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md); OS task/event plumbing
@@ -464,6 +467,11 @@ the def uses the Mazda assignment (RX-8-specific).
 - [`data/dtc/README.md`](../../../data/dtc/README.md) + `data/dtc/<rom-id>.tsv` (11 ROMs) + `data/dtc/defs_audit.tsv` —
   extracted DTC tables and the defs audit (new folder, proposed here per AGENTS.md).
 - `data/labels/60E15120_N3J1E/dtc_engine_labels.tsv` — DTC engine labels.
+- `data/labels/60E15120_N3J1E/dtc_control_labels.json` — DTC-control RAM aliases
+  (0xffff87b0/0xffff8900/0xffffd286/0xffffd3c0/0xffffd3c2/0xffffd458/0xffffd4e4/
+  0xffffd5fc/0xffffd688/0xffffd930) promoted from the `[ADDITIONAL SOURCE REVIEW]`
+  header comments into a per-subsystem JSON record; binary-level re-verification of
+  each cited reader's literal pool recorded per entry.
 
 ## 7. Validation
 
@@ -472,6 +480,14 @@ the def uses the Mazda assignment (RX-8-specific).
   re-read for 0x5a130, 0x61450/0x615c6, 0x667c8, 0x5fe20/0x60062/0x601cc, 0x558ac,
   0x5dc44; OS event table 0x67d00 dumped. Details in
   [`reviews/dtc_control/REVIEW_NOTES.md`](reviews/dtc_control/REVIEW_NOTES.md).
+  The ten DTC-control RAM aliases in
+  [`data/labels/60E15120_N3J1E/dtc_control_labels.json`](../../../data/labels/60E15120_N3J1E/dtc_control_labels.json)
+  were additionally re-verified against the raw ROM literal pools: each cited reader
+  loads the address from a pool word (`mov.l`: 0x61450→0x61554/0x61558, 0x5f9f0→0x5faf8,
+  0x5ff5a→0x6001c/0x6012c, 0x60062→0x60130, 0x601cc→0x60278, 0x5fd4a→0x5fe10,
+  0x66a00→0x66bf8; `mov.w` sign-extended: 0x5a130→pool word 0xd286 at 0x5a202), and
+  the pool bytes in the ROM match the labeled address. Durable check:
+  `tests/test_dtc_control_labels.py`.
 - Dynamic (emulator, `reviews/dtc_control/dynamic_validation_log.txt`): boot 300k
   cycles; init DTC RAM via ROM 0x5fd6c; plant stored slot 9 (P0101, state 0x80) and
   active slot 8 (P0077, state 0x01); then through the ROM's own code:
