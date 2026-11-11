@@ -74,3 +74,26 @@ mask rejection on all 14 restricted records) and dynamic service routing through
 (session-bit mask `record[8] & (1 << DAT_ffffde20[0])` confirmed; unknown service -> r0=1).
 Durable tests added: `test_mode22_dispatch_full_sweep`, `test_uds_service_router_routes`.
 Result: no function label changed; `pytest tests/` and the validators PASS.
+
+## Full `[ADDITIONAL SOURCE REVIEW]` sweep (2026-11-11)
+
+All 511 decompiled function files carrying an `[ADDITIONAL SOURCE REVIEW]` header were
+parsed: 482 function-alias lines and 455 `RAM <addr> <alias>` lines. Coverage measured on
+the artifacts themselves:
+
+- accepted TSVs: 482/482 function aliases in `accepted_function_aliases.tsv`, 455/455 RAM
+  lines in `accepted_ram_aliases.tsv` (both TSVs have non-empty evidence on every row).
+- per-subsystem labels JSONs under `data/labels/60E15120_N3J1E/`: all 482 function aliases
+  present with matching names; the only RAM aliases without a JSON record were the ten
+  DTC-control addresses, promoted in `dtc_control_labels.json` (DTC batch, merged).
+- subsystem reports: after normalizing combined notations (`a/b/c` name groups, short
+  `a1b2` forms, `a094..a0c0` / `b101-b103` ranges), 88 alias names were missing from their
+  anchor report's memory map and were added there (UDS dispatch 50, knock 21, fueling 9,
+  ignition 5, DSC CAN 2, idle control 1); a re-run of the same check now reports 0 gaps.
+- binary level (rule 7): all 482 `accepted_ram_aliases.tsv` rows re-verified against the raw
+  ROM (SHA-256 `a7cd953c…264f1`) literal pools — 451 rows are loaded directly in the cited
+  reader (`mov.l` 32-bit pool word or sign-extended `mov.w` pool word), the remaining 31
+  are array/struct members whose base cell is pool-referenced in the cited reader or
+  elsewhere (e.g. 0xffffa098-0xffffa0a8 = base 0xffffa094 + 4·ch in 0x86f8; 0xffff763e =
+  0xffff7638 + 6 in 0x3db0; 0xffff9f48 = 0xffff9f44 + 4 via 0x25710). Durable check:
+  `tests/test_source_review_ram_aliases.py`.
