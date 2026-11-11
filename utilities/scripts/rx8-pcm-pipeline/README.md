@@ -31,3 +31,9 @@ steps from the **repo root**.
   + append to `docs/investigations/60E15120_N3J1E/source_review/accepted_*.tsv`;
   `annotate_source_review.py` / `integrate_reviewed_names.py` apply them to the
   synchronized views (with backups under `docs/investigations/60E15120_N3J1E/backups/`).
+- `refine_comment_merge.py` (runs last, before the validators) canonicalizes the
+  stacked review comment blocks across `functions/`, `firmware_decompiled.c` and
+  `named/firmware_named.c`: one block order in all three views, no duplicate lines,
+  and machine-generated cross-ECU/math-units lines dropped when the function's
+  `[ADDITIONAL SOURCE REVIEW]` block already states the same fact. Idempotent;
+  stats in `docs/investigations/60E15120_N3J1E/comment_merge/validation.json`.
