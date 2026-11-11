@@ -207,7 +207,7 @@ different monitor and was not touched.)
 | 0x00038dca | `FUN_00038dca` | calls 0x3f924 |
 | 0x00058262 / 0x0005831c | `FUN_00058262` / `FUN_0005831c` | Mode-06 encoders of `o2_monitor_ratio_ch0/ch1` 0xffffc6f0/c6f4 |
 | 0x0005fd38 | `dtc_set_fault_x0` | set-fault trampoline, x=0 (see [dtc_control_report.md](dtc_control_report.md)) |
-| 0x00003fa18 / 0x0001d1ca / 0x0001d2e2 | `FUN_0003fa18` / `FUN_0001d1ca` / `FUN_0001d2e2` | producers of 0xffffc700 (monitor enable), 0xffffae21 (O2-monitor enable) and the half-period timers 0xffffae1a/0xffffae1c |
+| 0x0003fa18 / 0x0001d1ca / 0x0001d2e2 | `FUN_0003fa18` / `FUN_0001d1ca` / `FUN_0001d2e2` | producers of 0xffffc700 (monitor enable), 0xffffae21 (O2-monitor enable) and the half-period timers 0xffffae1a/0xffffae1c |
 | 0x0001aa98 / 0x0001c880 | `FUN_0001aa98` / `FUN_0001c880` | producers of the channel inputs 0xffffaa6c (AFR word) / 0xffffadec (lambda actual) |
 
 ### 8.2 Data and entry points (ROM)
