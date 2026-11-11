@@ -170,10 +170,10 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
 
 Functions: 0x142a4 ignition_timing_main_task; 0x11f00/0x1206c base timing calc;
 0x123da/0x124d6 cranking blend; 0x125bc/0x125f6 knock/derate/A-C correction;
-0x123ba/0x123ca add corrections; 0x121fc/0x12300 final clamp+output;
+0x123ba/0x123ca add corrections; 0x121fc/0x12300 `trailing_final_timing_clamp_output` final clamp+output;
 0x12630/0x12754 min-advance select; 0x14100 idle base select; 0x14090 IAT comp;
-0x43934/0x439b2 cranking filters; 0x135b4/0x136e4 idle error corr; 0x13ecc coolant
-derate; 0x12e60 trim scale; 0x2cc2c/0x1815c DSC; 0x1340e/0x1346a final copy;
+0x43934/0x439b2 cranking filters; 0x135b4/0x136e4 idle error corr; 0x13ecc `coolant_timing_derate_calc` coolant
+derate; 0x12e60 `timing_trim_scale_calc` trim scale; 0x2cc2c `dsc_mode_a_base_timing_lookup`/0x1815c `dsc_timing_derate_select` DSC; 0x1340e/0x1346a final copy;
 0x14774/0x147aa per-rotor output; 0x8f2a/0x9110/0x9490 dwell; 0xc338 driving timing.
 
 RAM: 0xffffa5e8/0xffffa5ec `leading/trailing_base_timing_final`; 0xffffa5f0/0xffffa5f4
@@ -187,7 +187,8 @@ RAM: 0xffffa5e8/0xffffa5ec `leading/trailing_base_timing_final`; 0xffffa5f0/0xff
 0xffffa734 `knock_retard_ffffa734`; 0xffffa6ac/0xffffa6b0 `rough_knock_correction_leading/trailing`;
 0xffffa750/0xffffa754 `coolant_timing_derate_leading/trailing`; 0xffffc9a0/0xffffc9a4
 `cold_start_timing_reduction_leading/trailing`; 0xffffb288/0xffffb28c `ac_compressor_leading/trailing_timing_retard`;
-0xffffa66c/0xffffa670 trim (unlabeled); 0xffffbc94 `dsc_mode_a_base_timing`; 0xffffa91c `dsc_timing_derate_leading`.
+0xffffa66c/0xffffa670 trim (unlabeled); 0xffffbc94 `dsc_mode_a_base_timing`; 0xffffa91c `dsc_timing_derate_leading`;
+0xffffbbd8 `engine_max_torque_allowed` (written by 0x2b3b8 in the DSC CAN batch, consumed here at 0x1815c).
 Tables: section 3.
 
 ## 9. Limits
