@@ -351,16 +351,34 @@ this report's §12 SBL/security + CVN facts feed the
 ## 8. Memory map for validation
 
 Functions: dispatch 0x5774c, PID handlers 0x56890-0x57974 (per-record table in section 3),
-service router 0x68dac, service handlers per table in section 3, ISO-TP 0x683d4/0x6842c/
-0x68548/0x6859e/0x6872c/0x68764/0x68a86/0x68b10, entry/scheduler 0x680a0/0x684b4/0x6010/
-0x96be, helpers 0x579a8/0x5fb08/0x5fab2/0x54884/0x55316/0x37358/0x37546/0x57858/0x57a0c/0x57a2e,
+service router 0x68dac `uds_service_dispatch_table_scan`, service handlers per table in section 3,
+ISO-TP 0x683d4 `isotp_pci_type_extract`/0x6842c `isotp_frame_type_dispatch`/0x68548
+`isotp_single_frame_accept`/0x6859e `isotp_first_frame_accept`/0x6872c
+`isotp_consecutive_frame_check`/0x68764 `isotp_flow_control_check`/0x68a86 `uds_rx_channel_alloc`/
+0x68b10 `uds_rx_channel_set_service`, entry/scheduler 0x680a0 `uds_service_entry`/0x684b4
+`uds_request_schedule_service_task`/0x6010 `os_queue_dequeue_record`/0x96be `uds_service_task_entry`,
+helpers 0x579a8 `diag22_subpid_supported_mask`/0x5fb08 `dtc_count_ram_table`/0x5fab2 `dtc_count_stored`/
+0x54884 `diag_encode_s16_div`/0x55316 `diag_read_active_cal_field`/0x37358 `dtc_state_machine_step`/
+0x37546 `diag_status_bit_pack`/0x57858 `diag22_append_positive_response_header`/0x57a0c
+`diag_append_u16_be`/0x57a2e `diag_append_u8`,
+PID payload encode/read helpers 0x553dc `diag_read_calc_load_pct`/0x5542a `diag_encode_ect_c`/
+0x55440 `diag_encode_stft_lambda`/0x55466 `diag_encode_ltft`/0x55484 `diag_encode_rpm`/0x5549a
+`diag_encode_vss`/0x554ae `diag_encode_leading_timing`/0x554c6 `diag_encode_iat`/0x55528
+`diag_encode_maf`/0x5553e `diag_encode_throttle_pct`/0x5556a `diag_read_secondary_air_status`/
+0x55580 `diag_read_o2_present_const`/0x55586 `diag_encode_o2s2`/0x555ac `diag_encode_trim_b074`/
+0x555ca `diag_read_obd_standard_const`/0x555d0 `diag_read_runtime_s`/0x555f8 `diag_read_distance_mil`/
+0x55616 `diag_encode_b2f0`/0x5562c `diag_read_d287`/0x55632 `diag_read_gear_byte`/0x556b0
+`diag_read_90fc`/0x556ce `diag_encode_ad10`/0x5571a `diag_encode_c644`/0x55732 `diag_encode_battery_v`/
+0x55748 `diag_encode_load_g_rev`/0x5575e `diag_encode_lambda_target`/0x55774 `diag_encode_ad48`/
+0x5578a `diag_encode_ad5e`/0x557b6 `diag_encode_a9c4`/0x55838 `diag_encode_a9c6`/0x55864 `diag_encode_b410`,
 SCI0 byte exchange 0x71ea `sci0_exchange_byte_wait_rdrf` (RDRF 0x40 poll at 0x721c-0x7224).
 RAM: 0xffffd1ea `diag22_current_identifier`/d1e8/d1ec diag22 state; 0xffffd3b4 permission mask; 0xffffddc8 UDS RX buf;
 0xffffd962 ch0 response ring (pos 0xffffd95c); 0xffffddf5 UDS flags; 0xffffddec/ddea/dde6
-channel/service/length; `vehicle_inputs_pfdr_latch` 0xffff9ec8 vehicle-present latch; 0xffffd570 DTC flag table;
-plus the 63 named cells appended to `accepted_ram_aliases.tsv` (`inferred_throttle_sensor_volts_ffffad5c` 0xffffad5c, `inferred_lambda_actual_ffffadec` 0xffffadec, `distance_mil_on_ffff90f4` 0xffff90f4, ad10/ad48/
+channel/service/length; 0xffffa12c `msg_dequeue_scratch_slot1`; `vehicle_inputs_pfdr_latch` 0xffff9ec8
+vehicle-present latch; 0xffffd570 DTC flag table;
+plus the 63 named cells appended to `accepted_ram_aliases.tsv` (`inferred_throttle_sensor_volts_ffffad5c` 0xffffad5c, `inferred_lambda_actual_ffffadec` 0xffffadec, `inferred_o2s2_ffffad1c` 0xffffad1c, `distance_mil_on_ffff90f4` 0xffff90f4, ad10/ad48/
 ad5e/a9c4/a9c6/a834/a984/add4/807c/a8f4/a8f5/a9bc/b074/b0d0/b2f0/b410/b53b/b570/b584/
-b59c/b5ac/b5b4/b654/bc30/bc35/bdb8/bf3c/bf9c/c1d0-c1d8/c274/c4c8/c644/c6ac/cab4/cdd8/
+b59c/b5ac/b5b4/b654/bc30/bc35/bdb8/bf3c/bf9c/c1d0-c1d8 (c1d6/c1d7 = PID 0xff10 bits 8/0x20)/c274/c4c8/c644/c6ac/cab4/cdd8/
 ce1c/ce30/ce32/d1a1/d1a2/d284/d287/d3a0/d570/d1ac/d1ea/8788/90f4/90fc/9150/aa62...).
 ROM strings: 0x2000 fw id, 0x6c000/0x6c043/0x6c046/0x6c05c cal ids, 0xff8-0xffd ID bytes.
 
