@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_b2f0 [medium]: PID 0x2e: ffffb2f0*0.392157
+ * diag_encode_b2f0 [high]: PID 0x2e: ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb2f0 inferred_ram_b2f0_ffffb2f0 (float): PID 0x2e
  */
 /* [MATH AND UNITS REVIEW]

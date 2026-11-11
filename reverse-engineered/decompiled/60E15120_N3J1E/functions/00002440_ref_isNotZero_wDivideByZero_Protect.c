@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_is_outside_tolerance_band: Returns value < center-tolerance || value > center+tolerance. Inclusive endpoints are inside. Strict comparisons can both be false for NaN. Existing divide-by-zero-related name is too narrow: this helper itself performs no division.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_is_outside_tolerance_band: Returns value < center-tolerance || value > center+tolerance. Inclusive endpoints are inside. Strict comparisons can both be false for NaN. Existing divide-by-zero-related name is too narrow: this helper itself performs no division.
  */
 /* ROM address: 0x00002440; body bytes: 30; decompiled */
 

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * maf_voltage_and_fault_counters [medium]: aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched).
+ * maf_voltage_and_fault_counters [high]: aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa2c maf_voltage (float): aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault.
  * RAM 0xffffaa35 maf_high_fault_counter (uint8): Saturating counter incremented while raw >= 0xf852.
  * RAM 0xffffaa36 maf_low_fault_counter (uint8): Saturating counter incremented while raw < 0x7ae; cleared otherwise.

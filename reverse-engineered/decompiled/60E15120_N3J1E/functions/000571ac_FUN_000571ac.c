@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid09d3_pedr_bit10_status [medium]: dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0
+ * diag22_pid09d3_pedr_bit10_status [high]: dispatch record 0x5f43c -> handler verified in ROM bytes + function_index; PEDR_W & 0x400 -> 0x579a8; appends u8 + 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x000571ac; body bytes: 56; decompiled */
 

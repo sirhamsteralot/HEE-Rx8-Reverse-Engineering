@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * gear_latch_confirm [high]: Latches current gear 0xffffbc3d: 0 when 0xffffb53a==1 (neutral), else candidate 0xffffbc3c once its per-gear counter (0xffffbc4a/4c/4e/50/52/54) exceeds 0xb; pool words 0x2c3d8 = 0xbc3c, 0x2c3da = 0xb534, 0x2c3dc = 0xb53a, 0x2c3de = 0xbc3d; jsr rx8_add_u16_saturate 0x2460 via pool 0x2c56c. Emulator: candidate 2 -> bc3d=2 after 20 runs; neutral -> 0. Called from 0x19aa0 (jsr 0x19adc, pool 0x19c88).
+ */
 /* ROM address: 0x0002c3b2; body bytes: 356; decompiled */
 
 uint FUN_0002c3b2(void)

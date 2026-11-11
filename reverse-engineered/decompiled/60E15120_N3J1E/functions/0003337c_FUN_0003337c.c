@@ -1,10 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006af18: Table 2D - 204 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006af2c: Ignition Leading - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006af40: Table 2D - 206 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

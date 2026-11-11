@@ -1,6 +1,3 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_air_correction_select [medium]: Selects idle air correction 0xffffa8cc/0xffffa8d0 from 2-D tables 0x69244/0x69258/0x6926c/0x69280/0x69294/0x692a8 by flags 0xffffbd69/0xffffb534/0xffffb53c/0xffffb540/0xffffbdb8; bd69==0 forces a8cc=0. Called from 0x167c0 via pool 0x16898.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069244: Table 2D - 10 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069258: Table 2D - 11 (RX8Defs data pointer, axes and dimensions match).
@@ -8,6 +5,9 @@
  * Descriptor 0x00069280: Table 2D - 13 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069294: Table 2D - 14 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000692a8: Table 2D - 15 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_correction_select [medium]: Selects idle air correction 0xffffa8cc/0xffffa8d0 from 2-D tables 0x69244/0x69258/0x6926c/0x69280/0x69294/0x692a8 by flags 0xffffbd69/0xffffb534/0xffffb53c/0xffffb540/0xffffbdb8; bd69==0 forces a8cc=0. Called from 0x167c0 via pool 0x16898.
  */
 /* ROM address: 0x00016900; body bytes: 162; decompiled */
 

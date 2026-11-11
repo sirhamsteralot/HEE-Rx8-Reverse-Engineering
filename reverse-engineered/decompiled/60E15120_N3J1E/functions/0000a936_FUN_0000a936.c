@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * apv_pwm_service [medium]: Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4.
+ * apv_pwm_service [high]: Software-PWM service: consumes pending ticks a1c4/a1c6, latches a1c0/a1c2 at period boundary, drives PLDR_W 0xfffff75e bits 0x0020 (PL5, pkg pin 221) and 0x0100 (PL8, pkg pin 224) with opposite polarity; calls apv_drive_status_sample (0xaac4) at phase 4. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  * RAM 0xffffa1c0 apv_pwm_forward_latched (uint16): Latched a1c4 at PWM period boundary.
  * RAM 0xffffa1c2 apv_pwm_reverse_latched (uint16): Latched a1c6 at PWM period boundary.
  */

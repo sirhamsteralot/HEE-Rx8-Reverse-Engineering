@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_sensor_fault_task [medium]: Task[9] entry: runs ref_knockSensorADCFault (0xc290: ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c -> a325 fault status).
+ * knock_sensor_fault_task [high]: Task[9] entry: runs ref_knockSensorADCFault (0xc290: ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c -> a325 fault status). | promoted to high (binary-level re-verification (this pass))
  */
 /* ROM address: 0x000064ba; body bytes: 46; decompiled */
 

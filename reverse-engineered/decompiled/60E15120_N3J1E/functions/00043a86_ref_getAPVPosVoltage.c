@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * apv_position_voltage_scale [medium]: cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified.
+ * apv_position_voltage_scale [high]: cab0 = (float)(u16 9ef0) * 5/65536 (0x38a00000): APV position feedback ADC6 (reg 0xfffff80c, AN6 = pkg pin 92) scaled to volts. PCM 3B->AN6 not board-verified. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  * RAM 0xffffcab0 apv_position_voltage (float): APV feedback volts = ADC6 raw 9ef0 * 5/65536.
  * RAM 0xffff9ef0 adc6_raw_apv_position (uint16): ADC6 (0xfffff80c, AN6 pkg pin 92) sample; candidate APV position input.
  */

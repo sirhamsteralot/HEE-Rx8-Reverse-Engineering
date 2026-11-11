@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_sensor_dtc_report [high]: Raises DTC 0x23/0x24 via FUN_0005fd38 from cd65/cd67 (cd64/cd66 reported as status 2).
+ * knock_sensor_dtc_report [high]: Raises DTC 0x23/0x24 via dtc_set_fault_x0 from cd65/cd67 (cd64/cd66 reported as status 2).
  * RAM 0xffffcd65 knock_sensor_fault_a (uint8): Channel A fault persistence -> DTC 0x23 via 0x4a084.
  * RAM 0xffffcd67 knock_sensor_fault_b (uint8): Channel B fault persistence -> DTC 0x24 via 0x4a084.
  */

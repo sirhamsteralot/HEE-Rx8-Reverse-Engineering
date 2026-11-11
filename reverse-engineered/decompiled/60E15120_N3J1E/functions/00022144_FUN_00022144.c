@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * evap_open_loop_condition [medium]: b319 = 1 iff b318 && b12c==1 (open loop) && be00 >= 66.5 && ae1f==0 && !b2f6 && !b0c8 && !b0c9; reached from ref_evapRelated 0x21b8a.
+ * fuel_open_loop_condition [medium]: b319 = 1 iff b318 && b12c==1 (open loop) && be00 >= 66.5 && ae1f==0 && !b2f6 && !b0c8 && !b0c9; reached from ref_evapRelated 0x21b8a. | renamed: Body (200 B): DAT_ffffb319 = 1 iff DAT_ffffb318==1 && open_loop_active_ffffb12c==1 && DAT_ffffbe00 >= 66.5 && closed_loop_active_ffffae1f==0 && DAT_ffffb2f6/b0c8/b0c9 clear; pools 0x22218/0x2221c/0x22
  */
 /* ROM address: 0x00022144; body bytes: 200; decompiled */
 

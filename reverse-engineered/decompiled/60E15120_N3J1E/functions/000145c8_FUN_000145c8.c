@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * timing_retard_fast_task [medium]: 0x1391c knock-seen counter + 0x13b40 slow recovery + throttle/rev-limit/AC retards; reached from task-table record 0x64e8 (ROM 0x4ab8, dispatch mechanism unresolved).
+ * timing_retard_fast_task [high]: 0x1391c knock-seen counter + 0x13b40 slow recovery + throttle/rev-limit/AC retards; reached from task-table record 0x64e8 (ROM 0x4ab8, dispatch mechanism unresolved). | promoted to high (binary-level re-verification (this pass))
  */
 /* ROM address: 0x000145c8; body bytes: 96; decompiled */
 

@@ -1,12 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1410_injector_pulse_time [high]: dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x1410: Injector Pulse Time. CONFLICT: same identifier also named Throttle Pedal Position. Do not assign a semantic alias.
  * RX8Defs service 0x22 identifier 0x1410: Throttle Pedal Position. CONFLICT: same identifier also named Injector Pulse Time. Do not assign a semantic alias.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): injector_pulse_time_ffffbe24; decode = raw * 8 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_injector_pulse_time [medium]: PID 0x1410 handler (logger def conflicts: 'Injector Pulse Time' vs 'Throttle Pedal Position' - do not trust either name): encodes DAT_ffffbe24 with step 8 (0x41000000); logger expr x*8*0.001 ms.
+ * diag22_pid1410_injector_pulse_time [high]: dispatch record 0x5f394 -> handler verified in ROM bytes + function_index; injector_pulse_time_ffffbe24*8 (logger 0x221410, ms scale)
  */
 /* ROM address: 0x00056f6c; body bytes: 30; decompiled */
 

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * cold_start_enrichment [medium]: Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0).
+ * cold_start_enrichment [high]: Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  */
 /* ROM address: 0x0001ddfc; body bytes: 82; decompiled */
 

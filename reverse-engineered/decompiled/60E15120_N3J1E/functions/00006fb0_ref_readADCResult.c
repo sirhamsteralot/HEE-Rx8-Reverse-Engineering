@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * adc_read_result_bank2 [medium]: was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff840); bank-2 channel select (ADCSR2 at 0xfffff858).
+ * adc_read_result_bank2 [high]: was ref_readADCResult. Starts an ADCSR2 conversion, waits ADF, returns ADDR24H_B (0xfffff840); bank-2 channel select (ADCSR2 at 0xfffff858). | promoted to high (data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json/function_aliases)
  */
 /* ROM address: 0x00006fb0; body bytes: 174; decompiled */
 

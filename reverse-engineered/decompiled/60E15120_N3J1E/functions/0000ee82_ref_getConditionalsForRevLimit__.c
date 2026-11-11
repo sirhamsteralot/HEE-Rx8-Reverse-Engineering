@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * rev_limit_conditionals [medium]: a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec).
+ * rev_limit_conditionals [high]: a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffa4a6 coolant_below_18c_flag (uint8): a4a6 = coolant < 18 C (clear at 20) - cold-engine rev-limit derate condition.
  * RAM 0xffffa4aa rev_limit_countdown_active (uint8): a4aa = (a4ae != 0); set by rev_limit_conditionals (0xee82).
  * RAM 0xffffa4ad rev_limit_mode_previous (uint8): a4ad = previous DAT_ffffbaec (mode) for change detection.

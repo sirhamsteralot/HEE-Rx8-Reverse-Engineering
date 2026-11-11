@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pidc117_ram_c1d3_c1d4 [medium]: dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0
+ * diag22_pidc117_ram_c1d3_c1d4 [high]: dispatch record 0x5f544 -> handler verified in ROM bytes + function_index; appends 0, DAT_ffffc1d3, DAT_ffffc1d4, 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc1d3 inferred_ram_c1d3_ffffc1d3 (uint8): PID 0xc117
  * RAM 0xffffc1d4 inferred_ram_c1d4_ffffc1d4 (uint8): PID 0xc117
  */
