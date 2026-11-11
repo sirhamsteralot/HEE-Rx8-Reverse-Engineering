@@ -36,11 +36,6 @@ and where artifacts live.
   see [reviews/large_control_bodies_review.md](docs/investigations/60E15120_N3J1E/reviews/large_control_bodies_review.md);
   it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
   emulator decode gaps). Still open, per subsystem (report §9 Limits):
-  - cruise ([cruise_control_report.md](docs/investigations/60E15120_N3J1E/cruise_control_report.md)):
-    units of `cruise_set_speed` 0xffffbcf8 (km/h vs % — inferred from the
-    [0,100] clamp + 20–200 km/h axes, not proven against a scanner PID); the
-    control law consuming 0xffffcf51–0xffffcf5b downstream of 0x4ca7e/0x4d4a6/
-    0x4d700; producer of the band selector 0xffffcf1c.
   - E2RAM ([e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)):
     attribute the remaining payload u16s of the 28-u16 block (only rpm
     0xffffb548, pedal volts 0xffffa9c4, two readValue floats and the DTC flag

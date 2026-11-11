@@ -30,7 +30,8 @@
       "cruise_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 3
       },
       "decompiler_triage_report.md": {
         "reg_pairs": 0,
@@ -156,6 +157,12 @@
         "pool_claims": 1,
         "word_assigns": 13
       },
+      "reviews/cruise_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 15
+      },
       "reviews/dsc_can_arbitration/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -214,11 +221,11 @@
         "reg_pairs": 37,
         "call_claims": 7,
         "pool_claims": 15,
-        "word_assigns": 121,
+        "word_assigns": 131,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 495,
+    "tsv_rows": 504,
     "labels_json_checked": 18
   },
   "notes": [

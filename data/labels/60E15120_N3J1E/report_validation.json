@@ -27,9 +27,9 @@
       "rom_claims": 0
     },
     "cruise_control_report.md": {
-      "fn_checked": 9,
-      "ram_checked": 8,
-      "rom_refs": 17,
+      "fn_checked": 17,
+      "ram_checked": 16,
+      "rom_refs": 33,
       "rom_claims": 0
     },
     "decompiler_triage_report.md": {
