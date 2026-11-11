@@ -151,3 +151,101 @@ def test_set_speed_apply(booted):
     bus.write8(0xFFFFBCED, 0)                # gate off -> 0
     harness.call(bus, cpu, CRUISE_APPLY)
     assert rf(bus, 0xFFFFBCF8) == 0.0
+
+
+# --- follow-up pass (reviews/cruise_control/dynamic_validation_log.txt) ---
+
+GEAR_CAND = 0x2C324
+GEAR_LATCH = 0x2C3B2
+BAND_PRODUCER = 0x4DE1C
+ENABLE_FLAG = 0x4C896
+TP_PCT = 0x193C4
+SET_SPEED_LATCH = 0x32614
+CTRL_LAW = 0x2D638
+
+
+def test_gear_float_band_producer(booted):
+    """0x4de1c writes 0xffffcf1c = float(gear 0xffffbc3d) on this ROM
+    (config byte ROM[0x7d07f] = 0 disables the switch-code band map)."""
+    _, bus, cpu = booted
+    for gear in range(7):
+        bus.write8(0xFFFFBC3D, gear)
+        for i in range(6):
+            bus.write8(0xFFFFCF47 + i, 0)
+        harness.call(bus, cpu, BAND_PRODUCER)
+        assert rf(bus, 0xFFFFCF1C) == float(gear)
+        # pressing a switch flag must NOT change cf1c while cfg byte = 0
+        bus.write8(0xFFFFCF49, 1)
+        harness.call(bus, cpu, BAND_PRODUCER)
+        assert rf(bus, 0xFFFFCF1C) == float(gear)
+        bus.write8(0xFFFFCF49, 0)
+
+
+def test_gear_ratio_chain(booted):
+    """0x2c324 candidate gear from rpm/vss ratio; 0x2c3b2 latches after >0xb."""
+    _, bus, cpu = booted
+    bus.write8(0xFFFFB534, 1)
+    bus.write8(0xFFFFB53A, 0)
+    wf(bus, 0xFFFFBBB4, 80.0)          # 80 km/h
+    wf(bus, 0xFFFFB548, 80.0 * 71.9)    # ratio 71.9 -> gear 2
+    harness.call(bus, cpu, GEAR_CAND)
+    assert bus.read8(0xFFFFBC3C) == 2
+    for _ in range(20):
+        harness.call(bus, cpu, GEAR_LATCH)
+    assert bus.read8(0xFFFFBC3D) == 2
+    bus.write8(0xFFFFB53A, 1)          # neutral -> gear 0
+    harness.call(bus, cpu, GEAR_LATCH)
+    assert bus.read8(0xFFFFBC3D) == 0
+    bus.write8(0xFFFFB53A, 0)
+
+
+def test_bcf8_is_percent_output_pedal_override(booted):
+    """0x4c896: cf34 = cruise_on && bcf8 >= TP% 0xffffa9b4 (pedal override);
+    0x193c4: a9bc = min(max(a9b4, bcf8), c028) in the same percent domain."""
+    _, bus, cpu = booted
+    bus.write8(0xFFFFBCED, 1)
+    wf(bus, 0xFFFFA9B4, 80.0)
+    wf(bus, 0xFFFFBCF8, 50.0)
+    harness.call(bus, cpu, ENABLE_FLAG)
+    assert bus.read8(0xFFFFCF34) == 0
+    assert rf(bus, 0xFFFFCF18) == 50.0
+    wf(bus, 0xFFFFBCF8, 90.0)
+    harness.call(bus, cpu, ENABLE_FLAG)
+    assert bus.read8(0xFFFFCF34) == 1
+    # demand mix: TP%=30, cruise output 70, limiter 100 -> a9bc = 70
+    bus.write8(0xFFFFCC9B, 0); bus.write8(0xFFFFCC9C, 0); bus.write8(0xFFFFA914, 0)
+    wf(bus, 0xFFFFA9B4, 30.0); wf(bus, 0xFFFFBCF8, 70.0); wf(bus, 0xFFFFC028, 100.0)
+    wf(bus, 0xFFFFA9D0, 0.0); wf(bus, 0xFFFFA9D4, 0.0)
+    harness.call(bus, cpu, TP_PCT)
+    assert rf(bus, 0xFFFFA9BC) == 70.0
+
+
+def test_set_speed_latch_kmh(booted):
+    """0x32614 latches the set speed IN KM/H into learned cell 0xffff866c,
+    clamp [27, 200]; target 0xffffbfa4 clamped to the same range."""
+    _, bus, cpu = booted
+    bus.write8(0xFFFFBD49, 0)          # cap 200 km/h
+    bus.write8(0xFFFFBFB4, 1)          # latch-current-speed path
+    bus.write8(0xFFFFBCE9, 0); bus.write8(0xFFFFBFC4, 0)
+    for vss, exp in ((80.0, 80.0), (250.0, 200.0), (10.0, 27.0)):
+        wf(bus, 0xFFFFBFA0, vss)
+        wf(bus, 0xFFFFBFA4, 0.0)
+        wf(bus, 0xFFFF866C, 0.0)
+        harness.call(bus, cpu, SET_SPEED_LATCH)
+        assert rf(bus, 0xFFFF866C) == exp
+        assert rf(bus, 0xFFFFBFA4) == exp
+
+
+def test_control_law_output_percent_domain(booted):
+    """0x2d638: bd00 = clamp(bd04*bd18*0.01, -100, 100) from gear band x speed
+    error - percent-domain output, not km/h."""
+    _, bus, cpu = booted
+    bus.write8(0xFFFFBCED, 1); bus.write8(0xFFFFBD3E, 1)
+    wf(bus, 0xFFFFBFA0, 100.0); wf(bus, 0xFFFFBFA4, 90.0)   # error +10 km/h
+    wf(bus, 0xFFFFCF1C, 3.0)                                # gear 3 band
+    wf(bus, 0xFFFFBCF8, 50.0); wf(bus, 0xFFFFA9B4, 20.0)
+    bus.write8(0xFFFFBBC8, 0xFD); bus.write8(0xFFFFBBC9, 0xFD)
+    harness.call(bus, cpu, CTRL_LAW)
+    out = rf(bus, 0xFFFFBD00)
+    assert -100.0 <= out <= 100.0
+    assert out != 0.0    # law engages on the speed error in percent domain
