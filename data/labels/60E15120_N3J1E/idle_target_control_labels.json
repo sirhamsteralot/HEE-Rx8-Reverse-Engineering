@@ -17,6 +17,12 @@
    "type": "float",
    "reader": "0001506c",
    "evidence": "Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94."
+  },
+  "ffffb53c": {
+   "alias": "at_drive_range_engaged",
+   "type": "uint8",
+   "reader": "0001506c",
+   "evidence": "Select flag read by idle_target_rpm_calculate 0x1506c (MT floor 790 rpm path). Producer FUN_00024b8c: =1 when 0xffffb540 or 0xffffb53e (pools 0x24c5a @0x24bdc write 0x24bde, 0x24e54 @0x24e36 write 0x24e38); cleared when automatic_transmission 0xffffb534==1. 0xffffb540/0xffffb53e derive from CAN 0x231 gear byte 0xffffbaec (=0xffffbae5>>4, ref_can231TxPack 0x290c6), vehicle speed 0xffffbbb4 and rpm 0xffffb548."
   }
  }
 }
