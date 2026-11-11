@@ -23,7 +23,7 @@ undefined4 ref_canInitVals(void)
   thunk_FUN_0002b220();
   thunk_FUN_0004bda2();
   uVar1 = thunk_FUN_0002b988();
-  if (DAT_ffffa410 == '\0') {
+  if (can_setup_error_flag_ffffa410 == '\0') {
     FUN_000291a4();
     FUN_00029414();
     FUN_00029c88();

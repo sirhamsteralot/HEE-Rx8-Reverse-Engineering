@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002a99c (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002a248(void)
+void can_error_supervision_step(void)
 
 {
   undefined4 uVar1;

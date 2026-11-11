@@ -23,7 +23,7 @@ uint candidate_can212_torque_extract(void)
   if (DAT_ffffbbf4 == -1) {
     bVar2 = true;
   }
-  else if ((((DAT_ffffbb24 == '\0') && (engine_running_ffffa428 == '\x01')) && (DAT_ffffa40a == '\0')) &&
+  else if ((((DAT_ffffbb24 == '\0') && (engine_running_ffffa428 == '\x01')) && (can_error_latch_ffffa40a == '\0')) &&
           (DAT_ffffa401 == '\0')) {
     DAT_ffffbbca = DAT_ffffbbf4;
   }

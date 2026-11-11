@@ -454,3 +454,9 @@ ffffbbc8	can212_torque_signal	uint8	0002b816	Torque-related signal from CAN 0x21
 ffffc28e	e2ram_shadow_data	uint8[256]	00037ef0	E2RAM byte shadow cache: written by 0x37ea4/0x37ef0/0x37cd8, read back for cached reads (0x37ef0 compares against the complement at 0xffffc38e).
 ffffc38e	e2ram_shadow_complement	uint8[256]	00037ef0	Complement shadow of 0xffffc28e (0xffffc38e[i] = ~data[i]); match means cache valid, mismatch triggers a device read via 0xbdfa in 0x37ef0.
 ffffc268	e2ram_param_block	uint8[32]	0003599c	Boot parameter block 0xffffc268-0xffffc282 filled by 0x3599c via 0x37ef0 (19 indexed fields); source cells for the write dispatch 0x35a8c.
+ffffa409	can_error_recovery_active	uint8	0000dcc0	Set to 1 in the bus-off/error branch of 0xdcc0 (mov.b r11,@r3 at 0xdd78, pool 0xddc4 = 0xa409).
+ffffa40a	can_error_latch	uint8	0000dcc0	Set when error-poll counter 0xffffa40f exceeds 100 (mov #0x64 at 0xdd16, cmp/gt; pool 0xddc2 = 0xa40a) and the latch was 0; cleared after the 0xdade full reset.
+ffffa40c	can_error_retry_counter	uint16	0000dcc0	Incremented via rx8_add_u16_saturate 0x2460 (pool 0xddd8) each error poll; ref_canSetup re-run only while 0 (tst at 0xdd7c); full reset 0xdade at >= 1000 (pool 0xddc6 = 0x3e8). Cell at pool 0xddd0.
+ffffa40e	can_setup_retry_counter	uint8	0000d9f4	Retry-loop counter of ref_canSetup 0xd9f4 (pool 0xdb10 = 0xffffa40e; incremented at 0xda5c-0xda60, loop bound 2 at 0xda06).
+ffffa40f	can_error_poll_counter	uint8	0000dcc0	Saturating counter (cap 0xff, pool 0xddc0) incremented while engine running (0xffffaa68==1) and ref_getHCANSomething 0x9b08 (GSR bit1 error warning) is set on either channel; cleared otherwise.
+ffffa410	can_setup_error_flag	uint8	0000d9f4	Set to 1 by ref_canSetup 0xd9f4 when the <=2-iteration mailbox-config retry loop still mismatches; 0xffffa411 cleared after the loop.

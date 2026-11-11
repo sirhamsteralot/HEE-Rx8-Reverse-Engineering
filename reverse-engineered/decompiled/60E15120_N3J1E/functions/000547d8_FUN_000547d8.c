@@ -5,7 +5,7 @@ void FUN_000547d8(void)
 {
   undefined4 uVar1;
   
-  if (DAT_ffffa40a == '\0') {
+  if (can_error_latch_ffffa40a == '\0') {
     uVar1 = 2;
   }
   else {
