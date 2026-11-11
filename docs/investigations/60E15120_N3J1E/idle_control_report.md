@@ -252,6 +252,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0xffffb5b3 | `high_load_flag` | filtered-load ≥40 flag (producer 0x264f0) |
 | 0xffffbdb8 | `inferred_ram_bdb8_ffffbdb8` | A/C switch input (PID 0x1102 cell; producer 0x2f868) |
 | 0xffff8040 / 0xffff8048 | `DAT_ffff8040` / `DAT_ffff8048` | E2RAM-backed idle trim cells |
+| 0xffffbbb8 | `vehicle_not_moving` | vspeed ≤ 4 km/h flag (producer 0x2b156 in the DSC CAN batch); feeds the A/C clutch gate 0x165d6 |
 
 ## 9. Limits
 
