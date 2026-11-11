@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 11–14, 16–19 — pick up 11 next; C item 11 pairs
+**reopened**: open items 12–14, 16–19 — pick up 12 next; C item 12 pairs
 naturally with **E item 1** (reimplementation coverage), then F (gated). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
@@ -27,29 +27,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 11–14, 16–19)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 12–14, 16–19)
 
-- **C item 11 (open)** — follow-ups from the large-control-bodies labeling pass
-  (PR #33, closed — record in git history). The
-  dynamic/emulator validation of the seven newly labeled bodies is **done**
-  (per-subsystem dynamic tests `tests/test_*_dynamic.py`, 11 passed; pairs with E item 1 —
-  see [reviews/large_control_bodies_review.md](docs/investigations/60E15120_N3J1E/reviews/large_control_bodies_review.md);
-  it also fixed the CAN report's BCR expect 0x83e → 0x803e and closed two
-  emulator decode gaps). Still open, per subsystem (report §9 Limits):
-  - E2RAM ([e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)):
-    attribute the remaining payload u16s of the 28-u16 block (only rpm
-    0xffffb548, pedal volts 0xffffa9c4, two readValue floats and the DTC flag
-    bytes are attributed); save cadence/trigger — the caller of 0x1150e was
-    not traced beyond the callgraph. (The deeper E2RAM device protocol layer
-    now covered by [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md): 0x3599c/0x37ea4.)
-  - idle ([idle_target_control_report.md](docs/investigations/60E15120_N3J1E/idle_target_control_report.md)):
-    meaning of the select flags 0xffffb534/b53c/b5b3/bd69/bdb8 (inferred, not
-    proven from producers); output path of 0x5ca94 (which actuator register it
-    drives).
-  - O2 monitor ([o2_sensor_monitor_report.md](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)):
-    physical meaning of the four filtered channels 0xffffc708–0x14; gating
-    conditions of 0xffffc704 / 0xffffae21 on the threshold averages
-    0x6b680–0x6b6d4.
 - **C item 12 (open)** — fold the leading/trailing timing-correction findings
   that landed with the DSC CAN report (PR #55, merged) into the label
   records and the ignition timing report. That pass added
