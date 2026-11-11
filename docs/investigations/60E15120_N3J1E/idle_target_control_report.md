@@ -53,6 +53,39 @@ a7f4 = filter(a7b0, a7ac, a7bc)          # -> idle_target_rpm; min 850 if a7b7
 out = idle_target_encode_u16(a7f4)       # 0x5ca94: u16 @0.25 rpm/LSB -> `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac (PID 0x096e)
 ```
 
+### 2a. Select-flag producers and the 0x5ca94 output path (traced this pass)
+
+The five mode-select flags read by 0x1506c now have verified producers
+(disassembly pool words + decompiled bodies):
+
+| Flag | Producer (verified) | Meaning |
+|---|---|---|
+| 0xffffb534 `automatic_transmission` | `ref_getAutoTransCal__` 0x24b44 sets it to 1 (pool 0x24b5e @0x24b44, `mov.b r1,@r4` at 0x24b58); called from 0x19624/0x19da2 | automatic-transmission calibration flag (1 = AT) — selects the 0x15818 open-loop ramp vs the 0x15934 running path and the 0x69370 base vs vehicle-moving tables |
+| 0xffffb53c | `FUN_00024b8c`: = 1 when 0xffffb540 or 0xffffb53e (pool 0x24c5a @0x24bdc, write 0x24bde; pool 0x24e54 @0x24e36, write 0x24e38); 0 when AT (0x24b8c clears it when b534==1) | AT drive-range engaged / vehicle-moving conditional, derived from the CAN 0x231 gear byte (0xffffbaec = 0xffffbae5 >> 4, `ref_can231TxPack` 0x290c6), vehicle speed and rpm |
+| 0xffffb5b3 `high_load_flag` | 0x264f0 `electrical_load_flag_calc`: = 1 when filtered electrical load 0xffffb5e0 >= 40.0, 0 below 30.0 (pool 0x265f0 @0x265b0, write 0x265ce); called from `ref_alternatorControl` 0x2680e | high electrical (alternator) load flag |
+| 0xffffbd69 `ac_clutch_on` | `FUN_0002e9a4` sets it under a gating chain (engine-running timer 0xffffa424, injectors-off 0xffffa42c, rpm < 7800, coolant < 118 °C, flags bd72/bd73/bd76/bd92/bd96/bd97/bd98/0xffffc5e6) — pool 0x2eb58 = 0xbd69 @0x2ea70 | A/C compressor clutch engaged |
+| 0xffffbdb8 | `ref_getACSwitchStatus` 0x2f868: `bdb8 = (0xffff9ecd & 4) == 0` (pool 0x2f888 @0x2f868, write 0x2f882); called from 0x19640/0x199d4 | A/C switch request from the vehicle input latch 0xffff9ecd bit2 (active low) |
+
+In 0x1506c these select the hard floors: AT → 820 base, 840 with A/C clutch +
+switch or high load, 810 with A/C clutch alone or high load alone; MT with
+0xffffb53c → 790, 830/800 with A/C clutch, 800 with high load (0x1506c code at
+0x1614e–0x1620e region, floors 790–840).
+
+**0x5ca94 output path**: 0x5ca94 `idle_target_encode_u16` drives **no actuator
+register**. Its sole caller is 0x1506c (pool word 0x0005ca94 exists only at
+0x158d4): `mov.l @(0x158d4,pc),r2` at 0x157f4, `jsr @r2` at 0x157f6, result
+stored `fmov.s fr0,@r12` at 0x157fa with r12 = 0xffffa7ac (pool 0x1576a at
+0x15710). 0xffffa7ac is the Mode 22 PID 0x096e source (handler 0x56e22, ×0.25)
+and doubles as the filter state read back next cycle (`filter(a7b0, a7ac, …)`)
+and as the index of the target-term table 0x692bc (0x148a4) and the rpm-error
+feedback (0x15a9a). 0x5ca94 also mirrors the value into the diagnostic override
+cell 0xffffd34d when the active DID is 0x96e. The actuator path from the idle
+target is separate: [`idle_control_report.md`](idle_control_report.md) —
+`idle_air_required` 0xffffb2a4 → `ref_throttlePlatePosToTorqueOutput_` 0x21a80
+/ 0x233ec → `inferred_throttle_position_ffffb2d4` 0xffffb2d4 →
+0xffffb410 throttle-plate command (0–84 counts) → drive-by-wire throttle motor
+(PCM terminals 1B/1C; package-pin routing untraced, discrepancy D2).
+
 ## 3. Key calibrated tables
 
 | Descriptor | Dims | Axis (ROM-verified) | Data | Role |
@@ -72,7 +105,12 @@ the names match the RX8Defs cross-ECU annotations already in the function header
 |---|---|---|
 | 0x1506c | `idle_target_rpm_calculate` | high |
 
-RAM alias: `idle_target_rpm` (0xffffa7f4). Evidence:
+RAM aliases: `idle_target_rpm` (0xffffa7f4), plus the select-flag cells proven
+in §2a: `automatic_transmission` (0xffffb534, already labeled),
+`at_drive_range_engaged` (0xffffb53c), `high_load_flag` (0xffffb5b3, already
+labeled), `ac_clutch_on` (0xffffbd69, already labeled), `ac_switch_request`
+(0xffffbdb8), and `idle_target_u16` for 0xffffa7ac's role as PID 0x096e source
++ filter state. Evidence:
 `source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`,
 `data/labels/60E15120_N3J1E/idle_target_control_labels.json`.
 
@@ -94,6 +132,14 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
   0x167c0; task table rec[10].entry = 0x64f6 (ROM 0x4a38) and thunk 0x64f6 →
   0x11744 (jsr at 0x6506); all six 2-D descriptors parsed from ROM; base table
   values read (1700 rpm @−40 °C … 810 rpm @80 °C). Scripted checks 62/62 PASS.
+- Binary-level, flag producers + 0x5ca94 output (§2a): pool words 0x24b5e =
+  0xb534 (write 0x24b58 in 0x24b44), 0x24c5a = 0xb53c (write 0x24bde) and
+  0x24e54 = 0xb53c (write 0x24e38) in 0x24b8c, 0x265f0 = 0xb5b3 (write 0x265ce
+  in 0x264f0), 0x2eb58 = 0xbd69 (@0x2ea70 in 0x2e9a4), 0x2f888 = 0xbdb8 (write
+  0x2f882 in 0x2f868); 0x5ca94 called only from 0x1506c (pool 0x158d4 @0x157f4,
+  jsr 0x157f6; whole-ROM scan: pool word 0x0005ca94 only at 0x158d4), result
+  stored at 0x157fa to r12 = 0xa7ac (pool 0x1576a @0x15710). Covered by
+  `tests/test_idle_target_control.py`.
 - `validate_reports.py` / `verify_claims.py` / `validate_export.py`;
   `tests/test_idle_target_control.py`.
 
@@ -108,7 +154,10 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 | 0x00011744 | `FUN_00011744` | task[10] body, calls 0x167c0 |
 | 0x000064f6 | `FUN_000064f6` | task[10] entry thunk → 0x11744 |
 | 0x00015818 / 0x00015934 | `FUN_00015818` / `FUN_00015934` | open-loop ramp / mode select |
-| 0x0005ca94 | `idle_target_encode_u16` | target → u16 (`inferred_ram_a7ac_ffffa7ac` 0xffffa7ac, PID 0x096e) |
+| 0x0005ca94 | `idle_target_encode_u16` | target → u16 (`inferred_ram_a7ac_ffffa7ac` 0xffffa7ac, PID 0x096e); sole caller 0x1506c (pool 0x158d4 @0x157f4, jsr 0x157f6, store @r12=0xffffa7ac at 0x157fa) |
+| 0x00024b44 / 0x00024b8c | `ref_getAutoTransCal__` / `FUN_00024b8c` | producers of `automatic_transmission` 0xffffb534 / 0xffffb53c |
+| 0x000264f0 / 0x0002e9a4 / 0x0002f868 | `FUN_000264f0` / `FUN_0002e9a4` / `ref_getACSwitchStatus` | producers of `high_load_flag` 0xffffb5b3 / `ac_clutch_on` 0xffffbd69 / 0xffffbdb8 |
+| 0x000290c6 | `ref_can231TxPack` | 0xffffbaec = 0xffffbae5 >> 4 (CAN 0x231 gear byte feeding 0x24b8c) |
 
 ### 8.2 Data and entry points (ROM)
 
@@ -117,23 +166,37 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 | 0x6935c, 0x69370, 0x69384, 0x693c0, 0x693d4, 0x693e8, 0x693fc, 0x69410 | idle 2-D descriptors |
 | 0x168ac | pool word = 0x1506c (call site 0x167fa) |
 | 0x4990 + 10*16 + 8 = 0x4a38 | task table rec[10].entry = 0x64f6 |
+| 0x158d4 / 0x1576a | pool words = 0x5ca94 (0x5ca94 call site 0x157f4) / 0xa7ac (store 0x157fa) |
+| 0x24b5e / 0x24c5a / 0x24e54 / 0x265f0 / 0x2eb58 / 0x2f888 | pool words = 0xb534 / 0xb53c / 0xb53c / 0xb5b3 / 0xbd69 / 0xbdb8 (flag producers) |
 
 ### 8.3 RAM (0xffff…)
 
 | Address | Name | Meaning |
 |---|---|---|
 | 0xffffa7f4 | `idle_target_rpm` | filtered idle target rpm output |
+| 0xffffa7ac | `inferred_ram_a7ac_ffffa7ac` | 0x5ca94 output: PID 0x096e source (0x56e22 ×0.25), filter state, tbl 0x692bc index (0x148a4), rpm-error feedback (0x15a9a); not an actuator register |
 | 0xffffa7b0 / … / 0xffffa800 | `DAT_ffffa7b0` … `DAT_ffffa800` | max-chain candidates / base target |
 | 0xffffa7c8 | `DAT_ffffa7c8` | filtered battery voltage (gates 13.016 / 12.0 V) |
 | 0xffffa804 / … / 0xffffa82c | `DAT_ffffa804` … `DAT_ffffa82c` | running/cranking timers and decay counters |
 | 0xffffa990 / 0xffffb590 / 0xffffbbb4 | `DAT_ffffa990` / `DAT_ffffb590` / `DAT_ffffbbb4` | coolant temp / battery volts / vehicle speed inputs |
+| 0xffffb534 | `automatic_transmission` | AT cal flag, set by `ref_getAutoTransCal__` 0x24b44 |
+| 0xffffb53c | `at_drive_range_engaged` | AT drive/moving conditional from `FUN_00024b8c` (CAN 0x231 gear byte 0xffffbaec, vss, rpm) |
+| 0xffffb5b3 | `high_load_flag` | set by 0x264f0 when filtered 0xffffb5e0 ≥ 40.0 |
+| 0xffffbd69 | `ac_clutch_on` | set by 0x2e9a4 under its gating chain |
+| 0xffffbdb8 | `ac_switch_request` | A/C switch input: (0xffff9ecd & 4) == 0, `ref_getACSwitchStatus` 0x2f868 |
 
 ## 9. Limits
 
 - Static analysis only; no emulator run of the idle loop in this pass.
-- The meaning of each select flag (`automatic_transmission` 0xffffb534/b53c/b5b3/bd69/bdb8, e.g. A/C or
-  AT) is inferred from context and the table names, not from the flag producers.
-- 0x5ca94's role is settled in [`idle_control_report.md`](idle_control_report.md):
-  it encodes the target to `inferred_ram_a7ac_ffffa7ac` 0xffffa7ac (Mode 22 PID 0x096e) and the diag override
-  cell 0xffffd34d; the actuator path runs via `idle_air_required` 0xffffb2a4 → 0x21a80 (electronic
-  throttle).
+- The select flags 0xffffb534/b53c/b5b3/bd69/bdb8 are now proven from their
+  producers (§2a), not just inferred: AT cal (0x24b44), AT drive/moving
+  conditional (0x24b8c from CAN 0x231 gear + vss/rpm), high electrical load
+  (0x264f0), A/C clutch engaged (0x2e9a4), A/C switch request (0x2f868 from
+  0xffff9ecd bit2). The exact gear encoding inside 0xffffbaec (CAN 0x231
+  nibble) is not decoded here.
+- 0x5ca94's output path is resolved (§2a): it writes no actuator register —
+  0xffffa7ac is the PID 0x096e diag cell + filter state, and the diag override
+  cell 0xffffd34d; the actuator path runs via `idle_air_required` 0xffffb2a4 →
+  0x21a80/0x233ec → 0xffffb2d4 → 0xffffb410 (throttle-plate command) →
+  drive-by-wire throttle motor (terminals 1B/1C; package-pin routing untraced,
+  discrepancy D2).

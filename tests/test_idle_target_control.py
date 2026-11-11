@@ -46,6 +46,8 @@ def asm_line(addr):
 
 EXPECTED_FN = {"0001506c": "idle_target_rpm_calculate"}
 EXPECTED_RAM = {"ffffa7f4": "idle_target_rpm"}
+# flag cell proven this pass (TSV + labels JSON; not renamed in symbols.tsv)
+EXPECTED_RAM_SRC = {"ffffb53c": "at_drive_range_engaged"}
 
 
 def test_labels_in_artifacts():
@@ -71,9 +73,12 @@ def test_labels_in_artifacts():
     for addr, alias in EXPECTED_RAM.items():
         assert ram.get(addr) == alias
         assert data["ram_aliases"][addr]["alias"] == alias
+    for addr, alias in EXPECTED_RAM_SRC.items():
+        assert ram.get(addr) == alias, f"TSV missing {addr}"
+        assert data["ram_aliases"][addr]["alias"] == alias, f"JSON missing {addr}"
     # the per-body labels JSON covers exactly this subsystem's rows
     assert len(data["function_aliases"]) == 1
-    assert len(data["ram_aliases"]) == 1
+    assert len(data["ram_aliases"]) == len(EXPECTED_RAM) + len(EXPECTED_RAM_SRC)
 
 
 def test_call_site_pool_word():
@@ -97,3 +102,29 @@ def test_idle_descriptors():
     # filter-factor table 0x6935c: n=11, type 8
     n, typ, res, ax, data = struct.unpack(">HBBII", ROM[0x6935C:0x6935C + 12])
     assert (n, typ, ax, data) == (11, 8, 0x6DCB0, 0x6DCDC)
+
+
+def test_select_flag_producers():
+    # 0xffffb534 automatic_transmission: ref_getAutoTransCal__ 0x24b44 sets =1
+    assert u16(0x24B5E) == 0xB534
+    assert "0x24b5e" in asm_line(0x24B44).replace(" ", "") and "mov.b" in asm_line(0x24B58)
+    # 0xffffb53c at_drive_range_engaged: FUN_00024b8c writes
+    assert u16(0x24C5A) == 0xB53C and "mov.b" in asm_line(0x24BDE)
+    assert u16(0x24E54) == 0xB53C and "mov.b" in asm_line(0x24E38)
+    # 0xffffb5b3 high_load_flag: 0x264f0 writes when filtered 0xffffb5e0 >= 40
+    assert u16(0x265F0) == 0xB5B3 and "mov.b" in asm_line(0x265CE)
+    # 0xffffbd69 ac_clutch_on: producer pool in 0x2e9a4
+    assert u16(0x2EB58) == 0xBD69 and "0x2eb58" in asm_line(0x2EA70).replace(" ", "")
+    # 0xffffbdb8 A/C switch request: ref_getACSwitchStatus 0x2f868 = (0xffff9ecd & 4) == 0
+    assert u16(0x2F888) == 0xBDB8 and "mov.b" in asm_line(0x2F882)
+
+
+def test_5ca94_output_path():
+    # 0x5ca94 is called only from 0x1506c: pool word 0x0005ca94 exists only at 0x158d4
+    import re
+    assert [m.start() for m in re.finditer(re.escape(struct.pack(">I", 0x5CA94)), ROM)] == [0x158D4]
+    assert u32(0x158D4) == 0x5CA94
+    assert "0x158d4" in asm_line(0x157F4).replace(" ", "") and "jsr" in asm_line(0x157F6)
+    # result stored to 0xffffa7ac (r12 = pool 0x1576a at 0x15710, fmov.s fr0,@r12 at 0x157fa)
+    assert u16(0x1576A) == 0xA7AC and "0x1576a" in asm_line(0x15710).replace(" ", "")
+    assert "fmov.s fr0,@r12" in asm_line(0x157FA)
