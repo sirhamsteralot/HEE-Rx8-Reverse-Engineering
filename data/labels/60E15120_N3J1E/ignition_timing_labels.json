@@ -83,32 +83,38 @@
  "ffffa5e8": {
   "alias": "leading_base_timing_final",
   "type": "float",
-  "reader": "000123da"
+  "reader": "000123da",
+  "evidence": "Written by 0x11f00 leading_base_timing_calc (fmov.s fr2,@r2 0x11fe8 via mov.w pool 0x12010=0xa5e8 @0x11fdc, sign-extends to 0xffffa5e8); read by 0x123da leading_timing_cranking_blend (mov.w pool 0x1253a @0x124b0)."
  },
  "ffffa5ec": {
   "alias": "trailing_base_timing_final",
   "type": "float",
-  "reader": "000124d6"
+  "reader": "000124d6",
+  "evidence": "Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r2 0x12154 via mov.w pool 0x1217c=0xa5ec @0x12148); read by 0x124d6 trailing_timing_cranking_blend (mov.w pool 0x12688 @0x12594)."
  },
  "ffffa5f0": {
   "alias": "leading_coolant_scaled_advance_term",
   "type": "float",
-  "reader": "00011f00"
+  "reader": "00011f00",
+  "evidence": "Written by 0x11f00 leading_base_timing_calc (fmov.s fr2,@r1 0x11f60 via mov.w pool 0x1200a=0xa5f0 @0x11f58); read by 0x123da (mov.w pool 0x12536 @0x124a0)."
  },
  "ffffa5f4": {
   "alias": "trailing_coolant_scaled_advance_term",
   "type": "float",
-  "reader": "0001206c"
+  "reader": "0001206c",
+  "evidence": "Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588)."
  },
  "ffffa718": {
   "alias": "idle_leading_timing_error_correction",
   "type": "float",
-  "reader": "000135b4"
+  "reader": "000135b4",
+  "evidence": "Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e)."
  },
  "ffffa71c": {
   "alias": "idle_trailing_timing_error_correction",
   "type": "float",
-  "reader": "000136e4"
+  "reader": "000136e4",
+  "evidence": "Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584)."
  },
  "ffffca9c": {
   "alias": "cranking_angle_timing_leading_filtered",
@@ -133,57 +139,79 @@
  "ffffa780": {
   "alias": "idle_base_timing_leading",
   "type": "float",
-  "reader": "00014100"
+  "reader": "00014100",
+  "evidence": "Written by 0x14100 idle_base_timing_select (fmov.s fr0,@r14 0x14120 and 0x14146 via mov.w pool 0x14158=0xa780 @0x1410a); read by 0x123da (pool 0x1253c @0x124b4) and 0x121fc (pool 0x122b8 @0x12200)."
  },
  "ffffa784": {
   "alias": "idle_base_timing_trailing",
   "type": "float",
-  "reader": "00014100"
+  "reader": "00014100",
+  "evidence": "Written by 0x14100 idle_base_timing_select (fmov.s fr3,@r3 0x1414c via mov.w pool 0x1415e=0xa784 @0x1414a); read by 0x124d6 (pool 0x1268a @0x12598) and 0x12300 (pool 0x123fe @0x12304)."
  },
  "ffffa778": {
   "alias": "iat_timing_compensation_leading",
   "type": "float",
-  "reader": "00014090"
+  "reader": "00014090",
+  "evidence": "Written by 0x14090 iat_timing_compensation_on_throttle (fmov.s fr5/fr0,@r14 0x140b8/0x140d2/0x140d4 via mov.w pool 0x140e2=0xa778 @0x14098); read by 0x123da (pool 0x1253e @0x124bc)."
  },
  "ffffa77c": {
   "alias": "iat_timing_compensation_trailing",
   "type": "float",
-  "reader": "00014090"
+  "reader": "00014090",
+  "evidence": "Written by 0x14090 iat_timing_compensation_on_throttle (fmov.s fr3,@r3 0x140da via mov.w pool 0x140ea=0xa77c @0x140d8); read by 0x124d6 (pool 0x1268c @0x125a0)."
  },
  "ffffa644": {
   "alias": "cranking_timing_multiplier_leading",
   "type": "float",
-  "reader": "000123da"
+  "reader": "000123da",
+  "evidence": "Written by 0x123da leading_timing_cranking_blend (fmov.s fr0,@r14 0x1249c via mov.l pool 0x12548=0xffffa644 @0x12464)."
  },
  "ffffa654": {
   "alias": "cranking_timing_multiplier_trailing",
   "type": "float",
-  "reader": "000124d6"
+  "reader": "000124d6",
+  "evidence": "Written by 0x124d6 trailing_timing_cranking_blend (fmov.s fr0,@r14 0x12582 via mov.l pool 0x1256c=0xffffa654 @0x12508)."
  },
  "ffffa64c": {
   "alias": "leading_min_advance_clamp",
   "type": "float",
-  "reader": "00012630"
+  "reader": "00012630",
+  "evidence": "Written by 0x12630 min_advance_clamp_select (fmov.s fr0/fr3,@r14 0x1270e/0x12738/0x12742 via mov.l pool 0x127b8=0xffffa64c @0x126e8); read by 0x121fc leading_final_timing_clamp_output."
  },
  "ffffa65c": {
   "alias": "trailing_min_advance_clamp",
   "type": "float",
-  "reader": "00012754"
+  "reader": "00012754",
+  "evidence": "Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output."
  },
  "ffffa660": {
   "alias": "leading_max_advance",
   "type": "float",
-  "reader": "000121fc"
+  "reader": "000121fc",
+  "evidence": "Written by 0x121fc leading_final_timing_clamp_output (fmov.s fr0,@r2 0x1229c via mov.l pool 0x122f4=0xffffa660 @0x1229a)."
  },
  "ffffa664": {
   "alias": "trailing_max_advance",
   "type": "float",
-  "reader": "00012300"
+  "reader": "00012300",
+  "evidence": "Written by 0x12300 trailing_final_timing_clamp_output (fmov.s fr0,@r2 0x123a0 via mov.l pool 0x12430=0xffffa664 @0x1239e)."
  },
  "ffffbc94": {
   "alias": "dsc_mode_a_base_timing",
   "type": "float",
   "reader": "0002cc2c"
+ },
+ "ffffa634": {
+  "alias": "leading_timing_with_corrections",
+  "type": "float",
+  "reader": "00012300",
+  "evidence": "Written by 0x123ba leading_timing_add_corrections (fmov.s fr2,@r3 0x123c8 via mov.w pool 0x12410=0xa634 @0x123c4); read by 0x121fc (pool 0x122c6 @0x1228a) and 0x2cc2c (pool 0x2cd54 @0x2ccc6); clamped into 0xffffa630 by 0x121fc."
+ },
+ "ffffa63c": {
+  "alias": "trailing_timing_with_corrections",
+  "type": "float",
+  "reader": "00012300",
+  "evidence": "Written by 0x123ca trailing_timing_add_corrections (fmov.s fr2,@r3 0x123d8 via mov.w pool 0x1240c=0xa63c @0x123d4); read by 0x12300 (pool 0x1240c @0x1238e); clamped into 0xffffa638 by 0x12300."
  },
  "ffffa91c": {
   "alias": "dsc_timing_derate_leading",
