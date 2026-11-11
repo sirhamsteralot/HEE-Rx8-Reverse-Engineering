@@ -60,6 +60,48 @@
    "type": "uint8",
    "reader": "00023f4e",
    "evidence": "Unpacked DTC history flags (0xffffb4ec-0xffffb51b) decoded by 0x23844 via 0x24b00; replayed by 0x23f4e through 0x5fd38."
+  },
+  "ffffb40c": {
+   "alias": "candidate_learned_pedal_value",
+   "type": "float",
+   "reader": "000244bc",
+   "evidence": "Payload u16[1]/[2] source: written by FUN_000231f0 (fmov.s at 0x233b0/0x233c2/0x233d2 via pool 0x232fa=0xb40c loaded at 0x232c2) as clamp(pedal-derived candidates, ..., 111.0), special 99.0; read back by monitors FUN_0001b6fc/0x46404 and encoded by e2ram_block_encode 0x244bc. Meaning inferred from producers -> candidate_."
+  },
+  "ffffb414": {
+   "alias": "throttle_pedal_position_delta",
+   "type": "float",
+   "reader": "000244bc",
+   "evidence": "Payload u16[3] source (signed encode): FUN_00023558 sets DAT_ffffb414 = 0xffffb410 - 0xffffb428 (0.0 when 0xffffccc9 set; pool 0x23590 at 0x2355c); b410 = raw pedal/throttle position counts (PIDs 0x004c/0x091a)."
+  },
+  "ffffb594": {
+   "alias": "filtered_battery_voltage",
+   "type": "float",
+   "reader": "000244bc",
+   "evidence": "Payload u16[4] source (step 0.00030517578125): ref_filterBatteryVoltage 0x2563c writes first_order_filter(0xffffb590, 0xffffb594, 0.5, 1e-5); seeded from ADC cell 0xffff9f68 by FUN_00025600."
+  },
+  "ffffb38c": {
+   "alias": "candidate_throttle_base_position",
+   "type": "float",
+   "reader": "000244bc",
+   "evidence": "Payload u16[19] source: FUN_00022a14 sets DAT_ffffb38c = min(0xffffb2c4, ...) or 5.0; consumed as pedal base in ref_throttlePlatePosToTorqueOutput_ 0x21a80 / FUN_000233ec (0xffffb2d4 = idle_air_required 0xffffb2a4 + b38c). Meaning inferred -> candidate_."
+  },
+  "ffffcc91": {
+   "alias": "candidate_idle_learn_flag",
+   "type": "uint8",
+   "reader": "000244bc",
+   "evidence": "Payload byte at 0xffffb458: written by FUN_00018aea/0x470d0/0x47cce; read by candidate_idle_learn_condition 0x160ce (mov.b via pool at 0x160ce). Idle-learn-related flag, meaning inferred -> candidate_."
+  },
+  "ffffb466": {
+   "alias": "e2ram_payload_reserved",
+   "type": "uint16",
+   "reader": "000236cc",
+   "evidence": "Payload u16[22..26] cells 0xffffb466-0xffffb474: never written by e2ram_block_encode 0x244bc and no pool references in ROM; retained staging bytes. Full-ROM pool scan this pass."
+  },
+  "ffffb51e": {
+   "alias": "e2ram_payload_reserved",
+   "type": "uint16",
+   "reader": "000244bc",
+   "evidence": "Cells 0xffffb51e/0xffffb520/0xffffb522/0xffffb524 (payload u16[8..11] sources, pools 0x24690/0x24694/0x24698/0x2469c in 0x244bc): no writer references anywhere in ROM -> constant 0, reserved."
   }
  }
 }
