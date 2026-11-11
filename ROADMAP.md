@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 11, 13–14, 16–19 — pick up 11 next; C item 11 pairs
+**reopened**: open items 11, 13–14, 16–19, 21 — pick up 11 next; C item 11 pairs
 naturally with **E item 1** (reimplementation coverage), then F (gated). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
@@ -150,6 +150,36 @@ and where artifacts live.
   [e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
   §9 Limits) — decide whether the target is `e2ram_shadow_byte_write`
   0x37ea4 or a device-write path.
+- **C item 21 (open)** — consistency audit of **all** label artifacts applied
+  to date. The ignition-timing follow-up (C item 12, closed — record in this
+  file's git history) found the same cell promoted in one artifact but not the
+  other, evidence-less stub rows, and a reader column naming the consumer
+  instead of the producer. Sweep every alias applied so far and fix the same
+  classes of defect everywhere (counts measured on current main + this
+  branch from the artifacts themselves):
+  - [accepted_ram_aliases.tsv](docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv):
+    470 rows, 22 still with an empty evidence column;
+    [accepted_lookup_aliases.tsv](docs/investigations/60E15120_N3J1E/source_review/accepted_lookup_aliases.tsv):
+    48 rows, 26 empty (`accepted_function_aliases.tsv` is clean: 504/504).
+  - TSV → labels-JSON direction (verify_claims.py only checks JSON → TSV):
+    10 RAM rows (`ffff87b0`, `ffff8900`, `ffffd286`, `ffffd3c0`, `ffffd3c2`,
+    `ffffd458`, `ffffd4e4`, `ffffd5fc`, `ffffd688`, `ffffd930`) and 3 function
+    rows (`0005fd38`, `0005fd3c`, `0005fd4a`) are in the accepted TSVs but in no
+    per-subsystem labels JSON under
+    [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/).
+  - JSON side: 293 unique RAM addresses and 33 function addresses across the
+    labels JSONs carry an empty/missing `evidence` field.
+  - reader/writer columns: where the column is meant to name the producer,
+    check it does (e.g. 0xffffa5e8 is written by 0x11f00 and read by 0x123da).
+  For each finding: re-verify against the raw ROM/disassembly (AGENTS.md
+  rule 7), then fill the evidence / add the missing counterpart / correct the
+  column in **all** artifacts at once (rule 11), update the subsystem
+  report's memory map if a name changes, and extend the per-subsystem test.
+  Deliver per subsystem (rule 11); run the pipeline validators +
+  `python -m pytest tests/` after each batch. Overlaps discrepancy D12 (the
+  4-field-row parser failure in `annotate_source_review.py`) — fix the rows,
+  not the parser, in this item. symbols.tsv currently covers all 470 RAM TSV
+  rows; keep it that way.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
