@@ -25,9 +25,14 @@ first-order-filtered channels of the AFR word and the actual lambda signal
 (0x3f924) are delta-accumulated per evaluation window by **0x3fb9e**
 (4,884 B — the largest unlabeled body). When a window
 completes, 0x3fb9e publishes four amplitude ratios (`o2_monitor_ratio_ch0..ch3` 0xffffc6f0/c6f4/c780/c784).
-**0x4128e** then compares them against load/rpm-indexed 3-D thresholds; if any
-channel exceeds its threshold the fault is set pending (0x5fd38(0x1c,1)), if all
-four exceed it is confirmed (0x5fd38(0x1c,2)) — fault id 0x1c maps to slot 0x1b,
+**0x4128e** then compares them against load/rpm-indexed 3-D thresholds (running
+averages updated only while both monitor gates 0xffffc704 and 0xffffae21 are
+set, see §2a); per channel, ratio ≤ threshold sets the channel flag
+0xffffc7ea–0xffffc7ed, ratio > threshold sets 0xffffc7e6–0xffffc7e9
+(asm-verified: `fcmp/gt fr3,fr2` at 0x41440/0x41456/0x4146e/0x414e0, T = ratio >
+threshold). If any of 0xffffc7ea–0xffffc7ed is set the fault is set pending
+(0x5fd38(0x1c,1) via 0xffffc703); if all four 0xffffc7e6–0xffffc7e9 are set it
+is confirmed (0x5fd38(0x1c,2) via 0xffffc702) — fault id 0x1c maps to slot 0x1b,
 code 0x0133 = P0133. The ratios are also exported as Mode-06 test results by
 0x58262/0x5831c.
 
@@ -65,14 +70,64 @@ if window complete (c904 == 0):
     c6f0 = c758/c728; c6f4 = c764/c734; c780 = c770/c740; c784 = c77c/c74c   # o2_monitor_ratio_ch0..ch3 0xffffc6f0/c6f4/c780/c784; 1e-5 guard (pool 0x41220)
 
 # evaluation — o2_response_monitor_evaluate 0x4128e (jsr at 0x38f7a)
-c6f8/c6fc/c798/c79c = running avg of lookup_3d(load, rpm, tbl 0x6b680/0x6b69c/0x6b6b8/0x6b6d4)
+c788/c78c/c790/c794 = lookup_3d(load, rpm, tbl 0x6b680/0x6b69c/0x6b6b8/0x6b6d4)
+if c704 == 1 and ae21 == 1:               # both gates required (asm 0x413ae-0x413c2)
+    c7da += 1; c7a0/c7a4/c7a8/c7ac += c788/c78c/c790/c794
+    c6f8/c6fc/c798/c79c = c7a0/c7a4/c7a8/c7ac / c7da      # running-average thresholds; else hold
 if c701:
-    any_fail  = any(ratio > threshold); all_fail = all four ratios > thresholds
-    if any_fail:  0x5fd38(0x1c, 1)      # pending
-    if all_fail:  0x5fd38(0x1c, 2)      # confirmed
+    per channel: ratio <= thr -> c7ea/c7eb/c7ec/c7ed = 1; ratio > thr -> c7e6/c7e7/c7e8/c7e9 = 1
+    if any(c7ea..c7ed): c703 = 1 -> 0x5fd38(0x1c, 1)      # pending
+    if all(c7e6..c7e9): c702 = 1 -> 0x5fd38(0x1c, 2)      # confirmed
     # id 0x1c -> slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133
 # Mode-06: 0x58262 encodes `o2_monitor_ratio_ch0` c6f0, 0x5831c encodes `o2_monitor_ratio_ch1` c6f4 via 0x5904a
 ```
+
+### 2a. Physical meaning of the four channels and of the two gates (traced this pass)
+
+The four filtered channels (0x3f924 `o2_channel_filter_update`) are the
+front-O2-derived signals at four filter speeds:
+
+| Cell | Filter | Input | Input producer (verified) |
+|---|---|---|---|
+| 0xffffc708 `o2_channel_afr_fast` | k=1.0 (unity, instantaneous) | `diag_afr_word_a` 0xffffaa6c | 0x1aa98: filtered 0xffffaa88 with MAF-indexed factor (tbl 0x697f8/0x69804); init 1.0 in 0x1a6c0 |
+| 0xffffc70c | k=0.5 | 0xffffaa6c | same |
+| 0xffffc710 `o2_channel_lambda_slow` (fast lambda) | k=0.1 | `inferred_lambda_actual_ffffadec` 0xffffadec | 0x1c880: clamped actual lambda (clamp(…, 0xffffb048, 0xffffb044)); init 1.0 |
+| 0xffffc714 | k=0.03125 (slow lambda) | 0xffffadec | same |
+
+In 0x3fb9e each ratio channel pairs the swing of an AFR-word channel with the
+swing of a lambda channel (delta vs the previous sample c8ec/c8f0/c8f4/c8f8,
+max-positive accumulated into c724/c730/c73c/c748 → moved to c728/c734/c740/c74c,
+min-negative into c754/c760/c76c/c778 → moved to c758/c764/c770/c77c; published
+when the window counter c904 reaches 0, c701 = 1):
+
+| Ratio | Formula | AFR channel | Lambda channel |
+|---|---|---|---|
+| ch0 0xffffc6f0 | c758/c728 | c708 (unity), negative swing | c710 (k=0.1), positive swing |
+| ch1 0xffffc6f4 | c764/c734 | c708, positive swing | c710, negative swing |
+| ch2 0xffffc780 | c770/c740 | c70c (k=0.5), negative swing | c714 (k=0.03125), positive swing |
+| ch3 0xffffc784 | c77c/c74c | c70c, positive swing | c714, negative swing |
+
+Delta accumulation is gated by 0xffffc704 (and the sign bits c7de–c7e5); the
+per-window reload counter comes from 3-D tbl 0x6b66c (load × rpm) every 2nd run
+(c908).
+
+**Gates** (both must be 1 for the threshold averages in 0x4128e to update, asm
+0x413ae–0x413c2):
+
+- 0xffffc704 — set inside 0x3fb9e every 2nd run (c908) when 0xffffc700 == 1,
+  0xffffc7b0 == 0 and 0xffffc7b8 != 0x32; cleared when 0xffffd1c5 (DTC-setting
+  disabled) is set. 0xffffc700 is the monitor-enable computed by 0x3fa18: 0 if
+  P0133 is already stored (`ref_getFaultStatus__` 0x1c), 0xffffaa81 != 1,
+  closed-loop not active (0xffffae1f), plausibility bands exceeded
+  (|0xffffcab8| ≥ 50, |0xffffcabc| ≥ 0.05, |0xffffad50| ≥ 0.42,
+  0xffffc7b8 > 0x31, 0xffffb220 ≥ 0.15, 0xffffb2f4 ≥ 0x271 …), else 1 with a
+  0x20 startup countdown (0xffffc7b0).
+- 0xffffae21 — O2-monitor enable computed by 0x1d1ca: 1 when 0xffffc700 == 1
+  OR (closed-loop active 0xffffae1f AND coolant 0xffffa98c ≥ 150.0 AND
+  0xffffad24 == 1 AND 0xffffae20 == 0). 0x1d1ca also computes the expected
+  oscillation period/amplitude (0xffffb016, 0xffffaff4 from 3-D MAF × rpm
+  lookups 0x69a98/0x69aac/0x69ac0/0x69adc) consumed by the half-period timers
+  0xffffae1a/0xffffae1c in 0x1d2e2, which are themselves gated by 0xffffae21.
 
 ## 3. Key calibrated tables
 
@@ -96,7 +151,9 @@ All five descriptors were parsed from ROM bytes (`>HHIIIB` 3-D base + 3 pad;
 
 RAM aliases: `o2_monitor_ratio_ch0..ch3` (0xffffc6f0/c6f4/c780/c784),
 `o2_monitor_fluctuation_detected` (0xffffc701), `o2_channel_afr_fast` (0xffffc708),
-`o2_channel_lambda_slow` (0xffffc710). Full evidence strings:
+`o2_channel_afr_medium` (0xffffc70c), `o2_channel_lambda_slow` (0xffffc710),
+`o2_channel_lambda_very_slow` (0xffffc714), `o2_monitor_accum_gate` (0xffffc704),
+`o2_monitor_enable` (0xffffae21). Full evidence strings:
 `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
 and `accepted_ram_aliases.tsv`; record:
 `data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`.
@@ -124,6 +181,14 @@ different monitor and was not touched.)
   0x41140/0x41156/0x4116a/0x4117e, fault chain id 0x1c → u16 @0x7df7a = 0x1b →
   u16 @0x7e596 = 0x0133 (P0133, `data/dtc/60E15120_N3J1E.tsv` slot 1b), Mode-06
   encoders 0x58262/0x5831c. 62/62 scripted ROM/disassembly checks passed.
+- Binary-level, channels + gates (§2a): gate reads in 0x4128e (pools 0x4147e =
+  0xc704 @0x413ae, 0x41480 = 0xae21 @0x413ba, both `cmp/eq 0x1` with `bf/s` at
+  0x413b6/0x413c2 skipping the average update), ratio compares `fcmp/gt fr3,fr2`
+  at 0x41440/0x41456/0x4146e/0x414e0, decision jsr 0x5fd38 (pool 0x415dc) with
+  r5=1 at 0x41564 / r5=2 at 0x4157c, ratio ch0 `fdiv` at 0x4119e (pools 0x41224 =
+  0xffffc728, 0x41238 = 0xffffc758); channel-input producers 0x1aa98/0x1c880 and
+  gate producers 0x3fa18/0x1d1ca/0x1d2e2 from the decompiled bodies + callgraph.
+  Covered by `tests/test_o2_sensor_monitor.py`.
 - `validate_reports.py`, `verify_claims.py`, `validate_export.py` run from repo
   root (see `data/labels/60E15120_N3J1E/report_validation.json` /
   `claim_validation.json`); `tests/test_o2_sensor_monitor.py` covers the ROM-byte
@@ -142,37 +207,50 @@ different monitor and was not touched.)
 | 0x00038dca | `FUN_00038dca` | calls 0x3f924 |
 | 0x00058262 / 0x0005831c | `FUN_00058262` / `FUN_0005831c` | Mode-06 encoders of `o2_monitor_ratio_ch0/ch1` 0xffffc6f0/c6f4 |
 | 0x0005fd38 | `dtc_set_fault_x0` | set-fault trampoline, x=0 (see [dtc_control_report.md](dtc_control_report.md)) |
+| 0x0003fa18 / 0x0001d1ca / 0x0001d2e2 | `FUN_0003fa18` / `FUN_0001d1ca` / `FUN_0001d2e2` | producers of 0xffffc700 (monitor enable), 0xffffae21 (O2-monitor enable) and the half-period timers 0xffffae1a/0xffffae1c |
+| 0x0001aa98 / 0x0001c880 | `FUN_0001aa98` / `FUN_0001c880` | producers of the channel inputs 0xffffaa6c (AFR word) / 0xffffadec (lambda actual) |
 
 ### 8.2 Data and entry points (ROM)
 
 | Address | Content |
 |---|---|
 | 0x6b66c, 0x6b680, 0x6b69c, 0x6b6b8, 0x6b6d4 | 3-D descriptors (load × rpm) |
+| 0x69a98 / 0x69aac / 0x69ac0 / 0x69adc | 3-D descriptors (MAF × rpm) for expected oscillation period/amplitude (0x1d1ca) |
+| 0x697f8 / 0x69804 | 2-D descriptors for the AFR-word filter factor (0x1aa98) |
 | 0x41220 | literal pool word 0x3727c5ac (1e-5 tolerance) |
 | 0x390b0 | pool word = 0x3fb9e (call site 0x38f74) |
 | 0x7df42 + 2*0x1c = 0x7df7a | id2slot[0x1c] = 0x1b |
 | 0x7e560 + 2*0x1b = 0x7e596 | slot 0x1b code = 0x0133 (P0133) |
+| 0x413ae / 0x413ba | gate reads: 0xffffc704 (pool 0x4147e) and 0xffffae21 (pool 0x41480) at 0x413ae–0x413c2 |
+| 0x41440 / 0x41456 / 0x4146e / 0x414e0 | `fcmp/gt fr3,fr2` ratio-vs-threshold compares (T = ratio > threshold) |
+| 0x41564 / 0x4157c | jsr 0x5fd38 with r5=1 (pending, via 0xffffc703) / r5=2 (confirmed, via 0xffffc702) |
 
 ### 8.3 RAM (0xffff…)
 
 | Address | Name | Meaning |
 |---|---|---|
-| 0xffffc708 / 0xffffc70c / 0xffffc710 / 0xffffc714 | `o2_channel_afr_fast` … | filtered channel values (0x3f924) |
-| 0xffffc6f0 / 0xffffc6f4 / 0xffffc780 / 0xffffc784 | `o2_monitor_ratio_ch0` / `_ch1` / `_ch2` / `_ch3` | window amplitude ratios |
+| 0xffffc708 / 0xffffc70c / 0xffffc710 / 0xffffc714 | `o2_channel_afr_fast` / `o2_channel_afr_medium` / `o2_channel_lambda_slow` / `o2_channel_lambda_very_slow` | filtered channel values: AFR word 0xffffaa6c k=1.0/0.5, lambda 0xffffadec k=0.1/0.03125 (0x3f924) |
+| 0xffffc6f0 / 0xffffc6f4 / 0xffffc780 / 0xffffc784 | `o2_monitor_ratio_ch0` / `_ch1` / `_ch2` / `_ch3` | window amplitude ratios (AFR-swing/lambda-swing pairs, §2a) |
 | 0xffffc701 | `o2_monitor_fluctuation_detected` | window complete flag |
-| 0xffffc6f8 / … / 0xffffc79c | `DAT_ffffc6f8` … `DAT_ffffc79c` | running-average thresholds |
+| 0xffffc704 | `o2_monitor_accum_gate` | delta-accumulation gate, set in 0x3fb9e when 0xffffc700 && 0xffffc7b0==0 && 0xffffc7b8 != 0x32 |
+| 0xffffc700 | `DAT_ffffc700` | monitor enable (0x3fa18; cleared when P0133 stored / not closed-loop / plausibility bands) |
+| 0xffffae21 | `o2_monitor_enable` | O2-monitor enable (0x1d1ca); with 0xffffc704 gates the threshold averages in 0x4128e |
+| 0xffffc6f8 / … / 0xffffc79c | `DAT_ffffc6f8` … `DAT_ffffc79c` | running-average thresholds (updated only when 0xffffc704 && 0xffffae21) |
 | 0xffffc724–0xffffc77c | `DAT_ffffc724`–`DAT_ffffc77c` | max/min delta accumulators |
 | 0xffffc7b2 | `DAT_ffffc7b2` | 3-D reload value (tbl 0x6b66c) |
 | 0xffffd1c5 | `DAT_ffffd1c5` | DTC-setting-disabled flag; resets accumulators when set |
 
 ## 9. Limits
 
-- Static analysis only; the exact physical meaning of the four channels (which
-  filter pairs the ratio compares) is inferred from dataflow, not from a
-  specification. The P0133 attribution is solid (fault id → slot → code bytes
-  verified); the ratio formula direction (pass/fail polarity) follows the
-  decompiled comparisons.
-- Thresholds 0x6b680–0x6b6d4 are running averages of 3-D lookups, gated by
-  0xffffc704 and 0xffffae21; the exact gating conditions of those flags are not
-  fully traced.
+- Static analysis only. The four channels' physical meaning is now traced to
+  their producers (§2a): filtered versions of the O2-feedback AFR word
+  0xffffaa6c (k=1.0/0.5) and the actual lambda 0xffffadec (k=0.1/0.03125); each
+  ratio channel compares an AFR-word swing against a lambda swing. The P0133
+  attribution is solid (fault id → slot → code bytes verified); the per-channel
+  comparison wiring is asm-verified (ratio ≤ threshold → 0xffffc7ea–c7ed, pending
+  if any set; all four > threshold → 0xffffc7e6–c7e9, confirmed), but which
+  physical direction means "slow" is not proven beyond the code.
+- The threshold gating is resolved (§2a): the running averages of the 3-D
+  lookups 0x6b680–0x6b6d4 update only while 0xffffc704 (accumulation gate, set in
+  0x3fb9e) AND 0xffffae21 (monitor enable from 0x1d1ca) are both 1.
 - No dynamic (emulator) run was performed for this monitor in this pass.

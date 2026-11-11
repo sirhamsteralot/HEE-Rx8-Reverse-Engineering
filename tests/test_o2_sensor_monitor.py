@@ -56,6 +56,13 @@ EXPECTED_RAM = {
     "ffffc708": "o2_channel_afr_fast",
     "ffffc710": "o2_channel_lambda_slow",
 }
+# channels/gates proven this pass (TSV + labels JSON; not renamed in symbols.tsv)
+EXPECTED_RAM_SRC = {
+    "ffffc70c": "o2_channel_afr_medium",
+    "ffffc714": "o2_channel_lambda_very_slow",
+    "ffffc704": "o2_monitor_accum_gate",
+    "ffffae21": "o2_monitor_enable",
+}
 
 
 def test_labels_in_artifacts():
@@ -81,9 +88,12 @@ def test_labels_in_artifacts():
     for addr, alias in EXPECTED_RAM.items():
         assert ram.get(addr) == alias
         assert data["ram_aliases"][addr]["alias"] == alias
+    for addr, alias in EXPECTED_RAM_SRC.items():
+        assert ram.get(addr) == alias, f"TSV missing {addr}"
+        assert data["ram_aliases"][addr]["alias"] == alias, f"JSON missing {addr}"
     # the per-body labels JSON covers exactly this subsystem's rows
     assert len(data["function_aliases"]) == 3
-    assert len(data["ram_aliases"]) == 7
+    assert len(data["ram_aliases"]) == len(EXPECTED_RAM) + len(EXPECTED_RAM_SRC)
 
 
 def test_call_site_pool_words():
@@ -117,3 +127,31 @@ def test_monitor_rom_anchors():
     # fault chain: id 0x1c -> slot 0x1b -> code 0x0133 (P0133)
     assert u16(0x7DF42 + 2 * 0x1C) == 0x1B
     assert u16(0x7E560 + 2 * 0x1B) == 0x0133
+
+
+def test_channel_inputs_and_gates():
+    # gate reads in 0x4128e: 0xffffc704 (pool 0x4147e @0x413ae) and 0xffffae21 (pool 0x41480 @0x413ba)
+    assert u16(0x4147E) == 0xC704 and "0x4147e" in asm_line(0x413AE).replace(" ", "")
+    assert u16(0x41480) == 0xAE21 and "0x41480" in asm_line(0x413BA).replace(" ", "")
+    # both must be ==1: bf/s at 0x413b6 and 0x413c2 skip the accumulate block
+    assert "bf/s" in asm_line(0x413B6) and "bf/s" in asm_line(0x413C2)
+    # ratio vs threshold compares: fcmp/gt fr3,fr2 (T = ratio > threshold) at 0x41440/0x41456/0x4146e/0x414e0
+    for a in (0x41440, 0x41456, 0x4146E, 0x414E0):
+        assert "fcmp/gt fr3,fr2" in asm_line(a)
+    # decision: c703 -> jsr 0x5fd38 r5=1 (pending) at 0x41564; c702 -> r5=2 (confirmed) at 0x4157c
+    assert u32(0x415DC) == 0x5FD38
+    assert "jsr" in asm_line(0x41566) and "0x1" in asm_line(0x41562)
+    assert "jsr" in asm_line(0x4157E) and "0x2" in asm_line(0x4157A)
+    # ratio ch0 = c758/c728: fdiv fr3,fr2 at 0x4119e (fr2=c758, fr3=c728)
+    assert u32(0x41238) == 0xFFFFC758 and u32(0x41224) == 0xFFFFC728 and "fdiv" in asm_line(0x4119E)
+
+
+def test_filter_factor_pools():
+    # 0x3f924 loads inputs 0xffffaa6c/0xffffadec and factor floats via mov.l pools
+    # 0x7ac7c/0x7ac80/0x7ac84/0x7ac88 = 1.0 / 0.5 / 0.1 / 0.03125, eps 1e-5 at 0x3f9e0
+    assert u16(0x3F9D8) == 0xAA6C and u16(0x3F9DA) == 0xADEC
+    assert u32(0x7AC7C) == 0x3F800000 and u32(0x7AC80) == 0x3F000000
+    assert u32(0x7AC84) == 0x3DCCCCCD and u32(0x7AC88) == 0x3D000000
+    assert u32(0x3F9E0) == 0x3727C5AC          # 1e-5 epsilon
+    assert u32(0x3F9EC) == 0xFFFFC708 and u32(0x3F9F4) == 0xFFFFC70C
+    assert u32(0x3F9FC) == 0xFFFFC710
