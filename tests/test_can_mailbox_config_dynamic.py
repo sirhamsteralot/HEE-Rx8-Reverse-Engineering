@@ -91,3 +91,51 @@ def test_mailbox_config_compare(booted):
     assert r0 == 0
     bus.write16(0xFFFFE616, 0)                       # IMR wrong on HCAN1
     assert harness.call(bus, cpu, CAN_COMPARE, r_args=(1, 0x4E21C))[0] != 0
+
+
+CAN_CONTROLLER_SETUP = 0x9744     # ref_CANControllerSetup(ch, recs, count)
+BUS_OFF_FLAG = 0x9AC4             # hcan_bus_off_flag(ch) = HCANx_GSR_B bit0
+
+
+def test_controller_setup_writes_record_fields(booted):
+    """Writer path of the descriptor records (mulu-free parts): BCR/IMR
+    constants and the per-mailbox MC control + ID bytes come straight from
+    record bytes +6/+7 and word0. The MBCR/MBIMR bit writes use MULU.W, which
+    the emulator models with the product in the operand register instead of
+    MACL, so those two registers are not asserted here."""
+    _, bus, cpu = booted
+    for ch, block, count, base in ((0, 0x4E11C, 16, 0xFFFFE400),
+                                   (0, 0x4E01C, 16, 0xFFFFE400),
+                                   (1, 0x4E21C, 6, 0xFFFFE600)):
+        harness.call(bus, cpu, CAN_CONTROLLER_SETUP, r_args=(ch, block, count))
+        assert bus.read16(base + 0x02) == 0x803E          # BCR_W
+        assert bus.read16(base + 0x16) == 0xFCFE          # IMR_W
+        for i in range(count):
+            rec = block + i * 16
+            mb = ROM[rec + 5] & 0xF
+            mc = base + 0x20 + mb * 8
+            assert bus.read8(mc + 0) == ROM[rec + 6]      # MC control byte = record +6
+            rid = _u32(rec)
+            if ROM[rec + 7] == 0:                         # standard 11-bit id
+                assert bus.read8(mc + 4) == ((ROM[rec + 7] * 8 + ((rid & 0xFF) << 5)) & 0xFF)
+                assert bus.read8(mc + 5) == ((rid >> 3) & 0xFF)
+            else:                                         # extended 29-bit id
+                assert bus.read8(mc + 4) == (((rid >> 0x12 & 7) * 0x20 + (rid >> 0x10 & 3)
+                                              + ROM[rec + 7] * 8) & 0xFF)
+                assert bus.read8(mc + 5) == ((rid >> 0x15) & 0xFF)
+                assert bus.read8(mc + 6) == (rid & 0xFF)
+                assert bus.read8(mc + 7) == ((rid >> 8) & 0xFF)
+
+
+def test_bus_off_flag_reads_gsr_bit0(booted):
+    """hcan_bus_off_flag 0x9ac4 returns (HCANx_GSR_B & 1) != 0 per channel."""
+    _, bus, cpu = booted
+    bus.write8(0xFFFFE401, 0x00)
+    bus.write8(0xFFFFE601, 0x00)
+    assert harness.call(bus, cpu, BUS_OFF_FLAG, r_args=(0,))[0] == 0
+    assert harness.call(bus, cpu, BUS_OFF_FLAG, r_args=(1,))[0] == 0
+    bus.write8(0xFFFFE401, 0x01)                          # HCAN0 GSR bit0 set
+    assert harness.call(bus, cpu, BUS_OFF_FLAG, r_args=(0,))[0] == 1
+    assert harness.call(bus, cpu, BUS_OFF_FLAG, r_args=(1,))[0] == 0
+    bus.write8(0xFFFFE601, 0x01)                          # HCAN1 GSR bit0 set
+    assert harness.call(bus, cpu, BUS_OFF_FLAG, r_args=(1,))[0] == 1

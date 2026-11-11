@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00009ac4 (32 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-bool FUN_00009ac4(undefined4 param_1)
+bool hcan_bus_off_flag(undefined4 param_1)
 
 {
   byte *pbVar1;

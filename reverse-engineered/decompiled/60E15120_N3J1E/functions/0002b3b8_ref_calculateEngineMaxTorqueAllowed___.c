@@ -14,7 +14,7 @@ void engine_max_torque_allowed_calc(void)
   
   arg1 = 0.0;
   if ((((DAT_ffffbb24 == '\0') && (DAT_ffffbb28 == '\0')) && (engine_running_ffffa428 == '\x01')) &&
-     (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (DAT_ffffa40a == '\0')))) {
+     (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (can_error_latch_ffffa40a == '\0')))) {
     fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)can212_torque_signal_ffffbbc8);
   }
   else {

@@ -15,9 +15,9 @@
       "rom_claims": 0
     },
     "can_mailbox_config_report.md": {
-      "fn_checked": 7,
-      "ram_checked": 7,
-      "rom_refs": 14,
+      "fn_checked": 20,
+      "ram_checked": 11,
+      "rom_refs": 34,
       "rom_claims": 0
     },
     "cooling_fan_control_report.md": {

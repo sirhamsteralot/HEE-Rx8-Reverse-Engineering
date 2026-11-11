@@ -8,7 +8,22 @@
   "0002a4f8": {
    "alias": "hcan_mailbox_config_compare",
    "confidence": "high",
-   "evidence": "Compares a desired HCAN mailbox descriptor array (param_2: 16 x 16-byte records for channel 0, 6 for channel 1) against live registers: HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 expect 0x803e; MBCR/MBIMR rebuilt from record bytes and compared (HCAN0_MBCR_W 0xffffe404, HCAN0_MBIMR_W 0xffffe414, HCAN1_MBCR_W 0xffffe604, HCAN1_MBIMR_W 0xffffe614); HCAN0_IMR_W 0xffffe416 / HCAN1_IMR_W 0xffffe616 expect 0xfcfe; HCAN0_LAFMH_W 0xffffe41e + HCAN0_LAFML_W 0xffffe41c (and HCAN1_LAFMH_W 0xffffe61e / HCAN1_LAFML_W 0xffffe61c) must be zero; per-mailbox MC control/data bytes checked at HCAN0_MC0[1]_B 0xffffe420 + 8*(mb&0xf) (MC0[5]/MC0[6]/MC0[7]/MC0[8] hold ID/DLC fields). Returns nonzero on any mismatch. Called from ref_canSetup 0xd9f4 (jsr @r13 at 0xda3e/0xda4e; pool 0xdb20 = 0x2a4f8) in a <=2-iteration retry loop with ref_CANControllerSetup(0, 0x4e01c or 0x4e11c, 0x10) and (1, 0x4e21c, 6); after >1 tries sets error flag 0xffffa410."
+   "evidence": "Compares a desired HCAN mailbox descriptor array (param_2: 16 x 16-byte records for channel 0, 6 for channel 1) against live registers: HCAN0_BCR_W 0xffffe402 / HCAN1_BCR_W 0xffffe602 expect 0x803e; MBCR/MBIMR rebuilt from record bytes and compared (HCAN0_MBCR_W 0xffffe404, HCAN0_MBIMR_W 0xffffe414, HCAN1_MBCR_W 0xffffe604, HCAN1_MBIMR_W 0xffffe614); HCAN0_IMR_W 0xffffe416 / HCAN1_IMR_W 0xffffe616 expect 0xfcfe; HCAN0_LAFMH_W 0xffffe41e + HCAN0_LAFML_W 0xffffe41c (and HCAN1_LAFMH_W 0xffffe61e / HCAN1_LAFML_W 0xffffe61c) must be zero; per-mailbox MC control/data bytes checked at HCAN0_MC0[1]_B 0xffffe420 + 8*(mb&0xf) (MC0[5]/MC0[6]/MC0[7]/MC0[8] hold ID/DLC fields). Returns nonzero on any mismatch. Called from ref_canSetup 0xd9f4 (jsr @r13 at 0xda3e/0xda4e; pool 0xdb20 = 0x2a4f8) in a <=2-iteration retry loop with ref_CANControllerSetup(0, 0x4e01c or 0x4e11c, 0x10) and (1, 0x4e21c, 6); after >1 tries sets error flag 0xffffa410. Record-field mapping verified against the writer chain (ref_CANControllerSetup 0x9744 -> ref_setCANRegisters 0xcacc -> ref_initializeCANRegisters 0x9d24) and the compare loop (0x2a56e-0x2a5be: mov.b @(0x4,r9) accumulates MBCR, mov.b @(0xc,r9) accumulates MBIMR): +0..+3 u32 BE = CAN id, +4 = MBCR direction bit (0=TX, 1=RX per Sh7055h.pdf 16.2.4), +5 = mailbox number, +6 = MC control/DLC byte, +7 = IDE flag, +8..+11 = RAM data buffer pointer (not consumed by setup), +12 = MBIMR interrupt-mask bit (0 = interrupt enabled, 1 = disabled per Sh7055h.pdf 16.2.12), +13..+15 = zero in all ROM blocks. Register bit for mailbox mb is 1<<((mb+8)&0xf) in MBCR/MBIMR."
+  },
+  "0000dade": {
+   "alias": "can_error_full_reset",
+   "confidence": "high",
+   "evidence": "bsr ref_canSetup 0xd9f4 at 0xdae0, then ref_resetCANTimers 0xda94; called only from ref_checkCANsomethingKeyOnBased 0xdcc0 via bsr at 0xdda8 when error counter 0xffffa40c >= 1000 (cmp/ge 0x3e8, pool 0xddc6) - full CAN reset after a persistent bus-off/error condition."
+  },
+  "0002a248": {
+   "alias": "can_error_supervision_step",
+   "confidence": "high",
+   "evidence": "sh_raise_interrupt_mask_return_previous(0x10), then ref_checkCANsomethingKeyOnBased 0xdcc0 (jsr @r3 at 0x2a252, pool 0x2a44c = 0xdcc0), then FUN_000547d8, then ref_setSR restores the mask; called from FUN_000114b0 0x114b0 (jsr at 0x114b8, pool 0x11680 = 0x2a248), which is called from OS task 7 entry ref_interruptSetup___ 0x63f0 (task-table record 7 at 0x4a08 = 0x63f0; jsr at 0x6414, pool 0x6528 = 0x114b0)."
+  },
+  "00009ac4": {
+   "alias": "hcan_bus_off_flag",
+   "confidence": "high",
+   "evidence": "returns (HCANx_GSR_B & 1) != 0 for channel param_1 (HCAN0_GSR_B 0xffffe401 / HCAN1_GSR_B 0xffffe601; GSR bit0 = bus-off flag, REC >= 256, per Sh7055h.pdf 16.2.2); called from 0xdcc0 via pool 0xddd4 = 0x9ac4 (jsr at 0xdd4e/0xdd5c)."
   },
   "00028eb8": {
     "alias": "can216_unpack_mixed_width_fields",
@@ -66,6 +81,42 @@
    "type": "float",
    "reader": "00029340",
    "evidence": "Previous unfiltered rpm saved each call by 0x29340."
+  },
+  "ffffa409": {
+   "alias": "can_error_recovery_active",
+   "type": "uint8",
+   "reader": "0000dcc0",
+   "evidence": "Set to 1 in the bus-off/error branch of 0xdcc0 (mov.b r11,@r3 at 0xdd78, pool 0xddc4 = 0xa409)."
+  },
+  "ffffa40a": {
+   "alias": "can_error_latch",
+   "type": "uint8",
+   "reader": "0000dcc0",
+   "evidence": "Set when error-poll counter 0xffffa40f exceeds 100 (mov #0x64 at 0xdd16, cmp/gt; pool 0xddc2 = 0xa40a) and the latch was 0; cleared after the 0xdade full reset."
+  },
+  "ffffa40c": {
+   "alias": "can_error_retry_counter",
+   "type": "uint16",
+   "reader": "0000dcc0",
+   "evidence": "Incremented via rx8_add_u16_saturate 0x2460 (pool 0xddd8) each error poll; ref_canSetup is re-run only while it is 0 (tst at 0xdd7c); full reset 0xdade when it reaches 1000 (pool 0xddc6 = 0x3e8). Cell at pool 0xddd0."
+  },
+  "ffffa40e": {
+   "alias": "can_setup_retry_counter",
+   "type": "uint8",
+   "reader": "0000d9f4",
+   "evidence": "Retry-loop counter of ref_canSetup 0xd9f4 (pool 0xdb10 = 0xffffa40e; incremented at 0xda5c-0xda60, loop bound 2 at 0xda06)."
+  },
+  "ffffa40f": {
+   "alias": "can_error_poll_counter",
+   "type": "uint8",
+   "reader": "0000dcc0",
+   "evidence": "Saturating counter (cap 0xff, pool 0xddc0) incremented while engine running (0xffffaa68==1) and ref_getHCANSomething 0x9b08 (GSR bit1 error warning) is set on either channel; cleared otherwise."
+  },
+  "ffffa410": {
+   "alias": "can_setup_error_flag",
+   "type": "uint8",
+   "reader": "0000d9f4",
+   "evidence": "Set to 1 by ref_canSetup 0xd9f4 when the <=2-iteration mailbox-config retry loop still mismatches; 0xffffa411 cleared after the loop."
   }
 }
 }
