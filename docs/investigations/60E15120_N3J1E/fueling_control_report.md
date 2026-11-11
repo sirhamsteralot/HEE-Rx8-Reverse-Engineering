@@ -208,11 +208,14 @@ entries below.
 | 0xffff9eea / 9f78 / 9f7c | `maf_adc_raw` / `maf_scaled` / `maf_fault_status` | 0x7438 |
 | 0xffffa9e4 / a9e8 / aa2c / aa35 / aa36 | `maf_voltage_latched` / `maf_scaled_latched` / `maf_voltage` / `maf_high_fault_counter` / `maf_low_fault_counter` | 0x19f4e |
 | 0xffffaa38 / aa3c / aa48 / aa54 / aa4c | `maf_per_rotation_filtered` / `maf_per_rotation` / `maf_filter_state` / `maf_filter_coeff` / `maf_filter_mode` | 0x1a418 |
-| 0xffffb0fe / b101-b103 | `maf_range_index` / band flags | 0x1e842 |
 | 0xffffa094..a0c0 | `injector_latency_ch0-2`(+mirrors) / `injector_zero_offset_ch0-2`(+mirrors) | 0x86f8/0x86ac |
 | 0xffffa004 base (+0xc=a010, +0x10=a014, +0x13=a017, +0x14=a018) | injector channel struct, 0x18 stride | 0x8a68/0x85e4 |
 | 0xffffa444/a445/a464/a465/a4a2/a4a3, a964/a97c/a97d/a96a/a96c, a4a4-a4ae | `fuel_cut_flag_a`/`fuel_cut_flag_b`/`fuel_cut_request_a`/`fuel_cut_request_b`/hysteresis latches, rpm gates/rev-limit state | 0xedc4/0x18cfe/0xee82/0xee64 |
 | 0xffffaa6c / aa7c | `diag_afr_word_a/b` | PID 0x0034 |
+| 0xffffb0fe / b101-b103 | `maf_range_index` / `maf_band_low`/`maf_band_mid`/`maf_band_high` (b102 = MAF < 9, hyst 8.4) | 0x1e842 |
+| 0xffffb142 / b152 / b157 | `ol_decay_enable_a/b/c` — gate the 0x200c6 blend-weight decay branches | 0x200c6 |
+| 0xffffbf20 | `cl_coolant_compensation` — lookup_2d tbl 0x6ac38(coolant), used in closed-loop fuel trim | 0x307e0 |
+| 0xffffc138 / c13c / c158 / c14c | `load_delta_scale` / `load_scale_2d` / `load_delta_input` / `tip_in_mode_flag` — load-delta & tip-in state (0x33ec4) | 0x33ec4 |
 
 ### 7.3 ROM tables/data and entry points
 
