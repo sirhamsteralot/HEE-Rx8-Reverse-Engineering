@@ -76,14 +76,14 @@
     },
     "fueling_control_report.md": {
       "fn_checked": 44,
-      "ram_checked": 21,
-      "rom_refs": 95,
+      "ram_checked": 24,
+      "rom_refs": 98,
       "rom_claims": 0
     },
     "idle_control_report.md": {
       "fn_checked": 21,
-      "ram_checked": 10,
-      "rom_refs": 31,
+      "ram_checked": 11,
+      "rom_refs": 32,
       "rom_claims": 0
     },
     "idle_target_control_report.md": {
@@ -106,8 +106,8 @@
     },
     "knock_control_report.md": {
       "fn_checked": 48,
-      "ram_checked": 57,
-      "rom_refs": 132,
+      "ram_checked": 63,
+      "rom_refs": 138,
       "rom_claims": 0
     },
     "live_tuning_feasibility_report.md": {

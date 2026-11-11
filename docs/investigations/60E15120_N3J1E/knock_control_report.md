@@ -332,6 +332,7 @@ Sensing, timing and shared state:
 | 0xffffc0b4 | `engine_load` | load input to the 3D knock-level tables (0x336c4) |
 | 0xffffa5e0 / 0xffffa5e4 | (unnamed `DAT_`) | idle/base terms read by 0x125bc/0x125f6; writer not identified |
 | 0xffffa5e8 / 0xffffa5ec | `leading/trailing_base_timing_final` | base timing blended by loop weight `timing_blend_weight` 0xffffb118 (0x11f00/0x1206c) |
+| 0xffffa5f0 / 0xffffa5f4 | `leading/trailing_coolant_scaled_advance_term` | coolant-scaled advance terms written by the base-timing calcs 0x11f00/0x1206c |
 | 0xffffa5fc | (unnamed `DAT_`) | unweighted base timing sum (0x11f00) |
 | 0xffffa640 | (unnamed `DAT_`) | base timing after cranking blend (0x123da) |
 | 0xffffa644 | `cranking_timing_multiplier_leading` | cranking blend multiplier (0x123da) |
@@ -346,6 +347,11 @@ Loop mode:
 | 0xffffb120 | `open_loop_fuel_target` | |
 | 0xffffb12d / 0xffffcd60 | `safe_mode` (fueling/base-timing cap) / `safe_mode` (knock threshold pair) | |
 | 0xffffaa80 | `lambda_in_target_band` | |
+| 0xffffb130 / b134 / b138 / b13c | `ol_fuel_target_main` / `ol_coolant_correction` / `ol_fuel_target_implausible` / `ol_temperature_correction_b` | OL target terms from 0x1ee4a (tables 0x69cac-0x69d10) |
+| 0xffffb170 / b174 / b190 / b194 / b198 / b19c | `ol_baro_base_correction` / `ol_rich_limit` / `ol_tip_in_target` / `ol_target_3d` / `ol_tip_in_implausible` / `ol_target_implausible_3d` | OL base/limit/target components (0x1ee4a; tables 0x69cac-0x69f44) |
+| 0xffffb15c / b160 / b164 / b168 / b16c | `cl_throttle_threshold` / `cl_load_threshold_a/b/c` / `cl_unknown_threshold_a` | CL entry thresholds from 0x1f0c4 (tables 0x69d24-0x69d74) |
+| 0xffffb1b6 / b1b7 / b1b8 | `cl_load_a/b/c_exceeded` | load-exceeded flags with hysteresis (0x1f0c4) |
+| 0xffffb1b1 | `coolant_above_78_flag` | coolant >= 80 (clear below 78) in 0x1f0c4 |
 
 Full list of all 84 named locations: `source_review/accepted_ram_aliases.tsv`.
 

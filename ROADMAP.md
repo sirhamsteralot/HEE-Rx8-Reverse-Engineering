@@ -16,7 +16,10 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 13–14, 16–19, 21 — pick up 13 next. The
+**reopened**: open items 14, 16–19, 21 — pick up 14 next (item 13 closed
+2026-11-11: the `[ADDITIONAL SOURCE REVIEW]` comment sweep was applied to the
+accepted TSVs, the per-subsystem labels JSONs and the subsystem report memory
+maps; full record in this file's git history). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
 `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
@@ -26,25 +29,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 13–14, 16–19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 14, 16–19, 21)
 
-- **C item 13 (open)** — sweep and apply the `[ADDITIONAL SOURCE REVIEW]`
-  comments that landed with the DSC CAN report (PR #55, merged): 311
-  decompiled function files under
-  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` carry new review
-  headers with 268 function-level alias descriptions and 164
-  `RAM <addr> <alias>` lines. Today they exist only as header comments — not
-  yet in `source_review/accepted_function_aliases.tsv` /
-  `accepted_ram_aliases.tsv`, not in the per-subsystem labels JSON under
-  [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/), and not reflected
-  in the subsystem reports. For each: evaluate (keep the label ladder —
-  `candidate_` stays until proven), re-verify against the raw ROM/disassembly
-  (AGENTS.md rule 7), then apply — promote into the TSVs + the matching
-  per-subsystem labels JSON, and update the relevant
-  [investigation reports](docs/investigations/60E15120_N3J1E/) where the new
-  names change the memory maps. Batch the rest per subsystem (one work
-  unit per subsystem, per AGENTS.md rule 11). Run the pipeline validators +
-  `python -m pytest tests/` after each batch.
 - **C item 14 (open)** — sweep all decompiled function definitions and their
   header comments for merge/reduce/apply opportunities. Every file under
   `reverse-engineered/decompiled/60E15120_N3J1E/functions/` now stacks several
