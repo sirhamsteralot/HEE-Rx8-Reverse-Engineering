@@ -161,7 +161,7 @@
         "reg_pairs": 1,
         "call_claims": 0,
         "pool_claims": 0,
-        "word_assigns": 21
+        "word_assigns": 24
       },
       "reviews/dsc_can_arbitration/README.md": {
         "reg_pairs": 0,
@@ -236,8 +236,6 @@
     "fueling_labels.json: function 000556ec record alias 'diag_afr_word_a' vs TSV 'diag_read_afr_word_a' (later refinement)",
     "fueling_labels.json: function 00055702 record alias 'diag_afr_word_b' vs TSV 'diag_read_afr_word_b' (later refinement)"
   ],
-  "failures": [
-    "reviews/cruise_control/README.md: claimed pool word 0x4df08 = 3.0 but the ROM word there differs"
-  ],
-  "result": "FAIL"
+  "failures": [],
+  "result": "PASS"
 }

@@ -97,7 +97,7 @@ diag-handler range, so no Mode 22 PID reads it), 0xffffbc3d 6 sites,
 decoded word-by-word from ROM: 0x4de1c (store pool 0x4dedc = 0xcf1c, cfg read
 pool 0x4def4 = 0x7d07f with ROM[0x7d07f] = 0x00, `tst`/`bf/s` at 0x4de2c-0x4de2e
 so the gear path runs when the cfg byte is 0, jsr pool 0x4def8 = 0x2500,
-band floats 0x4defc–0x4df08 = 3.0/4.0/5.0/6.0); 0x2df62 (r14 = pool 0x2e004 =
+band floats: 0x4defc = 0x40400000 (3.0), 0x4df00 = 0x40800000 (4.0), 0x4df04 = 0x40a00000 (5.0), 0x4df08 = 0x40c00000 (6.0)); 0x2df62 (r14 = pool 0x2e004 =
 0xbcf8, `fadd` of bd00+bd08 at 0x2dfbe, clamp jsr 0x2404 with bounds via ptr
 pools 0x2e048→0x767e4 = 100.0 and 0x2e04c→0x767e0 = 0.0, store 0x2dfcc);
 0x4c896 (cf18 = bcf8 copy at 0x4c89a-0x4c89c, `fcmp/gt` at 0x4c8b0 + `bf/s`
