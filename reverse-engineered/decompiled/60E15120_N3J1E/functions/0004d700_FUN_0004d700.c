@@ -1,11 +1,13 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffcef4 cruise_filtered_speed_error (float): Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006bbec: Table 2D - 392 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc04: Table 2D - 394 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc1c: Table 2D - 396 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc34: Table 2D - 398 Check DataType (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_switch_plausibility_timers [high]: Per-switch countdown timers 0xffffcf51/52/54/55/57/58/5a/5b armed at 0x3e when filtered error 0xffffcef4 exceeds channel max + 1.5 or vss tables 0x6bbec/0x6bc04/0x6bc1c/0x6bc34, decremented while error high, cleared when 0xffffcf34==0; expiry clears latches 0xffffcf3a/3c/3e/40. Pool scan: cf51-cf5b referenced only inside the cruise cluster (0x4ca7e/0x4d4a6/0x4d700) - no external consumer. Called from batch 0x2e692 (jsr 0x2e6d4, pool 0x2e7e4).
+ * RAM 0xffffcef4 cruise_filtered_speed_error (float): Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
+ * RAM 0xffffcf34 cruise_enable_flag (uint8): Set by 0x4c896 = (0xffffbced && 0xffffbcf8 >= 0xffffa9b4): cruise enabled while cruise output percent >= TP1 percent (pedal override). Emulator: bcf8=50 < a9b4=80 -> 0; bcf8=90 -> 1.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1340_ram_a9bc_pct [medium]: dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157
+ * diag22_pid1340_ram_a9bc_pct [high]: dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa9bc inferred_ram_a9bc_ffffa9bc (float): PID 0x1340 *0.392157
  */
 /* [MATH AND UNITS REVIEW]

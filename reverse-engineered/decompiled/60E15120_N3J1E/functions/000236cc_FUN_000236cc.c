@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb440 e2ram_staging_block (uint16[28]): E2RAM staging block: u16[0] = magic 0xa55a (mov.w via pool 0x23734 at 0x236ec), payload u16[1..26], u16[27] at +0x36 = checksum (sum of 0x1b u16, loop 0x236f0-0x236fe); 0x1c u16 written to E2RAM via 0xb886.
+ * RAM 0xffffb466 e2ram_payload_reserved (uint16): Payload u16[22..26] cells 0xffffb466-0xffffb474: never written by e2ram_block_encode 0x244bc and no pool references in ROM; retained staging bytes. Full-ROM pool scan this pass.
  */
 /* ROM address: 0x000236cc; body bytes: 90; decompiled */
 

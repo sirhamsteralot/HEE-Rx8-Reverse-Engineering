@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * fuel_cut_resume_threshold [medium]: 0xffffa830 = tbl 0x69768(rough knock correction leading 0xffffa6ac) when 0xffffa6b7/a6b8/a6b9 are clear, else 0. Called from 0x167c0 via pool 0x168d0.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069768: Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * fuel_cut_resume_threshold [medium]: 0xffffa830 = tbl 0x69768(rough knock correction leading 0xffffa6ac) when 0xffffa6b7/a6b8/a6b9 are clear, else 0. Called from 0x167c0 via pool 0x168d0.
  */
 /* ROM address: 0x00015a40; body bytes: 60; decompiled */
 

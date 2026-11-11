@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * fuel_cut_arbitration [medium]: Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4.
+ * fuel_cut_arbitration [high]: Sets fuel-cut flags a444/a445 from requests a464/a465 and param_1 mode (band checks 0/6 vs 12/18, mirrors a4a2/a4a3); calls FUN_0000e2d4. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffa444 fuel_cut_flag_a (uint8): Set by fuel_cut_arbitration (0xedc4) from request a464 / mode param.
  * RAM 0xffffa445 fuel_cut_flag_b (uint8): Second fuel-cut flag set alongside a444 in 0xedc4.
  * RAM 0xffffa464 fuel_cut_request_a (uint8): Input request: when set, a444 = a445 = 1 unconditionally.

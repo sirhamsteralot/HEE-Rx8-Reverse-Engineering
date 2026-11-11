@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * vfad_control_task_wrapper [medium]: Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744.
+ * vfad_control_task_wrapper [high]: Mask-0x10 wrapper calling vfad_solenoid_control; called from 0x11744. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  */
 /* ROM address: 0x00034916; body bytes: 24; decompiled */
 

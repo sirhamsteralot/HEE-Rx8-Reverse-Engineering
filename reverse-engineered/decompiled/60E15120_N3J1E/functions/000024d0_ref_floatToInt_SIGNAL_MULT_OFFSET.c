@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_encode_u8_affine_saturate: For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..255. Decode is raw*step+offset. Exceptional FTRC behavior is not established by raw C.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_encode_u8_affine_saturate: For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..255. Decode is raw*step+offset. Exceptional FTRC behavior is not established by raw C.
  */
 /* ROM address: 0x000024d0; body bytes: 40; decompiled */
 

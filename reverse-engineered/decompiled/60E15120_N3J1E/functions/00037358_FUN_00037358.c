@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * dtc_state_machine_step [medium]: DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116)
+ * dtc_state_machine_step [high]: DTC/immo state machine over DAT_ffffc239-c281; sets DAT_ffffd1e8 response code; reached via thunk 0x576c2 (PID 0xc116) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00037358; body bytes: 278; decompiled */
 

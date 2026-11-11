@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid097c_ram_b59c_div2048 [medium]: dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048)
+ * diag22_pid097c_ram_b59c_div2048 [high]: dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb59c inferred_ram_b59c_ffffb59c (float): PID 0x097c /2048
  */
 /* [MATH AND UNITS REVIEW]

@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_add_u8_saturate: Inputs are truncated to uint8 before addition; output min(a+b,255).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_add_u8_saturate: Inputs are truncated to uint8 before addition; output min(a+b,255).
  */
 /* ROM address: 0x00002478; body bytes: 22; decompiled */
 

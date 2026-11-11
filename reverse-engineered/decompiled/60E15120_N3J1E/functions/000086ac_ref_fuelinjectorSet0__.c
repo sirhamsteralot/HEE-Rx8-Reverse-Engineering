@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * injector_zero_offset_set [medium]: param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_.
+ * injector_zero_offset_set [high]: param_1 ch 0/1/2 -> a0ac/a0b8, a0b0/a0bc, a0b4/a0c0 (zero/offset pair per channel); caller 0x10208 ref_setAllInjectorto0_. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffa0ac injector_zero_offset_ch0 (float): Zero/offset channel 0; pair a0b8 mirror; caller 0x10208 ref_setAllInjectorto0_.
  * RAM 0xffffa0b0 injector_zero_offset_ch1 (float): Zero/offset channel 1; pair a0bc.
  * RAM 0xffffa0b4 injector_zero_offset_ch2 (float): Zero/offset channel 2; pair a0c0.

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffa65c trailing_min_advance_clamp (float): 
+ * RAM 0xffffa65c trailing_min_advance_clamp (float): Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

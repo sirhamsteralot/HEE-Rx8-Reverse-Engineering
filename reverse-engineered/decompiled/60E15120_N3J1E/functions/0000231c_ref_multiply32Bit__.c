@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_mul_s32_shift16_saturate: DMULS.L forms signed 64-bit product; 16 SHAR/ROTCR pairs perform arithmetic >>16; range check clamps to INT32_MIN/MAX. Equivalent to saturate_s32(floor((int64)a*b/65536)). Compatible with Q16.16 multiplication if both inputs use that format; actual operand units depend on callers. Not GCC __mulsi3, which returns an ordinary integer product.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_mul_s32_shift16_saturate: DMULS.L forms signed 64-bit product; 16 SHAR/ROTCR pairs perform arithmetic >>16; range check clamps to INT32_MIN/MAX. Equivalent to saturate_s32(floor((int64)a*b/65536)). Compatible with Q16.16 multiplication if both inputs use that format; actual operand units depend on callers. Not GCC __mulsi3, which returns an ordinary integer product.
  */
 /* ROM address: 0x0000231c; body bytes: 114; decompiled */
 

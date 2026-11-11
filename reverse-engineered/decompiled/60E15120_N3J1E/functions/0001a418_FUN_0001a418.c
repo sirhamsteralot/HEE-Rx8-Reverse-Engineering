@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * maf_per_rotation_calc [medium]: aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0.
+ * maf_per_rotation_calc [high]: aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa54 maf_filter_coeff (float): aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc.
  * RAM 0xffffaa48 maf_filter_state (float): aa48 = first_order_filter(maf, aa48, aa54).
  * RAM 0xffffaa3c maf_per_rotation (float): aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm).

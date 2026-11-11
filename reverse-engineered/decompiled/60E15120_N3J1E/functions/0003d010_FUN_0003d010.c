@@ -1,9 +1,9 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * o2_monitor_integrator [medium]: c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0.
- * RAM 0xffffa42c engine_injectors_off (uint8): Injectors-off flag checked by the 0x3d010 O2 monitor integrator.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b61c: Table 2D - 256 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * o2_monitor_integrator [high]: c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0. | promoted to high (binary-level re-verification (this pass))
+ * RAM 0xffffa42c engine_injectors_off (uint8): Injectors-off flag checked by the 0x3d010 O2 monitor integrator.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * dtc_count_stored [medium]: 0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0)
+ * dtc_count_stored [high]: 0x61450(0x80,0) - 0x5f8fa() + 1 clamp 0xff (was ref_faultSomething0x0) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x0005fab2; body bytes: 60; decompiled */
 

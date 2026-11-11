@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * First-order filter: current+(previous-current)*(1-coefficient), with invalid previous exponent rejection and snap-to-current threshold. Units of current/previous/threshold agree; coefficient is dimensionless. The raw C (uint)arg1 is an FPU bit reinterpretation in assembly, not a numeric uint conversion.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * First-order filter: current+(previous-current)*(1-coefficient), with invalid previous exponent rejection and snap-to-current threshold. Units of current/previous/threshold agree; coefficient is dimensionless. The raw C (uint)arg1 is an FPU bit reinterpretation in assembly, not a numeric uint conversion.
  */
 /* ROM address: 0x000023b0; body bytes: 40; decompiled */
 

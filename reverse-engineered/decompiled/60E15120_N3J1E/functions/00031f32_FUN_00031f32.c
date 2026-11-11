@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * apv_command_calc [medium]: Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset).
+ * apv_command_calc [high]: Sets command bf84: 0 in low-RPM/closed conditions; else staged float literals 100.0 (0x42c80000) / 12.5 (0x41480000) from 0x31f32's own literal pool (verified in ROM), selected by counter bf88 against u16 band thresholds referenced from ROM 0x78bb2-0x78bc0 (incl. 0x78bb8=0x32); RPM hysteresis 2800/3000 (bf98; binary encodes lower bound as 3000.0 minus 200 offset). | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  * RAM 0xffffbf98 apv_rpm_high_flag (uint8): RPM > 3000 (hyst 2800).
  */
 /* ROM address: 0x00031f32; body bytes: 230; decompiled */

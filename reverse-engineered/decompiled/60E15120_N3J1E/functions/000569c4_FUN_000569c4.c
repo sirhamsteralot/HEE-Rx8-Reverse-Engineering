@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid000f_intake_air_temp_c [high]: dispatch record 0x5f184 -> handler verified in ROM bytes + function_index; 0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x000f: Intake Air Temperature. Dispatch identifier match; logger meaning is definition-derived.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid000f_intake_air_temp_c [high]: dispatch record 0x5f184 -> handler verified in ROM bytes + function_index; 0x554c6: intake_air_temperature_ffff9f60*1.0-40 = OBD PID 0F
  */
 /* ROM address: 0x000569c4; body bytes: 22; decompiled */
 

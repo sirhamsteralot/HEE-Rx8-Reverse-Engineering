@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * uds_rx_channel_alloc [medium]: finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10
+ * uds_rx_channel_alloc [high]: finds free/busy channel slot in DAT_ffffddf4, binds service via 0x68b10 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00068a86; body bytes: 98; decompiled */
 

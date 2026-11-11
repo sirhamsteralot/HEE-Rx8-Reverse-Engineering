@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * apv_drive_status_sample [medium]: Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc.
+ * apv_drive_status_sample [high]: Reads PHDR_W 0xfffff72c bits 0x1000/0x2000 (PH12 pkg pin 79 / PH13 pkg pin 80) when a drive-active flag is set; emits remapped 0..3 state at a1bc. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  * RAM 0xffffa1bc apv_drive_status (uint8): Remapped 0..3 state from PH12/PH13 (PHDR 0x1000/0x2000).
  */
 /* ROM address: 0x0000aac4; body bytes: 126; decompiled */

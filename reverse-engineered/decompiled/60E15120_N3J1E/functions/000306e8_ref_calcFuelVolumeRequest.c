@@ -8,9 +8,6 @@
  * RAM 0xffffbeac fuel_volume_scaled (float): beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0.
  * RAM 0xffffbeb0 fuel_volume_final (float): beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0.
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ac88: Fuel Injection - Engine Load Compensation (RX8Defs data pointer, axes and dimensions match).
- */
 /* ROM address: 0x000306e8; body bytes: 248; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00030720) */

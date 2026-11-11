@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_set_speed_latch [high]: Cruise set-speed state machine: latches set speed IN KM/H into learned readValue cell 0xffff866c (write site 0x32624, pool 0x32662), clamp [0, 200] (100 when 0xffffbd49==1) and floor 27.0 km/h; writes cruise target 0xffffbfa4 clamp [27, 100/200]. Emulator: vss 80 -> 866c=80.0, 250 -> 200.0, 10 -> 27.0. Called from batch 0x2e5c6 (jsr 0x2e620, pool 0x2e77c).
+ * RAM 0xffff866c cruise_set_speed_kmh (float): Learned readValue cell with the cruise SET SPEED IN KM/H, written by 0x32614 (site 0x32624, pool 0x32662) clamped [27,200] (100 when 0xffffbd49==1); read by 0x32104/0x3290c/0x329fc/0x2e3dc/0x4ca7e (3.2 km/h tolerance vs 0xffffbfa0) and 0x2d83c. Emulator: vss 80 -> 80.0, 250 -> 200.0, 10 -> 27.0 km/h.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

@@ -2,9 +2,6 @@
  * open_loop_changeover_enrichment [high]: b124 = 0 when b146 == 0, else tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM); b124 feeds calc_fuel_volume_request (0x306e8) via max(ae10, b124).
  * RAM 0xffffb124 open_loop_changeover_enrichment (float): b124 = tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM) when b146 != 0 else 0; feeds 0x306e8 via max(ae10, b124).
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069e00: Open Loop Changeover Enrichment (RX8Defs data pointer, axes and dimensions match).
- */
 /* ROM address: 0x0002024c; body bytes: 42; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00020cac (42 bytes). Names prefixed ref_

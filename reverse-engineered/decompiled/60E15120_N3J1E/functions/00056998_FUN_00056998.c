@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid000d_vehicle_speed_kmh [high]: dispatch record 0x5f16c -> handler verified in ROM bytes + function_index; 0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x000d: Vehicle Speed. Dispatch identifier match; logger meaning is definition-derived.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid000d_vehicle_speed_kmh [high]: dispatch record 0x5f16c -> handler verified in ROM bytes + function_index; 0x5549a: vehicle_speed_ffffbbb4*1.0 = OBD PID 0D
  */
 /* ROM address: 0x00056998; body bytes: 22; decompiled */
 
