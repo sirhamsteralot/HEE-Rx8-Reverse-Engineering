@@ -13351,7 +13351,7 @@ bool ref_txCAN_EventBased(const Rx8CanMessageDescriptor *message)
 /* Unique exact-byte match to related 60E0FC00 function at 00009ac4 (32 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-bool FUN_00009ac4(undefined4 param_1)
+bool hcan_bus_off_flag(undefined4 param_1)
 
 {
   byte *pbVar1;
@@ -17722,7 +17722,7 @@ void ref_canSetup(void)
   char cVar2;
   undefined *puVar3;
   
-  for (DAT_ffffa40e = 0; DAT_ffffa40e < 2; DAT_ffffa40e = DAT_ffffa40e + 1) {
+  for (can_setup_retry_counter_ffffa40e = 0; can_setup_retry_counter_ffffa40e < 2; can_setup_retry_counter_ffffa40e = can_setup_retry_counter_ffffa40e + 1) {
     if (automatic_transmission_ffffb534 == '\x01') {
       ref_CANControllerSetup(0,&DAT_0004e01c,0x10);
       puVar3 = &DAT_0004e01c;
@@ -17736,8 +17736,8 @@ void ref_canSetup(void)
     cVar2 = hcan_mailbox_config_compare(1,&DAT_0004e21c);
     if (cVar1 == '\0' && cVar2 == '\0') break;
   }
-  if (1 < DAT_ffffa40e) {
-    DAT_ffffa410 = 1;
+  if (1 < can_setup_retry_counter_ffffa40e) {
+    can_setup_error_flag_ffffa410 = 1;
   }
   DAT_ffffa411 = 0;
   return;
@@ -17770,7 +17770,7 @@ void ref_resetCANTimers(void)
 
 /* ROM address: 0x0000dade; body bytes: 10; decompiled */
 
-void FUN_0000dade(void)
+void can_error_full_reset(void)
 
 {
   ref_canSetup();
@@ -17818,8 +17818,8 @@ undefined1 * ref_CANTX_Main(void)
 {
   undefined1 *puVar1;
   
-  puVar1 = &DAT_ffffa40f;
-  if ((((DAT_ffffa40f < 100) && (DAT_ffffa40a == '\0')) && (DAT_ffffa410 == '\0')) &&
+  puVar1 = &can_error_poll_counter_ffffa40f;
+  if ((((can_error_poll_counter_ffffa40f < 100) && (can_error_latch_ffffa40a == '\0')) && (can_setup_error_flag_ffffa410 == '\0')) &&
      (((puVar1 = &DAT_ffffa411, DAT_ffffa411 == '\0' &&
        (puVar1 = (undefined1 *)(uint)DAT_ffffaa68,
        puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1))) &&
@@ -17851,7 +17851,7 @@ undefined1 * ref_CANTX_Main(void)
 void ref_CANRX_Main(void)
 
 {
-  if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (DAT_ffffa410 == '\0')) {
+  if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (can_setup_error_flag_ffffa410 == '\0')) {
     can212_rx_main();
     ref_CAN216RX_Main();
     if (automatic_transmission_ffffb534 == '\0') {
@@ -17882,38 +17882,38 @@ uint ref_checkCANsomethingKeyOnBased(void)
   if (((DAT_ffffaa68 == 1) && (DAT_ffffb578 != '\x01')) &&
      ((cVar2 = ref_getHCANSomething(0), cVar2 == '\x01' ||
       (cVar2 = ref_getHCANSomething(1), cVar2 == '\x01')))) {
-    if (DAT_ffffa40f != 0xff) {
-      DAT_ffffa40f = DAT_ffffa40f + 1;
+    if (can_error_poll_counter_ffffa40f != 0xff) {
+      can_error_poll_counter_ffffa40f = can_error_poll_counter_ffffa40f + 1;
     }
   }
   else {
-    DAT_ffffa40f = 0;
+    can_error_poll_counter_ffffa40f = 0;
   }
-  if ((100 < DAT_ffffa40f) && (ref_CANSetupSomethingDifferentBasedOnBit(), DAT_ffffa40a == 0)) {
-    DAT_ffffa40a = 1;
+  if ((100 < can_error_poll_counter_ffffa40f) && (ref_CANSetupSomethingDifferentBasedOnBit(), can_error_latch_ffffa40a == 0)) {
+    can_error_latch_ffffa40a = 1;
   }
   uVar1 = (uint)DAT_ffffaa68;
   if ((uVar1 == 1) && (uVar1 = 1, DAT_ffffb578 != '\x01')) {
-    cVar2 = FUN_00009ac4(0);
+    cVar2 = hcan_bus_off_flag(0);
     if ((cVar2 == '\x01') ||
-       ((cVar2 = FUN_00009ac4(1), cVar2 == '\x01' || (uVar1 = (uint)DAT_ffffa40a, uVar1 == 1)))) {
-      DAT_ffffa40a = 1;
-      DAT_ffffa409 = 1;
-      if (DAT_ffffa40c == 0) {
+       ((cVar2 = hcan_bus_off_flag(1), cVar2 == '\x01' || (uVar1 = (uint)can_error_latch_ffffa40a, uVar1 == 1)))) {
+      can_error_latch_ffffa40a = 1;
+      can_error_recovery_active_ffffa409 = 1;
+      if (can_error_retry_counter_ffffa40c == 0) {
         ref_CANSetupSomethingDifferentBasedOnBit();
         ref_canSetup();
       }
       ref_CANSetupSomethingDifferentBasedOnBit();
-      uVar1 = rx8_add_u16_saturate((int)(short)DAT_ffffa40c,1);
-      DAT_ffffa40c = (ushort)uVar1;
+      uVar1 = rx8_add_u16_saturate((int)(short)can_error_retry_counter_ffffa40c,1);
+      can_error_retry_counter_ffffa40c = (ushort)uVar1;
     }
     else {
-      DAT_ffffa40c = 0;
+      can_error_retry_counter_ffffa40c = 0;
     }
-    if (999 < DAT_ffffa40c) {
-      uVar1 = FUN_0000dade();
-      DAT_ffffa40a = 0;
-      DAT_ffffa40c = 0;
+    if (999 < can_error_retry_counter_ffffa40c) {
+      uVar1 = can_error_full_reset();
+      can_error_latch_ffffa40a = 0;
+      can_error_retry_counter_ffffa40c = 0;
     }
   }
   return uVar1;
@@ -21221,7 +21221,7 @@ void FUN_000114b0(void)
 
 {
   FUN_00019806();
-  FUN_0002a248();
+  can_error_supervision_step();
   FUN_00016f3e();
   FUN_00068be8();
   FUN_00067f64();
@@ -41397,7 +41397,7 @@ undefined4 ref_canInitVals(void)
   thunk_FUN_0002b220();
   thunk_FUN_0004bda2();
   uVar1 = thunk_FUN_0002b988();
-  if (DAT_ffffa410 == '\0') {
+  if (can_setup_error_flag_ffffa410 == '\0') {
     FUN_000291a4();
     FUN_00029414();
     FUN_00029c88();
@@ -41419,7 +41419,7 @@ undefined4 ref_canInitVals(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0002a99c (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002a248(void)
+void can_error_supervision_step(void)
 
 {
   undefined4 uVar1;
@@ -42414,7 +42414,7 @@ void engine_max_torque_allowed_calc(void)
   
   arg1 = 0.0;
   if ((((DAT_ffffbb24 == '\0') && (DAT_ffffbb28 == '\0')) && (engine_running_ffffa428 == '\x01')) &&
-     (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (DAT_ffffa40a == '\0')))) {
+     (((DAT_ffffbbe8 != 0 && (DAT_ffffa401 == '\0')) && (can_error_latch_ffffa40a == '\0')))) {
     fVar1 = (float)rx8_decode_u8_affine(0x3ec99326,0,(int)can212_torque_signal_ffffbbc8);
   }
   else {
@@ -42450,13 +42450,13 @@ void FUN_0002b480(void)
   DAT_ffffbbf8 = (float)rx8_decode_u8_affine(0x3ec99326,0,0xfffffffe);
   cVar4 = DAT_ffffbb24;
   cVar3 = engine_running_ffffa428;
-  cVar2 = DAT_ffffa40a;
+  cVar2 = can_error_latch_ffffa40a;
   cVar1 = DAT_ffffa401;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffbbc9 = -2;
   }
   if ((((DAT_ffffbbec == 0) || (DAT_ffffbb24 == '\x01')) || (engine_running_ffffa428 == '\0')) ||
-     ((DAT_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
+     ((can_error_latch_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
     DAT_ffffbbca = 0xfe;
   }
   arg1 = 0.0;
@@ -42515,13 +42515,13 @@ void candidate_dsc_desired_torque_calc(void)
   
   cVar4 = DAT_ffffbb24;
   cVar3 = engine_running_ffffa428;
-  cVar2 = DAT_ffffa40a;
+  cVar2 = can_error_latch_ffffa40a;
   cVar1 = DAT_ffffa401;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffbbc9 = -2;
   }
   if ((((DAT_ffffbbec == 0) || (DAT_ffffbb24 == '\x01')) || (engine_running_ffffa428 == '\0')) ||
-     ((DAT_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
+     ((can_error_latch_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
     DAT_ffffbbca = 0xfe;
   }
   arg1 = 0.0;
@@ -42751,7 +42751,7 @@ uint candidate_can212_torque_extract(void)
   if (DAT_ffffbbf4 == -1) {
     bVar2 = true;
   }
-  else if ((((DAT_ffffbb24 == '\0') && (engine_running_ffffa428 == '\x01')) && (DAT_ffffa40a == '\0')) &&
+  else if ((((DAT_ffffbb24 == '\0') && (engine_running_ffffa428 == '\x01')) && (can_error_latch_ffffa40a == '\0')) &&
           (DAT_ffffa401 == '\0')) {
     DAT_ffffbbca = DAT_ffffbbf4;
   }
@@ -77774,7 +77774,7 @@ void FUN_000547d8(void)
 {
   undefined4 uVar1;
   
-  if (DAT_ffffa40a == '\0') {
+  if (can_error_latch_ffffa40a == '\0') {
     uVar1 = 2;
   }
   else {

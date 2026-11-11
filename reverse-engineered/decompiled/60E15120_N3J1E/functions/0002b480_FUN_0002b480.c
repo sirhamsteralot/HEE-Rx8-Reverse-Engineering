@@ -22,13 +22,13 @@ void FUN_0002b480(void)
   DAT_ffffbbf8 = (float)rx8_decode_u8_affine(0x3ec99326,0,0xfffffffe);
   cVar4 = DAT_ffffbb24;
   cVar3 = engine_running_ffffa428;
-  cVar2 = DAT_ffffa40a;
+  cVar2 = can_error_latch_ffffa40a;
   cVar1 = DAT_ffffa401;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffbbc9 = -2;
   }
   if ((((DAT_ffffbbec == 0) || (DAT_ffffbb24 == '\x01')) || (engine_running_ffffa428 == '\0')) ||
-     ((DAT_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
+     ((can_error_latch_ffffa40a == '\x01' || (DAT_ffffa401 == '\x01')))) {
     DAT_ffffbbca = 0xfe;
   }
   arg1 = 0.0;

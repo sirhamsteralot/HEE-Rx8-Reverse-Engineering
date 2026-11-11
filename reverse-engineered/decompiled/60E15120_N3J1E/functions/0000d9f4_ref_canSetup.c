@@ -10,7 +10,7 @@ void ref_canSetup(void)
   char cVar2;
   undefined *puVar3;
   
-  for (DAT_ffffa40e = 0; DAT_ffffa40e < 2; DAT_ffffa40e = DAT_ffffa40e + 1) {
+  for (can_setup_retry_counter_ffffa40e = 0; can_setup_retry_counter_ffffa40e < 2; can_setup_retry_counter_ffffa40e = can_setup_retry_counter_ffffa40e + 1) {
     if (automatic_transmission_ffffb534 == '\x01') {
       ref_CANControllerSetup(0,&DAT_0004e01c,0x10);
       puVar3 = &DAT_0004e01c;
@@ -24,8 +24,8 @@ void ref_canSetup(void)
     cVar2 = hcan_mailbox_config_compare(1,&DAT_0004e21c);
     if (cVar1 == '\0' && cVar2 == '\0') break;
   }
-  if (1 < DAT_ffffa40e) {
-    DAT_ffffa410 = 1;
+  if (1 < can_setup_retry_counter_ffffa40e) {
+    can_setup_error_flag_ffffa410 = 1;
   }
   DAT_ffffa411 = 0;
   return;

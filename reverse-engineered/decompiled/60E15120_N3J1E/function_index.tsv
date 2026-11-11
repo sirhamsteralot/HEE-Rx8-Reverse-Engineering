@@ -470,7 +470,7 @@ address	name	body_bytes	status	file
 00009744	ref_CANControllerSetup	274	decompiled	functions/00009744_ref_CANControllerSetup.c
 00009890	can_rx_copy_mailbox_to_buffer	262	decompiled	functions/00009890_ref_placeCANRX.c
 000099b0	ref_txCAN_EventBased	134	decompiled	functions/000099b0_ref_txCAN_EventBased.c
-00009ac4	FUN_00009ac4	32	decompiled	functions/00009ac4_FUN_00009ac4.c
+00009ac4	hcan_bus_off_flag	32	decompiled	functions/00009ac4_FUN_00009ac4.c
 00009b08	ref_getHCANSomething	32	decompiled	functions/00009b08_ref_getHCANSomething.c
 00009b92	ref_doSomethingIfByteIs1InCANSetup	106	decompiled	functions/00009b92_ref_doSomethingIfByteIs1InCANSetup.c
 00009c34	FUN_00009c34	22	decompiled	functions/00009c34_FUN_00009c34.c
@@ -640,7 +640,7 @@ address	name	body_bytes	status	file
 0000d716	crank_tick_flag_set	8	decompiled	functions/0000d716_FUN_0000d716.c
 0000d9f4	ref_canSetup	160	decompiled	functions/0000d9f4_ref_canSetup.c
 0000da94	ref_resetCANTimers	74	decompiled	functions/0000da94_ref_resetCANTimers.c
-0000dade	FUN_0000dade	10	decompiled	functions/0000dade_FUN_0000dade.c
+0000dade	can_error_full_reset	10	decompiled	functions/0000dade_FUN_0000dade.c
 0000dae8	FUN_0000dae8	8	decompiled	functions/0000dae8_FUN_0000dae8.c
 0000daf0	ref_handleCANReset	30	decompiled	functions/0000daf0_ref_handleCANReset.c
 0000db58	ref_CANTX_Main	158	decompiled	functions/0000db58_ref_CANTX_Main.c
@@ -1368,7 +1368,7 @@ address	name	body_bytes	status	file
 0002a082	FUN_0002a082	154	decompiled	functions/0002a082_FUN_0002a082.c
 0002a158	FUN_0002a158	58	decompiled	functions/0002a158_FUN_0002a158.c
 0002a1a0	ref_canInitVals	168	decompiled	functions/0002a1a0_ref_canInitVals.c
-0002a248	FUN_0002a248	30	decompiled	functions/0002a248_FUN_0002a248.c
+0002a248	can_error_supervision_step	30	decompiled	functions/0002a248_FUN_0002a248.c
 0002a266	ref_CANHandler	42	decompiled	functions/0002a266_ref_CANHandler.c
 0002a290	FUN_0002a290	30	decompiled	functions/0002a290_FUN_0002a290.c
 0002a2ae	dsc_can_arbitration_batch	96	decompiled	functions/0002a2ae_ref_updateDSCRelatedCANStuff__.c

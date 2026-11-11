@@ -18,7 +18,7 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0,
-        "word_assigns": 3,
+        "word_assigns": 38,
         "desc_claims": 1
       },
       "cooling_fan_control_report.md": {
@@ -214,11 +214,11 @@
         "reg_pairs": 37,
         "call_claims": 7,
         "pool_claims": 15,
-        "word_assigns": 116,
+        "word_assigns": 121,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 492,
+    "tsv_rows": 495,
     "labels_json_checked": 18
   },
   "notes": [
