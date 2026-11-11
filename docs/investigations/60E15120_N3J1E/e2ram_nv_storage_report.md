@@ -206,7 +206,6 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 | 0x000064ba | `knock_sensor_fault_task` | task[9] body (rec[9].entry @ ROM 0x4a28); sole caller of 0x1150e (jsr pool 0x656c at 0x64d4) |
 | 0x0001150e | `FUN_0001150e` | task[9] sub-batch; tail-jmp 0x23766 (pool 0x116cc at 0x1152e) = the save |
 | 0x00009f96 / 0x0000a522 / 0x00005cee | `FUN_00009f96` / `FUN_0000a522` / `FUN_00005cee` | wake task 9 (`mov #0x9,r4` at 0x9f9c; dispatch entry 0xd890) ← rotating dispatcher 0xa522 (byte table 0xd8f0, ptr table 0xd888) ← CMCSR1 ISR 0x5cee (pool 0x5d64 at 0x5cf8) |
-| 0x00002f20 | IVT trampoline vec 192 | `jmp` pool 0x2f30 = 0x5cee at 0x2f2c; IVT slot ROM 0x7ff50 = 0x2f20 |
 | 0x00022f86 / 0x00022a14 / 0x000231f0 / 0x00023558 | `FUN_00022f86` / `FUN_00022a14` / `FUN_000231f0` / `FUN_00023558` | same 0x1150e pass updates learned values 0xffffb38c/0xffffb40c/0xffffb414 before the save |
 | 0x0002563c / 0x00025600 | `ref_filterBatteryVoltage` / `FUN_00025600` | writers of `filtered_battery_voltage` 0xffffb594 |
 
@@ -218,7 +217,7 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 | 0x23726 / 0x23734 / 0x23738 / 0x2372c / 0x23728 | pool words: 0xb440 (base), 0xa55a (magic), 0xb886 (write), 0x2377a, 0xb43b (ok flag) |
 | 0x656c / 0x116cc / 0x237b8 | pool words = 0x1150e / 0x23766 / 0x236cc (save chain 0x64ba→0x1150e→0x23766→0x236cc) |
 | 0x4a28 | task table rec[9].entry = 0x64ba |
-| 0x2f30 / 0x5d64 / 0xd890 / 0xa1f4 / 0x7ff50 | pool/IVT words = 0x5cee / 0xa522 / 0x9f96 / 0x3854 / 0x2f20 (wake chain: IVT vec 192 → 0x2f20 → 0x5cee → 0xa522 → 0x9f96) |
+| 0x2f30 / 0x5d64 / 0xd890 / 0xa1f4 / 0x7ff50 | pool/IVT words = 0x5cee / 0xa522 / 0x9f96 / 0x3854 / trampoline 0x2f20 (wake chain: IVT vec 192 slot 0x7ff50 → trampoline → 0x5cee → 0xa522 → 0x9f96) |
 | 0x232fa / 0x23590 | pool words = 0xb40c / 0xb414 (encode source cells in 0x231f0/0x23558) |
 
 ### 8.3 RAM (0xffff…)

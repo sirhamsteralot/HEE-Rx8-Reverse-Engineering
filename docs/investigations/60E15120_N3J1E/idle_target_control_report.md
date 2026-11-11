@@ -156,7 +156,7 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 | 0x00015818 / 0x00015934 | `FUN_00015818` / `FUN_00015934` | open-loop ramp / mode select |
 | 0x0005ca94 | `idle_target_encode_u16` | target → u16 (`inferred_ram_a7ac_ffffa7ac` 0xffffa7ac, PID 0x096e); sole caller 0x1506c (pool 0x158d4 @0x157f4, jsr 0x157f6, store @r12=0xffffa7ac at 0x157fa) |
 | 0x00024b44 / 0x00024b8c | `ref_getAutoTransCal__` / `FUN_00024b8c` | producers of `automatic_transmission` 0xffffb534 / 0xffffb53c |
-| 0x000264f0 / 0x0002e9a4 / 0x0002f868 | `FUN_000264f0` / `FUN_0002e9a4` / `ref_getACSwitchStatus` | producers of `high_load_flag` 0xffffb5b3 / `ac_clutch_on` 0xffffbd69 / 0xffffbdb8 |
+| 0x000264f0 / 0x0002e9a4 / 0x0002f868 | `candidate_electrical_load_flag_calc` / `FUN_0002e9a4` / `ref_getACSwitchStatus` | producers of `high_load_flag` 0xffffb5b3 / `ac_clutch_on` 0xffffbd69 / 0xffffbdb8 |
 | 0x000290c6 | `ref_can231TxPack` | 0xffffbaec = 0xffffbae5 >> 4 (CAN 0x231 gear byte feeding 0x24b8c) |
 
 ### 8.2 Data and entry points (ROM)
@@ -183,7 +183,7 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 | 0xffffb53c | `at_drive_range_engaged` | AT drive/moving conditional from `FUN_00024b8c` (CAN 0x231 gear byte 0xffffbaec, vss, rpm) |
 | 0xffffb5b3 | `high_load_flag` | set by 0x264f0 when filtered 0xffffb5e0 ≥ 40.0 |
 | 0xffffbd69 | `ac_clutch_on` | set by 0x2e9a4 under its gating chain |
-| 0xffffbdb8 | `ac_switch_request` | A/C switch input: (0xffff9ecd & 4) == 0, `ref_getACSwitchStatus` 0x2f868 |
+| 0xffffbdb8 | `inferred_ram_bdb8_ffffbdb8` | A/C switch request: (0xffff9ecd & 4) == 0, `ref_getACSwitchStatus` 0x2f868 |
 
 ## 9. Limits
 
