@@ -16,10 +16,12 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 14, 16–19, 21 — pick up 14 next (item 13 closed
-2026-11-11: the `[ADDITIONAL SOURCE REVIEW]` comment sweep was applied to the
-accepted TSVs, the per-subsystem labels JSONs and the subsystem report memory
-maps; full record in this file's git history). The
+**reopened**: open items 16–19, 21 — pick up 16 next (items 13–14 closed
+2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
+the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
+memory maps; item 14 applied, merged and reduced the stacked review comment
+blocks in the export via the re-runnable pipeline passes — full records in
+this file's git history). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
 `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
@@ -29,23 +31,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 14, 16–19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 16–19, 21)
 
-- **C item 14 (open)** — sweep all decompiled function definitions and their
-  header comments for merge/reduce/apply opportunities. Every file under
-  `reverse-engineered/decompiled/60E15120_N3J1E/functions/` now stacks several
-  comment blocks (`[ADDITIONAL SOURCE REVIEW]`, `[CROSS-ECU / RX8DEFS REVIEW]`,
-  `[READABILITY RECONSTRUCTION]`, `[ROM address: ...]`), and the same bodies
-  appear in the monolithic
-  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
-  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
-  — with C item 13 landing more review comments, some statements are now
-  duplicated across blocks. Go through all of them: merge or drop redundant
-  comment lines, apply the ones that belong in the canonical export (via the
-  re-runnable pipeline passes, not hand edits), and keep the per-function files
-  and the two monoliths in sync. Any rename/relabel still needs rule-7
-  binary-level verification; run the pipeline validators + `python -m pytest
-  tests/` after the pass.
 - **C item 16 (open)** — apply all of today's findings to the decompiled C
   code itself. Today's passes (the DSC CAN arbitration labeling, merged as
   PR #55, and the idle speed control labeling, merged as PR #51) produced new
