@@ -1,10 +1,10 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006957c: Igntion Leading Timing - DSC Mode A - Map 4 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
  * RAM 0xffffa91c dsc_timing_derate_leading (float): 
  * RAM 0xffffbbd8 engine_max_torque_allowed (float): Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006957c: Igntion Leading Timing - DSC Mode A - Map 4 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

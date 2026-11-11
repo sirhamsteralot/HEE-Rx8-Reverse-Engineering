@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pidff10_dtc_status_c1d5_c1d8 [medium]: dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8
+ * diag22_pidff10_dtc_status_c1d5_c1d8 [high]: dispatch record 0x5f55c -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffc1d8(0x40)/c1d7(0x20)/c1d6(8)/c1d5(4); appends 4 u8 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc1d5 inferred_ram_c1d5_ffffc1d5 (uint8): PID 0xff10 -> bit 4
  * RAM 0xffffc1d6 inferred_ram_c1d6_ffffc1d6 (uint8): PID 0xff10 -> bit 8
  * RAM 0xffffc1d7 inferred_ram_c1d7_ffffc1d7 (uint8): PID 0xff10 -> bit 0x20

@@ -1,8 +1,9 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0034_afr_lambda_words [high]: dispatch record 0x5f238 -> handler verified in ROM bytes + function_index; diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x0034: Air Fuel Ratio. Dispatch identifier match; logger meaning is definition-derived.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_air_fuel_ratio [high]: RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words.
+ * diag22_pid0034_afr_lambda_words [high]: dispatch record 0x5f238 -> handler verified in ROM bytes + function_index; diag_air_fuel_ratio 0x56b22 appends diag_afr_word_a_ffffaa6c and diag_afr_word_b_ffffaa7c (logger 0x220034 AFR, x*3.05e-05)
  */
 /* ROM address: 0x00056b22; body bytes: 32; decompiled */
 

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * uds_service_21_read_data_by_local_id [medium]: service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function)
+ * uds_service_21_read_data_by_local_id [high]: service table record 0x5ebdc (service 0x21) -> handler; ROM bytes verified; record 0x5ebdc -> 0x5b414 (ref_UDSService21Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x0005b414; body bytes: 110; decompiled */
 

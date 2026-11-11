@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_trim_b074 [medium]: PID 0x15: ffffb074*100*0.7813-100
+ * diag_encode_trim_b074 [high]: PID 0x15: ffffb074*100*0.7813-100 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb074 inferred_trim_b074_ffffb074 (float): PID 0x15/0x163e: x*100*0.7813-100
  */
 /* [MATH AND UNITS REVIEW]

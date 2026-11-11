@@ -1,15 +1,15 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006ae28: Fuel Injection - Warmup Fueling - Load Based Multiplier (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006ae3c: Fuel Injection - Warmup Fueling (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006ae58: Fuel Injection - Warmup Fueling - Engine Speed Based (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006ae74: Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault) (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * warmup_fueling_compensation [high]: c014 = tbl 0x6ae28 'Warmup Fueling - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, catalyst-temp model); c018 = 3D tbl 0x6ae58 (or coolant-fault variant 0x6ae74)(rpm, coolant); c00c = c014 + c018; c010 = warmup-complete flag (catalyst-temp model >= 5 C, or >= 200 C when ce33).
  * RAM 0xffffc010 warmup_complete_flag (uint8): c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair.
  * RAM 0xffffc014 warmup_load_multiplier (float): c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model).
  * RAM 0xffffc018 warmup_rpm_multiplier (float): c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant).
  * RAM 0xffffc00c warmup_enrichment_total (float): c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ae28: Fuel Injection - Warmup Fueling - Load Based Multiplier (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ae3c: Fuel Injection - Warmup Fueling (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ae58: Fuel Injection - Warmup Fueling - Engine Speed Based (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ae74: Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault) (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

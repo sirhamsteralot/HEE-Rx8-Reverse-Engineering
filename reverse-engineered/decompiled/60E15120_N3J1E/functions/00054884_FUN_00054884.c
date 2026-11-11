@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_s16_div [medium]: s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers
+ * diag_encode_s16_div [high]: s16 = (x - p3)/p2 + 0.5 clamp [-0x8000,0x7fff]; used by 0x0914/0x0915/0x0917/0x0918/0x163e handlers | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00054884; body bytes: 62; decompiled */
 

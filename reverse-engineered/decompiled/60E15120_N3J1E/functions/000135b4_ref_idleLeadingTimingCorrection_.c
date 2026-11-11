@@ -1,10 +1,10 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
- * RAM 0xffffa718 idle_leading_timing_error_correction (float): 
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a060: Ignition Leading - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a074: Ignition Leading - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
+ * RAM 0xffffa718 idle_leading_timing_error_correction (float): Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

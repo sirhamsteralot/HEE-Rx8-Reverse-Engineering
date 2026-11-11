@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * maf_filtered_update [medium]: mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8.
+ * maf_filtered_update [high]: mass_air_flow a9ec = a9e8 (scaled/latched MAF); a9f4 = a9e8. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  */
 /* ROM address: 0x00019f40; body bytes: 14; decompiled */
 

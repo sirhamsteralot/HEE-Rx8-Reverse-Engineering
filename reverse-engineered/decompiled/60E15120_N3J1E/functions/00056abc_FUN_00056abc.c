@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid002e_ram_b2f0_pct [medium]: dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157
+ * diag22_pid002e_ram_b2f0_pct [high]: dispatch record 0x5f1fc -> handler verified in ROM bytes + function_index; 0x55616: DAT_ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056abc; body bytes: 22; decompiled */
 

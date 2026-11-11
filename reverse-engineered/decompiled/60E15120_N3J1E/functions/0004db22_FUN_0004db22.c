@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_plausibility_stage [high]: Stages plausibility cascade 0xffffcf35-38 from latches 0xffffcf39/3a, 3b/3c, 3d/3e, 3f/40 gated on 0xffffbfa0 < 300.0; cf35-38 have no readers outside 0x4db22 (pool scan). Called from batch 0x2e692 (jsr 0x2e6da, pool 0x2e7e8).
+ */
 /* ROM address: 0x0004db22; body bytes: 324; decompiled */
 
 undefined4 * FUN_0004db22(void)

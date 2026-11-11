@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid003c_ram_c644_scaled [medium]: dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C)
+ * diag22_pid003c_ram_c644_scaled [high]: dispatch record 0x5f244 -> handler verified in ROM bytes + function_index; 0x5571a: DAT_ffffc644*0.1-40 (fuel-chain cell named in ROADMAP group C) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056b42; body bytes: 20; decompiled */
 

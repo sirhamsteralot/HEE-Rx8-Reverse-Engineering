@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * apv_position_voltage_counter [medium]: bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment — position-voltage dwell counter.
+ * apv_position_voltage_counter [high]: bf88: reset to 0 when bf8b==0 or (bf88 > 0x4e1 && cab4==0); else saturating increment — position-voltage dwell counter. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  * RAM 0xffffbf88 apv_position_dwell_counter (uint16): Incremented unless bf8b==0 or (bf88>0x4e1 && cab4==0); bands in 0x31f32.
  */
 /* ROM address: 0x00031ece; body bytes: 60; decompiled */

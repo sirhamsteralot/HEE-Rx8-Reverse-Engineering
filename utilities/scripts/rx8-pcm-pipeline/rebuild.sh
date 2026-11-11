@@ -50,6 +50,8 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 (cd "$root" && python3 "$base/scripts/refine_lookup_family.py")
 (cd "$root" && python3 "$base/scripts/refine_export_cleanup.py")
 (cd "$root" && python3 "$base/scripts/review_knock_loop_labels_apply.py")
+# Merge/reduce stacked review comment blocks; keeps the per-function files and both monoliths in sync.
+(cd "$root" && python3 "$base/refine_comment_merge.py")
 (cd "$root" && python3 "$base/scripts/verify_readability.py")
 (cd "$root" && python3 "$base/scripts/validate_export.py")
 (cd "$root" && python3 "$base/scripts/validate_reports.py")

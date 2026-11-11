@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0005_coolant_temp_c [high]: dispatch record 0x5f13c -> handler verified in ROM bytes + function_index; 0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs service 0x22 identifier 0x0005: Coolant Temp. Dispatch identifier match; logger meaning is definition-derived.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid0005_coolant_temp_c [high]: dispatch record 0x5f13c -> handler verified in ROM bytes + function_index; 0x5542a: coolant_temperature_ffff9f70*1.0-40.0 = OBD PID 05 A-40
  */
 /* ROM address: 0x00056940; body bytes: 22; decompiled */
 

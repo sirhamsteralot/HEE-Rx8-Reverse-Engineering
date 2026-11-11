@@ -1,3 +1,6 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006ac4c: Table 2D - 182 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * calculate_fuel_amount_per_rotation [high]: Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios.
  * RAM 0xffffbec8 fuel_amount_per_rotation_a (float): bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation.
@@ -7,9 +10,6 @@
  * RAM 0xffffbee0 fuel_amount_per_rotation_e (float): bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93.
  * RAM 0xffffbee4 fuel_ratio_a (float): bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts.
  * RAM 0xffffbee8 fuel_ratio_b (float): bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ac4c: Table 2D - 182 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

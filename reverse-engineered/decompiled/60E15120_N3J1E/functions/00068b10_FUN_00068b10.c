@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * uds_rx_channel_set_service [medium]: DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer
+ * uds_rx_channel_set_service [high]: DAT_ffffddf3[ch*2]=service, state=4, calls 0x67d8c timer | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00068b10; body bytes: 18; decompiled */
 

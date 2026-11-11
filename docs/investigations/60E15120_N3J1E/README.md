@@ -45,6 +45,10 @@ for the latest readability pass and unresolved lookup-call audit.
 See [the axis-search/interpolation family reconstruction](lookup_family/README.md)
 for recovered register outputs, typed variants and per-function analysis records.
 
+See [the comment-block merge/reduce pass](comment_merge/README.md) for the
+canonical ordering, application and deduplication of the stacked review comment
+blocks across the per-function files and both monoliths.
+
 ## Export cleanup
 
 `scripts/refine_export_cleanup.py` post-processes the export without touching

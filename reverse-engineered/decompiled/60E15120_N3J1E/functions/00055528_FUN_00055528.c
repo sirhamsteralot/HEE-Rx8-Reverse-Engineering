@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_maf [high]: PID 0x10: maf*0.01
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffa9ec = mass_air_flow. Direct C dataflow to handler 0x000569da; semantic candidate, not a recovered original symbol.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_maf [high]: PID 0x10: maf*0.01
  */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): mass_air_flow_ffffa9ec; decode = raw * 0.009999999776 + (0) [g/s]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.

@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_blend_s32_u16_weight_over_256: Returns a+trunc((1-weight/256)*(float(b)-float(a))). weight is uint16, not restricted to 0..256; values above 256 extrapolate. Floating arithmetic and truncation matter; not generic integer lerp with unrestricted overflow guarantees.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_blend_s32_u16_weight_over_256: Returns a+trunc((1-weight/256)*(float(b)-float(a))). weight is uint16, not restricted to 0..256; values above 256 extrapolate. Floating arithmetic and truncation matter; not generic integer lerp with unrestricted overflow guarantees.
  */
 /* ROM address: 0x00002510; body bytes: 38; decompiled */
 

@@ -1,8 +1,8 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_iat [high]: PID 0x0f: iat-40
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f60 = intake_air_temperature. Direct C dataflow to handler 0x000569c4; semantic candidate, not a recovered original symbol.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_iat [high]: PID 0x0f: iat-40
  */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): intake_air_temperature_ffff9f60; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.

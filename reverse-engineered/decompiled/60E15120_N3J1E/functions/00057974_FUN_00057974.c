@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pidff44_ram_ce30_raw [medium]: dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16
+ * diag22_pidff44_ram_ce30_raw [high]: dispatch record 0x5f5a4 -> handler verified in ROM bytes + function_index; raw DAT_ffffce30 u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffce30 inferred_ram_ce30_ffffce30 (uint16): PID 0xff44 raw
  */
 /* ROM address: 0x00057974; body bytes: 6; decompiled */

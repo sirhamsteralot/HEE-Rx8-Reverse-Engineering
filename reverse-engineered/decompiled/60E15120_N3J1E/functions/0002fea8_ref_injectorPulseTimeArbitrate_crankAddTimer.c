@@ -9,9 +9,6 @@
  * RAM 0xffffbe3c cranking_decay_counter (uint8): Cranking: loaded from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant); decrements while running.
  * RAM 0xffffbe5c injector_pulse_crank_base (float): Cranking base for be30/be38 while engine not running.
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006bab0: Primary Fuel Injector Cranking Pulse Decay Time (RX8Defs data pointer, axes and dimensions match).
- */
 /* ROM address: 0x0002fea8; body bytes: 164; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00030344 (164 bytes). Names prefixed ref_

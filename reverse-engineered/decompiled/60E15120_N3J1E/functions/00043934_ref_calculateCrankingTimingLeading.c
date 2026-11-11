@@ -3,9 +3,6 @@
  * RAM 0xffffca9c cranking_angle_timing_leading_filtered (float): 
  * RAM 0xffffcaa4 cranking_angle_timing_leading_raw (float): 
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006b630: Off Throttle Leading Timing Realted (RX8Defs data pointer, axes and dimensions match).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

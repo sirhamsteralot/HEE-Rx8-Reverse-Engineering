@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * uds_service_12 [medium]: service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094
+ * uds_service_12 [high]: service table record 0x5ec18 (service 0x12) -> handler; ROM bytes verified; record 0x5ec18 -> 0x5b094 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x0005b094; body bytes: 154; decompiled */
 

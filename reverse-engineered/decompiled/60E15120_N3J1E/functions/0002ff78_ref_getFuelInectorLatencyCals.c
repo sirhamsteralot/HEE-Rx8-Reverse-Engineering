@@ -3,10 +3,6 @@
  * RAM 0xffffbe40 injector_latency_secondary (float): be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP, battery V), quantized /0.25; added to pulse times in 0x2fea8.
  * RAM 0xffffbe44 injector_latency_primary (float): be44 = 3D tbl 0x6aa80 'Injector Latency Primary'(MRP, battery V), quantized /0.25.
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006aa64: Injector Latency Secondary (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006aa80: Injector Latency Primary (RX8Defs data pointer, axes and dimensions match).
- */
 /* ROM address: 0x0002ff78; body bytes: 146; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00030414 (146 bytes). Names prefixed ref_

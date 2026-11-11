@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * vdi_control_task_wrapper [medium]: Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744.
+ * vdi_control_task_wrapper [high]: Mask-0x10 wrapper calling vdi_solenoid_control; called from 0x11744. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
  */
 /* ROM address: 0x000348ea; body bytes: 24; decompiled */
 

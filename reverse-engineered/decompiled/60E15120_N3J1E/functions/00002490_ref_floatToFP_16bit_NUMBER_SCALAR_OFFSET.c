@@ -1,9 +1,9 @@
+/* [MATH AND UNITS REVIEW]
+ * rx8_encode_u16_affine_saturate: For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..65535. Physical decode is raw*step+offset. Step is units/count, not an encode multiplier. NaN, zero step and out-of-range FTRC require SH-specific analysis; do not model by an unrestricted C float-to-int cast. Not roundf: that has a signed floating result and halfway-away-from-zero rules.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [MATH AND UNITS REVIEW]
- * rx8_encode_u16_affine_saturate: For finite in-range intermediate t=(signal-offset)/step, performs trunc(t+0.5), then clamps integer to 0..65535. Physical decode is raw*step+offset. Step is units/count, not an encode multiplier. NaN, zero step and out-of-range FTRC require SH-specific analysis; do not model by an unrestricted C float-to-int cast. Not roundf: that has a signed floating result and halfway-away-from-zero rules.
  */
 /* ROM address: 0x00002490; body bytes: 40; decompiled */
 
