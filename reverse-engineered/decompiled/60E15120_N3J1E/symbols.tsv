@@ -3327,7 +3327,7 @@ address	name	type	source
 000099b0	ref_txCAN_EventBased	Function	USER_DEFINED
 00009a1e	LAB_00009a1e	Label	DEFAULT
 00009a20	LAB_00009a20	Label	DEFAULT
-00009ac4	FUN_00009ac4	Function	DEFAULT
+00009ac4	hcan_bus_off_flag	Function	DEFAULT
 00009adc	LAB_00009adc	Label	DEFAULT
 00009ade	LAB_00009ade	Label	DEFAULT
 00009ae4	DAT_00009ae4	Label	DEFAULT
@@ -4572,7 +4572,7 @@ address	name	type	source
 0000da7c	LAB_0000da7c	Label	DEFAULT
 0000da94	ref_resetCANTimers	Function	USER_DEFINED
 0000daba	LAB_0000daba	Label	DEFAULT
-0000dade	FUN_0000dade	Function	DEFAULT
+0000dade	can_error_full_reset	Function	DEFAULT
 0000dae8	FUN_0000dae8	Function	DEFAULT
 0000daf0	ref_handleCANReset	Function	USER_DEFINED
 0000db08	LAB_0000db08	Label	DEFAULT
@@ -15956,7 +15956,7 @@ address	name	type	source
 0002a19c	PTR_DAT_0002a19c	Label	DEFAULT
 0002a1a0	ref_canInitVals	Function	USER_DEFINED
 0002a242	LAB_0002a242	Label	DEFAULT
-0002a248	FUN_0002a248	Function	DEFAULT
+0002a248	can_error_supervision_step	Function	DEFAULT
 0002a266	ref_CANHandler	Function	USER_DEFINED
 0002a290	FUN_0002a290	Function	DEFAULT
 0002a2ae	dsc_can_arbitration_batch	Function	USER_DEFINED
@@ -43697,12 +43697,12 @@ ffffa405	DAT_ffffa405	Label	DEFAULT
 ffffa406	DAT_ffffa406	Label	DEFAULT
 ffffa407	DAT_ffffa407	Label	DEFAULT
 ffffa408	DAT_ffffa408	Label	DEFAULT
-ffffa409	DAT_ffffa409	Label	DEFAULT
-ffffa40a	DAT_ffffa40a	Label	DEFAULT
-ffffa40c	DAT_ffffa40c	Label	DEFAULT
-ffffa40e	DAT_ffffa40e	Label	DEFAULT
-ffffa40f	DAT_ffffa40f	Label	DEFAULT
-ffffa410	DAT_ffffa410	Label	DEFAULT
+ffffa409	can_error_recovery_active_ffffa409	Label	DEFAULT
+ffffa40a	can_error_latch_ffffa40a	Label	DEFAULT
+ffffa40c	can_error_retry_counter_ffffa40c	Label	DEFAULT
+ffffa40e	can_setup_retry_counter_ffffa40e	Label	DEFAULT
+ffffa40f	can_error_poll_counter_ffffa40f	Label	DEFAULT
+ffffa410	can_setup_error_flag_ffffa410	Label	DEFAULT
 ffffa411	DAT_ffffa411	Label	DEFAULT
 ffffa414	DAT_ffffa414	Label	DEFAULT
 ffffa415	DAT_ffffa415	Label	DEFAULT

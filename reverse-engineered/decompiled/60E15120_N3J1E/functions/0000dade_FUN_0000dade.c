@@ -1,6 +1,6 @@
 /* ROM address: 0x0000dade; body bytes: 10; decompiled */
 
-void FUN_0000dade(void)
+void can_error_full_reset(void)
 
 {
   ref_canSetup();

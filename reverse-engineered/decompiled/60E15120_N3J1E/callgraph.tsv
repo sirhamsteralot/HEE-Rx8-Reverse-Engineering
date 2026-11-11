@@ -925,10 +925,10 @@ caller	callee	callee_name
 0000dbf6	00028dc0	ref_CAN216RX_Main
 0000dbf6	00032d24	ref_CAN430RX_Main
 0000dbf6	0002b958	ref_CAN4C0RX_Main
-0000dcc0	0000dade	FUN_0000dade
+0000dcc0	0000dade	can_error_full_reset
 0000dcc0	00009b08	ref_getHCANSomething
 0000dcc0	0000dddc	ref_CANSetupSomethingDifferentBasedOnBit
-0000dcc0	00009ac4	FUN_00009ac4
+0000dcc0	00009ac4	hcan_bus_off_flag
 0000dcc0	0000d9f4	ref_canSetup
 0000dcc0	00002460	rx8_add_u16_saturate
 0000dddc	00009b92	ref_doSomethingIfByteIs1InCANSetup
@@ -1180,7 +1180,7 @@ caller	callee	callee_name
 00011492	0003e020	FUN_0003e020
 000114b0	00019806	FUN_00019806
 000114b0	00016f3e	FUN_00016f3e
-000114b0	0002a248	FUN_0002a248
+000114b0	0002a248	can_error_supervision_step
 000114b0	00068be8	FUN_00068be8
 000114b0	00067f64	FUN_00067f64
 000114d0	00016b20	ref_readImmoBit
