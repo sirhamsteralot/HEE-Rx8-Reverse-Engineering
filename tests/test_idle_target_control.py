@@ -105,9 +105,12 @@ def test_idle_descriptors():
 
 
 def test_select_flag_producers():
-    # 0xffffb534 automatic_transmission: ref_getAutoTransCal__ 0x24b44 sets =1
+    # 0xffffb534 automatic_transmission: ref_getAutoTransCal__ 0x24b44 copies the
+    # AT calibration byte at ROM 0x74924 (0x00 on this ROM -> MT)
     assert u16(0x24B5E) == 0xB534
     assert "0x24b5e" in asm_line(0x24B44).replace(" ", "") and "mov.b" in asm_line(0x24B58)
+    assert u32(0x24B60) == 0x74924 and "0x24b60" in asm_line(0x24B46).replace(" ", "")
+    assert ROM[0x74924] == 0x00 and "mov.b r0,@r4" in asm_line(0x24B54)
     # 0xffffb53c at_drive_range_engaged: FUN_00024b8c writes
     assert u16(0x24C5A) == 0xB53C and "mov.b" in asm_line(0x24BDE)
     assert u16(0x24E54) == 0xB53C and "mov.b" in asm_line(0x24E38)

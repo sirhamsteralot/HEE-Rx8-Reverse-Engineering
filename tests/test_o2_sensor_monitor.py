@@ -144,3 +144,14 @@ def test_channel_inputs_and_gates():
     assert "jsr" in asm_line(0x4157E) and "0x2" in asm_line(0x4157A)
     # ratio ch0 = c758/c728: fdiv fr3,fr2 at 0x4119e (fr2=c758, fr3=c728)
     assert u32(0x41238) == 0xFFFFC758 and u32(0x41224) == 0xFFFFC728 and "fdiv" in asm_line(0x4119E)
+
+
+def test_filter_factor_pools():
+    # 0x3f924 loads inputs 0xffffaa6c/0xffffadec and factor floats via mov.l pools
+    # 0x7ac7c/0x7ac80/0x7ac84/0x7ac88 = 1.0 / 0.5 / 0.1 / 0.03125, eps 1e-5 at 0x3f9e0
+    assert u16(0x3F9D8) == 0xAA6C and u16(0x3F9DA) == 0xADEC
+    assert u32(0x7AC7C) == 0x3F800000 and u32(0x7AC80) == 0x3F000000
+    assert u32(0x7AC84) == 0x3DCCCCCD and u32(0x7AC88) == 0x3D000000
+    assert u32(0x3F9E0) == 0x3727C5AC          # 1e-5 epsilon
+    assert u32(0x3F9EC) == 0xFFFFC708 and u32(0x3F9F4) == 0xFFFFC70C
+    assert u32(0x3F9FC) == 0xFFFFC710

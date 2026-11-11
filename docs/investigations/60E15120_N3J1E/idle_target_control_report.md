@@ -60,7 +60,7 @@ The five mode-select flags read by 0x1506c now have verified producers
 
 | Flag | Producer (verified) | Meaning |
 |---|---|---|
-| 0xffffb534 `automatic_transmission` | `ref_getAutoTransCal__` 0x24b44 sets it to 1 (pool 0x24b5e @0x24b44, `mov.b r1,@r4` at 0x24b58); called from 0x19624/0x19da2 | automatic-transmission calibration flag (1 = AT) — selects the 0x15818 open-loop ramp vs the 0x15934 running path and the 0x69370 base vs vehicle-moving tables |
+| 0xffffb534 `automatic_transmission` | `ref_getAutoTransCal__` 0x24b44 copies the AT calibration byte at ROM 0x74924 into it (cal byte read at 0x24b46 via pool 0x24b60 = 0x74924; `mov.b r0,@r4` at 0x24b54 when nonzero, `mov.b r1,@r4` at 0x24b58 when zero; pool 0x24b5e = 0xb534; ROM 0x74924 = 0x00 on this ROM → MT); called from 0x19624/0x19da2 | automatic-transmission calibration flag (1 = AT) — selects the 0x15818 open-loop ramp vs the 0x15934 running path and the 0x69370 base vs vehicle-moving tables |
 | 0xffffb53c | `FUN_00024b8c`: = 1 when 0xffffb540 or 0xffffb53e (pool 0x24c5a @0x24bdc, write 0x24bde; pool 0x24e54 @0x24e36, write 0x24e38); 0 when AT (0x24b8c clears it when b534==1) | AT drive-range engaged / vehicle-moving conditional, derived from the CAN 0x231 gear byte (0xffffbaec = 0xffffbae5 >> 4, `ref_can231TxPack` 0x290c6), vehicle speed and rpm |
 | 0xffffb5b3 `high_load_flag` | 0x264f0 `electrical_load_flag_calc`: = 1 when filtered electrical load 0xffffb5e0 >= 40.0, 0 below 30.0 (pool 0x265f0 @0x265b0, write 0x265ce); called from `ref_alternatorControl` 0x2680e | high electrical (alternator) load flag |
 | 0xffffbd69 `ac_clutch_on` | `FUN_0002e9a4` sets it under a gating chain (engine-running timer 0xffffa424, injectors-off 0xffffa42c, rpm < 7800, coolant < 118 °C, flags bd72/bd73/bd76/bd92/bd96/bd97/bd98/0xffffc5e6) — pool 0x2eb58 = 0xbd69 @0x2ea70 | A/C compressor clutch engaged |
@@ -68,8 +68,10 @@ The five mode-select flags read by 0x1506c now have verified producers
 
 In 0x1506c these select the hard floors: AT → 820 base, 840 with A/C clutch +
 switch or high load, 810 with A/C clutch alone or high load alone; MT with
-0xffffb53c → 790, 830/800 with A/C clutch, 800 with high load (0x1506c code at
-0x1614e–0x1620e region, floors 790–840).
+0xffffb53c → 790, 830/800 with A/C clutch, 800 with high load. (The floor
+constants 790–840 rpm are built by FP ops in 0x1506c, not literal pool words —
+same export-derived caveat as the battery-gate constants noted in
+[reviews/large_control_bodies_review.md](reviews/large_control_bodies_review.md).)
 
 **0x5ca94 output path**: 0x5ca94 `idle_target_encode_u16` drives **no actuator
 register**. Its sole caller is 0x1506c (pool word 0x0005ca94 exists only at
