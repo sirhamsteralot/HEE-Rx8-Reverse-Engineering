@@ -104,7 +104,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
   0x135b4/0x136e4 idle error corrections, 0x2cc2c/0x1815c DSC, 0x13ecc coolant
   derate, 0x12e60 trim scale. Applied to symbols.tsv, function_index.tsv,
   callgraph.tsv, functions/*.c, named/firmware_named.c, firmware_decompiled.c.
-- **22 RAM locations** named in `ignition_timing_labels.json` +
+- **24 RAM locations** named in `ignition_timing_labels.json` +
   [accepted_ram_aliases.tsv](source_review/accepted_ram_aliases.tsv): base finals
   `leading_base_timing_final` 0xffffa5e8 / `trailing_base_timing_final` 0xffffa5ec,
   coolant terms 0xffffa5f0/0xffffa5f4, idle corrections 0xffffa718/0xffffa71c,
@@ -120,6 +120,10 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
   `cold_start_timing_reduction_leading/trailing` 0xffffc9a0/0xffffc9a4,
   `ac_compressor_leading/trailing_timing_retard` 0xffffb288/0xffffb28c,
   `timing_blend_weight` 0xffffb118, `cranking_active_ffffaa62` 0xffffaa62.
+  The 18 leading/trailing chain cells (base finals, coolant terms, cranking
+  multipliers, min/max clamps, with-corrections, idle error corrections, IAT
+  comp, idle base) each carry a binary-level store/pool citation in both the
+  TSV and the labels JSON — re-verified against the raw ROM in §10 below.
 - **17 lookup descriptors** named (table above; candidate_ where no RX8Defs match).
 
 ## 5. Corrections made in this pass
@@ -231,3 +235,50 @@ RAM 0xffffa5e8):
   set when c0b4 > 0.5, cleared at <= 0.45 (0x6d780=0.5, 0x6d784=0.05).
   The report, labels JSON, accepted_*.tsv and decompiled comments all carry the corrected values.
 - Base calc 0x11f00 cap constant 80.0 (0x42a00000 @0x6c758/0x6c76c) confirmed.
+- Leading/trailing chain RAM cells: every cell's writer store was re-traced to
+  its literal-pool word in the raw ROM (mov.w pools sign-extend, mov.l pools
+  carry the full 0xffff.... word), and the store instruction bytes were checked
+  in the disassembly:
+  - 0xffffa5e8 `leading_base_timing_final`: fmov.s fr2,@r2 0x11fe8, mov.w pool
+    0x12010=0xa5e8 @0x11fdc (writer 0x11f00); read by 0x123da via pool 0x1253a @0x124b0.
+  - 0xffffa5ec `trailing_base_timing_final`: fmov.s fr2,@r2 0x12154, pool
+    0x1217c=0xa5ec @0x12148 (writer 0x1206c); read by 0x124d6 via pool 0x12688 @0x12594.
+  - 0xffffa5f0 `leading_coolant_scaled_advance_term`: fmov.s fr2,@r1 0x11f60,
+    pool 0x1200a=0xa5f0 @0x11f58 (writer 0x11f00); read by 0x123da via pool 0x12536 @0x124a0.
+  - 0xffffa5f4 `trailing_coolant_scaled_advance_term`: fmov.s fr2,@r1 0x120cc,
+    pool 0x12176=0xa5f4 @0x120c4 (writer 0x1206c); read by 0x124d6 via pool 0x12684 @0x12588.
+  - 0xffffa644 `cranking_timing_multiplier_leading`: fmov.s fr0,@r14 0x1249c,
+    mov.l pool 0x12548=0xffffa644 @0x12464 (writer 0x123da).
+  - 0xffffa654 `cranking_timing_multiplier_trailing`: fmov.s fr0,@r14 0x12582,
+    mov.l pool 0x1256c=0xffffa654 @0x12508 (writer 0x124d6).
+  - 0xffffa64c `leading_min_advance_clamp`: fmov.s fr0/fr3,@r14 0x1270e/0x12738/0x12742,
+    mov.l pool 0x127b8=0xffffa64c @0x126e8 (writer 0x12630); read by 0x121fc.
+  - 0xffffa65c `trailing_min_advance_clamp`: fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e,
+    mov.l pool 0x12868=0xffffa65c @0x127f4 (writer 0x12754); read by 0x12300.
+  - 0xffffa660 `leading_max_advance`: fmov.s fr0,@r2 0x1229c, mov.l pool
+    0x122f4=0xffffa660 @0x1229a (writer 0x121fc).
+  - 0xffffa664 `trailing_max_advance`: fmov.s fr0,@r2 0x123a0, mov.l pool
+    0x12430=0xffffa664 @0x1239e (writer 0x12300).
+  - 0xffffa634 `leading_timing_with_corrections`: fmov.s fr2,@r3 0x123c8, mov.w
+    pool 0x12410=0xa634 @0x123c4 (writer 0x123ba); read by 0x121fc (pool 0x122c6
+    @0x1228a) and 0x2cc2c (pool 0x2cd54 @0x2ccc6).
+  - 0xffffa63c `trailing_timing_with_corrections`: fmov.s fr2,@r3 0x123d8, mov.w
+    pool 0x1240c=0xa63c @0x123d4 (writer 0x123ca); read by 0x12300 (pool 0x1240c @0x1238e).
+  - 0xffffa718 `idle_leading_timing_error_correction`: fmov.s fr15,@r3 0x1368a,
+    mov.w pool 0x136aa=0xa718 @0x13688 (writer 0x135b4); read by 0x123da (pool 0x12534 @0x1249e).
+  - 0xffffa71c `idle_trailing_timing_error_correction`: fmov.s fr15,@r3 0x137ba,
+    mov.w pool 0x137da=0xa71c @0x137b8 (writer 0x136e4); read by 0x124d6 (pool 0x12682 @0x12584).
+  - 0xffffa778 `iat_timing_compensation_leading`: fmov.s fr5/fr0,@r14
+    0x140b8/0x140d2/0x140d4, mov.w pool 0x140e2=0xa778 @0x14098 (writer 0x14090);
+    read by 0x123da (pool 0x1253e @0x124bc).
+  - 0xffffa77c `iat_timing_compensation_trailing`: fmov.s fr3,@r3 0x140da, mov.w
+    pool 0x140ea=0xa77c @0x140d8 (writer 0x14090); read by 0x124d6 (pool 0x1268c @0x125a0).
+  - 0xffffa780 `idle_base_timing_leading`: fmov.s fr0,@r14 0x14120/0x14146, mov.w
+    pool 0x14158=0xa780 @0x1410a (writer 0x14100); read by 0x123da (pool 0x1253c
+    @0x124b4) and 0x121fc (pool 0x122b8 @0x12200).
+  - 0xffffa784 `idle_base_timing_trailing`: fmov.s fr3,@r3 0x1414c, mov.w pool
+    0x1415e=0xa784 @0x1414a (writer 0x14100); read by 0x124d6 (pool 0x1268a
+    @0x12598) and 0x12300 (pool 0x123fe @0x12304).
+  These citations are stored verbatim as the evidence column of the
+  [accepted_ram_aliases.tsv](source_review/accepted_ram_aliases.tsv) rows and the
+  `evidence` fields in `ignition_timing_labels.json`.
