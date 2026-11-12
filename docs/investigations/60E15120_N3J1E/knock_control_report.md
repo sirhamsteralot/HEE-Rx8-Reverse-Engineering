@@ -228,7 +228,7 @@ calibration area 0x0006c000–0x0007ffff.
 | 0x000138b2 | `knock_active_gate` | sets 0xffffa73c |
 | 0x00013a60 | `knock_retard_attack` | retard target; −1.0°/cycle attack |
 | 0x00013b40 | `knock_retard_slow_recovery` | +0.35° per 62 counts |
-| 0x00013bd2 | `knock_retard_clamp` | clamp [min,max](RPM); returns value (bug fixed) |
+| 0x00013bd2 | `knock_retard_clamp` | clamp [min, max] (RPM); returns value (bug fixed) |
 | 0x000139c4 | `knock_retard_learn_to_eeprom` | persistent learned retard |
 | 0x0001391c | `ref_calcKnockRAMUpdate_` | knock-seen counter 0xffffa748 |
 | 0x000145c8 | `timing_retard_fast_task` | 0x1391c + 0x13b40 + throttle/rev-limit/AC retards |

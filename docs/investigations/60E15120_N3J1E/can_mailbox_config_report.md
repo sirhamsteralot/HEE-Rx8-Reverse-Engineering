@@ -11,7 +11,8 @@ recorded in `data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`.
 0xffffe400; UDS mailboxes 14/15); UDS/CAN dispatch in
 [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md); the descriptor
 blocks (0x4e01c etc.) are the same record format as the UDS descriptor tables
-documented there.
+documented there; the CAN 0x212 RX mailbox inside the 0x4e21c HCAN1 block is
+unpacked by [`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md).
 
 ## 1. Executive summary
 
