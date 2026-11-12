@@ -46,7 +46,7 @@ for their content; our repo references them rather than duplicating files:
   `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
   `Utilities/` (upstream patcher scripts)
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs, pinned at
-  `1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`: upstream RomRaider/ECUFlash ECU +
+  `01de56be61b807f58b0b81820d4d2478c16ecc16`: upstream RomRaider/ECUFlash ECU +
   logger XML definitions, referenced in place — no promoted copies (rule 4b);
   the one differing snapshot is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
   @ upstream `ff5ab4f`, the 60E15120 merge base — see

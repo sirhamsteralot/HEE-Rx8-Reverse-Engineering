@@ -45,7 +45,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21, 22)
 
 - **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
   53 rows in
@@ -98,6 +98,24 @@ and where artifacts live.
   4-field-row parser failure in `annotate_source_review.py`) — fix the rows,
   not the parser, in this item. symbols.tsv currently covers all 470 RAM TSV
   rows; keep it that way.
+
+- **C item 22 (open)** — ingest the upstream RX8Defs `01de56b` DTC model into the
+  reviewed merged 60E15120 def. Upstream `d95b0be` turned the RX8Base
+  `DTC xxxx Enable/Disable #1/#2` tables into `Switch` (Enabled=01 /
+  Disabled=00) under new categories "DTC - MIL Illuminate" / "DTC - OBD
+  Report" and re-categorized `#3` as "DTC - Unknown" — matching the
+  ROM-verified banks 0x7e678 (MIL + aging), 0x7e704 (Mode 03 list / freeze
+  frame), 0x7e790 (feature bitmask) in
+  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md).
+  The 8 per-ROM defs regenerated from the new pin carry the switch form; sync
+  record: [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md).
+  But `data/definitions/romraider/rx8defs-merged-60E15120.xml` (base `ff5ab4f`)
+  and therefore `per-rom/60E15120_N3J1E.xml` still carry the old 1D form.
+  Decide whether to rebase the merged def's RX8Base onto `01de56b` (the "do not
+  mix" note in [data/definitions/README.md](data/definitions/README.md) predates
+  the pin move) or to splice only the DTC-table changes, keeping the local
+  P-code names/descriptions applied by `relabel_dtc_names.py`; then re-run the
+  defs passes + pipeline validators + `python -m pytest tests/`.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
