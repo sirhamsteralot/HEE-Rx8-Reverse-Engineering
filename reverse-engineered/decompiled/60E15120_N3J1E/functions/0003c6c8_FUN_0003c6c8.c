@@ -8,9 +8,9 @@ char FUN_0003c6c8(void)
 
 {
   char cVar1;
-  float snapshot_DAT_ffffadd4;
+  float snapshot_inferred_ram_add4_ffffadd4_ffffadd4;
   
-  snapshot_DAT_ffffadd4 = inferred_ram_add4_ffffadd4_ffffadd4;
+  snapshot_inferred_ram_add4_ffffadd4_ffffadd4 = inferred_ram_add4_ffffadd4_ffffadd4;
   FUN_0003c99a(inferred_ram_add4_ffffadd4_ffffadd4);
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc5d8 = '\x03';
@@ -21,7 +21,7 @@ char FUN_0003c6c8(void)
     DAT_ffffc5e0 = 0;
     cVar1 = '\x01';
   }
-  else if ((snapshot_DAT_ffffadd4 < 0.16) || (4.8 < snapshot_DAT_ffffadd4)) {
+  else if ((snapshot_inferred_ram_add4_ffffadd4_ffffadd4 < 0.16) || (4.8 < snapshot_inferred_ram_add4_ffffadd4_ffffadd4)) {
     if (DAT_ffffc5dc == '\x01') {
       if (DAT_ffffc5d8 == '\0') {
         cVar1 = ref_getFaultStatus__(0xf);

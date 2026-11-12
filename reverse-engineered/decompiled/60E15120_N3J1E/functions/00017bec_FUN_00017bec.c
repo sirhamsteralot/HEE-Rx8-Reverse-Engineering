@@ -7,20 +7,20 @@
 uint FUN_00017bec(void)
 
 {
-  byte snapshot_DAT_ffffa8f4;
+  byte snapshot_inferred_ram_a8f4_ffffa8f4_ffffa8f4;
   byte bVar3;
   uint uVar2;
   byte bVar4;
   char cVar5;
   
-  snapshot_DAT_ffffa8f4 = inferred_ram_a8f4_ffffa8f4_ffffa8f4;
+  snapshot_inferred_ram_a8f4_ffffa8f4_ffffa8f4 = inferred_ram_a8f4_ffffa8f4_ffffa8f4;
   bVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8052,0x37);
   cVar5 = '\0';
   bVar4 = 0;
   if (DAT_ffffa8e9 == '\x01') {
     if (inferred_ram_a8f5_ffffa8f5_ffffa8f5 == '\0') {
       bVar3 = rx8_add_u8_saturate();
-      if (bVar3 < snapshot_DAT_ffffa8f4) {
+      if (bVar3 < snapshot_inferred_ram_a8f4_ffffa8f4_ffffa8f4) {
         cVar5 = '\x01';
       }
     }
@@ -31,7 +31,7 @@ uint FUN_00017bec(void)
       else {
         bVar3 = bVar3 - 1;
       }
-      if (snapshot_DAT_ffffa8f4 < bVar3) {
+      if (snapshot_inferred_ram_a8f4_ffffa8f4_ffffa8f4 < bVar3) {
         bVar4 = 1;
       }
     }

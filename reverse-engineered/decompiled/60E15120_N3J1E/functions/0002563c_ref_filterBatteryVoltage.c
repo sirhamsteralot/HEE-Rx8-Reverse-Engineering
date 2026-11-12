@@ -6,7 +6,7 @@
 void ref_filterBatteryVoltage(void)
 
 {
-  DAT_ffffb594 = rx8_first_order_filter(inferred_battery_voltage_ffffb590,DAT_ffffb594,0.5,1e-05);
+  filtered_battery_voltage_ffffb594 = rx8_first_order_filter(inferred_battery_voltage_ffffb590,filtered_battery_voltage_ffffb594,0.5,1e-05);
   return;
 }
 

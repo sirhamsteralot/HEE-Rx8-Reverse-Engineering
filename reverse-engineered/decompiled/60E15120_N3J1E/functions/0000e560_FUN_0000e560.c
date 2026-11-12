@@ -15,7 +15,7 @@ undefined2 * FUN_0000e560(void)
 {
   char cVar1;
   char cVar2;
-  byte snapshot_DAT_ffffbf3c;
+  byte snapshot_inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   undefined2 *extraout_r0;
   undefined2 *puVar4;
   undefined4 uVar5;
@@ -24,7 +24,7 @@ undefined2 * FUN_0000e560(void)
   float snapshot_inferred_predicted_engine_speed_ffffb55c;
   float fVar9;
   
-  snapshot_DAT_ffffbf3c = inferred_ram_bf3c_ffffbf3c_ffffbf3c;
+  snapshot_inferred_ram_bf3c_ffffbf3c_ffffbf3c = inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   cVar2 = DAT_ffffb53a;
   cVar1 = automatic_transmission_ffffb534;
   if ((DAT_ffffa4a1 == '\x01') && (DAT_ffffb53a == '\0')) {
@@ -40,7 +40,7 @@ undefined2 * FUN_0000e560(void)
     DAT_ffffa48c = DAT_ffffa48c + -1;
   }
   if (automatic_transmission_ffffb534 == '\x01') {
-    DAT_ffffa461 = DAT_ffffbc3d;
+    DAT_ffffa461 = current_gear_ffffbc3d;
   }
   else if (DAT_ffffbc41 == '\x01') {
     DAT_ffffa461 = '\x01';
@@ -62,7 +62,7 @@ undefined2 * FUN_0000e560(void)
   else {
     DAT_ffffa499 = '\x01';
   }
-  puVar4 = (undefined2 *)(uint)snapshot_DAT_ffffbf3c;
+  puVar4 = (undefined2 *)(uint)snapshot_inferred_ram_bf3c_ffffbf3c_ffffbf3c;
   DAT_ffffa458 = DAT_ffffa468;
   if (puVar4 == (undefined2 *)((int)&vector_Poweron_Reset + 1)) {
     DAT_ffffa458 = DAT_ffffa468 + 0.0;
@@ -82,7 +82,7 @@ undefined2 * FUN_0000e560(void)
   if (DAT_ffffc590 == '\x01') {
     DAT_ffffa458 = DAT_ffffa458 + 10000.0;
   }
-  if (((DAT_ffffbad0 == '\x01') && (DAT_ffffb53c == '\0')) && (DAT_ffffa499 == '\x01')) {
+  if (((DAT_ffffbad0 == '\x01') && (at_drive_range_engaged_ffffb53c == '\0')) && (DAT_ffffa499 == '\x01')) {
     DAT_ffffa458 = DAT_ffffa458 + 1500.0;
   }
   if (cVar2 == '\x01') {

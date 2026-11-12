@@ -7,7 +7,7 @@ void FUN_0002e692(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   cruise_switch_code_decode();
-  FUN_0004c896();
+  cruise_enable_pedal_override();
   FUN_0004dece();
   FUN_0004c8c4();
   FUN_0004c9b2();
@@ -15,8 +15,8 @@ void FUN_0002e692(void)
   FUN_0004dec0();
   cruise_speed_error_filter_stage();
   FUN_0004d4a6();
-  FUN_0004d700();
-  FUN_0004db22();
+  cruise_switch_plausibility_timers();
+  cruise_plausibility_stage();
   FUN_0004dc9e();
   ref_setSR(uVar1);
   return;

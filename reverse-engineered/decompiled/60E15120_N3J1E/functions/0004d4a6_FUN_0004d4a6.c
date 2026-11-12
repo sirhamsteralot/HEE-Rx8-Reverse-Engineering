@@ -29,7 +29,7 @@ void FUN_0004d4a6(void)
   
   fVar5 = 0.0;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
-  if (DAT_ffffcf34 == '\0') {
+  if (cruise_enable_flag_ffffcf34 == '\0') {
     DAT_ffffcef8 = 0.0;
     DAT_ffffcf00 = 0.0;
     DAT_ffffcf08 = 0.0;
@@ -80,7 +80,7 @@ void FUN_0004d4a6(void)
   fVar1 = fVar5;
   fVar2 = fVar5;
   fVar3 = fVar5;
-  if (DAT_ffffcf34 != '\0') {
+  if (cruise_enable_flag_ffffcf34 != '\0') {
     if (DAT_ffffcf50 != '\0') {
       DAT_ffffcefc = rx8_max_float(arg0,arg1);
     }

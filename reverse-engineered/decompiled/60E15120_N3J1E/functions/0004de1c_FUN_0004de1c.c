@@ -19,14 +19,14 @@
 /* WARNING: Removing unreachable block (ram,0x0004deb0) */
 /* WARNING: Removing unreachable block (ram,0x0004de4e) */
 
-undefined4 FUN_0004de1c(void)
+undefined4 gear_float_band_producer(void)
 
 {
   undefined4 uVar1;
   undefined4 extraout_fr0;
   
-  uVar1 = rx8_decode_u8_affine(0x3f800000,0,(int)DAT_ffffbc3d);
-  DAT_ffffcf1c = extraout_fr0;
+  uVar1 = rx8_decode_u8_affine(0x3f800000,0,(int)current_gear_ffffbc3d);
+  current_gear_float_ffffcf1c = extraout_fr0;
   return uVar1;
 }
 

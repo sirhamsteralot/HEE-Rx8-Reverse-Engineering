@@ -3,7 +3,7 @@
  * RAM 0xffffa9bc inferred_ram_a9bc_ffffa9bc (float): PID 0x1340 *0.392157
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): DAT_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (8-bit): inferred_ram_a9bc_ffffa9bc_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056f4e; body bytes: 30; decompiled */
 

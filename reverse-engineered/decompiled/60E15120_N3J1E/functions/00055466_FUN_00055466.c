@@ -3,7 +3,7 @@
  * RAM 0xffffb0d0 inferred_ltft_bank1_ffffb0d0 (float): PID 0x07: x*100*0.78125-100
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): DAT_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (8-bit): inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055466; body bytes: 30; decompiled */
 

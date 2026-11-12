@@ -15,7 +15,7 @@ uint ref_cruiseControllAccelResCheck__(void)
   
   uVar4 = 0;
   fVar5 = DAT_ffffbfa0;
-  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff866c);
+  fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&cruise_set_speed_kmh_ffff866c);
   fVar6 = fVar5 - fVar3;
   fVar5 = fVar3 - fVar5;
   uVar1 = rx8_is_outside_tolerance_band(fVar3,uVar4,0x3727c5ac);

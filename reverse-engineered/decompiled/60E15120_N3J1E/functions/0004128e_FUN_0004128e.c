@@ -59,7 +59,7 @@ undefined4 * o2_response_monitor_evaluate(void)
       DAT_ffffc78c = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&tbl_table_3d_88_0006b69c);
       DAT_ffffc790 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&tbl_table_3d_89_0006b6b8);
       DAT_ffffc794 = (float)lookup_3d_descriptor_scaled(snapshot_engine_load_ffffc0b4,snapshot_engine_speed_rpm_ffffb548,&tbl_table_3d_90_0006b6d4);
-      if ((DAT_ffffc704 == '\x01') && (DAT_ffffae21 == '\x01')) {
+      if ((o2_monitor_accum_gate_ffffc704 == '\x01') && (o2_monitor_enable_ffffae21 == '\x01')) {
         DAT_ffffc7da = rx8_add_u16_saturate((int)DAT_ffffc7da,1);
         fVar2 = (float)rx8_decode_u16_affine(0x3f800000,uVar5,(int)DAT_ffffc7da);
         DAT_ffffc7a0 = DAT_ffffc788 + DAT_ffffc7a0;

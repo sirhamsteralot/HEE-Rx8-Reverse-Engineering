@@ -11,8 +11,8 @@ undefined1 * FUN_000321f4(void)
   
   if (((((DAT_ffffbced != '\x01') || (DAT_ffffbfb5 != '\0')) || (DAT_ffffbfcc != '\0')) ||
       (inferred_ram_bc35_ffffbc35_ffffbc35 != '\x01')) ||
-     ((2.0 < DAT_ffffbfa0 - DAT_ffffbfa4 &&
-      ((6.4 < DAT_ffffbfa0 - DAT_ffffbfa4 || (DAT_ffffbfb7 != '\x01')))))) {
+     ((2.0 < DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4 &&
+      ((6.4 < DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4 || (DAT_ffffbfb7 != '\x01')))))) {
     DAT_ffffbfb6 = 0;
     bVar1 = false;
   }

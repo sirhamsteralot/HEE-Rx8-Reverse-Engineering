@@ -19,7 +19,7 @@ void FUN_000233ec(void)
   undefined4 snapshot_intake_air_temperature_ffffaddc;
   float arg0;
   
-  arg0 = DAT_ffffb38c + idle_air_required_ffffb2a4;
+  arg0 = candidate_throttle_base_position_ffffb38c + idle_air_required_ffffb2a4;
   fVar3 = idle_air_required_ffffb2a4;
   snapshot_intake_air_temperature_ffffaddc = intake_air_temperature_ffffaddc;
   DAT_ffffb418 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_table_2d_144_0006a4c8);

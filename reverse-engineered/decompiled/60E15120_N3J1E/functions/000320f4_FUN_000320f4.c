@@ -3,7 +3,7 @@
 void FUN_000320f4(void)
 
 {
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff866c);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0,&cruise_set_speed_kmh_ffff866c);
   return;
 }
 

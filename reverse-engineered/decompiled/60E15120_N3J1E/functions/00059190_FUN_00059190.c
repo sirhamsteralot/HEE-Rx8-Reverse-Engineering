@@ -10,21 +10,21 @@
 undefined4 FUN_00059190(uint param_1)
 
 {
-  ushort snapshot_DAT_ffffd3b4;
+  ushort snapshot_diag_permission_mask_ffffd3b4_ffffd3b4;
   undefined4 uVar2;
   byte *pbVar3;
   uint uVar4;
   byte local_c [2];
   ushort uStack_a;
   
-  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
+  snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   pbVar3 = local_c;
   do {
     sh_copy_bytes_forward_r0_r1_r2();
     uVar4 = (uint)*pbVar3;
     if (uVar4 == (param_1 & 0xff)) break;
   } while (uVar4 != 0);
-  if ((uVar4 == 0) || ((snapshot_DAT_ffffd3b4 & uStack_a) == 0)) {
+  if ((uVar4 == 0) || ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & uStack_a) == 0)) {
     uVar2 = 1;
   }
   else {

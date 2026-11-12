@@ -2,7 +2,7 @@
  * diag22_pid16b3_ram_ad10_raw [high]: dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffad10; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): inferred_ram_ad10_ffffad10_ffffad10; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056faa; body bytes: 30; decompiled */
 

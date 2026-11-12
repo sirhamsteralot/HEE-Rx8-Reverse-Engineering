@@ -4,15 +4,15 @@
  */
 /* ROM address: 0x0004c896; body bytes: 46; decompiled */
 
-void FUN_0004c896(void)
+void cruise_enable_pedal_override(void)
 
 {
   DAT_ffffcf18 = cruise_set_speed_ffffbcf8;
-  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < DAT_ffffa9b4)) {
-    DAT_ffffcf34 = 0;
+  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < throttle_position_1_percent_ffffa9b4)) {
+    cruise_enable_flag_ffffcf34 = 0;
   }
   else {
-    DAT_ffffcf34 = 1;
+    cruise_enable_flag_ffffcf34 = 1;
   }
   return;
 }

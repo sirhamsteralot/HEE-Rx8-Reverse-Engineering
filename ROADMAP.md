@@ -16,14 +16,18 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 16–19, 21 — pick up 16 next (items 13–14 closed
+**reopened**: open items 17–19, 21 — pick up 17 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
-blocks in the export via the re-runnable pipeline passes — full records in
-this file's git history). The
-audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
-2,424 `FUN_` (function_index.tsv figures of 2026-11-11,
+blocks in the export via the re-runnable pipeline passes; item 16 closed
+2026-11-12: the annotation + `integrate_reviewed_names.py` passes were re-run so
+every file under `reverse-engineered/decompiled/60E15120_N3J1E/functions/`,
+`firmware_decompiled.c` and `named/firmware_named.c` carries the accepted
+function/RAM aliases and review comments — full records in this file's git
+history). The
+audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
+2,416 `FUN_` (function_index.tsv figures of 2026-11-12,
 `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
 
 ## Open work — pick up here
@@ -31,23 +35,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 931 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 16–19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 17–19, 21)
 
-- **C item 16 (open)** — apply all of today's findings to the decompiled C
-  code itself. Today's passes (the DSC CAN arbitration labeling, merged as
-  PR #55, and the idle speed control labeling, merged as PR #51) produced new
-  function aliases, RAM aliases and review comments, but the decompiled artifacts still
-  need a fresh pipeline run so they carry them: re-run the annotation +
-  `integrate_reviewed_names.py` passes from `rebuild.sh` so every file under
-  `reverse-engineered/decompiled/60E15120_N3J1E/functions/`, the monolithic
-  [`firmware_decompiled.c`](reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
-  and [`named/firmware_named.c`](reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c)
-  reflect the new names/comments (distinct from C item 13, which applies the
-  comments to the label TSVs/JSON + reports, and C item 14, which
-  merges/reduces the comment blocks themselves). Re-verify at the binary level
-  per AGENTS.md rule 7 and run the pipeline validators + `python -m pytest
-  tests/`; keep the passes re-runnable (rule 6c) rather than hand-editing the
-  export.
 - **C item 17 (open)** — update and review all existing documentation with the
   new insights. Today's passes (DSC CAN arbitration and idle speed control,
   both merged; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment

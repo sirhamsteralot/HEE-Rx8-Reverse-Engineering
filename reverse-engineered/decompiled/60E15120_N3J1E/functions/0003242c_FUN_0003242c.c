@@ -32,7 +32,7 @@ void FUN_0003242c(void)
   if ((DAT_ffffbfbd == '\x01') && (bVar1)) {
     DAT_ffffbfbd = '\0';
   }
-  if (((DAT_ffffbced != '\x01') || (DAT_ffffbfa0 - DAT_ffffbfa4 <= 2.0)) ||
+  if (((DAT_ffffbced != '\x01') || (DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4 <= 2.0)) ||
      ((DAT_ffffbfb7 != '\0' || (((DAT_ffffbfc9 != '\0' || (DAT_ffffbfba != '\0')) || (!bVar1)))))) {
     DAT_ffffbfb1 = 0;
     bVar3 = false;

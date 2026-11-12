@@ -27,7 +27,7 @@ void FUN_0001c880(void)
   float fVar12;
   float fVar13;
   float snapshot_engine_load_ffffc0b4;
-  float snapshot_DAT_ffffb0d0;
+  float snapshot_inferred_ltft_bank1_ffffb0d0_ffffb0d0;
   float snapshot_engine_speed_rpm_ffffb548;
   float arg3;
   
@@ -38,10 +38,10 @@ void FUN_0001c880(void)
   fVar11 = inferred_coolant_temperature_ffffa98c;
   arg3 = 1e-05;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
-  snapshot_DAT_ffffb0d0 = inferred_ltft_bank1_ffffb0d0_ffffb0d0;
+  snapshot_inferred_ltft_bank1_ffffb0d0_ffffb0d0 = inferred_ltft_bank1_ffffb0d0_ffffb0d0;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   cVar4 = rx8_is_outside_tolerance_band(DAT_ffffb220,DAT_ffffb050,0x3727c5ac);
-  cVar5 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffb0d0,DAT_ffffb054,arg3);
+  cVar5 = rx8_is_outside_tolerance_band(snapshot_inferred_ltft_bank1_ffffb0d0_ffffb0d0,DAT_ffffb054,arg3);
   DAT_ffffadf8 = (float)rx8_divide_with_zero_fallback(0x3f800000,diag_afr_word_a_ffffaa6c);
   pfVar9 = &DAT_ffffaec8;
   if (closed_loop_active_ffffae1f == '\0') {
@@ -60,7 +60,7 @@ void FUN_0001c880(void)
       DAT_ffffaffc = 0.0;
     }
     else {
-      DAT_ffffaffc = (((snapshot_DAT_ffffb0d0 - DAT_ffffb054) - DAT_ffffb058) + snapshot_DAT_ffffb21c) * 0.0;
+      DAT_ffffaffc = (((snapshot_inferred_ltft_bank1_ffffb0d0_ffffb0d0 - DAT_ffffb054) - DAT_ffffb058) + snapshot_DAT_ffffb21c) * 0.0;
     }
     fVar13 = 0.0;
     bVar8 = 1;
@@ -132,7 +132,7 @@ void FUN_0001c880(void)
   }
   DAT_ffffb04c = DAT_ffffadf8;
   DAT_ffffb050 = snapshot_DAT_ffffb220;
-  DAT_ffffb054 = snapshot_DAT_ffffb0d0;
+  DAT_ffffb054 = snapshot_inferred_ltft_bank1_ffffb0d0_ffffb0d0;
   DAT_ffffb058 = snapshot_DAT_ffffb21c;
   return;
 }

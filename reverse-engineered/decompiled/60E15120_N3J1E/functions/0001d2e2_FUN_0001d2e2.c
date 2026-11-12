@@ -3,7 +3,7 @@
 void FUN_0001d2e2(void)
 
 {
-  if ((DAT_ffffb016 == 0) || (DAT_ffffae21 == '\0')) {
+  if ((DAT_ffffb016 == 0) || (o2_monitor_enable_ffffae21 == '\0')) {
     DAT_ffffae1a = 0;
     DAT_ffffae1c = 0;
     DAT_ffffaff8 = 0.0;
@@ -34,7 +34,7 @@ void FUN_0001d2e2(void)
       DAT_ffffaff8 = DAT_ffffaff4;
     }
   }
-  DAT_ffffb06d = DAT_ffffae21;
+  DAT_ffffb06d = o2_monitor_enable_ffffae21;
   DAT_ffffb062 = DAT_ffffb016;
   return;
 }

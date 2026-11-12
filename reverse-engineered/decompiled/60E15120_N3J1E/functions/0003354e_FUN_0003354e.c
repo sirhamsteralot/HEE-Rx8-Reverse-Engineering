@@ -11,9 +11,9 @@ void candidate_idle_ac_blend_ramp(void)
 {
   char cVar1;
   
-  cVar1 = DAT_ffffb53c;
+  cVar1 = at_drive_range_engaged_ffffb53c;
   if (automatic_transmission_ffffb534 == '\0') {
-    if (DAT_ffffb53c == '\0') {
+    if (at_drive_range_engaged_ffffb53c == '\0') {
       DAT_ffffc048 = 0.0;
     }
     else if (DAT_ffffc05b == '\0') {

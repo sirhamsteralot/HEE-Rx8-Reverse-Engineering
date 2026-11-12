@@ -11,7 +11,7 @@ undefined1 * FUN_0002d318(void)
   float fVar3;
   
   cVar1 = DAT_ffffbfb9;
-  fVar3 = DAT_ffffbfa0 - DAT_ffffbfa4;
+  fVar3 = DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4;
   puVar2 = (undefined1 *)0x1;
   if (((((inferred_ram_ad18_ffffad18_ffffad18 == '\x01') || (puVar2 = (undefined1 *)0x1, DAT_ffffbbcf == '\x01')) ||
        (puVar2 = (undefined1 *)0x1, DAT_ffffb53a == '\x01')) ||

@@ -9147,7 +9147,7 @@ address	name	type	source
 000193b8	PTR_DAT_000193b8	Label	DEFAULT
 000193bc	PTR_ref_readValue_float_DEFAULTVAL_ADDRESS_000193bc	Label	DEFAULT
 000193c0	PTR_DAT_000193c0	Label	DEFAULT
-000193c4	FUN_000193c4	Function	DEFAULT
+000193c4	throttle_percent_and_demand_calc	Function	DEFAULT
 00019434	LAB_00019434	Label	DEFAULT
 0001943e	LAB_0001943e	Label	DEFAULT
 00019470	LAB_00019470	Label	DEFAULT
@@ -16744,7 +16744,7 @@ address	name	type	source
 0002c2f4	LAB_0002c2f4	Label	DEFAULT
 0002c30e	LAB_0002c30e	Label	DEFAULT
 0002c314	LAB_0002c314	Label	DEFAULT
-0002c324	ref_calculateGearRPMbased	Function	USER_DEFINED
+0002c324	candidate_gear_from_ratio	Function	USER_DEFINED
 0002c356	LAB_0002c356	Label	DEFAULT
 0002c366	LAB_0002c366	Label	DEFAULT
 0002c376	LAB_0002c376	Label	DEFAULT
@@ -16754,7 +16754,7 @@ address	name	type	source
 0002c3a8	LAB_0002c3a8	Label	DEFAULT
 0002c3ac	LAB_0002c3ac	Label	DEFAULT
 0002c3ae	LAB_0002c3ae	Label	DEFAULT
-0002c3b2	FUN_0002c3b2	Function	DEFAULT
+0002c3b2	gear_latch_confirm	Function	DEFAULT
 0002c3d4	DAT_0002c3d4	Label	DEFAULT
 0002c3d6	DAT_0002c3d6	Label	DEFAULT
 0002c3d8	DAT_0002c3d8	Label	DEFAULT
@@ -17240,7 +17240,7 @@ address	name	type	source
 0002d61c	LAB_0002d61c	Label	DEFAULT
 0002d628	LAB_0002d628	Label	DEFAULT
 0002d62c	LAB_0002d62c	Label	DEFAULT
-0002d638	FUN_0002d638	Function	DEFAULT
+0002d638	cruise_control_output_law	Function	DEFAULT
 0002d67e	LAB_0002d67e	Label	DEFAULT
 0002d68e	LAB_0002d68e	Label	DEFAULT
 0002d6e4	DAT_0002d6e4	Label	DEFAULT
@@ -19239,7 +19239,7 @@ address	name	type	source
 000325e6	LAB_000325e6	Label	DEFAULT
 000325ec	LAB_000325ec	Label	DEFAULT
 000325f0	LAB_000325f0	Label	DEFAULT
-00032614	FUN_00032614	Function	DEFAULT
+00032614	cruise_set_speed_latch	Function	DEFAULT
 00032650	DAT_00032650	Label	DEFAULT
 00032652	DAT_00032652	Label	DEFAULT
 00032654	DAT_00032654	Label	DEFAULT
@@ -29308,7 +29308,7 @@ address	name	type	source
 0004c882	LAB_0004c882	Label	DEFAULT
 0004c890	LAB_0004c890	Label	DEFAULT
 0004c892	LAB_0004c892	Label	DEFAULT
-0004c896	FUN_0004c896	Function	DEFAULT
+0004c896	cruise_enable_pedal_override	Function	DEFAULT
 0004c8b6	LAB_0004c8b6	Label	DEFAULT
 0004c8bc	LAB_0004c8bc	Label	DEFAULT
 0004c8c0	LAB_0004c8c0	Label	DEFAULT
@@ -29677,7 +29677,7 @@ address	name	type	source
 0004d6f4	PTR_DAT_0004d6f4	Label	DEFAULT
 0004d6f8	PTR_DAT_0004d6f8	Label	DEFAULT
 0004d6fc	PTR_DAT_0004d6fc	Label	DEFAULT
-0004d700	FUN_0004d700	Function	DEFAULT
+0004d700	cruise_switch_plausibility_timers	Function	DEFAULT
 0004d7d8	LAB_0004d7d8	Label	DEFAULT
 0004d80a	LAB_0004d80a	Label	DEFAULT
 0004d81a	DAT_0004d81a	Label	DEFAULT
@@ -29769,7 +29769,7 @@ address	name	type	source
 0004db1c	DAT_0004db1c	Label	DEFAULT
 0004db1e	DAT_0004db1e	Label	DEFAULT
 0004db20	DAT_0004db20	Label	DEFAULT
-0004db22	FUN_0004db22	Function	DEFAULT
+0004db22	cruise_plausibility_stage	Function	DEFAULT
 0004db68	LAB_0004db68	Label	DEFAULT
 0004db78	LAB_0004db78	Label	DEFAULT
 0004db7c	LAB_0004db7c	Label	DEFAULT
@@ -29858,7 +29858,7 @@ address	name	type	source
 0004de10	PTR_DAT_0004de10	Label	DEFAULT
 0004de14	PTR_DAT_0004de14	Label	DEFAULT
 0004de18	PTR_DAT_0004de18	Label	DEFAULT
-0004de1c	FUN_0004de1c	Function	DEFAULT
+0004de1c	gear_float_band_producer	Function	DEFAULT
 0004de42	LAB_0004de42	Label	DEFAULT
 0004de52	LAB_0004de52	Label	DEFAULT
 0004de64	LAB_0004de64	Label	DEFAULT
@@ -43067,7 +43067,7 @@ ffff865c	DAT_ffff865c	Label	DEFAULT
 ffff8660	DAT_ffff8660	Label	DEFAULT
 ffff8664	DAT_ffff8664	Label	DEFAULT
 ffff8668	DAT_ffff8668	Label	DEFAULT
-ffff866c	DAT_ffff866c	Label	DEFAULT
+ffff866c	cruise_set_speed_kmh_ffff866c	Label	DEFAULT
 ffff8674	DAT_ffff8674	Label	DEFAULT
 ffff867c	DAT_ffff867c	Label	DEFAULT
 ffff8684	DAT_ffff8684	Label	DEFAULT
@@ -44203,8 +44203,8 @@ ffffa9a4	DAT_ffffa9a4	Label	DEFAULT
 ffffa9a8	DAT_ffffa9a8	Label	DEFAULT
 ffffa9ac	DAT_ffffa9ac	Label	DEFAULT
 ffffa9b0	DAT_ffffa9b0	Label	DEFAULT
-ffffa9b4	DAT_ffffa9b4	Label	DEFAULT
-ffffa9b8	DAT_ffffa9b8	Label	DEFAULT
+ffffa9b4	throttle_position_1_percent_ffffa9b4	Label	DEFAULT
+ffffa9b8	throttle_position_2_percent_ffffa9b8	Label	DEFAULT
 ffffa9bc	inferred_ram_a9bc_ffffa9bc_ffffa9bc	Label	DEFAULT
 ffffa9c0	DAT_ffffa9c0	Label	DEFAULT
 ffffa9c4	inferred_pedal_volts_ffffa9c4_ffffa9c4	Label	DEFAULT
@@ -44381,7 +44381,7 @@ ffffae1c	DAT_ffffae1c	Label	DEFAULT
 ffffae1e	closed_loop_allowed_ffffae1e	Label	DEFAULT
 ffffae1f	closed_loop_active_ffffae1f	Label	DEFAULT
 ffffae20	DAT_ffffae20	Label	DEFAULT
-ffffae21	DAT_ffffae21	Label	DEFAULT
+ffffae21	o2_monitor_enable_ffffae21	Label	DEFAULT
 ffffae24	DAT_ffffae24	Label	DEFAULT
 ffffae28	DAT_ffffae28	Label	DEFAULT
 ffffae2c	DAT_ffffae2c	Label	DEFAULT
@@ -44791,7 +44791,7 @@ ffffb386	DAT_ffffb386	Label	DEFAULT
 ffffb388	DAT_ffffb388	Label	DEFAULT
 ffffb389	DAT_ffffb389	Label	DEFAULT
 ffffb38a	DAT_ffffb38a	Label	DEFAULT
-ffffb38c	DAT_ffffb38c	Label	DEFAULT
+ffffb38c	candidate_throttle_base_position_ffffb38c	Label	DEFAULT
 ffffb390	DAT_ffffb390	Label	DEFAULT
 ffffb394	DAT_ffffb394	Label	DEFAULT
 ffffb398	DAT_ffffb398	Label	DEFAULT
@@ -44818,9 +44818,9 @@ ffffb400	DAT_ffffb400	Label	DEFAULT
 ffffb401	DAT_ffffb401	Label	DEFAULT
 ffffb404	DAT_ffffb404	Label	DEFAULT
 ffffb408	DAT_ffffb408	Label	DEFAULT
-ffffb40c	DAT_ffffb40c	Label	DEFAULT
+ffffb40c	candidate_learned_pedal_value_ffffb40c	Label	DEFAULT
 ffffb410	inferred_ram_b410_ffffb410_ffffb410	Label	DEFAULT
-ffffb414	DAT_ffffb414	Label	DEFAULT
+ffffb414	throttle_pedal_position_delta_ffffb414	Label	DEFAULT
 ffffb418	DAT_ffffb418	Label	DEFAULT
 ffffb41c	DAT_ffffb41c	Label	DEFAULT
 ffffb420	DAT_ffffb420	Label	DEFAULT
@@ -44972,7 +44972,7 @@ ffffb519	DAT_ffffb519	Label	DEFAULT
 ffffb51a	DAT_ffffb51a	Label	DEFAULT
 ffffb51b	DAT_ffffb51b	Label	DEFAULT
 ffffb51c	DAT_ffffb51c	Label	DEFAULT
-ffffb51e	DAT_ffffb51e	Label	DEFAULT
+ffffb51e	e2ram_payload_reserved_ffffb51e	Label	DEFAULT
 ffffb520	DAT_ffffb520	Label	DEFAULT
 ffffb522	DAT_ffffb522	Label	DEFAULT
 ffffb524	DAT_ffffb524	Label	DEFAULT
@@ -44995,7 +44995,7 @@ ffffb538	DAT_ffffb538	Label	DEFAULT
 ffffb539	DAT_ffffb539	Label	DEFAULT
 ffffb53a	DAT_ffffb53a	Label	DEFAULT
 ffffb53b	inferred_ram_b53b_ffffb53b_ffffb53b	Label	DEFAULT
-ffffb53c	DAT_ffffb53c	Label	DEFAULT
+ffffb53c	at_drive_range_engaged_ffffb53c	Label	DEFAULT
 ffffb53d	DAT_ffffb53d	Label	DEFAULT
 ffffb53e	DAT_ffffb53e	Label	DEFAULT
 ffffb53f	DAT_ffffb53f	Label	DEFAULT
@@ -45031,7 +45031,7 @@ ffffb584	inferred_ram_b584_ffffb584_ffffb584	Label	DEFAULT
 ffffb588	DAT_ffffb588	Label	DEFAULT
 ffffb58c	DAT_ffffb58c	Label	DEFAULT
 ffffb590	inferred_battery_voltage_ffffb590	Label	DEFAULT
-ffffb594	DAT_ffffb594	Label	DEFAULT
+ffffb594	filtered_battery_voltage_ffffb594	Label	DEFAULT
 ffffb598	inferred_alternator_speed_ffffb598	Label	DEFAULT
 ffffb59c	inferred_ram_b59c_ffffb59c_ffffb59c	Label	DEFAULT
 ffffb5a0	alternator_target_field_ffffb5a0	Label	DEFAULT
@@ -45455,8 +45455,8 @@ ffffbc37	DAT_ffffbc37	Label	DEFAULT
 ffffbc38	DAT_ffffbc38	Label	DEFAULT
 ffffbc39	DAT_ffffbc39	Label	DEFAULT
 ffffbc3a	DAT_ffffbc3a	Label	DEFAULT
-ffffbc3c	DAT_ffffbc3c	Label	DEFAULT
-ffffbc3d	DAT_ffffbc3d	Label	DEFAULT
+ffffbc3c	candidate_gear_ffffbc3c	Label	DEFAULT
+ffffbc3d	current_gear_ffffbc3d	Label	DEFAULT
 ffffbc3e	DAT_ffffbc3e	Label	DEFAULT
 ffffbc3f	DAT_ffffbc3f	Label	DEFAULT
 ffffbc40	DAT_ffffbc40	Label	DEFAULT
@@ -45548,7 +45548,7 @@ ffffbcf8	cruise_set_speed_ffffbcf8	Label	DEFAULT
 ffffbcfc	DAT_ffffbcfc	Label	DEFAULT
 ffffbcfd	DAT_ffffbcfd	Label	DEFAULT
 ffffbcfe	DAT_ffffbcfe	Label	DEFAULT
-ffffbd00	DAT_ffffbd00	Label	DEFAULT
+ffffbd00	cruise_control_law_output_ffffbd00	Label	DEFAULT
 ffffbd04	DAT_ffffbd04	Label	DEFAULT
 ffffbd08	cruise_set_speed_adjust_ffffbd08	Label	DEFAULT
 ffffbd0c	DAT_ffffbd0c	Label	DEFAULT
@@ -45804,7 +45804,7 @@ ffffbf99	apv_rpm_low_flag_ffffbf99	Label	DEFAULT
 ffffbf9a	DAT_ffffbf9a	Label	DEFAULT
 ffffbf9c	inferred_ram_bf9c_ffffbf9c_ffffbf9c	Label	DEFAULT
 ffffbfa0	DAT_ffffbfa0	Label	DEFAULT
-ffffbfa4	DAT_ffffbfa4	Label	DEFAULT
+ffffbfa4	cruise_target_speed_kmh_ffffbfa4	Label	DEFAULT
 ffffbfa8	DAT_ffffbfa8	Label	DEFAULT
 ffffbfac	DAT_ffffbfac	Label	DEFAULT
 ffffbfb0	DAT_ffffbfb0	Label	DEFAULT
@@ -46502,11 +46502,11 @@ ffffc700	DAT_ffffc700	Label	DEFAULT
 ffffc701	o2_monitor_fluctuation_detected_ffffc701	Label	DEFAULT
 ffffc702	DAT_ffffc702	Label	DEFAULT
 ffffc703	DAT_ffffc703	Label	DEFAULT
-ffffc704	DAT_ffffc704	Label	DEFAULT
+ffffc704	o2_monitor_accum_gate_ffffc704	Label	DEFAULT
 ffffc708	o2_channel_afr_fast_ffffc708	Label	DEFAULT
-ffffc70c	DAT_ffffc70c	Label	DEFAULT
+ffffc70c	o2_channel_afr_medium_ffffc70c	Label	DEFAULT
 ffffc710	o2_channel_lambda_slow_ffffc710	Label	DEFAULT
-ffffc714	DAT_ffffc714	Label	DEFAULT
+ffffc714	o2_channel_lambda_very_slow_ffffc714	Label	DEFAULT
 ffffc718	DAT_ffffc718	Label	DEFAULT
 ffffc71c	DAT_ffffc71c	Label	DEFAULT
 ffffc720	DAT_ffffc720	Label	DEFAULT
@@ -46984,7 +46984,7 @@ ffffcc88	DAT_ffffcc88	Label	DEFAULT
 ffffcc8c	DAT_ffffcc8c	Label	DEFAULT
 ffffcc8e	DAT_ffffcc8e	Label	DEFAULT
 ffffcc90	DAT_ffffcc90	Label	DEFAULT
-ffffcc91	DAT_ffffcc91	Label	DEFAULT
+ffffcc91	candidate_idle_learn_flag_ffffcc91	Label	DEFAULT
 ffffcc92	DAT_ffffcc92	Label	DEFAULT
 ffffcc93	DAT_ffffcc93	Label	DEFAULT
 ffffcc94	DAT_ffffcc94	Label	DEFAULT
@@ -47308,14 +47308,14 @@ ffffcf0c	DAT_ffffcf0c	Label	DEFAULT
 ffffcf10	DAT_ffffcf10	Label	DEFAULT
 ffffcf14	DAT_ffffcf14	Label	DEFAULT
 ffffcf18	DAT_ffffcf18	Label	DEFAULT
-ffffcf1c	DAT_ffffcf1c	Label	DEFAULT
+ffffcf1c	current_gear_float_ffffcf1c	Label	DEFAULT
 ffffcf20	DAT_ffffcf20	Label	DEFAULT
 ffffcf24	DAT_ffffcf24	Label	DEFAULT
 ffffcf28	DAT_ffffcf28	Label	DEFAULT
 ffffcf2c	DAT_ffffcf2c	Label	DEFAULT
 ffffcf30	DAT_ffffcf30	Label	DEFAULT
 ffffcf32	DAT_ffffcf32	Label	DEFAULT
-ffffcf34	DAT_ffffcf34	Label	DEFAULT
+ffffcf34	cruise_enable_flag_ffffcf34	Label	DEFAULT
 ffffcf35	DAT_ffffcf35	Label	DEFAULT
 ffffcf36	DAT_ffffcf36	Label	DEFAULT
 ffffcf37	DAT_ffffcf37	Label	DEFAULT
