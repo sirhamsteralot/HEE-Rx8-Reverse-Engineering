@@ -16,11 +16,11 @@ undefined1 * ref_liftoffRelated__(void)
   char cVar1;
   undefined1 *puVar2;
   float fVar3;
-  float snapshot_DAT_ffffa9bc;
+  float snapshot_inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   float snapshot_engine_speed_rpm_ffffb548;
   
   cVar1 = cranking_active_ffffaa62_ffffaa62;
-  snapshot_DAT_ffffa9bc = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
+  snapshot_inferred_ram_a9bc_ffffa9bc_ffffa9bc = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   fVar3 = (float)lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_table_2d_274_0006b850);
   puVar2 = (undefined1 *)((int)&vector_Poweron_Reset + 1);
@@ -30,7 +30,7 @@ undefined1 * ref_liftoffRelated__(void)
     DAT_ffffca49 = 0;
   }
   else {
-    if (((DAT_ffffca99 == 1) || ((DAT_ffffca94 < fVar3 && (fVar3 <= snapshot_DAT_ffffa9bc)))) && (DAT_ffffca47 == 1)
+    if (((DAT_ffffca99 == 1) || ((DAT_ffffca94 < fVar3 && (fVar3 <= snapshot_inferred_ram_a9bc_ffffa9bc_ffffa9bc)))) && (DAT_ffffca47 == 1)
        ) {
       DAT_ffffca46 = 1;
     }
@@ -54,7 +54,7 @@ undefined1 * ref_liftoffRelated__(void)
       DAT_ffffca4a = 0;
     }
   }
-  DAT_ffffca94 = snapshot_DAT_ffffa9bc;
+  DAT_ffffca94 = snapshot_inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   DAT_ffffca99 = cVar1;
   return puVar2;
 }

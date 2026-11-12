@@ -15,7 +15,7 @@ uint FUN_0000e910(void)
 
 {
   undefined4 snapshot_inferred_coolant_temperature_ffffa98c;
-  byte snapshot_DAT_ffffaa62;
+  byte snapshot_cranking_active_ffffaa62_ffffaa62;
   float snapshot_DAT_ffffb41c;
   char cVar4;
   float snapshot_engine_load_ffffc0b4;
@@ -32,7 +32,7 @@ uint FUN_0000e910(void)
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   cVar4 = DAT_ffffb53a;
   snapshot_DAT_ffffb41c = DAT_ffffb41c;
-  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
+  snapshot_cranking_active_ffffaa62_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_DAT_ffffa448 = DAT_ffffa448;
   snapshot_inferred_predicted_engine_speed_ffffb55c = inferred_predicted_engine_speed_ffffb55c;
@@ -111,7 +111,7 @@ uint FUN_0000e910(void)
     DAT_ffffa4a0 = '\x01';
   }
   if (((engine_running_ffffa428 == '\x01') && (DAT_ffffd26a == '\0')) &&
-     ((snapshot_DAT_ffffaa62 == 1 || (DAT_ffffa450 == '\x01')))) {
+     ((snapshot_cranking_active_ffffaa62_ffffaa62 == 1 || (DAT_ffffa450 == '\x01')))) {
     DAT_ffffa463 = '\x01';
   }
   else {
@@ -142,14 +142,14 @@ uint FUN_0000e910(void)
 LAB_0000ebd0:
   if ((((iVar8 == 2) &&
        (((cVar4 == '\x01' || (DAT_ffffa49d == '\0')) ||
-        ((DAT_ffffa49e == '\x01' && ((snapshot_DAT_ffffaa62 == 0 || (DAT_ffffa49b == '\x01')))))))) ||
+        ((DAT_ffffa49e == '\x01' && ((snapshot_cranking_active_ffffaa62_ffffaa62 == 0 || (DAT_ffffa49b == '\x01')))))))) ||
       (fuel_cut_allowed_ffffa964 == '\x01')) || ((DAT_ffffcc71 == '\x01' || (DAT_ffffb2cf == '\x01')))) {
     fuel_cut_request_b_ffffa465 = '\0';
   }
   else if (((iVar8 == 1) && (DAT_ffffa48e <= DAT_ffffa490)) ||
           ((cVar4 == '\0' &&
            ((((DAT_ffffa49e == '\0' && (DAT_ffffa48e <= DAT_ffffa492)) ||
-             ((snapshot_DAT_ffffaa62 == 1 && ((DAT_ffffa48e <= DAT_ffffa494 && (DAT_ffffa49a == '\0')))))) &&
+             ((snapshot_cranking_active_ffffaa62_ffffaa62 == 1 && ((DAT_ffffa48e <= DAT_ffffa494 && (DAT_ffffa49a == '\0')))))) &&
             (DAT_ffffa49c == '\x01')))))) {
     fuel_cut_request_b_ffffa465 = '\x01';
   }
@@ -177,7 +177,7 @@ LAB_0000ebd0:
   else {
     DAT_ffffa492 = 0;
   }
-  uVar6 = (uint)snapshot_DAT_ffffaa62;
+  uVar6 = (uint)snapshot_cranking_active_ffffaa62_ffffaa62;
   if (uVar6 == 1) {
     uVar6 = rx8_add_u16_saturate((int)(short)DAT_ffffa494,1);
     DAT_ffffa494 = (ushort)uVar6;

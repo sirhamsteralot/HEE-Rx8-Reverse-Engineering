@@ -16,24 +16,24 @@ char ref_setGearBools(void)
       DAT_ffffbc40 = 0;
       return automatic_transmission_ffffb534;
     }
-    cVar1 = DAT_ffffbc3c;
-    if ((DAT_ffffbc3c != '\x01') && (DAT_ffffbc3c != '\x02')) {
-      if ((DAT_ffffbc3c != '\x03') && (DAT_ffffbc3c != '\x04')) {
-        if ((DAT_ffffbc3c != '\x05') && (DAT_ffffbc3c != '\x06')) {
+    cVar1 = candidate_gear_ffffbc3c;
+    if ((candidate_gear_ffffbc3c != '\x01') && (candidate_gear_ffffbc3c != '\x02')) {
+      if ((candidate_gear_ffffbc3c != '\x03') && (candidate_gear_ffffbc3c != '\x04')) {
+        if ((candidate_gear_ffffbc3c != '\x05') && (candidate_gear_ffffbc3c != '\x06')) {
           DAT_ffffbc3e = 0;
           DAT_ffffbc3f = 0;
           DAT_ffffbc40 = 0;
-          return DAT_ffffbc3c;
+          return candidate_gear_ffffbc3c;
         }
         DAT_ffffbc3e = 0;
         DAT_ffffbc3f = 0;
         DAT_ffffbc40 = 1;
-        return DAT_ffffbc3c;
+        return candidate_gear_ffffbc3c;
       }
       DAT_ffffbc3e = 0;
       DAT_ffffbc3f = 1;
       DAT_ffffbc40 = 0;
-      return DAT_ffffbc3c;
+      return candidate_gear_ffffbc3c;
     }
   }
   DAT_ffffbc3e = 1;

@@ -15,7 +15,7 @@ void candidate_idle_trim_load(void)
     DAT_ffffa88c = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8040);
   }
   else {
-    if (DAT_ffffb53c == '\0') {
+    if (at_drive_range_engaged_ffffb53c == '\0') {
       sVar1 = -0x7fc0;
     }
     else {

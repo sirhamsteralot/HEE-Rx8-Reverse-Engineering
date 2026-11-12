@@ -54,7 +54,7 @@ undefined4 * FUN_00021970(void)
         DAT_ffffb2cd = 0;
         DAT_ffffb2ce = 1;
       }
-      inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + DAT_ffffb38c;
+      inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + candidate_throttle_base_position_ffffb38c;
       snapshot_DAT_ffffbac8 = DAT_ffffbac8;
       snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
       DAT_ffffb2c0 = lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,engine_speed_rpm_ffffb548,&tbl_throttle_position_to_torque_0006a180);

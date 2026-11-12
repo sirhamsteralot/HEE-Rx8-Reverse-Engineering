@@ -13,13 +13,13 @@
 uint uds_service_85_control_dtc_setting(short param_1,uint param_2)
 
 {
-  ushort snapshot_DAT_ffffd3b4;
+  ushort snapshot_diag_permission_mask_ffffd3b4_ffffd3b4;
   char cVar3;
   undefined4 uVar2;
   char local_18 [4];
   short sStack_14;
   
-  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
+  snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   sStack_14 = param_1;
   if (param_2 == 1) {
@@ -27,8 +27,8 @@ uint uds_service_85_control_dtc_setting(short param_1,uint param_2)
       cVar3 = FUN_00055e3e(0);
       if (cVar3 == '\0') {
         ref_udsServiceResponse(0x85,local_18,(int)sStack_14);
-        if (((local_18[0] == '\x01') && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)) ||
-           ((local_18[0] == '\x02' && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)))) {
+        if (((local_18[0] == '\x01') && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)) ||
+           ((local_18[0] == '\x02' && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)))) {
           ref_setDiagMode85Bool2((int)local_18[0]);
           uVar2 = FUN_0005de18((int)local_18[0]);
         }

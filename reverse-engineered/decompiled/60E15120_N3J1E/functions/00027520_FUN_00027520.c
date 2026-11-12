@@ -11,11 +11,11 @@ code * FUN_00027520(void)
   code *pcVar2;
   float fVar3;
   float snapshot_engine_speed_rpm_ffffb548;
-  float snapshot_DAT_ffffb2f0;
+  float snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0;
   
   fVar3 = 0.0;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  snapshot_DAT_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
+  snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
   uVar1 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0,0x3727c5ac);
   fVar3 = rx8_absolute_difference(DAT_ffffad50,fVar3);
   pcVar2 = (code *)(uint)DAT_ffffb69c;
@@ -31,7 +31,7 @@ code * FUN_00027520(void)
      || (((pcVar2 = (code *)(uint)DAT_ffffba1c, pcVar2 != (code *)(uVar1 & 0xff) ||
           (pcVar2 = (code *)&DAT_ffffba1b, DAT_ffffba1b < 8)) ||
          (((uVar1 & 0xff) != 0 &&
-          (((snapshot_DAT_ffffb2f0 <= 0.0 || (0.2 < DAT_ffffb220)) ||
+          (((snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0 <= 0.0 || (0.2 < DAT_ffffb220)) ||
            (pcVar2 = (code *)&DAT_00075598, DAT_ffffb2f4 < 0x271)))))))) {
     DAT_ffffba0a = 0;
     DAT_ffffba06 = 8;

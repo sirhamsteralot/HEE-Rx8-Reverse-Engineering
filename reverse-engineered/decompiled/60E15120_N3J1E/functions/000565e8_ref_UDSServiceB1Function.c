@@ -13,14 +13,14 @@
 uint uds_service_b1_mazda_specific(uint param_1,uint param_2)
 
 {
-  ushort snapshot_DAT_ffffd3b4;
+  ushort snapshot_diag_permission_mask_ffffd3b4_ffffd3b4;
   ushort *puVar2;
   uint uVar3;
   uint uVar4;
   ushort local_24 [2];
   ushort local_20 [8];
   
-  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
+  snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   if (param_2 == 1) {
     if ((param_1 & 0xffff) < 2) {
@@ -38,7 +38,7 @@ uint uds_service_b1_mazda_specific(uint param_1,uint param_2)
       if (uVar4 == 0) {
         param_2 = (**(code **)(puVar2 + 2))();
       }
-      else if ((snapshot_DAT_ffffd3b4 & puVar2[4]) == 0) {
+      else if ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & puVar2[4]) == 0) {
         param_2 = FUN_000567c2();
       }
       else if ((uint)puVar2[1] == (param_1 & 0xffff) - 2) {

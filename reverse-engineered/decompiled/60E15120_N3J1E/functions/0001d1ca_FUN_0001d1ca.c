@@ -26,10 +26,10 @@ uint FUN_0001d1ca(void)
   if ((DAT_ffffc700 == '\x01') ||
      ((((uVar1 = (uint)closed_loop_active_ffffae1f, uVar1 == 1 && (150.0 <= inferred_coolant_temperature_ffffa98c)) &&
        (uVar1 = (uint)DAT_ffffad24, uVar1 == 1)) && (uVar1 = (uint)DAT_ffffae20, uVar1 == 0)))) {
-    DAT_ffffae21 = 1;
+    o2_monitor_enable_ffffae21 = 1;
   }
   else {
-    DAT_ffffae21 = 0;
+    o2_monitor_enable_ffffae21 = 0;
   }
   return uVar1;
 }

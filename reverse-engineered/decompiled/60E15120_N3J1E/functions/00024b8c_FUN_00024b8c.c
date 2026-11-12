@@ -19,7 +19,7 @@ char FUN_00024b8c(void)
     else {
       DAT_ffffb53a = 0;
     }
-    DAT_ffffb53c = 0;
+    at_drive_range_engaged_ffffb53c = 0;
     DAT_ffffb53e = 0;
     DAT_ffffb540 = 0;
     return cVar4;
@@ -104,10 +104,10 @@ LAB_00024c72:
   }
   cVar4 = '\x01';
   if ((DAT_ffffb540 == '\x01') || (cVar4 = DAT_ffffb53e, DAT_ffffb53e == '\x01')) {
-    DAT_ffffb53c = 1;
+    at_drive_range_engaged_ffffb53c = 1;
   }
   else {
-    DAT_ffffb53c = 0;
+    at_drive_range_engaged_ffffb53c = 0;
   }
   return cVar4;
 }

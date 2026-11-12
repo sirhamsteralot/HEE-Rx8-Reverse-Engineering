@@ -15,7 +15,7 @@
  */
 /* ROM address: 0x0004d700; body bytes: 896; decompiled */
 
-undefined1 * FUN_0004d700(void)
+undefined1 * cruise_switch_plausibility_timers(void)
 
 {
   char cVar1;
@@ -54,7 +54,7 @@ undefined1 * FUN_0004d700(void)
   fVar12 = (float)lookup_2d_descriptor_scaled(snapshot_vehicle_speed_ffffbbb4,&tbl_table_2d_396_check_datatype_0006bc1c);
   fVar17 = DAT_ffffcf14 + 1.5;
   fVar13 = (float)lookup_2d_descriptor_scaled(snapshot_vehicle_speed_ffffbbb4,&tbl_table_2d_398_check_datatype_0006bc34);
-  if (DAT_ffffcf34 == '\0') {
+  if (cruise_enable_flag_ffffcf34 == '\0') {
     DAT_ffffcf51 = '\0';
     DAT_ffffcf52 = '\0';
     DAT_ffffcf54 = '\0';

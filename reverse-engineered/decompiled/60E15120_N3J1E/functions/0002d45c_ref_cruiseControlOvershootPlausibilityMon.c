@@ -11,7 +11,7 @@ undefined4 * ref_cruiseControlOvershootPlausibilityMon(void)
   float fVar3;
   
   cVar1 = DAT_ffffbfba;
-  fVar3 = DAT_ffffbfa0 - DAT_ffffbfa4;
+  fVar3 = DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4;
   puVar2 = (undefined4 *)(uint)DAT_ffffbced;
   if ((puVar2 != (undefined4 *)((int)&vector_Poweron_Reset + 1)) ||
      (((((DAT_ffffbcf7 != '\0' || (DAT_ffffbfba != '\0')) || (DAT_ffffbfb5 != 0)) ||

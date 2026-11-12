@@ -10,10 +10,10 @@
 uint FUN_000470d0(void)
 
 {
-  ushort snapshot_DAT_ffffad5c;
-  ushort snapshot_DAT_ffffad5e;
+  ushort snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
+  ushort snapshot_inferred_pedal_volts_ffffad5e_ffffad5e;
   char cVar3;
-  byte snapshot_DAT_ffffcc91;
+  byte snapshot_candidate_idle_learn_flag_ffffcc91;
   char cVar5;
   char cVar6;
   char cVar7;
@@ -25,10 +25,10 @@ uint FUN_000470d0(void)
   cVar7 = DAT_ffffcc9f;
   cVar6 = DAT_ffffcc99;
   cVar5 = DAT_ffffcc98;
-  snapshot_DAT_ffffcc91 = DAT_ffffcc91;
+  snapshot_candidate_idle_learn_flag_ffffcc91 = candidate_idle_learn_flag_ffffcc91;
   cVar3 = DAT_ffffb53a;
-  snapshot_DAT_ffffad5e = inferred_pedal_volts_ffffad5e_ffffad5e;
-  snapshot_DAT_ffffad5c = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
+  snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_pedal_volts_ffffad5e_ffffad5e;
+  snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
@@ -64,9 +64,9 @@ uint FUN_000470d0(void)
   else {
     DAT_ffffcc76 = '\x01';
   }
-  if (((2 < snapshot_DAT_ffffcc91) && (snapshot_DAT_ffffcc91 < 5)) &&
-     (((cVar5 == '\0' && (((cVar6 == '\x01' && (0x2b84 < snapshot_DAT_ffffad5c)) && (0x270 < DAT_ffffcc7c)))) ||
-      (((((cVar5 == '\x01' && (cVar6 == '\0')) && (0x5603 < snapshot_DAT_ffffad5e)) && (0x270 < DAT_ffffcc7e)) ||
+  if (((2 < snapshot_candidate_idle_learn_flag_ffffcc91) && (snapshot_candidate_idle_learn_flag_ffffcc91 < 5)) &&
+     (((cVar5 == '\0' && (((cVar6 == '\x01' && (0x2b84 < snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c)) && (0x270 < DAT_ffffcc7c)))) ||
+      (((((cVar5 == '\x01' && (cVar6 == '\0')) && (0x5603 < snapshot_inferred_pedal_volts_ffffad5e_ffffad5e)) && (0x270 < DAT_ffffcc7e)) ||
        ((DAT_ffffcc78 <= snapshot_engine_load_ffffc0b4 && (0x270 < DAT_ffffcc80)))))))) {
     DAT_ffffcc77 = 1;
   }
@@ -77,14 +77,14 @@ uint FUN_000470d0(void)
   else {
     DAT_ffffcc71 = 0;
   }
-  if (snapshot_DAT_ffffad5c < 0x2b85) {
+  if (snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c < 0x2b85) {
     DAT_ffffcc7c = 0;
   }
   else {
     uVar8 = rx8_add_u16_saturate((int)(short)DAT_ffffcc7c,1);
     DAT_ffffcc7c = (ushort)uVar8;
   }
-  if (snapshot_DAT_ffffad5e < 0x5604) {
+  if (snapshot_inferred_pedal_volts_ffffad5e_ffffad5e < 0x5604) {
     DAT_ffffcc7e = 0;
   }
   else {

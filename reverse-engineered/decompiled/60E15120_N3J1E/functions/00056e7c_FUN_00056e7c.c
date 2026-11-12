@@ -3,7 +3,7 @@
  * RAM 0xffffa984 inferred_ram_a984_ffffa984 (float): PID 0x114d
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): inferred_ram_a984_ffffa984_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e7c; body bytes: 30; decompiled */
 

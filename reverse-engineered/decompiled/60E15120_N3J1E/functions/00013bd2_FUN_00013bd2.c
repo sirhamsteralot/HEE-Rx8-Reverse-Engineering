@@ -15,7 +15,7 @@ float knock_retard_clamp(float param_1)
   float arg2;
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   
-  if ((automatic_transmission_ffffb534 == '\x01') && (4 < DAT_ffffbc3d)) {
+  if ((automatic_transmission_ffffb534 == '\x01') && (4 < current_gear_ffffbc3d)) {
     ppuVar1 = &tbl_knock_retard_clamp_min_alt_0006af7c;
   }
   else {

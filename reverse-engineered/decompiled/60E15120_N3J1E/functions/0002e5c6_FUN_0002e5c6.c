@@ -6,7 +6,7 @@ void FUN_0002e5c6(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_0004de1c();
+  gear_float_band_producer();
   FUN_0002d1d4();
   FUN_0002d280();
   FUN_0002d318();
@@ -19,11 +19,11 @@ void FUN_0002e5c6(void)
   ref_debounceCruiseControlSET();
   ref_debounceCruiseControlACCELRES();
   FUN_0003242c();
-  FUN_00032614();
+  cruise_set_speed_latch();
   FUN_0003290c();
   FUN_000329fc();
   FUN_0002d5e4();
-  FUN_0002d638();
+  cruise_control_output_law();
   cruise_set_speed_adjust_integrator();
   cruise_set_speed_apply();
   FUN_0002dfd6();

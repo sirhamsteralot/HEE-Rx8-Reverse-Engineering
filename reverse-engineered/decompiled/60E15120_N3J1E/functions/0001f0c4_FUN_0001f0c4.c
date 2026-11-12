@@ -29,7 +29,7 @@ uint open_loop_request_condition(void)
 {
   float snapshot_inferred_throttle_position_ffffad44;
   byte snapshot_DAT_ffffbecc;
-  float snapshot_DAT_ffffc644;
+  float snapshot_fuel_correction_sum_ffffc644_ffffc644;
   short sVar4;
   uint uVar5;
   undefined **ppuVar6;
@@ -41,7 +41,7 @@ uint open_loop_request_condition(void)
   float fVar12;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  snapshot_DAT_ffffc644 = fuel_correction_sum_ffffc644_ffffc644;
+  snapshot_fuel_correction_sum_ffffc644_ffffc644 = fuel_correction_sum_ffffc644_ffffc644;
   snapshot_DAT_ffffbecc = DAT_ffffbecc;
   fVar10 = fuel_amount_per_rotation_a_ffffbec8;
   snapshot_inferred_throttle_position_ffffad44 = inferred_throttle_position_ffffad44;
@@ -79,8 +79,8 @@ uint open_loop_request_condition(void)
   else {
     cl_load_c_exceeded_ffffb1b8 = '\x01';
   }
-  if (snapshot_DAT_ffffc644 < 950.0) {
-    if (snapshot_DAT_ffffc644 < 900.0) {
+  if (snapshot_fuel_correction_sum_ffffc644_ffffc644 < 950.0) {
+    if (snapshot_fuel_correction_sum_ffffc644_ffffc644 < 900.0) {
       DAT_ffffb1b0 = '\0';
     }
   }

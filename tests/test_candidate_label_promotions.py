@@ -9,7 +9,7 @@ the curated alias TSV:
 - 0x22144 was renamed to `candidate_fuel_open_loop_condition` (gate uses the
   fuel open-loop flag; the old "evap" attribution came from an inherited ref_
   caller name) and stays medium;
-- the 68 remaining `candidate_*` labels are unchanged (kept as hypotheses per
+- the 69 remaining `candidate_*` labels are unchanged (kept as hypotheses per
   the label ladder, evidence recorded);
 - accepted_function_aliases.tsv carries confidence=high for the promoted rows;
 - the raw ROM is untouched (SHA-256 asserted).

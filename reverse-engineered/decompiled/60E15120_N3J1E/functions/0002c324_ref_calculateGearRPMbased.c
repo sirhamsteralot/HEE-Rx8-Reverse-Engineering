@@ -7,7 +7,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002cadc (142 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_calculateGearRPMbased(void)
+uint candidate_gear_from_ratio(void)
 
 {
   uint uVar1;
@@ -20,7 +20,7 @@ uint ref_calculateGearRPMbased(void)
           if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 40.158) {
             if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 33.841) {
               if (engine_speed_rpm_ffffb548 < vehicle_speed_ffffbbb4 * 0.0) {
-                DAT_ffffbc3c = 0;
+                candidate_gear_ffffbc3c = 0;
                 return 0;
               }
               uVar1 = 6;
@@ -40,14 +40,14 @@ uint ref_calculateGearRPMbased(void)
       else {
         uVar1 = 2;
       }
-      DAT_ffffbc3c = (undefined1)uVar1;
+      candidate_gear_ffffbc3c = (undefined1)uVar1;
     }
     else {
-      DAT_ffffbc3c = 1;
+      candidate_gear_ffffbc3c = 1;
     }
   }
   else {
-    DAT_ffffbc3c = 0;
+    candidate_gear_ffffbc3c = 0;
   }
   return uVar1;
 }

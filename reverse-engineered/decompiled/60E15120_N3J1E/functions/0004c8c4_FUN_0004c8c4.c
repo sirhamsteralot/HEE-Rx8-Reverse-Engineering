@@ -7,7 +7,7 @@ void FUN_0004c8c4(void)
   DAT_ffffcf43 = DAT_ffffbfbc == '\x01';
   if ((((DAT_ffffcf67 == '\0') && (DAT_ffffbfb9 == '\x01')) ||
       ((DAT_ffffcf69 == '\0' && (DAT_ffffbfba == '\x01')))) ||
-     ((((DAT_ffffcf70 == '\x01' || (DAT_ffffbfbb != '\x01')) || (DAT_ffffcf34 == '\0')) ||
+     ((((DAT_ffffcf70 == '\x01' || (DAT_ffffbfbb != '\x01')) || (cruise_enable_flag_ffffcf34 == '\0')) ||
       (DAT_ffffcf4f == '\x01')))) {
     DAT_ffffcf41 = 0;
   }

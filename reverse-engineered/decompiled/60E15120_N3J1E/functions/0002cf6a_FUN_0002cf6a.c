@@ -7,17 +7,17 @@
 uint FUN_0002cf6a(void)
 
 {
-  byte snapshot_DAT_ffffad18;
+  byte snapshot_inferred_ram_ad18_ffffad18_ffffad18;
   byte snapshot_DAT_ffffbbcf;
   uint uVar3;
   uint uVar4;
   
   snapshot_DAT_ffffbbcf = DAT_ffffbbcf;
-  snapshot_DAT_ffffad18 = inferred_ram_ad18_ffffad18_ffffad18;
+  snapshot_inferred_ram_ad18_ffffad18_ffffad18 = inferred_ram_ad18_ffffad18_ffffad18;
   uVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8668,0);
   uVar3 = uVar3 & 0xff;
   if (uVar3 == 1) {
-    uVar4 = (uint)snapshot_DAT_ffffad18;
+    uVar4 = (uint)snapshot_inferred_ram_ad18_ffffad18_ffffad18;
     uVar3 = uVar4;
     if ((uVar4 != 1) || (uVar3 = (uint)snapshot_DAT_ffffbbcf, uVar3 != 1)) {
       if ((uVar4 == 0) && (snapshot_DAT_ffffbbcf == 0)) {

@@ -7,9 +7,9 @@ undefined2 * FUN_0003f86c(void)
   ushort uVar2;
   
   o2_channel_afr_fast_ffffc708 = 0x3f800000;
-  DAT_ffffc70c = 0x3f800000;
+  o2_channel_afr_medium_ffffc70c = 0x3f800000;
   o2_channel_lambda_slow_ffffc710 = 0x3f800000;
-  DAT_ffffc714 = 0x3f800000;
+  o2_channel_lambda_very_slow_ffffc714 = 0x3f800000;
   DAT_ffffc8ec = 0x3f800000;
   DAT_ffffc8f0 = 0x3f800000;
   DAT_ffffc8f4 = 0x3f800000;
@@ -21,7 +21,7 @@ undefined2 * FUN_0003f86c(void)
   }
   puVar1 = &DAT_ffffc870;
   for (uVar2 = 0; uVar2 < 0xb; uVar2 = uVar2 + 1) {
-    *puVar1 = DAT_ffffc714;
+    *puVar1 = o2_channel_lambda_very_slow_ffffc714;
     puVar1 = puVar1 + 1;
   }
   DAT_ffffc7b0 = 0x20;

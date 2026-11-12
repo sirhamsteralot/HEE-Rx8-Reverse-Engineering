@@ -21,7 +21,7 @@ void candidate_idle_maf_airflow_term(void)
     fVar2 = (float)lookup_2d_descriptor_scaled(&tbl_table_2d_114_0006a100);
   }
   else {
-    if (DAT_ffffb53c == '\x01') {
+    if (at_drive_range_engaged_ffffb53c == '\x01') {
       ppuVar1 = &tbl_table_2d_116_0006a128;
     }
     else {

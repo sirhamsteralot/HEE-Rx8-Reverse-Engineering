@@ -8,7 +8,7 @@ byte FUN_00029a6e(void)
   bVar1 = 1;
   if ((((DAT_ffffc590 == '\x01') || (bVar1 = 1, DAT_ffffc5e6 == '\x01')) ||
       (bVar1 = 1, DAT_ffffc5db == '\x01')) ||
-     ((bVar1 = 1, DAT_ffffc5d7 == '\x01' || (bVar1 = DAT_ffffcc91, 2 < DAT_ffffcc91)))) {
+     ((bVar1 = 1, DAT_ffffc5d7 == '\x01' || (bVar1 = candidate_idle_learn_flag_ffffcc91, 2 < candidate_idle_learn_flag_ffffcc91)))) {
     DAT_ffffbb24 = 1;
   }
   else {

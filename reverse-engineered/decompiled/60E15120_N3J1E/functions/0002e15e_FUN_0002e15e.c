@@ -5,8 +5,8 @@ uint FUN_0002e15e(void)
 {
   uint uVar1;
   
-  if (DAT_ffffbfa4 - DAT_ffffbfa0 < 15.0) {
-    if (DAT_ffffbfa4 - DAT_ffffbfa0 < 15.0) {
+  if (cruise_target_speed_kmh_ffffbfa4 - DAT_ffffbfa0 < 15.0) {
+    if (cruise_target_speed_kmh_ffffbfa4 - DAT_ffffbfa0 < 15.0) {
       DAT_ffffbd55 = '\0';
     }
   }

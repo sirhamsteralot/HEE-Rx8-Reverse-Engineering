@@ -3,7 +3,7 @@
 void FUN_000320fc(void)
 
 {
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff866c);
+  ref_validateAddressCopy_float_ADDRESS__(&cruise_set_speed_kmh_ffff866c);
   return;
 }
 

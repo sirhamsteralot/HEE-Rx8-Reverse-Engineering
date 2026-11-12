@@ -28,7 +28,7 @@ undefined4 * candidate_idle_air_correction_select(void)
     DAT_ffffa8cc = 0;
   }
   else {
-    if ((automatic_transmission_ffffb534 == '\x01') || (DAT_ffffb53c == '\0')) {
+    if ((automatic_transmission_ffffb534 == '\x01') || (at_drive_range_engaged_ffffb53c == '\0')) {
       if (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\0') {
         puVar2 = &tbl_table_2d_10_00069244;
       }

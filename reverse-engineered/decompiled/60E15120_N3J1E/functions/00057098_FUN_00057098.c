@@ -3,7 +3,7 @@
  * RAM 0xffffc6ac inferred_ram_c6ac_ffffc6ac (float): PID 0x1782
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): inferred_ram_c6ac_ffffc6ac_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00057098; body bytes: 30; decompiled */
 

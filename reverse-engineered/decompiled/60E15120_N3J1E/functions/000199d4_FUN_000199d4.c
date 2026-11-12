@@ -23,7 +23,7 @@ void FUN_000199d4(void)
   ref_filterSomething2();
   FUN_00018fe8();
   FUN_0001933a();
-  FUN_000193c4();
+  throttle_percent_and_demand_calc();
   ref_getDriverOffThrottleTimer__();
   ref_getDriverOffThrottleInstatanious();
   FUN_0001b08e();

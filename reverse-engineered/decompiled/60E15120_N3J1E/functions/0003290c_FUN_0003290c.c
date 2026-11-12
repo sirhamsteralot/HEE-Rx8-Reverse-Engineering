@@ -6,7 +6,7 @@ undefined1 * FUN_0003290c(void)
   undefined1 *puVar1;
   float fVar2;
   
-  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff866c);
+  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&cruise_set_speed_kmh_ffff866c);
   puVar1 = &DAT_ffffbfd3;
   if ((((DAT_ffffbfd3 == '\0') &&
        (puVar1 = (undefined1 *)(uint)DAT_ffffbfba,
