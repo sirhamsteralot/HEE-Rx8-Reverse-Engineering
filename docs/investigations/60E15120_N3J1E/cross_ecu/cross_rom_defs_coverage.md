@@ -14,7 +14,7 @@ All 11 dumped ROMs (1 in `binaries/dumps/`, 10 in
 SHA-256-checked against `binaries/manifest.csv`. Each fw id was mapped to a
 `<rom>` block of the upstream RomRaider defs
 `submodules/RX8Defs/RomRaider/rx8_defs.xml` at the pinned submodule commit
-**`01de56be61b807f58b0b81820d4d2478c16ecc16`**; 60E15120 uses the locally reviewed
+**`39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f`**; 60E15120 uses the locally reviewed
 block from `data/definitions/romraider/rx8defs-merged-60E15120.xml` instead
 (merge records: [defs-merge/README.md](../defs-merge/README.md)). For every ROM a
 standalone per-ROM def (base chain + rom block + provenance comment) was emitted to
@@ -54,14 +54,14 @@ AGENTS.md rule 4b; the submodule path + pinned commit is the reference now:
 
 | deleted copy | blob | pinned reference |
 |--------------|------|------------------|
-| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `01de56b…` |
-| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `01de56b…` |
-| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `01de56b…` |
+| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…` |
+| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `39d98a0…` |
+| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `39d98a0…` |
 | `romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml` | `ba8edef8…` | same (reviewed copy was unmodified) |
 
 `romraider/upstream-rx8defs/rx8_defs.xml` was **kept**: its blob `35ddcf31…` equals
-upstream commit `ff5ab4f` (2026-09-29), not the pinned HEAD (`c747d084…` @
-`01de56b`), because the reviewed 60E15120 merge was built against `ff5ab4f`.
+upstream commit `ff5ab4f` (2026-09-29), not the pinned HEAD (`82e5724d…` @
+`39d98a0`), because the reviewed 60E15120 merge was built against `ff5ab4f`.
 Side effect: the earlier note "the pinned submodule has a newer ECUFlash XML" is
 settled — content is identical (1210 tables both); the size difference was line
 endings only. Full provenance: [`data/definitions/README.md`](../../../../data/definitions/README.md).
