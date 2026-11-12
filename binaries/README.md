@@ -7,7 +7,7 @@ edited, patched, or "fixed" in place.
 
 - **Upstream stock ROMs and prior captures are NOT duplicated here** — they live in
   the read-only submodule `submodules/Mazda_RX8_PCM_ReverseEngineering`
-  (pinned at `492193ba8548869b91915be55133d85ab7a8722a`):
+  (pinned at `b243b355002f591f97631708af081d89e935b6c9`):
   - `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/` — 10 stock ROMs,
     upstream `<firmware-id>_<cal-id>.bin` names (e.g. `60E15120_N3J1E.bin`,
     SHA-256 `a7cd953c…`, see `data/labels/60E15120_N3J1E/input.json`)

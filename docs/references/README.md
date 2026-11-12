@@ -41,12 +41,12 @@ cite files by path + upstream commit hash instead. These are the canonical home
 for their content; our repo references them rather than duplicating files:
 
 - `submodules/Mazda_RX8_PCM_ReverseEngineering` — github.com/equinox311/Mazda_RX8_PCM_ReverseEngineering,
-  pinned at `492193ba8548869b91915be55133d85ab7a8722a`:
+  pinned at `b243b355002f591f97631708af081d89e935b6c9`:
   `Stock_ROMs/` (10 stock ROMs — referenced from [`binaries/README.md`](../../binaries/README.md)),
   `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
   `Utilities/` (upstream patcher scripts)
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs, pinned at
-  `1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`: upstream RomRaider/ECUFlash ECU +
+  `39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f`: upstream RomRaider/ECUFlash ECU +
   logger XML definitions, referenced in place — no promoted copies (rule 4b);
   the one differing snapshot is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
   @ upstream `ff5ab4f`, the 60E15120 merge base — see
