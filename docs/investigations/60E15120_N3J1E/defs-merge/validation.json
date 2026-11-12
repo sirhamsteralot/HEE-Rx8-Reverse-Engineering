@@ -1,35 +1,55 @@
 {
-  "upstream_commit": "ff5ab4f8a99ef9d2816db39872bc68ac116919d3",
-  "copy_base_commit": "944062ebe9de1a33cac6e56e62c3ead25591f586",
-  "commits_reviewed": [
-    "ff5ab4f Fat fingered an extra 0 in defs",
-    "978f881 Added immo delete for 60E32000",
-    "593b95b Update README.md",
-    "7224561 Added more DTC mappings",
-    "182524d Updated DTC mappings for a few ROMs, more still needs to be done.",
-    "0c8ac90 Merge pull request #3 from jfoster/master",
-    "d9a75b6 Updated some throttle and torque control tables for more clarity on functionality",
-    "04971dc Updated for devel",
-    "944062e Fixed a naming error",
-    "0f21c54 Added defs in some roms for off throttle fuel cut"
-  ],
-  "source_sha256": {
-    "RX8Defs/RomRaider/rx8_defs.xml": "514814ca00c7b97e7fa42830843761a35b75d73882e78a7f551a14e8a3077cbd",
-    "RX8Defs_Copy/RomRaider/rx8_defs.xml": "a506bba37084ea1a0db8dc8b048ab8b88d247aa7494b0d8ec0c0f8b953acb005",
-    "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1"
+ "upstream_commit": "ff5ab4f8a99ef9d2816db39872bc68ac116919d3",
+ "copy_base_commit": "944062ebe9de1a33cac6e56e62c3ead25591f586",
+ "commits_reviewed": [
+  "ff5ab4f Fat fingered an extra 0 in defs",
+  "978f881 Added immo delete for 60E32000",
+  "593b95b Update README.md",
+  "7224561 Added more DTC mappings",
+  "182524d Updated DTC mappings for a few ROMs, more still needs to be done.",
+  "0c8ac90 Merge pull request #3 from jfoster/master",
+  "d9a75b6 Updated some throttle and torque control tables for more clarity on functionality",
+  "04971dc Updated for devel",
+  "944062e Fixed a naming error",
+  "0f21c54 Added defs in some roms for off throttle fuel cut"
+ ],
+ "source_sha256": {
+  "RX8Defs/RomRaider/rx8_defs.xml": "514814ca00c7b97e7fa42830843761a35b75d73882e78a7f551a14e8a3077cbd",
+  "RX8Defs_Copy/RomRaider/rx8_defs.xml": "a506bba37084ea1a0db8dc8b048ab8b88d247aa7494b0d8ec0c0f8b953acb005",
+  "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1"
+ },
+ "prior_storage_annotations_corrected": 124,
+ "local_tables_merged": 478,
+ "local_axes_retained": 103,
+ "axis_conflicts": 0,
+ "target_tables": 637,
+ "descriptor_verified": 462,
+ "lookup_tables_needing_review": 32,
+ "renamed_tables": 7,
+ "inheritance_issues": 311,
+ "xml_parse_passed": true,
+ "calibration_changes_limited_to_recorded_target_repairs": true,
+ "target_repairs": 82,
+ "other_rom_blocks_byte_identical_to_upstream": true,
+ "live_RomRaider_tested": false,
+ "defs_update_from_investigations": {
+  "scope": "ECU-definition update from the DSC CAN arbitration, idle speed/target, alternator control and ignition timing investigations: 47 new table labels (idle target/air, alternator, CAN 0x212-derived DSC Mode C throttle table) in data/labels/60E15120_N3J1E/defs_table_labels.json, applied to the merged 60E15120 block (relabel_merged_def.py: renamed=47, added=0, already_relabeled=174) and propagated to all per-ROM defs (extend_defs_all_roms.py, cross-ROM structural match); 12 additional literal-pool scalars exposed as 1-cell 'Scalar -' entries (14 total) with provenance in defs_table_labels.json scalar_entries",
+  "binary_level_recheck": {
+   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+   "descriptor_reparse": "47/47 new label descriptors re-parsed from the raw ROM (>HBBII 2D / >HHIII 3D) and match data/maps/60E15120_N3J1E/index.tsv count/type/axis/data fields",
+   "scalar_redecode": "18/18 reference literal addresses f32-decode to the cross_rom_scalars.json values; inject_scalar_tables asserts the same per ROM at generation",
+   "dsc_mode_c_chain": "0x2b754 dsc_mode_bit40_check: mov.w @(0x2b834,pc),r4 = 0xffffbbcc, reads mode byte 0xffffbbf6 via pool 0x2b844, and 0x40, writes 1/0 to 0xffffbbcc; 0x218c4 loads tbl 0x6a150 from pool word 0x21a08 (mov.l @(0x21a08,pc),r4 at 0x2194a) and gates on 0xffffbbcc==1 && 0xffffbbca==0 (decompiled body)"
   },
-  "prior_storage_annotations_corrected": 124,
-  "local_tables_merged": 478,
-  "local_axes_retained": 103,
-  "axis_conflicts": 0,
-  "target_tables": 637,
-  "descriptor_verified": 462,
-  "lookup_tables_needing_review": 32,
-  "renamed_tables": 7,
-  "inheritance_issues": 311,
-  "xml_parse_passed": true,
-  "calibration_changes_limited_to_recorded_target_repairs": true,
-  "target_repairs": 82,
-  "other_rom_blocks_byte_identical_to_upstream": true,
-  "live_RomRaider_tested": false
+  "passes_run": [
+   "build_table_labels.py",
+   "relabel_merged_def.py",
+   "extend_defs_all_roms.py"
+  ],
+  "checks_run": [
+   "tests/test_defs_relabel.py",
+   "tests/test_extract_scalars.py",
+   "full pytest suite",
+   "pipeline validators (validate_export/validate_reports/verify_claims/verify_readability/verify_math_units)"
+  ]
+ }
 }

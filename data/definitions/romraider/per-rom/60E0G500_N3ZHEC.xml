@@ -3916,11 +3916,15 @@
         <table name="Ignition Trailing- Idle Timing Load Compensation Multiplier" storageaddress="0x06D618">
             <table type="Y Axis" storageaddress="0x06D5F4" />
         </table>
-        <table name="Table 2D - 10 " storageaddress="0x06E4BC">
-            <table type="Y Axis" storageaddress="0x06E4A4" />
+        <table name="Idle Air Correction Select 1 (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="6" storageaddress="0x6E4BC">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0.0) / 0.001" format="0.0000" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E4A4" />
+            <description>Idle air correction vs coolant temperature (select variant 1 of 6).</description>
         </table>
-        <table name="Table 2D - 11 " storageaddress="0x06E4E0">
-            <table type="Y Axis" storageaddress="0x06E4C8" />
+        <table name="Idle Air Correction Select 2 (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="6" storageaddress="0x6E4E0">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0.0) / 0.001" format="0.0000" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E4C8" />
+            <description>Idle air correction vs coolant temperature (select variant 2 of 6).</description>
         </table>
         <table name="Table 2D - 12 " storageaddress="0x06E504">
             <table type="Y Axis" storageaddress="0x06E4EC" />
@@ -3934,8 +3938,10 @@
         <table name="Table 2D - 15 " storageaddress="0x06E570">
             <table type="Y Axis" storageaddress="0x06E558" />
         </table>
-        <table name="Table 2D - 16 " storageaddress="0x06E5BC">
-            <table type="Y Axis" storageaddress="0x06E57C" />
+        <table name="Idle Air Target Term (Target RPM)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="16" storageaddress="0x6E5BC">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0.0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E57C" />
+            <description>Idle air target term vs the encoded idle target speed.</description>
         </table>
         <table name="Table 2D - 17 " storageaddress="0x06E6F0">
             <table type="Y Axis" storageaddress="0x06E6D4" />
@@ -3958,14 +3964,20 @@
         <table name="Table 2D - 23 " storageaddress="0x06E7F8">
             <table type="Y Axis" storageaddress="0x06E7AC" />
         </table>
-        <table name="Idle Target Filter Factor" storageaddress="0x06E84C">
-            <table type="Y Axis" storageaddress="0x06E820" />
+        <table name="Idle Target Filter Factor (RPM Error)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="11" storageaddress="0x6E84C">
+            <scaling units="Filter Factor" expression="(x * 0.003906 ) + 0" to_byte="(x - 0.0) / 0.003906" format="0.00" />
+            <table name="Idle Target Delta" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E820">
+                <scaling units="RPM/loop" />
+            </table>
+            <description>Smoothing factor applied to the idle target speed, vs target error.</description>
         </table>
         <table name="Idle Target - Base" storageaddress="0x06E880">
             <table type="Y Axis" storageaddress="0x06E864" />
         </table>
-        <table name="Idle Target Minimum - Open Loop Conditonal" storageaddress="0x06E8C0">
-            <table type="Y Axis" storageaddress="0x06E890" />
+        <table name="Idle Target RPM - Open-Loop Ramp (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="12" storageaddress="0x6E8C0">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E890" />
+            <description>Open-loop idle speed ramp vs coolant (automatic transmission); never below 500 rpm.</description>
         </table>
         <table name="Idle Target Minimum - Closed Loop Conditonal" storageaddress="0x06E908">
             <table type="Y Axis" storageaddress="0x06E8D8" />
@@ -3973,23 +3985,33 @@
         <table name="Idle Target Minimum - Reset Value" storageaddress="0x06E950">
             <table type="Y Axis" storageaddress="0x06E920" />
         </table>
-        <table name="Idle Target E" storageaddress="0x06E998">
-            <table type="Y Axis" storageaddress="0x06E968" />
+        <table name="Idle Target RPM - Cranking (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="12" storageaddress="0x6E998">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E968" />
+            <description>Cranking idle target vs coolant (manual transmission cranking/running select).</description>
         </table>
         <table name="Idle Target F" storageaddress="0x06E9CC">
             <table type="Y Axis" storageaddress="0x06E9B0" />
         </table>
-        <table name="Idle Target G" storageaddress="0x06E9F8">
-            <table type="Y Axis" storageaddress="0x06E9DC" />
+        <table name="Idle Target RPM - Variant G (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x6E9F8">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6E9DC" />
+            <description>Alternate idle target speed vs coolant temperature (variant G).</description>
         </table>
-        <table name="Idle Target H" storageaddress="0x06EA24">
-            <table type="Y Axis" storageaddress="0x06EA08" />
+        <table name="Idle Target RPM - Variant H (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x6EA24">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EA08" />
+            <description>Alternate idle target speed vs coolant temperature (variant H).</description>
         </table>
-        <table name="Idle Target - Vehicle Moving - Automatic Transmission Related 1" storageaddress="0x06EA50">
-            <table type="Y Axis" storageaddress="0x06EA34" />
+        <table name="Idle Target RPM - Vehicle Moving AT (Coolant)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x6EA50">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EA34" />
+            <description>Idle target speed while the vehicle is moving (automatic transmission), vs coolant.</description>
         </table>
-        <table name="Table 2D - 34 " storageaddress="0x06EAF8">
-            <table type="Y Axis" storageaddress="0x06EAD4" />
+        <table name="Idle Air Feedback Clamp Min (Coolant)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x6EAF8">
+            <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EAD4" />
+            <description>Lower clamp of the idle air feedback term vs coolant temperature.</description>
         </table>
         <table name="Table 2D - 35 " storageaddress="0x06EB28">
             <table type="Y Axis" storageaddress="0x06EB04" />
@@ -3997,20 +4019,30 @@
         <table name="Table 2D - 36 " storageaddress="0x06EB58">
             <table type="Y Axis" storageaddress="0x06EB34" />
         </table>
-        <table name="Table 2D - 37 " storageaddress="0x06EB88">
-            <table type="Y Axis" storageaddress="0x06EB64" />
+        <table name="Idle Air Feedback Correction A (RPM Error)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x6EB88">
+            <scaling expression="(x * 0.003906 ) + 0" to_byte="(x - 0) / 0.003906" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EB64" />
+            <description>Idle air feedback correction vs engine speed error (variant A).</description>
         </table>
-        <table name="Table 2D - 38 " storageaddress="0x06EBA8">
-            <table type="Y Axis" storageaddress="0x06EB94" />
+        <table name="Idle Air Feedback Correction B (RPM Error)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="5" storageaddress="0x6EBA8">
+            <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EB94" />
+            <description>Idle air feedback correction vs engine speed error (variant B).</description>
         </table>
-        <table name="Table 2D - 39 " storageaddress="0x06EBC8">
-            <table type="Y Axis" storageaddress="0x06EBB0" />
+        <table name="Idle Air Cranking Correction (Coolant)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="6" storageaddress="0x6EBC8">
+            <scaling expression="(x * 0.05 ) + 0" to_byte="(x - 0) / 0.05" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EBB0" />
+            <description>Idle air correction while cranking vs coolant temperature.</description>
         </table>
-        <table name="Table 2D - 40 " storageaddress="0x06EC08">
-            <table type="Y Axis" storageaddress="0x06EBD0" />
+        <table name="Idle Air Feedback Correction C (RPM Error)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="14" storageaddress="0x6EC08">
+            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EBD0" />
+            <description>Idle air feedback correction vs engine speed error (variant C).</description>
         </table>
-        <table name="Table 2D - 41 " storageaddress="0x06EC44">
-            <table type="Y Axis" storageaddress="0x06EC34" />
+        <table name="Idle A/C Request Term" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="4" storageaddress="0x6EC44">
+            <scaling expression="(x * 0.0001 ) + 0" to_byte="(x - 0) / 0.0001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6EC34" />
+            <description>Idle air term for the A/C request (stock: zero).</description>
         </table>
         <table name="Table 2D - 42 " storageaddress="0x06EC70">
             <table type="Y Axis" storageaddress="0x06EC4C" />
@@ -4024,8 +4056,10 @@
         <table name="Table 2D - 45 " storageaddress="0x06ED08">
             <table type="Y Axis" storageaddress="0x06ECF4" />
         </table>
-        <table name="Table 2D - 46 " storageaddress="0x06ED3C">
-            <table type="Y Axis" storageaddress="0x06ED18" />
+        <table name="Idle A/C Load (Coolant)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x6ED3C">
+            <scaling expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6ED18" />
+            <description>Idle air added for A/C compressor load vs coolant temperature.</description>
         </table>
         <table name="Ignition 4" storageaddress="0x06F78C">
             <table type="Y Axis" storageaddress="0x06F75C" />
@@ -4057,8 +4091,10 @@
         <table name="Ignition 13" storageaddress="0x06F810">
             <table type="Y Axis" storageaddress="0x06F80C" />
         </table>
-        <table name="Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold7 " storageaddress="0x06F878">
-            <table type="Y Axis" storageaddress="0x06F848" />
+        <table name="Fuel Cut Resume Threshold (Knock)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="12" storageaddress="0x6F878">
+            <scaling expression="(x * 3E-06 ) + -0.1" to_byte="(x - -0.1) / 3E-06" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6F848" />
+            <description>Engine speed threshold for resuming fuel after a fuel cut, vs knock correction.</description>
         </table>
         <table name="Off Throttle Fuel Cut - Fuel Resume - In Neutral Threshold8 " storageaddress="0x06FAB0">
             <table type="Y Axis" storageaddress="0x06FA9C" />
@@ -4256,20 +4292,30 @@
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72E90" />
             <description>Purpose not fully verified (candidate label).</description>
         </table>
-        <table name="Table 2D - 114 " storageaddress="0x072EDC">
-            <table type="Y Axis" storageaddress="0x072EC0" />
+        <table name="Idle Air MAF Term A" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x72EDC">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72EC0" />
+            <description>Idle air MAF airflow term (variant A).</description>
         </table>
-        <table name="Table 2D - 115 " storageaddress="0x072F08">
-            <table type="Y Axis" storageaddress="0x072EEC" />
+        <table name="Idle Air MAF Term B" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x72F08">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72EEC" />
+            <description>Idle air MAF airflow term (variant B).</description>
         </table>
-        <table name="Table 2D - 116 " storageaddress="0x072F34">
-            <table type="Y Axis" storageaddress="0x072F18" />
+        <table name="Idle Air MAF Term C" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x72F34">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72F18" />
+            <description>Idle air MAF airflow term (variant C).</description>
         </table>
-        <table name="Table 2D - 117 " storageaddress="0x072F64">
-            <table type="Y Axis" storageaddress="0x072F4C" />
+        <table name="Idle Air Aux Compensation" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="6" storageaddress="0x72F64">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.000" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72F4C" />
+            <description>Auxiliary idle air compensation term.</description>
         </table>
-        <table name="DSC Mode C - Max Throttle Plate Opening Allowed" storageaddress="0x072FC8">
-            <table type="Y Axis" storageaddress="0x072F7C" />
+        <table name="DSC Mode C - Max Throttle Plate Opening (RPM)" category="Torque Control" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x72FC8">
+            <scaling expression="(x * 0.1 ) + 0" to_byte="(x - 0) / 0.1" format="0.00" />
+            <table name="Throttle Plate Position" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x72F7C" />
+            <description>Maximum throttle plate opening while stability-control mode C is active, vs engine speed.</description>
         </table>
         <table name="Table 2D - 119 " storageaddress="0x073778">
             <table type="Y Axis" storageaddress="0x073768" />
@@ -4280,11 +4326,15 @@
         <table name="Table 2D - 121 " storageaddress="0x073B70">
             <table type="Y Axis" storageaddress="0x073B1C" />
         </table>
-        <table name="Table 2D - 122 " storageaddress="0x073BBC">
-            <table type="Y Axis" storageaddress="0x073B88" />
+        <table name="Idle Air Output Clamp Min (Coolant)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="13" storageaddress="0x73BBC">
+            <scaling expression="(x * 0.1 ) + 0" to_byte="(x - 0) / 0.1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x73B88" />
+            <description>Minimum idle air output vs coolant temperature.</description>
         </table>
-        <table name="Table 2D - 123 " storageaddress="0x073C00">
-            <table type="Y Axis" storageaddress="0x073BCC" />
+        <table name="Idle Air Output Clamp Max (Coolant)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="13" storageaddress="0x73C00">
+            <scaling expression="(x * 0.1 ) + 0" to_byte="(x - 0) / 0.1" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x73BCC" />
+            <description>Maximum idle air output vs coolant temperature.</description>
         </table>
         <table name="Table 2D - 124 " storageaddress="0x073C50">
             <table type="Y Axis" storageaddress="0x073C24" />
@@ -4358,17 +4408,27 @@
         <table name="Table 2D - 147 " storageaddress="0x075130">
             <table type="Y Axis" storageaddress="0x07510C" />
         </table>
-        <table name="Battery Temperature Model - Decay Amount" storageaddress="0x0752E0">
-            <table type="Y Axis" storageaddress="0x0752C4" />
+        <table name="Battery Temp Model - Speed Decay" category="Alternator Control" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x752E0">
+            <scaling expression="(x * 0.1 ) + -15" to_byte="(x - -15) / 0.1" format="0.00" />
+            <table name="Vehicle Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x752C4" />
+            <description>Battery temperature model decay vs vehicle speed.</description>
         </table>
         <table name="Desired Charge Voltage" storageaddress="0x07530C">
             <table type="Y Axis" storageaddress="0x0752E8" />
         </table>
-        <table name="Alternator Duty Cycle Max" storageaddress="0x07534C">
-            <table type="Y Axis" storageaddress="0x075320" />
+        <table name="Alternator Field Drive Target vs Alt Speed" category="Alternator Control" type="2D" storagetype="uint16" endian="big" sizey="7" storageaddress="0x7534C">
+            <scaling units="% Duty Cycle" expression="(x * 0.0099999998 )" to_byte="(x ) / 0.0099999998" format="0.00" />
+            <table name="Alternator RPM" units="RPM" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x75320">
+                <scaling units="RPM" />
+            </table>
+            <description>Target alternator field drive vs alternator speed.</description>
         </table>
-        <table name="Alternator Diagnostic Voltage Delta to DC" storageaddress="0x075398">
-            <table type="Y Axis" storageaddress="0x075364" />
+        <table name="Alternator Duty To Percent Scale" category="Alternator Control" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x75398">
+            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75364">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <description>Scales the computed alternator duty to percent (clamped 0-100).</description>
         </table>
         <table name="Table 2D - 152 " storageaddress="0x0753D8">
             <table type="Y Axis" storageaddress="0x0753B4" />
@@ -4400,11 +4460,17 @@
         <table name="Table 2D - 161 " storageaddress="0x07607C">
             <table type="Y Axis" storageaddress="0x076058" />
         </table>
-        <table name="Alternator Max Torque" storageaddress="0x0760A4">
-            <table type="Y Axis" storageaddress="0x076090" />
+        <table name="Alternator Drag Torque vs Alt Speed (candidate)" category="Alternator Control" type="2D" storagetype="uint16" endian="big" sizey="5" storageaddress="0x760A4">
+            <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
+            <table name="Alternator Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x76090">
+                <scaling units="RPM" />
+            </table>
+            <description>Purpose not fully verified (candidate label).</description>
         </table>
-        <table name="Table 2D - 163 " storageaddress="0x076B28">
-            <table type="Y Axis" storageaddress="0x076B18" />
+        <table name="Idle Air IAT Compensation" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="4" storageaddress="0x76B28">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x76B18" />
+            <description>Idle air intake-air-temperature compensation.</description>
         </table>
         <table name="Table 2D - 164 " storageaddress="0x0778F0">
             <table type="Y Axis" storageaddress="0x0778EC" />
@@ -4538,8 +4604,10 @@
         <table name="Table 2D - 203 " storageaddress="0x079728">
             <table type="Y Axis" storageaddress="0x0796F4" />
         </table>
-        <table name="Table 2D - 204 " storageaddress="0x079790">
-            <table type="Y Axis" storageaddress="0x079770" />
+        <table name="Idle Ratio Calc C (candidate)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="8" storageaddress="0x79790">
+            <scaling expression="(x * 0.02 ) + 0" to_byte="(x - 0) / 0.02" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79770" />
+            <description>Purpose not fully verified (candidate label).</description>
         </table>
         <table name="Ignition Leading - Cranking Timing Advance (ECT)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="12" storageaddress="0x797C8">
             <scaling units="deg" expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
@@ -4548,8 +4616,10 @@
             </table>
             <description>Cranking ignition advance adder vs coolant temperature, leading.</description>
         </table>
-        <table name="Table 2D - 206 " storageaddress="0x079814">
-            <table type="Y Axis" storageaddress="0x0797D4" />
+        <table name="Idle Ratio Calc D (candidate)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="16" storageaddress="0x79814">
+            <scaling expression="(x * 0.000977 ) + 0" to_byte="(x - 0) / 0.000977" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x797D4" />
+            <description>Purpose not fully verified (candidate label).</description>
         </table>
         <table name="Table 2D - 207 " storageaddress="0x0798B8">
             <table type="Y Axis" storageaddress="0x0798A4" />
@@ -4630,11 +4700,15 @@
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A230" />
             <description>Scales knock sensor voltage to knock magnitude.</description>
         </table>
-        <table name="Table 2D - 228 " storageaddress="0x07A554">
-            <table type="Y Axis" storageaddress="0x07A538" />
+        <table name="Idle Ratio Calc A (candidate)" category="Idle Control" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x7A554">
+            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A538" />
+            <description>Purpose not fully verified (candidate label).</description>
         </table>
-        <table name="Table 2D - 229 " storageaddress="0x07A58C">
-            <table type="Y Axis" storageaddress="0x07A55C" />
+        <table name="Idle Ratio Calc B (candidate)" category="Idle Control" type="2D" storagetype="uint16" endian="big" sizey="12" storageaddress="0x7A58C">
+            <scaling expression="(x * 2E-06 ) + 0" to_byte="(x - 0) / 2E-06" format="0.00" />
+            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A55C" />
+            <description>Purpose not fully verified (candidate label).</description>
         </table>
         <table name="Airflow Or Load Related" storageaddress="0x07A628">
             <table type="Y Axis" storageaddress="0x07A600" />
@@ -5252,13 +5326,25 @@
             </table>
             <description>Trailing ignition advance adder.</description>
         </table>
-        <table name="Table 3D - 12 " storageaddress="0x06EA88">
-            <table type="X Axis" storageaddress="0x06EA60" />
-            <table type="Y Axis" storageaddress="0x06EA7C" />
+        <table name="Idle Trim Ramp Floor 3D (Coolant x Baro)" category="Idle Control" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="7" sizey="3" storageaddress="0x6EA88">
+            <scaling expression="(x * 0.002 ) + 0" to_byte="(x - 0) / 0.002" format="0.00" />
+            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6EA60">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6EA7C">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <description>Floor of the idle trim ramp vs coolant temperature and barometric pressure.</description>
         </table>
-        <table name="Table 3D - 13 " storageaddress="0x06ED78">
-            <table type="X Axis" storageaddress="0x06ED48" />
-            <table type="Y Axis" storageaddress="0x06ED6C" />
+        <table name="Idle A/C Load 3D (Coolant x Catalyst)" category="Idle Control" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="9" sizey="3" storageaddress="0x6ED78">
+            <scaling expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
+            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6ED48">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6ED6C">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <description>Idle air added for A/C load vs coolant temperature and catalyst state.</description>
         </table>
         <table name="Table 3D - 14 " storageaddress="0x06EDF4">
             <table type="X Axis" storageaddress="0x06EDA4" />
@@ -5458,9 +5544,15 @@
             <table type="X Axis" storageaddress="0x074C64" />
             <table type="Y Axis" storageaddress="0x074CB8" />
         </table>
-        <table name="Alternator Voltage Delta - Diagnostic Request" storageaddress="0x0754F0">
-            <table type="X Axis" storageaddress="0x075494" />
-            <table type="Y Axis" storageaddress="0x0754C0" />
+        <table name="Alternator Duty Base 3D (Alt Speed x Load)" category="Alternator Control" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="11" sizey="12" storageaddress="0x754F0">
+            <scaling expression="(x * 0.05 ) + 0" to_byte="(x - 0) / 0.05" format="0.00" />
+            <table name="Alternator Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x75494">
+                <scaling units="RPM" expression="x" to_byte="x" />
+            </table>
+            <table name="Alternator Duty Cycle" type="Y Axis" storagetype="float" endian="big" storageaddress="0x754C0">
+                <scaling units="%" expression="x" to_byte="x" />
+            </table>
+            <description>Base alternator field duty vs alternator speed and electrical load.</description>
         </table>
         <table name="Table 3D - 54 " storageaddress="0x075630">
             <table type="X Axis" storageaddress="0x0755C4" />
@@ -5504,9 +5596,15 @@
             <table type="X Axis" storageaddress="0x07691C" />
             <table type="Y Axis" storageaddress="0x07693C" />
         </table>
-        <table name="Table 3D - 63 " storageaddress="0x076AD8">
-            <table type="X Axis" storageaddress="0x076AB8" />
-            <table type="Y Axis" storageaddress="0x076ACC" />
+        <table name="Idle Air Baro Compensation 3D" category="Idle Control" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="5" sizey="3" storageaddress="0x76AD8">
+            <scaling expression="(x * 0.003906 ) + 1" to_byte="(x - 1) / 0.003906" format="0.00" />
+            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x76AB8">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76ACC">
+                <scaling expression="x" to_byte="x" />
+            </table>
+            <description>Idle air barometric-pressure compensation vs baro and load.</description>
         </table>
         <table name="Primary Injector Weighted Engine Temp Multiplier" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="11" sizey="11" storageaddress="0x77A9C">
             <scaling expression="(x * 0.003906 ) + 0.75" to_byte="(x - 0.75) / 0.003906" format="0.00" />
@@ -5835,6 +5933,52 @@
         <table name="Scalar - Fuel Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7838C">
             <description>Scales engine load into the base injected fuel volume; editing changes open-loop fueling. For a different-stoich fuel scale it by 14.7/new stoich (E85: x1.506), paired with setting 'Scalar - Stoich AFR' to the new stoich.</description>
             <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Load Cell Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x79FE0">
+            <description>Converts air per revolution (g/rev) into the engine-load cell units used by the fuel and ignition maps (1/(engine displacement x air density)).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Factor (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x92E0">
+            <description>Seconds-per-minute factor in the air-per-revolution calculation (air flow in g/s to g/rev).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Clamp (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0xE4D4">
+            <description>Upper clamp of the computed air per revolution (g/rev).</description>
+            <scaling units="g/rev" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Offset (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B120">
+            <description>Celsius-to-Kelvin offset used in the intake-air density model.</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Reference (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B124">
+            <description>Reference temperature in the intake-air density ratio (20 C reference).</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Standard Atmosphere kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B130">
+            <description>Standard-atmosphere pressure used to normalize barometric pressure.</description>
+            <scaling units="kPa" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Baro ADC Scale kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7A9C0">
+            <description>Barometric-pressure sensor ADC counts to kPa scale.</description>
+            <scaling units="kPa/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - ADC Volt Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7310">
+            <scaling units="V/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Fuel Blend Decay (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x71C74">
+            <description>Per-call decay of the open-loop/closed-loop fueling blend weight.</description>
+            <scaling units="mult/call" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Diag Engine Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x55FC8">
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Primary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x783A0">
+            <description>Primary injector flow rating used for the injector pulse-width math; change it when fitting different primary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Secondary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x783A8">
+            <description>Secondary injector flow rating used for the injector pulse-width math; change it when fitting different secondary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
         </table>
         <table name="DTC P0300 Enable/Disable #1" storageaddress="0x7E220" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
             <description>DTC P0300 - Random misfire detected. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp.</description>

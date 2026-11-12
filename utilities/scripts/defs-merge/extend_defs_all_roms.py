@@ -218,6 +218,73 @@ SCALAR_ENTRIES = {
                         "open-loop fueling. For a different-stoich fuel scale it by 14.7/new stoich "
                         "(E85: x1.506), paired with setting 'Scalar - Stoich AFR' to the new stoich."),
     },
+    # meanings pinned by the source-review comments and the subsystem reports
+    # (cross_rom_scalars.json evidence); same rule-6b editor text policy
+    "load_cell_scale": {
+        "name": "Scalar - Load Cell Scale (literal pool)",
+        "units": "mult",
+        "description": ("Converts air per revolution (g/rev) into the engine-load cell units used "
+                        "by the fuel and ignition maps (1/(engine displacement x air density))."),
+    },
+    "air_per_rev_factor": {
+        "name": "Scalar - Air Per Rev Factor (literal pool)",
+        "units": "mult",
+        "description": ("Seconds-per-minute factor in the air-per-revolution calculation "
+                        "(air flow in g/s to g/rev)."),
+    },
+    "air_per_rev_clamp": {
+        "name": "Scalar - Air Per Rev Clamp (literal pool)",
+        "units": "g/rev",
+        "description": "Upper clamp of the computed air per revolution (g/rev).",
+    },
+    "kelvin_offset": {
+        "name": "Scalar - Kelvin Offset (literal pool)",
+        "units": "K",
+        "description": "Celsius-to-Kelvin offset used in the intake-air density model.",
+    },
+    "kelvin_ref": {
+        "name": "Scalar - Kelvin Reference (literal pool)",
+        "units": "K",
+        "description": "Reference temperature in the intake-air density ratio (20 C reference).",
+    },
+    "std_atm_kpa": {
+        "name": "Scalar - Standard Atmosphere kPa (literal pool)",
+        "units": "kPa",
+        "description": "Standard-atmosphere pressure used to normalize barometric pressure.",
+    },
+    "baro_scale_kpa": {
+        "name": "Scalar - Baro ADC Scale kPa (literal pool)",
+        "units": "kPa/count",
+        "description": "Barometric-pressure sensor ADC counts to kPa scale.",
+    },
+    "maf_adc_scale": {
+        "name": "Scalar - ADC Volt Scale (literal pool)",
+        "units": "V/count",
+        "description": ("Analog sensor ADC counts to volts scale (raw x 5/65536); used by the MAF, "
+                        "throttle and knock sensor inputs."),
+    },
+    "blend_weight_decay": {
+        "name": "Scalar - Fuel Blend Decay (literal pool)",
+        "units": "mult/call",
+        "description": "Per-call decay of the open-loop/closed-loop fueling blend weight.",
+    },
+    "pid0043_load_scale": {
+        "name": "Scalar - Diag Engine Load Scale (literal pool)",
+        "units": "mult",
+        "description": "Scale applied to engine load in the diagnostic engine-load report (x 1/255).",
+    },
+    "injector_flow_primary_cc_min": {
+        "name": "Scalar - Primary Injector Flow cc/min (literal pool)",
+        "units": "cc/min",
+        "description": ("Primary injector flow rating used for the injector pulse-width math; "
+                        "change it when fitting different primary injectors."),
+    },
+    "injector_flow_secondary_cc_min": {
+        "name": "Scalar - Secondary Injector Flow cc/min (literal pool)",
+        "units": "cc/min",
+        "description": ("Secondary injector flow rating used for the injector pulse-width math; "
+                        "change it when fitting different secondary injectors."),
+    },
 }
 
 

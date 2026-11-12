@@ -3846,6 +3846,52 @@
             <description>Scales engine load into the base injected fuel volume; editing changes open-loop fueling. For a different-stoich fuel scale it by 14.7/new stoich (E85: x1.506), paired with setting 'Scalar - Stoich AFR' to the new stoich.</description>
             <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
         </table>
+        <table name="Scalar - Load Cell Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7AE3C">
+            <description>Converts air per revolution (g/rev) into the engine-load cell units used by the fuel and ignition maps (1/(engine displacement x air density)).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Factor (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x9310">
+            <description>Seconds-per-minute factor in the air-per-revolution calculation (air flow in g/s to g/rev).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Clamp (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0xE7C8">
+            <description>Upper clamp of the computed air per revolution (g/rev).</description>
+            <scaling units="g/rev" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Offset (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B7FC">
+            <description>Celsius-to-Kelvin offset used in the intake-air density model.</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Reference (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B800">
+            <description>Reference temperature in the intake-air density ratio (20 C reference).</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Standard Atmosphere kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B80C">
+            <description>Standard-atmosphere pressure used to normalize barometric pressure.</description>
+            <scaling units="kPa" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Baro ADC Scale kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7B88C">
+            <description>Barometric-pressure sensor ADC counts to kPa scale.</description>
+            <scaling units="kPa/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - ADC Volt Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7334">
+            <scaling units="V/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Fuel Blend Decay (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x746F8">
+            <description>Per-call decay of the open-loop/closed-loop fueling blend weight.</description>
+            <scaling units="mult/call" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Diag Engine Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x5AECC">
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Primary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x79500">
+            <description>Primary injector flow rating used for the injector pulse-width math; change it when fitting different primary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Secondary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x79508">
+            <description>Secondary injector flow rating used for the injector pulse-width math; change it when fitting different secondary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
+        </table>
         <table name="DTC P0300 Enable/Disable #1" storageaddress="0x7E74C" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
             <description>DTC P0300 - Random misfire detected. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp.</description>
         </table>

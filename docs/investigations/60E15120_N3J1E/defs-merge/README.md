@@ -134,3 +134,23 @@ The generated `validation.json` pins their hashes and commits.
   Mazda wording preferred in descriptions. Evidence:
   [`../dtc_control_report.md`](../dtc_control_report.md) §5b; tests
   `tests/test_dtc_pcode_labels.py`.
+- **Defs update from the subsystem investigations** (idle target/air, alternator
+  control, DSC CAN arbitration, ignition timing): 47 new curated table labels
+  in [`data/labels/60E15120_N3J1E/defs_table_labels.json`](../../../../data/labels/60E15120_N3J1E/defs_table_labels.json)
+  (built by `utilities/scripts/defs-merge/build_table_labels.py`) — idle target
+  RPM variants/filter, idle air output/feedback/correction/A-C tables, the
+  alternator field-drive/duty/voltage-target/drag-torque tables, and the CAN
+  0x212-derived DSC Mode C max-throttle table (descriptor 0x6a150, gated by the
+  0x212 mode bit 0x40 → 0xffffbbcc in 0x218c4) — applied to the merged 60E15120
+  block by `relabel_merged_def.py` (renamed=47, added=0, pass log
+  [`relabel_2026-11-02.json`](relabel_2026-11-02.json)) and propagated to every
+  per-ROM def by `extend_defs_all_roms.py` via the cross-ROM structural match.
+  The 12 remaining verified literal-pool scalars are now also exposed as 1-cell
+  `Scalar - …` entries in every per-ROM def (14 total; `SCALAR_ENTRIES` in
+  `extend_defs_all_roms.py`), with per-scalar provenance in the
+  `scalar_entries` section of `defs_table_labels.json`. Binary-level re-check
+  (descriptor re-parse 47/47, scalar f32 re-decode 18/18, DSC mode-C pool chain)
+  recorded in [`validation.json`](validation.json)
+  `defs_update_from_investigations`; checks: `tests/test_defs_relabel.py`,
+  `tests/test_extract_scalars.py`, full pytest suite and the pipeline validators
+  all green.

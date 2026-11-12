@@ -4090,10 +4090,8 @@
         <table name="Table 2D - 85 " storageaddress="0x071610">
             <table type="Y Axis" storageaddress="0x0715E8" />
         </table>
-        <table name="OL Fuelling Base Correction - Baro [Safe Mode]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="1" storageaddress="0x717C0">
-            <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0.0) / 0.007812" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x717BC" />
-            <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
+        <table name="Open Loop Fuelling Base Correction (Throttle)" storageaddress="0x0717C0">
+            <table type="Y Axis" storageaddress="0x0717BC" />
         </table>
         <table name="Open Loop Target - Coolant Temperature Correction" storageaddress="0x0717E0">
             <table type="Y Axis" storageaddress="0x0717C4" />
@@ -4101,10 +4099,8 @@
         <table name="Closed Loop Fuelling Threshold (Engine Load A)" storageaddress="0x071900">
             <table type="Y Axis" storageaddress="0x0718B8" />
         </table>
-        <table name="Closed Loop Fuelling Threshold E" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x7199C">
-            <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71950" />
-            <description>Closed-loop fuelling enable threshold (variant E).</description>
+        <table name="Closed Loop Fuelling Threshold (Throttle Position) " storageaddress="0x07199C">
+            <table type="Y Axis" storageaddress="0x071950" />
         </table>
         <table name="Table 2D - 97 " storageaddress="0x0719F8">
             <table type="Y Axis" storageaddress="0x0719B0" />
@@ -4124,10 +4120,8 @@
         <table name="Table 2D - 102 " storageaddress="0x071AD8">
             <table type="Y Axis" storageaddress="0x071AD4" />
         </table>
-        <table name="OL Changeover Enrichment" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="7" storageaddress="0x71AF8">
-            <scaling expression="x * 0.00390625" to_byte="x / 0.00390625" format="0.000" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71ADC" />
-            <description>Fuel enrichment during open-loop changeover.</description>
+        <table name="Open Loop Changeover Enrichment" storageaddress="0x071AF8">
+            <table type="Y Axis" storageaddress="0x071ADC" />
         </table>
         <table name="Table 2D - 104 " storageaddress="0x072694">
             <table type="Y Axis" storageaddress="0x072670" />
@@ -4135,19 +4129,11 @@
         <table name="Table 2D - 105 " storageaddress="0x0726C4">
             <table type="Y Axis" storageaddress="0x0726A0" />
         </table>
-        <table name="Idle Error Timing Correction - Leading Off (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x72720">
-            <scaling units="deg" expression="(x * 0.25 ) + -32" to_byte="(x - -32) / 0.25" format="0.00" />
-            <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x726FC">
-                <scaling units="RPM" />
-            </table>
-            <description>Idle speed error correction to leading timing (idle control off).</description>
+        <table name="Ignition Leading - Idle Error Timing Correction - Unknown Bool False" storageaddress="0x072720">
+            <table type="Y Axis" storageaddress="0x0726FC" />
         </table>
-        <table name="Idle Error Timing Correction - Leading On (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x72750">
-            <scaling units="deg" expression="(x * 0.25 ) + -32" to_byte="(x - -32.0) / 0.25" format="0.00" />
-            <table name="Idle Speed Error" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7272C">
-                <scaling units="RPM" />
-            </table>
-            <description>Idle speed error correction to leading timing (idle control on).</description>
+        <table name="Ignition Leading - Idle Error Timing Correction - Unknown Bool True" storageaddress="0x072750">
+            <table type="Y Axis" storageaddress="0x07272C" />
         </table>
         <table name="Ignition Trailing - Idle Error Timing Correction - Unknown Bool False" storageaddress="0x072780">
             <table type="Y Axis" storageaddress="0x07275C" />
@@ -4329,15 +4315,11 @@
         <table name="Table 2D - 180 Injector Ratio Poss Min Sec PW #1" storageaddress="0x077300">
             <table type="Y Axis" storageaddress="0x0772DC" />
         </table>
-        <table name="Fuel Coolant Compensation (candidate)" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="9" storageaddress="0x77360">
-            <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7733C" />
-            <description>Purpose not fully verified (candidate label).</description>
+        <table name="Table 2D - 181 Minimum Lambda/EQ for Secondary Injectiors" storageaddress="0x077360">
+            <table type="Y Axis" storageaddress="0x07733C" />
         </table>
-        <table name="Per-Rotation Fuel Scale" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="17" storageaddress="0x773B8">
-            <scaling expression="(x * 0.007812 ) + 0" to_byte="(x - 0) / 0.007812" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x77374" />
-            <description>Per-rotation fuel scale in the fuel-volume calculation.</description>
+        <table name="Table 2D - 182 " storageaddress="0x0773B8">
+            <table type="Y Axis" storageaddress="0x077374" />
         </table>
         <table name="Secondary Injectors Allowed Threshold - Coolant Temperature Based" storageaddress="0x077400">
             <table type="Y Axis" storageaddress="0x0773DC" />
@@ -4352,10 +4334,8 @@
         <table name="Table 2D - 190 " storageaddress="0x077888">
             <table type="Y Axis" storageaddress="0x077860" />
         </table>
-        <table name="Air Flow x Battery A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x778B4">
-            <scaling expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x77890" />
-            <description>Air-flow x battery-voltage correction (variant A).</description>
+        <table name="Table 2D - 191 " storageaddress="0x0778B4">
+            <table type="Y Axis" storageaddress="0x077890" />
         </table>
         <table name="Table 2D - 194 " storageaddress="0x077974">
             <table type="Y Axis" storageaddress="0x077958" />
@@ -4372,12 +4352,8 @@
         <table name="Load Based Oil Injection Temperature Correction" storageaddress="0x077C9C">
             <table type="Y Axis" storageaddress="0x077C90" />
         </table>
-        <table name="Warmup Fueling A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="10" storageaddress="0x78040">
-            <scaling units="mult" expression="(x * 0.015625 ) + 0" to_byte="(x - 0) / 0.015625" format="0.00" />
-            <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78018">
-                <scaling units="g/rev" />
-            </table>
-            <description>Warmup fuel enrichment (variant A).</description>
+        <table name="Fuel Injection - Warmup Fueling - Load Based Multiplier" storageaddress="0x078040">
+            <table type="Y Axis" storageaddress="0x078018" />
         </table>
         <table name="Table 2D - 200 " storageaddress="0x0781BC">
             <table type="Y Axis" storageaddress="0x07817C" />
@@ -4394,12 +4370,8 @@
         <table name="Table 2D - 204 " storageaddress="0x07849C">
             <table type="Y Axis" storageaddress="0x07847C" />
         </table>
-        <table name="Ignition Leading - Cranking Timing Advance (ECT)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="12" storageaddress="0x784D4">
-            <scaling units="deg" expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x784A4">
-                <scaling units="degC" />
-            </table>
-            <description>Cranking ignition advance adder vs coolant temperature, leading.</description>
+        <table name="Ignition Leading - Cranking Timing Advance" storageaddress="0x0784D4">
+            <table type="Y Axis" storageaddress="0x0784A4" />
         </table>
         <table name="Table 2D - 206 " storageaddress="0x078520">
             <table type="Y Axis" storageaddress="0x0784E0" />
@@ -4431,10 +4403,8 @@
         <table name="Table 2D - 215 " storageaddress="0x078728">
             <table type="Y Axis" storageaddress="0x078720" />
         </table>
-        <table name="Load Delta / Tip-In A" category="Fuel Injection" type="2D" storagetype="uint8" endian="big" sizey="10" storageaddress="0x78924">
-            <scaling expression="(x * 0.05 ) + 0" to_byte="(x - 0) / 0.05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x788FC" />
-            <description>Load-delta / tip-in fuel correction (variant A).</description>
+        <table name="Table 2D - 216 " storageaddress="0x078924">
+            <table type="Y Axis" storageaddress="0x0788FC" />
         </table>
         <table name="Table 2D - 217 " storageaddress="0x078954">
             <table type="Y Axis" storageaddress="0x078930" />
@@ -4442,10 +4412,8 @@
         <table name="Table 2D - 218 " storageaddress="0x078980">
             <table type="Y Axis" storageaddress="0x078960" />
         </table>
-        <table name="Load Delta / Tip-In B" category="Fuel Injection" type="2D" storagetype="uint16" endian="big" sizey="14" storageaddress="0x789C0">
-            <scaling expression="(x * 1E-05 ) + 0" to_byte="(x - 0) / 1E-05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78988" />
-            <description>Load-delta / tip-in fuel correction (variant B).</description>
+        <table name="Table 2D - 219 " storageaddress="0x0789C0">
+            <table type="Y Axis" storageaddress="0x078988" />
         </table>
         <table name="Table 2D - 220 " storageaddress="0x078A14">
             <table type="Y Axis" storageaddress="0x0789DC" />
@@ -4453,24 +4421,14 @@
         <table name="Table 2D - 221 " storageaddress="0x078A68">
             <table type="Y Axis" storageaddress="0x078A30" />
         </table>
-        <table name="RPM-Based Max Engine Load" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="18" storageaddress="0x78D7C">
-            <scaling units="g/rev" expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
-            <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78D34">
-                <scaling units="RPM" />
-            </table>
-            <description>Maximum engine load ceiling vs RPM.</description>
+        <table name="RPM Based Max Engine Load" storageaddress="0x078D7C">
+            <table type="Y Axis" storageaddress="0x078D34" />
         </table>
-        <table name="Max Engine Load - IAT Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x78DC0">
-            <scaling expression="(x * 3.1E-05 ) + 0" to_byte="(x - 0) / 3.1E-05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78DA0" />
-            <description>Intake-air-temperature multiplier in the max engine load clamp.</description>
+        <table name="Table 2D - 223 " storageaddress="0x078DC0">
+            <table type="Y Axis" storageaddress="0x078DA0" />
         </table>
-        <table name="Max Engine Load - Baro Correction" category="Engine Load" type="2D" storagetype="uint16" endian="big" sizey="8" storageaddress="0x78DF0">
-            <scaling units="mult" expression="x*0.000030517578" to_byte="x / 0.000030517578" format="0.00" />
-            <table name="Barometric Pressure" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78DD0">
-                <scaling units="kPa" />
-            </table>
-            <description>Barometric-pressure multiplier in the max engine load clamp.</description>
+        <table name="Max Load - Barometric Pressure Compensation" storageaddress="0x078DF0">
+            <table type="Y Axis" storageaddress="0x078DD0" />
         </table>
         <table name="Table 2D - 225 " storageaddress="0x078E24">
             <table type="Y Axis" storageaddress="0x078E00" />
@@ -4478,10 +4436,8 @@
         <table name="Table 2D - 226 " storageaddress="0x078E5C">
             <table type="Y Axis" storageaddress="0x078E38" />
         </table>
-        <table name="Knock Voltage To Magnitude Scale" category="Knock Control" type="2D" storagetype="uint8" endian="big" sizey="58" storageaddress="0x79024">
-            <scaling expression="(x * 1 ) - 0" to_byte="(x +0) / 1" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x78F3C" />
-            <description>Scales knock sensor voltage to knock magnitude.</description>
+        <table name="Knock Voltage To Magnitude" storageaddress="0x079024">
+            <table type="Y Axis" storageaddress="0x078F3C" />
         </table>
         <table name="Table 2D - 228 " storageaddress="0x079260">
             <table type="Y Axis" storageaddress="0x079244" />
@@ -4561,17 +4517,11 @@
         <table name="Table 2D - 256 " storageaddress="0x0796B8">
             <table type="Y Axis" storageaddress="0x07969C" />
         </table>
-        <table name="Off-Throttle Leading Timing vs ECT (deg)" category="Ignition Leading" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x797C8">
-            <scaling units="degrees" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
-            <table name="Coolant Temp" units="degC" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x797A4" />
-            <description>Off-throttle leading timing vs coolant temperature.</description>
+        <table name="Off Throttle Leading Timing Realted" storageaddress="0x0797C8">
+            <table type="Y Axis" storageaddress="0x0797A4" />
         </table>
-        <table name="Ignition Trailing - Cranking Timing Advance (ECT)" category="Ignition Trailing" type="2D" storagetype="uint8" endian="big" sizey="9" storageaddress="0x797F8">
-            <scaling units="deg" expression="(x * 0.5 ) + -50" to_byte="(x - -50) / 0.5" format="0.00" />
-            <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x797D4">
-                <scaling units="degC" />
-            </table>
-            <description>Cranking ignition advance adder vs coolant temperature, trailing.</description>
+        <table name="Ignition Trailing - Cranking Timing Advance" storageaddress="0x0797F8">
+            <table type="Y Axis" storageaddress="0x0797D4" />
         </table>
         <table name="Table 2D - 259 " storageaddress="0x079C20">
             <table type="Y Axis" storageaddress="0x079BD8" />
@@ -4615,10 +4565,8 @@
         <table name="Table 2D - 272 " storageaddress="0x07A244">
             <table type="Y Axis" storageaddress="0x07A214" />
         </table>
-        <table name="Cold-Start Advance Reduction (RPM)" category="Ignition Timing" type="2D" storagetype="uint8" endian="big" sizey="11" storageaddress="0x7A27C">
-            <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x7A250" />
-            <description>Cold-start ignition advance reduction, vs RPM.</description>
+        <table name="Table 2D - 273 " storageaddress="0x07A27C">
+            <table type="Y Axis" storageaddress="0x07A250" />
         </table>
         <table name="Table 2D - 274 " storageaddress="0x07A2B4">
             <table type="Y Axis" storageaddress="0x07A288" />
@@ -4674,10 +4622,8 @@
         <table name="Table 2D - 293 Check DataType" storageaddress="0x06F638">
             <table type="Y Axis" storageaddress="0x06F624" />
         </table>
-        <table name="MAF Scaling" category="Sensors" type="2D" storagetype="float" endian="big" sizey="48" storageaddress="0x6F71C">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6F65C" />
-            <description>MAF sensor voltage to air mass flow (g/s).</description>
+        <table name="MAF Scaling" storageaddress="0x06F71C">
+            <table type="Y Axis" storageaddress="0x06F65C" />
         </table>
         <table name="Table 2D - 295 Check DataType" storageaddress="0x06F83C">
             <table type="Y Axis" storageaddress="0x06F81C" />
@@ -4706,10 +4652,8 @@
         <table name="Table 2D - 303 Check DataType" storageaddress="0x06FDF8">
             <table type="Y Axis" storageaddress="0x06FDDC" />
         </table>
-        <table name="Closed Loop Warmup Time" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="15" storageaddress="0x6FE88">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6FE4C" />
-            <description>Time after start during which closed-loop fuelling is inhibited.</description>
+        <table name="Table 2D - 304 Check DataType" storageaddress="0x06FE88">
+            <table type="Y Axis" storageaddress="0x06FE4C" />
         </table>
         <table name="Table 2D - 305" storageaddress="0x06FEEC">
             <table type="Y Axis" storageaddress="0x06FED4" />
@@ -4846,15 +4790,11 @@
         <table name="Ignition Timing Threshold B - Knock Retard Reset Off" storageaddress="0x0790EC">
             <table type="Y Axis" storageaddress="0x0790B4" />
         </table>
-        <table name="Knock Noise Threshold Min" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x7910C">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79108" />
-            <description>Minimum knock noise threshold (clamp floor).</description>
+        <table name="Knock Related" storageaddress="0x07910C">
+            <table type="Y Axis" storageaddress="0x079108" />
         </table>
-        <table name="Knock Noise Floor (RPM)" category="Knock Control" type="2D" storagetype="float" endian="big" sizey="1" storageaddress="0x79114">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x79110" />
-            <description>Knock noise floor vs RPM.</description>
+        <table name="Knock Related 3" storageaddress="0x079114">
+            <table type="Y Axis" storageaddress="0x079110" />
         </table>
         <table name="Table 2D - 367 Check DataType" storageaddress="0x07BBF0">
             <table type="Y Axis" storageaddress="0x07BBCC" />
@@ -4943,15 +4883,9 @@
             <table type="X Axis" storageaddress="0x06DB88" />
             <table type="Y Axis" storageaddress="0x06DBD8" />
         </table>
-        <table name="Ignition Trailing - Base Timing" category="Ignition Trailing" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6DE94">
-            <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6DDFC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DE4C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Trailing (rear rotor) base ignition timing map.</description>
+        <table name="Ignition Timing Trailing Base" storageaddress="0x06DE94">
+            <table type="X Axis" storageaddress="0x06DDFC" />
+            <table type="Y Axis" storageaddress="0x06DE4C" />
         </table>
         <table name="Table 3D - 12 " storageaddress="0x06E698">
             <table type="X Axis" storageaddress="0x06E670" />
@@ -4965,15 +4899,9 @@
             <table type="X Axis" storageaddress="0x06E8E8" />
             <table type="Y Axis" storageaddress="0x06E918" />
         </table>
-        <table name="Ignition Leading - DSC Mode A Map 4" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="20" sizey="18" storageaddress="0x6EA30">
-            <scaling expression="x*0.5-50" to_byte="(x+50)/.5" format="0.000" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x6E998">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E9E8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Leading timing map 4 in DSC mode A.</description>
+        <table name="Igntion Leading Timing - DSC Mode A - Map 4" storageaddress="0x06EA30">
+            <table type="X Axis" storageaddress="0x06E998" />
+            <table type="Y Axis" storageaddress="0x06E9E8" />
         </table>
         <table name="Igntion Leading Timing - DSC Mode A - Map 2" storageaddress="0x06EC30">
             <table type="X Axis" storageaddress="0x06EB98" />
@@ -5003,15 +4931,9 @@
             <table type="X Axis" storageaddress="0x070370" />
             <table type="Y Axis" storageaddress="0x070390" />
         </table>
-        <table name="Closed Loop WOT Enrichment" category="Fuel Target (Closed Loop)" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="3" storageaddress="0x7042C">
-            <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x703F0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70420">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Closed-loop fuel enrichment at wide-open throttle.</description>
+        <table name="Closed Loop WOT Enrichment??" storageaddress="0x07042C">
+            <table type="X Axis" storageaddress="0x0703F0" />
+            <table type="Y Axis" storageaddress="0x070420" />
         </table>
         <table name="Table 3D - 24 " storageaddress="0x0704A0">
             <table type="X Axis" storageaddress="0x06FF34" />
@@ -5041,25 +4963,13 @@
             <table type="X Axis" storageaddress="0x071D60" />
             <table type="Y Axis" storageaddress="0x071DB4" />
         </table>
-        <table name="OL Target - Throttle Tip In [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x71F98">
-            <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-            <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x71F90">
-                <scaling units="RPM" expression="x" to_byte="x" />
-            </table>
-            <table name="Throttle Position" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71F94">
-                <scaling units="%" expression="x" to_byte="x" />
-            </table>
-            <description>Open-loop target lambda during throttle tip-in (safe mode).</description>
+        <table name="Open Loop Target - Throttle Tip In (Safe Mode)" storageaddress="0x071F98">
+            <table type="X Axis" storageaddress="0x071F90" />
+            <table type="Y Axis" storageaddress="0x071F94" />
         </table>
-        <table name="OL Target - Main [Safe Mode]" category="Fuel Injection - Open Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="1" sizey="1" storageaddress="0x71FA4">
-            <scaling units="Lambda" expression="1-(x * 0.003906)" to_byte="(1 - x) / 0.003906" format="0.000" />&gt;
-            <table name="Engine Load" type="X Axis" storagetype="float" endian="big" storageaddress="0x71F9C">
-                <scaling units="g/rev" expression="x" to_byte="x" />
-            </table>
-            <table name="Engine Speed" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71FA0">
-                <scaling units="RPM" expression="x" to_byte="x" />
-            </table>
-            <description>Main open-loop target lambda vs engine load and RPM (safe mode).</description>
+        <table name="Open Loop Target (Safe Mode)" storageaddress="0x071FA4">
+            <table type="X Axis" storageaddress="0x071F9C" />
+            <table type="Y Axis" storageaddress="0x071FA0" />
         </table>
         <table name="Open Loop Target - Throttle Tip in - Coolant Temp Implausible B" storageaddress="0x071FF8">
             <table type="X Axis" storageaddress="0x071FA8" />
@@ -5133,15 +5043,9 @@
             <table type="X Axis" storageaddress="0x074FD8" />
             <table type="Y Axis" storageaddress="0x075000" />
         </table>
-        <table name="Ignition Leading - DSC Mode A Base" category="Ignition Leading" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="18" sizey="19" storageaddress="0x7587C">
-            <scaling expression="(x * 0.488281 ) + -50" to_byte="(x - -50) / 0.488281" format="0.00" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x757E8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75830">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Leading base timing in DSC mode A.</description>
+        <table name="Ignition Timing Leading - DSC Mode A - Base" storageaddress="0x07587C">
+            <table type="X Axis" storageaddress="0x0757E8" />
+            <table type="Y Axis" storageaddress="0x075830" />
         </table>
         <table name="Table 3D - 60 " storageaddress="0x075A68">
             <table type="X Axis" storageaddress="0x0759D4" />
@@ -5159,15 +5063,9 @@
             <table type="X Axis" storageaddress="0x0761F0" />
             <table type="Y Axis" storageaddress="0x076204" />
         </table>
-        <table name="Primary Injector Weighted Engine Temp Multiplier" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="11" sizey="11" storageaddress="0x76860">
-            <scaling expression="(x * 0.003906 ) + 0.75" to_byte="(x - 0.75) / 0.003906" format="0.00" />
-            <table name="Weighted Engine Temperature" type="X Axis" storagetype="float" endian="big" storageaddress="0x76808">
-                <scaling units="degC" expression="x" to_byte="x" />
-            </table>
-            <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76834">
-                <scaling units="g/rev" expression="x" to_byte="x" />
-            </table>
-            <description>Engine-temperature multiplier for primary injector pulse width.</description>
+        <table name="Primary Injector Weighted Engine Temp Multiplier" storageaddress="0x076860">
+            <table type="X Axis" storageaddress="0x076808" />
+            <table type="Y Axis" storageaddress="0x076834" />
         </table>
         <table name="Secondary 1 Injector Weighted Engine Temp Multiplier" storageaddress="0x0768E4">
             <table type="X Axis" storageaddress="0x0768DC" />
@@ -5177,69 +5075,33 @@
             <table type="X Axis" storageaddress="0x0768E8" />
             <table type="Y Axis" storageaddress="0x0768EC" />
         </table>
-        <table name="Estimated Manifold Pressure (RPM x load)" category="Engine Load" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="20" storageaddress="0x76A0C">
-            <scaling expression="(x * 0.00390625 ) + 0" to_byte="(x - 0) / 0.00390625" format="0.00" />
-            <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x76978">
-                <scaling units="RPM" expression="x" to_byte="x" />
-            </table>
-            <table name="Engine Load" type="Y Axis" storagetype="float" endian="big" storageaddress="0x769BC">
-                <scaling units="g/rev" expression="x" to_byte="x" />
-            </table>
-            <description>Estimated manifold pressure vs RPM and engine load.</description>
+        <table name="Estimated Manifold Pressure" storageaddress="0x076A0C">
+            <table type="X Axis" storageaddress="0x076978" />
+            <table type="Y Axis" storageaddress="0x0769BC" />
         </table>
-        <table name="Injector Latency - Secondary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x76D1C">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Manifold Relative Pressure" type="X Axis" storagetype="float" endian="big" storageaddress="0x76CB4">
-                <scaling units="kPa" expression="x" to_byte="x" />
-            </table>
-            <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76CF8">
-                <scaling units="V" expression="x" to_byte="x" />
-            </table>
-            <description>Secondary injector dead time vs estimated manifold pressure and battery voltage.</description>
+        <table name="Injector Latency Secondary" storageaddress="0x076D1C">
+            <table type="X Axis" storageaddress="0x076CB4" />
+            <table type="Y Axis" storageaddress="0x076CF8" />
         </table>
-        <table name="Injector Latency - Primary" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="17" sizey="9" storageaddress="0x76EB8">
-            <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
-            <table name="Manifold Relative Pressure" type="X Axis" storagetype="float" endian="big" storageaddress="0x76E50">
-                <scaling units="kPa" expression="x" to_byte="x" />
-            </table>
-            <table name="Battery Voltage" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76E94">
-                <scaling units="V" expression="x" to_byte="x" />
-            </table>
-            <description>Primary injector dead time vs estimated manifold pressure and battery voltage.</description>
+        <table name="Injector Latency Primary" storageaddress="0x076EB8">
+            <table type="X Axis" storageaddress="0x076E50" />
+            <table type="Y Axis" storageaddress="0x076E94" />
         </table>
         <table name="Fuel Injection - Engine Load Compensation" storageaddress="0x0774AC">
             <table type="X Axis" storageaddress="0x077414" />
             <table type="Y Axis" storageaddress="0x07745C" />
         </table>
-        <table name="Warmup Fueling B" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="16" sizey="3" storageaddress="0x78098">
-            <scaling units="mult" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
-            <table name="Coolant Temperature" type="X Axis" storagetype="float" endian="big" storageaddress="0x7804C">
-                <scaling units="degC" expression="x" to_byte="x" />
-            </table>
-            <table name="Coolant Temperature (Catalyst Temp Model)" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7808C">
-                <scaling units="degC" expression="x" to_byte="x" />
-            </table>
-            <description>Warmup fuel enrichment (variant B).</description>
+        <table name="Fuel Injection - Warmup Fueling" storageaddress="0x078098">
+            <table type="X Axis" storageaddress="0x07804C" />
+            <table type="Y Axis" storageaddress="0x07808C" />
         </table>
-        <table name="Warmup Fueling C" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="5" sizey="5" storageaddress="0x780F0">
-            <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
-            <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x780C8">
-                <scaling units="RPM" expression="x" to_byte="x" />
-            </table>
-            <table name="Coolant Temperature" type="Y Axis" storagetype="float" endian="big" storageaddress="0x780DC">
-                <scaling units="degC" expression="x" to_byte="x" />
-            </table>
-            <description>Warmup fuel enrichment (variant C).</description>
+        <table name="Fuel Injection - Warmup Fueling - Engine Speed Based" storageaddress="0x0780F0">
+            <table type="X Axis" storageaddress="0x0780C8" />
+            <table type="Y Axis" storageaddress="0x0780DC" />
         </table>
-        <table name="Warmup Fueling D" category="Fuel Injection" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="7" sizey="6" storageaddress="0x78140">
-            <scaling units="lambda" expression="(x * 0.01 ) + 0" to_byte="(x - 0) / 0.01" format="0.00" />
-            <table name="Engine Speed" type="X Axis" storagetype="float" endian="big" storageaddress="0x7810C">
-                <scaling units="RPM" expression="x" to_byte="x" />
-            </table>
-            <table name="Coolant Temp" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78128">
-                <scaling units="degC" expression="x" to_byte="x" />
-            </table>
-            <description>Warmup fuel enrichment (variant D).</description>
+        <table name="Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault)" storageaddress="0x078140">
+            <table type="X Axis" storageaddress="0x07810C" />
+            <table type="Y Axis" storageaddress="0x078128" />
         </table>
         <table name="Table 3D - 74 " storageaddress="0x078290">
             <table type="X Axis" storageaddress="0x07823C" />
@@ -5261,25 +5123,13 @@
             <table type="X Axis" storageaddress="0x078818" />
             <table type="Y Axis" storageaddress="0x078838" />
         </table>
-        <table name="Load Delta / Tip-In C" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="6" sizey="7" storageaddress="0x78AB8">
-            <scaling expression="(x * 0.000488 ) + 0" to_byte="(x - 0) / 0.000488" format="0.00" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x78A84">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78A9C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Load-delta / tip-in fuel correction (variant C).</description>
+        <table name="Table 3D - 79 " storageaddress="0x078AB8">
+            <table type="X Axis" storageaddress="0x078A84" />
+            <table type="Y Axis" storageaddress="0x078A9C" />
         </table>
-        <table name="Load Delta / Tip-In D" category="Fuel Injection" type="3D" storagetype="uint16" endian="big" expression="x" to_byte="x" sizex="5" sizey="7" storageaddress="0x78B3C">
-            <scaling expression="(x * 0.000488 ) + 0" to_byte="(x - 0) / 0.000488" format="0.00" />
-            <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x78B0C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Value" type="Y Axis" storagetype="float" endian="big" storageaddress="0x78B20">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Load-delta / tip-in fuel correction (variant D).</description>
+        <table name="Table 3D - 80 " storageaddress="0x078B3C">
+            <table type="X Axis" storageaddress="0x078B0C" />
+            <table type="Y Axis" storageaddress="0x078B20" />
         </table>
         <table name="Table 3D - 81 " storageaddress="0x078BB8">
             <table type="X Axis" storageaddress="0x078B84" />
@@ -5428,6 +5278,52 @@
         <table name="Scalar - Fuel Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x77150">
             <description>Scales engine load into the base injected fuel volume; editing changes open-loop fueling. For a different-stoich fuel scale it by 14.7/new stoich (E85: x1.506), paired with setting 'Scalar - Stoich AFR' to the new stoich.</description>
             <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Load Cell Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x78CEC">
+            <description>Converts air per revolution (g/rev) into the engine-load cell units used by the fuel and ignition maps (1/(engine displacement x air density)).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Factor (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x9318">
+            <description>Seconds-per-minute factor in the air-per-revolution calculation (air flow in g/s to g/rev).</description>
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Air Per Rev Clamp (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0xE770">
+            <description>Upper clamp of the computed air per revolution (g/rev).</description>
+            <scaling units="g/rev" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Offset (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B16C">
+            <description>Celsius-to-Kelvin offset used in the intake-air density model.</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Kelvin Reference (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B170">
+            <description>Reference temperature in the intake-air density ratio (20 C reference).</description>
+            <scaling units="K" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Standard Atmosphere kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x1B17C">
+            <description>Standard-atmosphere pressure used to normalize barometric pressure.</description>
+            <scaling units="kPa" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Baro ADC Scale kPa (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x79790">
+            <description>Barometric-pressure sensor ADC counts to kPa scale.</description>
+            <scaling units="kPa/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - ADC Volt Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7334">
+            <scaling units="V/count" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Fuel Blend Decay (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7177C">
+            <description>Per-call decay of the open-loop/closed-loop fueling blend weight.</description>
+            <scaling units="mult/call" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Diag Engine Load Scale (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x53D9C">
+            <scaling units="mult" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Primary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x77164">
+            <description>Primary injector flow rating used for the injector pulse-width math; change it when fitting different primary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
+        </table>
+        <table name="Scalar - Secondary Injector Flow cc/min (literal pool)" category="Fuel Injection" type="1D" storagetype="float" endian="big" size="1" storageaddress="0x7716C">
+            <description>Secondary injector flow rating used for the injector pulse-width math; change it when fitting different secondary injectors.</description>
+            <scaling units="cc/min" expression="x" to_byte="x" format="0.0000" />
         </table>
         <table name="DTC P0300 Enable/Disable #1" storageaddress="0x7C9FC" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
             <description>DTC P0300 - Random misfire detected. #1 gate: 1 = fault is evaluated and ages; can light the check-engine lamp.</description>
@@ -6544,614 +6440,6 @@
         </table>
         <table name="DTC U0167 Enable/Disable #3" storageaddress="0x7CB8F" category="DTCs" type="1D" storagetype="uint8" endian="big" expression="x" to_byte="x" size="1">
             <description>DTC U0167 - Communication error to keyless control module.</description>
-        </table>
-        <table name="Table 3D - 0x67c28 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="8" sizey="7" storageaddress="0x6DDC4">
-            <scaling expression="(x * 0.5) + -50.0" to_byte="(x - -50.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x6DD88">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6DDA8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67d50 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E3C0">
-            <scaling expression="(x * 0.001999999862164259) + -0.5" to_byte="(x - -0.5) / 0.001999999862164259" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E3BC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67d64 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E3C8">
-            <scaling expression="(x * 0.001999999862164259) + 0.0" to_byte="(x - 0.0) / 0.001999999862164259" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E3C4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67d78 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E3E8">
-            <scaling expression="(x * 0.001999999862164259) + -0.5" to_byte="(x - -0.5) / 0.001999999862164259" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E3CC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67e18 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6E5DC">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E5D0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67e2c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6E600">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E5E4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67e40 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6E62C">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E610">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67e54 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6E640">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E63C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67e98 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E6E8">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E6E4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67eac (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E6F0">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E6EC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67ec0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E718">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E6F4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67ed4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E728">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E724">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67ee8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E730">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E72C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67efc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E74C">
-            <scaling expression="(x * 0.04999999701976776) + 0.0" to_byte="(x - 0.0) / 0.04999999701976776" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E734">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x67f10 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x6E758">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6E754">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68174 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6F3BC">
-            <scaling expression="(x * 3.0517576306010596e-06) + -0.09999999403953552" to_byte="(x - -0.09999999403953552) / 3.0517576306010596e-06" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F38C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68214 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x6FA00">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6F9FC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68338 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x6FF70">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x6FF30">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x683e4 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="8" sizey="9" storageaddress="0x706A4">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70660">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70680">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68400 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="8" sizey="9" storageaddress="0x70778">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70734">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70754">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x6841c (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="8" sizey="9" storageaddress="0x7084C">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70808">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70828">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68438 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="12" sizey="16" storageaddress="0x7094C">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x708DC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7090C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68454 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="12" sizey="16" storageaddress="0x70B3C">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70ACC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70AFC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x6848c (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="13" sizey="7" storageaddress="0x70E14">
-            <scaling expression="(x * 9.999999747378752e-05) + -1.0" to_byte="(x - -1.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70DC4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70DF8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x684a8 (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="10" sizey="7" storageaddress="0x70F10">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x70ECC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x70EF4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68548 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7122C">
-            <scaling expression="(x * 0.0009999999310821295) + 0.0" to_byte="(x - 0.0) / 0.0009999999310821295" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71208">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6855c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7125C">
-            <scaling expression="(x * 0.0009999999310821295) + 0.0" to_byte="(x - 0.0) / 0.0009999999310821295" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71238">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x685a4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x71330">
-            <scaling expression="(x * 9.999999747378752e-05) + 0.0" to_byte="(x - 0.0) / 9.999999747378752e-05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71310">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="OL Fuelling Base Correction - Baro [Safe Mode] [0x6865c]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x717B8">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x717B4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
-        </table>
-        <table name="OL Fuelling Base Correction - Baro [Safe Mode] [0x68698]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x717EC">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x717E8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
-        </table>
-        <table name="OL Fuelling Base Correction - Baro [Safe Mode] [0x686ac]" category="Fuel Injection - Open Loop" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x717F4">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x717F0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Open-loop fuelling base correction vs barometric pressure (safe mode).</description>
-        </table>
-        <table name="Table 2D - 0x686c0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x717FC">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x717F8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x686d4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x71848">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71800">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x686e8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x718A4">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7185C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68710 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x71944">
-            <scaling expression="(x * 0.0078125) + 0.0" to_byte="(x - 0.0) / 0.0078125" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71914">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x687e8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x71BC8">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x71B98">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x689d0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x72908">
-            <scaling expression="(x * 0.5) + -40.0" to_byte="(x - -40.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x72904">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68ac4 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="9" sizey="9" storageaddress="0x732B8">
-            <scaling expression="(x * 0.004999999888241291) + 0.0" to_byte="(x - 0.0) / 0.004999999888241291" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x73270">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x73294">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68b10 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x735D8">
-            <scaling expression="(x * 0.09999999403953552) + 0.0" to_byte="(x - 0.0) / 0.09999999403953552" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x735D4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68b38 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x73638">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x73634">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x68b60 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x73648">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x73644">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68ed0 (unlabeled)" category="Unknown 3D" type="3D" storagetype="float" endian="big" sizex="3" sizey="12" storageaddress="0x75570">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x75534">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75540">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68ee4 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="12" sizey="3" storageaddress="0x755D0">
-            <scaling expression="(x * 3.0517578125e-05) + -1.0" to_byte="(x - -1.0) / 3.0517578125e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x75594">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x755C4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68f00 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="12" sizey="3" storageaddress="0x75654">
-            <scaling expression="(x * 3.0517578125e-05) + -1.0" to_byte="(x - -1.0) / 3.0517578125e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x75618">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x75648">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x68f1c (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="12" sizey="3" storageaddress="0x756D8">
-            <scaling expression="(x * 3.0517578125e-05) + -1.0" to_byte="(x - -1.0) / 3.0517578125e-05" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x7569C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x756CC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69014 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x76344">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76320">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69028 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x76374">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76350">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6903c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x763A4">
-            <scaling expression="(x * 0.5) + 0.0" to_byte="(x - 0.0) / 0.5" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76380">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69050 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7644C">
-            <scaling expression="(x * 0.09999999403953552) + -200.0" to_byte="(x - -200.0) / 0.09999999403953552" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x763B0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69064 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x764C4">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7649C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69078 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x76500">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x764D8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6908c (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7653C">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76514">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x690a0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x765EC">
-            <scaling expression="(x * 9.999999747378752e-06) + -0.14999999105930328" to_byte="(x - -0.14999999105930328) / 9.999999747378752e-06" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x76550">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x692e4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x77330">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7730C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69364 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x777D4">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x777D0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69378 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x77808">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x777D8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x693a0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7784C">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7781C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x693b4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7785C">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77858">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x693c8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x77884">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77860">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x693f0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x778EC">
-            <scaling expression="(x * 1.0) + 0.0" to_byte="(x - 0.0) / 1.0" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x778C0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69404 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x77908">
-            <scaling expression="(x * 0.009999999776482582) + 0.0" to_byte="(x - 0.0) / 0.009999999776482582" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x77904">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69964 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x79328">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79300">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699a0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x793CC">
-            <scaling expression="(x * 0.09765625) + 0.0" to_byte="(x - 0.0) / 0.09765625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x793A0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699b4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7940C">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x793E4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699c0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x79458">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79420">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699cc (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x794C8">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79490">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699d8 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x79538">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x79500">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x699e4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7B840">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B81C">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69b54 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7BE00">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7BDDC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69b60 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7BE54">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7BE14">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x69f68 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7A83C">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A838">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x69f94 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="9" sizey="9" storageaddress="0x7A94C">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x7A904">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7A928">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x69fb0 (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint16" endian="big" sizex="10" sizey="17" storageaddress="0x7AA68">
-            <scaling expression="(x * 0.001953125) + 0.0" to_byte="(x - 0.0) / 0.001953125" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x7A9FC">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7AA24">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a0e4 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7B2B0">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B2A0">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a0f0 (unlabeled)" category="Unknown 2D" type="2D" storagetype="float" endian="big" sizey="0" storageaddress="0x7B2C4">
-            <scaling expression="x" to_byte="x" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B2B4">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a0fc (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint8" endian="big" sizey="0" storageaddress="0x7B2EC">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B2C8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a110 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7B318">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B2F8">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a124 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7B348">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B328">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 2D - 0x6a138 (unlabeled)" category="Unknown 2D" type="2D" storagetype="uint16" endian="big" sizey="0" storageaddress="0x7B368">
-            <scaling expression="(x * 1.52587890625e-05) + 0.0" to_byte="(x - 0.0) / 1.52587890625e-05" format="0.00" />
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B358">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
-        </table>
-        <table name="Table 3D - 0x6a14c (unlabeled)" category="Unknown 3D" type="3D" storagetype="uint8" endian="big" sizex="9" sizey="6" storageaddress="0x7B3AC">
-            <scaling expression="(x * 0.00390625) + 0.0" to_byte="(x - 0.0) / 0.00390625" format="0.00" />
-            <table name="Unknown" type="X Axis" storagetype="float" endian="big" storageaddress="0x7B370">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <table name="Unknown" type="Y Axis" storagetype="float" endian="big" storageaddress="0x7B394">
-                <scaling expression="x" to_byte="x" />
-            </table>
-            <description>Unlabeled lookup table (no verified purpose).</description>
         </table>
     </rom>
 </roms>
