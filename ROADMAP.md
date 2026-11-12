@@ -45,7 +45,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21, 22)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21, 22, 23)
 
 - **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
   53 rows in
@@ -121,6 +121,31 @@ and where artifacts live.
   keeping the local P-code names/descriptions applied by
   `relabel_dtc_names.py`; then re-run the defs passes + pipeline validators +
   `python -m pytest tests/`.
+
+- **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
+  `39d98a0` / MRP `b243b35`; record:
+  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md))
+  back into our documentation and label artifacts, so the sync record stops
+  being the only place they live:
+  - per-ROM immobilizer start-pattern offsets (ROM-verified table in §3 of the
+    sync record) → immobilizer-subsystem label records/evidence (e.g.
+    `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents)
+    with the pattern, offset and with-RKE offset (+0x44c) per ROM; overlaps D13
+    (N3N5EB address) and C item 22 (merged-def addresses) — coordinate, don't
+    duplicate;
+  - upstream's new DTC categories (#1 "MIL Illuminate" / #2 "OBD Report" / #3
+    "Unknown") → cross-link from the defs-accuracy section of
+    [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
+    so readers see our 0x7e678/0x7e704/0x7e790 banks map to upstream's names;
+  - `N3ZGEC` as 60E0G500's second cal ID → note next to the cal-ID
+    documentation (D1) and in the 60E0G500 investigation docs;
+  - upstream rename `Table 3D - UNKNOWN_CL` → `Closed Loop Fueling Base`
+    (0x70b3c) → cross-reference wherever our fueling docs discuss that table;
+  - after C item 22 lands: update `defs_table_labels.json` categories
+    `Fuel Target (Closed Loop)` → `Fuel Injection - Closed Loop` (9 entries)
+    and drop the rename alias in `tests/test_defs_relabel.py`.
+  Re-verify any touched label against the raw ROM (rule 7), then run the
+  pipeline validators + `python -m pytest tests/`.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
