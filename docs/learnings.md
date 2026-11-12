@@ -57,6 +57,10 @@ validation JSONs).
   passing fieldnames duplicates the header row and breaks downstream scripts.
 - `refine_*` passes are one-shot on a processed export ("already applied"); the
   0x13bd2 fix lives in `review_knock_loop_labels_apply.py` for that reason.
+- Exception: `refine_comment_merge.py` is idempotent — re-running it safely
+  re-canonicalizes stacked `[ADDITIONAL SOURCE REVIEW]` comment blocks across
+  `functions/`, both monoliths and `named/` (one block order, no duplicate lines;
+  stats in `docs/investigations/60E15120_N3J1E/comment_merge/validation.json`).
 - Report tables: grouped rows (`a/b`), unnamed `DAT_` rows and base-pointer rows
   are legitimate — `validate_reports.py` knows them.
 - Evidence strings in `review_*.py` are hand-written prose that fan out into the

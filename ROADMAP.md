@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 17–19, 21 — pick up 17 next (items 13–14 closed
+**reopened**: open items 18–19, 21 — pick up 18 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
@@ -24,8 +24,13 @@ blocks in the export via the re-runnable pipeline passes; item 16 closed
 2026-11-12: the annotation + `integrate_reviewed_names.py` passes were re-run so
 every file under `reverse-engineered/decompiled/60E15120_N3J1E/functions/`,
 `firmware_decompiled.c` and `named/firmware_named.c` carries the accepted
-function/RAM aliases and review comments — full records in this file's git
-history). The
+function/RAM aliases and review comments; item 17 closed 2026-11-12: the docs
+sweep added the DSC↔idle↔ignition cross-links (0xffffbbb8 `vehicle_not_moving`
+→ idle A/C clutch gate 0x165d6, 0xffffbbd8 `engine_max_torque_allowed` → DSC
+timing derate 0x1815c) to the report Related-reports lines, §9/§10 sections and
+the investigations README index, noted the re-runnable comment-merge pass in
+`docs/learnings.md`, and fixed the 9 broken `.md` links a repo-wide scan found —
+full records in this file's git history). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 2,416 `FUN_` (function_index.tsv figures of 2026-11-12,
 `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`).
@@ -35,25 +40,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 17–19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 18–19, 21)
 
-- **C item 17 (open)** — update and review all existing documentation with the
-  new insights. Today's passes (DSC CAN arbitration and idle speed control,
-  both merged; plus the 311 `[ADDITIONAL SOURCE REVIEW]` comment
-  sets) changed labels and cross-subsystem links — e.g. 0xffffbbb8
-  `vehicle_not_moving` is now known to feed the idle A/C clutch gate 0x165d6,
-  and `engine_max_torque_allowed` 0xffffbbd8 feeds the DSC timing derate
-  0x1815c in the ignition report. Go through
-  [docs/investigations/60E15120_N3J1E/](docs/investigations/60E15120_N3J1E/)
-  (the README index, every existing `*_report.md`'s **Related reports:** line
-  and §9 Limits/open questions), [`docs/learnings.md`](docs/learnings.md), and
-  this ROADMAP's cross-references: add the new links, refresh stale statements
-  that the new evidence supersedes, and fix any broken `.md` links (rule 8:
-  cross-reference everywhere, never leave a bare code span). Factual changes
-  must land in all artifacts at once (rule 11). Validate afterwards with
-  `validate_reports.py` + `verify_claims.py` and a link + non-empty-size check
-  on every touched doc. Sequencing: do this after C items 13–16 so the docs
-  reflect the applied labels, not just the raw comments.
 - **C item 18 (open)** — update the ECU definitions in
   [data/definitions/](data/definitions/) from the new investigations. The
   recent passes (DSC CAN arbitration, idle speed control, alternator control,

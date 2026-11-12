@@ -13,7 +13,10 @@ and task[10] in [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_re
 the VDI wrapper called from the same batch in
 [`intake_solenoids_report.md`](intake_solenoids_report.md); Mode 22 PID 0x096e in
 [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md); the E2RAM-backed
-trim cells in [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md); throttle
+trim cells in [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md); the
+`vehicle_not_moving` 0xffffbbb8 flag read by the A/C clutch gate 0x165d6 is
+produced by 0x2b156 in
+[`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md); throttle
 plate/torque chain names are inherited `ref_` hypotheses from the upstream project.
 
 ## 1. Executive summary
@@ -260,7 +263,8 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 - 0xffffb53c's exact meaning is still not pinned (cleared in the AT branch of
   0x24b8c; MT producer not traced here).
 - `high_load_flag` 0xffffb5b3's underlying quantity sits in the alternator domain (`electrical_load_filtered` 0xffffb5a4 ratio
-  in 0x2ce18); its physical meaning is deferred to the alternator/charging report.
+  in 0x2ce18); its physical meaning is deferred to
+  [`alternator_control_report.md`](alternator_control_report.md).
 - The throttle-plate motor drive itself (0x218c4 chain) and the
   package-pin↔connector-terminal hop (terminals 1B/1C) are outside this pass.
 - `candidate_` labels are hypotheses pending dynamic or cross-ROM proof.
@@ -274,4 +278,6 @@ wrapper ([`intake_solenoids_report.md`](intake_solenoids_report.md)); the trim
 cells live in the E2RAM-backed window
 ([`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md)); task scheduling in
 [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md); PID 0x096e
-in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md).
+in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md); the
+`vehicle_not_moving` 0xffffbbb8 input to the A/C clutch gate 0x165d6 comes from the
+DSC CAN batch in [`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md).

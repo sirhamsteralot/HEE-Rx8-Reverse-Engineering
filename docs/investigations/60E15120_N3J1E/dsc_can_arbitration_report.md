@@ -14,7 +14,8 @@ mailbox descriptor at ROM 0x4e21c/0x4e224); task[10] structure in
 timing derate consumer in the ignition report
 ([`ignition_timing_report.md`](ignition_timing_report.md) — 0x1815c
 `dsc_timing_derate_select` reads 0xffffbbd8); the vehicle-not-moving flag feeds
-the idle A/C clutch gate (0x165d6).
+the idle A/C clutch gate 0x165d6 in
+[`idle_control_report.md`](idle_control_report.md).
 
 ## 1. Executive summary
 
@@ -193,12 +194,12 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
   (wheelspeeds/mode/torque), not from a wiring trace.
 - The exact physical meaning of each mode bit (0x80/0x40/0x20/0x10/0x08) is
   decoded only as "mode byte bits" — the bit semantics are not pinned.
-- The TX side of the DSC arbitration (what the PCM sends back) is covered by the
-  CAN mailbox report, not here.
+- The TX side of the DSC arbitration (what the PCM sends back) is covered by
+  [`can_mailbox_config_report.md`](can_mailbox_config_report.md), not here.
 
 ## 10. Related subsystems
 
 CAN mailbox model: [`can_mailbox_config_report.md`](can_mailbox_config_report.md);
 task[10] scheduling: [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md);
 DSC timing derate consuming 0xffffbbd8: [`ignition_timing_report.md`](ignition_timing_report.md);
-idle A/C clutch gate consuming 0xffffbbb8: idle control report.
+idle A/C clutch gate consuming 0xffffbbb8: [`idle_control_report.md`](idle_control_report.md).
