@@ -12,15 +12,15 @@
 uint cranking_timing_trailing_filter(void)
 
 {
-  byte snapshot_DAT_ffffb53c;
+  byte snapshot_at_drive_range_engaged_ffffb53c;
   uint uVar2;
   uint extraout_r0;
   float fVar3;
   float extraout_fr0;
   
-  snapshot_DAT_ffffb53c = DAT_ffffb53c;
+  snapshot_at_drive_range_engaged_ffffb53c = at_drive_range_engaged_ffffb53c;
   uVar2 = (uint)cranking_active_ffffaa62_ffffaa62;
-  if ((uVar2 == 1) && (uVar2 = (uint)DAT_ffffb53c, uVar2 == 1)) {
+  if ((uVar2 == 1) && (uVar2 = (uint)at_drive_range_engaged_ffffb53c, uVar2 == 1)) {
     cranking_angle_timing_trailing_raw_ffffcaa8 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_ignition_trailing_cranking_timing_advance_0006b644);
     if (DAT_ffffcaad == '\0') {
       fVar3 = rx8_min_float(1.0,1.0);
@@ -36,7 +36,7 @@ uint cranking_timing_trailing_filter(void)
     cranking_angle_timing_trailing_raw_ffffcaa8 = 0.0;
     cranking_angle_timing_trailing_filtered_ffffcaa0 = 0.0;
   }
-  DAT_ffffcaad = snapshot_DAT_ffffb53c;
+  DAT_ffffcaad = snapshot_at_drive_range_engaged_ffffb53c;
   return uVar2;
 }
 

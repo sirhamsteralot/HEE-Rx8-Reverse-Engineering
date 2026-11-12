@@ -18,7 +18,7 @@ undefined ** FUN_0003f288(void)
   float fVar9;
   float snapshot_inferred_coolant_temperature_ffffa98c;
   float snapshot_mass_air_flow_ffffa9ec;
-  float snapshot_DAT_ffffb074;
+  float snapshot_inferred_trim_b074_ffffb074_ffffb074;
   float snapshot_DAT_ffffad20;
   
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
@@ -27,7 +27,7 @@ undefined ** FUN_0003f288(void)
   fVar8 = DAT_ffffb078 + 0.1;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
-  snapshot_DAT_ffffb074 = inferred_trim_b074_ffffb074_ffffb074;
+  snapshot_inferred_trim_b074_ffffb074_ffffb074 = inferred_trim_b074_ffffb074_ffffb074;
   snapshot_DAT_ffffad20 = DAT_ffffad20;
   fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8720);
   fVar7 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8718);
@@ -51,7 +51,7 @@ undefined ** FUN_0003f288(void)
         if (((((snapshot_DAT_ffffaa78 < 52.0) && (ppuVar4 = (undefined **)&DAT_ffffae18, DAT_ffffae18 == 0)) &&
              (ppuVar4 = (undefined **)&DAT_ffffd1c5, DAT_ffffd1c5 == '\0')) &&
             ((((fVar9 <= snapshot_DAT_ffffad20 && (snapshot_DAT_ffffad20 < fVar8)) ||
-              ((snapshot_DAT_ffffb074 <= fVar7 + 0.0003 || ((fVar6 - 0.0003 <= snapshot_DAT_ffffb074 || (snapshot_DAT_ffffad20 < 0.2)))))) ||
+              ((snapshot_inferred_trim_b074_ffffb074_ffffb074 <= fVar7 + 0.0003 || ((fVar6 - 0.0003 <= snapshot_inferred_trim_b074_ffffb074_ffffb074 || (snapshot_DAT_ffffad20 < 0.2)))))) ||
              (ppuVar4 = (undefined **)&UNK_00000014, 0.7 <= snapshot_DAT_ffffad20)))) &&
            ((cVar5 == '\0' ||
             ((ppuVar4 = &vector_Illegal_instr, DAT_ffffb220 < 0.2 &&

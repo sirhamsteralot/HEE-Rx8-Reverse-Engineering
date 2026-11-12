@@ -38,7 +38,7 @@ LAB_000330a0:
     DAT_ffffc042 = '\x01';
   }
   if (((DAT_ffffc042 == '\0') || (cVar1 = '\x01', DAT_ffffb53a == '\x01')) ||
-     ((DAT_ffffc030 == '\x01' && (cVar1 = '\x01', DAT_ffffa9b4 < DAT_ffffc028)))) {
+     ((DAT_ffffc030 == '\x01' && (cVar1 = '\x01', throttle_position_1_percent_ffffa9b4 < DAT_ffffc028)))) {
     DAT_ffffc030 = '\0';
   }
   else {

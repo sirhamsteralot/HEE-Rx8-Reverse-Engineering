@@ -13,22 +13,22 @@
 uint uds_service_28_communication_control(short param_1,uint param_2)
 
 {
-  ushort snapshot_DAT_ffffd3b4;
+  ushort snapshot_diag_permission_mask_ffffd3b4_ffffd3b4;
   char cVar3;
   undefined4 uVar2;
   char local_18;
   char local_17;
   char cStack_16;
   
-  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
+  snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   if (param_2 == 1) {
     if (param_1 == 3) {
       if ((DAT_ffffd1cc == '\x01') && (cVar3 = FUN_00055e3e(0), cVar3 == '\0')) {
         ref_udsServiceResponse(0x28,&local_18,3);
         if (local_18 == '\x01') {
-          if (((local_17 == '\0') && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)) ||
-             ((local_17 == '\x01' && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)))) {
+          if (((local_17 == '\0') && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)) ||
+             ((local_17 == '\x01' && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)))) {
             if (cStack_16 == '\x01') {
               FUN_0005bbc6((int)local_17);
               uVar2 = FUN_0005bbee();

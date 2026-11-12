@@ -13,8 +13,8 @@ void FUN_00019aa0(void)
   FUN_0002be40();
   ref_setGearBools();
   FUN_0002c15a();
-  ref_calculateGearRPMbased();
-  FUN_0002c3b2();
+  candidate_gear_from_ratio();
+  gear_latch_confirm();
   ref_setSR(uVar1);
   return;
 }

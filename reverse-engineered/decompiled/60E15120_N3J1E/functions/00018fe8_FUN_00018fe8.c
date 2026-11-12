@@ -27,15 +27,15 @@ uint FUN_00018fe8(void)
   else if ((-0.5 <= fVar8) && (fVar8 < -0.3)) {
     DAT_ffffa9cc = '\x01';
   }
-  if ((40.0 <= DAT_ffffa9b4) || ((DAT_ffffa9ce == 0 && (DAT_ffffa9de == '\x01')))) {
+  if ((40.0 <= throttle_position_1_percent_ffffa9b4) || ((DAT_ffffa9ce == 0 && (DAT_ffffa9de == '\x01')))) {
     DAT_ffffa9cd = '\0';
   }
-  else if (5.0 <= DAT_ffffa9b4) {
+  else if (5.0 <= throttle_position_1_percent_ffffa9b4) {
     DAT_ffffa9cd = '\x01';
   }
   DAT_ffffa9de = DAT_ffffa9ce;
-  if ((((DAT_ffffa9ce == 1) && (DAT_ffffa9d8 == 0x177)) || (DAT_ffffa9b4 < 0.0)) ||
-     (((5.0 <= DAT_ffffa9b4 || (DAT_ffffcc9b == '\x01')) || (DAT_ffffcc9c == '\x01')))) {
+  if ((((DAT_ffffa9ce == 1) && (DAT_ffffa9d8 == 0x177)) || (throttle_position_1_percent_ffffa9b4 < 0.0)) ||
+     (((5.0 <= throttle_position_1_percent_ffffa9b4 || (DAT_ffffcc9b == '\x01')) || (DAT_ffffcc9c == '\x01')))) {
     DAT_ffffa9ce = 0;
   }
   else if ((DAT_ffffa9cc == '\x01') && (DAT_ffffa9cd == '\x01')) {

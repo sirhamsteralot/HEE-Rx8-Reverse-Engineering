@@ -28,7 +28,7 @@ uint idle_leading_timing_error_correction(void)
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   fVar3 = engine_speed_rpm_ffffb548;
   if (automatic_transmission_ffffb534 == '\0') {
-    if (DAT_ffffb53c == '\0') {
+    if (at_drive_range_engaged_ffffb53c == '\0') {
       puVar2 = &tbl_ignition_leading_idle_error_timing_correction_unknown_bool_false_0006a060;
     }
     else {

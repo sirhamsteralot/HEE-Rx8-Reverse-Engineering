@@ -16,12 +16,12 @@ uint ref_throttlePlateControl_Related(void)
 {
   uint uVar1;
   undefined4 extraout_fr0;
-  undefined4 snapshot_DAT_ffffb38c;
+  undefined4 snapshot_candidate_throttle_base_position_ffffb38c;
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   float snapshot_inferred_desired_torque_ffffbbd4;
   
   DAT_ffffb2d8 = inferred_desired_torque_ffffbbd4;
-  snapshot_DAT_ffffb38c = DAT_ffffb38c;
+  snapshot_candidate_throttle_base_position_ffffb38c = candidate_throttle_base_position_ffffb38c;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   snapshot_inferred_desired_torque_ffffbbd4 = inferred_desired_torque_ffffbbd4;
   DAT_ffffb2e4 = lookup_3d_descriptor_scaled(inferred_desired_torque_ffffbbd4,engine_speed_rpm_ffffb548,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
@@ -31,7 +31,7 @@ uint ref_throttlePlateControl_Related(void)
   }
   else {
     DAT_ffffb2cf = 0;
-    DAT_ffffb2b8 = snapshot_DAT_ffffb38c;
+    DAT_ffffb2b8 = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   uVar1 = (uint)DAT_ffffbbcc;
   if ((uVar1 == 1) && (DAT_ffffbbca == '\0')) {
@@ -41,7 +41,7 @@ uint ref_throttlePlateControl_Related(void)
   }
   else {
     DAT_ffffb2d0 = 0;
-    DAT_ffffb2bc = snapshot_DAT_ffffb38c;
+    DAT_ffffb2bc = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   return uVar1;
 }

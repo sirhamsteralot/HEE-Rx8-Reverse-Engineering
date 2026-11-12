@@ -9,9 +9,9 @@ uint FUN_0003af10(void)
 {
   char cVar2;
   uint uVar1;
-  float snapshot_DAT_ffffb2f0;
+  float snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0;
   
-  snapshot_DAT_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
+  snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0 = inferred_ram_b2f0_ffffb2f0_ffffb2f0;
   cVar2 = rx8_is_outside_tolerance_band(inferred_ram_b2f0_ffffb2f0_ffffb2f0,0x42c80000,0x3727c5ac);
   uVar1 = 1;
   if ((DAT_ffffd1c5 == '\x01') || (uVar1 = (uint)DAT_ffffd1ad, uVar1 == 1)) {
@@ -21,7 +21,7 @@ uint FUN_0003af10(void)
     DAT_ffffc580 = '\0';
   }
   else {
-    if ((snapshot_DAT_ffffb2f0 == 0.0) && (DAT_ffffd18c == 0)) {
+    if ((snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0 == 0.0) && (DAT_ffffd18c == 0)) {
       uVar1 = (uint)DAT_ffffc57d;
       if (DAT_ffffc57d != -1) {
         uVar1 = uVar1 + 1;
@@ -31,7 +31,7 @@ uint FUN_0003af10(void)
     else {
       DAT_ffffc57d = '\0';
     }
-    if ((snapshot_DAT_ffffb2f0 == 0.0) && (uVar1 = (uint)DAT_ffffd18c, uVar1 == 1)) {
+    if ((snapshot_inferred_ram_b2f0_ffffb2f0_ffffb2f0 == 0.0) && (uVar1 = (uint)DAT_ffffd18c, uVar1 == 1)) {
       if (DAT_ffffc57f != -1) {
         DAT_ffffc57f = DAT_ffffc57f + '\x01';
       }

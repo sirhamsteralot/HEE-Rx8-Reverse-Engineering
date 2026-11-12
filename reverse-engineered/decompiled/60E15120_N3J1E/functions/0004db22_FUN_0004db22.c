@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x0004db22; body bytes: 324; decompiled */
 
-undefined4 * FUN_0004db22(void)
+undefined4 * cruise_plausibility_stage(void)
 
 {
   undefined4 *puVar1;

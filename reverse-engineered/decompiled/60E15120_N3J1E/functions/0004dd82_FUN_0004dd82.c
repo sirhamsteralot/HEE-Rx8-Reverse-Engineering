@@ -3,13 +3,13 @@
 void FUN_0004dd82(void)
 
 {
-  if ((2.0 <= DAT_ffffbccc) || (DAT_ffffbfa4 <= DAT_ffffbfa0)) {
+  if ((2.0 <= DAT_ffffbccc) || (cruise_target_speed_kmh_ffffbfa4 <= DAT_ffffbfa0)) {
     DAT_ffffcf30 = 0x19;
   }
   else if (DAT_ffffcf30 != 0) {
     DAT_ffffcf30 = DAT_ffffcf30 + -1;
   }
-  if ((1.8 <= DAT_ffffbccc) || (DAT_ffffbfa4 <= DAT_ffffbfa0)) {
+  if ((1.8 <= DAT_ffffbccc) || (cruise_target_speed_kmh_ffffbfa4 <= DAT_ffffbfa0)) {
     DAT_ffffcf32 = 0x19;
   }
   else if (DAT_ffffcf32 != 0) {

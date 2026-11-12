@@ -21,7 +21,7 @@
   },
   {
     "function": "000244bc",
-    "signal": "DAT_ffffb40c",
+    "signal": "candidate_learned_pedal_value_ffffb40c",
     "bits": 16,
     "step": 0.030517578125,
     "offset": 0.0,
@@ -31,7 +31,7 @@
   },
   {
     "function": "000244bc",
-    "signal": "-DAT_ffffb414",
+    "signal": "-throttle_pedal_position_delta_ffffb414",
     "bits": 16,
     "step": 0.030517578125,
     "offset": 0.0,
@@ -41,7 +41,7 @@
   },
   {
     "function": "000244bc",
-    "signal": "DAT_ffffb414",
+    "signal": "throttle_pedal_position_delta_ffffb414",
     "bits": 16,
     "step": 0.030517578125,
     "offset": 0.0,
@@ -51,7 +51,7 @@
   },
   {
     "function": "000244bc",
-    "signal": "DAT_ffffb594",
+    "signal": "filtered_battery_voltage_ffffb594",
     "bits": 16,
     "step": 0.00030517578125,
     "offset": 0.0,
@@ -91,7 +91,7 @@
   },
   {
     "function": "000244bc",
-    "signal": "DAT_ffffb38c",
+    "signal": "candidate_throttle_base_position_ffffb38c",
     "bits": 16,
     "step": 0.030517578125,
     "offset": 0.0,
@@ -141,7 +141,7 @@
   },
   {
     "function": "000292f8",
-    "signal": "DAT_ffffa9bc",
+    "signal": "inferred_ram_a9bc_ffffa9bc_ffffa9bc",
     "bits": 8,
     "step": 0.5,
     "offset": 0.0,
@@ -201,7 +201,7 @@
   },
   {
     "function": "00055466",
-    "signal": "DAT_ffffb0d0 * 100.0",
+    "signal": "inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0",
     "bits": 8,
     "step": 0.78125,
     "offset": -100.0,
@@ -261,7 +261,7 @@
   },
   {
     "function": "000555ac",
-    "signal": "DAT_ffffb074 * 100.0",
+    "signal": "inferred_trim_b074_ffffb074_ffffb074 * 100.0",
     "bits": 8,
     "step": 0.7812999486923218,
     "offset": -100.0,
@@ -271,7 +271,7 @@
   },
   {
     "function": "00055616",
-    "signal": "DAT_ffffb2f0",
+    "signal": "inferred_ram_b2f0_ffffb2f0_ffffb2f0",
     "bits": 8,
     "step": 0.39215683937072754,
     "offset": 0.0,
@@ -281,7 +281,7 @@
   },
   {
     "function": "000556ce",
-    "signal": "DAT_ffffad10 * 25.325 + 0.0182",
+    "signal": "inferred_ram_ad10_ffffad10_ffffad10 * 25.325 + 0.0182",
     "bits": 8,
     "step": 1.0,
     "offset": 0.0,
@@ -311,7 +311,7 @@
   },
   {
     "function": "0005571a",
-    "signal": "DAT_ffffc644",
+    "signal": "fuel_correction_sum_ffffc644_ffffc644",
     "bits": 16,
     "step": 0.09999999403953552,
     "offset": -40.0,
@@ -351,7 +351,7 @@
   },
   {
     "function": "00055774",
-    "signal": "DAT_ffffad48",
+    "signal": "inferred_ram_ad48_ffffad48_ffffad48",
     "bits": 8,
     "step": 0.39215683937072754,
     "offset": 0.0,
@@ -371,7 +371,7 @@
   },
   {
     "function": "00056de6",
-    "signal": "DAT_ffffb410",
+    "signal": "inferred_ram_b410_ffffb410_ffffb410",
     "bits": 16,
     "step": 0.001953125,
     "offset": 0.0,
@@ -391,7 +391,7 @@
   },
   {
     "function": "00056e22",
-    "signal": "DAT_ffffa7ac",
+    "signal": "inferred_ram_a7ac_ffffa7ac_ffffa7ac",
     "bits": 16,
     "step": 0.25,
     "offset": 0.0,
@@ -401,7 +401,7 @@
   },
   {
     "function": "00056e40",
-    "signal": "DAT_ffffb59c",
+    "signal": "inferred_ram_b59c_ffffb59c_ffffb59c",
     "bits": 16,
     "step": 0.00048828125,
     "offset": 0.0,
@@ -411,7 +411,7 @@
   },
   {
     "function": "00056e5e",
-    "signal": "DAT_ffffadd4",
+    "signal": "inferred_ram_add4_ffffadd4_ffffadd4",
     "bits": 16,
     "step": 7.62939453125e-05,
     "offset": 0.0,
@@ -421,7 +421,7 @@
   },
   {
     "function": "00056e7c",
-    "signal": "DAT_ffffa984",
+    "signal": "inferred_ram_a984_ffffa984_ffffa984",
     "bits": 16,
     "step": 7.62939453125e-05,
     "offset": 0.0,
@@ -431,7 +431,7 @@
   },
   {
     "function": "00056e9a",
-    "signal": "DAT_ffffa834",
+    "signal": "inferred_ram_a834_ffffa834_ffffa834",
     "bits": 16,
     "step": 3.0517578125e-05,
     "offset": 0.0,
@@ -451,7 +451,7 @@
   },
   {
     "function": "00056f4e",
-    "signal": "DAT_ffffa9bc",
+    "signal": "inferred_ram_a9bc_ffffa9bc_ffffa9bc",
     "bits": 8,
     "step": 0.39215683937072754,
     "offset": 0.0,
@@ -471,7 +471,7 @@
   },
   {
     "function": "00056faa",
-    "signal": "DAT_ffffad10",
+    "signal": "inferred_ram_ad10_ffffad10_ffffad10",
     "bits": 16,
     "step": 7.62939453125e-05,
     "offset": 0.0,
@@ -481,7 +481,7 @@
   },
   {
     "function": "00056fc8",
-    "signal": "DAT_ffffb5ac",
+    "signal": "inferred_ram_b5ac_ffffb5ac_ffffb5ac",
     "bits": 16,
     "step": 0.0030517578125,
     "offset": 0.0,
@@ -491,7 +491,7 @@
   },
   {
     "function": "00056fe6",
-    "signal": "DAT_ffffb654",
+    "signal": "inferred_ram_b654_ffffb654_ffffb654",
     "bits": 16,
     "step": 0.125,
     "offset": 0.0,
@@ -501,7 +501,7 @@
   },
   {
     "function": "0005705c",
-    "signal": "DAT_ffffbc30",
+    "signal": "inferred_ram_bc30_ffffbc30_ffffbc30",
     "bits": 16,
     "step": 7.62939453125e-05,
     "offset": 0.0,
@@ -521,7 +521,7 @@
   },
   {
     "function": "00057098",
-    "signal": "DAT_ffffc6ac",
+    "signal": "inferred_ram_c6ac_ffffc6ac_ffffc6ac",
     "bits": 16,
     "step": 7.62939453125e-05,
     "offset": 0.0,
@@ -531,7 +531,7 @@
   },
   {
     "function": "000570ee",
-    "signal": "DAT_ffffc4c8",
+    "signal": "inferred_temp_c4c8_ffffc4c8_ffffc4c8",
     "bits": 8,
     "step": 1.0,
     "offset": -40.0,
@@ -561,7 +561,7 @@
   },
   {
     "function": "00058262",
-    "signal": "DAT_ffffc6f0",
+    "signal": "o2_monitor_ratio_ch0_ffffc6f0",
     "bits": 16,
     "step": 0.0039061999414116144,
     "offset": 0.0,
@@ -571,7 +571,7 @@
   },
   {
     "function": "0005831c",
-    "signal": "DAT_ffffc6f4",
+    "signal": "o2_monitor_ratio_ch1_ffffc6f4",
     "bits": 16,
     "step": 0.0039061999414116144,
     "offset": 0.0,

@@ -14,7 +14,7 @@ undefined4 * ref_throttlePlatePosToTorqueOutput_(void)
   float in_fr14;
   undefined4 in_fr15;
   
-  inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + DAT_ffffb38c;
+  inferred_throttle_position_ffffb2d4 = idle_air_required_ffffb2a4 + candidate_throttle_base_position_ffffb38c;
   DAT_ffffb2c0 = lookup_3d_descriptor_scaled(inferred_throttle_position_ffffb2d4,&tbl_throttle_position_to_torque_0006a180);
   DAT_ffffb2d8 = in_fr14;
   DAT_ffffb2dc = DAT_ffffb2c0;

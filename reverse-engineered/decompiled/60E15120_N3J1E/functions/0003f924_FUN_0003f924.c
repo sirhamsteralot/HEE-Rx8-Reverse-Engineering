@@ -23,9 +23,9 @@ uint o2_channel_filter_update(void)
   arg0 = diag_afr_word_a_ffffaa6c;
   arg0_00 = inferred_lambda_actual_ffffadec_ffffadec;
   o2_channel_afr_fast_ffffc708 = rx8_first_order_filter(diag_afr_word_a_ffffaa6c,o2_channel_afr_fast_ffffc708,1.0,1e-05);
-  DAT_ffffc70c = rx8_first_order_filter(arg0,DAT_ffffc70c,0.5,arg3);
+  o2_channel_afr_medium_ffffc70c = rx8_first_order_filter(arg0,o2_channel_afr_medium_ffffc70c,0.5,arg3);
   o2_channel_lambda_slow_ffffc710 = rx8_first_order_filter(arg0_00,o2_channel_lambda_slow_ffffc710,0.1,arg3);
-  DAT_ffffc714 = rx8_first_order_filter(arg0_00,DAT_ffffc714,0.03125,arg3);
+  o2_channel_lambda_very_slow_ffffc714 = rx8_first_order_filter(arg0_00,o2_channel_lambda_very_slow_ffffc714,0.03125,arg3);
   uVar3 = extraout_r0;
   if ((sVar2 == 0) && (uVar3 = (uint)DAT_ffffc900, uVar3 == 1)) {
     DAT_ffffc906 = 1;

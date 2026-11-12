@@ -9,7 +9,7 @@ void ref_fuelCutSomethingSomething(char param_1)
   char cVar1;
   char *pcVar2;
   
-  if (((DAT_ffffcc9f == '\0') || (DAT_ffffcc71 == '\x01')) || (DAT_ffffcc91 < 3)) {
+  if (((DAT_ffffcc9f == '\0') || (DAT_ffffcc71 == '\x01')) || (candidate_idle_learn_flag_ffffcc91 < 3)) {
     DAT_ffffcc70 = '\0';
   }
   else {

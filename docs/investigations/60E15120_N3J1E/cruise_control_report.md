@@ -203,14 +203,14 @@ Evidence: `source_review/accepted_{function,ram}_aliases.tsv`,
 | 0x0004dce8 / 0x0004d4a6 / 0x0004d700 | `FUN_0004dce8` / `FUN_0004d4a6` / `FUN_0004d700` (cruise_switch_plausibility_timers) | mean-of-12, min/max track, threshold compare |
 | 0x00011744 | `FUN_00011744` | task[10] body (entry 0x64f6) |
 | 0x00011534 | `slow_background_task` | task[18] body (entry 0x64e8) |
-| 0x0004de1c | `FUN_0004de1c` (gear_float_band_producer) | cf1c = float(gear 0xffffbc3d); jsr 0x2e5d2 (pool 0x2e748) in 0x2e5c6 |
+| 0x0004de1c | `gear_float_band_producer` | cf1c = float(gear 0xffffbc3d); jsr 0x2e5d2 (pool 0x2e748) in 0x2e5c6 |
 | 0x0002c324 | `ref_calculateGearRPMbased` (candidate_gear_from_ratio) | gear from rpm/vss ratio; jsr 0x19ad6 (pool 0x19c84) in 0x19aa0 |
-| 0x0002c3b2 | `FUN_0002c3b2` (gear_latch_confirm) | gear latch; jsr 0x19adc (pool 0x19c88) in 0x19aa0 |
-| 0x00032614 | `FUN_00032614` (cruise_set_speed_latch) | set speed km/h → 0xffff866c, target → 0xffffbfa4; jsr 0x2e620 (pool 0x2e77c) |
-| 0x0002d638 | `FUN_0002d638` (cruise_control_output_law) | bd00 = clamp(bd04·bd18·0.01, ±100); jsr 0x2e638 (pool 0x2e78c) |
-| 0x0004c896 | `FUN_0004c896` (cruise_enable_pedal_override) | cf18 = bcf8; cf34 = bced && bcf8 ≥ TP%; jsr 0x2e6a4 (pool 0x2e7c8) |
-| 0x000193c4 | `FUN_000193c4` (throttle_percent_and_demand_calc) | TP1/TP2 %, demand a9bc; jsr 0x19a46 (pool 0x19c30) in 0x199d4 |
-| 0x0004db22 | `FUN_0004db22` (cruise_plausibility_stage) | cf35–38 staging; jsr 0x2e6da (pool 0x2e7e8) |
+| 0x0002c3b2 | `gear_latch_confirm` | gear latch; jsr 0x19adc (pool 0x19c88) in 0x19aa0 |
+| 0x00032614 | `cruise_set_speed_latch` | set speed km/h → 0xffff866c, target → 0xffffbfa4; jsr 0x2e620 (pool 0x2e77c) |
+| 0x0002d638 | `cruise_control_output_law` | bd00 = clamp(bd04·bd18·0.01, ±100); jsr 0x2e638 (pool 0x2e78c) |
+| 0x0004c896 | `cruise_enable_pedal_override` | cf18 = bcf8; cf34 = bced && bcf8 ≥ TP%; jsr 0x2e6a4 (pool 0x2e7c8) |
+| 0x000193c4 | `throttle_percent_and_demand_calc` | TP1/TP2 %, demand a9bc; jsr 0x19a46 (pool 0x19c30) in 0x199d4 |
+| 0x0004db22 | `cruise_plausibility_stage` | cf35–38 staging; jsr 0x2e6da (pool 0x2e7e8) |
 
 ### 8.2 Data and entry points (ROM)
 

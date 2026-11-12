@@ -2,7 +2,7 @@
  * RAM 0xffffc6f4 o2_monitor_ratio_ch1 (float): Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c.
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffc6f4; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): o2_monitor_ratio_ch1_ffffc6f4; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005831c; body bytes: 80; decompiled */
 

@@ -17,7 +17,7 @@
  */
 /* ROM address: 0x0002d638; body bytes: 372; decompiled */
 
-uint FUN_0002d638(void)
+uint cruise_control_output_law(void)
 
 {
   uint uVar1;
@@ -32,15 +32,15 @@ uint FUN_0002d638(void)
   undefined4 uVar8;
   float fVar9;
   undefined4 uVar10;
-  undefined4 snapshot_DAT_ffffcf1c;
+  undefined4 snapshot_current_gear_float_ffffcf1c;
   
-  fVar9 = DAT_ffffbfa4 - DAT_ffffbfa0;
-  DAT_ffffbd14 = DAT_ffffbfa0 - DAT_ffffbfa4;
-  snapshot_DAT_ffffcf1c = DAT_ffffcf1c;
-  uVar1 = lookup_3d_descriptor_scaled(DAT_ffffbfa0,DAT_ffffcf1c,&tbl_table_3d_111_0006a8bc);
+  fVar9 = cruise_target_speed_kmh_ffffbfa4 - DAT_ffffbfa0;
+  DAT_ffffbd14 = DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4;
+  snapshot_current_gear_float_ffffcf1c = current_gear_float_ffffcf1c;
+  uVar1 = lookup_3d_descriptor_scaled(DAT_ffffbfa0,current_gear_float_ffffcf1c,&tbl_table_3d_111_0006a8bc);
   uVar8 = 0;
   if (DAT_ffffbced == '\0') {
-    DAT_ffffbd00 = 0.0;
+    cruise_control_law_output_ffffbd00 = 0.0;
     DAT_ffffbd18 = extraout_fr0;
     return uVar1;
   }
@@ -50,11 +50,11 @@ uint FUN_0002d638(void)
   }
   uVar10 = 0x3727c5ac;
   DAT_ffffbd18 = extraout_fr0;
-  cVar2 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffcf1c,0x40000000,0x3727c5ac);
-  cVar3 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffcf1c,0x40400000,uVar10);
-  cVar4 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffcf1c,0x40800000,uVar10);
-  cVar5 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffcf1c,0x40a00000,uVar10);
-  cVar6 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffcf1c,0x40c00000,uVar10);
+  cVar2 = rx8_is_outside_tolerance_band(snapshot_current_gear_float_ffffcf1c,0x40000000,0x3727c5ac);
+  cVar3 = rx8_is_outside_tolerance_band(snapshot_current_gear_float_ffffcf1c,0x40400000,uVar10);
+  cVar4 = rx8_is_outside_tolerance_band(snapshot_current_gear_float_ffffcf1c,0x40800000,uVar10);
+  cVar5 = rx8_is_outside_tolerance_band(snapshot_current_gear_float_ffffcf1c,0x40a00000,uVar10);
+  cVar6 = rx8_is_outside_tolerance_band(snapshot_current_gear_float_ffffcf1c,0x40c00000,uVar10);
   if (cVar2 == '\0') {
     puVar7 = &tbl_table_2d_335_check_datatype_0006a844;
   }
@@ -80,14 +80,14 @@ uint FUN_0002d638(void)
   DAT_ffffbd04 = (float)lookup_2d_descriptor_scaled(puVar7);
 LAB_0002d77c:
   if ((100.0 <= fVar9) || (fVar9 < -100.0)) {
-    fVar9 = DAT_ffffbd00;
-    if (DAT_ffffa9b4 <= cruise_set_speed_ffffbcf8) {
+    fVar9 = cruise_control_law_output_ffffbd00;
+    if (throttle_position_1_percent_ffffa9b4 <= cruise_set_speed_ffffbcf8) {
       if (DAT_ffffbbcb != 1) {
-        DAT_ffffbd00 = (float)uVar8;
+        cruise_control_law_output_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;
       }
       if ((0xfd < can212_torque_signal_ffffbbc8) && (0xfd < DAT_ffffbbc9)) {
-        DAT_ffffbd00 = (float)uVar8;
+        cruise_control_law_output_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbc9;
       }
     }
@@ -95,7 +95,7 @@ LAB_0002d77c:
   else {
     fVar9 = DAT_ffffbd04 * DAT_ffffbd18 * 0.01;
   }
-  DAT_ffffbd00 = rx8_clamp_float(fVar9,-100.0,100.0);
+  cruise_control_law_output_ffffbd00 = rx8_clamp_float(fVar9,-100.0,100.0);
   return extraout_r0;
 }
 

@@ -16,11 +16,11 @@ void FUN_000129c0(void)
   float arg0;
   float arg0_00;
   
-  cVar3 = DAT_ffffb53c;
+  cVar3 = at_drive_range_engaged_ffffb53c;
   uVar6 = DAT_ffffa678;
   cVar2 = fuel_cut_flag_b_ffffa445;
   cVar1 = fuel_cut_flag_a_ffffa444;
-  if ((DAT_ffffa69e == '\0') && (DAT_ffffb53c == '\x01')) {
+  if ((DAT_ffffa69e == '\0') && (at_drive_range_engaged_ffffb53c == '\x01')) {
     DAT_ffffa69c = 0xfa;
   }
   else if (DAT_ffffa69c != 0) {

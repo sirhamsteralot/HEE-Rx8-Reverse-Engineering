@@ -14,7 +14,7 @@ uint FUN_00046404(void)
   float arg0;
   float arg1;
   
-  arg0 = DAT_ffffb40c;
+  arg0 = candidate_learned_pedal_value_ffffb40c;
   arg1 = DAT_ffffad30;
   fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffcc20 = arg1 - fVar3;
