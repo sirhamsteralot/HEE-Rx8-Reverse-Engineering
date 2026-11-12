@@ -16,7 +16,9 @@ scheduling model; where the two disagree, §7 lists the correction.
 **Related reports:** infrastructure for all engine subsystems — the task table
 0x4990 drives the [fueling](fueling_control_report.md) task[11] 0x6584, the
 [ignition timing](ignition_timing_report.md) task[6] 0x661e, the
-[intake solenoids](intake_solenoids_report.md) chain task[10] 0x64f6, the
+[intake solenoids](intake_solenoids_report.md) chain task[10] 0x64f6 (whose body
+0x11744 also runs the [idle control](idle_control_report.md) batch 0x167c0 and the
+[DSC CAN arbitration](dsc_can_arbitration_report.md) batch 0x2a2ae), the
 [knock control](knock_control_report.md) tasks 0x65f6/0x661e/0x64ba; the
 crank-angle tick feeds the [load & fuelling model](load_fueling_report.md) rpm
 path (0x803e → 0xffff9f80); UDS transport runs through the CAN RX interrupt and
@@ -241,7 +243,7 @@ WDT: polled: 0x31c (keyed 0xa53c -> TCSR 0xffffec10, PB15 toggle); ITI (IVT 0x35
 | 7 | 0x63f0 (`ref_interruptSetup___`) | 0x02 | MAF scaling, ADC helpers, GPIO 0xfffff746 bit4, `apv_pwm_service` → taskEnd |
 | 8 | 0x648e | 0x02 | 0x6796, 0x759e (**arms the CMI10B tick** via 0x7778/0x7b58), 0xb3aa, ECM voltage, rear O2, 0x114d0 → taskEnd |
 | 9 | 0x64ba (`knock_sensor_fault_task`) | 0x02 | `ref_main__`, 0x6842, 0x94fc, `ref_knockSensorADCFault`, 0x1150e (→ 0x199d4 → `ref_calculateEngineRunningTimer` 0xe21c), 0x9fb2(0) → taskEnd |
-| 10 | 0x64f6 | 0x02 | 0x6846, `ref_getBaroSensorVal`, 0x11744 → taskEnd (intake chain) |
+| 10 | 0x64f6 | 0x02 | 0x6846, `ref_getBaroSensorVal`, 0x11744 → taskEnd (idle batch 0x167c0 + DSC CAN batch 0x2a2ae + intake chain) |
 | 11 | 0x6584 | 0x02 | 0x117ac → taskEnd (fueling task) |
 | 12 | 0x6592 `task12_adc_feedback_pwm_entry` | 0x02 | 0xa4b6 `task12_alive_counter_clear`, 0xaee8 `adc_pair_correlation_fault_compute` (via thunk 0xad2a), 0x11880 `monitor_service_batch`, 0xb308 `atu_ch7d_pwm_enable` → taskEnd — §14 |
 | 13 | 0x65b2 `task13_temp_sensor_dtc_entry` | 0x02 | 0x7298 `iat_sensor_scaling_fault`, 0x73a0 `clt_sensor_scaling_fault`, 0x118d0 `dtc_fault_service_batch` → taskEnd — §14 |
