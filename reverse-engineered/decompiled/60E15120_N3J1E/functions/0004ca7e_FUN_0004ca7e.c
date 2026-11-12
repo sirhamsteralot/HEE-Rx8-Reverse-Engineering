@@ -43,7 +43,7 @@ void cruise_speed_error_filter_stage(void)
   cVar4 = DAT_ffffcf3c;
   cVar3 = DAT_ffffcf3a;
   fVar16 = 0.0;
-  fVar12 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff866c);
+  fVar12 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&cruise_set_speed_kmh_ffff866c);
   cVar11 = DAT_ffffcf4c;
   cVar10 = DAT_ffffcf4b;
   cVar9 = DAT_ffffcf4a;
@@ -127,7 +127,7 @@ void cruise_speed_error_filter_stage(void)
   if (DAT_ffffcf59 != '\0') {
     DAT_ffffcf59 = DAT_ffffcf59 + -1;
   }
-  if ((DAT_ffffcf4f == '\x01') || (DAT_ffffcf34 == '\0')) {
+  if ((DAT_ffffcf4f == '\x01') || (cruise_enable_flag_ffffcf34 == '\0')) {
     DAT_ffffcf39 = 0;
     DAT_ffffcf3a = '\0';
     DAT_ffffcf3b = 0;

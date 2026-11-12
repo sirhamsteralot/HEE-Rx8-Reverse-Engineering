@@ -51,7 +51,7 @@ void idle_target_rpm_calculate(void)
   cVar7 = ac_clutch_on_ffffbd69;
   cVar6 = DAT_ffffbad0;
   cVar5 = high_load_flag_ffffb5b3;
-  cVar4 = DAT_ffffb53c;
+  cVar4 = at_drive_range_engaged_ffffb53c;
   cVar3 = automatic_transmission_ffffb534;
   cVar1 = engine_injectors_off_ffffa42c;
   cVar2 = engine_running_ffffa428;

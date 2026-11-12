@@ -19,7 +19,7 @@ void cruise_set_speed_apply(void)
      (((DAT_ffffb53a != '\x01' &&
        (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8664,0), fVar2 = fVar3, cVar1 != '\0')) &&
       (DAT_ffffaa68 != '\0')))) {
-    fVar2 = rx8_clamp_float(DAT_ffffbd00 + cruise_set_speed_adjust_ffffbd08,0.0,100.0);
+    fVar2 = rx8_clamp_float(cruise_control_law_output_ffffbd00 + cruise_set_speed_adjust_ffffbd08,0.0,100.0);
   }
   cruise_set_speed_ffffbcf8 = fVar2;
   return;

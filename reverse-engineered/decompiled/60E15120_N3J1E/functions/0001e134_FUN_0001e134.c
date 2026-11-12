@@ -16,7 +16,7 @@ uint FUN_0001e134(void)
 
 {
   float snapshot_inferred_coolant_temperature_ffffa98c;
-  byte snapshot_DAT_ffffaa62;
+  byte snapshot_cranking_active_ffffaa62_ffffaa62;
   float snapshot_lambda_target_ffffadfc;
   char cVar4;
   char cVar6;
@@ -31,7 +31,7 @@ uint FUN_0001e134(void)
   
   cVar4 = closed_loop_active_ffffae1f;
   snapshot_lambda_target_ffffadfc = lambda_target_ffffadfc;
-  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
+  snapshot_cranking_active_ffffaa62_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_engine_load_delta_ffffc150 = engine_load_delta_ffffc150;
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;
@@ -67,7 +67,7 @@ uint FUN_0001e134(void)
         (((snapshot_engine_speed_rpm_ffffb548 < DAT_ffffb0e4 || (DAT_ffffb0e8 <= snapshot_engine_speed_rpm_ffffb548)) || (0.4 < snapshot_engine_load_ffffc0b4)))))) ||
       ((((300.0 <= snapshot_engine_speed_rpm_ffffb548 && (snapshot_engine_load_ffffc0b4 < fVar9)) ||
         ((0.004 <= snapshot_engine_load_delta_ffffc150 || ((DAT_ffffb0f4 < 0x7d || (cVar8 != '\0')))))) || (snapshot_lambda_target_ffffadfc < 0.99)))) ||
-     ((1.05 <= snapshot_lambda_target_ffffadfc || ((snapshot_DAT_ffffaa62 != 0 && ((snapshot_DAT_ffffaa62 != 1 || (DAT_ffffb0f2 < 0x9c)))))))) {
+     ((1.05 <= snapshot_lambda_target_ffffadfc || ((snapshot_cranking_active_ffffaa62_ffffaa62 != 0 && ((snapshot_cranking_active_ffffaa62_ffffaa62 != 1 || (DAT_ffffb0f2 < 0x9c)))))))) {
     DAT_ffffb0da = 0;
   }
   else {
@@ -79,7 +79,7 @@ uint FUN_0001e134(void)
   else {
     DAT_ffffb0ee = 0;
   }
-  uVar5 = (uint)snapshot_DAT_ffffaa62;
+  uVar5 = (uint)snapshot_cranking_active_ffffaa62_ffffaa62;
   if (uVar5 == 1) {
     uVar5 = rx8_add_u16_saturate((int)(short)DAT_ffffb0f2,1);
     DAT_ffffb0f2 = (ushort)uVar5;

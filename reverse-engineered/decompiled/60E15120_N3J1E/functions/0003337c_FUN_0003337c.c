@@ -28,7 +28,7 @@ undefined4 * candidate_idle_ratio_calcs(void)
   float arg1;
   
   snapshot_DAT_ffffbaec = DAT_ffffbaec;
-  cVar1 = DAT_ffffb53c;
+  cVar1 = at_drive_range_engaged_ffffb53c;
   puVar3 = (undefined4 *)&automatic_transmission_ffffb534;
   arg1 = 0.0;
   if (automatic_transmission_ffffb534 == '\0') {
@@ -41,7 +41,7 @@ undefined4 * candidate_idle_ratio_calcs(void)
       DAT_ffffc050 = 0.0;
       puVar3 = (undefined4 *)0x0;
     }
-    else if (DAT_ffffb53c == '\x01') {
+    else if (at_drive_range_engaged_ffffb53c == '\x01') {
       fVar6 = inferred_ram_a7ac_ffffa7ac_ffffa7ac;
       fVar4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa990,&tbl_table_2d_204_0006af18);
       fVar5 = (float)lookup_2d_descriptor_scaled(DAT_ffffc04c,&tbl_table_2d_206_0006af40);

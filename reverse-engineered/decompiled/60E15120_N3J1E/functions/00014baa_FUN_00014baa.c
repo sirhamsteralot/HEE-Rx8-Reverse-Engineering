@@ -16,7 +16,7 @@ undefined2 * candidate_idle_mode_timers(void)
   else {
     DAT_ffffa80c = 0x1f;
   }
-  if (DAT_ffffa824 == DAT_ffffb53c) {
+  if (DAT_ffffa824 == at_drive_range_engaged_ffffb53c) {
     if (DAT_ffffa80e != 0) {
       DAT_ffffa80e = DAT_ffffa80e + -1;
     }
@@ -49,7 +49,7 @@ undefined2 * candidate_idle_mode_timers(void)
     DAT_ffffa7b5 = 1;
   }
   DAT_ffffa823 = ac_clutch_on_ffffbd69;
-  DAT_ffffa824 = DAT_ffffb53c;
+  DAT_ffffa824 = at_drive_range_engaged_ffffb53c;
   DAT_ffffa825 = inferred_ram_ad18_ffffad18_ffffad18;
   return puVar1;
 }

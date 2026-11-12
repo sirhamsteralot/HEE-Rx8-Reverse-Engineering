@@ -3,7 +3,7 @@
 void FUN_00047cce(void)
 
 {
-  DAT_ffffcc91 = DAT_ffffcc90;
+  candidate_idle_learn_flag_ffffcc91 = DAT_ffffcc90;
   return;
 }
 

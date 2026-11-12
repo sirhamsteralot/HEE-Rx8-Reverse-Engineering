@@ -14,13 +14,13 @@
 uint FUN_0002090a(void)
 
 {
-  undefined1 snapshot_DAT_ffffaa62;
+  undefined1 snapshot_cranking_active_ffffaa62_ffffaa62;
   char cVar2;
   uint uVar3;
   undefined4 uVar4;
   
   cVar2 = DAT_ffffaa63;
-  snapshot_DAT_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
+  snapshot_cranking_active_ffffaa62_ffffaa62 = cranking_active_ffffaa62_ffffaa62;
   if (((((DAT_ffffb0cc == '\0') && (DAT_ffffb268 == '\0')) && (DAT_ffffb269 == '\0')) &&
       ((0x270 < engine_running_timer_ffffa424 && ((0x2c < DAT_ffffb25a || (DAT_ffffb267 == 0)))))) &&
      ((DAT_ffffb266 == '\x01' && (DAT_ffffaa63 == '\0')))) {
@@ -47,7 +47,7 @@ uint FUN_0002090a(void)
     uVar3 = rx8_add_u16_saturate((int)(short)DAT_ffffb25a,1);
     DAT_ffffb25a = (ushort)uVar3;
   }
-  DAT_ffffb265 = snapshot_DAT_ffffaa62;
+  DAT_ffffb265 = snapshot_cranking_active_ffffaa62_ffffaa62;
   DAT_ffffb266 = cVar2;
   return uVar3;
 }

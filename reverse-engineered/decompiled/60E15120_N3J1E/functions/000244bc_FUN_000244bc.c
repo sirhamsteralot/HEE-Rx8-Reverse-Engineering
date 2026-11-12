@@ -8,11 +8,11 @@
  * RAM 0xffffb51e e2ram_payload_reserved (uint16): Cells 0xffffb51e/0xffffb520/0xffffb522/0xffffb524 (payload u16[8..11] sources, pools 0x24690/0x24694/0x24698/0x2469c in 0x244bc): no writer references anywhere in ROM -> constant 0, reserved.
  */
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): -DAT_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): DAT_ffffb594; decode = raw * 0.0003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): candidate_learned_pedal_value_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): -throttle_pedal_position_delta_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): filtered_battery_voltage_ffffb594; decode = raw * 0.0003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): uVar3; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): DAT_ffffb38c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): candidate_throttle_base_position_ffffb38c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): uVar3; decode = raw * 0.00390625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.1953125 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
@@ -25,26 +25,26 @@ void e2ram_block_encode(void)
   char cVar2;
   undefined4 uVar3;
   
-  DAT_ffffb442 = rx8_encode_u16_affine_saturate(DAT_ffffb40c,0x3cfa0000,0);
+  DAT_ffffb442 = rx8_encode_u16_affine_saturate(candidate_learned_pedal_value_ffffb40c,0x3cfa0000,0);
   DAT_ffffb444 = DAT_ffffb442;
-  if (DAT_ffffb414 < 0.0) {
-    uVar1 = rx8_encode_u16_affine_saturate(-DAT_ffffb414,0x3cfa0000,0);
+  if (throttle_pedal_position_delta_ffffb414 < 0.0) {
+    uVar1 = rx8_encode_u16_affine_saturate(-throttle_pedal_position_delta_ffffb414,0x3cfa0000,0);
     DAT_ffffb446 = ~uVar1 + 1;
   }
   else {
-    DAT_ffffb446 = rx8_encode_u16_affine_saturate(DAT_ffffb414,0x3cfa0000,0);
+    DAT_ffffb446 = rx8_encode_u16_affine_saturate(throttle_pedal_position_delta_ffffb414,0x3cfa0000,0);
   }
-  DAT_ffffb448 = rx8_encode_u16_affine_saturate(DAT_ffffb594,0x39a00000,0);
+  DAT_ffffb448 = rx8_encode_u16_affine_saturate(filtered_battery_voltage_ffffb594,0x39a00000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffb44a = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
   DAT_ffffb44c = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   DAT_ffffb44e = inferred_pedal_volts_ffffa9c4_ffffa9c4;
-  DAT_ffffb450 = DAT_ffffb51e;
+  DAT_ffffb450 = e2ram_payload_reserved_ffffb51e;
   DAT_ffffb452 = DAT_ffffb520;
   DAT_ffffb454 = DAT_ffffb522;
   DAT_ffffb456 = DAT_ffffb524;
-  DAT_ffffb458 = DAT_ffffcc91;
+  DAT_ffffb458 = candidate_idle_learn_flag_ffffcc91;
   if (DAT_ffffaa68 == '\x01') {
     DAT_ffffb459 = DAT_ffffb459 | 1;
   }
@@ -266,7 +266,7 @@ void e2ram_block_encode(void)
   }
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41a00000,&DAT_ffff8094);
   DAT_ffffb45e = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
-  DAT_ffffb460 = rx8_encode_u16_affine_saturate(DAT_ffffb38c,0x3cfa0000,0);
+  DAT_ffffb460 = rx8_encode_u16_affine_saturate(candidate_throttle_base_position_ffffb38c,0x3cfa0000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8068);
   DAT_ffffb462 = rx8_encode_u16_affine_saturate(uVar3,0x3b800000,0);
   DAT_ffffb464 = rx8_encode_u16_affine_saturate(engine_speed_rpm_ffffb548,0x3e480000,0);

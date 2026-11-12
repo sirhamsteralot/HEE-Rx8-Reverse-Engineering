@@ -10,7 +10,7 @@ uint FUN_0001eba6(void)
       (((inferred_coolant_temperature_ffffa98c < 40.0 || (mass_air_flow_ffffa9ec < 8.0)) ||
        ((100.0 <= mass_air_flow_ffffa9ec || ((0.0001 <= DAT_ffffae04 || (cranking_active_ffffaa62_ffffaa62 != '\0')))))))) ||
      ((DAT_ffffae20 != '\0' ||
-      ((((DAT_ffffcac8 != '\0' || (DAT_ffffc704 != '\0')) || (DAT_ffffae0c < -0.05)) ||
+      ((((DAT_ffffcac8 != '\0' || (o2_monitor_accum_gate_ffffc704 != '\0')) || (DAT_ffffae0c < -0.05)) ||
        (0.05 < DAT_ffffae0c)))))) {
     DAT_ffffb108 = 0;
   }

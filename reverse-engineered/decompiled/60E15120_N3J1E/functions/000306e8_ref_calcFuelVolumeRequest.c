@@ -6,7 +6,7 @@
  * RAM 0xffffbf1c fuel_coolant_compensation (float): bf1c = lookup_2d tbl DAT_0006ac38(coolant); added via min(bf1c, c00c + open_loop_fuel_target b120) in bf14.
  * RAM 0xffffbf14 fuel_correction_sum (float): bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; scaled by FUN_0005c024 into beac.
  * RAM 0xffffbeac fuel_volume_scaled (float): beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0.
- * RAM 0xffffbeb0 fuel_volume_final (float): beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0.
+ * RAM 0xffffbeb0 fuel_volume_final (float): beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_fuel_volume_final_ffffbeb0.
  */
 /* ROM address: 0x000306e8; body bytes: 248; decompiled_with_warnings */
 

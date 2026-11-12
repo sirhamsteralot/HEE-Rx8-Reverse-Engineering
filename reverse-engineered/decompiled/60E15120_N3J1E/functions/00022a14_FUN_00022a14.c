@@ -96,8 +96,8 @@ LAB_00022b5c:
     puVar5 = &tbl_table_2d_138_0006a3e0;
   }
   DAT_ffffb3dc = (float)lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,puVar5);
-  if (DAT_ffffb38c <= DAT_ffffb3dc) {
-    if (DAT_ffffb38c <= DAT_ffffb3dc - 2.0) {
+  if (candidate_throttle_base_position_ffffb38c <= DAT_ffffb3dc) {
+    if (candidate_throttle_base_position_ffffb38c <= DAT_ffffb3dc - 2.0) {
       DAT_ffffb3ee = '\x01';
     }
   }
@@ -155,12 +155,12 @@ LAB_00022c9a:
   }
   DAT_ffffb3d0 = rx8_clamp_float(arg0,arg1,fVar7);
   if ((DAT_ffffcc9b == '\x01') && (DAT_ffffcc9c == '\x01')) {
-    DAT_ffffb38c = 5.0;
+    candidate_throttle_base_position_ffffb38c = 5.0;
     uVar4 = 1;
   }
   else {
-    fVar7 = rx8_first_order_filter(DAT_ffffb3cc,DAT_ffffb38c,DAT_ffffb3d0,arg3);
-    DAT_ffffb38c = rx8_min_float(DAT_ffffb2c4,fVar7);
+    fVar7 = rx8_first_order_filter(DAT_ffffb3cc,candidate_throttle_base_position_ffffb38c,DAT_ffffb3d0,arg3);
+    candidate_throttle_base_position_ffffb38c = rx8_min_float(DAT_ffffb2c4,fVar7);
     uVar4 = extraout_r0;
   }
   return uVar4;

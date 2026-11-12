@@ -10,7 +10,7 @@
 void candidate_low_voltage_dtc_timer(void)
 
 {
-  float snapshot_DAT_ffffb654;
+  float snapshot_inferred_ram_b654_ffffb654_ffffb654;
   
   if (inferred_battery_voltage_ffffb590 < 10.0) {
     if (inferred_battery_voltage_ffffb590 < 9.0) {
@@ -28,7 +28,7 @@ void candidate_low_voltage_dtc_timer(void)
   else if (DAT_ffffb60e != 0) {
     DAT_ffffb60e = DAT_ffffb60e + -1;
   }
-  snapshot_DAT_ffffb654 = inferred_ram_b654_ffffb654_ffffb654;
+  snapshot_inferred_ram_b654_ffffb654_ffffb654 = inferred_ram_b654_ffffb654_ffffb654;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffb640 = 0;
   }
@@ -44,7 +44,7 @@ void candidate_low_voltage_dtc_timer(void)
   if (DAT_ffffb60e == 0) {
     low_voltage_latch_ffffb5b2 = 1;
   }
-  else if (8.486699 <= snapshot_DAT_ffffb654) {
+  else if (8.486699 <= snapshot_inferred_ram_b654_ffffb654_ffffb654) {
     low_voltage_latch_ffffb5b2 = 0;
   }
   return;

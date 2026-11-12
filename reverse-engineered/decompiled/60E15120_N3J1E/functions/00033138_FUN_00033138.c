@@ -11,7 +11,7 @@
 void FUN_00033138(void)
 
 {
-  byte snapshot_DAT_ffffbbc8;
+  byte snapshot_can212_torque_signal_ffffbbc8;
   byte snapshot_DAT_ffffbbc9;
   char cVar3;
   char cVar4;
@@ -24,13 +24,13 @@ void FUN_00033138(void)
   cVar4 = DAT_ffffc030;
   cVar3 = DAT_ffffbbcb;
   snapshot_DAT_ffffbbc9 = DAT_ffffbbc9;
-  snapshot_DAT_ffffbbc8 = can212_torque_signal_ffffbbc8;
+  snapshot_can212_torque_signal_ffffbbc8 = can212_torque_signal_ffffbbc8;
   fVar6 = DAT_ffffbfa0 - DAT_ffffc02c;
   fVar7 = DAT_ffffc02c - DAT_ffffbfa0;
   arg2 = 100.0;
   if (DAT_ffffc030 == '\x01') {
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
-      fVar5 = DAT_ffffa9b4;
+      fVar5 = throttle_position_1_percent_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
          ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
@@ -42,7 +42,7 @@ void FUN_00033138(void)
       else {
         fVar5 = DAT_ffffc038;
         if (((((fVar7 < -0.25) || (0.25 <= fVar7)) && (0.0 <= DAT_ffffc028)) &&
-            (DAT_ffffc028 < 100.0)) && ((cVar3 != '\x01' || ((0xfd < snapshot_DAT_ffffbbc8 && (0xfd < snapshot_DAT_ffffbbc9)))))) {
+            (DAT_ffffc028 < 100.0)) && ((cVar3 != '\x01' || ((0xfd < snapshot_can212_torque_signal_ffffbbc8 && (0xfd < snapshot_DAT_ffffbbc9)))))) {
           DAT_ffffc03c = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_203_0006af04);
           fVar5 = DAT_ffffc038 + DAT_ffffc03c;
         }
@@ -56,7 +56,7 @@ void FUN_00033138(void)
     }
   }
   else {
-    if (DAT_ffffa9b4 <= DAT_ffffc028) {
+    if (throttle_position_1_percent_ffffa9b4 <= DAT_ffffc028) {
       DAT_ffffc034 = 0.0;
       DAT_ffffc038 = 100.0;
       DAT_ffffc028 = 100.0;

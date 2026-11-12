@@ -65,7 +65,7 @@ ushort open_loop_fueling_targets(void)
   ol_fuel_target_main_ffffb130 = rx8_max_float(ol_baro_base_correction_ffffb170 * ol_tip_in_target_ffffb190,ol_target_3d_ffffb194);
   ol_coolant_correction_ffffb134 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_open_loop_target_coolant_temperature_correction_00069cd4);
   if (automatic_transmission_ffffb534 == '\x01') {
-    if (4 < DAT_ffffbc3d) {
+    if (4 < current_gear_ffffbc3d) {
       safe_mode_ffffb12d = '\0';
       goto LAB_0001ef92;
     }

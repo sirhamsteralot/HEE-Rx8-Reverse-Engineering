@@ -1,5 +1,5 @@
 /* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): DAT_ffffc6f0; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): o2_monitor_ratio_ch0_ffffc6f0; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00058262; body bytes: 80; decompiled */
 

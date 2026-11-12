@@ -7,10 +7,10 @@ char FUN_00023558(void)
 
 {
   if (DAT_ffffccc9 == '\x01') {
-    DAT_ffffb414 = 0.0;
+    throttle_pedal_position_delta_ffffb414 = 0.0;
   }
   else {
-    DAT_ffffb414 = inferred_ram_b410_ffffb410_ffffb410 - DAT_ffffb428;
+    throttle_pedal_position_delta_ffffb414 = inferred_ram_b410_ffffb410_ffffb410 - DAT_ffffb428;
   }
   DAT_ffffb428 = inferred_ram_b410_ffffb410_ffffb410;
   return DAT_ffffccc9;

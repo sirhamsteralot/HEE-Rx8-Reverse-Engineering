@@ -49,6 +49,25 @@ See [the comment-block merge/reduce pass](comment_merge/README.md) for the
 canonical ordering, application and deduplication of the stacked review comment
 blocks across the per-function files and both monoliths.
 
+The export was regenerated from the accepted label TSVs and `metadata/` so all
+three synchronized views carry the function/RAM aliases and review comments
+accepted in the cruise, ignition-timing-RAM, DTC-control, ASR, O2-monitor,
+idle-target, UDS-dispatch, live-tuning, free-resources, OS-scheduling and
+candidate-promotion sweeps: 505 function names in the index, 1,689 identifier
+renames in `metadata/integrated_names.json`, and all 3,355 function bodies
+verified intact in both monoliths. `scripts/validate_export.py` re-verified
+168,592 instructions / 337,184 bytes against the ROM (SHA-256 unchanged).
+Rule-7 spot re-checks against the raw disassembly and ROM literal pools:
+0x32614 `cruise_set_speed_latch` writes 0xffff866c and 0xffffbfa4; 0x4de1c
+`gear_float_band_producer` reads gear 0xffffbc3d and writes 0xffffcf1c;
+0x2c324 `candidate_gear_from_ratio` reads rpm 0xffffb548 / vss 0xffffbbb4 with
+gates 0xffffb534/0xffffb53a, writes 0xffffbc3c, and compares against the gear
+ratio floats (110.741, 71.887, 52.001, 40.158, 33.841) in the shared pool at
+0x758b8; 0x2d638 `cruise_control_output_law` writes 0xffffbd00; 0x2df62 folds
+the adjust term into 0xffffbcf8/0xffffbd08. `validate_reports.py`,
+`verify_readability.py`, `verify_math_units.py` and `verify_claims.py` all
+PASS, and `python -m pytest tests/` is green (187 passed).
+
 ## Export cleanup
 
 `scripts/refine_export_cleanup.py` post-processes the export without touching

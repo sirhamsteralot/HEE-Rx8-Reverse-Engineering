@@ -22,7 +22,7 @@ undefined4 candidate_idle_trim_integrator(void)
   fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar5,&DAT_ffff8048);
   if (automatic_transmission_ffffb534 == '\0') {
     if (idle_trim_learn_active_ffffa890 == '\x01') {
-      if (DAT_ffffb53c == '\0') {
+      if (at_drive_range_engaged_ffffb53c == '\0') {
         if (fVar4 < 0.005) {
           if (fVar4 <= -0.005) {
             fVar2 = fVar2 - 1e-05;

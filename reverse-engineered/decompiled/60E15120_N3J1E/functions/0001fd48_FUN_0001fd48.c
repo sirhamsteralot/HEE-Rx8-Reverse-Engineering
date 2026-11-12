@@ -49,7 +49,7 @@ uint FUN_0001fd48(void)
     DAT_ffffb1d4 = '\x01';
   }
   if ((((DAT_ffffb1d1 == '\x01') && (DAT_ffffb1d2 == '\0')) && (DAT_ffffb1d3 == '\x01')) &&
-     ((DAT_ffffb1d4 == '\0' && ((DAT_ffffbc3d == '\x05' || (DAT_ffffbc3d == '\x06')))))) {
+     ((DAT_ffffb1d4 == '\0' && ((current_gear_ffffbc3d == '\x05' || (current_gear_ffffbc3d == '\x06')))))) {
     DAT_ffffb158 = '\x01';
   }
   else {

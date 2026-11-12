@@ -21,15 +21,15 @@ void candidate_alternator_duty_calc(void)
   float fVar3;
   float fVar4;
   float arg3;
-  undefined4 snapshot_DAT_ffffb5e0;
+  undefined4 snapshot_electrical_load_raw_ffffb5e0;
   float arg1;
   
   arg3 = 1e-05;
   fVar4 = DAT_ffffb5f4;
-  snapshot_DAT_ffffb5e0 = electrical_load_raw_ffffb5e0;
+  snapshot_electrical_load_raw_ffffb5e0 = electrical_load_raw_ffffb5e0;
   cVar1 = rx8_is_outside_tolerance_band(electrical_load_raw_ffffb5e0,alternator_target_field_ffffb5a0,0x3727c5ac);
   arg1 = 0.0;
-  cVar2 = rx8_is_outside_tolerance_band(snapshot_DAT_ffffb5e0,0,arg3);
+  cVar2 = rx8_is_outside_tolerance_band(snapshot_electrical_load_raw_ffffb5e0,0,arg3);
   fVar3 = arg1;
   if (DAT_ffffb613 != '\0') {
     if (cVar1 == '\0') {
@@ -37,7 +37,7 @@ void candidate_alternator_duty_calc(void)
       fVar3 = DAT_ffffb5f0;
     }
     else {
-      fVar3 = (float)lookup_3d_descriptor_scaled(inferred_alternator_speed_ffffb598,snapshot_DAT_ffffb5e0,&LAB_0006a5c4);
+      fVar3 = (float)lookup_3d_descriptor_scaled(inferred_alternator_speed_ffffb598,snapshot_electrical_load_raw_ffffb5e0,&LAB_0006a5c4);
     }
   }
   DAT_ffffb5f0 = fVar3;

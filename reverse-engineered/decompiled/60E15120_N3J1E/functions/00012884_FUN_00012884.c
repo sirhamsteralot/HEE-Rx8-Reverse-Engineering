@@ -3,7 +3,7 @@
 void FUN_00012884(void)
 
 {
-  DAT_ffffa69e = DAT_ffffb53c;
+  DAT_ffffa69e = at_drive_range_engaged_ffffb53c;
   return;
 }
 

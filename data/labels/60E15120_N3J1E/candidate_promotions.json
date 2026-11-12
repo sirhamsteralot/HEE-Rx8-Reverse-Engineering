@@ -3,7 +3,7 @@
  "rom": "60E15120_N3J1E",
  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
  "rom_unchanged": true,
- "candidate_total": 181,
+ "candidate_total": 182,
  "promoted_to_high": {
   "000064ba": {
    "alias": "knock_sensor_fault_task",
@@ -617,6 +617,7 @@
   "0002b7a6": "candidate_dsc_mode_bit10_check",
   "0002b7c4": "candidate_can212_timeout_flag",
   "0002b816": "candidate_can212_torque_extract",
+  "0002c324": "candidate_gear_from_ratio",
   "0002ce18": "candidate_alternator_drag_torque_calc",
   "0002f260": "candidate_fan_init_thunk",
   "0003174a": "candidate_secondary_air_on_time_task",
@@ -644,10 +645,10 @@
   "0005cf7c": "candidate_secondary_air_diag_override"
  },
  "counts": {
-  "candidate_total": 181,
+  "candidate_total": 182,
   "promoted": 112,
   "renamed": 1,
-  "kept_candidate": 68
+  "kept_candidate": 69
  },
  "export_applied_by": "review_candidate_promotions.py --apply-export (scoped surrogateescape pass)",
  "ghidra_database_updated": false

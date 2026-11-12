@@ -58,12 +58,12 @@ undefined4 FUN_000231f0(void)
     else {
       if (DAT_ffffcca2 != '\x01') {
         if (DAT_ffffb423 == '\x01') {
-          DAT_ffffb40c = 99.0;
+          candidate_learned_pedal_value_ffffb40c = 99.0;
           DAT_ffffb436 = cVar1;
           return 1;
         }
         fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
-        DAT_ffffb40c = rx8_clamp_float(arg0,arg1,fVar2);
+        candidate_learned_pedal_value_ffffb40c = rx8_clamp_float(arg0,arg1,fVar2);
         DAT_ffffb436 = cVar1;
         return extraout_r0_00;
       }
@@ -71,7 +71,7 @@ undefined4 FUN_000231f0(void)
       arg0 = DAT_ffffcca8;
     }
   }
-  DAT_ffffb40c = rx8_clamp_float(arg0,arg1,fVar2);
+  candidate_learned_pedal_value_ffffb40c = rx8_clamp_float(arg0,arg1,fVar2);
   DAT_ffffb436 = cVar1;
   return extraout_r0;
 }

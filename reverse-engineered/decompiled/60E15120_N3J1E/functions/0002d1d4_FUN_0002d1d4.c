@@ -14,7 +14,7 @@ uint FUN_0002d1d4(void)
   
   uVar1 = (uint)DAT_ffffbced;
   if (((uVar1 == 1) &&
-      (((10.0 <= DAT_ffffbfa0 - DAT_ffffbfa4 || (10.0 <= DAT_ffffbfa4 - DAT_ffffbfa0)) &&
+      (((10.0 <= DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4 || (10.0 <= cruise_target_speed_kmh_ffffbfa4 - DAT_ffffbfa0)) &&
        (90.0 <= inferred_ram_a9bc_ffffa9bc_ffffa9bc)))) && (uVar1 = 0x271, 0x270 < DAT_ffffbcf0)) {
     uVar1 = 0;
   }

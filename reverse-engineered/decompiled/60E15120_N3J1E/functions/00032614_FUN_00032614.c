@@ -10,7 +10,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x0003264a) */
 
-void FUN_00032614(void)
+void cruise_set_speed_latch(void)
 
 {
   float arg1;
@@ -18,12 +18,12 @@ void FUN_00032614(void)
   float fVar2;
   float fVar3;
   float arg1_00;
-  float snapshot_DAT_ffffbfa4;
+  float snapshot_cruise_target_speed_kmh_ffffbfa4;
   
   arg1_00 = 0.0;
   fVar3 = DAT_ffffbfa0;
-  snapshot_DAT_ffffbfa4 = DAT_ffffbfa4;
-  arg1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff866c);
+  snapshot_cruise_target_speed_kmh_ffffbfa4 = cruise_target_speed_kmh_ffffbfa4;
+  arg1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&cruise_set_speed_kmh_ffff866c);
   if (DAT_ffffbfb4 == '\x01') {
     fVar1 = rx8_max_float(fVar3,27.0);
     fVar2 = fVar1;
@@ -39,7 +39,7 @@ void FUN_00032614(void)
         ((DAT_ffffbfd2 != '\x01' || (DAT_ffffbfb5 != '\0')))))) {
       if ((arg1 <= fVar3) || (DAT_ffffbfb5 != '\x01')) {
         fVar1 = arg1_00;
-        fVar2 = snapshot_DAT_ffffbfa4;
+        fVar2 = snapshot_cruise_target_speed_kmh_ffffbfa4;
         if (((DAT_ffffbce9 != '\x01') && (fVar1 = arg1, fVar2 = 27.0, DAT_ffffbced != '\0')) &&
            (DAT_ffffbfc4 != '\x01')) {
           if (DAT_ffffbfb6 == '\x01') {
@@ -57,10 +57,10 @@ void FUN_00032614(void)
             else {
               fVar3 = 0.1;
             }
-            fVar2 = snapshot_DAT_ffffbfa4 - fVar3;
+            fVar2 = snapshot_cruise_target_speed_kmh_ffffbfa4 - fVar3;
           }
           else {
-            fVar2 = snapshot_DAT_ffffbfa4;
+            fVar2 = snapshot_cruise_target_speed_kmh_ffffbfa4;
             if (DAT_ffffbfb9 == '\x01') {
               if ((DAT_ffffbfd1 == '\0') || ((DAT_ffffbfd2 == '\x01' && (DAT_ffffbfb5 == '\0')))) {
                 fVar3 = 1.0;
@@ -68,7 +68,7 @@ void FUN_00032614(void)
               else {
                 fVar3 = 0.025;
               }
-              fVar2 = fVar3 + snapshot_DAT_ffffbfa4;
+              fVar2 = fVar3 + snapshot_cruise_target_speed_kmh_ffffbfa4;
             }
           }
         }
@@ -78,7 +78,7 @@ void FUN_00032614(void)
           fVar3 = fVar3 + 0.0;
         }
         else {
-          fVar3 = snapshot_DAT_ffffbfa4 + 0.025;
+          fVar3 = snapshot_cruise_target_speed_kmh_ffffbfa4 + 0.025;
         }
         fVar2 = rx8_min_float(fVar3,arg1);
         fVar1 = arg1;
@@ -92,9 +92,9 @@ void FUN_00032614(void)
     DAT_ffffbfac = 200.0;
   }
   fVar3 = rx8_clamp_float(fVar1,arg1_00,DAT_ffffbfac);
-  ref_updateMemoryAtAddress_float_VAL_ADDR(fVar3,&DAT_ffff866c);
-  DAT_ffffbfa4 = rx8_clamp_float(fVar2,27.0,DAT_ffffbfac);
-  DAT_ffffbfa8 = DAT_ffffbfa4;
+  ref_updateMemoryAtAddress_float_VAL_ADDR(fVar3,&cruise_set_speed_kmh_ffff866c);
+  cruise_target_speed_kmh_ffffbfa4 = rx8_clamp_float(fVar2,27.0,DAT_ffffbfac);
+  DAT_ffffbfa8 = cruise_target_speed_kmh_ffffbfa4;
   DAT_ffffbfc4 = '\0';
   DAT_ffffbfd2 = DAT_ffffbfb5;
   DAT_ffffbfd0 = DAT_ffffbfba;

@@ -11,11 +11,11 @@ char FUN_0003c2ac(void)
 
 {
   char cVar1;
-  float snapshot_DAT_ffffad10;
+  float snapshot_inferred_ram_ad10_ffffad10_ffffad10;
   
   DAT_ffffc5d0 = '\r';
   DAT_ffffc5d1 = '\r';
-  snapshot_DAT_ffffad10 = inferred_ram_ad10_ffffad10_ffffad10;
+  snapshot_inferred_ram_ad10_ffffad10_ffffad10 = inferred_ram_ad10_ffffad10_ffffad10;
   ref_adcVoltageOutOfRangeCheck_(inferred_ram_ad10_ffffad10_ffffad10);
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc5d4 = '\0';
@@ -24,7 +24,7 @@ char FUN_0003c2ac(void)
     DAT_ffffc5d7 = 0;
     cVar1 = '\x01';
   }
-  else if ((snapshot_DAT_ffffad10 < 0.2) || (4.8 < snapshot_DAT_ffffad10)) {
+  else if ((snapshot_inferred_ram_ad10_ffffad10_ffffad10 < 0.2) || (4.8 < snapshot_inferred_ram_ad10_ffffad10_ffffad10)) {
     if ((DAT_ffffc5d2 == '\x01') &&
        ((DAT_ffffc5d0 == '\0' && (cVar1 = ref_getFaultStatus__(0xc), cVar1 == '\0')))) {
       DAT_ffffc5d4 = '\x01';

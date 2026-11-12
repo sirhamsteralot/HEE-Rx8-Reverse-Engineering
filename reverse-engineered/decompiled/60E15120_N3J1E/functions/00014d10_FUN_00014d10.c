@@ -30,10 +30,10 @@ undefined4 candidate_idle_stall_flags(void)
   float extraout_fr0;
   float extraout_fr0_00;
   float fVar6;
-  float snapshot_DAT_ffffa838;
+  float snapshot_idle_air_calc_total_ffffa838;
   
   cVar3 = ac_clutch_on_ffffbd69;
-  cVar2 = DAT_ffffb53c;
+  cVar2 = at_drive_range_engaged_ffffb53c;
   cVar1 = DAT_ffffa8a8;
   if (vehicle_speed_ffffbbb4 < 10.0) {
     if (vehicle_speed_ffffbbb4 < 9.0) {
@@ -46,7 +46,7 @@ undefined4 candidate_idle_stall_flags(void)
   if ((engine_stopped_latch_ffffa41c == '\x01') ||
      ((DAT_ffffa7a8 < 0.0 &&
       (((ac_clutch_on_ffffbd69 == '\0' && (DAT_ffffa828 == '\x01')) ||
-       ((DAT_ffffb53c == '\0' && (DAT_ffffa829 == '\x01')))))))) {
+       ((at_drive_range_engaged_ffffb53c == '\0' && (DAT_ffffa829 == '\x01')))))))) {
     uVar4 = 1;
     DAT_ffffa7a8 = 0.0;
   }
@@ -61,7 +61,7 @@ undefined4 candidate_idle_stall_flags(void)
     }
   }
   else {
-    snapshot_DAT_ffffa838 = idle_air_calc_total_ffffa838;
+    snapshot_idle_air_calc_total_ffffa838 = idle_air_calc_total_ffffa838;
     if (((DAT_ffffa7b6 == '\0') && (DAT_ffffb53a == '\0')) && (DAT_ffffa82b == '\x01')) {
       uVar4 = inferred_coolant_temperature_ffffa990;
       DAT_ffffa7e4 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa990,&tbl_table_2d_19_000692f8);
@@ -87,11 +87,11 @@ undefined4 candidate_idle_stall_flags(void)
       fVar6 = rx8_clamp_float(DAT_ffffa7a8 + DAT_ffffa7f8,DAT_ffffa7e4,DAT_ffffa7e8);
       uVar4 = extraout_r0_00;
       if (fVar6 <= DAT_ffffa7a8) {
-        if (DAT_ffffa840 < snapshot_DAT_ffffa838) {
+        if (DAT_ffffa840 < snapshot_idle_air_calc_total_ffffa838) {
           DAT_ffffa7a8 = fVar6;
         }
       }
-      else if (snapshot_DAT_ffffa838 < DAT_ffffa83c) {
+      else if (snapshot_idle_air_calc_total_ffffa838 < DAT_ffffa83c) {
         DAT_ffffa7a8 = fVar6;
       }
     }

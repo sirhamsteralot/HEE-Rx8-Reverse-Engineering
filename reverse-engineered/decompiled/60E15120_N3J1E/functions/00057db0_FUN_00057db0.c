@@ -13,19 +13,19 @@
 uint uds_service_18(short param_1,uint param_2)
 
 {
-  ushort snapshot_DAT_ffffd3b4;
+  ushort snapshot_diag_permission_mask_ffffd3b4_ffffd3b4;
   uint uVar2;
   char local_18;
   char cStack_17;
   char cStack_16;
   
-  snapshot_DAT_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
+  snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 = diag_permission_mask_ffffd3b4_ffffd3b4;
   param_2 = param_2 & 0xff;
   if (param_2 == 1) {
     if (param_1 == 3) {
       ref_udsServiceResponse(0x18,&local_18,3);
-      if (((local_18 == '\0') && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)) ||
-         ((local_18 == '\x01' && ((snapshot_DAT_ffffd3b4 & 0xfffc) != 0)))) {
+      if (((local_18 == '\0') && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)) ||
+         ((local_18 == '\x01' && ((snapshot_diag_permission_mask_ffffd3b4_ffffd3b4 & 0xfffc) != 0)))) {
         if ((cStack_17 == -1) && (cStack_16 == '\0')) {
           param_2 = FUN_00058168((int)local_18);
           uVar2 = 0;
