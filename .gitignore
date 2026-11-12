@@ -24,3 +24,4 @@ scratch/
 # Its contents are never committed; only input/README.md is tracked.
 input/*
 !input/README.md
+.venv/
