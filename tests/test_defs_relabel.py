@@ -32,6 +32,12 @@ MERGED = REPO / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.
 PER_ROM = REPO / "data" / "definitions" / "romraider" / "per-rom"
 LABELS = REPO / "data" / "labels" / "60E15120_N3J1E" / "defs_table_labels.json"
 
+# Base categories renamed upstream in RX8Defs 39d98a0; the curated label map
+# predates the rename, so marked tables may still carry the old name (the
+# merged 60E15120 def is not rebased yet — ROADMAP C item 22). A curated
+# category is accepted if it or its upstream successor exists in the base.
+UPSTREAM_CATEGORY_RENAMES = {"Fuel Target (Closed Loop)": "Fuel Injection - Closed Loop"}
+
 
 def rom_block(path, xmlid):
     root = ET.parse(path).getroot()
@@ -166,7 +172,8 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
             cat = t.get("category")
             if cat and cat.startswith("Unknown"):
                 continue
-            assert cat in base_cats, f"{stem}: category {cat!r} of {t.get('name')!r} not an existing base category"
+            known = cat in base_cats or UPSTREAM_CATEGORY_RENAMES.get(cat) in base_cats
+            assert known, f"{stem}: category {cat!r} of {t.get('name')!r} not an existing base category"
 
 
 def test_generator_idempotent_on_60E15120():

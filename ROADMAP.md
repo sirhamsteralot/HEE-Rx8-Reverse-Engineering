@@ -99,7 +99,7 @@ and where artifacts live.
   not the parser, in this item. symbols.tsv currently covers all 470 RAM TSV
   rows; keep it that way.
 
-- **C item 22 (open)** — ingest the upstream RX8Defs `01de56b` DTC model into the
+- **C item 22 (open)** — ingest the upstream RX8Defs `39d98a0` changes into the
   reviewed merged 60E15120 def. Upstream `d95b0be` turned the RX8Base
   `DTC xxxx Enable/Disable #1/#2` tables into `Switch` (Enabled=01 /
   Disabled=00) under new categories "DTC - MIL Illuminate" / "DTC - OBD
@@ -107,15 +107,20 @@ and where artifacts live.
   ROM-verified banks 0x7e678 (MIL + aging), 0x7e704 (Mode 03 list / freeze
   frame), 0x7e790 (feature bitmask) in
   [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md).
-  The 8 per-ROM defs regenerated from the new pin carry the switch form; sync
-  record: [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md).
+  Upstream `39d98a0` also fixed the per-block immobilizer patch addresses —
+  for 60E15120 `0x34da8`→`0x34b10` and `0x351f4`→`0x34f5c`, ROM-verified against
+  the immo start pattern at 0x34b10 in `60E15120_N3J1E.bin` (sync record:
+  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md)
+  §3). The 8 per-ROM defs regenerated from the new pin carry both changes.
   But `data/definitions/romraider/rx8defs-merged-60E15120.xml` (base `ff5ab4f`)
-  and therefore `per-rom/60E15120_N3J1E.xml` still carry the old 1D form.
-  Decide whether to rebase the merged def's RX8Base onto `01de56b` (the "do not
+  and therefore `per-rom/60E15120_N3J1E.xml` still carry the old 1D DTC form
+  and the pre-fix immobilizer addresses 0x34da8/0x351f4 (now proven wrong).
+  Decide whether to rebase the merged def's RX8Base onto `39d98a0` (the "do not
   mix" note in [data/definitions/README.md](data/definitions/README.md) predates
-  the pin move) or to splice only the DTC-table changes, keeping the local
-  P-code names/descriptions applied by `relabel_dtc_names.py`; then re-run the
-  defs passes + pipeline validators + `python -m pytest tests/`.
+  the pin move) or to splice only the DTC-table + immobilizer-address changes,
+  keeping the local P-code names/descriptions applied by
+  `relabel_dtc_names.py`; then re-run the defs passes + pipeline validators +
+  `python -m pytest tests/`.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
@@ -181,6 +186,7 @@ flash before any read), not the test path.
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D12 | open | `annotate_source_review.py` fails on clean main too: 38 pre-existing 4-field rows in `docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv` (row count verified on main and on the PR #33 head). Noted in PR #33 and deliberately left as-is there (no drive-by fix, AGENTS.md rule 9); fixing the parser/rows is its own work unit |
+| D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.

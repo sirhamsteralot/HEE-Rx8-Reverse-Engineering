@@ -11,10 +11,10 @@ machine-readable record: [`data/definitions/coverage.json`](../../../../data/def
 
 - **RomRaider**: upstream block `60E0G500` (base `Rx8Base` → `RX8Base`, 1052
   tables) in `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ pinned
-  `01de56be61b807f58b0b81820d4d2478c16ecc16` — block has **814** top-level tables.
+  `39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f` — block has **814** top-level tables.
   Standalone per-ROM defs emitted:
   `data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml`.
-- **ECUFlash**: `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `01de56b…`
+- **ECUFlash**: `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…`
   (**1210 tables**, last upstream change `aaac6f3` 2023-08-11, blob
   `c4a3c37e41eddc1e92c29716b087bb9d9c2090fd`) + `ECUFlash/RX8BASE.xml`
   (1743 tables, blob `05a7943e…`). Referenced in place — no local copies are kept

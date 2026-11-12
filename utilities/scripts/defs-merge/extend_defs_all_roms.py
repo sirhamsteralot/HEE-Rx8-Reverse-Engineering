@@ -89,8 +89,19 @@ def scan_rom(path, source):
 
 
 def blocks(root):
-    # case-insensitive xmlid lookup (upstream mixes 'Rx8Base' base attr vs 'RX8Base' xmlid)
-    return {x.findtext("romid/xmlid").lower(): x for x in root.findall("rom")}
+    # case-insensitive xmlid lookup (upstream mixes 'Rx8Base' base attr vs 'RX8Base'
+    # xmlid); when a block's <xmlid> is blank (upstream blanked 60E1B900's at RX8Defs
+    # 39d98a0), fall back to its <internalidstring>, which still carries the fw id
+    # our ROMs report at 0x2000
+    out = {}
+    for x in root.findall("rom"):
+        for rid in x.findall("romid"):
+            v = rid.findtext("xmlid")
+            if not (v and v.strip()):
+                v = rid.findtext("internalidstring")
+            if v and v.strip():
+                out.setdefault(v.strip().lower(), x)
+    return out
 
 
 def base_chain(block, blks):
@@ -414,7 +425,9 @@ def repair_dtc_tables(block, rom_rec):
 
 def validate_block(block, fwid):
     rid = block.find("romid")
-    assert rid.findtext("xmlid") == fwid, (rid.findtext("xmlid"), fwid)
+    # xmlid may be blank upstream (60E1B900 at RX8Defs 39d98a0) — internalidstring
+    # still must carry the fw id
+    assert (rid.findtext("xmlid") or "").strip() in ("", fwid), (rid.findtext("xmlid"), fwid)
     assert int(rid.findtext("internalidaddress"), 16) == 0x2000
     assert rid.findtext("internalidstring") == fwid
     n = 0
