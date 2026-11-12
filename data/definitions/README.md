@@ -2,8 +2,9 @@
 
 Editor metadata only: nothing here changes ROM bytes (AGENTS.md rule 2). All
 upstream originals live in the read-only submodule `submodules/RX8Defs`
-(equinox311/RX8Defs), pinned at **`1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc`**
-("Fixed 60E1D400 DTC defs", 2026-10-20). We keep local copies only where they
+(equinox311/RX8Defs), pinned at **`39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f`**
+(2026-11-12; DTC switch rework in `d95b0be`, immobilizer patch-address fixes in
+`39d98a0`). We keep local copies only where they
 differ from the pinned tree (see "D8 dedupe" below); everything else is
 referenced by submodule path + commit.
 
@@ -31,7 +32,7 @@ referenced by submodule path + commit.
 - `romraider/upstream-rx8defs/rx8_defs.xml` — upstream RomRaider defs snapshot,
   git blob `35ddcf316573a092006db5d33c60238ab9a43ea2` = upstream commit
   **`ff5ab4f`** (2026-09-29). Kept (not deleted under rule 4b) because the pinned
-  HEAD carries a *newer* blob (`29afd000…` @ `1b3aea2`) and the 60E15120 merge
+  HEAD carries a *newer* blob (`82e5724d…` @ `39d98a0`) and the 60E15120 merge
   is built against `ff5ab4f`; do not mix the two. Locally modified: flex-fuel
   content stripped (see "Stock-only defs" below).
 - `romraider/reviewed-rx8defs-copy/rx8_defs.xml` — locally reviewed
@@ -43,13 +44,17 @@ referenced by submodule path + commit.
 
 | Need | Reference |
 |------|-----------|
-| RomRaider defs, all ROM blocks (pinned) | `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ `1b3aea2…` (last change `1b3aea2` 2026-10-20, blob `29afd000…`) |
-| RomRaider logger defs (pinned) | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `1b3aea2…` (last change `607d1a3` 2025-11-30, blob `ba8edef8…`) |
-| ECUFlash def for 60E0G500 (1210 tables) | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `1b3aea2…` (last change `aaac6f3` 2023-08-11, blob `c4a3c37e…`) |
-| ECUFlash base (1743 tables) | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `1b3aea2…` (blob `05a7943e…`) |
+| RomRaider defs, all ROM blocks (pinned) | `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ `39d98a0…` (last change `39d98a0` 2026-11-12, blob `82e5724d…`) |
+| RomRaider logger defs (pinned) | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `39d98a0…` (last change `607d1a3` 2025-11-30, blob `ba8edef8…`) |
+| ECUFlash def for 60E0G500 (1210 tables) | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…` (last change `aaac6f3` 2023-08-11, blob `c4a3c37e…`) |
+| ECUFlash base (1743 tables) | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `39d98a0…` (blob `05a7943e…`) |
 
 ECUFlash defs exist upstream only for 60E0G500; no ECUFlash def exists for the
 other 13 ROMs (documented gap, not an omission here).
+
+Upstream sync record (RX8Defs `39d98a0`: DTC switch rework, `N3ZGEC` cal ID,
+immobilizer address fixes, per-ROM defs regenerated, validation results):
+[`docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md`](../../docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md).
 
 ## Literal-pool scalars exposed as editable entries (ROADMAP D11)
 
@@ -201,9 +206,9 @@ The affected copies:
 
 | Local copy | Blob | Pinned submodule file |
 |--------------------|------|----------------------|
-| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `1b3aea2…` |
-| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `1b3aea2…` |
-| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `1b3aea2…` |
+| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…` |
+| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `39d98a0…` |
+| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `39d98a0…` |
 | `romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml` | `ba8edef8…` | same (the reviewed copy was unmodified) |
 
 The pinned submodule does not have a newer ECUFlash XML: both are 1,210 tables

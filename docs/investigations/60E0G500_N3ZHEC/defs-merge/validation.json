@@ -15,7 +15,7 @@
     },
     "ecuflash_60E0G500_tables": 1210,
     "ecuflash_60E0G500_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
-    "pinned_commit": "1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
+    "pinned_commit": "39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
     "dedupe_d8": [
       {
         "local": "data/definitions/ecuflash/60E0G500.xml",
