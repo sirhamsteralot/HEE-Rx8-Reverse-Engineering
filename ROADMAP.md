@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 18–19, 21 — pick up 18 next (items 13–14 closed
+**reopened**: open items 19, 21 — pick up 19 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
@@ -29,7 +29,12 @@ sweep added the DSC↔idle↔ignition cross-links (0xffffbbb8 `vehicle_not_movin
 → idle A/C clutch gate 0x165d6, 0xffffbbd8 `engine_max_torque_allowed` → DSC
 timing derate 0x1815c) to the report Related-reports lines, §9/§10 sections and
 the investigations README index, noted the re-runnable comment-merge pass in
-`docs/learnings.md`, and fixed the 9 broken `.md` links a repo-wide scan found —
+`docs/learnings.md`, and fixed the 9 broken `.md` links a repo-wide scan found;
+item 18 closed 2026-11-12: the ECU defs were updated from the subsystem
+investigations — 47 new curated table labels (idle target/air, alternator,
+CAN 0x212-derived DSC Mode C throttle) applied to the merged 60E15120 block and
+all per-ROM defs via the re-runnable defs passes, and the 12 remaining verified
+literal-pool scalars exposed as editable `Scalar - …` entries (14 total) —
 full records in this file's git history). The
 audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 2,416 `FUN_` (function_index.tsv figures of 2026-11-12,
@@ -40,23 +45,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 18–19, 21)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21)
 
-- **C item 18 (open)** — update the ECU definitions in
-  [data/definitions/](data/definitions/) from the new investigations. The
-  recent passes (DSC CAN arbitration, idle speed control, alternator control,
-  the ignition timing chain) confirmed or refined table/scalar semantics and
-  descriptor meanings that the RomRaider XML defs should reflect — e.g. new or
-  corrected table descriptions for the CAN 0x212-derived signals, idle
-  target/air tables and alternator drag-torque tables, and any scalar
-  meanings pinned by the source-review comments. Use the re-runnable defs
-  passes (`extend_defs_all_roms.py` per-ROM regeneration + `relabel_merged_def.py`
-  splice, per AGENTS.md rule 6c): keep `<description>` a short user-facing
-  what-the-table-does sentence with no addresses/provenance/pass markers
-  (rule 6b), and record provenance in
-  `data/labels/60E15120_N3J1E/defs_table_labels.json`. Sequencing: after C
-  items 13/16 so the defs pick up verified labels, and re-run the defs-merge
-  checks + pipeline validators afterwards.
 - **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
   53 rows in
   [rx8defs-analysis/function_labels.tsv](docs/investigations/60E15120_N3J1E/rx8defs-analysis/function_labels.tsv)
