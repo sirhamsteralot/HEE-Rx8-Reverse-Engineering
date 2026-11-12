@@ -53,24 +53,47 @@ other 13 ROMs (documented gap, not an omission here).
 
 ## Literal-pool scalars exposed as editable entries (ROADMAP D11)
 
-`utilities/scripts/defs-merge/extend_defs_all_roms.py` injects two 1-cell
-`type="1D" size="1" storagetype="float"` tables (RomRaider renders these as
-scalars) into every per-ROM def that has a block:
+`utilities/scripts/defs-merge/extend_defs_all_roms.py` injects the verified
+literal-pool float32 scalars as 1-cell `type="1D" size="1" storagetype="float"`
+tables (RomRaider renders these as scalars) into every per-ROM def that has a
+block — all 14 seeded scalars from `data/maps/cross_rom_scalars.json`:
 
 - **Scalar - Stoich AFR (literal pool)** — the 14.7 stoich constant
   (0x416b3333; N3J1E @0x3E7EC, mova @0x3e6ec in FUN_0003e560).
 - **Scalar - Fuel Load Scale (literal pool)** — 0.07196
   (N3J1E @0x78170 → `fuel_load_scale_ffffbed0`).
+- **Scalar - Load Cell Scale (literal pool)** — 0.6345, air-per-rev (g/rev) →
+  engine-load cell units.
+- **Scalar - Air Per Rev Factor (literal pool)** — 60.0, g/s → g/rev conversion.
+- **Scalar - Air Per Rev Clamp (literal pool)** — 5.0 g/rev upper clamp.
+- **Scalar - Kelvin Offset (literal pool)** — 273.0 °C→K in the density model.
+- **Scalar - Kelvin Reference (literal pool)** — 293.0 K reference temperature.
+- **Scalar - Standard Atmosphere kPa (literal pool)** — 101.333 kPa normalization.
+- **Scalar - Baro ADC Scale kPa (literal pool)** — 25.325 kPa/count baro ADC scale.
+- **Scalar - ADC Volt Scale (literal pool)** — 5/65536 V/count (MAF, throttle,
+  knock sensor inputs).
+- **Scalar - Fuel Blend Decay (literal pool)** — 0.0667/call open/closed-loop
+  blend decay.
+- **Scalar - Diag Engine Load Scale (literal pool)** — 1/255 in the diagnostic
+  engine-load report.
+- **Scalar - Primary Injector Flow cc/min (literal pool)** — 369.472 cc/min.
+- **Scalar - Secondary Injector Flow cc/min (literal pool)** — 475.93 cc/min.
 
 `storageaddress` is the per-ROM literal address from
 `data/maps/cross_rom_scalars.json` (extract_scalars.py), **asserted against the
 ROM bytes** (f32 decode == expected value) at generation time, and re-checked by
-`tests/test_extract_scalars.py::test_per_rom_defs_expose_scalars`. Editing these
+`tests/test_extract_scalars.py::test_per_rom_defs_expose_scalars`. Editor names,
+units and descriptions come from `SCALAR_ENTRIES` in `extend_defs_all_roms.py`;
+per-scalar provenance (value, bit pattern, evidence, per-ROM addresses) is
+recorded in the `scalar_entries` section of
+`data/labels/60E15120_N3J1E/defs_table_labels.json`. Editing these
 in RomRaider/VersaTuner changes the λ→AFR conversion and the base load→fuel
-scale respectively. Caveat: both addresses are inside the app-flash checksum
+scale respectively (see below). Caveat: all scalar addresses are inside the
+app-flash checksum
 range (ROADMAP D3, 0x2000–0x7ffff), so a changed value needs the checksum/CVN
 path handled. ROMs without an upstream
-block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries.
+block (60E0E500, 60E1C500) have no per-ROM def and thus no scalar entries;
+a scalar absent from a given ROM's layout is skipped for that ROM.
 ECUFlash defs remain upstream-only for 60E0G500 (documented gap).
 
 ### Changing fuel stoichiometry — which scalar does what

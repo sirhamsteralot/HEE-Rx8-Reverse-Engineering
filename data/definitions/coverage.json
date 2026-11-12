@@ -23,9 +23,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 937,
+      "block_tables": 949,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7E108",
         "dtc_enable_blocks": [
@@ -37,17 +37,17 @@
         "dtc_tables_emitted": 363
       },
       "relabel_2026-11-02": {
-        "renamed": 54,
-        "regrouped": 54,
+        "renamed": 91,
+        "regrouped": 91,
         "annotated": 0,
         "added": 0,
         "already_relabeled": 0,
-        "no_label": 479,
-        "block_tables": 937,
-        "join_rate": 0.569,
+        "no_label": 442,
+        "block_tables": 949,
+        "join_rate": 0.562,
         "preexisting_duplicate_names": []
       },
-      "block_tables_with_storageaddress": 937,
+      "block_tables_with_storageaddress": 949,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
       "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 1b3aea274b1edc3cc57ed78a6d3f19b9e870abfc",
       "status": "OK"
@@ -75,9 +75,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 904,
+      "block_tables": 915,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 13,
       "dtc_repair": {
         "dtc_code_table": "0x7C5C0",
         "dtc_enable_blocks": [
@@ -89,17 +89,17 @@
         "dtc_tables_emitted": 363
       },
       "relabel_2026-11-02": {
-        "renamed": 35,
-        "regrouped": 35,
+        "renamed": 66,
+        "regrouped": 66,
         "annotated": 0,
         "added": 39,
         "already_relabeled": 0,
-        "no_label": 436,
-        "block_tables": 865,
-        "join_rate": 0.545,
+        "no_label": 405,
+        "block_tables": 876,
+        "join_rate": 0.538,
         "preexisting_duplicate_names": []
       },
-      "block_tables_with_storageaddress": 904,
+      "block_tables_with_storageaddress": 915,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -117,9 +117,9 @@
         "RX8Base",
         "60E0FC00"
       ],
-      "block_tables": 936,
+      "block_tables": 948,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
         "dtc_enable_blocks": [
@@ -131,19 +131,19 @@
         "dtc_tables_emitted": 372
       },
       "relabel_2026-11-02": {
-        "renamed": 40,
-        "regrouped": 40,
+        "renamed": 67,
+        "regrouped": 67,
         "annotated": 0,
         "added": 72,
         "already_relabeled": 0,
-        "no_label": 401,
-        "block_tables": 864,
-        "join_rate": 0.51,
+        "no_label": 374,
+        "block_tables": 876,
+        "join_rate": 0.503,
         "preexisting_duplicate_names": [
           "Table 2D - 85 "
         ]
       },
-      "block_tables_with_storageaddress": 936,
+      "block_tables_with_storageaddress": 948,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -160,9 +160,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 966,
+      "block_tables": 924,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
         "dtc_enable_blocks": [
@@ -174,20 +174,17 @@
         "dtc_tables_emitted": 372
       },
       "relabel_2026-11-02": {
-        "renamed": 43,
-        "regrouped": 43,
+        "renamed": 0,
+        "regrouped": 0,
         "annotated": 0,
-        "added": 54,
+        "added": 0,
         "already_relabeled": 0,
-        "no_label": 416,
-        "block_tables": 912,
-        "join_rate": 0.503,
-        "preexisting_duplicate_names": [
-          "Ignition Leading - Ignition Base Max",
-          "Ignition Leading - Ignition Base Max Safe Mode"
-        ]
+        "no_label": 0,
+        "block_tables": 924,
+        "join_rate": 0.497,
+        "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
-      "block_tables_with_storageaddress": 966,
+      "block_tables_with_storageaddress": 924,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -211,9 +208,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 977,
+      "block_tables": 989,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7E560",
         "dtc_enable_blocks": [
@@ -229,13 +226,13 @@
         "regrouped": 0,
         "annotated": 0,
         "added": 0,
-        "already_relabeled": 174,
-        "no_label": 413,
-        "block_tables": 977,
-        "join_rate": 0.601,
+        "already_relabeled": 221,
+        "no_label": 366,
+        "block_tables": 989,
+        "join_rate": 0.594,
         "preexisting_duplicate_names": []
       },
-      "block_tables_with_storageaddress": 977,
+      "block_tables_with_storageaddress": 989,
       "per_rom_def": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -252,9 +249,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 919,
+      "block_tables": 851,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7C8E4",
         "dtc_enable_blocks": [
@@ -266,17 +263,17 @@
         "dtc_tables_emitted": 372
       },
       "relabel_2026-11-02": {
-        "renamed": 38,
-        "regrouped": 38,
+        "renamed": 0,
+        "regrouped": 0,
         "annotated": 0,
-        "added": 80,
+        "added": 0,
         "already_relabeled": 0,
-        "no_label": 385,
-        "block_tables": 839,
-        "join_rate": 0.504,
-        "preexisting_duplicate_names": []
+        "no_label": 0,
+        "block_tables": 851,
+        "join_rate": 0.497,
+        "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
-      "block_tables_with_storageaddress": 919,
+      "block_tables_with_storageaddress": 851,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1B900.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -304,9 +301,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 928,
+      "block_tables": 940,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7E108",
         "dtc_enable_blocks": [
@@ -318,17 +315,17 @@
         "dtc_tables_emitted": 363
       },
       "relabel_2026-11-02": {
-        "renamed": 53,
-        "regrouped": 53,
+        "renamed": 90,
+        "regrouped": 90,
         "annotated": 0,
         "added": 0,
         "already_relabeled": 0,
-        "no_label": 441,
-        "block_tables": 928,
-        "join_rate": 0.532,
+        "no_label": 404,
+        "block_tables": 940,
+        "join_rate": 0.526,
         "preexisting_duplicate_names": []
       },
-      "block_tables_with_storageaddress": 928,
+      "block_tables_with_storageaddress": 940,
       "per_rom_def": "data/definitions/romraider/per-rom/60E1D400.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -345,9 +342,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 391,
+      "block_tables": 403,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7E634",
         "dtc_enable_blocks": [
@@ -365,11 +362,11 @@
         "added": 0,
         "already_relabeled": 0,
         "no_label": 0,
-        "block_tables": 391,
+        "block_tables": 403,
         "join_rate": 0.0,
         "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
-      "block_tables_with_storageaddress": 391,
+      "block_tables_with_storageaddress": 403,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3M5E.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -388,9 +385,9 @@
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 403,
+      "block_tables": 415,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
-      "scalar_tables_injected": 2,
+      "scalar_tables_injected": 14,
       "dtc_repair": {
         "dtc_code_table": "0x7E548",
         "dtc_enable_blocks": [
@@ -408,11 +405,11 @@
         "added": 0,
         "already_relabeled": 0,
         "no_label": 0,
-        "block_tables": 403,
+        "block_tables": 415,
         "join_rate": 0.0,
         "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
-      "block_tables_with_storageaddress": 403,
+      "block_tables_with_storageaddress": 415,
       "per_rom_def": "data/definitions/romraider/per-rom/60E32000_N3N5EB.xml",
       "ecuflash_def": null,
       "status": "OK"
