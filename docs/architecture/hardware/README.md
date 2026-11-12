@@ -102,7 +102,7 @@ Two further candidates now have hardware context:
 
 ## New C and project annotations
 
-[rx8_apv.c](../reconstructed/rx8_apv.c) reconstructs the sample scaling,
+[rx8_apv.c](../../../reverse-engineered/reimplementation/rx8_apv.c) reconstructs the sample scaling,
 signed-percent conversion, and tick splitting as ordinary C. It deliberately
 performs no hardware access and does not claim a complete APV controller.
 The split function requires a finite normalized input within [-1, 1]; SH FTRC
@@ -114,7 +114,7 @@ It passed with C11 strict warnings. This is a host logic check, not an ECU test.
 
 ```sh
 cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off \
-  reconstructed/rx8_apv.c reconstructed/test_rx8_apv.c -lm -o /tmp/rx8_apv_test
+  reverse-engineered/reimplementation/rx8_apv.c reverse-engineered/reimplementation/test_rx8_apv.c -lm -o /tmp/rx8_apv_test
 /tmp/rx8_apv_test
 ```
 

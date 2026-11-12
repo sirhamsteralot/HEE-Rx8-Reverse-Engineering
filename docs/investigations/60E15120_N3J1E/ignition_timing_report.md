@@ -10,7 +10,7 @@ tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
 `source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools.
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools; the DSC torque-request derate producer (`engine_max_torque_allowed` 0xffffbbd8 ← 0x2b3b8, consumed here at 0x1815c) is in [DSC CAN arbitration](dsc_can_arbitration_report.md).
 
 ## 1. Executive summary
 
@@ -202,7 +202,8 @@ Tables: section 3.
 - DSC derate `dsc_timing_derate_leading` 0xffffa91c has no direct reader in the export
   beyond 0x1815c's write — its application point (final clamp? torque limit?) is
   partially resolved: torque-loss calc reads `dsc_mode_a_base_timing` 0xffffbc94;
-  flag if a reader appears in later passes.
+  flag if a reader appears in later passes. The 0xffffbbd8 input is produced in the
+  DSC CAN batch ([`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md)).
 
 ## 10. Binary-level re-verification
 

@@ -198,7 +198,10 @@ the electronic-throttle torque chain 0x21a80), target encoder 0x5ca94 (= Mode 22
 PID 0x096e source 0xffffa7ac at 0.25 rpm/LSB, plus diag cell 0xffffd34d), and the
 E2RAM-backed trim learn/load 0x1617e/0x15fa0 on 0xffff8040/8048. 26 functions,
 6 RAM cells; select-flag producers pinned (0xffffb534 AT, 0xffffbdb8 A/C switch,
-0xffffbd69 A/C clutch, 0xffffb5b3 high-load flag). Write-up:
+0xffffbd69 A/C clutch, 0xffffb5b3 high-load flag). The A/C clutch gate 0x165d6 also
+reads `vehicle_not_moving` 0xffffbbb8, produced by 0x2b156 in the DSC CAN batch —
+see [DSC-related CAN arbitration](#dsc-related-can-arbitration-labeling) below.
+Write-up:
 [`idle_control_report.md`](idle_control_report.md) + `reviews/idle_control/`;
 record: `metadata/idle_control_labels.json`.
 ## DSC-related CAN arbitration labeling
@@ -210,6 +213,9 @@ mask-0x10 batch from task[10] 0x11744) plus the CAN 0x212 RX chain
 0x4e21c, buffer 0xffffbbc0) and the derived-signal helpers (validity timers,
 `engine_max_torque_allowed_calc` 0x2b3b8 → 0xffffbbd8, DSC mode bits of
 0xffffbbf6, `vehicle_moving_calc` 0x2b156 → 0xffffbbb8, wheelspeed validity).
+Cross-subsystem consumers: 0xffffbbd8 feeds the DSC timing derate 0x1815c
+([ignition timing](#ignition-timing-labeling)), 0xffffbbb8 feeds the idle A/C
+clutch gate 0x165d6 ([idle speed control](#idle-speed-control-labeling)).
 18 functions, 10 RAM cells. Write-up:
 [`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md) +
 `reviews/dsc_can_arbitration/`; record: `metadata/dsc_can_labels.json`.
@@ -274,14 +280,14 @@ ROM untouched.
 ## Start here
 
 - [Firmware design document](../../architecture/design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [calibration extraction](calibration_extraction_report.md) (tables in `data/maps/<rom-id>/tables/` via `extract_maps.py`; literal-pool scalar constants — e.g. base fuel scalar 0.07196 @0x78170 — in `data/maps/<rom-id>/scalars.*` via `extract_scalars.py`, report §6a; cross-ROM: `data/maps/cross_rom_diff.json` + `cross_rom_scalars.json`), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [idle speed control](idle_control_report.md) + [idle target RPM](idle_target_control_report.md), [DSC-related CAN arbitration](dsc_can_arbitration_report.md), [calibration extraction](calibration_extraction_report.md) (tables in `data/maps/<rom-id>/tables/` via `extract_maps.py`; literal-pool scalar constants — e.g. base fuel scalar 0.07196 @0x78170 — in `data/maps/<rom-id>/scalars.*` via `extract_scalars.py`, report §6a; cross-ROM: `data/maps/cross_rom_diff.json` + `cross_rom_scalars.json`), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
 - [Named C view with lookup descriptor and RAM aliases](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c) — [naming evidence](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/README.md)
-- [Combined C listing](decompiled/firmware_decompiled.c)
-- [Function index: addresses, names, status, individual files](decompiled/function_index.tsv)
+- [Combined C listing](../../../reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+- [Function index: addresses, names, status, individual files](../../../reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv)
 - [Readable, compilable helper modules](../../../reverse-engineered/reimplementation/README.md) (`rx8_math`, `rx8_apv`, `rx8_knock`)
-- [Addressed disassembly with instruction bytes](decompiled/firmware_disassembly.asm)
-- [Functions requiring decompiler review](decompiled/decompiler_issues.tsv)
-- [Call graph](decompiled/callgraph.tsv) and [symbols](decompiled/symbols.tsv)
+- [Addressed disassembly with instruction bytes](../../../reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm)
+- [Functions requiring decompiler review](../../../reverse-engineered/decompiled/60E15120_N3J1E/decompiler_issues.tsv)
+- [Call graph](../../../reverse-engineered/decompiled/60E15120_N3J1E/callgraph.tsv) and [symbols](../../../reverse-engineered/decompiled/60E15120_N3J1E/symbols.tsv)
 - [Local SH-2E Ghidra processor configuration](../../../utilities/tools/ghidra/processor/README.md) (live project DBs are not committed)
 
 ## Input and architecture
