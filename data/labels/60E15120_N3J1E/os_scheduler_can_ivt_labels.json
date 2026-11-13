@@ -143,82 +143,98 @@
  "ffff7638": {
   "alias": "os_ctrl_block",
   "type": "uint8[0x20]",
-  "reader": "0000375c"
+  "reader": "0000375c",
+  "evidence": "OS ctrl block base; mov.l pool 0x3278/0x32ec/0x3388 in 0x3238, pool 0x3e00 in 0x3db0, pool 0x3e80 in 0x3e10 (os_init) among 11 pool refs; members +4/+6/+8/+0x14/+0x18 are the count/flags/ptr cells; os_switch_to_task 0x375c writes ctrl+4, ctrl+0x14, ctrl+0x18."
  },
  "ffff763c": {
   "alias": "os_scheduled_count",
   "type": "uint16",
-  "reader": "00003db0"
+  "reader": "00003db0",
+  "evidence": "u16 at ctrl+4; direct mov.l pool 0x3960 in 0x3954; compared with 0xffff763e in os_wake_check_context_switch 0x3db0; initialized to 0xffff by os_init 0x3e10."
  },
  "ffff763e": {
   "alias": "os_dispatched_count",
   "type": "uint16",
-  "reader": "00003db0"
+  "reader": "00003db0",
+  "evidence": "u16 at ctrl+6 (base 0xffff7638 pool-referenced in 0x3db0 via pool 0x3e00); compared with 0xffff763c in the 0x3db0 wake check."
  },
  "ffff7640": {
   "alias": "os_state_flags",
   "type": "uint16",
-  "reader": "00003238"
+  "reader": "00003238",
+  "evidence": "u16 at ctrl+8; mov.l pool 0x3674 in 0x3588/0x35cc/0x35ee, pool 0x3758 in 0x36d4; incremented in interrupt_entry_save_context 0x3238; bit 0x1000 tested and 0x100 set in the 0x3db0 context-switch check."
  },
  "ffff764c": {
   "alias": "os_current_task_record_ptr",
   "type": "ptr",
-  "reader": "00003e10"
+  "reader": "00003e10",
+  "evidence": "ptr at ctrl+0x14 (base 0xffff7638); os_init 0x3e10 stores &DAT_ffff7408 into it; os_switch_to_task 0x375c stores task record 0x4990+idx*0x10 at ctrl+0x18."
  },
  "ffff7650": {
   "alias": "os_task_table_ptr",
   "type": "ptr",
-  "reader": "00003e10"
+  "reader": "00003e10",
+  "evidence": "ptr at ctrl+0x18 (base 0xffff7638); os_init 0x3e10 stores &DAT_00004990 (task record base, pool refs in 0x375c/0x3854/0x3c2a/0x3e10/0x3ec0)."
  },
  "ffff7408": {
   "alias": "os_task_stack_base",
   "type": "ptr",
-  "reader": "00003e10"
+  "reader": "00003e10",
+  "evidence": "task stack base; raw u32 0xffff7408 at ROM 0x4938 and 0x4994 (stack field of task record 0x4990); stored to ctrl+0x14 and DAT_ffff7644 by os_init 0x3e10."
  },
  "ffff9ec8": {
   "alias": "vehicle_inputs_pfdr_latch",
   "type": "uint8",
-  "reader": "00006744"
+  "reader": "00006744",
+  "evidence": "mov.l pool 0x6854 in 0x6744 vehicle_inputs_poll_pfdr_phdr and 0x6796, pool 0x11e98 in 0x11d88; = PFDR_W 0xfffff74e sampled in 0x6744; bit0 gates the UDS entry 0x680a0 tail-call from 0x11d88."
  },
  "ffff9ed8": {
   "alias": "vehicle_inputs_pfdr_prev",
   "type": "uint8",
-  "reader": "00006796"
+  "reader": "00006796",
+  "evidence": "mov.l pool 0x6850 in 0x6744 and 0x6796; previous PFDR latch used in the edge-detect update in 0x6796."
  },
  "ffff9eca": {
   "alias": "vehicle_inputs_phdr_latch",
   "type": "uint8",
-  "reader": "00006744"
+  "reader": "00006744",
+  "evidence": "mov.l pool 0x685c in 0x6744 and 0x6796; = PHDR_W sampled in 0x6744 vehicle_inputs_poll_pfdr_phdr."
  },
  "ffff9eda": {
   "alias": "vehicle_inputs_phdr_prev",
   "type": "uint8",
-  "reader": "00006796"
+  "reader": "00006796",
+  "evidence": "mov.l pool 0x6858 in 0x6744 and 0x6796; previous PHDR latch used in 0x6796."
  },
  "ffffddc8": {
   "alias": "uds_rx_buffer",
   "type": "uint8[8]",
-  "reader": "00011d88"
+  "reader": "00011d88",
+  "evidence": "CAN RX buffer; descriptors 0x4dfec (id 0x7df, mb 13) and 0x4dffc (id 0x7e0, mb 14) hold buf=0xffffddc8 at ROM 0x4dff4/0x4e004; descriptor table base 0x4df1c pool-loaded at 0x11da0 in 0x11d88; also mov.l pools 0x68428/0x68660/0x688c8 in the ISO-TP RX path 0x683d4-0x6872c."
  },
  "ffffddd0": {
   "alias": "uds_tx_buffer",
   "type": "uint8[8]",
-  "reader": "000099b0"
+  "reader": "000099b0",
+  "evidence": "CAN TX buffer; descriptor 0x4e00c (id 0x7e8, mb 15, DLC 8) holds buf=0xffffddd0 at ROM 0x4e014; mov.l pool 0x682b0 in 0x681ba and pool 0x688e8 in 0x68776-0x68868 (ISO-TP TX); written via ref_txCAN_EventBased 0x99b0."
  },
  "ffff9fb0": {
   "alias": "crank_icr10ah_sample",
   "type": "uint16",
-  "reader": "000077f0"
+  "reader": "000077f0",
+  "evidence": "mov.l pool 0x78e4 in 0x77f0 crank_capture_poll, pool 0x77cc in 0x7724, pool 0x7b34 in 0x787a; = ATUII_ICR10AH_W 0xfffff6d0 sampled in 0x77f0."
  },
  "ffff9fb8": {
   "alias": "crank_icr0ah_sample",
   "type": "uint16",
-  "reader": "000077f0"
+  "reader": "000077f0",
+  "evidence": "mov.l pool 0x78e0 in 0x77f0, pool 0x7b38 in 0x787a, pool 0x80b4 in 0x7fcc; = ATUII_ICR0AH_W 0xfffff434 sampled in 0x77f0 crank_capture_poll."
  },
  "ffff9fa8": {
   "alias": "crank_period_last",
   "type": "uint32",
-  "reader": "000077f0"
+  "reader": "000077f0",
+  "evidence": "mov.l pool 0x78fc in 0x77f0, pool 0x80b0 in 0x7fcc ref_getCrankAngle; u32 crank period computed in 0x77f0 from the ICR samples."
  }
  },
  "lookup_aliases": {
