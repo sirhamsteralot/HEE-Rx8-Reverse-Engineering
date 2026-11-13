@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """Splice the upstream RX8Defs DTC switch rework (`d95b0be`) and the 60E15120
-immobilizer patch-address fix (`39d98a0`) into the reviewed merged def
-(data/definitions/romraider/rx8defs-merged-60E15120.xml), keeping the local
-P-code DTC names applied by relabel_dtc_names.py.
+immobilizer patch-address fix (`39d98a0`) into our local RomRaider def files,
+keeping the local P-code DTC names applied by relabel_dtc_names.py where
+present. Targets (default: all three local def files; or pass paths):
+
+  data/definitions/romraider/rx8defs-merged-60E15120.xml
+  data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml
+  data/definitions/romraider/upstream-rx8defs/rx8_defs.xml
+
+so every XML under data/definitions carries the same DTC categories/form.
+The generated per-ROM defs (romraider/per-rom/*.xml) are covered by
+repair_dtc_tables() in extend_defs_all_roms.py at generation time.
 
 Decision (splice, not rebase): the merged def's RX8Base is the reviewed
 ff5ab4f/944062e content (renamed tables, cleaned descriptions, flex-fuel
 stripped); a whole-block rebase onto `39d98a0` would drag in unrelated
 renames/category moves that are tracked separately. So only the two upstream
-changes that are ROM-proven wrong/stale in our file are spliced:
+changes that are ROM-proven wrong/stale in our files are spliced:
 
   1. DTC enable/disable tables in every active <rom> block that are still in
      the old form (category="DTCs", type="1D"): #1 -> category
@@ -34,26 +42,31 @@ re-serialized over their original line spans (expat line numbers); every other
 byte of the file is untouched. Commented-out blocks are not seen by expat and
 stay untouched. Idempotent: tables already in the new form and the corrected
 immo addresses are left as-is; re-run = no-op (stats JSON only rewritten on a
-fresh run).
+fresh run that changed at least one target).
 
 Run from the repo root:
-  python utilities/scripts/defs-merge/splice_upstream_dtc_immo.py [--dry-run]
+  python utilities/scripts/defs-merge/splice_upstream_dtc_immo.py [--dry-run] [FILE ...]
 Writes stats to
 docs/investigations/60E15120_N3J1E/defs-merge/upstream_splice_39d98a0.json
 """
 from pathlib import Path
 import copy
 import json
+import re
 import sys
 import xml.etree.ElementTree as E
 import xml.parsers.expat as expat
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import dtc_names  # noqa: E402
 import relabel  # noqa: E402  (rom_files() inventory)
 
-MERGED = ROOT / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.xml"
+DEFS_RR = ROOT / "data" / "definitions" / "romraider"
+DEFAULT_TARGETS = [
+    DEFS_RR / "rx8defs-merged-60E15120.xml",
+    DEFS_RR / "reviewed-rx8defs-copy" / "rx8_defs.xml",
+    DEFS_RR / "upstream-rx8defs" / "rx8_defs.xml",
+]
 UPSTREAM_RR = ROOT / "submodules" / "RX8Defs" / "RomRaider" / "rx8_defs.xml"
 STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "defs-merge" / "upstream_splice_39d98a0.json"
 TARGET_XMLID = "60E15120"
@@ -72,6 +85,18 @@ SWITCH_STATES = (("Enabled", "01"), ("Disabled", "00"))
 IMMO_PATTERN = bytes.fromhex("B56E000960D0600C88008D1100098801")
 IMMO_RKE_DELTA = 0x44C
 IMMO_RKE_ORIG = bytes.fromhex("3320")  # "off" bytes of the With-RKE switch
+
+# Broader than dtc_names.DTC_NAME_RE: also matches the legacy no-space form
+# "DTC 0300 Enable/Disable#1" used by the reviewed copy (base 944062e). Only
+# the suffix (#N) is needed here — names are kept verbatim in every file.
+DTC_ANY_RE = re.compile(
+    r"^DTC ([PCBU]?)([0-9A-Fa-f]{4}) Enable/Disable ?(#\d)( \[additional site 0x[0-9A-Fa-f]+\])?$")
+
+
+def parse_dtc_suffix(name):
+    """'DTC 0300 Enable/Disable#1' / 'DTC P0300 Enable/Disable #1' -> '#1', else None."""
+    m = DTC_ANY_RE.match(name or "")
+    return m.group(3) if m else None
 
 
 def table_spans(text):
@@ -215,26 +240,25 @@ def convert_dtc_table(frag, suffix):
     return True
 
 
-def main():
-    dry = "--dry-run" in sys.argv
-    raw = MERGED.read_bytes()
+def splice_file(path, up_immo, immo_evidence, dry):
+    """Splice one def file; returns its stats dict (edits>0 means it changed)."""
+    raw = path.read_bytes()
     bom = raw.startswith(b"\xef\xbb\xbf")
     nl = b"\r\n" if b"\r\n" in raw else b"\n"
     text = raw.decode("utf-8-sig")
     lines = [ln.rstrip("\r") for ln in text.split("\n")]
     frag_text = "\n".join(lines)
 
-    up_immo, immo_evidence = upstream_immo_elements()
-
     spans = table_spans(frag_text)
     edits = []
-    stats = {"dtc_converted": {"#1": 0, "#2": 0, "#3": 0}, "immo_replaced": 0,
-             "details": [], "immo_evidence": immo_evidence}
+    stats = {"file": str(path.relative_to(ROOT)),
+             "dtc_converted": {"#1": 0, "#2": 0, "#3": 0}, "immo_replaced": 0,
+             "details": []}
     names_before, addr_before = [], []
     for s, e, attrs, rom_fw in spans:
         name = attrs.get("name") or ""
-        parsed = dtc_names.parse_dtc_name(name)
-        if parsed is not None:
+        suffix = parse_dtc_suffix(name)
+        if suffix is not None:
             names_before.append(name)
             addr_before.append(attrs.get("storageaddress"))
             # only entries that explicitly carry the old form (category/type
@@ -242,8 +266,8 @@ def main():
             # stay bare and inherit the new form from RX8Base, like upstream
             if attrs.get("category") == "DTCs" or attrs.get("type") == "1D":
                 frag = E.fromstring("<root>" + "\n".join(lines[s:e + 1]) + "</root>")[0]
-                if convert_dtc_table(frag, parsed[1]):
-                    stats["dtc_converted"][parsed[1]] += 1
+                if convert_dtc_table(frag, suffix):
+                    stats["dtc_converted"][suffix] += 1
                     edits.append((s, e, serialize(frag)))
                     stats["details"].append({"block": rom_fw, "name": name,
                                              "category": frag.get("category"), "type": frag.get("type")})
@@ -260,10 +284,9 @@ def main():
             stats["details"].append({"block": rom_fw, "name": name,
                                      "storageaddress": f"{frag.get('storageaddress')} -> {up.get('storageaddress')}"})
 
+    stats["edits"] = len(edits)
     if dry:
-        print(f"dry run: would convert {stats['dtc_converted']} DTC tables, "
-              f"replace {stats['immo_replaced']} immobilizer tables")
-        return
+        return stats
 
     out_lines = lines[:]
     for s, e, txt in sorted(edits, key=lambda x: x[0], reverse=True):
@@ -271,21 +294,21 @@ def main():
     new_text = "\n".join(out_lines)
     if nl == b"\r\n":
         new_text = new_text.replace("\n", "\r\n")
-    MERGED.write_bytes((b"\xef\xbb\xbf" if bom else b"") + new_text.encode("utf-8"))
+    path.write_bytes((b"\xef\xbb\xbf" if bom else b"") + new_text.encode("utf-8"))
 
     # verify: re-parse; every DTC table in an active block is in the new form,
     # names/addresses unchanged except the two immo addresses, no new dups
-    back = E.parse(MERGED).getroot()
+    back = E.parse(path).getroot()
     names_after, addr_after = [], []
     for rom in back.findall("rom"):
         xid = rom.findtext("romid/xmlid")
         for t in rom.findall("table"):
             n = t.get("name") or ""
-            parsed = dtc_names.parse_dtc_name(n)
-            if parsed is not None:
+            suffix = parse_dtc_suffix(n)
+            if suffix is not None:
                 names_after.append(n)
                 addr_after.append(t.get("storageaddress"))
-                new = DTC_NEW_FORM[parsed[1]]
+                new = DTC_NEW_FORM[suffix]
                 if t.get("category") is None and t.get("type") is None:
                     continue  # bare name+storageaddress override: inherits the new form
                 assert t.get("category") == new["category"] and t.get("type") == new["type"], \
@@ -293,10 +316,10 @@ def main():
                 if new["type"] == "Switch":
                     states = [(s.get("name"), s.get("data")) for s in t.findall("state")]
                     assert states == list(SWITCH_STATES), f"{n}: states {states}"
-    assert names_after == names_before, "DTC names changed"
+    assert names_after == names_before, f"{path.name}: DTC names changed"
     # DTC storage addresses untouched; only the two immo addresses may differ
     assert sorted(a for a in addr_before if a) == sorted(a for a in addr_after if a), \
-        "DTC storageaddress multiset changed"
+        f"{path.name}: DTC storageaddress multiset changed"
     before_root = E.fromstring(text)
     for rom_b, rom_a in zip(before_root.findall("rom"), back.findall("rom")):
         xid = rom_a.findtext("romid/xmlid")
@@ -304,23 +327,48 @@ def main():
             len({t.get("name") for t in rom_b.findall("table")})
         dup_a = len([t.get("name") for t in rom_a.findall("table")]) - \
             len({t.get("name") for t in rom_a.findall("table")})
-        assert dup_a <= dup_b, f"block {xid}: duplicate names grew {dup_b} -> {dup_a}"
-    # immo addresses now ROM-verified values
+        assert dup_a <= dup_b, f"{path.name} block {xid}: duplicate names grew {dup_b} -> {dup_a}"
+    # immo addresses now ROM-verified values, in any file carrying a 60E15120 block
     for rom in back.findall("rom"):
-        if rom.findtext("romid/xmlid") == TARGET_XMLID:
+        xids = [rid.findtext("xmlid") for rid in rom.findall("romid")]
+        if TARGET_XMLID in xids:
             immo = {t.get("name"): t.get("storageaddress") for t in rom.findall("table")
                     if "Immobilizer Disable" in (t.get("name") or "")}
-            assert int(immo["Immobilizer Disable - Without RKE Installed"], 16) == \
-                int(immo_evidence["pattern_offset"], 16)
-            assert int(immo["Immobilizer Disable - With RKE Installed"], 16) == \
-                int(immo_evidence["with_rke_offset"], 16)
+            if immo:
+                assert int(immo["Immobilizer Disable - Without RKE Installed"], 16) == \
+                    int(immo_evidence["pattern_offset"], 16), path.name
+                assert int(immo["Immobilizer Disable - With RKE Installed"], 16) == \
+                    int(immo_evidence["with_rke_offset"], 16), path.name
+    stats.update({"bom": bom, "crlf": nl == b"\r\n"})
+    return stats
 
-    stats.update({"file": str(MERGED.relative_to(ROOT)), "pass": __doc__.splitlines()[0],
-                  "bom": bom, "crlf": nl == b"\r\n"})
-    if edits:
-        STATS_OUT.write_text(json.dumps(stats, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-        print(f"OK: converted {stats['dtc_converted']} DTC tables, replaced {stats['immo_replaced']} "
-              f"immobilizer tables; stats -> {STATS_OUT.relative_to(ROOT)}")
+
+def main():
+    args = sys.argv[1:]
+    dry = "--dry-run" in args
+    targets = [ROOT / a for a in args if not a.startswith("--")] or DEFAULT_TARGETS
+    for t in targets:
+        assert t.exists(), t
+    up_immo, immo_evidence = upstream_immo_elements()
+
+    all_stats = {}
+    any_edits = False
+    for t in targets:
+        st = splice_file(t, up_immo, immo_evidence, dry)
+        all_stats[str(t.relative_to(ROOT))] = st
+        any_edits = any_edits or st["edits"] > 0
+        print(f"{'dry run: would edit' if dry else 'OK'}: {t.relative_to(ROOT)}: "
+              f"dtc_converted={st['dtc_converted']} immo_replaced={st['immo_replaced']}")
+
+    if dry:
+        return
+    if any_edits:
+        STATS_OUT.write_text(json.dumps({
+            "pass": __doc__.splitlines()[0],
+            "immo_evidence": immo_evidence,
+            "targets": all_stats,
+        }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
     else:
         print(f"normalization-only run (nothing to change); stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
 
