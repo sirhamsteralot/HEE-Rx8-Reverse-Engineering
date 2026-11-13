@@ -26,15 +26,21 @@ referenced by submodule path + commit.
   out, commit `251f54f` — "NOT CORRECT BUT CLOSE").
 - `romraider/rx8defs-merged-60E15120.xml` — merged/reviewed definition for ROM
   `60E15120_N3J1E` (upstream base `ff5ab4f` + local reviewed copy based on
-  `944062e`); merge records in
+  `944062e`, plus the spliced upstream `d95b0be`/`39d98a0` changes — DTC switch
+  form and the 60E15120 immobilizer patch addresses `0x34b10`/`0x34f5c` — applied
+  by
+  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py));
+  merge records in
   [`docs/investigations/60E15120_N3J1E/defs-merge/`](../../docs/investigations/60E15120_N3J1E/defs-merge/README.md).
   The per-ROM `per-rom/60E15120_N3J1E.xml` uses this reviewed block.
 - `romraider/upstream-rx8defs/rx8_defs.xml` — upstream RomRaider defs snapshot,
   git blob `35ddcf316573a092006db5d33c60238ab9a43ea2` = upstream commit
   **`ff5ab4f`** (2026-09-29). Kept (not deleted under rule 4b) because the pinned
   HEAD carries a *newer* blob (`82e5724d…` @ `39d98a0`) and the 60E15120 merge
-  is built against `ff5ab4f`; do not mix the two. Locally modified: flex-fuel
-  content stripped (see "Stock-only defs" below).
+  is built against `ff5ab4f`; do not mix the two blobs. The merged def carries
+  the `d95b0be`/`39d98a0` delta as a targeted splice (see above), not as a
+  rebase. Locally modified: flex-fuel content stripped (see "Stock-only defs"
+  below).
 - `romraider/reviewed-rx8defs-copy/rx8_defs.xml` — locally reviewed
   copy (base `944062e` + annotations; blob `0cd7ec8d…`, not an upstream blob).
 - `romraider/reviewed-rx8defs-copy/logger_60E15120_reviewed.xml` — reviewed
@@ -222,7 +228,12 @@ Evidence: `coverage.json` `dedupe_d8` (regenerate to re-verify).
   DTC-enable bytes), not real addresses.
 - DTC enable/disable tables are named with the standard 5-char OBD code:
   `DTC P0420 Enable/Disable #1`; slot code `0xC167` decodes to
-  `DTC U0167 ...` (0xC0>>6 = U per SAE J2012).
+  `DTC U0167 ...` (0xC0>>6 = U per SAE J2012). `#1`/`#2` are `Switch` tables
+  (Enabled=01 / Disabled=00) under the categories `DTC - MIL Illuminate` /
+  `DTC - OBD Report`; `#3` stays a raw 1D byte under `DTC - Unknown` (feature
+  bitmask, not on/off) — the upstream `d95b0be` form, matching the ROM-verified
+  banks 0x7e678 (MIL + aging), 0x7e704 (Mode 03 list / freeze frame) and
+  0x7e790 (bitmask) on 60E15120.
   Decode + SAE descriptions: [`data/dtc/pcodes.tsv`](../dtc/pcodes.tsv);
   details in [dtc_control_report.md §5b](../../docs/investigations/60E15120_N3J1E/dtc_control_report.md).
 - ROM identification is by the 8-byte fw id at 0x2000, asserted per ROM by the
