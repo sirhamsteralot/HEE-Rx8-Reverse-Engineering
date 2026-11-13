@@ -201,6 +201,14 @@ its own branch and is delivered as a pull request for the user to review and mer
 
 ## Agent tooling
 
+- **Check the OS before using paths.** This repo is worked on Windows: the
+  `bash` tool is Git Bash (POSIX syntax, drive letters as `/c/...`), but
+  `python` and the repo's own scripts are native Windows processes that only
+  understand `C:\...` — a `/c/...` path handed to Python just becomes a bogus
+  relative path (`\\c\\...`). When a shell command and a script mix, check what
+  you are on first (`uname` in bash, `os.name`/`sys.platform` in Python) and
+  prefer repo-relative paths from the repo root (or `Path(__file__).resolve()` /
+  `Path.cwd()` inside scripts), which work under both.
 - **In-session agents do NOT need MCP** — you have local repo access. For
   simulator-based validation follow
   [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md)
