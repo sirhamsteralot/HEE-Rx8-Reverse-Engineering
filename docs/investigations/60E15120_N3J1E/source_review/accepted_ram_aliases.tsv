@@ -292,10 +292,10 @@ ffffa5f0	leading_coolant_scaled_advance_term	float	00011f00	Written by 0x11f00 l
 ffffa5f4	trailing_coolant_scaled_advance_term	float	0001206c	Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588).
 ffffa718	idle_leading_timing_error_correction	float	000135b4	Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e).
 ffffa71c	idle_trailing_timing_error_correction	float	000136e4	Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584).
-ffffca9c	cranking_angle_timing_leading_filtered	float	00043934
-ffffcaa0	cranking_angle_timing_trailing_filtered	float	000439b2
-ffffcaa4	cranking_angle_timing_leading_raw	float	00043934
-ffffcaa8	cranking_angle_timing_trailing_raw	float	000439b2
+ffffca9c	cranking_angle_timing_leading_filtered	float	00043934	mov.w pool 0x43a1c (sign-extends to 0xffffca9c) in 0x43934 cranking_timing_leading_filter and 0x4391c, pool 0x12538 in 0x123da; filtered = raw / period via rx8_divide_with_zero_fallback, stored by 0x43934.
+ffffcaa0	cranking_angle_timing_trailing_filtered	float	000439b2	mov.w pool 0x43a1e (sign-extends to 0xffffcaa0) in 0x439b2 cranking_timing_trailing_filter and 0x43928, pool 0x12686 in 0x124d6; filtered trailing value stored by 0x439b2.
+ffffcaa4	cranking_angle_timing_leading_raw	float	00043934	mov.l pool 0x43a28 in 0x4391c and 0x43934; raw leading = lookup_2d(ECT, tbl 0x6b630) stored by 0x43934 cranking_timing_leading_filter.
+ffffcaa8	cranking_angle_timing_trailing_raw	float	000439b2	mov.l pool 0x43a2c in 0x43928 and 0x439b2; raw trailing = lookup_2d(ECT, tbl 0x6b644) stored by 0x439b2 cranking_timing_trailing_filter.
 ffffa780	idle_base_timing_leading	float	00014100	Written by 0x14100 idle_base_timing_select (fmov.s fr0,@r14 0x14120 and 0x14146 via mov.w pool 0x14158=0xa780 @0x1410a); read by 0x123da (pool 0x1253c @0x124b4) and 0x121fc (pool 0x122b8 @0x12200).
 ffffa784	idle_base_timing_trailing	float	00014100	Written by 0x14100 idle_base_timing_select (fmov.s fr3,@r3 0x1414c via mov.w pool 0x1415e=0xa784 @0x1414a); read by 0x124d6 (pool 0x1268a @0x12598) and 0x12300 (pool 0x123fe @0x12304).
 ffffa778	iat_timing_compensation_leading	float	00014090	Written by 0x14090 iat_timing_compensation_on_throttle (fmov.s fr5/fr0,@r14 0x140b8/0x140d2/0x140d4 via mov.w pool 0x140e2=0xa778 @0x14098); read by 0x123da (pool 0x1253e @0x124bc).
@@ -306,8 +306,8 @@ ffffa64c	leading_min_advance_clamp	float	00012630	Written by 0x12630 min_advance
 ffffa65c	trailing_min_advance_clamp	float	00012754	Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
 ffffa660	leading_max_advance	float	000121fc	Written by 0x121fc leading_final_timing_clamp_output (fmov.s fr0,@r2 0x1229c via mov.l pool 0x122f4=0xffffa660 @0x1229a).
 ffffa664	trailing_max_advance	float	00012300	Written by 0x12300 trailing_final_timing_clamp_output (fmov.s fr0,@r2 0x123a0 via mov.l pool 0x12430=0xffffa664 @0x1239e).
-ffffbc94	dsc_mode_a_base_timing	float	0002cc2c
-ffffa91c	dsc_timing_derate_leading	float	0001815c
+ffffbc94	dsc_mode_a_base_timing	float	0002cc2c	mov.w pool 0x2cd44 (sign-extends to 0xffffbc94) in 0x2cc2c dsc_mode_a_base_timing_lookup (also 0x2cc5c/0x2cc7c), pool 0x18278 in 0x1815c; = lookup_3d(load, rpm, tbl 0x6a7a4) stored by 0x2cc2c.
+ffffa91c	dsc_timing_derate_leading	float	0001815c	mov.w pool 0x18284 (sign-extends to 0xffffa91c) in 0x1815c dsc_timing_derate_select; DSC leading-timing derate value selected in 0x1815c.
 ffffad5c	inferred_throttle_sensor_volts_ffffad5c	uint16	0005553e	Read by diag_encode_throttle_pct 0x5553e (PID 0x11) and handlers 0x56d58 (PID 0x0917) / 0x56eb8 (PID 0x1154); also written in the APP/throttle chain (literal 0xad5c at 0x1b0e6/0x4561c/0x47186); decode 7.62939e-05 V/count *20 -> %
 ffffadec	inferred_lambda_actual_ffffadec	float	00055440	PID 0x06: (x-1)*100 trim; fuel-chain cell listed in ROADMAP group C
 ffffb0d0	inferred_ltft_bank1_ffffb0d0	float	00055466	PID 0x07: x*100*0.78125-100
