@@ -71,7 +71,7 @@ switch or high load, 810 with A/C clutch alone or high load alone; MT with
 0xffffb53c → 790, 830/800 with A/C clutch, 800 with high load. (The floor
 constants 790–840 rpm are built by FP ops in 0x1506c, not literal pool words —
 same export-derived caveat as the battery-gate constants noted in
-[reviews/large_control_bodies_review.md](reviews/large_control_bodies_review.md).)
+[reviews/large_control_bodies_review.md](labeling/reviews/large_control_bodies_review.md).)
 
 **0x5ca94 output path**: 0x5ca94 `idle_target_encode_u16` drives **no actuator
 register**. Its sole caller is 0x1506c (pool word 0x0005ca94 exists only at
@@ -113,7 +113,7 @@ in §2a: `automatic_transmission` (0xffffb534, already labeled),
 labeled), `ac_clutch_on` (0xffffbd69, already labeled), `ac_switch_request`
 (0xffffbdb8), and `idle_target_u16` for 0xffffa7ac's role as PID 0x096e source
 + filter state. Evidence:
-`source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`,
+`labeling/source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`,
 `data/labels/60E15120_N3J1E/idle_target_control_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -125,7 +125,7 @@ None — 0x1506c was unlabeled. `idle_control_calc_batch` 0x167c0 is labeled in
 
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0001506c_*.c`
   (symbol renamed in place; filename keeps the `FUN_` prefix)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/idle_target_control_labels.json`
 
 ## 7. Validation

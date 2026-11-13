@@ -72,7 +72,7 @@ each has a UDS diagnostic actuator override (0x5c9ac / 0x5c3c0 / 0x5cdc4 /
 
 ## 3. Labeling applied
 
-- 26 functions + 26 RAM locations added to `source_review/accepted_*_aliases.tsv`
+- 26 functions + 26 RAM locations added to `labeling/source_review/accepted_*_aliases.tsv`
   via `scripts/review_intake_labels.py` (idempotent, wired into
   `scripts/rebuild.sh` after `review_fueling_labels.py`); integrated into all
   synchronized views; record in `metadata/intake_labels.json`; backup

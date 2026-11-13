@@ -8,9 +8,9 @@ disassembly + ROM bytes, the RX8Club thread extract §9 ([`docs/references/rx8cl
 and **dynamic execution in the SH-2E emulator** (`utilities/scripts/emu/harness.py`,
 tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
-`source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
+`labeling/source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools; the DSC torque-request derate producer (`engine_max_torque_allowed` 0xffffbbd8 ← 0x2b3b8, consumed here at 0x1815c) is in [DSC CAN arbitration](dsc_can_arbitration_report.md).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](labeling/calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools; the DSC torque-request derate producer (`engine_max_torque_allowed` 0xffffbbd8 ← 0x2b3b8, consumed here at 0x1815c) is in [DSC CAN arbitration](dsc_can_arbitration_report.md).
 
 ## 1. Executive summary
 
@@ -105,7 +105,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
   derate, 0x12e60 trim scale. Applied to symbols.tsv, function_index.tsv,
   callgraph.tsv, functions/*.c, named/firmware_named.c, firmware_decompiled.c.
 - **24 RAM locations** named in `ignition_timing_labels.json` +
-  [accepted_ram_aliases.tsv](source_review/accepted_ram_aliases.tsv): base finals
+  [accepted_ram_aliases.tsv](labeling/source_review/accepted_ram_aliases.tsv): base finals
   `leading_base_timing_final` 0xffffa5e8 / `trailing_base_timing_final` 0xffffa5ec,
   coolant terms 0xffffa5f0/0xffffa5f4, idle corrections 0xffffa718/0xffffa71c,
   cranking angle 0xffffca9c/0xffffcaa0 (+raw 0xffffcaa4/0xffffcaa8), idle base
@@ -140,7 +140,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
 ## 6. Files
 
 - `data/labels/60E15120_N3J1E/ignition_timing_labels.json` (with thread-equation verdict)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram,lookup}_aliases.tsv` (appended)
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram,lookup}_aliases.tsv` (appended)
 - `reverse-engineered/decompiled/60E15120_N3J1E/`: symbols.tsv, function_index.tsv,
   callgraph.tsv, functions/*.c, named/firmware_named.c, firmware_decompiled.c
 - `data/labels/60E15120_N3J1E/integrated_names.json`
@@ -162,7 +162,7 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
   holds 0xffffaa62/0xffffa718/0xffffa5f0/0xffffca9c/0xffffa5e8/0xffffa780/0xffffa778/
   0xffffa644/0xffffa640 exactly as mapped — and the §1/§2/§4/§8 texts now use the
   promoted alias names from
-  [accepted_ram_aliases.tsv](source_review/accepted_ram_aliases.tsv) +
+  [accepted_ram_aliases.tsv](labeling/source_review/accepted_ram_aliases.tsv) +
   `ignition_timing_labels.json` instead of raw `a5e8`-style cells. Unlabeled cells
   (0xffffa66c/0xffffa670 trim, 0xffffa5e0/0xffffa5e4) stay raw per the label ladder.
 
@@ -282,5 +282,5 @@ RAM 0xffffa5e8):
     0x1415e=0xa784 @0x1414a (writer 0x14100); read by 0x124d6 (pool 0x1268a
     @0x12598) and 0x12300 (pool 0x123fe @0x12304).
   These citations are stored verbatim as the evidence column of the
-  [accepted_ram_aliases.tsv](source_review/accepted_ram_aliases.tsv) rows and the
+  [accepted_ram_aliases.tsv](labeling/source_review/accepted_ram_aliases.tsv) rows and the
   `evidence` fields in `ignition_timing_labels.json`.

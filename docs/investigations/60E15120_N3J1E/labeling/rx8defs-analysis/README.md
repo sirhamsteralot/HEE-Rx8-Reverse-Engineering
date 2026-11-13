@@ -29,5 +29,5 @@ Editor tables cannot represent arbitrary functions or RAM symbols. Those finding
 `table_changes.json` gives per-table edits. `validation.json` records XML parsing and unchanged calibration structure checks. RomRaider's local TableScaleUnmarshaller was inspected: descriptions are supported and nested axes are selected by axis type before applying overrides. An actual RomRaider GUI load/live logging test has not been performed.
 
 `definitions_before_review.zip` preserves both original XML files. The generation script is `reverse_engineered/60E15120_N3J1E/scripts/extend_definitions.py` in the original workspace. It refuses repeated application to an already-extended XML; restore a backup before regenerating. (The defs flow is owned by
-[`utilities/scripts/defs-merge/`](../../../../utilities/scripts/defs-merge/);
+[`utilities/scripts/defs-merge/`](../../../../../utilities/scripts/defs-merge/);
 the outputs of the original generation are preserved here and in `data/definitions/`.)

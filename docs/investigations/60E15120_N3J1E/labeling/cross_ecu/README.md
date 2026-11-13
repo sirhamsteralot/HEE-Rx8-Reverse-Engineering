@@ -40,7 +40,7 @@ The [nine cross-project/assembly alias proposals](symbol_aliases.tsv) include tw
 - **0x71ea waits for SCI0 status bit 0x40 without a software timeout in that loop.** Combined with the interrupt-mask behavior and possible external watchdog, this is a concrete path to investigate for loss of progress. No evidence yet connects entry into a stuck state to 10,000 RPM. An absent external response alone does not necessarily stop an internally clocked SCI transfer.
 - **0x4c14 contains 20 NOPs before the return**, despite appearing empty in C. Its timing purpose must not be erased in reconstruction.
 
-No reset-causing bug has been proven. The new evidence improves where to inspect and which misleading decompiler assumptions to avoid. See the [reset review](../reviews/reset_at_10000_rpm.md).
+No reset-causing bug has been proven. The new evidence improves where to inspect and which misleading decompiler assumptions to avoid. See the [reset review](../../reviews/reset_at_10000_rpm.md).
 
 ## Reproducing and reviewing
 
@@ -51,5 +51,5 @@ Run `python3 scripts/correlate_rx8defs.py` and then `python3 scripts/annotate_cr
 ## Cross-ROM artifacts (all 14 dumped ROMs)
 
 - [cross_rom_differential_labeling.md](cross_rom_differential_labeling.md) + alias/match TSVs — byte-match function aliases (D item 1).
-- [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) + [data/labels/cross_rom_mode22_pid_handlers.tsv](../../../../data/labels/cross_rom_mode22_pid_handlers.tsv) — Mode 22 PID handlers (D item 2).
-- [cross_rom_defs_coverage.md](cross_rom_defs_coverage.md) + [data/definitions/coverage.json](../../../../data/definitions/coverage.json) — per-ROM ECU definitions for all 14 ROMs (D item 4).
+- [cross_rom_mode22_pid_handlers.md](cross_rom_mode22_pid_handlers.md) + [data/labels/cross_rom_mode22_pid_handlers.tsv](../../../../../data/labels/cross_rom_mode22_pid_handlers.tsv) — Mode 22 PID handlers (D item 2).
+- [cross_rom_defs_coverage.md](cross_rom_defs_coverage.md) + [data/definitions/coverage.json](../../../../../data/definitions/coverage.json) — per-ROM ECU definitions for all 14 ROMs (D item 4).

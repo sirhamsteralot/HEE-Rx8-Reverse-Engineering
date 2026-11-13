@@ -149,7 +149,7 @@ RAM aliases: `idle_air_required` 0xffffb2a4, `idle_air_calc_total` 0xffffa838,
 `idle_trim_learn_active` 0xffffa890, `ac_clutch_on` 0xffffbd69,
 `automatic_transmission` 0xffffb534, `high_load_flag` 0xffffb5b3.
 
-Evidence: `source_review/accepted_function_aliases.tsv` /
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`, `data/labels/60E15120_N3J1E/idle_control_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -174,7 +174,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 - `utilities/scripts/rx8-pcm-pipeline/review_idle_control_labels.py` (wired into
   `rebuild.sh` after `review_intake_labels.py`; idempotent)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/idle_control_labels.json`
 - `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols renamed in place by
   `integrate_reviewed_names.py`; filenames keep historical names)

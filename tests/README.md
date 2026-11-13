@@ -20,7 +20,7 @@ Verification that reimplemented/derived behavior matches the original binaries.
   ```
 
   Host tests do **not** validate SH-2E FPU rounding/exception behavior.
-- `docs/investigations/60E15120_N3J1E/lookup_family/test_lookup_family.c` — lookup
+- `docs/investigations/60E15120_N3J1E/labeling/lookup_family/test_lookup_family.c` — lookup
   interpolation family host test.
 - Pipeline validators run from the **repo root** (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py` to the repo layout):

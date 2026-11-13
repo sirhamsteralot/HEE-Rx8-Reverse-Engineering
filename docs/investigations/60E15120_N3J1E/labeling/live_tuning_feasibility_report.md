@@ -10,15 +10,15 @@ tracking — free RAM at idle), and a static allocation analysis of the
 disassembly (every code-reachable RAM reference — see
 [free_resources_report.md](free_resources_report.md) §10).
 
-**Related reports:** [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md)
+**Related reports:** [uds_mode22_dispatch_report.md](../uds_mode22_dispatch_report.md)
 (service/PID tables, checksum D3, seed/key D4, SBL flash path),
-[os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md) +
-[os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md) (CAN/ISO-TP/OS),
-[design doc](../../architecture/design/README.md) (memory map, lookup layer),
-[emulated-obd.md](../../architecture/emulated-obd.md) + [emulator-re-guide.md](../../architecture/emulator-re-guide.md)
-(virtual OBD port, replay workflow), [learnings.md](../../learnings.md) (patcher
+[os_scheduler_can_ivt_report.md](../os_scheduler_can_ivt_report.md) +
+[os_scheduling_deep_dive_report.md](../os_scheduling_deep_dive_report.md) (CAN/ISO-TP/OS),
+[design doc](../../../architecture/design/README.md) (memory map, lookup layer),
+[emulated-obd.md](../../../architecture/emulated-obd.md) + [emulator-re-guide.md](../../../architecture/emulator-re-guide.md)
+(virtual OBD port, replay workflow), [learnings.md](../../../learnings.md) (patcher
 patterns, free cal-area run), patchers
-[`PATCHER_limiter_behavior.md`](../../../utilities/scripts/patchers/PATCHER_limiter_behavior.md).
+[`PATCHER_limiter_behavior.md`](../../../../utilities/scripts/patchers/PATCHER_limiter_behavior.md).
 
 ## 1. Executive summary
 
@@ -220,8 +220,8 @@ are still code-referenced, so the usable figure is 3,852 B, largest contiguous
 
 ## 6. Files
 
-- This report: `docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md`
-- [`ROADMAP.md`](../../../ROADMAP.md) — new F item 3 pointing at this study
+- This report: `docs/investigations/60E15120_N3J1E/labeling/live_tuning_feasibility_report.md`
+- [`ROADMAP.md`](../../../../ROADMAP.md) — new F item 3 pointing at this study
 - No binaries touched (`hash_binaries.py --check` unaffected); no code changed.
 
 ## 7. Validation

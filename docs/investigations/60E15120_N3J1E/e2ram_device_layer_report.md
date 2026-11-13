@@ -93,7 +93,7 @@ None — fixed device addressing (base 0x6000000, page<<16) and command 0x4c0000
 | 0xc02c | `sci4_read_u16` | high |
 | 0xbf3a | `e2ram_cs_port_setup` | high |
 | 0xbed8 | `e2ram_busy_status_read` | high |
-| 0x35d36 | `e2ram_shadow_byte_write_trampoline` | high (thunk audit: [`thunk_audit_report.md`](thunk_audit_report.md)) |
+| 0x35d36 | `e2ram_shadow_byte_write_trampoline` | high (thunk audit: [`thunk_audit_report.md`](labeling/thunk_audit_report.md)) |
 | 0x35a8c | `candidate_e2ram_param_write_dispatch` | medium |
 | 0x379e4 | `candidate_e2ram_verify_state_machine` | medium |
 | 0xbe5e / 0xbe8c | `e2ram_send_command4_a` / `e2ram_send_command4_b` | medium |
@@ -101,7 +101,7 @@ None — fixed device addressing (base 0x6000000, page<<16) and command 0x4c0000
 RAM aliases: `e2ram_shadow_data` 0xffffc28e, `e2ram_shadow_complement`
 0xffffc38e, `e2ram_param_block` 0xffffc268.
 
-Evidence: `source_review/accepted_function_aliases.tsv` /
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`, `data/labels/60E15120_N3J1E/e2ram_device_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -120,7 +120,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 - `utilities/scripts/rx8-pcm-pipeline/review_e2ram_labels.py` (wired into
   `rebuild.sh`; idempotent)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/e2ram_device_labels.json`
 - `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols renamed in place)
 - `docs/investigations/60E15120_N3J1E/reviews/e2ram_device_layer/README.md`,
@@ -151,7 +151,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x00037ea4 | `e2ram_shadow_byte_write` | shadow data+complement write |
 | 0x00037cd8 | `e2ram_bulk_read_into_shadow` | page-wise device→shadow fill |
 | 0x00035a8c | `candidate_e2ram_param_write_dispatch` | id → (index, src, len) writes |
-| 0x00035d36 | `e2ram_shadow_byte_write_trampoline` | tail-call trampoline to 0x37ea4 (proven; see [`thunk_audit_report.md`](thunk_audit_report.md)) |
+| 0x00035d36 | `e2ram_shadow_byte_write_trampoline` | tail-call trampoline to 0x37ea4 (proven; see [`thunk_audit_report.md`](labeling/thunk_audit_report.md)) |
 | 0x000379e4 | `candidate_e2ram_verify_state_machine` | cmd 0x4c00000 + read-back verify |
 | 0x0000bdfa | `e2ram_read_word` | send addr, clock in u16 |
 | 0x0000be30 | `e2ram_send_command2` | 2-byte command frame |

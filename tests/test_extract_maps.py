@@ -53,7 +53,7 @@ def test_cal_start_detected(cal_start):
 
 def test_finds_all_known_descriptors(tables):
     """All 478 RX8Defs-matched descriptors must be found."""
-    known_path = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "cross_ecu" / "romraider_descriptor_matches.json"
+    known_path = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "cross_ecu" / "romraider_descriptor_matches.json"
     known = json.loads(known_path.read_text())
     known_addrs = {int(m["descriptor"], 16) for m in known}
     our_addrs = {t["descriptor"] for t in tables}
@@ -63,7 +63,7 @@ def test_finds_all_known_descriptors(tables):
 
 def test_type_codes_match(tables):
     type_map = {0: "float32", 4: "uint8", 8: "uint16", 12: "int8", 16: "int16"}
-    known_path = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "cross_ecu" / "romraider_descriptor_matches.json"
+    known_path = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "cross_ecu" / "romraider_descriptor_matches.json"
     known = json.loads(known_path.read_text())
     our_by_addr = {t["descriptor"]: t for t in tables}
     for m in known:

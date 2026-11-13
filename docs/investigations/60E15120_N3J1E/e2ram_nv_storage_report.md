@@ -150,7 +150,7 @@ payload-source cells attributed in §2a: `candidate_learned_pedal_value`
 (0xffffcc91), `candidate_throttle_base_position` (0xffffb38c), and
 `e2ram_payload_reserved` (0xffffb466–0xffffb474, 0xffffb51e–0xffffb524 — no
 writer references in ROM). Evidence in
-`source_review/accepted_{function,ram}_aliases.tsv` and
+`labeling/source_review/accepted_{function,ram}_aliases.tsv` and
 `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -162,7 +162,7 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/00023844_*.c`,
   `000244bc_*.c`, `0002376c_*.c`, `0002377a_*.c`, `00023f4e_*.c`, `000242ae_*.c`
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/e2ram_nv_storage_labels.json`
 
 ## 7. Validation
