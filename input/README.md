@@ -103,3 +103,14 @@ printouts), `67112 RX8 Front Bumper Replacement.pdf` (bodywork), and
 Tuning.md` (0-byte placeholder; the thread is already curated in
 `../docs/references/rx8club-user-guide-thread.md`). The zip itself stays here as raw
 intake.
+
+2026-11-13: `Engine_Acoustic_Tuning_Rotary_Intake_Design.pdf` (SHA-256
+`f1f4bfb8e5ab4e679ffece0a14c10685fcb9dd72e749a98c836495c14c6b5638`) and
+`mazda-rx-8-s-dias-intake-system-deep-research-report.pdf` (SHA-256
+`06cd24d85f81edc4932eb36f56e697793cffc0b6cb3f1b46557a7fdeaded803f`) promoted to
+[`../docs/references/`](../docs/references/README.md) (rows + trust notes in its
+README table) and then removed from `input/`, per the promotion path above. Both
+are generated research syntheses, not primary sources — see the trust caveats in
+the references README; the S-DIAS report restates this repo's own firmware
+evidence (primary: [`../docs/investigations/60E15120_N3J1E/intake_solenoids_report.md`](../docs/investigations/60E15120_N3J1E/intake_solenoids_report.md))
+and its runner-length figures remain single-source community measurements.
