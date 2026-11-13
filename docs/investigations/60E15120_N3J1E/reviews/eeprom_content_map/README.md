@@ -132,3 +132,35 @@ Goal: pin which of the 34 chip pairs (0x20–0x63) is which correction.
 10. Dump diff re-run: RX8 vs SE3P differ at 0x20–0x5f, 0x60, 0x62 (learned
     table values/flags) plus the known per-ECU fields; SE3P 0x20–0x63 all
     `ff 00` (erased). Per-pair RX8 decode in the report §3a table.
+
+## Where the learned table hooks in (misfire detection → P0300/P0301/P0302)
+
+Traced this session, binary-level (asm call sites + literal pools + ROM bytes):
+
+1. 0x28198/0x28484 read the learned cell per rotor bank into DAT_ffffba64 /
+   0xffffba68 (base pool 0x282b8 = 0xffff8108, bank +0x220 pool 0x284f6);
+   DAT_ffffba30 = DAT_ffffba2c − learned; 0x2837c filters to DAT_ffffba34/
+   0xffffba38 (k=0.125) when DAT_ffffb6c6==1; DAT_ffffba40 = max(0, ·).
+2. DAT_ffffba2c = (0xffffb668 − (0xffffb680−0xffffb668)/6) − 0xffffb664 —
+   sector-speed-ring deviation (ring 0xffffa390–0xffffa3ac, copied by 0x26940;
+   ring filled in the ATUII sector ISR with 6666666/period).
+3. Arm flags 0xffffba24/25 (0x27fb4: load≥lookup(rpm,tbl 0x6a6b8) && b53a==1
+   && b69c==1 && b6c6==1 && ba40 > ba78) and 0xffffba26/27 (0x28022).
+4. Threshold checks: 0x447e2 (cb8c*ba44 < ba48 || cb90*ba44 < ba40, cb8c/cb90
+   from tbl 0x6b9f4/0x6ba00 via 0x44a78 — 12 cells, RPM axis 0x7c43c =
+   780..8500) and 0x4489c (cb94/cb98 = Load Limit A/B tbl 0x6ba0c/0x6ba18 via
+   0x44a9e) clear the flags or bump counters 0xffffcb78/cb7a, cb7c/cb7e.
+5. 0x26a42/0x26b34 bump per-rotor counters 0xffffb688–0xffffb68e and set
+   0xffffb694; 0x44436 keeps the sustained window 0xffffcb60/cb62.
+6. 0x445ba (2000-tick, DAT_ffffba9e) evaluates and tail-calls 0x44724
+   (`bsr 0x00044724` at asm 0x446ea); 0x44724 calls dtc_set_fault_xdefault
+   (pool 0x447ac = 0x0005fd3c, ROM-verified) with slot 1 and rotor bits in r6.
+7. DTC slot table 0x7e560 = [0x300, 0x300, ...] (slots 0/1 both P0300, one per
+   rotor), prefix table 0x7e55a = [0x300, 0x301, 0x302, 0x300] —
+   P0300/P0301/P0302 (cross-read dtc_control_report.md §1/§8).
+
+Conclusion: the 34 chip pairs are the learned misfire/roughness baseline
+per (RPM cell × load band), with rotor sign; the residual above baseline
+feeds the P0300/P0301/P0302 monitor. The remaining misfire-monitor details
+(units of the ring, drive-cycle logic, slot-0 caller 0x44cec) stay with the
+open misfire backlog item.

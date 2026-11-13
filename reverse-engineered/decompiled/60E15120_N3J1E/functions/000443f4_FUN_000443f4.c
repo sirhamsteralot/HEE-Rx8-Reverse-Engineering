@@ -10,7 +10,7 @@ char FUN_000443f4(void)
   
   cVar1 = DAT_ffffd1c5;
   if ((DAT_ffffd1c5 == '\x01') && (cVar1 = engine_stopped_latch_ffffa41c, engine_stopped_latch_ffffa41c == '\x01')) {
-    DAT_ffffcb60 = 0;
+    misfire_sustained_counter_a_ffffcb60 = 0;
     DAT_ffffcb62 = 0;
     DAT_ffffcb68 = 0;
   }

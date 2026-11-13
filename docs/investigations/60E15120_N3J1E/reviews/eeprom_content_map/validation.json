@@ -21,10 +21,10 @@
   "verify_math_units": "PASS",
   "hash_binaries_check": "manifest OK (1 file(s))",
   "pytest": "253 passed, 1 pre-existing failure (tests/test_extract_scalars.py, also failing on main)",
-  "new_test": "tests/test_eeprom_content_map.py: 18 passed (5 new learned-table per-index tests)",
+  "new_test": "tests/test_eeprom_content_map.py: 19 passed (6 learned-table tests incl. misfire hook-up)",
   "labels_applied": {
-    "function_rows_added": 11,
-    "ram_rows_added": 5,
+    "function_rows_added": 22,
+    "ram_rows_added": 18,
     "records": [
       "data/labels/60E15120_N3J1E/eeprom_content_labels.json",
       "docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv",
@@ -46,5 +46,6 @@
     "utilities/scripts/rx8-pcm-pipeline/review_eeprom_content_labels.py (wired into rebuild.sh)"
   ],
   "emulator": "idle boot 60E15120_N3J1E 2M cycles: 0xffff8000-0xffff80ff stays zero (window not bulk-filled at idle); no 93C56 model exists, chip traffic not executed",
-  "learned_table_per_index": "PASS - per-index semantics verified at binary level (see README 'Learned-table per-index semantics'): cell = rpm_cell + 17*load_band (0x2711a, tbl 0x6a694 axis 0x755dc, load pools 0x755a4/a8/ac); pair i -> +v/-v at 0xffff8108+8i / 0xffff8328+8i, flags 0xffff8548+2i / 0xffff85d0+2i (0x27b8e, strides 0x220/0x88); apply 0x28198/0x28484, gate 0x271b0, learn 0x276ec (pools 0x755d0=100.0, 0x755d4=0.031), persist 0x27808 (tick 0xb, counter > 0x1d), mirror 0x27eec (bitmask 0x7 -> cells 0..2); chip 0x20-0x63 written only by 0x27b8e/0x279d8/0x27d06; RX8 dump decodes to the \u00a73a table, SE3P erased; knock retard is the separate window cell 0xffff8038 (0x139c4), not a chip pair"
+  "learned_table_per_index": "PASS - per-index semantics verified at binary level (see README 'Learned-table per-index semantics'): cell = rpm_cell + 17*load_band (0x2711a, tbl 0x6a694 axis 0x755dc, load pools 0x755a4/a8/ac); pair i -> +v/-v at 0xffff8108+8i / 0xffff8328+8i, flags 0xffff8548+2i / 0xffff85d0+2i (0x27b8e, strides 0x220/0x88); apply 0x28198/0x28484, gate 0x271b0, learn 0x276ec (pools 0x755d0=100.0, 0x755d4=0.031), persist 0x27808 (tick 0xb, counter > 0x1d), mirror 0x27eec (bitmask 0x7 -> cells 0..2); chip 0x20-0x63 written only by 0x27b8e/0x279d8/0x27d06; RX8 dump decodes to the \u00a73a table, SE3P erased; knock retard is the separate window cell 0xffff8038 (0x139c4), not a chip pair",
+  "misfire_hookup": "PASS - learned table traced to the misfire monitor: residual DAT_ffffba30 = deviation - learned, excess DAT_ffffba40 thresholded by 0x447e2 (RPM tbl 0x6b9f4/0x6ba00) / 0x4489c (Load Limit A/B 0x6ba0c/0x6ba18), per-rotor flags 0xffffba24-27, counters 0xffffb688-b68e, sustained window 0x44436, DTC via 0x445ba -> bsr 0x44724 (asm 0x446ea) -> dtc_set_fault_xdefault pool 0x447ac = 0x5fd3c slot 1; DTC slot table 0x7e560[0..1] = 0x300 (P0300 both rotors), prefixes 0x7e55a = P0300/301/302"
 }

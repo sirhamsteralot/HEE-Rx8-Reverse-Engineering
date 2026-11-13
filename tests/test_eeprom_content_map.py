@@ -341,3 +341,27 @@ def test_labels_json_learned_pairs():
         "accepted_ram_aliases.tsv"), encoding="utf-8").read()
     assert "ffffb6c4\te2ram_learned_table_cell_index" in ram_rows
     assert "ffffb660\tsector_parity_bank" in ram_rows
+
+
+def test_learned_table_hooks_to_misfire_dtc():
+    # DTC slot table 0x7e560: slots 0/1 = P0300 (both rotors); prefixes 0x7e55a
+    assert u16(0x7E560) == 0x0300 and u16(0x7E562) == 0x0300
+    assert [u16(0x7E55A + 2 * i) for i in range(4)] == [0x300, 0x301, 0x302, 0x300]
+    # 0x44724 (misfire DTC set) calls dtc_set_fault_xdefault via pool 0x447ac
+    assert u32(0x447AC) == 0x0005FD3C and u32(0x44D54) == 0x0005FD3C
+    # 0x445ba tail-calls 0x44724 (bsr at 0x446ea)
+    assert any(l.startswith("000446ea") and "bsr 0x00044724" in l for l in ASM)
+    # threshold tables: 12-cell RPM axes 780..8500 (0x6b9f4), Load Limit A/B
+    for d in (0x6B9F4, 0x6BA00, 0x6BA0C, 0x6BA18):
+        assert u16(d) == 12 and ROM[d + 2] == 0
+    assert f32(0x7C43C) == 780.0 and f32(0x7C43C + 4 * 11) == 8500.0
+    # labels JSON carries the misfire hook-up aliases
+    d = json.load(open(LAB, encoding="utf-8"))
+    fa = d["function_aliases"]
+    assert fa["00044724"]["alias"] == "misfire_dtc_set"
+    assert fa["000445ba"]["alias"] == "misfire_dtc_evaluate"
+    assert fa["000447e2"]["alias"] == "misfire_threshold_check_rpm"
+    ra = d["ram_aliases"]
+    assert ra["ffffba40"]["alias"] == "misfire_excess_deviation"
+    assert ra["ffffba24"]["alias"] == "misfire_event_flag_a"
+    assert "P0300" in ra["ffffba2c"]["evidence"]
