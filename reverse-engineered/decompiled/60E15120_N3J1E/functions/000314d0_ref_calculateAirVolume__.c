@@ -1,7 +1,3 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ad30: Table 2D - 191 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ad44: Table 2D - 192 (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * calculate_air_charge [high]: bf68 = rpm*load/38.07; bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V); bf4c = baro*353.0163/((IAT+273)*101.32) (density ratio); bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0) air charge per cycle; bf54 = first-order-filtered bf50/load, clamp 50.
  * RAM 0xffffbf68 airflow_rpm_load_product (float): bf68 = rpm * load / 38.07; axis for tbl 0x6ad44 in calculate_air_charge.
@@ -9,6 +5,10 @@
  * RAM 0xffffbf4c air_density_ratio (float): bf4c = baro*353.0163 / ((IAT+273)*101.32): pressure/temperature density ratio.
  * RAM 0xffffbf50 air_charge_per_cycle (float): bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0); 2.0 when rpm ~ 0.
  * RAM 0xffffbf54 air_charge_filtered (float): bf54 = first_order_filter(bf50/load, bf54, 1.0, 1e-05) clamped to 50.0.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006ad30: Table 2D - 191 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006ad44: Table 2D - 192 (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x000314d0; body bytes: 252; decompiled */
 

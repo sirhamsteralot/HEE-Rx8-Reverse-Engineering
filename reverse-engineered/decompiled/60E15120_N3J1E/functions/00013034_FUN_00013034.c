@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x00069644: Ignition 5 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069658: Ignition 6 (RX8Defs data pointer, axes and dimensions match).
@@ -12,9 +15,6 @@
  * Descriptor 0x00069714: Ignition 15 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069730: Ignition 16 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006974c: Ignition 17 (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -24,7 +24,7 @@ DAT_0006ac38	tbl_fuel_coolant_compensation_0006ac38	source_review_fueling	2D loo
 00004dfec	can_rx_desc_id07df	Rx8CanMessageDescriptor id=0x7df mb=13 dlc=8 buf=0xffffddc8 (functional)
 00004e00c	can_tx_desc_id07e8	Rx8CanMessageDescriptor id=0x7e8 mb=15 dlc=8 buf=0xffffddd0; emulator TX via 0x99b0 emitted 0x7e8 frames from 0xffffddd0
 00005f10c	diag22_dispatch_table	99 x 12-byte Rx8DiagnosticRecord {identifier, resp_len, _, availability_mask, _, handler}; PID 0x43 record at 0x5f268 -> handler 0x56b8a
-00069208	candidate_tbl_idle_base_timing_cranking_00069208	2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' — name is a hypothesis (descriptor not in romraider_descriptor_matches).
+00069208	candidate_tbl_idle_base_timing_cranking_00069208	2D u8 n=9, data 0x6d8e4; read only when cranking (0x14100, aa62==1). Thread 60E0FC00 def tree lists 'Idle Base Timing' â€” name is a hypothesis (descriptor not in romraider_descriptor_matches).
 0006921c	candidate_tbl_idle_base_timing_cold_lowload_0006921c	2D u8 n=9, data 0x6d914; 0x14100 ECT<90 or load<0.5 branch.
 00069230	candidate_tbl_idle_base_timing_warm_highload_00069230	2D u8 n=4, data 0x6d930; 0x14100 else branch.
 000691a4	candidate_tbl_min_advance_vs_coolant_a_000691a4	2D u8 n=8, data 0x6d7f0; read by 0x12630 lookup_2d(ECT,...) on the cranking+out-of-band path; thread lists 'Minimum Advance'.

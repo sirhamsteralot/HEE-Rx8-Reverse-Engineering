@@ -1,9 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b318: Table 2D - 228 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b32c: Table 2D - 229 (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

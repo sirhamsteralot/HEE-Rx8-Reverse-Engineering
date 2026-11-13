@@ -1,10 +1,13 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00049112 [high]: 4-byte body: word 0xa00b = `bra 0x49112` + delay-slot word 0x0009 (ROM-verified at 0x000490f8). Direct tail-jump to `FUN_00049112` 0x00049112; callers in callgraph: 0x00019640. Upstream name `thunk_FUN_00049112` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000490f8; body bytes: 4; decompiled */
 
-uint thunk_FUN_00049112(void)
+uint jump_to_FUN_00049112(void)
 
 {
   uint uVar1;

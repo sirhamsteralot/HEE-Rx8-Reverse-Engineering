@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * timing_trim_scale_calc [high]: a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim). | promoted to high (data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases)
+ * timing_trim_scale_calc [high]: a66c = a67c * a698; a670 = a680 * a698 â€” the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim). | promoted to high (data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases)
  */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 

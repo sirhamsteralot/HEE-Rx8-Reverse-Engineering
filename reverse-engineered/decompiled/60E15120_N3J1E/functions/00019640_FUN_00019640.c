@@ -22,7 +22,7 @@ void FUN_00019640(void)
   FUN_0001afb0();
   FUN_0001a5d8();
   FUN_0001a600();
-  thunk_FUN_00049112();
+  jump_to_FUN_00049112();
   FUN_0001a686();
   ref_fuelingRealtedInitalVals__();
   FUN_0001ae5c();

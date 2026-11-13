@@ -14,19 +14,19 @@ undefined4 FUN_0003e020(void)
   sVar2 = ref_readValue_16bit_ADDRESS_VAL(&DAT_ffff8704,0);
   if (sVar2 == -0x55ab) {
     FUN_000602e0();
-    thunk_FUN_000252a6();
-    thunk_FUN_00028db8();
+    jump_to_FUN_000252a6();
+    jump_to_FUN_00028db8();
     FUN_00019e10();
     FUN_0002e718();
     FUN_00039f64();
     FUN_0002149c();
-    thunk_FUN_0001381e();
-    thunk_FUN_00015f8e();
+    jump_to_FUN_0001381e();
+    jump_to_FUN_00015f8e();
     FUN_00016fdc();
-    thunk_FUN_0003e300();
+    jump_to_FUN_0003e300();
     FUN_000230ae();
-    thunk_FUN_000270aa();
-    thunk_FUN_00034a6c();
+    jump_to_FUN_000270aa();
+    jump_to_FUN_00034a6c();
     FUN_0005a2b6();
     FUN_0005a3c6();
     FUN_0005a63a();

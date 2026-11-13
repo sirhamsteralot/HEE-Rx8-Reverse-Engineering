@@ -136,6 +136,11 @@
         "pool_claims": 1,
         "word_assigns": 3
       },
+      "thunk_audit_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 2
+      },
       "uds_mode22_dispatch_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -219,15 +224,21 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "reviews/thunk_audit/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 1
+      },
       "accepted_function_aliases.tsv": {
         "reg_pairs": 37,
         "call_claims": 7,
         "pool_claims": 15,
-        "word_assigns": 131,
+        "word_assigns": 168,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 504,
+    "tsv_rows": 554,
     "labels_json_checked": 19
   },
   "notes": [

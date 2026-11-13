@@ -10,7 +10,7 @@ void task12_adc_feedback_pwm_entry(void)
 
 {
   task12_alive_counter_clear();
-  thunk_FUN_0000aee8();
+  jump_to_adc_pair_correlation_fault_compute();
   monitor_service_batch();
   atu_ch7d_pwm_enable();
   ref_taskEndRoutine_();

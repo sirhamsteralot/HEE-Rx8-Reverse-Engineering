@@ -6585,7 +6585,7 @@ void FUN_00004cb6(void)
 
 {
   FUN_00004dea();
-  thunk_FUN_00004dee();
+  jump_to_FUN_00004dee();
   FUN_00004e0a();
   FUN_00004e12();
   FUN_00004f00();
@@ -6707,9 +6707,12 @@ void FUN_00004dee(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00004dee [high]: 4-byte body: word 0xaff2 = `bra 0x4dee` + delay-slot word 0x0009 (ROM-verified at 0x00004e06). Direct tail-jump to `FUN_00004dee` 0x00004dee; callers in callgraph: 0x00004cb6. Upstream name `thunk_FUN_00004dee` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00004e06; body bytes: 4; decompiled */
 
-void thunk_FUN_00004dee(void)
+void jump_to_FUN_00004dee(void)
 
 {
   UBC_UBARH_W = 0x7fffffff;
@@ -8942,9 +8945,12 @@ void FUN_00005e68(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_can_rx_isr_handler [high]: 6-byte body: word 0xd30f = `mov.l @(0x5eb8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x5eb8 = 0x00009c86 (ROM-verified, big-endian) (ROM-verified at 0x00005e78). Direct tail-jump to `can_rx_isr_handler` 0x00009c86; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00009c86` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00005e78; body bytes: 6; decompiled */
 
-void thunk_FUN_00009c86_00005e78(void)
+void jump_to_can_rx_isr_handler(void)
 
 {
   can_rx_isr_handler();
@@ -9013,9 +9019,12 @@ void FUN_00005ede(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_can_rx_isr_handler [high]: 6-byte body: word 0xd309 = `mov.l @(0x5f14,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x5f14 = 0x00009c86 (ROM-verified, big-endian) (ROM-verified at 0x00005eee). Direct tail-jump to `can_rx_isr_handler` 0x00009c86; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00009c86` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00005eee; body bytes: 6; decompiled */
 
-void thunk_FUN_00009c86_00005eee(void)
+void jump_to_can_rx_isr_handler(void)
 
 {
   can_rx_isr_handler();
@@ -9309,9 +9318,12 @@ void task0_background_loop(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00011492 [high]: 6-byte body: word 0xd31e = `mov.l @(0x63dc,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63dc = 0x00011492 (ROM-verified, big-endian) (ROM-verified at 0x00006360). Direct tail-jump to `FUN_00011492` 0x00011492; callers in callgraph: 0x00009f4c. Upstream name `thunk_FUN_00011492` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00006360; body bytes: 6; decompiled */
 
-void thunk_FUN_00011492_00006360(void)
+void jump_to_FUN_00011492(void)
 
 {
   FUN_00011492();
@@ -9319,9 +9331,12 @@ void thunk_FUN_00011492_00006360(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000113b8 [high]: 6-byte body: word 0xd31e = `mov.l @(0x63e0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63e0 = 0x000113b8 (ROM-verified, big-endian) (ROM-verified at 0x00006366). Direct tail-jump to `FUN_000113b8` 0x000113b8; callers in callgraph: 0x00009f52. Upstream name `thunk_FUN_000113b8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00006366; body bytes: 6; decompiled */
 
-void thunk_FUN_000113b8_00006366(void)
+void jump_to_FUN_000113b8(void)
 
 {
   FUN_000113b8();
@@ -9329,9 +9344,12 @@ void thunk_FUN_000113b8_00006366(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0000abfa [high]: 6-byte body: word 0xd31d = `mov.l @(0x63e4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63e4 = 0x0000abfa (ROM-verified, big-endian) (ROM-verified at 0x0000636c). Direct tail-jump to `FUN_0000abfa` 0x0000abfa; callers in callgraph: 0x00009f58. Upstream name `thunk_FUN_0000abfa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0000636c; body bytes: 6; decompiled */
 
-void thunk_FUN_0000abfa_0000636c(void)
+void jump_to_FUN_0000abfa(void)
 
 {
   FUN_0000abfa();
@@ -9492,7 +9510,7 @@ void task12_adc_feedback_pwm_entry(void)
 
 {
   task12_alive_counter_clear();
-  thunk_FUN_0000aee8();
+  jump_to_adc_pair_correlation_fault_compute();
   monitor_service_batch();
   atu_ch7d_pwm_enable();
   ref_taskEndRoutine_();
@@ -10519,12 +10537,12 @@ void sci0_configure_sync_and_exchange_command(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * sci0_exchange_byte_blocking [assembly_verified]: SCI0 transmit/receive with GPIO select at 0xfffff764 bit0. At 0x721e..0x7226 waits for SCI_SSR0 bit0x40 with no software timeout or watchdog service inside the loop. Clock-synchronous configuration comes from caller 0x7188. Not proof of the reported reset; missing external response alone need not prevent internally clocked receive completion.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * sci0_exchange_byte_wait_rdrf [high]: Renesas SH7055 app note section 2.20 confirms SSR mask 0x40 is receive-data-full (RDRF), the condition polled here; no timeout inside the loop. This idiom also occurs in vendor sample code and is not itself evidence of a bug.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * sci0_exchange_byte_wait_rdrf [high]: Renesas SH7055 app note section 2.20 confirms SSR mask 0x40 is receive-data-full (RDRF), the condition polled here; no timeout inside the loop. This idiom also occurs in vendor sample code and is not itself evidence of a bug.
  */
 /* ROM address: 0x000071ea; body bytes: 98; decompiled */
 
@@ -10713,18 +10731,18 @@ undefined2 * clt_sensor_scaling_fault(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * maf_sensor_scaling [high]: 9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1.
- * RAM 0xffff9eea maf_adc_raw (uint16): Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2.
- * RAM 0xffff9f78 maf_scaled (float): 9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e).
- * RAM 0xffff9f7c maf_fault_status (uint8): 9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high).
- */
 /* [MATH AND UNITS REVIEW]
  * 7.6293945e-05 is binary32 5/65536. The MAF lookup input is raw*5/65536, consistent with a 5-V full-scale normalized ADC signal; volts is an inference until ADC representation/reference are verified, not proof of a 16-bit ADC.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * maf_sensor_scaling [high]: 9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1.
+ * RAM 0xffff9eea maf_adc_raw (uint16): Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2.
+ * RAM 0xffff9f78 maf_scaled (float): 9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e).
+ * RAM 0xffff9f7c maf_fault_status (uint8): 9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high).
  */
 /* ROM address: 0x00007438; body bytes: 82; decompiled */
 
@@ -12006,9 +12024,12 @@ void FUN_000083ca(uint param_1,int param_2,int param_3)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00008b4c [high]: 4-byte body: word 0xa343 = `bra 0x8b4c` + delay-slot word 0x0009 (ROM-verified at 0x000084c2). Direct tail-jump to `FUN_00008b4c` 0x00008b4c; callers in callgraph: 0x0000f960. Upstream name `thunk_FUN_00008b4c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000084c2; body bytes: 4; decompiled */
 
-void thunk_FUN_00008b4c(void)
+void jump_to_FUN_00008b4c(void)
 
 {
   FUN_00008b4c();
@@ -13294,12 +13315,12 @@ undefined4 can_rx_copy_mailbox_to_buffer(int param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): 
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): 
  */
 /* ROM address: 0x000099b0; body bytes: 134; decompiled */
 
@@ -13730,32 +13751,41 @@ void FUN_00009f48(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_0x00006360 [high]: 6-byte body: word 0xd3a6 = `mov.l @(0xa1e8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1e8 = 0x00006360 (ROM-verified, big-endian) (ROM-verified at 0x00009f4c). Direct tail-jump to `0x00006360` 0x00006360; callers in callgraph: 0x0000d408. Upstream name `thunk_FUN_00011492` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00009f4c; body bytes: 6; decompiled */
 
-void thunk_FUN_00011492_00009f4c(void)
+void jump_to_0x00006360(void)
 
 {
-  thunk_FUN_00011492_00009f4c();
+  jump_to_0x00006360();
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_0x00006366 [high]: 6-byte body: word 0xd3a6 = `mov.l @(0xa1ec,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1ec = 0x00006366 (ROM-verified, big-endian) (ROM-verified at 0x00009f52). Direct tail-jump to `0x00006366` 0x00006366; callers in callgraph: 0x0000d44c. Upstream name `thunk_FUN_000113b8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00009f52; body bytes: 6; decompiled */
 
-void thunk_FUN_000113b8_00009f52(void)
+void jump_to_0x00006366(void)
 
 {
-  thunk_FUN_000113b8_00009f52();
+  jump_to_0x00006366();
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_0x0000636c [high]: 6-byte body: word 0xd3a5 = `mov.l @(0xa1f0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1f0 = 0x0000636c (ROM-verified, big-endian) (ROM-verified at 0x00009f58). Direct tail-jump to `0x0000636c` 0x0000636c; callers in callgraph: 0x0000d408. Upstream name `thunk_FUN_0000abfa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00009f58; body bytes: 6; decompiled */
 
-void thunk_FUN_0000abfa_00009f58(void)
+void jump_to_0x0000636c(void)
 
 {
-  thunk_FUN_0000abfa_00009f58();
+  jump_to_0x0000636c();
   return;
 }
 
@@ -14902,9 +14932,12 @@ void FUN_0000acfc(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_adc_pair_correlation_fault_compute [high]: 4-byte body: word 0xa0dd = `bra 0xaee8` + delay-slot word 0x0009 (ROM-verified at 0x0000ad2a). Direct tail-jump to `adc_pair_correlation_fault_compute` 0x0000aee8; callers in callgraph: 0x00006592. Upstream name `thunk_FUN_0000aee8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0000ad2a; body bytes: 4; decompiled */
 
-uint thunk_FUN_0000aee8(void)
+uint jump_to_adc_pair_correlation_fault_compute(void)
 
 {
   uint uVar1;
@@ -16344,16 +16377,16 @@ void ref_functionDrivingTiming(byte param_1)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_voltage_sample [high]: Called from 0x661e (task[6], before ref_engineControlTASK): a37a = DAT_ffff9ef8 (knock ADC raw); in the 200-2000 RPM window filters into a378; sets a386 = (raw RPM >= 10000).
  * RAM 0xffffa37a knock_adc_raw (uint16): Raw knock sensor ADC 0xffff9ef8 read in 0xc3ce.
  * RAM 0xffffa374 knock_adc_filtered (float): First-order filtered knock ADC (coeff 0.004, snap 1.0) valid in the 200-2000 RPM window.
  * RAM 0xffff9f80 engine_speed_rpm_raw (float): Raw RPM = 120e6 / crank period sum (ISR 0x803e); window and 10k-flag checks in 0xc3ce.
  * RAM 0xffff9ef8 knock_sensor_adc_raw (uint16): Knock sensor ADC result read in 0xc3ce.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0000c3ce; body bytes: 114; decompiled */
 
@@ -16390,6 +16423,10 @@ undefined2 * knock_voltage_sample(void)
  * Descriptor 0x0006b2a0: Knock Related (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b2ac: Knock Related 3 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_magnitude_integrate [high]: Knock magnitude core: voltage = (a378 - a326)*5/65536; magnitude vs tbl 0x6b250 minus command-code term; noise filter, per-rotor integrators a33c/a350, baseline a348, combined level a34c; sets a324 = (a364 <= a330), knock detected.
  * RAM 0xffffc060 knock_filter_coeff_a (float): Noise-step scale 0.0625 (calm) / 0.1875 (transient); used in the 0xc486 integrator step.
@@ -16412,10 +16449,6 @@ undefined2 * knock_voltage_sample(void)
  * RAM 0xffffa364 knock_threshold_command_base (float): Base threshold command (a34c + a328*a360 clamped 64..255; a34c = combined knock level addend, 64 is the clamp floor).
  * RAM 0xffffa389 knock_reference_voltage_latched (uint8[2]): Latched a387 values; a change forces a32c = 40 (noise reset).
  * RAM 0xffffa381 knock_command_code (uint8[2]): Mapped command codes a381[0..1] from a368 (6/5/4/2/0 bands).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0000c486; body bytes: 674; decompiled_with_warnings */
 
@@ -17463,11 +17496,11 @@ uint FUN_0000d408(void)
     DAT_ffffa3fb = 1;
   }
   if (DAT_ffffa3fb == 0) {
-    thunk_FUN_00011492_00009f4c();
+    jump_to_0x00006360();
   }
   if (DAT_ffffa3fb == 1) {
     DAT_ffff8000 = 0x55aa;
-    uVar1 = thunk_FUN_0000abfa_00009f58();
+    uVar1 = jump_to_0x0000636c();
     return uVar1;
   }
   return (uint)DAT_ffffa3fb;
@@ -17486,7 +17519,7 @@ uint FUN_0000d44c(void)
   
   uVar1 = (uint)DAT_ffffa3fb;
   if (uVar1 == 1) {
-    uVar1 = thunk_FUN_000113b8_00009f52();
+    uVar1 = jump_to_0x00006366();
     DAT_ffff8000 = 0xaa55;
   }
   return uVar1;
@@ -19570,7 +19603,7 @@ void ref_somethingFuelCutRelated(float param_1,byte param_2)
     pcVar3 = &DAT_0004e2ce + (uint)param_2 * 3;
     do {
       if (*pcVar3 == '\x01') {
-        thunk_FUN_00008b4c((int)*pcVar4,(int)(param_1 / 0.25));
+        jump_to_FUN_00008b4c((int)*pcVar4,(int)(param_1 / 0.25));
       }
       iVar2 = iVar2 + 1;
       pcVar4 = pcVar4 + 1;
@@ -20300,9 +20333,12 @@ void FUN_00010320(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00010fa8 [high]: 6-byte body: word 0xd34f = `mov.l @(0x104c8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x104c8 = 0x00010fa8 (ROM-verified, big-endian) (ROM-verified at 0x0001038a). Direct tail-jump to `FUN_00010fa8` 0x00010fa8; callers in callgraph: 0x000142a4. Upstream name `thunk_FUN_00010fa8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0001038a; body bytes: 6; decompiled */
 
-void thunk_FUN_00010fa8(void)
+void jump_to_FUN_00010fa8(void)
 
 {
   FUN_00010fa8();
@@ -21063,7 +21099,7 @@ void FUN_00011004(void)
 void FUN_0001102a(void)
 
 {
-  thunk_FUN_00037fda();
+  jump_to_FUN_00037fda();
   FUN_0002e58c();
   FUN_00019632();
   FUN_00019640();
@@ -21074,7 +21110,7 @@ void FUN_0001102a(void)
   FUN_0005df50();
   FUN_0005dc40();
   FUN_000563dc();
-  thunk_FUN_00056786();
+  jump_to_FUN_00056786();
   FUN_0005b016();
   FUN_00055988();
   FUN_0005a3b8();
@@ -21105,18 +21141,18 @@ void FUN_0001102a(void)
   FUN_000267b8();
   FUN_000167ac();
   FUN_00022f54();
-  thunk_FUN_0002e800();
+  jump_to_FUN_0002e800();
   candidate_fan_init_thunk();
   FUN_0002f948();
   FUN_00031c1c();
   FUN_0003173c();
   FUN_00016f30();
-  thunk_FUN_0002508c();
+  jump_to_FUN_0002508c();
   FUN_00021b48();
   ssv_control_thunk();
   vdi_control_thunk();
   vfad_control_thunk();
-  thunk_FUN_00025438();
+  jump_to_FUN_00025438();
   FUN_00022538();
   FUN_00023740();
   FUN_0002874c();
@@ -21147,7 +21183,7 @@ void FUN_0001102a(void)
   FUN_00058b40();
   FUN_00058c78();
   FUN_00058d9e();
-  thunk_FUN_000486a0();
+  jump_to_FUN_000486a0();
   return;
 }
 
@@ -21169,22 +21205,22 @@ void FUN_0001122a(void)
 void FUN_000113b8(void)
 
 {
-  thunk_FUN_0003ec3c();
+  jump_to_FUN_0003ec3c();
   FUN_00019632();
   FUN_00060318();
-  thunk_FUN_0002529e();
-  thunk_FUN_00028db0();
+  jump_to_FUN_0002529e();
+  jump_to_FUN_00028db0();
   FUN_00019dd2();
   FUN_0002e70a();
   FUN_00039d96();
   FUN_0002148e();
-  thunk_FUN_00013814();
-  thunk_FUN_00015f74();
+  jump_to_FUN_00013814();
+  jump_to_FUN_00015f74();
   FUN_00016fce();
   FUN_0003eb5e();
   FUN_00023094();
   FUN_0002897e();
-  thunk_FUN_00034a64();
+  jump_to_FUN_00034a64();
   FUN_0005a2c8();
   FUN_0005a3d8();
   FUN_0005a662();
@@ -21265,7 +21301,7 @@ void FUN_0001150e(void)
   FUN_0002114a();
   FUN_0002e5a8();
   FUN_00022f86();
-  thunk_FUN_000236cc();
+  jump_to_FUN_000236cc();
   return;
 }
 
@@ -21740,14 +21776,14 @@ bool ref_getKnownBooleanValue__(void)
  * Descriptor 0x00069078: Ignition Leading - Base Timing (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000690cc: Ignition Timing Leading Advance (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * leading_base_timing_calc [high]: RX8Defs 'Ignition Leading - Base Timing' plate; blends calibrated base with open-loop cap by weight b118; safe-mode cap via b12d.
  * RAM 0xffffb12d safe_mode (uint8): 0x1ee4a: 1 unless (b534==1 && 4<bc3d) or (b534==0 && 3<baed); selects Safe Mode CAL tables and the base-timing cap in 0x11f00/0x1206c.
  * RAM 0xffffa5f0 leading_coolant_scaled_advance_term (float): Written by 0x11f00 leading_base_timing_calc (fmov.s fr2,@r1 0x11f60 via mov.w pool 0x1200a=0xa5f0 @0x11f58); read by 0x123da (mov.w pool 0x12536 @0x124a0).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00011f00; body bytes: 254; decompiled */
 
@@ -21795,13 +21831,13 @@ void leading_base_timing_calc(void)
  * Descriptor 0x00069120: Ignition Timing Trailing Base (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069174: Ignition Timing Trailing Advance (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
- * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
+ * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588).
  */
 /* ROM address: 0x0001206c; body bytes: 254; decompiled */
 
@@ -21867,13 +21903,13 @@ void FUN_000121ea(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * leading_final_timing_clamp_output [high]: a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630.
- * RAM 0xffffa660 leading_max_advance (float): Written by 0x121fc leading_final_timing_clamp_output (fmov.s fr0,@r2 0x1229c via mov.l pool 0x122f4=0xffffa660 @0x1229a).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * leading_final_timing_clamp_output [high]: a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630.
+ * RAM 0xffffa660 leading_max_advance (float): Written by 0x121fc leading_final_timing_clamp_output (fmov.s fr0,@r2 0x1229c via mov.l pool 0x122f4=0xffffa660 @0x1229a).
  */
 /* ROM address: 0x000121fc; body bytes: 186; decompiled_with_warnings */
 
@@ -21911,15 +21947,15 @@ LAB_0001228e:
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_final_timing_clamp_output [high]: Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638.
  * RAM 0xffffa634 leading_timing_with_corrections (float): a640 + a648 clamped into leading_ignition_timing_ffffa630 (0x12300). Written by 0x123ba leading_timing_add_corrections (fmov.s fr2,@r3 0x123c8 via mov.w pool 0x12410=0xa634 @0x123c4); read by 0x121fc (pool 0x122c6 @0x1228a) and 0x2cc2c (pool 0x2cd54 @0x2ccc6); clamped into 0xffffa630 by 0x121fc.
  * RAM 0xffffa63c trailing_timing_with_corrections (float): a650 + a658 clamped into trailing_ignition_timing_ffffa638. Written by 0x123ca trailing_timing_add_corrections (fmov.s fr2,@r3 0x123d8 via mov.w pool 0x1240c=0xa63c @0x123d4); read by 0x12300 (pool 0x1240c @0x1238e); clamped into 0xffffa638 by 0x12300.
  * RAM 0xffffa664 trailing_max_advance (float): Written by 0x12300 trailing_final_timing_clamp_output (fmov.s fr0,@r2 0x123a0 via mov.l pool 0x12430=0xffffa664 @0x1239e).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00012300; body bytes: 186; decompiled_with_warnings */
 
@@ -22108,13 +22144,13 @@ void knock_retard_apply_trailing(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * min_advance_clamp_select [high]: Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45).
- * RAM 0xffffa64c leading_min_advance_clamp (float): Written by 0x12630 min_advance_clamp_select (fmov.s fr0/fr3,@r14 0x1270e/0x12738/0x12742 via mov.l pool 0x127b8=0xffffa64c @0x126e8); read by 0x121fc leading_final_timing_clamp_output.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * min_advance_clamp_select [high]: Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45).
+ * RAM 0xffffa64c leading_min_advance_clamp (float): Written by 0x12630 min_advance_clamp_select (fmov.s fr0/fr3,@r14 0x1270e/0x12738/0x12742 via mov.l pool 0x127b8=0xffffa64c @0x126e8); read by 0x121fc leading_final_timing_clamp_output.
  */
 /* ROM address: 0x00012630; body bytes: 206; decompiled */
 
@@ -22173,12 +22209,12 @@ uint min_advance_clamp_select(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffa65c trailing_min_advance_clamp (float): Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa65c trailing_min_advance_clamp (float): Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
  */
 /* ROM address: 0x00012754; body bytes: 206; decompiled */
 
@@ -22506,7 +22542,7 @@ undefined1 * FUN_00012dec(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * timing_trim_scale_calc [high]: a66c = a67c * a698; a670 = a680 * a698 — the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim). | promoted to high (data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases)
+ * timing_trim_scale_calc [high]: a66c = a67c * a698; a670 = a680 * a698 â€” the trim terms subtracted in 0x125bc/0x125f6 (leading/trailing timing trim). | promoted to high (data/labels/60E15120_N3J1E/ignition_timing_labels.json/function_aliases)
  */
 /* ROM address: 0x00012e60; body bytes: 58; decompiled */
 
@@ -22595,12 +22631,12 @@ uint FUN_00012ed0(void)
  * Descriptor 0x00069730: Ignition 16 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006974c: Ignition 17 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
  */
 /* ROM address: 0x00013034; body bytes: 340; decompiled */
 
@@ -22676,12 +22712,12 @@ uint knock_rough_correction_targets(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffa428 engine_running (uint8): Engine running flag; zeroes rough knock corrections in 0x13210; ingredient of the attack condition.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa428 engine_running (uint8): Engine running flag; zeroes rough knock corrections in 0x13210; ingredient of the attack condition.
  */
 /* ROM address: 0x00013210; body bytes: 370; decompiled */
 
@@ -22856,13 +22892,13 @@ void FUN_00013508(void)
  * Descriptor 0x0006a060: Ignition Leading - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a074: Ignition Leading - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
- * RAM 0xffffa718 idle_leading_timing_error_correction (float): Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
+ * RAM 0xffffa718 idle_leading_timing_error_correction (float): Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e).
  */
 /* ROM address: 0x000135b4; body bytes: 228; decompiled */
 
@@ -22925,13 +22961,13 @@ uint idle_leading_timing_error_correction(void)
  * Descriptor 0x0006a088: Ignition Trailing - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a09c: Ignition Trailing - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
- * RAM 0xffffa71c idle_trailing_timing_error_correction (float): Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
+ * RAM 0xffffa71c idle_trailing_timing_error_correction (float): Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584).
  */
 /* ROM address: 0x000136e4; body bytes: 228; decompiled */
 
@@ -23010,13 +23046,13 @@ void FUN_0001381e(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_enable_gate [high]: Sets DAT_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000.
- * RAM 0xffffa424 engine_running_timer (uint16): Engine-running time counter (100 Hz); gates knock enable (>= 0x177) and the attack condition (>= 0xfa).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_enable_gate [high]: Sets DAT_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000.
+ * RAM 0xffffa424 engine_running_timer (uint16): Engine-running time counter (100 Hz); gates knock enable (>= 0x177) and the attack condition (>= 0xfa).
  */
 /* ROM address: 0x00013826; body bytes: 100; decompiled */
 
@@ -23227,12 +23263,12 @@ void knock_retard_slow_recovery(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
  */
 /* ROM address: 0x00013bd2; body bytes: 86; decompiled */
 
@@ -23404,7 +23440,7 @@ void ref_debounceThrottleRate(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * coolant_timing_derate_calc [high]: was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 — the max() derate subtracted in 0x125bc/0x125f6.
+ * coolant_timing_derate_calc [high]: was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 â€” the max() derate subtracted in 0x125bc/0x125f6.
  */
 /* ROM address: 0x00013ecc; body bytes: 104; decompiled */
 
@@ -23696,7 +23732,7 @@ void ignition_timing_main_task(void)
   ref_finalTrailingTimingStuff_();
   ref_setPerRotorTimingValuesLeading();
   ref_setPerRotorTimingValuesTrailing();
-  thunk_FUN_00010fa8();
+  jump_to_FUN_00010fa8();
   FUN_00010ea2();
   FUN_0002bd4c();
   FUN_0002bdae();
@@ -23848,9 +23884,12 @@ void FUN_000146a6(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00013814 [high]: 6-byte body: word 0xd324 = `mov.l @(0x14748,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x14748 = 0x00013814 (ROM-verified, big-endian) (ROM-verified at 0x000146b6). Direct tail-jump to `FUN_00013814` 0x00013814; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00013814` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000146b6; body bytes: 6; decompiled */
 
-void thunk_FUN_00013814(void)
+void jump_to_FUN_00013814(void)
 
 {
   FUN_00013814();
@@ -23858,9 +23897,12 @@ void thunk_FUN_00013814(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0001381e [high]: 6-byte body: word 0xd323 = `mov.l @(0x1474c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x1474c = 0x0001381e (ROM-verified, big-endian) (ROM-verified at 0x000146bc). Direct tail-jump to `FUN_0001381e` 0x0001381e; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_0001381e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000146bc; body bytes: 6; decompiled */
 
-void thunk_FUN_0001381e(void)
+void jump_to_FUN_0001381e(void)
 
 {
   FUN_0001381e();
@@ -24026,12 +24068,12 @@ void candidate_idle_maf_airflow_term(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
  */
 /* ROM address: 0x00014944; body bytes: 516; decompiled */
 
@@ -24185,13 +24227,13 @@ undefined2 * candidate_idle_mode_timers(void)
  * Descriptor 0x00069334: Table 2D - 22 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069348: Table 2D - 23 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
- * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
+ * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
  */
 /* ROM address: 0x00014d10; body bytes: 456; decompiled */
 
@@ -24336,15 +24378,15 @@ uint candidate_idle_trim_ramp(void)
  * Descriptor 0x000693fc: Idle Target H (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069410: Idle Target - Vehicle Moving - Automatic Transmission Related 1 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_target_rpm_calculate [high]: Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94.
  * RAM 0xffffa7f4 idle_target_rpm (float): Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94.
  * RAM 0xffffb5b3 high_load_flag (uint8): Set by 0x264f0 when filtered 0xffffb5e0 >= 40.0 (clears below 30.0); 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335) in 0x2633e; 0xffffb5a4/0xffffb5a0 ratio appears in the alternator domain (0x2ce18); selects an idle-target table path in 0x1506c.
  * RAM 0xffffb53c at_drive_range_engaged (uint8): Select flag in 0x1506c (MT 790 rpm floor path); producer FUN_00024b8c (=1 when 0xffffb540||0xffffb53e; pools 0x24c5a @0x24bdc / 0x24e54 @0x24e36; cleared when 0xffffb534==1); b540/b53e derive from CAN 0x231 gear byte 0xffffbaec (0xffffbae5>>4, ref_can231TxPack 0x290c6), vss 0xffffbbb4, rpm 0xffffb548.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001506c; body bytes: 1530; decompiled_with_warnings */
 
@@ -24748,12 +24790,12 @@ void FUN_00015a90(void)
  * Descriptor 0x000694a4: Table 2D - 39 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000694b8: Table 2D - 40 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
  */
 /* ROM address: 0x00015a9a; body bytes: 938; decompiled_with_warnings */
 
@@ -24957,12 +24999,12 @@ void candidate_idle_trim_load(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
  */
 /* ROM address: 0x00015ffc; body bytes: 302; decompiled */
 
@@ -25181,12 +25223,12 @@ void FUN_00016428(void)
  * Descriptor 0x00069508: Table 2D - 44 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006951c: Table 2D - 45 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
  */
 /* ROM address: 0x00016432; body bytes: 344; decompiled */
 
@@ -25282,12 +25324,12 @@ void candidate_idle_ac_clutch_gate(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
  */
 /* ROM address: 0x00016672; body bytes: 120; decompiled */
 
@@ -25439,9 +25481,12 @@ void idle_control_calc_batch(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00015f74 [high]: 6-byte body: word 0xd322 = `mov.l @(0x168f8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x168f8 = 0x00015f74 (ROM-verified, big-endian) (ROM-verified at 0x0001686e). Direct tail-jump to `FUN_00015f74` 0x00015f74; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00015f74` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0001686e; body bytes: 6; decompiled */
 
-void thunk_FUN_00015f74(void)
+void jump_to_FUN_00015f74(void)
 
 {
   FUN_00015f74();
@@ -25449,9 +25494,12 @@ void thunk_FUN_00015f74(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00015f8e [high]: 6-byte body: word 0xd321 = `mov.l @(0x168fc,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x168fc = 0x00015f8e (ROM-verified, big-endian) (ROM-verified at 0x00016874). Direct tail-jump to `FUN_00015f8e` 0x00015f8e; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00015f8e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00016874; body bytes: 6; decompiled */
 
-void thunk_FUN_00015f8e(void)
+void jump_to_FUN_00015f8e(void)
 
 {
   FUN_00015f8e();
@@ -26833,14 +26881,14 @@ void FUN_000180c8(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006957c: Igntion Leading Timing - DSC Mode A - Map 4 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
  * RAM 0xffffa91c dsc_timing_derate_leading (float): 
  * RAM 0xffffbbd8 engine_max_torque_allowed (float): Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
@@ -27977,7 +28025,7 @@ void FUN_00019640(void)
   FUN_0001afb0();
   FUN_0001a5d8();
   FUN_0001a600();
-  thunk_FUN_00049112();
+  jump_to_FUN_00049112();
   FUN_0001a686();
   ref_fuelingRealtedInitalVals__();
   FUN_0001ae5c();
@@ -28329,9 +28377,12 @@ void FUN_00019e10(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0003ec3c [high]: 6-byte body: word 0xd32d = `mov.l @(0x19ef4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x19ef4 = 0x0003ec3c (ROM-verified, big-endian) (ROM-verified at 0x00019e3c). Direct tail-jump to `FUN_0003ec3c` 0x0003ec3c; callers in callgraph: 0x000113b8. Upstream name `thunk_FUN_0003ec3c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00019e3c; body bytes: 6; decompiled */
 
-void thunk_FUN_0003ec3c(void)
+void jump_to_FUN_0003ec3c(void)
 
 {
   FUN_0003ec3c();
@@ -28415,6 +28466,10 @@ void maf_filtered_update(void)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * maf_voltage_and_fault_counters [high]: aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa2c maf_voltage (float): aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault.
@@ -28422,10 +28477,6 @@ void maf_filtered_update(void)
  * RAM 0xffffaa36 maf_low_fault_counter (uint8): Saturating counter incremented while raw < 0x7ae; cleared otherwise.
  * RAM 0xffffa9e4 maf_voltage_latched (float): a9e4 = aa2c when MAF faulted (>2 on either counter or raw in 0x7ae..0xf852 window).
  * RAM 0xffffa9e8 maf_scaled_latched (float): a9e8 = 9f78 (maf_scaled) on fault; becomes mass_air_flow a9ec via 0x19f40.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00019f4e; body bytes: 164; decompiled */
 
@@ -28657,6 +28708,10 @@ undefined4 FUN_0001a394(void)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * maf_per_rotation_calc [high]: aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa54 maf_filter_coeff (float): aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc.
@@ -28664,10 +28719,6 @@ undefined4 FUN_0001a394(void)
  * RAM 0xffffaa3c maf_per_rotation (float): aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm).
  * RAM 0xffffaa38 maf_per_rotation_filtered (float): aa38 = filtered maf*60/rpm; 0.1560058 when rpm ~ 0.
  * RAM 0xffffaa4c maf_filter_mode (uint8): aa4c selects filtered vs instantaneous MAF for the per-rotation calc.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001a418; body bytes: 174; decompiled */
 
@@ -31897,6 +31948,10 @@ void set_open_loop_flag(void)
  * Descriptor 0x00069f28: Open Loop Target - Throttle Tip in - Coolant Temp Implausible A (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069f44: Open Loop Target - Coolant Temp Implausible - Gear 1-4 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_fueling_targets [high]: When b12c==1: open-loop base/tip-in/target/rich-limit lookups (0x69cac/0x69cc0, 0x69e80/0x69e9c, 0x69cd4/0x69d10, safe-mode variants via b12d) -> b120; zeroes b120 in closed loop.
  * RAM 0xffffcd60 safe_mode (uint8): 0 = safe mode active: selects the knock threshold table pair in 0x336c4 (0x6b270/0x6b288 vs alts) and is checked in 0x200c6.
@@ -31911,10 +31966,6 @@ void set_open_loop_flag(void)
  * RAM 0xffffb138 ol_fuel_target_implausible (float): b138 = max(b174*b198, b19c); coolant-implausible OL target product.
  * RAM 0xffffb13c ol_temperature_correction_b (float): b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant).
  * RAM 0xffffb150 ol_target_select (uint8): b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001ee4a; body bytes: 458; decompiled */
 
@@ -32007,6 +32058,10 @@ LAB_0001ef92:
  * Descriptor 0x00069e2c: Table 2D - 322 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069e38: Table 2D - 323 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_request_condition [high]: Sets b12a=1 when load/throttle exceed 'Closed Loop Fuelling Threshold' tables 0x69d24/0x69d38/0x69d4c/0x69d60/0x69d74 with hysteresis flags b1b6/b1b7, throttle threshold b15c and timers b148/b14e.
  * RAM 0xffffb15c cl_throttle_threshold (float): b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition.
@@ -32018,10 +32073,6 @@ LAB_0001ef92:
  * RAM 0xffffb1b7 cl_load_b_exceeded (uint8): b1b7 = load >= b164 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b8 cl_load_c_exceeded (uint8): b1b8 = load >= b168 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b1 coolant_above_78_flag (uint8): b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001f0c4; body bytes: 1166; decompiled */
 
@@ -32229,6 +32280,10 @@ uint open_loop_request_condition(void)
  * Descriptor 0x00069dd8: Table 2D - 101 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069dec: Table 2D - 102 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb180 cl_load_threshold_2d_c (float): b180 = tbl 0x69db0(rpm); throttle/load band compares -> b1be/b1c2 in 0x1f6ae.
  * RAM 0xffffb184 cl_load_threshold_2d_d (float): b184 = tbl 0x69dc4(rpm).
@@ -32238,10 +32293,6 @@ uint open_loop_request_condition(void)
  * RAM 0xffffb1ca load_above_thresh_d (uint8): b1ca = load > b18c (hysteresis) in 0x1f6ae.
  * RAM 0xffffb1c7 rpm_above_5300_flag_b (uint8): b1c7 = rpm > 5500 (clear below 5300); second copy in 0x1f6ae.
  * RAM 0xffffb1cb rpm_above_9800_flag (uint8): b1cb = rpm > 10000 (clear below 9800) in 0x1f6ae.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001f6ae; body bytes: 892; decompiled */
 
@@ -32608,6 +32659,10 @@ uint FUN_0001fd48(void)
  * Descriptor 0x00069d88: Table 2D - 97 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069d9c: Table 2D - 98 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb178 cl_load_threshold_2d_a (float): b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9.
  * RAM 0xffffb17c cl_load_threshold_2d_b (float): b17c = tbl 0x69d9c(rpm) -> b1bb.
@@ -32619,10 +32674,6 @@ uint FUN_0001fd48(void)
  * RAM 0xffffb144 ol_condition_timer (uint16): b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag.
  * RAM 0xffffb154 ol_band_condition (uint8): b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6).
  * RAM 0xffffb159 ol_timer_expired (uint8): b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001ff38; body bytes: 334; decompiled */
 
@@ -33782,13 +33833,13 @@ uint ref_acCompressorTrailingTimingRetard(void)
  * Descriptor 0x0006a22c: Table 2D - 122 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a240: Table 2D - 123 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_air_output_clamp [high]: Final idle air output: 0xffffb2a4 = clamp(tbl 0x6a218(0xffffa838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)) via 0x2404 rx8_clamp_float; pool 0x21740-0x2175c (classified mixed_pool) words: 0x21744=0x2068 (lookup helper), 0x21748=0x6a218, 0x2174c=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404 (clamp); descriptors parsed (0x6a218 n=21 type 4 axis 0x732dc data 0x73330; 0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0). 0xffffb2a4 is read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88) - the electronic-throttle torque chain, plus 0x1b940/0x233ec/0x29d4c/0x48558.
- * RAM 0xffffb2a4 idle_air_required (float): Clamped idle air output of 0x216f8: clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)). Read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88 -> electronic throttle torque chain, terminals 1B/1C), also 0x1b940/0x233ec/0x29d4c/0x48558.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_output_clamp [high]: Final idle air output: 0xffffb2a4 = clamp(tbl 0x6a218(0xffffa838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)) via 0x2404 rx8_clamp_float; pool 0x21740-0x2175c (classified mixed_pool) words: 0x21744=0x2068 (lookup helper), 0x21748=0x6a218, 0x2174c=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404 (clamp); descriptors parsed (0x6a218 n=21 type 4 axis 0x732dc data 0x73330; 0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0). 0xffffb2a4 is read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88) - the electronic-throttle torque chain, plus 0x1b940/0x233ec/0x29d4c/0x48558.
+ * RAM 0xffffb2a4 idle_air_required (float): Clamped idle air output of 0x216f8: clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)). Read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88 -> electronic throttle torque chain, terminals 1B/1C), also 0x1b940/0x233ec/0x29d4c/0x48558.
  */
 /* ROM address: 0x000216f8; body bytes: 70; decompiled */
 
@@ -34102,9 +34153,12 @@ void FUN_00021b4c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002508c [high]: 6-byte body: word 0xd317 = `mov.l @(0x21be4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x21be4 = 0x0002508c (ROM-verified, big-endian) (ROM-verified at 0x00021b84). Direct tail-jump to `FUN_0002508c` 0x0002508c; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_0002508c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00021b84; body bytes: 6; decompiled */
 
-void thunk_FUN_0002508c(void)
+void jump_to_FUN_0002508c(void)
 
 {
   FUN_0002508c();
@@ -34410,9 +34464,12 @@ uint candidate_fuel_open_loop_condition(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00025438 [high]: 6-byte body: word 0xd30b = `mov.l @(0x22278,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x22278 = 0x00025438 (ROM-verified, big-endian) (ROM-verified at 0x00022248). Direct tail-jump to `FUN_00025438` 0x00025438; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00025438` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00022248; body bytes: 6; decompiled */
 
-void thunk_FUN_00025438(void)
+void jump_to_FUN_00025438(void)
 
 {
   FUN_00025438();
@@ -35110,9 +35167,12 @@ void FUN_00022f54(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000486a0 [high]: 6-byte body: word 0xd355 = `mov.l @(0x230d8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x230d8 = 0x000486a0 (ROM-verified, big-endian) (ROM-verified at 0x00022f80). Direct tail-jump to `FUN_000486a0` 0x000486a0; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_000486a0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00022f80; body bytes: 6; decompiled */
 
-void thunk_FUN_000486a0(void)
+void jump_to_FUN_000486a0(void)
 
 {
   FUN_000486a0();
@@ -35552,9 +35612,12 @@ void FUN_0002374e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000236cc [high]: 6-byte body: word 0xd314 = `mov.l @(0x237b8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x237b8 = 0x000236cc (ROM-verified, big-endian) (ROM-verified at 0x00023766). Direct tail-jump to `FUN_000236cc` 0x000236cc; callers in callgraph: 0x0001150e. Upstream name `thunk_FUN_000236cc` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00023766; body bytes: 6; decompiled */
 
-void thunk_FUN_000236cc(void)
+void jump_to_FUN_000236cc(void)
 
 {
   FUN_000236cc();
@@ -35937,15 +36000,6 @@ undefined1 * e2ram_fault_status_collect(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * e2ram_block_encode [high]: Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0x39a00000 = 0.00030517578125) -> 0xffffb448, ref_readValue_float of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796).
- * RAM 0xffffb40c candidate_learned_pedal_value (float): Payload u16[1]/[2] source: written by FUN_000231f0 (fmov.s at 0x233b0/0x233c2/0x233d2 via pool 0x232fa=0xb40c loaded at 0x232c2) as clamp(pedal-derived candidates, ..., 111.0), special 99.0; read back by monitors FUN_0001b6fc/0x46404 and encoded by e2ram_block_encode 0x244bc. Meaning inferred from producers -> candidate_.
- * RAM 0xffffb414 throttle_pedal_position_delta (float): Payload u16[3] source (signed encode): FUN_00023558 sets DAT_ffffb414 = 0xffffb410 - 0xffffb428 (0.0 when 0xffffccc9 set; pool 0x23590 at 0x2355c); b410 = raw pedal/throttle position counts (PIDs 0x004c/0x091a).
- * RAM 0xffffb594 filtered_battery_voltage (float): Payload u16[4] source (step 0.00030517578125): ref_filterBatteryVoltage 0x2563c writes first_order_filter(0xffffb590, 0xffffb594, 0.5, 1e-5); seeded from ADC cell 0xffff9f68 by FUN_00025600.
- * RAM 0xffffb38c candidate_throttle_base_position (float): Payload u16[19] source: FUN_00022a14 sets DAT_ffffb38c = min(0xffffb2c4, ...) or 5.0; consumed as pedal base in ref_throttlePlatePosToTorqueOutput_ 0x21a80 / FUN_000233ec (0xffffb2d4 = idle_air_required 0xffffb2a4 + b38c). Meaning inferred -> candidate_.
- * RAM 0xffffcc91 candidate_idle_learn_flag (uint8): Payload byte at 0xffffb458: written by FUN_00018aea/0x470d0/0x47cce; read by candidate_idle_learn_condition 0x160ce (mov.b via pool at 0x160ce). Idle-learn-related flag, meaning inferred -> candidate_.
- * RAM 0xffffb51e e2ram_payload_reserved (uint16): Cells 0xffffb51e/0xffffb520/0xffffb522/0xffffb524 (payload u16[8..11] sources, pools 0x24690/0x24694/0x24698/0x2469c in 0x244bc): no writer references anywhere in ROM -> constant 0, reserved.
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): candidate_learned_pedal_value_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): -throttle_pedal_position_delta_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
@@ -35954,6 +36008,15 @@ undefined1 * e2ram_fault_status_collect(void)
  * Affine encoding (16-bit): candidate_throttle_base_position_ffffb38c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): uVar3; decode = raw * 0.00390625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.1953125 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_block_encode [high]: Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0x39a00000 = 0.00030517578125) -> 0xffffb448, ref_readValue_float of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796).
+ * RAM 0xffffb40c candidate_learned_pedal_value (float): Payload u16[1]/[2] source: written by FUN_000231f0 (fmov.s at 0x233b0/0x233c2/0x233d2 via pool 0x232fa=0xb40c loaded at 0x232c2) as clamp(pedal-derived candidates, ..., 111.0), special 99.0; read back by monitors FUN_0001b6fc/0x46404 and encoded by e2ram_block_encode 0x244bc. Meaning inferred from producers -> candidate_.
+ * RAM 0xffffb414 throttle_pedal_position_delta (float): Payload u16[3] source (signed encode): FUN_00023558 sets DAT_ffffb414 = 0xffffb410 - 0xffffb428 (0.0 when 0xffffccc9 set; pool 0x23590 at 0x2355c); b410 = raw pedal/throttle position counts (PIDs 0x004c/0x091a).
+ * RAM 0xffffb594 filtered_battery_voltage (float): Payload u16[4] source (step 0.00030517578125): ref_filterBatteryVoltage 0x2563c writes first_order_filter(0xffffb590, 0xffffb594, 0.5, 1e-5); seeded from ADC cell 0xffff9f68 by FUN_00025600.
+ * RAM 0xffffb38c candidate_throttle_base_position (float): Payload u16[19] source: FUN_00022a14 sets DAT_ffffb38c = min(0xffffb2c4, ...) or 5.0; consumed as pedal base in ref_throttlePlatePosToTorqueOutput_ 0x21a80 / FUN_000233ec (0xffffb2d4 = idle_air_required 0xffffb2a4 + b38c). Meaning inferred -> candidate_.
+ * RAM 0xffffcc91 candidate_idle_learn_flag (uint8): Payload byte at 0xffffb458: written by FUN_00018aea/0x470d0/0x47cce; read by candidate_idle_learn_condition 0x160ce (mov.b via pool at 0x160ce). Idle-learn-related flag, meaning inferred -> candidate_.
+ * RAM 0xffffb51e e2ram_payload_reserved (uint16): Cells 0xffffb51e/0xffffb520/0xffffb522/0xffffb524 (payload u16[8..11] sources, pools 0x24690/0x24694/0x24698/0x2469c in 0x244bc): no writer references anywhere in ROM -> constant 0, reserved.
  */
 /* ROM address: 0x000244bc; body bytes: 1408; decompiled */
 
@@ -36768,9 +36831,12 @@ void ref_setValues_000253ac(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002529e [high]: 6-byte body: word 0xd318 = `mov.l @(0x25414,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25414 = 0x0002529e (ROM-verified, big-endian) (ROM-verified at 0x000253b2). Direct tail-jump to `FUN_0002529e` 0x0002529e; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_0002529e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000253b2; body bytes: 6; decompiled */
 
-void thunk_FUN_0002529e(void)
+void jump_to_FUN_0002529e(void)
 
 {
   FUN_0002529e();
@@ -36830,9 +36896,12 @@ undefined4 FUN_000253e8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000252a6 [high]: 6-byte body: word 0xd30a = `mov.l @(0x25434,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25434 = 0x000252a6 (ROM-verified, big-endian) (ROM-verified at 0x00025408). Direct tail-jump to `FUN_000252a6` 0x000252a6; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_000252a6` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00025408; body bytes: 6; decompiled */
 
-void thunk_FUN_000252a6(void)
+void jump_to_FUN_000252a6(void)
 
 {
   FUN_000252a6();
@@ -37352,14 +37421,14 @@ void candidate_battery_temp_model(void)
  * Descriptor 0x0006a59c: Table 2D - 154 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a5b0: Table 2D - 155 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_voltage_target_select [medium]: Target voltage 0xffffb61c: 14.2 (pool 0x749c8) when c6ac<=0 && b64c; tbl 0x6a5b0(battery temp b5c4) + clamp(b59c Â± 0.2 hysteresis, b624) in cold mode (b617); tbl 0x6a59c + min(b59c+0.2, b624) in mode b618; then 0xffffb59c = ref_alternatorPIDsomething(0x5cba4)(b61c). Coolant/IAT 145/150 C flags b64a/b64b/b64c. Called from 0x26868 via pool 0x268d8 and from 0x25790.
  * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
  * RAM 0xffffb5a4 electrical_load_filtered (float): first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00025c6c; body bytes: 1008; decompiled */
 
@@ -37579,12 +37648,12 @@ void FUN_0002633e(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
  */
 /* ROM address: 0x0002635c; body bytes: 264; decompiled */
 
@@ -37686,12 +37755,12 @@ void candidate_electrical_load_flag_calc(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a5c4: Alternator Voltage Delta - Diagnostic Request (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * alternator_duty_calc [medium]: Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_calc [medium]: Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4.
  */
 /* ROM address: 0x00026624; body bytes: 238; decompiled */
 
@@ -39692,9 +39761,12 @@ void FUN_0002897e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000270aa [high]: 6-byte body: word 0xd34d = `mov.l @(0x28ac8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x28ac8 = 0x000270aa (ROM-verified, big-endian) (ROM-verified at 0x00028992). Direct tail-jump to `FUN_000270aa` 0x000270aa; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_000270aa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00028992; body bytes: 6; decompiled */
 
-void thunk_FUN_000270aa(void)
+void jump_to_FUN_000270aa(void)
 
 {
   FUN_000270aa();
@@ -40175,9 +40247,12 @@ void ref_CANRX216TimeoutCount(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00029134 [high]: 4-byte body: word 0xa060 = `bra 0x29134` + delay-slot word 0x0009 (ROM-verified at 0x00029070). Direct tail-jump to `FUN_00029134` 0x00029134; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00029134` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00029070; body bytes: 4; decompiled */
 
-void thunk_FUN_00029134(void)
+void jump_to_FUN_00029134(void)
 
 {
   FUN_00029134();
@@ -40354,12 +40429,12 @@ void ref_getCAN201Values(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): can201_prepared_engine_rpm_ffffbb04; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * can201_encode_rpm_u16 [high]: Reads 0xffffbb04, quantizes at 0.25 RPM/count into 0xffffbafc; fault produces 0xffff, normal output capped at 0xfffe. Conversion 0x2490 divides by scalar.
  * RAM 0xffffbafc can201_encoded_rpm (uint16): 0.25 RPM/count; 0xffff fault sentinel.
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): can201_prepared_engine_rpm_ffffbb04; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00029236; body bytes: 62; decompiled */
 
@@ -40398,12 +40473,12 @@ void FUN_00029274(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): vehicle_speed_ffffbbb4; decode = raw * 0.009999999776 + (-100) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * can201_encode_vehicle_speed_u16 [high]: Reads diagnostic-correlated speed 0xffffbbb4; quantization is (speed+100)/0.01 rounded and bounded to 40000, or 0xffff on fault. Result 0xffffbb00 is packed at payload bytes 4 and 5.
  * RAM 0xffffbb00 can201_encoded_vehicle_speed (uint16): (speed+100)/0.01, normal cap 40000.
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): vehicle_speed_ffffbbb4; decode = raw * 0.009999999776 + (-100) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0002927c; body bytes: 64; decompiled */
 
@@ -41389,18 +41464,18 @@ undefined4 ref_canInitVals(void)
   ref_canSetup();
   FUN_0000de3c();
   FUN_0002a9f8();
-  thunk_FUN_00038194();
-  thunk_FUN_0002b8f4();
+  jump_to_FUN_00038194();
+  jump_to_FUN_0002b8f4();
   FUN_0002b304();
   FUN_0002b480();
   ref_canRX_216_stubs_();
   FUN_00028dea();
   FUN_00028e1a();
-  thunk_FUN_00029134();
-  thunk_FUN_00032d96();
-  thunk_FUN_0002b220();
-  thunk_FUN_0004bda2();
-  uVar1 = thunk_FUN_0002b988();
+  jump_to_FUN_00029134();
+  jump_to_FUN_00032d96();
+  jump_to_FUN_0002b220();
+  jump_to_FUN_0004bda2();
+  uVar1 = jump_to_FUN_0002b988();
   if (can_setup_error_flag_ffffa410 == '\0') {
     FUN_000291a4();
     FUN_00029414();
@@ -41594,9 +41669,12 @@ void FUN_0002a3bc(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00028db0 [high]: 6-byte body: word 0xd346 = `mov.l @(0x2a4f0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2a4f0 = 0x00028db0 (ROM-verified, big-endian) (ROM-verified at 0x0002a3d4). Direct tail-jump to `FUN_00028db0` 0x00028db0; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00028db0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002a3d4; body bytes: 6; decompiled */
 
-void thunk_FUN_00028db0(void)
+void jump_to_FUN_00028db0(void)
 
 {
   FUN_00028db0();
@@ -41604,9 +41682,12 @@ void thunk_FUN_00028db0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00028db8 [high]: 6-byte body: word 0xd346 = `mov.l @(0x2a4f4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2a4f4 = 0x00028db8 (ROM-verified, big-endian) (ROM-verified at 0x0002a3da). Direct tail-jump to `FUN_00028db8` 0x00028db8; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00028db8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002a3da; body bytes: 6; decompiled */
 
-void thunk_FUN_00028db8(void)
+void jump_to_FUN_00028db8(void)
 
 {
   FUN_00028db8();
@@ -42094,9 +42175,12 @@ uint FUN_0002ae7c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002b220 [high]: 4-byte body: word 0xa118 = `bra 0x2b220` + delay-slot word 0x0009 (ROM-verified at 0x0002afec). Direct tail-jump to `FUN_0002b220` 0x0002b220; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b220` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002afec; body bytes: 4; decompiled */
 
-void thunk_FUN_0002b220(void)
+void jump_to_FUN_0002b220(void)
 
 {
   FUN_0002b220();
@@ -42307,9 +42391,12 @@ void FUN_0002b264(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002b8f4 [high]: 4-byte body: word 0xa32c = `bra 0x2b8f4` + delay-slot word 0x0009 (ROM-verified at 0x0002b298). Direct tail-jump to `FUN_0002b8f4` 0x0002b8f4; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b8f4` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002b298; body bytes: 4; decompiled */
 
-void thunk_FUN_0002b8f4(void)
+void jump_to_FUN_0002b8f4(void)
 
 {
   FUN_0002b8f4();
@@ -42804,9 +42891,12 @@ void FUN_0002b8fe(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002b988 [high]: 4-byte body: word 0xa018 = `bra 0x2b988` + delay-slot word 0x0009 (ROM-verified at 0x0002b954). Direct tail-jump to `FUN_0002b988` 0x0002b988; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b988` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002b954; body bytes: 4; decompiled */
 
-void thunk_FUN_0002b988(void)
+void jump_to_FUN_0002b988(void)
 
 {
   FUN_0002b988();
@@ -44781,14 +44871,14 @@ void FUN_0002d5e4(void)
  * Descriptor 0x0006a874: Table 2D - 339 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a8bc: Table 3D - 111 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_control_output_law [high]: bd00 = clamp(bd04*bd18*0.01, -100, 100): bd04 from band-selected 2-D tables 0x6a844-0x6a874 (0xffffcf1c gear bands 2.0-6.0) of speed error 0xffffbd14 = 0xffffbfa0-0xffffbfa4; bd18 from 3-D tbl 0x6a8bc on (bfa0, cf1c); zeroed when |error|>=100 and TP% 0xffffa9b4 <= 0xffffbcf8. Percent-domain output folded into 0xffffbcf8 by 0x2df62. Emulator: vss=100, target=90, band=3 -> bd00=-23.93. Called from batch 0x2e5c6 (jsr 0x2e638, pool 0x2e78c).
  * RAM 0xffffcf1c current_gear_float (float): Band selector = float(current gear 0xffffbc3d), produced by 0x4de1c (store pool 0x4dedc=0xcf1c at 0x4de24, jsr 0x2500 decode_u88_affine(1.0,0,bc3d)); config byte ROM[0x7d07f]=0x00 disables the compiled-in switch-code band map (cf47->0.0, cf48->2.0..cf4c->6.0). Bands 2.0-6.0 in 0x2d83c/0x2d638 tables = gears 2-6. Pool scan: only 3 sites (0x2d658, 0x2d86c readers, 0x4de24 writer). Emulator: gear 0-6 -> 0.0-6.0 regardless of switch flags.
  * RAM 0xffffbfa4 cruise_target_speed_kmh (float): Cruise target speed km/h written by 0x32614 clamp [27, 100/200]; error reference: 0xffffbd14 = 0xffffbfa0-0xffffbfa4 in 0x2d638, 8.0 delta gate on 0xffffbd1c in 0x2d83c.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0002d638; body bytes: 372; decompiled */
 
@@ -44887,12 +44977,12 @@ LAB_0002d77c:
  * Descriptor 0x0006a90c: Table 3D - 115 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a920: Table 3D - 116 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * cruise_set_speed_adjust_integrator [high]: Integrates cruise set-speed adjustment 0xffffbd08 clamped [0,100]: +/- steps from 3-D tbl descriptors 0x6a8e4/0x6a8f8 (nx=2 ny=5) and 0x6a8d0/0x6a90c/0x6a920 (nx=10/9/5 ny=5; ax 0x77198-0x77410 ay 0x771c0-0x77424 data 0x771d4-0x77438 type 0; ROM bytes verified) on (0xffffbfa4/0xffffbfa0, 0xffffcf1c); band-selected 2-D ramps tbl 0x6a880-0x6a8b0 (n=31, data 0x76c50-0x77030) by 0xffffcf1c bands 2.0/3.0/4.0/5.0/6.0; gates on cruise flags 0xffffbfb0-0xffffbfba, delta 8.0 on 0xffffbd1c = 0xffffbfa0-0xffffbfa4, 0xffffbccc, 0xffffbbc8/bbc9 (0xfd/0xfe); sets accel/decel flags 0xffffbcfc/0xffffbcfd. Consumer 0x2df62: 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100). Called from 0x2e5c6 (jsr via pool 0x2e790 at 0x2e63c), itself called from slow task 0x11534 (task[18] entry 0x64e8).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_set_speed_adjust_integrator [high]: Integrates cruise set-speed adjustment 0xffffbd08 clamped [0,100]: +/- steps from 3-D tbl descriptors 0x6a8e4/0x6a8f8 (nx=2 ny=5) and 0x6a8d0/0x6a90c/0x6a920 (nx=10/9/5 ny=5; ax 0x77198-0x77410 ay 0x771c0-0x77424 data 0x771d4-0x77438 type 0; ROM bytes verified) on (0xffffbfa4/0xffffbfa0, 0xffffcf1c); band-selected 2-D ramps tbl 0x6a880-0x6a8b0 (n=31, data 0x76c50-0x77030) by 0xffffcf1c bands 2.0/3.0/4.0/5.0/6.0; gates on cruise flags 0xffffbfb0-0xffffbfba, delta 8.0 on 0xffffbd1c = 0xffffbfa0-0xffffbfa4, 0xffffbccc, 0xffffbbc8/bbc9 (0xfd/0xfe); sets accel/decel flags 0xffffbcfc/0xffffbcfd. Consumer 0x2df62: 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100). Called from 0x2e5c6 (jsr via pool 0x2e790 at 0x2e63c), itself called from slow task 0x11534 (task[18] entry 0x64e8).
  */
 /* ROM address: 0x0002d83c; body bytes: 1444; decompiled_with_warnings */
 
@@ -45935,9 +46025,12 @@ void FUN_0002f0c6(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0002e800 [high]: 6-byte body: word 0xd310 = `mov.l @(0x2f160,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2f160 = 0x0002e800 (ROM-verified, big-endian) (ROM-verified at 0x0002f11c). Direct tail-jump to `FUN_0002e800` 0x0002e800; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_0002e800` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0002f11c; body bytes: 6; decompiled */
 
-void thunk_FUN_0002e800(void)
+void jump_to_FUN_0002e800(void)
 
 {
   FUN_0002e800();
@@ -47082,7 +47175,7 @@ void cranking_pulse_adder(void)
  * RAM 0xffffbf1c fuel_coolant_compensation (float): bf1c = lookup_2d tbl DAT_0006ac38(coolant); added via min(bf1c, c00c + open_loop_fuel_target b120) in bf14.
  * RAM 0xffffbf14 fuel_correction_sum (float): bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; scaled by FUN_0005c024 into beac.
  * RAM 0xffffbeac fuel_volume_scaled (float): beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0.
- * RAM 0xffffbeb0 fuel_volume_final (float): beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_fuel_volume_final_ffffbeb0.
+ * RAM 0xffffbeb0 fuel_volume_final (float): beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0.
  */
 /* ROM address: 0x000306e8; body bytes: 248; decompiled_with_warnings */
 
@@ -47154,6 +47247,10 @@ char closed_loop_fuel_trim(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ac4c: Table 2D - 182 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * calculate_fuel_amount_per_rotation [high]: Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios.
  * RAM 0xffffbec8 fuel_amount_per_rotation_a (float): bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation.
@@ -47163,10 +47260,6 @@ char closed_loop_fuel_trim(void)
  * RAM 0xffffbee0 fuel_amount_per_rotation_e (float): bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93.
  * RAM 0xffffbee4 fuel_ratio_a (float): bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts.
  * RAM 0xffffbee8 fuel_ratio_b (float): bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00030948; body bytes: 346; decompiled */
 
@@ -48071,16 +48164,16 @@ void apv_control_task(void)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * apv_target_condition [medium]: Computes APV target state bf8d from RPM >= 150/200 (bf99), counter bf92 > 0x32, aa68; uses MAF a9ec and coolant a98c snapshots.
  * RAM 0xffffbf8d apv_target_state (uint8): APV target condition from RPM/counter/aa68.
  * RAM 0xffffbf8e apv_target_state_prev (uint8): previous bf8d.
  * RAM 0xffffbf92 apv_counter_92 (uint8): > 0x32 term in APV target logic.
  * RAM 0xffffbf99 apv_rpm_low_flag (uint8): RPM >= 200 (clear below 150).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00031c6c; body bytes: 504; decompiled */
 
@@ -48573,13 +48666,13 @@ void FUN_0003242c(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * cruise_set_speed_latch [high]: Cruise set-speed state machine: latches set speed IN KM/H into learned readValue cell 0xffff866c (write site 0x32624, pool 0x32662), clamp [0, 200] (100 when 0xffffbd49==1) and floor 27.0 km/h; writes cruise target 0xffffbfa4 clamp [27, 100/200]. Emulator: vss 80 -> 866c=80.0, 250 -> 200.0, 10 -> 27.0. Called from batch 0x2e5c6 (jsr 0x2e620, pool 0x2e77c).
- * RAM 0xffff866c cruise_set_speed_kmh (float): Learned readValue cell with the cruise SET SPEED IN KM/H, written by 0x32614 (site 0x32624, pool 0x32662) clamped [27,200] (100 when 0xffffbd49==1); read by 0x32104/0x3290c/0x329fc/0x2e3dc/0x4ca7e (3.2 km/h tolerance vs 0xffffbfa0) and 0x2d83c. Emulator: vss 80 -> 80.0, 250 -> 200.0, 10 -> 27.0 km/h.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_set_speed_latch [high]: Cruise set-speed state machine: latches set speed IN KM/H into learned readValue cell 0xffff866c (write site 0x32624, pool 0x32662), clamp [0, 200] (100 when 0xffffbd49==1) and floor 27.0 km/h; writes cruise target 0xffffbfa4 clamp [27, 100/200]. Emulator: vss 80 -> 866c=80.0, 250 -> 200.0, 10 -> 27.0. Called from batch 0x2e5c6 (jsr 0x2e620, pool 0x2e77c).
+ * RAM 0xffff866c cruise_set_speed_kmh (float): Learned readValue cell with the cruise SET SPEED IN KM/H, written by 0x32614 (site 0x32624, pool 0x32662) clamped [27,200] (100 when 0xffffbd49==1); read by 0x32104/0x3290c/0x329fc/0x2e3dc/0x4ca7e (3.2 km/h tolerance vs 0xffffbfa0) and 0x2d83c. Emulator: vss 80 -> 80.0, 250 -> 200.0, 10 -> 27.0 km/h.
  */
 /* ROM address: 0x00032614; body bytes: 600; decompiled_with_warnings */
 
@@ -49033,9 +49126,12 @@ int FUN_00032c6e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00032d96 [high]: 4-byte body: word 0xa039 = `bra 0x32d96` + delay-slot word 0x0009 (ROM-verified at 0x00032d20). Direct tail-jump to `FUN_00032d96` 0x00032d96; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00032d96` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00032d20; body bytes: 4; decompiled */
 
-void thunk_FUN_00032d96(void)
+void jump_to_FUN_00032d96(void)
 
 {
   FUN_00032d96();
@@ -49135,16 +49231,16 @@ void FUN_00032da0(void)
  * Descriptor 0x0006ae58: Fuel Injection - Warmup Fueling - Engine Speed Based (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006ae74: Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault) (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * warmup_fueling_compensation [high]: c014 = tbl 0x6ae28 'Warmup Fueling - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, catalyst-temp model); c018 = 3D tbl 0x6ae58 (or coolant-fault variant 0x6ae74)(rpm, coolant); c00c = c014 + c018; c010 = warmup-complete flag (catalyst-temp model >= 5 C, or >= 200 C when ce33).
  * RAM 0xffffc010 warmup_complete_flag (uint8): c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair.
  * RAM 0xffffc014 warmup_load_multiplier (float): c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model).
  * RAM 0xffffc018 warmup_rpm_multiplier (float): c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant).
  * RAM 0xffffc00c warmup_enrichment_total (float): c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00032e08; body bytes: 166; decompiled */
 
@@ -49397,12 +49493,12 @@ void FUN_00033138(void)
  * Descriptor 0x0006af2c: Ignition Leading - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006af40: Table 2D - 206 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
  */
 /* ROM address: 0x0003337c; body bytes: 392; decompiled */
 
@@ -49582,15 +49678,15 @@ void FUN_0003365a(void)
  * Descriptor 0x0006b270: Ignition Timing Threshold A - Knock Retard Reset Off (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b288: Ignition Timing Threshold B - Knock Retard Reset Off (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_threshold_setup [high]: 3D load/RPM level tables 0x6b2b8/0x6b2f0/0x6b2d4/0x6b304 -> a328; raw u16 thresholds 0x6b270/0x6b27c and 0x6b288/0x6b294 -> c090/c092 -> a37e/a37c (defaults 94/193); stability check -> c05d and c0ac hold counter; latches c078 = a324.
  * RAM 0xffffa324 knock_detected (uint8): Set by 0xc486: a364 <= a330 (integrated knock level over threshold); latched into c078 by 0x336c4.
  * RAM 0xffffc092 knock_threshold_b_raw (uint16): Raw u16 threshold B from tbl 0x6b288 (or alt 0x6b294 when cd60 set); moved to a37c.
  * RAM 0xffffc0ac knock_transient_hold_counter (uint16): Counts down tbl 0x6b264 (raw u8 << 1 = 20 cycles) while conditions are stable; expiry sets c05d=1.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000336c4; body bytes: 510; decompiled */
 
@@ -50063,6 +50159,10 @@ void ref_getThrottlePositionFault__(void)
  * Descriptor 0x0006b160: Table 3D - 79 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b17c: Table 3D - 80 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * load_delta_enrichment [high]: c138 = tbl 0x6b124(load delta c158); c13c = tbl 0x6b0c0(load); c134 = c138*1.0*c13c when c158 >= 0 else 0; c140 = 3D tip-in tbl 0x6b160 (or 0x6b17c when warmup c010) (rpm, coolant); injectors off (a42c) -> c140 = 0; c110 decays toward 1.0 at -0.0078125 when c14c set.
  * RAM 0xffffc158 load_delta_input (float): c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0.
@@ -50072,10 +50172,6 @@ void ref_getThrottlePositionFault__(void)
  * RAM 0xffffc110 tip_in_decay (float): c110 = max(c110 - 0.0078125, 1.0) when c14c set.
  * RAM 0xffffc140 tip_in_enrichment (float): c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off.
  * RAM 0xffffc14c tip_in_mode_flag (uint8): c14c gates the c110 decay in load_delta_enrichment.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00033ec4; body bytes: 164; decompiled */
 
@@ -50452,12 +50548,12 @@ undefined4 * FUN_00034364(void)
  * Descriptor 0x0006b318: Table 2D - 228 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b32c: Table 2D - 229 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
  */
 /* ROM address: 0x00034650; body bytes: 356; decompiled */
 
@@ -50722,9 +50818,12 @@ void FUN_00034a04(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00034a64 [high]: 6-byte body: word 0xd30c = `mov.l @(0x34a5c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x34a5c = 0x00034a64 (ROM-verified, big-endian) (ROM-verified at 0x00034a28). Direct tail-jump to `FUN_00034a64` 0x00034a64; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00034a64` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00034a28; body bytes: 6; decompiled */
 
-void thunk_FUN_00034a64(void)
+void jump_to_FUN_00034a64(void)
 
 {
   FUN_00034a64();
@@ -50732,9 +50831,12 @@ void thunk_FUN_00034a64(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00034a6c [high]: 6-byte body: word 0xd30c = `mov.l @(0x34a60,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x34a60 = 0x00034a6c (ROM-verified, big-endian) (ROM-verified at 0x00034a2e). Direct tail-jump to `FUN_00034a6c` 0x00034a6c; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00034a6c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00034a2e; body bytes: 6; decompiled */
 
-void thunk_FUN_00034a6c(void)
+void jump_to_FUN_00034a6c(void)
 
 {
   FUN_00034a6c();
@@ -51637,39 +51739,39 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
   param_1 = param_1 & 0xff;
   if (param_1 != 1) {
     if (param_1 == 2) {
-      uVar1 = candidate_e2ram_write_thunk(2,&DAT_ffffc26c,8);
+      uVar1 = e2ram_shadow_byte_write_trampoline(2,&DAT_ffffc26c,8);
       return uVar1;
     }
     if (param_1 == 0xd) {
-      uVar1 = candidate_e2ram_write_thunk(0x1e,&DAT_ffffc282,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&DAT_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 3) {
-      uVar1 = candidate_e2ram_write_thunk(0,&e2ram_param_block_ffffc268,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0,&e2ram_param_block_ffffc268,1);
       return uVar1;
     }
     if (param_1 == 4) {
       e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
       e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
-      uVar1 = candidate_e2ram_write_thunk(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
       return uVar1;
     }
     if (param_1 == 5) {
       e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-      uVar1 = candidate_e2ram_write_thunk(0x13,&DAT_ffffc278,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x13,&DAT_ffffc278,1);
       return uVar1;
     }
     if (param_1 == 6) {
-      uVar1 = candidate_e2ram_write_thunk(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
       return uVar1;
     }
     if (param_1 == 7) {
       e2ram_shadow_byte_write(0x16,&DAT_ffffc27a,2);
-      uVar1 = candidate_e2ram_write_thunk(0x18,&DAT_ffffc27c,2);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x18,&DAT_ffffc27c,2);
       return uVar1;
     }
     if (param_1 == 8) {
-      uVar1 = candidate_e2ram_write_thunk(0x14,&DAT_ffffc279,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x14,&DAT_ffffc279,1);
       return uVar1;
     }
     if (param_1 == 0xc) {
@@ -51685,7 +51787,7 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
       e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
       e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
       e2ram_shadow_byte_write(0x1d,&DAT_ffffc281,1);
-      uVar1 = candidate_e2ram_write_thunk(0x1e,&DAT_ffffc282,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&DAT_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 9) {
@@ -51693,19 +51795,19 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
       e2ram_shadow_byte_write(0xe,&inferred_ram_c1d3_ffffc1d3_ffffc1d3,1);
       e2ram_shadow_byte_write(0x10,&inferred_ram_c1d2_ffffc1d2_ffffc1d2,1);
       e2ram_shadow_byte_write(0x12,&inferred_ram_c1d4_ffffc1d4_ffffc1d4,1);
-      uVar1 = candidate_e2ram_write_thunk(0x13,&DAT_ffffc278,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x13,&DAT_ffffc278,1);
       return uVar1;
     }
     if (param_1 == 10) {
       e2ram_shadow_byte_write(0x1a,&DAT_ffffc27e,1);
       e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
       e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
-      uVar1 = candidate_e2ram_write_thunk(0x1d,&DAT_ffffc281,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x1d,&DAT_ffffc281,1);
       return uVar1;
     }
     if (param_1 != 0xb) {
       if (param_1 == 0xe) {
-        uVar1 = candidate_e2ram_write_thunk(0xd,&DAT_ffffc276,1);
+        uVar1 = e2ram_shadow_byte_write_trampoline(0xd,&DAT_ffffc276,1);
         return uVar1;
       }
       if (param_1 != 0xf) {
@@ -51731,25 +51833,25 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
         }
         return param_1;
       }
-      uVar1 = candidate_e2ram_write_thunk(0xf,&DAT_ffffc277,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0xf,&DAT_ffffc277,1);
       return uVar1;
     }
     e2ram_shadow_byte_write(2,&DAT_ffffc26c,8);
   }
-  uVar1 = candidate_e2ram_write_thunk(10,&inferred_ram_c274_ffffc274_ffffc274,1);
+  uVar1 = e2ram_shadow_byte_write_trampoline(10,&inferred_ram_c274_ffffc274_ffffc274,1);
   return uVar1;
 }
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * e2ram_write_thunk [medium]: 4-byte thunk calling the write area via register-indirect call; called from 0x35a8c (callgraph 0x35a8c -> 0x35d36). Inherited ref_writeToE2RAMAreaTHUNK confirmed.
+ * e2ram_shadow_byte_write_trampoline [high]: 14-byte body (words 4e0b 0009 4f26 6cf6 6df6 000b 6ef6 at 0x35d36, ROM-verified; byte-exact match with 60E0FC00 0x36456): `jsr @r14; nop; lds.l @r15+,pr; mov.l @r15+,r12; mov.l @r15+,r13; rts; mov.l @r15+,r14`. Sole caller 0x35a8c loads r14 exactly once, at 0x35a94 `mov.l @(0x35b74,pc),r14` with pool 0x35b74 = 0x00037ea4 (e2ram_shadow_byte_write), and all 14 dispatch arms `bra 0x35d36`; the epilogue pops the frame 0x35a8c pushed (r14/r13/r12/pr), so this is a tail-call trampoline to e2ram_shadow_byte_write 0x37ea4, not an unknown indirect call. Target proven -> promoted from candidate_ to a high-confidence label; inherited ref_writeToE2RAMAreaTHUNK_ was a misnomer (the real ref_writeToE2RAMArea_INDEX_ADDR_LEN is 0x37ea4).
  */
 /* ROM address: 0x00035d36; body bytes: 14; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00036456 (14 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void candidate_e2ram_write_thunk(void)
+void e2ram_shadow_byte_write_trampoline(void)
 
 {
   code *unaff_r14;
@@ -53638,9 +53740,12 @@ void FUN_00037fea(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00037fda [high]: 6-byte body: word 0xd30d = `mov.l @(0x380b4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x380b4 = 0x00037fda (ROM-verified, big-endian) (ROM-verified at 0x0003807c). Direct tail-jump to `FUN_00037fda` 0x00037fda; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00037fda` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0003807c; body bytes: 6; decompiled */
 
-void thunk_FUN_00037fda(void)
+void jump_to_FUN_00037fda(void)
 
 {
   FUN_00037fda();
@@ -53708,9 +53813,12 @@ uint ref_can41TXPack(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00038194 [high]: 4-byte body: word 0xa03c = `bra 0x38194` + delay-slot word 0x0009 (ROM-verified at 0x00038118). Direct tail-jump to `FUN_00038194` 0x00038194; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00038194` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00038118; body bytes: 4; decompiled */
 
-void thunk_FUN_00038194(void)
+void jump_to_FUN_00038194(void)
 
 {
   FUN_00038194();
@@ -57789,13 +57897,13 @@ uint FUN_0003cf7e(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b61c: Table 2D - 256 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * o2_monitor_integrator [high]: c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0. | promoted to high (binary-level re-verification (this pass))
- * RAM 0xffffa42c engine_injectors_off (uint8): Injectors-off flag checked by the 0x3d010 O2 monitor integrator.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * o2_monitor_integrator [high]: c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0. | promoted to high (binary-level re-verification (this pass))
+ * RAM 0xffffa42c engine_injectors_off (uint8): Injectors-off flag checked by the 0x3d010 O2 monitor integrator.
  */
 /* ROM address: 0x0003d010; body bytes: 286; decompiled_with_warnings */
 
@@ -58812,19 +58920,19 @@ uint FUN_0003de70(void)
     DAT_ffffc63c = 0;
     ref_updateMemoryAtAddress_16bit_ADDR_VAL(&DAT_ffff8704,0);
     FUN_00060318();
-    thunk_FUN_0002529e();
-    thunk_FUN_00028db0();
+    jump_to_FUN_0002529e();
+    jump_to_FUN_00028db0();
     FUN_00019dd2();
     FUN_0002e70a();
     FUN_00039d96();
     FUN_0002148e();
-    thunk_FUN_00013814();
-    thunk_FUN_00015f74();
+    jump_to_FUN_00013814();
+    jump_to_FUN_00015f74();
     FUN_00016fce();
     FUN_0003eb5e();
     FUN_00023094();
     FUN_0002897e();
-    thunk_FUN_00034a64();
+    jump_to_FUN_00034a64();
     FUN_0005a2c8();
     FUN_0005a3d8();
     FUN_0005a662();
@@ -58878,19 +58986,19 @@ undefined4 FUN_0003e020(void)
   sVar2 = ref_readValue_16bit_ADDRESS_VAL(&DAT_ffff8704,0);
   if (sVar2 == -0x55ab) {
     FUN_000602e0();
-    thunk_FUN_000252a6();
-    thunk_FUN_00028db8();
+    jump_to_FUN_000252a6();
+    jump_to_FUN_00028db8();
     FUN_00019e10();
     FUN_0002e718();
     FUN_00039f64();
     FUN_0002149c();
-    thunk_FUN_0001381e();
-    thunk_FUN_00015f8e();
+    jump_to_FUN_0001381e();
+    jump_to_FUN_00015f8e();
     FUN_00016fdc();
-    thunk_FUN_0003e300();
+    jump_to_FUN_0003e300();
     FUN_000230ae();
-    thunk_FUN_000270aa();
-    thunk_FUN_00034a6c();
+    jump_to_FUN_000270aa();
+    jump_to_FUN_00034a6c();
     FUN_0005a2b6();
     FUN_0005a3c6();
     FUN_0005a63a();
@@ -59530,9 +59638,12 @@ void FUN_0003eb5e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0003e300 [high]: 6-byte body: word 0xd312 = `mov.l @(0x3ebb8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x3ebb8 = 0x0003e300 (ROM-verified, big-endian) (ROM-verified at 0x0003eb6c). Direct tail-jump to `FUN_0003e300` 0x0003e300; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_0003e300` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0003eb6c; body bytes: 6; decompiled */
 
-void thunk_FUN_0003e300(void)
+void jump_to_FUN_0003e300(void)
 
 {
   FUN_0003e300();
@@ -60267,13 +60378,13 @@ undefined2 * FUN_0003fa18(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b66c: Table 3D - 123 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * o2_response_monitor_accumulate [high]: 4-channel filtered-lambda/AFR delta accumulator: snapshots 0xffffc708/0c/10/14, shifts 10-entry rings 0xffffc7f4 (float) and 0xffffc870 (u16), reloads per-channel counters 0xffffc7ba-0xffffc7d8 from 3-D tbl descriptor 0x6b66c (nx=9 ny=9 ax=0x7ad48 ay=0x7ad6c data=0x7ad90 type=0, ROM bytes verified) on (engine_load 0xffffc0b4, engine_speed_rpm 0xffffb548); accumulates max/min deltas 0xffffc724-0xffffc77c, sign/deviation bits 0xffffc7de-0xffffc7e5, tolerance band float 1e-5 (0x3727c5ac) via mova pool 0x41220 (refs 0x41140/0x41156/0x4116a/0x4117e). Outputs ratios 0xffffc6f0/c6f4/c780/c784 and flag 0xffffc701, consumed by 0x4128e. Called from slow-task batch 0x38f3e (jsr at 0x38f74; pool word 0x390b0 = 0x3fb9e). Channel inputs filtered by 0x3f924 (called from 0x38dca).
- * RAM 0xffffc710 o2_channel_lambda_slow (float): First-order filtered actual lambda 0xffffadec, factor 0.1; one of the four channels delta-accumulated in 0x3fb9e.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * o2_response_monitor_accumulate [high]: 4-channel filtered-lambda/AFR delta accumulator: snapshots 0xffffc708/0c/10/14, shifts 10-entry rings 0xffffc7f4 (float) and 0xffffc870 (u16), reloads per-channel counters 0xffffc7ba-0xffffc7d8 from 3-D tbl descriptor 0x6b66c (nx=9 ny=9 ax=0x7ad48 ay=0x7ad6c data=0x7ad90 type=0, ROM bytes verified) on (engine_load 0xffffc0b4, engine_speed_rpm 0xffffb548); accumulates max/min deltas 0xffffc724-0xffffc77c, sign/deviation bits 0xffffc7de-0xffffc7e5, tolerance band float 1e-5 (0x3727c5ac) via mova pool 0x41220 (refs 0x41140/0x41156/0x4116a/0x4117e). Outputs ratios 0xffffc6f0/c6f4/c780/c784 and flag 0xffffc701, consumed by 0x4128e. Called from slow-task batch 0x38f3e (jsr at 0x38f74; pool word 0x390b0 = 0x3fb9e). Channel inputs filtered by 0x3f924 (called from 0x38dca).
+ * RAM 0xffffc710 o2_channel_lambda_slow (float): First-order filtered actual lambda 0xffffadec, factor 0.1; one of the four channels delta-accumulated in 0x3fb9e.
  */
 /* ROM address: 0x0003fb9e; body bytes: 4884; decompiled */
 
@@ -60978,6 +61089,10 @@ void o2_response_monitor_accumulate(void)
  * Descriptor 0x0006b6b8: Table 3D - 89 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b6d4: Table 3D - 90 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * o2_response_monitor_evaluate [high]: Evaluates the 0x3fb9e accumulators: thresholds from 3-D tbl descriptors 0x6b680/0x6b69c/0x6b6b8/0x6b6d4 (load,rpm; ROM bytes verified) -> 0xffffc6f8/c6fc/c798/c79c; ratio<=threshold sets pass flags 0xffffc7ea-0xffffc7e9, else fail flags 0xffffc7e6-0xffffc7e9; any-fail -> 0x5fd38(0x1c,1) pending, all-four-fail -> 0x5fd38(0x1c,2) confirmed. Fault id 0x1c -> id2slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133 front HO2S slow response (data/dtc/60E15120_N3J1E.tsv slot 1b). Mode-06 test results written by 0x58262 (0xffffc6f0) and 0x5831c (0xffffc6f4) via 0x5904a. Called from 0x38f3e (jsr at 0x38f7a).
  * RAM 0xffffc6f0 o2_monitor_ratio_ch0 (float): Accumulated amplitude ratio channel 0 (0xffffc758/0xffffc728) from 0x3fb9e; compared vs threshold 0xffffc6f8 in 0x4128e; mode-06 result via 0x58262 (encode step 0.0039062).
@@ -60986,10 +61101,6 @@ void o2_response_monitor_accumulate(void)
  * RAM 0xffffc701 o2_monitor_fluctuation_detected (uint8): Set by 0x3fb9e when the counter window completes (0xffffc904==0); gates the ratio evaluation in 0x4128e.
  * RAM 0xffffc704 o2_monitor_accum_gate (uint8): Delta-accumulation gate set in o2_response_monitor_accumulate 0x3fb9e (every 2nd run, c908, when 0xffffc700==1 && 0xffffc7b0==0 && 0xffffc7b8 != 0x32; cleared when 0xffffd1c5 set; pool read at 0x413ae in 0x4128e). With 0xffffae21 it gates the threshold running averages 0xffffc6f8/c6fc/c798/c79c (asm 0x413ae-0x413c2).
  * RAM 0xffffae21 o2_monitor_enable (uint8): O2-monitor enable computed by FUN_0001d1ca: 1 when 0xffffc700==1 OR (closed_loop_active 0xffffae1f AND coolant 0xffffa98c >= 150.0 AND 0xffffad24==1 AND 0xffffae20==0); also gates the half-period timers 0xffffae1a/0xffffae1c (0x1d2e2). Read at 0x413ba in 0x4128e (pool 0x41480).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0004128e; body bytes: 610; decompiled */
 
@@ -63211,14 +63322,14 @@ void ref_throttleLiftInitStuff(void)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_leading_filter [high]: was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da.
  * RAM 0xffffca9c cranking_angle_timing_leading_filtered (float): 
  * RAM 0xffffcaa4 cranking_angle_timing_leading_raw (float): 
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00043934; body bytes: 126; decompiled */
 
@@ -63257,14 +63368,14 @@ uint cranking_timing_leading_filter(void)
 }
 
 
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_trailing_filter [high]: Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6.
  * RAM 0xffffcaa0 cranking_angle_timing_trailing_filtered (float): 
  * RAM 0xffffcaa8 cranking_angle_timing_trailing_raw (float): 
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000439b2; body bytes: 126; decompiled */
 
@@ -67889,9 +68000,12 @@ void FUN_00049080(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00049112 [high]: 4-byte body: word 0xa00b = `bra 0x49112` + delay-slot word 0x0009 (ROM-verified at 0x000490f8). Direct tail-jump to `FUN_00049112` 0x00049112; callers in callgraph: 0x00019640. Upstream name `thunk_FUN_00049112` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000490f8; body bytes: 4; decompiled */
 
-uint thunk_FUN_00049112(void)
+uint jump_to_FUN_00049112(void)
 
 {
   uint uVar1;
@@ -70631,9 +70745,12 @@ void ref_calcDiagFuelInjectorTrim(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_0004bda2 [high]: 4-byte body: word 0xa02d = `bra 0x4bda2` + delay-slot word 0x0009 (ROM-verified at 0x0004bd44). Direct tail-jump to `FUN_0004bda2` 0x0004bda2; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0004bda2` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0004bd44; body bytes: 4; decompiled */
 
-void thunk_FUN_0004bda2(void)
+void jump_to_FUN_0004bda2(void)
 
 {
   FUN_0004bda2();
@@ -71395,13 +71512,13 @@ undefined1 * FUN_0004c9b2(void)
  * Descriptor 0x0006bc64: Table 2D - 402 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc70: Table 2D - 403 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * cruise_speed_error_filter_stage [high]: Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c.
- * RAM 0xffffcee4 cruise_speed_error_mean12 (float): Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_speed_error_filter_stage [high]: Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c.
+ * RAM 0xffffcee4 cruise_speed_error_mean12 (float): Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
  */
 /* ROM address: 0x0004ca7e; body bytes: 2200; decompiled_with_warnings */
 
@@ -71790,14 +71907,14 @@ void FUN_0004d4a6(void)
  * Descriptor 0x0006bc1c: Table 2D - 396 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc34: Table 2D - 398 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_switch_plausibility_timers [high]: Per-switch countdown timers 0xffffcf51/52/54/55/57/58/5a/5b armed at 0x3e when filtered error 0xffffcef4 exceeds channel max + 1.5 or vss tables 0x6bbec/0x6bc04/0x6bc1c/0x6bc34, decremented while error high, cleared when 0xffffcf34==0; expiry clears latches 0xffffcf3a/3c/3e/40. Pool scan: cf51-cf5b referenced only inside the cruise cluster (0x4ca7e/0x4d4a6/0x4d700) - no external consumer. Called from batch 0x2e692 (jsr 0x2e6d4, pool 0x2e7e4).
  * RAM 0xffffcef4 cruise_filtered_speed_error (float): Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
  * RAM 0xffffcf34 cruise_enable_flag (uint8): Set by 0x4c896 = (0xffffbced && 0xffffbcf8 >= 0xffffa9b4): cruise enabled while cruise output percent >= TP1 percent (pedal override). Emulator: bcf8=50 < a9b4=80 -> 0; bcf8=90 -> 1.
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0004d700; body bytes: 896; decompiled */
 
@@ -78294,9 +78411,12 @@ uint FUN_00054cf8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054d90 [high]: 4-byte body: word 0xa034 = `bra 0x54d90` + delay-slot word 0x0009 (ROM-verified at 0x00054d24). Direct tail-jump to `FUN_00054d90` 0x00054d90; callers in callgraph: 0x00065980. Upstream name `thunk_FUN_00054d90` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00054d24; body bytes: 4; decompiled */
 
-void thunk_FUN_00054d90(void)
+void jump_to_FUN_00054d90(void)
 
 {
   FUN_00054d90();
@@ -78787,12 +78907,12 @@ undefined4 diag_ol_status_low_byte(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_read_calc_load_pct [high]: PID 0x04: load*100/max*0.392157, 0xff if max~0
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_calc_load_pct [high]: PID 0x04: load*100/max*0.392157, 0xff if max~0
  */
 /* ROM address: 0x000553dc; body bytes: 78; decompiled */
 
@@ -78821,11 +78941,11 @@ undefined4 diag_read_calc_load_pct(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f70 = coolant_temperature. Direct C dataflow to handler 0x00056940; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_ect_c [high]: PID 0x05: coolant_temperature_ffff9f70-40
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): coolant_temperature_ffff9f70; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_ect_c [high]: PID 0x05: coolant_temperature_ffff9f70-40
  */
 /* ROM address: 0x0005542a; body bytes: 22; decompiled */
 
@@ -78855,12 +78975,12 @@ undefined4 diag_encode_stft_lambda(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ltft [high]: PID 0x07: ffffb0d0*100*0.78125-100
  * RAM 0xffffb0d0 inferred_ltft_bank1_ffffb0d0 (float): PID 0x07: x*100*0.78125-100
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055466; body bytes: 30; decompiled */
 
@@ -78877,11 +78997,11 @@ undefined4 diag_encode_ltft(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffb548 = engine_speed_rpm. Direct C dataflow to handler 0x00056982; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_rpm [high]: PID 0x0c: rpm*0.25
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.25 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_rpm [high]: PID 0x0c: rpm*0.25
  */
 /* ROM address: 0x00055484; body bytes: 22; decompiled */
 
@@ -78898,11 +79018,11 @@ undefined4 diag_encode_rpm(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffbbb4 = vehicle_speed. Direct C dataflow to handler 0x00056998; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_vss [high]: PID 0x0d: vss*1
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): vehicle_speed_ffffbbb4; decode = raw * 1 + (0) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_vss [high]: PID 0x0d: vss*1
  */
 /* ROM address: 0x0005549a; body bytes: 20; decompiled */
 
@@ -78919,11 +79039,11 @@ undefined4 diag_encode_vss(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffa630 = leading_ignition_timing. Direct C dataflow to handler 0x000569ae; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_leading_timing [high]: PID 0x0e: lead*0.5-64
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): leading_ignition_timing_ffffa630; decode = raw * 0.5 + (-64) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_leading_timing [high]: PID 0x0e: lead*0.5-64
  */
 /* ROM address: 0x000554ae; body bytes: 24; decompiled */
 
@@ -78940,11 +79060,11 @@ undefined4 diag_encode_leading_timing(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f60 = intake_air_temperature. Direct C dataflow to handler 0x000569c4; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_iat [high]: PID 0x0f: iat-40
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): intake_air_temperature_ffff9f60; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_iat [high]: PID 0x0f: iat-40
  */
 /* ROM address: 0x000554c6; body bytes: 22; decompiled */
 
@@ -78961,11 +79081,11 @@ undefined4 diag_encode_iat(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffa9ec = mass_air_flow. Direct C dataflow to handler 0x000569da; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_maf [high]: PID 0x10: maf*0.01
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): mass_air_flow_ffffa9ec; decode = raw * 0.009999999776 + (0) [g/s]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_maf [high]: PID 0x10: maf*0.01
  */
 /* ROM address: 0x00055528; body bytes: 22; decompiled */
 
@@ -79049,12 +79169,12 @@ void diag_encode_o2s2(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_trim_b074_ffffb074_ffffb074 * 100.0; decode = raw * 0.7812999487 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_trim_b074 [high]: PID 0x15: ffffb074*100*0.7813-100 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb074 inferred_trim_b074_ffffb074 (float): PID 0x15/0x163e: x*100*0.7813-100
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_trim_b074_ffffb074_ffffb074 * 100.0; decode = raw * 0.7812999487 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000555ac; body bytes: 30; decompiled */
 
@@ -79118,12 +79238,12 @@ void diag_read_distance_mil(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_b2f0_ffffb2f0_ffffb2f0; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_b2f0 [high]: PID 0x2e: ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb2f0 inferred_ram_b2f0_ffffb2f0 (float): PID 0x2e
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_b2f0_ffffb2f0_ffffb2f0; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055616; body bytes: 22; decompiled */
 
@@ -79187,12 +79307,12 @@ void diag_read_90fc(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_ad10_ffffad10_ffffad10 * 25.325 + 0.0182; decode = raw * 1 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ad10 [high]: PID 0x33: ffffad10*25.325+0.0182 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad10 inferred_ram_ad10_ffffad10 (float): PID 0x33/0x16b3
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_ad10_ffffad10_ffffad10 * 25.325 + 0.0182; decode = raw * 1 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000556ce; body bytes: 30; decompiled */
 
@@ -79240,12 +79360,12 @@ undefined4 diag_read_afr_word_b(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): fuel_correction_sum_ffffc644_ffffc644; decode = raw * 0.09999999404 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_c644 [high]: PID 0x3c: ffffc644*0.1-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc644 fuel_correction_sum_ffffc644 (float): PID 0x3c: x*0.1-40; ROADMAP group C names this cell fuel_correction_sum
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): fuel_correction_sum_ffffc644_ffffc644; decode = raw * 0.09999999404 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005571a; body bytes: 24; decompiled */
 
@@ -79259,11 +79379,11 @@ undefined4 diag_encode_c644(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_battery_v [high]: PID 0x42: ffffb590*0.001
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_battery_voltage_ffffb590; decode = raw * 0.0009999999311 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_battery_v [high]: PID 0x42: ffffb590*0.001
  */
 /* ROM address: 0x00055732; body bytes: 22; decompiled */
 
@@ -79280,11 +79400,11 @@ undefined4 diag_encode_battery_v(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffc0b4 = engine_load. Direct C dataflow to handler 0x00056b8a; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_load_g_rev [high]: PID 0x43: engine_load_ffffc0b4*1/255
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): engine_load_ffffc0b4; decode = raw * 0.003921568394 + (0) [logger-defined load units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_load_g_rev [high]: PID 0x43: engine_load_ffffc0b4*1/255
  */
 /* ROM address: 0x00055748; body bytes: 22; decompiled */
 
@@ -79301,11 +79421,11 @@ undefined4 diag_encode_load_g_rev(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffadfc = lambda_target. Direct C dataflow to handler 0x00056b9e; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_encode_lambda_target [high]: PID 0x44: lambda_target_ffffadfc*3.05e-05
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): lambda_target_ffffadfc; decode = raw * 3.051757812e-05 + (0) [dimensionless lambda]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_encode_lambda_target [high]: PID 0x44: lambda_target_ffffadfc*3.05e-05
  */
 /* ROM address: 0x0005575e; body bytes: 22; decompiled */
 
@@ -79319,12 +79439,12 @@ undefined4 diag_encode_lambda_target(void)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_ad48_ffffad48_ffffad48; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ad48 [high]: PID 0x45: ffffad48*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad48 inferred_ram_ad48_ffffad48 (float): PID 0x45: *0.392157
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_ad48_ffffad48_ffffad48; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055774; body bytes: 22; decompiled */
 
@@ -80447,12 +80567,12 @@ void FUN_000564d4(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_3e_tester_present [high]: service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_3e_tester_present [high]: service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
  */
 /* ROM address: 0x00056508; body bytes: 166; decompiled */
 
@@ -80516,9 +80636,12 @@ undefined4 FUN_000565ae(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00056786 [high]: 4-byte body: word 0xa0cf = `bra 0x56786` + delay-slot word 0x0009 (ROM-verified at 0x000565e4). Direct tail-jump to `FUN_00056786` 0x00056786; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00056786` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x000565e4; body bytes: 4; decompiled */
 
-undefined4 thunk_FUN_00056786(void)
+undefined4 jump_to_FUN_00056786(void)
 
 {
   undefined4 uVar1;
@@ -80534,12 +80657,12 @@ undefined4 thunk_FUN_00056786(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_b1_mazda_specific [high]: service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_b1_mazda_specific [high]: service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x000565e8; body bytes: 234; decompiled */
 
@@ -80689,13 +80812,13 @@ void FUN_000567c2(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_accept_identifier_request [medium]: Service 0x22 reads two request bytes into 0xffffd1ea and updates request state. Decompiled phase parameter comparison remains suspect; name describes visible path.
- * uds_service_22_read_data_by_identifier [high]: service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_accept_identifier_request [medium]: Service 0x22 reads two request bytes into 0xffffd1ea and updates request state. Decompiled phase parameter comparison remains suspect; name describes visible path.
+ * uds_service_22_read_data_by_identifier [high]: service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
  */
 /* ROM address: 0x000567e8; body bytes: 110; decompiled */
 
@@ -81619,11 +81742,11 @@ void diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid091a_ram_b410_raw_512 [high]: dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_ram_b410_ffffb410_ffffb410; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid091a_ram_b410_raw_512 [high]: dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056de6; body bytes: 30; decompiled */
 
@@ -81641,11 +81764,11 @@ void diag22_pid091a_ram_b410_raw_512(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid093c_throttle_position_raw [high]: dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_throttle_position_ffffad44; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid093c_throttle_position_raw [high]: dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
  */
 /* ROM address: 0x00056e04; body bytes: 30; decompiled */
 
@@ -81663,12 +81786,12 @@ void diag22_pid093c_throttle_position_raw(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a7ac_ffffa7ac_ffffa7ac; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid096e_ram_a7ac_quarter [high]: dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa7ac inferred_ram_a7ac_ffffa7ac (float): PID 0x096e *0.25
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a7ac_ffffa7ac_ffffa7ac; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e22; body bytes: 30; decompiled */
 
@@ -81686,12 +81809,12 @@ void diag22_pid096e_ram_a7ac_quarter(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b59c_ffffb59c_ffffb59c; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid097c_ram_b59c_div2048 [high]: dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb59c inferred_ram_b59c_ffffb59c (float): PID 0x097c /2048
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b59c_ffffb59c_ffffb59c; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e40; body bytes: 30; decompiled */
 
@@ -81709,12 +81832,12 @@ void diag22_pid097c_ram_b59c_div2048(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_add4_ffffadd4_ffffadd4; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid114a_ram_add4_raw [high]: dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffadd4 inferred_ram_add4_ffffadd4 (float): PID 0x114a *7.63e-05
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_add4_ffffadd4_ffffadd4; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e5e; body bytes: 30; decompiled */
 
@@ -81732,12 +81855,12 @@ void diag22_pid114a_ram_add4_raw(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a984_ffffa984_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid114d_ram_a984_raw [high]: dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa984 inferred_ram_a984_ffffa984 (float): PID 0x114d
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a984_ffffa984_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e7c; body bytes: 30; decompiled */
 
@@ -81755,12 +81878,12 @@ void diag22_pid114d_ram_a984_raw(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a834_ffffa834_ffffa834; decode = raw * 3.051757812e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1153_ram_a834_lambda [high]: dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa834 inferred_ram_a834_ffffa834 (float): PID 0x1153 *3.05e-05
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a834_ffffa834_ffffa834; decode = raw * 3.051757812e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e9a; body bytes: 30; decompiled */
 
@@ -81816,11 +81939,11 @@ void diag22_pid1169_ram_807c_scaled(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1177_maf_voltage_latched_v [high]: dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): maf_voltage_latched_ffffa9e4; decode = raw * 0.000244140625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1177_maf_voltage_latched_v [high]: dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
  */
 /* ROM address: 0x00056f30; body bytes: 30; decompiled */
 
@@ -81838,12 +81961,12 @@ void diag22_pid1177_maf_voltage_latched_v(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_a9bc_ffffa9bc_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1340_ram_a9bc_pct [high]: dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa9bc inferred_ram_a9bc_ffffa9bc (float): PID 0x1340 *0.392157
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_a9bc_ffffa9bc_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056f4e; body bytes: 30; decompiled */
 
@@ -81904,11 +82027,11 @@ void diag22_pid163e_ram_b074_scaled_s16(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid16b3_ram_ad10_raw [high]: dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_ram_ad10_ffffad10_ffffad10; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid16b3_ram_ad10_raw [high]: dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056faa; body bytes: 30; decompiled */
 
@@ -81926,12 +82049,12 @@ void diag22_pid16b3_ram_ad10_raw(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b5ac_ffffb5ac_ffffb5ac; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid16e8_ram_b5ac_raw [high]: dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb5ac inferred_ram_b5ac_ffffb5ac (float): PID 0x16e8
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b5ac_ffffb5ac_ffffb5ac; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056fc8; body bytes: 30; decompiled */
 
@@ -81949,12 +82072,12 @@ void diag22_pid16e8_ram_b5ac_raw(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b654_ffffb654_ffffb654; decode = raw * 0.125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid16e9_ram_b654_eighth [high]: dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb654 inferred_ram_b654_ffffb654 (float): PID 0x16e9 *0.125
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b654_ffffb654_ffffb654; decode = raw * 0.125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056fe6; body bytes: 30; decompiled */
 
@@ -81992,12 +82115,12 @@ void diag22_pid16f0_tire_revolutions_per_mile(undefined4 param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_bc30_ffffbc30_ffffbc30; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pida216_ram_bc30_raw [high]: dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffbc30 inferred_ram_bc30_ffffbc30 (float): PID 0xa216
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_bc30_ffffbc30_ffffbc30; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005705c; body bytes: 30; decompiled */
 
@@ -82019,11 +82142,11 @@ void diag22_pida216_ram_bc30_raw(char param_1)
  * RX8Defs service 0x22 identifier 0x1746: Knock Retard. Dispatch identifier match; logger meaning is definition-derived.
  * RX8Defs diagnostic chain suggests RAM 0xffffa734 = knock_retard. Direct C dataflow to handler 0x0005707a; semantic candidate, not a recovered original symbol.
  */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1746_knock_retard_deg [high]: dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): knock_retard_ffffa734; decode = raw * 0.3515625 + (0) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1746_knock_retard_deg [high]: dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
  */
 /* ROM address: 0x0005707a; body bytes: 30; decompiled */
 
@@ -82041,12 +82164,12 @@ void diag22_pid1746_knock_retard_deg(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_c6ac_ffffc6ac_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1782_ram_c6ac_raw [high]: dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc6ac inferred_ram_c6ac_ffffc6ac (float): PID 0x1782
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_c6ac_ffffc6ac_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00057098; body bytes: 30; decompiled */
 
@@ -82087,12 +82210,12 @@ void diag22_pid17a6_ram_d1ac_scaled(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_temp_c4c8_ffffc4c8_ffffc4c8; decode = raw * 1 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid172a_ram_c4c8_temp_c [high]: dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc4c8 inferred_temp_c4c8_ffffc4c8 (float): PID 0x172a: x-40
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_temp_c4c8_ffffc4c8_ffffc4c8; decode = raw * 1 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000570ee; body bytes: 30; decompiled */
 
@@ -82127,11 +82250,11 @@ void diag22_pid172d_ram_a8f4_raw(undefined4 param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1634_apv_position_voltage [high]: dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (8-bit): apv_position_voltage_ffffcab0; decode = raw * 0.01953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_pid1634_apv_position_voltage [high]: dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
  */
 /* ROM address: 0x0005711a; body bytes: 30; decompiled */
 
@@ -82640,12 +82763,12 @@ undefined4 diag22_pide611_sw_name_string(char param_1)
 }
 
 
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): uVar4; decode = raw * 0.1953125 + (-25) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1710_sensor_snapshot_7byte [medium]: dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
  * RAM 0xffff9150 inferred_sensor_block_ffff9150 (float[7]): PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b
- */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): uVar4; decode = raw * 0.1953125 + (-25) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00057594; body bytes: 288; decompiled */
 
@@ -82789,12 +82912,12 @@ void diag22_pidc124_diag_status_bits(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_find_and_dispatch_identifier [high]: Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_find_and_dispatch_identifier [high]: Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect.
  */
 /* ROM address: 0x0005774c; body bytes: 232; decompiled */
 
@@ -82837,13 +82960,13 @@ int diag22_find_and_dispatch_identifier(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_append_positive_response_header [high]: G-ROM 0x55d24 match plus explicit bytes 0x62 and current identifier RAM 0xffffd1ea.
- * RAM 0xffffd1ea diag22_current_identifier (uint16): Read from request by 0x567e8, matched by 0x5774c, echoed in 0x62 header.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_append_positive_response_header [high]: G-ROM 0x55d24 match plus explicit bytes 0x62 and current identifier RAM 0xffffd1ea.
+ * RAM 0xffffd1ea diag22_current_identifier (uint16): Read from request by 0x567e8, matched by 0x5774c, echoed in 0x62 header.
  */
 /* ROM address: 0x00057858; body bytes: 44; decompiled */
 
@@ -83042,12 +83165,12 @@ uint diag22_subpid_supported_mask(uint param_1,char param_2)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_append_u16_be [high]: G-ROM 0x55ecc matches after masking PC-relative literal displacement; C explicitly emits high then low byte and appends length 2.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_append_u16_be [high]: G-ROM 0x55ecc matches after masking PC-relative literal displacement; C explicitly emits high then low byte and appends length 2.
  */
 /* ROM address: 0x00057a0c; body bytes: 34; decompiled */
 
@@ -83064,12 +83187,12 @@ void diag_append_u16_be(uint32_t service,uint32_t value)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_append_u8 [high]: G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte.
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_append_u8 [high]: G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte.
  */
 /* ROM address: 0x00057a2e; body bytes: 28; decompiled */
 
@@ -83328,12 +83451,12 @@ undefined4 ref_parseSubFunction(char param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_18 [high]: service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_18 [high]: service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00057db0; body bytes: 194; decompiled */
 
@@ -83674,11 +83797,11 @@ void FUN_000582e0(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffc6f4 o2_monitor_ratio_ch1 (float): Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c.
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): o2_monitor_ratio_ch1_ffffc6f4; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffc6f4 o2_monitor_ratio_ch1 (float): Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c.
  */
 /* ROM address: 0x0005831c; body bytes: 80; decompiled */
 
@@ -85163,7 +85286,7 @@ uint FUN_00059852(void)
   
   uVar1 = (uint)DAT_ffffd25a;
   if (uVar1 == 1) {
-    uVar1 = thunk_FUN_000601b2();
+    uVar1 = jump_to_FUN_000601b2();
     DAT_ffffd25b = 0;
     DAT_ffffd25a = 0;
   }
@@ -86946,12 +87069,12 @@ void FUN_0005b9e4(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_28_communication_control [high]: service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_28_communication_control [high]: service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
  */
 /* ROM address: 0x0005b9f6; body bytes: 236; decompiled */
 
@@ -87756,11 +87879,11 @@ uint candidate_fan1_diag_override(uint param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * alternator_duty_encode_u16 [medium]: Diag-override-aware u16 encoder for the field duty %, DID 0x16e8 (mask 0x40, cell 0xffffd347): step f32 0x3b480000 via 0x2490; decode via 0x24c0. Sole caller 0x26624 stores result into 0xffffb5ac (also Mode 22 PID 0x16e8 source, handler 0x56fc8).
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_encode_u16 [medium]: Diag-override-aware u16 encoder for the field duty %, DID 0x16e8 (mask 0x40, cell 0xffffd347): step f32 0x3b480000 via 0x2490; decode via 0x24c0. Sole caller 0x26624 stores result into 0xffffb5ac (also Mode 22 PID 0x16e8 source, handler 0x56fc8).
  */
 /* ROM address: 0x0005c800; body bytes: 226; decompiled_with_warnings */
 
@@ -87891,11 +88014,11 @@ uint candidate_ssv_diag_override(uint param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_target_encode_u16 [high]: Encodes idle_target_rpm (fr4) to u16 with step 0.25 (f32 0x3e800000 at ROM 0x5cb64, loaded by mova at 0x5cb1a) through 0x2490 rx8_encode_u16_affine_saturate when diag override state 0xffffd319==0 and the active DID 0xffffd314==0x96e (word at pool 0x5cb42) passes mask 0xc0 (word at 0x5cb3e) on 0xffffd36c; result stored to 0xffffd34d (base 0xffffd335 + 0x18); otherwise decodes override cell 0xffffd34d via 0x24c0. Pool words of the function (classified mixed_pool starting 0x5cb3e): 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb68=0x2490. Sole caller 0x1506c stores the u16 to 0xffffa7ac, the Mode 22 PID 0x096e source (handler 0x56e22, encode *0.25). Not an actuator register.
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_target_encode_u16 [high]: Encodes idle_target_rpm (fr4) to u16 with step 0.25 (f32 0x3e800000 at ROM 0x5cb64, loaded by mova at 0x5cb1a) through 0x2490 rx8_encode_u16_affine_saturate when diag override state 0xffffd319==0 and the active DID 0xffffd314==0x96e (word at pool 0x5cb42) passes mask 0xc0 (word at 0x5cb3e) on 0xffffd36c; result stored to 0xffffd34d (base 0xffffd335 + 0x18); otherwise decodes override cell 0xffffd34d via 0x24c0. Pool words of the function (classified mixed_pool starting 0x5cb3e): 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb68=0x2490. Sole caller 0x1506c stores the u16 to 0xffffa7ac, the Mode 22 PID 0x096e source (handler 0x56e22, encode *0.25). Not an actuator register.
  */
 /* ROM address: 0x0005ca94; body bytes: 226; decompiled_with_warnings */
 
@@ -87939,11 +88062,11 @@ uint idle_target_encode_u16(undefined4 param_1)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * alternator_target_encode_u16 [medium]: Diag-override-aware u16 encoder for the voltage target, DID 0x97c (mask 0x60 on 0xffffd36c, state 0xffffd319/0xffffd328, cell 0xffffd34f): step f32 0x3a000000 via 0x2490 rx8_encode_u16_affine_saturate; decode via 0x24c0. Same pattern as 0x5ca94 (PID 0x096e). Sole caller 0x25c6c stores result into 0xffffb59c.
- */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): param_1; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_target_encode_u16 [medium]: Diag-override-aware u16 encoder for the voltage target, DID 0x97c (mask 0x60 on 0xffffd36c, state 0xffffd319/0xffffd328, cell 0xffffd34f): step f32 0x3a000000 via 0x2490 rx8_encode_u16_affine_saturate; decode via 0x24c0. Same pattern as 0x5ca94 (PID 0x096e). Sole caller 0x25c6c stores result into 0xffffb59c.
  */
 /* ROM address: 0x0005cba4; body bytes: 226; decompiled_with_warnings */
 
@@ -88876,12 +88999,12 @@ undefined4 FUN_0005dc40(void)
 }
 
 
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_85_control_dtc_setting [high]: service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_85_control_dtc_setting [high]: service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
  */
 /* ROM address: 0x0005dc44; body bytes: 180; decompiled */
 
@@ -90363,9 +90486,12 @@ void FUN_0005fd84(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_000601b2 [high]: 4-byte body: word 0xa20e = `bra 0x601b2` + delay-slot word 0x0009 (ROM-verified at 0x0005fd92). Direct tail-jump to `FUN_000601b2` 0x000601b2; callers in callgraph: 0x00059852. Upstream name `thunk_FUN_000601b2` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x0005fd92; body bytes: 4; decompiled */
 
-void thunk_FUN_000601b2(void)
+void jump_to_FUN_000601b2(void)
 
 {
   FUN_000601b2();
@@ -91765,10 +91891,10 @@ void FUN_00061092(uint *param_1)
       FUN_000648cc(iVar7,uVar5);
     }
     else if (cVar1 == '\x02') {
-      thunk_FUN_00060c7a_00064912(iVar7,uVar5);
+      jump_to_FUN_00060c7a(iVar7,uVar5);
     }
     else if (cVar1 == '\x03') {
-      thunk_FUN_00060c7a_00064004(iVar7,uVar5);
+      jump_to_FUN_00060c7a(iVar7,uVar5);
     }
     FUN_000627a0();
   }
@@ -94354,9 +94480,12 @@ void FUN_00063f64(undefined4 param_1,uint param_2)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00060c7a [high]: 6-byte body: word 0xd31c = `mov.l @(0x64078,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x64078 = 0x00060c7a (ROM-verified, big-endian) (ROM-verified at 0x00064004). Direct tail-jump to `FUN_00060c7a` 0x00060c7a; callers in callgraph: 0x00061092. Upstream name `thunk_FUN_00060c7a` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00064004; body bytes: 6; decompiled */
 
-void thunk_FUN_00060c7a_00064004(void)
+void jump_to_FUN_00060c7a(void)
 
 {
   FUN_00060c7a();
@@ -94909,9 +95038,12 @@ void FUN_000648cc(undefined4 param_1,char param_2)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00060c7a [high]: 6-byte body: word 0xd333 = `mov.l @(0x649e0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x649e0 = 0x00060c7a (ROM-verified, big-endian) (ROM-verified at 0x00064912). Direct tail-jump to `FUN_00060c7a` 0x00060c7a; callers in callgraph: 0x00061092. Upstream name `thunk_FUN_00060c7a` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00064912; body bytes: 6; decompiled */
 
-void thunk_FUN_00060c7a_00064912(void)
+void jump_to_FUN_00060c7a(void)
 
 {
   FUN_00060c7a();
@@ -95961,7 +96093,7 @@ uint FUN_00065980(char param_1)
   char local_d [5];
   
   local_d[0] = param_1;
-  uVar1 = thunk_FUN_00054d90((int)param_1);
+  uVar1 = jump_to_FUN_00054d90((int)param_1);
   if ((uVar1 & 0xff) != 0) {
     ref_setupForUdsResponse_(1,local_d);
     DAT_ffffd816 = DAT_ffffd816 + 1;
@@ -98712,7 +98844,7 @@ uint FUN_00067faa(uint *param_1)
         DAT_ffffdde0 = (char)uVar6;
         DAT_ffffdde2 = (char)uVar1;
         FUN_00068776(uVar3);
-        thunk_FUN_00054a00((int)DAT_ffffdde0);
+        jump_to_FUN_00054a00((int)DAT_ffffdde0);
       }
       else {
         FUN_00068b98(uVar1);
@@ -99001,7 +99133,7 @@ void uds_request_schedule_service_task(int param_1)
   DAT_ffffddf9 = DAT_ffffddea;
   DAT_ffffddeb = 0;
   DAT_ffffddf5 = DAT_ffffddf5 & 0xfb | 0x40;
-  thunk_FUN_00054b2c((int)(char)DAT_ffffddea);
+  jump_to_FUN_00054b2c((int)(char)DAT_ffffddea);
   os_schedule_task_event(2,0,&local_14);
   return;
 }
@@ -99061,7 +99193,7 @@ uint isotp_first_frame_accept(void)
     DAT_ffffdded = 1;
     ref_pack_for_OBD_response_((int)DAT_ffffddec,&DAT_ffffddca,6);
     FUN_00068bc6(6,5);
-    uVar1 = thunk_FUN_00054b62((int)DAT_ffffddea);
+    uVar1 = jump_to_FUN_00054b62((int)DAT_ffffddea);
     return uVar1;
   }
   return (uint)DAT_ffffddc9;
@@ -99296,7 +99428,7 @@ void FUN_00068868(void)
       (&DAT_ffffddf4)[(uint)DAT_ffffddec * 2] = 0;
       DAT_ffffddeb = 0;
       DAT_ffffddf5 = DAT_ffffddf5 & 0xfb;
-      thunk_FUN_00054b98((int)DAT_ffffddea);
+      jump_to_FUN_00054b98((int)DAT_ffffddea);
     }
     ref_setSR(uVar1);
     return;
@@ -99362,7 +99494,7 @@ void FUN_0006892a(void)
     FUN_00068910();
     iVar1 = (int)DAT_ffffdde0;
   }
-  thunk_FUN_00054a36(iVar1);
+  jump_to_FUN_00054a36(iVar1);
   return;
 }
 
@@ -99398,7 +99530,7 @@ void FUN_00068996(void)
   DAT_ffffddde = DAT_ffffddde + 7;
   if (DAT_ffffdddc <= DAT_ffffddde) {
     FUN_00068910();
-    thunk_FUN_00054a36((int)DAT_ffffdde0);
+    jump_to_FUN_00054a36((int)DAT_ffffdde0);
     return;
   }
   if ((DAT_ffffddf1 != 0) && (DAT_ffffddf1 <= DAT_ffffdde4)) {
@@ -99730,9 +99862,12 @@ void FUN_00068d56(undefined4 param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054a00 [high]: 6-byte body: word 0xd30b = `mov.l @(0x68d94,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d94 = 0x00054a00 (ROM-verified, big-endian) (ROM-verified at 0x00068d64). Direct tail-jump to `FUN_00054a00` 0x00054a00; callers in callgraph: 0x00067faa. Upstream name `thunk_FUN_00054a00` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d64; body bytes: 6; decompiled */
 
-void thunk_FUN_00054a00(void)
+void jump_to_FUN_00054a00(void)
 
 {
   FUN_00054a00();
@@ -99740,9 +99875,12 @@ void thunk_FUN_00054a00(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054b2c [high]: 6-byte body: word 0xd30b = `mov.l @(0x68d98,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d98 = 0x00054b2c (ROM-verified, big-endian) (ROM-verified at 0x00068d6a). Direct tail-jump to `FUN_00054b2c` 0x00054b2c; callers in callgraph: 0x000684b4. Upstream name `thunk_FUN_00054b2c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d6a; body bytes: 6; decompiled */
 
-void thunk_FUN_00054b2c(void)
+void jump_to_FUN_00054b2c(void)
 
 {
   FUN_00054b2c();
@@ -99750,9 +99888,12 @@ void thunk_FUN_00054b2c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054a36 [high]: 6-byte body: word 0xd30a = `mov.l @(0x68d9c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d9c = 0x00054a36 (ROM-verified, big-endian) (ROM-verified at 0x00068d70). Direct tail-jump to `FUN_00054a36` 0x00054a36; callers in callgraph: 0x0006892a, 0x00068996. Upstream name `thunk_FUN_00054a36` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d70; body bytes: 6; decompiled */
 
-void thunk_FUN_00054a36(void)
+void jump_to_FUN_00054a36(void)
 
 {
   FUN_00054a36();
@@ -99760,9 +99901,12 @@ void thunk_FUN_00054a36(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054aa0 [high]: 6-byte body: word 0xd30a = `mov.l @(0x68da0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da0 = 0x00054aa0 (ROM-verified, big-endian) (ROM-verified at 0x00068d76). Direct tail-jump to `FUN_00054aa0` 0x00054aa0; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00054aa0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d76; body bytes: 6; decompiled */
 
-void thunk_FUN_00054aa0(void)
+void jump_to_FUN_00054aa0(void)
 
 {
   FUN_00054aa0();
@@ -99770,9 +99914,12 @@ void thunk_FUN_00054aa0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054b62 [high]: 6-byte body: word 0xd309 = `mov.l @(0x68da4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da4 = 0x00054b62 (ROM-verified, big-endian) (ROM-verified at 0x00068d7c). Direct tail-jump to `FUN_00054b62` 0x00054b62; callers in callgraph: 0x0006859e. Upstream name `thunk_FUN_00054b62` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d7c; body bytes: 6; decompiled */
 
-void thunk_FUN_00054b62(void)
+void jump_to_FUN_00054b62(void)
 
 {
   FUN_00054b62();
@@ -99780,9 +99927,12 @@ void thunk_FUN_00054b62(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00054b98 [high]: 6-byte body: word 0xd309 = `mov.l @(0x68da8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da8 = 0x00054b98 (ROM-verified, big-endian) (ROM-verified at 0x00068d82). Direct tail-jump to `FUN_00054b98` 0x00054b98; callers in callgraph: 0x00068868. Upstream name `thunk_FUN_00054b98` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* ROM address: 0x00068d82; body bytes: 6; decompiled */
 
-void thunk_FUN_00054b98(void)
+void jump_to_FUN_00054b98(void)
 
 {
   FUN_00054b98();

@@ -15,7 +15,7 @@ void FUN_00068868(void)
       (&DAT_ffffddf4)[(uint)DAT_ffffddec * 2] = 0;
       DAT_ffffddeb = 0;
       DAT_ffffddf5 = DAT_ffffddf5 & 0xfb;
-      thunk_FUN_00054b98((int)DAT_ffffddea);
+      jump_to_FUN_00054b98((int)DAT_ffffddea);
     }
     ref_setSR(uVar1);
     return;

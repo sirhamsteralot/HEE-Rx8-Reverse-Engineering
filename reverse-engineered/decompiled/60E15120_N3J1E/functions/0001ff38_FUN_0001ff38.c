@@ -1,7 +1,3 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069d88: Table 2D - 97 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069d9c: Table 2D - 98 (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb178 cl_load_threshold_2d_a (float): b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9.
  * RAM 0xffffb17c cl_load_threshold_2d_b (float): b17c = tbl 0x69d9c(rpm) -> b1bb.
@@ -13,6 +9,10 @@
  * RAM 0xffffb144 ol_condition_timer (uint16): b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag.
  * RAM 0xffffb154 ol_band_condition (uint8): b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6).
  * RAM 0xffffb159 ol_timer_expired (uint8): b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x00069d88: Table 2D - 97 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069d9c: Table 2D - 98 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

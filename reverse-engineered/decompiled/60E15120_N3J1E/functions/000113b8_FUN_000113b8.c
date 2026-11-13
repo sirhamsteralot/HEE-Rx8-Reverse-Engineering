@@ -3,22 +3,22 @@
 void FUN_000113b8(void)
 
 {
-  thunk_FUN_0003ec3c();
+  jump_to_FUN_0003ec3c();
   FUN_00019632();
   FUN_00060318();
-  thunk_FUN_0002529e();
-  thunk_FUN_00028db0();
+  jump_to_FUN_0002529e();
+  jump_to_FUN_00028db0();
   FUN_00019dd2();
   FUN_0002e70a();
   FUN_00039d96();
   FUN_0002148e();
-  thunk_FUN_00013814();
-  thunk_FUN_00015f74();
+  jump_to_FUN_00013814();
+  jump_to_FUN_00015f74();
   FUN_00016fce();
   FUN_0003eb5e();
   FUN_00023094();
   FUN_0002897e();
-  thunk_FUN_00034a64();
+  jump_to_FUN_00034a64();
   FUN_0005a2c8();
   FUN_0005a3d8();
   FUN_0005a662();
