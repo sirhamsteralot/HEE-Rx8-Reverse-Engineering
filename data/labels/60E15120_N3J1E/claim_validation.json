@@ -239,16 +239,9 @@
       }
     },
     "tsv_rows": 554,
-    "labels_json_checked": 19
+    "labels_json_checked": 20
   },
-  "notes": [
-    "fueling_labels.json: function 00056b8a record alias 'diag_engine_load' vs TSV 'diag22_pid0043_engine_load_g_rev' (later refinement)",
-    "fueling_labels.json: function 00056b9e record alias 'diag_lambda_target' vs TSV 'diag22_pid0044_lambda_target' (later refinement)",
-    "fueling_labels.json: function 00056b22 record alias 'diag_air_fuel_ratio' vs TSV 'diag22_pid0034_afr_lambda_words' (later refinement)",
-    "fueling_labels.json: function 00056f6c record alias 'diag_injector_pulse_time' vs TSV 'diag22_pid1410_injector_pulse_time' (later refinement)",
-    "fueling_labels.json: function 000556ec record alias 'diag_afr_word_a' vs TSV 'diag_read_afr_word_a' (later refinement)",
-    "fueling_labels.json: function 00055702 record alias 'diag_afr_word_b' vs TSV 'diag_read_afr_word_b' (later refinement)"
-  ],
+  "notes": [],
   "failures": [],
   "result": "PASS"
 }
