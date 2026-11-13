@@ -104,6 +104,7 @@ def test_tsv_hygiene(rows):
     assert len(addrs) == len(set(addrs)), "duplicate address rows"
     for r in rows:
         assert (r.get("alias") or "").strip(), r["address"]
+        assert (r.get("evidence") or "").strip(), f"empty evidence: {r['address']}"
         assert re.fullmatch(r"ffff[0-9a-f]{4}", r["address"].lower()), r["address"]
 
 

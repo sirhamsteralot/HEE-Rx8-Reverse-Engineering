@@ -174,10 +174,10 @@ is exported on PID 0x1410 (handler 0x56f6c, step 8.0 -> logger x*8 us).
 
 | PID | Handler | Reads | Encoding |
 |---|---|---|---|
-| 0x0034 Air Fuel Ratio | 0x56b22 `diag_air_fuel_ratio` | aa6c (step 3.05e-05), aa7c (mult 0.0625, offset -96) | 2x u16 BE |
-| 0x0043 Engine Load | 0x56b8a `diag_engine_load` | engine_load c0b4 | step 1/255, u16 BE |
-| 0x0044 Lambda Target | 0x56b9e `diag_lambda_target` | lambda_target adfc | step 3.05e-05, u16 BE |
-| 0x1410 Injector Pulse Time | 0x56f6c `candidate_diag_injector_pulse_time` | injector_pulse_time be24 | step 8.0 (us) |
+| 0x0034 Air Fuel Ratio | 0x56b22 `diag22_pid0034_afr_lambda_words` | aa6c (step 3.05e-05), aa7c (mult 0.0625, offset -96) | 2x u16 BE |
+| 0x0043 Engine Load | 0x56b8a `diag22_pid0043_engine_load_g_rev` | engine_load c0b4 | step 1/255, u16 BE |
+| 0x0044 Lambda Target | 0x56b9e `diag22_pid0044_lambda_target` | lambda_target adfc | step 3.05e-05, u16 BE |
+| 0x1410 Injector Pulse Time | 0x56f6c `diag22_pid1410_injector_pulse_time` | injector_pulse_time be24 | step 8.0 (us) |
 
 **Def caveat:** logger def assigns 0x221410 to both "Injector Pulse Time"
 (x*8 us) and "Throttle Pedal Position" (x*0.392 %) — a real conflict in
@@ -195,8 +195,8 @@ here — upstream repo).
   `fuel_cut_arbitration`, `fuel_cut_rpm_condition`,
   `rev_limit_conditionals`, `cold_start_enrichment`,
   `maf_voltage_and_fault_counters`, `maf_filtered_update`,
-  `maf_per_rotation_calc`, `candidate_diag_injector_pulse_time`,
-  `candidate_diag_afr_word_a/b`).
+  `maf_per_rotation_calc`, `diag22_pid1410_injector_pulse_time`,
+  `diag_read_afr_word_a/b`).
 - **151 RAM locations** in `source_review/accepted_ram_aliases.tsv`
   (integrated as `<alias>_<address>`; snapshot locals renamed by the
   post-integration pass, 234 occurrences).
