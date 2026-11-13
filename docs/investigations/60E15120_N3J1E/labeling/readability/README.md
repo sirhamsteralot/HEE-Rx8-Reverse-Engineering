@@ -18,7 +18,7 @@ Automatic propagation is limited to single-assignment temporaries copied directl
 
 ## 3. Structures and arrays
 
-[rx8_analysis_types.h](../../../../reverse-engineered/decompiled/60E15120_N3J1E/rx8_analysis_types.h) defines five checked layouts:
+[rx8_analysis_types.h](../../../../../reverse-engineered/decompiled/60E15120_N3J1E/rx8_analysis_types.h) defines five checked layouts:
 
 - 2D descriptor: counts, type, 32-bit axis/data addresses, optional scaling.
 - 3D descriptor: two counts, axes/data addresses, type and optional scaling.

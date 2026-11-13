@@ -93,7 +93,7 @@ def main():
     for r in read_rows(b / 'decompiled/callgraph.tsv', ['caller', 'callee', 'callee_name']):
         callers.setdefault(r['callee'], []).append(r['caller'])
 
-    thunk_rows = [r for r in read_rows(INV / 'rx8defs-analysis/function_labels.tsv',
+    thunk_rows = [r for r in read_rows(INV / 'labeling/rx8defs-analysis/function_labels.tsv',
                                        ['address', 'name', 'body_bytes', 'source', 'file'])
                   if 'thunk' in r['name'].lower()]
     assert len(thunk_rows) == 53, 'expected 53 thunk rows, got %d' % len(thunk_rows)

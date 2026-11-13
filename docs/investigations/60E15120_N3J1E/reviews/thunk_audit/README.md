@@ -1,8 +1,8 @@
 # Thunk audit — review notes (60E15120_N3J1E)
 
-Companion evidence for [`../../thunk_audit_report.md`](../../thunk_audit_report.md).
+Companion evidence for [`../../thunk_audit_report.md`](../../labeling/thunk_audit_report.md).
 Label records: [`../../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json`](../../../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json)
-(applied rows: `source_review/accepted_function_aliases.tsv`).
+(applied rows: `labeling/source_review/accepted_function_aliases.tsv`).
 
 ## What was checked (binary level, raw ROM re-read)
 
@@ -10,7 +10,7 @@ Label records: [`../../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json`
   `utilities/scripts/rx8-pcm-pipeline/review_thunk_audit_labels.py`
   (`a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`).
 - All 53 `thunk`-named rows in
-  [`../rx8defs-analysis/function_labels.tsv`](../../rx8defs-analysis/function_labels.tsv)
+  [`../rx8defs-analysis/function_labels.tsv`](../../labeling/rx8defs-analysis/function_labels.tsv)
   re-decoded word-by-word from `60E15120_N3J1E.bin` (big-endian SH-2E):
   14 × 4-byte `bra`, 37 × 6-byte `mov.l @(pool,pc),r3; jmp @r3; nop`,
   1 × 14-byte `jsr @r14` (0x35d36), 1 × conditional tail-jump (0x5fd3c).
@@ -46,7 +46,7 @@ Label records: [`../../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json`
 - Pipeline validators from repo root: `validate_export.py` exit 0,
   `validate_reports.py` PASS, `verify_claims.py` PASS, `verify_readability.py`
   exit 0, `verify_math_units.py` exit 0.
-- `source_review/validation.json` updated (554 function annotations, basis
+- `labeling/source_review/validation.json` updated (554 function annotations, basis
   `source_review_thunk_audit` added).
 
 ## Notes / limits

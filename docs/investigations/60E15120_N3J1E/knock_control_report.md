@@ -6,7 +6,7 @@ untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
 performed. Full evidence: [`reviews/knock_control/README.md`](reviews/knock_control/README.md).
 
-**Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](calibration_extraction_report.md) (knock tables in data/maps/); [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (PID 0x1746 exposes this report's retard cell).
+**Related reports:** retard applies to [ignition timing](ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](fueling_control_report.md); load axis from [load & fuelling model](load_fueling_report.md); [calibration extraction](labeling/calibration_extraction_report.md) (knock tables in data/maps/); [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (PID 0x1746 exposes this report's retard cell).
 
 ## 1. Executive summary
 
@@ -125,7 +125,7 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 
 ## 4. Labeling applied
 
-- **39 functions** named in `source_review/accepted_function_aliases.tsv`
+- **39 functions** named in `labeling/source_review/accepted_function_aliases.tsv`
   (38 high confidence; 1 medium → `candidate_` prefix: `candidate_fuel_open_loop_condition`.
   The five former `candidate_` task/monitor labels — `timing_retard_fast_task`
   0x145c8, `knock_sensor_monitor_task` 0x390b8, `knock_sensor_fault_task` 0x64ba,
@@ -133,12 +133,12 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
   were promoted to high: ROM task-table pointers at 0x116e0/0x11978/0x4a28/
   0x11a84 verified against the raw ROM, callee chains confirmed in
   `callgraph.tsv`, byte-exact matches in `cross_rom_function_matches.tsv`).
-- **84 RAM locations** named in `source_review/accepted_ram_aliases.tsv`
+- **84 RAM locations** named in `labeling/source_review/accepted_ram_aliases.tsv`
   (integrated as `<alias>_<address>`), e.g. `knock_retard_ffffa734` (pre-existing),
   `knock_detected_ffffa324`, `knock_attack_condition_ffffc05c`,
   `knock_level_integrator_ffffa33c[2]`, `open_loop_active_ffffb12c`,
   `closed_loop_active_ffffae1f`; 8 `snapshot_` locals renamed to match.
-- **15 lookup-table rows** in `source_review/accepted_lookup_aliases.tsv`
+- **15 lookup-table rows** in `labeling/source_review/accepted_lookup_aliases.tsv`
   (merged into `named/lookup_aliases.tsv`).
 - All renames applied to every synchronized view: per-function files,
   `decompiled/firmware_decompiled.c`, `named/firmware_named.c`,
@@ -192,7 +192,7 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
   0x336a6/0x336ae/0x336b6/0x337de (0x336c4), 0xc090 at 0x337ce, 0xa37c at
   0xc8c6 (0xc7ba), 0x9fd0 at 0x80d2 (0x7fcc ring), 0x9304 at 0x6002/0x60c2
   (0x5f1c/0x6010), 0xb534 at 0x13c34 — and §2/§8/§9/§11/§12 now use the
-  promoted alias names from `source_review/accepted_*.tsv` instead of raw
+  promoted alias names from `labeling/source_review/accepted_*.tsv` instead of raw
   short cells where an accepted alias exists.
 
 ## 8. Memory map for validation
@@ -353,7 +353,7 @@ Loop mode:
 | 0xffffb1b6 / b1b7 / b1b8 | `cl_load_a/b/c_exceeded` | load-exceeded flags with hysteresis (0x1f0c4) |
 | 0xffffb1b1 | `coolant_above_78_flag` | coolant >= 80 (clear below 78) in 0x1f0c4 |
 
-Full list of all 84 named locations: `source_review/accepted_ram_aliases.tsv`.
+Full list of all 84 named locations: `labeling/source_review/accepted_ram_aliases.tsv`.
 
 ### 8.4 ROM tables and constants
 
@@ -391,16 +391,16 @@ Full list of all 84 named locations: `source_review/accepted_ram_aliases.tsv`.
 - **The 0x13bd2 fix**: disassembly 0x13bd2–0x13c26 — `jsr @r3` (rx8_clamp_float)
   at 0x13c18 with delay slot `fmov.s @r15,fr4` (restores fr4 = param), `rts` at
   0x13c24 returning fr0.
-- **Alias evidence**: `source_review/accepted_function_aliases.tsv` (39 rows),
-  `source_review/accepted_ram_aliases.tsv` (84 rows),
-  `source_review/accepted_lookup_aliases.tsv` (15 rows); the same notes appear
+- **Alias evidence**: `labeling/source_review/accepted_function_aliases.tsv` (39 rows),
+  `labeling/source_review/accepted_ram_aliases.tsv` (84 rows),
+  `labeling/source_review/accepted_lookup_aliases.tsv` (15 rows); the same notes appear
   as `[ADDITIONAL SOURCE REVIEW]` blocks in the per-function files.
 - **Rename map**: `metadata/integrated_names.json` (672 entries); pass record:
   `metadata/knock_loop_labels.json`.
 - **Task table bytes**: ROM 0x4998–0x4ab7; extra record at 0x4ab8; diagnostic
   dispatch table at 0x5f10c.
 - **Knock sensor wiring**: pins 1F/1T/1G (`hardware/pcm_connections.tsv`);
-  cross-ECU descriptor/logger matches in `cross_ecu/`.
+  cross-ECU descriptor/logger matches in `labeling/cross_ecu`.
 
 ## 9. Limits
 

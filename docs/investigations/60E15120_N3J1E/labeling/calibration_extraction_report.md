@@ -4,8 +4,8 @@
 (plus all 10 stock ROMs + the own 60E0G500 factory dump). Static analysis of ROM bytes only;
 no firmware was modified.
 
-**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](load_fueling_report.md), [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [knock control](knock_control_report.md), [intake solenoids](intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1);
-the corpus-wide [flash-memory-layout.md](../../architecture/flash-memory-layout.md) builds on
+**Related reports:** the extracted tables in `data/maps/` back the §3 table lists of [load & fuelling](../load_fueling_report.md), [fueling control](../fueling_control_report.md), [ignition timing](../ignition_timing_report.md), [knock control](../knock_control_report.md), [intake solenoids](../intake_solenoids_report.md); ROM/cal ID strings backing this report's cal-ID claims are mapped to Mode 22 PIDs in [uds_mode22_dispatch_report.md](../uds_mode22_dispatch_report.md) (fw id 0x2000, `N3J1E_1W.Z05` 0x6c000, `SW-N3ZHEB000.HEX` 0x6c043/0x6c046 — ROADMAP D1);
+the corpus-wide [flash-memory-layout.md](../../../architecture/flash-memory-layout.md) builds on
 this report's cal-region/descriptor detection (its §4 cal-start families; the
 descriptor-array spans are cross-checked against this report's §9 in its §8).
 
@@ -111,7 +111,7 @@ scale 0.6345 = 0x3f226e98 @0x7a088). All 13 seeds are present in all 11 ROMs
 except `injector_flow_secondary_cc_min` (475.93), which 60E0E700_N3YLEE
 replaces with 608.0/626.224 at 0x76ccc-0x76cd0 — different secondary injectors
 on that market ROM. Seeds + evidence come from the
-[load & fuelling review validation](reviews/load_fueling_model/validation.json);
+[load & fuelling review validation](../reviews/load_fueling_model/validation.json);
 tests in `tests/test_extract_scalars.py`.
 - **Negative result**: no stored scalar equals λ = 0.942188
   (f32 0x3f71333c ±2 ULP, any alignment, absent from all 11 ROMs; Q15 would be
@@ -155,14 +155,14 @@ tests in `tests/test_extract_scalars.py`.
   => A flex-fuel patch hooks exactly this site: swap the 14.7 literal load for a
   lookup into the stoich table indexed by ethanol content (logger PID 0x0555,
   uint16 %). No ethanol-indexed 1/AFR table exists in any of the 11 ROMs (scanned).
-- Both scalars are now **editable in RomRaider/VersaTuner**: `defs-merge/extend_defs_all_roms.py`
+- Both scalars are now **editable in RomRaider/VersaTuner**: `labeling/defs-merge/extend_defs_all_roms.py`
   injects them into every per-ROM def as 1-cell `type="1D"` float tables
   ("Scalar - Stoich AFR (literal pool)", "Scalar - Fuel Load Scale (literal pool)")
   with the per-ROM `storageaddress` asserted against ROM bytes at generation time;
   test `test_per_rom_defs_expose_scalars`. Caveat in each entry: addresses are inside
   the D3 checksum range and editing changes fueling — bench-validate before flashing.
   For a different-stoich fuel, which scalar to change (and how) is documented in
-  [data/definitions/README.md](../../../data/definitions/README.md) "Literal-pool
+  [data/definitions/README.md](../../../../data/definitions/README.md) "Literal-pool
   scalars" — set stoich_afr to the new stoich AND scale fuel_load_scale by
   14.7/new_stoich; leave the λ maps alone.
 
@@ -191,7 +191,7 @@ generation (fewer structural matches).
 - `data/maps/<rom-id>/` — per-ROM output (manifest.json, index.tsv, tables/*.json + *.csv, scalars.json + scalars.tsv)
 - `data/maps/cross_rom_diff.json` — cross-ROM diff report
 - `data/maps/cross_rom_scalars.json` — cross-ROM scalar address report
-- [data/maps README](../../../data/maps/README.md) — format docs + regeneration recipe
+- [data/maps README](../../../../data/maps/README.md) — format docs + regeneration recipe
 - `tests/test_extract_maps.py` — 6 tests; `tests/test_extract_scalars.py` — 5 tests
 
 ## 8. Validation

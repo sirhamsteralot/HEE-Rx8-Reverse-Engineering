@@ -15,8 +15,8 @@ against [fueling_control_report.md](fueling_control_report.md),
 [ignition_timing_report.md](ignition_timing_report.md),
 [knock_control_report.md](knock_control_report.md),
 [load_fueling_report.md](load_fueling_report.md); cross-ROM propagation of this table:
-[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md)
-+ [cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md);
+[cross_ecu/cross_rom_mode22_pid_handlers.md](labeling/cross_ecu/cross_rom_mode22_pid_handlers.md)
++ [cross_ecu/cross_rom_differential_labeling.md](labeling/cross_ecu/cross_rom_differential_labeling.md);
 logger scalings from
 `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` and
 [docs/references/rx8club-user-guide-thread.md](../../references/rx8club-user-guide-thread.md);
@@ -257,7 +257,7 @@ this report's §12 SBL/security + CVN facts feed the
 
 ## 4. Labeling applied
 
-- **175 functions** renamed via `source_review/accepted_function_aliases.tsv` + `integrate_reviewed_names.py`
+- **175 functions** renamed via `labeling/source_review/accepted_function_aliases.tsv` + `integrate_reviewed_names.py`
   (symbols.tsv, function_index.tsv, callgraph.tsv, functions/*.c, named/firmware_named.c,
   firmware_decompiled.c; 3,355 bodies re-verified intact): 99 PID handlers
   (`diag22_pidXXXX_*`), 29 service handlers (`uds_service_XX_*` / `obd_modeXX_*`),
@@ -296,7 +296,7 @@ this report's §12 SBL/security + CVN facts feed the
 - `data/labels/60E15120_N3J1E/uds_dispatch_labels.json` (this pass, full evidence per record)
 - `data/labels/60E15120_N3J1E/diagnostic_dispatch_named.tsv` (99 annotated records)
 - `data/labels/60E15120_N3J1E/uds_service_dispatch.tsv` (29 service records)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv` and
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv` and
   `accepted_ram_aliases.tsv` (appended)
 - `reverse-engineered/decompiled/60E15120_N3J1E/`: symbols.tsv, function_index.tsv,
   callgraph.tsv, functions/*.c, named/firmware_named.c, named/lookup_aliases.tsv,

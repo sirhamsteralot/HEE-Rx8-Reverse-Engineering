@@ -7,7 +7,7 @@ untouched). All findings are from static analysis of the canonical export
 performed. Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.md); sceptical re-check:
 [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md); validation: `reviews/fueling/validation.json`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](labeling/calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410).
 
 
 ## 1. Executive summary
@@ -85,7 +85,7 @@ closed loop: beb8 = filter(clamp((max(bf40, c01c+b0c4) + min(tbl_0x6ac38(ECT), b
 Scalar constants behind the math (not tables - literal-pool float32s, now
 extracted per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` by
 `utilities/scripts/extract_scalars.py`, see
-[calibration extraction section 6a](calibration_extraction_report.md)): the base
+[calibration extraction section 6a](labeling/calibration_extraction_report.md)): the base
 fuel scalar `fuel_load_scale_ffffbed0` = load x **0.07196** (0x3d935fc4 @0x78170,
 ptr 0x30830) multiplying into every fuel-volume request, injector flow rates
 369.472/475.93 cc/min (@0x78184, @0x7818c/0x78194), blend decay 0.0667
@@ -106,7 +106,7 @@ def-matched).
 ## 4. Labeling applied
 
 - 39 functions, 151 RAM locations, 1 lookup table added to
-  `source_review/accepted_*_aliases.tsv`; integrated into all synchronized
+  `labeling/source_review/accepted_*_aliases.tsv`; integrated into all synchronized
   views (per-function files, `decompiled/firmware_decompiled.c`,
   `named/firmware_named.c`, index/callgraph/symbols TSVs,
   `metadata/integrated_names.json`); 234 snapshot-local renames.
@@ -150,7 +150,7 @@ modified.
 
 Check any address in `decompiled/firmware_disassembly.asm` (ROM) or
 `decompiled/functions/<address>_*.c` (index: `decompiled/function_index.tsv`);
-alias evidence in `source_review/accepted_*_aliases.tsv` (basis
+alias evidence in `labeling/source_review/accepted_*_aliases.tsv` (basis
 `source_review_fueling`). Full RAM list (150 entries) is in the TSV; core
 entries below.
 
@@ -219,7 +219,7 @@ entries below.
 
 ### 7.3 ROM tables/data and entry points
 
-Descriptors (verified vs `cross_ecu/romraider_descriptor_matches.json` from raw
+Descriptors (verified vs `labeling/cross_ecu/romraider_descriptor_matches.json` from raw
 ROM): 0x69788 MAF Scaling; 0x6ac88 Engine Load Compensation; 0x6aa80/0x6aa64
 Injector Latency Primary/Secondary; 0x6a9a4/c0/dc temp multipliers; 0x6ae28/
 0x6ae3c/0x6ae58/0x6ae74 Warmup family; 0x69e00 OL Changeover; 0x69cac-0x69f44
@@ -356,7 +356,7 @@ off by one record — see the dated note added there).
 
 P3-extracted names for every fueling-relevant descriptor (join of
 `data/maps/60E15120_N3J1E/index.tsv` with
-`cross_ecu/romraider_descriptor_matches.json`):
+`labeling/cross_ecu/romraider_descriptor_matches.json`):
 
 | descriptor | data/maps name | RX8Defs name |
 |------------|---------------|--------------|

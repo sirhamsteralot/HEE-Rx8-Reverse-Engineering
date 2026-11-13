@@ -11,8 +11,8 @@ re-checked against the raw binaries (method in §6, validation in §8). No binar
 was modified.
 
 **Related reports:** [firmware design document](design/README.md) §1 (target +
-memory map), [free-flash / free-RAM resource scan](../investigations/60E15120_N3J1E/free_resources_report.md)
-(the free-space numbers used here), [calibration extraction report](../investigations/60E15120_N3J1E/calibration_extraction_report.md)
+memory map), [free-flash / free-RAM resource scan](../investigations/60E15120_N3J1E/labeling/free_resources_report.md)
+(the free-space numbers used here), [calibration extraction report](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md)
 (cal-region auto-detection, per-ROM table counts), [UDS/OBD dispatch report](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
 §12 (CVN checksum + SBL services), [OS scheduler / IVT report](../investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
 (VBR + interrupt vectors), [learnings](../learnings.md) (VBR value, ROM
@@ -73,7 +73,7 @@ flowchart TD
 | User ROM (flash) | 0x00000000–0x0007ffff | 512 KiB | The dumped image: SBL + app + calibration + runtime IVT | all 11 dumps are exactly 524,288 B; [SH7055 hardware manual](https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual) |
 | On-chip RAM | 0xffff6000–0xffffdfff | 32 KiB | Working variables, task stacks, EEPROM mirror, CVN result | [design doc §1](design/README.md); emulator profiles `memory.ram` |
 | I/O registers | 0xffffe000–0xffffffff | 8 KiB | SH7055 peripherals (volatile) | emulator profiles `memory.io`; [learnings](../learnings.md) |
-| External 93C56 | off-chip | 256 B | Persistent storage (IC420) incl. learned knock retard; 0x55aa/0xaa55 magic mirrored at 0xffff8000 (full content not yet mapped) | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/free_resources_report.md) |
+| External 93C56 | off-chip | 256 B | Persistent storage (IC420) incl. learned knock retard; 0x55aa/0xaa55 magic mirrored at 0xffff8000 (full content not yet mapped) | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/labeling/free_resources_report.md) |
 
 Runtime flash is **read-only** from the CPU: stores to `0x0–0x7ffff` are ignored
 (the emulator counts them in `bus.rom_writes_blocked`; on hardware they need
@@ -135,10 +135,10 @@ Key fixed addresses, with what proves them:
 |---|---|---|
 | 0x0–0x3ff | Hardware vector table, active while VBR=0 (reset) | design doc §2; longwords at 0x0/0x8 = 0x8b8 in all 11 ROMs (byte-checked) |
 | 0x8b8 / 0x8b4 | `ref_Manual_Reset` / `Illegal_instr` | [design doc §2–3](design/README.md) |
-| 0xb0e–0xfdf | Erased 1,234-B SBL gap (CVN-free — checksum starts at 0x2000) | [free-resources report §3](../investigations/60E15120_N3J1E/free_resources_report.md); re-verified all-0xFF in all 11 |
+| 0xb0e–0xfdf | Erased 1,234-B SBL gap (CVN-free — checksum starts at 0x2000) | [free-resources report §3](../investigations/60E15120_N3J1E/labeling/free_resources_report.md); re-verified all-0xFF in all 11 |
 | 0x2000 | Firmware-ID ASCII string (application start) | byte-checked all 11 (§4 table); [UDS report §12.1](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) |
 | 0x2000–0x7ffff | CVN coverage except hole 0x7fb00–0x7fb7f | checksum engine 0x5a3f4 (D3, verified for 60E15120_N3J1E) |
-| cal_start−0x8000 … cal_start | Descriptor scan window | [cal-extraction report §2](../investigations/60E15120_N3J1E/calibration_extraction_report.md) |
+| cal_start−0x8000 … cal_start | Descriptor scan window | [cal-extraction report §2](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md) |
 | 0x7fb8c–0x7fc4f | 196-B all-erased cave | byte-checked all-0xFF in all 11 ROMs |
 | 0x7fc50 | Runtime VBR (IVT base) | `ldc` at 0xd206 sets VBR=0x7fc50 ([learnings](../learnings.md), verified for 60E15120_N3J1E; the identical cave/IVT bytes on the other 10 are consistent but the VBR write itself is only proven on the reference ROM) |
 
@@ -204,7 +204,7 @@ Notes on the table:
   below 0x7fb00 — the cal region also holds ID blocks and non-table data, so it
   extends past the table spans. The 60E15120_N3J1E spans match the
   independently verified §9 figures in the
-  [calibration extraction report](../investigations/60E15120_N3J1E/calibration_extraction_report.md)
+  [calibration extraction report](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md)
   (axes 0x6c1a4–0x7dd3c, data 0x6c1e4–0x7dd60); the scan's upper bound
   (0x7dd84) is a span estimate that can overshoot by a few dozen bytes
   (type-size rounding on the last table).
@@ -229,7 +229,7 @@ Notes on the table:
 ### 4.3 Free application flash per ROM (visual)
 
 Free flash = total bytes in `0xFF` runs ≥16 B inside the application area
-`0x2000–0x7ffff` (from the [free-resources report §3](../investigations/60E15120_N3J1E/free_resources_report.md),
+`0x2000–0x7ffff` (from the [free-resources report §3](../investigations/60E15120_N3J1E/labeling/free_resources_report.md),
 re-verified this pass). Every ROM also has the 1,234-B SBL gap `0xb0e–0xfdf`
 outside the checksum, and the newer generation additionally has
 `0x1fc4–0x1fff` (60 B) erased at the SBL tail.
@@ -260,7 +260,7 @@ roomiest cal-area free runs    roomiest overall (22 KiB free) tightest (0.9–1.
 
 The emulator boots of all 11 ROMs produce the **same** idle RAM write pattern
 (27,904 of 32,768 bytes touched after 2M cycles;
-[free-resources report §3](../investigations/60E15120_N3J1E/free_resources_report.md)):
+[free-resources report §3](../investigations/60E15120_N3J1E/labeling/free_resources_report.md)):
 
 ```
 0xffff6000 ┌──────────────────────────────────────────────┐
@@ -301,7 +301,7 @@ for rom in 11_roms:                       # read-only, no binary touched
 ```
 
 Free-flash totals are reused verbatim from the
-[free-resources report](../investigations/60E15120_N3J1E/free_resources_report.md)
+[free-resources report](../investigations/60E15120_N3J1E/labeling/free_resources_report.md)
 §3 (its scan is the authoritative one); the raw scan JSON of this pass lives in
 the session scratchpad (`flash-layout-report/findings.md`).
 
@@ -326,10 +326,10 @@ the session scratchpad (`flash-layout-report/findings.md`).
   [`binaries/manifest.csv`](../../binaries/manifest.csv) and the free-resources
   report §3.
 - Cross-checked figures: 60E15120_N3J1E descriptor array 0x68ef8–0x6bc70 and
-  cal spans consistent with [cal-extraction report §9](../investigations/60E15120_N3J1E/calibration_extraction_report.md)
+  cal spans consistent with [cal-extraction report §9](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md)
   (same lower bound; scan upper bound overshoots the verified data end by 0x24);
   SBL/CVN facts equal [UDS report §12](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
-  free-flash totals equal [free-resources report §3](../investigations/60E15120_N3J1E/free_resources_report.md);
+  free-flash totals equal [free-resources report §3](../investigations/60E15120_N3J1E/labeling/free_resources_report.md);
   RAM map equals [design doc §1](design/README.md) + free-resources §10.
 - `python utilities/scripts/rx8-pcm-pipeline/validate_reports.py` — PASS
   (this file is outside `docs/investigations/` and not scanned; run as a

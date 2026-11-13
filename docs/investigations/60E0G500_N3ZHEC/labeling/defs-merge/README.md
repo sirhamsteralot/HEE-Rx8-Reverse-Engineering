@@ -4,8 +4,8 @@ Which tuning definitions apply to the 60E0G500/N3ZHEC factory dump in
 `binaries/dumps/` (`60E0G500_N3ZHEC.bin`, SHA-256 `a33f79a4…` per
 `binaries/manifest.csv`, fw id `60E0G500` at 0x2000). Cross-ROM method and results
 for all 11 ROMs:
-[`../60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md`](../../60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md);
-machine-readable record: [`data/definitions/coverage.json`](../../../../data/definitions/coverage.json).
+[`../60E15120_N3J1E/cross_ecu/cross_rom_defs_coverage.md`](../../../60E15120_N3J1E/labeling/cross_ecu/cross_rom_defs_coverage.md);
+machine-readable record: [`data/definitions/coverage.json`](../../../../../data/definitions/coverage.json).
 
 ## Applicable definitions
 
@@ -19,7 +19,7 @@ machine-readable record: [`data/definitions/coverage.json`](../../../../data/def
   `c4a3c37e41eddc1e92c29716b087bb9d9c2090fd`) + `ECUFlash/RX8BASE.xml`
   (1743 tables, blob `05a7943e…`). Referenced in place — no local copies are kept
   under `data/definitions/ecuflash/` (rule 4b: files blob-identical to the pinned
-  submodule are not duplicated; register item **D8**, closed). See [`data/definitions/README.md`](../../../../data/definitions/README.md).
+  submodule are not duplicated; register item **D8**, closed). See [`data/definitions/README.md`](../../../../../data/definitions/README.md).
 
 ## Validation
 

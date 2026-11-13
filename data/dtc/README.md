@@ -85,7 +85,7 @@ of `rx8defs-merged-60E15120.xml` is named with the standard 5-char OBD code
 `utilities/scripts/defs-merge/relabel_dtc_names.py` (merged def, surgical) +
 `repair_dtc_tables()` at per-ROM generation time (names + short rule-6b
 descriptions); stats in
-`docs/investigations/60E15120_N3J1E/defs-merge/dtc_pcode_labels_2026-11-03.json`.
+`docs/investigations/60E15120_N3J1E/labeling/defs-merge/dtc_pcode_labels_2026-11-03.json`.
 Audit: 0 mismatches (`defs_audit.tsv`;
 the audit compares decoded u16 codes, so both naming forms audit identically).
 Tests: `tests/test_dtc_pcode_labels.py`. See

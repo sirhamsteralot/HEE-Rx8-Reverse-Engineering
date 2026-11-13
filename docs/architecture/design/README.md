@@ -190,7 +190,7 @@ Verified encoders: 0x29236 (RPM: 0.25 RPM/count, cap 0xfffe, fault 0xffff),
 0x2927c (speed: `(speed+100)/0.01`, cap 40000), 0x291dc (packs CAN 0x201,
 length 8, buffer 0xffffbaf4; RPM bytes 0–1, speed bytes 4–5), 0x29340
 (RPM preparation with conditional filter, RAM 0xffffbb04/0xffffbb08).
-See [`source_review/README.md`](../../investigations/60E15120_N3J1E/source_review/README.md).
+See [`source_review/README.md`](../../investigations/60E15120_N3J1E/labeling/source_review/README.md).
 
 ### 5.3 Diagnostics / UDS over SCI0
 
@@ -213,7 +213,7 @@ memory services (all critical-section masked):
 ```
 
 15 of 22 RomRaider logger entries match 14 distinct dispatch handlers
-([`cross_ecu/README.md`](../../investigations/60E15120_N3J1E/cross_ecu/README.md)); the engine-speed PID 0x000c selects handler 0x56982,
+([`cross_ecu/README.md`](../../investigations/60E15120_N3J1E/labeling/cross_ecu/README.md)); the engine-speed PID 0x000c selects handler 0x56982,
 reading `engine_speed_rpm_ffffb548` with scalar 0.25.
 
 ### 5.4 Calibration lookup layer
@@ -242,7 +242,7 @@ Variable-shift dispatchers recovered from ROM data: FUN_000043c8 (`shar`,
 32 cases) and FUN_000044e0 (`shlr`, 32 cases) — see the [EXPORT CLEANUP]
 notes. Also: forward byte copy 0x42b0, insertion sort 0x6689e,
 critical-section pair `sh_raise_interrupt_mask_return_previous` (0x3920) /
-`ref_setSR` (0x3934) — 184 callers each. Details in [`math_units/README.md`](../../investigations/60E15120_N3J1E/math_units/README.md).
+`ref_setSR` (0x3934) — 184 callers each. Details in [`math_units/README.md`](../../investigations/60E15120_N3J1E/labeling/math_units/README.md).
 
 ### 5.6 Peripherals and watchdogs
 

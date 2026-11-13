@@ -28,7 +28,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-SR = REPO / "docs/investigations/60E15120_N3J1E/source_review"
+SR = REPO / "docs/investigations/60E15120_N3J1E/labeling/source_review"
 LABELS = REPO / "data/labels/60E15120_N3J1E"
 SYMBOLS = REPO / "reverse-engineered/decompiled/60E15120_N3J1E/symbols.tsv"
 

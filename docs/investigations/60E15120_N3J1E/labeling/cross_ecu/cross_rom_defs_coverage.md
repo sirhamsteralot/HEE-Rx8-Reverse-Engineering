@@ -2,7 +2,7 @@
 
 ROADMAP **D item 4** (extend `data/definitions/` from 60E15120_N3J1E to all ROMs,
 incl. 60E0G500) + register item **D8** (defs dedupe vs the pinned submodule).
-Machine-readable record: [`data/definitions/coverage.json`](../../../../data/definitions/coverage.json);
+Machine-readable record: [`data/definitions/coverage.json`](../../../../../data/definitions/coverage.json);
 generator: `utilities/scripts/defs-merge/extend_defs_all_roms.py` (run from repo root).
 
 ## Method
@@ -26,17 +26,17 @@ upstream placeholder for unmapped DTC-enable bytes).
 
 | ROM | fw id @0x2000 | RomRaider block | tables | per-ROM def | status |
 |-----|---------------|-----------------|--------|-------------|--------|
-| `60E0G500_N3ZHEC.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/60E0G500_N3ZHEC.xml](../../../../data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml) | OK |
+| `60E0G500_N3ZHEC.bin` | 60E0G500 | 60E0G500 | 814 (+RX8Base 1052) | [per-rom/60E0G500_N3ZHEC.xml](../../../../../data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml) | OK |
 | `60E0E500.bin` | 60E0E500 | — | — | — | no upstream block |
-| `60E0E700_N3YLEE.bin` | 60E0E700 | 60E0E700 | 743 (+RX8Base 1052) | [per-rom/60E0E700_N3YLEE.xml](../../../../data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml) | OK |
-| `60E0FB00.bin` | 60E0FB00 | 60E0FB00 | 732 (+RX8Base 1052) | [per-rom/60E0FB00.xml](../../../../data/definitions/romraider/per-rom/60E0FB00.xml) | OK |
-| `60E0FC00.bin` | 60E0FC00 | 60E0FC00 | 907 (+RX8Base 1052) | [per-rom/60E0FC00.xml](../../../../data/definitions/romraider/per-rom/60E0FC00.xml) | OK |
-| `60E15120_N3J1E.bin` | 60E15120 | 60E15120 | 637 (+RX8Base 1052) | [per-rom/60E15120_N3J1E.xml](../../../../data/definitions/romraider/per-rom/60E15120_N3J1E.xml) | OK |
-| `60E1B900.bin` | 60E1B900 | 60E1B900 | 707 (+RX8Base 1052) | [per-rom/60E1B900.xml](../../../../data/definitions/romraider/per-rom/60E1B900.xml) | OK |
+| `60E0E700_N3YLEE.bin` | 60E0E700 | 60E0E700 | 743 (+RX8Base 1052) | [per-rom/60E0E700_N3YLEE.xml](../../../../../data/definitions/romraider/per-rom/60E0E700_N3YLEE.xml) | OK |
+| `60E0FB00.bin` | 60E0FB00 | 60E0FB00 | 732 (+RX8Base 1052) | [per-rom/60E0FB00.xml](../../../../../data/definitions/romraider/per-rom/60E0FB00.xml) | OK |
+| `60E0FC00.bin` | 60E0FC00 | 60E0FC00 | 907 (+RX8Base 1052) | [per-rom/60E0FC00.xml](../../../../../data/definitions/romraider/per-rom/60E0FC00.xml) | OK |
+| `60E15120_N3J1E.bin` | 60E15120 | 60E15120 | 637 (+RX8Base 1052) | [per-rom/60E15120_N3J1E.xml](../../../../../data/definitions/romraider/per-rom/60E15120_N3J1E.xml) | OK |
+| `60E1B900.bin` | 60E1B900 | 60E1B900 | 707 (+RX8Base 1052) | [per-rom/60E1B900.xml](../../../../../data/definitions/romraider/per-rom/60E1B900.xml) | OK |
 | `60E1C500_N3J6EB.bin` | 60E1C500 | — | — | — | no upstream block (commented out upstream @ `251f54f`) |
-| `60E1D400.bin` | 60E1D400 | 60E1D400 | 827 (+RX8Base 1052) | [per-rom/60E1D400.xml](../../../../data/definitions/romraider/per-rom/60E1D400.xml) | OK |
-| `60E32000_N3M5E.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3M5E.xml](../../../../data/definitions/romraider/per-rom/60E32000_N3M5E.xml) | OK |
-| `60E32000_N3N5EB.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3N5EB.xml](../../../../data/definitions/romraider/per-rom/60E32000_N3N5EB.xml) | OK |
+| `60E1D400.bin` | 60E1D400 | 60E1D400 | 827 (+RX8Base 1052) | [per-rom/60E1D400.xml](../../../../../data/definitions/romraider/per-rom/60E1D400.xml) | OK |
+| `60E32000_N3M5E.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3M5E.xml](../../../../../data/definitions/romraider/per-rom/60E32000_N3M5E.xml) | OK |
+| `60E32000_N3N5EB.bin` | 60E32000 | 60E32000 | 266 (+RX8Base 1052) | [per-rom/60E32000_N3N5EB.xml](../../../../../data/definitions/romraider/per-rom/60E32000_N3N5EB.xml) | OK |
 
 - **9 of 11 ROMs** now have a standalone RomRaider def. Gaps: **60E0E500** (no
   upstream block at all) and **60E1C500_N3J6EB** (block present upstream but
@@ -64,7 +64,7 @@ upstream commit `ff5ab4f` (2026-09-29), not the pinned HEAD (`82e5724d…` @
 `39d98a0`), because the reviewed 60E15120 merge was built against `ff5ab4f`.
 Side effect: the earlier note "the pinned submodule has a newer ECUFlash XML" is
 settled — content is identical (1210 tables both); the size difference was line
-endings only. Full provenance: [`data/definitions/README.md`](../../../../data/definitions/README.md).
+endings only. Full provenance: [`data/definitions/README.md`](../../../../../data/definitions/README.md).
 
 ## Validation
 
@@ -76,7 +76,7 @@ endings only. Full provenance: [`data/definitions/README.md`](../../../../data/d
   under `data/definitions/` were written and four duplicate XMLs removed.
 - XML defs are editor metadata; they never change ROM bytes (AGENTS.md rule 2).
 
-**Related:** [60E0G500_N3ZHEC defs-merge](../../60E0G500_N3ZHEC/defs-merge/README.md) ·
+**Related:** [60E0G500_N3ZHEC defs-merge](../../../60E0G500_N3ZHEC/labeling/defs-merge/README.md) ·
 [60E15120_N3J1E defs-merge](../defs-merge/README.md) ·
 [cross-ROM Mode 22 PID handlers](cross_rom_mode22_pid_handlers.md) ·
 [cross-ROM function aliases](cross_rom_differential_labeling.md)

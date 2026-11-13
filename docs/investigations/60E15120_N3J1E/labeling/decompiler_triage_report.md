@@ -11,9 +11,9 @@ was needed for this pass. Artifacts:
 `…/non_instruction_ranges_classified.tsv`, `data/labels/60E15120_N3J1E/triage_export.json`.
 
 **Related reports:** dispatch-table semantics cross-referenced with
-[uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) (tables 0x5eb18/0x5eb40,
+[uds_mode22_dispatch_report.md](../uds_mode22_dispatch_report.md) (tables 0x5eb18/0x5eb40,
 router 0x68dac); the scheduler warning with
-[os_scheduler_can_ivt_report.md](os_scheduler_can_ivt_report.md) (0x9630); export-cleanup
+[os_scheduler_can_ivt_report.md](../os_scheduler_can_ivt_report.md) (0x9630); export-cleanup
 jump annotations with `refine_export_cleanup.py` (`data/labels/60E15120_N3J1E/export_cleanup.json`);
 calibration-area descriptors with [calibration_extraction_report.md](calibration_extraction_report.md).
 
@@ -128,7 +128,7 @@ key==0 record carries the default target):
 | 0x55a7c `ref_OBDModeFunc_Unsure` (called via thunk at 0x6666c inside 0x665cc) | 0x55c64 = 0x0005eb18 | 0x5eb18 | 4 + terminator | 0x02,0x04,0x06,0x08 | 0x55aba |
 
 Record format `{key:u8<<24, handler:u32}` matches the 8-byte tables already labeled in
-[uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md) §3 (0x5eb18 "caseD_22..26");
+[uds_mode22_dispatch_report.md](../uds_mode22_dispatch_report.md) §3 (0x5eb18 "caseD_22..26");
 0x5eb40 right after it is the 29 × 12-byte UDS service table. The 0x5ea08 key space
 (single-byte service/mode-like IDs 0x01–0x4c) is consistent with a diagnostic-mode
 dispatch feeding 0x54d90's callers — semantics remain a `candidate_`-level hypothesis,

@@ -8,7 +8,7 @@ literals were re-read directly from the untouched ROM. No hardware execution
 was performed. Full per-function evidence: `reviews/load_fueling_model/`
 (README, REVIEW_NOTES, candidate alias TSVs, validation.json).
 
-**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](calibration_extraction_report.md); the computed load cell is diag-exposed as [Mode 22 PID 0x43](uds_mode22_dispatch_report.md) (handler 0x56b8a reads `engine_load_ffffc0b4` × 1/255; PID 0x04 = load/max×100 — ROADMAP D5).
+**Related reports:** this is the upstream of the fuelling and timing chains — see [fueling control](fueling_control_report.md), [ignition timing](ignition_timing_report.md), [intake solenoids](intake_solenoids_report.md) (MAF/RPM thresholds); tables extracted in [calibration extraction](labeling/calibration_extraction_report.md); the computed load cell is diag-exposed as [Mode 22 PID 0x43](uds_mode22_dispatch_report.md) (handler 0x56b8a reads `engine_load_ffffc0b4` × 1/255; PID 0x04 = load/max×100 — ROADMAP D5).
 
 ## 1. Executive summary
 
@@ -190,7 +190,7 @@ validators) — is the follow-up work if the candidates are accepted.
   "Kelvin conversion 295/(x+273)"; corrected in
   `decompiled/functions/0001a086_FUN_0001a086.c`,
   `decompiled/firmware_decompiled.c`, `named/firmware_named.c` and
-  `source_review/accepted_ram_aliases.tsv`. Documentation-only change: no
+  `labeling/source_review/accepted_ram_aliases.tsv`. Documentation-only change: no
   function bodies, names, addresses or ROM bytes changed.
 
 ## 7. Files
@@ -222,7 +222,7 @@ validators) — is the follow-up work if the candidates are accepted.
   **0.07196 @0x78170 -> `fuel_load_scale_ffffbed0`**) are machine-extracted
   per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` +
   `data/maps/cross_rom_scalars.json` by `utilities/scripts/extract_scalars.py`
-  - see [calibration extraction section 6a](calibration_extraction_report.md)
+  - see [calibration extraction section 6a](labeling/calibration_extraction_report.md)
   and the [data/maps README](../../../data/maps/README.md); tests
   `tests/test_extract_scalars.py`.
 - Disassembly verification: the MAF copy gate (0x19fa8–0x19fe8), the 0x1a418
@@ -236,7 +236,7 @@ validators) — is the follow-up work if the candidates are accepted.
   0x9f78 @0x749e/0x1a02a, 0xaa35/0xaa36 @0x1a016/0x1a022 (0x19f4e), 0xa9e4/
   0xa9e8 @0x19ff8/0x19ff2, 0xaa4c @0x1a3f6 (0x1a1dc), 0xadec @0x1c184
   (0x1c880), 0xad48 @0x1a170/0x3368a — and §2/§12 now use the promoted
-  alias names from `source_review/accepted_ram_aliases.tsv`.
+  alias names from `labeling/source_review/accepted_ram_aliases.tsv`.
 
 ## 9. Limits
 
@@ -257,7 +257,7 @@ integration pass and its validators pass.
 The fueling-chain labeling integrated **39 function aliases,
 150 RAM aliases and lookup aliases** into the synchronized views
 (`data/labels/60E15120_N3J1E/fueling_labels.json`;
-`source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`;
+`labeling/source_review/accepted_function_aliases.tsv` / `accepted_ram_aliases.tsv`;
 `integrated_names.json`; evidence in `reviews/load_fueling_model/` incl.
 [`REVIEW_NOTES.md`](reviews/load_fueling_model/REVIEW_NOTES.md) + `validation.json`; backup
 `backups/pre_fueling_labels.zip`). Key named rows: `calculate_engine_load`

@@ -61,9 +61,9 @@ RX8Defs identifier 0x000c maps through 0x56982 and 0x55484 to RAM 0xffffb548, in
 
 Assembly at 0x392c writes SR in a return delay slot, a side effect missing from raw C. Caller 0x7188 requests interrupt mask level 11 before a synchronous SCI0 exchange at 0x71ea. The receive-status loop at 0x721e–0x7226 has no software timeout or watchdog service inside it. This is a potential loss-of-progress path, not a demonstrated fault: SCI completion may depend on internal clocking, and a missing external response alone need not hang it. No 10,000 RPM trigger or active-engine watchdog starvation chain has been established. PB15 toggles in 0x31c/0x11cc resemble the external-watchdog idiom in other SH705x projects, but board routing and normal-runtime scheduling still need verification.
 
-See [sources, alias corrections and full evidence](../cross_ecu/README.md).
+See [sources, alias corrections and full evidence](../labeling/cross_ecu/README.md).
 
 
 ### Additional source review
 
-Renesas SH7055 application-note section 2.20 corroborates RDRF mask 0x40 and itself uses a blocking wait. The pattern alone is therefore not evidence of a firmware defect. CAN 0x201 RPM encoding at 0x29236 uses 0.25 RPM/count with a normal ceiling of 0xfffe; 10,000 RPM encodes as 40000, within range. This excludes overflow of this particular encoded field at that RPM, not other reset mechanisms. See [source review](../source_review/README.md).
+Renesas SH7055 application-note section 2.20 corroborates RDRF mask 0x40 and itself uses a blocking wait. The pattern alone is therefore not evidence of a firmware defect. CAN 0x201 RPM encoding at 0x29236 uses 0.25 RPM/count with a normal ceiling of 0xfffe; 10,000 RPM encodes as 40000, within range. This excludes overflow of this particular encoded field at that RPM, not other reset mechanisms. See [source review](../labeling/source_review/README.md).

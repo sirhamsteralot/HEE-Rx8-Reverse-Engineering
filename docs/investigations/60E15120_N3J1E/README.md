@@ -14,16 +14,16 @@ dataflow and unverified board routing.
 
 ## Denso and RomRaider extension
 
-See [the cross-ECU and RX8Defs review](cross_ecu/README.md) for descriptor matches,
+See [the cross-ECU and RX8Defs review](labeling/cross_ecu/README.md) for descriptor matches,
 diagnostic/RAM candidates and assembly corrections. This extension annotates the
 C export; the saved Ghidra database has not received these new annotations.
 The cross-ROM passes are documented at
-[cross_ecu/cross_rom_differential_labeling.md](cross_ecu/cross_rom_differential_labeling.md)
+[cross_ecu/cross_rom_differential_labeling.md](labeling/cross_ecu/cross_rom_differential_labeling.md)
 (function byte-matches across all 14 ROMs) and
-[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md)
+[cross_ecu/cross_rom_mode22_pid_handlers.md](labeling/cross_ecu/cross_rom_mode22_pid_handlers.md)
 (Mode 22 PID handlers mapped in all 14 ROMs).
 
-See also [the additional source review](source_review/README.md) for G-ROM,
+See also [the additional source review](labeling/source_review/README.md) for G-ROM,
 diagnostic and CAN findings.
 
 ## Integrated reviewed names
@@ -36,16 +36,16 @@ The saved Ghidra database is unchanged. A pre-integration backup is retained at
 `backups/pre_name_integration.zip`; the complete rename map is in
 `metadata/integrated_names.json`.
 
-See [math helpers and unit conversions](math_units/README.md) for the latest
+See [math helpers and unit conversions](labeling/math_units/README.md) for the latest
 helper naming and scale/offset annotations integrated into the canonical C.
 
-See [signature, local, structure and constant reconstruction](readability/README.md)
+See [signature, local, structure and constant reconstruction](labeling/readability/README.md)
 for the latest readability pass and unresolved lookup-call audit.
 
-See [the axis-search/interpolation family reconstruction](lookup_family/README.md)
+See [the axis-search/interpolation family reconstruction](labeling/lookup_family/README.md)
 for recovered register outputs, typed variants and per-function analysis records.
 
-See [the comment-block merge/reduce pass](comment_merge/README.md) for the
+See [the comment-block merge/reduce pass](labeling/comment_merge/README.md) for the
 canonical ordering, application and deduplication of the stacked review comment
 blocks across the per-function files and both monoliths.
 
@@ -265,7 +265,7 @@ IVT 0x378, OS scheduler 0x3e10/0x3c2a/0x375c/0x3db0, UDS entry 0x680a0, ADC swee
 NMI poll 0x8ea...). Write-up: [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md)
 (0x803e there is only the
 default VBR=0 IVT slot 0x2c8 target; the live rpm path is 0x7fcc — see the deep dive below);
-labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `source_review/accepted_*.tsv`;
+labels: `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` + `labeling/source_review/accepted_*.tsv`;
 backup: `backups/pre_os_scheduler_can_ivt_labels.zip`. ROM untouched.
 
 ## OS scheduling labeling
@@ -274,13 +274,14 @@ From the deep dive: 33 functions + 10 RAM cells + 6 tables labeled (OS core,
 tick chain, interrupt surface; `ref_osTaskScheduler` 0x9630 =
 `os_schedule_task_event`). Write-up: [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md)
 §6; labels: `data/labels/60E15120_N3J1E/os_scheduling_labels.json` + appended
-`source_review/accepted_*.tsv` rows; backup: `backups/pre_os_scheduling_labels.zip`.
+`labeling/source_review/accepted_*.tsv` rows; backup: `backups/pre_os_scheduling_labels.zip`.
 ROM untouched.
 
 ## Start here
 
 - [Firmware design document](../../architecture/design/README.md)
-- Subsystem reports: [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [idle speed control](idle_control_report.md) + [idle target RPM](idle_target_control_report.md), [DSC-related CAN arbitration](dsc_can_arbitration_report.md), [calibration extraction](calibration_extraction_report.md) (tables in `data/maps/<rom-id>/tables/` via `extract_maps.py`; literal-pool scalar constants — e.g. base fuel scalar 0.07196 @0x78170 — in `data/maps/<rom-id>/scalars.*` via `extract_scalars.py`, report §6a; cross-ROM: `data/maps/cross_rom_diff.json` + `cross_rom_scalars.json`), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Subsystem reports (this folder's root `*_report.md`): [knock](knock_control_report.md), [fueling](fueling_control_report.md), [intake solenoids](intake_solenoids_report.md), [OS scheduler / interrupt / CAN-UDS transport](os_scheduler_can_ivt_report.md), [OS scheduling deep dive (task loops, tick, timers, queues)](os_scheduling_deep_dive_report.md), [ignition timing](ignition_timing_report.md), [idle speed control](idle_control_report.md) + [idle target RPM](idle_target_control_report.md), [DSC-related CAN arbitration](dsc_can_arbitration_report.md), [UDS service + Mode 22 PID dispatch](uds_mode22_dispatch_report.md) — each with a full memory map and a plain-language §1a (standard per AGENTS.md rule 8); reviews in `reviews/` — architecture, boot flow, scheduler, task table and subsystem call map
+- Labeling investigations (aliasing/renaming passes, editor-definition merges, export cleanup) live in [`labeling/`](labeling/README.md) — e.g. [calibration extraction](labeling/calibration_extraction_report.md) (tables in `data/maps/<rom-id>/tables/` via `extract_maps.py`; literal-pool scalar constants — e.g. base fuel scalar 0.07196 @0x78170 — in `data/maps/<rom-id>/scalars.*` via `extract_scalars.py`, report §6a; cross-ROM: `data/maps/cross_rom_diff.json` + `cross_rom_scalars.json`)
 - [Named C view with lookup descriptor and RAM aliases](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c) — [naming evidence](../../../reverse-engineered/decompiled/60E15120_N3J1E/named/README.md)
 - [Combined C listing](../../../reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
 - [Function index: addresses, names, status, individual files](../../../reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv)

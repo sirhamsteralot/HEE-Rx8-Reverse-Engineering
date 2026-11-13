@@ -154,7 +154,7 @@ RAM aliases: `o2_monitor_ratio_ch0..ch3` (0xffffc6f0/c6f4/c780/c784),
 `o2_channel_afr_medium` (0xffffc70c), `o2_channel_lambda_slow` (0xffffc710),
 `o2_channel_lambda_very_slow` (0xffffc714), `o2_monitor_accum_gate` (0xffffc704),
 `o2_monitor_enable` (0xffffae21). Full evidence strings:
-`docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
+`docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv`
 and `accepted_ram_aliases.tsv`; record:
 `data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`.
 
@@ -169,7 +169,7 @@ different monitor and was not touched.)
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0003fb9e_*.c`,
   `0004128e_*.c`, `0003f924_*.c` (symbol renamed in place by
   `integrate_reviewed_names.py`; filenames keep the `FUN_` prefix)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/o2_sensor_monitor_labels.json`,
   `data/labels/60E15120_N3J1E/integrated_names.json`
 

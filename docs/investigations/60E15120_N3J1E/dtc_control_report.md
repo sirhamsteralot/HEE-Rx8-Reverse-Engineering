@@ -18,8 +18,8 @@ re-verified against the raw ROM literal pools).
 [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md); OS task/event plumbing
 (group-2 diag events at 0x67d00, `os_schedule_task_event` 0x9630) in
 [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md); defs merge/inheritance
-issues in [defs-merge/](defs-merge/README.md); cross-ROM PID propagation in
-[cross_ecu/cross_rom_mode22_pid_handlers.md](cross_ecu/cross_rom_mode22_pid_handlers.md);
+issues in [defs-merge/](labeling/defs-merge/README.md); cross-ROM PID propagation in
+[cross_ecu/cross_rom_mode22_pid_handlers.md](labeling/cross_ecu/cross_rom_mode22_pid_handlers.md);
 key-off persistence codec + device layer (the E2RAM block in §2b) in
 [e2ram_nv_storage_report.md](e2ram_nv_storage_report.md) and
 [e2ram_device_layer_report.md](e2ram_device_layer_report.md); the "how to author a new
@@ -392,7 +392,7 @@ post-repair summary (all zeros): [`data/dtc/defs_audit.tsv`](../../../data/dtc/d
 
 Upstream `rx8_defs.xml` child ROMs that inherit `Rx8Base` DTC addresses show the
 expected inheritance drift (97–98 mismatches for the 60E0FC00-based blocks) — already
-tracked in [`defs-merge/inheritance_issues.json`](defs-merge/inheritance_issues.json)
+tracked in [`defs-merge/inheritance_issues.json`](labeling/defs-merge/inheritance_issues.json)
 (0128/1574/1577/2008/2101/2406…). The merged `rx8defs-merged-60E15120.xml` keeps the
 DTC category (381 tables). Note the ROM code sets differ per ROM (e.g. 60E1B900 and
 60E32000_N3M5E include 0444/0445/0116/… that 60E15120 lacks) — per-ROM tables are in
@@ -410,7 +410,7 @@ audit reports **0 mismatches for all 9 per-ROM defs across #1/#2/#3** (fixed iss
 real enable#1 0x7c9fc / 0x7e74c; 60E0FB00 had 98 and 60E1D400 112 misaligned entries;
 60E0E700 #2 had a bogus storageaddress 0x0). The merged 60E15120 block
 (`rx8defs-merged-60E15120.xml`) gained the missing #2/#3 bindings (363 DTC entries,
-0 mismatches). Repair record: `defs-merge/definition_repairs.json` (entry 83);
+0 mismatches). Repair record: `labeling/defs-merge/definition_repairs.json` (entry 83);
 pre-repair detail: `reviews/dtc_control/defs_audit_detail.json`.
 
 #### §5b DTC P-code labels in the defs
@@ -438,9 +438,9 @@ suffixes + 12 stale descriptions replaced, surgical splice, idempotent) and by
 descriptions — no checksum-range/bench-validate text per rule 6b).
 Audit: **0 mismatches** across all 9 per-ROM defs × #1/#2/#3
 ([`data/dtc/defs_audit.tsv`](../../../data/dtc/defs_audit.tsv)); stats:
-[`defs-merge/dtc_pcode_labels_2026-11-03.json`](defs-merge/dtc_pcode_labels_2026-11-03.json);
+[`defs-merge/dtc_pcode_labels_2026-11-03.json`](labeling/defs-merge/dtc_pcode_labels_2026-11-03.json);
 tests: `tests/test_dtc_pcode_labels.py` (14 passed). Repair record:
-`defs-merge/definition_repairs.json` (entry 84).
+`labeling/defs-merge/definition_repairs.json` (entry 84).
 
 Cross-checked against the Mazda workshop manual `input/4EngineControl.pdf`
 ("RX8 – Engine Diagnostics & Control", 2003; DTC TABLE section parsed to
