@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_erase [medium]: On engine stop (engine_running_flag_ffffaa68==1 && engine_stopped_latch_ffffa41c==1 && DAT_ffffba20==1) after DAT_ffffba1d reaches 0x14: writes (encode(0.0)=0x7e, flag 0) pairs to shadow 0x20+2i (rx8_encode_u8_affine_saturate(0, 0x3f000000, 0xc27c0000)) i.e. clears the learned table at key-off. Called from 0x288be.
+ */
 /* ROM address: 0x00027d06; body bytes: 392; decompiled */
 
-undefined1 * FUN_00027d06(void)
+undefined1 * candidate_e2ram_learned_table_erase(void)
 
 {
   bool bVar1;
@@ -40,7 +43,7 @@ undefined1 * FUN_00027d06(void)
           uVar4 = uVar4 + 1;
           sVar5 = sVar5 + 2;
         } while (uVar4 < 0x22);
-        DAT_ffffba1e = FUN_000378dc(0x20,0x44,3);
+        DAT_ffffba1e = e2ram_flush_request(0x20,0x44,3);
       }
     }
     DAT_ffffba12 = rx8_add_u16_saturate((int)(short)DAT_ffffba12,1);
@@ -53,7 +56,7 @@ undefined1 * FUN_00027d06(void)
   puVar3 = (undefined1 *)(uint)DAT_ffffba22;
   if (puVar3 == (undefined1 *)0x1) {
     if (DAT_ffffba1e == '\x01') {
-      puVar3 = (undefined1 *)FUN_000378dc(0x20,0x44,3);
+      puVar3 = (undefined1 *)e2ram_flush_request(0x20,0x44,3);
       DAT_ffffba1e = (char)puVar3;
     }
     else if (DAT_ffffc28d == '\x01') {

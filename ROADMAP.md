@@ -16,7 +16,16 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 23–37 — pick up 23 next (item 22 closed 2026-11-13:
+**reopened**: open items 23–34, 36–37 — pick up 23 next (item 35 closed
+2026-11-13: the full 256 B of the 93C56 (IC420) are mapped in
+[eeprom_content_map_report.md](docs/investigations/60E15120_N3J1E/eeprom_content_map_report.md)
+against the upstream dumps — immo key 0x02–0x09, immo code 0x16–0x19, param
+block 0x00–0x1f, learned table 0x20–0x63, ECU ID 0x64–0x6d, VIN 0x80–0x90,
+tire marker/revs 0x95/0x9a–0x9b, config bit 0x9f — plus the RAM side (shadow
+0xffffc28e, param block 0xffffc268, E2 window 0xffff8000–0xffff80ff);
+`flash-memory-layout.md` §2/§5 updated; record
+`data/labels/60E15120_N3J1E/eeprom_content_labels.json`; checks
+`tests/test_eeprom_content_map.py`; item 22 closed 2026-11-13:
 spliced the upstream RX8Defs `d95b0be` DTC switch rework + `39d98a0` 60E15120
 immobilizer patch addresses (ROM-verified 0x34b10/0x34f5c) into the reviewed
 merged 60E15120 def and therefore per-rom/60E15120_N3J1E.xml via the re-runnable
@@ -57,7 +66,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–37)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–34, 36–37)
 
 - **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
   `39d98a0` / MRP `b243b35`; record:
@@ -160,15 +169,6 @@ and where artifacts live.
   holds only a README; fuel-cut arbitration `0xedc4` is currently a subsection
   of [fueling_control_report.md](docs/investigations/60E15120_N3J1E/fueling_control_report.md).
   Deliver a dedicated limiter report + labels.
-- **C item 35 (open)** — **93C56 EEPROM full content map.**
-  [flash-memory-layout.md §2/§5](docs/architecture/flash-memory-layout.md)
-  still records "full content not yet mapped"; the E2RAM reports
-  ([e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md),
-  [e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md))
-  cover the device layer and NV storage but not the whole 256 B — map it
-  against the upstream dump
-  `submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`
-  and the RAM mirror `0xffff8000–0xffff80ff`.
 - **C item 36 (open)** — **whole-export "is it really code" audit.** The triage
   pass ([decompiler_triage_report.md](docs/investigations/60E15120_N3J1E/labeling/decompiler_triage_report.md))
   classified the 1,759 *non-instruction ranges* outside functions and triaged

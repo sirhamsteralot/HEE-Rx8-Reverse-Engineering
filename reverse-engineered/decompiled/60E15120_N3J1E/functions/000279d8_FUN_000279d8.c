@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_save [high]: Reverse of 0x27b8e: 0x22 iterations reading float cells 0xffff8108+8i and byte cells 0xffff8548+2i, rx8_encode_u8_affine_saturate(val, 0x3f000000, 0xc27c0000), e2ram_shadow_byte_write(0x20+2i,..,2), flush FUN_000378dc(0x20,0x44,3); only when engine not running (engine_running_flag_ffffaa68==0) and DAT_ffffb6c7==1, timeout DAT_ffffba16 < 0x4e2. Called from 0x288be.
+ */
 /* ROM address: 0x000279d8; body bytes: 342; decompiled */
 
-uint FUN_000279d8(void)
+uint e2ram_learned_table_save(void)
 
 {
   bool bVar1;
@@ -33,9 +36,9 @@ uint FUN_000279d8(void)
       DAT_ffffba21 = '\x01';
       ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8658,1);
       uVar4 = 0;
-      puVar5 = &DAT_ffff8548;
+      puVar5 = &e2ram_learned_table_flag_a_ffff8548;
       uVar11 = 0;
-      puVar7 = &DAT_ffff8108;
+      puVar7 = &e2ram_learned_table_value_pos_ffff8108;
       iVar6 = 0;
       uVar9 = 0xc27c0000;
       uVar10 = 0x3f000000;
@@ -49,12 +52,12 @@ uint FUN_000279d8(void)
         puVar5 = puVar5 + 2;
         puVar7 = puVar7 + 8;
       } while (uVar4 < 0x22);
-      uVar2 = FUN_000378dc(0x20,0x44,3);
+      uVar2 = e2ram_flush_request(0x20,0x44,3);
       DAT_ffffba1e = (char)uVar2;
       goto LAB_00027b14;
     }
     if (DAT_ffffba1e == '\x01') {
-      uVar2 = FUN_000378dc(0x20,0x44,3);
+      uVar2 = e2ram_flush_request(0x20,0x44,3);
       DAT_ffffba1e = (char)uVar2;
       goto LAB_00027b14;
     }

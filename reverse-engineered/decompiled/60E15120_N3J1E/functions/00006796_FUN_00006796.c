@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffff9ed8 vehicle_inputs_pfdr_prev (uint8): 
- * RAM 0xffff9eda vehicle_inputs_phdr_prev (uint8): 
+ * RAM 0xffff9ed8 vehicle_inputs_pfdr_prev (uint8): mov.l pool 0x6850 in 0x6744 and 0x6796; previous PFDR latch used in the edge-detect update in 0x6796.
+ * RAM 0xffff9eda vehicle_inputs_phdr_prev (uint8): mov.l pool 0x6858 in 0x6744 and 0x6796; previous PHDR latch used in 0x6796.
  */
 /* ROM address: 0x00006796; body bytes: 172; decompiled */
 

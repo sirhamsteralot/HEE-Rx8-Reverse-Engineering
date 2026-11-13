@@ -10,7 +10,7 @@ void FUN_00039cf0(void)
   FUN_0003840c();
   FUN_000384a2();
   FUN_000385f6();
-  ref_getTireSizeChecksumthing_();
+  e2ram_tire_size_marker_check();
   FUN_00054426();
   FUN_00054486();
   FUN_000544c4();

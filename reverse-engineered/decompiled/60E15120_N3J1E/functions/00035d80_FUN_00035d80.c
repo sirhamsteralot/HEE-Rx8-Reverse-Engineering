@@ -76,7 +76,7 @@ void FUN_00035d80(char param_1)
     uVar3 = 0x20;
     uVar2 = 0;
   }
-  cVar1 = FUN_000378dc(uVar2,uVar3,1);
+  cVar1 = e2ram_flush_request(uVar2,uVar3,1);
 LAB_00035e8c:
   if (cVar1 == '\0') {
     DAT_ffffc262 = '\x01';

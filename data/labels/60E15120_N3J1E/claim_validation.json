@@ -59,6 +59,12 @@
         "pool_claims": 0,
         "word_assigns": 9
       },
+      "eeprom_content_map_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 12
+      },
       "fueling_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -193,6 +199,12 @@
         "pool_claims": 3,
         "word_assigns": 2
       },
+      "reviews/eeprom_content_map/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 9
+      },
       "reviews/fueling/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -238,8 +250,8 @@
         "desc_claims": 1
       }
     },
-    "tsv_rows": 549,
-    "labels_json_checked": 21
+    "tsv_rows": 563,
+    "labels_json_checked": 22
   },
   "notes": [],
   "failures": [],
