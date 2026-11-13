@@ -10,7 +10,7 @@ uint FUN_00059852(void)
   
   uVar1 = (uint)DAT_ffffd25a;
   if (uVar1 == 1) {
-    uVar1 = thunk_FUN_000601b2();
+    uVar1 = jump_to_FUN_000601b2();
     DAT_ffffd25b = 0;
     DAT_ffffd25a = 0;
   }

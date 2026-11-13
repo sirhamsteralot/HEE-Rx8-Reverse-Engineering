@@ -140,6 +140,12 @@
       "rom_refs": 137,
       "rom_claims": 0
     },
+    "thunk_audit_report.md": {
+      "fn_checked": 53,
+      "ram_checked": 0,
+      "rom_refs": 53,
+      "rom_claims": 0
+    },
     "uds_mode22_dispatch_report.md": {
       "fn_checked": 11,
       "ram_checked": 0,

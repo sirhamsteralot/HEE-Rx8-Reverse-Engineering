@@ -1,7 +1,7 @@
 {
   "date": "2026-11-10",
-  "function_annotations": 492,
-  "ram_aliases": 455,
+  "function_annotations": 554,
+  "ram_aliases": 482,
   "ghidra_database_updated": false,
   "label_sweep_passes": [
     {
@@ -36,6 +36,7 @@
     "source_review_idle_control",
     "source_review_dsc_can",
     "source_review_e2ram_device",
-    "source_review_dtc_thunks"
+    "source_review_dtc_thunks",
+    "source_review_thunk_audit"
   ]
 }

@@ -12,7 +12,7 @@ uint FUN_00065980(char param_1)
   char local_d [5];
   
   local_d[0] = param_1;
-  uVar1 = thunk_FUN_00054d90((int)param_1);
+  uVar1 = jump_to_FUN_00054d90((int)param_1);
   if ((uVar1 & 0xff) != 0) {
     ref_setupForUdsResponse_(1,local_d);
     DAT_ffffd816 = DAT_ffffd816 + 1;

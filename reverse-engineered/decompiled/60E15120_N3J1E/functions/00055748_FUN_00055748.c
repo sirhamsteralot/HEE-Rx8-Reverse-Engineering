@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * RX8Defs diagnostic chain suggests RAM 0xffffc0b4 = engine_load. Direct C dataflow to handler 0x00056b8a; semantic candidate, not a recovered original symbol.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_load_g_rev [high]: PID 0x43: engine_load_ffffc0b4*1/255
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * RX8Defs diagnostic chain suggests RAM 0xffffc0b4 = engine_load. Direct C dataflow to handler 0x00056b8a; semantic candidate, not a recovered original symbol.
  */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): engine_load_ffffc0b4; decode = raw * 0.003921568394 + (0) [logger-defined load units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.

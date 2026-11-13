@@ -70,7 +70,7 @@ void ignition_timing_main_task(void)
   ref_finalTrailingTimingStuff_();
   ref_setPerRotorTimingValuesLeading();
   ref_setPerRotorTimingValuesTrailing();
-  thunk_FUN_00010fa8();
+  jump_to_FUN_00010fa8();
   FUN_00010ea2();
   FUN_0002bd4c();
   FUN_0002bdae();

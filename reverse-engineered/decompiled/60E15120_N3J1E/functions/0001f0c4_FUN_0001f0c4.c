@@ -1,11 +1,3 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069d38: Closed Loop Fuelling Threshold (Engine Load B) (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069d4c: Closed Loop Fuelling Threshold (Engine Load C) (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069e14: Table 2D - 320 Check DataType (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069e20: Table 2D - 321 Check DataType (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069e2c: Table 2D - 322 Check DataType (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069e38: Table 2D - 323 Check DataType (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_request_condition [high]: Sets b12a=1 when load/throttle exceed 'Closed Loop Fuelling Threshold' tables 0x69d24/0x69d38/0x69d4c/0x69d60/0x69d74 with hysteresis flags b1b6/b1b7, throttle threshold b15c and timers b148/b14e.
  * RAM 0xffffb15c cl_throttle_threshold (float): b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition.
@@ -17,6 +9,14 @@
  * RAM 0xffffb1b7 cl_load_b_exceeded (uint8): b1b7 = load >= b164 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b8 cl_load_c_exceeded (uint8): b1b8 = load >= b168 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b1 coolant_above_78_flag (uint8): b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x00069d38: Closed Loop Fuelling Threshold (Engine Load B) (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069d4c: Closed Loop Fuelling Threshold (Engine Load C) (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069e14: Table 2D - 320 Check DataType (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069e20: Table 2D - 321 Check DataType (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069e2c: Table 2D - 322 Check DataType (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069e38: Table 2D - 323 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
