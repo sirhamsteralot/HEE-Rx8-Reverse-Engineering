@@ -119,22 +119,26 @@
  "ffffca9c": {
   "alias": "cranking_angle_timing_leading_filtered",
   "type": "float",
-  "reader": "00043934"
+  "reader": "00043934",
+  "evidence": "mov.w pool 0x43a1c (sign-extends to 0xffffca9c) in 0x43934 cranking_timing_leading_filter and 0x4391c, pool 0x12538 in 0x123da; filtered = raw / period via rx8_divide_with_zero_fallback, stored by 0x43934."
  },
  "ffffcaa0": {
   "alias": "cranking_angle_timing_trailing_filtered",
   "type": "float",
-  "reader": "000439b2"
+  "reader": "000439b2",
+  "evidence": "mov.w pool 0x43a1e (sign-extends to 0xffffcaa0) in 0x439b2 cranking_timing_trailing_filter and 0x43928, pool 0x12686 in 0x124d6; filtered trailing value stored by 0x439b2."
  },
  "ffffcaa4": {
   "alias": "cranking_angle_timing_leading_raw",
   "type": "float",
-  "reader": "00043934"
+  "reader": "00043934",
+  "evidence": "mov.l pool 0x43a28 in 0x4391c and 0x43934; raw leading = lookup_2d(ECT, tbl 0x6b630) stored by 0x43934 cranking_timing_leading_filter."
  },
  "ffffcaa8": {
   "alias": "cranking_angle_timing_trailing_raw",
   "type": "float",
-  "reader": "000439b2"
+  "reader": "000439b2",
+  "evidence": "mov.l pool 0x43a2c in 0x43928 and 0x439b2; raw trailing = lookup_2d(ECT, tbl 0x6b644) stored by 0x439b2 cranking_timing_trailing_filter."
  },
  "ffffa780": {
   "alias": "idle_base_timing_leading",
@@ -199,7 +203,8 @@
  "ffffbc94": {
   "alias": "dsc_mode_a_base_timing",
   "type": "float",
-  "reader": "0002cc2c"
+  "reader": "0002cc2c",
+  "evidence": "mov.w pool 0x2cd44 (sign-extends to 0xffffbc94) in 0x2cc2c dsc_mode_a_base_timing_lookup (also 0x2cc5c/0x2cc7c), pool 0x18278 in 0x1815c; = lookup_3d(load, rpm, tbl 0x6a7a4) stored by 0x2cc2c."
  },
  "ffffa634": {
   "alias": "leading_timing_with_corrections",
@@ -216,7 +221,8 @@
  "ffffa91c": {
   "alias": "dsc_timing_derate_leading",
   "type": "float",
-  "reader": "0001815c"
+  "reader": "0001815c",
+  "evidence": "mov.w pool 0x18284 (sign-extends to 0xffffa91c) in 0x1815c dsc_timing_derate_select; DSC leading-timing derate value selected in 0x1815c."
  }
  },
  "lookup_aliases": {

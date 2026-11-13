@@ -1,42 +1,46 @@
 {
-  "date": "2026-11-10",
-  "function_annotations": 554,
-  "ram_aliases": 482,
-  "ghidra_database_updated": false,
-  "label_sweep_passes": [
-    {
-      "pass": "source_review_label_sweep_can_uds",
-      "note": "Promoted the 10 source-review function aliases that were only in accepted_function_aliases.tsv + decompiled header comments into subsystem label records: uds_dispatch_labels.json (0x5774c diag22_find_and_dispatch_identifier, 0x57858 diag22_append_positive_response_header, 0x57a0c diag_append_u16_be, 0x57a2e diag_append_u8, 0x71ea sci0_exchange_byte_wait_rdrf, RAM 0xffffd1ea diag22_current_identifier) and can_mailbox_config_labels.json (0x28eb8 can216_unpack_mixed_width_fields, 0x291dc can201_pack_and_queue_payload, 0x29236 can201_encode_rpm_u16, 0x2927c can201_encode_vehicle_speed_u16, 0x29340 can201_prepare_rpm_with_conditional_filter, RAM 0xffffbaf4/bafc/bb00/bb04/bb08). Each re-verified this pass against raw ROM literal pools + disassembly (0x62 header emit, BE append, RDRF 0x40 loop 0x721c-0x7224, 0.25 RPM scale + 0xfffe cap + 0xffff sentinel, descriptor 0x4df1c bytes, 12-byte record stride at 0x5776e-0x5777a). Reports touched: can_mailbox_config_report.md, uds_mode22_dispatch_report.md.",
-      "rom_unchanged": true
-    },
-    {
-      "pass": "candidate_label_promotions",
-      "note": "Prove-or-demote pass over the export's candidate_* function labels (181 at pickup): 112 promoted to high (prefix dropped in the export via accepted_function_aliases.tsv), 1 renamed (0x22144 -> candidate_fuel_open_loop_condition, stays medium), 68 kept as candidate_ with evidence. Record: data/labels/60E15120_N3J1E/candidate_promotions.json; review: docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md; pass script: utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py (wired into rebuild.sh); tests/test_candidate_label_promotions.py 6 passed."
-    }
-  ],
-  "sources": [
-    {
-      "url": "https://github.com/equinox311/RX8_FlexFuel",
-      "commit": "15dd340c3ef94a7d9cb4a38d61e0328a4bab8884",
-      "files": {
-        "G_ROM_FlexFuel/RomAddresses.s": "374bf3c242c7884e85c48d8317dd11d594f25cbe4aad89c8f0496be8b27b983c",
-        "G_ROM_FlexFuel/vars.h": "0766e945289c4401297768780d90f876cfa6f66043a945bc7281466dcb7fabcc",
-        "G_ROM_FlexFuel/pid_handler.h": "4bc8be55ea86cf68b57fd2739262bed777b22afa676705f21025728a0498db62"
-      }
-    },
-    {
-      "url": "https://github.com/rnd-ash/rx8-reverse-engineering",
-      "commit": "e15c53a8f6376f219b01020dc6a90d4a60132338",
-      "files": {
-        "rx8.dbc": "1aef4f4192974c55f0670704bbe06e643fa043186a3cc416f524d92b26dea8b1"
-      }
-    },
-    "source_review_fan_control",
-    "source_review_alternator",
-    "source_review_idle_control",
-    "source_review_dsc_can",
-    "source_review_e2ram_device",
-    "source_review_dtc_thunks",
-    "source_review_thunk_audit"
-  ]
+ "date": "2026-11-13",
+ "function_annotations": 547,
+ "ram_aliases": 482,
+ "ghidra_database_updated": false,
+ "label_sweep_passes": [
+  {
+   "pass": "source_review_label_sweep_can_uds",
+   "note": "Promoted the 10 source-review function aliases that were only in accepted_function_aliases.tsv + decompiled header comments into subsystem label records: uds_dispatch_labels.json (0x5774c diag22_find_and_dispatch_identifier, 0x57858 diag22_append_positive_response_header, 0x57a0c diag_append_u16_be, 0x57a2e diag_append_u8, 0x71ea sci0_exchange_byte_wait_rdrf, RAM 0xffffd1ea diag22_current_identifier) and can_mailbox_config_labels.json (0x28eb8 can216_unpack_mixed_width_fields, 0x291dc can201_pack_and_queue_payload, 0x29236 can201_encode_rpm_u16, 0x2927c can201_encode_vehicle_speed_u16, 0x29340 can201_prepare_rpm_with_conditional_filter, RAM 0xffffbaf4/bafc/bb00/bb04/bb08). Each re-verified this pass against raw ROM literal pools + disassembly (0x62 header emit, BE append, RDRF 0x40 loop 0x721c-0x7224, 0.25 RPM scale + 0xfffe cap + 0xffff sentinel, descriptor 0x4df1c bytes, 12-byte record stride at 0x5776e-0x5777a). Reports touched: can_mailbox_config_report.md, uds_mode22_dispatch_report.md.",
+   "rom_unchanged": true
+  },
+  {
+   "pass": "candidate_label_promotions",
+   "note": "Prove-or-demote pass over the export's candidate_* function labels (181 at pickup): 112 promoted to high (prefix dropped in the export via accepted_function_aliases.tsv), 1 renamed (0x22144 -> candidate_fuel_open_loop_condition, stays medium), 68 kept as candidate_ with evidence. Record: data/labels/60E15120_N3J1E/candidate_promotions.json; review: docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md; pass script: utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py (wired into rebuild.sh); tests/test_candidate_label_promotions.py 6 passed."
+  },
+  {
+   "pass": "label_artifact_consistency_audit",
+   "note": "Cross-artifact audit of all accepted alias TSVs vs every labels JSON under data/labels/60E15120_N3J1E/. Findings fixed: 22 four-field rows in accepted_ram_aliases.tsv (os_ctrl_block members, vehicle_inputs PFDR/PHDR latches, uds_rx/tx buffers, crank ICR samples, cranking angle timing cells, DSC timing cells) and 26 accepted_lookup_aliases.tsv rows (IVT base, task table, CAN mailbox mask table, injector channel map, CAN descriptors, Mode 22 dispatch table, 17 ignition/idle lookup descriptors) had an empty evidence column - filled from raw-ROM pool words + loading instructions in the cited readers and descriptor record bytes; 320 evidence-less entries in knock_loop_labels.json (271 RAM + 33 function + 16 lookup) filled from the canonical TSV rows (RAM anchoring re-proven by tests/test_source_review_ram_aliases.py); 3 DTC set-fault trampolines 0x5fd38/0x5fd3c/0x5fd4a added as function_aliases to dtc_thunk_labels.json; 7 stale duplicate rows removed from accepted_function_aliases.tsv (0x567e8, 0x556ec, 0x55702, 0x56b22, 0x56b8a, 0x56b9e, 0x56f6c - superseded by the applied dispatch-pass names per function_index.tsv), with fueling_labels.json aliases and the fueling review README handler table aligned to them; symbols.tsv gained the missing ffffb466 row so all 482 RAM rows are covered. Reader-column audit: 451/482 RAM rows are pool-loaded directly in the cited reader, 27 are base-cell members, 4 use documented indirection (task stack base via task-record u32, UDS buffers via CAN descriptors, os_ready_ring via ctrl+0x24 pointer). Durable check: tests/test_label_artifact_consistency.py (both TSV<->JSON directions, evidence presence, row shape, symbols.tsv coverage). verify_claims/validate_export/validate_reports/verify_readability/verify_math_units PASS; pytest 200 passed."
+  }
+ ],
+ "sources": [
+  {
+   "url": "https://github.com/equinox311/RX8_FlexFuel",
+   "commit": "15dd340c3ef94a7d9cb4a38d61e0328a4bab8884",
+   "files": {
+    "G_ROM_FlexFuel/RomAddresses.s": "374bf3c242c7884e85c48d8317dd11d594f25cbe4aad89c8f0496be8b27b983c",
+    "G_ROM_FlexFuel/vars.h": "0766e945289c4401297768780d90f876cfa6f66043a945bc7281466dcb7fabcc",
+    "G_ROM_FlexFuel/pid_handler.h": "4bc8be55ea86cf68b57fd2739262bed777b22afa676705f21025728a0498db62"
+   }
+  },
+  {
+   "url": "https://github.com/rnd-ash/rx8-reverse-engineering",
+   "commit": "e15c53a8f6376f219b01020dc6a90d4a60132338",
+   "files": {
+    "rx8.dbc": "1aef4f4192974c55f0670704bbe06e643fa043186a3cc416f524d92b26dea8b1"
+   }
+  },
+  "source_review_fan_control",
+  "source_review_alternator",
+  "source_review_idle_control",
+  "source_review_dsc_can",
+  "source_review_e2ram_device",
+  "source_review_dtc_thunks",
+  "source_review_thunk_audit"
+ ]
 }
