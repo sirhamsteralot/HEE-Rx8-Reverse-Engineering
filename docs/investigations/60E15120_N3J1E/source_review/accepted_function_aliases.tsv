@@ -3,7 +3,6 @@ address	alias	confidence	evidence
 00057a2e	diag_append_u8	high	G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte.
 00057858	diag22_append_positive_response_header	high	G-ROM 0x55d24 match plus explicit bytes 0x62 and current identifier RAM 0xffffd1ea.
 0005774c	diag22_find_and_dispatch_identifier	high	Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect.
-000567e8	diag22_accept_identifier_request	medium	Service 0x22 reads two request bytes into 0xffffd1ea and updates request state. Decompiled phase parameter comparison remains suspect; name describes visible path.
 00029340	can201_prepare_rpm_with_conditional_filter	high	Reads confirmed RPM 0xffffb548, conditionally filters into 0xffffbb04 and stores previous input at 0xffffbb08. Exact conditions include unresolved status flags.
 00029236	can201_encode_rpm_u16	high	Reads 0xffffbb04, quantizes at 0.25 RPM/count into 0xffffbafc; fault produces 0xffff, normal output capped at 0xfffe. Conversion 0x2490 divides by scalar.
 0002927c	can201_encode_vehicle_speed_u16	high	Reads diagnostic-correlated speed 0xffffbbb4; quantization is (speed+100)/0.01 rounded and bounded to 40000, or 0xffff on fault. Result 0xffffbb00 is packed at payload bytes 4 and 5.
@@ -82,12 +81,6 @@ address	alias	confidence	evidence
 00018cfe	fuel_cut_rpm_condition	high	a97c = rpm >= 2500 (clear below 1700), a97d = rpm >= 1700 (clear below 1100); a964 fuel_cut_allowed = (a96a && a97c) || (a96c && a97d). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 0000ee82	rev_limit_conditionals	high	a4a6 = coolant < 18 C (set below 18, clear at 20); when b534==0 && baec active && mode changed: a4ae = 0x0f countdown (a4aa active flag, a4ad = previous baec). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
 0001ddfc	cold_start_enrichment	high	Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
-00056b8a	diag_engine_load	high	RomRaider PID 0x0043 'Engine Load' handler: encodes engine_load_ffffc0b4 via rx8_encode_u16_affine_saturate (step 0x3b808080 ~ 0.00392) as u16 BE.
-00056b9e	diag_lambda_target	high	RomRaider PID 0x0044 'Lambda Target' handler: encodes lambda_target_ffffadfc (step 0x38000000) as u16 BE.
-00056b22	diag_air_fuel_ratio	high	RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words.
-00056f6c	diag_injector_pulse_time	medium	PID 0x1410 handler (logger def conflicts: 'Injector Pulse Time' vs 'Throttle Pedal Position' - do not trust either name): encodes DAT_ffffbe24 with step 8 (0x41000000); logger expr x*8*0.001 ms.
-000556ec	diag_afr_word_a	medium	Encodes DAT_ffffaa6c (step 0x38000000) as the high u16 word of PID 0x0034 'Air Fuel Ratio'.
-00055702	diag_afr_word_b	medium	Encodes DAT_ffffaa7c (mult 0x3b800000, offset 0xc3000000 = -96.0) as the low u16 word of PID 0x0034.
 0002178c	ssv_solenoid_control	high	Writes PEDR_W 0xfffff754 bit 0x80 (PE7, SH7055F pkg pin 16) via ref_setRegister_REG_BIT_VAL after diag override 0x5c9ac. On-condition: coolant hysteresis 197/200 C (b2b4), counter b2b2=0xbc, (aa68==0 && b2b5 prev) || becd. Harness: SSV solenoid PCM 1L (position switch is separate, PCM 1D). Reached from task 0x64f6 -> 0x11744 -> 0x21766.
 00021760	ssv_control_thunk	high	4-byte thunk to 0x2178c; called from init fan-out 0x1102a. | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
 00021766	ssv_control_task_wrapper	high	Mask-0x10 wrapper calling ssv_solenoid_control (0x2178c); called from 0x11744 (task 0x64f6 chain). | promoted to high (data/labels/60E15120_N3J1E/intake_labels.json/function_aliases)
