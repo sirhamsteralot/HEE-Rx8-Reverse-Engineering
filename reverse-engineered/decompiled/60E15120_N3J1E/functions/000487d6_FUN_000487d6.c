@@ -38,7 +38,7 @@ uint FUN_000487d6(void)
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   arg0 = inferred_coolant_temperature_ffffa98c;
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0);
-  cVar2 = DAT_ffffaa68;
+  cVar2 = engine_running_flag_ffffaa68;
   bVar5 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   cVar7 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8104,0);

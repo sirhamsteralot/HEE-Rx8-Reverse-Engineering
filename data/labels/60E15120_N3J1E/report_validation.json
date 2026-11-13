@@ -57,9 +57,9 @@
       "rom_claims": 0
     },
     "fueling_control_report.md": {
-      "fn_checked": 44,
-      "ram_checked": 24,
-      "rom_refs": 98,
+      "fn_checked": 46,
+      "ram_checked": 27,
+      "rom_refs": 107,
       "rom_claims": 0
     },
     "idle_control_report.md": {
@@ -81,9 +81,9 @@
       "rom_claims": 0
     },
     "intake_solenoids_report.md": {
-      "fn_checked": 20,
-      "ram_checked": 13,
-      "rom_refs": 33,
+      "fn_checked": 21,
+      "ram_checked": 15,
+      "rom_refs": 36,
       "rom_claims": 0
     },
     "knock_control_report.md": {

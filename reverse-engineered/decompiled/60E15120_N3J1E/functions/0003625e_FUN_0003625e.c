@@ -5,7 +5,7 @@ void FUN_0003625e(void)
 {
   char cVar1;
   
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     if (engine_speed_rpm_ffffb548 < 500.0) {
       cVar1 = FUN_000567aa(0x271);
     }
@@ -33,7 +33,7 @@ void FUN_0003625e(void)
     DAT_ffffc234 = 0;
     DAT_ffffc23c = 0;
   }
-  DAT_ffffc246 = DAT_ffffaa68;
+  DAT_ffffc246 = engine_running_flag_ffffaa68;
   return;
 }
 

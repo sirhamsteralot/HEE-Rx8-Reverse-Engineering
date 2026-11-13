@@ -21,7 +21,7 @@ void ssv_solenoid_control(void)
   undefined4 local_1c;
   undefined4 auStack_18 [2];
   
-  cVar1 = DAT_ffffaa68;
+  cVar1 = engine_running_flag_ffffaa68;
   if (inferred_coolant_temperature_ffffa98c < 200.0) {
     if (inferred_coolant_temperature_ffffa98c < 197.0) {
       ssv_coolant_hot_flag_ffffb2b4 = '\0';
@@ -30,14 +30,14 @@ void ssv_solenoid_control(void)
   else {
     ssv_coolant_hot_flag_ffffb2b4 = '\x01';
   }
-  if ((DAT_ffffaa68 == '\0') && (ssv_was_enabled_ffffb2b5 == '\x01')) {
+  if ((engine_running_flag_ffffaa68 == '\0') && (ssv_was_enabled_ffffb2b5 == '\x01')) {
     ssv_on_counter_ffffb2b2 = 0xbc;
   }
   else if (ssv_on_counter_ffffb2b2 != 0) {
     ssv_on_counter_ffffb2b2 = ssv_on_counter_ffffb2b2 + -1;
   }
-  if ((DAT_ffffbecd == '\x01') ||
-     (((DAT_ffffaa68 == '\0' && (ssv_on_counter_ffffb2b2 != 0)) && (ssv_coolant_hot_flag_ffffb2b4 == '\0')))) {
+  if ((secondary_injectors_active_flag_ffffbecd == '\x01') ||
+     (((engine_running_flag_ffffaa68 == '\0' && (ssv_on_counter_ffffb2b2 != 0)) && (ssv_coolant_hot_flag_ffffb2b4 == '\0')))) {
     uVar2 = 1;
   }
   else {

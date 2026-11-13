@@ -6,7 +6,7 @@
 void ref_CANRX_Main(void)
 
 {
-  if (((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (can_setup_error_flag_ffffa410 == '\0')) {
+  if (((engine_running_flag_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) && (can_setup_error_flag_ffffa410 == '\0')) {
     can212_rx_main();
     ref_CAN216RX_Main();
     if (automatic_transmission_ffffb534 == '\0') {

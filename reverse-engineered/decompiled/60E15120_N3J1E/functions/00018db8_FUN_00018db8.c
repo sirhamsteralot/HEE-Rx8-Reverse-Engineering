@@ -13,7 +13,7 @@ uint FUN_00018db8(void)
     uVar1 = 1;
   }
   else {
-    uVar1 = (uint)DAT_ffffaa68;
+    uVar1 = (uint)engine_running_flag_ffffaa68;
     if ((uVar1 == 1) && (uVar1 = 0, DAT_ffffa968 != 0)) {
       uVar1 = (int)DAT_ffffa968 + 0xffff;
       DAT_ffffa968 = (short)uVar1;

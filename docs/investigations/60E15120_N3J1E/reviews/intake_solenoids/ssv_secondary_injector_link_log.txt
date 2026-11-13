@@ -1,0 +1,24 @@
+== threshold tables (ROM lookup 0x2068) ==
+  coolant=20.0: tbl_0x6ac74 -> 6250.0 rpm ; tbl_0x6ac60 (secondary allowed) -> 0.0 rpm
+  coolant=40.0: tbl_0x6ac74 -> 6250.0 rpm ; tbl_0x6ac60 (secondary allowed) -> 0.0 rpm
+  coolant=60.0: tbl_0x6ac74 -> 6250.0 rpm ; tbl_0x6ac60 (secondary allowed) -> 0.0 rpm
+  coolant=90.0: tbl_0x6ac74 -> 6250.0 rpm ; tbl_0x6ac60 (secondary allowed) -> 0.0 rpm
+== SSV (0x2178c) pin vs becd ==
+  sec-inj flag set, engine running, coolant normal: becd=1 aa68=1 b2b2=0x0 b2b4=0 b2b5=1 coolant=90.0 -> SSV pin(PE7)=1 (b2b0=1, b2b2 now=0x0)
+  sec-inj flag clear, engine running: becd=0 aa68=1 b2b2=0x0 b2b4=0 b2b5=1 coolant=90.0 -> SSV pin(PE7)=0 (b2b0=0, b2b2 now=0x0)
+  sec-inj flag clear, engine stopped edge (sets counter): becd=0 aa68=0 b2b2=0x0 b2b4=0 b2b5=1 coolant=90.0 -> SSV pin(PE7)=1 (b2b0=1, b2b2 now=0xbc)
+  counter path active (aa68=0, b2b2!=0, not hot): becd=0 aa68=0 b2b2=0xbc b2b4=0 b2b5=0 coolant=90.0 -> SSV pin(PE7)=1 (b2b0=1, b2b2 now=0xbb)
+  counter path but coolant hot (b2b4=1): becd=0 aa68=0 b2b2=0xbc b2b4=1 b2b5=0 coolant=250.0 -> SSV pin(PE7)=0 (b2b0=0, b2b2 now=0xbb)
+  becd=1 even though coolant hot: becd=1 aa68=1 b2b2=0x0 b2b4=1 b2b5=1 coolant=250.0 -> SSV pin(PE7)=1 (b2b0=1, b2b2 now=0x0)
+== 0x30b08 split flags vs rpm/fuel ==
+  high rpm, normal fuel: rpm=6000.0 coolant=90.0 fuel_vol=0.02 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=0.0 bf37=1 bf38=1 bf39=1 => becd=1 becc=1
+  low rpm (below sec threshold): rpm=2000.0 coolant=90.0 fuel_vol=0.02 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=0.0 bf37=1 bf38=1 bf39=1 => becd=1 becc=1
+  high rpm but zero fuel demand: rpm=6000.0 coolant=90.0 fuel_vol=0.0 fuel_a=0.0 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=0.0 bf37=1 bf38=1 bf39=1 => becd=1 becc=1
+  cold coolant, mid rpm: rpm=4000.0 coolant=20.0 fuel_vol=0.02 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=0.0 bf37=1 bf38=1 bf39=1 => becd=1 becc=1
+  warm, LOW fuel demand (below primary cap): rpm=6000.0 coolant=90.0 fuel_vol=0.001 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=0.0 bf37=1 bf38=0 bf39=0 => becd=0 becc=0
+  cold (0C), rpm below 3000 gate: rpm=2000.0 coolant=0.0 fuel_vol=0.02 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=3000.0 bf37=0 bf38=1 bf39=1 => becd=0 becc=0
+  cold (0C), rpm above 3000 gate: rpm=4000.0 coolant=0.0 fuel_vol=0.02 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=0 bf28(sec-allow-thr)=3000.0 bf37=1 bf38=1 bf39=1 => becd=1 becc=1
+  warm, high rpm, WOT (throttle>=60) low fuel: rpm=7000.0 coolant=90.0 fuel_vol=0.001 fuel_a=0.01 thr=80.0 -> bf24(thr1)=6250.0 bf36=1 bf28(sec-allow-thr)=0.0 bf37=1 bf38=1 bf39=0 => becd=1 becc=1
+  very high rpm 6500 (bf36 override), low fuel: rpm=6500.0 coolant=90.0 fuel_vol=0.001 fuel_a=0.01 thr=10.0 -> bf24(thr1)=6250.0 bf36=1 bf28(sec-allow-thr)=0.0 bf37=1 bf38=0 bf39=0 => becd=1 becc=1
+RESULT: warm+fuel = (1, 1) ; low rpm warm = (1, 1) ; zero fuel = (1, 1) ; cold mid = (1, 1)
+        warm low demand = (0, 0) ; cold below gate = (0, 0) ; cold above gate = (1, 1) ; WOT low fuel = (1, 1) ; 6500rpm low fuel = (1, 1)

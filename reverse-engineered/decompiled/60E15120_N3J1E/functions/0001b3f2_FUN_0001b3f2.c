@@ -12,7 +12,7 @@ void FUN_0001b3f2(void)
   undefined4 uVar7;
   
   cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0);
-  cVar4 = DAT_ffffaa68;
+  cVar4 = engine_running_flag_ffffaa68;
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   uVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   if ((((uVar1 & 0xff) == 0) || ((uVar2 & 0xff) == 0)) && (DAT_ffffccc7 == '\x01')) {

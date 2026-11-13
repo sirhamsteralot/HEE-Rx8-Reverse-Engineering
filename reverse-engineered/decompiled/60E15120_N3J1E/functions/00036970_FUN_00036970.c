@@ -16,7 +16,7 @@ undefined4 FUN_00036970(void)
   
   iVar3 = 0;
   ref_udsServiceResponse(0xb1,local_18,1);
-  if (((DAT_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) &&
+  if (((engine_running_flag_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) &&
      ((cVar1 = FUN_00055e3e(0), cVar1 == '\0' || (cVar1 = FUN_00055e3e(2), cVar1 == '\0')))) {
     if (local_18[0] == '\x10') {
       DAT_ffffc238 = 1;

@@ -8,7 +8,7 @@ undefined1 * FUN_000252c2(void)
 {
   undefined1 *puVar1;
   
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     if (DAT_ffffb57a != '\0') {
       ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8104,0);
       puVar1 = (undefined1 *)ref_whileLoop();

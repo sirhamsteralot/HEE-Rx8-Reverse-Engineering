@@ -37,7 +37,7 @@ void FUN_00046b24(void)
     DAT_ffffcc60 = 0;
   }
   uVar4 = uVar1 & 0xff;
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     if ((cVar2 != '\x01') && (cVar3 != '\x01')) goto LAB_00046c74;
     if (uVar4 != 1) {
       DAT_ffffcc5e = 1;

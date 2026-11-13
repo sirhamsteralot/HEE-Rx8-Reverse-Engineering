@@ -14,7 +14,7 @@ uint FUN_0001fd48(void)
   byte snapshot_DAT_ffffbecc;
   uint uVar3;
   
-  snapshot_DAT_ffffbecc = DAT_ffffbecc;
+  snapshot_DAT_ffffbecc = secondary_split_gate_flag_ffffbecc;
   cVar1 = DAT_ffffb158;
   if (engine_load_ffffc0b4 < 0.0) {
     if (engine_load_ffffc0b4 < -0.04) {
@@ -68,7 +68,7 @@ uint FUN_0001fd48(void)
     ol_decay_enable_c_ffffb157 = 0;
   }
   uVar3 = (uint)ol_decay_enable_c_ffffb157;
-  if (((uVar3 == 1) && (DAT_ffffb1da == '\0')) && (uVar3 = (uint)DAT_ffffbecc, uVar3 == 1)) {
+  if (((uVar3 == 1) && (DAT_ffffb1da == '\0')) && (uVar3 = (uint)secondary_split_gate_flag_ffffbecc, uVar3 == 1)) {
     uVar3 = rx8_lookup_2d_raw_u16(&PTR_PTR_00069e5c);
     ol_target_select_ffffb150 = (short)uVar3;
   }

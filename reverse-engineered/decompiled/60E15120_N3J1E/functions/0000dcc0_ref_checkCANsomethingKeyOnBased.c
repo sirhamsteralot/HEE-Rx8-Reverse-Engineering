@@ -15,7 +15,7 @@ uint ref_checkCANsomethingKeyOnBased(void)
   char cVar2;
   uint uVar1;
   
-  if (((DAT_ffffaa68 == 1) && (DAT_ffffb578 != '\x01')) &&
+  if (((engine_running_flag_ffffaa68 == 1) && (DAT_ffffb578 != '\x01')) &&
      ((cVar2 = ref_getHCANSomething(0), cVar2 == '\x01' ||
       (cVar2 = ref_getHCANSomething(1), cVar2 == '\x01')))) {
     if (can_error_poll_counter_ffffa40f != 0xff) {
@@ -28,7 +28,7 @@ uint ref_checkCANsomethingKeyOnBased(void)
   if ((100 < can_error_poll_counter_ffffa40f) && (ref_CANSetupSomethingDifferentBasedOnBit(), can_error_latch_ffffa40a == 0)) {
     can_error_latch_ffffa40a = 1;
   }
-  uVar1 = (uint)DAT_ffffaa68;
+  uVar1 = (uint)engine_running_flag_ffffaa68;
   if ((uVar1 == 1) && (uVar1 = 1, DAT_ffffb578 != '\x01')) {
     cVar2 = hcan_bus_off_flag(0);
     if ((cVar2 == '\x01') ||

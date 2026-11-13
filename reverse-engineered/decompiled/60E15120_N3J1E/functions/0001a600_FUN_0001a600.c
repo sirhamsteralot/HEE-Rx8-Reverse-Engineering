@@ -3,7 +3,7 @@
 void FUN_0001a600(void)
 
 {
-  DAT_ffffaa68 = DAT_ffffaa69;
+  engine_running_flag_ffffaa68 = DAT_ffffaa69;
   return;
 }
 

@@ -22,7 +22,7 @@ undefined1 * FUN_00027d06(void)
   else {
     bVar1 = false;
   }
-  if (((DAT_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) && (DAT_ffffba20 == '\x01')) {
+  if (((engine_running_flag_ffffaa68 == '\x01') && (engine_stopped_latch_ffffa41c == '\x01')) && (DAT_ffffba20 == '\x01')) {
     if ((DAT_ffffba12 < 1000) && (bVar1)) {
       DAT_ffffba1d = rx8_add_u8_saturate((int)DAT_ffffba1d,1);
       if (DAT_ffffba1d == '\x14') {

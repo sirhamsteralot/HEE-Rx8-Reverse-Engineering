@@ -27,7 +27,7 @@ void candidate_alternator_voltage_target_select(void)
   float snapshot_vehicle_speed_ffffbbb4;
   
   cVar3 = DAT_ffffb0cd;
-  cVar2 = DAT_ffffaa68;
+  cVar2 = engine_running_flag_ffffaa68;
   cVar1 = cranking_active_ffffaa62_ffffaa62;
   if (inferred_coolant_temperature_ffffa98c <= 150.0) {
     if (inferred_coolant_temperature_ffffa98c <= 145.0) {
