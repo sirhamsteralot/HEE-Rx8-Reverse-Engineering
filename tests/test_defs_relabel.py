@@ -181,3 +181,29 @@ def test_generator_idempotent_on_60E15120():
     subprocess.run([sys.executable, "utilities/scripts/defs-merge/extend_defs_all_roms.py"],
                    cwd=REPO, check=True, capture_output=True)
     assert path.read_bytes() == before, "extend_defs_all_roms.py not idempotent on 60E15120 per-rom def"
+
+
+def test_label_map_generator_matches_committed():
+    """AGENTS.md rule 6d: build_table_labels.py must regenerate
+    defs_table_labels.json without drifting any committed field. The only
+    whitelisted volatile field is "evidence", which the builder re-fills from
+    the lookup_aliases JSONs while the committed map keeps it empty."""
+    before = LABELS.read_bytes()
+    try:
+        subprocess.run([sys.executable, "utilities/scripts/defs-merge/build_table_labels.py"],
+                       cwd=REPO, check=True, capture_output=True)
+        regenerated = json.loads(LABELS.read_text(encoding="utf-8"))
+    finally:
+        LABELS.write_bytes(before)
+    committed = json.loads(before.decode("utf-8"))
+
+    def strip_evidence(o):
+        if isinstance(o, dict):
+            return {k: strip_evidence(v) for k, v in o.items() if k != "evidence"}
+        if isinstance(o, list):
+            return [strip_evidence(x) for x in o]
+        return o
+
+    assert strip_evidence(regenerated) == strip_evidence(committed), \
+        "build_table_labels.py output drifted from the committed defs_table_labels.json; " \
+        "edit the generator and re-run it instead of hand-editing the JSON (rule 6d)"
