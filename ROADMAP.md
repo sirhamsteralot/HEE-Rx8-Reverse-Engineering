@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 19, 21–23 and 24–35 — pick up 19 next (items 13–14 closed
+**reopened**: open items 19, 21–23 and 24–36 — pick up 19 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
@@ -45,7 +45,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21–23, 24–35)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21–23, 24–36)
 
 - **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
   53 rows in
@@ -232,6 +232,28 @@ and where artifacts live.
   against the upstream dump
   `submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`
   and the RAM mirror `0xffff8000–0xffff80ff`.
+- **C item 36 (open)** — **whole-export "is it really code" audit.** The triage
+  pass ([decompiler_triage_report.md](docs/investigations/60E15120_N3J1E/decompiler_triage_report.md))
+  classified the 1,759 *non-instruction ranges* outside functions and triaged
+  the 154 decompiler warnings, but nothing yet proves that every **function**
+  in `function_index.tsv` (3,355 entries) is genuine code rather than a
+  decompilation artifact. For each function: re-decode its `body_bytes` from
+  the raw ROM with the SH-2E decoder (opdec corpus in
+  `utilities/scripts/emu/`, same one `test_decode_corpus.py` uses), assert
+  every 16-bit word is a valid instruction (illegal/`0x0000` words only where
+  a terminator is expected), that the body does not overlap a range classified
+  in
+  [non_instruction_ranges_classified.tsv](reverse-engineered/decompiled/60E15120_N3J1E/non_instruction_ranges_classified.tsv),
+  that its entry is a real instruction boundary hit by a call/vector/dispatch
+  referrer (or deliberately unreferenced, like the proven orphan `0x33b6`),
+  and that its direct call targets land on function entries. Reconcile the
+  result with `decompiler_issues_triaged.tsv` and extend
+  `utilities/scripts/rx8-pcm-pipeline/validate_export.py` so the check is
+  re-runnable (ROM hash + instruction bytes + matches, as today). Deliverable:
+  an audit report + updated `validation.json`; any function that fails gets
+  demoted per rule 6 and the export artifacts fixed in the same pass. Spot-check
+  the same audit on 60E0G500_N3ZHEC and one family-B/C ROM (E8 opcode-table gap
+  applies — note which opcodes could not be decoded there).
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
