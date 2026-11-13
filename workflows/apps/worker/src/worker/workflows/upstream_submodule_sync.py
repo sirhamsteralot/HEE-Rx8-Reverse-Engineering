@@ -277,7 +277,7 @@ async def push_branch_and_open_pr(input: SyncInput, check: UpstreamCheck, change
     result = SyncResult(dry_run=input.dry_run)
     if input.dry_run:
         return result
-    token = os.environ.get(GITHUB_TOKEN_ENV, "")
+    token = os.environ.get(GITHUB_TOKEN_ENV, "") or os.environ.get(GITHUB_TOKEN_ENV.lower(), "")
     if not token:
         raise RuntimeError(
             f"Missing {GITHUB_TOKEN_ENV}: bind the workspace secret holding a "
