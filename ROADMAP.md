@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 19, 21–23 and 24–36 — pick up 19 next (items 13–14 closed
+**reopened**: open items 21–23 and 24–36 — pick up 21 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
