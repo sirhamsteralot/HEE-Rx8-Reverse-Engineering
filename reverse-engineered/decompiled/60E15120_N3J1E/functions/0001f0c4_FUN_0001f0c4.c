@@ -42,7 +42,7 @@ uint open_loop_request_condition(void)
   float snapshot_engine_speed_rpm_ffffb548;
   
   snapshot_fuel_correction_sum_ffffc644_ffffc644 = fuel_correction_sum_ffffc644_ffffc644;
-  snapshot_DAT_ffffbecc = DAT_ffffbecc;
+  snapshot_DAT_ffffbecc = secondary_split_gate_flag_ffffbecc;
   fVar10 = fuel_amount_per_rotation_a_ffffbec8;
   snapshot_inferred_throttle_position_ffffad44 = inferred_throttle_position_ffffad44;
   fVar12 = inferred_barometric_pressure_ffffad14;

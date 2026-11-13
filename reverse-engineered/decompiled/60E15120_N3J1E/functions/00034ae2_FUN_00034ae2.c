@@ -3,7 +3,7 @@
 void FUN_00034ae2(void)
 
 {
-  if ((DAT_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) {
+  if ((engine_running_flag_ffffaa68 == '\x01') && (DAT_ffffb578 != '\x01')) {
     ref_ImmoUpdateRelated();
     FUN_000355f0();
     if (DAT_ffffc21d == '\0') {

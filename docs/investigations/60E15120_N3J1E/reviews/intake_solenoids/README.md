@@ -44,7 +44,7 @@ All four solenoid controls run in the task 0x64f6 → 0x11744 chain
 each has a UDS diagnostic actuator override (0x5c9ac / 0x5c3c0 / 0x5cdc4 /
 0x5cf7c, state machine on the diagnostic area 0xffffd3xx):
 
-- **SSV** (0x2178c): ON if `DAT_ffffbecd` (0xffffbecd, from the fuel split at
+- **SSV** (0x2178c): ON if `secondary_injectors_active_flag` (0xffffbecd, from the fuel split at
   0x30b08 — the secondary-split-active flag) is set — this term bypasses the
   coolant-hot flag — **or** on the cold/engine-stopped edge:
   `(engine-state aa68 == 0) && counter b2b2 != 0 && !coolant_hot b2b4`

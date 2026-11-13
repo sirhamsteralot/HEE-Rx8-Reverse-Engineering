@@ -14,7 +14,7 @@ char FUN_0002be40(void)
   float snapshot_DAT_ffffbfa0;
   
   cVar2 = DAT_ffffbcec;
-  cVar1 = DAT_ffffaa68;
+  cVar1 = engine_running_flag_ffffaa68;
   if (0.125 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
     if (1.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
       if (2.0 <= inferred_ram_bc30_ffffbc30_ffffbc30) {
@@ -37,7 +37,7 @@ char FUN_0002be40(void)
     DAT_ffffbc37 = '\x01';
   }
   snapshot_DAT_ffffbfa0 = DAT_ffffbfa0;
-  if ((((DAT_ffffaa68 == '\x01') && (DAT_ffffbc3a == '\0')) && (DAT_ffffbd49 == '\x01')) ||
+  if ((((engine_running_flag_ffffaa68 == '\x01') && (DAT_ffffbc3a == '\0')) && (DAT_ffffbd49 == '\x01')) ||
      (DAT_ffffbd48 == '\0')) {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8664,0);
   }

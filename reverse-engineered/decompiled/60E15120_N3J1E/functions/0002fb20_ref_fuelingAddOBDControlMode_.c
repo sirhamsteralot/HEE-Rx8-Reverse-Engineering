@@ -20,7 +20,7 @@ char ref_fuelingAddOBDControlMode_(void)
     DAT_ffffbdd5 = '\x01';
   }
   if (((DAT_ffffbdd5 == '\x01') && (engine_stopped_latch_ffffa41c == '\0')) ||
-     ((engine_injectors_off_ffffa42c == '\x01' && (DAT_ffffaa68 == '\x01')))) {
+     ((engine_injectors_off_ffffa42c == '\x01' && (engine_running_flag_ffffaa68 == '\x01')))) {
     uVar2 = 1;
   }
   else {

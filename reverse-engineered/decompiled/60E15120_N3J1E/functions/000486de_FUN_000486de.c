@@ -9,8 +9,8 @@ undefined2 * FUN_000486de(void)
   char cVar1;
   undefined2 *puVar2;
   
-  cVar1 = DAT_ffffaa68;
-  if (DAT_ffffaa68 == '\x01') {
+  cVar1 = engine_running_flag_ffffaa68;
+  if (engine_running_flag_ffffaa68 == '\x01') {
     puVar2 = (undefined2 *)rx8_add_u16_saturate((int)DAT_ffffccb4,1);
     DAT_ffffccb4 = (short)puVar2;
     DAT_ffffccb6 = 0;

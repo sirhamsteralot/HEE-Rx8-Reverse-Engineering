@@ -18,7 +18,7 @@ undefined2 * apv_command_calc(void)
     apv_rpm_high_flag_ffffbf98 = '\x01';
   }
   if (((apv_rpm_high_flag_ffffbf98 == '\0') && (puVar1 = &DAT_00078bbe, 0x752 < apv_position_dwell_counter_ffffbf88)) ||
-     ((DAT_ffffaa68 == '\0' &&
+     ((engine_running_flag_ffffaa68 == '\0' &&
       ((apv_target_state_ffffbf8d == '\0' && (puVar1 = &apv_position_dwell_counter_ffffbf88, 0x58 < apv_position_dwell_counter_ffffbf88)))))) {
     apv_command_percent_ffffbf84 = 0;
   }

@@ -71,7 +71,7 @@ void FUN_00016cc4(void)
   if (DAT_ffffa914 == '\x01') {
     uVar2 = 7;
   }
-  else if (DAT_ffffaa68 == '\0') {
+  else if (engine_running_flag_ffffaa68 == '\0') {
     uVar2 = 0;
   }
   else if (DAT_ffffa8ec == '\x01') {

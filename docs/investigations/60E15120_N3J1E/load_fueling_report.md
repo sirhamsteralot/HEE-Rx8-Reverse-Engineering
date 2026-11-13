@@ -119,8 +119,8 @@ fuel_volume_request = request_trimmed * load_to_fuel      # fuel_volume_final 0x
 # --- per-injector split (0x2fd3e / 0x2fe1e / 0x2ff78 / 0x30948 / 0x30b08 / 0x30f5c / 0x30030 / 0x2fea8) ---
 # 0x30b08 gates the split: secondary injectors get fuel only above the coolant-based
 # "Secondary Injectors Allowed" rpm threshold (tbl_0x6ac60; 3000 rpm <= 0C, 0 warm) or above
-# 6250 rpm (tbl_0x6ac74), AND fuel demand >= primary-only amount — and its DAT_ffffbecd
-# flag is an SSV on-term (see intake_solenoids_report.md §2.1 / fueling_control_report.md §2.1)
+# 6250 rpm (tbl_0x6ac74), AND fuel demand >= primary-only amount — and its
+# secondary_injectors_active_flag (0xffffbecd) is an SSV on-term (see intake_solenoids_report.md §2.1 / fueling_control_report.md §2.1)
 mult_primary    = lookup3d(tbl_0x6a9a4, weighted_temp, engine_load)
 mult_secondary1 = lookup3d(tbl_0x6a9c0, weighted_temp, engine_load)
 mult_secondary2 = lookup3d(tbl_0x6a9dc, weighted_temp, engine_load)

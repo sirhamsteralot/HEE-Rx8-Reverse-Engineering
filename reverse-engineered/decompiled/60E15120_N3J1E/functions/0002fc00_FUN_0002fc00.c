@@ -9,9 +9,9 @@ char FUN_0002fc00(void)
   char cVar1;
   char cVar2;
   
-  cVar2 = DAT_ffffaa68;
+  cVar2 = engine_running_flag_ffffaa68;
   cVar1 = engine_injectors_off_ffffa42c;
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     DAT_ffffbdda = rx8_add_u16_saturate((int)(short)DAT_ffffbdda,1);
   }
   else {

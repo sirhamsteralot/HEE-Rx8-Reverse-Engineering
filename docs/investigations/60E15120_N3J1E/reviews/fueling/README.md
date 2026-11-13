@@ -118,10 +118,10 @@ Coolant Temperature Based": 3000 rpm at ≤ 0 °C, 0 above ~20 °C), `bf38/39` =
 (tbl 0x6ab84 at throttle ≥ 60 %). `becc==0` → all fuel to primaries (`bef4=0`);
 `becc==1` → split by ratio tbl 0x6ab70 (0x30b08) into `bef0` (primary) /
 `bef4` (secondary), converted to pulse times in 0x30f5c by flow scalars
-250.0/475.93. **`DAT_ffffbecd` is an SSV on-term** read by 0x2178c — the SSV
+250.0/475.93. **`secondary_injectors_active_flag` (0xffffbecd) is an SSV on-term** read by 0x2178c — the SSV
 opens whenever the secondaries are active; dynamic proof in
 [`../intake_solenoids/ssv_secondary_injector_link_log.txt`](../intake_solenoids/ssv_secondary_injector_link_log.txt).
-`DAT_ffffbecc` is also read by open-loop request logic 0x1f0c4/0x1fd48.
+`secondary_split_gate_flag` (0xffffbecc) is also read by open-loop request logic 0x1f0c4/0x1fd48.
 
 Pulse arbitration (0x2fea8 `injector_pulse_time_arbitrate`): cranking
 (!engine_running) uses `be30 = be38 = be5c + be44`, running
