@@ -29,9 +29,10 @@ Submodules stay read-only context (AGENTS.md §4b): only gitlinks are updated.
 
 ### Credentials
 
-The unattended run needs `HEE_GITHUB_TOKEN` in its environment: a GitHub PAT
-with repo contents write + pull requests write, bound from a Mistral workspace
-secret on the deployment. Reads of the (public) submodules need no token.
+The unattended run needs a GitHub PAT with repo contents write + pull requests
+write, bound from a Mistral workspace secret on the deployment as `HEE_GITHUB_TOKEN`
+(or `hee_github_token`; both env var spellings are accepted). Reads of the
+(public) submodules need no token.
 
 ## Local development
 
