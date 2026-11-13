@@ -377,6 +377,20 @@ def dtc_layout(rom):
     return code_start, nslots, p, codes
 
 
+# DTC enable/disable gate form, matching upstream RX8Defs d95b0be and the
+# ROM-verified banks on 60E15120_N3J1E (0x7e678 MIL + aging, 0x7e704 Mode 03
+# list / freeze frame, 0x7e790 feature bitmask — dtc_control_report.md §3a/§5):
+# #1/#2 are on/off switches (Enabled=01/Disabled=00) under the new categories,
+# #3 stays a raw 1D byte (bitmask, not on/off) under "DTC - Unknown".
+DTC_GATE_FORM = {
+    1: {"category": "DTC - MIL Illuminate", "type": "Switch"},
+    2: {"category": "DTC - OBD Report", "type": "Switch"},
+    3: {"category": "DTC - Unknown", "type": "1D", "endian": "big",
+        "expression": "x", "to_byte": "x", "size": "1"},
+}
+DTC_SWITCH_STATES = (("Enabled", "01"), ("Disabled", "00"))
+
+
 def repair_dtc_tables(block, rom_rec):
     """Rebuild this block's 'DTC xxxx Enable/Disable #N' entries from the ROM's own
     DTC layout, so every address maps slot -> the byte the firmware actually reads
@@ -385,6 +399,8 @@ def repair_dtc_tables(block, rom_rec):
     (60E0E700 +3, 60E1B900/60E32000_N3M5E, 60E0FB00/60E1D400) and binds #2/#3 where
     only #1 was bound (60E15120, 60E0G500). Names carry the standard 5-char OBD code
     ("DTC P0420 Enable/Disable #1", decode in dtc_names.py; mapping data/dtc/pcodes.tsv).
+    #1/#2 entries are emitted as Switch tables (Enabled=01/Disabled=00) under the
+    upstream categories, #3 as a raw 1D byte — see DTC_GATE_FORM.
     Evidence: dtc_control_report.md §5."""
     rom = (ROOT / rom_rec["file"]).read_bytes()
     code_start, nslots, e1, codes = dtc_layout(rom)
@@ -405,15 +421,19 @@ def repair_dtc_tables(block, rom_rec):
             # duplicate code (P0300 occupies slots 0 and 1): distinct editor name
             dup = addr if seen[key] > 1 else None
             name = dtc_names.dtc_table_name(code, f"#{n}", dup)
+            form = dict(DTC_GATE_FORM[n])
+            category = form.pop("category")
             t = E.SubElement(block, "table", {
                 "name": name, "storageaddress": f"0x{addr:X}",
-                "category": "DTCs", "type": "1D", "storagetype": "uint8",
-                "endian": "big", "expression": "x", "to_byte": "x", "size": "1",
+                "category": category, "storagetype": "uint8", **form,
             })
             # short editor-facing description (AGENTS.md rule 6b); address/slot
             # provenance stays in data/dtc/<rom>.tsv and dtc_control_report.md §5
             d = E.SubElement(t, "description")
             d.text = dtc_names.dtc_description(code, f"#{n}")
+            if form["type"] == "Switch":
+                for sname, sdata in DTC_SWITCH_STATES:
+                    E.SubElement(t, "state", {"name": sname, "data": sdata})
             added += 1
     return {
         "dtc_code_table": f"0x{code_start:X}",

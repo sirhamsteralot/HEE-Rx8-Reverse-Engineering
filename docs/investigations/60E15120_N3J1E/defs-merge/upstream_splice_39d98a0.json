@@ -1,0 +1,2316 @@
+{
+ "dtc_converted": {
+  "#1": 135,
+  "#2": 123,
+  "#3": 123
+ },
+ "immo_replaced": 2,
+ "details": [
+  {
+   "block": null,
+   "name": "DTC P0300 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0030 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0031 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0032 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0037 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0038 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0076 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0077 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0101 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0102 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0103 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0107 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0108 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0111 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0112 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0113 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0117 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0118 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0122 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0123 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0125 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0126 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0130 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0131 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0132 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0133 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0138 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0139 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0171 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0172 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0222 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0223 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0327 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0328 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0335 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0336 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0351 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0352 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0353 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0354 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0410 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0420 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0441 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0442 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0443 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0444 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0445 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0446 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0455 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0456 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0461 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0462 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0463 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0480 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0481 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0500 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0505 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0506 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0507 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0562 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0564 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0571 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0601 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0602 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0604 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0610 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0638 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0661 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0662 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0703 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0704 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0850 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1260 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1686 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1687 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1688 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2004 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2006 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2009 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2010 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2016 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2017 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2067 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2068 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2070 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2096 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2097 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2102 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2103 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2106 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2107 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2108 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2109 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2112 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2119 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2122 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2123 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2127 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2128 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2135 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2136 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2138 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2195 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2196 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2257 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2258 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2259 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2260 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2270 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2271 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2401 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2402 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2404 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2405 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2407 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2502 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2503 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2504 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0073 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0101 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0121 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0155 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0167 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0300 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0030 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0031 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0032 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0037 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0038 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0076 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0077 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0101 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0102 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0103 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0107 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0108 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0111 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0112 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0113 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0117 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0118 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0122 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0123 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0125 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0126 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0130 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0131 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0132 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0133 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0138 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0139 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0171 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0172 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0222 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0223 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0327 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0328 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0335 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0336 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0351 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0352 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0353 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0354 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0410 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0420 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0441 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0442 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0443 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0444 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0445 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0446 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0455 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0456 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0461 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0462 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0463 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0480 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0481 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0500 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0505 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0506 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0507 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0562 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0564 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0571 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0601 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0602 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0604 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0610 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0638 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0661 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0662 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0703 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0704 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0850 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1260 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1686 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1687 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P1688 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2004 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2006 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2009 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2010 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2016 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2017 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2067 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2068 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2070 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2096 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2097 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2102 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2103 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2106 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2107 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2108 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2109 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2112 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2119 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2122 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2123 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2127 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2128 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2135 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2136 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2138 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2195 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2196 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2257 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2258 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2259 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2260 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2270 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2271 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2401 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2402 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2404 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2405 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2407 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2502 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2503 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P2504 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0073 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0101 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0121 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0155 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC U0167 Enable/Disable #2",
+   "category": "DTC - OBD Report",
+   "type": "Switch"
+  },
+  {
+   "block": null,
+   "name": "DTC P0300 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0030 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0031 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0032 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0037 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0038 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0076 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0077 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0101 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0102 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0103 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0107 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0108 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0111 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0112 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0113 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0117 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0118 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0122 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0123 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0125 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0126 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0130 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0131 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0132 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0133 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0138 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0139 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0171 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0172 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0222 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0223 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0327 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0328 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0335 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0336 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0351 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0352 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0353 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0354 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0410 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0420 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0441 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0442 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0443 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0444 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0445 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0446 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0455 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0456 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0461 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0462 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0463 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0480 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0481 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0500 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0505 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0506 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0507 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0562 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0564 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0571 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0601 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0602 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0604 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0610 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0638 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0661 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0662 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0703 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0704 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P0850 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P1260 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P1686 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P1687 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P1688 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2004 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2006 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2009 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2010 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2016 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2017 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2067 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2068 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2070 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2096 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2097 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2102 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2103 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2106 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2107 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2108 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2109 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2112 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2119 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2122 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2123 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2127 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2128 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2135 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2136 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2138 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2195 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2196 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2257 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2258 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2259 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2260 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2270 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2271 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2401 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2402 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2404 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2405 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2407 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2502 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2503 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC P2504 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC U0073 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC U0101 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC U0121 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC U0155 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": null,
+   "name": "DTC U0167 Enable/Disable #3",
+   "category": "DTC - Unknown",
+   "type": "1D"
+  },
+  {
+   "block": "60E15120",
+   "name": "Immobilizer Disable - Without RKE Installed",
+   "storageaddress": "0x34da8 -> 0x34b10"
+  },
+  {
+   "block": "60E15120",
+   "name": "Immobilizer Disable - With RKE Installed",
+   "storageaddress": "0x351f4 -> 0x34f5c"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P0300 Enable/Disable #1 [additional site 0x7e679]",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P0128 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P1574 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P1577 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P2008 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P2101 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC P2406 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC U0073 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC U0101 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC U0121 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC U0155 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  },
+  {
+   "block": "60E15120",
+   "name": "DTC U0167 Enable/Disable #1",
+   "category": "DTC - MIL Illuminate",
+   "type": "Switch"
+  }
+ ],
+ "immo_evidence": {
+  "rom": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "pattern_offset": "0x34B10",
+  "with_rke_offset": "0x34F5C",
+  "off_state_matches_rom_bytes": true
+ },
+ "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+ "pass": "Splice the upstream RX8Defs DTC switch rework (`d95b0be`) and the 60E15120",
+ "bom": true,
+ "crlf": false
+}
