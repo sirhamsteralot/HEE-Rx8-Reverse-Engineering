@@ -8,6 +8,10 @@ External reference material and provenance for third-party sources.
 |---|---|---|---|
 | `Sh7055h.pdf` | Renesas **SH7055F hardware manual** (ADE 602-155B) | Chip-level truth: register map, Tables 1.2/1.3 pin functions & package pin numbers, PFC/port control, ATU-II channel→pin mapping | Vendor document — authoritative for the silicon |
 | `13Electrical.pdf` | Original RX-8 electrical wiring book (copy-protected; pages are images) — **ground truth for the RX-8 electrical systems** | Underlying circuit diagrams; source for all derived pinout/colour data | Text extraction yields mostly headers — read via renders; treat as image source |
+| `renesis_i_rotary_engine_fundamentals.pdf` | Mazda **"Renesis Rotary Engine Fundamentals"** training guide (©2003 Mazda Motor of America, 75 pp) | Engine-architecture background for the 13B-MSP: rotor/gas-seal/oil-seal geometry, four strokes, Renesis design characteristics (side intake, side exhaust) — context for the load, fueling, ignition and knock models | Vendor training material — authoritative for the Renesis design; not a service or calibration spec |
+| `Mazda_RX8_TSB-01-015-08.pdf` | Mazda North American Operations **TSB 01-015/08 "Engine cranks no start"** (2004–2008 RX-8, last issued 2008-12-26, 16 pp) | Official symptom context for short cold runs: flooded spark plugs / carbon-locked apex seals, purge-by-cranking procedure, OEM plugs (leading NGK RE7C-L heat range 7, trailing NGK RE9B-T heat range 9) — backdrop for cranking fuel/timing and flood-clear behavior | Dealer service bulletin — describes symptom + mechanical fix; any PCM flood-clear/cranking strategy is our own ROM finding, not from this document |
+| `Effect of leading and trailing spark plugs on combustion fuel consumption and exhaust emissions.pdf` | Peer-reviewed paper (Ö. Cihan & O. A. Kutlar, *Arabian Journal for Science and Engineering*, 2021, DOI [10.1007/s13369-021-05456-3](https://doi.org/10.1007/s13369-021-05456-3)) on leading vs trailing plug effects in a Wankel engine | Mechanism background for why the ROM runs separate leading/trailing ignition timing and fueling (see [`../investigations/60E15120_N3J1E/ignition_timing_report.md`](../investigations/60E15120_N3J1E/ignition_timing_report.md)) | Single lab study on a Wankel test engine, not the RX-8 — background for mechanisms only, never a source of calibration values |
+| `timingchart.pdf` | Aftermarket rotary ignition "Timing Recommendations" chart (1971–1992 12A/13B, carb-era, incl. street/bridge/peripheral porting) | Historical context for leading/trailing advance-spread thinking | Carb-era 12A/13B chart — predates the Renesis 13B-MSP; never use its advance numbers for RX-8 calibration |
 
 Derived from `13Electrical.pdf` (regenerate + re-diff, don't edit in place): the
 Series-1 PCM connector pinout lives as text at
@@ -21,6 +25,16 @@ package-pin ↔ connector-terminal link from the pinout alone.
 
 ## Workshop manual (kept uncommitted in `input/`, vetted by use)
 
+- The **full RX-8 workshop-manual set** (sections `0Owners` … `13bmsp`, incl.
+  `3EngineDetails.pdf` and `4EngineControl.pdf`) is available uncommitted in
+  `input/Proton Drive Download - 2026-11-13.zip`. The zip's `13Electrical.pdf`
+  (SHA-256 `c2acd5e528b6af329ec1f4efa437815ef4cc90374c2d36c6cdd144059fccb8df`, 148 pp,
+  opens without a password) is a different container copy of the same book as the
+  tracked `13Electrical.pdf` above (SHA-256
+  `8d17e05f4df497dda09c559050c94b43f06574f4bc1d7bfa4db3b168a85d7379`, copy-protected) —
+  the tracked copy remains the reference; do not duplicate. The zip's
+  `4EngineControl.pdf` is byte-identical to `input/4EngineControl.pdf`
+  (SHA-256 `527b22b1b1b28e24f0529de1d3dc020548e1e55be1a8070ff304558555901415`).
 - `input/4EngineControl.pdf` — Mazda RX-8 workshop manual **"RX8 – Engine
   Diagnostics & Control"** (PDF created 2003-11-21; copy-protected like the others).
   Its **DTC TABLE** section is the official RX-8 fault-code list; parsed (pdftotext
@@ -80,3 +94,12 @@ Related but not submoduled (not git repos in the intake, URL only):
   Mode 22 dispatch at 0x5fa0c in 60E0FC00, RomRaider table inventories for 60E0FC00 and
   G-ROM FlexFuel, ignition 2D tables in deg BTDC over load g/rev × RPM).
   Forum claims are `candidate_` until verified against our ROMs.
+- The `Forum Threads/Open Source S1 RX-8 ECU Reverse Engineering, Data Logging
+  and Tuning.md` inside `input/Proton Drive Download - 2026-11-13.zip` is a
+  **0-byte placeholder** — nothing to extract; the thread is the one curated
+  above. Also reviewed from that zip and deliberately left uncommitted in
+  `input/` (no PCM-relevant content): `MILKY SUBSTANCE ON OIL LEVEL GAUGE
+  (DIPSTICK).pdf` (TSB 01-050/06, coolant-in-oil — mechanical),
+  `RR Engine Teardown RX8Club Pages 1-8/9-17/18-19.pdf` (image-only forum
+  printouts — engine teardown photos), `67112 RX8 Front Bumper
+  Replacement.pdf` (Racing Beat bodywork instructions).

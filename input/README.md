@@ -82,3 +82,24 @@ parsed to the tracked `data/dtc/mazda_dtc_table.tsv` and merged into
 `data/dtc/pcodes.tsv` (Mazda wording preferred in def descriptions) — see
 `docs/investigations/60E15120_N3J1E/dtc_control_report.md` §5b. The PDF itself stays
 here uncommitted (rule 4).
+
+2026-11-13: `Proton Drive Download - 2026-11-13.zip` sorted (extracted to
+`extracted-2026-11-13/`, removed again after promotion). Promoted to
+`../docs/references/` (trust notes in its README): `renesis_i_rotary_engine_fundamentals.pdf`
+(Mazda Renesis training guide), `Mazda_RX8_TSB-01-015-08.pdf` (cranks-no-start TSB),
+`Effect of leading and trailing spark plugs on combustion fuel consumption and exhaust
+emissions.pdf` (Cihan & Kutlar 2021, DOI 10.1007/s13369-021-05456-3), `timingchart.pdf`
+(carb-era 12A/13B ignition-timing chart). The zip's `4EngineControl.pdf` is
+byte-identical to the loose `4EngineControl.pdf` here (SHA-256
+`527b22b1b1b28e24f0529de1d3dc020548e1e55be1a8070ff304558555901415`); its `13Electrical.pdf`
+(SHA-256 `c2acd5e528b6af329ec1f4efa437815ef4cc90374c2d36c6cdd144059fccb8df`) is a different
+container copy of the tracked `../docs/references/13Electrical.pdf` — the tracked copy
+stays the reference. Reviewed and deliberately left inside the zip (uncommitted): the
+full workshop-manual set `0Owners`–`13bmsp` (manual policy: stays in `input/`),
+`MILKY SUBSTANCE ON OIL LEVEL GAUGE (DIPSTICK).pdf` (TSB 01-050/06, coolant-in-oil —
+mechanical), `RR Engine Teardown RX8Club Pages 1-8/9-17/18-19.pdf` (image-only forum
+printouts), `67112 RX8 Front Bumper Replacement.pdf` (bodywork), and
+`Forum Threads/Open Source S1 RX-8 ECU Reverse Engineering, Data Logging and
+Tuning.md` (0-byte placeholder; the thread is already curated in
+`../docs/references/rx8club-user-guide-thread.md`). The zip itself stays here as raw
+intake.
