@@ -1,0 +1,18 @@
+{
+ "date": "2026-11-13",
+ "pass": "immobilizer_start_pattern",
+ "basis": "upstream submodule sync fold-in (RX8Defs 39d98a0 / MRP b243b35) — ROM-verified immobilizer start-pattern addresses",
+ "source": "Raw ROM bytes binaries/dumps/60E0G500_N3ZHEC.bin (SHA-256 a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2, manifest-verified) — own donor-ECU dump. Pattern and with-RKE offset from upstream submodules/Mazda_RX8_PCM_ReverseEngineering/Utilities/G_ROM_ImmoDefWriter.py @ b243b35. Sync record: docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md §3. Cross-ROM table of all 11 ROMs: data/labels/cross_rom/immobilizer_start_patterns.json.",
+ "rom_code_patterns": {
+  "0x35af8": {
+   "alias": "immobilizer_start_pattern",
+   "kind": "code pattern — immobilizer-off patch target (without RKE); def 'Immobilizer Disable - Without RKE Installed' storageaddress",
+   "pattern_hex": "B56E000960D0600C88008D1100098801",
+   "with_rke_address": "0x35f44",
+   "with_rke_derivation": "start + 0x44c (upstream G_ROM_ImmoDefWriter.py w_rke_offset = 0xf7 + 0x355)",
+   "def_tables": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml: 'Immobilizer Disable - Without RKE Installed' @0x35af8, 'Immobilizer Disable - With RKE Installed' @0x35f44 (no upstream block override either side of the sync; these addresses are the ROM pattern offset and offset+0x44c)",
+   "evidence": "ROM bytes at 0x35af8 = B56E000960D0600C88008D1100098801 (re-read against the raw dump)."
+  }
+ },
+ "rom_unchanged": true
+}
