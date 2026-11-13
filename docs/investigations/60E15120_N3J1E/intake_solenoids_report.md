@@ -147,6 +147,8 @@ no chip-pin data, so package-pin → terminal remains board routing).
 | Design doc subsystem map | [`design/README.md`](../../architecture/design/README.md) §5.9 |
 | Pre-change backup | `backups/pre_intake_labels.zip` |
 | Hardware manual (pin source) | `Sh7055h.pdf` (workspace root; SH7055F HW manual ADE 602-155B) |
+| S-DIAS/S-DAIS synthesis vs community claims (secondary, generated — not primary evidence) | [`../../references/mazda-rx-8-s-dias-intake-system-deep-research-report.pdf`](../../references/mazda-rx-8-s-dias-intake-system-deep-research-report.pdf) |
+| Rotary intake acoustic-tuning research (background for VDI/VFAD runner-length staging) | [`../../references/Engine_Acoustic_Tuning_Rotary_Intake_Design.pdf`](../../references/Engine_Acoustic_Tuning_Rotary_Intake_Design.pdf) |
 
 ## 8. Validation
 
