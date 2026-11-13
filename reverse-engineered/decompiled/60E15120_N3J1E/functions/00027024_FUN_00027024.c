@@ -14,9 +14,9 @@ void FUN_00027024(void)
   undefined *puVar6;
   undefined4 uVar7;
   
-  puVar2 = &DAT_ffff8108;
+  puVar2 = &e2ram_learned_table_value_pos_ffff8108;
   bVar1 = 0;
-  puVar3 = &DAT_ffff8548;
+  puVar3 = &e2ram_learned_table_flag_a_ffff8548;
   uVar7 = 0;
   do {
     bVar4 = 0;

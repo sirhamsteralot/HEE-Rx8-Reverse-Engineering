@@ -3,7 +3,7 @@
   "rom": "60E15120_N3J1E",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rom_unchanged": true,
-  "candidate_total": 182,
+  "candidate_total": 184,
   "promoted_to_high": {
     "000064ba": {
       "alias": "knock_sensor_fault_task",
@@ -144,6 +144,11 @@
       "alias": "vfad_control_task_wrapper",
       "name": "candidate_vfad_control_task_wrapper",
       "source": "data/labels/60E15120_N3J1E/intake_labels.json/function_aliases"
+    },
+    "00035d36": {
+      "alias": "e2ram_shadow_byte_write_trampoline",
+      "name": "candidate_e2ram_shadow_byte_write_trampoline",
+      "source": "thunk audit: sole caller 0x35a8c fixes r14 = 0x37ea4 (pool 0x35b74)"
     },
     "00037358": {
       "alias": "dtc_state_machine_step",
@@ -564,11 +569,6 @@
       "alias": "uds_rx_channel_set_service",
       "name": "candidate_uds_rx_channel_set_service",
       "source": "data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases"
-    },
-    "00035d36": {
-      "alias": "e2ram_shadow_byte_write_trampoline",
-      "name": "e2ram_shadow_byte_write_trampoline",
-      "source": "thunk audit: sole caller 0x35a8c fixes r14 = 0x37ea4 (pool 0x35b74)"
     }
   },
   "renamed_staying_medium": {
@@ -612,6 +612,7 @@
     "000264f0": "candidate_electrical_load_flag_calc",
     "00026624": "candidate_alternator_duty_calc",
     "00026760": "candidate_alternator_warning_light_flag",
+    "00027d06": "candidate_e2ram_learned_table_erase",
     "0002b046": "candidate_wheelspeed_rear_avg_calc",
     "0002b1d6": "candidate_can4b0_wheelspeed_extract",
     "0002b496": "candidate_dsc_desired_torque_calc",
@@ -646,14 +647,15 @@
     "0005c9ac": "candidate_ssv_diag_override",
     "0005cba4": "candidate_alternator_target_encode_u16",
     "0005cdc4": "candidate_vfad_diag_override",
-    "0005cf7c": "candidate_secondary_air_diag_override"
+    "0005cf7c": "candidate_secondary_air_diag_override",
+    "0005e748": "candidate_e2ram_config_bit_9f_read"
   },
   "counts": {
-    "candidate_total": 182,
+    "candidate_total": 184,
     "promoted": 113,
     "renamed": 1,
-    "kept_candidate": 68
+    "kept_candidate": 70
   },
-  "export_applied_by": "review_candidate_promotions.py --apply-export (scoped surrogateescape pass)",
+  "export_applied_by": "pending: integrate_reviewed_names.py on full rebuild",
   "ghidra_database_updated": false
 }

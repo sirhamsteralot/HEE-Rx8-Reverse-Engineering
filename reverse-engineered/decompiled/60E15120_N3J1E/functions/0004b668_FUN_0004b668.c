@@ -14,13 +14,13 @@ uint FUN_0004b668(void)
   if (inferred_ram_ce30_ffffce30_ffffce30 != DAT_ffffce46) {
     DAT_ffffce4c = 1;
     e2ram_shadow_byte_write(0x7a,&inferred_ram_ce30_ffffce30_ffffce30,2);
-    DAT_ffffce4a = FUN_000378dc(0x7a,2);
+    DAT_ffffce4a = e2ram_flush_request(0x7a,2);
     DAT_ffffce46 = inferred_ram_ce30_ffffce30_ffffce30;
   }
   uVar1 = (uint)DAT_ffffce4c;
   if (uVar1 == 1) {
     if (DAT_ffffce4a == '\x01') {
-      uVar1 = FUN_000378dc(0x7a,2);
+      uVar1 = e2ram_flush_request(0x7a,2);
       DAT_ffffce4a = (char)uVar1;
     }
     else {

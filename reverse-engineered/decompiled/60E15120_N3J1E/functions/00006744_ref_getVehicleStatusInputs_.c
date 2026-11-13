@@ -1,7 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * vehicle_inputs_poll_pfdr_phdr [high]: was ref_getVehicleStatusInputs_. DAT_ffff9ec8 = PFDR_W (0xfffff74e), DAT_ffff9eca = PHDR_W, plus 3 GPIO inputs. Emulator: PFDR bit0 scripted high via GPIO inputs; read observed during the CAN-RX tick.
- * RAM 0xffff9ec8 vehicle_inputs_pfdr_latch (uint8): 
- * RAM 0xffff9eca vehicle_inputs_phdr_latch (uint8): 
+ * RAM 0xffff9ec8 vehicle_inputs_pfdr_latch (uint8): mov.l pool 0x6854 in 0x6744 vehicle_inputs_poll_pfdr_phdr and 0x6796, pool 0x11e98 in 0x11d88; = PFDR_W 0xfffff74e sampled in 0x6744; bit0 gates the UDS entry 0x680a0 tail-call from 0x11d88.
+ * RAM 0xffff9eca vehicle_inputs_phdr_latch (uint8): mov.l pool 0x685c in 0x6744 and 0x6796; = PHDR_W sampled in 0x6744 vehicle_inputs_poll_pfdr_phdr.
  */
 /* ROM address: 0x00006744; body bytes: 82; decompiled */
 

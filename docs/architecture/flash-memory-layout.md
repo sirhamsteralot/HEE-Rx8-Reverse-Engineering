@@ -61,7 +61,7 @@ flowchart TD
         RAM["On-chip RAM\n0xffff6000 – 0xffffdfff\n32 KiB working data"]
         IO["On-chip I/O registers\n0xffffe000 – 0xffffffff\nADC, timers (ATU-II), HCAN, DMAC, WDT, GPIO…"]
     end
-    EEPROM["External 93C56 serial EEPROM (IC420)\n256 bytes — persistent data incl.\nlearned knock retard (0xffff8038 mirror);\nfull content not yet mapped; mirrored at\nRAM 0xffff8000–0xffff80ff during runtime"]
+    EEPROM["External 93C56 serial EEPROM (IC420)\n256 bytes — persistent data incl.\nlearned knock retard (0xffff8038 cell in the\nE2 window); content mapped in\neeprom_content_map_report.md; E2 window at\nRAM 0xffff8000–0xffff80ff during runtime"]
     FLASH -->|"CPU reads code + calibration"| CPU["SH-2E core"]
     RAM --> CPU
     IO --> CPU
@@ -73,7 +73,7 @@ flowchart TD
 | User ROM (flash) | 0x00000000–0x0007ffff | 512 KiB | The dumped image: SBL + app + calibration + runtime IVT | all 11 dumps are exactly 524,288 B; [SH7055 hardware manual](https://www.renesas.com/en/document/mah/sh-2e-sh7055s-hardware-manual) |
 | On-chip RAM | 0xffff6000–0xffffdfff | 32 KiB | Working variables, task stacks, EEPROM mirror, CVN result | [design doc §1](design/README.md); emulator profiles `memory.ram` |
 | I/O registers | 0xffffe000–0xffffffff | 8 KiB | SH7055 peripherals (volatile) | emulator profiles `memory.io`; [learnings](../learnings.md) |
-| External 93C56 | off-chip | 256 B | Persistent storage (IC420) incl. learned knock retard; 0x55aa/0xaa55 magic mirrored at 0xffff8000 (full content not yet mapped) | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/labeling/free_resources_report.md) |
+| External 93C56 | off-chip | 256 B | Persistent storage (IC420) incl. learned knock retard; full 256-B content map in [eeprom_content_map_report.md](../investigations/60E15120_N3J1E/eeprom_content_map_report.md) (VIN at chip 0x80, immo key 0x02–0x09, learned table 0x20–0x63); 0x55aa/0xaa55 magic in the E2 window at 0xffff8000 | dumps `Data_binaries/RX8_93c56_ECU_IC420_Read.bin` (256 B); [free-resources report §10](../investigations/60E15120_N3J1E/labeling/free_resources_report.md) |
 
 Runtime flash is **read-only** from the CPU: stores to `0x0–0x7ffff` are ignored
 (the emulator counts them in `bus.rom_writes_blocked`; on hardware they need
@@ -268,8 +268,9 @@ The emulator boots of all 11 ROMs produce the **same** idle RAM write pattern
            │  densest bins 0xffffa000–0xffffdxxx)          │
 0xffff7408 │ task context blocks 0xffff7408–0xffff7498     │
            │ (stacks end at 0xffff7498)                   │
-0xffff8000 │ external-EEPROM mirror 0xffff8000–0xffff80ff  │
-           │ (0x55aa/0xaa55 magic; 93C56 = 256 B)          │
+0xffff8000 │ E2 window 0xffff8000–0xffff80ff (93C56-sized;  │
+           │ 0x55aa/0xaa55 magic; checksummed cells; see   │
+           │ eeprom_content_map_report.md)                 │
            │ ─ idle-free window 0xffff8000–0xffff92ff ──    │
            │  4,864 B never written at idle (all 11 ROMs); │
            │  3,852 B static-free, largest contiguous run  │

@@ -1,7 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_trailing_filter [high]: Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6.
- * RAM 0xffffcaa0 cranking_angle_timing_trailing_filtered (float): 
- * RAM 0xffffcaa8 cranking_angle_timing_trailing_raw (float): 
+ * RAM 0xffffcaa0 cranking_angle_timing_trailing_filtered (float): mov.w pool 0x43a1e (sign-extends to 0xffffcaa0) in 0x439b2 cranking_timing_trailing_filter and 0x43928, pool 0x12686 in 0x124d6; filtered trailing value stored by 0x439b2.
+ * RAM 0xffffcaa8 cranking_angle_timing_trailing_raw (float): mov.l pool 0x43a2c in 0x43928 and 0x439b2; raw trailing = lookup_2d(ECT, tbl 0x6b644) stored by 0x439b2 cranking_timing_trailing_filter.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

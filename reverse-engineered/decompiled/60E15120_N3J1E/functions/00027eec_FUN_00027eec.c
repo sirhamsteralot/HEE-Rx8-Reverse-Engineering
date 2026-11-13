@@ -19,8 +19,8 @@ undefined2 * FUN_00027eec(byte param_1)
       uVar4 = rx8_add_u8_saturate(uVar4,0x11);
       FUN_0000420c();
       bVar2 = bVar2 + 1;
-      puVar1 = (undefined2 *)(&DAT_ffff8548 + (uVar4 & 0xff) * 2 + (uint)bVar3 * 0x88);
-      *puVar1 = *(undefined2 *)(&DAT_ffff8548 + (uint)param_1 * 2 + (uint)bVar3 * 0x88);
+      puVar1 = (undefined2 *)(&e2ram_learned_table_flag_a_ffff8548 + (uVar4 & 0xff) * 2 + (uint)bVar3 * 0x88);
+      *puVar1 = *(undefined2 *)(&e2ram_learned_table_flag_a_ffff8548 + (uint)param_1 * 2 + (uint)bVar3 * 0x88);
     } while (bVar2 < 3);
     bVar3 = bVar3 + 1;
   } while (bVar3 < 2);

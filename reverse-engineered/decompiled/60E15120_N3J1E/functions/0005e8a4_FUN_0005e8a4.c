@@ -22,7 +22,7 @@ int FUN_0005e8a4(void)
         local_24 = (undefined1)((ushort)DAT_ffffd3a8 >> 8);
         uStack_23 = (undefined1)DAT_ffffd3a8;
         e2ram_shadow_byte_write(0x78,&local_24,2);
-        DAT_ffffd3b0 = FUN_000378dc(0x78,2);
+        DAT_ffffd3b0 = e2ram_flush_request(0x78,2);
         DAT_ffffd3ae = '\x02';
       }
       else {
@@ -34,7 +34,7 @@ int FUN_0005e8a4(void)
   }
   else if (DAT_ffffd3ae == '\x02') {
     if (DAT_ffffd3b0 == '\x01') {
-      DAT_ffffd3b0 = FUN_000378dc(0x78,2);
+      DAT_ffffd3b0 = e2ram_flush_request(0x78,2);
     }
     else if ((DAT_ffffc28c == '\x01') || (DAT_ffffc289 == '\x01')) {
       iVar2 = 2;

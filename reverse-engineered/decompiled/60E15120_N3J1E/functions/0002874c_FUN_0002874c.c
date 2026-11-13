@@ -8,7 +8,7 @@ void FUN_0002874c(void)
   FUN_00028510();
   FUN_00026b98();
   FUN_0004496c();
-  FUN_00027b8e();
+  e2ram_learned_table_load();
   FUN_00028acc();
   FUN_00028ad4();
   FUN_00028adc();
