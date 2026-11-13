@@ -294,8 +294,10 @@ def apply_to_block(block, blks, rom_id, stats=None):
     blks: all <rom> elements of the same file (for base-chain template lookup),
     keyed by lowercase xmlid — see extend_defs_all_roms.blocks().
     Returns stats dict. Idempotent: entries already carrying this pass's
-    description (see is_relabeled) keep their name/category/addresses and only
-    get their description re-normalized to the short form (rule 6b).
+    description (see is_relabeled) keep their name/addresses and only get
+    their description re-normalized to the short form (rule 6b); the category
+    is still re-applied from the label map when it changed there (upstream
+    category renames fold in on re-run).
     """
     labels = load_labels()
     by_desc, by_data = maps_index(rom_id)
@@ -354,10 +356,19 @@ def apply_to_block(block, blks, rom_id, stats=None):
             continue
         label = label_of.get(desc)
         if is_relabeled(t, label):
-            # already relabeled (or legacy marker format): keep name/category/
-            # addresses, re-normalize the description to the short form
+            # already relabeled (or legacy marker format): keep name/addresses,
+            # re-normalize the description to the short form; the category is
+            # re-applied from the label map so a category rename in
+            # defs_table_labels.json (e.g. the upstream RX8Defs 39d98a0 rename
+            # "Fuel Target (Closed Loop)" -> "Fuel Injection - Closed Loop")
+            # regroups the table on re-run
             new_el = copy.deepcopy(t)
             _set_desc(new_el, _label_desc(label) if label else UNLABELED_DESC)
+            if label is not None and label.get("category") and new_el.get("category") != label["category"]:
+                new_el.set("category", label["category"])
+                st["regrouped"] += 1
+                st["details"].append({"descriptor": f"0x{desc:x}", "name": t.get("name"),
+                                      "category": label["category"], "action": "regrouped"})
             idx = list(block).index(t)
             block.remove(t)
             block.insert(idx, new_el)

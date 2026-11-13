@@ -137,7 +137,7 @@
   },
   "0x6990c": {
    "name": "Closed Loop Warmup Time",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "raw u16 x15 s; axis 0x6f7e0, data 0x6f81c; dispatch helper tbl_table_2d_304_check_datatype.",
    "desc": "Time after start during which closed-loop fuelling is inhibited.",
    "evidence": "",
@@ -757,7 +757,7 @@
   },
   "0x699b8": {
    "name": "Closed Loop WOT Enrichment",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "upstream name had '??'.",
    "desc": "Closed-loop fuel enrichment at wide-open throttle.",
    "evidence": "",
@@ -767,7 +767,7 @@
   },
   "0x69a60": {
    "name": "Closed Loop Target Bank A (3D)",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "upstream 'Table 3D - 29'; CL lambda target bank.",
    "desc": "Closed-loop target lambda bank A vs load and RPM.",
    "evidence": "",
@@ -777,7 +777,7 @@
   },
   "0x69a7c": {
    "name": "Closed Loop Target Bank B (3D)",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "upstream 'Table 3D - 30'; CL lambda target bank.",
    "desc": "Closed-loop target lambda bank B vs load and RPM.",
    "evidence": "",
@@ -1077,7 +1077,7 @@
   },
   "0x69d24": {
    "name": "Closed Loop Fuelling Threshold A",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "open-loop request conditions, read by 0x1f0c4; range 0x69d24-0x69d74.",
    "desc": "Closed-loop fuelling enable threshold (variant A).",
    "evidence": "",
@@ -1087,7 +1087,7 @@
   },
   "0x69d38": {
    "name": "Closed Loop Fuelling Threshold B",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant B).",
    "evidence": "",
@@ -1097,7 +1097,7 @@
   },
   "0x69d4c": {
    "name": "Closed Loop Fuelling Threshold C",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant C).",
    "evidence": "",
@@ -1107,7 +1107,7 @@
   },
   "0x69d60": {
    "name": "Closed Loop Fuelling Threshold D",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant D).",
    "evidence": "",
@@ -1117,7 +1117,7 @@
   },
   "0x69d74": {
    "name": "Closed Loop Fuelling Threshold E",
-   "category": "Fuel Target (Closed Loop)",
+   "category": "Fuel Injection - Closed Loop",
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant E).",
    "evidence": "",

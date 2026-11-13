@@ -32,12 +32,10 @@ MERGED = REPO / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.
 PER_ROM = REPO / "data" / "definitions" / "romraider" / "per-rom"
 LABELS = REPO / "data" / "labels" / "60E15120_N3J1E" / "defs_table_labels.json"
 
-# Base categories renamed upstream in RX8Defs 39d98a0; the curated label map
-# predates the rename, so marked tables may still carry the old name (the
-# merged 60E15120 def keeps the pre-rename base category names until the label
-# map is updated). A curated category is accepted if it or its upstream
-# successor exists in the base.
-UPSTREAM_CATEGORY_RENAMES = {"Fuel Target (Closed Loop)": "Fuel Injection - Closed Loop"}
+# The base category "Fuel Target (Closed Loop)" was renamed upstream in RX8Defs
+# 39d98a0 to "Fuel Injection - Closed Loop"; the curated label map, the merged
+# def and all per-ROM defs carry the new name, so a marked table's category must
+# exist in the base verbatim (no rename alias needed anymore).
 
 
 def rom_block(path, xmlid):
@@ -173,7 +171,7 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
             cat = t.get("category")
             if cat and cat.startswith("Unknown"):
                 continue
-            known = cat in base_cats or UPSTREAM_CATEGORY_RENAMES.get(cat) in base_cats
+            known = cat in base_cats
             assert known, f"{stem}: category {cat!r} of {t.get('name')!r} not an existing base category"
 
 
@@ -183,3 +181,29 @@ def test_generator_idempotent_on_60E15120():
     subprocess.run([sys.executable, "utilities/scripts/defs-merge/extend_defs_all_roms.py"],
                    cwd=REPO, check=True, capture_output=True)
     assert path.read_bytes() == before, "extend_defs_all_roms.py not idempotent on 60E15120 per-rom def"
+
+
+def test_label_map_generator_matches_committed():
+    """AGENTS.md rule 6d: build_table_labels.py must regenerate
+    defs_table_labels.json without drifting any committed field. The only
+    whitelisted volatile field is "evidence", which the builder re-fills from
+    the lookup_aliases JSONs while the committed map keeps it empty."""
+    before = LABELS.read_bytes()
+    try:
+        subprocess.run([sys.executable, "utilities/scripts/defs-merge/build_table_labels.py"],
+                       cwd=REPO, check=True, capture_output=True)
+        regenerated = json.loads(LABELS.read_text(encoding="utf-8"))
+    finally:
+        LABELS.write_bytes(before)
+    committed = json.loads(before.decode("utf-8"))
+
+    def strip_evidence(o):
+        if isinstance(o, dict):
+            return {k: strip_evidence(v) for k, v in o.items() if k != "evidence"}
+        if isinstance(o, list):
+            return [strip_evidence(x) for x in o]
+        return o
+
+    assert strip_evidence(regenerated) == strip_evidence(committed), \
+        "build_table_labels.py output drifted from the committed defs_table_labels.json; " \
+        "edit the generator and re-run it instead of hand-editing the JSON (rule 6d)"

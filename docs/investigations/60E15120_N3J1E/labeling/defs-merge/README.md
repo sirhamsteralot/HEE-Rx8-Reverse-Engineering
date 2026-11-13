@@ -171,4 +171,15 @@ The generated `validation.json` pins their hashes and commits.
   per-ROM def. Sync record:
   [`../rx8defs-analysis/upstream-sync-validation.md`](../rx8defs-analysis/upstream-sync-validation.md);
   tests `tests/test_defs_upstream_sync.py` (all XMLs under `data/definitions`
-  checked for the new form + ROM-verified immo addresses).
+  checked for the new form + ROM-verified immo addresses). The same splice pass
+  also applies the remaining `39d98a0` category rename
+  (`Fuel Target (Closed Loop)` → `Fuel Injection - Closed Loop`) to every table
+  that explicitly carries the old category, folded in together with the
+  `defs_table_labels.json` label-map category update (9 entries);
+  `relabel.py` re-applies the label-map category on re-run, so the per-ROM defs
+  regroup accordingly and `tests/test_defs_relabel.py` needs no rename alias.
+  Table names are not renamed in our reviewed files (the upstream
+  `Table 3D - UNKNOWN_CL` → `Closed Loop Fueling Base` rename is
+  cross-referenced in
+  [`../../fueling_control_report.md`](../../fueling_control_report.md) §10.7
+  instead).

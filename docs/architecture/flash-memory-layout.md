@@ -215,7 +215,15 @@ Notes on the table:
   `N3ZHEC`), with two documented discrepancies: 60E1B900's internal package is
   `N3ZDEH` (byte-verified here; the forum table and the emu profile name say
   `N3ZBEH`), and the reference ROM's `N3ZHE` at 0x6c046 (already noted as a
-  do-not-"fix" discrepancy in that extract). Market/model context per ROM
+  do-not-"fix" discrepancy in that extract). Second cal ID on 60E0G500:
+  upstream RX8Defs `39d98a0` declares **`N3ZGEC`** as an additional `<romid>`
+  of the 60E0G500 block (6 Port and 4 Port variants, both at
+  internalidaddress `0x6ce46` — the `SW-N3ZHEC000.HEX` package string this
+  dump carries at 0x6ce46, byte-verified), so the same def block also covers
+  N3ZGEC calibrations; our `per-rom/60E0G500_N3ZHEC.xml` already carries both
+  romids (see the
+  [upstream sync record](../investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md)
+  §2). Market/model context per ROM
   (hypotheses, from the
   [emulator profiles](../../utilities/scripts/emu/profiles/README.md)):
   60E0G500_N3ZHEC = EU, 2004 Series 1, 6-port MT.
