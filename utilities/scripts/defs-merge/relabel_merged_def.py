@@ -16,7 +16,7 @@ fresh renaming run.
 Run from the repo root:
   python utilities/scripts/defs-merge/relabel_merged_def.py [--dry-run]
 Writes the stats JSON to
-docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.json
+docs/investigations/60E15120_N3J1E/labeling/defs-merge/relabel_2026-11-02.json
 """
 from pathlib import Path
 import json, sys
@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import relabel
 
 MERGED = ROOT / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.xml"
-STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "defs-merge" / "relabel_2026-11-02.json"
+STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "defs-merge" / "relabel_2026-11-02.json"
 TARGET_XMLID = "60E15120"
 
 

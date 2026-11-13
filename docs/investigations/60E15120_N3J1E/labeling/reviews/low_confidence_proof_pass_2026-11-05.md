@@ -18,7 +18,7 @@ ROM 60E15120_N3J1E (SHA-256 a7cd953c…f264f1):
    0x579a8 over the 36×6-byte table at ROM 0x5f5b2). Plus `harness.call`
    tests of control-path functions and an end-to-end physical chain through
    the real ADC read path. Durable regression test:
-   [`tests/test_lowconf_dynamic_proof.py`](../../../../tests/test_lowconf_dynamic_proof.py)
+   [`tests/test_lowconf_dynamic_proof.py`](../../../../../tests/test_lowconf_dynamic_proof.py)
    (6 passed).
 2. **Cross-ROM byte matches** (`cross_rom_function_matches.tsv`,
    `cross_rom_mode22_pid_handlers.tsv`): every upgraded function/handler is

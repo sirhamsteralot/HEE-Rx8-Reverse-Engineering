@@ -9,11 +9,6 @@
         "pool_claims": 0,
         "word_assigns": 3
       },
-      "calibration_extraction_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0
-      },
       "can_mailbox_config_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -32,12 +27,6 @@
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 3
-      },
-      "decompiler_triage_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0,
-        "word_assigns": 2
       },
       "dsc_can_arbitration_report.md": {
         "reg_pairs": 0,
@@ -69,11 +58,6 @@
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 9
-      },
-      "free_resources_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0
       },
       "fueling_control_report.md": {
         "reg_pairs": 0,
@@ -109,11 +93,6 @@
         "call_claims": 0,
         "pool_claims": 0
       },
-      "live_tuning_feasibility_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0
-      },
       "load_fueling_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -136,16 +115,37 @@
         "pool_claims": 1,
         "word_assigns": 3
       },
-      "thunk_audit_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 2
-      },
       "uds_mode22_dispatch_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 1
+      },
+      "labeling/calibration_extraction_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "labeling/decompiler_triage_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 2
+      },
+      "labeling/free_resources_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "labeling/live_tuning_feasibility_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "labeling/thunk_audit_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 2
       },
       "README.md": {
         "reg_pairs": 1,

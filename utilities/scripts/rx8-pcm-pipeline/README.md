@@ -28,7 +28,7 @@ steps from the **repo root**.
   utilities/scripts/rx8-pcm-pipeline/rebuild.sh NEW_PROJECT_NAME` — re-exports the
   ROM into `reverse-engineered/`, then runs all annotation/review/validation passes.
 - Label passes: `review_*_labels.py` write `data/labels/60E15120_N3J1E/*_labels.json`
-  + append to `docs/investigations/60E15120_N3J1E/source_review/accepted_*.tsv`;
+  + append to `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_*.tsv`;
   `annotate_source_review.py` / `integrate_reviewed_names.py` apply them to the
   synchronized views (with backups under `docs/investigations/60E15120_N3J1E/backups/`).
 - `refine_comment_merge.py` (runs last, before the validators) canonicalizes the
@@ -36,4 +36,4 @@ steps from the **repo root**.
   `named/firmware_named.c`: one block order in all three views, no duplicate lines,
   and machine-generated cross-ECU/math-units lines dropped when the function's
   `[ADDITIONAL SOURCE REVIEW]` block already states the same fact. Idempotent;
-  stats in `docs/investigations/60E15120_N3J1E/comment_merge/validation.json`.
+  stats in `docs/investigations/60E15120_N3J1E/labeling/comment_merge/validation.json`.

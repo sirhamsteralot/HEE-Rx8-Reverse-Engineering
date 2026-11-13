@@ -9,7 +9,7 @@ The dispatcher's literal pool word at **0x57848** holds the table address; the p
 word at **0x57854** points at the count byte stored immediately after the table
 (`rom[table + count*12] == count`, self-consistent: 0x5f10c + 99*12 = 0x5f5b0, byte 99).
 Record layout cross-checked against all 99 rows of
-[`diagnostic_dispatch_named.tsv`](../../../../data/labels/60E15120_N3J1E/diagnostic_dispatch_named.tsv).
+[`diagnostic_dispatch_named.tsv`](../../../../../data/labels/60E15120_N3J1E/diagnostic_dispatch_named.tsv).
 
 Method (`utilities/scripts/cross_rom_mode22_map.py`, run from the repo root): per
 target ROM the table is located by direct byte-compare at 0x5f10c, else a generic
@@ -18,7 +18,7 @@ filtered by "u32(table_addr) occurs in the ROM" (pool reference); the record cou
 the unique N with `rom[table + N*12] == N` and a u32 reference to that address. All
 handler fields must be even addresses in the code region 0x40–0x6c000. Handlers map
 back to the base ROM by identical address or via
-[`cross_rom_function_matches.tsv`](../../../../data/labels/cross_rom_function_matches.tsv)
+[`cross_rom_function_matches.tsv`](../../../../../data/labels/cross_rom_function_matches.tsv)
 (unique exact bytes — every matched body is re-compared byte-for-byte from the raw
 ROMs in the script, and asserted to equal the base handler of the *same* PID).
 Labels are inherited from the base record of the same PID.
@@ -47,7 +47,7 @@ diag22 scanner's, not a coincidental data word. The sub-PID table (count byte + 
 in all 11 ROMs and carries the identical 36-PID list as the base (0x5f5b2).
 
 Full per-ROM detail incl. SHA-256, count-pool refs and extra/missing PID lists:
-[`cross_rom_mode22_summary.json`](../../../../data/labels/cross_rom_mode22_summary.json).
+[`cross_rom_mode22_summary.json`](../../../../../data/labels/cross_rom_mode22_summary.json).
 
 Two firmware families plus one outlier:
 
@@ -154,7 +154,7 @@ renamed definitions present, names unique/valid/non-colliding, comments untouche
 - `data/labels/cross_rom_mode22_summary.json` — per-ROM locations, pool refs, PID
   diffs, mapping stats, SHA-256.
 
-Related: [uds_mode22_dispatch_report.md](../uds_mode22_dispatch_report.md) (base-ROM
+Related: [uds_mode22_dispatch_report.md](../../uds_mode22_dispatch_report.md) (base-ROM
 table semantics, dispatcher 0x5774c),
 [cross_rom_differential_labeling.md](cross_rom_differential_labeling.md) (function
 byte-matches used here).

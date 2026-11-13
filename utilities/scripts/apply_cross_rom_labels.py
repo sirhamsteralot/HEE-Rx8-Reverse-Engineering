@@ -3,7 +3,7 @@
 export (currently: 60E0G500_N3ZHEC, the only non-base ROM with an export).
 
 Rename sources, all propagated from the base ROM 60E15120_N3J1E by evidence:
-  - docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_function_aliases.tsv
+  - docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_function_aliases.tsv
     rows for the target ROM (unique_exact_bytes function matches; alias inherited
     at the match confidence) — applied as-is (high confidence, plain alias).
   - the Mode 22 cross-ROM map (data/labels/cross_rom_mode22_pid_handlers.tsv):
@@ -46,7 +46,7 @@ ROM_KEY = "dumps/60E0G500_N3ZHEC.bin"  # key in the cross-ROM TSVs
 DEC = ROOT / "reverse-engineered" / "decompiled" / ROM_ID
 INV = ROOT / "docs" / "investigations" / ROM_ID
 LABELS = ROOT / "data" / "labels" / ROM_ID
-ALIASES_TSV = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "cross_ecu" / "cross_rom_function_aliases.tsv"
+ALIASES_TSV = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "cross_ecu" / "cross_rom_function_aliases.tsv"
 MODE22_TSV = ROOT / "data" / "labels" / "cross_rom_mode22_pid_handlers.tsv"
 
 # --- Mode 22 additions not covered by the byte-match alias TSV ---
@@ -216,7 +216,7 @@ write_rows(named / "lookup_aliases.tsv", lookup_rows, lookup_fields)
     "names (see the [CROSS-ROM NAMES APPLIED] header). Provenance:\n"
     "`data/labels/60E0G500_N3ZHEC/cross_rom_renames_applied.tsv`;\n"
     "table aliases: `lookup_aliases.tsv` here. Report:\n"
-    "`docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md`.\n")
+    "`docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_mode22_pid_handlers.md`.\n")
 
 # --- provenance + validation ---
 write_rows(LABELS / "cross_rom_renames_applied.tsv", prov,

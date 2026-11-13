@@ -48,7 +48,7 @@ confirmations and caveats below.
    already-integrated export wiped the generated rows; they were restored
    from `backups/pre_fueling_labels.zip` and the curated merge re-applied
    (486 rows + header). Also fixed a duplicate-header artifact in the three
-   `source_review/accepted_*.tsv` files and made
+   `labeling/source_review/accepted_*.tsv` files and made
    `scripts/review_fueling_labels.py` read with the header consumed
    (matching `review_knock_loop_labels.py`).
 8. **knock_loop_labels.json side effect:** `review_knock_loop_labels_apply.py`
@@ -87,7 +87,7 @@ Every label was re-checked against the raw ROM (`60E15120_N3J1E.bin`) and
   (the C's `< 0xfae2` boundary is the integer-equivalent). Label wording kept.
 - **Descriptors**: 21 table descriptors re-parsed from raw ROM bytes
   (2D `>HBBII`, 3D `>HHIIIB`) — counts, axis pointers, data pointers and type
-  codes all match `cross_ecu/romraider_descriptor_matches.json`. 0x6ac38 parses
+  codes all match `labeling/cross_ecu/romraider_descriptor_matches.json`. 0x6ac38 parses
   as a valid 2D descriptor (n=9, typ=8, axis 0x7844c, data 0x78470) but has no
   def name — candidate label stands.
 - **Diagnostic dispatch**: records at 0x5f10c re-read from ROM — PID 0x0034 ->

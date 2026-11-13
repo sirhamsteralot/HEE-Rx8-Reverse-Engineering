@@ -127,7 +127,7 @@ RAM aliases: `cruise_switch_code` (0xffffbaed), `cruise_output_percent`
 `throttle_position_1_percent` (0xffffa9b4), `throttle_position_2_percent`
 (0xffffa9b8), `cruise_set_speed_kmh` (0xffff866c),
 `cruise_target_speed_kmh` (0xffffbfa4), `cruise_enable_flag` (0xffffcf34).
-Evidence: `source_review/accepted_{function,ram}_aliases.tsv`,
+Evidence: `labeling/source_review/accepted_{function,ram}_aliases.tsv`,
 `data/labels/60E15120_N3J1E/cruise_control_labels.json`,
 [`reviews/cruise_control/`](reviews/cruise_control/README.md).
 
@@ -154,7 +154,7 @@ Evidence: `source_review/accepted_{function,ram}_aliases.tsv`,
 - `reverse-engineered/decompiled/60E15120_N3J1E/functions/0004ca7e_*.c`,
   `0002d83c_*.c`, `0004c828_*.c`, `0002df62_*.c` (symbol renamed in place;
   filenames keep the `FUN_` prefix)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/cruise_control_labels.json`
 - [`reviews/cruise_control/`](reviews/cruise_control/README.md) — dynamic
   validation script + log

@@ -8,7 +8,7 @@ the fuel-split function 0x30b08 and the SSV control 0x2178c in the SH-2E
 emulator (no hardware execution). Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.md); sceptical re-check:
 [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md); validation: `reviews/fueling/validation.json`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410), [intake solenoids](intake_solenoids_report.md) (the split flag `secondary_injectors_active_flag` 0xffffbecd from 0x30b08 is an SSV on-term — §2.1).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](labeling/calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410), [intake solenoids](intake_solenoids_report.md) (the split flag `secondary_injectors_active_flag` 0xffffbecd from 0x30b08 is an SSV on-term — §2.1).
 
 
 ## 1. Executive summary
@@ -36,7 +36,7 @@ loop, and 0.0 on fault/safe-mode conditions.
   final pulse = base map value x enrichment factors x fuel-target multiplier,
   split across the primary/secondary injectors, latency-compensated for
   battery voltage, clamped, and handed to six timer channels.
-- The **primary/secondary split** (0x30b08) only engages the secondary
+- The **primary/secondary split** (0x30b08 `primary_secondary_fuel_split`) only engages the secondary
   injectors above a coolant-dependent RPM threshold (or above 6250 rpm
   outright) **and** when total fuel demand exceeds the primary-only amount —
   and that same "secondaries active" flag (`secondary_injectors_active_flag` 0xffffbecd) also switches the
@@ -66,14 +66,15 @@ fuel_volume_final = FUN_0005c024(bf14) * bed0                          # beb0
 
 # per-injector amounts + pulse times (0x30948, 0x30b08, 0x30f5c, 0x2fea8)
 # 0x30b08 primary/secondary split: becc==0 -> all fuel to primaries (bef4=0), else split by tbl_0x6ab70;
-#          also computes becd/becc flags that gate the split AND feed the SSV (0x2178c) — see §2.1
-bf24 = lookup2d(coolant, tbl_0x6ac74)      # 6250 rpm flat override -> bf36 = rpm >= bf24 (hyst 188)
-bf28 = lookup2d(coolant, tbl_0x6ac60)      # "Secondary Injectors Allowed Threshold" (3000 rpm <= 0C, 0 warm) -> bf37
+#          also computes the split flags that gate the split AND feed the SSV (0x2178c) — see §2.1
+bf24 = lookup2d(coolant, tbl_0x6ac74)      # split_high_rpm_threshold: 6250 rpm flat override -> bf36 = rpm >= bf24 (hyst 188)
+bf28 = lookup2d(coolant, tbl_0x6ac60)      # secondary_allowed_rpm_threshold ("Secondary Injectors Allowed
+                                           #  Threshold", 3000 rpm <= 0C, 0 warm) -> bf37
 bf38 = fuel_volume_final >= (throttle>=60% ? baro_corr(tbl_0x6ab84)*amount_a : amount_a)   # bf39 vs amount_a
 becd = bf36 or (bf37 and bf38)            # secondary_injectors_active_flag 0xffffbecd -> SSV on-term (intake report §2.1)
 becc = bf36 or (bf37 and bf39)            # secondary_split_gate_flag 0xffffbecc -> split gate + open-loop logic 0x1f0c4/0x1fd48
 amounts[6] = temp_mult[3] * flow * 6e7/rpm * tbl_0x6ac4c/360 * {369.472, 475.93} - latency   # 0x30948
-injector_pulse_time be24 = (cranking? be58 : be4c) + latency_primary be40   # PID 0x1410, step 8 us  (0x2fea8)
+injector_pulse_time be24 = (cranking? be58 : be4c) + latency_primary be40   # PID 0x1410, step 8 us
 cranking decay be3c = tbl_0x6bab0(coolant)
 
 # targets
@@ -93,7 +94,7 @@ closed loop: beb8 = filter(clamp((max(bf40, c01c+b0c4) + min(tbl_0x6ac38(ECT), b
 # connector terminals 2M/2J/2G/2D/3A/3D: chip-pin->terminal hop still unresolved (board routing)
 ```
 
-### 2.1 Primary/secondary split (0x30b08) and the SSV link
+### 2.1 Primary/secondary split (0x30b08 `primary_secondary_fuel_split`) and the SSV link
 
 Between `calculate_fuel_amount_per_rotation` (0x30948) and the pulse
 arbitration (0x2fea8), the fuel task 0x20e40 calls 0x30b08, which decides
@@ -101,23 +102,24 @@ whether the **secondary injectors get any fuel at all**:
 
 ```python
 bf24 = lookup2d(coolant, tbl_0x6ac74)   # flat 6250 rpm (u16 cells 0x186a, scale 1) — high-RPM override
-bf36 = rpm >= bf24                      # 188 rpm hysteresis band (0xffffbf36)
+bf36 = rpm >= bf24                      # 188 rpm hysteresis band (high_rpm_override_flag 0xffffbf36)
 bf28 = lookup2d(coolant, tbl_0x6ac60)   # CAL "Secondary Injectors Allowed Threshold - Coolant
                                         #  Temperature Based": 3000 rpm at <= 0 C, 0 above ~20 C
-bf37 = rpm >= bf28                      # hysteresis band (0xffffbf37)
+bf37 = rpm >= bf28                      # hysteresis band (secondary_allowed_rpm_flag 0xffffbf37)
 bf04 = fuel_amount_per_rotation_a (bec8)
 if throttle >= 60: bf04 *= lookup2d(baro, tbl_0x6ab84)   # "Primary Injector Max Baro Correction"
-bf38 = fuel_volume_final (beb0) >= bf04 # WOT-aware gate (0xffffbf38, hyst bf08 = 0.007/0.02)
-bf39 = fuel_volume_final (beb0) >= bec8 # plain gate (0xffffbf39)
-becd = bf36 or (bf37 and bf38)          # 0xffffbecd
-becc = bf36 or (bf37 and bf39)          # 0xffffbecc
+bf38 = fuel_volume_final (beb0) >= bf04 # WOT-aware gate (split_fuel_gate_wot_flag, hyst bf08)
+bf39 = fuel_volume_final (beb0) >= bec8 # plain gate (split_fuel_gate_flag, hyst bf08)
+becd = bf36 or (bf37 and bf38)          # secondary_injectors_active_flag 0xffffbecd
+becc = bf36 or (bf37 and bf39)          # secondary_split_gate_flag 0xffffbecc
 if becc == 0:   all fuel to primaries (bef0 = beb0, bef4 = 0)
 else:           ratio = clamp(lookup2d(rpm, tbl_0x6ab70), 0, 1); secondary share bef4, primary bef0
 ```
 
-0x30f5c then converts the two volumes to pulse times using the injector flow
-ratings (primary 0x43b8bc6a = 250.0, secondary 0x43edf70a = 475.93 cc/min —
-the literal-pool `CAL_Secondary_Injector_Size` scalars at 0x7818c/0x78194).
+0x30f5c `split_pulse_time_output` then converts the two volumes to pulse times
+using the injector flow ratings (primary 0x43b8bc6a = 250.0, secondary
+0x43edf70a = 475.93 cc/min — the literal-pool `CAL_Secondary_Injector_Size`
+scalars at 0x7818c/0x78194).
 
 **Cross-subsystem feed:** `secondary_injectors_active_flag` (0xffffbecd) is read by the SSV solenoid control
 0x2178c as an OR-term in its on-condition, so **the SSV opens whenever the
@@ -138,7 +140,7 @@ the primaries.
 Scalar constants behind the math (not tables - literal-pool float32s, now
 extracted per ROM into `data/maps/<rom-id>/scalars.{json,tsv}` by
 `utilities/scripts/extract_scalars.py`, see
-[calibration extraction section 6a](calibration_extraction_report.md)): the base
+[calibration extraction section 6a](labeling/calibration_extraction_report.md)): the base
 fuel scalar `fuel_load_scale_ffffbed0` = load x **0.07196** (0x3d935fc4 @0x78170,
 ptr 0x30830) multiplying into every fuel-volume request, injector flow rates
 369.472/475.93 cc/min (@0x78184, @0x7818c/0x78194), blend decay 0.0667
@@ -159,7 +161,7 @@ def-matched).
 ## 4. Labeling applied
 
 - 39 functions, 151 RAM locations, 1 lookup table added to
-  `source_review/accepted_*_aliases.tsv`; integrated into all synchronized
+  `labeling/source_review/accepted_*_aliases.tsv`; integrated into all synchronized
   views (per-function files, `decompiled/firmware_decompiled.c`,
   `named/firmware_named.c`, index/callgraph/symbols TSVs,
   `metadata/integrated_names.json`); 234 snapshot-local renames.
@@ -191,7 +193,7 @@ def-matched).
 - `scripts/verify_math_units.py` — pass.
 - Dynamic (SH-2E emulator harness calls to 0x30b08 / 0x2178c, no hardware):
   the 0x30b08 split flags behave as §2.1 states (rpm/coolant/fuel gates) and
-  `DAT_ffffbecd` drives the SSV pin PE7 — log in
+  `secondary_injectors_active_flag` drives the SSV pin PE7 — log in
   [`reviews/intake_solenoids/ssv_secondary_injector_link_log.txt`](reviews/intake_solenoids/ssv_secondary_injector_link_log.txt).
 - Def caveat: logger PID 0x221410 is claimed by both "Injector Pulse Time" and
   "Throttle Pedal Position" in `logger_rx8_defs.xml`; the firmware handler
@@ -212,7 +214,7 @@ modified.
 
 Check any address in `decompiled/firmware_disassembly.asm` (ROM) or
 `decompiled/functions/<address>_*.c` (index: `decompiled/function_index.tsv`);
-alias evidence in `source_review/accepted_*_aliases.tsv` (basis
+alias evidence in `labeling/source_review/accepted_*_aliases.tsv` (basis
 `source_review_fueling`). Full RAM list (150 entries) is in the TSV; core
 entries below.
 
@@ -286,7 +288,7 @@ entries below.
 
 ### 7.3 ROM tables/data and entry points
 
-Descriptors (verified vs `cross_ecu/romraider_descriptor_matches.json` from raw
+Descriptors (verified vs `labeling/cross_ecu/romraider_descriptor_matches.json` from raw
 ROM): 0x69788 MAF Scaling; 0x6ac88 Engine Load Compensation; 0x6aa80/0x6aa64
 Injector Latency Primary/Secondary; 0x6a9a4/c0/dc temp multipliers; 0x6ae28/
 0x6ae3c/0x6ae58/0x6ae74 Warmup family; 0x69e00 OL Changeover; 0x69cac-0x69f44
@@ -423,7 +425,7 @@ off by one record — see the dated note added there).
 
 P3-extracted names for every fueling-relevant descriptor (join of
 `data/maps/60E15120_N3J1E/index.tsv` with
-`cross_ecu/romraider_descriptor_matches.json`):
+`labeling/cross_ecu/romraider_descriptor_matches.json`):
 
 | descriptor | data/maps name | RX8Defs name |
 |------------|---------------|--------------|

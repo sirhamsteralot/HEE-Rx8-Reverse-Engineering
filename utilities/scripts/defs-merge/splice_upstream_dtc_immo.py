@@ -47,7 +47,7 @@ fresh run that changed at least one target).
 Run from the repo root:
   python utilities/scripts/defs-merge/splice_upstream_dtc_immo.py [--dry-run] [FILE ...]
 Writes stats to
-docs/investigations/60E15120_N3J1E/defs-merge/upstream_splice_39d98a0.json
+docs/investigations/60E15120_N3J1E/labeling/defs-merge/upstream_splice_39d98a0.json
 """
 from pathlib import Path
 import copy
@@ -68,7 +68,7 @@ DEFAULT_TARGETS = [
     DEFS_RR / "upstream-rx8defs" / "rx8_defs.xml",
 ]
 UPSTREAM_RR = ROOT / "submodules" / "RX8Defs" / "RomRaider" / "rx8_defs.xml"
-STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "defs-merge" / "upstream_splice_39d98a0.json"
+STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "defs-merge" / "upstream_splice_39d98a0.json"
 TARGET_XMLID = "60E15120"
 
 # upstream d95b0be form per enable/disable suffix

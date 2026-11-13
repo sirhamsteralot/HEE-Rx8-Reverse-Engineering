@@ -12,7 +12,7 @@ the own factory dump in `binaries/dumps/`, every `function_index.tsv` body
 occurrence** in the target ROM (same `unique_exact_bytes` method as
 `data/labels/60E15120_N3J1E/matched_functions.tsv`). Matches inherit the base
 ROM's accepted aliases from
-`source_review/accepted_function_aliases.tsv` at the same confidence.
+`labeling/source_review/accepted_function_aliases.tsv` at the same confidence.
 
 ## Results
 
@@ -34,7 +34,7 @@ Per-ROM (matched functions / propagated aliases of 3,355 base functions):
 | dumps/60E0G500_N3ZHEC.bin (60E0G500/N3ZHEC) | (see summary JSON) | |
 
 Full data: `data/labels/cross_rom_function_matches.tsv` (one row per match) and
-`docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_function_aliases.tsv`
+`docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_function_aliases.tsv`
 (per-ROM target address → alias); summary with per-ROM SHA-256:
 `data/labels/cross_rom_match_summary.json`.
 
