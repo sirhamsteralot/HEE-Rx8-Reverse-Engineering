@@ -16,7 +16,11 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 21–23 and 24–36 — pick up 21 next (items 13–14 closed
+**reopened**: open items 22–23 and 24–36 — pick up 22 next (item 21 closed
+2026-11-13: label-artifact consistency audit — 22 RAM + 26 lookup TSV rows got
+ROM-anchored evidence, 342 evidence-less labels-JSON entries filled from the
+canonical TSVs, 7 stale duplicate alias rows removed, symbols.tsv coverage
+restored, durable `tests/test_label_artifact_consistency.py` added; items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
@@ -45,38 +49,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 21–23, 24–36)
-
-- **C item 21 (open)** — consistency audit of **all** label artifacts applied
-  to date. The ignition-timing follow-up (C item 12, closed — record in this
-  file's git history) found the same cell promoted in one artifact but not the
-  other, evidence-less stub rows, and a reader column naming the consumer
-  instead of the producer. Sweep every alias applied so far and fix the same
-  classes of defect everywhere (counts measured on current main + this
-  branch from the artifacts themselves):
-  - [accepted_ram_aliases.tsv](docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv):
-    470 rows, 22 still with an empty evidence column;
-    [accepted_lookup_aliases.tsv](docs/investigations/60E15120_N3J1E/source_review/accepted_lookup_aliases.tsv):
-    48 rows, 26 empty (`accepted_function_aliases.tsv` is clean: 504/504).
-  - TSV → labels-JSON direction (verify_claims.py only checks JSON → TSV):
-    10 RAM rows (`ffff87b0`, `ffff8900`, `ffffd286`, `ffffd3c0`, `ffffd3c2`,
-    `ffffd458`, `ffffd4e4`, `ffffd5fc`, `ffffd688`, `ffffd930`) and 3 function
-    rows (`0005fd38`, `0005fd3c`, `0005fd4a`) are in the accepted TSVs but in no
-    per-subsystem labels JSON under
-    [data/labels/60E15120_N3J1E/](data/labels/60E15120_N3J1E/).
-  - JSON side: 293 unique RAM addresses and 33 function addresses across the
-    labels JSONs carry an empty/missing `evidence` field.
-  - reader/writer columns: where the column is meant to name the producer,
-    check it does (e.g. 0xffffa5e8 is written by 0x11f00 and read by 0x123da).
-  For each finding: re-verify against the raw ROM/disassembly (AGENTS.md
-  rule 7), then fill the evidence / add the missing counterpart / correct the
-  column in **all** artifacts at once (rule 11), update the subsystem
-  report's memory map if a name changes, and extend the per-subsystem test.
-  Deliver per subsystem (rule 11); run the pipeline validators +
-  `python -m pytest tests/` after each batch. Overlaps discrepancy D12 (the
-  4-field-row parser failure in `annotate_source_review.py`) — fix the rows,
-  not the parser, in this item. symbols.tsv currently covers all 470 RAM TSV
-  rows; keep it that way.
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 22–23, 24–36)
 
 - **C item 22 (open)** — ingest the upstream RX8Defs `39d98a0` changes into the
   reviewed merged 60E15120 def. Upstream `d95b0be` turned the RX8Base
@@ -297,7 +270,6 @@ flash before any read), not the test path.
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
-| D12 | open | `annotate_source_review.py` fails on clean main too: 38 pre-existing 4-field rows in `docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv` (row count verified on main and on the PR #33 head). Noted in PR #33 and deliberately left as-is there (no drive-by fix, AGENTS.md rule 9); fixing the parser/rows is its own work unit |
 | D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 
 The tables above are summaries; the full per-item records (locations, impact,
