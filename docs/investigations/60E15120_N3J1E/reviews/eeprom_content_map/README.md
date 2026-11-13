@@ -77,3 +77,58 @@ pair @0x20..0x63 (34 pairs): (raw, flag) -> value
   semantics open.
 - PLDR/ISR 28-u16 device vs IC420: separate device at the data level; board
   routing unresolved.
+
+## Learned-table per-index semantics (binary-level checks, this session)
+
+Goal: pin which of the 34 chip pairs (0x20–0x63) is which correction.
+
+1. Array-base pool scan (raw ROM, big-endian u32): 0xffff8108 pools at
+   0x27154, 0x27938, 0x27b48, 0x27c78, 0x27fa4, 0x282b8, 0x2850c; 0xffff8548
+   pools at 0x27158, 0x27270, 0x27934, 0x27b44, 0x27c7c, 0x27fa8. Referencing
+   instructions: 0x27034/0x270bc (0x27024 clear / 0x270aa validate),
+   0x27208 (0x271b0), 0x278a4/0x278bc (0x27808), 0x27a68/0x27a70 (0x279d8),
+   0x27bf8/0x27c00 (0x27b8e), 0x27f1c/0x27f20 (0x27eec), 0x281e0 (0x28198),
+   0x2849c (0x28484). value_neg 0xffff8328 / flag_b 0xffff85d0 are computed:
+   u16 pools 0x27d3e = 0x0220, 0x27d40 = 0x0088, 0x284f6 = 0x0220.
+2. Cell index 0x2711a: tbl descriptor pool 0x2716c = 0x0006a694; load
+   thresholds float pools 0x755a4 = 0.4, 0x755a8 = 0.65, 0x755ac = 3.0;
+   band offsets `mov #0x11/#0x22/#0x33` (0x2718a/0x2719c/0x2719e), add fn
+   pool 0x2724c = 0x2460; dest DAT_ffffb6c4 pool 0x27152. Branch direction
+   verified against `fcmp/gt` semantics: load < 0.4 → +0, < 0.65 → +0x11,
+   < 3.0 → +0x22, else +0x33.
+3. Axis descriptors dumped from ROM: 0x6a694 = {count 17, type 0, axis
+   0x755dc, data 0x75620}; 0x6a6a0 = {count 17, type 0, axis 0x75644, data
+   0x75688}. Axis 0x755dc = f32 0, 1125, 1750, …, 8750; data 0x75620 = u16
+   identity 0..16; axis 0x75644 = f32 0..16; data 0x75688 = f32 750, 1500,
+   …, 9000.
+4. Consumers (callgraph.tsv): 0x287aa (per-tick fuel/load update, from
+   handler 0x11c98) calls 0x2711a/0x271b0/0x28198/0x276ec/0x2837c;
+   0x288be (key-off) calls 0x27b8e/0x27808/0x27d06; 0x28198 → 0x28484;
+   0x27808 → 0x27eec; 0x2897e → 0x27024; 0x28992 → 0x270aa.
+5. 0x276ec pools: 0xffffb548 (rpm), 0xffffb6c4 (cell), 0xffffb660 (parity),
+   0xffffba2c (learn value), 0xffffb8f0 (cell breakpoint), 0xffffb8f4
+   (counter), 0xffffb6cc (live value), 0x277f4 = 0x2460 (add), float pool
+   0x755d0 = 100.0 (RPM gate), 0x755d4 = 0.031 (filter k), 0x277fc = 1e-5.
+6. 0x27808: tick DAT_ffffba04 pool 0x2791c (init 0xb), loop `mov #0x44`
+   cells × `mov #0x2` banks, counter array 0xffffb8f4 pool 0x27928, live
+   value 0xffffb6cc pool 0x2792c, flag base 0xffff8548 pool 0x27934, value
+   base 0xffff8108 pool 0x27938, filter 0x3db54 pool 0x27940 / writes 0x3dcd0
+   (0x27944) + 0x3dc70 (0x27948); tail loop `mov #0x8` cells with bitmask
+   u16 pool 0x27a20 = 0x0007 shifted by FUN_000043c8 (pool 0x27a24) →
+   0x27eec called for cells 0..2.
+7. 0x27eec: `mov #0x3` inner / `mov #0x2` bank loops, stride `mov #0x11`
+   (0x27f42) via 0x2478 (pool 0x27fac); bases pools 0x27fa4 = 0xffff8108,
+   0x27fa8 = 0xffff8548.
+8. Chip-shadow 0x20–0x63 writers (callgraph.tsv over 0x37cd8/0x37ea4/0x37ef0/
+   0x378dc callers): only 0x27b8e (bulk 0x20,0x44 + 0x22 cached reads),
+   0x279d8 (shadow_byte_write 0x20+2i ×0x22, flush 0x20,0x44,3),
+   0x27d06 (erase (0.0,0) pairs after 0x14 counts at engine stop). UDS 0x3B
+   write table DAT_0005f6dd targets 0x80/0x64/0x68/0x6a/0x6c/0x6e/0xff/0xa0 —
+   never 0x20–0x63. So the 34 pairs are firmware save/erase only.
+9. Knock learned retard is NOT in this table: `knock_retard_learn_to_eeprom`
+   0x139c4 writes the 8-byte E2-window cell 0xffff8038 via
+   ref_updateMemoryAtAddress_float (0x3dcd0) — a RAM window cell, not a chip
+   pair; window cells are validated/reset by 0x3e020, not chip-loaded.
+10. Dump diff re-run: RX8 vs SE3P differ at 0x20–0x5f, 0x60, 0x62 (learned
+    table values/flags) plus the known per-ECU fields; SE3P 0x20–0x63 all
+    `ff 00` (erased). Per-pair RX8 decode in the report §3a table.

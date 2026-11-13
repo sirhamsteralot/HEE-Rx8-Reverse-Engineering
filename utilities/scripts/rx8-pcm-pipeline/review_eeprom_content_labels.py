@@ -46,6 +46,26 @@ FUNCTIONS = [
      "If *(u16*)0xffff8000 == 0xaa55 (pool 0xd4f4) -> DAT_ffffa3fb = 1 (pool 0xd4ec); if set, call 0x9f4c -> 0x6360 -> 0x11492 (validate via 0x3e020, pool 0x11674); if ==1 write 0x55aa (pool 0xd4ea) to 0xffff8000 (pool 0xd4f0) and jmp 0x9f58 -> 0xabfa. Called from 0x6372 (pool 0x63e8) <- ref_getSensorStuff__ 0x60c8."),
     ("0000d44c", "eeprom_mirror_magic_init", "high",
      "If DAT_ffffa3fb == 1 call 0x9f52 -> 0x6366 -> 0x113b8 (init fan-out); then write 0xaa55 (pool 0xd4f4) to 0xffff8000 (pool 0xd4f0). Called from ref_mainInit__ 0x61a8 (pool 0x6288)."),
+    ("00027024", "e2ram_learned_table_clear", "high",
+     "Clears 2 rotor banks x 0x44 cells: float 0 -> 0xffff8108+8i+bank*0x220 (pool 0x27154) and flag 0 -> 0xffff8548+2i+bank*0x88 (pool 0x27158) via ref_updateMemoryAtAddress_*, plus DAT_ffff8658/865a/865c. Called from 0x2897e."),
+    ("000270aa", "e2ram_learned_table_validate", "high",
+     "Checksum-validates the same 2 banks x 0x44 learned-table cells via ref_validateAddressCopy_float/8bit (pools 0x27154/0x27158). Called from 0x28992 (validate fan-out 0x3e020)."),
+    ("0002711a", "e2ram_learned_table_cell_index", "high",
+     "DAT_ffffb6c4 = rx8_lookup_2d_raw_u16(engine_speed_rpm_ffffb548, tbl 0x6a694 [17 cells, RPM axis 0x755dc = 0,1125,1750,...,8750, identity u16 data 0x75620]) + 17*load_band; load bands from engine_load_ffffc0b4 vs 0.4/0.65/3.0 (float pools 0x755a4/0x755a8/0x755ac): <0.4 -> +0, <0.65 -> +0x11, <3.0 -> +0x22, else +0x33 (rx8_add_u16_saturate 0x2460, pool 0x2724c). Cell = rpm_cell(0..16) + 17*load_band(0..3). Called from 0x287aa."),
+    ("000271b0", "e2ram_learned_table_learn_gate", "high",
+     "rpm_cell = DAT_ffffb6c4 mod 17 (div FUN_00003fe8, pool 0x27258); DAT_ffffb8f0 = lookup_2d_descriptor_scaled(rpm_cell, tbl 0x6a6a0 [axis 0x75644 = 0..16, data 0x75688 = RPM breakpoints 750..9000]) = cell RPM breakpoint; reads flag_a + (cell-1)*2 / cell*2 / (cell+1)*2 + (DAT_ffffb660&1)*0x88 (pool 0x27270 = 0xffff8548) and sets DAT_ffffb6c6 = 1 only if the cell flag is set and a learned neighbour cell covers the current RPM (DAT_ffffb8f0). Called from 0x287aa."),
+    ("000276ec", "e2ram_learned_table_cell_learn", "high",
+     "If DAT_ffffba04!=0 && DAT_ffffba06==0 && DAT_ffffb8f0-100.0 <= engine_speed_rpm_ffffb548 < DAT_ffffb8f0+100.0 (100.0 = float pool 0x755d0): bumps counter DAT_ffffb8f4[bank*0x44+cell] (pool 0x277f0) and stores DAT_ffffba2c into live cell DAT_ffffb6cc[bank*0x44+cell] (pool 0x277f8), first time directly, later via rx8_first_order_filter k=0.031 (pool 0x755d4), eps 1e-5 (pool 0x277fc); bank = DAT_ffffb660&1, cell = DAT_ffffb6c4. Called from 0x287aa."),
+    ("00027808", "e2ram_learned_table_ram_persist", "high",
+     "Every 0xb ticks (DAT_ffffba04, pool 0x2791c): for 2 banks x 0x44 cells, if counter DAT_ffffb8f4[bank*0x44+cell] (pool 0x27928) > 0x1d: flag==0 -> copy live float DAT_ffffb6cc (pool 0x2792c) into value cell 0xffff8108+cell*8+bank*0x220 (pool 0x27938) and set flag 0xffff8548+cell*2+bank*0x88 = 1 (pool 0x27934); else filter the stored value toward the live one (rx8_first_order_filter 0x3db54, k=0.125, eps 1e-5 pool 0x27930). Then calls 0x27eec for cells 0..2 ((0x7>>cell)&1, pool 0x27a20). Called from 0x288be."),
+    ("00027eec", "e2ram_learned_table_flag_mirror", "medium",
+     "For bank 0..1 (mov #0x2 loop) and j 0..2 (mov #0x3 loop): copies the 2-byte flag cell at flag_a+param*0x88+param*2 to flag_a+param*0x88+(param+0x11*(j+1))*2 (bases pools 0x27fa4 = 0xffff8108 / 0x27fa8 = 0xffff8548, stride 0x11 via rx8_add_u8_saturate 0x2478 pool 0x27fac); mirrors learned flags from cell p to p+0x11/+0x22/+0x33 within each rotor bank. Called from 0x27808."),
+    ("00028198", "e2ram_learned_table_apply", "high",
+     "Reads the learned value for cell DAT_ffffb6c4: 0xffff8108+cell*8 (pool 0x282b8) when DAT_ffffb660&1==0, else +0x220 (value_neg 0xffff8328) -> DAT_ffffba64+4*parity; interpolates between adjacent RPM cells via 0x28484 using the tbl 0x6a6a0 axis/data arrays; computes DAT_ffffba2c = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664 (sector-speed ring copies from 0x26940) and DAT_ffffba30 = DAT_ffffba2c - learned_value. Called from 0x287aa."),
+    ("00028484", "e2ram_learned_table_cell_read", "high",
+     "Fetches two neighbouring learned floats: base 0xffff8108 (pool 0x2850c) + bank*0x220 (mov.w pool 0x284f6) + cell*8, via ref_readValue_float_DEFAULTVAL_ADDRESS 0x3dc22 (pool 0x28508); returns them for RPM interpolation. Called from 0x28198."),
+    ("0002837c", "e2ram_learned_table_correction_filter", "medium",
+     "Per rotor bank (DAT_ffffb660&1): if DAT_ffffb6c6==1, filters DAT_ffffba30 into DAT_ffffba34 / 0xffffba38 (rx8_first_order_filter k=0.125, eps 1e-5), else 0; DAT_ffffba3c = bank value, DAT_ffffba40 = max(0, DAT_ffffba3c). Called from 0x287aa."),
 ]
 
 RAM = [
@@ -60,9 +80,44 @@ RAM = [
      "Learned-table flag bytes (chip 0x21+2i, 0xff->0) from 0x27b8e."),
     ("ffff85d0", "e2ram_learned_table_flag_b", "uint8[136]", "00027b8e",
      "Second flag array (0xffff8548+0x88), written by 0x27b8e/0x27024."),
+    ("ffffb6c4", "e2ram_learned_table_cell_index", "uint16", "0002711a",
+     "Current learned-table cell = rpm_cell(0..16) + 17*load_band(0..3), computed by 0x2711a from engine_speed_rpm_ffffb548 (tbl 0x6a694) and engine_load_ffffc0b4 (bands 0.4/0.65/3.0). Consumed by 0x271b0/0x276ec/0x28198."),
+    ("ffffb660", "sector_parity_bank", "uint16", "00026982",
+     "DAT_ffffb660 = DAT_ffffa3b0 = ATUII sector index 0..5 (set in the CMI10B sector ISR); &1 selects the rotor bank in the learned table (0x271b0/0x276ec/0x28198): bank 0 reads value_pos 0xffff8108, bank 1 reads value_neg 0xffff8328."),
+    ("ffffb6cc", "e2ram_learned_table_live_value", "float[2][68]", "000276ec",
+     "Live (RAM-only) learned values per rotor bank x cell, written by 0x276ec from DAT_ffffba2c when |rpm - cell breakpoint| <= 100; copied into the chip-backed cells by 0x27808 once counter DAT_ffffb8f4 > 0x1d."),
+    ("ffffb8f4", "e2ram_learned_table_live_counter", "uint16[2][68]", "000276ec",
+     "Per bank x cell learn counters bumped by 0x276ec; 0x27808 persists the live cell into the learned table when the counter exceeds 0x1d."),
+    ("ffffba2c", "e2ram_learned_correction_value", "float", "00028198",
+     "Learn value computed by 0x28198 = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664, a sector-speed-ring deviation term (ring 0xffffa390..0xffffa3ac copied by 0x26940); learned into the table cell by 0x276ec."),
 ]
 
 LOOKUP = []
+
+# Per-index meaning of the 34 chip pairs 0x20-0x63 (pair i = value byte 0x20+2i,
+# flag byte 0x21+2i). Index = rpm_cell + 17*load_band; only load bands 0-1
+# (cells 0..33) are persisted to the chip; bands 2-3 (cells 34..67) are RAM-only.
+# RPM breakpoints from tbl 0x6a6a0 data array 0x75688 (750..9000 step 500);
+# load thresholds from float pools 0x755a4/0x755a8/0x755ac (0.4/0.65/3.0).
+LOAD_BANDS = [("< 0.4", 0x00), ("0.4 - 0.65", 0x11), ("0.65 - 3.0", 0x22), (">= 3.0", 0x33)]
+# RPM breakpoints of the 17 cells, tbl 0x6a6a0 data array 0x75688 (ROM-verified)
+RPM_BP = [750, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500,
+          6000, 6500, 7000, 7500, 8000, 8500, 9000]
+PAIRS = [
+    {
+        "index": i,
+        "chip": "0x%02x-0x%02x" % (0x20 + 2 * i, 0x21 + 2 * i),
+        "rpm_cell": i % 17,
+        "rpm_breakpoint": RPM_BP[i % 17],
+        "load_band": i // 17,
+        "load_range": LOAD_BANDS[i // 17][0],
+        "value_ram_pos": "0xffff8108+0x%x" % (8 * i),
+        "value_ram_neg": "0xffff8328+0x%x" % (8 * i),
+        "flag_ram": "0xffff8548+0x%x / 0xffff85d0+0x%x" % (2 * i, 2 * i),
+        "meaning": "learned correction, RPM cell %d (%d rpm breakpoint), load band %d (%s); +value applied to even sectors (DAT_ffffb660&1==0), -value to odd sectors" % (i % 17, RPM_BP[i % 17], i // 17, LOAD_BANDS[i // 17][0]),
+    }
+    for i in range(34)
+]
 
 # chip-offset map (93C56 byte offsets), recorded in the labels JSON
 OFFSETS = {
@@ -192,6 +247,12 @@ def main():
         'eeprom_offsets': {k: {'alias': v[0], 'evidence': v[1]} for k, v in OFFSETS.items()},
         'function_aliases': {a: {'alias': al, 'confidence': c, 'evidence': ev} for a, al, c, ev in FUNCTIONS},
         'ram_aliases': {a: {'alias': al, 'type': t, 'reader': r, 'evidence': ev} for a, al, t, r, ev in RAM},
+        'learned_table_pairs': {
+            'format': '34 x (u8 value, u8 flag) at chip 0x20-0x63; value = -63 + raw*0.5; flag 0xff -> 0 (not learned), 1 = learned',
+            'index': 'cell = rpm_cell + 17*load_band; rpm_cell = lookup(engine_speed_rpm, tbl 0x6a694) 0..16; load_band from engine_load: <0.4 -> 0, <0.65 -> 1, <3.0 -> 2, else 3 (0x2711a); only bands 0-1 (pairs 0..33) are chip-persisted, bands 2-3 live in RAM cells 34..67 only',
+            'rotor': 'pair i feeds both rotor banks: +value at 0xffff8108+8i (even sector parity, DAT_ffffb660&1==0) and -value at 0xffff8328+8i (odd parity); flags at 0xffff8548+2i and 0xffff85d0+2i (0x27b8e load / 0x279d8 save)',
+            'pairs': PAIRS,
+        },
         'rom_unchanged': True,
         'ghidra_database_updated': False,
     }

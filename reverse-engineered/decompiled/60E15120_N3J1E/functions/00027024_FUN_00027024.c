@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000279a0 (106 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00027024(void)
+void e2ram_learned_table_clear(void)
 
 {
   byte bVar1;

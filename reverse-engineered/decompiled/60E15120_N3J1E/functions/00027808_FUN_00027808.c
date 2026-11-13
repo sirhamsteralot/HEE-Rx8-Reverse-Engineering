@@ -1,6 +1,6 @@
 /* ROM address: 0x00027808; body bytes: 412; decompiled */
 
-uint FUN_00027808(void)
+uint e2ram_learned_table_ram_persist(void)
 
 {
   char cVar2;
@@ -26,8 +26,8 @@ uint FUN_00027808(void)
     fVar16 = 0.0;
     if (DAT_ffffba09 == '\x01') {
       bVar12 = 0;
-      puVar13 = &DAT_ffffb8f4;
-      puVar7 = &DAT_ffffb6cc;
+      puVar13 = &e2ram_learned_table_live_counter_ffffb8f4;
+      puVar7 = &e2ram_learned_table_live_value_ffffb6cc;
       do {
         bVar6 = 0;
         puVar3 = puVar13;
@@ -51,13 +51,13 @@ uint FUN_00027808(void)
       do {
         bVar6 = 0;
         uVar14 = (uint)bVar12;
-        pfVar4 = (float *)(&DAT_ffffb6cc + (uint)bVar12 * 0x44);
+        pfVar4 = (float *)(&e2ram_learned_table_live_value_ffffb6cc + (uint)bVar12 * 0x44);
         pfVar8 = pfVar4;
-        puVar13 = &DAT_ffffb8f4 + uVar14 * 0x44;
+        puVar13 = &e2ram_learned_table_live_counter_ffffb8f4 + uVar14 * 0x44;
         pfVar9 = pfVar4;
         do {
           iVar10 = (uint)bVar6 * 2;
-          if (0x1d < (ushort)(&DAT_ffffb8f4 + uVar14 * 0x44)[bVar6]) {
+          if (0x1d < (ushort)(&e2ram_learned_table_live_counter_ffffb8f4 + uVar14 * 0x44)[bVar6]) {
             cVar2 = ref_readValue_8bit_ADDRESS_VAL(&e2ram_learned_table_flag_a_ffff8548 + iVar10 + uVar14 * 0x88,0);
             if (cVar2 == '\0') {
               ref_updateMemoryAtAddress_float_VAL_ADDR

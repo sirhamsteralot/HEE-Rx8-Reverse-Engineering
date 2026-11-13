@@ -2772,7 +2772,7 @@ caller	callee	callee_name
 00027808	000023b0	rx8_first_order_filter
 00027808	0003db54	ref_readValue_8bit_ADDRESS_VAL
 00027808	000043c8	FUN_000043c8
-00027808	00027eec	FUN_00027eec
+00027808	00027eec	candidate_e2ram_learned_table_flag_mirror
 000279d8	0003dc22	ref_readValue_float_DEFAULTVAL_ADDRESS
 000279d8	0003dc70	ref_updateMemoryAtAddress_8bit_ADDR_VAL
 000279d8	00037ea4	e2ram_shadow_byte_write
@@ -2796,7 +2796,7 @@ caller	callee	callee_name
 00027fb4	00002068	lookup_2d_descriptor_scaled
 00028118	00002460	rx8_add_u16_saturate
 00028118	000023e4	rx8_max_float
-00028198	00028484	FUN_00028484
+00028198	00028484	e2ram_learned_table_cell_read
 00028198	0003dc22	ref_readValue_float_DEFAULTVAL_ADDRESS
 00028198	00002460	rx8_add_u16_saturate
 00028198	00002440	rx8_is_outside_tolerance_band
@@ -2832,7 +2832,7 @@ caller	callee	callee_name
 000287aa	00026d70	FUN_00026d70
 000287aa	00044b16	FUN_00044b16
 000287aa	00028648	FUN_00028648
-000287aa	0002837c	FUN_0002837c
+000287aa	0002837c	candidate_e2ram_learned_table_correction_filter
 000287aa	00027fb4	FUN_00027fb4
 000287aa	0002853c	FUN_0002853c
 000287aa	00028022	FUN_00028022
@@ -2853,8 +2853,8 @@ caller	callee	callee_name
 000287aa	000445ba	FUN_000445ba
 000287aa	00027520	FUN_00027520
 000287aa	00026a42	FUN_00026a42
-000287aa	0002711a	FUN_0002711a
-000287aa	00028198	FUN_00028198
+000287aa	0002711a	e2ram_learned_table_cell_index
+000287aa	00028198	e2ram_learned_table_apply
 000287aa	00026940	FUN_00026940
 000287aa	00026d04	FUN_00026d04
 000287aa	000280be	FUN_000280be
@@ -2865,11 +2865,11 @@ caller	callee	callee_name
 000287aa	00003920	sh_raise_interrupt_mask_return_previous
 000287aa	00026bda	FUN_00026bda
 000287aa	0004441e	FUN_0004441e
-000287aa	000276ec	FUN_000276ec
+000287aa	000276ec	e2ram_learned_table_cell_learn
 000287aa	00044b46	FUN_00044b46
-000287aa	000271b0	FUN_000271b0
+000287aa	000271b0	e2ram_learned_table_learn_gate
 000287aa	0004499c	FUN_0004499c
-000288be	00027808	FUN_00027808
+000288be	00027808	e2ram_learned_table_ram_persist
 000288be	00003934	ref_setSR
 000288be	0002698e	FUN_0002698e
 000288be	000279d8	e2ram_learned_table_save
@@ -2898,8 +2898,8 @@ caller	callee	callee_name
 00028966	00027444	FUN_00027444
 0002897e	0002708e	FUN_0002708e
 0002897e	00027096	FUN_00027096
-0002897e	00027024	FUN_00027024
-00028992	000270aa	FUN_000270aa
+0002897e	00027024	e2ram_learned_table_clear
+00028992	000270aa	e2ram_learned_table_validate
 00028b10	00002460	rx8_add_u16_saturate
 00028b50	00002460	rx8_add_u16_saturate
 00028bb2	00028be4	ref_can420TXPack

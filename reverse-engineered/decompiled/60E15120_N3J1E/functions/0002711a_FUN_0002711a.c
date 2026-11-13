@@ -33,7 +33,7 @@ void FUN_0002711a(void)
       uVar2 = rx8_add_u16_saturate(uVar1,0x11);
     }
   }
-  DAT_ffffb6c4 = uVar2;
+  e2ram_learned_table_cell_index_ffffb6c4 = uVar2;
   return;
 }
 

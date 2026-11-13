@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0007_ltft_bank1_pct [high]: dispatch record 0x5f154 -> handler verified in ROM bytes + function_index; 0x55466: DAT_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula
+ * diag22_pid0007_ltft_bank1_pct [high]: dispatch record 0x5f154 -> handler verified in ROM bytes + function_index; 0x55466: inferred_ltft_bank1_ffffb0d0_ffffb0d0*100*0.78125-100; OBD PID 07 trim formula
  */
 /* ROM address: 0x0005696c; body bytes: 22; decompiled */
 

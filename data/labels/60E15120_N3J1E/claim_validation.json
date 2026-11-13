@@ -63,7 +63,7 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0,
-        "word_assigns": 12
+        "word_assigns": 15
       },
       "fueling_control_report.md": {
         "reg_pairs": 0,
@@ -203,7 +203,7 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0,
-        "word_assigns": 9
+        "word_assigns": 18
       },
       "reviews/fueling/README.md": {
         "reg_pairs": 0,
@@ -246,11 +246,11 @@
         "reg_pairs": 37,
         "call_claims": 7,
         "pool_claims": 15,
-        "word_assigns": 168,
+        "word_assigns": 171,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 563,
+    "tsv_rows": 573,
     "labels_json_checked": 22
   },
   "notes": [],
