@@ -36,10 +36,10 @@ void FUN_00028198(void)
   if ((engine_speed_rpm_ffffb548 < 750.0) || (9000.0 <= engine_speed_rpm_ffffb548)) {
     if (uVar2 == 0) {
       _DAT_ffffba64 =
-           ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8108 + (uint)DAT_ffffb6c4 * 8);
+           ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_pos_ffff8108 + (uint)DAT_ffffb6c4 * 8);
     }
     else {
-      uVar10 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&DAT_ffff8328 + (uint)DAT_ffffb6c4 * 8);
+      uVar10 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_neg_ffff8328 + (uint)DAT_ffffb6c4 * 8);
       *(undefined4 *)(&DAT_ffffba64 + iVar6) = uVar10;
     }
   }

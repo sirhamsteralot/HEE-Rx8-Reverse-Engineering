@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_immo_key_read [high]: Reads device words 0x6010000-0x6040000 (chip 0x02-0x09, 8-byte immo key), 0x60b0000/0x60c0000 (0x16-0x19 immo code), 0x6050000 (0x0a-0x0b status) via e2ram_read_word 0xbdfa under mask 0x10 with 0xbed8 busy checks; all-0x00/all-0xff patterns -> erased flags 0xffffc1d5-0xffffc1d8; gated by ref_securityNotUnlocked(1) and DAT_ffffd1ce. Called from 0x34a04 (boot, near ref_ImmoSomethingOrOther__ 0x349e4).
+ */
 /* ROM address: 0x000375c0; body bytes: 684; decompiled */
 
-undefined1 * FUN_000375c0(void)
+undefined1 * e2ram_immo_key_read(void)
 
 {
   char extraout_var;

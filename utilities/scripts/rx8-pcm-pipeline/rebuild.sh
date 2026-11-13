@@ -34,6 +34,7 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 (cd "$root" && python3 "$base/scripts/review_fuel_split_labels.py")
 (cd "$root" && python3 "$base/scripts/review_intake_labels.py")
 (cd "$root" && python3 "$base/scripts/review_e2ram_labels.py")
+(cd "$root" && python3 "$base/scripts/review_eeprom_content_labels.py")
 (cd "$root" && python3 "$base/scripts/review_fan_control_labels.py")
 (cd "$root" && python3 "$base/scripts/review_alternator_labels.py")
 (cd "$root" && python3 "$base/scripts/review_idle_control_labels.py")

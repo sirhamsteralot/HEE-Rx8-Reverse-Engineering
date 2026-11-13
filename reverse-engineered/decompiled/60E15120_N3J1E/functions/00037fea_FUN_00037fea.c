@@ -14,7 +14,7 @@ void FUN_00037fea(void)
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   if (DAT_ffffc49e == '\x01') {
-    DAT_ffffc49e = FUN_000378dc(0,0xff,4);
+    DAT_ffffc49e = e2ram_flush_request(0,0xff,4);
   }
   DAT_ffffc49d = 0;
   ref_setSR(uVar1);

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): 
+ * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): CAN TX buffer; descriptor 0x4e00c (id 0x7e8, mb 15, DLC 8) holds buf=0xffffddd0 at ROM 0x4e014; mov.l pool 0x682b0 in 0x681ba and pool 0x688e8 in 0x68776-0x68868 (ISO-TP TX); written via ref_txCAN_EventBased 0x99b0.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

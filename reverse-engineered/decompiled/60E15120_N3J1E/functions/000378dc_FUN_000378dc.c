@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_flush_request [high]: Sets up a shadow->chip flush: DAT_ffffc48e = start>>1, DAT_ffffc490 = end word, mode in DAT_ffffc49c (1: read-verify 0xffffc288/0xffffc28b, 2: 0xffffc289/0xffffc28c, 3: 0xffffc28a/0xffffc28d), DAT_ffffc496 = start byte, DAT_ffffc4a1 = busy. Processed by the state machine 0x379e4 (called from 0x38082). Callers incl. 0x279d8 (0x20,0x44,3), 0x5e8a4 (0x78,2).
+ */
 /* ROM address: 0x000378dc; body bytes: 202; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00037ffc (202 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_000378dc(ushort param_1,byte param_2,char param_3)
+undefined4 e2ram_flush_request(ushort param_1,byte param_2,char param_3)
 
 {
   undefined4 uVar1;

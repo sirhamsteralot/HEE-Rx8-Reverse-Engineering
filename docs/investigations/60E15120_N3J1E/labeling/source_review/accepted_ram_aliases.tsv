@@ -502,3 +502,8 @@ ffffbef0	fuel_volume_primary_split	float	00030b08	Primary-side fuel volume after
 ffffbef4	fuel_volume_secondary_split	float	00030b08	Secondary-side fuel volume from the 0x30b08 split (0 when becc==0); converted to pulse time in 0x30f5c (x6e7 / 475.93).
 ffffbef8	primary_secondary_split_ratio	float	00030b08	Ratio lookup_2d_descriptor_scaled(rpm, tbl 0x6ab70) clamped to [0,1] in 0x30b08; used to split beb0 into bef0/bef4 when becc==1.
 ffffbefc	fuel_volume_secondary_amount	float	00030b08	befc = bef8 * beb0, the uncapped secondary amount in 0x30b08 (capped against bec8/bedc when computing bef4).
+ffff8000	eeprom_mirror_magic	uint16	0000d408	Firmware-written magic of the E2 window 0xffff8000-0xffff80ff: 0xd44c writes 0xaa55, 0xd408 checks it and rewrites 0x55aa (pools 0xd4f4/0xd4ea, base 0xd4f0). Window holds 8-byte checksummed cells (float +0, u16 cksum +4/+6 = ~(lo16+hi16)) via 0x3dc22/0x3dcd0; 241 pc-relative literal refs land in 0xffff8000-0xffff80ff.
+ffff8108	e2ram_learned_table_value_pos	float[68]	00027b8e	Learned-table decoded float cells (+value = -63 + raw*0.5) from chip pairs 0x20+2i, written by 0x27b8e/0x279d8; cleared in 2x0x44 pattern by 0x27024.
+ffff8328	e2ram_learned_table_value_neg	float[68]	00027b8e	Negated copies of the learned-table floats (0xffff8108 mirrored at -value), written by 0x27b8e.
+ffff8548	e2ram_learned_table_flag_a	uint8[136]	00027b8e	Learned-table flag bytes (chip 0x21+2i, 0xff->0) from 0x27b8e.
+ffff85d0	e2ram_learned_table_flag_b	uint8[136]	00027b8e	Second flag array (0xffff8548+0x88), written by 0x27b8e/0x27024.

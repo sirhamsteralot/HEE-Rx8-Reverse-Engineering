@@ -166,6 +166,21 @@ TX/RX, CS on `PFDR_W` 0xfffff74e bit 0x400, busy on `PBDR_W` 0xfffff738 bit
 0x800; device addresses 0x6000000 + page*0x10000). 15 functions, 3 RAM cells.
 Write-up: [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md) +
 `reviews/e2ram_device_layer/`; record: `metadata/e2ram_device_labels.json`.
+
+## 93C56 EEPROM content map
+
+The full 256 B of the external 93C56 (IC420) are mapped against the upstream
+dumps (`Data_binaries/RX8_93c56_ECU_IC420_Read.bin` + the Mazda 3
+`se3p_ecm_eeprom.bin` cross-reference): immo key 0x02–0x09 + code 0x16–0x19
+(0x375c0), param block 0x00–0x1f (0x3599c/0x35956), learned-correction table
+0x20–0x63 (0x27b8e/0x279d8, value = −63 + raw*0.5), ECU ID string 0x64–0x6d
+(0x55b18), VIN 0x80–0x90 (UDS dump 0x5b5d4), tire marker 0x95 + tire revs
+0x9a–0x9b (0x543e4/0x5de74), config bit 0x9f; the RAM side splits into the
+shadow 0xffffc28e, the param block 0xffffc268 and the checksummed E2 window
+0xffff8000–0xffff80ff (magic 0xd408/0xd44c).
+Write-up: [`eeprom_content_map_report.md`](eeprom_content_map_report.md) +
+`reviews/eeprom_content_map/`; record: `metadata/eeprom_content_labels.json`;
+checks: `tests/test_eeprom_content_map.py`.
 ## Cooling fan control labeling
 
 `scripts/review_fan_control_labels.py` labels the fan chain: task wrapper

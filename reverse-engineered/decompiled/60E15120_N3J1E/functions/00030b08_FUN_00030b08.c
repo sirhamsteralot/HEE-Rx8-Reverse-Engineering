@@ -1,3 +1,26 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * primary_secondary_fuel_split [high]: Computes the primary/secondary split in the fuel task 0x20e40 (called between 0x30948 calculate_fuel_amount_per_rotation and 0x30f5c): rpm gates bf36/bf37 from coolant lookups tbl 0x6ac74 (flat 6250) / tbl 0x6ac60 (Secondary Injectors Allowed Threshold), fuel gates bf38/bf39 vs bec8/beb0 (WOT baro correction tbl 0x6ab84), then becd/becc flags and split volumes bef0/bef4/bef8/befc by ratio tbl 0x6ab70 when becc==1. becd is OR-ed into the SSV on-condition by 0x2178c; becc is read by open-loop logic 0x1f0c4/0x1fd48. Dynamically verified in the SH-2E emulator: docs/investigations/60E15120_N3J1E/reviews/intake_solenoids/ssv_secondary_injector_link.py.
+ * RAM 0xffffbecc secondary_split_gate_flag (uint8): becc = bf36 || (bf37 && bf39), computed in 0x30b08: 0 => all fuel to primaries (bef0=beb0, bef4=0), 1 => split by ratio tbl 0x6ab70; also read by open-loop request logic 0x1f0c4/0x1fd48 (b1db/b1da latches). Emulator-verified: set above the rpm/coolant gate with fuel demand, clear below (ssv_secondary_injector_link_log.txt).
+ * RAM 0xffffbecd secondary_injectors_active_flag (uint8): becd = bf36 || (bf37 && bf38) in 0x30b08 (bf38 uses the WOT baro-corrected fuel gate); OR-ed into the SSV on-condition by 0x2178c (mov.w pool word 0xbecd at ROM 0x2188a). Emulator: becd=1 drives PEDR_W PE7 high with engine running and even at 250 C coolant.
+ * RAM 0xffffbece primary_split_sufficient_flag (uint8): bece = (bef0 >= bec8) && !(becd && !becc) with 0.005 hysteresis, in 0x30b08; read by 0x30f5c to choose the all-primary pulse path when 0.
+ * RAM 0xffffbf08 split_fuel_gate_hysteresis (float): Hysteresis band for the bf38/bf39 fuel gates in 0x30b08: 0.007 when coolant >= 40 C, else 0.02 (inline float compares); 32-bit pool value present in ROM.
+ * RAM 0xffffbf0c secondary_split_on_delay_counter (uint8): Loaded from raw-u8 lookup tbl 0x6ab98(coolant) on the becc 0->1 edge, decrements while becc==1, cleared when becc==1 and prev was 1; consumed by 0x30f5c delay logic.
+ * RAM 0xffffbf0d secondary_split_off_delay_counter (uint8): Loaded from raw-u8 lookup tbl 0x6aba4(coolant) on the becc 1->0 edge, decrements while becc==0; consumed by 0x30f5c delay logic.
+ * RAM 0xffffbf10 split_covers_amounts_ab_flag (uint8): bf10 = bef0 >= bec8+beec (0.005 hysteresis) in 0x30b08.
+ * RAM 0xffffbf11 split_covers_amounts_bc_flag (uint8): bf11 = bef0 >= bed8+beec (0.005 hysteresis) in 0x30b08.
+ * RAM 0xffffbf24 split_high_rpm_threshold (float): lookup_2d_descriptor_scaled(coolant, tbl 0x6ac74) in 0x30b08; table data 0x78548 is flat u16 0x186a = 6250 rpm (scale 1.0) — the high-RPM override threshold.
+ * RAM 0xffffbf28 secondary_allowed_rpm_threshold (float): lookup_2d_descriptor_scaled(coolant, tbl 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based', data 0x78510, axis 0x784ec): u16 cells 3000 rpm at <= 0 C, 0 above ~20 C; confirmed by ROM cell dump and emulator lookup in 0x30b08.
+ * RAM 0xffffbf2c primary_baro_correction (float): lookup_2d_descriptor_scaled(baro, tbl 0x6ab84 'Primary Injector Max Barometric Pressure Correction') in 0x30b08; scales bec8 into bf04 at throttle >= 60%.
+ * RAM 0xffffbf04 split_fuel_gate_threshold (float): bf04 = bec8 (fuel_amount_per_rotation_a), or bec8*bf2c when throttle >= 60% WOT; beb0 is compared against it for bf38 in 0x30b08.
+ * RAM 0xffffbf36 high_rpm_override_flag (uint8): bf36 = rpm >= bf24 (tbl 0x6ac74) with a 188 rpm hysteresis band, in 0x30b08; forces the secondary split (and SSV) at very high rpm.
+ * RAM 0xffffbf37 secondary_allowed_rpm_flag (uint8): bf37 = rpm >= bf28 (tbl 0x6ac60 coolant-based Secondary Injectors Allowed Threshold) with 188 rpm hysteresis, in 0x30b08.
+ * RAM 0xffffbf38 split_fuel_gate_wot_flag (uint8): bf38 = beb0 >= bf04 (WOT-aware threshold) with bf08 hysteresis, in 0x30b08; part of becd.
+ * RAM 0xffffbf39 split_fuel_gate_flag (uint8): bf39 = beb0 >= bec8 with bf08 hysteresis, in 0x30b08; part of becc.
+ * RAM 0xffffbef0 fuel_volume_primary_split (float): Primary-side fuel volume after the 0x30b08 split: beb0 when becc==0, else beb0 minus the secondary share; converted to pulse time in 0x30f5c (x6e7 / 250.0).
+ * RAM 0xffffbef4 fuel_volume_secondary_split (float): Secondary-side fuel volume from the 0x30b08 split (0 when becc==0); converted to pulse time in 0x30f5c (x6e7 / 475.93).
+ * RAM 0xffffbef8 primary_secondary_split_ratio (float): Ratio lookup_2d_descriptor_scaled(rpm, tbl 0x6ab70) clamped to [0,1] in 0x30b08; used to split beb0 into bef0/bef4 when becc==1.
+ * RAM 0xffffbefc fuel_volume_secondary_amount (float): befc = bef8 * beb0, the uncapped secondary amount in 0x30b08 (capped against bec8/bedc when computing bef4).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ab70: Table 2D - 177 Might be Primary/Secondary Ratio (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006ab84: Primary Injector Max Barometric Pressure Correction (RX8Defs data pointer, axes and dimensions match).

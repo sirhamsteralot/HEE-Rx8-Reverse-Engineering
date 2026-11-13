@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_tire_revs_read [high]: e2ram_cached_byte_read(0x9a, &local, 2) -> tire_revolutions_per_mile_ffffd380 (u16 BE); tolerance band vs 0x3727c5ac -> DAT_ffffd382. Inherited ref_getTireSize confirmed. Dumps: 0x030d = 781 rev/mile.
+ */
 /* ROM address: 0x0005de74; body bytes: 178; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005c664 (178 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_getTireSize(void)
+uint e2ram_tire_revs_read(void)
 
 {
   uint uVar1;

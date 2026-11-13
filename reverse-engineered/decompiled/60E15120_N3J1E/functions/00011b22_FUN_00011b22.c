@@ -11,9 +11,9 @@ void uds_diag_utility_batch(void)
 {
   FUN_00059164();
   FUN_0005a162();
-  ref_getTireSize();
-  FUN_0005e748();
-  FUN_0005e664();
+  e2ram_tire_revs_read();
+  candidate_e2ram_config_bit_9f_read();
+  e2ram_ecu_id_read();
   FUN_00054cf8();
   FUN_0005e7e4();
   FUN_00019da2();

@@ -17,7 +17,7 @@ void ref_mainInit__(void)
   FUN_0000b23c();
   FUN_0000a8dc();
   (*unaff_r14)();
-  FUN_0000d44c();
+  eeprom_mirror_magic_init();
   FUN_0001102a();
   (*unaff_r14)();
   ref_setRegisters();

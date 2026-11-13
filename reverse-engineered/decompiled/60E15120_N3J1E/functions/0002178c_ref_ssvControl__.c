@@ -4,6 +4,7 @@
  * RAM 0xffffb2b2 ssv_on_counter (uint8): Set to 0xbc when (aa68==0 && b2b5==1), else decremented; gates SSV on with b2b4.
  * RAM 0xffffb2b4 ssv_coolant_hot_flag (uint8): coolant >= 200 (clear below 197) hysteresis; blocks SSV on-condition.
  * RAM 0xffffb2b5 ssv_was_enabled (uint8): previous aa68 snapshot; edge term in the on-condition.
+ * RAM 0xffffaa68 engine_running_flag (uint8): 1 = engine running, 0 = stopped/cranking; read by SSV control 0x2178c (cold edge aa68==0 && b2b5), fan logic 0x2f51a, CAN error counter 0xdcc0; mov.w pool word 0xaa68 sign-extends to 0xffffaa68 (e.g. pool 0x21886 in 0x2178c).
  */
 /* ROM address: 0x0002178c; body bytes: 250; decompiled */
 
