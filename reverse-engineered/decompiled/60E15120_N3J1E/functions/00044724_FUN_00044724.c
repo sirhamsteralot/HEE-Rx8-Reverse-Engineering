@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00043f40 (106 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00044724(void)
+uint misfire_dtc_set(void)
 
 {
   char cVar2;

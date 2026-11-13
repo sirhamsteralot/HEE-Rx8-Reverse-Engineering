@@ -142,7 +142,37 @@ update 0x287aa — a sector-speed-ring deviation term
 (`(DAT_ffffb668 − (DAT_ffffb680−DAT_ffffb668)/6) − DAT_ffffb664`, ring
 0xffffa390–0xffffa3ac) — stored per cell by 0x276ec when
 |RPM − cell breakpoint| ≤ 100, and persisted to the RAM table by 0x27808
-once the cell counter exceeds 0x1d. The **knock learned retard is not one
+once the cell counter exceeds 0x1d.
+
+**Where the stored calibrations hook in — misfire detection.** The learned
+cell value is the per-cell *baseline* subtracted from the instantaneous
+deviation before thresholding, and the residual drives the misfire DTC path
+(all links ROM-verified: asm call sites + literal pools + DTC slot bytes):
+
+```
+learned cell (chip pair i ↔ 0xffff8108+8i / 0xffff8328+8i)
+  → 0x28198/0x28484 read + RPM-interpolate → DAT_ffffba64 / 0xffffba68 (per rotor bank)
+  → DAT_ffffba30 = DAT_ffffba2c (deviation) − learned          # residual
+  → 0x2837c filters → DAT_ffffba34 / 0xffffba38 when cell learned (0xffffb6c6)
+  → DAT_ffffba40 = max(0, ·)                                   # excess deviation
+  → armed by 0x27fb4 / 0x28022 → per-rotor event flags 0xffffba24/25 (+ba26/27)
+  → 0x447e2 clears/bumps when above RPM thresholds (0xffffcb8c/cb90 =
+     lookups tbl 0x6b9f4/0x6ba00, 12 cells, axis 780–8500 rpm; 0x44a78)
+    0x4489c same vs load limits (0xffffcb94/cb98 = Load Limit A/B,
+     tbl 0x6ba0c/0x6ba18; 0x44a9e)
+  → 0x26a42/0x26b34 bump per-rotor counters 0xffffb688–0xffffb68e (0xffffb694 tick flag)
+  → 0x44436 sustained window (0xffffcb60/cb62)
+  → 0x445ba evaluates → bsr 0x44724 (asm 0x446ea)
+  → 0x44724 calls dtc_set_fault_xdefault (pool 0x447ac = 0x5fd3c) slot 1,
+    rotor bits in r6 → DTC slot table 0x7e560 slots 0/1 = 0x0300 (P0300, both
+    rotors), prefix table 0x7e55a = P0300/P0301/P0302
+```
+
+So the 34 pairs are the **learned misfire/roughness baseline per
+(RPM cell × load band × rotor sign)**, consumed by the misfire monitor that
+sets P0300/P0301/P0302 (see the open misfire-detection backlog item; the DTC
+side is covered in [`dtc_control_report.md`](dtc_control_report.md)). The
+**knock learned retard is not one
 of these 34 pairs**: it lives in the separate 8-byte E2-window cell
 0xffff8038 (consumer `knock_retard_learn_to_eeprom` 0x139c4, see
 [`knock_control_report.md`](knock_control_report.md)), as do the idle-trim
@@ -225,6 +255,16 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 | RAM 0xffffb660 | `sector_parity_bank` | high |
 | RAM 0xffffb6cc / 0xffffb8f4 | `e2ram_learned_table_live_value` / `e2ram_learned_table_live_counter` | high |
 | RAM 0xffffba2c | `e2ram_learned_correction_value` | high |
+| 0x2842c | `misfire_deviation_delay_line` | high |
+| 0x27fb4 / 0x28022 | `misfire_event_arm` / `misfire_event_arm_secondary` | high |
+| 0x26a42 / 0x26b34 | `misfire_event_count` / `misfire_counter_bump` | high |
+| 0x447e2 / 0x4489c | `misfire_threshold_check_rpm` / `misfire_threshold_check_load` | high |
+| 0x44a78 / 0x44a9e | `misfire_threshold_rpm_lookup` / `misfire_threshold_load_lookup` | high |
+| 0x44436 | `misfire_sustained_window` | high |
+| 0x445ba / 0x44724 | `misfire_dtc_evaluate` / `misfire_dtc_set` | high |
+| RAM 0xffffba30 / ba40 / ba24 / ba26 | `misfire_residual` / `misfire_excess_deviation` / `misfire_event_flag_a` / `misfire_event_flag_b` | high |
+| RAM 0xffffb688–b68e / b694 | per-rotor misfire counters / tick flag | high |
+| RAM 0xffffcb8c–cb98 / cb60 | misfire thresholds (RPM / load-limit lookups) / sustained counters | high |
 | chip 0x20–0x63 per pair | `learned_table_pairs` in the labels JSON | high |
 
 ## 5. Corrections made in this pass
@@ -320,6 +360,13 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 | 0x00028198 / 0x00028484 | `e2ram_learned_table_apply` / `e2ram_learned_table_cell_read` | read + RPM-interpolate learned value per rotor bank; DAT_ffffba2c |
 | 0x0002837c | `e2ram_learned_table_correction_filter` | filter DAT_ffffba30 → 0xffffba34/0x38, max(0,·) → 0xffffba40 |
 | 0x000287aa | `FUN_000287aa` | per-tick fuel/load update; calls the whole 0x27xxx cluster |
+| 0x002842c | `misfire_deviation_delay_line` | deviation delay line 0xffffba58/54/50 from 0xffffba4c |
+| 0x0027fb4 / 0x00028022 | `misfire_event_arm` / `misfire_event_arm_secondary` | set per-rotor event flags 0xffffba24/25, 0xffffba26/27 |
+| 0x00026a42 / 0x00026b34 | `misfire_event_count` / `misfire_counter_bump` | bump per-rotor counters 0xffffb688–0xffffb68e, tick flag 0xffffb694 |
+| 0x000447e2 / 0x0004489c | `misfire_threshold_check_rpm` / `misfire_threshold_check_load` | clear/bump on RPM thresholds (0xffffcb8c/cb90) / load limits (0xffffcb94/cb98) |
+| 0x00044a78 / 0x00044a9e | `misfire_threshold_rpm_lookup` / `misfire_threshold_load_lookup` | tbl 0x6b9f4/0x6ba00 / Load Limit A/B tbl 0x6ba0c/0x6ba18 |
+| 0x00044436 | `misfire_sustained_window` | sustained counters 0xffffcb60/cb62 |
+| 0x000445ba / 0x00044724 | `misfire_dtc_evaluate` / `misfire_dtc_set` | bsr 0x44724 (asm 0x446ea) → `dtc_set_fault_xdefault` pool 0x447ac = 0x5fd3c, slot 1 → P0300/P0301/P0302 (0x7e560/0x7e55a) |
 | 0x0003599c | `e2ram_boot_param_read` | 19 boot params chip 0x00–0x1e → 0xffffc268–0xffffc282 |
 | 0x00035956 | `ref_loadDatafromE2intoRAM_` | bulk chip 0x00–0x1f → shadow |
 | 0x00035a8c | `candidate_e2ram_param_write_dispatch` | param id → (index, src, len) shadow writes |
@@ -359,7 +406,12 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 | 0xffffb660 | `sector_parity_bank` | ATUII sector index; &1 = rotor bank select |
 | 0xffffb6cc[bank*0x44+cell] | `e2ram_learned_table_live_value` | live learned floats (0x276ec → 0x27808) |
 | 0xffffb8f4[bank*0x44+cell] | `e2ram_learned_table_live_counter` | learn counters; > 0x1d persists (0x27808) |
-| 0xffffba2c | `e2ram_learned_correction_value` | learn value from the 0x287aa tick (0x28198) |
+| 0xffffba2c | `e2ram_learned_correction_value` | sector-speed deviation (raw misfire term) from the 0x287aa tick (0x28198) |
+| 0xffffba30 / 0xffffba40 | `misfire_residual` / `misfire_excess_deviation` | deviation − learned cell; max(0, filtered) excess (0x28198/0x2837c) |
+| 0xffffba24+ / 0xffffba26+ | `misfire_event_flag_a` / `_b` | per-rotor event flags (0x27fb4/0x28022, checked by 0x447e2/0x4489c) |
+| 0xffffb688–0xffffb68e, 0xffffb694 | per-rotor counters / tick flag | 0x26a42/0x26b34 |
+| 0xffffcb8c/cb90, 0xffffcb94/cb98 | `misfire_threshold_rpm_a` / `misfire_threshold_load_a` | RPM lookups tbl 0x6b9f4/0x6ba00; Load Limit A/B 0x6ba0c/0x6ba18 (0x44a78/0x44a9e) |
+| 0xffffcb60/cb62 | `misfire_sustained_counter_a` | sustained window counters (0x44436) |
 | 0xffffc268–0xffffc282 | `e2ram_param_block` | decoded chip 0x00–0x1e |
 | 0xffffc28e / 0xffffc38e | `e2ram_shadow_data` / `e2ram_shadow_complement` | chip byte shadow + complement |
 | 0xffffc1d3–0xffffc1d8 | immo/validate flags | set by 0x3599c dests and 0x375c0 |
@@ -381,13 +433,14 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 - The learned table's 34 pairs are pinned per index in §3a: cell =
   rpm_cell (0..16, breakpoints 750–9000 rpm) + 17 × load_band (bands 0–1
   persisted; bands 2–3 RAM-only), shared by both rotor banks with +/− sign.
-  The learned quantity is the 0x287aa tick's sector-speed deviation
-  (DAT_ffffba2c); the physical unit of the correction (fuel trim vs.
-  roughness baseline) is not fully resolved — the applied result feeds
-  0x2837c → DAT_ffffba40 and the per-rotor counters 0xffffb688–0xffffb68e
-  (0x26a42/0x26b34, 0x447e2). The knock learned retard is the separate
-  window cell 0xffff8038, not one of these pairs — see
-  [`knock_control_report.md`](knock_control_report.md).
+  They hook into the **misfire monitor** (see §3a chain): the learned value
+  is the roughness baseline subtracted from the sector-speed deviation
+  DAT_ffffba2c, and persistent excess sets P0300/P0301/P0302 via
+  0x445ba → 0x44724 → `dtc_set_fault_xdefault` (slot table 0x7e560). The
+  physical unit of the ring values (6666666/ATUII period) is not converted
+  here — that belongs to the open misfire-detection backlog item. The knock
+  learned retard is the separate window cell 0xffff8038, not one of these
+  pairs — see [`knock_control_report.md`](knock_control_report.md).
 - Whether the PLDR/ISR 28-u16 device is a second chip or a second interface of
   IC420 is a board-routing question, unresolved (data shows it is not inside
   the 256-B IC420 image).
