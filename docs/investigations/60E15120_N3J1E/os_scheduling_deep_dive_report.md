@@ -466,7 +466,7 @@ in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
 | 0x005b3c | `cmi10b_tick_isr` (CMI10B handler) |
 | 0x005b56 | `FUN_00005b56` |
 | 0x005e0c | `wdt_iti_fatal_trap` (WDT ITI trap) |
-| 0x005e78 | `thunk_FUN_00009c86_00005e78` (CAN RX thunk -> 0x9c86 `can_rx_isr_handler`) |
+| 0x005e78 | `jump_to_can_rx_isr_handler` (CAN RX thunk -> 0x9c86 `can_rx_isr_handler`) |
 | 0x005f1c | `os_post_message` (post) |
 | 0x006010 | `os_queue_dequeue_record` |
 | 0x0060c8 | `ref_getSensorStuff__` (task[17]) |
