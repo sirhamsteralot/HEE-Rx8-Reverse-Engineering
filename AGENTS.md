@@ -65,6 +65,20 @@ dumping it at the root.
      descriptions is safe.
    - When a pass rewrites a touched table's description, replace the whole
      description on that entry; untouched entries keep theirs (rule 9).
+6d. **Generated artifacts are never hand-edited.** A file that a script
+    regenerates — `data/labels/<rom-id>/defs_table_labels.json`
+    (`utilities/scripts/defs-merge/build_table_labels.py`), the per-ROM defs
+    (`extend_defs_all_roms.py`), the merged def (the splice/relabel passes),
+    `data/maps/` (`extract_maps.py`, `extract_scalars.py`), `binaries/manifest.csv`
+    (`hash_binaries.py`) — is changed by editing the generator and re-running it,
+    never by editing the output directly. If a hand-edit is truly unavoidable,
+    update the generator in the same commit. Every generator of a tracked artifact
+    gets a regeneration test (pattern: `test_generator_idempotent_on_60E15120` in
+    `tests/test_defs_relabel.py`) that re-runs it and asserts the committed file is
+    unchanged, ignoring only explicitly whitelisted volatile fields (e.g. the
+    `evidence` strings `build_table_labels.py` re-fills from the `lookup_aliases`
+    JSONs) — so generator/output drift fails the test suite instead of silently
+    regressing the artifact on the next re-run.
 7. **Binary-level verification is mandatory** before claiming a review pass done:
    re-check labels against the raw ROM/disassembly (literal pools incl. shared pools,
    `mov.w`/`mov.l`/`mov #imm`/base+offset idioms, GPIO reg+mask+helper, descriptor
@@ -187,6 +201,14 @@ its own branch and is delivered as a pull request for the user to review and mer
 
 ## Agent tooling
 
+- **Check the OS before using paths.** This repo is worked on Windows: the
+  `bash` tool is Git Bash (POSIX syntax, drive letters as `/c/...`), but
+  `python` and the repo's own scripts are native Windows processes that only
+  understand `C:\...` — a `/c/...` path handed to Python just becomes a bogus
+  relative path (`\\c\\...`). When a shell command and a script mix, check what
+  you are on first (`uname` in bash, `os.name`/`sys.platform` in Python) and
+  prefer repo-relative paths from the repo root (or `Path(__file__).resolve()` /
+  `Path.cwd()` inside scripts), which work under both.
 - **In-session agents do NOT need MCP** — you have local repo access. For
   simulator-based validation follow
   [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md)
@@ -216,7 +238,10 @@ its own branch and is delivered as a pull request for the user to review and mer
   `cc -std=c11 -Wall -Wextra -Werror -ffp-contract=off reverse-engineered/reimplementation/rx8_math.c reverse-engineered/reimplementation/test_rx8_math.c -lm -o /tmp/t && /tmp/t`
   (same pattern for `rx8_apv.c`/`rx8_knock.c`). Host tests do not validate SH FPU
   rounding.
-- `python -m pytest tests/` for repo-level harnesses.
+- `python -m pytest tests/` for repo-level harnesses. The suite includes the
+  regeneration tests (rule 6d): every generator of a tracked artifact is re-run
+  and the committed output must come back unchanged (modulo whitelisted volatile
+  fields).
 - Pipeline validators run from the **repo root** (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py`): `validate_export.py` (ROM hash +
   instruction bytes + matches), `validate_reports.py` (report sections, ROM hash,

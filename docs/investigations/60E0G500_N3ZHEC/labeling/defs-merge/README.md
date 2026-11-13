@@ -13,7 +13,16 @@ machine-readable record: [`data/definitions/coverage.json`](../../../../../data/
   tables) in `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ pinned
   `39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f` — block has **814** top-level tables.
   Standalone per-ROM defs emitted:
-  `data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml`.
+  `data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml`. The block since
+  `39d98a0` also declares **`N3ZGEC`** as a second cal ID (two `<romid>`
+  entries — 6 Port and 4 Port — both at internalidaddress `0x6ce46`, where our
+  dump carries the `SW-N3ZHEC000.HEX` package string, byte-verified at
+  0x6ce46), so the same block covers N3ZGEC calibrations; our per-ROM def
+  carries both romids. Record:
+  [`upstream-sync-validation.md`](../../../60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md)
+  §2; cal-ID layout context:
+  [`docs/architecture/flash-memory-layout.md`](../../../../../docs/architecture/flash-memory-layout.md)
+  §4.2.
 - **ECUFlash**: `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…`
   (**1210 tables**, last upstream change `aaac6f3` 2023-08-11, blob
   `c4a3c37e41eddc1e92c29716b087bb9d9c2090fd`) + `ECUFlash/RX8BASE.xml`

@@ -177,3 +177,34 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
   `0x371d8`/`0x37624`, so `per-rom/60E32000_N3N5EB.xml` inherits an address
   that is wrong for that ROM. A per-ROM immo-address repair derived from the
   ROM pattern (same approach as `repair_dtc_tables`) would close this.
+
+## 7. Fold-in of the findings into our docs and label artifacts
+
+This record is no longer the only place the sync findings live:
+
+- Per-ROM immobilizer start-pattern offsets (§3 table, re-verified against the
+  raw ROM bytes of all 11 dumps) →
+  [`data/labels/cross_rom/immobilizer_start_patterns.json`](../../../../../data/labels/cross_rom/immobilizer_start_patterns.json)
+  (pattern, offset, with-RKE offset +0x44c, def addresses, per-ROM SHA-256)
+  plus the per-ROM records
+  [`data/labels/60E15120_N3J1E/immobilizer_labels.json`](../../../../../data/labels/60E15120_N3J1E/immobilizer_labels.json)
+  and
+  [`data/labels/60E0G500_N3ZHEC/immobilizer_labels.json`](../../../../../data/labels/60E0G500_N3ZHEC/immobilizer_labels.json)
+  (the N3N5EB address mismatch stays open as discrepancy D13).
+- DTC category names (§2) → cross-referenced from the defs-accuracy audit in
+  [`../../dtc_control_report.md`](../../dtc_control_report.md) §5c (our
+  0x7e678/0x7e704/0x7e790 banks ↔ upstream `DTC - MIL Illuminate` /
+  `DTC - OBD Report` / `DTC - Unknown`).
+- `N3ZGEC` as 60E0G500's second cal ID (§2) → noted next to the cal-ID table in
+  [`docs/architecture/flash-memory-layout.md`](../../../../architecture/flash-memory-layout.md)
+  §4.2 and in the 60E0G500 defs-merge record
+  ([`../../60E0G500_N3ZHEC/labeling/defs-merge/README.md`](../../../60E0G500_N3ZHEC/labeling/defs-merge/README.md)).
+- `Table 3D - UNKNOWN_CL` → `Closed Loop Fueling Base` rename (§3) →
+  cross-referenced where the fueling docs discuss the CL tables
+  ([`../../fueling_control_report.md`](../../fueling_control_report.md) §10.7);
+  the `Fuel Target (Closed Loop)` → `Fuel Injection - Closed Loop` category
+  rename is folded into `defs_table_labels.json` (9 entries), into all local
+  def files (splice pass item 3 in
+  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py))
+  and into the regenerated per-ROM defs, with the rename alias dropped from
+  `tests/test_defs_relabel.py`.

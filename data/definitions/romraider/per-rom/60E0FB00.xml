@@ -6882,7 +6882,7 @@
         <table name="Closed Loop Fuelling Threshold (Engine Load A)" storageaddress="0x071900">
             <table type="Y Axis" storageaddress="0x0718B8" />
         </table>
-        <table name="Closed Loop Fuelling Threshold E" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x7199C">
+        <table name="Closed Loop Fuelling Threshold E" category="Fuel Injection - Closed Loop" type="2D" storagetype="uint8" endian="big" sizey="19" storageaddress="0x7199C">
             <scaling expression="(x * 0.5 ) + 0" to_byte="(x - 0.0) / 0.5" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x71950" />
             <description>Closed-loop fuelling enable threshold (variant E).</description>
@@ -7527,7 +7527,7 @@
         <table name="Table 2D - 303 Check DataType" storageaddress="0x06FDF8">
             <table type="Y Axis" storageaddress="0x06FDDC" />
         </table>
-        <table name="Closed Loop Warmup Time" category="Fuel Target (Closed Loop)" type="2D" storagetype="uint8" endian="big" sizey="15" storageaddress="0x6FE88">
+        <table name="Closed Loop Warmup Time" category="Fuel Injection - Closed Loop" type="2D" storagetype="uint8" endian="big" sizey="15" storageaddress="0x6FE88">
             <scaling expression="(x * 1 ) + 0" to_byte="(x - 0) / 1" format="0.00" />
             <table name="Unknown" type="Y Axis" storagetype="float" endian="big" expression="x" to_byte="x" storageaddress="0x6FE4C" />
             <description>Time after start during which closed-loop fuelling is inhibited.</description>
@@ -7845,7 +7845,7 @@
             <table type="X Axis" storageaddress="0x070370" />
             <table type="Y Axis" storageaddress="0x070390" />
         </table>
-        <table name="Closed Loop WOT Enrichment" category="Fuel Target (Closed Loop)" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="3" storageaddress="0x7042C">
+        <table name="Closed Loop WOT Enrichment" category="Fuel Injection - Closed Loop" type="3D" storagetype="uint8" endian="big" expression="x" to_byte="x" sizex="12" sizey="3" storageaddress="0x7042C">
             <scaling expression="(x * 0.001 ) + 0" to_byte="(x - 0) / 0.001" format="0.00" />
             <table name="Value" type="X Axis" storagetype="float" endian="big" storageaddress="0x703F0">
                 <scaling expression="x" to_byte="x" />

@@ -36,13 +36,26 @@ changes that are ROM-proven wrong/stale in our files are spliced:
      at the new storageaddress in 60E15120_N3J1E.bin, the switch's "off"
      state must equal the ROM bytes there, and the with-RKE site must be
      offset+0x44c with the original "33 20" bytes.
+  3. The remaining 39d98a0 category rename is spliced as a plain attribute
+     edit: every <table> that explicitly carries category="Fuel Target
+     (Closed Loop)" becomes category="Fuel Injection - Closed Loop" (the 12
+     RX8Base tables upstream re-categorized; block-level name-only overrides
+     inherit from RX8Base, like upstream). This folds the rename together with
+     the defs_table_labels.json label-map category update, so the curated
+     label map and the defs agree and no rename alias is needed in the tests.
+     Table NAMES are deliberately not renamed here (e.g. "Table 3D -
+     UNKNOWN_CL" keeps its pre-rename name in our reviewed files; the
+     upstream name "Closed Loop Fueling Base" is cross-referenced in the
+     fueling docs instead).
 
 Surgical splice like relabel_dtc_names.py: only changed <table> elements are
 re-serialized over their original line spans (expat line numbers); every other
 byte of the file is untouched. Commented-out blocks are not seen by expat and
 stay untouched. Idempotent: tables already in the new form and the corrected
 immo addresses are left as-is; re-run = no-op (stats JSON only rewritten on a
-fresh run that changed at least one target).
+fresh run that changed at least one target; on such a fresh run the previous
+stats record is preserved under "previous_runs", so the pass log stays
+cumulative).
 
 Run from the repo root:
   python utilities/scripts/defs-merge/splice_upstream_dtc_immo.py [--dry-run] [FILE ...]
@@ -85,6 +98,11 @@ SWITCH_STATES = (("Enabled", "01"), ("Disabled", "00"))
 IMMO_PATTERN = bytes.fromhex("B56E000960D0600C88008D1100098801")
 IMMO_RKE_DELTA = 0x44C
 IMMO_RKE_ORIG = bytes.fromhex("3320")  # "off" bytes of the With-RKE switch
+
+# upstream 39d98a0 re-categorized the 12 RX8Base "Fuel Target (Closed Loop)"
+# tables to "Fuel Injection - Closed Loop"; spliced here together with the
+# label-map category update (defs_table_labels.json)
+CATEGORY_RENAME = {"Fuel Target (Closed Loop)": "Fuel Injection - Closed Loop"}
 
 # Broader than dtc_names.DTC_NAME_RE: also matches the legacy no-space form
 # "DTC 0300 Enable/Disable#1" used by the reviewed copy (base 944062e). Only
@@ -253,10 +271,20 @@ def splice_file(path, up_immo, immo_evidence, dry):
     edits = []
     stats = {"file": str(path.relative_to(ROOT)),
              "dtc_converted": {"#1": 0, "#2": 0, "#3": 0}, "immo_replaced": 0,
-             "details": []}
+             "category_renamed": 0, "details": []}
     names_before, addr_before = [], []
     for s, e, attrs, rom_fw in spans:
         name = attrs.get("name") or ""
+        new_cat = CATEGORY_RENAME.get(attrs.get("category") or "")
+        if new_cat is not None:
+            # attribute-only edit on the table's opening line
+            old_attr = f'category="{attrs["category"]}"'
+            assert old_attr in lines[s], f"{path.name}:{s + 1}: {old_attr!r} not on opening line"
+            lines[s] = lines[s].replace(old_attr, f'category="{new_cat}"', 1)
+            stats["category_renamed"] += 1
+            stats["details"].append({"block": rom_fw, "name": name,
+                                     "category": f"{attrs['category']} -> {new_cat}"})
+            continue
         suffix = parse_dtc_suffix(name)
         if suffix is not None:
             names_before.append(name)
@@ -284,7 +312,9 @@ def splice_file(path, up_immo, immo_evidence, dry):
             stats["details"].append({"block": rom_fw, "name": name,
                                      "storageaddress": f"{frag.get('storageaddress')} -> {up.get('storageaddress')}"})
 
-    stats["edits"] = len(edits)
+    # category renames are applied in-place on `lines` above, so they are not
+    # in `edits`; count them into the edit total for the stats/any_edits logic
+    stats["edits"] = len(edits) + stats["category_renamed"]
     if dry:
         return stats
 
@@ -316,6 +346,12 @@ def splice_file(path, up_immo, immo_evidence, dry):
                 if new["type"] == "Switch":
                     states = [(s.get("name"), s.get("data")) for s in t.findall("state")]
                     assert states == list(SWITCH_STATES), f"{n}: states {states}"
+    # the 39d98a0 category rename is fully applied (active blocks only —
+    # commented-out blocks are invisible to expat and stay untouched)
+    for rom in back.findall("rom"):
+        for t in rom.findall("table"):
+            assert t.get("category") not in CATEGORY_RENAME, \
+                f"{path.name}: table {t.get('name')!r} still carries old category {t.get('category')!r}"
     assert names_after == names_before, f"{path.name}: DTC names changed"
     # DTC storage addresses untouched; only the two immo addresses may differ
     assert sorted(a for a in addr_before if a) == sorted(a for a in addr_after if a), \
@@ -358,16 +394,28 @@ def main():
         all_stats[str(t.relative_to(ROOT))] = st
         any_edits = any_edits or st["edits"] > 0
         print(f"{'dry run: would edit' if dry else 'OK'}: {t.relative_to(ROOT)}: "
-              f"dtc_converted={st['dtc_converted']} immo_replaced={st['immo_replaced']}")
+              f"dtc_converted={st['dtc_converted']} immo_replaced={st['immo_replaced']} "
+              f"category_renamed={st['category_renamed']}")
 
     if dry:
         return
     if any_edits:
-        STATS_OUT.write_text(json.dumps({
+        prev = None
+        if STATS_OUT.exists():
+            try:
+                prev = json.loads(STATS_OUT.read_text(encoding="utf-8"))
+            except (ValueError, OSError):
+                prev = None
+        payload = {
             "pass": __doc__.splitlines()[0],
             "immo_evidence": immo_evidence,
             "targets": all_stats,
-        }, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        }
+        if prev is not None:
+            # keep the pass log cumulative: earlier run records (e.g. the
+            # d95b0be/39d98a0 DTC + immo splice) stay in the current file
+            payload["previous_runs"] = prev.get("previous_runs", []) + [prev]
+        STATS_OUT.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
     else:
         print(f"normalization-only run (nothing to change); stats file left untouched: {STATS_OUT.relative_to(ROOT)}")

@@ -16,7 +16,27 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 23–34, 36–37 — pick up 23 next (item 35 closed
+**reopened**: open items 24–34, 36–37 — pick up 24 next (item 23 closed
+2026-11-13: the upstream-sync findings (RX8Defs `39d98a0` / MRP `b243b35`,
+record
+[upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md)
+§7) are folded into our docs and label artifacts — per-ROM immobilizer
+start-pattern offsets re-verified against all 11 raw ROMs →
+`data/labels/cross_rom/immobilizer_start_patterns.json` +
+`data/labels/60E15120_N3J1E/immobilizer_labels.json` +
+`data/labels/60E0G500_N3ZHEC/immobilizer_labels.json`; upstream DTC categories
+cross-linked from [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
+§5c (0x7e678/0x7e704/0x7e790 ↔ "DTC - MIL Illuminate" / "OBD Report" / "Unknown");
+`N3ZGEC` as 60E0G500's second cal ID noted in
+[flash-memory-layout.md](docs/architecture/flash-memory-layout.md) §4.2 and
+the 60E0G500 defs-merge record; the `Table 3D - UNKNOWN_CL` → `Closed Loop
+Fueling Base` rename cross-referenced in
+[fueling_control_report.md](docs/investigations/60E15120_N3J1E/fueling_control_report.md)
+§10.7; the `Fuel Target (Closed Loop)` → `Fuel Injection - Closed Loop`
+category rename folded into `defs_table_labels.json` (9 entries), all local
+def files (splice item 3) and the regenerated per-ROM defs, rename alias
+dropped from `tests/test_defs_relabel.py`; pipeline validators + full pytest
+green; item 35 closed
 2026-11-13: the full 256 B of the 93C56 (IC420) are mapped in
 [eeprom_content_map_report.md](docs/investigations/60E15120_N3J1E/eeprom_content_map_report.md)
 against the upstream dumps — immo key 0x02–0x09, immo code 0x16–0x19, param
@@ -66,32 +86,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–34, 36–37)
-
-- **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
-  `39d98a0` / MRP `b243b35`; record:
-  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md))
-  back into our documentation and label artifacts, so the sync record stops
-  being the only place they live:
-  - per-ROM immobilizer start-pattern offsets (ROM-verified table in §3 of the
-    sync record) → immobilizer-subsystem label records/evidence (e.g.
-    `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents)
-    with the pattern, offset and with-RKE offset (+0x44c) per ROM; overlaps D13
-    (N3N5EB address) and C item 22 (merged-def addresses) — coordinate, don't
-    duplicate;
-  - upstream's new DTC categories (#1 "MIL Illuminate" / #2 "OBD Report" / #3
-    "Unknown") → cross-link from the defs-accuracy section of
-    [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
-    so readers see our 0x7e678/0x7e704/0x7e790 banks map to upstream's names;
-  - `N3ZGEC` as 60E0G500's second cal ID → note next to the cal-ID
-    documentation (D1) and in the 60E0G500 investigation docs;
-  - upstream rename `Table 3D - UNKNOWN_CL` → `Closed Loop Fueling Base`
-    (0x70b3c) → cross-reference wherever our fueling docs discuss that table;
-  - after C item 22 lands: update `defs_table_labels.json` categories
-    `Fuel Target (Closed Loop)` → `Fuel Injection - Closed Loop` (9 entries)
-    and drop the rename alias in `tests/test_defs_relabel.py`.
-  Re-verify any touched label against the raw ROM (rule 7), then run the
-  pipeline validators + `python -m pytest tests/`.
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -130,9 +125,9 @@ and where artifacts live.
   D13 open for N3N5EB), plus the `ref_afterImmo_1..6` UDS handlers and the immo
   counter in the slow task `0x11534`. Label the immo challenge/response and
   keyless-module CAN dialogue; deliver `immobilizer_report.md` +
-  `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents.
-  Coordinate with C item 23, which only folds the per-ROM addresses into the
-  label records — don't duplicate.
+  `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents
+  (the per-ROM start-pattern addresses are already folded into those records —
+  don't duplicate them, extend with the challenge/response analysis).
 - **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
   DSC torque-request throttle via CAN 0x212 are labeled (see
   [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)),
