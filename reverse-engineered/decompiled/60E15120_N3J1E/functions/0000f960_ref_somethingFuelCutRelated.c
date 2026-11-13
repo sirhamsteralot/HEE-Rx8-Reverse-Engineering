@@ -18,7 +18,7 @@ void ref_somethingFuelCutRelated(float param_1,byte param_2)
     pcVar3 = &DAT_0004e2ce + (uint)param_2 * 3;
     do {
       if (*pcVar3 == '\x01') {
-        thunk_FUN_00008b4c((int)*pcVar4,(int)(param_1 / 0.25));
+        jump_to_FUN_00008b4c((int)*pcVar4,(int)(param_1 / 0.25));
       }
       iVar2 = iVar2 + 1;
       pcVar4 = pcVar4 + 1;

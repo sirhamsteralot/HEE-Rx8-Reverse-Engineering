@@ -21,7 +21,7 @@ void uds_request_schedule_service_task(int param_1)
   DAT_ffffddf9 = DAT_ffffddea;
   DAT_ffffddeb = 0;
   DAT_ffffddf5 = DAT_ffffddf5 & 0xfb | 0x40;
-  thunk_FUN_00054b2c((int)(char)DAT_ffffddea);
+  jump_to_FUN_00054b2c((int)(char)DAT_ffffddea);
   os_schedule_task_event(2,0,&local_14);
   return;
 }

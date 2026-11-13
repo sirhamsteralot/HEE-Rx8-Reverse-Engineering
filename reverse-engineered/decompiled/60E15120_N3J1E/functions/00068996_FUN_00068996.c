@@ -11,7 +11,7 @@ void FUN_00068996(void)
   DAT_ffffddde = DAT_ffffddde + 7;
   if (DAT_ffffdddc <= DAT_ffffddde) {
     FUN_00068910();
-    thunk_FUN_00054a36((int)DAT_ffffdde0);
+    jump_to_FUN_00054a36((int)DAT_ffffdde0);
     return;
   }
   if ((DAT_ffffddf1 != 0) && (DAT_ffffddf1 <= DAT_ffffdde4)) {

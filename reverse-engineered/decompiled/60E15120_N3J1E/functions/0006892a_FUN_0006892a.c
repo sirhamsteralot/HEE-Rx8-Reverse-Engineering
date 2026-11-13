@@ -20,7 +20,7 @@ void FUN_0006892a(void)
     FUN_00068910();
     iVar1 = (int)DAT_ffffdde0;
   }
-  thunk_FUN_00054a36(iVar1);
+  jump_to_FUN_00054a36(iVar1);
   return;
 }
 

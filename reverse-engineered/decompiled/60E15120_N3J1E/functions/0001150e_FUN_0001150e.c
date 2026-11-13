@@ -8,7 +8,7 @@ void FUN_0001150e(void)
   FUN_0002114a();
   FUN_0002e5a8();
   FUN_00022f86();
-  thunk_FUN_000236cc();
+  jump_to_FUN_000236cc();
   return;
 }
 

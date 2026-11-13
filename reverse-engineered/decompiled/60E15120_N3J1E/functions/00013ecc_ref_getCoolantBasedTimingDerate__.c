@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * coolant_timing_derate_calc [high]: was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 — the max() derate subtracted in 0x125bc/0x125f6.
+ * coolant_timing_derate_calc [high]: was ref_getCoolantBasedTimingDerate__. Writes coolant_timing_derate_leading_ffffa750 (a76c * fVar2) and trailing a754 â€” the max() derate subtracted in 0x125bc/0x125f6.
  */
 /* ROM address: 0x00013ecc; body bytes: 104; decompiled */
 

@@ -1,0 +1,549 @@
+{
+  "basis": "source_review_thunk_audit",
+  "finding": "All 53 `thunk`-named rows audited at binary level: 51 are Ghidra auto-named single-jump functions (14 x `bra` + 37 x pool `jmp @r3`) with ROM-proven fixed targets, renamed to jump_to_<target>; 0x35d36 is a `jsr @r14` trampoline whose sole caller 0x35a8c fixes r14 = pool 0x35b74 = 0x00037ea4 (e2ram_shadow_byte_write), promoted to e2ram_shadow_byte_write_trampoline (high); 0x5fd3c keeps dtc_set_fault_xdefault and 0x576c2 keeps diag22_pidc116_dtc_state_machine. \"thunk\" upstream = Ghidra single-jump auto-name, not an \"unknown call\" marker.",
+  "classes": {
+    "bra": 14,
+    "pool_jmp": 37,
+    "jsr_reg": 1,
+    "other": 1
+  },
+  "functions": [
+    {
+      "address": "00004e06",
+      "old_name": "thunk_FUN_00004dee",
+      "cls": "bra",
+      "target": "00004dee",
+      "target_name": "FUN_00004dee",
+      "alias": "jump_to_FUN_00004dee",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xaff2 = `bra 0x4dee` + delay-slot word 0x0009 (ROM-verified at 0x00004e06). Direct tail-jump to `FUN_00004dee` 0x00004dee; callers in callgraph: 0x00004cb6. Upstream name `thunk_FUN_00004dee` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00005e78",
+      "old_name": "thunk_FUN_00009c86",
+      "cls": "pool_jmp",
+      "target": "00009c86",
+      "target_name": "can_rx_isr_handler",
+      "alias": "jump_to_can_rx_isr_handler",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30f = `mov.l @(0x5eb8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x5eb8 = 0x00009c86 (ROM-verified, big-endian) (ROM-verified at 0x00005e78). Direct tail-jump to `can_rx_isr_handler` 0x00009c86; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00009c86` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00005eee",
+      "old_name": "thunk_FUN_00009c86",
+      "cls": "pool_jmp",
+      "target": "00009c86",
+      "target_name": "can_rx_isr_handler",
+      "alias": "jump_to_can_rx_isr_handler",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd309 = `mov.l @(0x5f14,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x5f14 = 0x00009c86 (ROM-verified, big-endian) (ROM-verified at 0x00005eee). Direct tail-jump to `can_rx_isr_handler` 0x00009c86; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00009c86` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00006360",
+      "old_name": "thunk_FUN_00011492",
+      "cls": "pool_jmp",
+      "target": "00011492",
+      "target_name": "FUN_00011492",
+      "alias": "jump_to_FUN_00011492",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd31e = `mov.l @(0x63dc,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63dc = 0x00011492 (ROM-verified, big-endian) (ROM-verified at 0x00006360). Direct tail-jump to `FUN_00011492` 0x00011492; callers in callgraph: 0x00009f4c. Upstream name `thunk_FUN_00011492` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00006366",
+      "old_name": "thunk_FUN_000113b8",
+      "cls": "pool_jmp",
+      "target": "000113b8",
+      "target_name": "FUN_000113b8",
+      "alias": "jump_to_FUN_000113b8",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd31e = `mov.l @(0x63e0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63e0 = 0x000113b8 (ROM-verified, big-endian) (ROM-verified at 0x00006366). Direct tail-jump to `FUN_000113b8` 0x000113b8; callers in callgraph: 0x00009f52. Upstream name `thunk_FUN_000113b8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0000636c",
+      "old_name": "thunk_FUN_0000abfa",
+      "cls": "pool_jmp",
+      "target": "0000abfa",
+      "target_name": "FUN_0000abfa",
+      "alias": "jump_to_FUN_0000abfa",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd31d = `mov.l @(0x63e4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x63e4 = 0x0000abfa (ROM-verified, big-endian) (ROM-verified at 0x0000636c). Direct tail-jump to `FUN_0000abfa` 0x0000abfa; callers in callgraph: 0x00009f58. Upstream name `thunk_FUN_0000abfa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000084c2",
+      "old_name": "thunk_FUN_00008b4c",
+      "cls": "bra",
+      "target": "00008b4c",
+      "target_name": "FUN_00008b4c",
+      "alias": "jump_to_FUN_00008b4c",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa343 = `bra 0x8b4c` + delay-slot word 0x0009 (ROM-verified at 0x000084c2). Direct tail-jump to `FUN_00008b4c` 0x00008b4c; callers in callgraph: 0x0000f960. Upstream name `thunk_FUN_00008b4c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00009f4c",
+      "old_name": "thunk_FUN_00011492",
+      "cls": "pool_jmp",
+      "target": "00006360",
+      "target_name": "0x00006360",
+      "alias": "jump_to_0x00006360",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd3a6 = `mov.l @(0xa1e8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1e8 = 0x00006360 (ROM-verified, big-endian) (ROM-verified at 0x00009f4c). Direct tail-jump to `0x00006360` 0x00006360; callers in callgraph: 0x0000d408. Upstream name `thunk_FUN_00011492` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00009f52",
+      "old_name": "thunk_FUN_000113b8",
+      "cls": "pool_jmp",
+      "target": "00006366",
+      "target_name": "0x00006366",
+      "alias": "jump_to_0x00006366",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd3a6 = `mov.l @(0xa1ec,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1ec = 0x00006366 (ROM-verified, big-endian) (ROM-verified at 0x00009f52). Direct tail-jump to `0x00006366` 0x00006366; callers in callgraph: 0x0000d44c. Upstream name `thunk_FUN_000113b8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00009f58",
+      "old_name": "thunk_FUN_0000abfa",
+      "cls": "pool_jmp",
+      "target": "0000636c",
+      "target_name": "0x0000636c",
+      "alias": "jump_to_0x0000636c",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd3a5 = `mov.l @(0xa1f0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0xa1f0 = 0x0000636c (ROM-verified, big-endian) (ROM-verified at 0x00009f58). Direct tail-jump to `0x0000636c` 0x0000636c; callers in callgraph: 0x0000d408. Upstream name `thunk_FUN_0000abfa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0000ad2a",
+      "old_name": "thunk_FUN_0000aee8",
+      "cls": "bra",
+      "target": "0000aee8",
+      "target_name": "adc_pair_correlation_fault_compute",
+      "alias": "jump_to_adc_pair_correlation_fault_compute",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa0dd = `bra 0xaee8` + delay-slot word 0x0009 (ROM-verified at 0x0000ad2a). Direct tail-jump to `adc_pair_correlation_fault_compute` 0x0000aee8; callers in callgraph: 0x00006592. Upstream name `thunk_FUN_0000aee8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0001038a",
+      "old_name": "thunk_FUN_00010fa8",
+      "cls": "pool_jmp",
+      "target": "00010fa8",
+      "target_name": "FUN_00010fa8",
+      "alias": "jump_to_FUN_00010fa8",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd34f = `mov.l @(0x104c8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x104c8 = 0x00010fa8 (ROM-verified, big-endian) (ROM-verified at 0x0001038a). Direct tail-jump to `FUN_00010fa8` 0x00010fa8; callers in callgraph: 0x000142a4. Upstream name `thunk_FUN_00010fa8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000146b6",
+      "old_name": "thunk_FUN_00013814",
+      "cls": "pool_jmp",
+      "target": "00013814",
+      "target_name": "FUN_00013814",
+      "alias": "jump_to_FUN_00013814",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd324 = `mov.l @(0x14748,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x14748 = 0x00013814 (ROM-verified, big-endian) (ROM-verified at 0x000146b6). Direct tail-jump to `FUN_00013814` 0x00013814; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00013814` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000146bc",
+      "old_name": "thunk_FUN_0001381e",
+      "cls": "pool_jmp",
+      "target": "0001381e",
+      "target_name": "FUN_0001381e",
+      "alias": "jump_to_FUN_0001381e",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd323 = `mov.l @(0x1474c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x1474c = 0x0001381e (ROM-verified, big-endian) (ROM-verified at 0x000146bc). Direct tail-jump to `FUN_0001381e` 0x0001381e; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_0001381e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0001686e",
+      "old_name": "thunk_FUN_00015f74",
+      "cls": "pool_jmp",
+      "target": "00015f74",
+      "target_name": "FUN_00015f74",
+      "alias": "jump_to_FUN_00015f74",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd322 = `mov.l @(0x168f8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x168f8 = 0x00015f74 (ROM-verified, big-endian) (ROM-verified at 0x0001686e). Direct tail-jump to `FUN_00015f74` 0x00015f74; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00015f74` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00016874",
+      "old_name": "thunk_FUN_00015f8e",
+      "cls": "pool_jmp",
+      "target": "00015f8e",
+      "target_name": "FUN_00015f8e",
+      "alias": "jump_to_FUN_00015f8e",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd321 = `mov.l @(0x168fc,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x168fc = 0x00015f8e (ROM-verified, big-endian) (ROM-verified at 0x00016874). Direct tail-jump to `FUN_00015f8e` 0x00015f8e; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00015f8e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00019e3c",
+      "old_name": "thunk_FUN_0003ec3c",
+      "cls": "pool_jmp",
+      "target": "0003ec3c",
+      "target_name": "FUN_0003ec3c",
+      "alias": "jump_to_FUN_0003ec3c",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd32d = `mov.l @(0x19ef4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x19ef4 = 0x0003ec3c (ROM-verified, big-endian) (ROM-verified at 0x00019e3c). Direct tail-jump to `FUN_0003ec3c` 0x0003ec3c; callers in callgraph: 0x000113b8. Upstream name `thunk_FUN_0003ec3c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00021b84",
+      "old_name": "thunk_FUN_0002508c",
+      "cls": "pool_jmp",
+      "target": "0002508c",
+      "target_name": "FUN_0002508c",
+      "alias": "jump_to_FUN_0002508c",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd317 = `mov.l @(0x21be4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x21be4 = 0x0002508c (ROM-verified, big-endian) (ROM-verified at 0x00021b84). Direct tail-jump to `FUN_0002508c` 0x0002508c; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_0002508c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00022248",
+      "old_name": "thunk_FUN_00025438",
+      "cls": "pool_jmp",
+      "target": "00025438",
+      "target_name": "FUN_00025438",
+      "alias": "jump_to_FUN_00025438",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30b = `mov.l @(0x22278,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x22278 = 0x00025438 (ROM-verified, big-endian) (ROM-verified at 0x00022248). Direct tail-jump to `FUN_00025438` 0x00025438; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00025438` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00022f80",
+      "old_name": "thunk_FUN_000486a0",
+      "cls": "pool_jmp",
+      "target": "000486a0",
+      "target_name": "FUN_000486a0",
+      "alias": "jump_to_FUN_000486a0",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd355 = `mov.l @(0x230d8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x230d8 = 0x000486a0 (ROM-verified, big-endian) (ROM-verified at 0x00022f80). Direct tail-jump to `FUN_000486a0` 0x000486a0; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_000486a0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00023766",
+      "old_name": "thunk_FUN_000236cc",
+      "cls": "pool_jmp",
+      "target": "000236cc",
+      "target_name": "FUN_000236cc",
+      "alias": "jump_to_FUN_000236cc",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd314 = `mov.l @(0x237b8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x237b8 = 0x000236cc (ROM-verified, big-endian) (ROM-verified at 0x00023766). Direct tail-jump to `FUN_000236cc` 0x000236cc; callers in callgraph: 0x0001150e. Upstream name `thunk_FUN_000236cc` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000253b2",
+      "old_name": "thunk_FUN_0002529e",
+      "cls": "pool_jmp",
+      "target": "0002529e",
+      "target_name": "FUN_0002529e",
+      "alias": "jump_to_FUN_0002529e",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd318 = `mov.l @(0x25414,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25414 = 0x0002529e (ROM-verified, big-endian) (ROM-verified at 0x000253b2). Direct tail-jump to `FUN_0002529e` 0x0002529e; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_0002529e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00025408",
+      "old_name": "thunk_FUN_000252a6",
+      "cls": "pool_jmp",
+      "target": "000252a6",
+      "target_name": "FUN_000252a6",
+      "alias": "jump_to_FUN_000252a6",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30a = `mov.l @(0x25434,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25434 = 0x000252a6 (ROM-verified, big-endian) (ROM-verified at 0x00025408). Direct tail-jump to `FUN_000252a6` 0x000252a6; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_000252a6` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00028992",
+      "old_name": "thunk_FUN_000270aa",
+      "cls": "pool_jmp",
+      "target": "000270aa",
+      "target_name": "FUN_000270aa",
+      "alias": "jump_to_FUN_000270aa",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd34d = `mov.l @(0x28ac8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x28ac8 = 0x000270aa (ROM-verified, big-endian) (ROM-verified at 0x00028992). Direct tail-jump to `FUN_000270aa` 0x000270aa; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_000270aa` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00029070",
+      "old_name": "thunk_FUN_00029134",
+      "cls": "bra",
+      "target": "00029134",
+      "target_name": "FUN_00029134",
+      "alias": "jump_to_FUN_00029134",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa060 = `bra 0x29134` + delay-slot word 0x0009 (ROM-verified at 0x00029070). Direct tail-jump to `FUN_00029134` 0x00029134; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00029134` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002a3d4",
+      "old_name": "thunk_FUN_00028db0",
+      "cls": "pool_jmp",
+      "target": "00028db0",
+      "target_name": "FUN_00028db0",
+      "alias": "jump_to_FUN_00028db0",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd346 = `mov.l @(0x2a4f0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2a4f0 = 0x00028db0 (ROM-verified, big-endian) (ROM-verified at 0x0002a3d4). Direct tail-jump to `FUN_00028db0` 0x00028db0; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00028db0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002a3da",
+      "old_name": "thunk_FUN_00028db8",
+      "cls": "pool_jmp",
+      "target": "00028db8",
+      "target_name": "FUN_00028db8",
+      "alias": "jump_to_FUN_00028db8",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd346 = `mov.l @(0x2a4f4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2a4f4 = 0x00028db8 (ROM-verified, big-endian) (ROM-verified at 0x0002a3da). Direct tail-jump to `FUN_00028db8` 0x00028db8; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00028db8` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002afec",
+      "old_name": "thunk_FUN_0002b220",
+      "cls": "bra",
+      "target": "0002b220",
+      "target_name": "FUN_0002b220",
+      "alias": "jump_to_FUN_0002b220",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa118 = `bra 0x2b220` + delay-slot word 0x0009 (ROM-verified at 0x0002afec). Direct tail-jump to `FUN_0002b220` 0x0002b220; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b220` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002b298",
+      "old_name": "thunk_FUN_0002b8f4",
+      "cls": "bra",
+      "target": "0002b8f4",
+      "target_name": "FUN_0002b8f4",
+      "alias": "jump_to_FUN_0002b8f4",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa32c = `bra 0x2b8f4` + delay-slot word 0x0009 (ROM-verified at 0x0002b298). Direct tail-jump to `FUN_0002b8f4` 0x0002b8f4; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b8f4` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002b954",
+      "old_name": "thunk_FUN_0002b988",
+      "cls": "bra",
+      "target": "0002b988",
+      "target_name": "FUN_0002b988",
+      "alias": "jump_to_FUN_0002b988",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa018 = `bra 0x2b988` + delay-slot word 0x0009 (ROM-verified at 0x0002b954). Direct tail-jump to `FUN_0002b988` 0x0002b988; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0002b988` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0002f11c",
+      "old_name": "thunk_FUN_0002e800",
+      "cls": "pool_jmp",
+      "target": "0002e800",
+      "target_name": "FUN_0002e800",
+      "alias": "jump_to_FUN_0002e800",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd310 = `mov.l @(0x2f160,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x2f160 = 0x0002e800 (ROM-verified, big-endian) (ROM-verified at 0x0002f11c). Direct tail-jump to `FUN_0002e800` 0x0002e800; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_0002e800` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00032d20",
+      "old_name": "thunk_FUN_00032d96",
+      "cls": "bra",
+      "target": "00032d96",
+      "target_name": "FUN_00032d96",
+      "alias": "jump_to_FUN_00032d96",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa039 = `bra 0x32d96` + delay-slot word 0x0009 (ROM-verified at 0x00032d20). Direct tail-jump to `FUN_00032d96` 0x00032d96; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00032d96` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00034a28",
+      "old_name": "thunk_FUN_00034a64",
+      "cls": "pool_jmp",
+      "target": "00034a64",
+      "target_name": "FUN_00034a64",
+      "alias": "jump_to_FUN_00034a64",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30c = `mov.l @(0x34a5c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x34a5c = 0x00034a64 (ROM-verified, big-endian) (ROM-verified at 0x00034a28). Direct tail-jump to `FUN_00034a64` 0x00034a64; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_00034a64` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00034a2e",
+      "old_name": "thunk_FUN_00034a6c",
+      "cls": "pool_jmp",
+      "target": "00034a6c",
+      "target_name": "FUN_00034a6c",
+      "alias": "jump_to_FUN_00034a6c",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30c = `mov.l @(0x34a60,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x34a60 = 0x00034a6c (ROM-verified, big-endian) (ROM-verified at 0x00034a2e). Direct tail-jump to `FUN_00034a6c` 0x00034a6c; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_00034a6c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00035d36",
+      "old_name": "ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN",
+      "cls": "jsr_reg",
+      "target": "00037ea4",
+      "target_name": "e2ram_shadow_byte_write",
+      "alias": "e2ram_shadow_byte_write_trampoline",
+      "confidence": "high",
+      "evidence": "14-byte body (words 4e0b 0009 4f26 6cf6 6df6 000b 6ef6 at 0x35d36, ROM-verified; byte-exact match with 60E0FC00 0x36456): `jsr @r14; nop; lds.l @r15+,pr; mov.l @r15+,r12; mov.l @r15+,r13; rts; mov.l @r15+,r14`. Sole caller 0x35a8c loads r14 exactly once, at 0x35a94 `mov.l @(0x35b74,pc),r14` with pool 0x35b74 = 0x00037ea4 (e2ram_shadow_byte_write), and all 14 dispatch arms `bra 0x35d36`; the epilogue pops the frame 0x35a8c pushed (r14/r13/r12/pr), so this is a tail-call trampoline to e2ram_shadow_byte_write 0x37ea4, not an unknown indirect call. Target proven -> promoted from candidate_ to a high-confidence label; inherited ref_writeToE2RAMAreaTHUNK_ was a misnomer (the real ref_writeToE2RAMArea_INDEX_ADDR_LEN is 0x37ea4)."
+    },
+    {
+      "address": "0003807c",
+      "old_name": "thunk_FUN_00037fda",
+      "cls": "pool_jmp",
+      "target": "00037fda",
+      "target_name": "FUN_00037fda",
+      "alias": "jump_to_FUN_00037fda",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30d = `mov.l @(0x380b4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x380b4 = 0x00037fda (ROM-verified, big-endian) (ROM-verified at 0x0003807c). Direct tail-jump to `FUN_00037fda` 0x00037fda; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00037fda` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00038118",
+      "old_name": "thunk_FUN_00038194",
+      "cls": "bra",
+      "target": "00038194",
+      "target_name": "FUN_00038194",
+      "alias": "jump_to_FUN_00038194",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa03c = `bra 0x38194` + delay-slot word 0x0009 (ROM-verified at 0x00038118). Direct tail-jump to `FUN_00038194` 0x00038194; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_00038194` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0003eb6c",
+      "old_name": "thunk_FUN_0003e300",
+      "cls": "pool_jmp",
+      "target": "0003e300",
+      "target_name": "FUN_0003e300",
+      "alias": "jump_to_FUN_0003e300",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd312 = `mov.l @(0x3ebb8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x3ebb8 = 0x0003e300 (ROM-verified, big-endian) (ROM-verified at 0x0003eb6c). Direct tail-jump to `FUN_0003e300` 0x0003e300; callers in callgraph: 0x0003e020. Upstream name `thunk_FUN_0003e300` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000490f8",
+      "old_name": "thunk_FUN_00049112",
+      "cls": "bra",
+      "target": "00049112",
+      "target_name": "FUN_00049112",
+      "alias": "jump_to_FUN_00049112",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa00b = `bra 0x49112` + delay-slot word 0x0009 (ROM-verified at 0x000490f8). Direct tail-jump to `FUN_00049112` 0x00049112; callers in callgraph: 0x00019640. Upstream name `thunk_FUN_00049112` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "0004bd44",
+      "old_name": "thunk_FUN_0004bda2",
+      "cls": "bra",
+      "target": "0004bda2",
+      "target_name": "FUN_0004bda2",
+      "alias": "jump_to_FUN_0004bda2",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa02d = `bra 0x4bda2` + delay-slot word 0x0009 (ROM-verified at 0x0004bd44). Direct tail-jump to `FUN_0004bda2` 0x0004bda2; callers in callgraph: 0x0002a1a0. Upstream name `thunk_FUN_0004bda2` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00054d24",
+      "old_name": "thunk_FUN_00054d90",
+      "cls": "bra",
+      "target": "00054d90",
+      "target_name": "FUN_00054d90",
+      "alias": "jump_to_FUN_00054d90",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa034 = `bra 0x54d90` + delay-slot word 0x0009 (ROM-verified at 0x00054d24). Direct tail-jump to `FUN_00054d90` 0x00054d90; callers in callgraph: 0x00065980. Upstream name `thunk_FUN_00054d90` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000565e4",
+      "old_name": "thunk_FUN_00056786",
+      "cls": "bra",
+      "target": "00056786",
+      "target_name": "FUN_00056786",
+      "alias": "jump_to_FUN_00056786",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa0cf = `bra 0x56786` + delay-slot word 0x0009 (ROM-verified at 0x000565e4). Direct tail-jump to `FUN_00056786` 0x00056786; callers in callgraph: 0x0001102a. Upstream name `thunk_FUN_00056786` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "000576c2",
+      "old_name": "thunk_FUN_00037358",
+      "cls": "pool_jmp",
+      "target": "00037358",
+      "target_name": "dtc_state_machine_step",
+      "alias": "diag22_pidc116_dtc_state_machine",
+      "confidence": "high",
+      "evidence": "Kept existing high-confidence alias diag22_pidc116_dtc_state_machine (proven by the DTC thunk-cluster pass / diag22 pass): dispatch record 0x5f538 -> handler verified in ROM bytes + function_index; thunk to 0x37358: DTC state machine; sets DAT_ffffd1e8 response code | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)",
+      "kept": true
+    },
+    {
+      "address": "0005fd3c",
+      "old_name": "ref_updateFaultStatusTHUNKNoR6_",
+      "cls": "other",
+      "target": null,
+      "target_name": null,
+      "alias": "dtc_set_fault_xdefault",
+      "confidence": "high",
+      "evidence": "Kept existing high-confidence alias dtc_set_fault_xdefault (proven by the DTC thunk-cluster pass / diag22 pass): Entry 0x5fd3c: extu.w r6,r3; tst r3,r3; bf/s skip; mov.l @(0x5fe0c,pc),r6 where pool 0x5fe0c = 0x0000ffff; then bra 0x5fe20 (a06b at 0x5fd46): trampoline to dtc_set_fault with x defaulted to 0xffff when the caller passes r6==0. 2 callers (0x44724, 0x44cec), both computing r6 from flag bits before the call (jsr via pool words 0x447ac/0x44d54). Inherited ref_updateFaultStatusTHUNKNoR6_ is a misnomer: the body is set_fault, not a fault-status update; 'NoR6' = trampoline for callers that leave r6 unset.",
+      "kept": true
+    },
+    {
+      "address": "0005fd92",
+      "old_name": "thunk_FUN_000601b2",
+      "cls": "bra",
+      "target": "000601b2",
+      "target_name": "FUN_000601b2",
+      "alias": "jump_to_FUN_000601b2",
+      "confidence": "high",
+      "evidence": "4-byte body: word 0xa20e = `bra 0x601b2` + delay-slot word 0x0009 (ROM-verified at 0x0005fd92). Direct tail-jump to `FUN_000601b2` 0x000601b2; callers in callgraph: 0x00059852. Upstream name `thunk_FUN_000601b2` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00064004",
+      "old_name": "thunk_FUN_00060c7a",
+      "cls": "pool_jmp",
+      "target": "00060c7a",
+      "target_name": "FUN_00060c7a",
+      "alias": "jump_to_FUN_00060c7a",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd31c = `mov.l @(0x64078,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x64078 = 0x00060c7a (ROM-verified, big-endian) (ROM-verified at 0x00064004). Direct tail-jump to `FUN_00060c7a` 0x00060c7a; callers in callgraph: 0x00061092. Upstream name `thunk_FUN_00060c7a` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00064912",
+      "old_name": "thunk_FUN_00060c7a",
+      "cls": "pool_jmp",
+      "target": "00060c7a",
+      "target_name": "FUN_00060c7a",
+      "alias": "jump_to_FUN_00060c7a",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd333 = `mov.l @(0x649e0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x649e0 = 0x00060c7a (ROM-verified, big-endian) (ROM-verified at 0x00064912). Direct tail-jump to `FUN_00060c7a` 0x00060c7a; callers in callgraph: 0x00061092. Upstream name `thunk_FUN_00060c7a` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d64",
+      "old_name": "thunk_FUN_00054a00",
+      "cls": "pool_jmp",
+      "target": "00054a00",
+      "target_name": "FUN_00054a00",
+      "alias": "jump_to_FUN_00054a00",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30b = `mov.l @(0x68d94,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d94 = 0x00054a00 (ROM-verified, big-endian) (ROM-verified at 0x00068d64). Direct tail-jump to `FUN_00054a00` 0x00054a00; callers in callgraph: 0x00067faa. Upstream name `thunk_FUN_00054a00` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d6a",
+      "old_name": "thunk_FUN_00054b2c",
+      "cls": "pool_jmp",
+      "target": "00054b2c",
+      "target_name": "FUN_00054b2c",
+      "alias": "jump_to_FUN_00054b2c",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30b = `mov.l @(0x68d98,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d98 = 0x00054b2c (ROM-verified, big-endian) (ROM-verified at 0x00068d6a). Direct tail-jump to `FUN_00054b2c` 0x00054b2c; callers in callgraph: 0x000684b4. Upstream name `thunk_FUN_00054b2c` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d70",
+      "old_name": "thunk_FUN_00054a36",
+      "cls": "pool_jmp",
+      "target": "00054a36",
+      "target_name": "FUN_00054a36",
+      "alias": "jump_to_FUN_00054a36",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30a = `mov.l @(0x68d9c,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68d9c = 0x00054a36 (ROM-verified, big-endian) (ROM-verified at 0x00068d70). Direct tail-jump to `FUN_00054a36` 0x00054a36; callers in callgraph: 0x0006892a, 0x00068996. Upstream name `thunk_FUN_00054a36` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d76",
+      "old_name": "thunk_FUN_00054aa0",
+      "cls": "pool_jmp",
+      "target": "00054aa0",
+      "target_name": "FUN_00054aa0",
+      "alias": "jump_to_FUN_00054aa0",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd30a = `mov.l @(0x68da0,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da0 = 0x00054aa0 (ROM-verified, big-endian) (ROM-verified at 0x00068d76). Direct tail-jump to `FUN_00054aa0` 0x00054aa0; no callgraph callers (vector/dispatch-table entry only). Upstream name `thunk_FUN_00054aa0` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d7c",
+      "old_name": "thunk_FUN_00054b62",
+      "cls": "pool_jmp",
+      "target": "00054b62",
+      "target_name": "FUN_00054b62",
+      "alias": "jump_to_FUN_00054b62",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd309 = `mov.l @(0x68da4,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da4 = 0x00054b62 (ROM-verified, big-endian) (ROM-verified at 0x00068d7c). Direct tail-jump to `FUN_00054b62` 0x00054b62; callers in callgraph: 0x0006859e. Upstream name `thunk_FUN_00054b62` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    },
+    {
+      "address": "00068d82",
+      "old_name": "thunk_FUN_00054b98",
+      "cls": "pool_jmp",
+      "target": "00054b98",
+      "target_name": "FUN_00054b98",
+      "alias": "jump_to_FUN_00054b98",
+      "confidence": "high",
+      "evidence": "6-byte body: word 0xd309 = `mov.l @(0x68da8,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x68da8 = 0x00054b98 (ROM-verified, big-endian) (ROM-verified at 0x00068d82). Direct tail-jump to `FUN_00054b98` 0x00054b98; callers in callgraph: 0x00068868. Upstream name `thunk_FUN_00054b98` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+    }
+  ],
+  "added_this_run": 0,
+  "replaced_this_run": 0,
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_unchanged": true,
+  "ghidra_database_updated": false
+}

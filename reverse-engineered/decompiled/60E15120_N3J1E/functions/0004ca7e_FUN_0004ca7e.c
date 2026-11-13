@@ -1,13 +1,13 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_speed_error_filter_stage [high]: Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c.
+ * RAM 0xffffcee4 cruise_speed_error_mean12 (float): Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006bc40: Table 2D - 399 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc4c: Table 2D - 400 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc58: Table 2D - 401 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc64: Table 2D - 402 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc70: Table 2D - 403 Check DataType (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * cruise_speed_error_filter_stage [high]: Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c.
- * RAM 0xffffcee4 cruise_speed_error_mean12 (float): Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

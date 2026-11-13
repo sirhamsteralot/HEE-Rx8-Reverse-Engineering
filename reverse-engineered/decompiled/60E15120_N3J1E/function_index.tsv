@@ -184,7 +184,7 @@ address	name	body_bytes	status	file
 00004d2e	ref_setRegisters	188	decompiled	functions/00004d2e_ref_setRegisters.c
 00004dea	FUN_00004dea	4	decompiled	functions/00004dea_FUN_00004dea.c
 00004dee	FUN_00004dee	24	decompiled	functions/00004dee_FUN_00004dee.c
-00004e06	thunk_FUN_00004dee	4	decompiled	functions/00004e06_thunk_FUN_00004dee.c
+00004e06	jump_to_FUN_00004dee	4	decompiled	functions/00004e06_thunk_FUN_00004dee.c
 00004e0a	FUN_00004e0a	4	decompiled	functions/00004e0a_FUN_00004e0a.c
 00004e0e	FUN_00004e0e	4	decompiled	functions/00004e0e_FUN_00004e0e.c
 00004e12	FUN_00004e12	4	decompiled	functions/00004e12_FUN_00004e12.c
@@ -322,12 +322,12 @@ address	name	body_bytes	status	file
 00005e48	FUN_00005e48	16	decompiled	functions/00005e48_FUN_00005e48.c
 00005e58	FUN_00005e58	16	decompiled	functions/00005e58_FUN_00005e58.c
 00005e68	FUN_00005e68	16	decompiled	functions/00005e68_FUN_00005e68.c
-00005e78	thunk_FUN_00009c86_00005e78	6	decompiled	functions/00005e78_thunk_FUN_00009c86.c
+00005e78	jump_to_can_rx_isr_handler	6	decompiled	functions/00005e78_thunk_FUN_00009c86.c
 00005ebc	FUN_00005ebc	12	decompiled	functions/00005ebc_FUN_00005ebc.c
 00005ec8	FUN_00005ec8	6	decompiled	functions/00005ec8_FUN_00005ec8.c
 00005ece	FUN_00005ece	16	decompiled	functions/00005ece_FUN_00005ece.c
 00005ede	FUN_00005ede	16	decompiled	functions/00005ede_FUN_00005ede.c
-00005eee	thunk_FUN_00009c86_00005eee	6	decompiled	functions/00005eee_thunk_FUN_00009c86.c
+00005eee	jump_to_can_rx_isr_handler	6	decompiled	functions/00005eee_thunk_FUN_00009c86.c
 00005ef4	FUN_00005ef4	12	decompiled	functions/00005ef4_FUN_00005ef4.c
 00005f18	FUN_00005f18	4	decompiled	functions/00005f18_FUN_00005f18.c
 00005f1c	os_post_message	218	decompiled	functions/00005f1c_FUN_00005f1c.c
@@ -335,9 +335,9 @@ address	name	body_bytes	status	file
 000060c8	ref_getSensorStuff__	224	decompiled	functions/000060c8_ref_getSensorStuff__.c
 000061a8	ref_mainInit__	98	decompiled	functions/000061a8_ref_mainInit__.c
 000062a0	task0_background_loop	192	decompiled	functions/000062a0_FUN_000062a0.c
-00006360	thunk_FUN_00011492_00006360	6	decompiled	functions/00006360_thunk_FUN_00011492.c
-00006366	thunk_FUN_000113b8_00006366	6	decompiled	functions/00006366_thunk_FUN_000113b8.c
-0000636c	thunk_FUN_0000abfa_0000636c	6	decompiled	functions/0000636c_thunk_FUN_0000abfa.c
+00006360	jump_to_FUN_00011492	6	decompiled	functions/00006360_thunk_FUN_00011492.c
+00006366	jump_to_FUN_000113b8	6	decompiled	functions/00006366_thunk_FUN_000113b8.c
+0000636c	jump_to_FUN_0000abfa	6	decompiled	functions/0000636c_thunk_FUN_0000abfa.c
 00006372	FUN_00006372	14	decompiled	functions/00006372_FUN_00006372.c
 000063f0	ref_interruptSetup___	158	decompiled	functions/000063f0_ref_interruptSetup___.c
 0000648e	FUN_0000648e	44	decompiled	functions/0000648e_FUN_0000648e.c
@@ -435,7 +435,7 @@ address	name	body_bytes	status	file
 00008340	injector_pulse_set_dispatch	4	decompiled	functions/00008340_ref_injectorPulseSet_.c
 00008344	FUN_00008344	134	decompiled	functions/00008344_FUN_00008344.c
 000083ca	FUN_000083ca	184	decompiled	functions/000083ca_FUN_000083ca.c
-000084c2	thunk_FUN_00008b4c	4	decompiled	functions/000084c2_thunk_FUN_00008b4c.c
+000084c2	jump_to_FUN_00008b4c	4	decompiled	functions/000084c2_thunk_FUN_00008b4c.c
 000084c6	FUN_000084c6	244	decompiled	functions/000084c6_FUN_000084c6.c
 000085e4	injector_channel_disable	200	decompiled	functions/000085e4_ref_putFuelingStuffInArray_.c
 000086ac	injector_zero_offset_set	36	decompiled	functions/000086ac_ref_fuelinjectorSet0__.c
@@ -491,9 +491,9 @@ address	name	body_bytes	status	file
 00009f0c	FUN_00009f0c	6	decompiled	functions/00009f0c_FUN_00009f0c.c
 00009f12	FUN_00009f12	6	decompiled	functions/00009f12_FUN_00009f12.c
 00009f48	FUN_00009f48	4	decompiled	functions/00009f48_FUN_00009f48.c
-00009f4c	thunk_FUN_00011492_00009f4c	6	decompiled	functions/00009f4c_thunk_FUN_00011492.c
-00009f52	thunk_FUN_000113b8_00009f52	6	decompiled	functions/00009f52_thunk_FUN_000113b8.c
-00009f58	thunk_FUN_0000abfa_00009f58	6	decompiled	functions/00009f58_thunk_FUN_0000abfa.c
+00009f4c	jump_to_0x00006360	6	decompiled	functions/00009f4c_thunk_FUN_00011492.c
+00009f52	jump_to_0x00006366	6	decompiled	functions/00009f52_thunk_FUN_000113b8.c
+00009f58	jump_to_0x0000636c	6	decompiled	functions/00009f58_thunk_FUN_0000abfa.c
 00009f5e	FUN_00009f5e	28	decompiled	functions/00009f5e_FUN_00009f5e.c
 00009f7a	FUN_00009f7a	28	decompiled	functions/00009f7a_FUN_00009f7a.c
 00009f96	FUN_00009f96	28	decompiled	functions/00009f96_FUN_00009f96.c
@@ -547,7 +547,7 @@ address	name	body_bytes	status	file
 0000abfa	FUN_0000abfa	8	decompiled	functions/0000abfa_FUN_0000abfa.c
 0000ac02	FUN_0000ac02	126	decompiled	functions/0000ac02_FUN_0000ac02.c
 0000acfc	FUN_0000acfc	46	decompiled	functions/0000acfc_FUN_0000acfc.c
-0000ad2a	thunk_FUN_0000aee8	4	decompiled	functions/0000ad2a_thunk_FUN_0000aee8.c
+0000ad2a	jump_to_adc_pair_correlation_fault_compute	4	decompiled	functions/0000ad2a_thunk_FUN_0000aee8.c
 0000ad40	FUN_0000ad40	316	decompiled_with_warnings	functions/0000ad40_FUN_0000ad40.c
 0000aee8	adc_pair_correlation_fault_compute	356	decompiled	functions/0000aee8_FUN_0000aee8.c
 0000b0a6	FUN_0000b0a6	110	decompiled	functions/0000b0a6_FUN_0000b0a6.c
@@ -717,7 +717,7 @@ address	name	body_bytes	status	file
 00010230	FUN_00010230	6	decompiled	functions/00010230_FUN_00010230.c
 00010248	FUN_00010248	216	decompiled	functions/00010248_FUN_00010248.c
 00010320	FUN_00010320	106	decompiled	functions/00010320_FUN_00010320.c
-0001038a	thunk_FUN_00010fa8	6	decompiled	functions/0001038a_thunk_FUN_00010fa8.c
+0001038a	jump_to_FUN_00010fa8	6	decompiled	functions/0001038a_thunk_FUN_00010fa8.c
 00010390	FUN_00010390	664	decompiled	functions/00010390_FUN_00010390.c
 0001065c	FUN_0001065c	210	decompiled	functions/0001065c_FUN_0001065c.c
 00010772	FUN_00010772	8	decompiled	functions/00010772_FUN_00010772.c
@@ -833,8 +833,8 @@ address	name	body_bytes	status	file
 0001465e	FUN_0001465e	30	decompiled	functions/0001465e_FUN_0001465e.c
 0001467c	knock_rough_correction_update	42	decompiled	functions/0001467c_FUN_0001467c.c
 000146a6	FUN_000146a6	16	decompiled	functions/000146a6_FUN_000146a6.c
-000146b6	thunk_FUN_00013814	6	decompiled	functions/000146b6_thunk_FUN_00013814.c
-000146bc	thunk_FUN_0001381e	6	decompiled	functions/000146bc_thunk_FUN_0001381e.c
+000146b6	jump_to_FUN_00013814	6	decompiled	functions/000146b6_thunk_FUN_00013814.c
+000146bc	jump_to_FUN_0001381e	6	decompiled	functions/000146bc_thunk_FUN_0001381e.c
 000146c2	FUN_000146c2	24	decompiled	functions/000146c2_FUN_000146c2.c
 00014754	FUN_00014754	28	decompiled	functions/00014754_FUN_00014754.c
 00014774	ref_setPerRotorTimingValuesLeading	54	decompiled_with_warnings	functions/00014774_ref_setPerRotorTimingValuesLeading.c
@@ -870,8 +870,8 @@ address	name	body_bytes	status	file
 00016748	candidate_idle_ac_load_calc	68	decompiled	functions/00016748_FUN_00016748.c
 000167ac	FUN_000167ac	20	decompiled	functions/000167ac_FUN_000167ac.c
 000167c0	idle_control_calc_batch	174	decompiled	functions/000167c0_ref_updateIdleControl__.c
-0001686e	thunk_FUN_00015f74	6	decompiled	functions/0001686e_thunk_FUN_00015f74.c
-00016874	thunk_FUN_00015f8e	6	decompiled	functions/00016874_thunk_FUN_00015f8e.c
+0001686e	jump_to_FUN_00015f74	6	decompiled	functions/0001686e_thunk_FUN_00015f74.c
+00016874	jump_to_FUN_00015f8e	6	decompiled	functions/00016874_thunk_FUN_00015f8e.c
 00016900	candidate_idle_air_correction_select	162	decompiled	functions/00016900_FUN_00016900.c
 000169d4	ref_ImmoRelatedFaultSomething_	72	decompiled_with_warnings	functions/000169d4_ref_ImmoRelatedFaultSomething_.c
 00016a1c	FUN_00016a1c	128	decompiled	functions/00016a1c_FUN_00016a1c.c
@@ -963,7 +963,7 @@ address	name	body_bytes	status	file
 00019da2	FUN_00019da2	48	decompiled	functions/00019da2_FUN_00019da2.c
 00019dd2	FUN_00019dd2	62	decompiled	functions/00019dd2_FUN_00019dd2.c
 00019e10	FUN_00019e10	44	decompiled	functions/00019e10_FUN_00019e10.c
-00019e3c	thunk_FUN_0003ec3c	6	decompiled	functions/00019e3c_thunk_FUN_0003ec3c.c
+00019e3c	jump_to_FUN_0003ec3c	6	decompiled	functions/00019e3c_thunk_FUN_0003ec3c.c
 00019ef8	FUN_00019ef8	40	decompiled	functions/00019ef8_FUN_00019ef8.c
 00019f20	FUN_00019f20	32	decompiled	functions/00019f20_FUN_00019f20.c
 00019f40	maf_filtered_update	14	decompiled	functions/00019f40_FUN_00019f40.c
@@ -1105,7 +1105,7 @@ address	name	body_bytes	status	file
 00021ae8	ref_getThrottleBasedTorque_Related	38	decompiled	functions/00021ae8_ref_getThrottleBasedTorque_Related.c
 00021b48	FUN_00021b48	4	decompiled	functions/00021b48_FUN_00021b48.c
 00021b4c	FUN_00021b4c	36	decompiled	functions/00021b4c_FUN_00021b4c.c
-00021b84	thunk_FUN_0002508c	6	decompiled	functions/00021b84_thunk_FUN_0002508c.c
+00021b84	jump_to_FUN_0002508c	6	decompiled	functions/00021b84_thunk_FUN_0002508c.c
 00021b8a	ref_evapRelated	60	decompiled	functions/00021b8a_ref_evapRelated.c
 00021bc6	FUN_00021bc6	30	decompiled	functions/00021bc6_FUN_00021bc6.c
 00021c14	FUN_00021c14	184	decompiled	functions/00021c14_FUN_00021c14.c
@@ -1114,7 +1114,7 @@ address	name	body_bytes	status	file
 00021d8a	FUN_00021d8a	270	decompiled	functions/00021d8a_FUN_00021d8a.c
 00021efc	FUN_00021efc	410	decompiled	functions/00021efc_FUN_00021efc.c
 00022144	candidate_fuel_open_loop_condition	200	decompiled	functions/00022144_FUN_00022144.c
-00022248	thunk_FUN_00025438	6	decompiled	functions/00022248_thunk_FUN_00025438.c
+00022248	jump_to_FUN_00025438	6	decompiled	functions/00022248_thunk_FUN_00025438.c
 0002224e	FUN_0002224e	42	decompiled	functions/0002224e_FUN_0002224e.c
 00022294	FUN_00022294	224	decompiled	functions/00022294_FUN_00022294.c
 000223b4	FUN_000223b4	274	decompiled	functions/000223b4_FUN_000223b4.c
@@ -1130,7 +1130,7 @@ address	name	body_bytes	status	file
 00022db4	FUN_00022db4	274	decompiled	functions/00022db4_FUN_00022db4.c
 00022f1c	FUN_00022f1c	42	decompiled	functions/00022f1c_FUN_00022f1c.c
 00022f54	FUN_00022f54	44	decompiled	functions/00022f54_FUN_00022f54.c
-00022f80	thunk_FUN_000486a0	6	decompiled	functions/00022f80_thunk_FUN_000486a0.c
+00022f80	jump_to_FUN_000486a0	6	decompiled	functions/00022f80_thunk_FUN_000486a0.c
 00022f86	FUN_00022f86	240	decompiled	functions/00022f86_FUN_00022f86.c
 00023076	FUN_00023076	30	decompiled	functions/00023076_FUN_00023076.c
 00023094	FUN_00023094	26	decompiled	functions/00023094_FUN_00023094.c
@@ -1145,7 +1145,7 @@ address	name	body_bytes	status	file
 000236cc	FUN_000236cc	90	decompiled	functions/000236cc_FUN_000236cc.c
 00023740	FUN_00023740	14	decompiled	functions/00023740_FUN_00023740.c
 0002374e	FUN_0002374e	24	decompiled	functions/0002374e_FUN_0002374e.c
-00023766	thunk_FUN_000236cc	6	decompiled	functions/00023766_thunk_FUN_000236cc.c
+00023766	jump_to_FUN_000236cc	6	decompiled	functions/00023766_thunk_FUN_000236cc.c
 0002376c	e2ram_load_decode_entry	14	decompiled	functions/0002376c_FUN_0002376c.c
 0002377a	e2ram_save_encode_entry	42	decompiled	functions/0002377a_FUN_0002377a.c
 000237cc	FUN_000237cc	120	decompiled	functions/000237cc_FUN_000237cc.c
@@ -1178,11 +1178,11 @@ address	name	body_bytes	status	file
 000252b8	FUN_000252b8	10	decompiled	functions/000252b8_FUN_000252b8.c
 000252c2	FUN_000252c2	178	decompiled	functions/000252c2_FUN_000252c2.c
 000253ac	ref_setValues_000253ac	6	decompiled	functions/000253ac_ref_setValues.c
-000253b2	thunk_FUN_0002529e	6	decompiled	functions/000253b2_thunk_FUN_0002529e.c
+000253b2	jump_to_FUN_0002529e	6	decompiled	functions/000253b2_thunk_FUN_0002529e.c
 000253b8	FUN_000253b8	24	decompiled	functions/000253b8_FUN_000253b8.c
 000253d0	FUN_000253d0	24	decompiled	functions/000253d0_FUN_000253d0.c
 000253e8	FUN_000253e8	32	decompiled	functions/000253e8_FUN_000253e8.c
-00025408	thunk_FUN_000252a6	6	decompiled	functions/00025408_thunk_FUN_000252a6.c
+00025408	jump_to_FUN_000252a6	6	decompiled	functions/00025408_thunk_FUN_000252a6.c
 00025438	FUN_00025438	102	decompiled	functions/00025438_FUN_00025438.c
 0002549e	FUN_0002549e	72	decompiled	functions/0002549e_FUN_0002549e.c
 00025510	FUN_00025510	8	decompiled	functions/00025510_FUN_00025510.c
@@ -1281,7 +1281,7 @@ address	name	body_bytes	status	file
 0002894e	FUN_0002894e	24	decompiled	functions/0002894e_FUN_0002894e.c
 00028966	FUN_00028966	24	decompiled	functions/00028966_FUN_00028966.c
 0002897e	FUN_0002897e	20	decompiled	functions/0002897e_FUN_0002897e.c
-00028992	thunk_FUN_000270aa	6	decompiled	functions/00028992_thunk_FUN_000270aa.c
+00028992	jump_to_FUN_000270aa	6	decompiled	functions/00028992_thunk_FUN_000270aa.c
 00028acc	FUN_00028acc	8	decompiled	functions/00028acc_FUN_00028acc.c
 00028ad4	FUN_00028ad4	8	decompiled	functions/00028ad4_FUN_00028ad4.c
 00028adc	FUN_00028adc	8	decompiled	functions/00028adc_FUN_00028adc.c
@@ -1310,7 +1310,7 @@ address	name	body_bytes	status	file
 00028efc	FUN_00028efc	228	decompiled_with_warnings	functions/00028efc_FUN_00028efc.c
 00029028	FUN_00029028	10	decompiled	functions/00029028_FUN_00029028.c
 00029032	ref_CANRX216TimeoutCount	42	decompiled	functions/00029032_ref_CANRX216TimeoutCount.c
-00029070	thunk_FUN_00029134	4	decompiled	functions/00029070_thunk_FUN_00029134.c
+00029070	jump_to_FUN_00029134	4	decompiled	functions/00029070_thunk_FUN_00029134.c
 00029074	ref_CAN231TX_Main	42	decompiled	functions/00029074_ref_CAN231TX_Main.c
 0002909e	ref_can231SetupTx	40	decompiled	functions/0002909e_ref_can231SetupTx.c
 000290c6	ref_can231TxPack	110	decompiled	functions/000290c6_ref_can231TxPack.c
@@ -1376,8 +1376,8 @@ address	name	body_bytes	status	file
 0002a374	FUN_0002a374	42	decompiled	functions/0002a374_FUN_0002a374.c
 0002a39e	ref_setOBDCANTXVars	30	decompiled	functions/0002a39e_ref_setOBDCANTXVars.c
 0002a3bc	FUN_0002a3bc	24	decompiled	functions/0002a3bc_FUN_0002a3bc.c
-0002a3d4	thunk_FUN_00028db0	6	decompiled	functions/0002a3d4_thunk_FUN_00028db0.c
-0002a3da	thunk_FUN_00028db8	6	decompiled	functions/0002a3da_thunk_FUN_00028db8.c
+0002a3d4	jump_to_FUN_00028db0	6	decompiled	functions/0002a3d4_thunk_FUN_00028db0.c
+0002a3da	jump_to_FUN_00028db8	6	decompiled	functions/0002a3da_thunk_FUN_00028db8.c
 0002a4f8	hcan_mailbox_config_compare	1218	decompiled	functions/0002a4f8_FUN_0002a4f8.c
 0002a9f8	FUN_0002a9f8	10	decompiled	functions/0002a9f8_FUN_0002a9f8.c
 0002aa02	FUN_0002aa02	68	decompiled	functions/0002aa02_FUN_0002aa02.c
@@ -1385,7 +1385,7 @@ address	name	body_bytes	status	file
 0002aa62	FUN_0002aa62	38	decompiled_with_warnings	functions/0002aa62_FUN_0002aa62.c
 0002aa88	FUN_0002aa88	792	decompiled	functions/0002aa88_FUN_0002aa88.c
 0002ae7c	FUN_0002ae7c	298	decompiled	functions/0002ae7c_FUN_0002ae7c.c
-0002afec	thunk_FUN_0002b220	4	decompiled	functions/0002afec_thunk_FUN_0002b220.c
+0002afec	jump_to_FUN_0002b220	4	decompiled	functions/0002afec_thunk_FUN_0002b220.c
 0002aff0	ref_CAN4B0RX_Main	86	decompiled	functions/0002aff0_ref_CAN4B0RX_Main.c
 0002b046	candidate_wheelspeed_rear_avg_calc	216	decompiled	functions/0002b046_FUN_0002b046.c
 0002b156	vehicle_moving_calc	40	decompiled	functions/0002b156_ref_calculateIfVehicleMoving.c
@@ -1394,7 +1394,7 @@ address	name	body_bytes	status	file
 0002b1d6	candidate_can4b0_wheelspeed_extract	74	decompiled	functions/0002b1d6_ref_canrx4b0related.c
 0002b220	FUN_0002b220	10	decompiled	functions/0002b220_FUN_0002b220.c
 0002b264	FUN_0002b264	42	decompiled	functions/0002b264_FUN_0002b264.c
-0002b298	thunk_FUN_0002b8f4	4	decompiled	functions/0002b298_thunk_FUN_0002b8f4.c
+0002b298	jump_to_FUN_0002b8f4	4	decompiled	functions/0002b298_thunk_FUN_0002b8f4.c
 0002b29c	can212_rx_main	104	decompiled	functions/0002b29c_ref_CAN212RX_Main.c
 0002b304	FUN_0002b304	16	decompiled	functions/0002b304_FUN_0002b304.c
 0002b314	can212_rx_signal_validity	104	decompiled	functions/0002b314_ref_can212RXSignalValidity__.c
@@ -1411,7 +1411,7 @@ address	name	body_bytes	status	file
 0002b816	candidate_can212_torque_extract	170	decompiled	functions/0002b816_FUN_0002b816.c
 0002b8f4	FUN_0002b8f4	10	decompiled	functions/0002b8f4_FUN_0002b8f4.c
 0002b8fe	FUN_0002b8fe	42	decompiled	functions/0002b8fe_FUN_0002b8fe.c
-0002b954	thunk_FUN_0002b988	4	decompiled	functions/0002b954_thunk_FUN_0002b988.c
+0002b954	jump_to_FUN_0002b988	4	decompiled	functions/0002b954_thunk_FUN_0002b988.c
 0002b958	ref_CAN4C0RX_Main	38	decompiled	functions/0002b958_ref_CAN4C0RX_Main.c
 0002b97e	FUN_0002b97e	10	decompiled	functions/0002b97e_FUN_0002b97e.c
 0002b988	FUN_0002b988	10	decompiled	functions/0002b988_FUN_0002b988.c
@@ -1518,7 +1518,7 @@ address	name	body_bytes	status	file
 0002ebda	FUN_0002ebda	882	decompiled	functions/0002ebda_FUN_0002ebda.c
 0002f04c	FUN_0002f04c	122	decompiled	functions/0002f04c_FUN_0002f04c.c
 0002f0c6	FUN_0002f0c6	42	decompiled	functions/0002f0c6_FUN_0002f0c6.c
-0002f11c	thunk_FUN_0002e800	6	decompiled	functions/0002f11c_thunk_FUN_0002e800.c
+0002f11c	jump_to_FUN_0002e800	6	decompiled	functions/0002f11c_thunk_FUN_0002e800.c
 0002f122	ref_acCompressorControlMain___	60	decompiled	functions/0002f122_ref_acCompressorControlMain___.c
 0002f188	fan_output_gpio_init	84	decompiled	functions/0002f188_ref_initFanControl.c
 0002f1dc	fan_output_gpio	100	decompiled	functions/0002f1dc_ref_setFanOutputGPIO.c
@@ -1614,7 +1614,7 @@ address	name	body_bytes	status	file
 00032c12	FUN_00032c12	10	decompiled	functions/00032c12_FUN_00032c12.c
 00032c1c	FUN_00032c1c	82	decompiled	functions/00032c1c_FUN_00032c1c.c
 00032c6e	FUN_00032c6e	142	decompiled	functions/00032c6e_FUN_00032c6e.c
-00032d20	thunk_FUN_00032d96	4	decompiled	functions/00032d20_thunk_FUN_00032d96.c
+00032d20	jump_to_FUN_00032d96	4	decompiled	functions/00032d20_thunk_FUN_00032d96.c
 00032d24	ref_CAN430RX_Main	42	decompiled	functions/00032d24_ref_CAN430RX_Main.c
 00032d4e	ref_can430rx_unpack	46	decompiled	functions/00032d4e_ref_can430rx_unpack.c
 00032d7c	FUN_00032d7c	26	decompiled	functions/00032d7c_FUN_00032d7c.c
@@ -1670,8 +1670,8 @@ address	name	body_bytes	status	file
 0003493c	vfad_solenoid_control	132	decompiled	functions/0003493c_ref_vfadControl_.c
 000349e4	ref_ImmoSomethingOrOther__	32	decompiled	functions/000349e4_ref_ImmoSomethingOrOther__.c
 00034a04	FUN_00034a04	36	decompiled	functions/00034a04_FUN_00034a04.c
-00034a28	thunk_FUN_00034a64	6	decompiled	functions/00034a28_thunk_FUN_00034a64.c
-00034a2e	thunk_FUN_00034a6c	6	decompiled	functions/00034a2e_thunk_FUN_00034a6c.c
+00034a28	jump_to_FUN_00034a64	6	decompiled	functions/00034a28_thunk_FUN_00034a64.c
+00034a2e	jump_to_FUN_00034a6c	6	decompiled	functions/00034a2e_thunk_FUN_00034a6c.c
 00034a64	FUN_00034a64	8	decompiled	functions/00034a64_FUN_00034a64.c
 00034a6c	FUN_00034a6c	8	decompiled	functions/00034a6c_FUN_00034a6c.c
 00034a74	ref_immoRelatedMaybe__	110	decompiled	functions/00034a74_ref_immoRelatedMaybe__.c
@@ -1696,7 +1696,7 @@ address	name	body_bytes	status	file
 00035956	ref_loadDatafromE2intoRAM_	16	decompiled	functions/00035956_ref_loadDatafromE2intoRAM_.c
 0003599c	e2ram_boot_param_read	164	decompiled	functions/0003599c_ref_getDataFromE2RAM.c
 00035a8c	candidate_e2ram_param_write_dispatch	592	decompiled	functions/00035a8c_FUN_00035a8c.c
-00035d36	candidate_e2ram_write_thunk	14	decompiled	functions/00035d36_ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN.c
+00035d36	e2ram_shadow_byte_write_trampoline	14	decompiled	functions/00035d36_ref_writeToE2RAMAreaTHUNK_INDEX_ADDR_LEN.c
 00035d80	FUN_00035d80	276	decompiled	functions/00035d80_FUN_00035d80.c
 00035ea0	ref_ImmoUpdateRelated	170	decompiled	functions/00035ea0_ref_ImmoUpdateRelated.c
 00035f64	ref_checkImmoStatus_	262	decompiled	functions/00035f64_ref_checkImmoStatus_.c
@@ -1744,11 +1744,11 @@ address	name	body_bytes	status	file
 00037fd4	FUN_00037fd4	6	decompiled	functions/00037fd4_FUN_00037fd4.c
 00037fda	FUN_00037fda	16	decompiled	functions/00037fda_FUN_00037fda.c
 00037fea	FUN_00037fea	116	decompiled_with_warnings	functions/00037fea_FUN_00037fea.c
-0003807c	thunk_FUN_00037fda	6	decompiled	functions/0003807c_thunk_FUN_00037fda.c
+0003807c	jump_to_FUN_00037fda	6	decompiled	functions/0003807c_thunk_FUN_00037fda.c
 00038082	FUN_00038082	24	decompiled	functions/00038082_FUN_00038082.c
 0003809a	FUN_0003809a	24	decompiled	functions/0003809a_FUN_0003809a.c
 000380c8	ref_can41TXPack	60	decompiled	functions/000380c8_ref_can41TXPack.c
-00038118	thunk_FUN_00038194	4	decompiled	functions/00038118_thunk_FUN_00038194.c
+00038118	jump_to_FUN_00038194	4	decompiled	functions/00038118_thunk_FUN_00038194.c
 0003811c	ref_CAN47RX_Main	52	decompiled	functions/0003811c_ref_CAN47RX_Main.c
 00038150	ref_can47RXunpack	58	decompiled	functions/00038150_ref_can47RXunpack.c
 0003818a	FUN_0003818a	10	decompiled	functions/0003818a_FUN_0003818a.c
@@ -1928,7 +1928,7 @@ address	name	body_bytes	status	file
 0003eb16	FUN_0003eb16	36	decompiled	functions/0003eb16_FUN_0003eb16.c
 0003eb3a	ref_catTempRelated	36	decompiled	functions/0003eb3a_ref_catTempRelated.c
 0003eb5e	FUN_0003eb5e	14	decompiled	functions/0003eb5e_FUN_0003eb5e.c
-0003eb6c	thunk_FUN_0003e300	6	decompiled	functions/0003eb6c_thunk_FUN_0003e300.c
+0003eb6c	jump_to_FUN_0003e300	6	decompiled	functions/0003eb6c_thunk_FUN_0003e300.c
 0003ebbc	ref_pcmBoardTempADCtoVolts	24	decompiled	functions/0003ebbc_ref_pcmBoardTempADCtoVolts.c
 0003ebe4	FUN_0003ebe4	80	decompiled	functions/0003ebe4_FUN_0003ebe4.c
 0003ec3c	FUN_0003ec3c	8	decompiled	functions/0003ec3c_FUN_0003ec3c.c
@@ -2162,7 +2162,7 @@ address	name	body_bytes	status	file
 00048fe8	FUN_00048fe8	106	decompiled	functions/00048fe8_FUN_00048fe8.c
 00049052	FUN_00049052	46	decompiled	functions/00049052_FUN_00049052.c
 00049080	FUN_00049080	62	decompiled	functions/00049080_FUN_00049080.c
-000490f8	thunk_FUN_00049112	4	decompiled	functions/000490f8_thunk_FUN_00049112.c
+000490f8	jump_to_FUN_00049112	4	decompiled	functions/000490f8_thunk_FUN_00049112.c
 000490fc	FUN_000490fc	10	decompiled	functions/000490fc_FUN_000490fc.c
 00049106	FUN_00049106	8	decompiled	functions/00049106_FUN_00049106.c
 0004910e	ref_calcSpeedBasedIATCompensation_0004910e	4	decompiled	functions/0004910e_ref_calcSpeedBasedIATCompensation__.c
@@ -2251,7 +2251,7 @@ address	name	body_bytes	status	file
 0004ba86	FUN_0004ba86	46	decompiled	functions/0004ba86_FUN_0004ba86.c
 0004bab4	FUN_0004bab4	342	decompiled	functions/0004bab4_FUN_0004bab4.c
 0004bc80	ref_calcDiagFuelInjectorTrim	154	decompiled	functions/0004bc80_ref_calcDiagFuelInjectorTrim.c
-0004bd44	thunk_FUN_0004bda2	4	decompiled	functions/0004bd44_thunk_FUN_0004bda2.c
+0004bd44	jump_to_FUN_0004bda2	4	decompiled	functions/0004bd44_thunk_FUN_0004bda2.c
 0004bd48	ref_CAN4B1RX_Main	38	decompiled	functions/0004bd48_ref_CAN4B1RX_Main.c
 0004bd6e	ref_can4B1RXUnpack	52	decompiled	functions/0004bd6e_ref_can4B1RXUnpack.c
 0004bda2	FUN_0004bda2	10	decompiled	functions/0004bda2_FUN_0004bda2.c
@@ -2531,7 +2531,7 @@ address	name	body_bytes	status	file
 00054c6c	FUN_00054c6c	58	decompiled	functions/00054c6c_FUN_00054c6c.c
 00054ca6	FUN_00054ca6	48	decompiled	functions/00054ca6_FUN_00054ca6.c
 00054cf8	FUN_00054cf8	44	decompiled	functions/00054cf8_FUN_00054cf8.c
-00054d24	thunk_FUN_00054d90	4	decompiled	functions/00054d24_thunk_FUN_00054d90.c
+00054d24	jump_to_FUN_00054d90	4	decompiled	functions/00054d24_thunk_FUN_00054d90.c
 00054d28	FUN_00054d28	104	decompiled	functions/00054d28_FUN_00054d28.c
 00054d90	FUN_00054d90	1204	decompiled_with_warnings	functions/00054d90_FUN_00054d90.c
 00055278	FUN_00055278	40	decompiled	functions/00055278_FUN_00055278.c
@@ -2614,7 +2614,7 @@ address	name	body_bytes	status	file
 000564d4	FUN_000564d4	20	decompiled_with_warnings	functions/000564d4_FUN_000564d4.c
 00056508	uds_service_3e_tester_present	166	decompiled	functions/00056508_FUN_00056508.c
 000565ae	FUN_000565ae	26	decompiled	functions/000565ae_FUN_000565ae.c
-000565e4	thunk_FUN_00056786	4	decompiled	functions/000565e4_thunk_FUN_00056786.c
+000565e4	jump_to_FUN_00056786	4	decompiled	functions/000565e4_thunk_FUN_00056786.c
 000565e8	uds_service_b1_mazda_specific	234	decompiled	functions/000565e8_ref_UDSServiceB1Function.c
 000566f0	FUN_000566f0	90	decompiled	functions/000566f0_FUN_000566f0.c
 0005674a	ref_runImmoRelatedCounter	60	decompiled	functions/0005674a_ref_runImmoRelatedCounter.c
@@ -3004,7 +3004,7 @@ address	name	body_bytes	status	file
 0005fd4a	dtc_set_eval_enable	34	decompiled	functions/0005fd4a_FUN_0005fd4a.c
 0005fd6c	FUN_0005fd6c	24	decompiled	functions/0005fd6c_FUN_0005fd6c.c
 0005fd84	FUN_0005fd84	14	decompiled	functions/0005fd84_FUN_0005fd84.c
-0005fd92	thunk_FUN_000601b2	4	decompiled	functions/0005fd92_thunk_FUN_000601b2.c
+0005fd92	jump_to_FUN_000601b2	4	decompiled	functions/0005fd92_thunk_FUN_000601b2.c
 0005fd96	FUN_0005fd96	94	decompiled	functions/0005fd96_FUN_0005fd96.c
 0005fe20	FUN_0005fe20	242	decompiled	functions/0005fe20_FUN_0005fe20.c
 0005ff30	FUN_0005ff30	42	decompiled	functions/0005ff30_FUN_0005ff30.c
@@ -3147,7 +3147,7 @@ address	name	body_bytes	status	file
 00063ecc	FUN_00063ecc	48	decompiled_with_warnings	functions/00063ecc_FUN_00063ecc.c
 00063efc	FUN_00063efc	76	decompiled	functions/00063efc_FUN_00063efc.c
 00063f64	FUN_00063f64	160	decompiled	functions/00063f64_FUN_00063f64.c
-00064004	thunk_FUN_00060c7a_00064004	6	decompiled	functions/00064004_thunk_FUN_00060c7a.c
+00064004	jump_to_FUN_00060c7a	6	decompiled	functions/00064004_thunk_FUN_00060c7a.c
 0006400a	FUN_0006400a	60	decompiled	functions/0006400a_FUN_0006400a.c
 00064088	FUN_00064088	108	decompiled	functions/00064088_FUN_00064088.c
 000640f4	FUN_000640f4	46	decompiled	functions/000640f4_FUN_000640f4.c
@@ -3170,7 +3170,7 @@ address	name	body_bytes	status	file
 00064620	FUN_00064620	274	decompiled	functions/00064620_FUN_00064620.c
 0006477c	FUN_0006477c	268	decompiled	functions/0006477c_FUN_0006477c.c
 000648cc	FUN_000648cc	70	decompiled	functions/000648cc_FUN_000648cc.c
-00064912	thunk_FUN_00060c7a_00064912	6	decompiled	functions/00064912_thunk_FUN_00060c7a.c
+00064912	jump_to_FUN_00060c7a	6	decompiled	functions/00064912_thunk_FUN_00060c7a.c
 00064918	FUN_00064918	90	decompiled	functions/00064918_FUN_00064918.c
 00064972	FUN_00064972	90	decompiled	functions/00064972_FUN_00064972.c
 000649f4	FUN_000649f4	230	decompiled	functions/000649f4_FUN_000649f4.c
@@ -3346,11 +3346,11 @@ address	name	body_bytes	status	file
 00068c98	FUN_00068c98	8	decompiled	functions/00068c98_FUN_00068c98.c
 00068ca0	ref_udsSomething_	182	decompiled	functions/00068ca0_ref_udsSomething_.c
 00068d56	FUN_00068d56	14	decompiled	functions/00068d56_FUN_00068d56.c
-00068d64	thunk_FUN_00054a00	6	decompiled	functions/00068d64_thunk_FUN_00054a00.c
-00068d6a	thunk_FUN_00054b2c	6	decompiled	functions/00068d6a_thunk_FUN_00054b2c.c
-00068d70	thunk_FUN_00054a36	6	decompiled	functions/00068d70_thunk_FUN_00054a36.c
-00068d76	thunk_FUN_00054aa0	6	decompiled	functions/00068d76_thunk_FUN_00054aa0.c
-00068d7c	thunk_FUN_00054b62	6	decompiled	functions/00068d7c_thunk_FUN_00054b62.c
-00068d82	thunk_FUN_00054b98	6	decompiled	functions/00068d82_thunk_FUN_00054b98.c
+00068d64	jump_to_FUN_00054a00	6	decompiled	functions/00068d64_thunk_FUN_00054a00.c
+00068d6a	jump_to_FUN_00054b2c	6	decompiled	functions/00068d6a_thunk_FUN_00054b2c.c
+00068d70	jump_to_FUN_00054a36	6	decompiled	functions/00068d70_thunk_FUN_00054a36.c
+00068d76	jump_to_FUN_00054aa0	6	decompiled	functions/00068d76_thunk_FUN_00054aa0.c
+00068d7c	jump_to_FUN_00054b62	6	decompiled	functions/00068d7c_thunk_FUN_00054b62.c
+00068d82	jump_to_FUN_00054b98	6	decompiled	functions/00068d82_thunk_FUN_00054b98.c
 00068dac	uds_service_dispatch_table_scan	146	decompiled	functions/00068dac_ref_udsHandler.c
 00068e3e	ref_udsResponseRelated2	134	decompiled	functions/00068e3e_ref_udsResponseRelated2.c

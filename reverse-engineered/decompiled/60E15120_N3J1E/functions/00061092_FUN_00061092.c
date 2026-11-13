@@ -47,10 +47,10 @@ void FUN_00061092(uint *param_1)
       FUN_000648cc(iVar7,uVar5);
     }
     else if (cVar1 == '\x02') {
-      thunk_FUN_00060c7a_00064912(iVar7,uVar5);
+      jump_to_FUN_00060c7a(iVar7,uVar5);
     }
     else if (cVar1 == '\x03') {
-      thunk_FUN_00060c7a_00064004(iVar7,uVar5);
+      jump_to_FUN_00060c7a(iVar7,uVar5);
     }
     FUN_000627a0();
   }

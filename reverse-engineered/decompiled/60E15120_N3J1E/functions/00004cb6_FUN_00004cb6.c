@@ -7,7 +7,7 @@ void FUN_00004cb6(void)
 
 {
   FUN_00004dea();
-  thunk_FUN_00004dee();
+  jump_to_FUN_00004dee();
   FUN_00004e0a();
   FUN_00004e12();
   FUN_00004f00();

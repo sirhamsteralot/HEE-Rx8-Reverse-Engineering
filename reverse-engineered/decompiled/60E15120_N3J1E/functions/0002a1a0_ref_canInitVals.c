@@ -11,18 +11,18 @@ undefined4 ref_canInitVals(void)
   ref_canSetup();
   FUN_0000de3c();
   FUN_0002a9f8();
-  thunk_FUN_00038194();
-  thunk_FUN_0002b8f4();
+  jump_to_FUN_00038194();
+  jump_to_FUN_0002b8f4();
   FUN_0002b304();
   FUN_0002b480();
   ref_canRX_216_stubs_();
   FUN_00028dea();
   FUN_00028e1a();
-  thunk_FUN_00029134();
-  thunk_FUN_00032d96();
-  thunk_FUN_0002b220();
-  thunk_FUN_0004bda2();
-  uVar1 = thunk_FUN_0002b988();
+  jump_to_FUN_00029134();
+  jump_to_FUN_00032d96();
+  jump_to_FUN_0002b220();
+  jump_to_FUN_0004bda2();
+  uVar1 = jump_to_FUN_0002b988();
   if (can_setup_error_flag_ffffa410 == '\0') {
     FUN_000291a4();
     FUN_00029414();

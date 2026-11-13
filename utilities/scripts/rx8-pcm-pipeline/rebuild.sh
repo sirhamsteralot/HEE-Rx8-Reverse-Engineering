@@ -39,6 +39,7 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 (cd "$root" && python3 "$base/scripts/review_dsc_can_labels.py")
 (cd "$root" && python3 "$base/scripts/review_dtc_thunk_labels.py")
 (cd "$root" && python3 "$base/scripts/review_candidate_promotions.py")
+(cd "$root" && python3 "$base/scripts/review_thunk_audit_labels.py")
 (cd "$root" && python3 "$base/scripts/annotate_source_review.py")
 (cd "$root" && python3 "$base/scripts/name_lookup_variables.py")
 (cd "$root" && python3 "$base/scripts/merge_reviewed_lookup_aliases.py")

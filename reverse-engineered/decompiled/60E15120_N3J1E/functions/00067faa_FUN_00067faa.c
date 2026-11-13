@@ -36,7 +36,7 @@ uint FUN_00067faa(uint *param_1)
         DAT_ffffdde0 = (char)uVar6;
         DAT_ffffdde2 = (char)uVar1;
         FUN_00068776(uVar3);
-        thunk_FUN_00054a00((int)DAT_ffffdde0);
+        jump_to_FUN_00054a00((int)DAT_ffffdde0);
       }
       else {
         FUN_00068b98(uVar1);

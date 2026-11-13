@@ -20,9 +20,9 @@
       "evidence": "Indexed shadow write under mask 0x10 (pools 0x37f6c=0x3920, 0x37f8c=0x3934): for len bytes, 0xffffc28e[i] = src byte and 0xffffc38e[i] = ~byte (pools 0x37f7c/0x37f80). Callers: 0x279d8, 0x27d06, 0x35a8c, 0x4b668, 0x5d9d8, 0x5e8a4 (callgraph). Inherited ref_writeToE2RAMArea_INDEX_ADDR_LEN confirmed as the RAM shadow writer (data + complement)."
     },
     "00035d36": {
-      "alias": "e2ram_write_thunk",
-      "confidence": "medium",
-      "evidence": "4-byte thunk calling the write area via register-indirect call; called from 0x35a8c (callgraph 0x35a8c -> 0x35d36). Inherited ref_writeToE2RAMAreaTHUNK confirmed."
+      "alias": "e2ram_shadow_byte_write_trampoline",
+      "confidence": "high",
+      "evidence": "14-byte body (words 4e0b 0009 4f26 6cf6 6df6 000b 6ef6 at 0x35d36, ROM-verified; byte-exact match with 60E0FC00 0x36456): `jsr @r14; nop; lds.l @r15+,pr; mov.l @r15+,r12; mov.l @r15+,r13; rts; mov.l @r15+,r14`. Sole caller 0x35a8c loads r14 exactly once, at 0x35a94 `mov.l @(0x35b74,pc),r14` with pool 0x35b74 = 0x00037ea4 (e2ram_shadow_byte_write), and all 14 dispatch arms `bra 0x35d36`; the epilogue pops the frame 0x35a8c pushed, so this is a tail-call trampoline to 0x37ea4, not an unknown indirect call. Resolved by the thunk audit (review_thunk_audit_labels.py); inherited ref_writeToE2RAMAreaTHUNK_ was a misnomer."
     },
     "00035a8c": {
       "alias": "e2ram_param_write_dispatch",
