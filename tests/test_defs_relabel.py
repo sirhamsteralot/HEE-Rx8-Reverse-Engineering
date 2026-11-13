@@ -32,12 +32,10 @@ MERGED = REPO / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.
 PER_ROM = REPO / "data" / "definitions" / "romraider" / "per-rom"
 LABELS = REPO / "data" / "labels" / "60E15120_N3J1E" / "defs_table_labels.json"
 
-# Base categories renamed upstream in RX8Defs 39d98a0; the curated label map
-# predates the rename, so marked tables may still carry the old name (the
-# merged 60E15120 def keeps the pre-rename base category names until the label
-# map is updated). A curated category is accepted if it or its upstream
-# successor exists in the base.
-UPSTREAM_CATEGORY_RENAMES = {"Fuel Target (Closed Loop)": "Fuel Injection - Closed Loop"}
+# The base category "Fuel Target (Closed Loop)" was renamed upstream in RX8Defs
+# 39d98a0 to "Fuel Injection - Closed Loop"; the curated label map, the merged
+# def and all per-ROM defs carry the new name, so a marked table's category must
+# exist in the base verbatim (no rename alias needed anymore).
 
 
 def rom_block(path, xmlid):
@@ -173,7 +171,7 @@ def test_per_rom_defs_carry_labels_and_keep_geometry():
             cat = t.get("category")
             if cat and cat.startswith("Unknown"):
                 continue
-            known = cat in base_cats or UPSTREAM_CATEGORY_RENAMES.get(cat) in base_cats
+            known = cat in base_cats
             assert known, f"{stem}: category {cat!r} of {t.get('name')!r} not an existing base category"
 
 
