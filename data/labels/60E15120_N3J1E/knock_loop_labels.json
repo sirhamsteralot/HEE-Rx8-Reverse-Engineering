@@ -4,131 +4,163 @@
  "function_aliases": {
  "00013826": {
   "alias": "knock_enable_gate",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets DAT_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000."
  },
  "0001388a": {
   "alias": "knock_sensor_health_gate",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets DAT_ffffa73e = (0xffffcd64 && 0xffffcd66); both set by 0x49fac after >30 healthy knock-sensor counts."
  },
  "000138b2": {
   "alias": "knock_active_gate",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets DAT_ffffa73c = DAT_ffffa73d && DAT_ffffa73e; gates attack (0x13a60) and slow recovery (0x13b40)."
  },
  "000139c4": {
   "alias": "knock_retard_learn_to_eeprom",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "When DAT_ffffa73f set: filters knock_retard_ffffa734 toward EEPROM 0xffff8038 (rx8_first_order_filter 0.0039/1e-05), clamps via 0x13bd2, writes back with ref_updateMemoryAtAddress_float."
  },
  "00013a60": {
   "alias": "knock_retard_attack",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Knock retard target: disabled (a73d==0) -> 0; sensors unhealthy (a73e==0) -> tbl 0x6afa4(RPM); activation edge (a74c==0 && a73c==1) -> tbl 0x6afb8(learned retard); active && attack condition (c05c==1) -> -1.0 deg/cycle (retard is negative, clamped <= 0). Writes a744, then clamped a734 = 0x13bd2(result), mirror a738."
  },
  "00013b40": {
   "alias": "knock_retard_slow_recovery",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Active && !c05c: +0.35 deg per 62 counts (two u8 saturating counters a74a/a74b selected by c05d); result clamped via 0x13bd2, mirror a738 updated."
  },
  "00013bd2": {
   "alias": "knock_retard_clamp",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result."
  },
  "000125bc": {
   "alias": "knock_retard_apply_leading",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "a648 = ((a734 - a6ac) - max(a750, c9a0)) + a5e0 + b288 - a66c: knock retard minus rough correction, minus max(coolant derate, cold-start reduction), plus idle/base term a5e0 (writer not identified in the export), plus A/C retard, minus trim a66c."
  },
  "000125f6": {
   "alias": "knock_retard_apply_trailing",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Trailing mirror of 0x125bc using a738/a6b0/a754/c9a4/b28c and idle/base term a5e4 (writer not identified) -> a658."
  },
  "000123ba": {
   "alias": "leading_timing_add_corrections",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "a634 = a640 + a648: base leading timing plus total corrections."
  },
  "000123ca": {
   "alias": "trailing_timing_add_corrections",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "a63c = a650 + a658: base trailing timing plus total corrections."
  },
  "00011f00": {
   "alias": "leading_base_timing_calc",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "RX8Defs 'Ignition Leading - Base Timing' plate; blends calibrated base with open-loop cap by weight b118; safe-mode cap via b12d."
  },
  "0001206c": {
   "alias": "trailing_base_timing_calc",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00."
  },
  "00049fac": {
   "alias": "knock_sensor_health_persistence",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "0xffffa325==0 (no fault) for >30 counts -> cd64=cd66=1; fault 1/2 -> cd67/cd65 with counters cd68/cd6a/cd6c; cleared by DTC 0x23/0x24 active or d1c5."
  },
  "0004a084": {
   "alias": "knock_sensor_dtc_report",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Raises DTC 0x23/0x24 via dtc_set_fault_x0 from cd65/cd67 (cd64/cd66 reported as status 2)."
  },
  "000336c4": {
   "alias": "knock_threshold_setup",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "3D load/RPM level tables 0x6b2b8/0x6b2f0/0x6b2d4/0x6b304 -> a328; raw u16 thresholds 0x6b270/0x6b27c and 0x6b288/0x6b294 -> c090/c092 -> a37e/a37c (defaults 94/193); stability check -> c05d and c0ac hold counter; latches c078 = a324."
  },
  "00033632": {
   "alias": "knock_filter_constants_init",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets c060=0.0625, c064=0.1253, c068=0.03125, c05d=0 (calm-state filter constants; 0x336c4 switches c060 to 0.1875 and c068 to ROM 0x7a23c=0.09375 on transient c05d==1; c064 stays 0.1253)."
  },
  "00033970": {
   "alias": "knock_attack_condition",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets c05c: knock latched (c078) && engine running (a428) && run timer >= 0xfa && leading and trailing timing both > 5 deg - thresholdA*0.15625 where thresholdA = raw u16 c090 (timing not already deeply retarded)."
  },
  "000335e4": {
   "alias": "knock_condition_snapshots_init",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Resets knock state via 0xc116(0); stores snapshots c06c/c070/c074 (RPM/load/throttle), c098/c09c/c0a0 and constants."
  },
  "0000c486": {
   "alias": "knock_magnitude_integrate",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Knock magnitude core: voltage = (a378 - a326)*5/65536; magnitude vs tbl 0x6b250 minus command-code term; noise filter, per-rotor integrators a33c/a350, baseline a348, combined level a34c; sets a324 = (a364 <= a330), knock detected."
  },
  "0000c8dc": {
   "alias": "knock_sensor_sci_command",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "SCI front-end on ATU window: rotor alternation a383/a384, reference select by a386 (ROM 0x7a750/0x7a752), command-code mapping a368->a380/a381 (6/5/4/2/0 bands), send via update_serial_command_bits_3_to_5_and_send or sci0_configure_sync_and_exchange_command."
  },
  "0000c3ce": {
   "alias": "knock_voltage_sample",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Called from 0x661e (task[6], before ref_engineControlTASK): a37a = DAT_ffff9ef8 (knock ADC raw); in the 200-2000 RPM window filters into a378; sets a386 = (raw RPM >= 10000)."
  },
  "0000c276": {
   "alias": "knock_reference_adc_read",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "a326 = ref_readADCResult(): knock reference-channel ADC; called from 0xc8dc (knock_sensor_sci_command) and 0x5a4c."
  },
  "0000c116": {
   "alias": "reset_knock_state_on_mode_change",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Inherited name ref_enableDisableCruiseControl__ is a misnomer: on mode change (a38c != param) only resets a384=0xff, a385=0, a324=0. Callers: 0x335e4 (init, param 0) and 0x339ea (RPM window)."
  },
  "000339ea": {
   "alias": "knock_state_reset_rpm_window",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "6500/7000 RPM hysteresis -> 0xc116(1) at/above 7000, 0xc116(0) below 6500; called from 0x19cf4 vehicle-speed task."
  },
  "0001c13c": {
   "alias": "closed_loop_enable_condition",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Computes ae1e (CL allowed: coolant >= 35 C, engine time >= tbl 0x6990c vs catalyst-temp model, open loop inactive b12c==0, O2 in tolerance, no DTC-ish conditions) and ae1f (CL active = ae1e && cd5c==0 && lambda feedback aa80/aa81)."
  },
  "0001f0c4": {
   "alias": "open_loop_request_condition",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Sets b12a=1 when load/throttle exceed 'Closed Loop Fuelling Threshold' tables 0x69d24/0x69d38/0x69d4c/0x69d60/0x69d74 with hysteresis flags b1b6/b1b7, throttle threshold b15c and timers b148/b14e."
  },
  "0001ee30": {
   "alias": "set_open_loop_flag",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Inherited name ref_setClosedLoopBool is a misnomer (polarity): sets b12c = (b12a != 0), i.e. the OPEN-loop flag; b12c blocks closed loop in 0x1c13c and selects open-loop targets in 0x1ee4a."
  },
  "0001ee4a": {
   "alias": "open_loop_fueling_targets",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "When b12c==1: open-loop base/tip-in/target/rich-limit lookups (0x69cac/0x69cc0, 0x69e80/0x69e9c, 0x69cd4/0x69d10, safe-mode variants via b12d) -> b120; zeroes b120 in closed loop."
  },
  "0005535e": {
   "alias": "diag_ol_status_byte",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "OBD PID 0x0003 'OL Status' high byte: 2 (closed loop) or 0x10 when ae1f==1, 4 (OL-DTC) when ae1e==0, 8 when coolant >= 35 C, 1 when cold."
  },
  "000553d8": {
   "alias": "diag_ol_status_low_byte",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Low byte of the 2-byte PID 0x0003 response; always 0 in this ROM; handler 0x568ca packs FUN_0005535e()<<8 | this."
  },
  "000142a4": {
   "alias": "ignition_timing_main_task",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "Task[6] worker chain: runs the knock state machine (0x13826/0x1388a/0x138b2/0x13a60/0x139c4; 0x13b40 and 0x13bd2 are NOT called here — 0x13b40 only from 0x145c8, 0x13bd2 from 0x13a60/0x13b40/0x139c4), correction apply (0x125bc/0x125f6/0x123ba/0x123ca) and base timing (0x11f00/0x1206c) -> leading/trailing_ignition_timing 0xffffa630/a638."
  },
  "000145c8": {
   "alias": "timing_retard_fast_task",
@@ -152,7 +184,8 @@
  },
  "00013034": {
   "alias": "knock_rough_correction_targets",
-  "confidence": "high"
+  "confidence": "high",
+  "evidence": "a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c."
  },
  "0003d010": {
   "alias": "o2_monitor_integrator",
@@ -169,1376 +202,1695 @@
  "ffffd1ea": {
   "alias": "diag22_current_identifier",
   "type": "uint16",
-  "reader": "00057858"
+  "reader": "00057858",
+  "evidence": "Read from request by 0x567e8, matched by 0x5774c, echoed in 0x62 header."
  },
  "ffffbb04": {
   "alias": "can201_prepared_engine_rpm",
   "type": "float",
-  "reader": "00029340"
+  "reader": "00029340",
+  "evidence": "Conditional filtered RPM; input from 0xffffb548."
  },
  "ffffbb08": {
   "alias": "can201_previous_engine_rpm",
   "type": "float",
-  "reader": "00029340"
+  "reader": "00029340",
+  "evidence": "Previous unfiltered input saved each call."
  },
  "ffffbafc": {
   "alias": "can201_encoded_rpm",
   "type": "uint16",
-  "reader": "00029236"
+  "reader": "00029236",
+  "evidence": "0.25 RPM/count; 0xffff fault sentinel."
  },
  "ffffbb00": {
   "alias": "can201_encoded_vehicle_speed",
   "type": "uint16",
-  "reader": "0002927c"
+  "reader": "0002927c",
+  "evidence": "(speed+100)/0.01, normal cap 40000."
  },
  "ffffbaf4": {
   "alias": "can201_tx_payload",
   "type": "uint8[8]",
-  "reader": "000291dc"
+  "reader": "000291dc",
+  "evidence": "Descriptor-confirmed 8-byte buffer."
  },
  "ffffbad4": {
   "alias": "can216_unpacked_field_0",
   "type": "uint16",
-  "reader": "00028eb8"
+  "reader": "00028eb8",
+  "evidence": "Source raw bytes 0..1 at bab8/bab9."
  },
  "ffffbad6": {
   "alias": "can216_unpacked_field_1",
   "type": "uint16",
-  "reader": "00028eb8"
+  "reader": "00028eb8",
+  "evidence": "Source raw bytes 2..3."
  },
  "ffffbad8": {
   "alias": "can216_unpacked_field_2",
   "type": "uint8",
-  "reader": "00028eb8"
+  "reader": "00028eb8",
+  "evidence": "Source raw byte 4."
  },
  "ffffbada": {
   "alias": "can216_unpacked_field_3",
   "type": "uint16",
-  "reader": "00028eb8"
+  "reader": "00028eb8",
+  "evidence": "Source raw bytes 5..6."
  },
  "ffffbadc": {
   "alias": "can216_unpacked_field_4",
   "type": "uint8",
-  "reader": "00028eb8"
+  "reader": "00028eb8",
+  "evidence": "Source raw byte 7."
  },
  "ffffa73d": {
   "alias": "knock_enable",
   "type": "uint8",
-  "reader": "0001388a"
+  "reader": "0001388a",
+  "evidence": "Set by 0x13826: run timer >= 0x177, coolant >= 10 C, load >= 0.5, RPM < 5000."
  },
  "ffffa73e": {
   "alias": "knock_sensors_healthy",
   "type": "uint8",
-  "reader": "0001388a"
+  "reader": "0001388a",
+  "evidence": "Set by 0x1388a = cd64 && cd66 (0x49fac health persistence)."
  },
  "ffffa73c": {
   "alias": "knock_active",
   "type": "uint8",
-  "reader": "00013b40"
+  "reader": "00013b40",
+  "evidence": "Set by 0x138b2 = a73d && a73e; gates attack (0x13a60) and slow recovery (0x13b40)."
  },
  "ffffa73f": {
   "alias": "knock_seen_learn_trigger",
   "type": "uint8",
-  "reader": "000139c4"
+  "reader": "000139c4",
+  "evidence": "When set, 0x139c4 learns the current retard into EEPROM 0xffff8038."
  },
  "ffffa748": {
   "alias": "knock_seen_counter",
   "type": "uint16",
-  "reader": "0001391c"
+  "reader": "0001391c",
+  "evidence": "Incremented by 0x1391c on knock-seen events (called from 0x145c8)."
  },
  "ffffa744": {
   "alias": "knock_recovery_target",
   "type": "float",
-  "reader": "00013a60"
+  "reader": "00013a60",
+  "evidence": "Attack/recovery target written by 0x13a60: 0 when disabled, tbl 0x6afa4 when sensors unhealthy, tbl 0x6afb8 on activation edge, else previous retard."
  },
  "ffffa74a": {
   "alias": "knock_recovery_counter_a",
   "type": "uint8",
-  "reader": "00013b40"
+  "reader": "00013b40",
+  "evidence": "Slow-recovery pacing counter (c05d==0 path); +0.35 deg per 62 counts."
  },
  "ffffa74b": {
   "alias": "knock_recovery_counter_b",
   "type": "uint8",
-  "reader": "00013b40"
+  "reader": "00013b40",
+  "evidence": "Slow-recovery pacing counter (c05d==1 path)."
  },
  "ffffa74c": {
   "alias": "knock_active_previous",
   "type": "uint8",
-  "reader": "00013a60"
+  "reader": "00013a60",
+  "evidence": "Previous a73c; activation-edge detection (a74c==0 && a73c==1)."
  },
  "ffffa738": {
   "alias": "knock_retard_mirror",
   "type": "float",
-  "reader": "000125f6"
+  "reader": "000125f6",
+  "evidence": "Copy of clamped a734 written by 0x13a60/0x13b40; consumed by 0x125f6 trailing apply."
  },
  "ffffa324": {
   "alias": "knock_detected",
   "type": "uint8",
-  "reader": "000336c4"
+  "reader": "000336c4",
+  "evidence": "Set by 0xc486: a364 <= a330 (integrated knock level over threshold); latched into c078 by 0x336c4."
  },
  "ffffa384": {
   "alias": "knock_rotor_index",
   "type": "uint8",
-  "reader": "0000c8dc"
+  "reader": "0000c8dc",
+  "evidence": "Rotor/channel index 0xff (init) or 0/1; alternates per ATU window in 0xc8dc."
  },
  "ffffc078": {
   "alias": "knock_detected_latched",
   "type": "uint8",
-  "reader": "00033970"
+  "reader": "00033970",
+  "evidence": "0x336c4 latches a324 here; 0x33970 requires it for the attack condition c05c."
  },
  "ffffc05c": {
   "alias": "knock_attack_condition",
   "type": "uint8",
-  "reader": "00013a60"
+  "reader": "00013a60",
+  "evidence": "Set by 0x33970: knock latched && running && timing not already deeply retarded; selects -1.0 deg/cycle attack in 0x13a60."
  },
  "ffffc05d": {
   "alias": "knock_transient_flag",
   "type": "uint8",
-  "reader": "00013b40"
+  "reader": "00013b40",
+  "evidence": "Set by 0x336c4 stability check (0 = stable); selects recovery counter a74a vs a74b and filter constants."
  },
  "ffffc060": {
   "alias": "knock_filter_coeff_a",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Noise-step scale 0.0625 (calm) / 0.1875 (transient); used in the 0xc486 integrator step."
  },
  "ffffc064": {
   "alias": "knock_filter_coeff_b",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Noise-excess gain 0.1253 (calm and transient; 0x336c4 hardcodes 0x3e004ea5); used in the 0xc486 integrator step (x2 on decay)."
  },
  "ffffc068": {
   "alias": "knock_filter_coeff_c",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Baseline slow-filter coefficient 0.03125 (calm, ROM 0x7a248) / 0.09375 (transient, ROM 0x7a23c); switched by 0x336c4 on c05d."
  },
  "ffffa328": {
   "alias": "knock_level_threshold",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Selected knock level threshold (from 0x336c4 3D tables); compared against per-rotor noise threshold a350 in 0xc486."
  },
  "ffffa37e": {
   "alias": "knock_ignition_threshold_a",
   "type": "uint16",
-  "reader": "0000c7ba"
+  "reader": "0000c7ba",
+  "evidence": "Threshold A (default 94; = c090 from 0x336c4 via 0xc0f0); used by 0xc7ba coil outputs; the 0x33970 attack condition reads c090 directly (same raw value)."
  },
  "ffffa37c": {
   "alias": "knock_ignition_threshold_b",
   "type": "uint16",
-  "reader": "0000c7ba"
+  "reader": "0000c7ba",
+  "evidence": "Threshold B (default 193; = c092); used by 0xc7ba coil outputs."
  },
  "ffffc090": {
   "alias": "knock_threshold_a_raw",
   "type": "uint16",
-  "reader": "00033970"
+  "reader": "00033970",
+  "evidence": "Raw u16 threshold A from tbl 0x6b270 (or alt 0x6b27c when cd60 set); moved to a37e."
  },
  "ffffc092": {
   "alias": "knock_threshold_b_raw",
   "type": "uint16",
-  "reader": "000336c4"
+  "reader": "000336c4",
+  "evidence": "Raw u16 threshold B from tbl 0x6b288 (or alt 0x6b294 when cd60 set); moved to a37c."
  },
  "ffffc0ac": {
   "alias": "knock_transient_hold_counter",
   "type": "uint16",
-  "reader": "000336c4"
+  "reader": "000336c4",
+  "evidence": "Counts down tbl 0x6b264 (raw u8 << 1 = 20 cycles) while conditions are stable; expiry sets c05d=1."
  },
  "ffffa378": {
   "alias": "knock_voltage_sample",
   "type": "uint16",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Filtered knock ADC sample (u16) from 0xc3ce; converted to volts in 0xc486."
  },
  "ffffa326": {
   "alias": "knock_voltage_reference",
   "type": "uint16",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Knock reference-channel ADC (0xc276); subtracted from a378 in 0xc486."
  },
  "ffffa37a": {
   "alias": "knock_adc_raw",
   "type": "uint16",
-  "reader": "0000c3ce"
+  "reader": "0000c3ce",
+  "evidence": "Raw knock sensor ADC 0xffff9ef8 read in 0xc3ce."
  },
  "ffffa374": {
   "alias": "knock_adc_filtered",
   "type": "float",
-  "reader": "0000c3ce"
+  "reader": "0000c3ce",
+  "evidence": "First-order filtered knock ADC (coeff 0.004, snap 1.0) valid in the 200-2000 RPM window."
  },
  "ffffa370": {
   "alias": "knock_voltage",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Knock voltage = (a378 - a326) * 5/65536 V."
  },
  "ffffa330": {
   "alias": "knock_magnitude",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Knock magnitude vs tbl 0x6b250 minus command-code term a381[a384]<<5, clamped >= 0."
  },
  "ffffa32c": {
   "alias": "knock_noise_filtered",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Filtered (a330 - a348) noise term; coefficient is the hardcoded literal 0.0625 in 0xc486 (not c060: equals calm c060, ignores the transient 0.1875)."
  },
  "ffffa344": {
   "alias": "knock_integrator_step",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), floor 1.0."
  },
  "ffffa348": {
   "alias": "knock_baseline_slow",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Slow baseline of a330 (coeff c068); part of the combined level a34c."
  },
  "ffffa34c": {
   "alias": "knock_level_combined",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "a33c[a384] + a348, clamped >= 0; stored to a334[a384]."
  },
  "ffffa334": {
   "alias": "knock_level_running",
   "type": "float[2]",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Per-rotor running knock level a334[0..1]."
  },
  "ffffa33c": {
   "alias": "knock_level_integrator",
   "type": "float[2]",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Per-rotor level integrators a33c[0..1] (+/-= a344)."
  },
  "ffffa350": {
   "alias": "knock_noise_threshold",
   "type": "float[2]",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Per-rotor noise thresholds a350[0..1], clamped to [tbl 0x6b2a0 min, a358+8 max]."
  },
  "ffffa358": {
   "alias": "knock_noise_floor",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Lookup(raw RPM, tbl 0x6b2ac) noise floor; a35c = 2x the excess above it."
  },
  "ffffa360": {
   "alias": "knock_noise_excess",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "a350 - 2x excess, clamped >= 0; drives the threshold command term."
  },
  "ffffa364": {
   "alias": "knock_threshold_command_base",
   "type": "float",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Base threshold command (a34c + a328*a360 clamped 64..255; a34c = combined knock level addend, 64 is the clamp floor)."
  },
  "ffffa368": {
   "alias": "knock_threshold_command",
   "type": "float[2]",
-  "reader": "0000c8dc"
+  "reader": "0000c8dc",
+  "evidence": "Per-rotor threshold command a368[0..1] = a364 + a360*2; mapped to command codes in 0xc8dc."
  },
  "ffffa387": {
   "alias": "knock_reference_voltage",
   "type": "uint8[2]",
-  "reader": "0000c8dc"
+  "reader": "0000c8dc",
+  "evidence": "Per-channel reference bytes from ROM 0x7a750/0x7a752 selected by a386."
  },
  "ffffa389": {
   "alias": "knock_reference_voltage_latched",
   "type": "uint8[2]",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Latched a387 values; a change forces a32c = 40 (noise reset)."
  },
  "ffffa381": {
   "alias": "knock_command_code",
   "type": "uint8[2]",
-  "reader": "0000c486"
+  "reader": "0000c486",
+  "evidence": "Mapped command codes a381[0..1] from a368 (6/5/4/2/0 bands)."
  },
  "ffffa380": {
   "alias": "knock_command_code_current",
   "type": "uint8",
-  "reader": "0000c8dc"
+  "reader": "0000c8dc",
+  "evidence": "Current command code a380 sent over SCI."
  },
  "ffffa38c": {
   "alias": "knock_state_mode",
   "type": "uint8",
-  "reader": "0000c116"
+  "reader": "0000c116",
+  "evidence": "Mode value passed to 0xc116; a change resets rotor index and knock state."
  },
  "ffffa386": {
   "alias": "high_rpm_10k_flag",
   "type": "uint8",
-  "reader": "0000c8dc"
+  "reader": "0000c8dc",
+  "evidence": "Set by 0xc3ce when raw RPM >= 10000; selects reference table 0x7a752 vs 0x7a750 (both 01 01 in this ROM)."
  },
  "ffffa325": {
   "alias": "knock_sensor_fault_status",
   "type": "uint8",
-  "reader": "00049fac"
+  "reader": "00049fac",
+  "evidence": "Knock sensor ADC fault: 0 OK, 1/2 per-channel fault (0xc290: ADC 0xffff9f0e vs u16 thresholds 51249/16121 stored at ROM 0x6c17e/0x6c17c)."
  },
  "ffffcd64": {
   "alias": "knock_sensor_healthy_a",
   "type": "uint8",
-  "reader": "0001388a"
+  "reader": "0001388a",
+  "evidence": "Set by 0x49fac after >30 healthy counts (channel A); gates a73e."
  },
  "ffffcd66": {
   "alias": "knock_sensor_healthy_b",
   "type": "uint8",
-  "reader": "0001388a"
+  "reader": "0001388a",
+  "evidence": "Channel B counterpart of cd64."
  },
  "ffffcd65": {
   "alias": "knock_sensor_fault_a",
   "type": "uint8",
-  "reader": "0004a084"
+  "reader": "0004a084",
+  "evidence": "Channel A fault persistence -> DTC 0x23 via 0x4a084."
  },
  "ffffcd67": {
   "alias": "knock_sensor_fault_b",
   "type": "uint8",
-  "reader": "0004a084"
+  "reader": "0004a084",
+  "evidence": "Channel B fault persistence -> DTC 0x24 via 0x4a084."
  },
  "ffffcd68": {
   "alias": "knock_sensor_healthy_counter",
   "type": "uint16",
-  "reader": "00049fac"
+  "reader": "00049fac",
+  "evidence": "Healthy-count counter (>30 -> cd64/cd66)."
  },
  "ffffcd6a": {
   "alias": "knock_sensor_fault_counter_a",
   "type": "uint16",
-  "reader": "00049fac"
+  "reader": "00049fac",
+  "evidence": "Channel A fault counter."
  },
  "ffffcd6c": {
   "alias": "knock_sensor_fault_counter_b",
   "type": "uint16",
-  "reader": "00049fac"
+  "reader": "00049fac",
+  "evidence": "Channel B fault counter."
  },
  "ffffa6ac": {
   "alias": "rough_knock_correction_leading",
   "type": "float",
-  "reader": "000125bc"
+  "reader": "000125bc",
+  "evidence": "Leading rough knock correction from 0x13210 (inherited ref_roughKnockCorrection name; knock semantic unproven); subtracted in 0x125bc."
  },
  "ffffa6b0": {
   "alias": "rough_knock_correction_trailing",
   "type": "float",
-  "reader": "000125f6"
+  "reader": "000125f6",
+  "evidence": "Trailing counterpart; subtracted in 0x125f6."
  },
  "ffffa750": {
   "alias": "coolant_timing_derate_leading",
   "type": "float",
-  "reader": "000125bc"
+  "reader": "000125bc",
+  "evidence": "Coolant-based timing derate (leading) from 0x13ecc (a76c * fVar2); max() with cold-start c9a0 in 0x125bc."
  },
  "ffffa754": {
   "alias": "coolant_timing_derate_trailing",
   "type": "float",
-  "reader": "000125f6"
+  "reader": "000125f6",
+  "evidence": "Trailing counterpart (a770 * fVar2)."
  },
  "ffffa648": {
   "alias": "leading_timing_correction_total",
   "type": "float",
-  "reader": "000123ba"
+  "reader": "000123ba",
+  "evidence": "Total leading correction written by 0x125bc; added to base in 0x123ba."
  },
  "ffffa658": {
   "alias": "trailing_timing_correction_total",
   "type": "float",
-  "reader": "000123ca"
+  "reader": "000123ca",
+  "evidence": "Total trailing correction from 0x125f6; added in 0x123ca."
  },
  "ffffa634": {
   "alias": "leading_timing_with_corrections",
   "type": "float",
-  "reader": "00012300"
+  "reader": "00012300",
+  "evidence": "a640 + a648 clamped into leading_ignition_timing_ffffa630 (0x12300). Written by 0x123ba leading_timing_add_corrections (fmov.s fr2,@r3 0x123c8 via mov.w pool 0x12410=0xa634 @0x123c4); read by 0x121fc (pool 0x122c6 @0x1228a) and 0x2cc2c (pool 0x2cd54 @0x2ccc6); clamped into 0xffffa630 by 0x121fc."
  },
  "ffffa63c": {
   "alias": "trailing_timing_with_corrections",
   "type": "float",
-  "reader": "00012300"
+  "reader": "00012300",
+  "evidence": "a650 + a658 clamped into trailing_ignition_timing_ffffa638. Written by 0x123ca trailing_timing_add_corrections (fmov.s fr2,@r3 0x123d8 via mov.w pool 0x1240c=0xa63c @0x123d4); read by 0x12300 (pool 0x1240c @0x1238e); clamped into 0xffffa638 by 0x12300."
  },
  "ffffb288": {
   "alias": "ac_compressor_leading_timing_retard",
   "type": "float",
-  "reader": "000125bc"
+  "reader": "000125bc",
+  "evidence": "A/C compressor timing retard (leading): -5.0 deg while ramping else 0 (0x214f8)."
  },
  "ffffb28c": {
   "alias": "ac_compressor_trailing_timing_retard",
   "type": "float",
-  "reader": "000125f6"
+  "reader": "000125f6",
+  "evidence": "Trailing counterpart (0x215f8)."
  },
  "ffffc9a0": {
   "alias": "cold_start_timing_reduction_leading",
   "type": "float",
-  "reader": "000125bc"
+  "reader": "000125bc",
+  "evidence": "Cold-start timing reduction (leading): min(c9a8, tbl 0x6b83c(RPM)) * clamp((ECT+30)*0.01, 0, 1) when ca44==1 && ca3f>1 (0x12630)."
  },
  "ffffc9a4": {
   "alias": "cold_start_timing_reduction_trailing",
   "type": "float",
-  "reader": "000125f6"
+  "reader": "000125f6",
+  "evidence": "Trailing mirror set in 0x12754."
  },
  "ffff9f80": {
   "alias": "engine_speed_rpm_raw",
   "type": "float",
-  "reader": "0000c3ce"
+  "reader": "0000c3ce",
+  "evidence": "Raw RPM = 120e6 / crank period sum (ISR 0x803e); window and 10k-flag checks in 0xc3ce."
  },
  "ffff9f88": {
   "alias": "crank_period_accumulator",
   "type": "float",
-  "reader": "0000c7ba"
+  "reader": "0000c7ba",
+  "evidence": "Sum of DAT_ffff9fd0[] periods; RPM denominator (ISR 0x803e); used by 0xc7ba coil scaling."
  },
  "ffff9ef8": {
   "alias": "knock_sensor_adc_raw",
   "type": "uint16",
-  "reader": "0000c3ce"
+  "reader": "0000c3ce",
+  "evidence": "Knock sensor ADC result read in 0xc3ce."
  },
  "ffffb12a": {
   "alias": "open_loop_request",
   "type": "uint8",
-  "reader": "0001ee30"
+  "reader": "0001ee30",
+  "evidence": "Set by 0x1f0c4 when load/throttle exceed the closed-loop fuelling thresholds; consumed by 0x1ee30."
  },
  "ffffb12c": {
   "alias": "open_loop_active",
   "type": "uint8",
-  "reader": "0001c13c"
+  "reader": "0001c13c",
+  "evidence": "OPEN-loop flag (polarity corrected): = (b12a != 0), set by 0x1ee30; blocks closed loop in 0x1c13c, selects open-loop targets in 0x1ee4a, gates evap 0x22144. Earlier sessions mislabeled this as the closed-loop flag."
  },
  "ffffae1e": {
   "alias": "closed_loop_allowed",
   "type": "uint8",
-  "reader": "0005535e"
+  "reader": "0005535e",
+  "evidence": "CL allowed (0x1c13c): warm, warmup time met, not open loop, O2 healthy, no DTC-ish conditions."
  },
  "ffffae1f": {
   "alias": "closed_loop_active",
   "type": "uint8",
-  "reader": "0005535e"
+  "reader": "0005535e",
+  "evidence": "CL active = ae1e && cd5c==0 && lambda feedback (aa80/aa81); drives the OBD status byte 0x5535e."
  },
  "ffffb120": {
   "alias": "open_loop_fuel_target",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "Open-loop fuel target computed by 0x1ee4a (b130*b134 or b138*b13c blend); zero in closed loop."
  },
  "ffffb12d": {
   "alias": "safe_mode",
   "type": "uint8",
-  "reader": "00011f00"
+  "reader": "00011f00",
+  "evidence": "0x1ee4a: 1 unless (b534==1 && 4<bc3d) or (b534==0 && 3<baed); selects Safe Mode CAL tables and the base-timing cap in 0x11f00/0x1206c."
  },
  "ffffaa80": {
   "alias": "lambda_in_target_band",
   "type": "uint8",
-  "reader": "0001c13c"
+  "reader": "0001c13c",
+  "evidence": "0x1ac00: 1 when no DTC, 0.99 <= lambda target 0xffffadfc < 1.01, ad0c==1, engine running; CL-active ingredient (ae1f)."
  },
  "ffffcd60": {
   "alias": "safe_mode",
   "type": "uint8",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "0 = safe mode active: selects the knock threshold table pair in 0x336c4 (0x6b270/0x6b288 vs alts) and is checked in 0x200c6."
  },
  "ffffc150": {
   "alias": "engine_load_delta",
   "type": "float",
-  "reader": "0001391c"
+  "reader": "0001391c",
+  "evidence": "|load - c188| (engine load delta) from 0x34364; c154 holds the signed delta."
  },
  "ffffaddc": {
   "alias": "intake_air_temperature",
   "type": "float",
-  "reader": "0001a086"
+  "reader": "0001a086",
+  "evidence": "Working copy of intake_air_temperature_ffff9f60 (0x1be00/0x1be4a; fault default 20.0 C at 0x1be54); Kelvin conversion 295/(x+273) at 0x1a086."
  },
  "ffffa424": {
   "alias": "engine_running_timer",
   "type": "uint16",
-  "reader": "00013826"
+  "reader": "00013826",
+  "evidence": "Engine-running time counter (100 Hz); gates knock enable (>= 0x177) and the attack condition (>= 0xfa)."
  },
  "ffffa428": {
   "alias": "engine_running",
   "type": "uint8",
-  "reader": "00013210"
+  "reader": "00013210",
+  "evidence": "Engine running flag; zeroes rough knock corrections in 0x13210; ingredient of the attack condition."
  },
  "ffffa426": {
   "alias": "engine_on_time_counter",
   "type": "uint16",
-  "reader": "00021cde"
+  "reader": "00021cde",
+  "evidence": "Engine on-time counter (0x21cde)."
  },
  "ffffa42c": {
   "alias": "engine_injectors_off",
   "type": "uint8",
-  "reader": "0003d010"
+  "reader": "0003d010",
+  "evidence": "Injectors-off flag checked by the 0x3d010 O2 monitor integrator."
  },
  "ffffbed0": {
   "alias": "fuel_load_scale",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "bed0 = engine_load_ffffc0b4 * 0.07196; multiplied into final fuel volume beb0 = beac * bed0."
  },
  "ffffbed4": {
   "alias": "fuel_load_compensation",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "bed4 = lookup_3d tbl 0x6ac88 'Fuel Injection - Engine Load Compensation'(RPM); multiplier in bf14."
  },
  "ffffbf1c": {
   "alias": "fuel_coolant_compensation",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "bf1c = lookup_2d tbl DAT_0006ac38(coolant); added via min(bf1c, c00c + open_loop_fuel_target b120) in bf14."
  },
  "ffffbf14": {
   "alias": "fuel_correction_sum",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "bf14 = (b0d0 - c0c8 - ae08 - b21c + max(c104,cde0) + min(bf1c, c00c+b120) + max(ae10,b124) + 1.0) * ad ecc * bed4; scaled by FUN_0005c024 into beac."
  },
  "ffffbeac": {
   "alias": "fuel_volume_scaled",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "beac = FUN_0005c024(bf14) (diagnostic-scaler transform); beb0 = beac * bed0."
  },
  "ffffbeb0": {
   "alias": "fuel_volume_final",
   "type": "float",
-  "reader": "000306e8"
+  "reader": "000306e8",
+  "evidence": "beb0 = beac * bed0: final requested fuel volume; read by open_loop_request_condition (0x1f0c4) as snapshot_DAT_ffffbeb0."
  },
  "ffffbf68": {
   "alias": "airflow_rpm_load_product",
   "type": "float",
-  "reader": "000314d0"
+  "reader": "000314d0",
+  "evidence": "bf68 = rpm * load / 38.07; axis for tbl 0x6ad44 in calculate_air_charge."
  },
  "ffffbf44": {
   "alias": "airflow_corrected",
   "type": "float",
-  "reader": "000314d0"
+  "reader": "000314d0",
+  "evidence": "bf44 = tbl 0x6ad44(bf68) * tbl 0x6ad30(battery V b590)."
  },
  "ffffbf4c": {
   "alias": "air_density_ratio",
   "type": "float",
-  "reader": "000314d0"
+  "reader": "000314d0",
+  "evidence": "bf4c = baro*353.0163 / ((IAT+273)*101.32): pressure/temperature density ratio."
  },
  "ffffbf50": {
   "alias": "air_charge_per_cycle",
   "type": "float",
-  "reader": "000314d0"
+  "reader": "000314d0",
+  "evidence": "bf50 = min(bf44*0.6345*bf4c/(60*rpm), 2.0); 2.0 when rpm ~ 0."
  },
  "ffffbf54": {
   "alias": "air_charge_filtered",
   "type": "float",
-  "reader": "000314d0"
+  "reader": "000314d0",
+  "evidence": "bf54 = first_order_filter(bf50/load, bf54, 1.0, 1e-05) clamped to 50.0."
  },
  "ffffbec8": {
   "alias": "fuel_amount_per_rotation_a",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation."
  },
  "ffffbeec": {
   "alias": "fuel_amount_per_rotation_b",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "beec = (bdec*be14 path) * 475.93; see 0x30948."
  },
  "ffffbed8": {
   "alias": "fuel_amount_per_rotation_c",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bed8 = (6e7/rpm - 608 - be40) / fVar7 * 369.472; latency-compensated variant."
  },
  "ffffbedc": {
   "alias": "fuel_amount_per_rotation_d",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bedc = (6e7/rpm - 608 - be44) / fVar4 * 475.93."
  },
  "ffffbee0": {
   "alias": "fuel_amount_per_rotation_e",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93."
  },
  "ffffbee4": {
   "alias": "fuel_ratio_a",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts."
  },
  "ffffbee8": {
   "alias": "fuel_ratio_b",
   "type": "float",
-  "reader": "00030948"
+  "reader": "00030948",
+  "evidence": "bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4)."
  },
  "ffffbe24": {
   "alias": "injector_pulse_time",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "Final arbitrated pulse time be24 = be28; encoded by diag PID 0x1410 handler 0x56f6c (step 8; logger x*8*0.001 ms)."
  },
  "ffffbe28": {
   "alias": "injector_pulse_time_base",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "be28 = (cranking? be58 : be4c) + injector_latency_primary be40; copied to be24."
  },
  "ffffbe2c": {
   "alias": "injector_pulse_time_ch1",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "be2c = be30 (running: be50 + be44; cranking: be5c + be44)."
  },
  "ffffbe30": {
   "alias": "injector_pulse_time_ch2",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "be30 = running? be50 + be44 : be5c + be44 (latency be44 added)."
  },
  "ffffbe34": {
   "alias": "injector_pulse_time_ch3",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "be34 = be38."
  },
  "ffffbe38": {
   "alias": "injector_pulse_time_ch4",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "be38 = running? be54 + be44 : be5c + be44."
  },
  "ffffbe3c": {
   "alias": "cranking_decay_counter",
   "type": "uint8",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "Cranking: loaded from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant); decrements while running."
  },
  "ffffbe40": {
   "alias": "injector_latency_secondary",
   "type": "float",
-  "reader": "0002ff78"
+  "reader": "0002ff78",
+  "evidence": "be40 = 3D tbl 0x6aa64 'Injector Latency Secondary'(MRP, battery V), quantized /0.25; added to pulse times in 0x2fea8."
  },
  "ffffbe44": {
   "alias": "injector_latency_primary",
   "type": "float",
-  "reader": "0002ff78"
+  "reader": "0002ff78",
+  "evidence": "be44 = 3D tbl 0x6aa80 'Injector Latency Primary'(MRP, battery V), quantized /0.25."
  },
  "ffffbe58": {
   "alias": "injector_pulse_crank",
   "type": "float",
-  "reader": "00030678"
+  "reader": "00030678",
+  "evidence": "Cranking pulse base; added into be94 by cranking_pulse_adder (0x30678) and into be28 by 0x2fea8."
  },
  "ffffbe5c": {
   "alias": "injector_pulse_crank_base",
   "type": "float",
-  "reader": "0002fea8"
+  "reader": "0002fea8",
+  "evidence": "Cranking base for be30/be38 while engine not running."
  },
  "ffffbe94": {
   "alias": "cranking_pulse_adder",
   "type": "float",
-  "reader": "00030678"
+  "reader": "00030678",
+  "evidence": "be94 += be58 when cranking && injectors off && ce32 (diag cranking pulse adder)."
  },
  "ffffa094": {
   "alias": "injector_latency_ch0",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Latency channel 0 (secondary) value; pair a0a0 mirror; read in injector_pulse_set_channel (0x8a68) pulse = a094[ch] + (a010[ch*0x18]>>4)."
  },
  "ffffa098": {
   "alias": "injector_latency_ch1",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Latency channel 1 (primary); pair a0a4 mirror."
  },
  "ffffa09c": {
   "alias": "injector_latency_ch2",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Latency channel 2 (primary); pair a0a8 mirror."
  },
  "ffffa0a0": {
   "alias": "injector_latency_ch0_mirror",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Mirror of a094 written by the same call."
  },
  "ffffa0a4": {
   "alias": "injector_latency_ch1_mirror",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Mirror of a098."
  },
  "ffffa0a8": {
   "alias": "injector_latency_ch2_mirror",
   "type": "float",
-  "reader": "000086f8"
+  "reader": "000086f8",
+  "evidence": "Mirror of a09c."
  },
  "ffffa0ac": {
   "alias": "injector_zero_offset_ch0",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Zero/offset channel 0; pair a0b8 mirror; caller 0x10208 ref_setAllInjectorto0_."
  },
  "ffffa0b0": {
   "alias": "injector_zero_offset_ch1",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Zero/offset channel 1; pair a0bc."
  },
  "ffffa0b4": {
   "alias": "injector_zero_offset_ch2",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Zero/offset channel 2; pair a0c0."
  },
  "ffffa0b8": {
   "alias": "injector_zero_offset_ch0_mirror",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Mirror of a0ac."
  },
  "ffffa0bc": {
   "alias": "injector_zero_offset_ch1_mirror",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Mirror of a0b0."
  },
  "ffffa0c0": {
   "alias": "injector_zero_offset_ch2_mirror",
   "type": "float",
-  "reader": "000086ac"
+  "reader": "000086ac",
+  "evidence": "Mirror of a0b4."
  },
  "ffffa010": {
   "alias": "injector_fuel_request_array",
   "type": "int",
-  "reader": "00008a68"
+  "reader": "00008a68",
+  "evidence": "Per-channel fuel request array, 0x18-byte stride from a010 (= base a004+0xc); pulse = (latency a094[ch] + a010[ch*0x18]) >> 4 per disasm 0x8a8e-0x8aa0."
  },
  "ffffa014": {
   "alias": "injector_start_angle_array",
   "type": "short",
-  "reader": "00008a68"
+  "reader": "00008a68",
+  "evidence": "Per-channel start compare, 0x18-byte stride from a014; written to ATU-II GR1A."
  },
  "ffffa017": {
   "alias": "injector_channel_enable_flag",
   "type": "uint8",
-  "reader": "000085e4"
+  "reader": "000085e4",
+  "evidence": "Checked/cleared per channel (0x18 stride) by injector_channel_disable (0x85e4)."
  },
  "ffffa018": {
   "alias": "injector_channel_tier_flag",
   "type": "uint8",
-  "reader": "000085e4"
+  "reader": "000085e4",
+  "evidence": "Per-channel ATU-II TIER enable mirror; cleared when channel disabled or pulsed."
  },
  "ffffc010": {
   "alias": "warmup_complete_flag",
   "type": "uint8",
-  "reader": "00032e08"
+  "reader": "00032e08",
+  "evidence": "c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair."
  },
  "ffffc014": {
   "alias": "warmup_load_multiplier",
   "type": "float",
-  "reader": "00032e08"
+  "reader": "00032e08",
+  "evidence": "c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model)."
  },
  "ffffc018": {
   "alias": "warmup_rpm_multiplier",
   "type": "float",
-  "reader": "00032e08"
+  "reader": "00032e08",
+  "evidence": "c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant)."
  },
  "ffffc00c": {
   "alias": "warmup_enrichment_total",
   "type": "float",
-  "reader": "00032e08"
+  "reader": "00032e08",
+  "evidence": "c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0)."
  },
  "ffffb124": {
   "alias": "open_loop_changeover_enrichment",
   "type": "float",
-  "reader": "0002024c"
+  "reader": "0002024c",
+  "evidence": "b124 = tbl 0x69e00 'Open Loop Changeover Enrichment'(RPM) when b146 != 0 else 0; feeds 0x306e8 via max(ae10, b124)."
  },
  "ffffc158": {
   "alias": "load_delta_input",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0."
  },
  "ffffc138": {
   "alias": "load_delta_scale",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c138 = lookup_2d tbl 0x6b124(c158)."
  },
  "ffffc13c": {
   "alias": "load_scale_2d",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c13c = lookup_2d tbl 0x6b0c0(engine_load)."
  },
  "ffffc134": {
   "alias": "load_delta_enrichment",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c134 = c138 * c13c (0 when load delta < 0)."
  },
  "ffffc110": {
   "alias": "tip_in_decay",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c110 = max(c110 - 0.0078125, 1.0) when c14c set."
  },
  "ffffc140": {
   "alias": "tip_in_enrichment",
   "type": "float",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off."
  },
  "ffffc14c": {
   "alias": "tip_in_mode_flag",
   "type": "uint8",
-  "reader": "00033ec4"
+  "reader": "00033ec4",
+  "evidence": "c14c gates the c110 decay in load_delta_enrichment."
  },
  "ffffbeb4": {
   "alias": "closed_loop_trim_raw",
   "type": "float",
-  "reader": "000307e0"
+  "reader": "000307e0",
+  "evidence": "beb4 = clamp((max(bf40, c01c+b0c4) + min(tbl 0x6ac38(coolant), b120) + 1)*ad ecc - 1, -1, 2) in closed loop; 0 in open loop."
  },
  "ffffbeb8": {
   "alias": "closed_loop_trim_filtered",
   "type": "float",
-  "reader": "000307e0"
+  "reader": "000307e0",
+  "evidence": "beb8 = first_order_filter(beb4, beb8, 0.0625, 1e-05); STFT-style trim."
  },
  "ffffbf20": {
   "alias": "cl_coolant_compensation",
   "type": "float",
-  "reader": "000307e0"
+  "reader": "000307e0",
+  "evidence": "bf20 = lookup_2d tbl DAT_0006ac38(coolant); used in closed_loop_fuel_trim."
  },
  "ffffc0b0": {
   "alias": "engine_load_raw",
   "type": "float",
-  "reader": "00033ad2"
+  "reader": "00033ad2",
+  "evidence": "c0b0 = raw load input filtered into engine_load c0b4 (coeff 0.2, or 1.0 when c0c4 set)."
  },
  "ffffc0b8": {
   "alias": "engine_load_max",
   "type": "float",
-  "reader": "00033ad2"
+  "reader": "00033ad2",
+  "evidence": "c0b8 = clamp maximum for engine_load c0b4 = min(filter(c0b0,...), c0b8)."
  },
  "ffffc0c4": {
   "alias": "load_filter_fast_flag",
   "type": "uint8",
-  "reader": "00033ad2"
+  "reader": "00033ad2",
+  "evidence": "c0c4 selects filter coefficient 1.0 vs 0.2 in calculate_engine_load."
  },
  "ffffc0c5": {
   "alias": "injectors_off_previous",
   "type": "uint8",
-  "reader": "00033ad2"
+  "reader": "00033ad2",
+  "evidence": "c0c5 = previous engine_injectors_off a42c; forces load 0.525 on injector-off edge."
  },
  "ffff9eea": {
   "alias": "maf_adc_raw",
   "type": "uint16",
-  "reader": "00007438"
+  "reader": "00007438",
+  "evidence": "Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2."
  },
  "ffff9f78": {
   "alias": "maf_scaled",
   "type": "float",
-  "reader": "00007438"
+  "reader": "00007438",
+  "evidence": "9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e)."
  },
  "ffff9f7c": {
   "alias": "maf_fault_status",
   "type": "uint8",
-  "reader": "00007438"
+  "reader": "00007438",
+  "evidence": "9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high)."
  },
  "ffffaa2c": {
   "alias": "maf_voltage",
   "type": "float",
-  "reader": "00019f4e"
+  "reader": "00019f4e",
+  "evidence": "aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault."
  },
  "ffffaa35": {
   "alias": "maf_high_fault_counter",
   "type": "uint8",
-  "reader": "00019f4e"
+  "reader": "00019f4e",
+  "evidence": "Saturating counter incremented while raw >= 0xf852."
  },
  "ffffaa36": {
   "alias": "maf_low_fault_counter",
   "type": "uint8",
-  "reader": "00019f4e"
+  "reader": "00019f4e",
+  "evidence": "Saturating counter incremented while raw < 0x7ae; cleared otherwise."
  },
  "ffffa9e4": {
   "alias": "maf_voltage_latched",
   "type": "float",
-  "reader": "00019f4e"
+  "reader": "00019f4e",
+  "evidence": "a9e4 = aa2c when MAF faulted (>2 on either counter or raw in 0x7ae..0xf852 window)."
  },
  "ffffa9e8": {
   "alias": "maf_scaled_latched",
   "type": "float",
-  "reader": "00019f4e"
+  "reader": "00019f4e",
+  "evidence": "a9e8 = 9f78 (maf_scaled) on fault; becomes mass_air_flow a9ec via 0x19f40."
  },
  "ffffaa54": {
   "alias": "maf_filter_coeff",
   "type": "float",
-  "reader": "0001a418"
+  "reader": "0001a418",
+  "evidence": "aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc."
  },
  "ffffaa48": {
   "alias": "maf_filter_state",
   "type": "float",
-  "reader": "0001a418"
+  "reader": "0001a418",
+  "evidence": "aa48 = first_order_filter(maf, aa48, aa54)."
  },
  "ffffaa3c": {
   "alias": "maf_per_rotation",
   "type": "float",
-  "reader": "0001a418"
+  "reader": "0001a418",
+  "evidence": "aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm)."
  },
  "ffffaa38": {
   "alias": "maf_per_rotation_filtered",
   "type": "float",
-  "reader": "0001a418"
+  "reader": "0001a418",
+  "evidence": "aa38 = filtered maf*60/rpm; 0.1560058 when rpm ~ 0."
  },
  "ffffaa4c": {
   "alias": "maf_filter_mode",
   "type": "uint8",
-  "reader": "0001a418"
+  "reader": "0001a418",
+  "evidence": "aa4c selects filtered vs instantaneous MAF for the per-rotation calc."
  },
  "ffffb0fe": {
   "alias": "maf_range_index",
   "type": "uint8",
-  "reader": "0001e842"
+  "reader": "0001e842",
+  "evidence": "b0fe = 0..3 MAF operating range from mass_air_flow bands (<1, <9, <22)."
  },
  "ffffb101": {
   "alias": "maf_band_low",
   "type": "uint8",
-  "reader": "0001e842"
+  "reader": "0001e842",
+  "evidence": "b101 = maf < 1 (hysteresis 0.4)."
  },
  "ffffb102": {
   "alias": "maf_band_mid",
   "type": "uint8",
-  "reader": "0001e842"
+  "reader": "0001e842",
+  "evidence": "b102 = maf < 9 (hysteresis 8.4)."
  },
  "ffffb103": {
   "alias": "maf_band_high",
   "type": "uint8",
-  "reader": "0001e842"
+  "reader": "0001e842",
+  "evidence": "b103 = maf < 22 (hysteresis 21.4); all clear -> range 3."
  },
  "ffffa434": {
   "alias": "max_injection_angle_1",
   "type": "float",
-  "reader": "0000e48e"
+  "reader": "0000e48e",
+  "evidence": "a434 = tbl 0x68ef8(rpm) 'Max Injection Angle1???'."
  },
  "ffffa438": {
   "alias": "max_injection_angle_2",
   "type": "float",
-  "reader": "0000e48e"
+  "reader": "0000e48e",
+  "evidence": "a438 = tbl 0x68f0c(rpm) 'Max Injection Angle2???'."
  },
  "ffffa43c": {
   "alias": "max_injection_angle_3",
   "type": "float",
-  "reader": "0000e48e"
+  "reader": "0000e48e",
+  "evidence": "a43c = tbl 0x68f20(rpm) 'Max Injection Angle3???'."
  },
  "ffffa41c": {
   "alias": "engine_stopped_latch",
   "type": "uint8",
-  "reader": "0000e2a8"
+  "reader": "0000e2a8",
+  "evidence": "a41c blocks the injectors-off flag a42c; also forces load 0.525 in calculate_engine_load (0x33ad2)."
  },
  "ffffa444": {
   "alias": "fuel_cut_flag_a",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Set by fuel_cut_arbitration (0xedc4) from request a464 / mode param."
  },
  "ffffa445": {
   "alias": "fuel_cut_flag_b",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Second fuel-cut flag set alongside a444 in 0xedc4."
  },
  "ffffa464": {
   "alias": "fuel_cut_request_a",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Input request: when set, a444 = a445 = 1 unconditionally."
  },
  "ffffa465": {
   "alias": "fuel_cut_request_b",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Input request: with a4a3/a4a2 mirrors gates a444 by param_1 band (0/12 vs 6/18)."
  },
  "ffffa4a2": {
   "alias": "fuel_cut_request_a_prev",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Mirror of a464 stored at end of 0xedc4."
  },
  "ffffa4a3": {
   "alias": "fuel_cut_request_b_prev",
   "type": "uint8",
-  "reader": "0000edc4"
+  "reader": "0000edc4",
+  "evidence": "Mirror of a465 stored at end of 0xedc4."
  },
  "ffffa964": {
   "alias": "fuel_cut_allowed",
   "type": "uint8",
-  "reader": "00018cfe"
+  "reader": "00018cfe",
+  "evidence": "a964 = (a96a && rpm>=2500) || (a96c && rpm>=1700); set by fuel_cut_rpm_condition (0x18cfe)."
  },
  "ffffa97c": {
   "alias": "rpm_above_2500_flag",
   "type": "uint8",
-  "reader": "00018cfe"
+  "reader": "00018cfe",
+  "evidence": "a97c = rpm >= 2500 (clear below 1700) - hysteresis."
  },
  "ffffa97d": {
   "alias": "rpm_above_1700_flag",
   "type": "uint8",
-  "reader": "00018cfe"
+  "reader": "00018cfe",
+  "evidence": "a97d = rpm >= 1700 (clear below 1100) - hysteresis."
  },
  "ffffa96a": {
   "alias": "decel_cut_request_a",
   "type": "uint8",
-  "reader": "00018cfe"
+  "reader": "00018cfe",
+  "evidence": "a96a: decel/overrun cut request input to fuel_cut_rpm_condition (0x18cfe)."
  },
  "ffffa96c": {
   "alias": "decel_cut_request_b",
   "type": "uint8",
-  "reader": "00018cfe"
+  "reader": "00018cfe",
+  "evidence": "a96c: second request input; pairs with a96a in the a964 OR."
  },
  "ffffa4a6": {
   "alias": "coolant_below_18c_flag",
   "type": "uint8",
-  "reader": "0000ee82"
+  "reader": "0000ee82",
+  "evidence": "a4a6 = coolant < 18 C (clear at 20) - cold-engine rev-limit derate condition."
  },
  "ffffa4aa": {
   "alias": "rev_limit_countdown_active",
   "type": "uint8",
-  "reader": "0000ee82"
+  "reader": "0000ee82",
+  "evidence": "a4aa = (a4ae != 0); set by rev_limit_conditionals (0xee82)."
  },
  "ffffa4ad": {
   "alias": "rev_limit_mode_previous",
   "type": "uint8",
-  "reader": "0000ee82"
+  "reader": "0000ee82",
+  "evidence": "a4ad = previous DAT_ffffbaec (mode) for change detection."
  },
  "ffffa4ae": {
   "alias": "rev_limit_countdown",
   "type": "uint8",
-  "reader": "0000ee82"
+  "reader": "0000ee82",
+  "evidence": "a4ae = 0x0f on mode change (b534==0 && baec active && a4ad==0 && baec != 7), decremented while a4aa."
  },
  "ffffa4a4": {
   "alias": "rev_limit_state_a",
   "type": "uint8",
-  "reader": "0000ee64"
+  "reader": "0000ee64",
+  "evidence": "Cleared by rev_limit_fuel_cut_init (0xee64) when 9f8c==1."
  },
  "ffffa4a5": {
   "alias": "rev_limit_state_b",
   "type": "uint8",
-  "reader": "0000ee64"
+  "reader": "0000ee64",
+  "evidence": "Cleared by 0xee64."
  },
  "ffffa4a8": {
   "alias": "rev_limit_state_c",
   "type": "uint8",
-  "reader": "0000ee64"
+  "reader": "0000ee64",
+  "evidence": "Cleared by 0xee64."
  },
  "ffffb11c": {
   "alias": "fuel_blend_weight",
   "type": "float",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "Set with b118 by blend_weight_update (0x200c6): 1.0 normal, decays -0.0667 in open loop, 0 on faults; weights the implausible-coolant OL target branch in 0x1ee4a."
  },
  "ffffb118": {
   "alias": "timing_blend_weight",
   "type": "float",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "Same producer as b11c (0x200c6); blends base ignition timing with the open-loop cap in 0x11f00/0x1206c."
  },
  "ffffb1d0": {
   "alias": "coolant_plausible_flag",
   "type": "uint8",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "b1d0 = 1 when coolant >= -40 C (clear below -43); gates blend-weight set in 0x200c6."
  },
  "ffffb170": {
   "alias": "ol_baro_base_correction",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b170 = tbl 0x69cac/0x69cc0 'Open Loop Fuelling Base Correction (Throttle)'(baro) (safe-mode variant selected by cd60==0)."
  },
  "ffffb174": {
   "alias": "ol_rich_limit",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b174 = tbl 0x69ce8/0x69cfc 'Open Loop Fuelling Rich Limit'(baro) (safe-mode pair)."
  },
  "ffffb190": {
   "alias": "ol_tip_in_target",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b190 = 3D tbl 0x69e80/0x69eb8 'Open Loop Target - Throttle Tip In'(rpm, throttle)."
  },
  "ffffb194": {
   "alias": "ol_target_3d",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b194 = 3D tbl 0x69e9c/0x69ed4 'Open Loop Target'(load, rpm)."
  },
  "ffffb198": {
   "alias": "ol_tip_in_implausible",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b198 = 3D tip-in vs coolant-implausible tables 0x69ef0/0x69f28 (gear 5-6 vs 1-4 select by safe_mode b12d)."
  },
  "ffffb19c": {
   "alias": "ol_target_implausible_3d",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b19c = 3D 'Open Loop Target - Coolant Temp Implausible'(load, rpm) 0x69f0c/0x69f44."
  },
  "ffffb130": {
   "alias": "ol_fuel_target_main",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b130 = max(b170*b190, b194); normal OL target product."
  },
  "ffffb134": {
   "alias": "ol_coolant_correction",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b134 = tbl 0x69cd4 'Open Loop Target - Coolant Temperature Correction'(coolant)."
  },
  "ffffb138": {
   "alias": "ol_fuel_target_implausible",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b138 = max(b174*b198, b19c); coolant-implausible OL target product."
  },
  "ffffb13c": {
   "alias": "ol_temperature_correction_b",
   "type": "float",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant)."
  },
  "ffffb150": {
   "alias": "ol_target_select",
   "type": "uint8",
-  "reader": "0001ee4a"
+  "reader": "0001ee4a",
+  "evidence": "b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c."
  },
  "ffffb15c": {
   "alias": "cl_throttle_threshold",
   "type": "float",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition."
  },
  "ffffb160": {
   "alias": "cl_load_threshold_a",
   "type": "float",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b160 = tbl 0x69d24 'Closed Loop Fuelling Threshold (Engine Load A)'(rpm)."
  },
  "ffffb164": {
   "alias": "cl_load_threshold_b",
   "type": "float",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b164 = tbl 0x69d38 (Engine Load B)(rpm)."
  },
  "ffffb168": {
   "alias": "cl_load_threshold_c",
   "type": "float",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b168 = tbl 0x69d4c (Engine Load C)(rpm)."
  },
  "ffffb16c": {
   "alias": "cl_unknown_threshold_a",
   "type": "float",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b16c = tbl 0x69d60 'Closed Loop Fuelling Threshold (Unknown A)'(rpm)."
  },
  "ffffb1b6": {
   "alias": "cl_load_a_exceeded",
   "type": "uint8",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b1b6 = load >= b160 (hysteresis -0.04) in 0x1f0c4."
  },
  "ffffb1b7": {
   "alias": "cl_load_b_exceeded",
   "type": "uint8",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b1b7 = load >= b164 (hysteresis) in 0x1f0c4."
  },
  "ffffb1b8": {
   "alias": "cl_load_c_exceeded",
   "type": "uint8",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b1b8 = load >= b168 (hysteresis) in 0x1f0c4."
  },
  "ffffb1b1": {
   "alias": "coolant_above_78_flag",
   "type": "uint8",
-  "reader": "0001f0c4"
+  "reader": "0001f0c4",
+  "evidence": "b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition."
  },
  "ffffb178": {
   "alias": "cl_load_threshold_2d_a",
   "type": "float",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9."
  },
  "ffffb17c": {
   "alias": "cl_load_threshold_2d_b",
   "type": "float",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b17c = tbl 0x69d9c(rpm) -> b1bb."
  },
  "ffffb1b9": {
   "alias": "load_above_thresh_a",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b1b9 = load >= b178 (hysteresis -0.04); part of OL band condition in 0x1ff38."
  },
  "ffffb1bb": {
   "alias": "load_above_thresh_b",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b1bb = load > b17c (hysteresis) in 0x1ff38."
  },
  "ffffb1ba": {
   "alias": "rpm_above_800_flag",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b1ba = rpm >= 1000 (clear below 800) in 0x1ff38."
  },
  "ffffb1bc": {
   "alias": "rpm_above_5300_flag",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b1bc = rpm > 5500 (clear below 5300) in 0x1ff38."
  },
  "ffffb1d8": {
   "alias": "coolant_above_97_flag",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b1d8 = coolant >= 100 (clear below 97) in 0x1ff38."
  },
  "ffffb144": {
   "alias": "ol_condition_timer",
   "type": "uint16",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag."
  },
  "ffffb154": {
   "alias": "ol_band_condition",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6)."
  },
  "ffffb159": {
   "alias": "ol_timer_expired",
   "type": "uint8",
-  "reader": "0001ff38"
+  "reader": "0001ff38",
+  "evidence": "b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition."
  },
  "ffffb180": {
   "alias": "cl_load_threshold_2d_c",
   "type": "float",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b180 = tbl 0x69db0(rpm); throttle/load band compares -> b1be/b1c2 in 0x1f6ae."
  },
  "ffffb184": {
   "alias": "cl_load_threshold_2d_d",
   "type": "float",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b184 = tbl 0x69dc4(rpm)."
  },
  "ffffb188": {
   "alias": "cl_load_threshold_2d_e",
   "type": "float",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b188 = tbl 0x69dd8(rpm) -> b1c6."
  },
  "ffffb18c": {
   "alias": "cl_load_threshold_2d_f",
   "type": "float",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b18c = tbl 0x69dec(rpm) -> b1ca."
  },
  "ffffb1c6": {
   "alias": "load_above_thresh_c",
   "type": "uint8",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b1c6 = load >= b188 (hysteresis) in 0x1f6ae."
  },
  "ffffb1ca": {
   "alias": "load_above_thresh_d",
   "type": "uint8",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b1ca = load > b18c (hysteresis) in 0x1f6ae."
  },
  "ffffb1c7": {
   "alias": "rpm_above_5300_flag_b",
   "type": "uint8",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b1c7 = rpm > 5500 (clear below 5300); second copy in 0x1f6ae."
  },
  "ffffb1cb": {
   "alias": "rpm_above_9800_flag",
   "type": "uint8",
-  "reader": "0001f6ae"
+  "reader": "0001f6ae",
+  "evidence": "b1cb = rpm > 10000 (clear below 9800) in 0x1f6ae."
  },
  "ffffb142": {
   "alias": "ol_decay_enable_a",
   "type": "uint8",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "b142 checked (with b157) in the blend_weight_update decay condition 0x200c6."
  },
  "ffffb152": {
   "alias": "ol_decay_enable_b",
   "type": "uint8",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "b152 checked in the fault branch of 0x200c6."
  },
  "ffffb157": {
   "alias": "ol_decay_enable_c",
   "type": "uint8",
-  "reader": "000200c6"
+  "reader": "000200c6",
+  "evidence": "b157 must be set (with b142) for the b11c/b118 decay branch in 0x200c6."
  },
  "ffffaa6c": {
   "alias": "diag_afr_word_a",
   "type": "float",
-  "reader": "000556ec"
+  "reader": "000556ec",
+  "evidence": "Encoded (step 0x38000000) as high word of PID 0x0034 'Air Fuel Ratio'."
  },
  "ffffaa7c": {
   "alias": "diag_afr_word_b",
   "type": "float",
-  "reader": "00055702"
+  "reader": "00055702",
+  "evidence": "Encoded (mult 0.0625, offset -96.0) as low word of PID 0x0034."
  },
  "ffffb2b0": {
   "alias": "ssv_diag_override_result",
   "type": "uint8",
-  "reader": "0002178c"
+  "reader": "0002178c",
+  "evidence": "Result of ssv_diag_override (0x5c9ac); 1 -> PEDR PE7 set."
  },
  "ffffb2b2": {
   "alias": "ssv_on_counter",
   "type": "uint8",
-  "reader": "0002178c"
+  "reader": "0002178c",
+  "evidence": "Set to 0xbc when (aa68==0 && b2b5==1), else decremented; gates SSV on with b2b4."
  },
  "ffffb2b4": {
   "alias": "ssv_coolant_hot_flag",
   "type": "uint8",
-  "reader": "0002178c"
+  "reader": "0002178c",
+  "evidence": "coolant >= 200 (clear below 197) hysteresis; blocks SSV on-condition."
  },
  "ffffb2b5": {
   "alias": "ssv_was_enabled",
   "type": "uint8",
-  "reader": "0002178c"
+  "reader": "0002178c",
+  "evidence": "previous aa68 snapshot; edge term in the on-condition."
  },
  "ffffc1c0": {
   "alias": "vdi_command",
   "type": "uint8",
-  "reader": "00034844"
+  "reader": "00034844",
+  "evidence": "RPM 7062/7250 hysteresis -> ref_diagControlVDI -> PEDR PD5."
  },
  "ffffc1c4": {
   "alias": "vfad_command",
   "type": "uint8",
-  "reader": "0003493c"
+  "reader": "0003493c",
+  "evidence": "RPM 5062/5250 hysteresis -> ref_diagControlVFADMAYBE -> PEDR PE10."
  },
  "ffffa960": {
   "alias": "secondary_air_request_final",
   "type": "uint8",
-  "reader": "000187b8"
+  "reader": "000187b8",
+  "evidence": "diag-checked secondary-air solenoid request (PE8)."
  },
  "ffffa961": {
   "alias": "sec_air_load_high",
   "type": "uint8",
-  "reader": "000187b8"
+  "reader": "000187b8",
+  "evidence": "load > 0.8 (hyst 0.75)."
  },
  "ffffa962": {
   "alias": "sec_air_rpm_high",
   "type": "uint8",
-  "reader": "000187b8"
+  "reader": "000187b8",
+  "evidence": "RPM > 4000 (hyst 3900)."
  },
  "ffffbf6c": {
   "alias": "secondary_air_pump_request",
   "type": "uint8",
-  "reader": "000316f8"
+  "reader": "000316f8",
+  "evidence": "Drives PBDR PB2 (pump) and feeds the solenoid condition in 0x187b8."
  },
  "ffffbf84": {
   "alias": "apv_command_percent",
   "type": "float",
-  "reader": "00031bec"
+  "reader": "00031bec",
+  "evidence": "APV command from 0x31f32 (staged 100.0/12.5 constants); negated when bf8b, /100 -> 0xaa90."
  },
  "ffffbf88": {
   "alias": "apv_position_dwell_counter",
   "type": "uint16",
-  "reader": "00031ece"
+  "reader": "00031ece",
+  "evidence": "Incremented unless bf8b==0 or (bf88>0x4e1 && cab4==0); bands in 0x31f32."
  },
  "ffffbf8a": {
   "alias": "apv_drive_counter",
   "type": "uint8",
-  "reader": "00031f0a"
+  "reader": "00031f0a",
+  "evidence": "0 when bf8b else saturating increment."
  },
  "ffffbf8b": {
   "alias": "apv_direction_flag",
   "type": "uint8",
-  "reader": "00031bec"
+  "reader": "00031bec",
+  "evidence": "When 1, negates the APV command (reverse) and resets bf8a."
  },
  "ffffbf8d": {
   "alias": "apv_target_state",
   "type": "uint8",
-  "reader": "00031c6c"
+  "reader": "00031c6c",
+  "evidence": "APV target condition from RPM/counter/aa68."
  },
  "ffffbf8e": {
   "alias": "apv_target_state_prev",
   "type": "uint8",
-  "reader": "00031c6c"
+  "reader": "00031c6c",
+  "evidence": "previous bf8d."
  },
  "ffffbf92": {
   "alias": "apv_counter_92",
   "type": "uint8",
-  "reader": "00031c6c"
+  "reader": "00031c6c",
+  "evidence": "> 0x32 term in APV target logic."
  },
  "ffffbf98": {
   "alias": "apv_rpm_high_flag",
   "type": "uint8",
-  "reader": "00031f32"
+  "reader": "00031f32",
+  "evidence": "RPM > 3000 (hyst 2800)."
  },
  "ffffbf99": {
   "alias": "apv_rpm_low_flag",
   "type": "uint8",
-  "reader": "00031c6c"
+  "reader": "00031c6c",
+  "evidence": "RPM >= 200 (clear below 150)."
  },
  "ffffa1c4": {
   "alias": "apv_pwm_forward_ticks",
   "type": "uint16",
-  "reader": "0000aa90"
+  "reader": "0000aa90",
+  "evidence": "Forward duty ticks from apv_duty_split (param*96)."
  },
  "ffffa1c6": {
   "alias": "apv_pwm_reverse_ticks",
   "type": "uint16",
-  "reader": "0000aa90"
+  "reader": "0000aa90",
+  "evidence": "Reverse duty ticks (other direction zeroed)."
  },
  "ffffa1c0": {
   "alias": "apv_pwm_forward_latched",
   "type": "uint16",
-  "reader": "0000a936"
+  "reader": "0000a936",
+  "evidence": "Latched a1c4 at PWM period boundary."
  },
  "ffffa1c2": {
   "alias": "apv_pwm_reverse_latched",
   "type": "uint16",
-  "reader": "0000a936"
+  "reader": "0000a936",
+  "evidence": "Latched a1c6 at PWM period boundary."
  },
  "ffffa1bc": {
   "alias": "apv_drive_status",
   "type": "uint8",
-  "reader": "0000aac4"
+  "reader": "0000aac4",
+  "evidence": "Remapped 0..3 state from PH12/PH13 (PHDR 0x1000/0x2000)."
  },
  "ffffcab0": {
   "alias": "apv_position_voltage",
   "type": "float",
-  "reader": "00043a86"
+  "reader": "00043a86",
+  "evidence": "APV feedback volts = ADC6 raw 9ef0 * 5/65536."
  },
  "ffff9ef0": {
   "alias": "adc6_raw_apv_position",
   "type": "uint16",
-  "reader": "00043a86"
+  "reader": "00043a86",
+  "evidence": "ADC6 (0xfffff80c, AN6 pkg pin 92) sample; candidate APV position input."
  }
  },
  "lookup_aliases": {
- "DAT_0006af54": "tbl_knock_enable_load_floor_0006af54",
- "PTR_DAT_0006af68": "tbl_knock_retard_clamp_min_0006af68",
- "PTR_DAT_0006af7c": "tbl_knock_retard_clamp_min_alt_0006af7c",
- "DAT_0006af90": "tbl_knock_retard_clamp_max_0006af90",
- "DAT_0006afa4": "tbl_knock_recovery_target_0006afa4",
- "DAT_0006afb8": "tbl_knock_learned_retard_scale_0006afb8",
- "PTR_DAT_0006b264": "tbl_knock_transient_hold_0006b264",
- "PTR_DAT_0006b27c": "tbl_ignition_timing_threshold_a_alt_0006b27c",
- "PTR_DAT_0006b294": "tbl_ignition_timing_threshold_b_alt_0006b294",
- "DAT_0006b2b8": "tbl_knock_level_3d_a_0006b2b8",
- "DAT_0006b2d4": "tbl_knock_level_3d_b_0006b2d4",
- "DAT_0006b2f0": "tbl_knock_level_3d_c_0006b2f0",
- "DAT_0006b304": "tbl_knock_level_3d_d_0006b304",
- "DAT_0006990c": "tbl_closed_loop_warmup_time_0006990c",
- "tbl_table_2d_304_check_datatype_0006990c": "tbl_closed_loop_warmup_time_0006990c",
- "DAT_0006ac38": "tbl_fuel_coolant_compensation_0006ac38"
+ "DAT_0006af54": {
+  "alias": "tbl_knock_enable_load_floor_0006af54",
+  "evidence": "12 u8 cells, all 0x32 x mult 0.01 = 0.5 flat load floor; RPM axis 0x795e8 (800-9600); used by knock_enable_gate 0x13826."
+ },
+ "PTR_DAT_0006af68": {
+  "alias": "tbl_knock_retard_clamp_min_0006af68",
+  "evidence": "u8 cells 0x6c(108) -> -10 deg ... 0x80 -> 0 vs RPM 2000-5000 (axis 0x79624); retard clamp minimum in knock_retard_clamp 0x13bd2."
+ },
+ "PTR_DAT_0006af7c": {
+  "alias": "tbl_knock_retard_clamp_min_alt_0006af7c",
+  "evidence": "u8 cells -10/-7.5/-5/-5/-5/-5/0 vs RPM (axis 0x79648); alternative minimum selected when b534==1 && 4<bc3d (0x13bd2)."
+ },
+ "DAT_0006af90": {
+  "alias": "tbl_knock_retard_clamp_max_0006af90",
+  "evidence": "15 u8 cells all 0x80 -> 0.0 deg vs RPM 800-6400 (axis 0x7966c); retard clamp maximum (retard is <= 0)."
+ },
+ "DAT_0006afa4": {
+  "alias": "tbl_knock_recovery_target_0006afa4",
+  "evidence": "u8 cells -10 x9, -8, -6, -4, -2, 0, 0 vs RPM 500-5500 (axis 0x796b8); recovery target when knock sensors unhealthy (0x13a60)."
+ },
+ "DAT_0006afb8": {
+  "alias": "tbl_knock_learned_retard_scale_0006afb8",
+  "evidence": "13 u8 cells all 0x80 -> 0.0; axis 0x79704 = learned EEPROM retard -8.4..+8.4 deg; activation-edge target (0x13a60)."
+ },
+ "PTR_DAT_0006b264": {
+  "alias": "tbl_knock_transient_hold_0006b264",
+  "evidence": "{count=1, type=0}; data byte 0x0a -> raw_u8 lookup << 1 = 20-cycle transient hold counter (0x336c4)."
+ },
+ "PTR_DAT_0006b27c": {
+  "alias": "tbl_ignition_timing_threshold_a_alt_0006b27c",
+  "evidence": "Raw u16 2D threshold A alternative selected when cd60 set (0x336c4); pair with 0x6b270."
+ },
+ "PTR_DAT_0006b294": {
+  "alias": "tbl_ignition_timing_threshold_b_alt_0006b294",
+  "evidence": "Raw u16 2D threshold B alternative selected when cd60 set (0x336c4); pair with 0x6b288."
+ },
+ "DAT_0006b2b8": {
+  "alias": "tbl_knock_level_3d_a_0006b2b8",
+  "evidence": "3D 20x12 scaled (type 0x0c, mult 0.05) knock level vs load/RPM; -> a328 (0x336c4)."
+ },
+ "DAT_0006b2d4": {
+  "alias": "tbl_knock_level_3d_b_0006b2d4",
+  "evidence": "3D 20x12 scaled knock level table B (0x336c4)."
+ },
+ "DAT_0006b2f0": {
+  "alias": "tbl_knock_level_3d_c_0006b2f0",
+  "evidence": "3D 1x1 raw knock level table C (0x336c4)."
+ },
+ "DAT_0006b304": {
+  "alias": "tbl_knock_level_3d_d_0006b304",
+  "evidence": "3D 1x1 raw knock level table D (0x336c4)."
+ },
+ "DAT_0006990c": {
+  "alias": "tbl_closed_loop_warmup_time_0006990c",
+  "evidence": "Raw u16 2D, 15 cells vs catalyst-temp-model axis 0x6f7e0 (data 0x6f81c); engine warmup time before closed loop is allowed (0x1c13c). Overrides the generated RX8Defs descriptor alias on rebuild."
+ },
+ "tbl_table_2d_304_check_datatype_0006990c": {
+  "alias": "tbl_closed_loop_warmup_time_0006990c",
+  "evidence": "Chained rename of the auto RX8Defs descriptor name already integrated into current exports; same table as the row above."
+ },
+ "DAT_0006ac38": {
+  "alias": "tbl_fuel_coolant_compensation_0006ac38",
+  "evidence": "2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim 0x307e0 (bf20). Descriptor not matched to an RX8Defs table (nearest matched neighbours 0x6ac4c 'Table 2D - 182', 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based'); name is a dataflow hypothesis."
+ }
  },
  "fix_00013bd2": {
  "address": "00013bd2",
