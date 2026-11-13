@@ -492,4 +492,21 @@ Session gotchas worth keeping:
   0x2000-0x7ffff, but that fact lives in the investigation docs, not the defs.
 - **Tooling gotcha:** `relabel_merged_def.py` re-indents already-relabeled entries
   on re-run (writes the file even when normalization-only) — check `git diff` after
-  running it.
+  running it. Run each splice pass once per change; use `--dry-run` to confirm a
+  pass is content-idempotent without adding re-indentation to the diff.
+- **Upstream sync splice mechanics:** `utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`
+  applies the RX8Defs `d95b0be`/`39d98a0` changes (DTC switch form, 60E15120
+  immobilizer patch addresses) by expat line-span splice, same mechanics as
+  `relabel_dtc_names.py`. Default targets are ALL local def files (merged def,
+  reviewed copy, upstream snapshot) so every XML under `data/definitions`
+  carries the same DTC categories; pass file paths to target a subset.
+  Bare block-level DTC overrides (name + storageaddress only) are left bare and
+  inherit the new form from RX8Base via name-based inheritance; only entries
+  explicitly carrying the old category/type are converted. DTC name matching
+  must accept both "Enable/Disable #1" and the legacy no-space
+  "Enable/Disable#1" (reviewed copy, base 944062e) — names are never rewritten
+  by this pass. Block identity must key on the FIRST `<romid>`
+  `<internalidstring>` (the fw id) — `<xmlid>` is the cal string (N3J1E). The
+  immo patch addresses are re-verified against ROM bytes inside the pass
+  (pattern offset, "off" blob == ROM bytes, with-RKE site = offset + 0x44c);
+  re-run = byte-identical no-op.

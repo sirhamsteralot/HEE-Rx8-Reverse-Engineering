@@ -455,7 +455,7 @@
     {
       "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
       "state": "present",
-      "local_blob": "7fb8a3ef38d064cd4c24c15948c054d9b00f5802",
+      "local_blob": "c70b0525e10133535622a1fb5ff4deee6ee05207",
       "pinned_submodule": "submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
       "pinned_blob": "82e5724d6d2e47b80ed2d48d23cb1558054aab5c",
       "blob_identical_to_pinned": false,
