@@ -133,7 +133,7 @@ timer-channel-to-physical-injector mapping is not established here.
 ## 6. New table candidates for RX8Defs
 
 Tables used by this chain with **no RX8Defs match** in
-`cross_ecu/romraider_descriptor_matches.json` (candidate definitions,
+`labeling/cross_ecu/romraider_descriptor_matches.json` (candidate definitions,
 needs dimension/storage verification before any def work):
 
 | Descriptor | Read by | Interpretation (candidate) |

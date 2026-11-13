@@ -31,7 +31,7 @@ referenced by submodule path + commit.
   by
   [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py));
   merge records in
-  [`docs/investigations/60E15120_N3J1E/defs-merge/`](../../docs/investigations/60E15120_N3J1E/defs-merge/README.md).
+  [`docs/investigations/60E15120_N3J1E/labeling/defs-merge/`](../../docs/investigations/60E15120_N3J1E/labeling/defs-merge/README.md).
   The per-ROM `per-rom/60E15120_N3J1E.xml` uses this reviewed block.
 - `romraider/upstream-rx8defs/rx8_defs.xml` — upstream RomRaider defs snapshot,
   git blob `35ddcf316573a092006db5d33c60238ab9a43ea2` = upstream commit
@@ -65,7 +65,7 @@ other 13 ROMs (documented gap, not an omission here).
 
 Upstream sync record (RX8Defs `39d98a0`: DTC switch rework, `N3ZGEC` cal ID,
 immobilizer address fixes, per-ROM defs regenerated, validation results):
-[`docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md`](../../docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md).
+[`docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md`](../../docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md).
 
 ## Literal-pool scalars exposed as editable entries (ROADMAP D11)
 
@@ -140,8 +140,8 @@ carries a `Flex Fuel` category (8 tables, incl. `Table 2D - Stoich Fuel Ratio`
 flex-fuel variant ROM, for which this repo has no binary: every dumped ROM carries
 a single 14.7 stoich literal (0x416b3333) and no ethanol-indexed 1/AFR table, and
 in a stock ROM 0x6C444 is `tbl_068f94`'s data, not a stoich table (flex-fuel
-cross-check: [calibration_extraction_report.md §6a](../../docs/investigations/60E15120_N3J1E/calibration_extraction_report.md);
-unresolved G-ROM_FLEX inheritance: [defs-merge/inheritance_issues.json](../../docs/investigations/60E15120_N3J1E/defs-merge/inheritance_issues.json)).
+cross-check: [calibration_extraction_report.md §6a](../../docs/investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md);
+unresolved G-ROM_FLEX inheritance: [defs-merge/inheritance_issues.json](../../docs/investigations/60E15120_N3J1E/labeling/defs-merge/inheritance_issues.json)).
 Flex-fuel content is absent from:
 
 - all 9 `romraider/per-rom/*.xml` — stripped at generation time by
@@ -205,9 +205,9 @@ whole-table additions; no storageaddress, axis, scaling or cell is modified
 `utilities/scripts/defs-merge/relabel_merged_def.py` (merged def) and
 `utilities/scripts/defs-merge/extend_defs_all_roms.py` (per-ROM defs);
 pass log:
-[`docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.json`](../../docs/investigations/60E15120_N3J1E/defs-merge/relabel_2026-11-02.json);
+[`docs/investigations/60E15120_N3J1E/labeling/defs-merge/relabel_2026-11-02.json`](../../docs/investigations/60E15120_N3J1E/labeling/defs-merge/relabel_2026-11-02.json);
 records:
-[`docs/investigations/60E15120_N3J1E/defs-merge/README.md`](../../docs/investigations/60E15120_N3J1E/defs-merge/README.md).
+[`docs/investigations/60E15120_N3J1E/labeling/defs-merge/README.md`](../../docs/investigations/60E15120_N3J1E/labeling/defs-merge/README.md).
 
 ## D8 dedupe
 

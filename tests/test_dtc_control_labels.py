@@ -11,7 +11,7 @@ Invariants checked against the artifacts on disk:
   * the JSON carries exactly the ten DTC-control RAM addresses, each with
     alias/type/reader/evidence;
   * every JSON ram_aliases entry has a matching row (same address + alias) in
-    docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv
+    docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv
     (labels-JSON -> accepted-TSV coverage, as verify_claims.py checks) and in
     data/labels/60E15120_N3J1E/dtc_engine_labels.tsv;
   * rule 7 binary-level verification: for each entry, the cited reader
@@ -32,7 +32,7 @@ REPO = Path(__file__).resolve().parents[1]
 LABELS = REPO / "data" / "labels" / "60E15120_N3J1E" / "dtc_control_labels.json"
 RAM_TSV = (
     REPO
-    / "docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv"
+    / "docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv"
 )
 ENGINE_TSV = REPO / "data" / "labels" / "60E15120_N3J1E" / "dtc_engine_labels.tsv"
 ROM = (

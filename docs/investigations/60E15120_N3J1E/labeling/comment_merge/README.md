@@ -5,8 +5,8 @@ stack several review comment blocks (`[EXPORT CLEANUP]`, `[CROSS-ECU / RX8DEFS R
 `[ADDITIONAL SOURCE REVIEW]`, `[MATH AND UNITS REVIEW]`, `[LOOKUP FAMILY RECONSTRUCTION]`,
 `[SORT RECORD RECONSTRUCTION]`, `[READABILITY RECONSTRUCTION]`) above the
 `/* ROM address: ... */` anchor, and the same headers appear in the monolithic
-[`firmware_decompiled.c`](../../../../reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
-and [`named/firmware_named.c`](../../../../reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c).
+[`firmware_decompiled.c`](../../../../../reverse-engineered/decompiled/60E15120_N3J1E/firmware_decompiled.c)
+and [`named/firmware_named.c`](../../../../../reverse-engineered/decompiled/60E15120_N3J1E/named/firmware_named.c).
 After the source-review comment sweep landed in
 [`source_review/accepted_*.tsv`](../source_review/README.md), some statements were
 restated across blocks and the three views ordered the blocks differently.

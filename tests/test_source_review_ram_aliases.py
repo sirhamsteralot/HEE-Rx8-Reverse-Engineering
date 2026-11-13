@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rule-7 binary-level verification of every accepted RAM alias.
 
-Each row of docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv
+Each row of docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv
 must be anchored in the raw ROM (SHA-256 pinned): the RAM address is loaded
 through a PC-relative literal pool — either
 
@@ -22,7 +22,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-TSV = REPO / "docs/investigations/60E15120_N3J1E/source_review/accepted_ram_aliases.tsv"
+TSV = REPO / "docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv"
 ROM = (
     REPO
     / "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin"

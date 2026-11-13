@@ -9,11 +9,11 @@ workspace root). This repo promotes those into tracked folders:
   decompiled/     -> reverse-engineered/decompiled/60E15120_N3J1E/
                      (except the disassembly outputs, see below)
   disassembly     -> reverse-engineered/disassembly/60E15120_N3J1E/
-  source_review/  -> docs/investigations/60E15120_N3J1E/source_review/
-  cross_ecu/      -> docs/investigations/60E15120_N3J1E/cross_ecu/
-  math_units/     -> docs/investigations/60E15120_N3J1E/math_units/
-  lookup_family/  -> docs/investigations/60E15120_N3J1E/lookup_family/
-  readability/    -> docs/investigations/60E15120_N3J1E/readability/
+  source_review/  -> docs/investigations/60E15120_N3J1E/labeling/source_review/
+  cross_ecu/      -> docs/investigations/60E15120_N3J1E/labeling/cross_ecu/
+  math_units/     -> docs/investigations/60E15120_N3J1E/labeling/math_units/
+  lookup_family/  -> docs/investigations/60E15120_N3J1E/labeling/lookup_family/
+  readability/    -> docs/investigations/60E15120_N3J1E/labeling/readability/
   backups/        -> docs/investigations/60E15120_N3J1E/backups/
   metadata/       -> data/labels/60E15120_N3J1E/
   named/          -> reverse-engineered/decompiled/60E15120_N3J1E/named/
@@ -48,12 +48,12 @@ DISASM_FILES = {"firmware_disassembly.asm", "decompiler_issues.tsv", "non_instru
 DIR_MAP = {
     "decompiled": DEC,
     "disassembly": DISASM,
-    "source_review": INV / "source_review",
-    "cross_ecu": INV / "cross_ecu",
-    "math_units": INV / "math_units",
-    "lookup_family": INV / "lookup_family",
-    "readability": INV / "readability",
-    "comment_merge": INV / "comment_merge",
+    "source_review": INV / "labeling" / "source_review",
+    "cross_ecu": INV / "labeling" / "cross_ecu",
+    "math_units": INV / "labeling" / "math_units",
+    "lookup_family": INV / "labeling" / "lookup_family",
+    "readability": INV / "labeling" / "readability",
+    "comment_merge": INV / "labeling" / "comment_merge",
     "backups": INV / "backups",
     "metadata": LABELS,
     "named": DEC / "named",

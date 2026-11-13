@@ -36,7 +36,7 @@ Reviewer notes on the DTC findings.
   def carries 14 codes this ROM does not have at those slots (0116, 0134,
   0137, 0411, 0444, 0445, 050A, 2009, 2010, 2016, 2067, 2068, 2102, 2103),
   shifting everything from slot 17 — matches the pre-existing
-  `defs-merge/inheritance_issues.json` entries (0128/1574/1577/2008/2101/2406
+  `labeling/defs-merge/inheritance_issues.json` entries (0128/1574/1577/2008/2101/2406
   family).
 - 60E0FB00's def has duplicated entries (0300 x3, 0030 x2, ...) and a gap at
   slot 23 — 98 mismatches; its #3 block is fine.
@@ -73,7 +73,7 @@ exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
   write is in the output task, not chased here).
 - Upstream `rx8_defs.xml` child ROMs inheriting `Rx8Base` DTC addresses show
   the expected inheritance drift (97-98 mismatches for 60E0FC00-based blocks);
-  already covered by `defs-merge/inheritance_issues.json`.
+  already covered by `labeling/defs-merge/inheritance_issues.json`.
 - Emulator self-check vs golden boot trace not re-run (no emulator changes);
   Renesas cross-check still pending.
 
@@ -84,7 +84,7 @@ exactly one used slot with asymmetric #1/#2 (0x74 C073) and 11 slots with 0/0.
 (code table + 3 enable blocks, `dtc_layout()`). After regeneration: 0 mismatches
 across all 9 per-ROM defs for #1/#2/#3 (see `data/dtc/defs_audit.tsv`, regenerated).
 The merged 60E15120 block gained its missing #2/#3 bindings (363 entries, 0
-mismatches, XML re-parsed). Repair recorded in `defs-merge/definition_repairs.json`.
+mismatches, XML re-parsed). Repair recorded in `labeling/defs-merge/definition_repairs.json`.
 
 ## P-code labels
 

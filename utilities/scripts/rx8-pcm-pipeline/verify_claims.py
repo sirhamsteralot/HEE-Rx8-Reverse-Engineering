@@ -41,8 +41,8 @@ this script). The mechanical checks:
      1-D rows' Axis/Data cells must contain the descriptor's axis/data
      addresses.
 
-Scans docs/investigations/<rom-id>/*_report.md and the evidence column of
-source_review/accepted_function_aliases.tsv.
+Scans docs/investigations/<rom-id>/*_report.md + labeling/*_report.md and the
+evidence column of source_review/accepted_function_aliases.tsv.
 
 Writes metadata/claim_validation.json; exits non-zero on any failure.
 Run from the repo root: python utilities/scripts/rx8-pcm-pipeline/verify_claims.py
@@ -55,7 +55,8 @@ from paths import b, rom_file, ROOT, INV, DEC, DISASM, LABELS
 ROM = rom_file().read_bytes()
 
 REPORTS_DIR = INV
-REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md'))
+REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md')) + \
+    sorted('labeling/' + p.name for p in (REPORTS_DIR / 'labeling').glob('*_report.md'))
 
 index = {r['address']: r for r in csv.DictReader((b / 'decompiled/function_index.tsv').open(newline='', encoding='utf-8', errors='surrogateescape'), delimiter='\t')}
 fn_bounds = sorted((int(a, 16), int(a, 16) + int(r['body_bytes'])) for a, r in index.items())

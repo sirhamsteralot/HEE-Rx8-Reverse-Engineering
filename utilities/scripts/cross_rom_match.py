@@ -10,7 +10,7 @@ Matched functions inherit the base ROM's accepted aliases
 
 Outputs (new files, nothing existing is modified):
   - data/labels/cross_rom_function_matches.tsv   (one row per base->target match)
-  - docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_function_aliases.tsv
+  - docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_function_aliases.tsv
   - data/labels/cross_rom_match_summary.json
 
 Run from the repo root:  python utilities/scripts/cross_rom_match.py
@@ -34,7 +34,7 @@ assert BASE_SHA == info["sha256"], "base ROM hash mismatch"
 
 index = list(csv.DictReader((DEC / "function_index.tsv").open(newline=""), delimiter="\t"))
 aliases = {r["address"]: r for r in csv.DictReader(
-    (INV / "source_review" / "accepted_function_aliases.tsv").open(newline=""), delimiter="\t")}
+    (INV / "labeling" / "source_review" / "accepted_function_aliases.tsv").open(newline=""), delimiter="\t")}
 
 targets = {}
 for p in sorted(STOCK.glob("*.bin")):
@@ -82,12 +82,12 @@ def write_tsv(path, fieldnames, rows):
 
 write_tsv(ROOT / "data" / "labels" / "cross_rom_function_matches.tsv",
           ["rom", "base_address", "base_name", "target_address", "size", "method"], match_rows)
-write_tsv(INV / "cross_ecu" / "cross_rom_function_aliases.tsv",
+write_tsv(INV / "labeling" / "cross_ecu" / "cross_rom_function_aliases.tsv",
           ["rom", "target_address", "alias", "base_address", "confidence"], alias_rows)
 out = {"date": "2026-10-31", "base_rom": BASE_ROM_ID, "base_sha256": BASE_SHA,
        "method": "unique exact byte match of function_index body_bytes in target ROM",
        "summary": summary, "outputs": ["data/labels/cross_rom_function_matches.tsv",
-                                       "docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_function_aliases.tsv"]}
+                                       "docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_function_aliases.tsv"]}
 (ROOT / "data" / "labels" / "cross_rom_match_summary.json").write_text(json.dumps(out, indent=2) + "\n")
 print(json.dumps({"roms": len(targets), "match_rows": len(match_rows), "alias_rows": len(alias_rows),
                   "per_rom": {k: (v["functions_matched"], v["aliases_propagated"]) for k, v in summary.items()}}, indent=2))

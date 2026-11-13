@@ -60,7 +60,7 @@ array, not the individual SAE DTC assignments in the upstream #1 bank.
 These four individual function files, the combined
 C export, and the named C view carry dated review comments. Executable C tokens and canonical function names
 are unchanged; suggested names and confidence live in `function_findings.json`.
-A backup is in `../60E15120_N3J1E/backups/pre_defs_20260930.zip`.
+A backup is in `../../60E15120_N3J1E/backups/pre_defs_20260930.zip`.
 
 ## Verification and open findings
 
@@ -97,7 +97,7 @@ python3 /home/yannick/Documents/Tuning/reverse_engineered/Defs/annotate_source.p
 ```
 
 (This repo's live copy of the merger is
-[`utilities/scripts/defs-merge/merge_review.py`](../../../../utilities/scripts/defs-merge/merge_review.py).
+[`utilities/scripts/defs-merge/merge_review.py`](../../../../../utilities/scripts/defs-merge/merge_review.py).
 The merger's review comments (`[RX8DEFS …]` markers) are baked into the
 promoted export and re-derivable from `function_findings.json` above.)
 
@@ -120,8 +120,8 @@ The generated `validation.json` pins their hashes and commits.
   `definition_repairs.json`): per-ROM `DTC xxxx Enable/Disable #N` storageaddresses
   rebuilt from each ROM's own DTC layout (`repair_dtc_tables()` in
   `utilities/scripts/defs-merge/extend_defs_all_roms.py`); evidence in
-  [`../dtc_control_report.md`](../dtc_control_report.md) §5 and
-  [`../reviews/dtc_control/`](../reviews/dtc_control/README.md).
+  [`../dtc_control_report.md`](../../dtc_control_report.md) §5 and
+  [`../reviews/dtc_control/`](../../reviews/dtc_control/README.md).
 - **Relabel/regroup pass** (ROADMAP D item 5): pass log
   [`relabel_2026-11-02.json`](relabel_2026-11-02.json).
 - **DTC P-code labels** (entry 84 in `definition_repairs.json`, ROADMAP
@@ -132,11 +132,11 @@ The generated `validation.json` pins their hashes and commits.
   SAE J2012 mapping `data/dtc/pcodes.tsv` cross-checked against the Mazda workshop
   manual `input/4EngineControl.pdf` (DTC TABLE → `data/dtc/mazda_dtc_table.tsv`);
   Mazda wording preferred in descriptions. Evidence:
-  [`../dtc_control_report.md`](../dtc_control_report.md) §5b; tests
+  [`../dtc_control_report.md`](../../dtc_control_report.md) §5b; tests
   `tests/test_dtc_pcode_labels.py`.
 - **Defs update from the subsystem investigations** (idle target/air, alternator
   control, DSC CAN arbitration, ignition timing): 47 new curated table labels
-  in [`data/labels/60E15120_N3J1E/defs_table_labels.json`](../../../../data/labels/60E15120_N3J1E/defs_table_labels.json)
+  in [`data/labels/60E15120_N3J1E/defs_table_labels.json`](../../../../../data/labels/60E15120_N3J1E/defs_table_labels.json)
   (built by `utilities/scripts/defs-merge/build_table_labels.py`) — idle target
   RPM variants/filter, idle air output/feedback/correction/A-C tables, the
   alternator field-drive/duty/voltage-target/drag-torque tables, and the CAN
@@ -157,7 +157,7 @@ The generated `validation.json` pins their hashes and commits.
 - **Upstream RX8Defs sync splice** (`d95b0be` DTC switch rework + `39d98a0`
   immobilizer patch addresses): applied to all three local def files (merged
   def, reviewed copy, upstream snapshot) by
-  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
+  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
   (surgical expat line-span splice, idempotent; pass log
   [`upstream_splice_39d98a0.json`](upstream_splice_39d98a0.json)), so every XML
   under `data/definitions` carries the same DTC categories/form. The pass

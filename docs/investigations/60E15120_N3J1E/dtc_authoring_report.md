@@ -207,7 +207,7 @@ renamed or upgraded, and no decompiled artifact was modified.
   `ref_updateFaultStatusTHUNKNoR6_` (a misnomer — the body is set_fault, not a status
   update) to `dtc_set_fault_x0` / `dtc_set_fault_xdefault` / `dtc_set_eval_enable`
   (record: `data/labels/60E15120_N3J1E/dtc_thunk_labels.json`, aliases in
-  `source_review/accepted_function_aliases.tsv`, applied to the export; test
+  `labeling/source_review/accepted_function_aliases.tsv`, applied to the export; test
   `tests/test_dtc_set_fault_thunk.py`).
 
 ## 6. Files
