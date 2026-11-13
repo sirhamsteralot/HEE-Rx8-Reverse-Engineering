@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_subpid_supported_mask [high]: scans 36 x 6-byte records at 0x5f5b2 for current PID+subfunc with mask&DAT_ffffd3b4, ORs byte1 (bit) into result; returns param & mask
+ * diag22_subpid_supported_mask [high]: scans 36 x 6-byte records at 0x5f5b2 for current PID+subfunc with mask&diag_permission_mask_ffffd3b4_ffffd3b4, ORs byte1 (bit) into result; returns param & mask
  * RAM 0xffffd3b4 diag_permission_mask_ffffd3b4 (uint16): session/security mask ANDed with every record availability_mask in 0x5774c and 0x579a8
  */
 /* ROM address: 0x000579a8; body bytes: 100; decompiled */

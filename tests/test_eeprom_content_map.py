@@ -220,3 +220,124 @@ def test_labels_json_present():
     assert "000375c0\te2ram_immo_key_read" in idx
     assert "00027b8e\te2ram_learned_table_load" in idx
     assert "0000d408\teeprom_mirror_magic_check" in idx
+
+
+def f32(a):
+    return struct.unpack(">f", ROM[a:a + 4])[0]
+
+
+# --- learned-table per-index semantics (chip 0x20-0x63), binary-level ---
+
+# RX8 dump decode, pair i -> (value, flag) with value = -63 + raw*0.5
+RX8_LEARNED = [
+    (1.5, 1), (1.0, 1), (0.0, 1), (-1.5, 1), (-4.0, 1), (-5.0, 1), (-6.5, 1),
+    (-10.0, 1), (-11.5, 1), (-16.5, 1), (-18.5, 1),
+    (0.0, 0), (0.0, 0), (0.0, 0), (0.0, 0), (0.0, 0), (0.0, 0),
+    (1.5, 1), (1.0, 1), (1.0, 1), (-2.0, 1), (-5.0, 1), (-6.0, 1), (-7.0, 1),
+    (-10.5, 1), (-11.5, 1), (-16.0, 1), (-18.0, 1), (-23.0, 1), (-25.5, 1),
+    (-33.5, 1), (-45.0, 1), (0.0, 0), (0.0, 0),
+]
+
+
+def test_learned_table_pair_decode_and_diff():
+    assert len(RX8_LEARNED) == 0x22
+    for i, (val, flag) in enumerate(RX8_LEARNED):
+        raw, fl = RX8[0x20 + 2 * i], RX8[0x21 + 2 * i]
+        assert -63.0 + raw * 0.5 == val, i
+        assert fl == flag, i
+        # SE3P learned table fully erased
+        assert SE3[0x20 + 2 * i] == 0xFF and SE3[0x21 + 2 * i] == 0x00, i
+    # the 0x20-0x63 region is per-ECU learned data (differs RX8 vs SE3P on
+    # every value byte 0x20..0x62 even and every differing flag byte; the
+    # zero-flag bytes 0x37,0x39,...,0x41,0x61,0x63 match SE3P's 0x00)
+    diffs = [i for i in range(0x20, 0x64) if RX8[i] != SE3[i]]
+    assert diffs == list(range(0x20, 0x37)) + list(range(0x38, 0x42, 2)) + \
+        list(range(0x42, 0x60)) + [0x60, 0x62]
+
+
+def test_learned_table_cell_index_pools():
+    # 0x2711a: cell = rpm_cell + 17*load_band
+    assert u32(0x2716C) == 0x0006A694          # tbl 2D #332 descriptor
+    assert u32(0x2724C) == 0x00002460           # rx8_add_u16_saturate
+    assert abs(f32(0x755A4) - 0.4) < 1e-6 and abs(f32(0x755A8) - 0.65) < 1e-6
+    assert f32(0x755AC) == 3.0
+    # descriptor geometry: 17 cells, type 0
+    assert u16(0x6A694) == 17 and ROM[0x6A696] == 0
+    assert u32(0x6A698) == 0x000755DC and u32(0x6A69C) == 0x00075620
+    assert u16(0x6A6A0) == 17 and ROM[0x6A6A2] == 0
+    assert u32(0x6A6A4) == 0x00075644 and u32(0x6A6A8) == 0x00075688
+    # axis/data content (ROM-verified arrays)
+    assert [f32(0x755DC + 4 * i) for i in range(17)] == [
+        0.0, 1125.0, 1750.0, 2250.0, 2750.0, 3250.0, 3750.0, 4250.0, 4750.0,
+        5250.0, 5750.0, 6250.0, 6750.0, 7250.0, 7750.0, 8250.0, 8750.0]
+    assert [u16(0x75620 + 2 * i) for i in range(17)] == list(range(17))
+    assert [f32(0x75644 + 4 * i) for i in range(17)] == [float(i) for i in range(17)]
+    assert [f32(0x75688 + 4 * i) for i in range(17)] == [
+        750.0, 1500.0, 2000.0, 2500.0, 3000.0, 3500.0, 4000.0, 4500.0, 5000.0,
+        5500.0, 6000.0, 6500.0, 7000.0, 7500.0, 8000.0, 8500.0, 9000.0]
+
+
+def test_learned_table_array_base_pools():
+    # value_pos 0xffff8108 / flag_a 0xffff8548 pool locations
+    for a in (0x27154, 0x27938, 0x27B48, 0x27C78, 0x27FA4, 0x282B8, 0x2850C):
+        assert u32(a) == 0xFFFF8108, hex(a)
+    for a in (0x27158, 0x27270, 0x27934, 0x27B44, 0x27C7C, 0x27FA8):
+        assert u32(a) == 0xFFFF8548, hex(a)
+    # bank strides: value_neg = +0x220, flag_b = +0x88
+    assert u16(0x27D3E) == 0x0220 and u16(0x27D40) == 0x0088 and u16(0x284F6) == 0x0220
+
+
+def test_learned_table_learn_gate_pools():
+    # 0x276ec: live arrays + RPM gate + filter constant
+    assert u32(0x277F0) == 0xFFFFB8F4          # counter array
+    assert u32(0x277F8) == 0xFFFFB6CC          # live value array
+    assert f32(0x755D0) == 100.0               # |rpm - breakpoint| gate
+    assert abs(f32(0x755D4) - 0.031) < 1e-9    # first-order filter k
+    assert u32(0x277FC) == 0x3727C5AC          # eps 1e-5
+    # 0x27808 persist: tick + bases + writers
+    assert u32(0x2791C) == 0xFFFFBA04          # tick counter (init 0xb)
+    assert u32(0x27928) == 0xFFFFB8F4 and u32(0x2792C) == 0xFFFFB6CC
+    assert u32(0x27934) == 0xFFFF8548 and u32(0x27938) == 0xFFFF8108
+    assert u32(0x27940) == 0x0003DB54          # rx8_first_order_filter
+    assert u32(0x27944) == 0x0003DCD0 and u32(0x27948) == 0x0003DC70
+    assert u16(0x27A20) == 0x0007              # flag-mirror bitmask for cells 0..2
+    assert u32(0x27A24) == 0x000043C8          # shift fn
+
+
+def test_labels_json_learned_pairs():
+    d = json.load(open(LAB, encoding="utf-8"))
+    pairs = d["learned_table_pairs"]["pairs"]
+    assert len(pairs) == 34
+    assert pairs[0]["chip"] == "0x20-0x21" and pairs[0]["rpm_cell"] == 0
+    assert pairs[0]["rpm_breakpoint"] == 750 and pairs[0]["load_band"] == 0
+    assert pairs[17]["chip"] == "0x42-0x43" and pairs[17]["load_band"] == 1
+    assert pairs[33]["rpm_breakpoint"] == 9000 and pairs[33]["load_band"] == 1
+    fa = d["function_aliases"]
+    for addr, alias in (("0002711a", "e2ram_learned_table_cell_index"),
+                        ("000271b0", "e2ram_learned_table_learn_gate"),
+                        ("000276ec", "e2ram_learned_table_cell_learn"),
+                        ("00027808", "e2ram_learned_table_ram_persist"),
+                        ("00027eec", "e2ram_learned_table_flag_mirror"),
+                        ("00028198", "e2ram_learned_table_apply"),
+                        ("00028484", "e2ram_learned_table_cell_read"),
+                        ("00027024", "e2ram_learned_table_clear"),
+                        ("000270aa", "e2ram_learned_table_validate"),
+                        ("0002837c", "e2ram_learned_table_correction_filter")):
+        assert fa[addr]["alias"] == alias, addr
+    ra = d["ram_aliases"]
+    assert ra["ffffb6c4"]["alias"] == "e2ram_learned_table_cell_index"
+    assert ra["ffffb660"]["alias"] == "sector_parity_bank"
+    assert ra["ffffb6cc"]["alias"] == "e2ram_learned_table_live_value"
+    assert ra["ffffb8f4"]["alias"] == "e2ram_learned_table_live_counter"
+    assert ra["ffffba2c"]["alias"] == "e2ram_learned_correction_value"
+    # TSV rows exist for the new labels (pipeline source of truth)
+    fn_rows = open(os.path.join(
+        ROOT, "docs/investigations/60E15120_N3J1E/labeling/source_review",
+        "accepted_function_aliases.tsv"), encoding="utf-8").read()
+    assert "0002711a\te2ram_learned_table_cell_index" in fn_rows
+    assert "00027808\te2ram_learned_table_ram_persist" in fn_rows
+    ram_rows = open(os.path.join(
+        ROOT, "docs/investigations/60E15120_N3J1E/labeling/source_review",
+        "accepted_ram_aliases.tsv"), encoding="utf-8").read()
+    assert "ffffb6c4\te2ram_learned_table_cell_index" in ram_rows
+    assert "ffffb660\tsector_parity_bank" in ram_rows

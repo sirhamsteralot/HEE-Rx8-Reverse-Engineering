@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1710_sensor_snapshot_7byte [medium]: dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
+ * diag22_pid1710_sensor_snapshot_7byte [medium]: dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from inferred_sensor_block_ffff9150_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
  * RAM 0xffff9150 inferred_sensor_block_ffff9150 (float[7]): PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b
  */
 /* [MATH AND UNITS REVIEW]

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * dtc_count_ram_table [high]: counts DAT_ffffd570[0..0x8b]==1, rotor-0/1 adjust, clamp 0xff
+ * dtc_count_ram_table [high]: counts dtc_ram_flag_table_ffffd570_ffffd570[0..0x8b]==1, rotor-0/1 adjust, clamp 0xff
  * RAM 0xffffd570 dtc_ram_flag_table_ffffd570 (uint8[0x8c]): PID 0x0202 counts set bytes (140 DTC slots)
  */
 /* ROM address: 0x0005fb08; body bytes: 84; decompiled */

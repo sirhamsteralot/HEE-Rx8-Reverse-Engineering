@@ -3,7 +3,7 @@
   "rom": "60E15120_N3J1E",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rom_unchanged": true,
-  "candidate_total": 184,
+  "candidate_total": 186,
   "promoted_to_high": {
     "000064ba": {
       "alias": "knock_sensor_fault_task",
@@ -579,6 +579,8 @@
     }
   },
   "kept_candidate": {
+    "00027eec": "candidate_e2ram_learned_table_flag_mirror",
+    "0002837c": "candidate_e2ram_learned_table_correction_filter",
     "0000be5e": "candidate_e2ram_send_command4_a",
     "0000be8c": "candidate_e2ram_send_command4_b",
     "000148a4": "candidate_idle_target_term_lookup",
@@ -651,10 +653,10 @@
     "0005e748": "candidate_e2ram_config_bit_9f_read"
   },
   "counts": {
-    "candidate_total": 184,
+    "candidate_total": 186,
     "promoted": 113,
     "renamed": 1,
-    "kept_candidate": 70
+    "kept_candidate": 72
   },
   "export_applied_by": "pending: integrate_reviewed_names.py on full rebuild",
   "ghidra_database_updated": false

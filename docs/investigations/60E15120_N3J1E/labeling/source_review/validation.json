@@ -1,7 +1,7 @@
 {
   "date": "2026-11-13",
-  "function_annotations": 563,
-  "ram_aliases": 508,
+  "function_annotations": 573,
+  "ram_aliases": 513,
   "ghidra_database_updated": false,
   "label_sweep_passes": [
     {

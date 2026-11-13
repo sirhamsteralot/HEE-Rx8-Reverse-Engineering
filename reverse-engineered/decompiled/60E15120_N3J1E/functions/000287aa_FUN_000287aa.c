@@ -11,7 +11,7 @@ void FUN_000287aa(void)
   FUN_00026982();
   FUN_000280be();
   FUN_00028118();
-  FUN_00028198();
+  e2ram_learned_table_apply();
   FUN_0002842c();
   FUN_00044a78();
   FUN_00044a9e();

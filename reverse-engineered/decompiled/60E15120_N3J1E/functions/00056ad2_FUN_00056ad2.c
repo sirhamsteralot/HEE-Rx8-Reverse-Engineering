@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid002f_ram_d287_raw [high]: dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: DAT_ffffd287 raw byte | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * diag22_pid002f_ram_d287_raw [high]: dispatch record 0x5f208 -> handler verified in ROM bytes + function_index; 0x5562c: inferred_ram_d287_ffffd287_ffffd287 raw byte | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056ad2; body bytes: 20; decompiled */
 

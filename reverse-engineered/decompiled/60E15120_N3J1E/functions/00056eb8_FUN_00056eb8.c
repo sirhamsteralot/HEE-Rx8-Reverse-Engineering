@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1154_throttle_raw_ad5c [high]: dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw DAT_ffffad5c u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * diag22_pid1154_throttle_raw_ad5c [high]: dispatch record 0x5f364 -> handler verified in ROM bytes + function_index; raw inferred_throttle_sensor_volts_ffffad5c_ffffad5c u16 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00056eb8; body bytes: 14; decompiled */
 

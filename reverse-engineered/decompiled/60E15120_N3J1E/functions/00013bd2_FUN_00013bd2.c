@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
+ * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when automatic_transmission_ffffb534==1 && 4<current_gear_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

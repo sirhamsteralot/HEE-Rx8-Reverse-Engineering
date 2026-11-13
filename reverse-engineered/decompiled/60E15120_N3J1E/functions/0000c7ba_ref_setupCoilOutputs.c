@@ -1,7 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffa37e knock_ignition_threshold_a (uint16): Threshold A (default 94; = c090 from 0x336c4 via 0xc0f0); used by 0xc7ba coil outputs; the 0x33970 attack condition reads c090 directly (same raw value).
  * RAM 0xffffa37c knock_ignition_threshold_b (uint16): Threshold B (default 193; = c092); used by 0xc7ba coil outputs.
- * RAM 0xffff9f88 crank_period_accumulator (float): Sum of DAT_ffff9fd0[] periods; RPM denominator (ISR 0x803e); used by 0xc7ba coil scaling.
+ * RAM 0xffff9f88 crank_period_accumulator (float): Sum of crank_period_ring_ffff9fd0[] periods; RPM denominator (ISR 0x803e); used by 0xc7ba coil scaling.
  */
 /* ROM address: 0x0000c7ba; body bytes: 208; decompiled */
 

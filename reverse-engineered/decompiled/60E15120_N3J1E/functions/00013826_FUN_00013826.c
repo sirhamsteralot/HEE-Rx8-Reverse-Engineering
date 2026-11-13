@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_enable_gate [high]: Sets DAT_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000.
+ * knock_enable_gate [high]: Sets knock_enable_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000.
  * RAM 0xffffa424 engine_running_timer (uint16): Engine-running time counter (100 Hz); gates knock enable (>= 0x177) and the attack condition (>= 0xfa).
  */
 /* [READABILITY RECONSTRUCTION]

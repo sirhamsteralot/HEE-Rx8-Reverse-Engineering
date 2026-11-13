@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * leading_timing_cranking_blend [high]: Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (DAT_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5).
+ * leading_timing_cranking_blend [high]: Leading final blend. ROM equation: a640 = a5e8*a644 + (a5f0 + a718 + ca9c)*(1-a644) + a780 - a778. a644 = cranking multiplier: decays max(a644-0.05,0) per call while cranking (cranking_active_ffffaa62_ffffaa62==1) and rpm < a7ac+10000-100, else min(a644+1,1). Dynamically verified in the emulator bit-exact (cranking: a640=25.775 for scripted inputs; non-cranking a644->1: a640=36.5).
  * RAM 0xffffa5e8 leading_base_timing_final (float): Written by 0x11f00 leading_base_timing_calc (fmov.s fr2,@r2 0x11fe8 via mov.w pool 0x12010=0xa5e8 @0x11fdc, sign-extends to 0xffffa5e8); read by 0x123da leading_timing_cranking_blend (mov.w pool 0x1253a @0x124b0).
  * RAM 0xffffa644 cranking_timing_multiplier_leading (float): Written by 0x123da leading_timing_cranking_blend (fmov.s fr0,@r14 0x1249c via mov.l pool 0x12548=0xffffa644 @0x12464).
  */

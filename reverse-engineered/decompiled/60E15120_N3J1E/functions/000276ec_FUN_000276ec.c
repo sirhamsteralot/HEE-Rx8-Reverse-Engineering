@@ -16,26 +16,26 @@ FUN_000276ec(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4
   short *psVar6;
   float fVar7;
   
-  uVar2 = DAT_ffffb660 & 1;
+  uVar2 = sector_parity_bank_ffffb660 & 1;
   puVar1 = &DAT_ffffba04;
   if ((((DAT_ffffba04 != 0) && (DAT_ffffba06 == 0)) && (DAT_ffffb8f0 - 100.0 <= engine_speed_rpm_ffffb548)) &&
      (engine_speed_rpm_ffffb548 < DAT_ffffb8f0 + 100.0)) {
-    uVar5 = (uint)DAT_ffffb6c4;
-    uVar4 = (uint)DAT_ffffb6c4;
-    if ((&DAT_ffffb8f4)[(uint)uVar2 * 0x44 + uVar5] == 0) {
-      psVar6 = &DAT_ffffb8f4 + (uint)uVar2 * 0x44 + uVar5;
+    uVar5 = (uint)e2ram_learned_table_cell_index_ffffb6c4;
+    uVar4 = (uint)e2ram_learned_table_cell_index_ffffb6c4;
+    if ((&e2ram_learned_table_live_counter_ffffb8f4)[(uint)uVar2 * 0x44 + uVar5] == 0) {
+      psVar6 = &e2ram_learned_table_live_counter_ffffb8f4 + (uint)uVar2 * 0x44 + uVar5;
       puVar1 = (undefined2 *)rx8_add_u16_saturate((int)*psVar6,1,param_3,param_4,psVar6);
       *psVar6 = (short)puVar1;
-      (&DAT_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4] = DAT_ffffba2c;
+      (&e2ram_learned_table_live_value_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4] = e2ram_learned_correction_value_ffffba2c;
     }
     else {
-      psVar6 = &DAT_ffffb8f4 + (uint)uVar2 * 0x44 + uVar5;
+      psVar6 = &e2ram_learned_table_live_counter_ffffb8f4 + (uint)uVar2 * 0x44 + uVar5;
       sVar3 = rx8_add_u16_saturate((int)*psVar6,1,param_3,param_4,psVar6);
       *psVar6 = sVar3;
       fVar7 = rx8_first_order_filter
-                        (DAT_ffffba2c,(float)(&DAT_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4],0.031,1e-05
+                        (e2ram_learned_correction_value_ffffba2c,(float)(&e2ram_learned_table_live_value_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4],0.031,1e-05
                         );
-      (&DAT_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4] = fVar7;
+      (&e2ram_learned_table_live_value_ffffb6cc)[(uint)uVar2 * 0x44 + uVar4] = fVar7;
       puVar1 = extraout_r0;
     }
   }
