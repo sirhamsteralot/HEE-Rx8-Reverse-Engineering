@@ -156,8 +156,14 @@ target without claiming semantics for it.
   exactly once in 0x35a8c (at 0x35a94) with pool 0x35b74 holding 0x00037ea4;
   14 dispatch arms `bra 0x35d36`; byte-exact match of the 14 bytes with
   60E0FC00 0x36456. Re-run twice: second run adds/replaces 0 rows (idempotent).
-- `python -m pytest tests/test_thunk_audit.py` — passes (see
-  `reviews/thunk_audit/README.md` for the recorded output).
+- `python -m pytest tests/test_thunk_audit.py` — 9 passed, including dynamic
+  emulator validation: the CAN RX interrupt (IVT 0x378) is traced
+  0x31c0 → 0x5e78 → 0x9c86 with the injected 0x7e0 frame landing in the UDS RX
+  buffer 0xffffddc8 (proves the pool-jmp class dynamically), and 0x35d36
+  called with r14 = 0x00037ea4 exactly as caller 0x35a8c sets it is traced
+  0x35d36 → 0x37ea4 and writes the shadow data+complement cells
+  0xffffc28e/0xffffc38e (proves the jsr_reg trampoline dynamically). See
+  `reviews/thunk_audit/README.md` for the recorded output.
 - Pipeline validators `validate_export.py`, `validate_reports.py`,
   `verify_claims.py` run from the repo root — clean (recorded in
   `reviews/thunk_audit/README.md`).
@@ -242,9 +248,9 @@ artifact consistency without the pipeline.
 
 ## 9. Limits
 
-- Static analysis only; no emulator run of the trampolines in this pass
-  (0x5e78 is exercised dynamically by the CAN RX IVT path per the
-  OS-scheduling labels, but that is not re-traced here).
+- Dynamic validation covers representative members of each class (0x5e78 via
+  the CAN RX IVT, 0x35d36 via a direct harness call), not all 53 trampolines;
+  the remaining classes are proven statically from the ROM bytes.
 - 47 of 53 targets are still-unnamed `FUN_` functions; the audit proves the
   jump target, not the target's semantics.
 - Cross-ROM propagation not done: only 0x35d36 was byte-matched against a second

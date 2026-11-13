@@ -7,6 +7,11 @@ the artifacts (accepted_function_aliases.tsv, thunk_audit_labels.json,
 function_index.tsv). The one register-indirect case 0x35d36 is proven by
 tracing r14 in its sole caller 0x35a8c.
 
+Dynamic, in the SH-2E emulator: the CAN RX interrupt path is traced through the
+pool-jmp thunk 0x5e78 into can_rx_isr_handler 0x9c86, and 0x35d36 is called with
+r14 = 0x00037ea4 exactly as caller 0x35a8c sets it, showing it reaches
+e2ram_shadow_byte_write 0x37ea4 and writes the shadow data+complement cells.
+
 Run: python -m pytest tests/test_thunk_audit.py
 """
 import csv
@@ -14,10 +19,18 @@ import json
 import os
 import re
 import struct
+import sys
 
 import pytest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+EMU = os.path.join(ROOT, "utilities", "scripts", "emu")
+sys.path.insert(0, EMU)
+
+import emu  # noqa: E402
+import harness  # noqa: E402
+from can import CANController  # noqa: E402
+
 ROM = os.path.join(ROOT, "submodules", "Mazda_RX8_PCM_ReverseEngineering",
                    "Stock_ROMs", "60E15120_N3J1E.bin")
 ROM2 = os.path.join(ROOT, "submodules", "Mazda_RX8_PCM_ReverseEngineering",
@@ -25,6 +38,8 @@ ROM2 = os.path.join(ROOT, "submodules", "Mazda_RX8_PCM_ReverseEngineering",
 DEC = os.path.join(ROOT, "reverse-engineered", "decompiled", "60E15120_N3J1E")
 INV = os.path.join(ROOT, "docs", "investigations", "60E15120_N3J1E")
 LABELS = os.path.join(ROOT, "data", "labels", "60E15120_N3J1E")
+PROFILE = os.path.join(EMU, "profiles", "60E15120_N3J1E.json")
+IDLE = 0x3DAC
 
 ROM_SHA256 = "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1"
 
@@ -164,3 +179,88 @@ def test_jump_to_aliases_encode_proven_targets():
             assert new == "jump_to_" + tname
         else:
             assert new == "jump_to_0x%08x" % tgt  # thunk-to-thunk chain
+
+
+# --- dynamic validation in the SH-2E emulator --------------------------------
+
+@pytest.fixture(scope="module")
+def booted():
+    prof, bus, cpu = emu.build(PROFILE)
+    emu.run(prof, bus, cpu, 300000)  # boot to the idle loop
+    assert cpu.pc == IDLE
+    return prof, bus, cpu
+
+
+def run_traced(bus, cpu, entry, max_steps=400000, pre=None):
+    """harness.call-style run that records every executed PC.
+
+    pre: optional fn(bus, cpu) to set up registers/stack before the run.
+    Returns (trace_list, final_pc).
+    """
+    trace = []
+    cpu.trace = trace
+    cpu.r[15] = harness.STACK
+    cpu.pr = harness.SENTINEL
+    if pre:
+        pre(bus, cpu)
+    cpu.pc = entry
+    steps = 0
+    while cpu.pc != harness.SENTINEL and steps < max_steps:
+        bus.pc = cpu.pc
+        cpu.step()
+        bus.tick(1)
+        steps += 1
+    cpu.trace = None
+    assert cpu.pc == harness.SENTINEL, "did not return (pc=0x%08x)" % cpu.pc
+    return trace, cpu.pc
+
+
+def ordered_subseq(trace, seq):
+    """True if `seq` appears in `trace` in order (not necessarily adjacent)."""
+    it = iter(trace)
+    return all(any(pc == want for pc in it) for want in seq)
+
+
+def test_dynamic_can_rx_ivt_goes_through_pool_jmp_thunk_0x5e78(booted):
+    """Inject a 0x7e0 frame; the CAN RX IVT (0x378) runs trampoline 0x31c0 ->
+    pool-jmp thunk 0x5e78 (jump_to_can_rx_isr_handler) -> 0x9c86, and the frame
+    lands in the UDS RX buffer 0xffffddc8."""
+    prof, bus, cpu = booted
+    can = next(p for _, _, p in bus.peripherals if isinstance(p, CANController))
+    can.inject(0x7E0, bytes([0x02, 0x10, 0x03, 0x55, 0, 0, 0, 0]))
+    assert can.read(0x0E, 2) & 0x40  # RXPR mb14 pending
+    trace = []
+    cpu.trace = trace
+    emu.run(prof, bus, cpu, 20000)
+    cpu.trace = None
+    assert ordered_subseq(trace, [0x31C0, 0x5E78, 0x9C86]), \
+        "IVT path did not go 0x31c0 -> 0x5e78 -> 0x9c86"
+    assert bus.read32(0xFFFFDDC8).to_bytes(4, "big") == bytes.fromhex("02100355")
+    assert not (can.read(0x0E, 2) & 0x40)
+    assert cpu.pc == IDLE
+
+
+def test_dynamic_0x35d36_trampoline_calls_0x37ea4_shadow_write(booted):
+    """Call 0x35d36 with r14 = 0x00037ea4 exactly as its sole caller 0x35a8c
+    sets it (pool 0x35b74). The trampoline must reach e2ram_shadow_byte_write
+    0x37ea4 and write shadow data + complement at 0xffffc28e/0xffffc38e."""
+    _, bus, cpu = booted
+    src = 0xFFFFC268  # e2ram_param_block, used as the src buffer here
+    payload = [0x11, 0x22, 0x33, 0x44]
+    for i, b in enumerate(payload):
+        bus.write8(src + i, b)
+
+    def pre(bus, cpu):
+        cpu.r[14] = 0x37EA4          # r14 target from pool 0x35b74
+        cpu.r[4] = 0                 # index
+        cpu.r[5] = src               # src address
+        cpu.r[6] = len(payload)      # len
+        # 0x35d36's epilogue pops pr from [r15] after the jsr frame is popped:
+        # with r15 = STACK the lds.l @r15+,pr reads mem[STACK] -> SENTINEL.
+        bus.write32(harness.STACK, harness.SENTINEL)
+
+    trace, _ = run_traced(bus, cpu, 0x35D36, max_steps=100000, pre=pre)
+    assert ordered_subseq(trace, [0x35D36, 0x37EA4]), "0x35d36 did not reach 0x37ea4"
+    for i, b in enumerate(payload):
+        assert bus.read8(0xFFFFC28E + i) == b          # shadow data
+        assert bus.read8(0xFFFFC38E + i) == (~b) & 0xFF  # shadow complement
