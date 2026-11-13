@@ -7,7 +7,7 @@ untouched). All findings are from static analysis of the canonical export
 supplied SH7055F hardware manual (`Sh7055h.pdf`). No hardware execution was
 performed. Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
 
-**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
+**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](labeling/calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
 
 ## 1. Executive summary
 
@@ -117,7 +117,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 
 ## 5. Labeling applied
 
-- 26 functions + 26 RAM locations added to `source_review/accepted_*_aliases.tsv`
+- 26 functions + 26 RAM locations added to `labeling/source_review/accepted_*_aliases.tsv`
   by `scripts/review_intake_labels.py` (idempotent; wired into `rebuild.sh`
   after `review_fueling_labels.py`), integrated into all synchronized views
   (per-function files, `decompiled/firmware_decompiled.c`,
@@ -166,7 +166,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 
 Check any address in `decompiled/firmware_disassembly.asm` (ROM) or
 `decompiled/functions/<address>_*.c` (index in `decompiled/function_index.tsv`),
-and alias evidence in `source_review/accepted_*_aliases.tsv`.
+and alias evidence in `labeling/source_review/accepted_*_aliases.tsv`.
 
 ### 9.1 Functions (ROM addresses)
 
@@ -225,7 +225,7 @@ names from `regs_7055_350.csv`.
 - ROM integrity + instruction bytes: `python3 scripts/validate_export.py`.
 - Any function: `decompiled/functions/<address>_*.c`; disassembly
   `decompiled/firmware_disassembly.asm`.
-- Alias evidence: `source_review/accepted_function_aliases.tsv` /
+- Alias evidence: `labeling/source_review/accepted_function_aliases.tsv` /
   `accepted_ram_aliases.tsv` rows for basis `source_review_intake`.
 - GPIO bit claims: literal pools of the functions in §9.1 (mov.w low16 +
   0xffff high, mov.l, mov #imm) — see [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §7.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Validate the root subsystem reports against the export and the raw ROM.
+"""Validate the subsystem + labeling reports against the export and the raw ROM.
 
-Extreme-scepticism check for every root-level <subsystem>_report.md (template:
-knock_control_report.md). For each report:
+Extreme-scepticism check for every <subsystem>_report.md at the investigation
+root and every labeling/<name>_report.md (template: knock_control_report.md). For each report:
   - required sections present (knock template: summary, pseudocode, tables,
     labeling, corrections, files, validation, memory map, limits)
   - ROM SHA-256 quoted in the header equals the actual ROM hash
@@ -25,7 +25,8 @@ ROM = ROM_PATH.read_bytes()
 ROM_SHA = hashlib.sha256(ROM).hexdigest()
 
 REPORTS_DIR = INV  # reports live in docs/investigations/<rom-id>/ in this repo
-REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md'))
+REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md')) + \
+    sorted('labeling/' + p.name for p in (REPORTS_DIR / 'labeling').glob('*_report.md'))
 REQUIRED_SECTIONS = ['Executive summary', 'pseudocode', 'Labeling applied', 'Corrections',
                      'Files', 'Validation', 'Memory map', 'Limits']
 

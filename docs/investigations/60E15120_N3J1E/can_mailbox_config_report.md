@@ -140,8 +140,8 @@ RAM: 0xffffa409 `can_error_recovery_active`, 0xffffa40a `can_error_latch`,
 0xffffa40f `can_error_poll_counter`, 0xffffa410 `can_setup_error_flag`
 (all uint8 except 0xffffa40c uint16).
 
-Evidence: `source_review/accepted_function_aliases.tsv` +
-`source_review/accepted_ram_aliases.tsv`,
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` +
+`labeling/source_review/accepted_ram_aliases.tsv`,
 `data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -170,7 +170,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` +
   `named/firmware_named.c`) with the same comment-preserving transform the
   `integrate_reviewed_names.py` pass uses, scoped to these rows; filenames
   keep their prefixes
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv`
   + `accepted_ram_aliases.tsv`
 - `data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`
 - `tests/test_can_mailbox_config.py`, `tests/test_can_mailbox_config_dynamic.py`
@@ -273,7 +273,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` +
 
 CAN 0x201/0x216 function + RAM aliases recorded in
 [`data/labels/60E15120_N3J1E/can_mailbox_config_labels.json`](../../../data/labels/60E15120_N3J1E/can_mailbox_config_labels.json)
-and `source_review/accepted_*.tsv`; all literal pools re-read from ROM bytes.
+and `labeling/source_review/accepted_*.tsv`; all literal pools re-read from ROM bytes.
 
 Peripheral window (0xffffe400+ HCAN0, 0xffffe600+ HCAN1): BCR/MBCR/MBIMR/IMR/
 LAFM/MC bytes as listed in §2, all symbol-named in `symbols.tsv`.

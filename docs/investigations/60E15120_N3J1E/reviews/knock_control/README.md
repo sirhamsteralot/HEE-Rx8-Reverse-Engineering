@@ -385,14 +385,14 @@ counts. An earlier session had these two swapped.
 
 ## 6. Labeling applied in this pass
 
-- 39 functions (`source_review/accepted_function_aliases.tsv`): 33 high
+- 39 functions (`labeling/source_review/accepted_function_aliases.tsv`): 33 high
   confidence, 6 medium (integrated with the `candidate_` prefix:
   `timing_retard_fast_task`, `knock_sensor_monitor_task`,
   `knock_sensor_fault_task`, `knock_rough_correction_update`,
   `o2_monitor_integrator`, `candidate_fuel_open_loop_condition`).
-- 84 RAM locations (`source_review/accepted_ram_aliases.tsv`), integrated as
+- 84 RAM locations (`labeling/source_review/accepted_ram_aliases.tsv`), integrated as
   `<alias>_<address>`; 8 `snapshot_` locals renamed to match (192 occurrences).
-- 15 lookup-table rows (`source_review/accepted_lookup_aliases.tsv`, merged into
+- 15 lookup-table rows (`labeling/source_review/accepted_lookup_aliases.tsv`, merged into
   `named/lookup_aliases.tsv`), including the chained rename of the auto-named
   descriptor 0x6990c to `tbl_closed_loop_warmup_time_0006990c`.
 - Export bug fix at 0x13bd2 (section 4.3).
@@ -410,11 +410,11 @@ Local address-indexed C (`decompiled/`), SH disassembly
 (`decompiled/firmware_disassembly.asm`), the original ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`,
 SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1),
-RX8Defs descriptors (`cross_ecu/romraider_descriptor_matches.json`), RomRaider
-logger matches (`cross_ecu/romraider_logger_matches.json`: OL Status PID 0x0003
+RX8Defs descriptors (`labeling/cross_ecu/romraider_descriptor_matches.json`), RomRaider
+logger matches (`labeling/cross_ecu/romraider_logger_matches.json`: OL Status PID 0x0003
 -> 0x568ca; Knock Retard PID 0x1746 -> 0x5707a), wiring
 (`hardware/pcm_connections.tsv`), and the related reviews
-([`reviews/reset_at_10000_rpm.md`](../reset_at_10000_rpm.md), `source_review/`, `cross_ecu/`). Function names
+([`reviews/reset_at_10000_rpm.md`](../reset_at_10000_rpm.md), `labeling/source_review/`, `labeling/cross_ecu/`). Function names
 inherited from the reference project remain hypotheses where marked `ref_`;
 `candidate_` names are unproven. No hardware execution was performed.
 

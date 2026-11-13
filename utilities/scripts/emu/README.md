@@ -255,7 +255,7 @@ discrepancies"** (items E1-E8). Summary:
   instance 0xda29 in 60E0FC00 dispatcher 0x55c14) -> UnknownOpcode if executed.
   Their boot path avoids those encodings, so family-B profiles boot to idle,
   but diag dispatch is not dynamically executable yet. See ROADMAP register E8
-  and docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md.
+  and docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_mode22_pid_handlers.md.
 
 ## Fidelity pass (ROADMAP group B)
 

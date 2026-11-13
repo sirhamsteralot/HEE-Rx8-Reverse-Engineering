@@ -96,7 +96,7 @@ coolant 94/97 °C (fan 1), 98/101 °C and 77/80 °C (fan 2), load 1.84/1.94 on
 RAM aliases: `fan_low_speed_cmd` 0xffffbda1, `fan_high_speed_cmd` 0xffffbda2,
 `fan_low_speed_timer` 0xffffbda8.
 
-Evidence: `source_review/accepted_function_aliases.tsv` /
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`, `data/labels/60E15120_N3J1E/fan_control_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -113,7 +113,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 - `utilities/scripts/rx8-pcm-pipeline/review_fan_control_labels.py` (wired into
   `rebuild.sh` after the other review scripts; idempotent)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/fan_control_labels.json`
 - `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols renamed in place)
 - `docs/investigations/60E15120_N3J1E/reviews/cooling_fan_control/README.md`,

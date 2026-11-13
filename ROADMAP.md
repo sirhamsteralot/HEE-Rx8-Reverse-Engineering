@@ -61,7 +61,7 @@ and where artifacts live.
 
 - **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
   `39d98a0` / MRP `b243b35`; record:
-  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md))
+  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md))
   back into our documentation and label artifacts, so the sync record stops
   being the only place they live:
   - per-ROM immobilizer start-pattern offsets (ROM-verified table in §3 of the
@@ -117,7 +117,7 @@ and where artifacts live.
 - **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
   start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
   60E15120_N3J1E; per-ROM table in
-  [upstream-sync-validation.md §3](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md),
+  [upstream-sync-validation.md §3](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md),
   D13 open for N3N5EB), plus the `ref_afterImmo_1..6` UDS handlers and the immo
   counter in the slow task `0x11534`. Label the immo challenge/response and
   keyless-module CAN dialogue; deliver `immobilizer_report.md` +
@@ -170,7 +170,7 @@ and where artifacts live.
   `submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`
   and the RAM mirror `0xffff8000–0xffff80ff`.
 - **C item 36 (open)** — **whole-export "is it really code" audit.** The triage
-  pass ([decompiler_triage_report.md](docs/investigations/60E15120_N3J1E/decompiler_triage_report.md))
+  pass ([decompiler_triage_report.md](docs/investigations/60E15120_N3J1E/labeling/decompiler_triage_report.md))
   classified the 1,759 *non-instruction ranges* outside functions and triaged
   the 154 decompiler warnings, but nothing yet proves that every **function**
   in `function_index.tsv` (3,355 entries) is genuine code rather than a
@@ -194,7 +194,7 @@ and where artifacts live.
 - **C item 37 (open)** — **audit def `type`/`storagetype` fields for more
   editor-compatible forms.** The upstream DTC switch rework (spliced into our
   defs by `utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`; record:
-  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md))
+  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md))
   showed the pattern: a byte the firmware treats as on/off is better exposed as
   RomRaider `type="Switch"` (Enabled/Disabled states) than as a raw `1D`. In the
   merged def's RX8Base, 248 tables are already `Switch` but 127 remain `1D uint8` —
@@ -210,7 +210,7 @@ and where artifacts live.
   bytes stay 1D; (b) `storagetype` vs the ROM lookup-descriptor `type_code`
   mismatches (`relabel.STORAGETYPE` map; precedent: the 62 storage-type
   corrections in
-  [defs-merge/README.md](docs/investigations/60E15120_N3J1E/defs-merge/README.md));
+  [defs-merge/README.md](docs/investigations/60E15120_N3J1E/labeling/defs-merge/README.md));
   (c) `type`/sizex/sizey fields that disagree with the descriptor geometry.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests; then the defs passes +
@@ -249,8 +249,8 @@ flash before any read), not the test path.
   contiguous 1,087 B at 0xffff8109–0xffff8547) + write service in a code cave
   (per-ROM app free flash 899 B–21,956 B; 196 B cave 0x7fb8c–0x7fc4f on all ROMs)
   + PC tool over CAN/ISO-TP (J2534 on car, emulator TCP port in dev).
-  See [live_tuning_feasibility_report.md](docs/investigations/60E15120_N3J1E/live_tuning_feasibility_report.md)
-  + [free_resources_report.md](docs/investigations/60E15120_N3J1E/free_resources_report.md).
+  See [live_tuning_feasibility_report.md](docs/investigations/60E15120_N3J1E/labeling/live_tuning_feasibility_report.md)
+  + [free_resources_report.md](docs/investigations/60E15120_N3J1E/labeling/free_resources_report.md).
 - **F item 4 (open)** — reconcile the OBD upload path with our static finding that
   the app's 0x34/0x36/0x37 handlers (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E) are
   NRC stubs and real flashing code lives in the SBL BOOT (0x1ad6/0x1c04/0x1d30/
@@ -268,7 +268,7 @@ flash before any read), not the test path.
 |----|--------|------|
 | E4 | partial | RCAN mailbox model done for diag path + CAN RX interrupt fires on inject (IVT 0x378 → CAN poll 0x11d88 + scheduler 0x9630); full mailbox/interrupt fidelity open |
 | E6 | partial (still open) | CAN RX (0x378) autonomous; wake 0x3db0 fires when CMI10B tick delivered; UDS entry 0x680a0 gated by vehicle latch word 0xffff9ec8 bit0; OS tick arming (task[8]→0x7778) circular without first scheduler pass → response TX still via profile `uds` entry points; pending-interrupt delivery on ldc/rte. The deep dive ([os_scheduling_deep_dive_report.md](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)) maps the full scheduler model and reproduces the post→queue→dequeue→handler→taskEnd→dispatch chain in the emulator; the ISR-exit context switch (0x32f4) still does not fire autonomously from idle (preemption needs class > ctrl[0] unsigned, ctrl[0]=0xff at boot) — that is the remaining E6 gap |
-| E8 | open | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_mode22_pid_handlers.md) |
+| E8 | open | opdec.OPMNEM keyed on full 16-bit words from the 60E15120 corpus (9,902 entries); family-B ROMs use operand encodings absent from it (e.g. 0xda29 `mov.l @(0x29*4,pc),r10` in 60E0FC00 dispatcher 0x55c14) → UnknownOpcode; family-B profiles boot but diag dispatch is not dynamically executable until the opcode table is widened. See [cross_rom_mode22_pid_handlers.md](docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_mode22_pid_handlers.md) |
 | E9 | open | emulator `sh2e.py` `_op_mull`/`_op_mulsw`/`_op_muluw` write the product to the operand register `r[t[1]]` instead of MACL (Sh7055h.pdf: MULU.W Rm,Rn → MACL, registers unchanged). Consequence: firmware RMW idioms `mulu.w` + `sts macl` (e.g. HCAN MBCR/MBIMR setup at 0x9d58-0x9d82 and compare at 0x2a596/0x2a5a2) compute 0 in-emulator, so HCAN mailbox direction/interrupt-mask registers cannot be dynamically validated until fixed. Evidence + workaround run in [can_mailbox_config_report.md](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md) §7/§9 |
 
 ### Data / docs discrepancies (D-items)
@@ -279,7 +279,7 @@ flash before any read), not the test path.
 | D2 | open | package-pin ↔ connector-terminal is board routing unless traced; pinout markers needed |
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
-| D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
+| D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.

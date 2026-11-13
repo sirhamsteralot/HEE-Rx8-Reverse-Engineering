@@ -5,15 +5,15 @@ Target ROM: `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J
 untouched — asserted by the review script). All findings are from static analysis
 of the raw ROM bytes, the disassembly and the canonical export. No hardware
 execution was performed. Full per-row evidence:
-[`data/labels/60E15120_N3J1E/thunk_audit_labels.json`](../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json)
-and [`reviews/thunk_audit/README.md`](reviews/thunk_audit/README.md).
+[`data/labels/60E15120_N3J1E/thunk_audit_labels.json`](../../../../data/labels/60E15120_N3J1E/thunk_audit_labels.json)
+and [`reviews/thunk_audit/README.md`](../reviews/thunk_audit/README.md).
 
 **Related reports:** E2RAM write path (the 0x35d36 trampoline's target):
-[`e2ram_device_layer_report.md`](e2ram_device_layer_report.md); DTC set-fault
-trampolines 0x5fd38/0x5fd3c/0x5fd4a: [`dtc_control_report.md`](dtc_control_report.md)
+[`e2ram_device_layer_report.md`](../e2ram_device_layer_report.md); DTC set-fault
+trampolines 0x5fd38/0x5fd3c/0x5fd4a: [`dtc_control_report.md`](../dtc_control_report.md)
 and `data/labels/60E15120_N3J1E/dtc_thunk_labels.json`; IVT trampoline family
 0x28c0–0x30d0 (same single-jump shape, kept as `FUN_` vector entries):
-[`os_scheduling` labels](../../../data/labels/60E15120_N3J1E/os_scheduling_labels.json);
+[`os_scheduling` labels](../../../../data/labels/60E15120_N3J1E/os_scheduling_labels.json);
 upstream name provenance:
 [`rx8defs-analysis/function_labels.tsv`](rx8defs-analysis/function_labels.tsv).
 
@@ -139,7 +139,7 @@ target without claiming semantics for it.
   `review_candidate_promotions.py`).
 - `utilities/scripts/rx8-pcm-pipeline/review_e2ram_labels.py` — 0x35d36 entry
   updated to the promoted label so rebuilds stay conflict-free.
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv`
   — 50 rows appended, 1 replaced (0x35d36).
 - `data/labels/60E15120_N3J1E/thunk_audit_labels.json` — all 53 records with
   per-row ROM evidence; `e2ram_device_labels.json`,
@@ -147,7 +147,7 @@ target without claiming semantics for it.
 - Export artifacts renamed via name integration (see §4).
 - `tests/test_thunk_audit.py` — standalone pytest re-checking all 53 bodies,
   pool/bra targets, the 0x35d36 r14 trace and the TSV/JSON/export consistency.
-- This report + `reviews/thunk_audit/README.md`.
+- This report + `../reviews/thunk_audit/README.md`.
 
 ## 7. Validation
 
@@ -163,10 +163,10 @@ target without claiming semantics for it.
   called with r14 = 0x00037ea4 exactly as caller 0x35a8c sets it is traced
   0x35d36 → 0x37ea4 and writes the shadow data+complement cells
   0xffffc28e/0xffffc38e (proves the jsr_reg trampoline dynamically). See
-  `reviews/thunk_audit/README.md` for the recorded output.
+  `../reviews/thunk_audit/README.md` for the recorded output.
 - Pipeline validators `validate_export.py`, `validate_reports.py`,
   `verify_claims.py` run from the repo root — clean (recorded in
-  `reviews/thunk_audit/README.md`).
+  `../reviews/thunk_audit/README.md`).
 - Binary-level rule: every label above cites ROM words/pools re-read this pass,
   not decompiled C alone.
 
@@ -260,11 +260,11 @@ artifact consistency without the pipeline.
 
 ## 10. Related subsystems
 
-E2RAM device layer: [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md);
-E2RAM NV storage: [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md);
-DTC control (0x5fd3c trampoline family): [`dtc_control_report.md`](dtc_control_report.md);
+E2RAM device layer: [`e2ram_device_layer_report.md`](../e2ram_device_layer_report.md);
+E2RAM NV storage: [`e2ram_nv_storage_report.md`](../e2ram_nv_storage_report.md);
+DTC control (0x5fd3c trampoline family): [`dtc_control_report.md`](../dtc_control_report.md);
 OS/scheduling (IVT trampolines, CAN RX path through 0x5e78):
-[`os_scheduling_labels.json`](../../../data/labels/60E15120_N3J1E/os_scheduling_labels.json);
+[`os_scheduling_labels.json`](../../../../data/labels/60E15120_N3J1E/os_scheduling_labels.json);
 upstream label provenance:
 [`rx8defs-analysis/function_labels.tsv`](rx8defs-analysis/function_labels.tsv),
 [`rx8defs-analysis/README.md`](rx8defs-analysis/README.md).

@@ -79,10 +79,10 @@ def test_labels_in_artifacts():
     for addr, alias in EXPECTED_RAM.items():
         assert syms.get(addr) == f"{alias}_{addr}", f"{addr}: {syms.get(addr)!r}"
     fn = {r["address"]: r["alias"] for r in
-          csv.DictReader(open(os.path.join(INV, "source_review", "accepted_function_aliases.tsv"),
+          csv.DictReader(open(os.path.join(INV, "labeling", "source_review", "accepted_function_aliases.tsv"),
                               newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
     ram = {r["address"]: r["alias"] for r in
-           csv.DictReader(open(os.path.join(INV, "source_review", "accepted_ram_aliases.tsv"),
+           csv.DictReader(open(os.path.join(INV, "labeling", "source_review", "accepted_ram_aliases.tsv"),
                                newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
     data = json.load(open(os.path.join(LAB, "e2ram_nv_storage_labels.json")))
     for addr, name in EXPECTED_FN.items():

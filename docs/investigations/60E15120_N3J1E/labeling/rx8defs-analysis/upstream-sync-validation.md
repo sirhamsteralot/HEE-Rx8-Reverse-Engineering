@@ -49,7 +49,7 @@ signature diff):
 ### Findings cross-check — DTC model
 
 Upstream's new categorization matches what
-[`../dtc_control_report.md`](../dtc_control_report.md) verified against the
+[`../dtc_control_report.md`](../../dtc_control_report.md) verified against the
 60E15120 ROM at binary level:
 
 | Upstream (new) | Our finding (60E15120_N3J1E) | Match |
@@ -101,7 +101,7 @@ def `storageaddress` is the pattern offset; with-RKE = offset + 0x44c
 So upstream `39d98a0` fixes real bugs (60E15120, 60E1D400 were pointing into
 the wrong code region) but the single 60E32000 block now matches only the
 N3M5E variant — recorded as discrepancy **D13** in
-[`../../../../ROADMAP.md`](../../../../ROADMAP.md). Our reviewed merged
+[`../../../../ROADMAP.md`](../../../../../ROADMAP.md). Our reviewed merged
 60E15120 def still carries the pre-fix `0x34da8`/`0x351f4`, now ROM-proven
 wrong; splicing the corrected addresses in is part of ROADMAP C item 22.
 
@@ -137,7 +137,7 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
 - MRP `b243b35` touches only the upstream immobilizer script; our
   `utilities/scripts/patchers/` do not wrap `G_ROM_ImmoDefWriter.py`, nothing
   to change on our side. Pin citations updated in `docs/references/README.md`
-  and [`binaries/README.md`](../../../../binaries/README.md).
+  and [`binaries/README.md`](../../../../../binaries/README.md).
 
 ## 5. Validation results (all run from the repo root on the synced tree)
 
@@ -150,7 +150,7 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
 | `verify_readability.py` | exit 0, 3355 function bodies consistent |
 | `verify_math_units.py` | verified 16 shift pairs, 10007 fixed-point boundary/random cases, 70 constant pairs |
 | `python -m pytest tests/` | 187 passed |
-| Pin citations in docs | `1b3aea2…` → `39d98a0…` (RX8Defs) and `492193b…` → `b243b35…` (MRP) updated in `data/definitions/README.md`, `coverage.json`, [`docs/references/README.md`](../../../references/README.md), [`binaries/README.md`](../../../../binaries/README.md), [`../cross_ecu/cross_rom_defs_coverage.md`](../cross_ecu/cross_rom_defs_coverage.md), [`../../60E0G500_N3ZHEC/defs-merge/README.md`](../../60E0G500_N3ZHEC/defs-merge/README.md) + `validation.json`; historical citations (`ff5ab4f`, `251f54f`, …) left as-is, they still resolve |
+| Pin citations in docs | `1b3aea2…` → `39d98a0…` (RX8Defs) and `492193b…` → `b243b35…` (MRP) updated in `data/definitions/README.md`, `coverage.json`, [`docs/references/README.md`](../../../../references/README.md), [`binaries/README.md`](../../../../../binaries/README.md), [`../cross_ecu/cross_rom_defs_coverage.md`](../cross_ecu/cross_rom_defs_coverage.md), [`../../60E0G500_N3ZHEC/defs-merge/README.md`](../../../60E0G500_N3ZHEC/labeling/defs-merge/README.md) + `validation.json`; historical citations (`ff5ab4f`, `251f54f`, …) left as-is, they still resolve |
 
 ## 6. Follow-up
 
@@ -163,7 +163,7 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
   "DTC - Unknown", local P-code names kept) and the corrected 60E15120
   immobilizer addresses `0x34b10`/`0x34f5c` with the regenerated patch blob.
   Splice pass:
-  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
+  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
   (pass log
   [defs-merge/upstream_splice_39d98a0.json](../defs-merge/upstream_splice_39d98a0.json));
   the pass re-verifies the immo start pattern and the switch "off" blob against

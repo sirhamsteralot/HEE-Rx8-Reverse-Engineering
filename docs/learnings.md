@@ -60,7 +60,7 @@ validation JSONs).
 - Exception: `refine_comment_merge.py` is idempotent — re-running it safely
   re-canonicalizes stacked `[ADDITIONAL SOURCE REVIEW]` comment blocks across
   `functions/`, both monoliths and `named/` (one block order, no duplicate lines;
-  stats in `docs/investigations/60E15120_N3J1E/comment_merge/validation.json`).
+  stats in `docs/investigations/60E15120_N3J1E/labeling/comment_merge/validation.json`).
 - Report tables: grouped rows (`a/b`), unnamed `DAT_` rows and base-pointer rows
   are legitimate — `validate_reports.py` knows them.
 - Evidence strings in `review_*.py` are hand-written prose that fan out into the

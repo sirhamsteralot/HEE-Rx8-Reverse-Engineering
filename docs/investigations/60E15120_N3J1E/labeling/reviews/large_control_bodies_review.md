@@ -5,11 +5,11 @@ control bodies. ROM 60E15120_N3J1E, SHA-256
 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1` (re-hashed during
 this review, matches the report headers).
 
-Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md),
-[`cruise_control_report.md`](../cruise_control_report.md),
-[`e2ram_nv_storage_report.md`](../e2ram_nv_storage_report.md),
-[`idle_target_control_report.md`](../idle_target_control_report.md),
-[`can_mailbox_config_report.md`](../can_mailbox_config_report.md).
+Reports reviewed: [`o2_sensor_monitor_report.md`](../../o2_sensor_monitor_report.md),
+[`cruise_control_report.md`](../../cruise_control_report.md),
+[`e2ram_nv_storage_report.md`](../../e2ram_nv_storage_report.md),
+[`idle_target_control_report.md`](../../idle_target_control_report.md),
+[`can_mailbox_config_report.md`](../../can_mailbox_config_report.md).
 
 ## Format checks (all five reports)
 
@@ -22,7 +22,7 @@ Reports reviewed: [`o2_sensor_monitor_report.md`](../o2_sensor_monitor_report.md
   addresses in each report's memory map checked vs index/TSVs/ROM).
 - Label artifacts consistent: per-body label JSONs (`data/labels/60E15120_N3J1E/{o2_sensor_monitor,cruise_control,e2ram_nv_storage,idle_target_control,can_mailbox_config}_labels.json`)
   covers exactly the 15 function + 17 RAM rows of
-  `source_review/accepted_{function,ram}_aliases.tsv`, which match
+  `labeling/source_review/accepted_{function,ram}_aliases.tsv`, which match
   `function_index.tsv` / `symbols.tsv` (asserted by
   the label-artifact checks live in each per-subsystem static test file
   (`tests/test_o2_sensor_monitor.py`, `test_cruise_control.py`,
@@ -159,5 +159,5 @@ found and fixed during the split (3.2f pool word is 0x404ccccd).
   save cadence, CAN record bytes +12..+15, idle flag meanings + 0x5ca94
   output, O2 channel meanings. (The cruise 0xffffbcf8 units / 0xffffcf1c
   producer / 0xffffcf51–0xcf5b consumer questions are resolved in
-  [`cruise_control/`](cruise_control/README.md) —
-  [`cruise_control_report.md`](../cruise_control_report.md) §9.)
+  [`cruise_control/`](../../reviews/cruise_control/README.md) —
+  [`cruise_control_report.md`](../../cruise_control_report.md) §9.)

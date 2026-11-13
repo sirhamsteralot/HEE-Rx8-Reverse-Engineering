@@ -5,7 +5,7 @@ selection, enrichments, fuel cut / rev limit and the fuel-related diagnostic
 PIDs of 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E), read from the canonical
 export (`decompiled/`), the disassembly and the untouched ROM. This pass
 labels the chain in the export (39 functions, 151 RAM locations, 1 lookup
-table; see `source_review/accepted_*_aliases.tsv` and
+table; see `labeling/source_review/accepted_*_aliases.tsv` and
 `metadata/fueling_labels.json`). No firmware changes were made; the ROM is
 untouched (SHA-256 verified by `scripts/validate_export.py`).
 
@@ -188,7 +188,7 @@ here — upstream repo).
 
 ## 7. Labeling applied in this pass
 
-- **39 functions** in `source_review/accepted_function_aliases.tsv`
+- **39 functions** in `labeling/source_review/accepted_function_aliases.tsv`
   (33 high confidence; 6 medium -> `candidate_` prefix in the integrated
   views: `injector_pulse_set_dispatch`,
   `injector_zero_offset_set`, `injection_angle_limit_lookup`,
@@ -197,10 +197,10 @@ here — upstream repo).
   `maf_voltage_and_fault_counters`, `maf_filtered_update`,
   `maf_per_rotation_calc`, `diag22_pid1410_injector_pulse_time`,
   `diag_read_afr_word_a/b`).
-- **151 RAM locations** in `source_review/accepted_ram_aliases.tsv`
+- **151 RAM locations** in `labeling/source_review/accepted_ram_aliases.tsv`
   (integrated as `<alias>_<address>`; snapshot locals renamed by the
   post-integration pass, 234 occurrences).
-- **1 lookup table** in `source_review/accepted_lookup_aliases.tsv`:
+- **1 lookup table** in `labeling/source_review/accepted_lookup_aliases.tsv`:
   `DAT_0006ac38` -> `tbl_fuel_coolant_compensation_0006ac38` (dataflow
   hypothesis; descriptor not matched to an RX8Defs table).
 - Pipeline: `scripts/review_fueling_labels.py` (idempotent TSV append, wired
@@ -244,8 +244,8 @@ here — upstream repo).
 Canonical export (`decompiled/`), SH disassembly
 (`decompiled/firmware_disassembly.asm`), the untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`),
-RX8Defs descriptor matches (`cross_ecu/romraider_descriptor_matches.json`),
-logger matches (`cross_ecu/romraider_logger_matches.json`), the logger def
+RX8Defs descriptor matches (`labeling/cross_ecu/romraider_descriptor_matches.json`),
+logger matches (`labeling/cross_ecu/romraider_logger_matches.json`), the logger def
 conflict (`RX8Defs/RomRaider/logger_rx8_defs.xml` 0x221410), wiring
 (`hardware/pcm_connections.tsv`), and the knock review
 ([`reviews/knock_control/README.md`](../knock_control/README.md), whose loop-mode findings this pass
