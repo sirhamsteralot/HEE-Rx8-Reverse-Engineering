@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 19, 21 — pick up 19 next (items 13–14 closed
+**reopened**: open items 19, 21–23 and 24–35 — pick up 19 next (items 13–14 closed
 2026-11-11: item 13 applied the `[ADDITIONAL SOURCE REVIEW]` comment sweep to
 the accepted TSVs, the per-subsystem labels JSONs and the subsystem report
 memory maps; item 14 applied, merged and reduced the stacked review comment
@@ -45,7 +45,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21, 22, 23)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 19, 21–23, 24–35)
 
 - **C item 19 (open)** — audit **all** "thunk"-named functions, not just one:
   53 rows in
@@ -146,6 +146,92 @@ and where artifacts live.
     and drop the rename alias in `tests/test_defs_relabel.py`.
   Re-verify any touched label against the raw ROM (rule 7), then run the
   pipeline validators + `python -m pytest tests/`.
+
+- **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
+  report.** The export carries 80 functions there but only 15 are named (all
+  inherited `ref_`; 65 bare `FUN_`), and no labels JSON covers SBL addresses
+  yet. Scope: the reset chain `0x8b8 ref_Manual_Reset` → `0x4e0
+  ref_resetHandler_` (boot flow in [design doc
+  §3](docs/architecture/design/README.md)), the SBL CAN command loop `0x1378`,
+  security unlock `0x27 @0x1858`, the download/erase services
+  `0x34/0x36/0x37 @0x1ad6/0x1c04/0x1d30` + erase `0x1d78` (anchors in
+  [flash-memory-layout.md §3](docs/architecture/flash-memory-layout.md) and
+  [UDS report §12.3](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)),
+  the CN400 BOOT-mode entry (overlaps D9 pinout conflict), the unidentified
+  32-B block `0xfe0–0xfff` (identical bytes in all 11 ROMs) and the erased gap
+  `0xb0e–0xfdf`; plus a cross-ROM diff of the SBL — the first 8 KiB hash to 8
+  distinct builds across the 11 ROMs (e.g. `cdc620…` is shared by
+  60E15120_N3J1E and 60E0G500_N3ZHEC, `9d1048…` by 60E1C500_N3J6EB and
+  60E1D400). Dynamic: trace the emulator boot from vector 0 through the SBL.
+  Deliverables: `sbl_bootloader_report.md` +
+  `data/labels/60E15120_N3J1E/sbl_bootloader_labels.json` + per-ROM
+  propagation; rule 7 binary-level verification, pipeline validators +
+  `python -m pytest tests/`.
+- **C item 25 (open)** — **bootloader handover / application entry.** [Design
+  doc §3](docs/architecture/design/README.md) flags that `ref_mainInit__`
+  `0x61a8` has no caller in the call graph, the disassembly, or as a ROM32
+  pointer — the SBL→app jump point, the entry mechanism of `0x61a8`, and any
+  pre-handover app-validity check (CVN engine `0x5a3f4` over `0x2000–0x7ffff`,
+  result cell `0xffff9104` written by `0x5a714`) are unmapped. Also fold in the
+  open reset investigation
+  ([reviews/reset_at_10000_rpm.md](docs/investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md)).
+  Feeds F item 4 (app-side question whether unlocked 0x34/0x36/0x37 stubs hand
+  off to the SBL). Deliverable: boot/handover report + label records.
+- **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
+  start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
+  60E15120_N3J1E; per-ROM table in
+  [upstream-sync-validation.md §3](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md),
+  D13 open for N3N5EB), plus the `ref_afterImmo_1..6` UDS handlers and the immo
+  counter in the slow task `0x11534`. Label the immo challenge/response and
+  keyless-module CAN dialogue; deliver `immobilizer_report.md` +
+  `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents.
+  Coordinate with C item 23, which only folds the per-ROM addresses into the
+  label records — don't duplicate.
+- **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
+  DSC torque-request throttle via CAN 0x212 are labeled (see
+  [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)),
+  but pedal→throttle-motor control (motor drive, limp/home mode, TP sensor
+  plausibility) has no report; also settle the logger PID 0x1410 conflict
+  (injector pulse time vs. throttle pedal, noted in design doc §5.8).
+- **C item 28 (open)** — **fuel pump control.** Zero coverage today (no report,
+  no labels): find the pump relay GPIO drive and its control conditions
+  (cranking, oil pressure, inertia switch input).
+- **C item 29 (open)** — **misfire detection / monitor.**
+  `ref_misfireDetectInit_` `0xab8a` is named and the misfire DTCs sit in
+  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
+  but the detection logic (crank-fluctuation path, per-rotor counting, monitor
+  enable conditions) is unanalyzed.
+- **C item 30 (open)** — **emissions monitors beyond O2.** Catalyst and EVAP
+  have no reports (EVAP appears only as `candidate_evap_open_loop_condition`
+  `0x22144`); readiness / monitor-completion logic is not covered even for the
+  O2 monitor ([o2_sensor_monitor_report.md](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)).
+- **C item 31 (open)** — **starting / cranking.** Only `cranking_pulse_adder`
+  `0x30678` inside the fueling chain is known; starter control, crank-signal
+  handling and flood-clear are unmapped.
+- **C item 32 (open)** — **power management / watchdog / main relay.** The PB15
+  external-WDT heartbeat (`0x31c` / `0x11cc`, routing unverified per design doc
+  §5.6) and the WDT ITI vector `0x7ffa8` are noted, but there is no
+  main-relay/power-latch or power-state analysis; ties into the open reset
+  investigation (C item 25).
+- **C item 33 (open)** — **sensor acquisition / ADC front-end.**
+  `ref_getSensorStuff__` `0x60c8` and `ref_readADCResult` `0x6fb0` are named,
+  but per-sensor scaling, fault and rationality handling is not consolidated
+  anywhere (MAF scaling is only covered inside
+  [load_fueling_report.md](docs/investigations/60E15120_N3J1E/load_fueling_report.md)).
+- **C item 34 (open)** — **limiter (rev limit / fuel cut / limp).**
+  [reviews/limiter/](docs/investigations/60E15120_N3J1E/reviews/limiter/README.md)
+  holds only a README; fuel-cut arbitration `0xedc4` is currently a subsection
+  of [fueling_control_report.md](docs/investigations/60E15120_N3J1E/fueling_control_report.md).
+  Deliver a dedicated limiter report + labels.
+- **C item 35 (open)** — **93C56 EEPROM full content map.**
+  [flash-memory-layout.md §2/§5](docs/architecture/flash-memory-layout.md)
+  still records "full content not yet mapped"; the E2RAM reports
+  ([e2ram_device_layer_report.md](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md),
+  [e2ram_nv_storage_report.md](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md))
+  cover the device layer and NV storage but not the whole 256 B — map it
+  against the upstream dump
+  `submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`
+  and the RAM mirror `0xffff8000–0xffff80ff`.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
