@@ -458,6 +458,26 @@ One conflict recorded, not resolved silently: **U0167** — SAE generic = lost
 communication with the immobilizer module, Mazda manual = keyless control module;
 the def uses the Mazda assignment (RX-8-specific).
 
+#### §5c Upstream category cross-reference (RX8Defs `d95b0be`)
+
+Upstream renamed the three per-DTC switch categories in `d95b0be`; our banks map
+onto them 1:1 (ROM-verified above, cross-checked in
+[`labeling/rx8defs-analysis/upstream-sync-validation.md`](labeling/rx8defs-analysis/upstream-sync-validation.md)
+§2):
+
+| Def entry | 60E15120 bank | Gates | Upstream category (RX8Defs `39d98a0`) |
+|---|---|---|---|
+| `DTC xxxx Enable/Disable #1` | 0x7e678 + slot | MIL + aging (0x5a130) | `DTC - MIL Illuminate` (Switch Enabled=01/Disabled=00) |
+| `DTC xxxx Enable/Disable #2` | 0x7e704 + slot | Mode 03 stored list + freeze frame | `DTC - OBD Report` (same Switch form) |
+| `DTC xxxx Enable/Disable #3` | 0x7e790 + slot | feature bitmask 0x02/0x04/0x08/0x10/0x20 | `DTC - Unknown` (stays raw 1D — consistent with the bitmask, not on/off) |
+
+The spliced merged def and all per-ROM defs now carry these categories and the
+#1/#2 Switch form (splice pass
+[`labeling/defs-merge/`](labeling/defs-merge/README.md), script
+`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`; per-ROM regeneration
+emits the same form via `repair_dtc_tables()`), so editor-side category names and
+our binary-level bank semantics agree.
+
 ## 6. Files
 
 - `docs/investigations/60E15120_N3J1E/dtc_control_report.md` — this report.

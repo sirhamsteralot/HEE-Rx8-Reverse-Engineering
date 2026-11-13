@@ -455,6 +455,18 @@ P3-extracted names for every fueling-relevant descriptor (join of
 | 0x06ae28 / 0x06ae3c / 0x06ae58 / 0x06ae74 | tbl_06ae28 / tbl_06ae3c / tbl_06ae58 / tbl_06ae74 | Warmup Fueling family |
 | 0x0697b4, 0x06ac4c, 0x06ad30, 0x06ad44, 0x06b0ac, 0x06b0c0, 0x06b124, 0x06b160, 0x06b17c | tbl_0697b4 … tbl_06b17c | (unmatched — Table 2D/3D-nnn in RX8Defs) |
 
+Upstream naming note: RX8Defs `39d98a0` renamed the RX8Base table
+`Table 3D - UNKNOWN_CL` (storageaddress 0x70b3c, 12×16 uint16, (x·0.0001)−1.0 =
+λ−1 scaling as in §10.1; the 60E0FC00 block override is descriptor tbl_0681bc
+at the same 0x70b3c) to **`Closed Loop Fueling Base`** under category
+`Fuel Injection - Closed Loop`. On 60E15120 the closed-loop target tables
+discussed above are tbl_069a60/tbl_069a7c (labels "Closed Loop Target Bank A/B
+(3D)", data 0x702ec/0x704dc, upstream "Table 3D - 29/30"). Our reviewed merged
+def keeps the pre-rename name (splice, not rebase); the per-ROM defs
+regenerated at the new pin carry the new name. Record:
+[`labeling/rx8defs-analysis/upstream-sync-validation.md`](labeling/rx8defs-analysis/upstream-sync-validation.md)
+§3.
+
 ### 10.8 Thread OL-fueling cross-check — confirmed
 
 0x1ee4a `open_loop_fueling_targets`: b170 = tbl_069cac|069cc0(baro) [safe-mode

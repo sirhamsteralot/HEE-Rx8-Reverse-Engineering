@@ -1,0 +1,19 @@
+{
+ "date": "2026-11-13",
+ "pass": "immobilizer_start_pattern",
+ "basis": "upstream submodule sync fold-in (RX8Defs 39d98a0 / MRP b243b35) — ROM-verified immobilizer start-pattern addresses",
+ "source": "Raw ROM bytes submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1, verified unchanged) + reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv. Pattern and with-RKE offset from upstream submodules/Mazda_RX8_PCM_ReverseEngineering/Utilities/G_ROM_ImmoDefWriter.py @ b243b35. Sync record: docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md §3. Cross-ROM table of all 11 ROMs: data/labels/cross_rom/immobilizer_start_patterns.json.",
+ "rom_code_patterns": {
+  "0x34b10": {
+   "alias": "immobilizer_start_pattern",
+   "kind": "code pattern — immobilizer-off patch target (without RKE); def 'Immobilizer Disable - Without RKE Installed' storageaddress",
+   "pattern_hex": "B56E000960D0600C88008D1100098801",
+   "containing_function": "0x34ae2 FUN_00034ae2 (298 B, pattern at +0x2e)",
+   "with_rke_address": "0x34f5c",
+   "with_rke_derivation": "start + 0x44c (upstream G_ROM_ImmoDefWriter.py w_rke_offset = 0xf7 + 0x355); site sits in 0x34f42 FUN_00034f42",
+   "def_tables": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml: 'Immobilizer Disable - Without RKE Installed' @0x34b10, 'Immobilizer Disable - With RKE Installed' @0x34f5c (spliced from upstream RX8Defs 39d98a0; the pre-fix def addresses 0x34da8/0x351f4 are ROM-proven wrong)",
+   "evidence": "ROM bytes at 0x34b10 = B56E000960D0600C88008D1100098801 (re-read against the raw ROM); bytes at 0x34f5c = 33208F080009B1AF0009E27F... (original '33 20' per the upstream splice verification). Boot-side immo path nearby: ref_ImmoSomethingOrOther__ 0x349e4, FUN_00034a04 calls e2ram_immo_key_read 0x375c0 (EEPROM immo key/code, see data/labels/60E15120_N3J1E/eeprom_content_labels.json); UDS immo handlers ref_afterImmo_1..7 at 0x36acc-0x3728c (data/labels/60E15120_N3J1E/matched_functions.tsv)."
+  }
+ },
+ "rom_unchanged": true
+}

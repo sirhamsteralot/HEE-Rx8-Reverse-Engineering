@@ -1,0 +1,156 @@
+{
+ "date": "2026-11-13",
+ "pass": "immobilizer_start_patterns",
+ "basis": "upstream submodule sync fold-in (RX8Defs 39d98a0 / MRP b243b35) \u2014 per-ROM immobilizer start-pattern offsets",
+ "source": "Pattern search (B56E000960D0600C88008D1100098801, B560 variant B560000960D0600C88008D1100098801; search from 0x2000 up) re-run against the raw bytes of all 11 dumped ROMs. Pattern + with-RKE offset source: submodules/Mazda_RX8_PCM_ReverseEngineering/Utilities/G_ROM_ImmoDefWriter.py @ b243b35 (immo_start_pattern / immo_start_pattern2, w_rke_offset = 0xf7 + 0x355 = 0x44c). Sync record: docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md \u00a73. Per-ROM def entries: data/definitions/romraider/per-rom/<rom>.xml tables 'Immobilizer Disable - Without/With RKE Installed'.",
+ "pattern_hex": "B56E000960D0600C88008D1100098801 (B560 variant: B560000960D0600C88008D1100098801)",
+ "with_rke_delta": "0x44c",
+ "roms": {
+  "60E15120_N3J1E": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+   "sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x34b10",
+   "with_rke_address": "0x34f5c",
+   "per_rom_def": {
+    "without_rke": "0x34b10",
+    "with_rke": "0x34f5c"
+   },
+   "upstream_def_before": {
+    "without_rke": "0x34da8",
+    "with_rke": "0x351f4"
+   },
+   "note": "upstream 39d98a0 corrected the 60E15120 block addresses (old ones were ROM-proven wrong); spliced into our merged def + per-rom def"
+  },
+  "60E1D400": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1D400.bin",
+   "sha256": "344cb8b960eb6dde973bdb8e8c3e3e96cac542166cd7158c6f5f24d71eb7af78",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x35d90",
+   "with_rke_address": "0x361dc",
+   "per_rom_def": {
+    "without_rke": "0x35d90",
+    "with_rke": "0x361dc"
+   },
+   "upstream_def_before": {
+    "without_rke": "0x755e",
+    "with_rke": "0x79aa"
+   },
+   "note": "upstream 39d98a0 corrected the 60E1D400 block addresses (old ones were ROM-proven wrong)"
+  },
+  "60E32000_N3M5E": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E32000_N3M5E.bin",
+   "sha256": "d5406459cc0b19f831a73a021ad2ae47179127097a15cfa323a34bfa47e330de",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x37278",
+   "with_rke_address": "0x376c4",
+   "per_rom_def": {
+    "without_rke": "0x37278",
+    "with_rke": "0x376c4"
+   },
+   "upstream_def_before": {
+    "without_rke": "0x371d8",
+    "with_rke": "0x37624"
+   },
+   "note": "shared 60E32000 block addresses match the N3M5E variant"
+  },
+  "60E32000_N3N5EB": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E32000_N3N5EB.bin",
+   "sha256": "6c043bd4c9581f611919c187da95aeca152627212f235505d7b5ead34294a0a8",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x371d8",
+   "with_rke_address": "0x37624",
+   "per_rom_def": {
+    "without_rke": "0x37278",
+    "with_rke": "0x376c4"
+   },
+   "note": "ROM pattern sits at 0x371d8/0x37624 but the shared 60E32000 def block (and therefore per-rom/60E32000_N3N5EB.xml) carries the N3M5E addresses 0x37278/0x376c4 \u2014 wrong for this ROM; open discrepancy, closure plan in ROADMAP.md (sync record \u00a73)"
+  },
+  "60E1B900": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1B900.bin",
+   "sha256": "b0dc94f96e8eaf6f154df8e7388d12fba490cf2adf13edb077677c4c82b3b1b5",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x354c8",
+   "with_rke_address": "0x35914",
+   "per_rom_def": {
+    "without_rke": "0x354c8",
+    "with_rke": "0x35914"
+   },
+   "upstream_def_before": {
+    "without_rke": "0x354c8 (hex-case only: 0x354C8)",
+    "with_rke": "0x35914"
+   },
+   "note": "case-only change upstream; same address"
+  },
+  "60E0FC00": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FC00.bin",
+   "sha256": "476ddcbed4549d89b9835dfbfb1aac48217d943fb53c73f489ffc9414803e35c",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x35230",
+   "with_rke_address": "0x3567c",
+   "per_rom_def": {
+    "without_rke": "0x35230",
+    "with_rke": "0x3567c"
+   },
+   "upstream_def_before": {
+    "without_rke": "0x35230",
+    "with_rke": "0x3567c (hex-case only: 0x3567C)"
+   },
+   "note": "case-only change upstream; same address"
+  },
+  "60E0FB00": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0FB00.bin",
+   "sha256": "3d32e2591a1170d5ac3feed7ae065c650bde525e56693a5ca7499e6c9eb5f661",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x35230",
+   "with_rke_address": "0x3567c",
+   "per_rom_def": {
+    "without_rke": "0x35230",
+    "with_rke": "0x3567c"
+   },
+   "note": "shares the 60E0FC00-family block layout; same pattern offset"
+  },
+  "60E0G500_N3ZHEC": {
+   "file": "binaries/dumps/60E0G500_N3ZHEC.bin",
+   "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x35af8",
+   "with_rke_address": "0x35f44",
+   "per_rom_def": {
+    "without_rke": "0x35af8",
+    "with_rke": "0x35f44"
+   },
+   "note": "own donor dump; no upstream block override either side of the sync"
+  },
+  "60E0E500": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0E500.bin",
+   "sha256": "c05dfd0422b2b773027a22dcce2c24923969f27b94634bfcbdb44d6157087e11",
+   "pattern_variant": "B560",
+   "start_pattern_offset": "0x3565c",
+   "with_rke_address": "0x35aa8",
+   "per_rom_def": null,
+   "note": "no upstream rom block (NO_UPSTREAM_BLOCK), so no per-rom def immo entry"
+  },
+  "60E0E700_N3YLEE": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E0E700_N3YLEE.bin",
+   "sha256": "bba52346a076c35ded281c14b7ff81fcfa6c6e8119b6ec544048e269b0c53dc0",
+   "pattern_variant": "B560",
+   "start_pattern_offset": "0x357c8",
+   "with_rke_address": "0x35c14",
+   "per_rom_def": {
+    "without_rke": "0x357c8",
+    "with_rke": "0x35c14"
+   },
+   "note": "B560 pattern variant"
+  },
+  "60E1C500_N3J6EB": {
+   "file": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E1C500_N3J6EB.bin",
+   "sha256": "b3b6e1e416826d9c9f51ddc853cae0dea3235a3ddbb260cccd23effc77995c68",
+   "pattern_variant": "B56E",
+   "start_pattern_offset": "0x358fc",
+   "with_rke_address": "0x35d48",
+   "per_rom_def": null,
+   "note": "upstream 60E1C500 block is commented out (commit 251f54f), so no per-rom def immo entry"
+  }
+ }
+}
