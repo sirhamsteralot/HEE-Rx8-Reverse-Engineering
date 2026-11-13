@@ -23,8 +23,8 @@ char FUN_00048d70(void)
       DAT_ffffccc4 = 0;
     }
   }
-  cVar1 = DAT_ffffaa68 == '\x01';
-  if (((DAT_ffffaa68 == '\x01') && (cVar1 = DAT_ffffccc1, DAT_ffffccc1 == '\x01')) &&
+  cVar1 = engine_running_flag_ffffaa68 == '\x01';
+  if (((engine_running_flag_ffffaa68 == '\x01') && (cVar1 = DAT_ffffccc1, DAT_ffffccc1 == '\x01')) &&
      (cVar1 = DAT_ffffb4ed, DAT_ffffb4ed == '\x01')) {
     DAT_ffffccc3 = 1;
   }

@@ -8,7 +8,7 @@ uint FUN_0005e7e4(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffaa68;
+  uVar1 = (uint)engine_running_flag_ffffaa68;
   DAT_ffffd3a4 = inferred_ram_c6ac_ffffc6ac_ffffc6ac;
   if (uVar1 == 1) {
     if (inferred_ram_c6ac_ffffc6ac_ffffc6ac < 1.374) {

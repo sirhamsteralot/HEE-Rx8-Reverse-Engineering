@@ -9,7 +9,7 @@ uint FUN_0004b84a(void)
   uint uVar1;
   
   uVar1 = (uint)engine_injectors_off_ffffa42c;
-  if ((DAT_ffffaa68 == '\0') || (engine_stopped_latch_ffffa41c == '\x01')) {
+  if ((engine_running_flag_ffffaa68 == '\0') || (engine_stopped_latch_ffffa41c == '\x01')) {
     DAT_ffffce49 = 0;
   }
   else if ((uVar1 == 1) && (1 < DAT_ffffce4b)) {

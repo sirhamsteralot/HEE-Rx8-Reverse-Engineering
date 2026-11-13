@@ -9,7 +9,7 @@ char ref_cruiseControlStateStuff(void)
   char cVar1;
   
   cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8664,0);
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     if (DAT_ffffbd53 == '\0') {
       DAT_ffffbd4e = 0;
     }
@@ -27,7 +27,7 @@ char ref_cruiseControlStateStuff(void)
   else if (cVar1 == '\0') {
     DAT_ffffbd4c = 0;
   }
-  DAT_ffffbd53 = DAT_ffffaa68;
+  DAT_ffffbd53 = engine_running_flag_ffffaa68;
   return cVar1;
 }
 

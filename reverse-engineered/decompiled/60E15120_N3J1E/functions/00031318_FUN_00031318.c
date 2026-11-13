@@ -8,7 +8,7 @@ undefined1 * FUN_00031318(void)
 {
   undefined1 *puVar1;
   
-  puVar1 = (undefined1 *)(uint)DAT_ffffaa68;
+  puVar1 = (undefined1 *)(uint)engine_running_flag_ffffaa68;
   if (puVar1 == (undefined1 *)0x1) {
     puVar1 = &inferred_ram_bf3c_ffffbf3c_ffffbf3c;
     inferred_ram_bf3c_ffffbf3c_ffffbf3c = DAT_ffffbf3d;

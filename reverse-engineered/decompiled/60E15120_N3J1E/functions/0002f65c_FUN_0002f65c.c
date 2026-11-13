@@ -45,7 +45,7 @@ uint fan_high_speed_decision(void)
   if (((((uVar1 == 1) && (0x5c < fan_low_speed_timer_ffffbda8)) &&
        ((((DAT_ffffbdac == '\x01' ||
           (((DAT_ffffbdac == '\0' && (DAT_ffffbd68 == '\x01')) && (inferred_ram_bdb8_ffffbdb8_ffffbdb8 == '\x01')))) ||
-         ((((DAT_ffffaa68 == '\0' && (DAT_ffffbda0 == '\x01')) && (DAT_ffffccc6 == '\0')) &&
+         ((((engine_running_flag_ffffaa68 == '\0' && (DAT_ffffbda0 == '\x01')) && (DAT_ffffccc6 == '\0')) &&
           ((DAT_ffffa8ea == '\0' && (apv_target_state_ffffbf8d == '\0')))))) ||
         ((DAT_ffffbd6a == '\x01' ||
          (((DAT_ffffbdb2 == '\0' && (DAT_ffffbdb3 == '\x01')) && (DAT_ffffbdb4 == '\0')))))))) ||

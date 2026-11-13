@@ -12,7 +12,7 @@
 
 /* WARNING: Removing unreachable block (ram,0x00030ea8) */
 
-uint FUN_00030b08(void)
+uint primary_secondary_fuel_split(void)
 
 {
   char cVar1;
@@ -29,143 +29,143 @@ uint FUN_00030b08(void)
   fVar8 = fuel_amount_per_rotation_b_ffffbeec;
   snapshot_fuel_ratio_a_ffffbee4 = fuel_ratio_a_ffffbee4;
   fVar6 = fuel_amount_per_rotation_d_ffffbedc;
-  snapshot_DAT_ffffbece = DAT_ffffbece;
-  cVar1 = DAT_ffffbecc;
+  snapshot_DAT_ffffbece = primary_split_sufficient_flag_ffffbece;
+  cVar1 = secondary_split_gate_flag_ffffbecc;
   if (inferred_coolant_temperature_ffffa98c < 40.0) {
-    DAT_ffffbf08 = 0.02;
+    split_fuel_gate_hysteresis_ffffbf08 = 0.02;
   }
   else {
-    DAT_ffffbf08 = 0.007;
+    split_fuel_gate_hysteresis_ffffbf08 = 0.007;
   }
   fVar5 = engine_speed_rpm_ffffb548;
   fVar7 = fuel_amount_per_rotation_a_ffffbec8;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   snapshot_fuel_volume_final_ffffbeb0 = fuel_volume_final_ffffbeb0;
-  DAT_ffffbf24 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&DAT_0006ac74);
-  if (fVar5 < DAT_ffffbf24) {
-    if (fVar5 < DAT_ffffbf24 - 188.0) {
-      DAT_ffffbf36 = '\0';
+  split_high_rpm_threshold_ffffbf24 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&DAT_0006ac74);
+  if (fVar5 < split_high_rpm_threshold_ffffbf24) {
+    if (fVar5 < split_high_rpm_threshold_ffffbf24 - 188.0) {
+      high_rpm_override_flag_ffffbf36 = '\0';
     }
   }
   else {
-    DAT_ffffbf36 = '\x01';
+    high_rpm_override_flag_ffffbf36 = '\x01';
   }
-  DAT_ffffbf28 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_secondary_injectors_allowed_threshold_coolant_temperature_based_0006ac60);
-  if (fVar5 < DAT_ffffbf28) {
-    if (fVar5 < DAT_ffffbf28 - 188.0) {
-      DAT_ffffbf37 = '\0';
+  secondary_allowed_rpm_threshold_ffffbf28 = (float)lookup_2d_descriptor_scaled(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_secondary_injectors_allowed_threshold_coolant_temperature_based_0006ac60);
+  if (fVar5 < secondary_allowed_rpm_threshold_ffffbf28) {
+    if (fVar5 < secondary_allowed_rpm_threshold_ffffbf28 - 188.0) {
+      secondary_allowed_rpm_flag_ffffbf37 = '\0';
     }
   }
   else {
-    DAT_ffffbf37 = '\x01';
+    secondary_allowed_rpm_flag_ffffbf37 = '\x01';
   }
-  DAT_ffffbf2c = (float)lookup_2d_descriptor_scaled(inferred_barometric_pressure_ffffad14,&tbl_primary_injector_max_barometric_pressure_correction_0006ab84);
-  DAT_ffffbf04 = fVar7;
+  primary_baro_correction_ffffbf2c = (float)lookup_2d_descriptor_scaled(inferred_barometric_pressure_ffffad14,&tbl_primary_injector_max_barometric_pressure_correction_0006ab84);
+  split_fuel_gate_threshold_ffffbf04 = fVar7;
   if (60.0 <= inferred_throttle_position_ffffad44) {
-    DAT_ffffbf04 = DAT_ffffbf2c * fVar7;
+    split_fuel_gate_threshold_ffffbf04 = primary_baro_correction_ffffbf2c * fVar7;
   }
-  if (snapshot_fuel_volume_final_ffffbeb0 < DAT_ffffbf04) {
-    if (snapshot_fuel_volume_final_ffffbeb0 < DAT_ffffbf04 - DAT_ffffbf08) {
-      DAT_ffffbf38 = '\0';
+  if (snapshot_fuel_volume_final_ffffbeb0 < split_fuel_gate_threshold_ffffbf04) {
+    if (snapshot_fuel_volume_final_ffffbeb0 < split_fuel_gate_threshold_ffffbf04 - split_fuel_gate_hysteresis_ffffbf08) {
+      split_fuel_gate_wot_flag_ffffbf38 = '\0';
     }
   }
   else {
-    DAT_ffffbf38 = '\x01';
+    split_fuel_gate_wot_flag_ffffbf38 = '\x01';
   }
   if (snapshot_fuel_volume_final_ffffbeb0 < fVar7) {
-    if (snapshot_fuel_volume_final_ffffbeb0 < fVar7 - DAT_ffffbf08) {
-      DAT_ffffbf39 = '\0';
+    if (snapshot_fuel_volume_final_ffffbeb0 < fVar7 - split_fuel_gate_hysteresis_ffffbf08) {
+      split_fuel_gate_flag_ffffbf39 = '\0';
     }
   }
   else {
-    DAT_ffffbf39 = '\x01';
+    split_fuel_gate_flag_ffffbf39 = '\x01';
   }
-  if ((DAT_ffffbf36 == '\x01') || ((DAT_ffffbf37 == '\x01' && (DAT_ffffbf38 == '\x01')))) {
-    DAT_ffffbecd = '\x01';
-  }
-  else {
-    DAT_ffffbecd = '\0';
-  }
-  if ((DAT_ffffbf36 == '\x01') || ((DAT_ffffbf37 == '\x01' && (DAT_ffffbf39 == '\x01')))) {
-    DAT_ffffbecc = '\x01';
+  if ((high_rpm_override_flag_ffffbf36 == '\x01') || ((secondary_allowed_rpm_flag_ffffbf37 == '\x01' && (split_fuel_gate_wot_flag_ffffbf38 == '\x01')))) {
+    secondary_injectors_active_flag_ffffbecd = '\x01';
   }
   else {
-    DAT_ffffbecc = '\0';
+    secondary_injectors_active_flag_ffffbecd = '\0';
   }
-  if (DAT_ffffbecc == '\0') {
-    DAT_ffffbef8 = 0.0;
-    DAT_ffffbefc = 0.0;
-    DAT_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0;
-    DAT_ffffbef4 = 0.0;
+  if ((high_rpm_override_flag_ffffbf36 == '\x01') || ((secondary_allowed_rpm_flag_ffffbf37 == '\x01' && (split_fuel_gate_flag_ffffbf39 == '\x01')))) {
+    secondary_split_gate_flag_ffffbecc = '\x01';
+  }
+  else {
+    secondary_split_gate_flag_ffffbecc = '\0';
+  }
+  if (secondary_split_gate_flag_ffffbecc == '\0') {
+    primary_secondary_split_ratio_ffffbef8 = 0.0;
+    fuel_volume_secondary_amount_ffffbefc = 0.0;
+    fuel_volume_primary_split_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0;
+    fuel_volume_secondary_split_ffffbef4 = 0.0;
   }
   else {
     fVar5 = (float)lookup_2d_descriptor_scaled(fVar5,&tbl_table_2d_177_might_be_primary_secondary_ratio_0006ab70);
-    DAT_ffffbef8 = rx8_clamp_float(fVar5,0.0,1.0);
-    DAT_ffffbefc = DAT_ffffbef8 * snapshot_fuel_volume_final_ffffbeb0;
-    if (snapshot_fuel_ratio_a_ffffbee4 <= DAT_ffffbefc) {
-      if (DAT_ffffbefc < fVar6) {
-        fVar6 = DAT_ffffbefc;
+    primary_secondary_split_ratio_ffffbef8 = rx8_clamp_float(fVar5,0.0,1.0);
+    fuel_volume_secondary_amount_ffffbefc = primary_secondary_split_ratio_ffffbef8 * snapshot_fuel_volume_final_ffffbeb0;
+    if (snapshot_fuel_ratio_a_ffffbee4 <= fuel_volume_secondary_amount_ffffbefc) {
+      if (fuel_volume_secondary_amount_ffffbefc < fVar6) {
+        fVar6 = fuel_volume_secondary_amount_ffffbefc;
       }
-      DAT_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0 - fVar6;
-      DAT_ffffbef4 = fVar6;
+      fuel_volume_primary_split_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0 - fVar6;
+      fuel_volume_secondary_split_ffffbef4 = fVar6;
     }
     else {
-      DAT_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0 - snapshot_fuel_ratio_a_ffffbee4;
-      DAT_ffffbef4 = snapshot_fuel_ratio_a_ffffbee4;
+      fuel_volume_primary_split_ffffbef0 = snapshot_fuel_volume_final_ffffbeb0 - snapshot_fuel_ratio_a_ffffbee4;
+      fuel_volume_secondary_split_ffffbef4 = snapshot_fuel_ratio_a_ffffbee4;
     }
   }
-  if ((DAT_ffffbef0 < fVar7) || ((DAT_ffffbecd != '\0' && (DAT_ffffbecc != '\x01')))) {
-    if (DAT_ffffbef0 < fVar7 - 0.005) {
-      DAT_ffffbece = 0;
+  if ((fuel_volume_primary_split_ffffbef0 < fVar7) || ((secondary_injectors_active_flag_ffffbecd != '\0' && (secondary_split_gate_flag_ffffbecc != '\x01')))) {
+    if (fuel_volume_primary_split_ffffbef0 < fVar7 - 0.005) {
+      primary_split_sufficient_flag_ffffbece = 0;
     }
   }
   else {
-    DAT_ffffbece = 1;
+    primary_split_sufficient_flag_ffffbece = 1;
   }
   fVar7 = fVar7 + fVar8;
-  if (DAT_ffffbef0 < fVar7) {
-    if (DAT_ffffbef0 < fVar7 - 0.005) {
-      DAT_ffffbf10 = 0;
+  if (fuel_volume_primary_split_ffffbef0 < fVar7) {
+    if (fuel_volume_primary_split_ffffbef0 < fVar7 - 0.005) {
+      split_covers_amounts_ab_flag_ffffbf10 = 0;
     }
   }
   else {
-    DAT_ffffbf10 = 1;
+    split_covers_amounts_ab_flag_ffffbf10 = 1;
   }
   fVar8 = fuel_amount_per_rotation_c_ffffbed8 + fVar8;
-  if (DAT_ffffbef0 < fVar8) {
-    if (DAT_ffffbef0 < fVar8 - 0.005) {
-      DAT_ffffbf11 = 0;
+  if (fuel_volume_primary_split_ffffbef0 < fVar8) {
+    if (fuel_volume_primary_split_ffffbef0 < fVar8 - 0.005) {
+      split_covers_amounts_bc_flag_ffffbf11 = 0;
     }
   }
   else {
-    DAT_ffffbf11 = 1;
+    split_covers_amounts_bc_flag_ffffbf11 = 1;
   }
-  if (DAT_ffffbecc == '\x01') {
+  if (secondary_split_gate_flag_ffffbecc == '\x01') {
     if (cVar1 == '\0') {
-      DAT_ffffbf0c = rx8_lookup_2d_raw_u8(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_table_2d_347_check_datatype_0006ab98);
+      secondary_split_on_delay_counter_ffffbf0c = rx8_lookup_2d_raw_u8(snapshot_inferred_coolant_temperature_ffffa98c,&tbl_table_2d_347_check_datatype_0006ab98);
     }
-    else if (DAT_ffffbf0c < 2) {
-      DAT_ffffbf0c = '\0';
+    else if (secondary_split_on_delay_counter_ffffbf0c < 2) {
+      secondary_split_on_delay_counter_ffffbf0c = '\0';
     }
     else {
-      DAT_ffffbf0c = DAT_ffffbf0c - 1;
+      secondary_split_on_delay_counter_ffffbf0c = secondary_split_on_delay_counter_ffffbf0c - 1;
     }
-    DAT_ffffbf0d = '\0';
+    secondary_split_off_delay_counter_ffffbf0d = '\0';
   }
   else {
     if (cVar1 == '\x01') {
-      DAT_ffffbf0d = rx8_lookup_2d_raw_u8(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_0006aba4);
+      secondary_split_off_delay_counter_ffffbf0d = rx8_lookup_2d_raw_u8(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_0006aba4);
     }
-    else if (DAT_ffffbf0d < 2) {
-      DAT_ffffbf0d = '\0';
+    else if (secondary_split_off_delay_counter_ffffbf0d < 2) {
+      secondary_split_off_delay_counter_ffffbf0d = '\0';
     }
     else {
-      DAT_ffffbf0d = DAT_ffffbf0d - 1;
+      secondary_split_off_delay_counter_ffffbf0d = secondary_split_off_delay_counter_ffffbf0d - 1;
     }
-    DAT_ffffbf0c = '\0';
+    secondary_split_on_delay_counter_ffffbf0c = '\0';
   }
   uVar4 = (uint)snapshot_DAT_ffffbece;
-  if (DAT_ffffbece == 1) {
+  if (primary_split_sufficient_flag_ffffbece == 1) {
     if (uVar4 == 0) {
       uVar4 = rx8_lookup_2d_raw_u8(snapshot_inferred_coolant_temperature_ffffa98c,&DAT_0006abb0);
       DAT_ffffbf0e = (byte)uVar4;

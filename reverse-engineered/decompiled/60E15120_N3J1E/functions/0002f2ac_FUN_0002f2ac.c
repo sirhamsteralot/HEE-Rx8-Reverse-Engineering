@@ -7,7 +7,7 @@ uint FUN_0002f2ac(void)
   uint uVar2;
   undefined4 local_18 [2];
   
-  cVar1 = DAT_ffffaa68;
+  cVar1 = engine_running_flag_ffffaa68;
   if (intake_air_temperature_ffffaddc < 40.0) {
     if (intake_air_temperature_ffffaddc < 37.0) {
       DAT_ffffbdad = '\0';
@@ -48,7 +48,7 @@ uint FUN_0002f2ac(void)
   else {
     DAT_ffffbdb1 = '\x01';
   }
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     DAT_ffffbda4 = 0x493e;
   }
   else if (DAT_ffffbda4 != 0) {
@@ -63,7 +63,7 @@ uint FUN_0002f2ac(void)
   else {
     DAT_ffffbda6 = '\0';
   }
-  if ((DAT_ffffaa68 == '\x01') || (DAT_ffffbda6 == '\0')) {
+  if ((engine_running_flag_ffffaa68 == '\x01') || (DAT_ffffbda6 == '\0')) {
     DAT_ffffbda0 = '\0';
   }
   else if (DAT_ffffbdb6 == '\x01') {

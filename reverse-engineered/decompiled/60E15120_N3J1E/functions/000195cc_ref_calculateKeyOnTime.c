@@ -8,7 +8,7 @@ uint ref_calculateKeyOnTime(void)
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffaa68;
+  uVar1 = (uint)engine_running_flag_ffffaa68;
   if (uVar1 == 1) {
     uVar1 = rx8_add_u16_saturate((int)DAT_ffffa9e0,1);
     DAT_ffffa9e0 = (short)uVar1;

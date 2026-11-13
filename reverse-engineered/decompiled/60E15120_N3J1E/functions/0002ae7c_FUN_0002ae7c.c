@@ -15,7 +15,7 @@ uint FUN_0002ae7c(void)
   else {
     DAT_ffffbb9f = '\x01';
   }
-  uVar2 = (uint)DAT_ffffaa68;
+  uVar2 = (uint)engine_running_flag_ffffaa68;
   if (DAT_ffffbc0c == '\x01') {
     if (DAT_ffffc61e == '\0') {
       if ((uVar2 == 1) &&

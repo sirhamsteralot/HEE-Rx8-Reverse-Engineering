@@ -23,7 +23,7 @@ uint ref_calcSpeedBasedIATCompensation_0004910e(void)
   float arg1;
   float snapshot_vehicle_speed_ffffbbb4;
   
-  cVar1 = DAT_ffffaa68;
+  cVar1 = engine_running_flag_ffffaa68;
   arg1 = intake_air_temperature_ffffaddc;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
   fVar4 = (float)lookup_2d_descriptor_scaled(vehicle_speed_ffffbbb4,&tbl_table_2d_279_0006ba68);

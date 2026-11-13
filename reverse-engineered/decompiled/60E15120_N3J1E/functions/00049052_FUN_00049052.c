@@ -6,7 +6,7 @@
 void FUN_00049052(void)
 
 {
-  if (((DAT_ffffaa68 == '\0') && (DAT_ffffccc6 == '\0')) && (0x18 < DAT_ffffccb6)) {
+  if (((engine_running_flag_ffffaa68 == '\0') && (DAT_ffffccc6 == '\0')) && (0x18 < DAT_ffffccb6)) {
     ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8760,1);
     return;
   }

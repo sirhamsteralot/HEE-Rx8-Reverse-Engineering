@@ -37,8 +37,8 @@ void fueling_main_task(void)
   ref_coolantTempSubtractorsForCatModel();
   calc_fuel_volume_request();
   calculate_fuel_amount_per_rotation();
-  FUN_00030b08();
-  FUN_00030f5c();
+  primary_secondary_fuel_split();
+  split_pulse_time_output();
   FUN_00030030();
   injector_pulse_time_arbitrate();
   cold_start_enrichment();
