@@ -12,6 +12,9 @@ Re-runnable checks: `tests/test_eeprom_content_map.py`.
   `se3p_ecm_eeprom.bin` SHA-256 `d7f4bb0a289f086610d8a9aafac58f6329b96c5be96ec75f7aef7418cf77c264`)
   hex + ASCII with per-region annotations.
 - `validation.json` — validator/pytest results for this pass.
+- Decoder: `utilities/scripts/decode_eeprom.py` turns any 256-B dump into the
+  annotated map (text or `--json`, optional `--compare`); covered by
+  `tests/test_decode_eeprom.py`.
 
 ## What was checked (binary level, this session)
 

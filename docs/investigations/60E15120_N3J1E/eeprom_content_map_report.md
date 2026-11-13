@@ -161,6 +161,9 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 - `docs/investigations/60E15120_N3J1E/reviews/eeprom_content_map/README.md`,
   `annotated_dumps.txt`, `validation.json`
 - `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
+- `utilities/scripts/decode_eeprom.py` — decodes any 256-B 93C56 dump into
+  this map (`python utilities/scripts/decode_eeprom.py <dump.bin> [--json]
+  [--compare other.bin]`); tests `tests/test_decode_eeprom.py`
 - `tests/test_eeprom_content_map.py`
 - Read-only inputs: `submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`
   (SHA-256 `64b13ddf…d205e3`), `…/se3p_ecm_eeprom.bin` (`d7f4bb0a…77c264`),
