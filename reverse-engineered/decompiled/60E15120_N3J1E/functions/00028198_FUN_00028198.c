@@ -8,7 +8,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00028ae0 (264 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00028198(void)
+void e2ram_learned_table_apply(void)
 
 {
   ushort snapshot_DAT_ffffb6c4;
@@ -27,25 +27,25 @@ void FUN_00028198(void)
   float local_38;
   short sStack_34;
   
-  snapshot_DAT_ffffb6c4 = DAT_ffffb6c4;
+  snapshot_DAT_ffffb6c4 = e2ram_learned_table_cell_index_ffffb6c4;
   uVar10 = 0;
-  iVar8 = (int)(short)DAT_ffffb6c4;
-  uVar2 = (int)DAT_ffffb660 & 1;
+  iVar8 = (int)(short)e2ram_learned_table_cell_index_ffffb6c4;
+  uVar2 = (int)sector_parity_bank_ffffb660 & 1;
   iVar6 = uVar2 * 4;
   snapshot_DAT_ffffb668 = DAT_ffffb668;
   if ((engine_speed_rpm_ffffb548 < 750.0) || (9000.0 <= engine_speed_rpm_ffffb548)) {
     if (uVar2 == 0) {
       _DAT_ffffba64 =
-           ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_pos_ffff8108 + (uint)DAT_ffffb6c4 * 8);
+           ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_pos_ffff8108 + (uint)e2ram_learned_table_cell_index_ffffb6c4 * 8);
     }
     else {
-      uVar10 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_neg_ffff8328 + (uint)DAT_ffffb6c4 * 8);
+      uVar10 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_neg_ffff8328 + (uint)e2ram_learned_table_cell_index_ffffb6c4 * 8);
       *(undefined4 *)(&DAT_ffffba64 + iVar6) = uVar10;
     }
   }
   else {
     uVar7 = 0;
-    sStack_34 = DAT_ffffb6c4 - 1;
+    sStack_34 = e2ram_learned_table_cell_index_ffffb6c4 - 1;
     snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
     do {
       uVar3 = rx8_add_u8_saturate(uVar7,1);
@@ -56,7 +56,7 @@ void FUN_00028198(void)
           iVar8 = rx8_add_u16_saturate(iVar8,1);
         }
 LAB_000282a0:
-        FUN_00028484(uVar2,iVar5,iVar8,&local_3c,&local_38);
+        e2ram_learned_table_cell_read(uVar2,iVar5,iVar8,&local_3c,&local_38);
         break;
       }
       if ((*(float *)(&CAL_table_647 + (uVar3 & 0xff) * 4) <= snapshot_engine_speed_rpm_ffffb548) &&
@@ -80,8 +80,8 @@ LAB_000282a0:
   }
   DAT_ffffba48 = DAT_ffffba44;
   DAT_ffffba44 = DAT_ffffba40;
-  DAT_ffffba2c = (snapshot_DAT_ffffb668 - (DAT_ffffb680 - snapshot_DAT_ffffb668) / 6.0) - DAT_ffffb664;
-  DAT_ffffba30 = DAT_ffffba2c - *(float *)(&DAT_ffffba64 + iVar6);
+  e2ram_learned_correction_value_ffffba2c = (snapshot_DAT_ffffb668 - (DAT_ffffb680 - snapshot_DAT_ffffb668) / 6.0) - DAT_ffffb664;
+  DAT_ffffba30 = e2ram_learned_correction_value_ffffba2c - *(float *)(&DAT_ffffba64 + iVar6);
   return;
 }
 

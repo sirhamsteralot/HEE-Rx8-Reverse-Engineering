@@ -14,12 +14,12 @@ uint FUN_000447e2(void)
     DAT_ffffcb78 = 0;
     DAT_ffffcb7a = 0;
   }
-  puVar2 = &DAT_ffffb660;
-  if ((DAT_ffffb660 & 1) == 0) {
+  puVar2 = &sector_parity_bank_ffffb660;
+  if ((sector_parity_bank_ffffb660 & 1) == 0) {
     puVar2 = (undefined2 *)(int)DAT_ffffba25;
     in_r7 = 1;
   }
-  else if ((DAT_ffffb660 & 1) == 1) {
+  else if ((sector_parity_bank_ffffb660 & 1) == 1) {
     puVar2 = (undefined2 *)(int)DAT_ffffba24;
     in_r7 = 0;
   }

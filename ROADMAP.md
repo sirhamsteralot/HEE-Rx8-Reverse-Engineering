@@ -210,30 +210,6 @@ and where artifacts live.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests; then the defs passes +
   pipeline validators + `python -m pytest tests/`.
-- **C item 38 (open)** — **EEPROM learned-correction table per-index semantics
-  (chip 0x20–0x63).** Item 22's
-  [eeprom_content_map_report.md](docs/investigations/60E15120_N3J1E/eeprom_content_map_report.md)
-  fixed the format (34 × (u8 value, u8 flag), `value = −63 + raw*0.5`, flag
-  0xff → "not learned") and the codec (load `0x27b8e` into RAM float cells
-  `0xffff8108+8i` / `0xffff8328+8i` + flag arrays `0xffff8548+2i` /
-  `0xffff85d0+2i`; save `0x279d8`; key-off erase `0x27d06`), but which of the
-  34 pairs is which correction is not pinned — e.g. which index is the knock
-  learned retard (consumer `knock_retard_learn_to_eeprom` `0x139c4`, cell
-  holder `0xffff8038`) vs idle trim / LTFT / other learned values. Scope:
-  trace every read/write site of the `0xffff8108+8i` / `0xffff8328+8i` /
-  `0xffff8548+2i` / `0xffff85d0+2i` cell arrays and of chip-shadow bytes
-  0x20–0x63 in the disassembly (rule 7: literal pools incl. shared pools, call
-  sites, descriptor bytes), cross-reading
-  [knock_control_report.md](docs/investigations/60E15120_N3J1E/knock_control_report.md)
-  and
-  [idle_control_report.md](docs/investigations/60E15120_N3J1E/idle_control_report.md),
-  and diff the two upstream 93C56 dumps
-  (`submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin`,
-  `se3p_ecm_eeprom.bin`). Deliverables: per-index meaning table in
-  `eeprom_content_map_report.md` + label records in
-  `data/labels/60E15120_N3J1E/eeprom_content_labels.json`; rule 7
-  binary-level verification, pipeline validators + `python -m pytest tests/`.
-
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled

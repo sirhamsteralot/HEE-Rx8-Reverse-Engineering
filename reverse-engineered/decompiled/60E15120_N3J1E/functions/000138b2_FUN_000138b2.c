@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_active_gate [high]: Sets DAT_ffffa73c = DAT_ffffa73d && DAT_ffffa73e; gates attack (0x13a60) and slow recovery (0x13b40).
+ * knock_active_gate [high]: Sets knock_active_ffffa73c = knock_enable_ffffa73d && knock_sensors_healthy_ffffa73e; gates attack (0x13a60) and slow recovery (0x13b40).
  */
 /* ROM address: 0x000138b2; body bytes: 40; decompiled */
 

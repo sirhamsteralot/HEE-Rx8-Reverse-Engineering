@@ -507,3 +507,8 @@ ffff8108	e2ram_learned_table_value_pos	float[68]	00027b8e	Learned-table decoded 
 ffff8328	e2ram_learned_table_value_neg	float[68]	00027b8e	Negated copies of the learned-table floats (0xffff8108 mirrored at -value), written by 0x27b8e.
 ffff8548	e2ram_learned_table_flag_a	uint8[136]	00027b8e	Learned-table flag bytes (chip 0x21+2i, 0xff->0) from 0x27b8e.
 ffff85d0	e2ram_learned_table_flag_b	uint8[136]	00027b8e	Second flag array (0xffff8548+0x88), written by 0x27b8e/0x27024.
+ffffb6c4	e2ram_learned_table_cell_index	uint16	0002711a	Current learned-table cell = rpm_cell(0..16) + 17*load_band(0..3), computed by 0x2711a from engine_speed_rpm_ffffb548 (tbl 0x6a694) and engine_load_ffffc0b4 (bands 0.4/0.65/3.0). Consumed by 0x271b0/0x276ec/0x28198.
+ffffb660	sector_parity_bank	uint16	00026982	DAT_ffffb660 = DAT_ffffa3b0 = ATUII sector index 0..5 (set in the CMI10B sector ISR); &1 selects the rotor bank in the learned table (0x271b0/0x276ec/0x28198): bank 0 reads value_pos 0xffff8108, bank 1 reads value_neg 0xffff8328.
+ffffb6cc	e2ram_learned_table_live_value	float[2][68]	000276ec	Live (RAM-only) learned values per rotor bank x cell, written by 0x276ec from DAT_ffffba2c when |rpm - cell breakpoint| <= 100; copied into the chip-backed cells by 0x27808 once counter DAT_ffffb8f4 > 0x1d.
+ffffb8f4	e2ram_learned_table_live_counter	uint16[2][68]	000276ec	Per bank x cell learn counters bumped by 0x276ec; 0x27808 persists the live cell into the learned table when the counter exceeds 0x1d.
+ffffba2c	e2ram_learned_correction_value	float	00028198	Learn value computed by 0x28198 = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664, a sector-speed-ring deviation term (ring 0xffffa390..0xffffa3ac copied by 0x26940); learned into the table cell by 0x276ec.

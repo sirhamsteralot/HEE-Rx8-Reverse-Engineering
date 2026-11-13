@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid1706_io_status_a8f5 [high]: dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over DAT_ffffa8f5 -> 4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * diag22_pid1706_io_status_a8f5 [high]: dispatch record 0x5f4b4 -> handler verified in ROM bytes + function_index; 0x579a8 over inferred_ram_a8f5_ffffa8f5_ffffa8f5 -> 4 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa8f5 inferred_ram_a8f5_ffffa8f5 (uint8): PID 0x1706 -> bit 4
  */
 /* ROM address: 0x0005741e; body bytes: 34; decompiled */

@@ -17,7 +17,7 @@ undefined4 FUN_00026a42(void)
     DAT_ffffb694 = 0;
     return 1;
   }
-  if ((DAT_ffffb660 & 1) == 1) {
+  if ((sector_parity_bank_ffffb660 & 1) == 1) {
     sVar1 = -0x4974;
     sVar2 = -0x4978;
     cVar3 = DAT_ffffba24;
