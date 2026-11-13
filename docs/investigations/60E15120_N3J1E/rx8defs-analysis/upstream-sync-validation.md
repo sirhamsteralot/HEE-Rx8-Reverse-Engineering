@@ -154,8 +154,9 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
 
 ## 6. Follow-up
 
-- The reviewed merged 60E15120 def (base `ff5ab4f`) and therefore
-  `per-rom/60E15120_N3J1E.xml` **now carry the upstream changes**, spliced (not
+- The reviewed merged 60E15120 def (base `ff5ab4f`), the local reviewed copy
+  and upstream snapshot, and therefore `per-rom/60E15120_N3J1E.xml` **now carry
+  the upstream changes**, spliced (not
   rebased — the merged RX8Base keeps its local reviewed content): the `d95b0be`
   DTC switch form (#1/#2 `Switch` Enabled=01/Disabled=00 under
   "DTC - MIL Illuminate" / "DTC - OBD Report", #3 raw 1D under
