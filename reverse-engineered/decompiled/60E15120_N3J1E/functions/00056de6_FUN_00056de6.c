@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid091a_ram_b410_raw_512 [high]: dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * diag22_pid091a_ram_b410_raw_512 [high]: dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; inferred_ram_b410_ffffb410_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* [MATH AND UNITS REVIEW]
  * Affine encoding (16-bit): inferred_ram_b410_ffffb410_ffffb410; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.

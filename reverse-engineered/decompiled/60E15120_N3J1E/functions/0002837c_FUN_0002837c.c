@@ -10,7 +10,7 @@ void FUN_0002837c(void)
   float arg0;
   
   arg0 = 0.0;
-  if ((DAT_ffffb660 & 1) == 0) {
+  if ((sector_parity_bank_ffffb660 & 1) == 0) {
     pfVar1 = &DAT_ffffba34;
     if (DAT_ffffb6c6 == '\x01') {
       DAT_ffffba34 = rx8_first_order_filter(DAT_ffffba30,DAT_ffffba34,0.125,1e-05);

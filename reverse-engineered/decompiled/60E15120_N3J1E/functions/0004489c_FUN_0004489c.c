@@ -13,11 +13,11 @@ uint FUN_0004489c(void)
     DAT_ffffcb7c = 0;
     DAT_ffffcb7e = 0;
   }
-  if ((DAT_ffffb660 & 1) == 0) {
+  if ((sector_parity_bank_ffffb660 & 1) == 0) {
     in_r7 = (uint)DAT_ffffba27;
     unaff_r12 = 1;
   }
-  else if ((DAT_ffffb660 & 1) == 1) {
+  else if ((sector_parity_bank_ffffb660 & 1) == 1) {
     unaff_r12 = 0;
     in_r7 = (uint)DAT_ffffba26;
   }

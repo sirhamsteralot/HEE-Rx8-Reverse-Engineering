@@ -20,9 +20,9 @@ char FUN_000271b0(void)
   int iVar8;
   float snapshot_engine_speed_rpm_ffffb548;
   
-  snapshot_DAT_ffffb6c4 = DAT_ffffb6c4;
-  iVar8 = (int)(short)DAT_ffffb6c4;
-  uVar3 = DAT_ffffb660 & 1;
+  snapshot_DAT_ffffb6c4 = e2ram_learned_table_cell_index_ffffb6c4;
+  iVar8 = (int)(short)e2ram_learned_table_cell_index_ffffb6c4;
+  uVar3 = sector_parity_bank_ffffb660 & 1;
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
   iVar2 = FUN_00003fe8();
   uVar7 = iVar8 + iVar2 * -0x11;

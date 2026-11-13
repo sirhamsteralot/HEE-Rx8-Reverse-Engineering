@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0968_io_status_b5b4_bc35 [high]: dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over DAT_ffffb5b4 (bit0) / DAT_ffffbc35 (bit5); appends u8 + 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * diag22_pid0968_io_status_b5b4_bc35 [high]: dispatch record 0x5f430 -> handler verified in ROM bytes + function_index; 0x579a8 submask over inferred_ram_b5b4_ffffb5b4_ffffb5b4 (bit0) / inferred_ram_bc35_ffffbc35_ffffbc35 (bit5); appends u8 + 0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb5b4 inferred_ram_b5b4_ffffb5b4 (uint8): PID 0x0968 -> bit 0
  * RAM 0xffffbc35 inferred_ram_bc35_ffffbc35 (uint8): PID 0x0968 -> bit 0x20
  */

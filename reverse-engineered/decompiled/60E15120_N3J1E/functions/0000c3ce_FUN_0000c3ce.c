@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_voltage_sample [high]: Called from 0x661e (task[6], before ref_engineControlTASK): a37a = DAT_ffff9ef8 (knock ADC raw); in the 200-2000 RPM window filters into a378; sets a386 = (raw RPM >= 10000).
+ * knock_voltage_sample [high]: Called from 0x661e (task[6], before ref_engineControlTASK): a37a = knock_sensor_adc_raw_ffff9ef8 (knock ADC raw); in the 200-2000 RPM window filters into a378; sets a386 = (raw RPM >= 10000).
  * RAM 0xffffa37a knock_adc_raw (uint16): Raw knock sensor ADC 0xffff9ef8 read in 0xc3ce.
  * RAM 0xffffa374 knock_adc_filtered (float): First-order filtered knock ADC (coeff 0.004, snap 1.0) valid in the 200-2000 RPM window.
  * RAM 0xffff9f80 engine_speed_rpm_raw (float): Raw RPM = 120e6 / crank period sum (ISR 0x803e); window and 10k-flag checks in 0xc3ce.

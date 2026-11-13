@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * knock_sensor_health_gate [high]: Sets DAT_ffffa73e = (0xffffcd64 && 0xffffcd66); both set by 0x49fac after >30 healthy knock-sensor counts.
+ * knock_sensor_health_gate [high]: Sets knock_sensors_healthy_ffffa73e = (0xffffcd64 && 0xffffcd66); both set by 0x49fac after >30 healthy knock-sensor counts.
  * RAM 0xffffa73d knock_enable (uint8): Set by 0x13826: run timer >= 0x177, coolant >= 10 C, load >= 0.5, RPM < 5000.
  * RAM 0xffffa73e knock_sensors_healthy (uint8): Set by 0x1388a = cd64 && cd66 (0x49fac health persistence).
  * RAM 0xffffcd64 knock_sensor_healthy_a (uint8): Set by 0x49fac after >30 healthy counts (channel A); gates a73e.

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid0021_distance_while_mil_on [high]: dispatch record 0x5f1f0 -> handler verified in ROM bytes + function_index; 0x555f8: DAT_ffff90f4 float*1.0 = OBD PID 21
+ * diag22_pid0021_distance_while_mil_on [high]: dispatch record 0x5f1f0 -> handler verified in ROM bytes + function_index; 0x555f8: distance_mil_on_ffff90f4_ffff90f4 float*1.0 = OBD PID 21
  */
 /* ROM address: 0x00056aa8; body bytes: 20; decompiled */
 

@@ -3,7 +3,7 @@
 void FUN_0002897e(void)
 
 {
-  FUN_00027024();
+  e2ram_learned_table_clear();
   FUN_0002708e();
   FUN_00027096();
   return;

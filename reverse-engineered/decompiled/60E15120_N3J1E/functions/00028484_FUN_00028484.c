@@ -3,7 +3,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00028dcc (96 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00028484(short param_1,ushort param_2,ushort param_3,undefined4 *param_4,
+void e2ram_learned_table_cell_read(short param_1,ushort param_2,ushort param_3,undefined4 *param_4,
                  undefined4 *param_5)
 
 {

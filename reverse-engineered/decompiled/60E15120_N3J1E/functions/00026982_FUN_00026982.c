@@ -6,7 +6,7 @@
 void FUN_00026982(void)
 
 {
-  DAT_ffffb660 = (ushort)DAT_ffffa3b0;
+  sector_parity_bank_ffffb660 = (ushort)DAT_ffffa3b0;
   return;
 }
 

@@ -3,12 +3,12 @@
 short FUN_00027306(void)
 
 {
-  if (DAT_ffffb660 == 1) {
+  if (sector_parity_bank_ffffb660 == 1) {
     if (DAT_ffffba04 != 0) {
       DAT_ffffba04 = DAT_ffffba04 + -1;
     }
   }
-  return DAT_ffffb660;
+  return sector_parity_bank_ffffb660;
 }
 
 

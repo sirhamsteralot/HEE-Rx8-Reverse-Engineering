@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * diag22_pid001f_engine_runtime_s [high]: dispatch record 0x5f1d8 -> handler verified in ROM bytes + function_index; 0x555d0: DAT_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start
+ * diag22_pid001f_engine_runtime_s [high]: dispatch record 0x5f1d8 -> handler verified in ROM bytes + function_index; 0x555d0: engine_runtime_counter_ffffd284_ffffd284 via 0x409c, clamp 0xffff = OBD PID 1F runtime since start
  */
 /* ROM address: 0x00056a6e; body bytes: 22; decompiled */
 
