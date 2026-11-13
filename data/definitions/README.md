@@ -40,9 +40,14 @@ referenced by submodule path + commit.
   is built against `ff5ab4f`; do not mix the two blobs. The merged def carries
   the `d95b0be`/`39d98a0` delta as a targeted splice (see above), not as a
   rebase. Locally modified: flex-fuel content stripped (see "Stock-only defs"
-  below).
+  below) and the same `d95b0be`/`39d98a0` DTC-switch + 60E15120
+  immobilizer-address splice applied by
+  [`splice_upstream_dtc_immo.py`](../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
+  (which targets all three local def files listed here, so every XML in this
+  tree carries the same DTC categories).
 - `romraider/reviewed-rx8defs-copy/rx8_defs.xml` — locally reviewed
-  copy (base `944062e` + annotations; blob `0cd7ec8d…`, not an upstream blob).
+  copy (base `944062e` + annotations; blob `0cd7ec8d…`, not an upstream blob),
+  likewise carrying the `d95b0be`/`39d98a0` DTC/immo splice.
 - `romraider/reviewed-rx8defs-copy/logger_60E15120_reviewed.xml` — reviewed
   RomRaider *logger* defs for 60E15120 (blob `9b96b2db…`, local).
 

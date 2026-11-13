@@ -155,16 +155,20 @@ The generated `validation.json` pins their hashes and commits.
   `tests/test_extract_scalars.py`, full pytest suite and the pipeline validators
   all green.
 - **Upstream RX8Defs sync splice** (`d95b0be` DTC switch rework + `39d98a0`
-  immobilizer patch addresses): applied to the merged def by
+  immobilizer patch addresses): applied to all three local def files (merged
+  def, reviewed copy, upstream snapshot) by
   [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
   (surgical expat line-span splice, idempotent; pass log
-  [`upstream_splice_39d98a0.json`](upstream_splice_39d98a0.json)). The pass
+  [`upstream_splice_39d98a0.json`](upstream_splice_39d98a0.json)), so every XML
+  under `data/definitions` carries the same DTC categories/form. The pass
   re-verifies the immo start pattern and the switch "off" blob against the ROM
-  bytes (0x34b10 / 0x34f5c on 60E15120_N3J1E) on every run. Local P-code DTC
-  names are kept; bare block-level DTC overrides stay bare and inherit the new
-  Switch form from RX8Base. `repair_dtc_tables()` in `extend_defs_all_roms.py`
+  bytes (0x34b10 / 0x34f5c on 60E15120_N3J1E) on every run. Local DTC names are
+  kept (P-code in the merged def, legacy 4-hex in the other two files); bare
+  block-level DTC overrides stay bare and inherit the new Switch form from
+  RX8Base. `repair_dtc_tables()` in `extend_defs_all_roms.py`
   emits the same Switch form (Enabled=01/Disabled=00, categories
   "DTC - MIL Illuminate" / "DTC - OBD Report" / "DTC - Unknown") for every
   per-ROM def. Sync record:
   [`../rx8defs-analysis/upstream-sync-validation.md`](../rx8defs-analysis/upstream-sync-validation.md);
-  tests `tests/test_defs_upstream_sync.py`.
+  tests `tests/test_defs_upstream_sync.py` (all XMLs under `data/definitions`
+  checked for the new form + ROM-verified immo addresses).
