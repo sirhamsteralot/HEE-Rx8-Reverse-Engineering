@@ -23,7 +23,7 @@ uint isotp_first_frame_accept(void)
     DAT_ffffdded = 1;
     ref_pack_for_OBD_response_((int)DAT_ffffddec,&DAT_ffffddca,6);
     FUN_00068bc6(6,5);
-    uVar1 = thunk_FUN_00054b62((int)DAT_ffffddea);
+    uVar1 = jump_to_FUN_00054b62((int)DAT_ffffddea);
     return uVar1;
   }
   return (uint)DAT_ffffddc9;

@@ -131,7 +131,7 @@ group/idx immediates) plus ~20 larger callers of `ref_osTaskScheduler`.
 | 0x64ba | candidate_knock_sensor_fault_task | -> ref_main__ (0xd21e), ref_knockSensorADCFault (0xc290) |
 | 0x64f6 | FUN_000064f6 | ref_getBaroSensorVal; -> 0x11744 -> candidate_knock_sensor_monitor_task (0x390b8), ref_OLFueling__ (0x211fe) |
 | 0x6584 | FUN_00006584 | -> FUN_000117ac -> FUN_000390fc (98 callees); -> ref_getFuelingSlowtask_ (0x21246) with the loop-mode conditions (5.7) |
-| 0x6592 | FUN_00006592 | -> 0xa4b6, thunk_FUN_0000aee8, 0xb308, 0x11880 |
+| 0x6592 | FUN_00006592 | -> 0xa4b6, jump_to_adc_pair_correlation_fault_compute (0xad2a), 0xb308, 0x11880 |
 | 0x65b2 | FUN_000065b2 | -> 0x7298, 0x73a0, 0x118d0 -> FUN_0003957c (161 callees); 0x118d0 -> candidate_knock_rough_correction_update (0x1467c) |
 | 0x65cc / 0x65da / 0x65e8 | FUN_000065xx | single-worker tasks (0x11adc, 0x11b08, 0x11b22); 0x11adc -> 0x39b08 -> 0x41964 reads closed_loop_active_ffffae1f |
 | 0x60c8 | ref_getSensorStuff__ | sensor acquisition: ref_sensorADCRead, ref_getMAFSensorValue, ref_getVehicleStatusInputs_ |

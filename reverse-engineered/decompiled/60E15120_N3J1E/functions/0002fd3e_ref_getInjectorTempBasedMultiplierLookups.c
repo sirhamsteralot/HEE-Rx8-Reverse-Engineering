@@ -1,10 +1,10 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * injector_temp_multiplier_lookup [high]: bde4/bde8/bdec = 3D weighted-engine-temp x load multipliers for primary / secondary-1 / secondary-2 injectors (tbls 0x6a9a4/0x6a9c0/0x6a9dc); consumed by calculate_fuel_amount_per_rotation (0x30948).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a9a4: Primary Injector Weighted Engine Temp Multiplier (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a9c0: Secondary 1 Injector Weighted Engine Temp Multiplier (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a9dc: Secondary 2 Injector Weighted Engine Temp Multiplier (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * injector_temp_multiplier_lookup [high]: bde4/bde8/bdec = 3D weighted-engine-temp x load multipliers for primary / secondary-1 / secondary-2 injectors (tbls 0x6a9a4/0x6a9c0/0x6a9dc); consumed by calculate_fuel_amount_per_rotation (0x30948).
  */
 /* ROM address: 0x0002fd3e; body bytes: 60; decompiled */
 

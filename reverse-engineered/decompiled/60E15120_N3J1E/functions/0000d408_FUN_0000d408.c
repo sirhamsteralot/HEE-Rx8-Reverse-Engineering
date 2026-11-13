@@ -12,11 +12,11 @@ uint FUN_0000d408(void)
     DAT_ffffa3fb = 1;
   }
   if (DAT_ffffa3fb == 0) {
-    thunk_FUN_00011492_00009f4c();
+    jump_to_0x00006360();
   }
   if (DAT_ffffa3fb == 1) {
     DAT_ffff8000 = 0x55aa;
-    uVar1 = thunk_FUN_0000abfa_00009f58();
+    uVar1 = jump_to_0x0000636c();
     return uVar1;
   }
   return (uint)DAT_ffffa3fb;

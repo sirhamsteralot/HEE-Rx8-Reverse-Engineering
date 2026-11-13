@@ -93,7 +93,7 @@ None — fixed device addressing (base 0x6000000, page<<16) and command 0x4c0000
 | 0xc02c | `sci4_read_u16` | high |
 | 0xbf3a | `e2ram_cs_port_setup` | high |
 | 0xbed8 | `e2ram_busy_status_read` | high |
-| 0x35d36 | `candidate_e2ram_write_thunk` | medium |
+| 0x35d36 | `e2ram_shadow_byte_write_trampoline` | high (thunk audit: [`thunk_audit_report.md`](thunk_audit_report.md)) |
 | 0x35a8c | `candidate_e2ram_param_write_dispatch` | medium |
 | 0x379e4 | `candidate_e2ram_verify_state_machine` | medium |
 | 0xbe5e / 0xbe8c | `e2ram_send_command4_a` / `e2ram_send_command4_b` | medium |
@@ -151,7 +151,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 | 0x00037ea4 | `e2ram_shadow_byte_write` | shadow data+complement write |
 | 0x00037cd8 | `e2ram_bulk_read_into_shadow` | page-wise device→shadow fill |
 | 0x00035a8c | `candidate_e2ram_param_write_dispatch` | id → (index, src, len) writes |
-| 0x00035d36 | `candidate_e2ram_write_thunk` | thunk |
+| 0x00035d36 | `e2ram_shadow_byte_write_trampoline` | tail-call trampoline to 0x37ea4 (proven; see [`thunk_audit_report.md`](thunk_audit_report.md)) |
 | 0x000379e4 | `candidate_e2ram_verify_state_machine` | cmd 0x4c00000 + read-back verify |
 | 0x0000bdfa | `e2ram_read_word` | send addr, clock in u16 |
 | 0x0000be30 | `e2ram_send_command2` | 2-byte command frame |

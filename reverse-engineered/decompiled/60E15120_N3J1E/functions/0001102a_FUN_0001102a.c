@@ -3,7 +3,7 @@
 void FUN_0001102a(void)
 
 {
-  thunk_FUN_00037fda();
+  jump_to_FUN_00037fda();
   FUN_0002e58c();
   FUN_00019632();
   FUN_00019640();
@@ -14,7 +14,7 @@ void FUN_0001102a(void)
   FUN_0005df50();
   FUN_0005dc40();
   FUN_000563dc();
-  thunk_FUN_00056786();
+  jump_to_FUN_00056786();
   FUN_0005b016();
   FUN_00055988();
   FUN_0005a3b8();
@@ -45,18 +45,18 @@ void FUN_0001102a(void)
   FUN_000267b8();
   FUN_000167ac();
   FUN_00022f54();
-  thunk_FUN_0002e800();
+  jump_to_FUN_0002e800();
   candidate_fan_init_thunk();
   FUN_0002f948();
   FUN_00031c1c();
   FUN_0003173c();
   FUN_00016f30();
-  thunk_FUN_0002508c();
+  jump_to_FUN_0002508c();
   FUN_00021b48();
   ssv_control_thunk();
   vdi_control_thunk();
   vfad_control_thunk();
-  thunk_FUN_00025438();
+  jump_to_FUN_00025438();
   FUN_00022538();
   FUN_00023740();
   FUN_0002874c();
@@ -87,7 +87,7 @@ void FUN_0001102a(void)
   FUN_00058b40();
   FUN_00058c78();
   FUN_00058d9e();
-  thunk_FUN_000486a0();
+  jump_to_FUN_000486a0();
   return;
 }
 

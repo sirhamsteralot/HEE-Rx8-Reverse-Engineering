@@ -1,13 +1,3 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00069cac: Open Loop Fuelling Base Correction (Throttle) - Safe Mode (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069ce8: Open Loop Fuelling Rich Limit - Safe Mode (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069eb8: Open Loop Target - Throttle Tip In (Safe Mode) (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069ed4: Open Loop Target (Safe Mode) (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069ef0: Open Loop Target - Throttle Tip in - Coolant Temp Implausible B (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069f0c: Open Loop Target - Coolant Temp Implausible - Gear 5-6 (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069f28: Open Loop Target - Throttle Tip in - Coolant Temp Implausible A (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00069f44: Open Loop Target - Coolant Temp Implausible - Gear 1-4 (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_fueling_targets [high]: When b12c==1: open-loop base/tip-in/target/rich-limit lookups (0x69cac/0x69cc0, 0x69e80/0x69e9c, 0x69cd4/0x69d10, safe-mode variants via b12d) -> b120; zeroes b120 in closed loop.
  * RAM 0xffffcd60 safe_mode (uint8): 0 = safe mode active: selects the knock threshold table pair in 0x336c4 (0x6b270/0x6b288 vs alts) and is checked in 0x200c6.
@@ -22,6 +12,16 @@
  * RAM 0xffffb138 ol_fuel_target_implausible (float): b138 = max(b174*b198, b19c); coolant-implausible OL target product.
  * RAM 0xffffb13c ol_temperature_correction_b (float): b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant).
  * RAM 0xffffb150 ol_target_select (uint8): b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x00069cac: Open Loop Fuelling Base Correction (Throttle) - Safe Mode (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069ce8: Open Loop Fuelling Rich Limit - Safe Mode (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069eb8: Open Loop Target - Throttle Tip In (Safe Mode) (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069ed4: Open Loop Target (Safe Mode) (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069ef0: Open Loop Target - Throttle Tip in - Coolant Temp Implausible B (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069f0c: Open Loop Target - Coolant Temp Implausible - Gear 5-6 (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069f28: Open Loop Target - Throttle Tip in - Coolant Temp Implausible A (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00069f44: Open Loop Target - Coolant Temp Implausible - Gear 1-4 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

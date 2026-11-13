@@ -1,10 +1,10 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_maf_airflow_term [medium]: 0xffffa7a4 = tbl(0x6a100 if b534==1 else 0x6a114/0x6a128 by b53c)(0xffffb5a8) * 0.6345 * 60 / 0xffffa7ac via divide-with-zero-fallback (0.6345 at shared pool 0x7a088). Called from 0x167c0 via pool 0x1689c.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a100: Table 2D - 114 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a114: Table 2D - 115 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a128: Table 2D - 116 (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_maf_airflow_term [medium]: 0xffffa7a4 = tbl(0x6a100 if b534==1 else 0x6a114/0x6a128 by b53c)(0xffffb5a8) * 0.6345 * 60 / 0xffffa7ac via divide-with-zero-fallback (0.6345 at shared pool 0x7a088). Called from 0x167c0 via pool 0x1689c.
  */
 /* ROM address: 0x000148c4; body bytes: 88; decompiled */
 
