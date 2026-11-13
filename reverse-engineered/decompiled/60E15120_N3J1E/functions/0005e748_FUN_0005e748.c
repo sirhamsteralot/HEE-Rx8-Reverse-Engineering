@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_config_bit_9f_read [medium]: e2ram_cached_byte_read(0x9f, local, 1); (val & 1) == 0 && DAT_ffffd1b5 == 0 && DAT_ffffd1b8 == 0 -> DAT_ffffd39c = 1. RX8 dump 0x9f = 0xfe, SE3P = 0xff.
+ */
 /* ROM address: 0x0005e748; body bytes: 74; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0005cf54 (74 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0005e748(void)
+uint candidate_e2ram_config_bit_9f_read(void)
 
 {
   uint uVar1;

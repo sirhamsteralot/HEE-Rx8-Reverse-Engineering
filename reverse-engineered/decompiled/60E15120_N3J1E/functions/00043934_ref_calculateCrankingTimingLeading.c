@@ -1,7 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_leading_filter [high]: was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da.
- * RAM 0xffffca9c cranking_angle_timing_leading_filtered (float): 
- * RAM 0xffffcaa4 cranking_angle_timing_leading_raw (float): 
+ * RAM 0xffffca9c cranking_angle_timing_leading_filtered (float): mov.w pool 0x43a1c (sign-extends to 0xffffca9c) in 0x43934 cranking_timing_leading_filter and 0x4391c, pool 0x12538 in 0x123da; filtered = raw / period via rx8_divide_with_zero_fallback, stored by 0x43934.
+ * RAM 0xffffcaa4 cranking_angle_timing_leading_raw (float): mov.l pool 0x43a28 in 0x4391c and 0x43934; raw leading = lookup_2d(ECT, tbl 0x6b630) stored by 0x43934 cranking_timing_leading_filter.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -58,14 +58,14 @@ uint FUN_00027808(void)
         do {
           iVar10 = (uint)bVar6 * 2;
           if (0x1d < (ushort)(&DAT_ffffb8f4 + uVar14 * 0x44)[bVar6]) {
-            cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8548 + iVar10 + uVar14 * 0x88,0);
+            cVar2 = ref_readValue_8bit_ADDRESS_VAL(&e2ram_learned_table_flag_a_ffff8548 + iVar10 + uVar14 * 0x88,0);
             if (cVar2 == '\0') {
               ref_updateMemoryAtAddress_float_VAL_ADDR
-                        (pfVar4[bVar6],&DAT_ffff8108 + (uint)bVar6 * 8 + (uint)bVar12 * 0x220);
-              ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8548 + iVar10 + uVar14 * 0x88,1);
+                        (pfVar4[bVar6],&e2ram_learned_table_value_pos_ffff8108 + (uint)bVar6 * 8 + (uint)bVar12 * 0x220);
+              ref_updateMemoryAtAddress_8bit_ADDR_VAL(&e2ram_learned_table_flag_a_ffff8548 + iVar10 + uVar14 * 0x88,1);
             }
             else {
-              puVar11 = &DAT_ffff8108 + (uint)bVar6 * 8 + (uint)bVar12 * 0x220;
+              puVar11 = &e2ram_learned_table_value_pos_ffff8108 + (uint)bVar6 * 8 + (uint)bVar12 * 0x220;
               fVar15 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(fVar16,puVar11);
               fVar15 = rx8_first_order_filter(*pfVar9,fVar15,0.125,arg3);
               ref_updateMemoryAtAddress_float_VAL_ADDR(fVar15,puVar11);

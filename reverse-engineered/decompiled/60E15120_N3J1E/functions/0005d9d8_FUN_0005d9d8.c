@@ -19,7 +19,7 @@ uint FUN_0005d9d8(void)
                 ((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],local_9c,
                  (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc]);
       DAT_ffffd376 = '\0';
-      uVar1 = FUN_000378dc((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],
+      uVar1 = e2ram_flush_request((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],
                            (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc],2);
     }
     else {
@@ -44,7 +44,7 @@ uint FUN_0005d9d8(void)
         uVar1 = FUN_0005dbda();
         return uVar1;
       }
-      uVar1 = FUN_000378dc((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],
+      uVar1 = e2ram_flush_request((&DAT_0005f6dd)[(uint)DAT_ffffd373 * 0xc],
                            (int)(char)(&DAT_0005f6de)[(uint)DAT_ffffd373 * 0xc],2);
     }
     DAT_ffffd374 = (char)uVar1;

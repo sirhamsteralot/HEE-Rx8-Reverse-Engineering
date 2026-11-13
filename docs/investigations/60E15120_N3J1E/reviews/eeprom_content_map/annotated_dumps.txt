@@ -1,0 +1,86 @@
+# Annotated 93C56 (IC420) EEPROM dumps — 256 bytes each
+
+RX8:  submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/RX8_93c56_ECU_IC420_Read.bin
+      SHA-256 64b13ddf353a06976729114179204f56b7a2869ea891f3f9d9400a2a56d205e3
+SE3P: submodules/Mazda_RX8_PCM_ReverseEngineering/Data_binaries/se3p_ecm_eeprom.bin (Mazda 3, cross-reference)
+      SHA-256 d7f4bb0a289f086610d8a9aafac58f6329b96c5be96ec75f7aef7418cf77c264
+
+0x00: 5a ff d3 d7 1a ef 41 3d 15 00 01 ff 00 ff 40 ff  |Z.....A=......@.|
+      se3p: 5a ff 4f a8 80 40 9e 92 d4 e8 01 ff 00 ff 40 ff
+      -- config/param byte (boot param block; indices 0xc,0xd,0xe,0xf,0x10(2B),0x12,0x13,0x14)
+      -- device marker word (0x5aff in both dumps); boot param index 0 (len 4 -> 0xffffc26c)
+      -- immo status word hi (word 0x6050000; 0x01ff both dumps)
+      -- immobilizer secret key byte (words 0x6010000-0x6040000, read by 0x375c0)
+
+0x10: 33 ff 08 00 00 ff 8d fd 47 da 00 00 00 00 02 ff  |3.......G.......|
+      se3p: 33 ff 08 00 00 ff ac 65 03 77 00 00 00 00 02 ff
+      -- config/param byte (boot param block; indices 0xc,0xd,0xe,0xf,0x10(2B),0x12,0x13,0x14)
+      -- immobilizer code/ID (words 0x60b0000/0x60c0000, read by 0x375c0)
+      -- param block tail (indices 0x1a,0x1b,0x1c,0x1d,0x1e)
+
+0x20: 81 01 80 01 7e 01 7b 01 76 01 74 01 71 01 6a 01  |....~.{.v.t.q.j.|
+      se3p: ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00
+      -- learned table pair (value u8, flag u8); bulk 0x20 len 0x44 by 0x27b8e
+
+0x30: 67 01 5d 01 59 01 7e 00 7e 00 7e 00 7e 00 7e 00  |g.].Y.~.~.~.~.~.|
+      se3p: ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00
+      -- learned table pair (value u8, flag u8); bulk 0x20 len 0x44 by 0x27b8e
+
+0x40: 7e 00 81 01 80 01 80 01 7a 01 74 01 72 01 70 01  |~.......z.t.r.p.|
+      se3p: ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00
+      -- learned table pair (value u8, flag u8); bulk 0x20 len 0x44 by 0x27b8e
+
+0x50: 69 01 67 01 5e 01 5a 01 50 01 4b 01 3b 01 24 01  |i.g.^.Z.P.K.;.$.|
+      se3p: ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00 ff 00
+      -- learned table pair (value u8, flag u8); bulk 0x20 len 0x44 by 0x27b8e
+
+0x60: 7e 00 7e 00 31 33 48 ff 36 ff 30 32 30 ff ff ff  |~.~.13H.6.020...|
+      se3p: ff 00 ff 00 31 33 48 ff 36 ff 30 41 30 ff ff ff
+      -- 9-byte field, UDS response (0x5b704 reads 0x6e len 9); erased here
+      -- ECU ID string chars (0x64/3, 0x68/1, 0x6a/2, 0x6c/1 read by 0x55b18/0x5e664; UDS 0x5b644)
+      -- learned table pair (value u8, flag u8); bulk 0x20 len 0x44 by 0x27b8e
+
+0x70: ff ff ff ff ff ff ff ff ff ff ff 00 ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff 00 ff ff ff ff
+      -- 2-byte field -> 0xffffce30 (bulk 0x7a,2 in 0x4b5b6)
+      -- 2-byte field written by 0x5e8a4 (from 0xffffd3a8)
+      -- reserved (erased)
+
+0x80: 4a 4d 31 46 45 31 37 33 39 34 30 31 30 32 35 34  |JM1FE17394010254|
+      se3p: 53 45 33 50 31 30 34 36 32 31 20 20 20 20 20 20
+      -- VIN char (17 ASCII; read 0x80 len 0x80->128B UDS dump 0x5b5d4)
+
+0x90: 38 ff ff ff ff 2a ff ff ff ff 03 0d ff ff ff fe  |8....*..........|
+      se3p: 20 ff ff ff ff 2a ff ff ff ff 03 0d ff ff ff ff
+      -- VIN char (17 ASCII; read 0x80 len 0x80->128B UDS dump 0x5b5d4)
+      -- config bit field (bit0 read by 0x5e748; RX8 0xfe, SE3P 0xff)
+      -- erased
+      -- tire revolutions per mile u16 (0x5de74 reads 0x9a len 2; 0x030d=781)
+      -- tire-size marker '*' (0x543e4: '*' -> default tire size)
+
+0xa0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      -- erased (0xa0-0xfb) in both dumps
+
+0xb0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      -- erased (0xa0-0xfb) in both dumps
+
+0xc0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      -- erased (0xa0-0xfb) in both dumps
+
+0xd0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      -- erased (0xa0-0xfb) in both dumps
+
+0xe0: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  |................|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+      -- erased (0xa0-0xfb) in both dumps
+
+0xf0: ff ff ff ff ff ff ff ff ff ff ff ff ff 0c ff 30  |...............0|
+      se3p: ff ff ff ff ff ff ff ff ff ff ff ff 5f 41 ff 30
+      -- erased
+      -- erased (0xa0-0xfb) in both dumps
+      -- fixed tail marker 0x30 ('0') both dumps
+      -- per-ECU tail u16 (RX8 0xfc-0xfd vs SE3P differ)

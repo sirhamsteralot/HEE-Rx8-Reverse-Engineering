@@ -11,10 +11,10 @@ void FUN_00028484(short param_1,ushort param_2,ushort param_3,undefined4 *param_
   undefined4 uVar2;
   undefined4 uVar3;
   
-  puVar1 = &DAT_ffff8108;
+  puVar1 = &e2ram_learned_table_value_pos_ffff8108;
   uVar3 = 0;
   if (param_1 != 0) {
-    puVar1 = &DAT_ffff8328;
+    puVar1 = &e2ram_learned_table_value_neg_ffff8328;
   }
   uVar2 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,puVar1 + (uint)param_2 * 8);
   *param_4 = uVar2;

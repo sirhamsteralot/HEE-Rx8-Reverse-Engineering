@@ -34,16 +34,16 @@ char FUN_000271b0(void)
   }
   else {
     cVar4 = ref_readValue_8bit_ADDRESS_VAL
-                      (&DAT_ffff8548 + (uint)(ushort)(snapshot_DAT_ffffb6c4 - 1) * 2 + (uint)uVar3 * 0x88,0);
+                      (&e2ram_learned_table_flag_a_ffff8548 + (uint)(ushort)(snapshot_DAT_ffffb6c4 - 1) * 2 + (uint)uVar3 * 0x88,0);
   }
   if (uVar7 == 0x10) {
     cVar5 = '\x01';
   }
   else {
     cVar5 = ref_readValue_8bit_ADDRESS_VAL
-                      (&DAT_ffff8548 + (uint)(ushort)(snapshot_DAT_ffffb6c4 + 1) * 2 + (uint)uVar3 * 0x88,0);
+                      (&e2ram_learned_table_flag_a_ffff8548 + (uint)(ushort)(snapshot_DAT_ffffb6c4 + 1) * 2 + (uint)uVar3 * 0x88,0);
   }
-  cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8548 + (uint)snapshot_DAT_ffffb6c4 * 2 + (uint)uVar3 * 0x88,0);
+  cVar6 = ref_readValue_8bit_ADDRESS_VAL(&e2ram_learned_table_flag_a_ffff8548 + (uint)snapshot_DAT_ffffb6c4 * 2 + (uint)uVar3 * 0x88,0);
   if ((cVar6 != '\x01') ||
      (((DAT_ffffb8f0 <= snapshot_engine_speed_rpm_ffffb548 || (cVar6 = cVar4, cVar4 != '\x01')) &&
       ((snapshot_engine_speed_rpm_ffffb548 < DAT_ffffb8f0 || (cVar6 = cVar5, cVar5 != '\x01')))))) {

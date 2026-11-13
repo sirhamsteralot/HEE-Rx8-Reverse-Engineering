@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * os_switch_to_task [high]: Sets ctrl+4 = task index, ctrl+0x18 = task record (0x4990 + idx*0x10), ctrl+0x14 = stack ptr from PTR_DAT_00004994[idx], then computed jump via PTR_FUN_00004998[idx] (task table 0x4998). Emulator: vec-0x378 handler reaches it via 0x9630.
- * RAM 0xffff7638 os_ctrl_block (uint8[0x20]): 
+ * RAM 0xffff7638 os_ctrl_block (uint8[0x20]): OS ctrl block base; mov.l pool 0x3278/0x32ec/0x3388 in 0x3238, pool 0x3e00 in 0x3db0, pool 0x3e80 in 0x3e10 (os_init) among 11 pool refs; members +4/+6/+8/+0x14/+0x18 are the count/flags/ptr cells; os_switch_to_task 0x375c writes ctrl+4, ctrl+0x14, ctrl+0x18.
  */
 /* [EXPORT CLEANUP]
  * Computed indirect jump at 0x37ac: slot = incoming r2 + ROM32[0x37c0] (=0x4b34)

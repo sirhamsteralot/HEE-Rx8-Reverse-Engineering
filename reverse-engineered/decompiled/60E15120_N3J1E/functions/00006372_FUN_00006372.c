@@ -6,7 +6,7 @@
 void FUN_00006372(void)
 
 {
-  FUN_0000d408();
+  eeprom_mirror_magic_check();
   FUN_00011004();
   return;
 }

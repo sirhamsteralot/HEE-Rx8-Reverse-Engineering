@@ -335,7 +335,7 @@ caller	callee	callee_name
 000061a8	0000d70a	FUN_0000d70a
 000061a8	00008f2a	ref_ignitionDwellOutputInit
 000061a8	0000ab8a	ref_misfireDetectInit_
-000061a8	0000d44c	FUN_0000d44c
+000061a8	0000d44c	eeprom_mirror_magic_init
 000061a8	0000b23c	FUN_0000b23c
 000061a8	00009f0c	FUN_00009f0c
 000062a0	0000bdbc	FUN_0000bdbc
@@ -360,7 +360,7 @@ caller	callee	callee_name
 00006366	000113b8	FUN_000113b8
 0000636c	0000abfa	FUN_0000abfa
 00006372	00011004	FUN_00011004
-00006372	0000d408	FUN_0000d408
+00006372	0000d408	eeprom_mirror_magic_check
 000063f0	0000b602	FUN_0000b602
 000063f0	00002064	FUN_00002064
 000063f0	00007438	maf_sensor_scaling
@@ -1046,11 +1046,11 @@ caller	callee	callee_name
 00010df0	00010f30	FUN_00010f30
 00010df0	00002158	ref_LongFunc
 00010fa8	00010f3e	FUN_00010f3e
-00011004	0005b482	FUN_0005b482
-00011004	0005de74	ref_getTireSize
-00011004	0005e664	FUN_0005e664
+00011004	0005b482	e2ram_tail_bulk_read
+00011004	0005de74	e2ram_tire_revs_read
+00011004	0005e664	e2ram_ecu_id_read
 00011004	00038a04	FUN_00038a04
-00011004	0005e748	FUN_0005e748
+00011004	0005e748	candidate_e2ram_config_bit_9f_read
 00011004	00019624	FUN_00019624
 0001102a	0002f948	FUN_0002f948
 0001102a	00016f30	FUN_00016f30
@@ -1330,17 +1330,17 @@ caller	callee	callee_name
 00011b08	000146a6	FUN_000146a6
 00011b08	0003eb3a	ref_catTempRelated
 00011b08	00039ca8	FUN_00039ca8
-00011b22	0005de74	ref_getTireSize
+00011b22	0005de74	e2ram_tire_revs_read
 00011b22	0003de70	FUN_0003de70
 00011b22	00019da2	FUN_00019da2
 00011b22	00059164	FUN_00059164
 00011b22	0005e7e4	FUN_0005e7e4
-00011b22	0005e664	FUN_0005e664
+00011b22	0005e664	e2ram_ecu_id_read
 00011b22	0002a3bc	FUN_0002a3bc
 00011b22	00021476	FUN_00021476
 00011b22	00039cf0	FUN_00039cf0
 00011b22	0005a162	FUN_0005a162
-00011b22	0005e748	FUN_0005e748
+00011b22	0005e748	candidate_e2ram_config_bit_9f_read
 00011b22	0003176e	FUN_0003176e
 00011b22	0005fc40	FUN_0005fc40
 00011b22	000602fc	FUN_000602fc
@@ -2778,7 +2778,7 @@ caller	callee	callee_name
 000279d8	00037ea4	e2ram_shadow_byte_write
 000279d8	0003db54	ref_readValue_8bit_ADDRESS_VAL
 000279d8	000024d0	rx8_encode_u8_affine_saturate
-000279d8	000378dc	FUN_000378dc
+000279d8	000378dc	e2ram_flush_request
 00027b8e	00037cd8	e2ram_bulk_read_into_shadow
 00027b8e	0003dc70	ref_updateMemoryAtAddress_8bit_ADDR_VAL
 00027b8e	00002500	rx8_decode_u8_affine
@@ -2789,7 +2789,7 @@ caller	callee	callee_name
 00027d06	0003dc70	ref_updateMemoryAtAddress_8bit_ADDR_VAL
 00027d06	00037ea4	e2ram_shadow_byte_write
 00027d06	000024d0	rx8_encode_u8_affine_saturate
-00027d06	000378dc	FUN_000378dc
+00027d06	000378dc	e2ram_flush_request
 00027d06	00002478	rx8_add_u8_saturate
 00027eec	0000420c	FUN_0000420c
 00027eec	00002478	rx8_add_u8_saturate
@@ -2815,7 +2815,7 @@ caller	callee	callee_name
 0002874c	0004496c	FUN_0004496c
 0002874c	00026934	FUN_00026934
 0002874c	00028080	FUN_00028080
-0002874c	00027b8e	FUN_00027b8e
+0002874c	00027b8e	e2ram_learned_table_load
 0002874c	00026b98	FUN_00026b98
 0002874c	00028acc	FUN_00028acc
 00028784	000280b0	FUN_000280b0
@@ -2872,10 +2872,10 @@ caller	callee	callee_name
 000288be	00027808	FUN_00027808
 000288be	00003934	ref_setSR
 000288be	0002698e	FUN_0002698e
-000288be	000279d8	FUN_000279d8
-000288be	00027d06	FUN_00027d06
+000288be	000279d8	e2ram_learned_table_save
+000288be	00027d06	candidate_e2ram_learned_table_erase
 000288be	00003920	sh_raise_interrupt_mask_return_previous
-000288be	00027b8e	FUN_00027b8e
+000288be	00027b8e	e2ram_learned_table_load
 000288be	00026ce0	FUN_00026ce0
 000288f4	00044ae4	FUN_00044ae4
 000288f4	00044974	FUN_00044974
@@ -3554,7 +3554,7 @@ caller	callee	callee_name
 000349e4	0003599c	e2ram_boot_param_read
 00034a04	00003920	sh_raise_interrupt_mask_return_previous
 00034a04	0003583c	FUN_0003583c
-00034a04	000375c0	FUN_000375c0
+00034a04	000375c0	e2ram_immo_key_read
 00034a04	0000e2d4	FUN_0000e2d4
 00034a04	00003934	ref_setSR
 00034a28	00034a64	FUN_00034a64
@@ -3615,7 +3615,7 @@ caller	callee	callee_name
 0003599c	00037ef0	e2ram_cached_byte_read
 00035a8c	00037ea4	e2ram_shadow_byte_write
 00035a8c	00035d36	e2ram_shadow_byte_write_trampoline
-00035d80	000378dc	FUN_000378dc
+00035d80	000378dc	e2ram_flush_request
 00035ea0	00035d80	FUN_00035d80
 00035ea0	00035a8c	candidate_e2ram_param_write_dispatch
 000360c8	00035d80	FUN_00035d80
@@ -3727,7 +3727,7 @@ caller	callee	callee_name
 00037ef0	0000bdfa	e2ram_read_word
 00037ef0	00003934	ref_setSR
 00037fea	00003920	sh_raise_interrupt_mask_return_previous
-00037fea	000378dc	FUN_000378dc
+00037fea	000378dc	e2ram_flush_request
 00037fea	00003934	ref_setSR
 0003807c	00037fda	FUN_00037fda
 00038082	00003920	sh_raise_interrupt_mask_return_previous
@@ -3765,7 +3765,7 @@ caller	callee	callee_name
 000387d4	000023f4	rx8_min_float
 0003898a	0005fd38	dtc_set_fault_x0
 000389b6	0005fd38	dtc_set_fault_x0
-00038a04	000543e4	ref_getTireSizeChecksumthing_
+00038a04	000543e4	e2ram_tire_size_marker_check
 00038a04	000544c4	FUN_000544c4
 00038a04	00054426	FUN_00054426
 00038a18	000538d4	FUN_000538d4
@@ -4240,7 +4240,7 @@ caller	callee	callee_name
 00039cf0	00054486	FUN_00054486
 00039cf0	0003d19e	FUN_0003d19e
 00039cf0	000384a2	FUN_000384a2
-00039cf0	000543e4	ref_getTireSizeChecksumthing_
+00039cf0	000543e4	e2ram_tire_size_marker_check
 00039cf0	000544c4	FUN_000544c4
 00039cf0	00003934	ref_setSR
 00039cf0	00054426	FUN_00054426
@@ -4996,7 +4996,7 @@ caller	callee	callee_name
 0004b5b6	000023e4	rx8_max_float
 0004b5b6	00002460	rx8_add_u16_saturate
 0004b668	00037ea4	e2ram_shadow_byte_write
-0004b668	000378dc	FUN_000378dc
+0004b668	000378dc	e2ram_flush_request
 0004b77c	0003dcd0	ref_updateMemoryAtAddress_float_VAL_ADDR
 0004b77c	000023e4	rx8_max_float
 0004b794	0003de02	ref_validateAddressCopy_float_ADDRESS__
@@ -6071,7 +6071,7 @@ caller	callee	callee_name
 0005d8b4	00054926	ref_udsResponseRelated__
 0005d9d8	00037ea4	e2ram_shadow_byte_write
 0005d9d8	00068184	ref_udsServiceResponse
-0005d9d8	000378dc	FUN_000378dc
+0005d9d8	000378dc	e2ram_flush_request
 0005d9d8	0005dbda	FUN_0005dbda
 0005d9d8	0005dc06	FUN_0005dc06
 0005dbda	00068124	ref_setupForUdsResponse_
@@ -6148,7 +6148,7 @@ caller	callee	callee_name
 0005e7a0	00037ef0	e2ram_cached_byte_read
 0005e7e4	00002460	rx8_add_u16_saturate
 0005e8a4	00037ea4	e2ram_shadow_byte_write
-0005e8a4	000378dc	FUN_000378dc
+0005e8a4	000378dc	e2ram_flush_request
 0005e8a4	00009630	os_schedule_task_event
 0005f8fa	00061800	FUN_00061800
 0005f9f0	00061d1a	FUN_00061d1a

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * split_pulse_time_output [high]: Split output stage called from fuel task 0x20e40 right after 0x30b08: converts the split volumes bef0/bef4 into pulse-time values (x6e7 / flow scalars 250.0 0x43b8bc6a primary, 475.93 0x43edf70a secondary) with first-order filtering (bebc) and on/off delay counters bf0c/bf0d, writing bf00/bec4/bec0; selects the all-primary path when bece==0.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ab98: Table 2D - 347 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006abc8: Table 2D - 350 Check DataType (RX8Defs data pointer, axes and dimensions match).

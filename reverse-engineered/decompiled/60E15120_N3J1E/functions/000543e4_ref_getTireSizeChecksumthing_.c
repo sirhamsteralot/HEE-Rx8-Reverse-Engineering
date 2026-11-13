@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_tire_size_marker_check [high]: e2ram_cached_byte_read(0x95, local, 1); byte == '*' (0x2a) -> DAT_ffffd1b5 = 0 (default tire size), else DAT_ffffd1b5 = 1. Inherited ref_getTireSizeChecksumthing_ confirmed. Chip 0x95 = 0x2a in both dumps.
+ */
 /* ROM address: 0x000543e4; body bytes: 66; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000524c0 (66 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char ref_getTireSizeChecksumthing_(void)
+char e2ram_tire_size_marker_check(void)
 
 {
   char cVar1;
