@@ -35,7 +35,7 @@ void candidate_apv_target_condition(void)
   if ((apv_target_state_prev_ffffbf8e == '\0') && (0x32 < apv_counter_92_ffffbf92)) {
     apv_target_state_ffffbf8d = '\0';
   }
-  else if ((DAT_ffffaa68 == '\0') && (apv_rpm_low_flag_ffffbf99 == '\0')) {
+  else if ((engine_running_flag_ffffaa68 == '\0') && (apv_rpm_low_flag_ffffbf99 == '\0')) {
     apv_target_state_ffffbf8d = '\x01';
   }
   snapshot_mass_air_flow_ffffa9ec = mass_air_flow_ffffa9ec;

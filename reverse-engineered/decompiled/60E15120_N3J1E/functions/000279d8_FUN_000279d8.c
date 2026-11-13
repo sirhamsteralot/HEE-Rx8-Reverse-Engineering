@@ -17,7 +17,7 @@ uint FUN_000279d8(void)
   undefined1 local_30;
   undefined1 local_2f;
   
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     DAT_ffffb6c7 = 1;
     DAT_ffffba16 = 0;
     DAT_ffffba21 = 0;

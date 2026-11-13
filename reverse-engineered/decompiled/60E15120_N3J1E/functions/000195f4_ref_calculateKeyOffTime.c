@@ -6,7 +6,7 @@
 void ref_calculateKeyOffTime(void)
 
 {
-  if (DAT_ffffaa68 == '\0') {
+  if (engine_running_flag_ffffaa68 == '\0') {
     DAT_ffffa9e2 = rx8_add_u16_saturate((int)DAT_ffffa9e2,1);
   }
   else {

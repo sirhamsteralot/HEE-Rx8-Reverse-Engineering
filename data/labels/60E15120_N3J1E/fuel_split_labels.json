@@ -1,0 +1,148 @@
+{
+  "date": "2026-11-13",
+  "pass": "fuel_split_labeling",
+  "basis": "source_review_fuel_split",
+  "function_aliases": {
+    "00030b08": {
+      "alias": "primary_secondary_fuel_split",
+      "confidence": "high",
+      "evidence": "Computes the primary/secondary split in the fuel task 0x20e40 (called between 0x30948 calculate_fuel_amount_per_rotation and 0x30f5c): rpm gates bf36/bf37 from coolant lookups tbl 0x6ac74 (flat 6250) / tbl 0x6ac60 (Secondary Injectors Allowed Threshold), fuel gates bf38/bf39 vs bec8/beb0 (WOT baro correction tbl 0x6ab84), then becd/becc flags and split volumes bef0/bef4/bef8/befc by ratio tbl 0x6ab70 when becc==1. becd is OR-ed into the SSV on-condition by 0x2178c; becc is read by open-loop logic 0x1f0c4/0x1fd48. Dynamically verified in the SH-2E emulator: docs/investigations/60E15120_N3J1E/reviews/intake_solenoids/ssv_secondary_injector_link.py."
+    },
+    "00030f5c": {
+      "alias": "split_pulse_time_output",
+      "confidence": "high",
+      "evidence": "Split output stage called from fuel task 0x20e40 right after 0x30b08: converts the split volumes bef0/bef4 into pulse-time values (x6e7 / flow scalars 250.0 0x43b8bc6a primary, 475.93 0x43edf70a secondary) with first-order filtering (bebc) and on/off delay counters bf0c/bf0d, writing bf00/bec4/bec0; selects the all-primary path when bece==0."
+    }
+  },
+  "ram_aliases": {
+    "ffffaa68": {
+      "alias": "engine_running_flag",
+      "type": "uint8",
+      "reader": "0002178c",
+      "evidence": "1 = engine running, 0 = stopped/cranking; read by SSV control 0x2178c (cold edge aa68==0 && b2b5), fan logic 0x2f51a, CAN error counter 0xdcc0; mov.w pool word 0xaa68 sign-extends to 0xffffaa68 (e.g. pool 0x21886 in 0x2178c)."
+    },
+    "ffffbecc": {
+      "alias": "secondary_split_gate_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "becc = bf36 || (bf37 && bf39), computed in 0x30b08: 0 => all fuel to primaries (bef0=beb0, bef4=0), 1 => split by ratio tbl 0x6ab70; also read by open-loop request logic 0x1f0c4/0x1fd48 (b1db/b1da latches). Emulator-verified: set above the rpm/coolant gate with fuel demand, clear below (ssv_secondary_injector_link_log.txt)."
+    },
+    "ffffbecd": {
+      "alias": "secondary_injectors_active_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "becd = bf36 || (bf37 && bf38) in 0x30b08 (bf38 uses the WOT baro-corrected fuel gate); OR-ed into the SSV on-condition by 0x2178c (mov.w pool word 0xbecd at ROM 0x2188a). Emulator: becd=1 drives PEDR_W PE7 high with engine running and even at 250 C coolant."
+    },
+    "ffffbece": {
+      "alias": "primary_split_sufficient_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bece = (bef0 >= bec8) && !(becd && !becc) with 0.005 hysteresis, in 0x30b08; read by 0x30f5c to choose the all-primary pulse path when 0."
+    },
+    "ffffbf08": {
+      "alias": "split_fuel_gate_hysteresis",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "Hysteresis band for the bf38/bf39 fuel gates in 0x30b08: 0.007 when coolant >= 40 C, else 0.02 (inline float compares); 32-bit pool value present in ROM."
+    },
+    "ffffbf0c": {
+      "alias": "secondary_split_on_delay_counter",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "Loaded from raw-u8 lookup tbl 0x6ab98(coolant) on the becc 0->1 edge, decrements while becc==1, cleared when becc==1 and prev was 1; consumed by 0x30f5c delay logic."
+    },
+    "ffffbf0d": {
+      "alias": "secondary_split_off_delay_counter",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "Loaded from raw-u8 lookup tbl 0x6aba4(coolant) on the becc 1->0 edge, decrements while becc==0; consumed by 0x30f5c delay logic."
+    },
+    "ffffbf10": {
+      "alias": "split_covers_amounts_ab_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf10 = bef0 >= bec8+beec (0.005 hysteresis) in 0x30b08."
+    },
+    "ffffbf11": {
+      "alias": "split_covers_amounts_bc_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf11 = bef0 >= bed8+beec (0.005 hysteresis) in 0x30b08."
+    },
+    "ffffbf24": {
+      "alias": "split_high_rpm_threshold",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "lookup_2d_descriptor_scaled(coolant, tbl 0x6ac74) in 0x30b08; table data 0x78548 is flat u16 0x186a = 6250 rpm (scale 1.0) \u2014 the high-RPM override threshold."
+    },
+    "ffffbf28": {
+      "alias": "secondary_allowed_rpm_threshold",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "lookup_2d_descriptor_scaled(coolant, tbl 0x6ac60 'Secondary Injectors Allowed Threshold - Coolant Temperature Based', data 0x78510, axis 0x784ec): u16 cells 3000 rpm at <= 0 C, 0 above ~20 C; confirmed by ROM cell dump and emulator lookup in 0x30b08."
+    },
+    "ffffbf2c": {
+      "alias": "primary_baro_correction",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "lookup_2d_descriptor_scaled(baro, tbl 0x6ab84 'Primary Injector Max Barometric Pressure Correction') in 0x30b08; scales bec8 into bf04 at throttle >= 60%."
+    },
+    "ffffbf04": {
+      "alias": "split_fuel_gate_threshold",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "bf04 = bec8 (fuel_amount_per_rotation_a), or bec8*bf2c when throttle >= 60% WOT; beb0 is compared against it for bf38 in 0x30b08."
+    },
+    "ffffbf36": {
+      "alias": "high_rpm_override_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf36 = rpm >= bf24 (tbl 0x6ac74) with a 188 rpm hysteresis band, in 0x30b08; forces the secondary split (and SSV) at very high rpm."
+    },
+    "ffffbf37": {
+      "alias": "secondary_allowed_rpm_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf37 = rpm >= bf28 (tbl 0x6ac60 coolant-based Secondary Injectors Allowed Threshold) with 188 rpm hysteresis, in 0x30b08."
+    },
+    "ffffbf38": {
+      "alias": "split_fuel_gate_wot_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf38 = beb0 >= bf04 (WOT-aware threshold) with bf08 hysteresis, in 0x30b08; part of becd."
+    },
+    "ffffbf39": {
+      "alias": "split_fuel_gate_flag",
+      "type": "uint8",
+      "reader": "00030b08",
+      "evidence": "bf39 = beb0 >= bec8 with bf08 hysteresis, in 0x30b08; part of becc."
+    },
+    "ffffbef0": {
+      "alias": "fuel_volume_primary_split",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "Primary-side fuel volume after the 0x30b08 split: beb0 when becc==0, else beb0 minus the secondary share; converted to pulse time in 0x30f5c (x6e7 / 250.0)."
+    },
+    "ffffbef4": {
+      "alias": "fuel_volume_secondary_split",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "Secondary-side fuel volume from the 0x30b08 split (0 when becc==0); converted to pulse time in 0x30f5c (x6e7 / 475.93)."
+    },
+    "ffffbef8": {
+      "alias": "primary_secondary_split_ratio",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "Ratio lookup_2d_descriptor_scaled(rpm, tbl 0x6ab70) clamped to [0,1] in 0x30b08; used to split beb0 into bef0/bef4 when becc==1."
+    },
+    "ffffbefc": {
+      "alias": "fuel_volume_secondary_amount",
+      "type": "float",
+      "reader": "00030b08",
+      "evidence": "befc = bef8 * beb0, the uncapped secondary amount in 0x30b08 (capped against bec8/bedc when computing bef4)."
+    }
+  },
+  "rom_unchanged": true,
+  "ghidra_database_updated": false,
+  "dynamic_evidence": "docs/investigations/60E15120_N3J1E/reviews/intake_solenoids/ssv_secondary_injector_link.py (+ _log.txt), SH-2E emulator harness calls to 0x30b08/0x2178c"
+}

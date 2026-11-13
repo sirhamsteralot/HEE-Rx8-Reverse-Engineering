@@ -25,7 +25,7 @@ char fan_low_speed_decision(void)
     DAT_ffffbdab = '\x01';
   }
   if (((((((DAT_ffffbdaa == '\x01') || ((DAT_ffffbdab == '\x01' && (DAT_ffffb0cd == '\x01')))) ||
-         ((DAT_ffffaa68 == '\0' &&
+         ((engine_running_flag_ffffaa68 == '\0' &&
           ((((DAT_ffffbda0 == '\x01' && (DAT_ffffccc6 == '\0')) && (DAT_ffffa8ea == '\0')) &&
            (apv_target_state_ffffbf8d == '\0')))))) || ((DAT_ffffbd68 == '\x01' || (DAT_ffffbd6a == '\x01')))) &&
        ((DAT_ffffd040 == '\0' && (cVar1 = '\0', DAT_ffffd0a8 == '\0')))) ||

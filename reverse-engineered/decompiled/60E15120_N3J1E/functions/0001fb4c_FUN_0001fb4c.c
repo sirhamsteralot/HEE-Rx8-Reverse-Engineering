@@ -18,12 +18,12 @@ undefined4 * FUN_0001fb4c(void)
   cVar4 = DAT_ffffb156;
   cVar3 = DAT_ffffb155;
   cVar2 = DAT_ffffb153;
-  cVar1 = DAT_ffffaa68;
+  cVar1 = engine_running_flag_ffffaa68;
   fVar6 = -43.0;
   puVar5 = (undefined4 *)(uint)ol_decay_enable_b_ffffb152;
   snapshot_inferred_coolant_temperature_ffffa98c = inferred_coolant_temperature_ffffa98c;
   if (((DAT_ffffb140 == 0) || (ol_decay_enable_b_ffffb152 != 0)) &&
-     ((DAT_ffffb1d5 != '\0' || (DAT_ffffaa68 != '\x01')))) {
+     ((DAT_ffffb1d5 != '\0' || (engine_running_flag_ffffaa68 != '\x01')))) {
     if (DAT_ffffb140 == 0) {
       if (puVar5 == (undefined4 *)0x0) {
         ol_decay_enable_a_ffffb142 = 1;

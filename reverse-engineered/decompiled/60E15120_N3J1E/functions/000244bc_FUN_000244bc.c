@@ -45,7 +45,7 @@ void e2ram_block_encode(void)
   DAT_ffffb454 = DAT_ffffb522;
   DAT_ffffb456 = DAT_ffffb524;
   DAT_ffffb458 = candidate_idle_learn_flag_ffffcc91;
-  if (DAT_ffffaa68 == '\x01') {
+  if (engine_running_flag_ffffaa68 == '\x01') {
     DAT_ffffb459 = DAT_ffffb459 | 1;
   }
   else {

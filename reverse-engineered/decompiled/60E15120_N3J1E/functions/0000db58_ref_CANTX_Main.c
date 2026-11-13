@@ -11,7 +11,7 @@ undefined1 * ref_CANTX_Main(void)
   puVar1 = &can_error_poll_counter_ffffa40f;
   if ((((can_error_poll_counter_ffffa40f < 100) && (can_error_latch_ffffa40a == '\0')) && (can_setup_error_flag_ffffa410 == '\0')) &&
      (((puVar1 = &DAT_ffffa411, DAT_ffffa411 == '\0' &&
-       (puVar1 = (undefined1 *)(uint)DAT_ffffaa68,
+       (puVar1 = (undefined1 *)(uint)engine_running_flag_ffffaa68,
        puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1))) &&
       (puVar1 = (undefined1 *)((int)&vector_Poweron_Reset + 1), DAT_ffffb578 != '\x01')))) {
     ref_can41TXPack();

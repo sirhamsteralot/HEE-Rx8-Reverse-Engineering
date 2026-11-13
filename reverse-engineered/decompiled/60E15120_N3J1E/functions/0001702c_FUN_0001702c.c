@@ -19,13 +19,13 @@ uint FUN_0001702c(void)
   cVar3 = DAT_ffffa8ec;
   bVar2 = false;
   bVar1 = false;
-  cStack_34 = DAT_ffffaa68;
+  cStack_34 = engine_running_flag_ffffaa68;
   cStack_30 = DAT_ffffa8f7;
   uStack_24 = 0;
   uStack_28 = 0;
   cStack_38 = DAT_ffffa8ec;
   cStack_2c = DAT_ffffa8ea;
-  if ((engine_running_ffffa428 == '\0') && (DAT_ffffaa68 == '\x01')) {
+  if ((engine_running_ffffa428 == '\0') && (engine_running_flag_ffffaa68 == '\x01')) {
     uStack_24 = 1;
     DAT_ffffa8f8 = '\0';
   }
@@ -34,7 +34,7 @@ uint FUN_0001702c(void)
   }
   else {
     bVar1 = DAT_ffffa8f8 == '\x01';
-    if ((DAT_ffffaa68 == '\0') &&
+    if ((engine_running_flag_ffffaa68 == '\0') &&
        (((bVar1 && (DAT_ffffa914 == '\0')) &&
         (cVar5 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8054,0), cVar5 == '\0')))) {
       bVar2 = true;
