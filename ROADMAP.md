@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 23–36 — pick up 23 next (item 22 closed 2026-11-13:
+**reopened**: open items 23–37 — pick up 23 next (item 22 closed 2026-11-13:
 spliced the upstream RX8Defs `d95b0be` DTC switch rework + `39d98a0` 60E15120
 immobilizer patch addresses (ROM-verified 0x34b10/0x34f5c) into the reviewed
 merged 60E15120 def and therefore per-rom/60E15120_N3J1E.xml via the re-runnable
@@ -57,7 +57,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–36)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–37)
 
 - **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
   `39d98a0` / MRP `b243b35`; record:
@@ -191,6 +191,30 @@ and where artifacts live.
   demoted per rule 6 and the export artifacts fixed in the same pass. Spot-check
   the same audit on 60E0G500_N3ZHEC and one family-B/C ROM (E8 opcode-table gap
   applies — note which opcodes could not be decoded there).
+- **C item 37 (open)** — **audit def `type`/`storagetype` fields for more
+  editor-compatible forms.** The upstream DTC switch rework (spliced into our
+  defs by `utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`; record:
+  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md))
+  showed the pattern: a byte the firmware treats as on/off is better exposed as
+  RomRaider `type="Switch"` (Enabled/Disabled states) than as a raw `1D`. In the
+  merged def's RX8Base, 248 tables are already `Switch` but 127 remain `1D uint8` —
+  and all 123 "Enable/Disable"-named ones among them are the DTC #3 bank `0x7e790`,
+  which is deliberately 1D (feature bitmask, not on/off —
+  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md)),
+  so the remaining candidates must be found semantically, not by name. Upstream
+  `39d98a0` has no further type changes to ingest (only the DTC tables differ in
+  type vs ours). Scope, per table in the merged def's RX8Base + 60E15120 block,
+  then propagated to all per-ROM defs: (a) 1D uint8/uint16 bytes the firmware
+  reads as a boolean gate (tested ==0/!=0, no arithmetic — the read site in the
+  disassembly is the rule-7 evidence) → candidate `Switch` with states; bitmask
+  bytes stay 1D; (b) `storagetype` vs the ROM lookup-descriptor `type_code`
+  mismatches (`relabel.STORAGETYPE` map; precedent: the 62 storage-type
+  corrections in
+  [defs-merge/README.md](docs/investigations/60E15120_N3J1E/defs-merge/README.md));
+  (c) `type`/sizex/sizey fields that disagree with the descriptor geometry.
+  Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
+  merged + per-ROM defs + label-map evidence, tests; then the defs passes +
+  pipeline validators + `python -m pytest tests/`.
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled
