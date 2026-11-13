@@ -109,6 +109,20 @@ flow rates (be0c/be10/be14) x `6e7/rpm` x `tbl 0x6ac4c/360` x 369.472/475.93,
 latency-compensated with be40/be44; ratios bee4/bee8 via
 `rx8_divide_with_zero_fallback`.
 
+Primary/secondary split gate (0x30b08, called from fuel task 0x20e40 between
+0x30948 and 0x30f5c/0x2fea8): `becc = bf36 or (bf37 and bf39)`,
+`becd = bf36 or (bf37 and bf38)` where `bf36 = rpm >= 6250` (tbl 0x6ac74, flat),
+`bf37 = rpm >= tbl_0x6ac60(coolant)` ("Secondary Injectors Allowed Threshold -
+Coolant Temperature Based": 3000 rpm at ≤ 0 °C, 0 above ~20 °C), `bf38/39` =
+`fuel_volume_final beb0 >= (WOT? baro-corrected : plain) fuel_amount_a bec8`
+(tbl 0x6ab84 at throttle ≥ 60 %). `becc==0` → all fuel to primaries (`bef4=0`);
+`becc==1` → split by ratio tbl 0x6ab70 (0x30b08) into `bef0` (primary) /
+`bef4` (secondary), converted to pulse times in 0x30f5c by flow scalars
+250.0/475.93. **`DAT_ffffbecd` is an SSV on-term** read by 0x2178c — the SSV
+opens whenever the secondaries are active; dynamic proof in
+[`../intake_solenoids/ssv_secondary_injector_link_log.txt`](../intake_solenoids/ssv_secondary_injector_link_log.txt).
+`DAT_ffffbecc` is also read by open-loop request logic 0x1f0c4/0x1fd48.
+
 Pulse arbitration (0x2fea8 `injector_pulse_time_arbitrate`): cranking
 (!engine_running) uses `be30 = be38 = be5c + be44`, running
 `be30 = be50 + be44`, `be38 = be54 + be44`; `be24 = be28 = (cranking? be58 :

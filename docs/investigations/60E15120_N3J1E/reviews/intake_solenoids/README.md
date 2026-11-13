@@ -44,10 +44,19 @@ All four solenoid controls run in the task 0x64f6 → 0x11744 chain
 each has a UDS diagnostic actuator override (0x5c9ac / 0x5c3c0 / 0x5cdc4 /
 0x5cf7c, state machine on the diagnostic area 0xffffd3xx):
 
-- **SSV** (0x2178c): ON if diag override says so (becd), or
-  `(engine-state aa68 == 0 && previous b2b5) && coolant < 197 C (hyst 200,
-  b2b4) && counter b2b2 != 0` (b2b2 loaded 0xbc on the aa68==0 && b2b5 edge,
-  else decremented). Result through 0x5c9ac → b2b0 → PE7.
+- **SSV** (0x2178c): ON if `DAT_ffffbecd` (0xffffbecd, from the fuel split at
+  0x30b08 — the secondary-split-active flag) is set — this term bypasses the
+  coolant-hot flag — **or** on the cold/engine-stopped edge:
+  `(engine-state aa68 == 0) && counter b2b2 != 0 && !coolant_hot b2b4`
+  (b2b2 loaded 0xbc on the aa68==0 && b2b5 edge, else decremented; coolant
+  hysteresis 197/200 °C). Result through 0x5c9ac → b2b0 → PE7.
+  Dynamic proof (emulator harness calls to 0x2178c/0x30b08):
+  [`ssv_secondary_injector_link.py`](ssv_secondary_injector_link.py) +
+  [`ssv_secondary_injector_link_log.txt`](ssv_secondary_injector_link_log.txt):
+  becd=1 → PE7 high with engine running and even at 250 °C coolant; becd=0 +
+  running → PE7 low; counter path blocked by b2b4; 0x30b08 sets becd/becc=1 at
+  4000 rpm/0 °C or with fuel demand above the primary-only amount, and =0 at
+  2000 rpm/0 °C or below the fuel gate.
 - **VDI** (0x34844): ON = RPM ≥ 7250 (clear below 7062) → c1c0 → diag
   override 0x5c3c0 → PD5.
 - **VFAD** (0x3493c): ON = RPM ≥ 5250 (clear below 5062) → c1c4 → 0x5cdc4 →

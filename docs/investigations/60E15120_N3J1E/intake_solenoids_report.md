@@ -4,10 +4,11 @@ Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
 (`decompiled/`), the disassembly and the ROM bytes, with package pins from the
-supplied SH7055F hardware manual (`Sh7055h.pdf`). No hardware execution was
-performed. Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
+supplied SH7055F hardware manual (`Sh7055h.pdf`), plus dynamic execution of
+the SSV and fuel-split functions in the SH-2E emulator (no hardware execution).
+Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
 
-**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); solenoid tables in [calibration extraction](calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
+**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); the SSV on-term `DAT_ffffbecd` comes from the fuel split at 0x30b08 in [fueling control](fueling_control_report.md) (§2.1 here); solenoid tables in [calibration extraction](calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
 
 ## 1. Executive summary
 
@@ -17,7 +18,9 @@ software PWM, plus a secondary-air pump relay. All solenoid controls run in
 the task 0x64f6 → 0x11744 chain with UDS diagnostic actuator overrides:
 **VDI** opens at RPM ≥ 7250 (hyst 7062), **VFAD** at RPM ≥ 5250 (hyst 5062),
 **SSV** on a cold/engine-state edge with a 0xbc-cycle counter (coolant 197/200 °C
-hysteresis), **secondary air** solenoid + pump at load ≤ 0.8 and RPM ≤ 4000
+hysteresis) **or whenever the secondary-injector split is active**
+(`DAT_ffffbecd`, computed in the fueling chain at 0x30b08 — see §2.1), **secondary
+air** solenoid + pump at load ≤ 0.8 and RPM ≤ 4000
 (catalyst warmup, with matching enrichment fuel from 0x31624 in the fueling
 chain). **APV** is position-controlled: target from RPM/MAF/coolant →
 dwell/drive counters → staged 100.0/12.5 % command → signed duty split (×96
@@ -31,8 +34,9 @@ board routing and deliberately not asserted (see §9).
 
 - The four intake solenoids (SSV, VFAD, VDI, secondary air) are simple
   **on/off valves** switched by engine-state windows: VDI opens at high RPM
-  (>= 7250), VFAD at mid-high RPM (>= 5250), SSV on a cold start, and the
-  secondary-air solenoid + pump run at low load/low RPM to warm up the
+  (>= 7250), VFAD at mid-high RPM (>= 5250), SSV on a cold start **and whenever
+  the secondary injectors are active** (high-load/high-RPM fueling — see §2.1),
+  and the secondary-air solenoid + pump run at low load/low RPM to warm up the
   catalytic converter.
 - The APV is different: it is a **motor with closed-loop position control**
   (target from RPM/airflow/coolant, driven by software PWM, position read
@@ -50,8 +54,9 @@ board routing and deliberately not asserted (see §9).
 ssv_coolant_hot = coolant >= 200 (clear < 197)            # b2b4
 if engine_state aa68 == 0 and prev b2b5 == 1: ssv_on_counter b2b2 = 0xbc
 elif b2b2 != 0: b2b2 -= 1
-ssv_on = diag_override(0x5c9ac, becd)                     # b2b0; UDS actuator test
-         or (aa68 == 0 and b2b5 and b2b2 != 0 and not ssv_coolant_hot)
+ssv_on = becd                                              # 0xffffbecd: secondary-split-active flag from 0x30b08 (see §2.1)
+         or (aa68 == 0 and b2b2 != 0 and not ssv_coolant_hot)   # cold/engine-stopped edge, counter b2b2
+ssv_on = diag_override(0x5c9ac, ssv_on)                   # b2b0; UDS actuator test passthrough
 set_bit(PEDR_W, 0x80, ssv_on)
 
 # VDI (PD5 = PDDR_W 0xfffff746 bit 0x20; pin 254; terminal 1W)
@@ -84,6 +89,45 @@ fwd,rev = bf84*96 > 0 ? (int)(bf84*96), 0 : 0, (int)(-bf84*96)                  
 # feedback: ADC6 raw 9ef0 (reg 0xfffff80c, AN6 pin 92) * 5/65536 -> cab0 volts (0x43a86)
 ```
 
+### 2.1 SSV ↔ secondary injectors: the SSV follows the fuel split
+
+The SSV on-condition's first term, `DAT_ffffbecd` (0xffffbecd), is **not**
+computed in the intake task — it is produced by the fueling chain's
+primary/secondary split function 0x30b08 (called from the periodic fuel task
+0x20e40 between `calculate_fuel_amount_per_rotation` 0x30948 and
+`injector_pulse_time_arbitrate` 0x2fea8; see
+[fueling control §2](fueling_control_report.md)). 0x30b08 computes:
+
+```python
+bf24 = lookup2d(coolant, tbl_0x6ac74)        # flat 6250 rpm (u16 cells 0x186a) — high-RPM override
+bf36 = rpm >= bf24  (188 rpm hysteresis)     # 0xffffbf36
+bf28 = lookup2d(coolant, tbl_0x6ac60)        # "Secondary Injectors Allowed Threshold - Coolant
+                                             #  Based" (CAL, u16 cells: 3000 rpm at <= 0 C, 0 above ~20 C)
+bf37 = rpm >= bf28  (188 rpm hysteresis)     # 0xffffbf37
+bf04 = fuel_amount_per_rotation_a (bec8); if throttle >= 60%: bf04 *= baro_corr tbl_0x6ab84
+bf38 = fuel_volume_final (beb0) >= bf04      # 0xffffbf38 (WOT-aware fuel gate)
+bf39 = fuel_volume_final (beb0) >= bec8      # 0xffffbf39
+becd = bf36 or (bf37 and bf38)               # 0xffffbecd -> SSV on-term (0x2178c)
+becc = bf36 or (bf37 and bf39)               # 0xffffbecc -> gates the fuel split itself:
+                                             #   becc==0 => all fuel to primaries (bef4=0),
+                                             #   becc==1 => split by ratio tbl_0x6ab70
+```
+
+So the dependency runs **from the injectors to the SSV, not the other way
+round**: whenever the secondary injectors are actually getting fuel (becd=1),
+the SSV is commanded on — even with the engine running, counter at 0, and even
+when the coolant-hot flag b2b4 is set (the becd term bypasses the 197/200 °C
+hysteresis; only the counter path is blocked by it). Conversely the SSV can be
+on with the secondaries off (the cold/engine-stopped counter path). The SSV
+state is not read back by the fuel split. Dynamically verified in the SH-2E
+emulator (harness calls to 0x2178c / 0x30b08): becd=1 → PE7 high in all
+combinations tested; becd=0 with engine running → PE7 low; becd=0 at 0 °C
+coolant below 3000 rpm, or with fuel demand below the primary-only amount →
+becd/becc clear → PE7 low unless the counter path fires. Script + log:
+[`reviews/intake_solenoids/ssv_secondary_injector_link.py`](reviews/intake_solenoids/ssv_secondary_injector_link.py)
++ [`ssv_secondary_injector_link_log.txt`](reviews/intake_solenoids/ssv_secondary_injector_link_log.txt).
+(0xffffbecc is also read by the open-loop request logic 0x1f0c4/0x1fd48.)
+
 ## 3. Actuator → GPIO → package pin → terminal
 
 | Actuator | Control fn | GPIO reg/bit | Port pin | SH7055F pin (Table 1.3) | Terminal |
@@ -114,6 +158,10 @@ no chip-pin data, so package-pin → terminal remains board routing).
 | 0x34844 pool | 7250.0 and 188.0 (hysteresis lower bound 7062 = 7250−188, folded) |
 | 0x3493c / 0x187b8 pools | 5250.0 / 4000.0 and offsets; 0.8 / 0.75 in shared pool |
 | 0x5d4a, 0x72732, 0x7323a | 0xbc (SSV on-counter) u16 in shared pools |
+| desc 0x6ac60 (data 0x78510) | "Secondary Injectors Allowed Threshold - Coolant Temperature Based" u16 vs coolant: 3000 rpm at ≤ 0 °C, 0 above ~20 °C — feeds becd/becc via 0x30b08 |
+| desc 0x6ac74 (data 0x78548) | flat 6250 rpm u16 (0x186a) high-RPM override — bf36 via 0x30b08 |
+| desc 0x6ab70 (data 0x78230) | primary/secondary ratio vs rpm (tbl "2D - 177") — the split ratio in 0x30b08 |
+| desc 0x6ab84 (data 0x78264) | "Primary Injector Max Barometric Pressure Correction" vs baro — WOT fuel gate bf04 in 0x30b08 |
 
 ## 5. Labeling applied
 
@@ -142,6 +190,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 |---|---|
 | Full review + binary verification | [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) (§7 = verification pass) |
 | Review validation record | `reviews/intake_solenoids/validation.json` |
+| SSV ↔ secondary-injector dynamic check (script + log) | [`reviews/intake_solenoids/ssv_secondary_injector_link.py`](reviews/intake_solenoids/ssv_secondary_injector_link.py), [`…_log.txt`](reviews/intake_solenoids/ssv_secondary_injector_link_log.txt) |
 | Rename/record manifest | `metadata/intake_labels.json` |
 | Pipeline script (idempotent, in `rebuild.sh`) | `scripts/review_intake_labels.py` |
 | Design doc subsystem map | [`design/README.md`](../../architecture/design/README.md) §5.9 |
@@ -158,6 +207,10 @@ no chip-pin data, so package-pin → terminal remains board routing).
 - `scripts/verify_readability.py` — pass (3,355 bodies consistent).
 - `scripts/verify_math_units.py` — pass. `scripts/design_graph_stats.py` — all
   6 cross-checks true.
+- Dynamic (SH-2E emulator, harness calls; no hardware): §2.1 — `ssv_solenoid_control`
+  0x2178c drives PE7 high exactly when `DAT_ffffbecd`=1 or the counter path fires;
+  0x30b08 sets becd/becc per the rpm/coolant/fuel gates. Script + log in
+  [`reviews/intake_solenoids/`](reviews/intake_solenoids/README.md) (§2.1 links).
 - Binary-level verification (README §7): 26/26 RAM aliases in reader pools,
   26/26 function names in index, all GPIO reg/mask/helper literals, thunk
   targets, call edges, task-table entry, and PDF pin quotes confirmed.
@@ -192,6 +245,7 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0x000316f8 | `secondary_air_pump_control` | PBDR PB2 = bf6c |
 | 0x0003174a | `candidate_secondary_air_on_time_task` | 0x3194a + 0x31a24 + 0x316f8 |
 | 0x0005c9ac / 0x0005c3c0 / 0x0005cdc4 / 0x0005cf7c | `ssv_diag_override` / `vdi_diag_override` / `vfad_diag_override` / `secondary_air_diag_override` | UDS actuator tests (d3xx state machine) |
+| 0x00030b08 | `FUN_00030b08` (unlabeled) | primary/secondary fuel split + `becc`/`becd` flag computation; called from fuel task 0x20e40. `becd` is the SSV on-term (§2.1) |
 
 ### 9.2 RAM
 
@@ -201,6 +255,8 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0xffffb2b2 | `ssv_on_counter` | 0xbc on edge, decrements |
 | 0xffffb2b4 | `ssv_coolant_hot_flag` | coolant ≥ 200 (clear 197) |
 | 0xffffb2b5 | `ssv_was_enabled` | previous aa68 |
+| 0xffffbecd / 0xffffbecc | `DAT_ffffbecd` / `DAT_ffffbecc` (unlabeled) | secondary-split-active flags from 0x30b08; `becd` = SSV on-term (§2.1), `becc` gates the fuel split and feeds open-loop logic 0x1f0c4/0x1fd48 |
+| 0xffffbf36 / bf37 | `DAT_ffffbf36` / `DAT_ffffbf37` (unlabeled) | rpm ≥ 6250 override flag / rpm ≥ coolant-based secondary-allowed threshold flag (0x30b08) |
 | 0xffffc1c0 / 0xffffc1c4 | `vdi_command` / `vfad_command` | RPM-hysteresis commands |
 | 0xffffa960 / a961 / a962 | `secondary_air_request_final` / `…_load_high` / `…_rpm_high` | sec-air request + gates |
 | 0xffffbf6c | `secondary_air_pump_request` | pump PB2 + solenoid condition |
