@@ -154,9 +154,24 @@ python utilities/scripts/defs-merge/extend_defs_all_roms.py
 
 ## 6. Follow-up
 
-- **ROADMAP C item 22** — the reviewed merged 60E15120 def (base `ff5ab4f`)
-  still carries the old 1D DTC tables and the pre-fix immobilizer addresses
-  (`0x34da8`/`0x351f4`, ROM-proven wrong; correct: `0x34b10`/`0x34f5c`).
+- The reviewed merged 60E15120 def (base `ff5ab4f`), the local reviewed copy
+  and upstream snapshot, and therefore `per-rom/60E15120_N3J1E.xml` **now carry
+  the upstream changes**, spliced (not
+  rebased — the merged RX8Base keeps its local reviewed content): the `d95b0be`
+  DTC switch form (#1/#2 `Switch` Enabled=01/Disabled=00 under
+  "DTC - MIL Illuminate" / "DTC - OBD Report", #3 raw 1D under
+  "DTC - Unknown", local P-code names kept) and the corrected 60E15120
+  immobilizer addresses `0x34b10`/`0x34f5c` with the regenerated patch blob.
+  Splice pass:
+  [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
+  (pass log
+  [defs-merge/upstream_splice_39d98a0.json](../defs-merge/upstream_splice_39d98a0.json));
+  the pass re-verifies the immo start pattern and the switch "off" blob against
+  the ROM bytes on every run. `repair_dtc_tables()` in `extend_defs_all_roms.py`
+  emits the same Switch form for every per-ROM def. Tests:
+  `tests/test_defs_upstream_sync.py`; pipeline validators + full pytest green.
+  The remaining upstream renames (Table 3D name, "Fuel Injection - Closed
+  Loop" categories) are folded in together with the label-map category update.
 - **ROADMAP discrepancy D13** — the 60E32000 upstream block's immobilizer
   addresses now match only N3M5E; for N3N5EB the ROM pattern sits at
   `0x371d8`/`0x37624`, so `per-rom/60E32000_N3N5EB.xml` inherits an address
