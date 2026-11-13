@@ -16,7 +16,15 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 22–23 and 24–36 — pick up 22 next (item 21 closed
+**reopened**: open items 23–36 — pick up 23 next (item 22 closed 2026-11-13:
+spliced the upstream RX8Defs `d95b0be` DTC switch rework + `39d98a0` 60E15120
+immobilizer patch addresses (ROM-verified 0x34b10/0x34f5c) into the reviewed
+merged 60E15120 def and therefore per-rom/60E15120_N3J1E.xml via the re-runnable
+`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py` (splice, not rebase —
+local P-code names kept); `repair_dtc_tables` in `extend_defs_all_roms.py` now
+emits the Switch form for every per-ROM def; `tests/test_defs_upstream_sync.py`
+added; relabel passes normalization-only, pipeline validators + full pytest
+green; item 21 closed
 2026-11-13: label-artifact consistency audit — 22 RAM + 26 lookup TSV rows got
 ROM-anchored evidence, 342 evidence-less labels-JSON entries filled from the
 canonical TSVs, 7 stale duplicate alias rows removed, symbols.tsv coverage
@@ -49,30 +57,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 22–23, 24–36)
-
-- **C item 22 (open)** — ingest the upstream RX8Defs `39d98a0` changes into the
-  reviewed merged 60E15120 def. Upstream `d95b0be` turned the RX8Base
-  `DTC xxxx Enable/Disable #1/#2` tables into `Switch` (Enabled=01 /
-  Disabled=00) under new categories "DTC - MIL Illuminate" / "DTC - OBD
-  Report" and re-categorized `#3` as "DTC - Unknown" — matching the
-  ROM-verified banks 0x7e678 (MIL + aging), 0x7e704 (Mode 03 list / freeze
-  frame), 0x7e790 (feature bitmask) in
-  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md).
-  Upstream `39d98a0` also fixed the per-block immobilizer patch addresses —
-  for 60E15120 `0x34da8`→`0x34b10` and `0x351f4`→`0x34f5c`, ROM-verified against
-  the immo start pattern at 0x34b10 in `60E15120_N3J1E.bin` (sync record:
-  [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/rx8defs-analysis/upstream-sync-validation.md)
-  §3). The 8 per-ROM defs regenerated from the new pin carry both changes.
-  But `data/definitions/romraider/rx8defs-merged-60E15120.xml` (base `ff5ab4f`)
-  and therefore `per-rom/60E15120_N3J1E.xml` still carry the old 1D DTC form
-  and the pre-fix immobilizer addresses 0x34da8/0x351f4 (now proven wrong).
-  Decide whether to rebase the merged def's RX8Base onto `39d98a0` (the "do not
-  mix" note in [data/definitions/README.md](data/definitions/README.md) predates
-  the pin move) or to splice only the DTC-table + immobilizer-address changes,
-  keeping the local P-code names/descriptions applied by
-  `relabel_dtc_names.py`; then re-run the defs passes + pipeline validators +
-  `python -m pytest tests/`.
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 23–36)
 
 - **C item 23 (open)** — fold the upstream-sync findings (submodules at RX8Defs
   `39d98a0` / MRP `b243b35`; record:
