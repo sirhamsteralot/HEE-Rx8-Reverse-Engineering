@@ -97,3 +97,38 @@ the artifacts themselves:
   elsewhere (e.g. 0xffffa098-0xffffa0a8 = base 0xffffa094 + 4·ch in 0x86f8; 0xffff763e =
   0xffff7638 + 6 in 0x3db0; 0xffff9f48 = 0xffff9f44 + 4 via 0x25710). Durable check:
   `tests/test_source_review_ram_aliases.py`.
+
+## Label-artifact consistency audit
+
+All accepted alias TSVs were swept against every per-subsystem labels JSON under
+`data/labels/60E15120_N3J1E/` in both directions, and every gap was re-verified against the
+raw ROM before fixing:
+
+- `accepted_ram_aliases.tsv`: 22 rows had an empty evidence column (four-field rows); all 482
+  rows now carry evidence anchored on raw-ROM pool words and the loading instructions in the
+  cited readers (OS ctrl block + members, vehicle-input PFDR/PHDR latches, UDS RX/TX buffers,
+  crank ICR samples, cranking-angle timing cells, DSC timing cells). Reader-column audit:
+  451 rows are pool-loaded directly in the cited reader, 27 are base-cell members, 4 use
+  documented indirection (task stack base via the task-record u32 at 0x4994, UDS buffers via
+  the CAN descriptors at 0x4dfec/0x4dffc/0x4e00c, `os_ready_ring` 0xffff74a0 via ctrl+0x24).
+- `accepted_lookup_aliases.tsv`: 26 rows had an empty evidence column (IVT base 0x7fc50, task
+  table 0x4990/0x4998, CAN mailbox mask table 0xd914, injector channel map 0xd7d4, CAN
+  descriptors 0x4dfec/0x4dffc/0x4e00c, Mode 22 dispatch table 0x5f10c, 17 ignition/idle lookup
+  descriptors); all now carry descriptor bytes (n/type/axis/data) plus the pool reference in
+  the consuming function.
+- `accepted_function_aliases.tsv`: 7 stale duplicate rows removed (addresses 0x567e8, 0x556ec,
+  0x55702, 0x56b22, 0x56b8a, 0x56b9e, 0x56f6c) - each carried an older alias next to the
+  dispatch-pass alias that the export actually applies (`function_index.tsv`); the fueling
+  labels JSON and review README were aligned to the applied names.
+- Labels JSONs: 320 evidence-less entries in `knock_loop_labels.json` (271 RAM, 33 function,
+  16 lookup) and 22 across `os_scheduler_can_ivt_labels.json` / `ignition_timing_labels.json`
+  were filled from the canonical TSV rows; the 3 DTC set-fault trampolines (0x5fd38/0x5fd3c/
+  0x5fd4a) are now also recorded as `function_aliases` in `dtc_thunk_labels.json`;
+  `symbols.tsv` gained the missing `ffffb466` row so all 482 accepted RAM rows are covered.
+
+Durable checks: `tests/test_label_artifact_consistency.py` (TSV<->JSON both directions, evidence
+presence, five-field row shape, symbols.tsv coverage) and the extended
+`tests/test_source_review_ram_aliases.py` hygiene assert. Pipeline validators
+(`verify_claims`, `validate_export`, `validate_reports`, `verify_readability`,
+`verify_math_units`) PASS; `python -m pytest tests/` 200 passed. Record:
+[validation.json](validation.json).

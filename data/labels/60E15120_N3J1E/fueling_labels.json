@@ -169,32 +169,32 @@
   "evidence": "Cranking: b0c4 = 0.0 (both coolant/IAT branches store 0.0 in this ROM); running: b0c4 = max(b0c4 - 0.0, 0.0). b0c4 feeds calc_fuel_volume_request (0x306e8) and closed_loop_fuel_trim (0x307e0).; dynamically verified in the SH-2E emulator (harness.call, profile 60E15120_N3J1E): b0c4 = 0.0 stored on both cranking branches (observed), running branch max(b0c4-0,0); feeds calc_fuel_volume_request 0x306e8 and closed_loop_fuel_trim 0x307e0; caller fueling_main_task 0x20e40; byte-exact function match in 10/10 other ROMs (cross_rom_function_matches.tsv)"
  },
  "00056b8a": {
-  "alias": "diag_engine_load",
+  "alias": "diag22_pid0043_engine_load_g_rev",
   "confidence": "high",
   "evidence": "RomRaider PID 0x0043 'Engine Load' handler: encodes engine_load_ffffc0b4 via rx8_encode_u16_affine_saturate (step 0x3b808080 ~ 0.00392) as u16 BE."
  },
  "00056b9e": {
-  "alias": "diag_lambda_target",
+  "alias": "diag22_pid0044_lambda_target",
   "confidence": "high",
   "evidence": "RomRaider PID 0x0044 'Lambda Target' handler: encodes lambda_target_ffffadfc (step 0x38000000) as u16 BE."
  },
  "00056b22": {
-  "alias": "diag_air_fuel_ratio",
+  "alias": "diag22_pid0034_afr_lambda_words",
   "confidence": "high",
   "evidence": "RomRaider PID 0x0034 'Air Fuel Ratio' handler: packs FUN_000556ec (DAT_ffffaa6c) and FUN_00055702 (DAT_ffffaa7c) as two u16 BE words."
  },
  "00056f6c": {
-  "alias": "diag_injector_pulse_time",
+  "alias": "diag22_pid1410_injector_pulse_time",
   "confidence": "high",
   "evidence": "PID 0x1410 handler (logger def conflicts: 'Injector Pulse Time' vs 'Throttle Pedal Position' - do not trust either name): encodes DAT_ffffbe24 with step 8 (0x41000000); logger expr x*8*0.001 ms.; dynamically verified in the SH-2E emulator (harness.call, profile 60E15120_N3J1E) D10 resolved: PID 0x1410 reads float injector_pulse_time_ffffbe24, enc_u16 step 8.0 - 80.0 -> 0x000a, 800.0 -> 0x0064 exact; independent of ffffad5c throttle (ad5c=0xf000 left response unchanged); byte-matched handler high in 60E0E500/60E0E700/60E1C500; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
  },
  "000556ec": {
-  "alias": "diag_afr_word_a",
+  "alias": "diag_read_afr_word_a",
   "confidence": "high",
   "evidence": "Encodes DAT_ffffaa6c (step 0x38000000) as the high u16 word of PID 0x0034 'Air Fuel Ratio'.; called from diag_air_fuel_ratio 0x56b22 (high) as PID 0x0034 high word from DAT_ffffaa6c; byte-exact match renamed diag_read_afr_word_a (high) in 60E0G500 at 0x55e90; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
  },
  "00055702": {
-  "alias": "diag_afr_word_b",
+  "alias": "diag_read_afr_word_b",
   "confidence": "high",
   "evidence": "Encodes DAT_ffffaa7c (mult 0x3b800000, offset 0xc3000000 = -96.0) as the low u16 word of PID 0x0034.; called from diag_air_fuel_ratio 0x56b22 (high) as PID 0x0034 low word from DAT_ffffaa7c (mult 0x3b800000, offset -96.0); byte-exact match renamed diag_read_afr_word_b (high) in 60E0G500 at 0x55ea6; byte-exact function match in 5/10 other ROMs (cross_rom_function_matches.tsv)"
  }
