@@ -7,7 +7,7 @@ come from the canonical export + disassembly + ROM bytes, **plus dynamic executi
 the SH-2E emulator** (`utilities/scripts/emu/`, harness `tests/test_phase1_dynamic.py`);
 every dynamically-cited claim names the emulator observation. Full evidence:
 `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json`,
-`source_review/accepted_{function,ram,lookup}_aliases.tsv`,
+`labeling/source_review/accepted_{function,ram,lookup}_aliases.tsv`,
 backup `backups/pre_os_scheduler_can_ivt_labels.zip`.
 
 **Related reports:** infrastructure for all subsystem tasks — task table 0x4998 drives [fueling](fueling_control_report.md) task[11], [ignition timing](ignition_timing_report.md) task[6], [intake solenoids](intake_solenoids_report.md) chain 0x64f6, [knock control](knock_control_report.md); UDS transport serves all Mode 22 PIDs — the full dispatch tables are labeled in [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md); for the full scheduling model (task loops, queues, crank-synchronous tick, timers) see [os_scheduling_deep_dive_report.md](os_scheduling_deep_dive_report.md);
@@ -118,7 +118,7 @@ knowledge of the SH7055 interrupt/OS/CAN plumbing, labeled in the decompiled cod
 ## 6. Files
 
 - `data/labels/60E15120_N3J1E/os_scheduler_can_ivt_labels.json` (this pass, with evidence)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram,lookup}_aliases.tsv` (appended)
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram,lookup}_aliases.tsv` (appended)
 - `reverse-engineered/decompiled/60E15120_N3J1E/`: symbols.tsv, function_index.tsv,
   callgraph.tsv, functions/*.c, named/firmware_named.c, firmware_decompiled.c (renamed)
 - `data/labels/60E15120_N3J1E/integrated_names.json` (identifier_map extended)

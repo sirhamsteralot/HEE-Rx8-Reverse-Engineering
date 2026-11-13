@@ -4,7 +4,7 @@ Ground truth: untouched ROM
 (`Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`, 512 KiB,
 SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
 `decompiled/firmware_disassembly.asm`, `decompiled/`, `decompiled/callgraph.tsv`,
-`cross_ecu/romraider_descriptor_matches.json`. Per AGENTS.md, `ref_`/`CAL_`/
+`labeling/cross_ecu/romraider_descriptor_matches.json`. Per AGENTS.md, `ref_`/`CAL_`/
 `inferred_`/candidate labels are hypotheses; nothing here was executed.
 
 ## A. MAF acquisition and validation
@@ -49,7 +49,7 @@ SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
 - Density cap: `a9f0 = f(RPM; tbl 0x69794) x 293.0/(IAT+273) x baro/101.33299`;
   literals verified from ROM: 273.0 @0x1a194, 293.0 @0x1a198 (0x43928000),
   101.33299 @0x1a1a0. **293.0, not 295** (correction applied to the
-  synchronized views and `source_review/accepted_ram_aliases.tsv`).
+  synchronized views and `labeling/source_review/accepted_ram_aliases.tsv`).
 - If c590 (MAF fault) set: mass_air_flow (0xffffa9ec) = aa28 (fallback).
 - 0x19f40 is the direct pass-through (init/reset path): a9ec = a9e8.
 
@@ -172,7 +172,7 @@ SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`),
    `decompiled/functions/0001a086_FUN_0001a086.c`,
    `decompiled/firmware_decompiled.c` (line 27952),
    `named/firmware_named.c` (line 27952),
-   `source_review/accepted_ram_aliases.tsv` (row ffffaddc).
+   `labeling/source_review/accepted_ram_aliases.tsv` (row ffffaddc).
    Evidence: ROM literal 0x43928000 at 0x1a198 = 293.0 (295.0 would be
    0x43938000; that encoding does not occur in this function).
    No function bodies, names, addresses or ROM bytes changed.

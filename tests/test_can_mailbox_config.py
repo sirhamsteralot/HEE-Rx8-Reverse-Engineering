@@ -80,14 +80,14 @@ def test_labels_in_artifacts():
     for addr, name in EXPECTED_FN_INDEX.items():
         assert idx.get(addr) == name, f"{addr}: {idx.get(addr)!r} != {name!r}"
     fn = {r["address"]: r["alias"] for r in
-          csv.DictReader(open(os.path.join(INV, "source_review", "accepted_function_aliases.tsv"),
+          csv.DictReader(open(os.path.join(INV, "labeling", "source_review", "accepted_function_aliases.tsv"),
                               newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
     data = json.load(open(os.path.join(LAB, "can_mailbox_config_labels.json")))
     for addr, name in EXPECTED_FN.items():
         assert fn.get(addr) == name
         assert data["function_aliases"][addr]["alias"] == name
     ram = {r["address"]: r["alias"] for r in
-           csv.DictReader(open(os.path.join(INV, "source_review", "accepted_ram_aliases.tsv"),
+           csv.DictReader(open(os.path.join(INV, "labeling", "source_review", "accepted_ram_aliases.tsv"),
                                newline="", encoding="utf-8", errors="surrogateescape"), delimiter="\t")}
     for addr, name in EXPECTED_RAM.items():
         assert ram.get(addr) == name

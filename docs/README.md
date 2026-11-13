@@ -4,7 +4,7 @@ Documentation, investigations, architecture maps, and references.
 
 | Path | Contents |
 |---|---|
-| `investigations/` | One folder per ROM ID (e.g. `60E15120_N3J1E/`): subsystem `*_report.md` files, `reviews/`, `backups/`, evidence folders (`cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `defs-merge/`, `rx8defs-analysis/`), README. See [`investigations/README.md`](investigations/README.md). |
+| `investigations/` | One folder per ROM ID (e.g. `60E15120_N3J1E/`): subsystem/logic `*_report.md` files at the root with `reviews/` evidence, `backups/`, and the labeling investigations under `labeling/` (`cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `comment_merge/`, `defs-merge/`, `rx8defs-analysis/`). See [`investigations/README.md`](investigations/README.md). |
 | `architecture/` | `hardware/` (pinout, `pcm_connections.tsv`, wiring review), `design/` (firmware design doc + graph stats), plus memory maps. |
 | `references/` | Reference PDFs with trust notes, upstream repository links. See [`references/README.md`](references/README.md). |
 | [`learnings.md`](learnings.md) | Session know-how: SH-2E encoding facts, pipeline pitfalls, patcher patterns. Read before starting analysis. |

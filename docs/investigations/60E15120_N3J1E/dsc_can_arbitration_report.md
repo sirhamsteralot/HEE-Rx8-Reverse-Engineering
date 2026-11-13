@@ -107,7 +107,7 @@ RAM aliases: `dsc_mode_byte` 0xffffbbf6, `wheelspeed_lr_raw` 0xffffbbac,
 `wheelspeed_rr_invalid` 0xffffbbba, `can212_timeout_counter` 0xffffbbf0,
 `can212_status_word` 0xffffbbde, `can212_torque_signal` 0xffffbbc8.
 
-Evidence: `source_review/accepted_function_aliases.tsv` /
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`, `data/labels/60E15120_N3J1E/dsc_can_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -122,7 +122,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 - `utilities/scripts/rx8-pcm-pipeline/review_dsc_can_labels.py` (wired into
   `rebuild.sh`; idempotent)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/dsc_can_labels.json`
 - `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols renamed in place)
 - `docs/investigations/60E15120_N3J1E/reviews/dsc_can_arbitration/README.md`,

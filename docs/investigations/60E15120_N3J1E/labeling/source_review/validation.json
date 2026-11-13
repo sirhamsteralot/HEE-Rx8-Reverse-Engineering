@@ -11,7 +11,7 @@
   },
   {
    "pass": "candidate_label_promotions",
-   "note": "Prove-or-demote pass over the export's candidate_* function labels (181 at pickup): 112 promoted to high (prefix dropped in the export via accepted_function_aliases.tsv), 1 renamed (0x22144 -> candidate_fuel_open_loop_condition, stays medium), 68 kept as candidate_ with evidence. Record: data/labels/60E15120_N3J1E/candidate_promotions.json; review: docs/investigations/60E15120_N3J1E/reviews/candidate_label_promotions_review.md; pass script: utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py (wired into rebuild.sh); tests/test_candidate_label_promotions.py 6 passed."
+   "note": "Prove-or-demote pass over the export's candidate_* function labels (181 at pickup): 112 promoted to high (prefix dropped in the export via accepted_function_aliases.tsv), 1 renamed (0x22144 -> candidate_fuel_open_loop_condition, stays medium), 68 kept as candidate_ with evidence. Record: data/labels/60E15120_N3J1E/candidate_promotions.json; review: docs/investigations/60E15120_N3J1E/labeling/reviews/candidate_label_promotions_review.md; pass script: utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py (wired into rebuild.sh); tests/test_candidate_label_promotions.py 6 passed."
   },
   {
    "pass": "label_artifact_consistency_audit",

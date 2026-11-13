@@ -84,6 +84,6 @@
   },
   "outputs": [
     "data/labels/cross_rom_function_matches.tsv",
-    "docs/investigations/60E15120_N3J1E/cross_ecu/cross_rom_function_aliases.tsv"
+    "docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_function_aliases.tsv"
   ]
 }

@@ -135,7 +135,7 @@ def test_labels_in_artifacts():
     for addr, name in EXPECTED_FN.items():
         assert idx.get(addr) == name, f"{addr}: {idx.get(addr)!r} != {name!r}"
     ram = {r["address"]: r for r in
-           csv.DictReader(open(os.path.join(INV, "source_review", "accepted_ram_aliases.tsv"),
+           csv.DictReader(open(os.path.join(INV, "labeling", "source_review", "accepted_ram_aliases.tsv"),
                                newline="", encoding="utf-8", errors="surrogateescape"),
                           delimiter="\t")}
     data = json.load(open(os.path.join(LAB, "ignition_timing_labels.json")))

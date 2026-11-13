@@ -8,12 +8,6 @@
       "rom_refs": 27,
       "rom_claims": 0
     },
-    "calibration_extraction_report.md": {
-      "fn_checked": 0,
-      "ram_checked": 0,
-      "rom_refs": 0,
-      "rom_claims": 0
-    },
     "can_mailbox_config_report.md": {
       "fn_checked": 20,
       "ram_checked": 11,
@@ -30,12 +24,6 @@
       "fn_checked": 17,
       "ram_checked": 16,
       "rom_refs": 33,
-      "rom_claims": 0
-    },
-    "decompiler_triage_report.md": {
-      "fn_checked": 5,
-      "ram_checked": 0,
-      "rom_refs": 12,
       "rom_claims": 0
     },
     "dsc_can_arbitration_report.md": {
@@ -66,12 +54,6 @@
       "fn_checked": 15,
       "ram_checked": 13,
       "rom_refs": 28,
-      "rom_claims": 0
-    },
-    "free_resources_report.md": {
-      "fn_checked": 3,
-      "ram_checked": 2,
-      "rom_refs": 10,
       "rom_claims": 0
     },
     "fueling_control_report.md": {
@@ -110,12 +92,6 @@
       "rom_refs": 138,
       "rom_claims": 0
     },
-    "live_tuning_feasibility_report.md": {
-      "fn_checked": 27,
-      "ram_checked": 6,
-      "rom_refs": 34,
-      "rom_claims": 0
-    },
     "load_fueling_report.md": {
       "fn_checked": 0,
       "ram_checked": 0,
@@ -140,16 +116,40 @@
       "rom_refs": 137,
       "rom_claims": 0
     },
-    "thunk_audit_report.md": {
-      "fn_checked": 53,
-      "ram_checked": 0,
-      "rom_refs": 53,
-      "rom_claims": 0
-    },
     "uds_mode22_dispatch_report.md": {
       "fn_checked": 11,
       "ram_checked": 0,
       "rom_refs": 15,
+      "rom_claims": 0
+    },
+    "labeling/calibration_extraction_report.md": {
+      "fn_checked": 0,
+      "ram_checked": 0,
+      "rom_refs": 0,
+      "rom_claims": 0
+    },
+    "labeling/decompiler_triage_report.md": {
+      "fn_checked": 5,
+      "ram_checked": 0,
+      "rom_refs": 12,
+      "rom_claims": 0
+    },
+    "labeling/free_resources_report.md": {
+      "fn_checked": 3,
+      "ram_checked": 2,
+      "rom_refs": 10,
+      "rom_claims": 0
+    },
+    "labeling/live_tuning_feasibility_report.md": {
+      "fn_checked": 27,
+      "ram_checked": 6,
+      "rom_refs": 34,
+      "rom_claims": 0
+    },
+    "labeling/thunk_audit_report.md": {
+      "fn_checked": 53,
+      "ram_checked": 0,
+      "rom_refs": 53,
       "rom_claims": 0
     }
   },

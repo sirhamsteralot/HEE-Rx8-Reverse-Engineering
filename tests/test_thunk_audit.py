@@ -65,12 +65,12 @@ def sgn12(w):
 
 
 THUNKS = [(int(r["address"], 16), r["name"], int(r["body_bytes"]))
-          for r in rows(os.path.join(INV, "rx8defs-analysis", "function_labels.tsv"))
+          for r in rows(os.path.join(INV, "labeling", "rx8defs-analysis", "function_labels.tsv"))
           if "thunk" in r["name"].lower()]
 INDEX = {r["address"]: r["name"]
          for r in rows(os.path.join(DEC, "function_index.tsv"))}
 ACCEPTED = {r["address"]: r for r in rows(os.path.join(
-    INV, "source_review", "accepted_function_aliases.tsv"))}
+    INV, "labeling", "source_review", "accepted_function_aliases.tsv"))}
 RECORD = json.load(open(os.path.join(LABELS, "thunk_audit_labels.json")))
 BY_ADDR = {f["address"]: f for f in RECORD["functions"]}
 

@@ -25,7 +25,7 @@ the file is untouched (verified by re-parse + address-multiset comparison).
 Run from the repo root:
   python utilities/scripts/defs-merge/relabel_dtc_names.py [--dry-run]
 Writes stats to
-docs/investigations/60E15120_N3J1E/defs-merge/dtc_pcode_labels_2026-11-03.json
+docs/investigations/60E15120_N3J1E/labeling/defs-merge/dtc_pcode_labels_2026-11-03.json
 """
 from pathlib import Path
 import copy
@@ -39,7 +39,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dtc_names
 
 MERGED = ROOT / "data" / "definitions" / "romraider" / "rx8defs-merged-60E15120.xml"
-STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "defs-merge" / "dtc_pcode_labels_2026-11-03.json"
+STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "defs-merge" / "dtc_pcode_labels_2026-11-03.json"
 
 
 def table_spans(text):

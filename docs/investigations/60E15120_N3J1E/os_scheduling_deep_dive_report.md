@@ -23,7 +23,7 @@ scheduling model; where the two disagree, §7 lists the correction.
 crank-angle tick feeds the [load & fuelling model](load_fueling_report.md) rpm
 path (0x803e → 0xffff9f80); UDS transport runs through the CAN RX interrupt and
 the message queues — see [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md);
-calibration tables in [calibration_extraction_report.md](calibration_extraction_report.md).
+calibration tables in [calibration_extraction_report.md](labeling/calibration_extraction_report.md).
 
 ## 1. Executive summary
 
@@ -299,7 +299,7 @@ Everything else that fires is treated as a fault.
 **Labels applied** (all high-confidence, each tied to its ROM
 address and backed by the binary-level + emulator evidence in §9; full record:
 `data/labels/60E15120_N3J1E/os_scheduling_labels.json`; rows appended to
-`source_review/accepted_{function,ram,lookup}_aliases.tsv`; applied via
+`labeling/source_review/accepted_{function,ram,lookup}_aliases.tsv`; applied via
 `merge_reviewed_lookup_aliases.py` + `integrate_reviewed_names.py`; pre-change
 backup `backups/pre_os_scheduling_labels.zip`):
 
@@ -379,7 +379,7 @@ in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
 - This report: `docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md`
 - Cross-link added to [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) (Related reports line + §12 addendum).
 - Labeling pass artifacts (§6): `data/labels/60E15120_N3J1E/os_scheduling_labels.json`;
-  appended rows in `source_review/accepted_{function,ram,lookup}_aliases.tsv`;
+  appended rows in `labeling/source_review/accepted_{function,ram,lookup}_aliases.tsv`;
   renamed views: `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols.tsv,
   function_index.tsv, callgraph.tsv, functions/*.c, firmware_decompiled.c,
   named/firmware_named.c, named/lookup_aliases.tsv, metadata/integrated_names.json);
@@ -662,7 +662,7 @@ then stop at pre-existing emulator opdec gaps 0x50de0 (word 0xff07 =
 
 **Labels applied** (record
 `data/labels/60E15120_N3J1E/os_task_12_16_labels.json`; rows appended to
-`source_review/accepted_{function,ram}_aliases.tsv`; applied via
+`labeling/source_review/accepted_{function,ram}_aliases.tsv`; applied via
 `integrate_reviewed_names.py`; pre-change state is the branch parent commit —
 backup zips are not kept in-tree since 9ba75728): **15 functions** — the five entries
 plus 0xa4b6, 0xaee8, 0xb308, 0x11880 (`candidate_` prefix: medium confidence),

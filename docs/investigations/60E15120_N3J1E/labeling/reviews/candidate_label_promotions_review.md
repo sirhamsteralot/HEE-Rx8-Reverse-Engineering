@@ -9,7 +9,7 @@ evidence comes from the emulator proof tests listed in §Validation.
 
 At pickup, `reverse-engineered/decompiled/60E15120_N3J1E/function_index.tsv`
 carried **181** `candidate_*` function names (all sourced from
-`source_review/accepted_function_aliases.tsv` rows at confidence `medium`, which
+`labeling/source_review/accepted_function_aliases.tsv` rows at confidence `medium`, which
 `integrate_reviewed_names.py` prefixes with `candidate_`). For each address the
 pass collected the best recorded confidence from every per-subsystem label
 record (`data/labels/60E15120_N3J1E/*.json`, investigation review JSONs), plus
@@ -20,9 +20,9 @@ name itself is wrong; otherwise keep `candidate_` with the evidence recorded —
 plausibility is not proof.
 
 Applied by the re-runnable pipeline pass
-[`review_candidate_promotions.py`](../../../../utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py)
+[`review_candidate_promotions.py`](../../../../../utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py)
 (wired into `rebuild.sh` after `review_dtc_thunk_labels.py`; record
-[`data/labels/60E15120_N3J1E/candidate_promotions.json`](../../../../data/labels/60E15120_N3J1E/candidate_promotions.json)).
+[`data/labels/60E15120_N3J1E/candidate_promotions.json`](../../../../../data/labels/60E15120_N3J1E/candidate_promotions.json)).
 The pass updates the TSV confidences and label records; in this environment the
 export rename was applied by the same pass via `--apply-export` using
 `errors='surrogateescape'` (byte-exact, CRCRLF preserved) because
@@ -146,7 +146,7 @@ keeps them at `candidate_`.
 
 - `utilities/scripts/rx8-pcm-pipeline/review_candidate_promotions.py` (new pass),
   `rebuild.sh` (wired in).
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_function_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv`
   (113 rows: 112 confidence medium→high, 1 alias rename), label records
   `data/labels/60E15120_N3J1E/knock_loop_labels.json`, new record
   `data/labels/60E15120_N3J1E/candidate_promotions.json`.
@@ -159,7 +159,7 @@ keeps them at `candidate_`.
   under `docs/investigations/60E15120_N3J1E/` (the historical proof-pass review
   `reviews/low_confidence_proof_pass_2026-11-05.md` is left as written),
   plus the corrected 0x22144 row and promotion note in
-  [knock_control_report.md](../knock_control_report.md).
+  [knock_control_report.md](../../knock_control_report.md).
 - `tests/test_candidate_label_promotions.py` (6 tests).
 
 ## Validation

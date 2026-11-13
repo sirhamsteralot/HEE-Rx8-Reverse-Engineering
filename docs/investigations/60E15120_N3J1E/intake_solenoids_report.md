@@ -8,7 +8,7 @@ supplied SH7055F hardware manual (`Sh7055h.pdf`), plus dynamic execution of
 the SSV and fuel-split functions in the SH-2E emulator (no hardware execution).
 Full evidence: [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md).
 
-**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); the SSV on-term `secondary_injectors_active_flag` (0xffffbecd) comes from the fuel split at 0x30b08 in [fueling control](fueling_control_report.md) (§2.1 here); solenoid tables in [calibration extraction](calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
+**Related reports:** RPM/load thresholds share the [load & fuelling model](load_fueling_report.md) inputs; catalyst-warmup enrichment comes from [fueling control](fueling_control_report.md) (0x31624); the SSV on-term `secondary_injectors_active_flag` (0xffffbecd) comes from the fuel split at 0x30b08 in [fueling control](fueling_control_report.md) (§2.1 here); solenoid tables in [calibration extraction](labeling/calibration_extraction_report.md); the secondary-air state is diag-exposed as Mode 22 PID 0x12 (1/4, handler 0x56a06 reads `secondary_air_request_final_ffffa960`) and PID 0x1688/0x1104 status bits — [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md).
 
 ## 1. Executive summary
 
@@ -19,8 +19,8 @@ the task 0x64f6 → 0x11744 chain with UDS diagnostic actuator overrides:
 **VDI** opens at RPM ≥ 7250 (hyst 7062), **VFAD** at RPM ≥ 5250 (hyst 5062),
 **SSV** on a cold/engine-state edge with a 0xbc-cycle counter (coolant 197/200 °C
 hysteresis) **or whenever the secondary-injector split is active**
-(`secondary_injectors_active_flag` 0xffffbecd, computed in the fueling chain at 0x30b08 — see §2.1), **secondary
-air** solenoid + pump at load ≤ 0.8 and RPM ≤ 4000
+(`secondary_injectors_active_flag` 0xffffbecd, computed in the fueling chain at
+0x30b08 — see §2.1), **secondary air** solenoid + pump at load ≤ 0.8 and RPM ≤ 4000
 (catalyst warmup, with matching enrichment fuel from 0x31624 in the fueling
 chain). **APV** is position-controlled: target from RPM/MAF/coolant →
 dwell/drive counters → staged 100.0/12.5 % command → signed duty split (×96
@@ -93,10 +93,9 @@ fwd,rev = bf84*96 > 0 ? (int)(bf84*96), 0 : 0, (int)(-bf84*96)                  
 
 The SSV on-condition's first term, `secondary_injectors_active_flag` (0xffffbecd), is **not**
 computed in the intake task — it is produced by the fueling chain's
-primary/secondary split function 0x30b08 (called from the periodic fuel task
-0x20e40 between `calculate_fuel_amount_per_rotation` 0x30948 and
-`injector_pulse_time_arbitrate` 0x2fea8; see
-[fueling control §2](fueling_control_report.md)). 0x30b08 computes:
+primary/secondary split function 0x30b08 `primary_secondary_fuel_split` (called from the
+periodic fuel task 0x20e40 between `calculate_fuel_amount_per_rotation` 0x30948 and
+`injector_pulse_time_arbitrate` 0x2fea8; see [fueling control §2.1](fueling_control_report.md)). 0x30b08 computes:
 
 ```python
 bf24 = lookup2d(coolant, tbl_0x6ac74)        # split_high_rpm_threshold (0xffffbf24): flat 6250 rpm — high-RPM override
@@ -165,7 +164,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 
 ## 5. Labeling applied
 
-- 26 functions + 26 RAM locations added to `source_review/accepted_*_aliases.tsv`
+- 26 functions + 26 RAM locations added to `labeling/source_review/accepted_*_aliases.tsv`
   by `scripts/review_intake_labels.py` (idempotent; wired into `rebuild.sh`
   after `review_fueling_labels.py`), integrated into all synchronized views
   (per-function files, `decompiled/firmware_decompiled.c`,
@@ -211,9 +210,9 @@ no chip-pin data, so package-pin → terminal remains board routing).
 - `scripts/verify_math_units.py` — pass. `scripts/design_graph_stats.py` — all
   6 cross-checks true.
 - Dynamic (SH-2E emulator, harness calls; no hardware): §2.1 — `ssv_solenoid_control`
-  0x2178c drives PE7 high exactly when `DAT_ffffbecd`=1 or the counter path fires;
-  0x30b08 sets becd/becc per the rpm/coolant/fuel gates. Script + log in
-  [`reviews/intake_solenoids/`](reviews/intake_solenoids/README.md) (§2.1 links).
+  0x2178c drives PE7 high exactly when `secondary_injectors_active_flag`=1 or the
+  counter path fires; 0x30b08 sets the flags per the rpm/coolant/fuel gates.
+  Script + log in [`reviews/intake_solenoids/`](reviews/intake_solenoids/README.md) (§2.1 links).
 - Binary-level verification (README §7): 26/26 RAM aliases in reader pools,
   26/26 function names in index, all GPIO reg/mask/helper literals, thunk
   targets, call edges, task-table entry, and PDF pin quotes confirmed.
@@ -222,7 +221,7 @@ no chip-pin data, so package-pin → terminal remains board routing).
 
 Check any address in `decompiled/firmware_disassembly.asm` (ROM) or
 `decompiled/functions/<address>_*.c` (index in `decompiled/function_index.tsv`),
-and alias evidence in `source_review/accepted_*_aliases.tsv`.
+and alias evidence in `labeling/source_review/accepted_*_aliases.tsv`.
 
 ### 9.1 Functions (ROM addresses)
 
@@ -247,8 +246,8 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0x000187b8 | `secondary_air_solenoid_control` | PEDR PE8; load/RPM/bf6c/d26e → diag 0x5cf7c → a960 |
 | 0x000316f8 | `secondary_air_pump_control` | PBDR PB2 = bf6c |
 | 0x0003174a | `candidate_secondary_air_on_time_task` | 0x3194a + 0x31a24 + 0x316f8 |
-| 0x0005c9ac / 0x0005c3c0 / 0x0005cdc4 / 0x0005cf7c | `ssv_diag_override` / `vdi_diag_override` / `vfad_diag_override` / `secondary_air_diag_override` | UDS actuator tests (d3xx state machine) |
 | 0x00030b08 | `primary_secondary_fuel_split` | primary/secondary fuel split + split-flag computation; called from fuel task 0x20e40. `secondary_injectors_active_flag` is the SSV on-term (§2.1) |
+| 0x0005c9ac / 0x0005c3c0 / 0x0005cdc4 / 0x0005cf7c | `ssv_diag_override` / `vdi_diag_override` / `vfad_diag_override` / `secondary_air_diag_override` | UDS actuator tests (d3xx state machine) |
 
 ### 9.2 RAM
 
@@ -257,7 +256,7 @@ and alias evidence in `source_review/accepted_*_aliases.tsv`.
 | 0xffffb2b0 | `ssv_diag_override_result` | SSV override output → PE7 |
 | 0xffffb2b2 | `ssv_on_counter` | 0xbc on edge, decrements |
 | 0xffffb2b4 | `ssv_coolant_hot_flag` | coolant ≥ 200 (clear 197) |
-| 0xffffb2b5 | `ssv_was_enabled` | previous aa68 |
+| 0xffffb2b5 | `ssv_was_enabled` | previous aa68 (`engine_running_flag` 0xffffaa68) |
 | 0xffffbecd / 0xffffbecc | `secondary_injectors_active_flag` / `secondary_split_gate_flag` | split flags from 0x30b08; the former is the SSV on-term (§2.1), the latter gates the fuel split and feeds open-loop logic 0x1f0c4/0x1fd48 |
 | 0xffffbf36 / bf37 | `high_rpm_override_flag` / `secondary_allowed_rpm_flag` | rpm ≥ 6250 override flag / rpm ≥ coolant-based secondary-allowed threshold flag (0x30b08) |
 | 0xffffc1c0 / 0xffffc1c4 | `vdi_command` / `vfad_command` | RPM-hysteresis commands |
@@ -284,7 +283,7 @@ names from `regs_7055_350.csv`.
 - ROM integrity + instruction bytes: `python3 scripts/validate_export.py`.
 - Any function: `decompiled/functions/<address>_*.c`; disassembly
   `decompiled/firmware_disassembly.asm`.
-- Alias evidence: `source_review/accepted_function_aliases.tsv` /
+- Alias evidence: `labeling/source_review/accepted_function_aliases.tsv` /
   `accepted_ram_aliases.tsv` rows for basis `source_review_intake`.
 - GPIO bit claims: literal pools of the functions in §9.1 (mov.w low16 +
   0xffff high, mov.l, mov #imm) — see [`reviews/intake_solenoids/README.md`](reviews/intake_solenoids/README.md) §7.

@@ -123,7 +123,7 @@ RAM aliases: `alternator_pwm_period` 0xffff9f44, `alternator_pwm_duty`
 `electrical_load_raw` 0xffffb5e0, `alternator_drag_torque` 0xffffbcc4,
 `system_voltage_alt` 0xffffb658, `battery_voltage_filtered` 0xffffb65c.
 
-Evidence: `source_review/accepted_function_aliases.tsv` /
+Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 `accepted_ram_aliases.tsv`, `data/labels/60E15120_N3J1E/alternator_labels.json`.
 
 ## 5. Corrections made in this pass
@@ -145,7 +145,7 @@ Evidence: `source_review/accepted_function_aliases.tsv` /
 
 - `utilities/scripts/rx8-pcm-pipeline/review_alternator_labels.py` (wired into
   `rebuild.sh` after `review_intake_labels.py`; idempotent)
-- `docs/investigations/60E15120_N3J1E/source_review/accepted_{function,ram}_aliases.tsv`
+- `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_{function,ram}_aliases.tsv`
 - `data/labels/60E15120_N3J1E/alternator_labels.json`
 - `reverse-engineered/decompiled/60E15120_N3J1E/` (symbols renamed in place)
 - `docs/investigations/60E15120_N3J1E/reviews/alternator_control/README.md`,

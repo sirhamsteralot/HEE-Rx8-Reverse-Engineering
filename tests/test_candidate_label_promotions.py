@@ -93,7 +93,7 @@ def test_promoted_names_applied_everywhere():
 
 def test_accepted_tsv_confidences():
     rec = record()
-    rows = {r["address"]: r for r in read_tsv(INV / "source_review/accepted_function_aliases.tsv")}
+    rows = {r["address"]: r for r in read_tsv(INV / "labeling/source_review/accepted_function_aliases.tsv")}
     for a, p in rec["promoted_to_high"].items():
         assert rows[a]["confidence"] == "high", a
         assert rows[a]["alias"] == p["alias"], a
