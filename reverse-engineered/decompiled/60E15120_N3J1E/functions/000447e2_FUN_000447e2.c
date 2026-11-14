@@ -20,15 +20,15 @@ uint FUN_000447e2(void)
     in_r7 = 1;
   }
   else if ((sector_parity_bank_ffffb660 & 1) == 1) {
-    puVar2 = (undefined2 *)(int)DAT_ffffba24;
+    puVar2 = (undefined2 *)(int)misfire_event_flag_a_ffffba24;
     in_r7 = 0;
   }
   uVar1 = (uint)puVar2 & 0xff;
   if (uVar1 == 1) {
-    if ((DAT_ffffcb8c * DAT_ffffba44 < DAT_ffffba48) || (DAT_ffffcb90 * DAT_ffffba44 < DAT_ffffba40)
+    if ((misfire_threshold_rpm_a_ffffcb8c * misfire_excess_deviation_delayed_ffffba44 < DAT_ffffba48) || (DAT_ffffcb90 * misfire_excess_deviation_delayed_ffffba44 < misfire_excess_deviation_ffffba40)
        ) {
       uVar1 = in_r7 & 0xffff;
-      (&DAT_ffffba24)[uVar1] = 0;
+      (&misfire_event_flag_a_ffffba24)[uVar1] = 0;
     }
     else if (DAT_ffffd1c5 == '\0') {
       DAT_ffffcb78 = rx8_add_u16_saturate((int)DAT_ffffcb78,1);

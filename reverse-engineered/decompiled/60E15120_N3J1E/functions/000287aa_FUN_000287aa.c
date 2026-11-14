@@ -34,7 +34,7 @@ void FUN_000287aa(void)
   FUN_000276ec();
   FUN_0002837c();
   FUN_00027fb4();
-  FUN_00028022();
+  misfire_event_arm_secondary();
   FUN_000447e2();
   FUN_0004489c();
   FUN_0004493a();
@@ -44,7 +44,7 @@ void FUN_000287aa(void)
   FUN_000449e4();
   FUN_00044a1e();
   FUN_0004441e();
-  FUN_00044436();
+  misfire_sustained_window();
   FUN_00044b16();
   FUN_00044b46();
   FUN_0004458a();

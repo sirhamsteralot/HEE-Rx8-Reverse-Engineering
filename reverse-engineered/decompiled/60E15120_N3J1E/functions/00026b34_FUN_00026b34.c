@@ -15,11 +15,11 @@ undefined4 FUN_00026b34(char param_1,char param_2,ushort *param_3,ushort *param_
       uVar1 = rx8_add_u16_saturate((int)(short)*param_4,1);
       *param_4 = (ushort)uVar1;
     }
-    DAT_ffffb694 = 1;
+    misfire_any_event_tick_ffffb694 = 1;
   }
   else {
     uVar1 = 0;
-    DAT_ffffb694 = 0;
+    misfire_any_event_tick_ffffb694 = 0;
   }
   return uVar1;
 }
