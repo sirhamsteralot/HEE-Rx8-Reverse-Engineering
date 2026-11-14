@@ -32,7 +32,7 @@ undefined2 * FUN_00044b46(void)
       fVar6 = (float)rx8_decode_u16_affine(0x3e800000,uVar8,(int)DAT_ffffcba4);
       uVar3 = rx8_encode_u16_affine_saturate(fVar5 * fVar6,uVar7,uVar8);
       bVar1 = false;
-      if ((uVar4 < DAT_ffffcba2) || (uVar3 < DAT_ffffcb60)) {
+      if ((uVar4 < DAT_ffffcba2) || (uVar3 < misfire_sustained_counter_a_ffffcb60)) {
         if (DAT_ffffcb87 == '\0') {
           DAT_ffffcb9d = 1;
           DAT_ffffcb9e = 0;
@@ -45,7 +45,7 @@ undefined2 * FUN_00044b46(void)
         DAT_ffffcb9d = 0;
         DAT_ffffcb9e = 1;
         uVar4 = rx8_encode_u16_affine_saturate(fVar5 * 0.9,uVar7,uVar8);
-        if (uVar4 < DAT_ffffb688) {
+        if (uVar4 < misfire_counter_bank1_a_ffffb688) {
           DAT_ffffcb9f = 1;
         }
         if (uVar4 < DAT_ffffb68a) {
@@ -57,11 +57,11 @@ undefined2 * FUN_00044b46(void)
         FUN_00044cec();
       }
       DAT_ffffcb9c = 0;
-      DAT_ffffb688 = 0;
+      misfire_counter_bank1_a_ffffb688 = 0;
       DAT_ffffb68a = 0;
       DAT_ffffcb78 = 0;
       DAT_ffffcb7c = 0;
-      DAT_ffffcb60 = 0;
+      misfire_sustained_counter_a_ffffcb60 = 0;
       puVar2 = &DAT_ffffcb84;
       DAT_ffffcb84 = 1000;
       DAT_ffffcb87 = '\0';

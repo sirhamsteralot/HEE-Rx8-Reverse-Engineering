@@ -40,7 +40,7 @@ void e2ram_learned_table_apply(void)
     }
     else {
       uVar10 = ref_readValue_float_DEFAULTVAL_ADDRESS(0,&e2ram_learned_table_value_neg_ffff8328 + (uint)e2ram_learned_table_cell_index_ffffb6c4 * 8);
-      *(undefined4 *)(&DAT_ffffba64 + iVar6) = uVar10;
+      *(undefined4 *)(&e2ram_learned_table_value_bank0_ffffba64 + iVar6) = uVar10;
     }
   }
   else {
@@ -76,12 +76,12 @@ LAB_000282a0:
                  ((snapshot_engine_speed_rpm_ffffb548 - (float)(&CAL_Table_2D___333_Check_DataType_648)[uVar7 & 0xff]) / fVar9)
                  * (local_38 - local_3c);
     }
-    *(float *)(&DAT_ffffba64 + iVar6) = local_3c;
+    *(float *)(&e2ram_learned_table_value_bank0_ffffba64 + iVar6) = local_3c;
   }
-  DAT_ffffba48 = DAT_ffffba44;
-  DAT_ffffba44 = DAT_ffffba40;
+  DAT_ffffba48 = misfire_excess_deviation_delayed_ffffba44;
+  misfire_excess_deviation_delayed_ffffba44 = misfire_excess_deviation_ffffba40;
   e2ram_learned_correction_value_ffffba2c = (snapshot_DAT_ffffb668 - (DAT_ffffb680 - snapshot_DAT_ffffb668) / 6.0) - DAT_ffffb664;
-  DAT_ffffba30 = e2ram_learned_correction_value_ffffba2c - *(float *)(&DAT_ffffba64 + iVar6);
+  misfire_residual_ffffba30 = e2ram_learned_correction_value_ffffba2c - *(float *)(&e2ram_learned_table_value_bank0_ffffba64 + iVar6);
   return;
 }
 

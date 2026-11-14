@@ -201,6 +201,66 @@
       "alias": "e2ram_learned_table_correction_filter",
       "confidence": "medium",
       "evidence": "Per rotor bank (DAT_ffffb660&1): if DAT_ffffb6c6==1, filters DAT_ffffba30 into DAT_ffffba34 / 0xffffba38 (rx8_first_order_filter k=0.125, eps 1e-5), else 0; DAT_ffffba3c = bank value, DAT_ffffba40 = max(0, DAT_ffffba3c). Called from 0x287aa."
+    },
+    "0002842c": {
+      "alias": "misfire_deviation_delay_line",
+      "confidence": "high",
+      "evidence": "DAT_ffffba58 = DAT_ffffba54; DAT_ffffba54 = DAT_ffffba50; DAT_ffffba4c = DAT_ffffb668 - DAT_ffffb664 (+ DAT_ffffb67c - DAT_ffffb680 when 0x3b < DAT_ffffba5c || 13.133 > DAT_ffffba6c); DAT_ffffba50 = max(0, DAT_ffffba4c). Delay line of the sector-speed deviation (ring copies 0xffffb664-0xffffb680 from 0xffffa390-0xffffa3ac via 0x26940). Called from 0x287aa."
+    },
+    "00027fb4": {
+      "alias": "misfire_event_arm",
+      "confidence": "high",
+      "evidence": "DAT_ffffba28 = lookup_2d_scaled(rpm, tbl 0x6a6b8); per rotor bank (DAT_ffffb660&1) sets (&DAT_ffffba24)[parity] = 1 when DAT_ffffb53a==1 && engine_load >= DAT_ffffba28 && DAT_ffffb69c==1 && DAT_ffffb6c6==1 && DAT_ffffba40 > DAT_ffffba78 (cleared otherwise). Arms the per-rotor misfire event flag. Called from 0x287aa."
+    },
+    "00028022": {
+      "alias": "misfire_event_arm_secondary",
+      "confidence": "high",
+      "evidence": "Per rotor bank: if DAT_ffffba50 <= DAT_ffffba80 || DAT_ffffb69c != 1 -> (&DAT_ffffba26)[parity] = 0 else 1. Secondary arm flag on the ba50/ba80 path. Called from 0x287aa."
+    },
+    "00026a42": {
+      "alias": "misfire_event_count",
+      "confidence": "high",
+      "evidence": "Per rotor bank (sector_parity_bank_ffffb660&1): passes DAT_ffffba24/25 and DAT_ffffba26/27 to 0x26b34 with counter addresses 0xffffb688/0xffffb68e (parity 1) or 0xffffb68a/0xffffb68c (parity 0); clears all on engine stop. Called from 0x287aa."
+    },
+    "00026b34": {
+      "alias": "misfire_counter_bump",
+      "confidence": "high",
+      "evidence": "If either event flag set: increments both u16 counters (saturate 0xff) and sets DAT_ffffb694 = 1, else DAT_ffffb694 = 0. Called from 0x26a42."
+    },
+    "000447e2": {
+      "alias": "misfire_threshold_check_rpm",
+      "confidence": "high",
+      "evidence": "Per rotor bank: if event flag DAT_ffffba24/25 set, clears it when DAT_ffffcb8c*DAT_ffffba44 < DAT_ffffba48 || DAT_ffffcb90*DAT_ffffba44 < DAT_ffffba40 (cb8c/cb90 = RPM lookups tbl 0x6b9f4/0x6ba00 from 0x44a78; ba44/ba48 = delayed DAT_ffffba40), else bumps counters DAT_ffffcb78/0xffffcb7a. Called from 0x287aa."
+    },
+    "0004489c": {
+      "alias": "misfire_threshold_check_load",
+      "confidence": "high",
+      "evidence": "Same shape on the secondary flags DAT_ffffba26/27 with DAT_ffffcb94*DAT_ffffba54 < DAT_ffffba58 || DAT_ffffcb98*DAT_ffffba54 < DAT_ffffba50 (cb94/cb98 = Load Limit A/B lookups tbl 0x6ba0c/0x6ba18 from 0x44a9e); counters DAT_ffffcb7c/0xffffcb7e. Called from 0x287aa."
+    },
+    "00044a78": {
+      "alias": "misfire_threshold_rpm_lookup",
+      "confidence": "high",
+      "evidence": "DAT_ffffcb8c = lookup_2d_scaled(rpm, tbl 0x6b9f4 [12 cells, RPM axis 0x7c43c = 780..8500]); DAT_ffffcb90 = lookup(rpm, tbl 0x6ba00 [12 cells, axis 0x7c49c]). Called from 0x287aa."
+    },
+    "00044a9e": {
+      "alias": "misfire_threshold_load_lookup",
+      "confidence": "high",
+      "evidence": "DAT_ffffcb94 = lookup(rpm, tbl_load_limit_a_0006ba0c); DAT_ffffcb98 = lookup(rpm, tbl_load_limit_b_0006ba18) (both 12 cells, axes 0x7c4fc/0x7c55c). Called from 0x287aa."
+    },
+    "00044436": {
+      "alias": "misfire_sustained_window",
+      "confidence": "high",
+      "evidence": "Sustained-event window: if load within [DAT_ffffba50, DAT_ffffba80] && DAT_ffffb69c==1 && DAT_ffffb53a==0 && (4000<=rpm || vehicle_speed<0) == false && !(DAT_ffffb694==0 && DAT_ffffcb68==0): bumps DAT_ffffcb60/0xffffcb62 (saturate 1000); DAT_ffffcb68 = 0x28 when DAT_ffffb694 else decays. Called from 0x287aa."
+    },
+    "000445ba": {
+      "alias": "misfire_dtc_evaluate",
+      "confidence": "high",
+      "evidence": "Misfire DTC evaluation on the 2000-tick (DAT_ffffba9e): compares DAT_ffffb692 and a scaled rpm-lookup product (tbl 0x6b9c0, 23 cells) against DAT_ffffcb72/DAT_ffffcb62 -> DAT_ffffcb6d/cb6e; rotor bits from DAT_ffffb68c/0xffffb68e -> DAT_ffffcb6c; then bsr 0x44724 (asm 0x446ea). Called from 0x287aa."
+    },
+    "00044724": {
+      "alias": "misfire_dtc_set",
+      "confidence": "high",
+      "evidence": "Calls dtc_set_fault_xdefault (pool 0x447ac = 0x5fd3c, ROM-verified) with slot 1: code 4 (or 2 if drive-cycle detected) when DAT_ffffcb6d, else code 1 with rotor bits bVar4 = DAT_ffffcb6c&3. DTC slot table 0x7e560 slots 0/1 = 0x0300 (P0300, both rotors), prefixes 0x7e55a = 0x300/0x301/0x302 (P0300/P0301/P0302). Called from 0x445ba."
     }
   },
   "ram_aliases": {
@@ -262,7 +322,85 @@
       "alias": "e2ram_learned_correction_value",
       "type": "float",
       "reader": "00028198",
-      "evidence": "Learn value computed by 0x28198 = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664, a sector-speed-ring deviation term (ring 0xffffa390..0xffffa3ac copied by 0x26940); learned into the table cell by 0x276ec."
+      "evidence": "Learn value computed by 0x28198 = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664, a sector-speed-ring deviation term (ring 0xffffa390..0xffffa3ac copied by 0x26940); learned into the table cell by 0x276ec. This is the raw misfire/roughness deviation: the learned cell value is subtracted from it (DAT_ffffba30) before misfire thresholding (0x447e2/0x4489c) and the P0300/P0301/P0302 DTC path (0x445ba -> 0x44724 -> dtc_set_fault_xdefault slot 1, 0x7e560)."
+    },
+    "ffffba30": {
+      "alias": "misfire_residual",
+      "type": "float",
+      "reader": "00028198",
+      "evidence": "DAT_ffffba30 = DAT_ffffba2c - learned value (DAT_ffffba64+4*parity): excess sector-speed deviation above the learned baseline, per rotor bank."
+    },
+    "ffffba34": {
+      "alias": "misfire_residual_filtered_bank0",
+      "type": "float",
+      "reader": "0002837c",
+      "evidence": "Filtered DAT_ffffba30 per rotor bank 0 (0x2837c, k=0.125) when DAT_ffffb6c6==1 (cell learned), else 0."
+    },
+    "ffffba38": {
+      "alias": "misfire_residual_filtered_bank1",
+      "type": "float",
+      "reader": "0002837c",
+      "evidence": "Filtered DAT_ffffba30 per rotor bank 1 (0x2837c)."
+    },
+    "ffffba40": {
+      "alias": "misfire_excess_deviation",
+      "type": "float",
+      "reader": "0002837c",
+      "evidence": "DAT_ffffba40 = max(0, DAT_ffffba3c): the excess deviation above the learned baseline; thresholded by 0x447e2 (RPM thresholds) and 0x4489c (load limits), armed via 0x27fb4/0x28022."
+    },
+    "ffffba44": {
+      "alias": "misfire_excess_deviation_delayed",
+      "type": "float",
+      "reader": "00028198",
+      "evidence": "DAT_ffffba48 = DAT_ffffba44; DAT_ffffba44 = DAT_ffffba40 (0x28198): one-tick delay of the excess deviation used by the 0x447e2 threshold check."
+    },
+    "ffffba64": {
+      "alias": "e2ram_learned_table_value_bank0",
+      "type": "float",
+      "reader": "00028198",
+      "evidence": "Learned value read for cell DAT_ffffb6c4, rotor bank 0 (0xffff8108+cell*8, parity 0). Bank 1 copy at 0xffffba68."
+    },
+    "ffffba24": {
+      "alias": "misfire_event_flag_a",
+      "type": "uint8[2]",
+      "reader": "00027fb4",
+      "evidence": "Per-rotor (sector parity) misfire event flags: set by 0x27fb4/0x28022 when the excess deviation DAT_ffffba40 exceeds DAT_ffffba78 with the cell learned; checked/cleared by 0x447e2; counted by 0x26a42 into 0xffffb688-0xffffb68e; DTC-evaluated by 0x445ba -> P0300/P0301/P0302."
+    },
+    "ffffba26": {
+      "alias": "misfire_event_flag_b",
+      "type": "uint8[2]",
+      "reader": "00028022",
+      "evidence": "Secondary per-rotor event flags on the DAT_ffffba50/0xffffba80 path; checked/cleared by 0x4489c (load-limit thresholds)."
+    },
+    "ffffb688": {
+      "alias": "misfire_counter_bank1_a",
+      "type": "uint16",
+      "reader": "00026a42",
+      "evidence": "Per-rotor misfire event counters bumped by 0x26a42/0x26b34 when the event flags are set; bank1 pair 0xffffb688/0xffffb68c, bank0 pair 0xffffb68a/0xffffb68e; DAT_ffffb694 = any event this tick; consumed by 0x445ba (DTC evaluation)."
+    },
+    "ffffb694": {
+      "alias": "misfire_any_event_tick",
+      "type": "uint8",
+      "reader": "00026b34",
+      "evidence": "Set by 0x26b34 when any per-rotor event flag fired this tick; gates the sustained window 0x44436 (DAT_ffffcb68)."
+    },
+    "ffffcb8c": {
+      "alias": "misfire_threshold_rpm_a",
+      "type": "float",
+      "reader": "00044a78",
+      "evidence": "RPM-dependent misfire threshold from tbl 0x6b9f4 (12 cells, axis 0x7c43c = 780..8500 rpm); used by 0x447e2 as cb8c*ba44 < ba48. Second threshold DAT_ffffcb90 from tbl 0x6ba00."
+    },
+    "ffffcb94": {
+      "alias": "misfire_threshold_load_a",
+      "type": "float",
+      "reader": "00044a9e",
+      "evidence": "Load Limit A lookup (tbl 0x6ba0c) -> DAT_ffffcb94, Load Limit B (0x6ba18) -> DAT_ffffcb98 (0x44a9e); used by 0x4489c as cb94*ba54 < ba58 || cb98*ba54 < ba50."
+    },
+    "ffffcb60": {
+      "alias": "misfire_sustained_counter_a",
+      "type": "uint16",
+      "reader": "00044436",
+      "evidence": "Sustained-event counters DAT_ffffcb60/0xffffcb62 bumped by 0x44436 (saturate 1000) while the misfire window conditions hold; consumed by 0x273d4/0x445ba."
     }
   },
   "learned_table_pairs": {

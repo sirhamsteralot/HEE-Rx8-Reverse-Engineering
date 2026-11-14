@@ -57,9 +57,9 @@
       "rom_claims": 0
     },
     "eeprom_content_map_report.md": {
-      "fn_checked": 35,
-      "ram_checked": 16,
-      "rom_refs": 51,
+      "fn_checked": 42,
+      "ram_checked": 21,
+      "rom_refs": 63,
       "rom_claims": 0
     },
     "fueling_control_report.md": {
