@@ -110,6 +110,15 @@ app pointer 0x2000 in all 11.
 
 ## 5. Unresolved / limits
 
+- Emulator verification (dynamic): `tests/test_ignition_power_state_dynamic.py`
+  — 16 passed, log in [`dynamic_validation_log.txt`](dynamic_validation_log.txt).
+  Boot entry selection (magic → warm 0x1298; WDT-overflow → warm; param!=0 →
+  cold 0x6c8 + cause byte; NMI poll blocks while ICR_W bit15 low), key pin →
+  latch chain 0xffff9ec8 → 0xffffaa69 → 0xffffaa68, key timers, RPM
+  hysteresis 0xffffa428, PF15 latches, key-off state machine transitions to
+  the 0x9efe halt with E2-shadow set and PB15 pulsed while the key pin is low,
+  PD11 relay hold vs 0xffffccc1. Cycles are not real time, so wall-clock
+  timing is unmeasured; no hardware run, no full-car datalog replay.
 - Chip-pin ↔ connector-terminal routing is board-level unresolved (D2):
   PF0/PF15/PF3/PD11 ↔ terminals 4Q (IG1), 4E (main relay), 4C/5H (DBW relay),
   5J (KAM) is a candidate mapping from the pinout, not traced.
@@ -117,8 +126,6 @@ app pointer 0x2000 in all 11.
   starting/cranking subsystem.
 - SBL→app handover into 0x61a8 remains a separate open question; this review
   maps only the warm/cold entry selection.
-- Static analysis only; timeout (0x36ee8 ticks) in real seconds and the
-  key-return behavior of the 0x9ea2 loop are unmeasured.
 - The 6 `candidate_` names (0xd21e, 0x2529e, 0x252ae/0x252b8, 0x48d38,
   0x48d70) are hypotheses, kept candidate per the label ladder.
 
@@ -128,7 +135,7 @@ See `validation.json` in this folder: `validate_export.py` (ROM SHA-256,
 3,355 function files, 168,592 instructions / 337,184 bytes byte-verified,
 1,833 exact reference matches), `verify_claims.py` PASS (619 TSV rows, 23
 labels JSONs), `verify_math_units.py` PASS, `validate_reports.py` PASS,
-`python -m pytest tests/` 272 passed + 1 pre-existing failure
+`python -m pytest tests/` 288 passed + 1 pre-existing failure
 (`test_extract_scalars.py`, cp1252-byte scalars.tsv read as UTF-8 on Windows —
 fails identically on `main`); `verify_readability.py` fails identically on
 `main` (per-function-file vs monolith name divergence at 0x28992 from the
@@ -136,4 +143,6 @@ thunk pass, untouched here). Labels applied by
 `review_ignition_power_state_labels.py` +
 `review_ignition_power_state_labels_apply.py` (idempotent, wired into
 `rebuild.sh`): 34 function + 20 RAM rows; thunk 0x253b2 re-derived;
-`tests/test_ignition_power_state.py` 18 tests.
+`tests/test_ignition_power_state.py` 18 static tests +
+`tests/test_ignition_power_state_dynamic.py` 16 emulator tests (log:
+[`dynamic_validation_log.txt`](dynamic_validation_log.txt)).
