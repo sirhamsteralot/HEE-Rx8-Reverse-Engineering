@@ -3,7 +3,7 @@
 void FUN_000252a6(void)
 
 {
-  ref_validateAddressCopy_8bit_ADDRESS__(&DAT_ffff8104);
+  ref_validateAddressCopy_8bit_ADDRESS__(&shutdown_e2_shadow_flag_ffff8104);
   return;
 }
 

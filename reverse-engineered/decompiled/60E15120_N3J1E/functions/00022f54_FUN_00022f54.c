@@ -8,7 +8,7 @@ void FUN_00022f54(void)
   FUN_00048538();
   FUN_000228d4();
   FUN_00023188();
-  FUN_000251d0();
+  relay_hold_output_pd11();
   FUN_00025216();
   return;
 }

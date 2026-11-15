@@ -10,8 +10,8 @@ void FUN_00019950(void)
   FUN_0000e1b8();
   update_injectors_off_flag();
   FUN_0001adb8();
-  FUN_0001a5d8();
-  FUN_0001a600();
+  key_on_latch_from_pfdr_bit0();
+  key_on_flag_update();
   FUN_00024fda();
   FUN_00024ff0();
   FUN_00025614();

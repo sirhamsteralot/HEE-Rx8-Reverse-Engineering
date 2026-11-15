@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_threshold_check_load [high]: Same shape on the secondary flags DAT_ffffba26/27 with DAT_ffffcb94*DAT_ffffba54 < DAT_ffffba58 || DAT_ffffcb98*DAT_ffffba54 < DAT_ffffba50 (cb94/cb98 = Load Limit A/B lookups tbl 0x6ba0c/0x6ba18 from 0x44a9e); counters DAT_ffffcb7c/0xffffcb7e. Called from 0x287aa.
+ */
 /* ROM address: 0x0004489c; body bytes: 158; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000440b8 (158 bytes). Names prefixed ref_

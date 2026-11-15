@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_flag_mirror [medium]: For bank 0..1 (mov #0x2 loop) and j 0..2 (mov #0x3 loop): copies the 2-byte flag cell at flag_a+param*0x88+param*2 to flag_a+param*0x88+(param+0x11*(j+1))*2 (bases pools 0x27fa4 = 0xffff8108 / 0x27fa8 = 0xffff8548, stride 0x11 via rx8_add_u8_saturate 0x2478 pool 0x27fac); mirrors learned flags from cell p to p+0x11/+0x22/+0x33 within each rotor bank. Called from 0x27808.
+ */
 /* ROM address: 0x00027eec; body bytes: 170; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00028834 (170 bytes). Names prefixed ref_

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_ram_persist [high]: Every 0xb ticks (DAT_ffffba04, pool 0x2791c): for 2 banks x 0x44 cells, if counter DAT_ffffb8f4[bank*0x44+cell] (pool 0x27928) > 0x1d: flag==0 -> copy live float DAT_ffffb6cc (pool 0x2792c) into value cell 0xffff8108+cell*8+bank*0x220 (pool 0x27938) and set flag 0xffff8548+cell*2+bank*0x88 = 1 (pool 0x27934); else filter the stored value toward the live one (rx8_first_order_filter 0x3db54, k=0.125, eps 1e-5 pool 0x27930). Then calls 0x27eec for cells 0..2 ((0x7>>cell)&1, pool 0x27a20). Called from 0x288be.
+ */
 /* ROM address: 0x00027808; body bytes: 412; decompiled */
 
 uint e2ram_learned_table_ram_persist(void)

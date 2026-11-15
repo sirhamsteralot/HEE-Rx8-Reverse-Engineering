@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_sustained_window [high]: Sustained-event window: if load within [DAT_ffffba50, DAT_ffffba80] && DAT_ffffb69c==1 && DAT_ffffb53a==0 && (4000<=rpm || vehicle_speed<0) == false && !(DAT_ffffb694==0 && DAT_ffffcb68==0): bumps DAT_ffffcb60/0xffffcb62 (saturate 1000); DAT_ffffcb68 = 0x28 when DAT_ffffb694 else decays. Called from 0x287aa.
+ * RAM 0xffffcb60 misfire_sustained_counter_a (uint16): Sustained-event counters DAT_ffffcb60/0xffffcb62 bumped by 0x44436 (saturate 1000) while the misfire window conditions hold; consumed by 0x273d4/0x445ba.
+ */
 /* ROM address: 0x00044436; body bytes: 226; decompiled */
 
 undefined4 * misfire_sustained_window(void)

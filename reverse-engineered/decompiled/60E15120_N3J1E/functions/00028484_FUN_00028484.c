@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_cell_read [high]: Fetches two neighbouring learned floats: base 0xffff8108 (pool 0x2850c) + bank*0x220 (mov.w pool 0x284f6) + cell*8, via ref_readValue_float_DEFAULTVAL_ADDRESS 0x3dc22 (pool 0x28508); returns them for RPM interpolation. Called from 0x28198.
+ */
 /* ROM address: 0x00028484; body bytes: 96; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00028dcc (96 bytes). Names prefixed ref_

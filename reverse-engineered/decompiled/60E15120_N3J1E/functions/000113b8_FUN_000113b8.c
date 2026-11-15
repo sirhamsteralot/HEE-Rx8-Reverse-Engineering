@@ -6,7 +6,7 @@ void FUN_000113b8(void)
   jump_to_FUN_0003ec3c();
   FUN_00019632();
   FUN_00060318();
-  jump_to_FUN_0002529e();
+  jump_to_candidate_shutdown_e2_flag_clear();
   jump_to_FUN_00028db0();
   FUN_00019dd2();
   FUN_0002e70a();

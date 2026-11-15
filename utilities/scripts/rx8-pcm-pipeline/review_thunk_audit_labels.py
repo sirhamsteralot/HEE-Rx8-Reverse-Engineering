@@ -173,7 +173,8 @@ def main():
             # target is itself an audited thunk: cite its address (stable before/after integration)
             tlabel = '0x%s' % taddr
         elif trow:
-            tlabel = trow['alias']
+            # medium-confidence targets keep the candidate_ prefix in the export
+            tlabel = ('candidate_' if trow['confidence'] == 'medium' else '') + trow['alias']
         elif tname:
             tlabel = tname
         elif target:
@@ -218,6 +219,15 @@ def main():
             if old['alias'] == rec['alias'] and old['confidence'] == rec['confidence']:
                 continue  # already applied
             if a == JSR_THUNK and old['alias'] == OLD_ALIAS:
+                old['alias'] = rec['alias']
+                old['confidence'] = rec['confidence']
+                old['evidence'] = rec['evidence']
+                old['_raw'] = None
+                replaced += 1
+                continue
+            if old['alias'].startswith('jump_to_FUN_') or old['alias'].startswith('jump_to_candidate_'):
+                # stale thunk auto-name: the target was relabeled by a later pass -
+                # re-derive the thunk name from the target's current label
                 old['alias'] = rec['alias']
                 old['confidence'] = rec['confidence']
                 old['evidence'] = rec['evidence']

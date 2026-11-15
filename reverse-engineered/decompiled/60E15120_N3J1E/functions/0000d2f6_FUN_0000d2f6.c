@@ -18,7 +18,7 @@ undefined1 FUN_0000d2f6(byte param_1)
   cVar1 = FUN_0000d674(piVar5,piVar4);
   if (cVar1 == '\0') {
     while (piVar5 < piVar4) {
-      FUN_0000a850();
+      external_wdt_heartbeat_pulse();
       piVar2 = piVar5 + 0x8000;
       if (piVar4 < piVar5 + 0x8000) {
         piVar2 = piVar4;

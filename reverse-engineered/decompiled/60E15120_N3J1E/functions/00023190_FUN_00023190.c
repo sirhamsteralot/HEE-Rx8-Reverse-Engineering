@@ -14,7 +14,7 @@ undefined2 * FUN_00023190(void)
     DAT_ffffb408 = 0;
     return (undefined2 *)0x0;
   }
-  if (0x270 < DAT_ffffa9e2) {
+  if (0x270 < key_off_time_counter_ffffa9e2) {
     DAT_ffffb408 = 0;
     return &DAT_0007c6be;
   }

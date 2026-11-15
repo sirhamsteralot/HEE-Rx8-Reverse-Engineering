@@ -65,13 +65,17 @@ The firmware has four entry mechanisms, all visible in the export:
 
 ```
 vector 0x0/0x8 -> 0x8b8 ref_Manual_Reset
-  -> 0x4e0 ref_resetHandler_
+  -> 0x4e0 reset_handler_warm_cold_select  (warm/cold split: magic 0x5aa5a55a @0xffffdffc + WDT overflow -> warm entry u32@0x1000 = 0x1298, else cold 0x6c8)
        -> 0x31c service_wdt_overflow_and_toggle_pb15   (external watchdog heartbeat idiom)
-       -> 0x572 ref_resetWatchdog_, 0x5b0 ref_checkWatchdogTimer_OVRCOUNT
+       -> 0x572 wdt_keyed_reset, 0x5b0 wdt_overflow_reset_check
        -> 0x170 FUN_00000170  (ATU timer setup: 0x9c0, 0x9de, 0x9fc INT_ATU102)
        -> 0x3d4, 0x41c, ... (early init; 22 functions reachable from reset by direct edges)
-  -> 0x8cc, 0x8f6 (small init stubs)
+  -> 0x8cc boot_wait_nmi_pin_high, 0x8f6 (small init stubs)
 ```
+
+The warm/cold entry selection, boot NMI poll (ICR_W 0xffffed18 bit15),
+key-on input latch and key-off shutdown/relay-hold sequence are detailed in
+[ignition_power_state_report.md](../../investigations/60E15120_N3J1E/ignition_power_state_report.md).
 
 `ref_mainInit__` (0x61a8) initializes the subsystems — `ref_setRegisters`
 (0x4d2e), `ref_ignitionDwellOutputInit` (0x8f2a), `ref_misfireDetectInit_`
@@ -249,9 +253,16 @@ critical-section pair `sh_raise_interrupt_mask_return_previous` (0x3920) /
 Watchdog service `service_wdt_overflow_and_toggle_pb15` (0x31c; also 0x11cc)
 toggles PBDR bit 15 after a WDT status event — external-watchdog heartbeat
 idiom, routing unverified (`cross_ecu/symbol_aliases.tsv`). Peripheral access:
-`ref_getFromGPIO_` (0x70ac), `ref_readADCResult` (0x6fb0), SCI0 helpers above,
+`sci0_gpio_expander_read` (0x70ac, SCI0 expander read; was `ref_getFromGPIO_`),
+`ref_readADCResult` (0x6fb0), SCI0 helpers above,
 `ref_interruptSetup___` (0x63f0, also a task). Wiring-level associations
 (35 component connections) are in `hardware/`.
+
+Ignition key-state / power-state logic — key-on input PFDR bit0 → latch
+0xffff9ec8 → key-on flag 0xffffaa68 (gates UDS 0x11d88 and the CAN RX/TX
+mains 0xdbf6/0xdb58), the key-off state machine 0x252c2 → halt 0x9ea2, and
+the PD11 relay-hold output 0x251d0 — is labeled and traced in
+[ignition_power_state_report.md](../../investigations/60E15120_N3J1E/ignition_power_state_report.md).
 
 ### 5.7 Knock control and loop mode
 

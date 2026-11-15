@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_threshold_check_rpm [high]: Per rotor bank: if event flag DAT_ffffba24/25 set, clears it when DAT_ffffcb8c*DAT_ffffba44 < DAT_ffffba48 || DAT_ffffcb90*DAT_ffffba44 < DAT_ffffba40 (cb8c/cb90 = RPM lookups tbl 0x6b9f4/0x6ba00 from 0x44a78; ba44/ba48 = delayed DAT_ffffba40), else bumps counters DAT_ffffcb78/0xffffcb7a. Called from 0x287aa.
+ */
 /* ROM address: 0x000447e2; body bytes: 152; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00043ffe (152 bytes). Names prefixed ref_
