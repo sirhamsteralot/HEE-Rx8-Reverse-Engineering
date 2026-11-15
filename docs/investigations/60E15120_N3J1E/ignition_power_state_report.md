@@ -3,8 +3,13 @@
 Target ROM: `Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin`
 (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`,
 untouched). All findings are from static analysis of the canonical export
-(`decompiled/`), the disassembly and the ROM bytes. No hardware execution was
-performed. Full evidence: [`reviews/ignition_power_state/README.md`](reviews/ignition_power_state/README.md).
+(`decompiled/`), the disassembly and the ROM bytes. The findings were
+additionally exercised dynamically in the SH-2E emulator (ROM functions run
+via `harness.call`, key pin PFDR bit0 / PF15 driven through the GPIO pin
+model; `tests/test_ignition_power_state_dynamic.py`, log at
+[`reviews/ignition_power_state/dynamic_validation_log.txt`](reviews/ignition_power_state/dynamic_validation_log.txt)).
+No hardware execution was performed. Full evidence:
+[`reviews/ignition_power_state/README.md`](reviews/ignition_power_state/README.md).
 
 **Related reports:** reset/boot chain and OS entry in
 [`os_scheduler_can_ivt_report.md`](os_scheduler_can_ivt_report.md) and
@@ -219,7 +224,20 @@ fan after-run: 0x2f51a/0x2f65c set fan cmd while aa68==0 && coolant hot && !ccc6
 - `scripts/verify_claims.py` — PASS (pool words, register↔address pairs and
   labels-JSON↔TSV coverage of the new rows machine-checked).
 - `scripts/validate_reports.py` — PASS (this report's memory maps vs index/TSVs/ROM).
-- `python -m pytest tests/` — 254 passed, 1 pre-existing failure
+- Dynamic emulator verification — `python -m pytest
+  tests/test_ignition_power_state_dynamic.py`: 16 passed. Boot: warm stub
+  0x1298 selected with magic present (and via WDT-overflow path on a stock
+  fresh boot, which then parks at idle 0x3dac), cold entry 0x6c8 + cause byte
+  on param!=0, NMI poll loop 0x8ea blocks boot while ICR_W bit15 reads low.
+  Key pin through PFDR: latch 0xffff9ec8 → 0xffffaa69 → 0xffffaa68 chain,
+  key timers 0xffffa9e0/a9e2, RPM hysteresis 0xffffa428 (500/250), PF15
+  latch 0xffffcbd0/cbd1. Key-off state machine 0x252c2: arm → count →
+  shutdown on the 0x36ee8 timeout and on the early condition, E2-shadow
+  0xffff8104 = 1, halt at 0x9efe via 0x9ea2 with PFDR bit3 cleared and PB15
+  pulsed while the key pin is low. Relay hold PD11 bit 0x800 follows NOT
+  0xffffccc1 (0x48cc0 conditions). Log:
+  [`reviews/ignition_power_state/dynamic_validation_log.txt`](reviews/ignition_power_state/dynamic_validation_log.txt).
+- `python -m pytest tests/` — 288 passed, 1 pre-existing failure
   (`test_extract_scalars.py` reads a cp1252-byte scalars.tsv as UTF-8 on this
   Windows box; unrelated to this pass and failing identically on `main`).
   `scripts/verify_readability.py` fails identically on `main` and here at
@@ -315,9 +333,10 @@ Every address below can be checked in `decompiled/firmware_disassembly.asm`
 
 ## 9. Limits
 
-Static analysis only; no emulator/hardware run in this pass, so timing
-(the 0x36ee8-tick timeout in real seconds, relay drop delay) and the exact
-key-return-then-halt behavior of 0x9ea2 are unmeasured. Chip-pin ↔
+Emulator verification covers the selection/state-machine/output behavior
+listed in §7, but cycles are not real time, so the 0x36ee8-tick shutdown
+timeout in wall-clock seconds and the relay drop delay remain unmeasured;
+no hardware run and no full-car datalog replay were performed. Chip-pin ↔
 connector-terminal routing is board-level unresolved (D2): PF0/PF15/PF3/PD11
 are firmware-level facts; their assignment to terminals 4Q (IG1), 4E (main
 relay), 4C/5H (DBW relay) is a candidate mapping from the pinout, not traced.

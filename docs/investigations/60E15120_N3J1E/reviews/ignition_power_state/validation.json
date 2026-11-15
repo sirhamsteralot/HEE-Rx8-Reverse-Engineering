@@ -15,7 +15,20 @@
   "verify_math_units": "PASS (16 shift pairs, 10007 fixed-point cases, 70 constant pairs)",
   "verify_readability": "FAIL — pre-existing, identical on main (per-function-file vs monolith name divergence at 0x28992 from the thunk pass; untouched by this pass)",
   "validate_reports": "PASS (all report memory maps vs function_index/TSVs/ROM, incl. the new ignition_power_state_report.md)",
-  "pytest": "272 passed, 1 failed — tests/test_extract_scalars.py UnicodeDecodeError (cp1252 byte 0xa7 in scalars.tsv read as UTF-8 on Windows); pre-existing, fails identically on main. tests/test_ignition_power_state.py: 18 passed",
+  "pytest": "288 passed, 1 failed — tests/test_extract_scalars.py UnicodeDecodeError (cp1252 byte 0xa7 in scalars.tsv read as UTF-8 on Windows); pre-existing, fails identically on main. tests/test_ignition_power_state.py: 18 passed; tests/test_ignition_power_state_dynamic.py: 16 passed (emulator)",
+  "dynamic_validation": {
+    "suite": "tests/test_ignition_power_state_dynamic.py (16 passed)",
+    "log": "reviews/ignition_power_state/dynamic_validation_log.txt",
+    "covered": [
+      "boot entry selection 0x4e0: magic -> warm 0x1298; WDT OVF path -> warm (stock fresh boot parks at idle 0x3dac); param!=0 -> cold 0x6c8 + cause byte 0xffffdfa8",
+      "boot NMI poll 0x8ea blocks while ICR_W 0xffffed18 bit15 reads low",
+      "key pin PFDR bit0 (GPIO pin model) -> latch 0xffff9ec8 (0x6744) -> 0xffffaa69 (0x1a5d8) -> 0xffffaa68 (0x1a600)",
+      "key timers 0xffffa9e0/0xffffa9e2 (0x195cc/0x195f4); RPM hysteresis 0xffffa428 500/250 (0xe274); PF15 latches 0xffffcbd0/cbd1 (0x454c0/0x454d2)",
+      "key-off state machine 0x252c2 via 0x253e8: arm/count/timeout(0x36ee8)/early-condition -> state 2, E2-shadow 0xffff8104=1, halt 0x9efe via 0x9ea2 (PFDR bit3 cleared, PB15 pulsed while key pin low)",
+      "relay hold PDDR_W bit 0x800 = NOT 0xffffccc1 (0x251d0); 0x48cc0 conditions; 0xa850 PB15 heartbeat toggles"
+    ],
+    "not_covered": "wall-clock timing (cycles != real time), hardware run, full-car datalog replay, CAN/UDS gate behavior end-to-end (gates read 0xffffaa68, verified statically)"
+  },
   "labels_applied": {
     "functions": 34,
     "ram": 20,
@@ -51,5 +64,5 @@
     "pf3_set_clear": {"0x9e68": "PFDR bit3 = 1 (pool 0x9f1a=0xf74e, r5=8, r6=1)", "0x9ea2": "PFDR bit3 = 0 (pool 0x9f1a=0xf74e, r5=8, r6=0)"},
     "halt_paths": {"0x9efe": "masked halt in the 0x9ea2 wait loop", "0x9e9e": "halt in 0x9e68"}
   },
-  "limits": "Static analysis only. No emulator/hardware run. Package-pin -> terminal hop not verified (board routing, discrepancy D2). Starter-relay (5A) driver not identified. SBL->app handover to 0x61a8 out of scope. 6 candidate_ names remain hypotheses."
+  "limits": "Static analysis + emulator harness verification (dynamic_validation above); no hardware run, cycles != real time. Package-pin -> terminal hop not verified (board routing, discrepancy D2). Starter-relay (5A) driver not identified. SBL->app handover to 0x61a8 out of scope. 6 candidate_ names remain hypotheses."
 }

@@ -49,11 +49,36 @@ Skeptical re-review notes on the findings in
    row — moved out of the report's function memory map into the ROM entry-point
    table and tracked as `code_entry_points` in the labels JSON.
 
+## Dynamic re-checks (emulator, real ROM code)
+
+`tests/test_ignition_power_state_dynamic.py` (16 tests, log
+[`dynamic_validation_log.txt`](dynamic_validation_log.txt)):
+
+1. Boot entry selection: harness call of 0x4e0 with param==0 + magic →
+   warm stub 0x1298; param==0 without magic → 0x5b0 counts 7 WDT OVF wraps →
+   warm (matches the stock-profile fresh boot, which parks at idle 0x3dac);
+   param!=0 → cause byte stored to 0xffffdfa8 and cold 0x6c8 selected. Full
+   boot with magic preset traces 0x1298 and never 0x6c8. NMI poll: with
+   SYSC nmi_level=0 the boot trace never leaves the 0x8ea loop.
+2. Key pin through the GPIO pin model (PFDR bit0): 0x6744 latch 0xffff9ec8,
+   0x1a5d8 → 0xffffaa69, 0x1a600 → 0xffffaa68 track the pin both ways; key
+   timers 0xffffa9e0/a9e2 increment/reset per 0xffffaa68; 0xe274 sets/clears
+   0xffffa428 at 500/250 rpm with hysteresis hold between; PF15 sample/edge
+   latches 0xffffcbd1/cbd0 behave as the TSV describes (two-call debounce).
+3. Key-off: 0x253e8/0x252c2 walks arm → counting → shutdown on the 0x36ee8
+   timeout and on the early condition (b57c ≥ 0x19 && b582 ≤ b583), sets
+   E2-shadow 0xffff8104, clears PFDR bit3, and ends in the 0x9efe halt via
+   0x9ea2. With the key pin low, 0x9ea2 spins in its wait loop pulsing PB15
+   (GPIO heartbeat log grows) and only halts once the pin reads high.
+4. Relay hold: 0x251d0 drives PDDR_W bit 0x800 = NOT 0xffffccc1;
+   0x48cc0 computes 0xffffccc1 per its documented conditions (aa68,
+   b4ee&&ccb6<0x271, cca0/ad60/ad61/80a2/b51a gates).
+
 ## Not verified / open
 
-- No emulator or hardware run: the 0x36ee8-tick shutdown timeout in wall-clock
-  seconds, the relay drop delay, and the 0x9ea2 loop's behavior on key return
-  are unmeasured.
+- No hardware run and no full-car datalog replay; emulator cycles are not real
+  time, so the 0x36ee8-tick shutdown timeout in wall-clock seconds and the
+  relay drop delay remain unmeasured.
 - Chip-pin ↔ connector-terminal mapping (PF0/PF15/PF3/PD11 ↔ 4Q/4E/4C/5H/5J)
   is board routing, unresolved (discrepancy D2); the pinout has no chip-pin
   data.
