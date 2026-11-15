@@ -10,18 +10,18 @@ undefined4 FUN_00026a42(void)
   undefined4 uVar5;
   
   if (DAT_ffffd1c5 == '\x01') {
-    DAT_ffffb688 = 0;
+    misfire_counter_bank1_a_ffffb688 = 0;
     DAT_ffffb68a = 0;
     DAT_ffffb68c = 0;
     DAT_ffffb68e = 0;
-    DAT_ffffb694 = 0;
+    misfire_any_event_tick_ffffb694 = 0;
     return 1;
   }
   if ((sector_parity_bank_ffffb660 & 1) == 1) {
     sVar1 = -0x4974;
     sVar2 = -0x4978;
-    cVar3 = DAT_ffffba24;
-    cVar4 = DAT_ffffba26;
+    cVar3 = misfire_event_flag_a_ffffba24;
+    cVar4 = misfire_event_flag_b_ffffba26;
   }
   else {
     sVar1 = -0x4972;

@@ -14,7 +14,7 @@ void FUN_00044a9e(void)
   undefined4 snapshot_engine_speed_rpm_ffffb548;
   
   snapshot_engine_speed_rpm_ffffb548 = engine_speed_rpm_ffffb548;
-  DAT_ffffcb94 = lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_load_limit_a_0006ba0c);
+  misfire_threshold_load_a_ffffcb94 = lookup_2d_descriptor_scaled(engine_speed_rpm_ffffb548,&tbl_load_limit_a_0006ba0c);
   DAT_ffffcb98 = lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&tbl_load_limit_b_0006ba18);
   return;
 }
