@@ -45,7 +45,7 @@ undefined4 FUN_000445ba(void)
         }
         DAT_ffffcb6c = DAT_ffffcb70 << 1 | DAT_ffffcb6f;
       }
-      uVar1 = FUN_00044724();
+      uVar1 = misfire_dtc_set();
       DAT_ffffcb6c = 0;
       DAT_ffffb68c = 0;
       DAT_ffffb68e = 0;
