@@ -34,7 +34,7 @@ blocks; see §3). `ref_canSetup` is **not boot-only**: it runs once at key-on
 init via `ref_canInitVals` 0x2a1a0 (init chain 0x61a8 → 0x1102a
 → 0x2a1a0, jsr at 0x2a1a4, pool 0x2a3e0 = 0xd9f4), and again from the runtime
 CAN supervision (OS task 7 0x63f0 → 0x114b0 → `can_error_supervision_step`
-0x2a248 → `ref_checkCANsomethingKeyOnBased` 0xdcc0) when a HCAN bus-off/error
+0x2a248 → `can_error_recovery_key_gated` 0xdcc0) when a HCAN bus-off/error
 condition is detected — re-running the full mailbox setup once per error
 episode (guard 0xffffa40c == 0, bsr 0xd9f4 at 0xdd86) and a full CAN reset
 (`can_error_full_reset` 0xdade, bsr at 0xdda8) after the error persists ≥ 1000
@@ -232,7 +232,7 @@ Evidence: `labeling/source_review/accepted_function_aliases.tsv` +
 | 0x000063f0 | `ref_interruptSetup___` | OS task 7 entry (task table 0x4990 record 7 at 0x4a08) (inherited name) |
 | 0x000114b0 | `FUN_000114b0` | task-7 body calling 0x2a248 (jsr at 0x114b8) |
 | 0x0002a248 | `can_error_supervision_step` | interrupt-masked CAN supervision step calling 0xdcc0 |
-| 0x0000dcc0 | `ref_checkCANsomethingKeyOnBased` | bus-off/error detection + recovery (inherited name) |
+| 0x0000dcc0 | `can_error_recovery_key_gated` | bus-off/error detection + recovery, gated on the key-on flag 0xffffaa68 |
 | 0x00009ac4 | `hcan_bus_off_flag` | HCANx GSR bit0 (bus-off) test |
 | 0x00009b08 | `ref_getHCANSomething` | HCANx GSR bit1 (error warning) test (inherited name) |
 | 0x0000dade | `can_error_full_reset` | full CAN reset: `ref_canSetup` + `ref_resetCANTimers` 0xda94 |

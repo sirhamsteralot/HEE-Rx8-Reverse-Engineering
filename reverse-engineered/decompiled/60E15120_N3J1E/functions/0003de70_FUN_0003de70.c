@@ -12,7 +12,7 @@ uint FUN_0003de70(void)
     DAT_ffffc63c = 0;
     ref_updateMemoryAtAddress_16bit_ADDR_VAL(&DAT_ffff8704,0);
     FUN_00060318();
-    jump_to_FUN_0002529e();
+    jump_to_candidate_shutdown_e2_flag_clear();
     jump_to_FUN_00028db0();
     FUN_00019dd2();
     FUN_0002e70a();

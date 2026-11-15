@@ -12,7 +12,7 @@ void slow_background_task(void)
   FUN_00021186();
   timing_retard_fast_task();
   FUN_00021b4c();
-  FUN_000253e8();
+  key_off_state_machine_step();
   FUN_000288be();
   FUN_00025532();
   ref_calculateDiagModeTimer();

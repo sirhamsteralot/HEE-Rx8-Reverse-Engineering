@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_dtc_evaluate [high]: Misfire DTC evaluation on the 2000-tick (DAT_ffffba9e): compares DAT_ffffb692 and a scaled rpm-lookup product (tbl 0x6b9c0, 23 cells) against DAT_ffffcb72/DAT_ffffcb62 -> DAT_ffffcb6d/cb6e; rotor bits from DAT_ffffb68c/0xffffb68e -> DAT_ffffcb6c; then bsr 0x44724 (asm 0x446ea). Called from 0x287aa.
+ */
 /* ROM address: 0x000445ba; body bytes: 296; decompiled */
 
 undefined4 FUN_000445ba(void)

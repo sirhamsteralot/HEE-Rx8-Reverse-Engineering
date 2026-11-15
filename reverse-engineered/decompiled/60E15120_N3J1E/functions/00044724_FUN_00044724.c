@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_dtc_set [high]: Calls dtc_set_fault_xdefault (pool 0x447ac = 0x5fd3c, ROM-verified) with slot 1: code 4 (or 2 if drive-cycle detected) when DAT_ffffcb6d, else code 1 with rotor bits bVar4 = DAT_ffffcb6c&3. DTC slot table 0x7e560 slots 0/1 = 0x0300 (P0300, both rotors), prefixes 0x7e55a = 0x300/0x301/0x302 (P0300/P0301/P0302). Called from 0x445ba.
+ */
 /* ROM address: 0x00044724; body bytes: 106; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00043f40 (106 bytes). Names prefixed ref_

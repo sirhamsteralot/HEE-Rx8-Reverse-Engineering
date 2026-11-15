@@ -1,0 +1,22 @@
+# Dynamic validation log — ignition key-state / power-state (60E15120_N3J1E)
+# Produced by: PYTHONUTF8=1 python -m pytest tests/test_ignition_power_state_dynamic.py -v
+# Emulator: utilities/scripts/emu (SH-2E), profile 60E15120_N3J1E, ROM sha256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1 (untouched).
+# Key pin (PFDR bit0) and PF15 driven through the GPIO peripheral pin model; ROM functions executed via harness.call on the real code.
+
+tests/test_ignition_power_state_dynamic.py::test_boot_magic_selects_warm_stub PASSED                             [  6%]
+tests/test_ignition_power_state_dynamic.py::test_reset_handler_param0_magic_selects_warm PASSED                  [ 12%]
+tests/test_ignition_power_state_dynamic.py::test_reset_handler_param0_no_magic_takes_warm_via_wdt_overflow PASSED [ 18%]
+tests/test_ignition_power_state_dynamic.py::test_reset_handler_param_nonzero_selects_cold_and_stores_cause PASSED [ 25%]
+tests/test_ignition_power_state_dynamic.py::test_fresh_boot_with_wdt_enabled_takes_warm_via_overflow PASSED      [ 31%]
+tests/test_ignition_power_state_dynamic.py::test_boot_nmi_poll_waits_for_icr_bit15_high PASSED                   [ 37%]
+tests/test_ignition_power_state_dynamic.py::test_key_pin_drives_latch_chain_through_pfdr PASSED                  [ 43%]
+tests/test_ignition_power_state_dynamic.py::test_key_on_off_timers PASSED                                        [ 50%]
+tests/test_ignition_power_state_dynamic.py::test_engine_running_rpm_hysteresis PASSED                            [ 56%]
+tests/test_ignition_power_state_dynamic.py::test_pf15_sample_and_edge_latch PASSED                               [ 62%]
+tests/test_ignition_power_state_dynamic.py::test_key_off_state_machine_arm_count_timeout_halt PASSED             [ 68%]
+tests/test_ignition_power_state_dynamic.py::test_key_off_early_condition PASSED                                  [ 75%]
+tests/test_ignition_power_state_dynamic.py::test_shutdown_wait_pulses_external_wdt_while_key_pin_low PASSED      [ 81%]
+tests/test_ignition_power_state_dynamic.py::test_relay_hold_pd11_follows_shutdown_allowed PASSED                 [ 87%]
+tests/test_ignition_power_state_dynamic.py::test_shutdown_allowed_flag_conditions PASSED                         [ 93%]
+tests/test_ignition_power_state_dynamic.py::test_external_wdt_heartbeat_pulse_toggles_pb15 PASSED                [100%]
+================================================= 16 passed in 6.07s ==================================================

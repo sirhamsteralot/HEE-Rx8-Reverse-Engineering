@@ -16,7 +16,7 @@ undefined4 FUN_0000b99c(int param_1,int param_2,byte param_3)
   byte bStack_24;
   
   bStack_24 = param_3;
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   uVar3 = 0;
   while (uVar1 = PLDR_W, (uVar1 & 0x1000) != 0) {
     sh_busy_wait_count_times_8(10);
@@ -26,7 +26,7 @@ undefined4 FUN_0000b99c(int param_1,int param_2,byte param_3)
       return 1;
     }
   }
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   ISR_W = 0xf7;
   ref_setSR_PARAM(&uStack_28,0xe0);
   ref_setRegister_REG_BIT_VAL(0xfffff72c,0x100,0);

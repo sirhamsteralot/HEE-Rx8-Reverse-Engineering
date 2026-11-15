@@ -12,7 +12,7 @@ void can_error_supervision_step(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_checkCANsomethingKeyOnBased();
+  can_error_recovery_key_gated();
   FUN_000547d8();
   ref_setSR(uVar1);
   return;

@@ -3,7 +3,7 @@
   "rom": "60E15120_N3J1E",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rom_unchanged": true,
-  "candidate_total": 186,
+  "candidate_total": 192,
   "promoted_to_high": {
     "000064ba": {
       "alias": "knock_sensor_fault_task",
@@ -147,7 +147,7 @@
     },
     "00035d36": {
       "alias": "e2ram_shadow_byte_write_trampoline",
-      "name": "candidate_e2ram_shadow_byte_write_trampoline",
+      "name": "e2ram_shadow_byte_write_trampoline",
       "source": "thunk audit: sole caller 0x35a8c fixes r14 = 0x37ea4 (pool 0x35b74)"
     },
     "00037358": {
@@ -579,10 +579,9 @@
     }
   },
   "kept_candidate": {
-    "00027eec": "candidate_e2ram_learned_table_flag_mirror",
-    "0002837c": "candidate_e2ram_learned_table_correction_filter",
     "0000be5e": "candidate_e2ram_send_command4_a",
     "0000be8c": "candidate_e2ram_send_command4_b",
+    "0000d21e": "candidate_main_task_software_reset_check",
     "000148a4": "candidate_idle_target_term_lookup",
     "000148c4": "candidate_idle_maf_airflow_term",
     "00014944": "candidate_idle_drive_flags",
@@ -602,6 +601,9 @@
     "00016720": "candidate_idle_iat_comp",
     "00016748": "candidate_idle_ac_load_calc",
     "00016900": "candidate_idle_air_correction_select",
+    "0002529e": "candidate_shutdown_e2_flag_clear",
+    "000252ae": "candidate_key_off_early_counter_a",
+    "000252b8": "candidate_key_off_early_counter_b",
     "000257b4": "candidate_charging_dtc_timer_a",
     "0002590a": "candidate_charging_dtc_timer_b",
     "00025a22": "candidate_charging_ok_latch",
@@ -615,6 +617,8 @@
     "00026624": "candidate_alternator_duty_calc",
     "00026760": "candidate_alternator_warning_light_flag",
     "00027d06": "candidate_e2ram_learned_table_erase",
+    "00027eec": "candidate_e2ram_learned_table_flag_mirror",
+    "0002837c": "candidate_e2ram_learned_table_correction_filter",
     "0002b046": "candidate_wheelspeed_rear_avg_calc",
     "0002b1d6": "candidate_can4b0_wheelspeed_extract",
     "0002b496": "candidate_dsc_desired_torque_calc",
@@ -636,6 +640,8 @@
     "00034650": "candidate_idle_vehicle_speed_flags",
     "00035a8c": "candidate_e2ram_param_write_dispatch",
     "000379e4": "candidate_e2ram_verify_state_machine",
+    "00048d38": "candidate_key_voltage_timer_update",
+    "00048d70": "candidate_voltage_key_sanity_flags",
     "00054590": "candidate_charging_dtc_raise_p2503",
     "000545a6": "candidate_charging_dtc_raise_p2504",
     "000545bc": "candidate_charging_dtc_raise_p2502",
@@ -653,11 +659,11 @@
     "0005e748": "candidate_e2ram_config_bit_9f_read"
   },
   "counts": {
-    "candidate_total": 186,
+    "candidate_total": 192,
     "promoted": 113,
     "renamed": 1,
-    "kept_candidate": 72
+    "kept_candidate": 78
   },
-  "export_applied_by": "pending: integrate_reviewed_names.py on full rebuild",
+  "export_applied_by": "review_candidate_promotions.py --apply-export (scoped surrogateescape pass)",
   "ghidra_database_updated": false
 }

@@ -82,6 +82,11 @@
         "pool_claims": 0,
         "word_assigns": 8
       },
+      "ignition_power_state_report.md": {
+        "reg_pairs": 4,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "ignition_timing_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -216,6 +221,12 @@
         "pool_claims": 2,
         "word_assigns": 39
       },
+      "reviews/ignition_power_state/README.md": {
+        "reg_pairs": 5,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 2
+      },
       "reviews/intake_solenoids/README.md": {
         "reg_pairs": 5,
         "call_claims": 0,
@@ -243,15 +254,15 @@
         "word_assigns": 1
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 37,
+        "reg_pairs": 44,
         "call_claims": 7,
-        "pool_claims": 15,
-        "word_assigns": 172,
+        "pool_claims": 16,
+        "word_assigns": 273,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 585,
-    "labels_json_checked": 22
+    "tsv_rows": 619,
+    "labels_json_checked": 23
   },
   "notes": [],
   "failures": [],

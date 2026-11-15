@@ -9,7 +9,7 @@ void FUN_000253d0(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000252b8();
+  candidate_key_off_early_counter_b();
   ref_setSR(uVar1);
   return;
 }

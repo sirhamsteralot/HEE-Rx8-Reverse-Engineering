@@ -13,7 +13,7 @@ char FUN_0003c032(void)
     DAT_ffffc5c6 = 0;
   }
   else {
-    uVar1 = ref_getFromGPIO_(2);
+    uVar1 = sci0_gpio_expander_read(2);
     if ((uVar1 & 0x80) == 0) {
       DAT_ffffc5c4 = 0xf;
       DAT_ffffc5c5 = 0;

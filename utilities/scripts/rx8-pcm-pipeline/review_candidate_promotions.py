@@ -142,7 +142,14 @@ def main():
                    for a, r in prev.get("renamed_staying_medium", {}).items()}
         for a, name in prev.get("kept_candidate", {}).items():
             kept[a] = name
-        total = prev["counts"]["candidate_total"]
+        # Absorb candidate_ rows that appeared in the export since the last run
+        # (e.g. medium-confidence aliases added by a later labeling pass): they
+        # stay candidate_ (kept) until proven; candidate_total grows with them.
+        new_cands = {a: name for a, name in cand.items()
+                     if a not in promoted and a not in renamed and a not in kept}
+        for a, name in new_cands.items():
+            kept[a] = name
+        total = prev["counts"]["candidate_total"] + len(new_cands)
     else:
         renamed = {}
         for a, (alias, evidence) in RENAME.items():
@@ -224,7 +231,7 @@ def main():
         "export_applied_by": "review_candidate_promotions.py --apply-export (scoped surrogateescape pass)" if apply_export else "pending: integrate_reviewed_names.py on full rebuild",
         "ghidra_database_updated": False,
     }
-    (b / "metadata/candidate_promotions.json").write_text(json.dumps(record, indent=1, ensure_ascii=True) + "\n", encoding="utf-8")
+    (b / "metadata/candidate_promotions.json").write_text(json.dumps(record, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
     # 4. export application
     name_map = {}
