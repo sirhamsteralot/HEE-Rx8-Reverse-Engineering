@@ -70,7 +70,7 @@ undefined2 * candidate_idle_drive_flags(void)
   else {
     puVar4 = (undefined2 *)rx8_is_outside_tolerance_band(DAT_ffffa8a4,0,uVar6);
     puVar5 = puVar4;
-    if (((((DAT_ffffb578 != '\0') ||
+    if (((((engine_stopped_latch_ffffb578 != '\0') ||
           (((puVar5 = &engine_running_timer_ffffa424, engine_running_timer_ffffa424 < 0x7d || (DAT_ffffa827 != '\0')) ||
            (DAT_ffffa7b6 != '\0')))) ||
          ((cVar1 != '\0' && (puVar5 = (undefined2 *)(uint)snapshot_DAT_ffffb53a, puVar5 != (undefined2 *)0x1)))) ||

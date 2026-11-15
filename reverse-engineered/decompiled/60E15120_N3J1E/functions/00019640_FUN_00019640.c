@@ -3,7 +3,7 @@
 void FUN_00019640(void)
 
 {
-  FUN_000454c0();
+  key_input_pf15_sample();
   FUN_0000e0e4();
   FUN_00025600();
   FUN_000268dc();
@@ -20,8 +20,8 @@ void FUN_00019640(void)
   FUN_0001ad8c();
   FUN_0001a1b8();
   FUN_0001afb0();
-  FUN_0001a5d8();
-  FUN_0001a600();
+  key_on_latch_from_pfdr_bit0();
+  key_on_flag_update();
   jump_to_FUN_00049112();
   FUN_0001a686();
   ref_fuelingRealtedInitalVals__();

@@ -8,9 +8,9 @@ bool FUN_0003ebe4(void)
 {
   uint uVar1;
   
-  uVar1 = ref_getFromGPIO_(0);
+  uVar1 = sci0_gpio_expander_read(0);
   DAT_ffffc6b0 = (uVar1 & 1) == 0;
-  uVar1 = ref_getFromGPIO_(0);
+  uVar1 = sci0_gpio_expander_read(0);
   DAT_ffffc6b1 = (uVar1 & 2) == 0;
   return (bool)DAT_ffffc6b1;
 }

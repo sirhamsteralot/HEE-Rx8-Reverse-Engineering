@@ -3,14 +3,14 @@
 char FUN_0004e852(void)
 
 {
-  if (DAT_ffffcfb9 == '\x01') {
+  if (key_on_latch_cfb9_ffffcfb9 == '\x01') {
     DAT_ffffcfb3 = '\x02';
   }
   else if (DAT_ffffcfb3 != '\0') {
     DAT_ffffcfb3 = DAT_ffffcfb3 + -1;
   }
   DAT_ffffcfc9 = DAT_ffffcfb3 != '\0';
-  return DAT_ffffcfb9;
+  return key_on_latch_cfb9_ffffcfb9;
 }
 
 

@@ -6,7 +6,7 @@
 void FUN_000564d4(void)
 
 {
-  ref_reset_ZERO(1);
+  warm_reset_dispatcher(1);
   do {
                     /* WARNING: Do nothing block with infinite loop */
   } while( true );

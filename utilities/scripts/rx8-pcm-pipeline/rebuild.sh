@@ -40,6 +40,7 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 (cd "$root" && python3 "$base/scripts/review_idle_control_labels.py")
 (cd "$root" && python3 "$base/scripts/review_dsc_can_labels.py")
 (cd "$root" && python3 "$base/scripts/review_dtc_thunk_labels.py")
+(cd "$root" && python3 "$base/scripts/review_ignition_power_state_labels.py")
 (cd "$root" && python3 "$base/scripts/review_candidate_promotions.py")
 (cd "$root" && python3 "$base/scripts/review_thunk_audit_labels.py")
 (cd "$root" && python3 "$base/scripts/annotate_source_review.py")
@@ -53,6 +54,8 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 (cd "$root" && python3 "$base/scripts/refine_lookup_family.py")
 (cd "$root" && python3 "$base/scripts/refine_export_cleanup.py")
 (cd "$root" && python3 "$base/scripts/review_knock_loop_labels_apply.py")
+# Apply the ignition/power-state aliases on top of the integrated export (integrate_reviewed_names.py itself is one-shot on a fresh export).
+(cd "$root" && python3 "$base/scripts/review_ignition_power_state_labels_apply.py")
 # Merge/reduce stacked review comment blocks; keeps the per-function files and both monoliths in sync.
 (cd "$root" && python3 "$base/refine_comment_merge.py")
 (cd "$root" && python3 "$base/scripts/verify_readability.py")

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_validate [high]: Checksum-validates the same 2 banks x 0x44 learned-table cells via ref_validateAddressCopy_float/8bit (pools 0x27154/0x27158). Called from 0x28992 (validate fan-out 0x3e020).
+ */
 /* ROM address: 0x000270aa; body bytes: 112; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00027a26 (112 bytes). Names prefixed ref_

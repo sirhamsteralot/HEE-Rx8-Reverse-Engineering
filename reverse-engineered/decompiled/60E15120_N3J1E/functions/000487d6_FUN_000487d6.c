@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * engine_stop_conditions_eval [high]: Engine-stop/shutdown condition evaluator (called from the slow-task step 0x22f86): snapshots rpm 0xffffb548 (pool 0x48884), battery 0xffffb590 (0x48886), coolant 0xffffa98c (0x48888); rpm < 200/300 -> 0xffffccec, voltage < 5.8/6.0 -> 0xffffcced, coolant < 98/100 -> 0xffffccee/0xffffccef; reads E2-shadow flags 0xffff873c/0xffff809e/0xffff809c/0xffff8104/0xffff80a0/0xffff80a2/0xffff8764 via 0x3db54/0x3dc70; sets 0xffffccbc-bf/ccc0/ccc9 from engine flag 0xffffaa68 (pool 0x4888e), injectors-off 0xffffa42c, counters 0xffffccb4/ccb6/ccba and stored flag 0xffffb4ed.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
@@ -15,7 +18,7 @@
 /* WARNING: Removing unreachable block (ram,0x00048a30) */
 /* WARNING: Removing unreachable block (ram,0x00048a38) */
 
-uint FUN_000487d6(void)
+uint engine_stop_conditions_eval(void)
 
 {
   bool bVar1;
@@ -41,7 +44,7 @@ uint FUN_000487d6(void)
   cVar2 = engine_running_flag_ffffaa68;
   bVar5 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
-  cVar7 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8104,0);
+  cVar7 = ref_readValue_8bit_ADDRESS_VAL(&shutdown_e2_shadow_flag_ffff8104,0);
   cVar8 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a0,0);
   cVar9 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a2,1);
   fVar12 = -2.0;
@@ -87,7 +90,7 @@ uint FUN_000487d6(void)
   else {
     DAT_ffffccf0 = '\x01';
   }
-  if ((((((DAT_ffffccec == '\0') && (DAT_ffffcced == '\x01')) && (DAT_ffffccc1 == '\x01')) &&
+  if ((((((DAT_ffffccec == '\0') && (DAT_ffffcced == '\x01')) && (shutdown_allowed_ffffccc1 == '\x01')) &&
        ((cVar10 == '\x01' && (cVar4 == '\0')))) && (DAT_ffffcc98 == '\0')) &&
      ((DAT_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
     bVar1 = true;

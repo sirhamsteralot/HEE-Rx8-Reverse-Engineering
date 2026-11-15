@@ -6,7 +6,7 @@
 void FUN_0000648e(void)
 
 {
-  FUN_00006796();
+  vehicle_inputs_sticky_update();
   FUN_0000759e();
   FUN_0000b3aa();
   ref_readECMVoltage__();

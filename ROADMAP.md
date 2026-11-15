@@ -16,7 +16,16 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37 — pick up 24 next (item 23 closed
+**reopened**: open items 24–34, 36–37 — pick up 24 next (item 38 closed
+2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
+reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
+UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
+state machine 0x252c2 → halt 0x9ea2, PD11 relay hold 0x251d0; report
+[ignition_power_state_report.md](docs/investigations/60E15120_N3J1E/ignition_power_state_report.md),
+record
+`data/labels/60E15120_N3J1E/ignition_power_state_labels.json`, per-ROM
+`data/labels/cross_rom/ignition_power_state_addresses.json`, checks
+`tests/test_ignition_power_state.py`; item 23 closed
 2026-11-13: the upstream-sync findings (RX8Defs `39d98a0` / MRP `b243b35`,
 record
 [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md)
@@ -86,7 +95,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–38)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -210,29 +219,7 @@ and where artifacts live.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests; then the defs passes +
   pipeline validators + `python -m pytest tests/`.
-- **C item 38 (open)** — **ignition key-state logic (key-off / ACC / ON /
-  crank).** No report or label record covers how the PCM senses and reacts to
-  the ignition-switch positions. Candidate key-position inputs: the IG1 feed
-  `4Q` (ignition relay, B/W), the main-relay supply `5AC`/`5AF` (B/L), the KAM
-  backup `5J` (L/R), and key-position messages from the keyless control module
-  over CAN (`4S`/`4V`) — which of these the firmware actually reads as "key
-  on" is unmapped, as are the PCM relay outputs `4E` main-relay control (G/Y)
-  and `4C` drive-by-wire relay control (W/B) with their drop/delay timing
-  (pins per [the Series-1 pinout](docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)).
-  Scope: the wake-from-KAM path and warm/cold start split in the reset handler
-  `0x4e0` (magic `0x5aa5a55a` at `0xffffdffc` — RAM retained → warm entry
-  `0x1298`, else cold path `0x6c8`), the vehicle-input latch `0xffff9ec8`
-  (`PFDR_W` `0xfffff74e`, bit0 gates the UDS branch `0x11d88`), the NMI /
-  power-fail pin poll at `0x8ea` (`ICR_W` `0xffffed18` bit15), the key-off
-  shutdown sequence (E2RAM commit `0x2377a` / `0x242ae` / `0x23f4e`,
-  cooling-fan after-run, DBW relay release) and any transition into
-  sleep/standby. Overlaps C item 32 (main-relay latch / PB15 watchdog
-  heartbeat `0x31c`/`0x11cc`) and C item 25 (reset chain) — do not duplicate
-  their scope; split at the key-position state machine. Deliverables:
-  `ignition_power_state_report.md` +
-  `data/labels/60E15120_N3J1E/ignition_power_state_labels.json` + per-ROM
-  propagation; rule 7 binary-level verification, pipeline validators +
-  `python -m pytest tests/`.
+
 ### E. Reimplementation coverage (P4)
 
 - **E item 1 (open)** — grow `reverse-engineered/reimplementation/` per labeled

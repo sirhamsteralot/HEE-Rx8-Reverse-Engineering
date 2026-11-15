@@ -8,7 +8,7 @@ void ref_Manual_Reset(void)
 {
   boot_wait_nmi_pin_high();
   FUN_000008f6();
-  ref_resetHandler_(0);
+  reset_handler_warm_cold_select(0);
   do {
                     /* WARNING: Do nothing block with infinite loop */
   } while( true );

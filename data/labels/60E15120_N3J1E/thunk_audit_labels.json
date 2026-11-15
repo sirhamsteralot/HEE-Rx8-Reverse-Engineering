@@ -223,10 +223,10 @@
       "old_name": "thunk_FUN_0002529e",
       "cls": "pool_jmp",
       "target": "0002529e",
-      "target_name": "FUN_0002529e",
-      "alias": "jump_to_FUN_0002529e",
+      "target_name": "candidate_shutdown_e2_flag_clear",
+      "alias": "jump_to_candidate_shutdown_e2_flag_clear",
       "confidence": "high",
-      "evidence": "6-byte body: word 0xd318 = `mov.l @(0x25414,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25414 = 0x0002529e (ROM-verified, big-endian) (ROM-verified at 0x000253b2). Direct tail-jump to `FUN_0002529e` 0x0002529e; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_0002529e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
+      "evidence": "6-byte body: word 0xd318 = `mov.l @(0x25414,pc),r3`, 0x432b = `jmp @r3`, 0x0009 nop; pool 0x25414 = 0x0002529e (ROM-verified, big-endian) (ROM-verified at 0x000253b2). Direct tail-jump to `candidate_shutdown_e2_flag_clear` 0x0002529e; callers in callgraph: 0x000113b8, 0x0003de70. Upstream name `thunk_FUN_0002529e` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6)."
     },
     {
       "address": "00025408",
@@ -542,7 +542,7 @@
     }
   ],
   "added_this_run": 0,
-  "replaced_this_run": 0,
+  "replaced_this_run": 1,
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rom_unchanged": true,
   "ghidra_database_updated": false

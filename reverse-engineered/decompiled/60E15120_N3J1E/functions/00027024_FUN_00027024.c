@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_clear [high]: Clears 2 rotor banks x 0x44 cells: float 0 -> 0xffff8108+8i+bank*0x220 (pool 0x27154) and flag 0 -> 0xffff8548+2i+bank*0x88 (pool 0x27158) via ref_updateMemoryAtAddress_*, plus DAT_ffff8658/865a/865c. Called from 0x2897e.
+ */
 /* ROM address: 0x00027024; body bytes: 106; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000279a0 (106 bytes). Names prefixed ref_

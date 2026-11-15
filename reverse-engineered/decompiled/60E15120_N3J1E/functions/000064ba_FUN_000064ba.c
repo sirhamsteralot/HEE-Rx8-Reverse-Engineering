@@ -9,7 +9,7 @@
 void knock_sensor_fault_task(void)
 
 {
-  ref_main__();
+  candidate_main_task_software_reset_check();
   FUN_00006842();
   FUN_000094fc();
   ref_knockSensorADCFault();

@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cold_entry_ring_dispatch_loop [high]: Cold entry monitor loop (selected by pool 0x58c=0x6c8 in 0x4e0): zeroes 0xffffdfb8 (pool 0x796=0xdfb8); loop jsr 0x364 (pool 0x7a4=0x364; dispatches on reset cause 0xffffdfa8), remaining-count jsr 0x3e0 (pool 0x79e=0x3e0), ring record ptr jsr 0x3b0 (pool 0x7a6=0x3b0; 100 x 8-byte records at 0xffffd4e0); on pending record dispatches on first byte: 'z' with second byte & 0xf8 (pool 0x7a2=0xf8) -> handlers 0x806/0x4c/0x64/0x7c0/0x7c/0x8a/0xc0 (pools 0x7a8-0x7b6), 0xff/0xc8 -> 0xd8; services WDT via jsr 0x31c (pool 0x7be=0x31c).
+ */
 /* ROM address: 0x000006c8; body bytes: 206; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000006c8 (206 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000006c8(void)
+void cold_entry_ring_dispatch_loop(void)
 
 {
   short sVar2;

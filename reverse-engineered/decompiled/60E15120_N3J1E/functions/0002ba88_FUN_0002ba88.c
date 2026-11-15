@@ -8,7 +8,7 @@ void FUN_0002ba88(void)
 {
   uint uVar1;
   
-  uVar1 = ref_getFromGPIO_(1);
+  uVar1 = sci0_gpio_expander_read(1);
   if ((uVar1 & 0x20) == 0) {
     if (0xf < DAT_ffffbc08) {
       DAT_ffffbc04 = 0;
