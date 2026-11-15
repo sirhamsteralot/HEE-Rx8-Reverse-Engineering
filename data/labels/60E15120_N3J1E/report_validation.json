@@ -80,6 +80,12 @@
       "rom_refs": 25,
       "rom_claims": 0
     },
+    "ignition_power_state_report.md": {
+      "fn_checked": 35,
+      "ram_checked": 18,
+      "rom_refs": 63,
+      "rom_claims": 0
+    },
     "ignition_timing_report.md": {
       "fn_checked": 0,
       "ram_checked": 0,

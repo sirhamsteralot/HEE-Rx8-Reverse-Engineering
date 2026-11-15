@@ -525,3 +525,23 @@ ffffb694	misfire_any_event_tick	uint8	00026b34	Set by 0x26b34 when any per-rotor
 ffffcb8c	misfire_threshold_rpm_a	float	00044a78	RPM-dependent misfire threshold from tbl 0x6b9f4 (12 cells, axis 0x7c43c = 780..8500 rpm); used by 0x447e2 as cb8c*ba44 < ba48. Second threshold DAT_ffffcb90 from tbl 0x6ba00.
 ffffcb94	misfire_threshold_load_a	float	00044a9e	Load Limit A lookup (tbl 0x6ba0c) -> DAT_ffffcb94, Load Limit B (0x6ba18) -> DAT_ffffcb98 (0x44a9e); used by 0x4489c as cb94*ba54 < ba58 || cb98*ba54 < ba50.
 ffffcb60	misfire_sustained_counter_a	uint16	00044436	Sustained-event counters DAT_ffffcb60/0xffffcb62 bumped by 0x44436 (saturate 1000) while the misfire window conditions hold; consumed by 0x273d4/0x445ba.
+ffffcbd0	key_input_pf15_edge_latch	uint8	000454d2	Edge latch of PFDR_W 0xfffff74e bit 0x8000: set 1 on pin 1->0, cleared on 0->1 by 0x454d2 (pools 0x4550a=0xcbd0, 0x45508=0xf74e, 0x4550c=0x8000); read by 0x48d38.
+ffffcbd1	key_input_pf15_prev	uint8	000454c0	Previous PF15 sample: (PFDR_W & 0x8000) == 0 stored by 0x454c0 (pool 0x45510=0xffffcbd1).
+ffffb57a	key_off_state	uint8	000252c2	Key-off state machine state: 0 = armed/key-on, 1 = engine stopped (counting), 2 = shutdown (0x252c2, pool 0x25380=0xffffb57a).
+ffffb578	engine_stopped_latch	uint8	000252c2	Set 1 on the engine-stop transition by 0x252c2 (pool 0x2537c=0xb578); gates CAN RX/TX mains 0xdbf6/0xdb58 and CAN error recovery 0xdcc0.
+ffffb579	key_off_armed_flag	uint8	000252c2	Armed flag of the key-off sequence (pool 0x25374=0xb579; init 1 in 0x25290).
+ffffb57c	key_off_timer	uint32	000252c2	Saturating u32 key-off timer (pool 0x2539c=0xffffb57c); shutdown when >= u32 @ROM 0x74940 = 0x36ee8 (pool 0x253a4=0x74940) or >= 0x19 with 0xffffb582 <= 0xffffb583.
+ffffb582	key_off_early_counter_a	uint8	000252ae	Incremented by 0x252ae (pool 0x2538c=0xffffb582); compared with 0xffffb583 in the early shutdown condition of 0x252c2.
+ffffb583	key_off_early_counter_b	uint8	000252b8	Incremented by 0x252b8 (pool 0x25390=0xffffb583).
+ffffb574	relay_hold_flag	uint8	000251d0	= (0xffffccc1 != 1); drives PDDR_W 0xfffff746 bit 0x800 (PD11 relay-hold output) via 0x251d0 (pool 0x25278=0xffffb574).
+ffffccc1	shutdown_allowed	uint8	00048cc0	Shutdown-allowed flag computed by 0x48cc0 from engine flag 0xffffaa68, 0xffffb4ee, 0xffffccb6 < 0x271, 0xffffcca0, 0xffffad60/ad61, E2-shadow 0xffff80a2 and 0xffffb51a (pool 0x48da2=0xccc1).
+ffff8104	shutdown_e2_shadow_flag	uint8	0002529e	E2RAM-shadow shutdown flag: written 0/1 by 0x2529e/0x252c2 via 0x3dc70 (pool 0x25376=0x8104), read back by 0x487d6 as the persistent shutdown marker.
+ffffa9e0	key_on_time_counter	uint16	000195cc	Saturating u16 key-on time, ++ while 0xffffaa68 == 1 (0x195cc; pools 0x1961a=0xa9e0, 0x1961c=0xaa68, 0x19620=0x2460).
+ffffa9e2	key_off_time_counter	uint16	000195f4	Saturating u16 key-off time, ++ while 0xffffaa68 == 0 (0x195f4; pools 0x1961e=0xa9e2, 0x1961c=0xaa68, 0x19620=0x2460).
+ffffcfb8	key_on_latch_cfb8	uint8	0004e7aa	= (0xffff9ec8 & 1) != 0 copied by 0x4e7aa (pool 0x4e874=0xf74e for PFDR_W 0xfffff74e).
+ffffcfb9	key_on_latch_cfb9	uint8	0004e7da	= (0xffff9ec8 & 1) != 0 copied by 0x4e7da; callers 0x38a18/0x390fc.
+ffffdf99	key_off_marker_byte	uint8	000252c2	Set to 0x5a when the key-off sequence arms, 0 on the shutdown transition (0x252c2, pool 0x2537a=0xdf99).
+ffffccca	key_voltage_timer	uint8	00048d38	Held at 0x19 while voltage 0xffffb590 < 6.0 and 0xffffcbd0 == 1, else counts down (0x48d38); read by 0x48d70 into 0xffffccc4.
+ffffdfa8	reset_cause	uint8	00000364	Reset-cause selector: written by the param!=0 branch of 0x4e0 (pool 0x590=0xdfa8) and by 0x5b0; selects the 0x210 vs 0x450 dispatch in 0x364/0x338.
+ffffdffc	warm_boot_magic	uint32	000004e0	Warm-boot magic 0x5aa5a55a, written on every reset by 0x4e0 (pool 0x5a0=0xffffdffc) and compared at 0x508 to select warm vs cold entry; top-of-RAM protected cell (range-checked in 0x87c).
+ffffaa69	key_on_latch_aa69	uint8	0001a5d8	= (0xffff9ec8 & 1) != 0 by 0x1a5d8 (pools 0x1a60c=0xffffaa69, 0x1a610=0xffff9ec8); copied to 0xffffaa68 by 0x1a600.

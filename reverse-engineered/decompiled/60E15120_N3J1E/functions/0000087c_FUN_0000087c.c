@@ -9,7 +9,7 @@ undefined4 FUN_0000087c(undefined1 *param_1,int param_2,undefined4 *param_3)
   undefined1 uVar1;
   undefined4 uVar2;
   
-  if ((param_3 < &DAT_ffff6000) || ((int)&DAT_ffffdffc + 3U < (uint)((int)param_3 + param_2 + -1)))
+  if ((param_3 < &DAT_ffff6000) || ((int)&warm_boot_magic_ffffdffc + 3U < (uint)((int)param_3 + param_2 + -1)))
   {
     uVar2 = 0xffffffff;
   }

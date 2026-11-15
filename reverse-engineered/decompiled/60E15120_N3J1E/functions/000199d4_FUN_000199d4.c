@@ -6,12 +6,12 @@ void FUN_000199d4(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_000454d2();
-  ref_calculateKeyOnTime();
-  ref_calculateKeyOffTime();
+  key_input_pf15_edge_latch();
+  key_on_time_counter_update();
+  key_off_time_counter_update();
   FUN_000312f8();
   FUN_00031318();
-  ref_calculateEngineRunning();
+  engine_running_from_rpm();
   FUN_0000e060();
   FUN_0000e0f4();
   ref_calculateEngineRunningTimer2();

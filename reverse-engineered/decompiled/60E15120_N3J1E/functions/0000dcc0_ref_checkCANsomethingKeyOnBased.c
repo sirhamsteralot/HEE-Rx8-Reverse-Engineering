@@ -1,4 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
+ * can_error_recovery_key_gated [high]: Inherited name ref_checkCANsomethingKeyOnBased corrected: CAN error poll/recovery runs only while 0xffffaa68 == 1 && 0xffffb578 != 1 (pools 0xddbc=0xaa68, 0xddbe=0xb578); increments 0xffffa40f (pool 0xddc8) while ref_getHCANSomething 0x9b08 (pool 0xddcc) reports GSR error warning, saturating at 0xff (pool 0xddc0); latches 0xffffa40a (pool 0xddc2) above 100; re-runs CAN setup while retry counter 0xffffa40c (pool 0xddd0) == 0, full reset 0xdade at >= 1000 (pool 0xddc6=0x3e8, saturating add 0x2460 pool 0xddd8); sets 0xffffa409 (pool 0xddc4).
  * RAM 0xffffa409 can_error_recovery_active (uint8): Set to 1 in the bus-off/error branch of 0xdcc0 (mov.b r11,@r3 at 0xdd78, pool 0xddc4 = 0xa409).
  * RAM 0xffffa40a can_error_latch (uint8): Set when error-poll counter 0xffffa40f exceeds 100 (mov #0x64 at 0xdd16, cmp/gt; pool 0xddc2 = 0xa40a) and the latch was 0; cleared after the 0xdade full reset.
  * RAM 0xffffa40c can_error_retry_counter (uint16): Incremented via rx8_add_u16_saturate 0x2460 (pool 0xddd8) each error poll; ref_canSetup re-run only while 0 (tst at 0xdd7c); full reset 0xdade at >= 1000 (pool 0xddc6 = 0x3e8). Cell at pool 0xddd0.
@@ -9,13 +10,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0000dcc0 (252 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_checkCANsomethingKeyOnBased(void)
+uint can_error_recovery_key_gated(void)
 
 {
   char cVar2;
   uint uVar1;
   
-  if (((engine_running_flag_ffffaa68 == 1) && (DAT_ffffb578 != '\x01')) &&
+  if (((engine_running_flag_ffffaa68 == 1) && (engine_stopped_latch_ffffb578 != '\x01')) &&
      ((cVar2 = ref_getHCANSomething(0), cVar2 == '\x01' ||
       (cVar2 = ref_getHCANSomething(1), cVar2 == '\x01')))) {
     if (can_error_poll_counter_ffffa40f != 0xff) {
@@ -29,7 +30,7 @@ uint ref_checkCANsomethingKeyOnBased(void)
     can_error_latch_ffffa40a = 1;
   }
   uVar1 = (uint)engine_running_flag_ffffaa68;
-  if ((uVar1 == 1) && (uVar1 = 1, DAT_ffffb578 != '\x01')) {
+  if ((uVar1 == 1) && (uVar1 = 1, engine_stopped_latch_ffffb578 != '\x01')) {
     cVar2 = hcan_bus_off_flag(0);
     if ((cVar2 == '\x01') ||
        ((cVar2 = hcan_bus_off_flag(1), cVar2 == '\x01' || (uVar1 = (uint)can_error_latch_ffffa40a, uVar1 == 1)))) {

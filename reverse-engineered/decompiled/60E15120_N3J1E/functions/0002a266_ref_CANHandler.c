@@ -9,10 +9,10 @@ void ref_CANHandler(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_CANRX_Main();
+  can_rx_main_key_gated();
   ref_setSR(uVar1);
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  ref_CANTX_Main();
+  can_tx_main_key_gated();
   ref_setSR(uVar1);
   return;
 }

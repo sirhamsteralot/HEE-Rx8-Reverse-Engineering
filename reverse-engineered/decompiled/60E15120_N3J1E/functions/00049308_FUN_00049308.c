@@ -20,7 +20,7 @@ char FUN_00049308(void)
     bVar2 = false;
     bVar3 = false;
     if (DAT_ffffbdbc == '\x01') {
-      uVar4 = ref_getFromGPIO_(2);
+      uVar4 = sci0_gpio_expander_read(2);
       if ((uVar4 & 2) == 0) {
         DAT_ffffcd00 = 0;
         DAT_ffffcd04 = '\x01';
@@ -43,7 +43,7 @@ char FUN_00049308(void)
       }
     }
     else {
-      uVar4 = ref_getFromGPIO_(2);
+      uVar4 = sci0_gpio_expander_read(2);
       if ((uVar4 & 2) == 0) {
         if (DAT_ffffd1ad == '\0') {
           DAT_ffffcd01 = rx8_add_u8_saturate((int)(char)DAT_ffffcd01,1);

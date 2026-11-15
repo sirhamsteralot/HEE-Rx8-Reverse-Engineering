@@ -43,7 +43,7 @@ uint FUN_0001b166(void)
   fVar9 = rx8_absolute_difference(DAT_ffffad74,DAT_ffffad9c);
   if (((((-80.0 < DAT_ffffb4bc) || (cVar7 != '\0')) ||
        ((cVar2 != '\0' || ((DAT_ffffb4f9 != '\0' || (0.244 <= fVar8)))))) || (0.244 <= fVar9)) ||
-     ((((DAT_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')) || (snapshot_DAT_ffffccbc != 0)) ||
+     ((((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')) || (snapshot_DAT_ffffccbc != 0)) ||
       ((cVar7 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0), cVar7 != '\0' || (5.0 <= fVar11))))
      )) {
     uVar5 = 0;

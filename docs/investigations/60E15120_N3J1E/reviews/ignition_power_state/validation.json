@@ -1,0 +1,68 @@
+{
+  "pass": "ignition_power_state_labeling",
+  "target_rom": "Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "verify_claims": "PASS (619 TSV rows, 23 labels JSONs, 0 failures)",
+  "verify_math_units": "PASS (16 shift pairs, 10007 fixed-point cases, 70 constant pairs)",
+  "verify_readability": "FAIL — pre-existing, identical on main (per-function-file vs monolith name divergence at 0x28992 from the thunk pass; untouched by this pass)",
+  "validate_reports": "PASS (all report memory maps vs function_index/TSVs/ROM, incl. the new ignition_power_state_report.md)",
+  "pytest": "288 passed, 1 failed — tests/test_extract_scalars.py UnicodeDecodeError (cp1252 byte 0xa7 in scalars.tsv read as UTF-8 on Windows); pre-existing, fails identically on main. tests/test_ignition_power_state.py: 18 passed; tests/test_ignition_power_state_dynamic.py: 16 passed (emulator)",
+  "dynamic_validation": {
+    "suite": "tests/test_ignition_power_state_dynamic.py (16 passed)",
+    "log": "reviews/ignition_power_state/dynamic_validation_log.txt",
+    "covered": [
+      "boot entry selection 0x4e0: magic -> warm 0x1298; WDT OVF path -> warm (stock fresh boot parks at idle 0x3dac); param!=0 -> cold 0x6c8 + cause byte 0xffffdfa8",
+      "boot NMI poll 0x8ea blocks while ICR_W 0xffffed18 bit15 reads low",
+      "key pin PFDR bit0 (GPIO pin model) -> latch 0xffff9ec8 (0x6744) -> 0xffffaa69 (0x1a5d8) -> 0xffffaa68 (0x1a600)",
+      "key timers 0xffffa9e0/0xffffa9e2 (0x195cc/0x195f4); RPM hysteresis 0xffffa428 500/250 (0xe274); PF15 latches 0xffffcbd0/cbd1 (0x454c0/0x454d2)",
+      "key-off state machine 0x252c2 via 0x253e8: arm/count/timeout(0x36ee8)/early-condition -> state 2, E2-shadow 0xffff8104=1, halt 0x9efe via 0x9ea2 (PFDR bit3 cleared, PB15 pulsed while key pin low)",
+      "relay hold PDDR_W bit 0x800 = NOT 0xffffccc1 (0x251d0); 0x48cc0 conditions; 0xa850 PB15 heartbeat toggles"
+    ],
+    "not_covered": "wall-clock timing (cycles != real time), hardware run, full-car datalog replay, CAN/UDS gate behavior end-to-end (gates read 0xffffaa68, verified statically)"
+  },
+  "labels_applied": {
+    "functions": 34,
+    "ram": 20,
+    "thunk_renamed": {"0x000253b2": "jump_to_candidate_shutdown_e2_flag_clear"},
+    "medium_candidate_prefix": ["0x0000d21e", "0x0002529e", "0x000252ae", "0x000252b8", "0x00048d38", "0x00048d70"],
+    "views_updated": [
+      "decompiled/functions/*.c",
+      "decompiled/firmware_decompiled.c",
+      "named/firmware_named.c",
+      "decompiled/function_index.tsv",
+      "decompiled/callgraph.tsv",
+      "decompiled/symbols.tsv",
+      "data/labels/60E15120_N3J1E/integrated_names.json"
+    ],
+    "function_bodies_verified_intact": 3355
+  },
+  "pipeline_scripts": "review_ignition_power_state_labels.py + review_ignition_power_state_labels_apply.py (both idempotent, wired into rebuild.sh); review_thunk_audit_labels.py + review_candidate_promotions.py re-run (medium targets get candidate_ prefix; new candidate rows absorbed into kept_candidate)",
+  "record": "data/labels/60E15120_N3J1E/ignition_power_state_labels.json",
+  "cross_rom": "data/labels/cross_rom/ignition_power_state_addresses.json (34 functions x 11 ROMs; generator utilities/scripts/extract_ignition_power_state_addresses.py; regeneration test in tests/test_ignition_power_state.py)",
+  "ghidra_database_updated": false,
+  "binary_level_verification": {
+    "warm_stub_0x1298_bytes": "9356430be400affe0009 (jsr 0x1038 + halt)",
+    "nmi_poll_loop_0x8ea_bytes": "6241622d225889fb",
+    "entry_cells": {"ROM 0x1000": "0x00001298 (warm; 0x12b4 on family B/C ROMs)", "ROM 0x7fff8": "0x0000d204 (recovery; 0xd49c/0xd494 on family B/C)", "ROM 0x7fffc": "0x00002000 (app, all 11 ROMs)"},
+    "key_off_timeout": {"ROM 0x74940": "0x00036ee8 (pool 0x253a4 in 0x252c2)"},
+    "warm_magic": {"RAM 0xffffdffc": "0x5aa5a55a (pool 0x59c/0x5a0 in 0x4e0)"},
+    "gpio": {
+      "PFDR_W": "0xfffff74e (bit0 key-on input; bit3 set by 0x9e68 r6=1 / cleared by 0x9ea2 r6=0 via 0x4bbc; bit15 PF15 second input)",
+      "PDDR_W": "0xfffff746 (bit 0x800 PD11 relay hold, 0x251d0)",
+      "PBDR_W": "0xfffff738 (bit 0x8000 PB15 external WDT heartbeat, 0xa850)",
+      "ICR_W": "0xffffed18 (bit15 NMI pin, polled 0x8ea)"
+    },
+    "pf3_set_clear": {"0x9e68": "PFDR bit3 = 1 (pool 0x9f1a=0xf74e, r5=8, r6=1)", "0x9ea2": "PFDR bit3 = 0 (pool 0x9f1a=0xf74e, r5=8, r6=0)"},
+    "halt_paths": {"0x9efe": "masked halt in the 0x9ea2 wait loop", "0x9e9e": "halt in 0x9e68"}
+  },
+  "limits": "Static analysis + emulator harness verification (dynamic_validation above); no hardware run, cycles != real time. Package-pin -> terminal hop not verified (board routing, discrepancy D2). Starter-relay (5A) driver not identified. SBL->app handover to 0x61a8 out of scope. 6 candidate_ names remain hypotheses."
+}

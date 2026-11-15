@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_event_arm [high]: DAT_ffffba28 = lookup_2d_scaled(rpm, tbl 0x6a6b8); per rotor bank (DAT_ffffb660&1) sets (&DAT_ffffba24)[parity] = 1 when DAT_ffffb53a==1 && engine_load >= DAT_ffffba28 && DAT_ffffb69c==1 && DAT_ffffb6c6==1 && DAT_ffffba40 > DAT_ffffba78 (cleared otherwise). Arms the per-rotor misfire event flag. Called from 0x287aa.
+ * RAM 0xffffba24 misfire_event_flag_a (uint8[2]): Per-rotor (sector parity) misfire event flags: set by 0x27fb4/0x28022 when the excess deviation DAT_ffffba40 exceeds DAT_ffffba78 with the cell learned; checked/cleared by 0x447e2; counted by 0x26a42 into 0xffffb688-0xffffb68e; DTC-evaluated by 0x445ba -> P0300/P0301/P0302.
+ */
 /* ROM address: 0x00027fb4; body bytes: 110; decompiled */
 
 char FUN_00027fb4(void)

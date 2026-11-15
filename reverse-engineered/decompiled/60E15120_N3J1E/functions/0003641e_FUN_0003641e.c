@@ -10,7 +10,7 @@ undefined1 * FUN_0003641e(void)
   undefined1 *in_r0;
   
   if ((DAT_ffffc246 == '\0') &&
-     (in_r0 = (undefined1 *)(uint)DAT_ffffb578,
+     (in_r0 = (undefined1 *)(uint)engine_stopped_latch_ffffb578,
      in_r0 != (undefined1 *)((int)&vector_Poweron_Reset + 1U))) {
     if (DAT_ffffc276 != '\0') {
       DAT_ffffc276 = DAT_ffffc276 + -1;

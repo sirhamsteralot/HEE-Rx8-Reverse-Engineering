@@ -20,11 +20,11 @@ void FUN_00022f86(void)
   FUN_00048484();
   FUN_000486de();
   FUN_0004876c();
-  FUN_00048cc0();
-  FUN_000487d6();
+  shutdown_allowed_flag();
+  engine_stop_conditions_eval();
   FUN_00048c7a();
-  FUN_00048d38();
-  FUN_00048d70();
+  candidate_key_voltage_timer_update();
+  candidate_voltage_key_sanity_flags();
   FUN_00048e4c();
   FUN_00048ecc();
   FUN_00048fe8();
@@ -42,7 +42,7 @@ void FUN_00022f86(void)
   ref_calculateThrottlePedalPositionMapBased();
   FUN_00022a14();
   FUN_00022d26();
-  FUN_000251d0();
+  relay_hold_output_pd11();
   ref_setSR(uVar1);
   return;
 }

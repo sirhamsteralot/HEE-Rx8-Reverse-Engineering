@@ -8,14 +8,14 @@ void ref_getSensorStuff__(void)
 {
   byte bVar1;
   
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   FUN_0000d3ce();
   FUN_0000a4f0();
   FUN_00009f48();
   FUN_0000a2a8();
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   FUN_00005f18();
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   FUN_00007070();
   adc_scan_sweep_all_channels();
   vehicle_inputs_poll_pfdr_phdr();
@@ -56,10 +56,10 @@ void ref_getSensorStuff__(void)
   ref_ignitionDwellOutputInit();
   FUN_0000b23c();
   FUN_0000a8dc();
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   eeprom_mirror_magic_init();
   FUN_0001102a();
-  FUN_0000a850();
+  external_wdt_heartbeat_pulse();
   ref_setRegisters();
   FUN_00009f0c(1);
   ref_taskEndRoutine_();

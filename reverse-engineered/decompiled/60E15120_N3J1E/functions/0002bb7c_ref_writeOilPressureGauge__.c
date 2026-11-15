@@ -9,7 +9,7 @@ void ref_writeOilPressureGauge__(void)
   bool bVar1;
   uint uVar2;
   
-  uVar2 = ref_getFromGPIO_(2);
+  uVar2 = sci0_gpio_expander_read(2);
   bVar1 = (uVar2 & 1) != 0;
   if (engine_running_ffffa428 == '\0') {
     DAT_ffffbc14 = 1;
