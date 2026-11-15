@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37 — pick up 24 next (item 38 closed
+**reopened**: open items 24–34, 36–37, 39 — pick up 24 next (item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
 UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
@@ -95,7 +95,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -219,6 +219,38 @@ and where artifacts live.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests; then the defs passes +
   pipeline validators + `python -m pytest tests/`.
+
+- **C item 39 (open)** — **reader-focused reorganisation of the investigation
+  docs.** `docs/investigations/` has grown organically: ~20 root reports for
+  60E15120_N3J1E alone (~9.5k lines counting `labeling/`) plus `reviews/`
+  evidence folders, with overlapping report pairs that re-derive the same
+  content instead of cross-linking ([`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
+  vs [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md),
+  [`load_fueling_report.md`](docs/investigations/60E15120_N3J1E/load_fueling_report.md)
+  vs [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md),
+  [`idle_control_report.md`](docs/investigations/60E15120_N3J1E/idle_control_report.md)
+  vs [`idle_target_control_report.md`](docs/investigations/60E15120_N3J1E/idle_target_control_report.md)),
+  and per-ROM `README.md` indexes duplicating the top-level
+  [`docs/investigations/README.md`](docs/investigations/README.md). Scope:
+  (a) one reading order — a single entry-point index per ROM folder (what to
+  read first, in what sequence) merged with the top-level index so there is
+  one source of truth; (b) dedup — fold duplicated sections into one canonical
+  report per topic and leave the other as a short summary + `**Related
+  reports:**` cross-link (AGENTS.md rule 8), unique evidence staying in
+  exactly one place (`reviews/<subsystem>/` remains the evidence home);
+  (c) uniform shape — spot-audit every root report against
+  [`TEMPLATE.md`](docs/investigations/TEMPLATE.md) / rule 8 (10 sections,
+  plain-language §1a, mandatory memory map, cross-references as links);
+  (d) maintainability — extend the link + non-empty-size check to every `.md`
+  under `docs/` (the pipeline validators only scan `*_report.md`, so a
+  truncated review note is not caught) and add a short "how to add a report"
+  section to [`docs/investigations/README.md`](docs/investigations/README.md).
+  Constraints: no evidence loss — every address, label and validation claim
+  survives the move (rules 5/7); reports state current findings only, no dated
+  addenda. After each report is touched: re-run the pipeline validators, the
+  link check over all touched docs and `python -m pytest tests/`.
+  Deliverables: reorganised `docs/investigations/` tree, consolidated indexes,
+  extended markdown check.
 
 ### E. Reimplementation coverage (P4)
 
