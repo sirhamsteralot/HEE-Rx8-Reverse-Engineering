@@ -97,12 +97,21 @@ dumping it at the root.
    ranges vs `non_instruction_ranges_classified.tsv` + resolved call targets, and
    labels-JSON↔TSV coverage — write such numbers from those artifacts, never
    hand-typed or copy-pasted between files.
-8. **Reports follow the 10-section subsystem format** (template:
-   [`docs/investigations/60E15120_N3J1E/knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)):
-   header with ROM SHA-256 + static-analysis disclaimer, executive summary followed
-   by a **plain-language §1a** (what the subsystem does, what the numbers mean), then
-   pseudocode, tables, labeling applied, corrections, files, validation, **mandatory
-   memory map (function + RAM address tables)**, limits. Detailed evidence goes in
+8. **Reports follow the human-first subsystem format** (template:
+   [`docs/subsystem-logic/TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md); reports
+   still under `docs/investigations/` keep the older 10-section layout —
+   [`knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)
+   is the reference — until migrated): header with ROM SHA-256 + static-analysis
+   disclaimer and a `**Related reports:**` line, then top-down from human to
+   machine — (1) a plain-language introduction (what the subsystem is and does,
+   what the numbers mean), (2) the body: basic operation step by step, with
+   flow/breakdown diagrams (ASCII or mermaid) and tables where they help,
+   (3) only then the technical pseudocode, (4) last the proof section holding
+   the **mandatory memory map (function + RAM address tables)**, labeling
+   applied, corrections, files, validation and limits. Reports contain facts
+   only: the single changelog prose allowed is one changelog table at the very
+   top of the document (date, what changed, evidence link) — git history
+   remains the detailed record. Detailed evidence goes in
    the matching `reviews/<subsystem>/` folder; link upstream/downstream reports in a
    `**Related reports:**` header line instead of re-deriving their content.
    Validation proves what it lists — never write "verified working" beyond what a
