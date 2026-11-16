@@ -92,7 +92,9 @@ validation JSONs).
   The applicable-ROMs table lists only ROMs actually investigated for the subsystem
   (never assert shared logic for an uninvestigated ROM), and subsystems touching
   hardware include a hardware setup diagram with the relevant peripherals/terminals,
-  distinguishing traced pin routing from firmware-level paths.
+  distinguishing traced pin routing from firmware-level paths, and every report
+  carries a structured overview diagram near the start of its body — the
+  components and execution order (which tasks/batches run what, in what order).
 - Placement: subsystem logic is assumed identical across ROM bins until proven
   otherwise, so shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) (written against the
