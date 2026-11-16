@@ -222,7 +222,9 @@ and where artifacts live.
 
 - **C item 40 (open)** — **rewrite the report template human-first.** Pick up
   before item 39 — the reorganisation should apply the new template, not the
-  old one. Rewrite [`TEMPLATE.md`](docs/investigations/TEMPLATE.md) so a report
+  old one. The rewritten subsystem-report template lands as
+  `docs/subsystem-logic/TEMPLATE.md` (the generic investigation template stays
+  at [`docs/investigations/TEMPLATE.md`](docs/investigations/TEMPLATE.md)). Rewrite it so a report
   reads top-down from human to machine: (1) a simple introduction — what the
   subsystem is and does in plain language; (2) the body — basic operation
   explained step by step, with a flow chart and breakdown diagrams (ASCII or
@@ -235,14 +237,16 @@ and where artifacts live.
   interleaving them. Reports contain facts only — no changelog prose
   anywhere, except a single changelog table at the very top of the document
   (date, what changed, evidence link); git history remains the detailed
-  record. When executing, update [`AGENTS.md`](AGENTS.md) rule 8 and
+  record. When executing, update [`AGENTS.md`](AGENTS.md) rule 8,
+  [`docs/subsystem-logic/README.md`](docs/subsystem-logic/README.md) and
   [`docs/investigations/README.md`](docs/investigations/README.md) (which
   currently bans change-log addenda outright) to match, migrate one existing
   report (e.g.
   [`knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md))
-  as the worked example, and re-run the pipeline validators + link check +
-  `python -m pytest tests/`. Deliverables: new `TEMPLATE.md`, updated rule-8
-  wording, one migrated example report.
+  into `docs/subsystem-logic/` as the worked example, and re-run the pipeline
+  validators + link check +
+  `python -m pytest tests/`. Deliverables: new `docs/subsystem-logic/TEMPLATE.md`,
+  updated rule-8 wording, one migrated example report in `docs/subsystem-logic/`.
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
   docs.** `docs/investigations/` has grown organically: ~20 root reports for
@@ -269,30 +273,31 @@ and where artifacts live.
   under `docs/` (the pipeline validators only scan `*_report.md`, so a
   truncated review note is not caught) and add a short "how to add a report"
   section to [`docs/investigations/README.md`](docs/investigations/README.md).
-  (e) shared-logic report placement — subsystem logic is **assumed identical
-  across the ROM bins until proven otherwise** (cross-ROM byte-match evidence
-  already exists for most functions — see
+  (e) shared-logic report placement — subsystem documentation is a separate
+  tree from the per-ROM investigations: create **`docs/subsystem-logic/`**
+  (README + report template) holding one `*_report.md` per subsystem. Logic
+  is **assumed identical across the ROM bins until proven otherwise**
+  (cross-ROM byte-match evidence already exists for most functions — see
   [cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)),
-  so a new subsystem report lands at the **`docs/investigations/` root**
-  first, written against the reference ROM `60E15120_N3J1E`; the root report
-  references any per-ROM differences found and links the more specific
-  documents in the per-ROM calibration folder `docs/investigations/<rom-id>/`,
-  which keeps the ROM-specific reports, labeling passes and `reviews/`
-  evidence. Migrate the existing per-ROM root reports the same way where
-  their logic is in fact shared: root report + per-ROM difference note, not
-  duplicated logic sections. Bake the placement rule into
-  [`AGENTS.md`](AGENTS.md) (repo map + rule 8),
+  so reports there are written against the reference ROM `60E15120_N3J1E`;
+  each report references any per-ROM differences and links the more specific
+  documents in the per-ROM calibration folders `docs/investigations/<rom-id>/`,
+  which keep the ROM-specific reports, labeling passes and `reviews/`
+  evidence. Migrate the existing per-ROM root reports into
+  `docs/subsystem-logic/` the same way where their logic is in fact shared:
+  subsystem-logic report + per-ROM difference note, not duplicated logic
+  sections. Bake the placement rule into [`AGENTS.md`](AGENTS.md) (repo map +
+  rule 8), [`docs/subsystem-logic/README.md`](docs/subsystem-logic/README.md),
   [`docs/investigations/README.md`](docs/investigations/README.md),
-  [`docs/investigations/TEMPLATE.md`](docs/investigations/TEMPLATE.md),
   [`README.md`](README.md) and [`docs/learnings.md`](docs/learnings.md).
   Constraints: no evidence loss — every address, label and validation claim
   survives the move (rules 5/7); reports state current findings only, no dated
   addenda. After each report is touched: re-run the pipeline validators, the
   link check over all touched docs and `python -m pytest tests/`.
-  Deliverables: reorganised `docs/investigations/` tree with root-level
-  shared-logic reports + per-ROM difference notes, consolidated indexes,
-  extended markdown check, placement rules updated in the docs listed under
-  (e).
+  Deliverables: `docs/subsystem-logic/` tree with the shared-logic reports +
+  per-ROM difference notes in `docs/investigations/`, reorganised
+  `docs/investigations/` tree, consolidated indexes, extended markdown check,
+  placement rules updated in the docs listed under (e).
 
 ### E. Reimplementation coverage (P4)
 

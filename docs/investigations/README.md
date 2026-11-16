@@ -1,19 +1,19 @@
 # investigations/
 
-Subsystem logic is **assumed identical across the ROM bins until proven
-otherwise**, so the subsystem/logic `*_report.md` files live at this folder's
-root — written against the reference ROM `60E15120_N3J1E` — and reference any
-per-ROM differences by linking the more specific documents in the per-ROM
-(calibration) folders listed below. [`TEMPLATE.md`](TEMPLATE.md) and this
-`README.md` (the index) live here too.
+Per-ROM evidence and labeling investigations — one folder per ROM ID. The
+shared-logic **subsystem documentation** (one `*_report.md` per subsystem,
+written against the reference ROM `60E15120_N3J1E`) lives separately in
+[`docs/subsystem-logic/`](../subsystem-logic/README.md); this tree holds the
+per-ROM material listed below. [`TEMPLATE.md`](TEMPLATE.md) (the generic
+investigation template) and this `README.md` (the index) live here.
 
-One folder per ROM ID. Each ROM folder is split into two kinds of material:
+Each ROM folder is split into two kinds of material:
 
-- **ROM-specific reports & evidence** — the `*_report.md` files at the folder
-  root cover what is specific to that ROM (differences vs the shared logic:
-  address shifts, calibration-specific findings); per-subsystem evidence
-  folders for the shared reports live in the reference ROM's `reviews/`. These
-  are the documents to read first.
+- **Reports & evidence** — `*_report.md` files describe what a subsystem of
+  the firmware *does* (control logic, task structure, dispatch tables, memory
+  maps); ROM-specific ones (differences vs the shared logic: address shifts,
+  calibration-specific findings) sit at the folder root. Per-subsystem
+  evidence folders live in `reviews/`. These are the documents to read first.
 - **`labeling/`** — investigations whose purpose was *labeling things*: the
   alias/cross-ROM/defs passes that renamed functions, RAM cells, tables and
   editor definitions (`cross_ecu/`, `source_review/`, `math_units/`,
@@ -41,10 +41,10 @@ One folder per ROM ID. Each ROM folder is split into two kinds of material:
 
 - New ROM or new major question → new dated folder/file from [`TEMPLATE.md`](TEMPLATE.md).
 - Subsystem/logic reports whose logic is shared across ROM bins (the default
-  assumption until proven otherwise) go at the `docs/investigations/` root and
-  link the per-ROM difference documents; only ROM-specific findings get a
-  report at the ROM folder root. Labeling passes and labeling review notes go
-  under `labeling/`.
+  assumption until proven otherwise) go to
+  [`docs/subsystem-logic/`](../subsystem-logic/README.md) and link the per-ROM
+  difference documents; only ROM-specific findings get a report at the ROM
+  folder root. Labeling passes and labeling review notes go under `labeling/`.
 - Reports: 10-section format with mandatory memory map (function + RAM address
   tables) and a plain-language §1a (see AGENTS.md rule 8) — template
   [`60E15120_N3J1E/knock_control_report.md`](60E15120_N3J1E/knock_control_report.md). Reports state
