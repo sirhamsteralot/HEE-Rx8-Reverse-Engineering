@@ -13,8 +13,10 @@ Documentation, investigations, architecture maps, and references.
 
 - Investigations are organized per ROM (`docs/investigations/<rom-id>/`); within a
   ROM, follow the per-folder READMEs. New ROMs get a new folder.
-- Subsystem reports follow the 10-section format of AGENTS.md rule 8 (template:
-  [`investigations/60E15120_N3J1E/knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)).
+- Reports under `docs/investigations/` follow the 10-section format of AGENTS.md rule 8 (template:
+  [`investigations/60E15120_N3J1E/fueling_control_report.md`](investigations/60E15120_N3J1E/fueling_control_report.md));
+  shared-logic subsystem reports in [`subsystem-logic/`](subsystem-logic/README.md) use the human-first
+  [`subsystem-logic/TEMPLATE.md`](subsystem-logic/TEMPLATE.md).
 - Reference external material by link + access date; commit PDFs only in
   `references/` with a trust note; quote them by table/section in reports.
 - Keep [`learnings.md`](learnings.md) updated with artifact-backed lessons.

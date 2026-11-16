@@ -99,11 +99,6 @@
         "pool_claims": 0,
         "word_assigns": 2
       },
-      "knock_control_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0
-      },
       "load_fueling_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -157,6 +152,11 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 2
+      },
+      "subsystem-logic/knock_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
       },
       "README.md": {
         "reg_pairs": 1,

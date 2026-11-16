@@ -26,8 +26,8 @@ Each ROM folder is split into two kinds of material:
 
 - `60E15120_N3J1E/` — full analysis of ROM `60E15120_N3J1E.bin`
   (SHA-256 `a7cd953c…`, see `binaries/manifest.csv`): subsystem reports at the
-  root ([`knock_control_report.md`](60E15120_N3J1E/knock_control_report.md), [`fueling_control_report.md`](60E15120_N3J1E/fueling_control_report.md),
-  [`intake_solenoids_report.md`](60E15120_N3J1E/intake_solenoids_report.md), [`load_fueling_report.md`](60E15120_N3J1E/load_fueling_report.md)),
+  root ([`fueling_control_report.md`](60E15120_N3J1E/fueling_control_report.md),
+  [`intake_solenoids_report.md`](60E15120_N3J1E/intake_solenoids_report.md), [`load_fueling_report.md`](60E15120_N3J1E/load_fueling_report.md)); shared-logic subsystem reports (e.g. [knock control](../subsystem-logic/knock_control_report.md)) live in [`docs/subsystem-logic/`](../subsystem-logic/README.md),
   detailed subsystem evidence in `reviews/`, labeling passes in
   [`labeling/`](60E15120_N3J1E/labeling/README.md), pre-change backups in
   `backups/` (LFS zips).
@@ -47,7 +47,7 @@ Each ROM folder is split into two kinds of material:
   folder root. Labeling passes and labeling review notes go under `labeling/`.
 - Reports: 10-section format with mandatory memory map (function + RAM address
   tables) and a plain-language §1a (see AGENTS.md rule 8) — template
-  [`60E15120_N3J1E/knock_control_report.md`](60E15120_N3J1E/knock_control_report.md);
+  [`60E15120_N3J1E/fueling_control_report.md`](60E15120_N3J1E/fueling_control_report.md);
   shared-logic subsystem reports in [`docs/subsystem-logic/`](../subsystem-logic/README.md)
   use the human-first template instead. Reports state current findings — the
   single changelog prose allowed is one changelog table at the very top of the

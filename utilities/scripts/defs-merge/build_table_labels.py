@@ -6,7 +6,7 @@ Sources, in priority order (later overrides earlier on the same descriptor):
   1. lookup_aliases in data/labels/60E15120_N3J1E/{knock_loop,ignition_timing,
      fueling}_labels.json (machine-readable labeling passes, 2026-10-29/31)
   2. REPORT_ENTRIES below — hand-transcribed from the subsystem reports
-     (knock_control_report.md §8.4, ignition_timing_report.md §3,
+     (knock_control_report.md §4.1, ignition_timing_report.md §3,
      fueling_control_report.md §7.3/§10.7, load_fueling_report.md §4) with
      per-entry citations. Every entry is keyed by the lookup DESCRIPTOR
      address (the tbl_XXXXXXXX name in data/maps/<rom>/index.tsv).
@@ -37,6 +37,7 @@ LABELS = ROOT / "data" / "labels" / "60E15120_N3J1E"
 OUT = LABELS / "defs_table_labels.json"
 
 REPORT = "docs/investigations/60E15120_N3J1E"
+KNOCK_REPORT = "docs/subsystem-logic"  # knock_control_report.md lives in the shared-logic tree
 
 # ---------------------------------------------------------------------------
 # Curated entries transcribed from the investigation reports (citations in
@@ -44,49 +45,49 @@ REPORT = "docs/investigations/60E15120_N3J1E"
 # data/maps/60E15120_N3J1E/index.tsv.
 # ---------------------------------------------------------------------------
 REPORT_ENTRIES = {
-    # ---- Knock control (knock_control_report.md §8.4; knock_loop_labels.json)
+    # ---- Knock control (knock_control_report.md §4.1; knock_loop_labels.json)
     "0x6af54": dict(name="Knock Enable Load Floor (RPM)", category="Knock Control",
         note="12 cells, 0.5 flat; axis 0x795e8 (RPM 800-9600); gates knock enable 0xffffa73d (0x13826).",
-        source=f"{REPORT}/knock_control_report.md §8.4; knock_loop_labels.json"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1; knock_loop_labels.json"),
     "0x6af68": dict(name="Knock Retard Clamp Min (RPM)", category="Knock Control",
         note="u8 cells x mult + offset(-64): -10..0 deg; axis 0x79624 (RPM 2000-5000); clamped by 0x13bd2 = [-10,0] deg (bug fixed 2026-10-29).",
-        source=f"{REPORT}/knock_control_report.md §8.4"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6af7c": dict(name="Knock Retard Clamp Min Alt (RPM)", category="Knock Control",
-        note="alt min: -10/-7.5/-5x4/0; axis 0x79648.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="alt min: -10/-7.5/-5x4/0; axis 0x79648.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6af90": dict(name="Knock Retard Clamp Max (RPM)", category="Knock Control",
-        note="0.0 deg x15; axis 0x7966c (RPM 800-6400).", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="0.0 deg x15; axis 0x7966c (RPM 800-6400).", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6afa4": dict(name="Knock Recovery Target (RPM)", category="Knock Control",
         note="fail-safe target -10..0 deg; axis 0x796b8 (RPM 500-5500); written to 0xffffa744.",
-        source=f"{REPORT}/knock_control_report.md §8.4"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6afb8": dict(name="Knock Learned Retard Scale", category="Knock Control",
-        note="0.0 x13; axis 0x79704 = learned retard -8.4..+8.4 deg.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="0.0 x13; axis 0x79704 = learned retard -8.4..+8.4 deg.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b250": dict(name="Knock Voltage To Magnitude Scale", category="Knock Control",
-        note="knock voltage -> magnitude scale.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="knock voltage -> magnitude scale.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b264": dict(name="Knock Transient Hold (cycles)", category="Knock Control",
-        note="raw u8 0x0a -> <<1 = 20-cycle hold (0xffffc0ac).", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="raw u8 0x0a -> <<1 = 20-cycle hold (0xffffc0ac).", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b270": dict(name="Knock Ignition Threshold A (RPM)", category="Knock Control",
         note="raw u16 vs RPM (normal) -> 0xffffc090 -> 0xffffa37e; default 94 (0xc1f8).",
-        source=f"{REPORT}/knock_control_report.md §8.4"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b27c": dict(name="Knock Ignition Threshold A Alt (RPM)", category="Knock Control",
-        note="raw u16 vs RPM (alt) -> 0xffffc090 -> 0xffffa37e.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="raw u16 vs RPM (alt) -> 0xffffc090 -> 0xffffa37e.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b288": dict(name="Knock Ignition Threshold B (RPM)", category="Knock Control",
-        note="raw u16 vs RPM (normal) -> 0xffffc092 -> 0xffffa37c; default 193.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="raw u16 vs RPM (normal) -> 0xffffc092 -> 0xffffa37c; default 193.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b294": dict(name="Knock Ignition Threshold B Alt (RPM)", category="Knock Control",
-        note="raw u16 vs RPM (alt) -> 0xffffc092 -> 0xffffa37c.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="raw u16 vs RPM (alt) -> 0xffffc092 -> 0xffffa37c.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b2a0": dict(name="Knock Noise Threshold Min", category="Knock Control",
-        note="clamp floor for 0xffffa350[2].", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="clamp floor for 0xffffa350[2].", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b2ac": dict(name="Knock Noise Floor (RPM)", category="Knock Control",
-        note="lookup vs raw RPM -> 0xffffa358.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="lookup vs raw RPM -> 0xffffa358.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b2b8": dict(name="Knock Level 3D A (load x RPM)", category="Knock Control",
-        note="3D knock level vs load/RPM (20x12 scaled).", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="3D knock level vs load/RPM (20x12 scaled).", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b2d4": dict(name="Knock Level 3D B (load x RPM)", category="Knock Control",
-        note="3D knock level vs load/RPM.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="3D knock level vs load/RPM.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b2f0": dict(name="Knock Level 3D C (load x RPM)", category="Knock Control",
-        note="3D knock level vs load/RPM.", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="3D knock level vs load/RPM.", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b304": dict(name="Knock Level 3D D (load x RPM)", category="Knock Control",
-        note="3D knock level vs load/RPM (1x1 raw).", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="3D knock level vs load/RPM (1x1 raw).", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x6b83c": dict(name="Cold-Start Advance Reduction (RPM)", category="Ignition Timing",
-        note="min(c9a8, lookup(RPM)) in 0x12630 (cranking + out-of-band path).", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="min(c9a8, lookup(RPM)) in 0x12630 (cranking + out-of-band path).", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     # ---- Ignition timing (ignition_timing_report.md §3 + ignition_timing_labels.json)
     "0x69078": dict(name="Ignition Leading - Base Timing", category="Ignition Leading",
         note="3D float, deg; main leading base map, read by 0x11f00.", source=f"{REPORT}/ignition_timing_report.md §3"),
@@ -226,7 +227,7 @@ REPORT_ENTRIES = {
         note="upstream 'Table 3D - 30'; CL lambda target bank.", source=f"{REPORT}/fueling_control_report.md §10.7"),
     "0x6990c": dict(name="Closed Loop Warmup Time", category="Fuel Injection - Closed Loop",
         note="raw u16 x15 s; axis 0x6f7e0, data 0x6f81c; dispatch helper tbl_table_2d_304_check_datatype.",
-        source=f"{REPORT}/knock_control_report.md §8.4; knock_loop_labels.json"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1; knock_loop_labels.json"),
     "0x6ac38": dict(name="Fuel Coolant Compensation (candidate)", category="Fuel Injection",
         note="2D lookup vs coolant used by calc_fuel_volume_request 0x306e8 (bf1c) and closed_loop_fuel_trim; descriptor unmatched in RX8Defs.",
         confidence="candidate", source=f"{REPORT}/fueling_labels.json; fueling_control_report.md §7.3"),
@@ -293,15 +294,15 @@ REPORT_ENTRIES = {
     # Closed-loop fuelling threshold range (0x1f0c4 open-loop request conditions)
     "0x69d24": dict(name="Closed Loop Fuelling Threshold A", category="Fuel Injection - Closed Loop",
         note="open-loop request conditions, read by 0x1f0c4; range 0x69d24-0x69d74.",
-        source=f"{REPORT}/knock_control_report.md §8.4; fueling_control_report.md §7.3"),
+        source=f"{KNOCK_REPORT}/knock_control_report.md §4.1; fueling_control_report.md §7.3"),
     "0x69d38": dict(name="Closed Loop Fuelling Threshold B", category="Fuel Injection - Closed Loop",
-        note="", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x69d4c": dict(name="Closed Loop Fuelling Threshold C", category="Fuel Injection - Closed Loop",
-        note="", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x69d60": dict(name="Closed Loop Fuelling Threshold D", category="Fuel Injection - Closed Loop",
-        note="", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     "0x69d74": dict(name="Closed Loop Fuelling Threshold E", category="Fuel Injection - Closed Loop",
-        note="", source=f"{REPORT}/knock_control_report.md §8.4"),
+        note="", source=f"{KNOCK_REPORT}/knock_control_report.md §4.1"),
     # ---- Idle target RPM (idle_target_control_report.md §3)
     "0x69370": dict(name="Idle Target RPM - Base (Coolant)", category="Idle Control",
         note="7 u16 cells 1700->810 rpm vs coolant -40..80 C (axis 0x6dcf4, data 0x6dd10); base target selected by idle_target_rpm_calculate 0x1506c; filtered result written to idle_target_rpm 0xffffa7f4.",
