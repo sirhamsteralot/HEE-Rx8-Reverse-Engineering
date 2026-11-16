@@ -153,11 +153,6 @@
         "pool_claims": 0,
         "word_assigns": 1
       },
-      "subsystem-logic/boot_handover_report.md": {
-        "reg_pairs": 1,
-        "call_claims": 0,
-        "pool_claims": 0
-      },
       "subsystem-logic/knock_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,

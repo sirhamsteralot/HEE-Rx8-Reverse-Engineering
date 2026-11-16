@@ -1,7 +1,7 @@
 # Boot handover review — evidence notes (reference ROM 60E15120_N3J1E)
 
-Evidence for [`docs/subsystem-logic/boot_handover_report.md`](../../../../subsystem-logic/boot_handover_report.md)
-and [`data/labels/60E15120_N3J1E/boot_handover_labels.json`](../../../../../data/labels/60E15120_N3J1E/boot_handover_labels.json).
+Evidence for the handover section of [`docs/subsystem-logic/sbl_bootloader_report.md`](../../../../subsystem-logic/sbl_bootloader_report.md)
+and the `handover` records in [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../../../../../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json).
 ROM SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`, verified
 unchanged; no binary was modified.
 

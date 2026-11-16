@@ -1,8 +1,8 @@
-# SBL serial bootloader — subsystem report
+# SBL serial bootloader and boot handover — subsystem report
 
 | Date | What changed | Version |
 |------|--------------|---------|
-| 2026-11-16 | Initial report | 1 |
+| 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -40,8 +40,9 @@ into BOOT mode (CN400 header on the back of the ECU, ~150 Hz square wave on pin
 §8) — it listens on the diagnostic CAN bus and accepts UDS-style reflash
 commands: session control, a fixed seed/key unlock, flash erase, block download
 and transfer exit. When BOOT mode is not requested, the same block hands control
-to the application image at `0x2000` (that handover is the subject of
-[`boot_handover_report.md`](boot_handover_report.md)).
+to the application image at `0x2000` — that handover (§2.3) is part of this
+subsystem: the dispatcher `0x1038` and the jump trampoline `0x1090` live inside
+the SBL block.
 
 The SBL block contains, in order: the vector table (`0x0–0x3ff`), the reset and
 cold-boot code (`0x40–0xb0d`), an erased gap (`0xb0e–0xfdf`, all `0xff` in all
@@ -63,13 +64,15 @@ flowchart TD
         HO["0x1090: SP=0xffffdfa0, jmp @target"]
         LOOP["0x1378 SBL CAN command loop<br/>services 0x10 0x11 0x22 0x27 0x28 0x3b<br/>0x34 0x36 0x37 0x3e 0x85 0xb1"]
     end
-    APP["application image 0x2000+<br/>entry 0xd204: VBR=0x7fc50, FPSCR, os_init"]
+    APP["application image 0x2000+<br/>entry 0xd204: VBR=0x7fc50, FPSCR,<br/>0x9e68 -> 0x3ad8(0) -> os_init 0x3e10"]
     VEC --> RESET --> WC
     WC -->|cold| COLD
     WC -->|warm| WARM --> DISP
     DISP -->|BOOT / erased| HO --> LOOP
     DISP -->|normal| HO --> APP
 ```
+
+The handover (§2.3) is the `0x1038` -> `0x1090` -> `0xd204` path on the right.
 
 ### 2.1 Reset chain and warm/cold selection
 
@@ -125,10 +128,67 @@ response) and sent on mailbox 15 (CAN ID `0x7e8`) by `0x11fa` via `0x1150`. The
 CAN peripheral (HCAN0 at `0xffffe400`) is set up by `0x170` (BCR `0x803e`) and
 `0x109c` (mailboxes 14/15); mailbox config is built by `0x1ed0` (standard ID
 stored low byte first, `id << 5`, in `MC[4..5]`). No checksum is verified by
-the SBL itself — see [`boot_handover_report.md`](boot_handover_report.md) for
-the app-side CVN.
+the SBL itself — the app-side CVN is covered in §2.3 and in
+[the UDS dispatch report §12](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 
-### 2.3 The fixed addresses at the end of the block
+### 2.3 The handover to the application
+
+The warm entry `0x1298` calls `0x1038` (`warm_reset_dispatcher`) with
+parameter 0. `0x1038` resets the WDT (`0x1364`), re-initializes the diag CAN
+(`0x109c`), runs housekeeping (`0x16dc`), then picks the jump target: with
+parameter != 0 it runs the BOOT-mode GPIO init `0x12a2` and targets the SBL
+loop `0x1378` (this path is taken via `0x564d4`, called from `0x563de` when a
+diagnostic request set the boot-request state `0xffffd1dc` to 3); with
+parameter 0 it checks that the IVT tail pointer `u32@0x7fffc` (= `0x2000`) and
+the app header `u32@0x2000` are not erased (`0xffffffff`) — if either is erased
+it falls back to the SBL loop — and otherwise targets `u32@0x7fff8` = `0xd204`.
+The jump itself is trampoline `0x1090` (SP = `0xffffdfa0`, `jmp @r4`). In the
+emulator boot trace the SBL->app transition is exactly `0x1094` -> `0xd204` at
+step 2856 of a 200,000-cycle boot.
+
+App entry `0xd204` sets VBR = `0x7fc50` and FPSCR = `0x40001`, calls the nop
+`0x4c7a`, then `0x9e68`, which runs `0x4c80`, a RAM-swap/semaphore mark
+(`0xd518`), `0x9f0c(0)`, sets the interrupt mask, sets `PFDR_W` `0xfffff74e`
+bit 3, calls `0x2064` and `0x4cf0`, and finally calls `0x3ad8(0)` — `os_init`
+`0x3e10` — after which the scheduler runs and the CPU settles in the idle loop
+`0x3dac`.
+
+**App validity:** the handover performs no checksum check — only the
+erased-pointer checks above. The application CVN (incremental dual-u16 additive
+sum over `0x2000–0x7ffff`, skipping the hole `0x7fb00–0x7fb7f`, engine
+`0x5a3f4`, finalize `0x5a714` storing to `0xffff9104`/`0xffff910c`) is computed
+**after** boot by the application: its only caller chain is task[0] entry
+`0x62a0` -> `0x1122a` -> `0x5a3f4` (task table at `0x4990`, record 0
+byte-verified). A corrupt app image is therefore still booted; the CVN mismatch
+is only observable afterwards through diagnostics (reader `0x5a5a6`, see
+[the UDS dispatch report §12.1](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)).
+
+**Entry mechanism of `ref_mainInit__` `0x61a8`:** it has no direct caller — no
+`jsr`/`bsr`/branch targets it, no ROM32 pointer holds `0x000061a8`, and it is
+not one of the 19 task-table entries at `0x4990`. Its only reference is pool
+word `0x25164` (holds `0x61a8`, byte-verified), loaded inside `0x2508c`
+(`FUN_0002508c`), which posts a record {handler `0x61a8` at `0xffff9f38`,
+enable byte at +9 = 1} and arms an ATU-II channel-4 compare. `0x2508c` is
+reached via thunk `0x21b84` from `0x1102a` (the large init fan-out), whose only
+callgraph caller is `0x61a8` itself — a cycle, so the first entry of `0x61a8`
+is not a direct call. The `0xffff9f38` record is consumed by interrupt handlers
+`0x567a` (IVT offset `0x204`, trampoline `0x2b00`, handler pool `0x2b10`) and
+`0x57c6` (IVT offset `0x224`, trampoline `0x2b78`, pool `0x2b88`). Dynamically,
+`0x61a8` is never executed in a 2,000,000-cycle emulator boot (with or without
+crank input), because the crank-angle-synchronous OS tick that dispatches tasks
+never fires in the emulator — consistent with
+[the OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md).
+
+**Reset-at-10,000-RPM fold-in:** the
+[reset_at_10000_rpm review](../investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md)
+found no confirmed reset-causing bug — the 10,000-RPM comparisons (`0xc3ce`,
+`0x1f6ae`, `0x49c5a`, `0x123da`, `0x124d6`) are control-mode transitions or
+blending factors, not reset requests. Combined with the above: nothing in the
+boot or handover path resets the ECU at high RPM, and no CVN gate exists at
+handover; the unresolved reset mechanisms remain watchdog starvation,
+supply/reset-pin disturbance or crank-signal faults.
+
+### 2.4 The fixed addresses at the end of the block
 
 `0xb0e–0xfdf` is erased (`0xff`) in all 11 ROMs and is not covered by the
 application checksum (which starts at `0x2000`). `0xfe0–0xfff` holds a 32-byte
@@ -138,7 +198,7 @@ values across the 11 ROMs (two per code build group of four); its role is not
 established — candidate SBL build stamp/checksum. `0x1ff4` holds the ASCII
 marker `*SBL_END`, which the `0x36` transfer handler scans for.
 
-### 2.4 Hardware setup — CAN and BOOT mode
+### 2.5 Hardware setup — CAN and BOOT mode
 
 ```mermaid
 flowchart LR
@@ -180,6 +240,11 @@ magic@0xffffdffc = 0x5aa5a55a; SP=0xffffdfa0; jmp entry;   // 0x40
                   : (u32@0x7fffc != -1 && u32@u32@0x7fffc != -1
                      ? u32@0x7fff8 : 0x1378);                 // app 0xd204
            SP = 0xffffdfa0; jmp target;                     // 0x1090
+
+// 0xd204 app entry (normal boot target)
+0xd204: VBR = 0x7fc50; FPSCR = 0x40001;   // pools 0xd2c0/0xd2c4
+        jsr 0x4c7a;                       // nop
+        jsr 0x9e68;                       // -> 0x3ad8(0) -> os_init 0x3e10 -> idle 0x3dac
 
 // 0x1378 SBL CAN command loop (BOOT mode)
 for (;;) {
@@ -281,6 +346,17 @@ Functions (ROM addresses are reference-ROM addresses; index names from
 | `0x00001fa2` | `FUN_00001fa2` | 8-byte copy (CAN RX) |
 | `0x00001fbc` | `FUN_00001fbc` | 8-byte copy (CAN TX) |
 | `0x00001fe2` | `FUN_00001fe2` | HCAN0 mailbox control read |
+| `0x0000563de` | `FUN_000563de` | boot-request state machine (`0xffffd1dc`==3 + param 1 -> `0x564d4`) |
+| `0x000564d4` | `FUN_000564d4` | calls `0x1038` with param 1 (BOOT-mode handover) |
+| `0x000061a8` | `ref_mainInit__` | application init; no direct caller, posted as handler at `0xffff9f38` by `0x2508c` |
+| `0x00002508c` | `FUN_0002508c` | posts {`0x61a8` -> `0xffff9f38`}, arms ATU-II ch4 compare |
+| `0x00021b84` | `jump_to_FUN_0002508c` | thunk to `0x2508c` |
+| `0x0001102a` | `FUN_0001102a` | init fan-out, calls `0x21b84` |
+| `0x00009e68` | `recovery_finalize_set_pf3_halt` | app-entry finalize (PFDR_W `0xfffff74e` bit 3, -> `0x3ad8`) |
+| `0x00003ad8` | `FUN_00003ad8` | calls `os_init` `0x3e10` |
+| `0x00005a3f4` | `FUN_0005a3f4` | app-side CVN checksum engine (post-boot, from task[0]) |
+| `0x00005a714` | `FUN_0005a714` | CVN finalize -> `0xffff9104` |
+| `0x0000567a` | `FUN_0000567a` | IVT `0x204` handler consuming `0xffff9f38` |
 
 RAM (only addresses with accepted aliases are listed):
 
@@ -301,31 +377,36 @@ ROM data / fixed locations (reference ROM, byte-verified):
 | `0x00001ff4` | `*SBL_END` | SBL end marker scanned by 0x1c04 (at `0x1fbc` in build B) |
 | `0x00007fff8` | `0x0000d204` | app entry pointer (build A; `0xd49c`/`0xd494` build B) |
 | `0x00007fffc` | `0x00002000` | IVT tail pointer, app validity check |
+| `0x00025164` | `0x000061a8` | pool word — the only reference to `ref_mainInit__` |
 
 ### 4.2 Labeling applied
 
 New label records: [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json)
-(per-function aliases with binary-verified evidence). Cross-ROM SBL hashes and
-diffs: [`data/labels/cross_rom/sbl_first_8k.json`](../../data/labels/cross_rom/sbl_first_8k.json).
+(per-function aliases plus the handover records — dispatcher chain, CVN caller
+analysis, `0x61a8` entry mechanism — with binary-verified evidence). Cross-ROM
+SBL hashes and diffs: [`data/labels/cross_rom/sbl_first_8k.json`](../../data/labels/cross_rom/sbl_first_8k.json).
 For build-B ROMs the labels apply with the shifted anchor addresses listed in
 the applicable-ROMs table above (`*SBL_END`, warm entry, app entry); the
-0x0–0x1007 region is byte-identical between the two code builds except the
+`0x0–0x1007` region is byte-identical between the two code builds except the
 stamp.
 
 ### 4.3 Corrections
 
-None — this report introduces no corrections to earlier documents. The SBL
-service map extends [the UDS dispatch report §12.2](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
+The SBL service map extends [the UDS dispatch report §12.2](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
 (the 13 dispatched services and the seed/key magic were already recorded
 there); this report adds the full dispatch table, the response record layout,
-the ISO-TP helpers, the erase guard and the cross-ROM SBL diff.
+the ISO-TP helpers, the erase guard and the cross-ROM SBL diff. On the handover
+side, the design doc §3 stated that `ref_mainInit__` `0x61a8` "has no caller in
+the call graph, the disassembly, or as a ROM32 pointer" — confirmed here, with
+the one indirect reference added (pool `0x25164`, handler registration in
+`0x2508c`) and the dynamic observation that it never executes in emulator boot.
 
 ### 4.4 Files
 
-- [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json) — per-function SBL label records
+- [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json) — per-function SBL + handover label records
 - [`data/labels/cross_rom/sbl_first_8k.json`](../../data/labels/cross_rom/sbl_first_8k.json) — per-ROM SBL hashes, groups, diff ranges, stamps
-- [`docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md) — evidence notes + emulator boot trace excerpt
-- [`boot_handover_report.md`](boot_handover_report.md) — the SBL->app handover (C25 counterpart)
+- [`docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md) — evidence notes
+- [`docs/investigations/60E15120_N3J1E/reviews/boot_handover/`](../investigations/60E15120_N3J1E/reviews/boot_handover/README.md) — handover evidence notes + emulator boot trace excerpt (`boot_trace_excerpt.txt`)
 
 ### 4.5 Validation
 
@@ -336,11 +417,15 @@ the ISO-TP helpers, the erase guard and the cross-ROM SBL diff.
   from the `0x1378` literal pool words at addresses `0x14f4` through `0x1610`.
 - Emulator boot trace (vector 0, 200,000 cycles, profile `60E15120_N3J1E`):
   `0x8b8` -> `0x4e0` -> warm `0x1298` -> `0x1038(param 0)` -> `0x1090` -> app
-  `0xd204` at step 2856; `0x1378` not entered on a normal boot. Trace excerpt
-  in [`reviews/sbl_bootloader/`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/).
-- `validate_reports.py`, `verify_claims.py`, `verify_readability.py`,
-  `verify_math_units.py` and `python -m pytest tests/` run clean (see
-  [`reviews/sbl_bootloader/README.md`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md)).
+  `0xd204` at step 2856; `0x1378` not entered on a normal boot. A second run of
+  2,000,000 cycles (also with ATU-II crank input at 900 rpm) never executes
+  `0x61a8`/`0x1102a`/`0x62a0`/`0x5a3f4`, because the crank-synchronous tick
+  never fires in the emulator. Trace excerpt in
+  [`reviews/boot_handover/boot_trace_excerpt.txt`](../investigations/60E15120_N3J1E/reviews/boot_handover/boot_trace_excerpt.txt).
+- `validate_reports.py`, `verify_claims.py` PASS and `python -m pytest tests/`
+  passes 288 tests (the single `test_extract_scalars.py` failure and the
+  `verify_readability.py` failure are pre-existing on `main` in this
+  environment; see [`reviews/sbl_bootloader/README.md`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md)).
 
 ### 4.6 Limits
 
@@ -356,13 +441,22 @@ the ISO-TP helpers, the erase guard and the cross-ROM SBL diff.
   `0x1e94`/`0x1eb2`) is described structurally; no erase/write was executed.
 - Dynamic coverage is limited to the normal boot path; the SBL command loop
   `0x1378` was not exercised dynamically (no BOOT-mode entry in the emulator).
+- The first entry of `0x61a8` is not proven: its only static reference is the
+  handler registration in `0x2508c`, itself reachable only through `0x61a8` ->
+  `0x1102a`; the consuming IVT handlers (`0x567a`, `0x57c6`) read the
+  `0xffff9f38` record, but the exact first-dispatch path on real hardware is
+  not traced — candidate-level.
+- The emulator never fires the crank-synchronous tick, so task dispatch (and
+  any task-mediated entry into `0x61a8` or the CVN computation) is not
+  dynamically covered.
 
 ### 4.7 Related reports
 
-- [`boot_handover_report.md`](boot_handover_report.md) — SBL->app handover, app
-  entry `0xd204`, CVN validity check, `ref_mainInit__` `0x61a8` entry mechanism
 - [UDS service + Mode 22 dispatch report §12](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) — app-side checksum/CVN (`0x5a3f4`) and seed/key (`0x27` app + SBL)
 - [Flash and memory layout](../architecture/flash-memory-layout.md) §3 — the shared 512 KiB skeleton incl. the SBL block
 - [Firmware design document](../architecture/design/README.md) §2–3 — entry points and boot flow
 - [RX8Club user-guide thread extract](../references/rx8club-user-guide-thread.md) §8 — CN400 BOOT mode, UDS services
 - [OS scheduler / IVT report](../investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md) — runtime VBR/IVT and CAN transport
+- [OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) — task table, tick, why tasks don't run in the emulator
+- [Ignition power-state report](../investigations/60E15120_N3J1E/ignition_power_state_report.md) — key-on latch, shutdown/relay-hold
+- [reset_at_10000_rpm review](../investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md) — folded in at §2.3
