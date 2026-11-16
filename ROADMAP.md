@@ -16,7 +16,14 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37, 39, 42–61 — pick up 24 next (item 38 closed
+**reopened**: open items 26–34, 36–37, 39, 42–61 — pick up 26 next (items 24–25 closed
+2026-11-16: SBL block `0x0–0x1fff` statically labeled + cross-ROM SBL diff, and the
+SBL→app handover incl. the `0x61a8` entry mechanism mapped — reports
+[`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md) +
+[`boot_handover_report.md`](docs/subsystem-logic/boot_handover_report.md), records
+`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json` +
+`boot_handover_labels.json`, cross-ROM `data/labels/cross_rom/sbl_first_8k.json`;
+item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
 UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
@@ -95,38 +102,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39, 42–61)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–61)
 
-- **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
-  report.** The export carries 80 functions there but only 15 are named (all
-  inherited `ref_`; 65 bare `FUN_`), and no labels JSON covers SBL addresses
-  yet. Scope: the reset chain `0x8b8 ref_Manual_Reset` → `0x4e0
-  ref_resetHandler_` (boot flow in [design doc
-  §3](docs/architecture/design/README.md)), the SBL CAN command loop `0x1378`,
-  security unlock `0x27 @0x1858`, the download/erase services
-  `0x34/0x36/0x37 @0x1ad6/0x1c04/0x1d30` + erase `0x1d78` (anchors in
-  [flash-memory-layout.md §3](docs/architecture/flash-memory-layout.md) and
-  [UDS report §12.3](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)),
-  the CN400 BOOT-mode entry (overlaps D9 pinout conflict), the unidentified
-  32-B block `0xfe0–0xfff` (identical bytes in all 11 ROMs) and the erased gap
-  `0xb0e–0xfdf`; plus a cross-ROM diff of the SBL — the first 8 KiB hash to 8
-  distinct builds across the 11 ROMs (e.g. `cdc620…` is shared by
-  60E15120_N3J1E and 60E0G500_N3ZHEC, `9d1048…` by 60E1C500_N3J6EB and
-  60E1D400). Dynamic: trace the emulator boot from vector 0 through the SBL.
-  Deliverables: `sbl_bootloader_report.md` +
-  `data/labels/60E15120_N3J1E/sbl_bootloader_labels.json` + per-ROM
-  propagation; rule 7 binary-level verification, pipeline validators +
-  `python -m pytest tests/`.
-- **C item 25 (open)** — **bootloader handover / application entry.** [Design
-  doc §3](docs/architecture/design/README.md) flags that `ref_mainInit__`
-  `0x61a8` has no caller in the call graph, the disassembly, or as a ROM32
-  pointer — the SBL→app jump point, the entry mechanism of `0x61a8`, and any
-  pre-handover app-validity check (CVN engine `0x5a3f4` over `0x2000–0x7ffff`,
-  result cell `0xffff9104` written by `0x5a714`) are unmapped. Also fold in the
-  open reset investigation
-  ([reviews/reset_at_10000_rpm.md](docs/investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md)).
-  Feeds F item 4 (app-side question whether unlocked 0x34/0x36/0x37 stubs hand
-  off to the SBL). Deliverable: boot/handover report + label records.
 - **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
   start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
   60E15120_N3J1E; per-ROM table in

@@ -1,0 +1,31 @@
+{
+ "date": "2026-11-16",
+ "pass": "boot_handover_labeling",
+ "basis": "static mapping of the SBL->application handover and the entry mechanism of ref_mainInit__ 0x61a8 on the reference ROM, binary-verified; emulator boot trace from vector 0 (rule 7); folds in the reset-at-10000-RPM review conclusions",
+ "source": "Raw ROM bytes submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1, verified unchanged) + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + reverse-engineered/decompiled/60E15120_N3J1E/ (callgraph.tsv, function_index.tsv). Dynamic: emulator boot trace, 2,000,000 cycles, with and without crank input (docs/investigations/60E15120_N3J1E/reviews/boot_handover/).",
+ "rom_unchanged": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+ "handover_chain": [
+  "vector 0 (ROM 0x0): SP = u32@0x4 = 0xffffdfa0, PC = u32@0x0 = 0x8b8 - byte-verified",
+  "0x8b8 ref_Manual_Reset -> 0x8cc boot_wait_nmi_pin_high -> 0x8f6 sbl_boot_mailbox_init -> 0x4e0 reset_handler_warm_cold_select(0) -> halt loop",
+  "0x4e0: wdt_keyed_reset 0x572, sbl_can_init 0x170, sbl_early_ram_init 0x41c, sbl_ring_index_reset 0x3d4; warm iff 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (erased-flash fallback u32@0x7fff8 = 0xd204); cold = 0x6c8; writes magic to 0xffffdffc, jsr 0x40 (pool 0x594) = set SP 0xffffdfa0 + jmp @entry",
+  "warm: 0x1298 (mov.w pool 0x1348 = 0x1038; jsr; mov #0,r4) -> 0x1038 warm_reset_dispatcher(0) -> 0x1364, 0x109c, 0x16dc; param==0 -> flash-validity checks on u32@0x7fffc (=0x2000) and u32@0x2000 (erased 0xffffffff checks) -> target u32@0x7fff8 = 0xd204; jsr 0x1090 = set SP 0xffffdfa0 + jmp @r4",
+  "SBL: 0x1038 param!=0 (via 0x564d4 warm_reset_dispatcher(1), called from 0x563de when param==1 && DAT_ffffd1dc==3) -> 0x12a2 sbl_boot_gpio_init -> target 0x1378 sbl_can_command_loop -> 0x1090 -> jmp 0x1378. Also erased-flash fallback in the param==0 path selects 0x1378 when u32@0x7fffc or u32@0x2000 is 0xffffffff",
+  "app: 0xd204 (u32@0x7fff8): ldc VBR = 0x7fc50 (pool 0xd2c0), lds FPSCR = 0x40001 (pool 0xd2c4), jsr 0x4c7a (nop, pool 0xd2cc), r4 = u32@0xd730 = 0xffff768c (pool 0xd2c8), jsr 0x9e68 (pool 0xd2d0) -> 0x4c80, shutdown_ram_swap_semaphore_mark 0xd518, 0x9f0c(0), ref_setSR_PARAM 0xe0, PFDR_W 0xfffff74e bit3 = 1, 0x2064, 0x4cf0, 0x3ad8(0) -> os_init 0x3e10 -> scheduler/idle 0x3dac; emulator trace: SBL->app transition at 0x1092 -> 0xd204 (step 2856 of a 200k-cycle boot)"
+ ],
+ "app_validity_check": {
+  "at_handover": "none based on the CVN: the SBL handover (0x4e0/0x1038) only checks that the IVT tail pointer u32@0x7fffc and the app header u32@0x2000 are not erased (0xffffffff); no checksum is verified before jumping to 0xd204",
+  "cvn_engine": "0x5a3f4 FUN_0005a3f4 sums 0x2000-0x7ffff in 0x1000-byte sections skipping 0x7fb00-0x7fb7f into DAT_ffffd2b0/d2b2; finalize 0x5a714 stores (d2b0<<16)|d2b2 to 0xffff9104 + done flag 0xffff910c; reset 0x5a3d8; reader 0x5a5a6 (UDS report §12.1)",
+  "cvn_callers": "0x5a3f4 is called only from 0x1122a, which is called only from task[0] entry 0x62a0 (callgraph.tsv; task table ROM 0x4990 rec[0] = {param 0x4000000, stack 0xffff7408, entry 0x62a0, mask 0x1000000} byte-verified) - i.e. the CVN is computed at runtime by the application background task, not at handover; 0x5a3d8 called from 0x113b8 (caller 0x6366 via thunk 0x9f52) and 0x3de70"
+ },
+ "main_init_entry": {
+  "0x000061a8": {
+   "alias": "ref_mainInit__",
+   "direct_callers": "none - no jsr/bsr target, no u32 ROM32 pointer (raw scan: zero u32 occurrences of 0x000061a8), not a task-table entry (19 records at 0x4990 byte-verified)",
+   "sole_reference": "pool word 0x25164 = 0x61a8 (u16, byte-verified), loaded by mov.w at 0x25094 and 0x250b0 inside 0x2508c FUN_0002508c: posts a record {handler = 0x61a8 @0xffff9f38, len, enable byte @+9 = 1, 0x5a @+0xb} and arms ATU-II ch4 compare (GR4B = TCNT4+1, TIOR4A |= 0x20, TSR3 = 0xffbf, TIER3 |= 0x40), then waits TSR3 bit 0x40 / re-arms GR4B +0x9c6",
+   "registration_chain": "0x2508c <- 0x21b84 thunk (u32 ref 0x21be4 = 0x2508c) <- 0x1102a FUN_0001102a (85-callee init fan-out); 0x1102a's only callgraph caller is 0x61a8 itself (circular), so the first entry of 0x61a8 is not a direct call",
+   "record_consumers": "0xffff9f38 is read by 0x567a (IVT offset 0x204 -> trampoline 0x2b00, handler pool 0x2b10 = 0x567a, byte-verified) and 0x57c6 alternator_pwm_service (IVT offset 0x224 -> trampoline 0x2b78, pool 0x2b88 = 0x57c6); these check record byte +9 == 1 and manage the record fields",
+   "dynamic": "emulator boot 2,000,000 cycles (idle, and with ATU2 crank input 900 rpm): 0x61a8, 0x1102a, 0x2508c, task[0] 0x62a0 and CVN 0x5a3f4 all hit 0 times - the crank-synchronous OS tick never fires in the emulator, so no task ever dispatches (consistent with os_scheduling_deep_dive_report.md)"
+  }
+ },
+ "reset_at_10000_rpm_review": "docs/investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md: no confirmed reset-causing bug found in that targeted pass (10,000-RPM thresholds at 0xc3ce/0x1f6ae/0x49c5a/0x123da/0x124d6 are control-mode transitions or blends, not reset requests); unresolved mechanisms remain watchdog starvation / supply or crank-signal disturbance; this handover pass adds that the SBL handover performs no CVN validity check, so an app image with a bad CVN is still booted - the CVN is only computed and exposed diagnostically afterwards"
+}
