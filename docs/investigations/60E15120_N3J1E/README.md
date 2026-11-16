@@ -202,7 +202,7 @@ voltage target/PID chain and the field PWM output on ATU-II ch5B (period
 DTCs resolved to P2502/P2503/P2504 (slots 0x7b/0x7c/0x7d via tables 0x7df42/0x7e560);
 warning flag 0xffffb5b4 exported via CAN word 0xffffbab2 bit 0x40 and PID 0x0968.
 25 functions, 10 RAM cells. Write-up:
-[`alternator_control_report.md`](alternator_control_report.md) +
+[`alternator_control_report.md`](../../subsystem-logic/alternator_control_report.md) +
 `reviews/alternator_control/`; record: `metadata/alternator_labels.json`.
 ## Idle speed control labeling
 

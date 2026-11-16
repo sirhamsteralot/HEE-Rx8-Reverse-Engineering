@@ -18,7 +18,7 @@ services, UDS 0x85 — in
 [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) and the device layer in
 [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md); a concrete detection
 site (charging P2502/P2503/P2504) in
-[`alternator_control_report.md`](alternator_control_report.md); the UDS service table
+[`alternator_control_report.md`](../../subsystem-logic/alternator_control_report.md); the UDS service table
 and Mode 22 dispatcher in
 [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md); OS event plumbing
 (group-2 event 2, table 0x67d00) in

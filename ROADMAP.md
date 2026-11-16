@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37, 39, 41–61 — pick up 24 next (item 38 closed
+**reopened**: open items 24–34, 36–37, 39, 42–61 — pick up 24 next (item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
 UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
@@ -95,7 +95,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39, 41–61)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39, 42–61)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -222,7 +222,7 @@ and where artifacts live.
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
   docs (dedup + indexes; the per-subsystem report migration is split out into
-  C items 41–61).** `docs/investigations/` has grown organically: ~20 root
+  C items 42–61).** `docs/investigations/` has grown organically: ~20 root
   reports for 60E15120_N3J1E alone (~9.5k lines counting `labeling/`) plus
   `reviews/` evidence folders, with overlapping report pairs that re-derive the
   same content instead of cross-linking
@@ -240,7 +240,7 @@ and where artifacts live.
   baked into [`AGENTS.md`](AGENTS.md) (repo map + rule 8), the subsystem-logic
   and investigations READMEs, [`README.md`](README.md) and
   [`docs/learnings.md`](docs/learnings.md); migrating each individual report is
-  tracked per subsystem in C items 41–61. Remaining scope here:
+  tracked per subsystem in C items 42–61. Remaining scope here:
   (a) one reading order — a single entry-point index per ROM folder (what to
   read first, in what sequence) merged with the top-level index so there is
   one source of truth; (b) dedup — fold duplicated sections into one canonical
@@ -258,7 +258,7 @@ and where artifacts live.
   survives any move (rules 5/7); after each touched doc: re-run the pipeline
   validators, the link check over all touched docs and `python -m pytest tests/`.
 
-- **C items 41–61 (open)** — **per-subsystem migration of the remaining
+- **C items 42–61 (open)** — **per-subsystem migration of the remaining
   60E15120_N3J1E root reports into `docs/subsystem-logic/`** in the human-first
   format. Worked example:
   [`knock_control_report.md`](docs/subsystem-logic/knock_control_report.md);
@@ -277,7 +277,6 @@ and where artifacts live.
   `python -m pytest tests/`. If a report's logic turns out ROM-specific rather
   than shared, leave it in `docs/investigations/` and close the item with that
   reason instead of migrating.
-  - **C item 41 (open)** — migrate [`alternator_control_report.md`](docs/investigations/60E15120_N3J1E/alternator_control_report.md)
   - **C item 42 (open)** — migrate [`can_mailbox_config_report.md`](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md)
   - **C item 43 (open)** — migrate [`cooling_fan_control_report.md`](docs/investigations/60E15120_N3J1E/cooling_fan_control_report.md)
   - **C item 44 (open)** — migrate [`cruise_control_report.md`](docs/investigations/60E15120_N3J1E/cruise_control_report.md)
