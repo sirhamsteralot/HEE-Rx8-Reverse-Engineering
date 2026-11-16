@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37, 39 — pick up 24 next (item 38 closed
+**reopened**: open items 24–34, 36–37, 39, 41–61 — pick up 24 next (item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
 UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
@@ -95,7 +95,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39, 41–61)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -221,55 +221,83 @@ and where artifacts live.
   pipeline validators + `python -m pytest tests/`.
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
-  docs.** `docs/investigations/` has grown organically: ~20 root reports for
-  60E15120_N3J1E alone (~9.5k lines counting `labeling/`) plus `reviews/`
-  evidence folders, with overlapping report pairs that re-derive the same
-  content instead of cross-linking ([`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
+  docs (dedup + indexes; the per-subsystem report migration is split out into
+  C items 41–61).** `docs/investigations/` has grown organically: ~20 root
+  reports for 60E15120_N3J1E alone (~9.5k lines counting `labeling/`) plus
+  `reviews/` evidence folders, with overlapping report pairs that re-derive the
+  same content instead of cross-linking
+  ([`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
   vs [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md),
   [`load_fueling_report.md`](docs/investigations/60E15120_N3J1E/load_fueling_report.md)
   vs [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md),
   [`idle_control_report.md`](docs/investigations/60E15120_N3J1E/idle_control_report.md)
   vs [`idle_target_control_report.md`](docs/investigations/60E15120_N3J1E/idle_target_control_report.md)),
   and per-ROM `README.md` indexes duplicating the top-level
-  [`docs/investigations/README.md`](docs/investigations/README.md). Scope:
+  [`docs/investigations/README.md`](docs/investigations/README.md). The
+  shared-logic placement groundwork is done — [`docs/subsystem-logic/`](docs/subsystem-logic/README.md)
+  exists with the human-first
+  [`TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md) and the placement rules are
+  baked into [`AGENTS.md`](AGENTS.md) (repo map + rule 8), the subsystem-logic
+  and investigations READMEs, [`README.md`](README.md) and
+  [`docs/learnings.md`](docs/learnings.md); migrating each individual report is
+  tracked per subsystem in C items 41–61. Remaining scope here:
   (a) one reading order — a single entry-point index per ROM folder (what to
   read first, in what sequence) merged with the top-level index so there is
   one source of truth; (b) dedup — fold duplicated sections into one canonical
-  report per topic and leave the other as a short summary + `**Related
-  reports:**` cross-link (AGENTS.md rule 8), unique evidence staying in
-  exactly one place (`reviews/<subsystem>/` remains the evidence home);
-  (c) uniform shape — spot-audit every root report against
-  [`TEMPLATE.md`](docs/investigations/TEMPLATE.md) / rule 8 (10 sections,
-  plain-language §1a, mandatory memory map, cross-references as links);
-  (d) maintainability — extend the link + non-empty-size check to every `.md`
-  under `docs/` (the pipeline validators only scan `*_report.md`, so a
-  truncated review note is not caught) and add a short "how to add a report"
-  section to [`docs/investigations/README.md`](docs/investigations/README.md).
-  (e) shared-logic report placement — subsystem documentation is a separate
-  tree from the per-ROM investigations: create **`docs/subsystem-logic/`**
-  (README + report template) holding one `*_report.md` per subsystem. Logic
-  is **assumed identical across the ROM bins until proven otherwise**
-  (cross-ROM byte-match evidence already exists for most functions — see
-  [cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)),
-  so reports there are written against the reference ROM `60E15120_N3J1E`;
-  each report references any per-ROM differences and links the more specific
-  documents in the per-ROM calibration folders `docs/investigations/<rom-id>/`,
-  which keep the ROM-specific reports, labeling passes and `reviews/`
-  evidence. Migrate the existing per-ROM root reports into
-  `docs/subsystem-logic/` the same way where their logic is in fact shared:
-  subsystem-logic report + per-ROM difference note, not duplicated logic
-  sections. Bake the placement rule into [`AGENTS.md`](AGENTS.md) (repo map +
-  rule 8), [`docs/subsystem-logic/README.md`](docs/subsystem-logic/README.md),
-  [`docs/investigations/README.md`](docs/investigations/README.md),
-  [`README.md`](README.md) and [`docs/learnings.md`](docs/learnings.md).
+  report per topic and leave the other as a short summary + cross-link
+  (AGENTS.md rule 8), unique evidence staying in exactly one place
+  (`reviews/<subsystem>/` remains the evidence home); (c) uniform shape —
+  spot-audit the root reports still in the old 10-section layout against
+  [`docs/investigations/TEMPLATE.md`](docs/investigations/TEMPLATE.md) / rule 8
+  until each is migrated; (d) maintainability — extend the link +
+  non-empty-size check to every `.md` under `docs/` (the pipeline validators
+  only scan `*_report.md`, so a truncated review note is not caught) and add a
+  short "how to add a report" section to
+  [`docs/investigations/README.md`](docs/investigations/README.md).
   Constraints: no evidence loss — every address, label and validation claim
-  survives the move (rules 5/7); reports state current findings only, no dated
-  addenda. After each report is touched: re-run the pipeline validators, the
-  link check over all touched docs and `python -m pytest tests/`.
-  Deliverables: `docs/subsystem-logic/` tree with the shared-logic reports +
-  per-ROM difference notes in `docs/investigations/`, reorganised
-  `docs/investigations/` tree, consolidated indexes, extended markdown check,
-  placement rules updated in the docs listed under (e).
+  survives any move (rules 5/7); after each touched doc: re-run the pipeline
+  validators, the link check over all touched docs and `python -m pytest tests/`.
+
+- **C items 41–61 (open)** — **per-subsystem migration of the remaining
+  60E15120_N3J1E root reports into `docs/subsystem-logic/`** in the human-first
+  format. Worked example:
+  [`knock_control_report.md`](docs/subsystem-logic/knock_control_report.md);
+  rules: AGENTS.md rule 8 +
+  [`docs/subsystem-logic/TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md). Each
+  item: move the named report with `git mv`, restructure it human-first
+  (header: applicable-ROMs table listing only investigated ROMs + ROM SHA-256 +
+  static-analysis disclaimer; §1 plain-language introduction; §2 step-by-step
+  body, starting with a hardware setup diagram when the subsystem touches
+  hardware; §3 technical pseudocode; §4 proof with the mandatory memory map,
+  labeling, corrections, files, validation, limits and §4.7 related reports),
+  keep every address, label and validation claim (rules 5/7), and update all
+  cross-references in the same change — including generated label artifacts via
+  their generators (rule 6d), e.g. `build_table_labels.py` source paths — then
+  re-run the pipeline validators, the link + non-empty check over `docs/` and
+  `python -m pytest tests/`. If a report's logic turns out ROM-specific rather
+  than shared, leave it in `docs/investigations/` and close the item with that
+  reason instead of migrating.
+  - **C item 41 (open)** — migrate [`alternator_control_report.md`](docs/investigations/60E15120_N3J1E/alternator_control_report.md)
+  - **C item 42 (open)** — migrate [`can_mailbox_config_report.md`](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md)
+  - **C item 43 (open)** — migrate [`cooling_fan_control_report.md`](docs/investigations/60E15120_N3J1E/cooling_fan_control_report.md)
+  - **C item 44 (open)** — migrate [`cruise_control_report.md`](docs/investigations/60E15120_N3J1E/cruise_control_report.md)
+  - **C item 45 (open)** — migrate [`dsc_can_arbitration_report.md`](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)
+  - **C item 46 (open)** — migrate [`dtc_authoring_report.md`](docs/investigations/60E15120_N3J1E/dtc_authoring_report.md)
+  - **C item 47 (open)** — migrate [`dtc_control_report.md`](docs/investigations/60E15120_N3J1E/dtc_control_report.md)
+  - **C item 48 (open)** — migrate [`e2ram_device_layer_report.md`](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md)
+  - **C item 49 (open)** — migrate [`e2ram_nv_storage_report.md`](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md)
+  - **C item 50 (open)** — migrate [`eeprom_content_map_report.md`](docs/investigations/60E15120_N3J1E/eeprom_content_map_report.md)
+  - **C item 51 (open)** — migrate [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md)
+  - **C item 52 (open)** — migrate [`idle_control_report.md`](docs/investigations/60E15120_N3J1E/idle_control_report.md)
+  - **C item 53 (open)** — migrate [`idle_target_control_report.md`](docs/investigations/60E15120_N3J1E/idle_target_control_report.md)
+  - **C item 54 (open)** — migrate [`ignition_power_state_report.md`](docs/investigations/60E15120_N3J1E/ignition_power_state_report.md)
+  - **C item 55 (open)** — migrate [`ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md)
+  - **C item 56 (open)** — migrate [`intake_solenoids_report.md`](docs/investigations/60E15120_N3J1E/intake_solenoids_report.md)
+  - **C item 57 (open)** — migrate [`load_fueling_report.md`](docs/investigations/60E15120_N3J1E/load_fueling_report.md)
+  - **C item 58 (open)** — migrate [`o2_sensor_monitor_report.md`](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)
+  - **C item 59 (open)** — migrate [`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
+  - **C item 60 (open)** — migrate [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
+  - **C item 61 (open)** — migrate [`uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
 
 ### E. Reimplementation coverage (P4)
 
