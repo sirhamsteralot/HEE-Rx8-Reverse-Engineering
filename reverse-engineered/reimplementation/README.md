@@ -16,7 +16,7 @@ Emulator cross-checks (float32 Python ports of these files vs the real ROM via
 |---|---|---|
 | `rx8_math.c` / `rx8_math.h` | 0x23b0, 0x23dc, 0x23e4, 0x23f4, 0x2404, 0x2478 | float filter/abs/max/min/clamp helpers + saturating u8 add |
 | `rx8_apv.c` / `rx8_apv.h` | 0x24c0 (via 0x43a86), 0x31bec, 0xaa90 | APV position scaling, signed fraction, per-channel tick split |
-| `rx8_knock.c` / `rx8_knock.h` | 0x13a60, 0x13b40 (clamp 0x13bd2 via `rx8_clamp_float`) | knock-retard state machine: attack/edge/hold target selection, slow-recovery pacing. See [`docs/investigations/60E15120_N3J1E/knock_control_report.md`](../../docs/investigations/60E15120_N3J1E/knock_control_report.md) |
+| `rx8_knock.c` / `rx8_knock.h` | 0x13a60, 0x13b40 (clamp 0x13bd2 via `rx8_clamp_float`) | knock-retard state machine: attack/edge/hold target selection, slow-recovery pacing. See [`docs/subsystem-logic/knock_control_report.md`](../../docs/subsystem-logic/knock_control_report.md) |
 
 ## Build and run host tests
 

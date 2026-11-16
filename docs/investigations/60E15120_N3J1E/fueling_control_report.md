@@ -8,7 +8,7 @@ the fuel-split function 0x30b08 and the SSV control 0x2178c in the SH-2E
 emulator (no hardware execution). Full evidence: [`reviews/fueling/README.md`](reviews/fueling/README.md); sceptical re-check:
 [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md); validation: `reviews/fueling/validation.json`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](knock_control_report.md) (blend weights 0x200c6), [calibration extraction](labeling/calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410), [intake solenoids](intake_solenoids_report.md) (the split flag `secondary_injectors_active_flag` 0xffffbecd from 0x30b08 is an SSV on-term — §2.1).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load input), [knock control](../../subsystem-logic/knock_control_report.md) (blend weights 0x200c6), [calibration extraction](labeling/calibration_extraction_report.md) (fuel tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) (the fueling cells exposed as PIDs 0x0006/0x0034/0x003c/0x0044/0x1410), [intake solenoids](intake_solenoids_report.md) (the split flag `secondary_injectors_active_flag` 0xffffbecd from 0x30b08 is an SSV on-term — §2.1).
 
 
 ## 1. Executive summary

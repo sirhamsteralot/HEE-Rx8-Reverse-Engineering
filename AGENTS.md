@@ -100,7 +100,7 @@ dumping it at the root.
 8. **Reports follow the human-first subsystem format** (template:
    [`docs/subsystem-logic/TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md); reports
    still under `docs/investigations/` keep the older 10-section layout —
-   [`knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)
+   [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md)
    is the reference — until migrated): header with an applicable-ROMs table
    (ROM link, ROM specifics, short one-line description), ROM SHA-256 +
    static-analysis disclaimer and a `**Related reports:**` line, then top-down
