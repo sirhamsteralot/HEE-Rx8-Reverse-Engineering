@@ -269,12 +269,30 @@ and where artifacts live.
   under `docs/` (the pipeline validators only scan `*_report.md`, so a
   truncated review note is not caught) and add a short "how to add a report"
   section to [`docs/investigations/README.md`](docs/investigations/README.md).
+  (e) shared-logic report placement — subsystem logic is **assumed identical
+  across the ROM bins until proven otherwise** (cross-ROM byte-match evidence
+  already exists for most functions — see
+  [cross_rom_differential_labeling.md](docs/investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)),
+  so a new subsystem report lands at the **`docs/investigations/` root**
+  first, written against the reference ROM `60E15120_N3J1E`; the root report
+  references any per-ROM differences found and links the more specific
+  documents in the per-ROM calibration folder `docs/investigations/<rom-id>/`,
+  which keeps the ROM-specific reports, labeling passes and `reviews/`
+  evidence. Migrate the existing per-ROM root reports the same way where
+  their logic is in fact shared: root report + per-ROM difference note, not
+  duplicated logic sections. Bake the placement rule into
+  [`AGENTS.md`](AGENTS.md) (repo map + rule 8),
+  [`docs/investigations/README.md`](docs/investigations/README.md),
+  [`docs/investigations/TEMPLATE.md`](docs/investigations/TEMPLATE.md),
+  [`README.md`](README.md) and [`docs/learnings.md`](docs/learnings.md).
   Constraints: no evidence loss — every address, label and validation claim
   survives the move (rules 5/7); reports state current findings only, no dated
   addenda. After each report is touched: re-run the pipeline validators, the
   link check over all touched docs and `python -m pytest tests/`.
-  Deliverables: reorganised `docs/investigations/` tree, consolidated indexes,
-  extended markdown check.
+  Deliverables: reorganised `docs/investigations/` tree with root-level
+  shared-logic reports + per-ROM difference notes, consolidated indexes,
+  extended markdown check, placement rules updated in the docs listed under
+  (e).
 
 ### E. Reimplementation coverage (P4)
 
