@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 26–34, 36–37, 39, 42–62 — pick up 26 next (items 24–25 closed
+**reopened**: open items 26–34, 36–37, 39, 42–90 — pick up 26 next (items 24–25 closed
 2026-11-16: SBL block `0x0–0x1fff` statically labeled + cross-ROM SBL diff, and the
 SBL→app handover incl. the `0x61a8` entry mechanism mapped — report
 [`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), record
@@ -101,7 +101,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–62)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–90)
 
 - **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
   start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
@@ -274,25 +274,59 @@ and where artifacts live.
   - **C item 60 (open)** — migrate [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
   - **C item 61 (open)** — migrate [`uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
 
-- **C item 62 (open)** — **end-of-C fold-back: push all knowledge gained during
-  group C back into the decompiled export, the label artifacts and the ECU
-  defs.** Runs once items 26–61 are closed, so nothing learned in the C reports
-  lives only in `docs/`: (a) decompiled code — re-run the annotation +
-  `integrate_reviewed_names.py` + comment-merge passes over
+- **C items 62–90 (open)** — **per-subsystem end-of-C fold-back: push each
+  subsystem's new knowledge back into the decompiled export, the label
+  artifacts and the ECU defs.** One item per subsystem covered by items 26–61,
+  so each fold-back is its own reviewable work unit and nothing learned during
+  group C lives only in `docs/`. Per item: (a) decompiled code — re-run the
+  annotation + `integrate_reviewed_names.py` + comment-merge passes over
   `reverse-engineered/decompiled/60E15120_N3J1E/` (`functions/`,
-  `firmware_decompiled.c`, `named/firmware_named.c`) so every function, RAM
-  cell and table named during C carries its accepted alias and review comment
-  in the export; (b) labels — fold the new per-subsystem records into the
-  canonical TSVs, the labels JSONs and `symbols.tsv` coverage and re-fill
+  `firmware_decompiled.c`, `named/firmware_named.c`) so the subsystem's new
+  function, RAM-cell and table names carry their accepted aliases and review
+  comments in the export; (b) labels — fold the subsystem's label record into
+  the canonical TSVs, the labels JSONs and `symbols.tsv` coverage and re-fill
   `validation.json`, keeping the rule-6 ladder (no upgrades without
-  binary-level evidence, rule 7); (c) defs — apply the table labels, scalars
-  and storage-type corrections found during C to the merged def, then
-  regenerate the per-ROM defs and `defs_table_labels.json` via the
-  re-runnable defs-merge passes (rule 6d: edit the generators, never the
-  generated files). Finish with the pipeline validators (`validate_export.py`,
+  binary-level evidence, rule 7); (c) defs — apply the subsystem's table
+  labels, scalars and storage-type corrections to the merged def, then
+  regenerate the per-ROM defs and `defs_table_labels.json` via the re-runnable
+  defs-merge passes (rule 6d: edit the generators, never the generated files).
+  Finish each item with the pipeline validators (`validate_export.py`,
   `validate_reports.py`, `verify_claims.py`, `verify_readability.py`,
   `verify_math_units.py`), the link + non-empty check over `docs/`, and
-  `python -m pytest tests/`.
+  `python -m pytest tests/`. Cross-cutting outputs stay with their own items
+  (36 export audit, 37 defs audit, 39 docs reorg); subsystems already migrated
+  to [`docs/subsystem-logic/`](docs/subsystem-logic/README.md) (alternator,
+  knock, SBL bootloader) were folded by the earlier annotation passes and are
+  out of scope here.
+  - **C item 62 (open)** — fold back **immobilizer** (item 26's report + `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM records)
+  - **C item 63 (open)** — fold back **throttle / DBW** (item 27)
+  - **C item 64 (open)** — fold back **fuel pump control** (item 28)
+  - **C item 65 (open)** — fold back **misfire detection / monitor** (item 29)
+  - **C item 66 (open)** — fold back **emissions monitors beyond O2** (item 30)
+  - **C item 67 (open)** — fold back **starting / cranking** (item 31)
+  - **C item 68 (open)** — fold back **power management / watchdog / main relay** (item 32)
+  - **C item 69 (open)** — fold back **sensor acquisition / ADC front-end** (item 33)
+  - **C item 70 (open)** — fold back **limiter** (item 34)
+  - **C item 71 (open)** — fold back [`can_mailbox_config_report.md`](docs/investigations/60E15120_N3J1E/can_mailbox_config_report.md) (item 42)
+  - **C item 72 (open)** — fold back [`cooling_fan_control_report.md`](docs/investigations/60E15120_N3J1E/cooling_fan_control_report.md) (item 43)
+  - **C item 73 (open)** — fold back [`cruise_control_report.md`](docs/investigations/60E15120_N3J1E/cruise_control_report.md) (item 44)
+  - **C item 74 (open)** — fold back [`dsc_can_arbitration_report.md`](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md) (item 45)
+  - **C item 75 (open)** — fold back [`dtc_authoring_report.md`](docs/investigations/60E15120_N3J1E/dtc_authoring_report.md) (item 46)
+  - **C item 76 (open)** — fold back [`dtc_control_report.md`](docs/investigations/60E15120_N3J1E/dtc_control_report.md) (item 47)
+  - **C item 77 (open)** — fold back [`e2ram_device_layer_report.md`](docs/investigations/60E15120_N3J1E/e2ram_device_layer_report.md) (item 48)
+  - **C item 78 (open)** — fold back [`e2ram_nv_storage_report.md`](docs/investigations/60E15120_N3J1E/e2ram_nv_storage_report.md) (item 49)
+  - **C item 79 (open)** — fold back [`eeprom_content_map_report.md`](docs/investigations/60E15120_N3J1E/eeprom_content_map_report.md) (item 50)
+  - **C item 80 (open)** — fold back [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md) (item 51)
+  - **C item 81 (open)** — fold back [`idle_control_report.md`](docs/investigations/60E15120_N3J1E/idle_control_report.md) (item 52)
+  - **C item 82 (open)** — fold back [`idle_target_control_report.md`](docs/investigations/60E15120_N3J1E/idle_target_control_report.md) (item 53)
+  - **C item 83 (open)** — fold back [`ignition_power_state_report.md`](docs/investigations/60E15120_N3J1E/ignition_power_state_report.md) (item 54)
+  - **C item 84 (open)** — fold back [`ignition_timing_report.md`](docs/investigations/60E15120_N3J1E/ignition_timing_report.md) (item 55)
+  - **C item 85 (open)** — fold back [`intake_solenoids_report.md`](docs/investigations/60E15120_N3J1E/intake_solenoids_report.md) (item 56)
+  - **C item 86 (open)** — fold back [`load_fueling_report.md`](docs/investigations/60E15120_N3J1E/load_fueling_report.md) (item 57)
+  - **C item 87 (open)** — fold back [`o2_sensor_monitor_report.md`](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md) (item 58)
+  - **C item 88 (open)** — fold back [`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md) (item 59)
+  - **C item 89 (open)** — fold back [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) (item 60)
+  - **C item 90 (open)** — fold back [`uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) (item 61)
 
 ### E. Reimplementation coverage (P4)
 
