@@ -158,6 +158,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "subsystem-logic/sbl_bootloader_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "README.md": {
         "reg_pairs": 1,
         "call_claims": 0,
@@ -168,6 +173,11 @@
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 24
+      },
+      "reviews/boot_handover/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
       },
       "reviews/cooling_fan_control/README.md": {
         "reg_pairs": 0,
@@ -243,6 +253,11 @@
         "pool_claims": 0
       },
       "reviews/load_fueling_model/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
+      "reviews/sbl_bootloader/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 0
