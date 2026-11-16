@@ -4,10 +4,10 @@
 - **Author:** <name>
 - **Status:** open / in-progress / done
 - **Placement:** subsystem/logic reports whose logic is shared across ROM bins
-  (assumed until proven otherwise) go at the `docs/investigations/` root,
-  written against the reference ROM `60E15120_N3J1E`; ROM-specific findings go
-  in `docs/investigations/<rom-id>/` and are linked from the root report — see
-  [README.md](README.md)
+  (assumed until proven otherwise) go in
+  [`docs/subsystem-logic/`](../subsystem-logic/README.md), written against the
+  reference ROM `60E15120_N3J1E`; ROM-specific findings go in
+  `docs/investigations/<rom-id>/` and are linked from the subsystem report
 - **Related binaries:** see `binaries/manifest.csv` (list SHA-256 prefixes used)
 - **Related code:** paths under `reverse-engineered/` with addresses
 

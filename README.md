@@ -100,7 +100,7 @@ Full rules: [AGENTS.md](AGENTS.md).
 | `submodules/` | Read-only upstream repos: `RX8Defs` (XML defs), `Rx8Man` (flash tooling), `Mazda_RX8_PCM_ReverseEngineering` (10 stock ROMs, captures, Ghidra `.gar`). |
 | `binaries/` | Immutable dumps of **our own acquisitions** + `manifest.csv` (recursive SHA-256 + provenance). |
 | `reverse-engineered/` | `disassembly/` + `decompiled/` exports per ROM, `reimplementation/` (compilable C11 + host tests). |
-| `docs/` | `investigations/` (subsystem reports + evidence), `architecture/` (memory map, design, hardware pinout, emulator guides), `references/`, [`learnings.md`](docs/learnings.md). |
+| `docs/` | `subsystem-logic/` (subsystem documentation), `investigations/` (per-ROM evidence + labeling), `architecture/` (memory map, design, hardware pinout, emulator guides), `references/`, [`learnings.md`](docs/learnings.md). |
 | `data/` | `definitions/` (RomRaider/ECUFlash XML), `labels/`, `maps/` (extracted tables + scalars), `dtc/`, `logs/` (real-car datalogs), `tunes/`. |
 | `utilities/` | `scripts/emu/` (emulator), `scripts/rx8-pcm-pipeline/` (Ghidra pipeline + validators), `scripts/patchers/`, `scripts/defs-merge/`, extraction scripts, `tools/ghidra/`. |
 | `tests/` | pytest harnesses (emulator, corpus, golden traces, ISO-TP/CAN/OBD/UI). |
@@ -114,10 +114,10 @@ Every unit gets binary-level verification plus the pipeline validators before
 review. Branch naming, commit style, the full task workflow, and the exact
 verification commands are in [AGENTS.md](AGENTS.md).
 
-Subsystem reports for logic shared across the ROM bins (assumed shared until
-proven otherwise) live at the [`docs/investigations/`](docs/investigations/README.md)
-root and link to the per-ROM difference documents in the `<rom-id>/` folders —
-see [`docs/investigations/README.md`](docs/investigations/README.md).
+Subsystem documentation for logic shared across the ROM bins (assumed shared
+until proven otherwise) lives in
+[`docs/subsystem-logic/`](docs/subsystem-logic/README.md) and links to the
+per-ROM difference documents in `docs/investigations/<rom-id>/`.
 
 Conventions: ISO dates, kebab-case filenames, `0x` addresses; memory map — ROM
 `0x00000000–0x0007ffff`, RAM `0xffff6000–0xffffdfff`, volatile I/O
