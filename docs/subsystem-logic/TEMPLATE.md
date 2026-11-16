@@ -1,5 +1,13 @@
 # <Subsystem> — subsystem report
 
+Template guidance: the report is organized top-down from human to machine —
+parts 1–2 are for anyone, part 3 for engineers, part 4 is the proof. Write the
+final report in a purely factual tone: state what the subsystem is and does,
+never "findings", never Q&A-style phrasing ("already", "you see"), and do not
+carry this template's explanatory scaffolding lines (including this paragraph)
+into the final report. Cross-links to related reports go in the proof section
+(§4.7), not in the header.
+
 | Date | What changed | Version |
 |------|--------------|---------|
 | YYYY-MM-DD | Initial report | 1 |
@@ -13,15 +21,9 @@ never re-derived here):
 |-----|---------------|----------------------------|
 | [`60E15120_N3J1E`](../investigations/60E15120_N3J1E/README.md) | reference ROM — all `0x` addresses in this report are from this bin unless a row says otherwise; SHA-256 `<hash from binaries/manifest.csv>`, untouched | <what this subsystem does on this ROM, one line> |
 
-All findings are from static analysis of the canonical export
-(`reverse-engineered/decompiled/`), the disassembly and the ROM bytes unless a
-section explicitly says otherwise (then it says what was executed instead).
-
-**Related reports:** <link upstream/downstream subsystem reports and per-ROM
-difference documents here instead of re-deriving their content>
-
-This report reads top-down from human to machine (AGENTS.md rule 8): parts 1–2
-are for anyone, part 3 for engineers, part 4 is the proof.
+All content in the report is from static analysis of the canonical export
+(`reverse-engineered/decompiled/`), the disassembly and the ROM bytes, except
+where a section explicitly states otherwise.
 
 ## 1. Introduction — what this subsystem is and does
 
@@ -82,3 +84,8 @@ artifact covers.
 
 What this report does not cover, and what would disprove the shared-logic
 assumption for a given ROM.
+
+### 4.7 Related reports
+
+Links to upstream/downstream subsystem reports and per-ROM difference
+documents — cross-link here instead of re-deriving their content.

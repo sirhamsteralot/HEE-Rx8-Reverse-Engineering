@@ -103,19 +103,23 @@ dumping it at the root.
    [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md)
    is the reference — until migrated): header with an applicable-ROMs table
    (ROM link, ROM specifics, short one-line description), ROM SHA-256 +
-   static-analysis disclaimer and a `**Related reports:**` line, then top-down
+   static-analysis disclaimer, then top-down
    from human to machine — (1) a plain-language introduction (what the
    subsystem is and does, what the numbers mean), (2) the body: basic operation
    step by step in sub-chapters (`## 2.1`, `## 2.2`, …) where they break down
    subsystems or logic, with flow/breakdown diagrams (ASCII or mermaid) and
    tables where they help, (3) only then the technical pseudocode, (4) last
    the proof section holding the **mandatory memory map (function + RAM
-   address tables)**, labeling applied, corrections, files, validation and
-   limits. Reports contain facts only: the single changelog prose allowed is
+   address tables)**, labeling applied, corrections, files, validation,
+   limits and a related-reports list. Reports contain facts only: the single
+   changelog prose allowed is
    one changelog table at the very top of the document (date, what changed,
-   version) — git history remains the detailed record. Detailed evidence goes in
-   the matching `reviews/<subsystem>/` folder; link upstream/downstream reports in a
-   `**Related reports:**` header line instead of re-deriving their content.
+   version) — git history remains the detailed record. The report states what
+   the subsystem is and does in purely factual terms — no "findings" wording,
+   no Q&A-style phrasing ("already", "you see"), and none of the template's
+   explanatory scaffolding lines in the final document. Detailed evidence goes in
+   the matching `reviews/<subsystem>/` folder; link upstream/downstream reports in the
+   proof section's related-reports list instead of re-deriving their content.
    Validation proves what it lists — never write "verified working" beyond what a
    validation artifact covers. **Cross-reference everywhere**: link every mentioned
    `.md` file, never leave it as a bare code span. **Placement**: a subsystem report
