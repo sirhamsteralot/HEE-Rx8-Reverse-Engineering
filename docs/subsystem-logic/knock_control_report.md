@@ -2,7 +2,7 @@
 
 | Date | What changed | Version |
 |------|--------------|---------|
-| 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; findings unchanged) | 1 |
+| 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; content unchanged) | 1 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -14,16 +14,10 @@ never re-derived here):
 | [`60E15120_N3J1E`](../investigations/60E15120_N3J1E/README.md) | reference ROM — all `0x` addresses in this report are from this bin unless a row says otherwise; `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin` (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`), untouched | Closed-loop knock control: retards ignition up to −10° when the knock sensors hear detonation, recovers slowly, learns a persistent offset to EEPROM |
 | [`60E0G500_N3ZHEC`](../investigations/60E0G500_N3ZHEC/labeling/) | pipeline export + cross-ROM label propagation only | No knock-specific per-ROM difference documented; shared-logic assumption stands (byte-exact cross-ROM function matches, see [cross-ROM differential labeling](../investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)) |
 
-All findings are from static analysis of the canonical export
+Everything in this report is from static analysis of the canonical export
 ([`reverse-engineered/decompiled/`](../../reverse-engineered/decompiled/60E15120_N3J1E/)),
-the disassembly and the ROM bytes unless a
-section explicitly says otherwise (then it says what was executed instead —
-see §4.5 for the emulator cross-check).
-
-**Related reports:** retard applies to [ignition timing](../investigations/60E15120_N3J1E/ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](../investigations/60E15120_N3J1E/fueling_control_report.md); load axis from [load & fuelling model](../investigations/60E15120_N3J1E/load_fueling_report.md); [calibration extraction](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md) (knock tables in [`data/maps/`](../../data/maps/60E15120_N3J1E/)); [UDS/Mode-22 dispatch](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) (PID 0x1746 exposes this report's retard cell); [OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) §7/§9 (RPM path, emulator evidence); [intake solenoids](../investigations/60E15120_N3J1E/intake_solenoids_report.md) and [injector pin mapping](../investigations/60E15120_N3J1E/reviews/fueling/injector_pin_mapping.md) (neighbouring actuators); [limiter review](../investigations/60E15120_N3J1E/reviews/limiter/README.md) (rev-limit retards share the apply path). Full evidence: [`reviews/knock_control/README.md`](../investigations/60E15120_N3J1E/reviews/knock_control/README.md).
-
-This report reads top-down from human to machine (AGENTS.md rule 8): parts 1–2
-are for anyone, part 3 for engineers, part 4 is the proof.
+the disassembly and the ROM bytes, except where a section explicitly states
+otherwise.
 
 ## 1. Introduction — what knock control is and does
 
@@ -42,12 +36,12 @@ In plain language:
 - If the knock sensors hear detonation, the PCM **immediately retards the
   spark a little (−1.0° per cycle)**; when the knock stops it creeps back
   slowly (+0.35° per 62 cycles), never past the calibrated window (−10…0°).
-- Consequence: the **ignition timing you see on OBD already includes any knock
+- Consequence: the **ignition timing reported on OBD includes any knock
   retard** — the base timing maps do not show it. If the knock sensors are
   unhealthy, a fail-safe table applies instead, and a persistent learned offset
   is stored in EEPROM.
 
-**Key finding: knock control applies in open loop as well as closed loop.**
+**Knock control applies in open loop as well as closed loop.**
 None of the ~40 functions in the knock chain read the loop-mode flags; its
 gates are engine conditions only (run time, coolant, load, RPM, sensor health,
 timing-not-already-retarded). Loop mode changes the *fueling* around the
@@ -553,3 +547,7 @@ these annotations; the canonical C carries the accepted names. The ROM was not
 modified. What would disprove the shared-logic assumption for a given ROM: a
 byte-diff of the functions in §4.1 against that ROM (cross-ROM evidence:
 [`cross_rom_differential_labeling.md`](../investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)).
+
+### 4.7 Related reports
+
+Retard applies to [ignition timing](../investigations/60E15120_N3J1E/ignition_timing_report.md); blend-weight producer 0x200c6 feeds [fueling control](../investigations/60E15120_N3J1E/fueling_control_report.md); load axis from [load & fuelling model](../investigations/60E15120_N3J1E/load_fueling_report.md); [calibration extraction](../investigations/60E15120_N3J1E/labeling/calibration_extraction_report.md) (knock tables in [`data/maps/`](../../data/maps/60E15120_N3J1E/)); [UDS/Mode-22 dispatch](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) (PID 0x1746 exposes this report's retard cell); [OS scheduling deep dive](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md) §7/§9 (RPM path, emulator evidence); [intake solenoids](../investigations/60E15120_N3J1E/intake_solenoids_report.md) and [injector pin mapping](../investigations/60E15120_N3J1E/reviews/fueling/injector_pin_mapping.md) (neighbouring actuators); [limiter review](../investigations/60E15120_N3J1E/reviews/limiter/README.md) (rev-limit retards share the apply path). Full evidence: [`reviews/knock_control/README.md`](../investigations/60E15120_N3J1E/reviews/knock_control/README.md).

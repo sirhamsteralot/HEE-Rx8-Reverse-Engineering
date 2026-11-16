@@ -85,6 +85,10 @@ validation JSONs).
   records how they changed. Shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) in the human-first
   format of [`docs/subsystem-logic/TEMPLATE.md`](subsystem-logic/TEMPLATE.md).
+  Subsystem-logic reports are factual design/operation documents: related-report
+  links live in the proof section (§4.7), not the header; no "findings" wording,
+  no Q&A-style phrasing, no meta commentary about the document's own layout,
+  and the template's explanatory scaffolding lines are dropped in the final report.
 - Placement: subsystem logic is assumed identical across ROM bins until proven
   otherwise, so shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) (written against the
