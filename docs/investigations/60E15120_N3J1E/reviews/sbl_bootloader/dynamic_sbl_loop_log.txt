@@ -1,0 +1,22 @@
+dynamic log: SBL loop + app->SBL handover checks, profile 60E15120_N3J1E
+re-runnable as: python -m pytest tests/test_sbl_bootloader.py -v
+
+FUN_00001008() with stock hole 0x7fb00=0002/0x7fb02=fffd -> r0 = 2
+battery via AN14 = 12.5 V; FUN_00056428() -> r0 = 0
+entered SBL loop 0x1378 (trampoline-style SP=0xffffdfa0): True pc 0x1260
+SBL 1085 -> ['5085'] dfb0 1 dfb1 90 dfb2 90 dfb3 165 dfb4 165
+SBL 2701 -> ['670155aa55'] dfb0 1 dfb1 90 dfb2 1 dfb3 165 dfb4 165
+SBL 27024daccd -> ['6702'] dfb0 1 dfb1 1 dfb2 0 dfb3 165 dfb4 165
+SBL b100b200 -> ['f100b2'] dfb0 1 dfb1 1 dfb2 0 dfb3 1 dfb4 0
+SBL 3e01 -> ['7e'] dfb0 1 dfb1 1 dfb2 0 dfb3 1 dfb4 0
+SBL 1101 -> ['51'] dfb0 1 dfb1 1 dfb2 0 dfb3 1 dfb4 0
+after 11 01: pc 0x1a44 sr 0xf1
++400k cycles: pc 0x1a44 WDT TCSR 0xbc
+reset: pc 0x4f124f22
+reset trace hit 000008b8 : True
+reset trace hit 000004e0 : True
+reset trace hit 00001298 : True
+reset trace hit 000006c8 : False
+reset trace hit 00001038 : True
+reset trace hit 0000d204 : True
+reset trace hit 00001378 : False
