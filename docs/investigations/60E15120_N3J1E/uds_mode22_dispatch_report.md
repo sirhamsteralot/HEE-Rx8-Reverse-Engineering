@@ -13,7 +13,7 @@ dynamically-cited claim names the emulator observation. Full evidence:
 (CAN/ISO-TP plumbing, UDS entry 0x680a0, task table 0x4998); PID semantics cross-checked
 against [fueling_control_report.md](fueling_control_report.md),
 [ignition_timing_report.md](ignition_timing_report.md),
-[knock_control_report.md](knock_control_report.md),
+[knock_control_report.md](../../subsystem-logic/knock_control_report.md),
 [load_fueling_report.md](load_fueling_report.md); cross-ROM propagation of this table:
 [cross_ecu/cross_rom_mode22_pid_handlers.md](labeling/cross_ecu/cross_rom_mode22_pid_handlers.md)
 + [cross_ecu/cross_rom_differential_labeling.md](labeling/cross_ecu/cross_rom_differential_labeling.md);

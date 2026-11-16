@@ -351,6 +351,9 @@ def scan_line(src, line, fn_hint=None):
 
 
 SOURCES = [(rep, (REPORTS_DIR / rep).read_bytes().decode('utf-8', errors='surrogateescape')) for rep in REPORTS]
+SUBSYS_DIR = ROOT / 'docs' / 'subsystem-logic'
+for sub_rep in sorted(SUBSYS_DIR.glob('*_report.md')):
+    SOURCES.append((f'subsystem-logic/{sub_rep.name}', sub_rep.read_bytes().decode('utf-8', errors='surrogateescape')))
 for extra in [INV / 'README.md'] + sorted(INV.glob('reviews/*/README.md')):
     name = extra.name if extra.parent == INV else f'reviews/{extra.parent.name}/README.md'
     SOURCES.append((name, extra.read_bytes().decode('utf-8', errors='surrogateescape')))

@@ -126,7 +126,7 @@ Note: our `60E15120_N3J1E.bin` contains `N3ZHE` at 0x6c046 (documented discrepan
   compensation, cranking angle timing, **knock retard**, **DSC torque-request
   derates** (from the EBCM; thought to apply to the leading rotor only). The forum
   itself says knock-retard and cranking-angle logic were "still under development" —
-  **our [`knock_control_report.md`](../investigations/60E15120_N3J1E/knock_control_report.md) is ahead** (retard negative, clamp [−10, 0]°,
+  **our [`knock_control_report.md`](../subsystem-logic/knock_control_report.md) is ahead** (retard negative, clamp [−10, 0]°,
   attack −1.0°/cycle, recovery +0.35°/62 counts).
 - **Open-loop fueling chain**: all lambda tables store the decimal part (1 is added
   back late in the math). `Final = max(OL target, TipIn×BaroCorr) × CLTCorr`; safe-mode

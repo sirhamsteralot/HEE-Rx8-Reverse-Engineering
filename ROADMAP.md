@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 24–34, 36–37, 39–40 — pick up 24 next (item 38 closed
+**reopened**: open items 24–34, 36–37, 39 — pick up 24 next (item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
 UDS/CAN, warm/cold reset split 0x4e0 (magic 0x5aa5a55a @0xffffdffc), key-off
@@ -95,7 +95,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39–40)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 24–34, 36–37, 39)
 
 - **C item 24 (open)** — **SBL bootloader block (`0x0–0x1fff`) static labeling +
   report.** The export carries 80 functions there but only 15 are named (all
@@ -219,34 +219,6 @@ and where artifacts live.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests; then the defs passes +
   pipeline validators + `python -m pytest tests/`.
-
-- **C item 40 (open)** — **rewrite the report template human-first.** Pick up
-  before item 39 — the reorganisation should apply the new template, not the
-  old one. The rewritten subsystem-report template lands as
-  `docs/subsystem-logic/TEMPLATE.md` (the generic investigation template stays
-  at [`docs/investigations/TEMPLATE.md`](docs/investigations/TEMPLATE.md)). Rewrite it so a report
-  reads top-down from human to machine: (1) a simple introduction — what the
-  subsystem is and does in plain language; (2) the body — basic operation
-  explained step by step, with a flow chart and breakdown diagrams (ASCII or
-  mermaid) where they help; (3) only then the technical pseudocode; (4) last
-  the proof section — the evidence, with links to every memory address
-  currently used as proof and validation (function + RAM address tables,
-  literal-pool ranges, `validation.json` records, ROM SHA-256 from
-  `binaries/manifest.csv`). Keep the mandatory rule-8 elements (memory map,
-  validation, limits) but place them in the proof section instead of
-  interleaving them. Reports contain facts only — no changelog prose
-  anywhere, except a single changelog table at the very top of the document
-  (date, what changed, version); git history remains the detailed
-  record. When executing, update [`AGENTS.md`](AGENTS.md) rule 8,
-  [`docs/subsystem-logic/README.md`](docs/subsystem-logic/README.md) and
-  [`docs/investigations/README.md`](docs/investigations/README.md) (which
-  currently bans change-log addenda outright) to match, migrate one existing
-  report (e.g.
-  [`knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md))
-  into `docs/subsystem-logic/` as the worked example, and re-run the pipeline
-  validators + link check +
-  `python -m pytest tests/`. Deliverables: new `docs/subsystem-logic/TEMPLATE.md`,
-  updated rule-8 wording, one migrated example report in `docs/subsystem-logic/`.
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
   docs.** `docs/investigations/` has grown organically: ~20 root reports for

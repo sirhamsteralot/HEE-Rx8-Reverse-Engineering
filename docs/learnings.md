@@ -76,7 +76,7 @@ validation JSONs).
 
 ## Reports, citation rules and verify_claims.py
 
-- Root `*_report.md` files follow [`knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)'s 10-section format,
+- Root `*_report.md` files follow [`fueling_control_report.md`](investigations/60E15120_N3J1E/fueling_control_report.md)'s 10-section format,
   with a mandatory memory map (function + RAM address tables) and a plain-language
   §1a after the executive summary (AGENTS.md rule 8;
   style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
