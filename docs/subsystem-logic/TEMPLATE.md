@@ -39,8 +39,11 @@ The basic operation in the order it happens, one short paragraph per step.
 Use sub-chapters (`## 2.1`, `## 2.2`, …) to explain the relevant subsystems and
 logic where required. When the subsystem touches hardware, start with a hardware
 setup diagram (ASCII or mermaid) showing the relevant peripherals, terminals and
-signals — distinguishing traced pin routing from firmware-level paths. Add a
-flow chart or breakdown diagram (ASCII or mermaid) where it helps, and the
+signals — distinguishing traced pin routing from firmware-level paths. Near the
+start of the body, include a structured overview diagram (ASCII or mermaid) of
+the subsystem's components and execution order — which tasks/batches run what,
+and in what order — so the whole is visible at a glance before the step-by-step
+detail. Add further flow charts or breakdown diagrams where they help, and the
 calibrated tables when they explain the operation:
 
 ## 2.1 <subsystem / logic stage>

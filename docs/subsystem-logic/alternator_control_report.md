@@ -59,7 +59,35 @@ GPIO is driven from `0x26760`.
 ### 2.2 Task structure — three mask-0x10 batches
 
 Charging control is split across **three mask-0x10 batches** (all inherited
-`ref_alternator*` names — verified and renamed, none a misnomer):
+`ref_alternator*` names — verified and renamed, none a misnomer). The structured
+overview — which tasks dispatch which batch, what each batch runs, in what
+order, and where the results go:
+
+```mermaid
+flowchart TD
+    T14["task[14] 0x11adc charging_control_batch"] --> PIDT["alternator_pid_task 0x26868"]
+    T10["task[10] 0x11744"] --> MON["alternator_monitor_batch 0x2680e"]
+    M0["0x114d0"] --> CTRL["alternator_control_main_batch 0x267c6"]
+
+    PIDT --> TGT["0x25c6c voltage target select<br/>14.2 V or tbl 0x6a5b0(battery temp) ± hyst<br/>→ 0xffffb59c (PID 0x097c)"]
+
+    CTRL --> C1["0x25a22 → 0x25a3c → 0x25a68 → 0x25b36 → 0x25ba4<br/>latches, overvoltage flags, speed ×2.08 → 0xffffb598,<br/>speed/crank gates, battery temp → 0xffffb5c4"]
+    C1 --> C2["0x2616e voltage error clamp ±2.5 → 0xffffb5c8<br/>field target tbl 0x6a54c → 0xffffb5a0"]
+    C2 --> C3["0x26624 duty base tbl 0x6a5c4 → clamp [0,100] tbl 0x6a560<br/>→ 0xffffb5ac (PID 0x16e8)"]
+    C3 --> C4["0x25710 duty % → counts 0xffff9f48<br/>vs period 0xffff9f44 = 1000"]
+    C4 --> ATU["ATU-II ch5B PWM<br/>service 0x57c6 → GR5B 0xfffff4e4 → field winding (TIO5B)"]
+    CTRL --> P2502["0x545bc → P2502 (slot 0x7b)"]
+
+    MON --> M1["0x257b4 → 0x2590a → 0x25aa0 → 0x2635c<br/>confirmation timers (0x138 window)"]
+    M1 --> M2["0x264f0 high_load_flag 0xffffb5b3<br/>0x26760 warning flag 0xffffb5b4"]
+    M2 --> M3["0x54590 → P2503 (slot 0x7c)<br/>0x545a6 → P2504 (slot 0x7d)"]
+    M2 --> CAN["0x28c78 packs 0xffffb5b4 → CAN word 0xffffbab2 bit 0x40 (cluster)<br/>PID 0x0968"]
+
+    M2 -.-> DRAG["0x2ce18 drag torque tbl 0x6a790 × load ratio → 0xffffbcc4<br/>(drivability compensation)"]
+```
+
+Callee order within each batch is the literal-word order of the batch's ROM
+table (control: 0x26888–0x268b0, monitor: 0x268b4–0x268d0, PID task: 0x268d8).
 
 - `alternator_control_main_batch` 0x267c6 (called from 0x114d0): the **control**
   path — alternator speed, overvoltage flags, battery temperature model,

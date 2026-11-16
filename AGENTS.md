@@ -112,8 +112,10 @@ dumping it at the root.
    step by step in sub-chapters (`## 2.1`, `## 2.2`, …) where they break down
    subsystems or logic, with a hardware setup diagram (ASCII or mermaid) of the
    relevant peripherals, terminals and signals when the subsystem touches
-   hardware (distinguish traced pin routing from firmware-level paths), with
-   flow/breakdown diagrams (ASCII or mermaid) and
+   hardware (distinguish traced pin routing from firmware-level paths), with a
+   structured overview diagram (ASCII or mermaid) near the start of the body
+   showing the components and execution order (which tasks/batches run what,
+   and in what order), plus flow/breakdown diagrams (ASCII or mermaid) and
    tables where they help, (3) only then the technical pseudocode, (4) last
    the proof section holding the **mandatory memory map (function + RAM
    address tables)**, labeling applied, corrections, files, validation,
