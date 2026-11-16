@@ -34,6 +34,9 @@ re-derived in the shared report. Evidence (review folders, validation records) s
 - Subsystems that touch hardware get a hardware setup diagram (ASCII or
   mermaid) with the relevant peripherals, terminals and signals, distinguishing
   traced pin routing from firmware-level paths.
+- Every report carries a structured overview diagram (ASCII or mermaid) near
+  the start of its body: the subsystem's components and execution order — which
+  tasks/batches run what, and in what order.
 - `docs/investigations/` remains the home of per-ROM evidence, labeling passes
   and ROM-specific findings — see
   [`docs/investigations/README.md`](../investigations/README.md).

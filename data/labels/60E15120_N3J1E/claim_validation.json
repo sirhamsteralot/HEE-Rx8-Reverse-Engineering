@@ -148,7 +148,7 @@
         "pool_claims": 2
       },
       "subsystem-logic/alternator_control_report.md": {
-        "reg_pairs": 1,
+        "reg_pairs": 2,
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 1
