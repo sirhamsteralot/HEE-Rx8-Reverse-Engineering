@@ -3,12 +3,6 @@
   "rom": "60E15120_N3J1E.bin",
   "checks": {
     "reports": {
-      "alternator_control_report.md": {
-        "reg_pairs": 0,
-        "call_claims": 0,
-        "pool_claims": 0,
-        "word_assigns": 3
-      },
       "can_mailbox_config_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -152,6 +146,12 @@
         "reg_pairs": 0,
         "call_claims": 0,
         "pool_claims": 2
+      },
+      "subsystem-logic/alternator_control_report.md": {
+        "reg_pairs": 1,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 1
       },
       "subsystem-logic/knock_control_report.md": {
         "reg_pairs": 0,

@@ -38,6 +38,7 @@ OUT = LABELS / "defs_table_labels.json"
 
 REPORT = "docs/investigations/60E15120_N3J1E"
 KNOCK_REPORT = "docs/subsystem-logic"  # knock_control_report.md lives in the shared-logic tree
+ALT_REPORT = "docs/subsystem-logic"  # alternator_control_report.md lives in the shared-logic tree
 
 # ---------------------------------------------------------------------------
 # Curated entries transcribed from the investigation reports (citations in
@@ -419,29 +420,29 @@ REPORT_ENTRIES = {
     "0x6af40": dict(name="Idle Ratio Calc D (candidate)", category="Idle Control", confidence="candidate",
         note="16 u16, axis 0x79538, data 0x79578; ratio calc input in 0x3337c; exact role not fully established.",
         source=f"{REPORT}/idle_control_report.md §3"),
-    # ---- Alternator / charging (alternator_control_report.md §3)
+    # ---- Alternator / charging (alternator_control_report.md §2.9)
     "0x6a54c": dict(name="Alternator Field Drive Target vs Alt Speed", category="Alternator Control",
         note="11 u16, alt-speed axis 0x74ae0 (0xffffb598 = engine rpm x 2.08), data 0x74b0c; field-drive target in alternator_voltage_error_calc 0x2616e; upstream name 'Alternator Duty Cycle Max' corrected.",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a5c4": dict(name="Alternator Duty Base 3D (Alt Speed x Load)", category="Alternator Control",
         note="3D 11x12 u8, axes 0x74c54/0x74c80 (alt speed, filtered electrical load 0xffffb5e0), data 0x74cb0; duty base in alternator_duty_calc 0x26624.",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a560": dict(name="Alternator Duty To Percent Scale", category="Alternator Control",
         note="13 u16, axis 0x74b24, data 0x74b58; duty-to-percent clamp [0,100] in 0x26624; upstream name 'Alternator Diagnostic Voltage Delta to DC' corrected.",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a524": dict(name="Battery Temp Model - Speed Decay", category="Alternator Control",
         note="7 u8, vehicle-speed axis 0x74a84, data 0x74aa0; battery-temp model decay in battery_temp_model 0x25ba4.",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a5b0": dict(name="Charging Voltage Target vs Battery Temp", category="Alternator Control",
         note="9 u16, battery-temp axis 0x74c1c (0xffffb5c4), data 0x74c40; voltage target in alternator_voltage_target_select 0x25c6c (14.2 V base +/- hysteresis).",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a59c": dict(name="Charging Voltage Target - Alt Mode", category="Alternator Control",
         note="9 u16 (all 0 stock), axis 0x74be4, data 0x74c08; alternate-mode voltage target in 0x25c6c.",
-        source=f"{REPORT}/alternator_control_report.md §3"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9"),
     "0x6a790": dict(name="Alternator Drag Torque vs Alt Speed (candidate)", category="Alternator Control",
         confidence="candidate",
         note="5 u16, alt-speed axis 0x75cb4, data 0x75cc8; speed-indexed table x ratio stored to 0xffffbcc4 in 0x2ce18; Nm and ratio physical meanings unproven (defs-merge review).",
-        source=f"{REPORT}/alternator_control_report.md §3; defs-merge/README.md (0x2ce18 candidate)"),
+        source=f"{ALT_REPORT}/alternator_control_report.md §2.9; defs-merge/README.md (0x2ce18 candidate)"),
     # ---- CAN 0x212-derived signal consumers (dsc_can_arbitration_report.md; 0x218c4 body)
     "0x6a150": dict(name="DSC Mode C - Max Throttle Plate Opening (RPM)", category="Torque Control",
         note="19 u8, rpm axis 0x7273c, data 0x72788; read in throttle plate control 0x218c4 when DSC mode bit 0x40 (0xffffbbcc, from the CAN 0x212 mode byte) is set and 0xffffbbca clear.",

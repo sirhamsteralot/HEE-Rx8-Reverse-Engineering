@@ -264,7 +264,7 @@ Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
   0x24b8c; MT producer not traced here).
 - `high_load_flag` 0xffffb5b3's underlying quantity sits in the alternator domain (`electrical_load_filtered` 0xffffb5a4 ratio
   in 0x2ce18); its physical meaning is deferred to
-  [`alternator_control_report.md`](alternator_control_report.md).
+  [`alternator_control_report.md`](../../subsystem-logic/alternator_control_report.md).
 - The throttle-plate motor drive itself (0x218c4 chain) and the
   package-pin↔connector-terminal hop (terminals 1B/1C) are outside this pass.
 - `candidate_` labels are hypotheses pending dynamic or cross-ROM proof.
