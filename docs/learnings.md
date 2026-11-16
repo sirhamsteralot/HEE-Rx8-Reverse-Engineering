@@ -80,8 +80,11 @@ validation JSONs).
   with a mandatory memory map (function + RAM address tables) and a plain-language
   §1a after the executive summary (AGENTS.md rule 8;
   style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
-  findings — don't append dated change-log addenda (git history records how
-  they changed).
+  findings — the single changelog prose allowed is one changelog table at the
+  very top of the report (date, what changed, version); git history
+  records how they changed. Shared-logic subsystem reports live in
+  [`docs/subsystem-logic/`](subsystem-logic/README.md) in the human-first
+  format of [`docs/subsystem-logic/TEMPLATE.md`](subsystem-logic/TEMPLATE.md).
 - Placement: subsystem logic is assumed identical across ROM bins until proven
   otherwise, so shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) (written against the
