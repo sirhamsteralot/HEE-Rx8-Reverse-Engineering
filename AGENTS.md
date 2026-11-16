@@ -102,12 +102,18 @@ dumping it at the root.
    still under `docs/investigations/` keep the older 10-section layout —
    [`fueling_control_report.md`](docs/investigations/60E15120_N3J1E/fueling_control_report.md)
    is the reference — until migrated): header with an applicable-ROMs table
-   (ROM link, ROM specifics, short one-line description), ROM SHA-256 +
+   (ROM link, ROM specifics, short one-line description; list only ROMs actually
+   investigated for the subsystem — never assert shared logic for an
+   uninvestigated ROM, the header text carries the shared-logic assumption),
+   ROM SHA-256 +
    static-analysis disclaimer, then top-down
    from human to machine — (1) a plain-language introduction (what the
    subsystem is and does, what the numbers mean), (2) the body: basic operation
    step by step in sub-chapters (`## 2.1`, `## 2.2`, …) where they break down
-   subsystems or logic, with flow/breakdown diagrams (ASCII or mermaid) and
+   subsystems or logic, with a hardware setup diagram (ASCII or mermaid) of the
+   relevant peripherals, terminals and signals when the subsystem touches
+   hardware (distinguish traced pin routing from firmware-level paths), with
+   flow/breakdown diagrams (ASCII or mermaid) and
    tables where they help, (3) only then the technical pseudocode, (4) last
    the proof section holding the **mandatory memory map (function + RAM
    address tables)**, labeling applied, corrections, files, validation,

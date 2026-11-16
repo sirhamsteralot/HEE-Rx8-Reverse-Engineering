@@ -12,7 +12,6 @@ never re-derived here):
 | ROM | ROM specifics | Short one-line description |
 |-----|---------------|----------------------------|
 | [`60E15120_N3J1E`](../investigations/60E15120_N3J1E/README.md) | reference ROM — all `0x` addresses in this report are from this bin unless a row says otherwise; `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin` (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`), untouched | Closed-loop knock control: retards ignition up to −10° when the knock sensors hear detonation, recovers slowly, learns a persistent offset to EEPROM |
-| [`60E0G500_N3ZHEC`](../investigations/60E0G500_N3ZHEC/labeling/) | pipeline export + cross-ROM label propagation only | No knock-specific per-ROM difference documented; shared-logic assumption stands (byte-exact cross-ROM function matches, see [cross-ROM differential labeling](../investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)) |
 
 Everything in this report is from static analysis of the canonical export
 ([`reverse-engineered/decompiled/`](../../reverse-engineered/decompiled/60E15120_N3J1E/)),
@@ -49,7 +48,25 @@ knock correction, not the correction itself.
 
 ## 2. How it works, step by step
 
-### 2.1 Sensing — listening to each rotor
+### 2.1 Hardware setup — sensor, amplifier, pins
+
+```mermaid
+flowchart LR
+    KS[Knock sensor] -- "signal pair (Y/B, Y/R)" --> TT["PCM terminals 1F (−) / 1T (+)"]
+    KS -- "shield (B)" --> TG["PCM terminal 1G"]
+    TT --> ADC["ADC input<br/>(knock_sensor_adc_raw 0xffff9ef8)"]
+    AMP["External knock amplifier"] --> ADC
+    SCI["PCM SCI0 (0xc8dc)"] -->|"per-rotor noise-threshold command"| AMP
+    PCM["SH7055 PCM"] -->|"final timing 0xffffa630 / 0xffffa638"| COIL["Ignition coils (terminals 2Z / 2AC / 2AD)"]
+```
+
+Terminals 1F/1T/1G and the coil terminals are documented harness connections
+([`pcm_connections.tsv`](../architecture/hardware/pcm_connections.tsv),
+[`mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)).
+The SCI0 threshold-command path is firmware-level (0xc8dc); its package pins
+are not traced, so no terminal is claimed for it here.
+
+### 2.2 Sensing — listening to each rotor
 
 Every engine cycle the PCM reads the crank period (RPM comes from the crank
 ISR chain, raw value in RAM `0xffff9f80`), samples the knock-sensor ADC
@@ -58,7 +75,7 @@ channel (only meaningful in the 200–2000 RPM window, task[6] `0x661e` →
 `0xffffa326`). The per-rotor noise-threshold command is sent to the external
 knock amplifier over SCI0 (`0xc8dc`; sensor pins 1F/1T/1G).
 
-### 2.2 From voltage to knock magnitude
+### 2.3 From voltage to knock magnitude
 
 `0xc486` (per rotor) computes the knock voltage
 `(sample − reference) × 5/65536` (`0xffffa370`), maps it through a voltage →
@@ -68,7 +85,7 @@ threshold (`0xffffa33c[2]`, `0xffffa350[2]` with filter coefficients
 `0xffffc060`/`0xffffc064`). `knock_detected` (`0xffffa324`) is set when the
 commanded base threshold falls below the measured magnitude.
 
-### 2.3 Decision inputs
+### 2.4 Decision inputs
 
 `0x336c4` / `0x33970` turn the raw signals into decisions: a 3D knock-level
 threshold is looked up from load and RPM (tables `0x6b2b8/0x6b2d4/0x6b2f0/0x6b304`
@@ -76,13 +93,13 @@ threshold is looked up from load and RPM (tables `0x6b2b8/0x6b2d4/0x6b2f0/0x6b30
 detection, engine running ≥ 2.5 s, and both leading and trailing timing still
 above `5 − threshold_a × 0.15625`.
 
-### 2.4 Enable gates — engine conditions only
+### 2.5 Enable gates — engine conditions only
 
 `0x13826` / `0x1388a` / `0x138b2` combine into `knock_active` (`0xffffa73c`):
 run time ≥ 3 s, coolant ≥ 10 °C, load ≥ 0.5 (table `0x6af54`), RPM < 5000,
 and both knock sensors healthy (`0xffffcd64`/`0xffffcd66`).
 
-### 2.5 The retard state machine
+### 2.6 The retard state machine
 
 ```mermaid
 flowchart TD
@@ -103,14 +120,14 @@ flowchart TD
 clamps it to the calibrated RPM-dependent window [−10°, 0°] and stores it in
 `knock_retard` (`0xffffa734`, mirror `0xffffa738`).
 
-### 2.6 Learning a persistent offset
+### 2.7 Learning a persistent offset
 
 When the learn trigger fires (`0xffffa73f`, `0x139c4`), the current retard is
 low-pass filtered into the EEPROM learned-retard cell (EEPROM address held in
 RAM `0xffff8038`) and written — so a persistent knock adaptation survives
 restarts.
 
-### 2.7 Applying the retard to ignition timing
+### 2.8 Applying the retard to ignition timing
 
 `0x125bc` / `0x125f6` subtract the retard (plus rough-knock, coolant-derate,
 cold-start and A/C terms) from the base leading/trailing timing
@@ -118,7 +135,7 @@ cold-start and A/C terms) from the base leading/trailing timing
 `0xffffa630` / `0xffffa638`. The retard therefore enters the ignition timing
 *after* the base maps — see [ignition timing](../investigations/60E15120_N3J1E/ignition_timing_report.md).
 
-### 2.8 Sensor health, fail-safe and DTCs
+### 2.9 Sensor health, fail-safe and DTCs
 
 Sensor health is monitored independently (`0xc290` ADC window check →
 `0x49fac` persistence → `0x4a084` raises **DTC 0x23/0x24**; the codes are
@@ -126,7 +143,7 @@ firmware-inferred — this ROM's def block has no DTC 0023/0024 tables).
 Unhealthy sensors both block knock control and force the fail-safe retard
 table.
 
-### 2.9 Reading it on a scan tool
+### 2.10 Reading it on a scan tool
 
 RomRaider PID 0x1746 "Knock Retard" (handler `0x5707a`
 `diag22_pid1746_knock_retard_deg`, uint8 × 0.3515625° — scale constant
@@ -136,7 +153,7 @@ RomRaider PID 0x1746 "Knock Retard" (handler `0x5707a`
 knock_retard clamped to [−10, 0] the PID always reports 0.00° in this ROM; the
 logger def's desc text ("Tire Size") is a copy-paste error.
 
-### 2.10 Key calibrated tables
+### 2.11 Key calibrated tables
 
 | Table | Contents |
 |---|---|

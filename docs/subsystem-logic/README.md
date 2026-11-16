@@ -28,6 +28,12 @@ re-derived in the shared report. Evidence (review folders, validation records) s
   scaffolding lines in the final document.
 - Inputs are cited by SHA-256 (from `binaries/manifest.csv`); `0x` addresses
   are reference-ROM addresses unless a linked per-ROM document says otherwise.
+- The applicable-ROMs table lists only ROMs actually investigated for the
+  subsystem (the reference ROM always present) — never assert shared logic for
+  an uninvestigated ROM; the shared-logic assumption lives in the header text.
+- Subsystems that touch hardware get a hardware setup diagram (ASCII or
+  mermaid) with the relevant peripherals, terminals and signals, distinguishing
+  traced pin routing from firmware-level paths.
 - `docs/investigations/` remains the home of per-ROM evidence, labeling passes
   and ROM-specific findings — see
   [`docs/investigations/README.md`](../investigations/README.md).

@@ -15,7 +15,10 @@ into the final report. Cross-links to related reports go in the proof section
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
 (also detailed in [`docs/investigations/<rom-id>/`](../investigations/README.md),
-never re-derived here):
+never re-derived here). List only ROMs actually investigated for this subsystem
+(the reference ROM always present) — never add a row asserting shared logic for
+a ROM that has not been investigated; the assumption above covers it until
+then:
 
 | ROM | ROM specifics | Short one-line description |
 |-----|---------------|----------------------------|
@@ -34,8 +37,11 @@ car, and what the key numbers mean.
 
 The basic operation in the order it happens, one short paragraph per step.
 Use sub-chapters (`## 2.1`, `## 2.2`, …) to explain the relevant subsystems and
-logic where required. Add a flow chart or breakdown diagram (ASCII or mermaid)
-where it helps, and the calibrated tables when they explain the operation:
+logic where required. When the subsystem touches hardware, start with a hardware
+setup diagram (ASCII or mermaid) showing the relevant peripherals, terminals and
+signals — distinguishing traced pin routing from firmware-level paths. Add a
+flow chart or breakdown diagram (ASCII or mermaid) where it helps, and the
+calibrated tables when they explain the operation:
 
 ## 2.1 <subsystem / logic stage>
 
