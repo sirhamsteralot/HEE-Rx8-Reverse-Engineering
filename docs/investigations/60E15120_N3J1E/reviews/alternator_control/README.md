@@ -4,7 +4,7 @@ Scope: the inherited `ref_alternator*` areas of 60E15120_N3J1E (RX-8 PCM,
 SH7055F), read from the canonical export (`decompiled/`), the disassembly and
 the raw ROM (SHA-256
 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`, untouched).
-Root report: [`../../alternator_control_report.md`](../../alternator_control_report.md);
+Root report: [`../../../../subsystem-logic/alternator_control_report.md`](../../../../subsystem-logic/alternator_control_report.md);
 record: `data/labels/60E15120_N3J1E/alternator_labels.json`.
 
 ## 1. The three batch bodies (inherited names verified)

@@ -2,12 +2,6 @@
   "date": "2026-10-30",
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "reports": {
-    "alternator_control_report.md": {
-      "fn_checked": 17,
-      "ram_checked": 9,
-      "rom_refs": 27,
-      "rom_claims": 0
-    },
     "can_mailbox_config_report.md": {
       "fn_checked": 20,
       "ram_checked": 11,
@@ -156,6 +150,12 @@
       "fn_checked": 53,
       "ram_checked": 0,
       "rom_refs": 53,
+      "rom_claims": 0
+    },
+    "subsystem-logic/alternator_control_report.md": {
+      "fn_checked": 28,
+      "ram_checked": 16,
+      "rom_refs": 45,
       "rom_claims": 0
     },
     "subsystem-logic/knock_control_report.md": {

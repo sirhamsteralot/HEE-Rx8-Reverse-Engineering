@@ -185,5 +185,5 @@ Actuator/GPIO conventions and pin table in
 arbitration pattern in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md);
 task scheduling in [`os_scheduling_deep_dive_report.md`](os_scheduling_deep_dive_report.md);
 A/C switch input (`inferred_ram_bdb8_ffffbdb8` 0xffffbdb8) feeds the fan-2 condition — see
-[`alternator_control_report.md`](alternator_control_report.md) for that flag's
+[`alternator_control_report.md`](../../subsystem-logic/alternator_control_report.md) for that flag's
 producer.
