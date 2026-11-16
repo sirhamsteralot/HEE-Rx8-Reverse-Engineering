@@ -57,7 +57,7 @@
    ]
   }
  ],
- "code_builds": "Two distinct SBL code builds: build A (60E0E500, 60E0E700_N3YLEE, 60E0FB00, 60E0FC00, 60E15120_N3J1E, 60E0G500_N3ZHEC) differs between members only in the 4-byte stamp at 0xffa-0xffd inside the 32-B block 0xfe0-0xfff; build B (60E1B900, 60E1C500_N3J6EB, 60E1D400, 60E32000_N3M5E, 60E32000_N3N5EB) is byte-identical to the reference up to 0x1007 (except the stamp) and to each other except the stamp, but its code from 0x1039-0x1ffb differs from build A. *SBL_END marker at 0x1ff4 (build A) / 0x1fbc (build B).",
+ "code_builds": "Two distinct SBL code builds: build A (60E0E500, 60E0E700_N3YLEE, 60E0FB00, 60E0FC00, 60E15120_N3J1E, 60E0G500_N3ZHEC) members differ from each other only in the 4-byte stamp at 0xffa-0xffd inside the 32-B block 0xfe0-0xfff; build B (60E1B900, 60E1C500_N3J6EB, 60E1D400, 60E32000_N3M5E, 60E32000_N3N5EB) is byte-identical to build A in 0x0-0xffa, differs at 0xffb-0xffd (stamp tail), 0x1000-0x1007 (warm-entry pointer u32@0x1000 plus the 4-B ASCII tag at 0x1004) and 0x1039-0x1ffb (code), and build-B members are identical to each other except the stamp. *SBL_END marker at 0x1ff4 (build A) / 0x1fbc (build B).",
  "roms": [
   {
    "rom": "60E0E500",
