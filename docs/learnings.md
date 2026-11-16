@@ -82,6 +82,11 @@ validation JSONs).
   style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
   findings — don't append dated change-log addenda (git history records how
   they changed).
+- Placement: subsystem logic is assumed identical across ROM bins until proven
+  otherwise, so shared-logic subsystem reports live at the `docs/investigations/`
+  root (written against the reference ROM `60E15120_N3J1E`); per-ROM differences
+  are documented in `docs/investigations/<rom-id>/` and linked from the root
+  report — see [`investigations/README.md`](investigations/README.md).
 - `utilities/scripts/rx8-pcm-pipeline/validate_reports.py` checks every report (sections, ROM hash, all
   memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
 
