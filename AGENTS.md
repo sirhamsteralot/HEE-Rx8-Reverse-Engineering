@@ -10,7 +10,8 @@ reverse-engineering effort. Read [`README.md`](README.md) first, plus
 - `submodules/` — upstream repos (`RX8Defs`, `Rx8Man`, `Mazda_RX8_PCM_ReverseEngineering`), **read-only context**. Never work, edit, or commit inside them; reference files by path + pinned commit hash. Don't duplicate submodule content into tracked folders — if a file is byte-identical, reference it instead. Updating a gitlink (`git submodule update --remote`) is a shared-state action — get approval first.
 - `binaries/` — immutable dumps of **our own acquisitions** only, with `manifest.csv` (recursive SHA-256 + provenance). Upstream ROMs/captures are referenced via `submodules/Mazda_RX8_PCM_ReverseEngineering/{Stock_ROMs,Data_binaries}/`, never duplicated.
 - `reverse-engineered/` — `disassembly/<rom-id>/` (addressed asm), `decompiled/<rom-id>/` (C export, per-function files, indexes, `named/` views), `reimplementation/` (compilable C11 + host tests). Live Ghidra `.gpr/.rep` project DBs are never committed; `.gar` archives stay in the submodule.
-- `docs/investigations/<rom-id>/` — per-ROM evidence: root `*_report.md` are the subsystem/logic reports, with per-subsystem evidence in `reviews/`; the labeling investigations (alias/cross-ROM/defs passes: `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `comment_merge/`, `defs-merge/`, `rx8defs-analysis/`, labeling reports + `reviews/`) live under `labeling/`; `backups/` holds pre-change zips (LFS).
+- `docs/investigations/` — cross-ROM home of the subsystem/logic reports. Logic shared between ROM bins is **assumed shared until proven otherwise**, so root `*_report.md` are written against the reference ROM (`60E15120_N3J1E`), state that assumption, and reference any per-ROM differences by linking the more specific documents in the per-ROM `<rom-id>/` folders. `README.md` (the index) and `TEMPLATE.md` live here.
+- `docs/investigations/<rom-id>/` — per-ROM (calibration) folder: ROM-specific `*_report.md` (differences vs the shared logic, calibration-specific findings) at the folder root, with per-subsystem evidence in `reviews/`; the labeling investigations (alias/cross-ROM/defs passes: `cross_ecu/`, `source_review/`, `math_units/`, `lookup_family/`, `readability/`, `comment_merge/`, `defs-merge/`, `rx8defs-analysis/`, labeling reports + `reviews/`) live under `labeling/`; `backups/` holds pre-change zips (LFS).
 - `docs/architecture/` — memory maps, `hardware/` (pinout + wiring), `design/` (firmware design doc), emulator docs incl. **[`emulator-re-guide.md`](docs/architecture/emulator-re-guide.md) — how to test firmware in the simulator with the real-car datalogs; read it before any emulator-based validation work**.
 - `docs/references/` — reference PDFs with trust notes and upstream repo links.
 - [`docs/learnings.md`](docs/learnings.md) — session know-how (SH-2E encodings, pipeline pitfalls, patcher patterns).
@@ -106,7 +107,12 @@ dumping it at the root.
    `**Related reports:**` header line instead of re-deriving their content.
    Validation proves what it lists — never write "verified working" beyond what a
    validation artifact covers. **Cross-reference everywhere**: link every mentioned
-   `.md` file, never leave it as a bare code span. If a dependency is missing, mark
+   `.md` file, never leave it as a bare code span. **Placement**: a subsystem report
+   whose logic is shared between ROM bins — assumed shared until proven otherwise —
+   goes at the `docs/investigations/` root (written against reference ROM
+   `60E15120_N3J1E`) and links the per-ROM difference documents in
+   `docs/investigations/<rom-id>/`; a report inside a ROM folder covers only what is
+   specific to that ROM. If a dependency is missing, mark
    the report FURTHER INVESTIGATION NEEDED at the top and add a ROADMAP item.
 9. **No drive-by changes.** Match existing style (kebab-case filenames, ISO dates,
    `0x` addresses; upstream binary names excepted). Don't reformat untouched files.

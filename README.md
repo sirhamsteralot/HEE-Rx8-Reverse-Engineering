@@ -114,6 +114,11 @@ Every unit gets binary-level verification plus the pipeline validators before
 review. Branch naming, commit style, the full task workflow, and the exact
 verification commands are in [AGENTS.md](AGENTS.md).
 
+Subsystem reports for logic shared across the ROM bins (assumed shared until
+proven otherwise) live at the [`docs/investigations/`](docs/investigations/README.md)
+root and link to the per-ROM difference documents in the `<rom-id>/` folders —
+see [`docs/investigations/README.md`](docs/investigations/README.md).
+
 Conventions: ISO dates, kebab-case filenames, `0x` addresses; memory map — ROM
 `0x00000000–0x0007ffff`, RAM `0xffff6000–0xffffdfff`, volatile I/O
 `0xffffe000–0xffffffff`; binary blobs go through Git LFS. Discrepancies are
