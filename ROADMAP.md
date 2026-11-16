@@ -16,7 +16,7 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 (reimplementation), F = P6 (toward hardware).
 
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
-**reopened**: open items 26–34, 36–37, 39, 42–61 — pick up 26 next (items 24–25 closed
+**reopened**: open items 26–34, 36–37, 39, 42–62 — pick up 26 next (items 24–25 closed
 2026-11-16: SBL block `0x0–0x1fff` statically labeled + cross-ROM SBL diff, and the
 SBL→app handover incl. the `0x61a8` entry mechanism mapped — report
 [`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), record
@@ -101,7 +101,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–61)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–62)
 
 - **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
   start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
@@ -273,6 +273,26 @@ and where artifacts live.
   - **C item 59 (open)** — migrate [`os_scheduler_can_ivt_report.md`](docs/investigations/60E15120_N3J1E/os_scheduler_can_ivt_report.md)
   - **C item 60 (open)** — migrate [`os_scheduling_deep_dive_report.md`](docs/investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
   - **C item 61 (open)** — migrate [`uds_mode22_dispatch_report.md`](docs/investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
+
+- **C item 62 (open)** — **end-of-C fold-back: push all knowledge gained during
+  group C back into the decompiled export, the label artifacts and the ECU
+  defs.** Runs once items 26–61 are closed, so nothing learned in the C reports
+  lives only in `docs/`: (a) decompiled code — re-run the annotation +
+  `integrate_reviewed_names.py` + comment-merge passes over
+  `reverse-engineered/decompiled/60E15120_N3J1E/` (`functions/`,
+  `firmware_decompiled.c`, `named/firmware_named.c`) so every function, RAM
+  cell and table named during C carries its accepted alias and review comment
+  in the export; (b) labels — fold the new per-subsystem records into the
+  canonical TSVs, the labels JSONs and `symbols.tsv` coverage and re-fill
+  `validation.json`, keeping the rule-6 ladder (no upgrades without
+  binary-level evidence, rule 7); (c) defs — apply the table labels, scalars
+  and storage-type corrections found during C to the merged def, then
+  regenerate the per-ROM defs and `defs_table_labels.json` via the
+  re-runnable defs-merge passes (rule 6d: edit the generators, never the
+  generated files). Finish with the pipeline validators (`validate_export.py`,
+  `validate_reports.py`, `verify_claims.py`, `verify_readability.py`,
+  `verify_math_units.py`), the link + non-empty check over `docs/`, and
+  `python -m pytest tests/`.
 
 ### E. Reimplementation coverage (P4)
 
