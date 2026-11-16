@@ -89,6 +89,10 @@ validation JSONs).
   links live in the proof section (§4.7), not the header; no "findings" wording,
   no Q&A-style phrasing, no meta commentary about the document's own layout,
   and the template's explanatory scaffolding lines are dropped in the final report.
+  The applicable-ROMs table lists only ROMs actually investigated for the subsystem
+  (never assert shared logic for an uninvestigated ROM), and subsystems touching
+  hardware include a hardware setup diagram with the relevant peripherals/terminals,
+  distinguishing traced pin routing from firmware-level paths.
 - Placement: subsystem logic is assumed identical across ROM bins until proven
   otherwise, so shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) (written against the
