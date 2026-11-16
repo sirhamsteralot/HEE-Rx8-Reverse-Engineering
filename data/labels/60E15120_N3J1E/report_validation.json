@@ -158,12 +158,6 @@
       "rom_refs": 45,
       "rom_claims": 0
     },
-    "subsystem-logic/boot_handover_report.md": {
-      "fn_checked": 0,
-      "ram_checked": 0,
-      "rom_refs": 0,
-      "rom_claims": 0
-    },
     "subsystem-logic/knock_control_report.md": {
       "fn_checked": 48,
       "ram_checked": 63,

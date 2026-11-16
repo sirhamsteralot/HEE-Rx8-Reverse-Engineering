@@ -18,11 +18,10 @@ residual (static labeling & gap closure), D = P2/P5 (cross-ROM propagation), E =
 Groups A, B and D are complete. Group C (static labeling & gap closure) is
 **reopened**: open items 26–34, 36–37, 39, 42–61 — pick up 26 next (items 24–25 closed
 2026-11-16: SBL block `0x0–0x1fff` statically labeled + cross-ROM SBL diff, and the
-SBL→app handover incl. the `0x61a8` entry mechanism mapped — reports
-[`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md) +
-[`boot_handover_report.md`](docs/subsystem-logic/boot_handover_report.md), records
-`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json` +
-`boot_handover_labels.json`, cross-ROM `data/labels/cross_rom/sbl_first_8k.json`;
+SBL→app handover incl. the `0x61a8` entry mechanism mapped — report
+[`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), record
+`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json` (incl. handover records),
+cross-ROM `data/labels/cross_rom/sbl_first_8k.json`;
 item 38 closed
 2026-11-15: ignition key-state logic (key-off/ON/crank) labeled and
 reported — key-on input PFDR bit0 → latch 0xffff9ec8 → 0xffffaa68 gating
