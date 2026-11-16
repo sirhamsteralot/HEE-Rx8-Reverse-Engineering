@@ -236,7 +236,7 @@ and where artifacts live.
   validation, limits) but place them in the proof section instead of
   interleaving them. Reports contain facts only — no changelog prose
   anywhere, except a single changelog table at the very top of the document
-  (date, what changed, evidence link); git history remains the detailed
+  (date, what changed, version); git history remains the detailed
   record. When executing, update [`AGENTS.md`](AGENTS.md) rule 8,
   [`docs/subsystem-logic/README.md`](docs/subsystem-logic/README.md) and
   [`docs/investigations/README.md`](docs/investigations/README.md) (which

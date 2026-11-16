@@ -22,7 +22,7 @@ shared report. Evidence (review folders, validation records) stays in
   cross-link related reports instead of duplicating their content.
 - Reports state current findings only — the single changelog prose allowed is
   one changelog table at the very top of the document (date, what changed,
-  evidence link); git history records how they changed.
+  version); git history records how they changed.
 - Inputs are cited by SHA-256 (from `binaries/manifest.csv`); `0x` addresses
   are reference-ROM addresses unless a linked per-ROM document says otherwise.
 - `docs/investigations/` remains the home of per-ROM evidence, labeling passes
