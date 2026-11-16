@@ -1521,7 +1521,7 @@
    "note": "11 u16, alt-speed axis 0x74ae0 (0xffffb598 = engine rpm x 2.08), data 0x74b0c; field-drive target in alternator_voltage_error_calc 0x2616e; upstream name 'Alternator Duty Cycle Max' corrected.",
    "desc": "Target alternator field drive vs alternator speed.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1531,7 +1531,7 @@
    "note": "3D 11x12 u8, axes 0x74c54/0x74c80 (alt speed, filtered electrical load 0xffffb5e0), data 0x74cb0; duty base in alternator_duty_calc 0x26624.",
    "desc": "Base alternator field duty vs alternator speed and electrical load.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1541,7 +1541,7 @@
    "note": "13 u16, axis 0x74b24, data 0x74b58; duty-to-percent clamp [0,100] in 0x26624; upstream name 'Alternator Diagnostic Voltage Delta to DC' corrected.",
    "desc": "Scales the computed alternator duty to percent (clamped 0-100).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1551,7 +1551,7 @@
    "note": "7 u8, vehicle-speed axis 0x74a84, data 0x74aa0; battery-temp model decay in battery_temp_model 0x25ba4.",
    "desc": "Battery temperature model decay vs vehicle speed.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1561,7 +1561,7 @@
    "note": "9 u16, battery-temp axis 0x74c1c (0xffffb5c4), data 0x74c40; voltage target in alternator_voltage_target_select 0x25c6c (14.2 V base +/- hysteresis).",
    "desc": "Target charging voltage vs battery temperature.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1571,7 +1571,7 @@
    "note": "9 u16 (all 0 stock), axis 0x74be4, data 0x74c08; alternate-mode voltage target in 0x25c6c.",
    "desc": "Alternate target charging voltage (alternate mode; stock zero).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9",
    "confidence": "high",
    "alias": null
   },
@@ -1581,7 +1581,7 @@
    "note": "5 u16, alt-speed axis 0x75cb4, data 0x75cc8; speed-indexed table x ratio stored to 0xffffbcc4 in 0x2ce18; Nm and ratio physical meanings unproven (defs-merge review).",
    "desc": "Purpose not fully verified (candidate label).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/alternator_control_report.md §3; defs-merge/README.md (0x2ce18 candidate)",
+   "source": "docs/subsystem-logic/alternator_control_report.md §2.9; defs-merge/README.md (0x2ce18 candidate)",
    "confidence": "candidate",
    "alias": null
   },
