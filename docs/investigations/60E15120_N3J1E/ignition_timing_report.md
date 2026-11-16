@@ -10,7 +10,7 @@ tests in `tests/test_phase1_dynamic.py`). Label evidence:
 `data/labels/60E15120_N3J1E/ignition_timing_labels.json`,
 `labeling/source_review/accepted_*.tsv`, backup `backups/pre_ignition_timing_labels.zip`.
 
-**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](knock_control_report.md) (retard enters via correction_total), [calibration extraction](labeling/calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools; the DSC torque-request derate producer (`engine_max_torque_allowed` 0xffffbbd8 ← 0x2b3b8, consumed here at 0x1815c) is in [DSC CAN arbitration](dsc_can_arbitration_report.md).
+**Related reports:** [load & fuelling model](load_fueling_report.md) (engine-load axis), [knock control](../../subsystem-logic/knock_control_report.md) (retard enters via correction_total), [calibration extraction](labeling/calibration_extraction_report.md) (timing tables in data/maps/), [UDS/Mode-22 dispatch](uds_mode22_dispatch_report.md) — the final leading/trailing timing cells computed here are diag-exposed as PID 0x0e (`leading_ignition_timing_ffffa630` × 0.5 − 64, handler 0x569ae) and PID 0x0904 (`trailing_ignition_timing_ffffa638` × 0.5 − 64, handler 0x56cc8), scale constants verified in the handlers' literal pools; the DSC torque-request derate producer (`engine_max_torque_allowed` 0xffffbbd8 ← 0x2b3b8, consumed here at 0x1815c) is in [DSC CAN arbitration](dsc_can_arbitration_report.md).
 
 ## 1. Executive summary
 
@@ -30,7 +30,7 @@ The **thread §9 equation is confirmed**, with one structural correction: the co
 term (`CLTcomp`, `leading_coolant_scaled_advance_term` 0xffffa5f0 = off-throttle-3D − advance×coolant-multiplier) sits **inside**
 the `(1−CrankingMult)` blend group, and `IdleBaseFinal` (`idle_base_timing_leading` 0xffffa780) is added **outside** it —
 the thread drew both outside the parens. Knock retard enters via `correction_total`
-(0x125bc/0x125f6, see [`knock_control_report.md`](knock_control_report.md)), DSC torque-request derate applies to
+(0x125bc/0x125f6, see [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md)), DSC torque-request derate applies to
 the **leading rotor only** (0x1815c, confirmed — no trailing reader). All dynamic checks
 in the emulator matched to <1e-4 deg (E1 double-precision limit).
 

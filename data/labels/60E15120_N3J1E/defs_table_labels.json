@@ -10,8 +10,8 @@
    "category": "Knock Control",
    "note": "12 cells, 0.5 flat; axis 0x795e8 (RPM 800-9600); gates knock enable 0xffffa73d (0x13826).",
    "desc": "Lowest engine load at which knock control is enabled, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
+   "evidence": "12 u8 cells, all 0x32 x mult 0.01 = 0.5 flat load floor; RPM axis 0x795e8 (800-9600); used by knock_enable_gate 0x13826.",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1; knock_loop_labels.json",
    "confidence": "high",
    "alias": "tbl_knock_enable_load_floor_0006af54"
   },
@@ -20,8 +20,8 @@
    "category": "Knock Control",
    "note": "u8 cells x mult + offset(-64): -10..0 deg; axis 0x79624 (RPM 2000-5000); clamped by 0x13bd2 = [-10,0] deg (bug fixed 2026-10-29).",
    "desc": "Most negative knock retard allowed (lower clamp), vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "u8 cells 0x6c(108) -> -10 deg ... 0x80 -> 0 vs RPM 2000-5000 (axis 0x79624); retard clamp minimum in knock_retard_clamp 0x13bd2.",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_retard_clamp_min_0006af68"
   },
@@ -30,8 +30,8 @@
    "category": "Knock Control",
    "note": "alt min: -10/-7.5/-5x4/0; axis 0x79648.",
    "desc": "Alternate lower knock retard clamp, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "u8 cells -10/-7.5/-5/-5/-5/-5/0 vs RPM (axis 0x79648); alternative minimum selected when b534==1 && 4<bc3d (0x13bd2).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_retard_clamp_min_alt_0006af7c"
   },
@@ -40,8 +40,8 @@
    "category": "Knock Control",
    "note": "0.0 deg x15; axis 0x7966c (RPM 800-6400).",
    "desc": "Upper knock retard clamp, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "15 u8 cells all 0x80 -> 0.0 deg vs RPM 800-6400 (axis 0x7966c); retard clamp maximum (retard is <= 0).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_retard_clamp_max_0006af90"
   },
@@ -50,8 +50,8 @@
    "category": "Knock Control",
    "note": "fail-safe target -10..0 deg; axis 0x796b8 (RPM 500-5500); written to 0xffffa744.",
    "desc": "Knock retard recovery target in fail-safe, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "u8 cells -10 x9, -8, -6, -4, -2, 0, 0 vs RPM 500-5500 (axis 0x796b8); recovery target when knock sensors unhealthy (0x13a60).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_recovery_target_0006afa4"
   },
@@ -60,8 +60,8 @@
    "category": "Knock Control",
    "note": "0.0 x13; axis 0x79704 = learned retard -8.4..+8.4 deg.",
    "desc": "Scale applied to learned knock retard.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "13 u8 cells all 0x80 -> 0.0; axis 0x79704 = learned EEPROM retard -8.4..+8.4 deg; activation-edge target (0x13a60).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_learned_retard_scale_0006afb8"
   },
@@ -70,8 +70,8 @@
    "category": "Knock Control",
    "note": "raw u8 0x0a -> <<1 = 20-cycle hold (0xffffc0ac).",
    "desc": "Number of cycles knock retard is held after a transient.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "{count=1, type=0}; data byte 0x0a -> raw_u8 lookup << 1 = 20-cycle transient hold counter (0x336c4).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_transient_hold_0006b264"
   },
@@ -80,8 +80,8 @@
    "category": "Knock Control",
    "note": "raw u16 vs RPM (alt) -> 0xffffc090 -> 0xffffa37e.",
    "desc": "Alternate knock ignition-retard threshold A, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "Raw u16 2D threshold A alternative selected when cd60 set (0x336c4); pair with 0x6b270.",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_ignition_timing_threshold_a_alt_0006b27c"
   },
@@ -90,8 +90,8 @@
    "category": "Knock Control",
    "note": "raw u16 vs RPM (alt) -> 0xffffc092 -> 0xffffa37c.",
    "desc": "Alternate knock ignition-retard threshold B, vs RPM.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "Raw u16 2D threshold B alternative selected when cd60 set (0x336c4); pair with 0x6b288.",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_ignition_timing_threshold_b_alt_0006b294"
   },
@@ -100,8 +100,8 @@
    "category": "Knock Control",
    "note": "3D knock level vs load/RPM (20x12 scaled).",
    "desc": "Knock level map vs load and RPM (variant A).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "3D 20x12 scaled (type 0x0c, mult 0.05) knock level vs load/RPM; -> a328 (0x336c4).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_level_3d_a_0006b2b8"
   },
@@ -110,8 +110,8 @@
    "category": "Knock Control",
    "note": "3D knock level vs load/RPM.",
    "desc": "Knock level map vs load and RPM (variant B).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "3D 20x12 scaled knock level table B (0x336c4).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_level_3d_b_0006b2d4"
   },
@@ -120,8 +120,8 @@
    "category": "Knock Control",
    "note": "3D knock level vs load/RPM.",
    "desc": "Knock level map vs load and RPM (variant C).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "3D 1x1 raw knock level table C (0x336c4).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_level_3d_c_0006b2f0"
   },
@@ -130,8 +130,8 @@
    "category": "Knock Control",
    "note": "3D knock level vs load/RPM (1x1 raw).",
    "desc": "Knock level map vs load and RPM (variant D).",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "evidence": "3D 1x1 raw knock level table D (0x336c4).",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": "tbl_knock_level_3d_d_0006b304"
   },
@@ -140,8 +140,8 @@
    "category": "Fuel Injection - Closed Loop",
    "note": "raw u16 x15 s; axis 0x6f7e0, data 0x6f81c; dispatch helper tbl_table_2d_304_check_datatype.",
    "desc": "Time after start during which closed-loop fuelling is inhibited.",
-   "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; knock_loop_labels.json",
+   "evidence": "Chained rename of the auto RX8Defs descriptor name already integrated into current exports; same table as the row above.",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1; knock_loop_labels.json",
    "confidence": "high",
    "alias": "tbl_closed_loop_warmup_time_0006990c"
   },
@@ -331,7 +331,7 @@
    "note": "knock voltage -> magnitude scale.",
    "desc": "Scales knock sensor voltage to knock magnitude.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -341,7 +341,7 @@
    "note": "raw u16 vs RPM (normal) -> 0xffffc090 -> 0xffffa37e; default 94 (0xc1f8).",
    "desc": "Knock level threshold that triggers ignition retard, channel A, vs RPM.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -351,7 +351,7 @@
    "note": "raw u16 vs RPM (normal) -> 0xffffc092 -> 0xffffa37c; default 193.",
    "desc": "Knock level threshold that triggers ignition retard, channel B, vs RPM.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -361,7 +361,7 @@
    "note": "clamp floor for 0xffffa350[2].",
    "desc": "Minimum knock noise threshold (clamp floor).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -371,7 +371,7 @@
    "note": "lookup vs raw RPM -> 0xffffa358.",
    "desc": "Knock noise floor vs RPM.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -381,7 +381,7 @@
    "note": "min(c9a8, lookup(RPM)) in 0x12630 (cranking + out-of-band path).",
    "desc": "Cold-start ignition advance reduction, vs RPM.",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -1081,7 +1081,7 @@
    "note": "open-loop request conditions, read by 0x1f0c4; range 0x69d24-0x69d74.",
    "desc": "Closed-loop fuelling enable threshold (variant A).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4; fueling_control_report.md §7.3",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1; fueling_control_report.md §7.3",
    "confidence": "high",
    "alias": null
   },
@@ -1091,7 +1091,7 @@
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant B).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -1101,7 +1101,7 @@
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant C).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -1111,7 +1111,7 @@
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant D).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },
@@ -1121,7 +1121,7 @@
    "note": "",
    "desc": "Closed-loop fuelling enable threshold (variant E).",
    "evidence": "",
-   "source": "docs/investigations/60E15120_N3J1E/knock_control_report.md §8.4",
+   "source": "docs/subsystem-logic/knock_control_report.md §4.1",
    "confidence": "high",
    "alias": null
   },

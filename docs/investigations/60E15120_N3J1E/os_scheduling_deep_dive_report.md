@@ -19,7 +19,7 @@ scheduling model; where the two disagree, §7 lists the correction.
 [intake solenoids](intake_solenoids_report.md) chain task[10] 0x64f6 (whose body
 0x11744 also runs the [idle control](idle_control_report.md) batch 0x167c0 and the
 [DSC CAN arbitration](dsc_can_arbitration_report.md) batch 0x2a2ae), the
-[knock control](knock_control_report.md) tasks 0x65f6/0x661e/0x64ba; the
+[knock control](../../subsystem-logic/knock_control_report.md) tasks 0x65f6/0x661e/0x64ba; the
 crank-angle tick feeds the [load & fuelling model](load_fueling_report.md) rpm
 path (0x803e → 0xffff9f80); UDS transport runs through the CAN RX interrupt and
 the message queues — see [uds_mode22_dispatch_report.md](uds_mode22_dispatch_report.md);

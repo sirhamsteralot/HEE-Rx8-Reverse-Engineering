@@ -76,7 +76,7 @@ validation JSONs).
 
 ## Reports, citation rules and verify_claims.py
 
-- Root `*_report.md` files follow [`knock_control_report.md`](investigations/60E15120_N3J1E/knock_control_report.md)'s 10-section format,
+- Root `*_report.md` files follow [`fueling_control_report.md`](investigations/60E15120_N3J1E/fueling_control_report.md)'s 10-section format,
   with a mandatory memory map (function + RAM address tables) and a plain-language
   §1a after the executive summary (AGENTS.md rule 8;
   style example [`ignition_timing_report.md`](investigations/60E15120_N3J1E/ignition_timing_report.md) §1a). Reports state current
@@ -85,6 +85,14 @@ validation JSONs).
   records how they changed. Shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) in the human-first
   format of [`docs/subsystem-logic/TEMPLATE.md`](subsystem-logic/TEMPLATE.md).
+  Subsystem-logic reports are factual design/operation documents: related-report
+  links live in the proof section (§4.7), not the header; no "findings" wording,
+  no Q&A-style phrasing, no meta commentary about the document's own layout,
+  and the template's explanatory scaffolding lines are dropped in the final report.
+  The applicable-ROMs table lists only ROMs actually investigated for the subsystem
+  (never assert shared logic for an uninvestigated ROM), and subsystems touching
+  hardware include a hardware setup diagram with the relevant peripherals/terminals,
+  distinguishing traced pin routing from firmware-level paths.
 - Placement: subsystem logic is assumed identical across ROM bins until proven
   otherwise, so shared-logic subsystem reports live in
   [`docs/subsystem-logic/`](subsystem-logic/README.md) (written against the

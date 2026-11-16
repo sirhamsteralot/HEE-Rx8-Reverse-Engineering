@@ -2,7 +2,10 @@
 """Validate the subsystem + labeling reports against the export and the raw ROM.
 
 Extreme-scepticism check for every <subsystem>_report.md at the investigation
-root and every labeling/<name>_report.md (template: knock_control_report.md). For each report:
+root, every labeling/<name>_report.md (10-section template:
+fueling_control_report.md) and every docs/subsystem-logic/<name>_report.md (human-first
+template: Introduction / How it works / pseudocode / Proof / Memory map / Validation /
+Limits). For each report:
   - required sections present (knock template: summary, pseudocode, tables,
     labeling, corrections, files, validation, memory map, limits)
   - ROM SHA-256 quoted in the header equals the actual ROM hash
@@ -27,8 +30,14 @@ ROM_SHA = hashlib.sha256(ROM).hexdigest()
 REPORTS_DIR = INV  # reports live in docs/investigations/<rom-id>/ in this repo
 REPORTS = sorted(p.name for p in REPORTS_DIR.glob('*_report.md')) + \
     sorted('labeling/' + p.name for p in (REPORTS_DIR / 'labeling').glob('*_report.md'))
+SUBSYS_DIR = ROOT / 'docs' / 'subsystem-logic'  # shared-logic reports, human-first format
+SUBSYS_REPORTS = sorted(p.name for p in SUBSYS_DIR.glob('*_report.md'))
 REQUIRED_SECTIONS = ['Executive summary', 'pseudocode', 'Labeling applied', 'Corrections',
                      'Files', 'Validation', 'Memory map', 'Limits']
+SUBSYS_REQUIRED_SECTIONS = ['Introduction', 'How it works', 'pseudocode', 'Proof',
+                            'Memory map', 'Validation', 'Limits']
+ALL_REPORTS = [(rep, REPORTS_DIR, REQUIRED_SECTIONS, rep) for rep in REPORTS] + \
+              [(rep, SUBSYS_DIR, SUBSYS_REQUIRED_SECTIONS, f'subsystem-logic/{rep}') for rep in SUBSYS_REPORTS]
 
 index = {r['address']: r for r in csv.DictReader((b / 'decompiled/function_index.tsv').open(newline=''), delimiter='\t')}
 ram_rows = {r['address']: r for r in csv.DictReader((b / 'source_review/accepted_ram_aliases.tsv').open(newline=''), delimiter='\t')}
@@ -42,15 +51,15 @@ def norm_fn(addr, reported):
 failures = []
 report_stats = {}
 
-for rep in REPORTS:
-    p = REPORTS_DIR / rep
+for rep, base_dir, required_sections, stat_key in ALL_REPORTS:
+    p = base_dir / rep
     text = p.read_text()
     stats = {'fn_checked': 0, 'ram_checked': 0, 'rom_refs': 0, 'rom_claims': 0}
-    for sec in REQUIRED_SECTIONS:
+    for sec in required_sections:
         if sec.lower() not in text.lower():
-            failures.append(f'{rep}: missing section {sec!r}')
+            failures.append(f'{stat_key}: missing section {sec!r}')
     if ROM_SHA not in text:
-        failures.append(f'{rep}: ROM SHA-256 not quoted or wrong')
+        failures.append(f'{stat_key}: ROM SHA-256 not quoted or wrong')
 
     section = ''
     for line in text.splitlines():
@@ -72,11 +81,11 @@ for rep in REPORTS:
             stats['rom_refs'] += 1  # volatile peripheral I/O window, valid
         elif val >= 0xffff0000:
             if not (0xffff6000 <= val <= 0xffffdfff):
-                failures.append(f'{rep}: RAM address 0x{val:x} outside RAM window: {line[:60]!r}')
+                failures.append(f'{stat_key}: RAM address 0x{val:x} outside RAM window: {line[:60]!r}')
             stats['rom_refs'] += 1
         else:
             if val >= len(ROM):
-                failures.append(f'{rep}: address 0x{val:x} out of ROM range: {line[:60]!r}')
+                failures.append(f'{stat_key}: address 0x{val:x} out of ROM range: {line[:60]!r}')
                 continue
             stats['rom_refs'] += 1
         name_m = re.search(r'`([^`]+)`', cells[1])
@@ -92,17 +101,17 @@ for rep in REPORTS:
                 mv = idmap.get('DAT_' + addr, '')
                 if mv and any(part in mv for part in re.split(r'[/…\s]+', name) if len(part) > 3):
                     continue
-                failures.append(f'{rep}: RAM 0x{addr} ({name}) not in accepted_ram_aliases.tsv/manifest')
+                failures.append(f'{stat_key}: RAM 0x{addr} ({name}) not in accepted_ram_aliases.tsv/manifest')
             elif row['alias'] not in name and not name.startswith(row['alias']):
-                failures.append(f'{rep}: RAM 0x{addr} reported {name!r} != TSV alias {row["alias"]!r}')
+                failures.append(f'{stat_key}: RAM 0x{addr} reported {name!r} != TSV alias {row["alias"]!r}')
         elif in_fn_section and val < 0xffff0000:
             stats['fn_checked'] += 1
             if any(t in name for t in ('/', '(', 'calc', 'clamp')):
                 continue  # grouped or parenthesized-role row
             if addr not in index:
-                failures.append(f'{rep}: function 0x{addr} not in function_index.tsv ({name})')
+                failures.append(f'{stat_key}: function 0x{addr} not in function_index.tsv ({name})')
             elif not norm_fn(addr, name):
-                failures.append(f'{rep}: function 0x{addr} reported {name!r} != index {index[addr]["name"]!r}')
+                failures.append(f'{stat_key}: function 0x{addr} reported {name!r} != index {index[addr]["name"]!r}')
 
     for m in re.finditer(r'0x([0-9a-f]{6})[^\n]{0,60}?=\s*(\d+)\b', text):
         a, val = int(m.group(1), 16), int(m.group(2))
@@ -110,8 +119,8 @@ for rep in REPORTS:
             stats['rom_claims'] += 1
             w = struct.unpack('>H', ROM[a:a+2])[0]
             if w != val:
-                failures.append(f'{rep}: ROM claim 0x{a:x} = {val} but ROM u16 = {w}')
-    report_stats[rep] = stats
+                failures.append(f'{stat_key}: ROM claim 0x{a:x} = {val} but ROM u16 = {w}')
+    report_stats[stat_key] = stats
 
 out = {'date': '2026-10-30', 'rom_sha256': ROM_SHA, 'reports': report_stats,
        'failures': failures, 'result': 'PASS' if not failures else 'FAIL'}

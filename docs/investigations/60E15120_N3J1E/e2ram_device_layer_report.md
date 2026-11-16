@@ -10,7 +10,7 @@ evidence in [`reviews/e2ram_device_layer/README.md`](reviews/e2ram_device_layer/
 **Related reports:** the 28-u16 learned-values/DTC-history block codec on top of
 this layer in [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) (its own
 low-level primitives 0xb886/0xb958/0xb99c on the PLDR/ISR lines); knock-learn
-consumer 0x139c4 in [`knock_control_report.md`](knock_control_report.md); idle
+consumer 0x139c4 in [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md); idle
 trim cells 0xffff8040/8048 in [`idle_control_report.md`](idle_control_report.md).
 
 ## 1. Executive summary
@@ -198,6 +198,6 @@ Evidence: `labeling/source_review/accepted_function_aliases.tsv` /
 ## 10. Related subsystems
 
 Learned-values block codec: [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md);
-knock-learn storage consumer 0x139c4: [`knock_control_report.md`](knock_control_report.md);
+knock-learn storage consumer 0x139c4: [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md);
 idle trim cells 0xffff8040/8048: [`idle_control_report.md`](idle_control_report.md);
 DTC stored-flag replay 0x23f4e: [`dtc_control_report.md`](dtc_control_report.md).

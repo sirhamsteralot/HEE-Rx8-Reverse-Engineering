@@ -159,7 +159,7 @@ keeps them at `candidate_`.
   under `docs/investigations/60E15120_N3J1E/` (the historical proof-pass review
   `reviews/low_confidence_proof_pass_2026-11-05.md` is left as written),
   plus the corrected 0x22144 row and promotion note in
-  [knock_control_report.md](../../knock_control_report.md).
+  [knock_control_report.md](../../../../subsystem-logic/knock_control_report.md).
 - `tests/test_candidate_label_promotions.py` (6 tests).
 
 ## Validation

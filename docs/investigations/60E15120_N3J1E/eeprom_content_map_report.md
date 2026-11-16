@@ -14,7 +14,7 @@ disassembly and the raw ROM bytes, plus the two upstream 256-byte EEPROM dumps
 learned/DTC-history block on the separate PLDR/ISR interface in
 [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md); memory-map context
 in [`docs/architecture/flash-memory-layout.md`](../../architecture/flash-memory-layout.md)
-§2/§5; knock-learn consumer in [`knock_control_report.md`](knock_control_report.md);
+§2/§5; knock-learn consumer in [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md);
 idle-trim cells in [`idle_control_report.md`](idle_control_report.md); UDS/Mode 22
 window in [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md);
 free-window scan in [`labeling/free_resources_report.md`](labeling/free_resources_report.md) §10.
@@ -175,7 +175,7 @@ side is covered in [`dtc_control_report.md`](dtc_control_report.md)). The
 **knock learned retard is not one
 of these 34 pairs**: it lives in the separate 8-byte E2-window cell
 0xffff8038 (consumer `knock_retard_learn_to_eeprom` 0x139c4, see
-[`knock_control_report.md`](knock_control_report.md)), as do the idle-trim
+[`knock_control_report.md`](../../subsystem-logic/knock_control_report.md)), as do the idle-trim
 cells 0xffff8040/0x8048 and the LTFT slots 0xffff80c4/0x80e4 — those window
 cells are not chip-backed (the window is validated/reset by 0x3e020, not
 loaded from the chip).
@@ -440,7 +440,7 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
   physical unit of the ring values (6666666/ATUII period) is not converted
   here — that belongs to the open misfire-detection backlog item. The knock
   learned retard is the separate window cell 0xffff8038, not one of these
-  pairs — see [`knock_control_report.md`](knock_control_report.md).
+  pairs — see [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md).
 - Whether the PLDR/ISR 28-u16 device is a second chip or a second interface of
   IC420 is a board-routing question, unresolved (data shows it is not inside
   the 256-B IC420 image).
@@ -451,7 +451,7 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 
 [`e2ram_device_layer_report.md`](e2ram_device_layer_report.md) (SCI4 protocol +
 shadow), [`e2ram_nv_storage_report.md`](e2ram_nv_storage_report.md) (28-u16
-PLDR/ISR block), [`knock_control_report.md`](knock_control_report.md) (0xffff8038
+PLDR/ISR block), [`knock_control_report.md`](../../subsystem-logic/knock_control_report.md) (0xffff8038
 learn), [`idle_control_report.md`](idle_control_report.md) (0xffff8040/8048),
 [`uds_mode22_dispatch_report.md`](uds_mode22_dispatch_report.md) (E2 window
 PIDs), [`labeling/free_resources_report.md`](labeling/free_resources_report.md)
