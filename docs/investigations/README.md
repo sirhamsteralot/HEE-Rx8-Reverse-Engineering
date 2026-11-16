@@ -51,7 +51,7 @@ Each ROM folder is split into two kinds of material:
   shared-logic subsystem reports in [`docs/subsystem-logic/`](../subsystem-logic/README.md)
   use the human-first template instead. Reports state current findings — the
   single changelog prose allowed is one changelog table at the very top of the
-  document (date, what changed, evidence link); git history records how they
+  document (date, what changed, version); git history records how they
   changed.
 - Every review folder carries a [`README.md`](README.md), a sceptical `REVIEW_NOTES.md` where
   warranted, and a `validation.json`; record binary-level verification results there.

@@ -101,17 +101,19 @@ dumping it at the root.
    [`docs/subsystem-logic/TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md); reports
    still under `docs/investigations/` keep the older 10-section layout —
    [`knock_control_report.md`](docs/investigations/60E15120_N3J1E/knock_control_report.md)
-   is the reference — until migrated): header with ROM SHA-256 + static-analysis
-   disclaimer and a `**Related reports:**` line, then top-down from human to
-   machine — (1) a plain-language introduction (what the subsystem is and does,
-   what the numbers mean), (2) the body: basic operation step by step, with
-   flow/breakdown diagrams (ASCII or mermaid) and tables where they help,
-   (3) only then the technical pseudocode, (4) last the proof section holding
-   the **mandatory memory map (function + RAM address tables)**, labeling
-   applied, corrections, files, validation and limits. Reports contain facts
-   only: the single changelog prose allowed is one changelog table at the very
-   top of the document (date, what changed, evidence link) — git history
-   remains the detailed record. Detailed evidence goes in
+   is the reference — until migrated): header with an applicable-ROMs table
+   (ROM link, ROM specifics, short one-line description), ROM SHA-256 +
+   static-analysis disclaimer and a `**Related reports:**` line, then top-down
+   from human to machine — (1) a plain-language introduction (what the
+   subsystem is and does, what the numbers mean), (2) the body: basic operation
+   step by step in sub-chapters (`## 2.1`, `## 2.2`, …) where they break down
+   subsystems or logic, with flow/breakdown diagrams (ASCII or mermaid) and
+   tables where they help, (3) only then the technical pseudocode, (4) last
+   the proof section holding the **mandatory memory map (function + RAM
+   address tables)**, labeling applied, corrections, files, validation and
+   limits. Reports contain facts only: the single changelog prose allowed is
+   one changelog table at the very top of the document (date, what changed,
+   version) — git history remains the detailed record. Detailed evidence goes in
    the matching `reviews/<subsystem>/` folder; link upstream/downstream reports in a
    `**Related reports:**` header line instead of re-deriving their content.
    Validation proves what it lists — never write "verified working" beyond what a
