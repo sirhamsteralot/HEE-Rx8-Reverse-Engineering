@@ -46,8 +46,8 @@ the SBL block.
 
 The SBL block contains, in order: the vector table (`0x0–0x3ff`), the reset and
 cold-boot code (`0x40–0xb0d`), an erased gap (`0xb0e–0xfdf`, all `0xff` in all
-11 ROMs), a 32-byte non-erased block (`0xfe0–0xfff`) whose last 4 bytes are a
-per-build stamp, and the flash-loader proper (`0x1000–0x1ffb`), ending in the
+11 ROMs), a 32-byte non-erased block (`0xfe0–0xfff`) with a per-build stamp at
+`0xffa–0xffd`, and the flash-loader proper (`0x1000–0x1ffb`), ending in the
 ASCII marker `*SBL_END` at `0x1ff4`.
 
 ## 2. How it works, step by step
@@ -133,6 +133,20 @@ the SBL itself — the app-side CVN is covered in §2.3 and in
 
 ### 2.3 The handover to the application
 
+```mermaid
+flowchart TD
+    W["warm entry 0x1298<br/>(u32@0x1000, build A)"] --> D["0x1038 warm_reset_dispatcher(param)<br/>0x1364 WDT, 0x109c CAN, 0x16dc housekeeping"]
+    D -->|"param != 0<br/>(0x564d4 <- 0x563de, boot-request 0xffffd1dc==3)"| GPIO["0x12a2 BOOT GPIO init"]
+    GPIO --> T["target 0x1378<br/>SBL CAN command loop"]
+    D -->|"param == 0"| CHK{"flash intact?<br/>u32@0x7fffc != 0xffffffff<br/>and u32@0x2000 != 0xffffffff"}
+    CHK -->|yes| APPT["target u32@0x7fff8 = 0xd204"]
+    CHK -->|no — erased| T
+    T --> HO["0x1090: SP=0xffffdfa0, jmp @target"]
+    APPT --> HO
+    HO -->|0x1378| SBL["SBL loop (BOOT mode) — §2.2"]
+    HO -->|0xd204| APP["app entry 0xd204: VBR=0x7fc50, FPSCR=0x40001,<br/>0x4c7a, 0x9e68 -> 0x3ad8(0) -> os_init 0x3e10 -> idle 0x3dac"]
+```
+
 The warm entry `0x1298` calls `0x1038` (`warm_reset_dispatcher`) with
 parameter 0. `0x1038` resets the WDT (`0x1364`), re-initializes the diag CAN
 (`0x109c`), runs housekeeping (`0x16dc`), then picks the jump target: with
@@ -194,8 +208,8 @@ supply/reset-pin disturbance or crank-signal faults.
 application checksum (which starts at `0x2000`). `0xfe0–0xfff` holds a 32-byte
 block: `7aff ffff 5079 7730 1141 ffff` followed by twelve `00` bytes, then
 `2797`, a 4-byte stamp at `0xffa–0xffd`, and `0000`. The stamp takes 8 distinct
-values across the 11 ROMs (two per code build group of four); its role is not
-established — candidate SBL build stamp/checksum. `0x1ff4` holds the ASCII
+values across the 11 ROMs (5 in build A over 6 ROMs, 3 in build B over 5 ROMs);
+its role is not established — candidate SBL build stamp/checksum. `0x1ff4` holds the ASCII
 marker `*SBL_END`, which the `0x36` transfer handler scans for.
 
 ### 2.5 Hardware setup — CAN and BOOT mode
@@ -386,9 +400,10 @@ New label records: [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../
 analysis, `0x61a8` entry mechanism — with binary-verified evidence). Cross-ROM
 SBL hashes and diffs: [`data/labels/cross_rom/sbl_first_8k.json`](../../data/labels/cross_rom/sbl_first_8k.json).
 For build-B ROMs the labels apply with the shifted anchor addresses listed in
-the applicable-ROMs table above (`*SBL_END`, warm entry, app entry); the
-`0x0–0x1007` region is byte-identical between the two code builds except the
-stamp.
+the applicable-ROMs table above (`*SBL_END`, warm entry, app entry); the two
+code builds are byte-identical in `0x0–0xffa` and differ only at `0xffb–0xffd`
+(stamp), `0x1000–0x1007` (warm-entry pointer + ASCII tag) and `0x1039–0x1ffb`
+(code).
 
 ### 4.3 Corrections
 
@@ -435,7 +450,7 @@ the one indirect reference added (pool `0x25164`, handler registration in
   ROADMAP discrepancy register); only the firmware side of the entry (the
   `0x1038` parameter and the `0xffffd1dc` boot-request state) is mapped here.
 - The build-B SBL code (`0x1039` up) was diffed byte-wise but not functionally
-  re-analyzed; labels for build-B ROMs rely on the byte-identity of `0x0–0x1007`
+  re-analyzed; labels for build-B ROMs rely on the byte-identity of `0x0–0xffa`
   and the identical marker/entry fields.
 - The flash-write primitive behind `0xb1` (`0x1008` and the status-wait helpers
   `0x1e94`/`0x1eb2`) is described structurally; no erase/write was executed.

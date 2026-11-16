@@ -8,7 +8,7 @@
   "range": "0x00000-0x001fff",
   "vector_table": "0x0-0x3ff active while VBR=0 at reset: u32@0x0 = 0x000008b8 (reset PC), u32@0x4 = 0xffffdfa0 (initial SP), u32@0x8 = 0x000008b8 (manual-reset PC), all exception slots 0x10-0x37 = 0x000008b4 (Illegal_instr), 0x38/0x3c = 0xffffffff (erased) - byte-verified",
   "erased_gap": "0xb0e-0xfdf all 0xff (1,234 B, CVN-free since the app checksum starts at 0x2000) - byte-verified in this ROM and all 11 corpus ROMs (data/labels/cross_rom/sbl_first_8k.json)",
-  "block_0xfe0_0xfff": "32-B non-erased block, identical bytes in 6 of 11 ROMs, differing only in the 4-B stamp at 0xffa-0xffd across builds: 7affffff507977301141ffff + 12x00 + 2797 + stamp32 + 0000 (reference stamp 0x2022936d); role unknown - candidate SBL build stamp/checksum",
+  "block_0xfe0_0xfff": "32-B non-erased block: constant 26-B prefix 7affffff507977301141ffff + 12x00 + 2797 across all 11 ROMs, 4-B stamp at 0xffa-0xffd (8 distinct values (5 in build A over 6 ROMs, 3 in build B over 5 ROMs); reference 0x2022936d), trailing 0000; the full block is byte-identical only between ROMs sharing an SBL hash (e.g. 60E15120_N3J1E and 60E0G500_N3ZHEC); role unknown - candidate SBL build stamp/checksum",
   "sbl_end_marker": "ASCII '*SBL_END' at 0x1ff4-0x1ffb, byte-verified; scanned for by the 0x36 transfer handler 0x1c04"
  },
  "functions": {
