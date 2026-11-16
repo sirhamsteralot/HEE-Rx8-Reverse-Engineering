@@ -153,6 +153,14 @@ dumping it at the root.
       test files and label JSONs into one standalone file per subsystem/body: each
       test file must pass alone via `python -m pytest tests/test_<name>.py`, and
       each label record must cover exactly its own body's rows.
+    - ROADMAP items are work units, not deliverable boundaries: there is exactly
+      **one report and one label record per subsystem**, however many ROADMAP
+      items it took. If a later item's logic is executed by an already-covered
+      subsystem's code (e.g. the boot handover is run by the SBL block's
+      dispatcher/trampoline), fold it into that subsystem's existing report as a
+      section and into its label JSON as a key — never open a second report for
+      the same subsystem. Pick the subsystem by where the code lives, not by
+      which ROADMAP item mentioned it first.
     - Reports, review notes, label evidence strings, test docstrings and PR bodies
       must not reference ROADMAP item IDs, PR numbers, discrepancy IDs or pass
       dates — backlog tags churn and are noise to readers. The same applies to
