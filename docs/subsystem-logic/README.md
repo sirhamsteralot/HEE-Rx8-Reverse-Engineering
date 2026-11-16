@@ -20,6 +20,11 @@ re-derived in the shared report. Evidence (review folders, validation records) s
 
 - New subsystem report → this folder, from [`TEMPLATE.md`](TEMPLATE.md);
   cross-link related reports instead of duplicating their content.
+- One report per subsystem, full stop. ROADMAP items are work units, not report
+  boundaries: if part of a subsystem's behavior is executed by another
+  subsystem's code (e.g. the boot handover runs in the SBL block), it is a
+  section of that subsystem's report here — decide by where the code lives,
+  never open a second report for the same subsystem.
 - Reports state current findings only — the single changelog prose allowed is
   one changelog table at the very top of the document (date, what changed,
   version); git history records how they changed. Reports are factual
