@@ -47,9 +47,12 @@ Each ROM folder is split into two kinds of material:
   folder root. Labeling passes and labeling review notes go under `labeling/`.
 - Reports: 10-section format with mandatory memory map (function + RAM address
   tables) and a plain-language §1a (see AGENTS.md rule 8) — template
-  [`60E15120_N3J1E/knock_control_report.md`](60E15120_N3J1E/knock_control_report.md). Reports state
-  current findings — don't append dated change-log addenda (git history records
-  how they changed).
+  [`60E15120_N3J1E/knock_control_report.md`](60E15120_N3J1E/knock_control_report.md);
+  shared-logic subsystem reports in [`docs/subsystem-logic/`](../subsystem-logic/README.md)
+  use the human-first template instead. Reports state current findings — the
+  single changelog prose allowed is one changelog table at the very top of the
+  document (date, what changed, evidence link); git history records how they
+  changed.
 - Every review folder carries a [`README.md`](README.md), a sceptical `REVIEW_NOTES.md` where
   warranted, and a `validation.json`; record binary-level verification results there.
 - Inputs are cited by SHA-256 (from `binaries/manifest.csv`) and upstream commits by
