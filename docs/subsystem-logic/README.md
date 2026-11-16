@@ -2,8 +2,10 @@
 
 Subsystem documentation: one `*_report.md` per firmware subsystem, describing
 what the subsystem *does* (control logic, task structure, dispatch tables,
-memory maps) in the rule-8 report format (AGENTS.md) with the mandatory memory
-map and plain-language §1a.
+memory maps) in the human-first format of [`TEMPLATE.md`](TEMPLATE.md)
+(AGENTS.md rule 8): plain-language introduction, step-by-step body, then
+pseudocode, with the mandatory memory map, validation and limits in the proof
+section at the end.
 
 **Placement rule.** Subsystem logic is **assumed identical across the ROM
 bins until proven otherwise**, so the reports here are written against the
@@ -16,10 +18,11 @@ shared report. Evidence (review folders, validation records) stays in
 
 ## Rules
 
-- New subsystem report → this folder, from the subsystem report template;
+- New subsystem report → this folder, from [`TEMPLATE.md`](TEMPLATE.md);
   cross-link related reports instead of duplicating their content.
-- Reports state current findings only — no dated change-log addenda (git
-  history records how they changed).
+- Reports state current findings only — the single changelog prose allowed is
+  one changelog table at the very top of the document (date, what changed,
+  version); git history records how they changed.
 - Inputs are cited by SHA-256 (from `binaries/manifest.csv`); `0x` addresses
   are reference-ROM addresses unless a linked per-ROM document says otherwise.
 - `docs/investigations/` remains the home of per-ROM evidence, labeling passes
