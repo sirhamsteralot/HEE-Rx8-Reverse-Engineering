@@ -66,3 +66,47 @@ static analysis predicts.
   accepted RAM row): pass.
 - `tests/test_immobilizer_labels.py`: pass (patterns, descriptors, pool words,
   cross-ROM map vs matches TSV).
+
+## Raw-bin re-verification (2026-11-17, independent re-read of the raw bytes)
+
+A standalone checker (kept uncommitted in `input/immobilizer_rawbin_reverify.py`,
+log `input/immobilizer_rawbin_reverify.log`) re-derived every label/finding from
+the raw ROM bytes only (the disassembly used solely for instruction boundaries —
+its instruction bytes are proven equal to the ROM by `validate_export.py`;
+pool operands printed there are the resolved pool addresses). 59/59 checks pass:
+
+- A: ROM SHA-256; patch patterns at 0x34b10/0x34f5c; with-RKE delta 0x44c.
+- B: instruction-level decode from raw 16-bit words — 0x34b10 = `bsr 0x355f0`;
+  all six state-dispatch `bsr`s (0x34b40/98/a0/a8/b0/b8 → 0x34c5c/0x34d12/
+  0x34f42/0x35062/0x351ae/0x35258); 0x34f5c = `cmp/eq r2,r3`, `bf/s` → 0x34f72,
+  `bsr` → 0x352c4 (authorized) / 0x35338 (rejected); fuel-cut gate in 0xe2d4
+  (pool 0xe406/0xe43c = 0xc1d0, `tst`, store `mov.w r4,@r3` via pool 0xe43e =
+  0xa430); 0x11c4 `mov.l` pool 0x1284 = 0xffffdfa0.
+- C: 0x355f0 command-decode pool words/longs (0x356b6-0x356d2) and the c4bf==1
+  guard.
+- D: CAN descriptors — 0x4dfac (id 0x041, mb 9, TX, DLC 8, buf 0xffffc4a8),
+  0x4e26c (id 0x047, mb 39, RX, DLC 8, buf 0xffffc4b0; = 0x4e21c+5*16).
+- E: 0x375c0 pool contains the E2RAM device addresses 0x6010000-0x6040000,
+  0x60b0000, 0x60c0000, 0x6050000.
+- F/G: 0x2556c pool refs PEDR_W 0xfffff754 + `mov #0x40`/`mov #0x20` masks;
+  0x3587c refs ADC cell 0xffff8674; 0x360a8 refs ATUII_TCNT0H_W 0xfffff430.
+- H: all 577 accepted RAM rows (incl. the 31 new immo rows) anchored in the raw
+  ROM per the rule-7 rules (pool-referenced, raw bytes anywhere, or
+  base+offset member).
+- I: all 35 immo function aliases are `function_index.tsv` entries; all immo RAM
+  aliases are in `symbols.tsv`.
+- J: call-graph claims resolved from raw pool loads — 0xdbf6 → 0x3811c/0x34ae2;
+  0x34ae2 → 0x35ea0 (jsr @0x34b0c) and tail jmp → 0x36908; 0x34a04 → 0x375c0;
+  0x1102a → 0x349e4; 0x114d0 → 0x34a04/0x16b20; 0x11534 → 0x5674a;
+  0xdb58 → 0x380c8; 0x36908 → afterImmo_1..8.
+- K: all 331 cross-ROM mapped functions in
+  `data/labels/cross_rom/immobilizer_function_map.json` re-compared byte-for-byte
+  against the raw bins of all 11 dumped ROMs — identical.
+- L: 60E0G500_N3ZHEC own dump — SHA-256, pattern 0x35af8, with-RKE 0x35f44,
+  descriptors 0x4e758 (0x041, buf 0xffffc518) / 0x4ea18 (0x047, buf 0xffffc520).
+- M: all 37 function addresses in the report memory map are function_index
+  entries.
+
+One hygiene fix made during this pass: the function-alias key for 0x11c4 was
+normalized to the 8-digit form `000011c4` in `immobilizer_labels.json` and
+`accepted_function_aliases.tsv` (matching the index/TSV convention).
