@@ -235,6 +235,24 @@ clutch gate 0x165d6 ([idle speed control](#idle-speed-control-labeling)).
 [`dsc_can_arbitration_report.md`](dsc_can_arbitration_report.md) +
 `reviews/dsc_can_arbitration/`; record: `metadata/dsc_can_labels.json`.
 
+## Immobilizer subsystem labeling
+
+The PCM-side immobilizer is labeled end to end: CAN 0x047 RX / 0x041 TX
+keyless-module dialogue (mailbox descriptors ROM 0x4e26c / 0x4dfac), the
+command decoder 0x355f0 (cmd 0x06/0x08/0x90/0xc9), the state machine
+0x34ae2 (states c21d 0-5), seed/key math 0x353ce/0x354dc/0x35356/0x35438,
+random-seed gen 0x3587c, EEPROM key read 0x375c0, TX frame builder 0x35738,
+lamp drive 0x2556c (PEDR_W 0xfffff754 bits 0x40/0x20), immo counter 0x5674a,
+and the fuel-cut gate 0xe2d4 (c1d0==0 -> DAT_ffffa430 = 3). The immo-off patch
+sites 0x34b10 / 0x34f5c are documented from the disassembly. 34 functions,
+31 RAM cells; dynamically reproduced in the SH-2E emulator (challenge/
+response, key-word exchange, fuel-cut gate — `tests/test_immobilizer_dynamic.py`).
+Write-up: [`immobilizer_report.md`](../../subsystem-logic/immobilizer_report.md) +
+`reviews/immobilizer/`; record: `data/labels/60E15120_N3J1E/immobilizer_labels.json`
+(+ `data/labels/60E0G500_N3ZHEC/immobilizer_labels.json`,
+`data/labels/cross_rom/immobilizer_function_map.json`); checks:
+`tests/test_immobilizer_labels.py`, `tests/test_immobilizer_dynamic.py`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

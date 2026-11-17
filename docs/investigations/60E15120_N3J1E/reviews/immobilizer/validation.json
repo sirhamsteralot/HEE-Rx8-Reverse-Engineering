@@ -1,0 +1,52 @@
+{
+  "pass": "immobilizer_subsystem_analysis",
+  "date": "2026-11-17",
+  "target_rom": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rom_modified": false,
+  "own_dump_checked": {
+    "file": "binaries/dumps/60E0G500_N3ZHEC.bin",
+    "sha256": "a33f79a4f1c47007fd95a667ef8a8e14740eb8522c0b26a4fc1022db7fd85db2",
+    "manifest_check": "python utilities/scripts/hash_binaries.py --check -> manifest OK"
+  },
+  "validate_export": {
+    "input_sha256_verified": true,
+    "function_files_verified": 3355,
+    "instructions_byte_verified": 168592,
+    "instruction_bytes_verified": 337184,
+    "exact_reference_matches_verified": 1833,
+    "semantic_equivalence_verified": false
+  },
+  "validate_reports": "PASS (with PYTHONUTF8=1; the plain-mode cp1252 crash on a pre-existing report also occurs on main — environment artifact, not this change)",
+  "verify_claims": "PASS (24 labels JSONs checked, 0 failures, 0 notes)",
+  "verify_math_units": "PASS (16 shift pairs, 10007 fixed-point cases, 70 constant pairs)",
+  "verify_readability": "FAILS IDENTICALLY ON MAIN (pre-existing assert on a function-body string; not caused by this change — confirmed by stashing)",
+  "pytest": "308 passed (python -m pytest tests/, incl. tests/test_immobilizer_labels.py 8 and tests/test_immobilizer_dynamic.py 4)",
+  "labels_applied": {
+    "functions": 34,
+    "ram": 31,
+    "rows_appended": {
+      "accepted_function_aliases.tsv": 34,
+      "accepted_ram_aliases.tsv": 31,
+      "symbols.tsv": 0
+    },
+    "records": [
+      "data/labels/60E15120_N3J1E/immobilizer_labels.json (extended)",
+      "data/labels/60E0G500_N3ZHEC/immobilizer_labels.json (extended)",
+      "data/labels/cross_rom/immobilizer_function_map.json (new)"
+    ]
+  },
+  "binary_level_verification": {
+    "start_patterns": {"0x34b10": "B56E000960D0600C88008D1100098801", "0x34f5c": "33208F080009B1AF0009E27F941A2E20"},
+    "can_descriptors": {"0x4dfac": "id=0x041 mb=9 mc=0x08 buf=0xffffc4a8", "0x4e26c": "id=0x047 mb=39 mc=0x08 buf=0xffffc4b0"},
+    "pools": {"0x355f0": "words 0x356b6-0x356d2 (c4bf/c4b9/c4ba-bd, 0x90/0xc9/0xff, c21e/c221/c204)", "0xe2d4": "0xe406/0xe43c=0xc1d0, 0xe43e=0xa430", "0x11c4": "0x1284=0xffffdfa0"},
+    "gpio": "PEDR_W 0xfffff754 masks 0x40/0x20 (0x2556c); ATUII_TCNT0H_W 0xfffff430 (0x360a8)",
+    "ram_rows_pool_anchored": "tests/test_source_review_ram_aliases.py PASS"
+  },
+  "dynamic_validation": {
+    "method": "SH-2E emulator profile 60E15120_N3J1E, 1e6 boot cycles, harness.call on 0x38150/0x34ae2/0x380c8/0xe2d4",
+    "test": "tests/test_immobilizer_dynamic.py",
+    "result": "4/4 pass — seed request -> TX 07 seed; challenge match -> authorized (c224=0x7f, c21d=3, TX 81/7f); wrong word -> rejected (c224=0x81, c1d0=0, TX 01/81); key exchange cmd 0xc9 + 0x90x4 -> c21d=0, TX 0xc6; fuel-cut 0xe2d4 -> a430=0x0003 with c1d0=0 vs 0x0000 with c1d0=1"
+  },
+  "limits": "Static + emulator only; keyless-module side not analyzed; seed/key algebra verified at bit-op level; lamp pin-to-terminal not traced; HCAN1 modeled as regfile (RX driven at buffer level); shared-logic assumed (chain byte-matches in all 11 ROMs, only 60E15120_N3J1E analyzed function-by-function)."
+}
