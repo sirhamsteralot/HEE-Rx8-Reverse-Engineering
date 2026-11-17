@@ -153,6 +153,11 @@
         "pool_claims": 0,
         "word_assigns": 1
       },
+      "subsystem-logic/immobilizer_report.md": {
+        "reg_pairs": 4,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "subsystem-logic/knock_control_report.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -164,7 +169,7 @@
         "pool_claims": 0
       },
       "README.md": {
-        "reg_pairs": 1,
+        "reg_pairs": 2,
         "call_claims": 0,
         "pool_claims": 0
       },
@@ -237,6 +242,12 @@
         "pool_claims": 0,
         "word_assigns": 2
       },
+      "reviews/immobilizer/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 2
+      },
       "reviews/intake_solenoids/README.md": {
         "reg_pairs": 5,
         "call_claims": 0,
@@ -269,15 +280,15 @@
         "word_assigns": 1
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 44,
+        "reg_pairs": 46,
         "call_claims": 7,
         "pool_claims": 16,
-        "word_assigns": 273,
+        "word_assigns": 275,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 619,
-    "labels_json_checked": 23
+    "tsv_rows": 653,
+    "labels_json_checked": 24
   },
   "notes": [],
   "failures": [],

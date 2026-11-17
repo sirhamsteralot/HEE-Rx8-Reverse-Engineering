@@ -101,18 +101,8 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 26–34, 36–37, 39, 42–90)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 27–34, 36–37, 39, 42–90)
 
-- **C item 26 (open)** — **immobilizer subsystem analysis.** Today only the
-  start-pattern addresses are known (`0x34b10` / with-RKE `0x34f5c` on
-  60E15120_N3J1E; per-ROM table in
-  [upstream-sync-validation.md §3](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md),
-  D13 open for N3N5EB), plus the `ref_afterImmo_1..6` UDS handlers and the immo
-  counter in the slow task `0x11534`. Label the immo challenge/response and
-  keyless-module CAN dialogue; deliver `immobilizer_report.md` +
-  `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM equivalents
-  (the per-ROM start-pattern addresses are already folded into those records —
-  don't duplicate them, extend with the challenge/response analysis).
 - **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
   DSC torque-request throttle via CAN 0x212 are labeled (see
   [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)),
