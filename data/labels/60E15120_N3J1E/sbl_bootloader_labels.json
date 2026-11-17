@@ -208,9 +208,9 @@
    "evidence": "decompiled body 0xae8"
   },
   "0x00001008": {
-   "alias": "sbl_erase_guard_compare",
-   "kind": "erase-service guard: reads u16@0x7fb00 and u16@0x7fb02 (the app-checksum hole) and compares the parameter against them and 0xffff; returns match code; called from 0x1d78 (0xb1 erase) - result < 100 permits erase",
-   "evidence": "disasm 0x1008-0x102a; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified"
+   "alias": "cvn_hole_pair_check",
+   "kind": "returns u16@0x7fb00 when it equals ~u16@0x7fb02 and != 0xffff, else 0 (NOT an erase guard - no erase exists in the SBL); callers 0x1d78 (0xb1 arm) and 0x56428 (app 0xB1 conditions), result < 100 required; emulator: returns 2 with the stock hole 0002/fffd",
+   "evidence": "disasm 0x1008-0x102a: mov.w @r3,r4; r5 = extu.w r4; r6 = ~mov.w @r2 (extu.w); cmp/eq r6,r5; if equal and r5 != u16 pool 0x1034 (0xffff) return r4 else 0; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified; hole bytes 0x7fb00 = 00 02 ff fd 5f 57 44 53 ('_UDS') ROM-verified; dynamic: harness.call(0x1008) -> r0 = 2 (tests/test_sbl_bootloader.py)"
   },
   "0x00001038": {
    "alias": "warm_reset_dispatcher",
@@ -363,9 +363,39 @@
    "evidence": "decompiled body 0x1d30; pool 0x160c = 0x1d30, cmp/eq 0x37 at 0x1486"
   },
   "0x00001d78": {
-   "alias": "sbl_svc_0xb1_erase",
-   "kind": "UDS 0xb1 (erase) handler: NRC 0x22/0x33 gates; payload 00 b2 00 -> runs erase via 0x1008 (guard compare against 0x7fb00/0x7fb02), sets DAT_ffffdfb3 = 1, positive 0xf1 00 b2; else NRC 0x10/0x31/0x12",
-   "evidence": "decompiled body 0x1d78; pool 0x160e = 0x1d78, compare value 0xb1 at pool 0x14f6"
+   "alias": "sbl_svc_0xb1_arm_download",
+   "kind": "UDS 0xb1 boot-mode arm (NO erase - only callees are 0x1008 and response sender 0x11fa): NRC 0x22/0x33 gates; payload 00 b2 00 with length 3 -> 0x1008() < 100 required (else NRC 0x10): clears DAT_ffffdfb4, sets download-armed latch DAT_ffffdfb3 = 1 (required by 0x1ad6/0x34, else NRC 0x10 there), answers 0xf1 00 b2; else NRC 0x31/0x12; emulator over CAN: b1 00 b2 00 -> f1 00 b2, dfb3=1, dfb4=0 (tests/test_sbl_bootloader.py)",
+   "evidence": "decompiled body 0x1d78; callgraph 0x1d78 -> {0x1008, 0x11fa} only; pool 0x160e = 0x1d78, compare value 0xb1 at pool 0x14f6; no flash-control register (0xffffe800+) referenced anywhere in 0x1000-0x1ffb (pool scan of committed disassembly)"
+  },
+  "0x000565e8": {
+   "alias": "app_uds_service_b1",
+   "kind": "app service 0xB1 (uds_service_b1_mazda_specific): scans the sub-table of {id u16, len u16, handler u32, mask u16} records; record 0x5f0f4 (00 b2 00 01 00 05 63 50 ff fc) = id 0x00B2, 1 data byte, handler 0x56350, mask 0xfffc",
+   "evidence": "decompiled body 0x565e8; dispatch record 0x5ec84 = b1 00 00 00 00 05 65 e8 ROM byte-verified; sub-record 0x5f0f4 ROM byte-verified"
+  },
+  "0x00056350": {
+   "alias": "app_b1_00b2_boot_request",
+   "kind": "app 0xB1 sub 0x00B2 handler: needs session index 1 (0xffffd1cf, table 0x5f040 index 1 = 0x85) else NRC 0x22; app unlock level 1 (0xffffd1d0) else 0x33; conditions 0x56428 (battery 8.0-16.5 V, coolant -40..120 C unless 0xffffc5e6, 0x1008() < 100) else 0x22/0x10; data byte 0 else 0x31; then queues F1 00 B2 (0x564ac) and sets boot-request state 0xffffd1dc = 3 (0x563de(3)); no engine-speed check on this path",
+   "evidence": "decompiled body 0x56350; 0x56428 gates ROM-verified (emulator: r0=0 with 12.5 V on AN14); 0x564ac = setupForUdsResponse(0xb1, {f1,00,b2}, 3); post-response 0x680de -> 0x6892a -> 0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) SBL loop (callgraph-verified)"
+  },
+  "0x00056428": {
+   "alias": "app_b1_conditions_check",
+   "kind": "app 0xB1 conditions: returns 0 (OK) when 0x1008() < 100 and battery 8.0-16.5 V (0xffffb590) and (coolant in -40..120 C or 0xffffc5e6 set), else NRC 0x22 / 0x10",
+   "evidence": "decompiled body 0x56428; emulator: 12.5 V via AN14 -> r0 = 0 (tests/test_sbl_bootloader.py)"
+  },
+  "0x000564ac": {
+   "alias": "app_queue_f1_00b2",
+   "kind": "queues the F1 00 B2 positive response for app 0xB1 sub 0x00B2",
+   "evidence": "decompiled body 0x564ac: ref_setupForUdsResponse_(0xb1, {0xf1, 0x00, 0xb2}, 3)"
+  },
+  "0x00054a36": {
+   "alias": "app_post_response_service_hook",
+   "kind": "post-response hook: for last service 0xb1 calls 0x563de(1) which (with 0xffffd1dc == 3) runs 0x564d4 -> 0x1038(1) -> SBL loop 0x1378",
+   "evidence": "decompiled body 0x54a36; callgraph 0x6892a -> thunk 0x68d70 -> 0x54a36; 0x680de -> 0x6892a"
+  },
+  "0x0006892a": {
+   "alias": "app_uds_session_tail",
+   "kind": "UDS-session tail (called from 0x680de): passes last service byte DAT_ffffdde0 to 0x54a36",
+   "evidence": "decompiled body 0x6892a; callgraph 0x680de -> 0x6892a"
   },
   "0x00001e34": {
    "alias": "sbl_svc_default_nrc11",

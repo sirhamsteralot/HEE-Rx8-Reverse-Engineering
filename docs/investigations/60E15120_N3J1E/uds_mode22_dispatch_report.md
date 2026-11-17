@@ -477,8 +477,10 @@ loaded with 0xac/0xcd) -> unlock latch `DAT_ffffdfb1` = 1. So the BOOT-mode
   big-endian addr via 0x1e4c, size via 0x1e72, range-checked to 0x7e000);
   0x36 -> 0x1c04 (0x400-byte blocks copied to the RAM staging buffer, scanning for
   the `*SBL_END` magic at 0x1ff4; on match responds 0x78 and jumps via
-  0x1090 `FUN_00001090`); 0x37 -> 0x1d30 (transfer exit); 0xb1 -> 0x1d78 (erase via
-  0x1008). No checksum is verified by the SBL itself - consistent with 12.1.
+  0x1090 `FUN_00001090`); 0x37 -> 0x1d30 (transfer exit); 0xb1 -> 0x1d78 (boot-mode arm: sets the
+  download-armed latch 0xffffdfb3 after the 0x1008 hole-pair check - it does NOT erase;
+  see the [SBL bootloader report](../../subsystem-logic/sbl_bootloader_report.md) SBL has no
+  flash-write path). No checksum is verified by the SBL itself - consistent with 12.1.
 
 ### 12.3 Functions located in this update
 
