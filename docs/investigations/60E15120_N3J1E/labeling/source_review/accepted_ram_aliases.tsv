@@ -545,3 +545,34 @@ ffffccca	key_voltage_timer	uint8	00048d38	Held at 0x19 while voltage 0xffffb590 
 ffffdfa8	reset_cause	uint8	00000364	Reset-cause selector: written by the param!=0 branch of 0x4e0 (pool 0x590=0xdfa8) and by 0x5b0; selects the 0x210 vs 0x450 dispatch in 0x364/0x338.
 ffffdffc	warm_boot_magic	uint32	000004e0	Warm-boot magic 0x5aa5a55a, written on every reset by 0x4e0 (pool 0x5a0=0xffffdffc) and compared at 0x508 to select warm vs cold entry; top-of-RAM protected cell (range-checked in 0x87c).
 ffffaa69	key_on_latch_aa69	uint8	0001a5d8	= (0xffff9ec8 & 1) != 0 by 0x1a5d8 (pools 0x1a60c=0xffffaa69, 0x1a610=0xffff9ec8); copied to 0xffffaa68 by 0x1a600.
+ffffc1c8	immo_tx_frame	u8[8]	380c8	c1c8=cmd, c1c9..c1cc=payload, c1cd..c1cf=0, c1d1=valid flag; copied to 0xffffc4a8..c4af when c1d1==1
+ffffc1d1	immo_tx_frame_valid	u8	380c8	set to 1 by every 0x35738 path; 0xdb58 clears it after packing
+ffffc1dc	immo_computed_key_words	u32[4] c1dc-c1e8	35356	raw scrambled words before the 0x01..0x04<<24 tag
+ffffc1ec	immo_received_key_word	u32	355f0	emulator: c1ec echoed the sent word
+ffffc1f0	immo_expected_key_words	u32[4] c1f0-c1fc	34d12	c1f0 = c1dc|0x01000000 ... c1fc = c1e8|0x04000000
+ffffc200	immo_seed_expected	u32	353ce	c200 = 0x354dc(c26c,c270,c208); the cmd-8 word c204 must equal it
+ffffc204	immo_challenge_received	u32	355f0	emulator: c204=0xdeadbeef after wrong challenge -> bad state
+ffffc208	immo_random_seed	u32	3587c	built from ADC 0xffff8674 + timers 0xffff9f00/9f1c/9f1e + counters c218/c21a/c223
+ffffc20c	immo_timer_a	u16	34c5c	set 500 on entry to challenge states; expiry -> bad state
+ffffc212	immo_timer_engine_off	u16	35062	15000 after authorization, 500 in ready-engine-off state
+ffffc21c	immo_ready_engine_off_pending	u8	35062	set with TX 0xc8 when c212 expires in state 3
+ffffc21d	immo_main_state	u8	34ae2	0x34b14 reads it; handlers 0x34c5c/0x34d12/0x34f42/0x35062/0x351ae/0x35258 via bsr at 0x34b40/0x34b98/0x34ba0/0x34ba8/0x34bb0/0x34bb8
+ffffc21e	immo_command_substate	u8	355f0	0 idle, 1 wait-key, 2 challenge, 3 key-exchange, 4 key-word, 5 no-command, 6 error
+ffffc21f	immo_fail_counter	u8	34ae2	counts consecutive c21e in {5,6} cycles with c226==0 && c229==0
+ffffc220	immo_key_word_index	u8	34d12	emulator: 1->2->3->4 across cmd 0x90 subs
+ffffc221	immo_request_subtype	u8	355f0	2 = seed request (triggers seed TX + c21d=2)
+ffffc224	immo_status_code	u8	35738	0x7f authorized, 0x80 battery/timeout reject, 0x81 challenge/key reject
+ffffc226	immo_authorized_latch_flag	u8	35062	set when state 3 sees c21e==0
+ffffc22a	immo_reject_event_flag	u8	00034f42	set 1 on every bad-state path (0x34c5c/0x34d12/0x34f42), cleared by immo_set_authorized 0x352c4; emulator: 1 after wrong challenge, 0 after good one
+ffffc26c	immo_key_reg_a	u32	353ce	EEPROM immo key bytes 0x02-0x05 half; default 0x10001 when erased; e2ram param id 2 writes (2, 0xffffc26c, 8)
+ffffc270	immo_key_reg_b	u32	000353ce	EEPROM immo key bytes 0x06-0x09 half; default 0x55aa55aa; same chain as c26c
+ffffc282	immo_registered_key_count	u8	352c4	c282==2 (or 1) admits the seed-request path with lamp on
+ffffc4a8	can041_tx_buffer	u8[8]	380c8	ROM descriptor bytes re-read: id 0x041, buf 0xffffc4a8
+ffffc4b0	can047_rx_raw_buffer	u8[8]	0003811c	filled by can_rx_copy_mailbox_to_buffer from HCAN1 mb39 (descriptor ROM 0x4e26c); ROM descriptor bytes re-read: id 0x047, buf 0xffffc4b0
+ffffc4b9	immo_rx_command	u8	38150	commands 0/6/8/0x90/0xc9 verified in emulator
+ffffc4ba	immo_rx_data	u8[4] c4ba-c4bd	38150	c4bb is the cmd-6 sub-status (0xff check, pool 0x356c2=0x00ff)
+ffffc4bf	immo_rx_command_pending	u8	3811c	pool word 0x356b6=0xc4bf at 0x355f2
+ffffd1ce	security_unlocked_flag	u8	375c0	UDS security-access area
+ffffd1e2	immo_counter	u8/s16	5674a	ref_runImmoRelatedCounter body, 60 B
+ffffd1e4	immo_counter_enable	u8	5674a	diag RAM area cell
+ffffdfa0	immo_diag_bit	u8 bit0	11c4	pool 0x1284=0xffffdfa0 in 0x11c4
