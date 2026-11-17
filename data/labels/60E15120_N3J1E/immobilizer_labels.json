@@ -193,7 +193,7 @@
    "confidence": "medium",
    "evidence": "ref_readImmoBit (unique_exact_bytes to 60E0FC00 0x16924), called from task 0x114d0. If 0xffffdfa0 bit0==0 && 0xffffdf98==0xa5 && (0xffffdf93 & 0x70)==0 -> FUN_00016a1c(2)."
   },
-  "00011c4": {
+  "000011c4": {
    "alias": "immo_diag_bit_clear",
    "confidence": "medium",
    "evidence": "8 B 'writeImmoBitZero?' (inherited name), called from 0x1378. mov.l pool 0x1284 = 0xffffdfa0; stores byte 0 to it (clears the immo diag bit at boot). Pool word re-read from ROM."

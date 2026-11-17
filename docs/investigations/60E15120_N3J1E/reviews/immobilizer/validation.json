@@ -41,7 +41,8 @@
     "can_descriptors": {"0x4dfac": "id=0x041 mb=9 mc=0x08 buf=0xffffc4a8", "0x4e26c": "id=0x047 mb=39 mc=0x08 buf=0xffffc4b0"},
     "pools": {"0x355f0": "words 0x356b6-0x356d2 (c4bf/c4b9/c4ba-bd, 0x90/0xc9/0xff, c21e/c221/c204)", "0xe2d4": "0xe406/0xe43c=0xc1d0, 0xe43e=0xa430", "0x11c4": "0x1284=0xffffdfa0"},
     "gpio": "PEDR_W 0xfffff754 masks 0x40/0x20 (0x2556c); ATUII_TCNT0H_W 0xfffff430 (0x360a8)",
-    "ram_rows_pool_anchored": "tests/test_source_review_ram_aliases.py PASS"
+    "ram_rows_pool_anchored": "tests/test_source_review_ram_aliases.py PASS",
+    "raw_bin_reverification_2026_11_17": "59/59 checks PASS (input/immobilizer_rawbin_reverify.py + .log, uncommitted scratch): instruction-level decode of all dispatch/branch/patch sites from raw words, all cited pools/descriptors/patterns re-read from the raw bin, all 577 accepted RAM rows + 31 new immo rows anchored per rule-7 rules, 35 function aliases in function_index, symbols.tsv coverage, 9 call-graph claims resolved from raw pool loads, all 331 cross-ROM mapped functions byte-identical across the 11 raw bins, 60E0G500_N3ZHEC record re-read from its own dump, all 37 report memory-map function addresses in the index. One hygiene fix: 0x11c4 key normalized to 000011c4 (JSON + TSV)."
   },
   "dynamic_validation": {
     "method": "SH-2E emulator profile 60E15120_N3J1E, 1e6 boot cycles, harness.call on 0x38150/0x34ae2/0x380c8/0xe2d4",
