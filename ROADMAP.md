@@ -354,22 +354,34 @@ flash before any read), not the test path.
   + PC tool over CAN/ISO-TP (J2534 on car, emulator TCP port in dev).
   See [live_tuning_feasibility_report.md](docs/investigations/60E15120_N3J1E/labeling/live_tuning_feasibility_report.md)
   + [free_resources_report.md](docs/investigations/60E15120_N3J1E/labeling/free_resources_report.md).
-- **F item 4 (answered statically + emulator handler-level; bench verification
-  still open)** — the OBD upload path is the app's **0xB1 00B2**, not the app
-  0x34/0x36/0x37 stubs (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E): app service
-  0xB1 = 0x565e8 -> sub-record 0x5f0f4 -> handler 0x56350 (needs session 0x85 via
-  0xffffd1cf, unlock level 1 via 0xffffd1d0, conditions 0x56428 = battery
-  8.0-16.5 V + 0x1008() < 100, data byte 0) queues F1 00 B2 (0x564ac) and sets
-  boot-request 0xffffd1dc = 3 (0x563de(3)); after the response, 0x680de ->
-  0x6892a -> 0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) enters the SBL
-  loop 0x1378, where 0x34/0x36/0x37 stage and jump to the flash kernel and 0xb1
-  (0x1d78) only arms one download (0xffffdfb3) — the SBL has no flash-write path.
-  So over OBD: 10 85, 27 01/02 (app key algorithm 0x5609e), B1 00 B2 00 ->
-  F1 00 B2, then the SBL answers its own 10 85 / 27 (fixed 55 AA 55 / 4D AC CD)
-  before 34/36/37. Details + emulator validation (tests/test_sbl_bootloader.py):
-  [sbl_bootloader_report.md](docs/subsystem-logic/sbl_bootloader_report.md) §2.3.
-  Remaining: bench-ECU confirmation of the full sequence (still gated on F
-  item 1/2 bench validation); the emulator can only drive the app side at
+- **F item 4 (answered statically + emulator; handshake sequence confirmed on a
+  real PCM 2026-11-18; the write path itself still open)** — the OBD upload path
+  is the app's **0xB1 00B2**, not the app 0x34/0x36/0x37 stubs
+  (0x5d7bc/0x5d834/0x5d874 on 60E15120_N3J1E): app service 0xB1 = 0x565e8 ->
+  sub-record 0x5f0f4 -> handler 0x56350 (needs session 0x85 via 0xffffd1cf,
+  unlock level 1 via 0xffffd1d0, conditions 0x56428 = battery 8.0-16.5 V +
+  0x1008() < 100, data byte 0) queues F1 00 B2 (0x564ac) and sets boot-request
+  0xffffd1dc = 3 (0x563de(3)); after the response, 0x680de -> 0x6892a ->
+  0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) enters the SBL loop 0x1378,
+  where 0x34/0x36/0x37 stage and jump to the flash kernel and 0xb1 (0x1d78) only
+  arms one download (0xffffdfb3) — the SBL has no flash-write path. So over OBD:
+  10 85, 27 01/02 (app key algorithm 0x5609e), B1 00 B2 00 -> F1 00 B2, then
+  34/36/37 in the SBL. The handover enters the SBL with its latches already set:
+  0x1038(1) calls 0x16dc(1), which clears 0xffffdfb0-b5 then sets session
+  0xffffdfb0=1, unlock 0xffffdfb1=1, download-armed 0xffffdfb3=1 — so right
+  after F1 00 B2 the SBL answers 22 D1 00 with 85 and 27 01 with a zero seed;
+  the fixed seed 55 AA 55 / key 4D AC CD is only offered on non-handover entries
+  (warm boot / erased-flash fallback, after 10 81, after the loop relock at
+  0x1428). On-car 2026-11-18 (guarded read-only session, calibration
+  N3YLEE00013SN0A0): the app-side sequence above confirmed (7F B1 22 / 7F B1 33 /
+  F1 00 B2), the post-handover 62 D1 00 85 / 67 01 00 00 00 / 7F 27 22 confirmed,
+  and SBL 11 01 -> 51 with the app back ~1.05 s later confirmed. Details +
+  emulator validation (tests/test_sbl_bootloader.py, 9 tests, on-car trace
+  reproduced frame-for-frame):
+  [sbl_bootloader_report.md](docs/subsystem-logic/sbl_bootloader_report.md)
+  §2.2–2.3. Remaining: an actual upload still needs the RAM flash kernel (no
+  kernel image in the corpus — the SBL stages it via 0x34/0x36 and jumps to it)
+  plus F item 1/2 bench validation; the emulator can only drive the app side at
   handler level because the OS tick never fires (E6).
 
 ---
