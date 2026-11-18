@@ -153,6 +153,11 @@
         "pool_claims": 0,
         "word_assigns": 1
       },
+      "subsystem-logic/fuel_pump_control_report.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "subsystem-logic/immobilizer_report.md": {
         "reg_pairs": 4,
         "call_claims": 0,
@@ -225,6 +230,11 @@
         "pool_claims": 0,
         "word_assigns": 20
       },
+      "reviews/fuel_pump_control/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "reviews/fueling/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -280,15 +290,15 @@
         "word_assigns": 1
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 46,
+        "reg_pairs": 50,
         "call_claims": 7,
         "pool_claims": 16,
-        "word_assigns": 275,
+        "word_assigns": 296,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 653,
-    "labels_json_checked": 24
+    "tsv_rows": 662,
+    "labels_json_checked": 25
   },
   "notes": [],
   "failures": [],
