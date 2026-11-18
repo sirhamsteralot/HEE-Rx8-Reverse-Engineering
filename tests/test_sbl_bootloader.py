@@ -323,3 +323,82 @@ def test_sbl_loop_after_app_handover_matches_on_car_trace():
     # with the unlock latch clear again, 27 01 offers the fixed seed 55 AA 55
     sbl_uds(prof, bus, cpu, can, bytes([0x10, 0x85]))
     assert sbl_uds(prof, bus, cpu, can, bytes([0x27, 0x01])) == [bytes([0x67, 0x01, 0x55, 0xAA, 0x55])]
+
+
+# --- relock semantics at the loop tail (0x141a-0x1450) -----------------------
+#
+# The u16 at 0xffffdfa0 is an inactivity counter: 0x11cc increments it once per
+# loop pass (while WDT OVF is clear) and 0x11c4 zeroes it at loop entry (0x137a),
+# on every successfully reassembled frame (0x13c8 single frame, 0x13e4 first
+# frame, 0x140a every consecutive frame) and after every service dispatch
+# (0x1544). Tail: if r12 == 0 (no multi-frame ISO-TP in progress) and the
+# counter >= 0x5f6 (pool 0x143a) -> 0x16dc(0) relock (all six latches cleared);
+# if r12 != 0 and the counter >= 0x2e (0x1382) -> only 0x11c4 + r12 = 0, i.e.
+# the in-progress multi-frame transfer aborts (inter-frame timeout), the latches
+# survive. So the relock is an inactivity timeout, not a fixed lifetime:
+# tester-present traffic keeps the latches. Measured in the emulator: ~256
+# cycles per idle pass, relock at 0x5f6 passes ~ 390k cycles, transfer abort at
+# 0x2e passes ~ 12k cycles.
+
+def test_sbl_relock_is_inactivity_timeout():
+    prof, bus, cpu, can = boot()
+    can_warmup(bus, cpu, can)
+    harness.call(bus, cpu, 0x16DC, r_args=(1,), max_steps=10000)
+    cpu.r[15] = SBL_SP
+    cpu.pc = SBL_LOOP
+    emu.run(prof, bus, cpu, 20000)
+    assert 0x1000 <= cpu.pc < 0x2000
+    # tester present every 100k cycles (~390 passes < 0x5f6): no relock in 1M cycles
+    for _ in range(10):
+        assert sbl_uds(prof, bus, cpu, can, bytes([0x3E, 0x01]), cycles=100000) == [bytes([0x7E])]
+        assert b(bus, 0xFFFFDFB0) == 1
+    assert bus.read16(0xFFFFDFA0) < 0x5F6      # counter was reset by the 3E frames
+    # now go idle: the relock fires once the counter passes 0x5f6 (~390k cycles)
+    total = 0
+    while b(bus, 0xFFFFDFB0) != 0 and total < 1000000:
+        emu.run(prof, bus, cpu, 20000)
+        total += 20000
+    assert b(bus, 0xFFFFDFB0) == 0 and b(bus, 0xFFFFDFB1) == 0 and b(bus, 0xFFFFDFB3) == 0
+    assert bus.read16(0xFFFFDFA0) >= 0x5F6
+    assert 300000 <= total <= 500000            # ~0x5f6 passes x ~256 cycles/pass
+    # locked again: 22 D1 00 reports 81 and 27 01 offers the fixed seed again
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x22, 0xD1, 0x00])) == [bytes([0x62, 0xD1, 0x00, 0x81])]
+    sbl_uds(prof, bus, cpu, can, bytes([0x10, 0x85]))
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x27, 0x01])) == [bytes([0x67, 0x01, 0x55, 0xAA, 0x55])]
+
+
+def test_sbl_multiframe_interframe_timeout_aborts_transfer_only():
+    prof, bus, cpu, can = boot()
+    can_warmup(bus, cpu, can)
+    harness.call(bus, cpu, 0x16DC, r_args=(1,), max_steps=10000)
+    cpu.r[15] = SBL_SP
+    cpu.pc = SBL_LOOP
+    emu.run(prof, bus, cpu, 20000)
+    block = bytes([0x36, 0x00]) + (0x20).to_bytes(2, "big") + bytes(0x20)
+    frames = isotp.encode(block, 0x7E0)
+    # first frame only -> r12 = 1 (multi-frame reception in progress)
+    for cid, data in frames:
+        if data[0] >> 4 == 1:
+            can.inject(cid, data)
+    emu.run(prof, bus, cpu, 5000)
+    assert cpu.r[12] & 0xFF == 1
+    # no consecutive frame within 0x2e passes (~12k cycles): transfer aborts,
+    # counter reset, latches NOT cleared
+    emu.run(prof, bus, cpu, 20000)
+    assert cpu.r[12] & 0xFF == 0
+    assert bus.read16(0xFFFFDFA0) < 0x5F6
+    assert b(bus, 0xFFFFDFB0) == 1 and b(bus, 0xFFFFDFB1) == 1 and b(bus, 0xFFFFDFB3) == 1
+    # consecutive frames DO reset the counter: arm a download, then send the
+    # whole block with frames every 5k cycles (~20 passes < 0x2e) -> the transfer
+    # survives past 0x2e total passes and the 0x36 handler answers
+    # (NRC 0x72: block is not 0x400 bytes)
+    req = bytes([0x34, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7E, 0x04, 0x00])  # addr 0, field 0x7e400
+    # multi-frame request: inject frames spaced (the mb holds one frame at a time)
+    for cid, data in isotp.encode(req, 0x7E0):
+        can.inject(cid, data)
+        emu.run(prof, bus, cpu, 5000)
+    assert tx_payloads(can) == [bytes([0x74, 0x04, 0x01])]
+    for cid, data in frames:
+        can.inject(cid, data)
+        emu.run(prof, bus, cpu, 5000)
+    assert tx_payloads(can) == [bytes([0x7F, 0x36, 0x72])]

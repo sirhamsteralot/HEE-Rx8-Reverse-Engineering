@@ -364,7 +364,15 @@ flash before any read), not the test path.
   0xffffd1dc = 3 (0x563de(3)); after the response, 0x680de -> 0x6892a ->
   0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) enters the SBL loop 0x1378,
   where 0x34/0x36/0x37 stage and jump to the flash kernel and 0xb1 (0x1d78) only
-  arms one download (0xffffdfb3) — the SBL has no flash-write path. So over OBD:
+  arms one download (0xffffdfb3) — the SBL has no flash-write path. The SBL
+  loop relocks on inactivity: u16@0xffffdfa0 counts passes (0x11cc), is reset
+  by every processed frame (0x11c4 at 0x13c8/0x13e4/0x140a/0x1544), and at
+  >= 0x5f6 while idle (0x1428) 0x16dc(0) clears all latches; mid-multi-frame,
+  >= 0x2e (0x1448) aborts only the transfer. Emulator: ~256 cycles/pass, relock
+  ~390k cycles, inter-frame abort ~12k cycles (at 40 MHz ≈ 9.8 ms / 0.29 ms; PCM
+  clock not pinned in-repo). So an upload only needs frames within the
+  inter-frame window; a mid-upload relock is recoverable (10 85 + fixed
+  27 01/02 + B1 00 B2 00, restart 34/36). So over OBD:
   10 85, 27 01/02 (app key algorithm 0x5609e), B1 00 B2 00 -> F1 00 B2, then
   34/36/37 in the SBL. The handover enters the SBL with its latches already set:
   0x1038(1) calls 0x16dc(1), which clears 0xffffdfb0-b5 then sets session

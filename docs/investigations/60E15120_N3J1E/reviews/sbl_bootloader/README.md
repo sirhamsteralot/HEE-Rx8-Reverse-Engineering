@@ -159,3 +159,48 @@ all six latches cleared), then `22 d1 00` -> `62 d1 00 81` and `27 01` ->
 - `validate_reports.py`, `verify_claims.py` — PASS (run from repo root,
   2026-11-18); full `python -m pytest tests/` re-run recorded in the subsystem
   report §4.5.
+
+## Follow-up: loop-tail relock semantics (0x141a–0x1450), 2026-11-18
+
+Question from the same on-car feedback: what resets the `0x11cc` counter, how
+long is `0x5f6` passes in real time, and what the `r12` condition means.
+
+Binary reading (disasm + pools byte-verified):
+
+- The u16 at `0xffffdfa0` is the loop-pass counter. `0x11cc` (`0x11cc`–`0x11f8`,
+  pools `0x1278`/`0x1284`/`0x1288`/`0x128c`/`0x1290`) services the WDT each pass
+  (TCSR `0xffffec10` = `0xa53c`, toggles bit 15 of `0xfffff738`) and, while OVF
+  is clear, increments the counter (saturating at `0xffff`), then returns it.
+- `0x11c4` zeroes the counter: once before the loop (`0x137a`; the loop head is
+  `0x1388`, back-edge `0x1548`), on every successfully reassembled frame
+  (`0x13c8` single frame, `0x13e4` first frame, `0x140a` every consecutive
+  frame), and after every service dispatch (`0x1544`). Received-but-invalid
+  frames (bad PCI, sequence error) do not reset it.
+- Tail: `r12` = multi-frame ISO-TP in progress (set at `0x13e2` on first frame).
+  If `r12 == 0` and counter `>= 0x5f6` (pool `0x143a`) → `jsr 0x16dc(0)` at
+  `0x1428`: relock, all six latches cleared. If `r12 != 0` and counter
+  `>= 0x2e` (`0x1382`) → `jsr 0x11c4` + `r12 = 0` at `0x1448`: abort only the
+  in-progress transfer, latches survive.
+
+So: (1) yes, anything that gets a frame reassembled and dispatched resets the
+counter — `3E` tester present included — it is an inactivity timeout, not a
+fixed lifetime; (3) the relock fires only while no multi-frame transfer is in
+progress (`r12 == 0`, i.e. CAN-idle), while during a transfer the tighter
+`0x2e` inter-frame timeout applies. (2) Emulator measurement: ~256 cycles per
+idle pass; relock at 1,526 passes ≈ 390,000 cycles after the last processed
+frame; inter-frame abort at 46 passes ≈ 12,000 cycles. Wall clock depends on
+the PCM clock (not pinned down in this repo): at 40 MHz ≈ 9.8 ms / 0.29 ms,
+at 20 MHz ≈ 19.5 ms / 0.59 ms. Consequence for a kernel upload: a full
+`0x7000`-byte upload (28 × `0x400` blocks) is not bounded by one relock
+window — frames must only keep arriving within the inter-frame window, and a
+mid-upload relock is recoverable (`10 85`, fixed `27 01/02`, `B1 00 B2 00`,
+restart `34`/`36`).
+
+Dynamic (re-runnable, 11 tests; log
+[`dynamic_handover_oncar_log.txt`](dynamic_handover_oncar_log.txt)):
+`test_sbl_relock_is_inactivity_timeout` — `3E 01` every 100k cycles keeps the
+latches for 1M cycles (counter stays `< 0x5f6`); idle afterwards relocks at
+`>= 0x5f6` after ~390k cycles, then `22 D1 00` → `81` and `27 01` → `55 AA 55`
+again. `test_sbl_multiframe_interframe_timeout_aborts_transfer_only` — FF with
+no CF aborts at `>= 0x2e` (~12k cycles, latches intact); CFs every 5k cycles
+reset the counter and the block completes (`7F 36 72` for a `0x20` block).
