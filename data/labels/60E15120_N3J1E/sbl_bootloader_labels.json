@@ -244,12 +244,12 @@
   },
   "0x000011c4": {
    "alias": "sbl_rx_buffer_head_clear",
-   "kind": "zeroes low16 of 0xffffdfa0 (RX buffer head); first jsr of each SBL loop iteration (pool 0x1438)",
+   "kind": "zeroes u16@0xffffdfa0 (inactivity counter / RX head): once before the loop (0x137a, pool 0x1438), on every successfully reassembled frame (0x13c8 single, 0x13e4 first, 0x140a every consecutive), and after every service dispatch (0x1544) - received-but-invalid frames do not reset it",
    "evidence": "decompiled body 0x11c4; 0x1378 pool 0x1438 = 0x11c4"
   },
   "0x000011cc": {
    "alias": "service_wdt_overflow_toggle_pb15_and_count",
-   "kind": "WDT service variant with counter (already named); called each SBL loop iteration (pool 0x1440)",
+   "kind": "WDT service + pass counter (already named): if TCSR 0xffffec10 OVF (0x80) clear, writes TCSR = 0xa53c, toggles 0xfffff738 bit 15, and increments u16@0xffffdfa0 (saturating at 0xffff), then returns it; called each loop pass (0x1414, pool 0x1440); the counter drives the loop-tail relock (>= 0x5f6 idle, 0x1428 -> 0x16dc(0)) and inter-frame abort (>= 0x2e mid-transfer, 0x1448); emulator: ~256 cycles/pass idle, relock ~390k cycles, abort ~12k cycles (tests/test_sbl_bootloader.py)",
    "evidence": "function_index.tsv name; 0x1378 pool 0x1440 = 0x11cc"
   },
   "0x000011fa": {
@@ -279,7 +279,7 @@
   },
   "0x00001378": {
    "alias": "sbl_can_command_loop",
-   "kind": "SBL CAN command loop (entered via 0x1090 from 0x1038 param!=0 or erased-flash fallback): per iteration jsr 0x11c4, 0x125c (CAN RX), 0x1272 -> dispatch on service byte with buffer 0xffffd3f0: 0x28->0x170a, 0x85->0x1774, 0x10->0x17f0, 0x27->0x1858, 0x3e->0x197a, 0x11->0x19ce, 0x22->0x1a50, 0x3b->0x1ac0, 0x34->0x1ad6, 0x36->0x1c04, 0x37->0x1d30, 0xb1->0x1d78, default->0x1e34 (NRC 0x11); multi-frame assembly via 0x154c/0x15a6/0x1624/0x1654; WDT via 0x11cc; periodic relock: when the 0x11cc counter (r5) reaches >= 0x5f6 (pool 0x143a) jsr 0x16dc(0) at 0x1428 clears all six latches; 0x16dc housekeeping",
+   "kind": "SBL CAN command loop (entered via 0x1090 from 0x1038 param!=0 or erased-flash fallback): per iteration jsr 0x11c4, 0x125c (CAN RX), 0x1272 -> dispatch on service byte with buffer 0xffffd3f0: 0x28->0x170a, 0x85->0x1774, 0x10->0x17f0, 0x27->0x1858, 0x3e->0x197a, 0x11->0x19ce, 0x22->0x1a50, 0x3b->0x1ac0, 0x34->0x1ad6, 0x36->0x1c04, 0x37->0x1d30, 0xb1->0x1d78, default->0x1e34 (NRC 0x11); loop head 0x1388 (back-edge 0x1548); multi-frame assembly via 0x154c/0x15a6/0x1624/0x1654; WDT via 0x11cc; tail 0x141a-0x1450 on the u16@0xffffdfa0 pass counter: r12==0 (no multi-frame in progress) and cnt >= 0x5f6 (pool 0x143a) -> jsr 0x16dc(0) at 0x1428 (inactivity relock, all six latches cleared); r12!=0 and cnt >= 0x2e (0x1382) -> jsr 0x11c4 + r12=0 at 0x1448 (inter-frame timeout: aborts only the in-progress transfer); 0x11c4 zeroes the counter on every reassembled frame (0x13c8/0x13e4/0x140a) and after every dispatch (0x1544), so any processed request (incl. 3E) resets it",
    "evidence": "disasm 0x1378-0x154c + pools 0x1438-0x1610 byte-verified; UDS report \u00a712.2"
   },
   "0x0000154c": {
