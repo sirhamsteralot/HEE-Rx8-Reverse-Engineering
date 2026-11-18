@@ -101,7 +101,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 27–34, 36–37, 39, 42–90)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 27, 29–34, 36–37, 39, 42–90)
 
 - **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
   DSC torque-request throttle via CAN 0x212 are labeled (see
@@ -109,9 +109,6 @@ and where artifacts live.
   but pedal→throttle-motor control (motor drive, limp/home mode, TP sensor
   plausibility) has no report; also settle the logger PID 0x1410 conflict
   (injector pulse time vs. throttle pedal, noted in design doc §5.8).
-- **C item 28 (open)** — **fuel pump control.** Zero coverage today (no report,
-  no labels): find the pump relay GPIO drive and its control conditions
-  (cranking, oil pressure, inertia switch input).
 - **C item 29 (open)** — **misfire detection / monitor.**
   `ref_misfireDetectInit_` `0xab8a` is named and the misfire DTCs sit in
   [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
