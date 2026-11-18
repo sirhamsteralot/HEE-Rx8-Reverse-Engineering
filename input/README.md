@@ -104,6 +104,18 @@ Tuning.md` (0-byte placeholder; the thread is already curated in
 `../docs/references/rx8club-user-guide-thread.md`). The zip itself stays here as raw
 intake.
 
+2026-11-18: `feedback-for-hee-handshake-on-car.md` (rx8tune/Fullburn Studio on-car
+guarded handshake, 2026-11-18, PCM calibration `N3YLEE00013SN0A0`) processed: the
+post-handover SBL latch behavior (`0x16dc(1)` via `0x1038(1)`) was mapped against
+the reference ROM, reproduced in the emulator, and promoted into
+[`../docs/subsystem-logic/sbl_bootloader_report.md`](../docs/subsystem-logic/sbl_bootloader_report.md)
+(§2.2/§2.3/§4.5), [`../docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md`](../docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md)
++ `dynamic_handover_oncar_log.txt`,
+[`../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json)
+(key `on_car_handover_feedback_2026-11-18`), and `tests/test_sbl_bootloader.py`
+(2 new tests). The intake file itself stays here uncommitted (rule 4); the chassis
+number in it is redacted in all promoted copies (rule 3).
+
 2026-11-13: `Engine_Acoustic_Tuning_Rotary_Intake_Design.pdf` (SHA-256
 `f1f4bfb8e5ab4e679ffece0a14c10685fcb9dd72e749a98c836495c14c6b5638`) and
 `mazda-rx-8-s-dias-intake-system-deep-research-report.pdf` (SHA-256
