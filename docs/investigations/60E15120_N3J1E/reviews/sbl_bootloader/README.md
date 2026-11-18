@@ -98,3 +98,64 @@ Dynamic validation (re-runnable: `python -m pytest tests/test_sbl_bootloader.py`
   `verify_math_units.py` — PASS (run from repo root, 2026-11-16).
 - `python -m pytest tests/` — PASS incl. the new `tests/test_sbl_bootloader.py`
   (2026-11-16).
+
+## On-car handshake feedback (rx8tune/Fullburn Studio session, 2026-11-18)
+
+Source: uncommitted intake `input/feedback-for-hee-handshake-on-car.md` — a
+guarded, read-only handshake on a real PCM (calibration `N3YLEE00013SN0A0`,
+RX-8 Series 1 Japanese market; the chassis number in the intake note is
+redacted here per repo rule 3). The N3YLEE-family SBL block is byte-identical
+to the reference ROM at the functions below (bytes compared 2026-11-18:
+`0x16dc`–`0x1706`, `0x1858`–`0x1978`, `0x1a50`–`0x1abe`).
+
+Observed on the car, and the binary mechanism for each:
+
+- `B1 00 B2 00` -> `7F B1 22` in the default session and `7F B1 33` in session
+  `85` without unlock: the app `0xB1` sub-handler `0x56350` gates on the session
+  index (`0xffffd1cf`, NRC `0x22`) and the app unlock level
+  (`0xffffd1d0` via `0x55ed4`, NRC `0x33`). With the app `27 01`/`27 02`
+  (algorithm `0x5609e`) done first, `B1 00 B2 00` -> `F1 00 B2` — the
+  app-side boot request is confirmed on hardware.
+- Straight after `F1 00 B2`, the SBL answered `22 D1 00` -> `62 D1 00 85`
+  (before any `10 85`), `27 01` -> `67 01 00 00 00` (zero seed, not
+  `55 AA 55`), and `27 02 4D AC CD` -> `7F 27 22`. Mechanism, byte-verified in
+  the disassembly + pools: the handover `0x564d4` calls `0x1038` with `r4 = 1`
+  (pool `0x564f2`, delay slot `mov #1,r4`, SR |= 0xf0 first; the only
+  param-1 caller), `0x1038` calls `0x16dc(param)` (pool `0x107e`), and
+  `0x16dc` (`0x16dc`–`0x1706`, pools `0x17d4`–`0x17e8`) clears
+  `0xffffdfb0/b1/b2/b3/b4/b5` and then — only for param == 1 — sets
+  `0xffffdfb0 = 1` (session), `0xffffdfb1 = 1` (unlock), `0xffffdfb3 = 1`
+  (download armed). `0x1a50` returns the session latch as the DID `0xd100`
+  data byte (`0x1aa4`–`0x1ab6`), and `0x1858` returns the zero seed when
+  `0xffffdfb1 == 1` (`0x18dc`–`0x18ec`) versus `55 AA 55` otherwise
+  (`0x1908`–`0x1914`); `27 02` with no seed flag outstanding gives NRC `0x22`.
+  So the handover deliberately arrives open and download-armed — the
+  authorization is inherited through the param-1 convention, not by sharing
+  the app cells `0xffffd1cf`/`0xffffd1d0` (those stay app-side; the app gates
+  at `0x56350` had to pass before `0xffffd1dc = 3` was set).
+- `11 01` -> `51`, then the application answered again after ~1.05 s: the SBL
+  `0x11` handler `0x19ce` answers bare `0x51`, halts at `0x1a44` with SR |= 0xf0,
+  the unserviced WDT overflows, and the warm reset path re-enters the app —
+  confirmed on hardware (and in the emulator, §4.5 of the report).
+- The fixed seed `55 AA 55` / key `4D AC CD` is offered on every SBL entry
+  except the param-1 handover: warm boot `0x1298` -> `0x1038(0)` (including the
+  erased-flash fallback that selects the loop when `u32@0x7fffc`/`u32@0x2000`
+  read `0xffffffff`), `10 81` (`0x17f0` -> `0x16dc(0)` at `0x182c`), and the
+  loop's own periodic relock (`0x1428` jsr `0x16dc(0)` when the `0x11cc`
+  counter reaches `0x5f6`, pool `0x143a`). The erased boot words only choose
+  SBL-loop vs app target; they do not gate the seed.
+
+Dynamic reproduction (re-runnable: `python -m pytest tests/test_sbl_bootloader.py`,
+9 tests; log [`dynamic_handover_oncar_log.txt`](dynamic_handover_oncar_log.txt)):
+`harness.call(0x16dc, r4=1)` then the loop `0x1378` over the virtual CAN port
+gives `22 d1 00` -> `62 d1 00 85`, `10 85` -> `50 85`, `27 01` ->
+`67 01 00 00 00`, `27 02 4d ac cd` -> `7f 27 22`, `10 81` -> `50 81` (relock:
+all six latches cleared), then `22 d1 00` -> `62 d1 00 81` and `27 01` ->
+`67 01 55 aa 55` again — the on-car trace frame-for-frame.
+
+## Validation runs (2026-11-18)
+
+- `python -m pytest tests/test_sbl_bootloader.py` — 9 passed.
+- `validate_reports.py`, `verify_claims.py` — PASS (run from repo root,
+  2026-11-18); full `python -m pytest tests/` re-run recorded in the subsystem
+  report §4.5.
