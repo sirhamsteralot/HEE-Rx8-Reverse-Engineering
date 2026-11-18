@@ -27,3 +27,15 @@ tests/test_sbl_bootloader.py::test_handleException_param_sets_sbl_latches PASSED
 tests/test_sbl_bootloader.py::test_sbl_loop_after_app_handover_matches_on_car_trace PASSED                       [100%]
 
 ========================================== 2 passed, 7 deselected in 13.06s ===========================================
+
+--- follow-up: loop-tail relock / inter-frame timeout tests (2026-11-18) ---
+
+Command: python -m pytest tests/test_sbl_bootloader.py -v -k 'relock or interframe'
+(tests/test_sbl_bootloader.py, 11 tests total, all pass)
+
+collecting ... collected 11 items / 9 deselected / 2 selected
+
+tests/test_sbl_bootloader.py::test_sbl_relock_is_inactivity_timeout PASSED                                       [ 50%]
+tests/test_sbl_bootloader.py::test_sbl_multiframe_interframe_timeout_aborts_transfer_only PASSED                 [100%]
+
+========================================== 2 passed, 9 deselected in 11.52s ===========================================

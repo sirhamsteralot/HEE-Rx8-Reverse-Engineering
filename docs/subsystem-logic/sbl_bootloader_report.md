@@ -5,6 +5,7 @@
 | 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
 | 2026-11-16 | External review corrections: 0xB1 arms one download (the SBL has no flash-write path), 0x1008 is the 0x7fb00/0x7fb02 hole pair check, the app-side 0xB1 00B2 boot request mapped, service-table details corrected, SBL loop validated dynamically in the emulator | 2 |
 | 2026-11-18 | On-car handshake feedback processed: 0x16dc(param) latch semantics mapped (the app→SBL handover arrives session-set/unlocked/download-armed; the fixed seed is a non-handover-entry behavior), the observed post-handover SBL replies reproduced frame-for-frame in the emulator; bench-confirmed handshake sequence recorded in §2.3 | 3 |
+| 2026-11-18 | Loop-tail relock semantics mapped (follow-up to the on-car feedback): inactivity counter u16@`0xffffdfa0` reset by every processed frame; `>= 0x5f6` while idle → relock, `>= 0x2e` mid-multi-frame → transfer-only abort; windows measured in the emulator (§2.2, §4.5) | 4 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -135,14 +136,42 @@ state lives in six adjacent RAM bytes, managed by `0x16dc` (`ref_handleException
 and `0xffffdfb3 = 1` (`0x16f8`–`0x1704`). Its three callers are: `0x1038`
 (passes its own dispatcher parameter, pool `0x107e`), the `10 81` branch of the
 `0x10` handler (`0x182c`, param 0 — relock), and the SBL loop itself (`0x1428`,
-param 0, taken when the `0x11cc` WDT-service counter reaches `0x5f6` — pool
-`0x143a` — a periodic relock while the loop runs). The parameter-1 case exists
+param 0 — the inactivity relock described below). The parameter-1 case exists
 on exactly one path: `0x564d4` calls `0x1038` with `r4 = 1` (delay slot
 `mov #1,r4` after `jsr 0x1038`, pool `0x564f2`, with the interrupt mask raised
 first), so a handover from the application arrives with the session latch set,
 the unlock latch set and one download already armed; every other entry
 (warm boot `0x1298` → `0x1038(0)`, erased-flash fallback, `10 81`, the loop
 relock) arrives fully locked.
+
+**The inactivity counter and the loop tail (`0x141a`–`0x1450`).** The u16 at
+`0xffffdfa0` counts loop passes: `0x11cc` (WDT service, called each pass at
+`0x1414`) services the WDT (TCSR `0xffffec10` = `0xa53c`, toggles PB15 at
+`0xfffff738`) and increments the counter unless OVF is set or it is `0xffff`,
+then returns it. `0x11c4` zeroes the counter once before the loop (`0x137a`;
+the loop head is `0x1388`) and again on every successfully reassembled frame —
+single frame (`0x13c8`), first frame (`0x13e4`), every consecutive frame
+(`0x140a`) — and after every service dispatch (`0x1544`). Received-but-invalid
+frames (bad PCI, ISO-TP sequence errors) do not reset it. At the loop tail,
+with `r12` = "multi-frame ISO-TP reception in progress" (set on first frame
+`0x13e2`, cleared on completion/error/abort): if `r12 == 0` and the counter
+reaches `0x5f6` (pool `0x143a`) the loop calls `0x16dc(0)` (`0x1428`) — a
+**relock**: all six latches clear, so the SBL keeps running but locked
+(`22 D1 00` → `81`, `27 01` → fixed seed again, `0x34` → NRC `0x10` until
+re-armed); if `r12 != 0` and the counter reaches `0x2e` (`0x1382`) it instead
+zeroes the counter and clears `r12` (`0x1448`–`0x144e`) — an **inter-frame
+timeout that aborts only the in-progress multi-frame transfer**, latches
+survive. So the relock is an inactivity timeout, not a fixed lifetime:
+any well-formed, dispatched request — including `3E` tester present — resets
+the counter. Measured in the emulator: ~256 cycles per idle pass, relock at
+`0x5f6` = 1,526 passes ≈ 390,000 cycles after the last processed frame,
+transfer abort at `0x2e` = 46 passes ≈ 12,000 cycles. (Wall-clock conversion
+depends on the PCM clock, which this repo does not pin down: at 40 MHz that is
+≈ 9.8 ms / ≈ 0.29 ms, at 20 MHz ≈ 19.5 ms / ≈ 0.59 ms.) A full `0x7000`-byte
+kernel upload (28 × `0x400` blocks) is therefore not bounded by one relock
+window — it only needs each frame to arrive within the inter-frame window, and
+a relock mid-upload is recoverable with `10 85`, the fixed `27 01/02`, and
+`B1 00 B2 00` before restarting `34`/`36`.
 
 All responses are built in the record at `0xffffdfc6` (`0x7f` = negative
 response) and sent on mailbox 15 (CAN ID `0x7e8`) by `0x11fa` via `0x1150`. The
@@ -382,8 +411,8 @@ magic@0xffffdffc = 0x5aa5a55a; SP=0xffffdfa0; jmp entry;   // 0x40
         jsr 0x9e68;                       // -> 0x3ad8(0) -> os_init 0x3e10 -> idle 0x3dac
 
 // 0x1378 SBL CAN command loop (BOOT mode)
-for (;;) {
-    rx_head = 0;                                   // 0x11c4
+rx_head = 0;                                       // 0x11c4 once before the loop (0x137a)
+for (;;) {                                         // loop head 0x1388
     if (can_rx_poll_mb14(buf=0xffffdfa2)) {        // 0x125c/0x10fe
         svc = buf[0]; req = 0xffffd3f0;
         switch (svc) {                             // dispatch, pool words 0x14f4..0x1610
@@ -402,8 +431,15 @@ for (;;) {
           default:   nrc_0x11(req);                        // 0x1e34
         }
     }
-    cnt = service_wdt();                           // 0x11cc
-    if (isotp_state && cnt >= 0x5f6) handleException(0);   // 0x1428: periodic relock
+    cnt = service_wdt();                           // 0x11cc: services WDT, returns/increments u16@0xffffdfa0
+    if (r12 == 0) {                                // no multi-frame ISO-TP in progress
+        if (cnt >= 0x5f6) handleException(0);      // 0x1428: inactivity relock (all latches cleared)
+    } else if (cnt >= 0x2e) {                      // 0x1448: inter-frame timeout
+        rx_head = 0;                               // 0x11c4: zero the counter
+        r12 = 0;                                   // abort the transfer only; latches survive
+    }
+    // 0x11c4 also runs on every reassembled frame (0x13c8/0x13e4/0x140a) and
+    // after every dispatch (0x1544): any processed request resets the counter
 }
 ```
 
@@ -448,14 +484,14 @@ Functions (ROM addresses are reference-ROM addresses; index names from
 | `0x0000109c` | `ref_resetOBDCAN_` | CAN reset + diag mailboxes 14/15 (0x7e0/0x7e8) |
 | `0x000010fe` | `FUN_000010fe` | diag CAN RX poll (mb14) |
 | `0x00001150` | `FUN_00001150` | diag CAN TX (mb15) |
-| `0x000011c4` | `FUN_000011c4` | RX buffer head clear |
-| `0x000011cc` | `service_wdt_overflow_toggle_pb15_and_count` | WDT service in SBL loop |
+| `0x000011c4` | `FUN_000011c4` | zeroes u16@`0xffffdfa0` (inactivity counter / RX head); once before the loop (`0x137a`, pool `0x1438`), on every reassembled frame (`0x13c8`/`0x13e4`/`0x140a`) and after every dispatch (`0x1544`) |
+| `0x000011cc` | `service_wdt_overflow_toggle_pb15_and_count` | WDT service (TCSR `0xffffec10` = `0xa53c`, toggles `0xfffff738` bit 15) + increments u16@`0xffffdfa0` each pass unless OVF set or `0xffff`, returns it; called each loop pass (`0x1414`, pool `0x1440`); drives the loop-tail relock (`>= 0x5f6` idle) and inter-frame abort (`>= 0x2e` mid-transfer) |
 | `0x000011fa` | `FUN_000011fa` | response frame send (from 0xffffdfc6) |
 | `0x0000125c` | `FUN_0000125c` | CAN RX poll wrapper |
 | `0x00001272` | `FUN_00001272` | RX buffer pointer (0xffffdfa2) |
 | `0x000012a2` | `FUN_000012a2` | BOOT-mode GPIO init |
 | `0x00001364` | `ref_resetWatchdog_00001364` | keyed WDT reset |
-| `0x00001378` | `FUN_00001378` | SBL CAN command loop + service dispatch |
+| `0x00001378` | `FUN_00001378` | SBL CAN command loop + service dispatch; loop head `0x1388`, tail `0x141a`–`0x1450` runs the inactivity relock (`r12==0` && cnt `>= 0x5f6` → `0x16dc(0)` at `0x1428`) / inter-frame abort (`r12!=0` && cnt `>= 0x2e` → `0x11c4` + `r12=0` at `0x1448`) |
 | `0x0000154c` | `FUN_0000154c` | ISO-TP first frame |
 | `0x000015a6` | `FUN_000015a6` | ISO-TP consecutive frame |
 | `0x00001624` | `FUN_00001624` | ISO-TP single frame |
@@ -508,6 +544,7 @@ RAM (only addresses with accepted aliases are listed):
 
 | Address | Alias | Role |
 |---------|-------|------|
+| `0xffffdfa0` (u16) | `sbl_inactivity_counter` | loop-pass counter: +1 per pass by `0x11cc`, zeroed by `0x11c4` on every reassembled frame and dispatch; `>= 0x5f6` while idle → relock, `>= 0x2e` mid-multi-frame → transfer abort |
 | `0xffffdfa8` | `reset_cause` | reset cause byte (written by 0x4e0 param!=0 path) |
 | `0xffffdffc` | `warm_boot_magic` | warm-boot magic 0x5aa5a55a |
 | `0xffffd3f0` | `sbl_request_buffer` | SBL CAN request buffer (r13; the 0x34 range check compares against it) |
@@ -635,6 +672,16 @@ is reproduced in the emulator (§4.5).
   `harness.call(0x16dc, r4=0/1)` asserts the latch bytes directly
   (`test_handleException_param_sets_sbl_latches`,
   `test_sbl_loop_after_app_handover_matches_on_car_trace`).
+- Relock semantics (2026-11-18): `test_sbl_relock_is_inactivity_timeout` — with
+  `3E 01` every 100k cycles the latches survive 1M cycles (counter reset by each
+  processed frame, stays `< 0x5f6`); idle afterwards, the relock fires at
+  counter `>= 0x5f6` after ~390k cycles (300k–500k asserted), all six latches
+  clear, `22 d1 00` → `62 d1 00 81` and `27 01` → `67 01 55 aa 55` again.
+  `test_sbl_multiframe_interframe_timeout_aborts_transfer_only` — a first
+  frame with no consecutive frame aborts the transfer at counter `>= 0x2e`
+  (~12k cycles, `r12` → 0, counter reset) while the latches survive; consecutive
+  frames reset the counter, so a block sent with frames every 5k cycles
+  completes and is dispatched. 11 tests total.
 - `validate_reports.py`, `verify_claims.py` PASS and `python -m pytest tests/`
   passes (incl. the new `tests/test_sbl_bootloader.py`; the single
   `test_extract_scalars.py` failure and the `verify_readability.py` failure are
