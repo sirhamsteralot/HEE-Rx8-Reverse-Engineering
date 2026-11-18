@@ -265,3 +265,61 @@ def test_app_0x27_key_algorithm_bit_exact():
                                 max_steps=100000)
         assert r0 == 0  # ROM's own verifier accepts the ported key
         cpu.pc = 0x3DAC
+
+
+# --- on-car post-handover state: 0x1038(1) -> 0x16dc(1) presets the SBL latches
+#
+# Bench feedback (rx8tune/Fullburn Studio on-car session, 2026-11-18, N3YLEE
+# family PCM - SBL block byte-identical to the reference ROM): straight after
+# the app's B1 00 B2 00 handover the SBL answered 22 D1 00 with 85 (session
+# latch already set, before any 10 85) and 27 01 with a ZERO seed (already
+# unlocked), and 27 02 4D AC CD with 7F 27 22. Mechanism: the handover calls
+# 0x1038 with param 1 (0x564d4, delay slot mov #1,r4 after jsr 0x1038, pool
+# 0x564f2), and 0x1038 calls 0x16dc(param); 0x16dc clears latches
+# 0xffffdfb0/b1/b2/b3/b4/b5 and, only when param == 1, sets 0xffffdfb0 = 1
+# (session), 0xffffdfb1 = 1 (unlock), 0xffffdfb3 = 1 (download armed).
+# 0x27 sub 01 then returns a zero seed when 0xffffdfb1 == 1 (0x18dc-0x18ec),
+# else the fixed 55 AA 55 (0x1908-0x1914); 22 D1 00 returns the session latch
+# value (0x1aa4-0x1ab6: 0x85 if 0xffffdfb0 == 1 else 0x81). Any other entry
+# (0x1038(0) warm/erased-flash, 10 81 at 0x182c, the loop's periodic relock at
+# 0x1428 when the 0x11cc counter reaches 0x5f6) runs 0x16dc(0) and arrives
+# locked.
+
+def test_handleException_param_sets_sbl_latches():
+    prof, bus, cpu, can = boot()
+    latches = [0xFFFFDFB0, 0xFFFFDFB1, 0xFFFFDFB2, 0xFFFFDFB3, 0xFFFFDFB4, 0xFFFFDFB5]
+    dirty = {a: (1, 1) for a in latches}
+    harness.call(bus, cpu, 0x16DC, r_args=(0,), max_steps=10000, ram=dirty)
+    assert all(b(bus, a) == 0 for a in latches)      # param 0: all six cleared
+    harness.call(bus, cpu, 0x16DC, r_args=(1,), max_steps=10000, ram=dirty)
+    assert b(bus, 0xFFFFDFB0) == 1                    # session latch set
+    assert b(bus, 0xFFFFDFB1) == 1                    # unlock latch set
+    assert b(bus, 0xFFFFDFB3) == 1                    # download armed
+    assert b(bus, 0xFFFFDFB2) == 0                    # seed flag stays clear
+    assert b(bus, 0xFFFFDFB4) == 0 and b(bus, 0xFFFFDFB5) == 0
+
+
+def test_sbl_loop_after_app_handover_matches_on_car_trace():
+    prof, bus, cpu, can = boot()
+    can_warmup(bus, cpu, can)
+    # exactly what 0x1038(1) does before jumping to the loop (0x1046 -> 0x16dc)
+    harness.call(bus, cpu, 0x16DC, r_args=(1,), max_steps=10000)
+    cpu.r[15] = SBL_SP
+    cpu.pc = SBL_LOOP
+    emu.run(prof, bus, cpu, 20000)
+    assert 0x1000 <= cpu.pc < 0x2000
+    # on-car: 22 D1 00 -> 62 D1 00 85 (latch already set, before any 10 85)
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x22, 0xD1, 0x00])) == [bytes([0x62, 0xD1, 0x00, 0x85])]
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x10, 0x85])) == [bytes([0x50, 0x85])]
+    # on-car: 27 01 -> 67 01 00 00 00 (unlock latch set -> zero seed, not 55 AA 55)
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x27, 0x01])) == [bytes([0x67, 0x01, 0x00, 0x00, 0x00])]
+    assert b(bus, 0xFFFFDFB2) == 0                    # seed request cleared the seed flag
+    # on-car: 27 02 4D AC CD -> 7F 27 22 (no seed outstanding)
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x27, 0x02, 0x4D, 0xAC, 0xCD])) == [bytes([0x7F, 0x27, 0x22])]
+    # 10 81 relocks (0x17f0 -> 0x16dc(0) at 0x182c): latches cleared, DID reports 81
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x10, 0x81])) == [bytes([0x50, 0x81])]
+    assert b(bus, 0xFFFFDFB0) == 0 and b(bus, 0xFFFFDFB1) == 0 and b(bus, 0xFFFFDFB3) == 0
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x22, 0xD1, 0x00])) == [bytes([0x62, 0xD1, 0x00, 0x81])]
+    # with the unlock latch clear again, 27 01 offers the fixed seed 55 AA 55
+    sbl_uds(prof, bus, cpu, can, bytes([0x10, 0x85]))
+    assert sbl_uds(prof, bus, cpu, can, bytes([0x27, 0x01])) == [bytes([0x67, 0x01, 0x55, 0xAA, 0x55])]

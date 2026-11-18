@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
 | 2026-11-16 | External review corrections: 0xB1 arms one download (the SBL has no flash-write path), 0x1008 is the 0x7fb00/0x7fb02 hole pair check, the app-side 0xB1 00B2 boot request mapped, service-table details corrected, SBL loop validated dynamically in the emulator | 2 |
+| 2026-11-18 | On-car handshake feedback processed: 0x16dc(param) latch semantics mapped (the app→SBL handover arrives session-set/unlocked/download-armed; the fixed seed is a non-handover-entry behavior), the observed post-handover SBL replies reproduced frame-for-frame in the emulator; bench-confirmed handshake sequence recorded in §2.3 | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -111,10 +112,10 @@ buffer at `0xffffd3f0`, and dispatches on the service byte:
 
 | Service | Handler | Action |
 |---------|---------|--------|
-| `0x10` | `0x17f0` | diagnostic session: sub `0x85` sets the session latch `0xffffdfb0` (programming/boot session), sub `0x81` resets SBL state |
+| `0x10` | `0x17f0` | diagnostic session: sub `0x85` sets the session latch `0xffffdfb0 = 1` and answers `50 85`; sub `0x81` runs `0x16dc(0)` — a full relock, clearing all six latches `0xffffdfb0–0xffffdfb5` — and answers `50 81` |
 | `0x11` | `0x19ce` | ECU reset: hard-reset sub `0x01` answers a bare `0x51`, then halts at `0x1a44` with the interrupt mask raised (SR |= 0xf0) — the unserviced WDT then overflows; gated by session + security latches |
-| `0x22` | `0x1a50` | read DID `0xd100` (SBL version info; `0x85` if session set, else `0x81`) |
-| `0x27` | `0x1858` | security access: needs the session latch (NRC `0x22` without `10 85`); seed request returns fixed seed `55 AA 55` and sets the seed flag `0xffffdfb2`; key send compares against fixed key `4D AC CD` and sets the unlock latch `0xffffdfb1` — any key attempt (success or failure) clears `0xffffdfb2`, so a failed key needs a new `27 01` |
+| `0x22` | `0x1a50` | read DID `0xd100`: answers `62 D1 00` plus the session latch value itself — `0x85` when `0xffffdfb0 == 1`, else `0x81` (`0x1aa4`–`0x1ab6`) |
+| `0x27` | `0x1858` | security access: needs the session latch (NRC `0x22` without it, `0x187c`–`0x1888`); seed request returns a **zero seed** `67 01 00 00 00` when the unlock latch `0xffffdfb1 == 1` (`0x18dc`–`0x18ec`), else the fixed seed `67 01 55 AA 55` (`0x1908`–`0x1914`); either seed reply clears the seed flag `0xffffdfb2` (`0x1968`); key send compares against the fixed key `4D AC CD` (`0x193a`–`0x1950`) and sets the unlock latch `0xffffdfb1` on match (`0x1958`), NRC `0x35` on mismatch, NRC `0x22` when no seed is outstanding — a key attempt always clears `0xffffdfb2`, so a failed key needs a new `27 01` |
 | `0x28` | `0x170a` | communication control (answers `0x68` when the session latch is clear, NRC `0x22` otherwise) |
 | `0x3b` | `0x1ac0` | write DID: always NRC `0x22` (not supported) |
 | `0x34` | `0x1ad6` | request download: request is `34 <addr u32> 00 <field u24>` (length 8; the byte after the address must be 0, else NRC `0x31`); byte count = field − `0x7e000` (pool `0x1bec` = `0xfff82000`), must be > 0 and a multiple of `0x400`, and the staged range `0xffff6000 + addr` must end below the request buffer `0xffffd3f0` — caps the count at `0x7000` from address 0; answers `74 04 01`, clears `0xffffdfb3`, sets `0xffffdfb4`, initializes marker index `0xffffdfc5 = 1`; needs `0xffffdfb3` set (else NRC `0x10`) |
@@ -124,6 +125,24 @@ buffer at `0xffffd3f0`, and dispatches on the service byte:
 | `0x85` | `0x1774` | control DTC setting: sub `0x01`/`0x02` answered `0xc5` |
 | `0xb1` | `0x1d78` | boot-mode arm (no erase): payload `00 b2 00` with session + unlock latches clears `0xffffdfb4`, sets the download-armed latch `0xffffdfb3 = 1` (checked by `0x1ad6` before accepting a download, else NRC `0x10`) and answers `0xf1 00 b2`; the guard `0x1008` reads the u16 pair at `0x7fb00`/`0x7fb02` (the app-CVN hole) and returns the counter value when value == ~complement (and != `0xffff`), else 0 — the result must be < 100 (else NRC `0x10`). The handler's only callees are `0x1008` and the response sender `0x11fa` |
 | other | `0x1e34` | NRC `0x11` (service not supported) |
+
+**The latch block `0xffffdfb0–0xffffdfb5` and `0x16dc(param)`.** All SBL security
+state lives in six adjacent RAM bytes, managed by `0x16dc` (`ref_handleException_`,
+`0x16dc`–`0x1706`, pools `0x17d4`–`0x17e8` byte-verified): it always clears
+`0xffffdfb0` (session), `0xffffdfb1` (unlock), `0xffffdfb2` (seed flag),
+`0xffffdfb3` (download armed), `0xffffdfb4` (transfer active) and `0xffffdfb5`;
+**only when its parameter == 1** it then sets `0xffffdfb0 = 1`, `0xffffdfb1 = 1`
+and `0xffffdfb3 = 1` (`0x16f8`–`0x1704`). Its three callers are: `0x1038`
+(passes its own dispatcher parameter, pool `0x107e`), the `10 81` branch of the
+`0x10` handler (`0x182c`, param 0 — relock), and the SBL loop itself (`0x1428`,
+param 0, taken when the `0x11cc` WDT-service counter reaches `0x5f6` — pool
+`0x143a` — a periodic relock while the loop runs). The parameter-1 case exists
+on exactly one path: `0x564d4` calls `0x1038` with `r4 = 1` (delay slot
+`mov #1,r4` after `jsr 0x1038`, pool `0x564f2`, with the interrupt mask raised
+first), so a handover from the application arrives with the session latch set,
+the unlock latch set and one download already armed; every other entry
+(warm boot `0x1298` → `0x1038(0)`, erased-flash fallback, `10 81`, the loop
+relock) arrives fully locked.
 
 All responses are built in the record at `0xffffdfc6` (`0x7f` = negative
 response) and sent on mailbox 15 (CAN ID `0x7e8`) by `0x11fa` via `0x1150`. The
@@ -211,11 +230,58 @@ calls `0x563de(1)` for service `0xB1`; with `0xffffd1dc == 3` that calls
 `0x564d4` -> `0x1038(1)` -> the SBL loop (the §2.3 handover above). So the OBD
 sequence is `10 85`, `27 01` / `27 02` (the app seed/key algorithm, `0x5609e` —
 reproduced bit-exact and accepted by the ROM's own verifier in the emulator),
-`B1 00 B2 00` -> `F1 00 B2`, after which the SBL is running and answers its own
-`10 85` / `27` with the fixed seed `55 AA 55` / key `4D AC CD`. The same code
+`B1 00 B2 00` -> `F1 00 B2`, after which the SBL loop is running — with its
+latches already preset by `0x16dc(1)` (see below). The same code
 lives at shifted addresses in `60E0E700_N3YLEE`: `0x55c28` (`0x565e8`),
 `0x55990` (`0x56350`), `0x55a1e` (`0x563de`), `0x55b14` (`0x564d4`), sub-record
 at `0x5e728` (byte-verified; `data/labels/cross_rom_function_matches.tsv`).
+
+**Latch state after the handover — deliberate, and confirmed on a car.**
+`0x564d4` calls `0x1038(1)`, and `0x1038` passes that parameter to `0x16dc`
+(§2.2): the handover therefore enters the SBL loop with `0xffffdfb0 = 1`
+(session), `0xffffdfb1 = 1` (unlock) and `0xffffdfb3 = 1` (one download
+armed) — the app's authenticated `10 85` + `27 01/02` session is inherited via
+the param-1 convention, not by sharing the app cells `0xffffd1cf`/`0xffffd1d0`
+(the app's own gates at `0x56350` had to pass before `0xffffd1dc = 3` was ever
+set). Concretely, straight after `F1 00 B2` the SBL answers `22 D1 00` with
+`62 D1 00 85` (the DID returns the session latch) and `27 01` with the zero
+seed `67 01 00 00 00` (the `0x27` handler's unlock-latch branch), and `0x34`
+is accepted immediately because `0xffffdfb3` is already set. The fixed seed
+`55 AA 55` / key `4D AC CD` is offered only when the SBL loop runs with the
+unlock latch clear — i.e. on every entry except this handover: the warm-boot
+`0x1038(0)` path (including its erased-flash fallback at `0x2000`/`0x7fffc`),
+after `10 81`, and after the loop's periodic relock. The erased checks on
+`0x2000`/`0x7fffc` only select SBL-loop vs application target; they do not
+gate the seed.
+
+An on-car session (RX-8 Series 1, Japanese market, PCM calibration
+`N3YLEE00013SN0A0` — an `N3YLEE`-family bin whose SBL block is byte-identical
+to the reference ROM at `0x16dc`/`0x1858`/`0x1a50`; guarded handshake, no
+write services sent, 2026-11-18) observed exactly this:
+
+```
+10 81            -> 50 81
+B1 00 B2 00      -> 7F B1 22     (default session: refused)
+10 85            -> 50 85
+B1 00 B2 00      -> 7F B1 33     (session 85 without unlock: refused)
+27 01            -> 67 01 <seed> (app algorithm)
+27 02 <key>      -> 67 02
+B1 00 B2 00      -> F1 00 B2      (handover accepted, reply in ~5 ms)
+22 D1 00         -> 62 D1 00 85  (SBL: session latch already set)
+10 85            -> 50 85
+27 01            -> 67 01 00 00 00   (zero seed: already unlocked)
+27 02 4D AC CD   -> 7F 27 22     (no seed outstanding)
+11 01            -> 51           (SBL reset; application back in ~1.05 s)
+22 D1 00         -> (no answer — application running again)
+01 0C            -> 41 0C 00 00  (application alive)
+```
+
+All of these replies are reproduced frame-for-frame in the emulator by running
+`0x16dc(1)` before entering `0x1378` (§4.5; `tests/test_sbl_bootloader.py`),
+and the app-side refusals (`7F B1 22` / `7F B1 33`) match the `0x56350` gates
+(session index via `0xffffd1cf` → NRC `0x22`, unlock level via
+`0xffffd1d0`/`0x55ed4` → NRC `0x33`). The `11 01` → `51` → WDT-overflow →
+warm-reset → application sequence matches §2.2/§4.5 as well.
 
 **App validity:** the handover performs no checksum check — only the
 erased-pointer checks above. The application CVN (incremental dual-u16 additive
@@ -299,6 +365,10 @@ entry = warm ? u32@0x1000              // 0x1298 build A / 0x12b4 build B
               : 0x6c8;                 // cold ring monitor loop
 magic@0xffffdffc = 0x5aa5a55a; SP=0xffffdfa0; jmp entry;   // 0x40
 
+// 0x16dc(p): clears latches 0xffffdfb0/b1/b2/b3/b4/b5;
+//            if (p == 1) sets 0xffffdfb0 = 0xffffdfb1 = 0xffffdfb3 = 1
+//            (p==1 only from 0x564d4: the app->SBL handover arrives open+armed)
+
 // 0x1298 -> 0x1038(param) warm_reset_dispatcher
 0x1038(p): wdt_reset(); resetOBDCAN(); handleException(p);
            target = (p != 0) ? 0x1378                       // SBL loop
@@ -317,10 +387,10 @@ for (;;) {
     if (can_rx_poll_mb14(buf=0xffffdfa2)) {        // 0x125c/0x10fe
         svc = buf[0]; req = 0xffffd3f0;
         switch (svc) {                             // dispatch, pool words 0x14f4..0x1610
-          case 0x10: svc_0x10_session(req); break;         // 0x17f0
+          case 0x10: svc_0x10_session(req); break;         // 0x17f0: 85 sets latch, 81 -> 0x16dc(0) relock
           case 0x11: svc_0x11_reset(req); break;           // 0x19ce
-          case 0x22: svc_0x22_read_did(req); break;        // 0x1a50
-          case 0x27: svc_0x27_security(req); break;        // 0x1858: 55 AA 55 / 4D AC CD
+          case 0x22: svc_0x22_read_did(req); break;        // 0x1a50: DID 0xd100 returns the session latch (85/81)
+          case 0x27: svc_0x27_security(req); break;        // 0x1858: zero seed if unlocked, else 55 AA 55 / key 4D AC CD
           case 0x28: svc_0x28_comm_control(req); break;    // 0x170a
           case 0x3b: svc_0x3b_nrc22(); break;              // 0x1ac0
           case 0x34: svc_0x34_download(req); break;        // 0x1ad6 -> stage 0xffff6000+addr
@@ -332,7 +402,8 @@ for (;;) {
           default:   nrc_0x11(req);                        // 0x1e34
         }
     }
-    service_wdt();                                 // 0x11cc
+    cnt = service_wdt();                           // 0x11cc
+    if (isotp_state && cnt >= 0x5f6) handleException(0);   // 0x1428: periodic relock
 }
 ```
 
@@ -389,7 +460,7 @@ Functions (ROM addresses are reference-ROM addresses; index names from
 | `0x000015a6` | `FUN_000015a6` | ISO-TP consecutive frame |
 | `0x00001624` | `FUN_00001624` | ISO-TP single frame |
 | `0x00001654` | `FUN_00001654` | ISO-TP flow control |
-| `0x000016dc` | `ref_handleException_` | SBL housekeeping / flag clear |
+| `0x000016dc` | `ref_handleException_` | SBL latch housekeeping: clears `0xffffdfb0–0xffffdfb5`; param == 1 (only from `0x564d4` via `0x1038(1)`) then sets session/unlock/download-armed = 1. Callers: `0x1038` (pool `0x107e`), `0x17f0` sub `0x81` (`0x182c`), loop relock (`0x1428`, counter `0x5f6`) |
 | `0x0000170a` | `FUN_0000170a` | service 0x28 handler |
 | `0x00001774` | `FUN_00001774` | service 0x85 handler |
 | `0x000017f0` | `FUN_000017f0` | service 0x10 handler (session latch 0xffffdfb0) |
@@ -440,10 +511,10 @@ RAM (only addresses with accepted aliases are listed):
 | `0xffffdfa8` | `reset_cause` | reset cause byte (written by 0x4e0 param!=0 path) |
 | `0xffffdffc` | `warm_boot_magic` | warm-boot magic 0x5aa5a55a |
 | `0xffffd3f0` | `sbl_request_buffer` | SBL CAN request buffer (r13; the 0x34 range check compares against it) |
-| `0xffffdfb0` | `sbl_session_latch` | SBL session latch (set by `10 85`) |
-| `0xffffdfb1` | `sbl_unlock_latch` | SBL unlock latch (set by `27 02 4D AC CD`) |
-| `0xffffdfb2` | `sbl_seed_flag` | SBL seed-requested flag (cleared by any key attempt) |
-| `0xffffdfb3` | `sbl_download_armed` | set by `0x1d78` (0xb1), required by `0x1ad6` (0x34) |
+| `0xffffdfb0` | `sbl_session_latch` | SBL session latch (set by `10 85`, or preset to 1 by `0x16dc(1)` on the app handover; DID `0xd100` returns it as `85`/`81`) |
+| `0xffffdfb1` | `sbl_unlock_latch` | SBL unlock latch (set by `27 02 4D AC CD`, or preset to 1 by `0x16dc(1)`; when set, `27 01` returns the zero seed) |
+| `0xffffdfb2` | `sbl_seed_flag` | SBL seed-requested flag (cleared by any seed reply or key attempt) |
+| `0xffffdfb3` | `sbl_download_armed` | set by `0x1d78` (0xb1) or preset by `0x16dc(1)`; required by `0x1ad6` (0x34) |
 | `0xffffdfb4` | `sbl_transfer_active` | set by `0x1ad6`, required by `0x1c04`/`0x1d30` |
 | `0xffffdfb8` | `sbl_stage_base` | staging base = `0xffff6000 + addr` |
 | `0xffffdfbc` | `sbl_remaining_count` | remaining byte count |
@@ -502,11 +573,21 @@ the call graph, the disassembly, or as a ROM32 pointer" — confirmed here, with
 the one indirect reference added (pool `0x25164`, handler registration in
 `0x2508c`) and the dynamic observation that it never executes in emulator boot.
 
+A subsequent on-car session (2026-11-18, calibration `N3YLEE00013SN0A0`;
+intake note `input/feedback-for-hee-handshake-on-car.md`, uncommitted, chassis
+number redacted) showed the SBL answering `22 D1 00` with `85` and `27 01`
+with a zero seed immediately after the application's `F1 00 B2` handover. This
+report previously implied the SBL always starts its `10 85`/`27` sequence from
+the locked state with the fixed seed `55 AA 55` — corrected in §2.2/§2.3: that
+is the state of every entry except the param-1 handover, which `0x16dc(1)`
+presets to session-set/unlocked/download-armed. The full on-car frame sequence
+is reproduced in the emulator (§4.5).
+
 ### 4.4 Files
 
 - [`data/labels/60E15120_N3J1E/sbl_bootloader_labels.json`](../../data/labels/60E15120_N3J1E/sbl_bootloader_labels.json) — per-function SBL + handover label records
 - [`data/labels/cross_rom/sbl_first_8k.json`](../../data/labels/cross_rom/sbl_first_8k.json) — per-ROM SBL hashes, groups, diff ranges, stamps
-- [`docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md) — evidence notes
+- [`docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/README.md) — evidence notes (incl. the 2026-11-18 on-car handshake feedback) + [`dynamic_handover_oncar_log.txt`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/dynamic_handover_oncar_log.txt)
 - [`docs/investigations/60E15120_N3J1E/reviews/boot_handover/`](../investigations/60E15120_N3J1E/reviews/boot_handover/README.md) — handover evidence notes + emulator boot trace excerpt (`boot_trace_excerpt.txt`)
 
 ### 4.5 Validation
@@ -523,8 +604,8 @@ the one indirect reference added (pool `0x25164`, handler registration in
   `0x61a8`/`0x1102a`/`0x62a0`/`0x5a3f4`, because the crank-synchronous tick
   never fires in the emulator. Trace excerpt in
   [`reviews/boot_handover/boot_trace_excerpt.txt`](../investigations/60E15120_N3J1E/reviews/boot_handover/boot_trace_excerpt.txt).
-- Emulator dynamic validation of the SBL loop (2026-11-16; re-runnable as
-  `python -m pytest tests/test_sbl_bootloader.py`, 7 tests): the SBL command
+- Emulator dynamic validation of the SBL loop (2026-11-16/2026-11-18; re-runnable as
+  `python -m pytest tests/test_sbl_bootloader.py`, 9 tests): the SBL command
   loop `0x1378` was entered the way trampoline `0x1090` does (SP =
   `0xffffdfa0`) and driven over the virtual CAN port — `10 85` -> `50 85`;
   `27 01` -> `67 01 55 aa 55` (seed flag `0xffffdfb2` set); `27 02 4d ac cd` ->
@@ -542,6 +623,18 @@ the one indirect reference added (pool `0x25164`, handler registration in
   injected on AN14; the app `0x27` key algorithm (`0x5609e`) ported to Python
   is accepted by the ROM's own verifier for 3 seeds. Log:
   [`reviews/sbl_bootloader/dynamic_sbl_loop_log.txt`](../investigations/60E15120_N3J1E/reviews/sbl_bootloader/dynamic_sbl_loop_log.txt).
+- Post-handover state (2026-11-18, on-car confirmed): `harness.call(0x16dc,
+  r4=1)` — exactly what `0x1038(1)` does before jumping to the loop — then the
+  loop over the virtual CAN port reproduces the on-car trace frame-for-frame:
+  `22 d1 00` -> `62 d1 00 85` (session latch preset, before any `10 85`);
+  `10 85` -> `50 85`; `27 01` -> `67 01 00 00 00` (zero seed, unlock latch set,
+  seed flag cleared); `27 02 4d ac cd` -> `7f 27 22` (no seed outstanding);
+  `10 81` -> `50 81` relocks all six latches, after which `22 d1 00` ->
+  `62 d1 00 81` and, with `10 85` again, `27 01` -> `67 01 55 aa 55` (the
+  fixed seed returns whenever the entry was not the param-1 handover).
+  `harness.call(0x16dc, r4=0/1)` asserts the latch bytes directly
+  (`test_handleException_param_sets_sbl_latches`,
+  `test_sbl_loop_after_app_handover_matches_on_car_trace`).
 - `validate_reports.py`, `verify_claims.py` PASS and `python -m pytest tests/`
   passes (incl. the new `tests/test_sbl_bootloader.py`; the single
   `test_extract_scalars.py` failure and the `verify_readability.py` failure are
