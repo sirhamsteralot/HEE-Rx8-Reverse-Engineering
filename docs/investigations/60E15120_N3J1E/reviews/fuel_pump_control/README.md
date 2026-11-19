@@ -42,6 +42,11 @@ folded back into [`reviews/intake_solenoids/README.md`](../intake_solenoids/READ
   `0x2fbf8`) are traced to cells/thresholds but not to task periods.
 - Cross-ROM byte-matching of this chain not run yet.
 - Inertia switch: no PCM input in the pinout; hardware-side in the pump feed.
-- The SCI0 input expander and its consumers (oil pressure switch, etc.) are
-  not covered here; tracked as a dedicated subsystem report in
-  [`ROADMAP.md`](../../../../../../ROADMAP.md).
+- The SCI0 input expander and its consumers are not covered here; tracked as a
+  dedicated subsystem report in [`ROADMAP.md`](../../../../../../ROADMAP.md)
+  (C item 91). Removed from this deliverable as out of scope — the oil
+  pressure switch path was traced here first: `0x2bafc` reads expander ch1
+  bit 0x80 (debounce vs ROM `0x775b8`=0x10 → `0xffffbc0c`),
+  `0x2bb74`/`0x2bb7c` reads ch2 bit 0 (→ `0xffffbc14` → CAN via `0x28c52`);
+  harness terminal 2E. The expander transport itself is already documented in
+  [`ignition_power_state_report.md`](../../ignition_power_state_report.md).

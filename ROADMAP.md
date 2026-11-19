@@ -291,11 +291,19 @@ and where artifacts live.
   - **C item 91 (open)** — **input expander (SCI0) subsystem report.** The
     external input expander read over SCI0 (`sci0_gpio_expander_read` `0x70ac`,
     channel select on PH13/PH14, results latched to `0xffff9ecc`/`0xffff9ecd`/
-    `0xffff9ede` by `0x6744`/`0x6796`) feeds several switch inputs (oil
-    pressure switch light `0x2bafc` ch1 bit 0x80, gauge `0x2bb74` ch2 bit 0,
-    and others). These were noted while tracing the fuel pump report but do
-    not belong there; a dedicated subsystem report for the expander and its
-    input consumers is needed, with labels and a review evidence folder.
+    `0xffff9ede` by `0x6744`/`0x6796`) feeds several switch inputs. The
+    expander transport itself is already documented in
+    [`ignition_power_state_report.md`](docs/investigations/60E15120_N3J1E/ignition_power_state_report.md)
+    (§4 misnomer note + memory map). What is **not yet documented anywhere** and
+    was removed from the fuel pump report as out of scope: the oil pressure
+    switch consumers — light `ref_writeOilPressureLight__` `0x2bafc` reads
+    expander ch1 bit 0x80 (`tst 0x80` at `0x2bb12`), debounced over
+    `0xffffbc0e`/`0xffffbc10` vs threshold ROM `0x775b8`=0x10 → `0xffffbc0c`;
+    gauge `ref_writeOilPressureGauge__` `0x2bb74`/`0x2bb7c` reads ch2 bit 0 →
+    `0xffffbc14`, exported to CAN by `ref_setOilPressureGaugeStatus` `0x28c52`
+    (status word `0xffffbab0`); harness terminal 2E. Deliver a dedicated
+    subsystem report for the expander and its input consumers, with labels
+    and a review evidence folder.
   - **C item 65 (open)** — fold back **misfire detection / monitor** (item 29)
   - **C item 66 (open)** — fold back **emissions monitors beyond O2** (item 30)
   - **C item 67 (open)** — fold back **starting / cranking** (item 31)
