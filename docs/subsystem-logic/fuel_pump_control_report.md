@@ -3,6 +3,7 @@
 | Date | What changed | Version |
 |------|--------------|---------|
 | 2026-11-19 | Initial report | 1 |
+| 2026-11-19 | §2.4: spell out the fuel-demand threshold term (`0xffffbdd5`) and its inputs, cross-link the load/fueling derivation | 2 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -106,8 +107,22 @@ at key-on, during cranking and while running, and low at key-off
   active on the `0xffffd3xx` state machine).
 - `0x2fb20` (`ref_fuelingAddOBDControlMode_`): `0xffffbdbc =
   0x5c2e4((0xffffbdd5 && engine_stopped_latch 0xffffa41c == 0) ||
-  (injectors_off 0xffffa42c == 1 && key_on 0xffffaa68 == 1))`, where
-  `0xffffbdd5` is the fuel-demand threshold term (`bdc0 >= bdc4 - 3.5`).
+  (injectors_off 0xffffa42c == 1 && key_on 0xffffaa68 == 1))`. The fuel-demand
+  threshold term `0xffffbdd5` is computed in the same function with 3.5
+  hysteresis from two inputs:
+  - `0xffffbdc0` — filtered fuel-volume demand,
+    `filter(rpm 0xffffb548 × fuel_volume_final 0xffffbeb0 × 0.12, coeff 0.75)`
+    from `0x2f9d0` (`ref_filterFuelVolumeRequest`); derivation in
+    [`load_fueling_report.md`](../investigations/60E15120_N3J1E/load_fueling_report.md)
+    §2 ("consumers worth noting", `decel_cut_base`);
+  - `0xffffbdc4` — max fueling request from `0x2f9fc`
+    (`ref_calculateFuelingRequestMaxForOBDControl`): battery-voltage 2D-table
+    lookups (descriptors `0x6a968`/`0x6a97c`/`0x6a990`, tables 2D-166/167/168)
+    selected by intake-air temperature.
+  `bdc0 >= bdc4` → `bdd5 = 1`; `bdc0 < bdc4 - 3.5` → `bdd5 = 0`. `0x5c2e4`
+  (`ref_obdFuelingAddRequst_`) is the UDS actuator-override gate: it passes the
+  raw request through unless a diagnostic output test (modes 5/0xa on the
+  `0xffffd3xx` state machine) is active.
 
 ### 2.5 Related relay outputs found while tracing (and one correction)
 
@@ -234,4 +249,5 @@ and
 - [`intake_solenoids_report.md`](../investigations/60E15120_N3J1E/intake_solenoids_report.md) — neighboring PEDR/PBDR output drives (SSV/VDI/VFAD/AIR pump/APV); its PJ7 note is corrected here (§4.3)
 - [`cooling_fan_control_report.md`](../investigations/60E15120_N3J1E/cooling_fan_control_report.md) — fan relay drives (PE11/PE4), same output-helper idiom
 - [`fueling_control_report.md`](../investigations/60E15120_N3J1E/fueling_control_report.md) — fuel-cut arbitration and injectors-off flag `0xffffa42c` feeding the pump request grace terms
+- [`load_fueling_report.md`](../investigations/60E15120_N3J1E/load_fueling_report.md) — derivation of the fuel-demand input `0xffffbdc0` (`0x2f9d0`) and `fuel_volume_final` `0xffffbeb0` feeding the `0xffffbdd5` threshold term in §2.4
 - [`docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md) — terminals 5P/5L/4M/5A/4C/5AA/2E
