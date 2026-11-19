@@ -1,0 +1,33 @@
+{
+  "rom": "60E15120_N3J1E",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rawbin_reverify": {
+    "log": "rawbin_reverify_log.txt",
+    "checks": 38,
+    "passed": 38
+  },
+  "static_tests": {
+    "file": "tests/test_fuel_pump_control.py",
+    "passed": 9,
+    "total": 9
+  },
+  "dynamic_tests": {
+    "file": "tests/test_fuel_pump_control_dynamic.py",
+    "passed": 6,
+    "total": 6
+  },
+  "label_record": "data/labels/60E15120_N3J1E/fuel_pump_control_labels.json",
+  "tsv_rows_added": {
+    "accepted_function_aliases.tsv": 9,
+    "accepted_ram_aliases.tsv": 9
+  },
+  "report": "docs/subsystem-logic/fuel_pump_control_report.md",
+  "validators": {
+    "validate_export.py": "PASS",
+    "verify_claims.py": "PASS",
+    "verify_math_units.py": "PASS",
+    "validate_reports.py": "pre-existing crash on main (UnicodeDecodeError reading e2ram_device_layer_report.md under cp1252 locale), unchanged by this work",
+    "verify_readability.py": "pre-existing AssertionError on main, unchanged by this work",
+    "pytest tests/": "327 passed"
+  }
+}

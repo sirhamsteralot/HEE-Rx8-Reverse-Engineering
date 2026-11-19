@@ -42,6 +42,13 @@ re-derived in the shared report. Evidence (review folders, validation records) s
 - Every report carries a structured overview diagram (ASCII or mermaid) near
   the start of its body: the subsystem's components and execution order — which
   tasks/batches run what, and in what order.
+- Scope discipline: neighboring items mapped while tracing (other outputs on
+  the same port bank, inputs read by the same expander, …) do not get body
+  sections, memory-map rows or label entries in the report. Record them in
+  §4.6 Limits with their key `0x` addresses, add a ROADMAP item for the
+  subsystem they actually belong to if none exists, and cross-link it.
+  Corrections to other documents go in §4.3 and are folded back into the
+  source document in the same change.
 - `docs/investigations/` remains the home of per-ROM evidence, labeling passes
   and ROM-specific findings — see
   [`docs/investigations/README.md`](../investigations/README.md).

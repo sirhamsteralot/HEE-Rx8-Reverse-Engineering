@@ -35,7 +35,7 @@ Package pins from `Sh7055h.pdf` Table 1.3: 7=PE0, 8=PE1, 9=PE2, 12=PE4,
 147=PB2, 183=PJ7, 221=PL5, 224=PL8, 254=PD5, 92=AN6.
 Related outputs seen in the same pass: cooling fan PE11 (pin 21) / PE4
 (pin 12) via 0x2f1dc/0x2f188, immo light PE6/PE5 (pins 15/14) via 0x2556c,
-PJ7 (pin 183) via 0x2e800 (fuel-pump relay candidate), PE0/PD7 via 0x3a0ec.
+PJ7 (pin 183) via 0x2e800 (**A/C clutch relay**, not a fuel-pump candidate — corrected: `0xffffbd68` comes from `ref_calculateACClutchOn__` `0x2e89c`; see [`fuel_pump_control_report.md`](../../../../subsystem-logic/fuel_pump_control_report.md) §4.3), PE0/PD7 via 0x3a0ec.
 
 ## 2. Control logic (per actuator)
 

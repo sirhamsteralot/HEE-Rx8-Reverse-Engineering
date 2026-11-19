@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-19",
+  "pass": "fuel_pump_control_subsystem_analysis",
+  "basis": "Static analysis of the canonical export + disassembly + raw ROM bytes (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1), plus SH-2E emulator dynamic checks of the output drive paths (tests/test_fuel_pump_control_dynamic.py). Harness-side identity of pkg pins to connector terminals remains board-level unresolved (docs/architecture/hardware/README.md evidence levels); terminals 5P/5L/4M/5A/4C/5AA from mazda-rx-8-pcm-pinout-series-1.md are candidate associations.",
+  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin); SH7055F pkg pins from docs/references/Sh7055h.pdf Table 1.3 (pins 7=PE0, 8=PE1, 9=PE2, 183=PJ7, 256=PD7)",
+  "function_aliases": {
+    "0002f890": {
+      "alias": "fuel_pump_relay_drive_pe2",
+      "confidence": "medium",
+      "evidence": "Writes PEDR_W 0xfffff754 bit 0x4 (PE2, SH7055F pkg pin 9) = (DAT_ffffbdd8 == 1) via ref_setRegister_REG_BIT_VAL 0x4bbc under SR mask 0xe0. Raw-bin verified: pool 0x2f930=0xbdd8 (cell), 0x2f932=0xf754 (PEDR low half), 0x2f93e=0x4bbc (helper), mask mov #0x4 at 0x2f8b0, cmp/eq 0x1 at 0x2f8a2. Caller 0x2f948 (main task 0x1102a). Harness candidate: fuel pump relay control 5P (with immobilizer) / 5L (without); chip-pin->terminal routing unresolved."
+    },
+    "0002f8ce": {
+      "alias": "fuel_pump_outputs_pe2_pe1",
+      "confidence": "medium",
+      "evidence": "Writes PEDR_W bit 0x4 (PE2, pkg pin 9) = (FUN_0005c204(DAT_ffffbdd8) == 1) [diag actuator-override gate] and bit 0x2 (PE1, pkg pin 8) = (DAT_ffffbdbc == 1). Raw-bin verified: jsr 0x5c204 (pool 0x2f944) with r4=pool 0x2f930=0xbdd8; mask mov #0x4 at 0x2f8ea; r13=pool 0x2f932=0xf754 (PEDR); then cell pool 0x2f934=0xbdbc, mask mov #0x2 at 0x2f912, helper pool 0x2f93e=0x4bbc. Caller 0x2f95c ref_getOBDFuelModificationRequest (fueling task 0x117ac). PE1 harness candidate: fuel pump speed control 4M."
+    },
+    "0002f948": {
+      "alias": "fuel_pump_request_force_step",
+      "confidence": "medium",
+      "evidence": "Calls 0x2fbf0 (DAT_ffffbdd8 = 1), 0x2fbf8 (DAT_ffffbddc = 0xffff), 0x2f890 (PE2 output). Called from main task 0x1102a (callgraph). Forces the PE2 request flag high once per main-task pass."
+    },
+    "0002fbf0": {
+      "alias": "fuel_pump_request_set",
+      "confidence": "medium",
+      "evidence": "8-byte body: DAT_ffffbdd8 = 1. Called from 0x2f948."
+    },
+    "0002fc00": {
+      "alias": "fuel_pump_request_calc",
+      "confidence": "medium",
+      "evidence": "Computes DAT_ffffbdd8 (drives PE2) = DAT_ffffaa68(key-on flag) && (DAT_ffffbdda < 0x1f || (DAT_ffffa42c(injectors_off)==1 && DAT_ffffbde0==1) || DAT_ffffbddc < 0x3e). Raw-bin verified pools: 0x2fcd0=0xaa68, 0x2fcd2=0xa42c, 0x2fce2=0xbdda, 0x2fce6=0xbdde, 0x2fcea=0xbde0, 0x2fcda=0xbddc, 0x2fcce=0xbdd8; thresholds ROM 0x7bc58=0x1f, 0x7bc5c=0x3e; increment helper pool 0x2fcde=0x2460. bdda counts up while key-on, bdde while injectors-off, bddc every call. Caller 0x2f95c (fueling task 0x117ac). Dynamically: PE2 high at key-on/cranking/running, low at key-off (tests/test_fuel_pump_control_dynamic.py)."
+    },
+    "0002e800": {
+      "alias": "ac_clutch_relay_drive_pj7",
+      "confidence": "high",
+      "evidence": "Writes PJDR_W 0xfffff76c bit 0x80 (PJ7, pkg pin 183) = (DAT_ffffbd68 == 1) via 0x4bbc. Corrects the earlier 'fuel-pump relay candidate' note in reviews/intake_solenoids/README.md: 0xffffbd68 is set by ref_calculateACClutchOn__ 0x2e89c (ac_clutch_on 0xffffbd69, rpm 0xffffb548 thresholds 600.0/7800.0 at ROM 0x774c0/0x774c4), i.e. the A/C compressor clutch. Harness candidate: A/C relay 5AA."
+    },
+    "0002e840": {
+      "alias": "ac_clutch_relay_drive_pj7_diag",
+      "confidence": "high",
+      "evidence": "Writes PJDR_W bit 0x80 (PJ7, pkg pin 183) = (FUN_0005c56c(DAT_ffffbd68) == 1) [diag actuator-override gate]. Caller 0x2f11c thunk."
+    },
+    "0003a0ec": {
+      "alias": "relay_output_pair_pd7_pe0",
+      "confidence": "medium",
+      "evidence": "Writes PDDR_W 0xfffff746 bit 0x80 (PD7, pkg pin 256) = (DAT_ffffcfb6 == 1) and PEDR_W 0xfffff754 bit 0x1 (PE0, pkg pin 7) = (DAT_ffffcfb7 == 0). Raw-bin verified pools: 0x3a1aa=0xcfb6, 0x3a1ac=0x0080, 0x3a1ae=0xf746 (PDDR), 0x3a1b0=0xcfb7, 0x3a1b2=0xf754 (PEDR), helper 0x3a1be=0x4bbc. Caller 0x38e12 (task 0x114d0 batch). PD7 dynamically high only while cranking (0xffffd15c path) - harness candidate: starter relay 5A; PE0 mostly high - harness candidate: DBW relay 4C."
+    },
+    "000532d0": {
+      "alias": "cranking_in_progress_calc",
+      "confidence": "high",
+      "evidence": "Computes DAT_ffffd15c = (vspeed 0xffffbbb4 within tolerance band of 0) && DAT_ffffaa62(cranking_active)==1 && DAT_ffffa428(engine_running)==1 && (E2-shadow u16 0xffff86e8 < 0xea); increments 0xffff86e8 while set. Feeds cfbc (0x4ed3c) -> cfb6 (0x4ef86) -> PD7 (0x3a0ec). Dynamically high only in cranking scenario."
+    }
+  },
+  "ram_aliases": {
+    "ffffbdd8": {
+      "alias": "fuel_pump_relay_request",
+      "type": "uint8",
+      "reader": "0002f890",
+      "evidence": "Written by 0x2fc00: key_on 0xffffaa68 && (bdda<0x1f || (injectors_off a42c && bde0) || bddc<0x3e); forced 1 by 0x2fbf0. Drives PE2 (pkg pin 9); harness candidate fuel pump relay control 5P/5L. Pool-anchored: 0x2fcce=0xbdd8, 0x2f930=0xbdd8."
+    },
+    "ffffbdbc": {
+      "alias": "fuel_pump_speed_request",
+      "type": "uint8",
+      "reader": "0002f8ce",
+      "evidence": "Written by 0x2fb20 ref_fuelingAddOBDControlMode_ = diag-wrapped ((0xffffbdd5 && engine_stopped_latch 0xffffa41c==0) || (injectors_off 0xffffa42c==1 && key_on 0xffffaa68==1)); 0xffffbdd5 = fuel-demand threshold term (bdc0 >= bdc4-3.5). Drives PE1 (pkg pin 8); harness candidate fuel pump speed control 4M. Pool-anchored: 0x2f934=0xbdbc."
+    },
+    "ffffbd68": {
+      "alias": "ac_clutch_relay_drive",
+      "type": "uint8",
+      "reader": "0002e800",
+      "evidence": "Set by ref_calculateACClutchOn__ 0x2e89c from ac_clutch_on 0xffffbd69 with rpm 0xffffb548 thresholds (pools 0x2e968=0xb548, 0x2e96a=0xbd68, 0x2e96c=0xbd69; floats 600.0/7800.0 at ROM 0x774c0/0x774c4). Drives PJ7 (pkg pin 183); harness candidate A/C relay 5AA - not the fuel pump."
+    },
+    "ffffd15c": {
+      "alias": "cranking_in_progress",
+      "type": "uint8",
+      "reader": "000532d0",
+      "evidence": "Written by 0x532d0: vspeed 0xffffbbb4 ~0 && cranking_active 0xffffaa62==1 && engine_running 0xffffa428==1 && E2-shadow 0xffff86e8 < 0xea. Pool-anchored at 0x532d0."
+    },
+    "ffffcfb6": {
+      "alias": "pd7_relay_flag",
+      "type": "uint8",
+      "reader": "0003a0ec",
+      "evidence": "= (0xffffcfbc == 1) computed by 0x4ef86; pool 0x3a1a8/0x3a1aa anchor 0xffffcfb6. Drives PD7 (pkg pin 256); harness candidate starter relay 5A (high only while cranking)."
+    },
+    "ffffcfb7": {
+      "alias": "pe0_relay_flag",
+      "type": "uint8",
+      "reader": "0003a0ec",
+      "evidence": "Computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc (RX8Defs 'Table 3D - 120/121') over counters cfad/cfac/cfaf/cfae; PE0 = (cfb7 == 0). Pool 0x3a1b0 anchors 0xffffcfb7. Harness candidate: DBW relay 4C."
+    },
+    "ffffcfbc": {
+      "alias": "pd7_relay_condition",
+      "type": "uint8",
+      "reader": "0004ef86",
+      "evidence": "Written by 0x4ed3c: = 1 if (cfbe==1 && cfaa>=cfa6) || 0xffffd15c(cranking_in_progress)==1, cleared if cfc1==1. Feeds PD7 via cfb6."
+    }
+  }
+}
