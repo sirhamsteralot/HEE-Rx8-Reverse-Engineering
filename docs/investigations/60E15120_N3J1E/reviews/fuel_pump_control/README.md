@@ -18,11 +18,12 @@ and the label record
   [`rawbin_reverify_log.txt`](rawbin_reverify_log.txt) — 34/34 PASS
   (ROM SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`).
 - Dynamic (SH-2E emulator, harness calls): PE2 follows `0xffffbdd8` (high at
-  key-on/cranking/running, low at key-off); PE1 follows `0xffffbdbc`;
-  PD7/PE0 follow `0xffffcfb6`/`0xffffcfb7`; PD7 high only while cranking via
-  `0xffffd15c` (`0x532d0`); PJ7 follows `0xffffbd68` (A/C clutch) —
-  `tests/test_fuel_pump_control_dynamic.py` (6/6).
-- Static label tests: `tests/test_fuel_pump_control.py` (8/8).
+  key-on/cranking/running, low at key-off); PE1 follows `0xffffbdbc` —
+  `tests/test_fuel_pump_control_dynamic.py` (3/3). The neighboring PD7/PE0/PJ7
+  drives mapped in the same runs are out of scope for the report and covered by
+  `tests/test_starting_cranking.py`, `tests/test_throttle_dbw.py` and
+  `tests/test_ac_compressor_clutch.py` (see the report §4.6).
+- Static label tests: `tests/test_fuel_pump_control.py` (6/6).
 
 ## Correction
 
@@ -43,7 +44,7 @@ folded back into [`reviews/intake_solenoids/README.md`](../intake_solenoids/READ
 - Cross-ROM byte-matching of this chain not run yet.
 - Inertia switch: no PCM input in the pinout; hardware-side in the pump feed.
 - The SCI0 input expander and its consumers are not covered here; tracked as a
-  dedicated subsystem report in [`ROADMAP.md`](../../../../../../ROADMAP.md)
+  dedicated subsystem report in [`ROADMAP.md`](../../../../../ROADMAP.md)
   (C item 91). Removed from this deliverable as out of scope — the oil
   pressure switch path was traced here first: `0x2bafc` reads expander ch1
   bit 0x80 (debounce vs ROM `0x775b8`=0x10 → `0xffffbc0c`),

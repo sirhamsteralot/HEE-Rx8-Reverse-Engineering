@@ -3,6 +3,7 @@
 | Date | What changed | Version |
 |------|--------------|---------|
 | 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; content unchanged) | 1 |
+| 2026-11-19 | Scope discipline: open/closed-loop fueling state, OL/CL fueling functions and tables, O2-monitor and UDS-diag items moved out of the body and memory map into §4.6 with cross-links | 2 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -44,7 +45,9 @@ In plain language:
 None of the ~40 functions in the knock chain read the loop-mode flags; its
 gates are engine conditions only (run time, coolant, load, RPM, sensor health,
 timing-not-already-retarded). Loop mode changes the *fueling* around the
-knock correction, not the correction itself.
+knock correction, not the correction itself — the loop-mode state itself
+belongs to fueling control ([`fueling_control_report.md`](../investigations/60E15120_N3J1E/fueling_control_report.md),
+recorded in §4.6).
 
 ## 2. How it works, step by step
 
@@ -147,11 +150,12 @@ table.
 
 RomRaider PID 0x1746 "Knock Retard" (handler `0x5707a`
 `diag22_pid1746_knock_retard_deg`, uint8 × 0.3515625° — scale constant
-`0x3eb40000` verified in the handler's literal pool) and OBD PID 0x0003
-"OL Status" (handler `0x568ca`). Note the 0x1746 encoding
-(clamp(trunc(x/0.3515625 + 0.5), 0, 255)) spans [0, +89.7]°, so with
-knock_retard clamped to [−10, 0] the PID always reports 0.00° in this ROM; the
-logger def's desc text ("Tire Size") is a copy-paste error.
+`0x3eb40000` verified in the handler's literal pool; dispatch via the Mode-22
+table in [`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)).
+Note the 0x1746 encoding (clamp(trunc(x/0.3515625 + 0.5), 0, 255)) spans
+[0, +89.7]°, so with knock_retard clamped to [−10, 0] the PID always reports
+0.00° in this ROM; the logger def's desc text ("Tire Size") is a copy-paste
+error.
 
 ### 2.11 Key calibrated tables
 
@@ -165,7 +169,6 @@ logger def's desc text ("Tire Size") is a copy-paste error.
 | `tbl_knock_level_3d_a..d_0006b2b8/b2d4/b2f0/b304` | 3D knock level vs load/RPM |
 | `tbl_ignition_timing_threshold_a/b_…_0006b27c/b294` | raw u16 thresholds A/B (alt pair) |
 | `tbl_knock_transient_hold_0006b264` | 20-cycle transient hold (raw u8 << 1) |
-| `tbl_closed_loop_warmup_time_0006990c` | engine warmup time before closed loop (raw u16 vs catalyst-temp model) |
 
 All five retard tables (0x6af68/0x6af7c/0x6af90/0x6afa4/0x6afb8) are u8-cell 2-D
 descriptors carrying multiplier **0.5 at descriptor+12** and offset **−64.0 at
@@ -224,15 +227,10 @@ final_leading  = clamp(base_leading_timing  + correction, limits)   # leading_ti
 final_trailing = clamp(base_trailing_timing + correction, limits)   # trailing_timing_with_corrections 0xffffa63c -> output trailing_ignition_timing_ffffa638 0xffffa638
 ```
 
-**RPM path attribution.** `0x803e` has no callgraph callers; its only ROM
-reference is the default (VBR=0) IVT slot 0x2c8 (the pre-VBR entry, inactive
-once VBR=0x7fc50 is set at 0xd206). The live path is the CMI10B tick chain
-0x5b3c → 0x75f4 → 0x77f0 → 0x7c68 → `ref_getCrankAngle` 0x7fcc, which writes
-`crank_period_accumulator_ffff9f88` and
-`engine_speed_rpm_raw_ffff9f80` = 1.2e8 / Σ ring(`crank_period_ring`
-0xffff9fd0[6]). Details and emulator evidence:
+**RPM input.** The RPM used above (`engine_speed_rpm_raw` `0xffff9f80`) is
+produced by the crank-angle tick chain — details and emulator evidence in
 [os_scheduling_deep_dive_report.md](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
-§7/§9.
+§7/§9 (attribution recorded in §4.6).
 
 Memory addresses for every quantity above are listed in §4.1.
 
@@ -282,40 +280,24 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0x000123ba | `leading_timing_add_corrections` | 0xffffa634 = base + corrections |
 | 0x000123ca | `trailing_timing_add_corrections` | 0xffffa63c |
 | 0x00012300 | `trailing_final_timing_clamp_output` | clamps into 0xffffa630/a638 |
-| 0x00011f00 | `leading_base_timing_calc` | base-timing plate, blend b118 |
-| 0x0001206c | `trailing_base_timing_calc` | base-timing plate |
 | 0x00013034 | `knock_rough_correction_targets` | rough-knock targets (descriptors 0x69630–0x6974c) |
 | 0x00013210 | `ref_roughKnockCorrection` | leading/trailing rough corrections 0xffffa6ac/a6b0 (inherited name; semantic unproven) |
 | 0x0001467c | `knock_rough_correction_update` | rough-correction task chain |
-| 0x000142a4 | `ignition_timing_main_task` | task[6] timing chain |
 | 0x00049fac | `knock_sensor_health_persistence` | health persistence → 0xffffcd64/cd66 |
 | 0x0004a084 | `knock_sensor_dtc_report` | DTC 0x23/0x24 via 0x5fd38 |
 | 0x000390b8 | `knock_sensor_monitor_task` | 0x49fac + 0x4a084 |
 | 0x000064ba | `knock_sensor_fault_task` | task[9]: 0xc290 |
-| 0x0001f0c4 | `open_loop_request_condition` | sets 0xffffb12a |
-| 0x0001ee30 | `set_open_loop_flag` | sets 0xffffb12c (misnomer corrected) |
-| 0x0001c13c | `closed_loop_enable_condition` | 0xffffae1e / 0xffffae1f |
-| 0x0001ee4a | `open_loop_fueling_targets` | 0xffffb120 |
-| 0x0005535e | `diag_ol_status_byte` | OBD PID 0x0003 status byte |
-| 0x000553d8 | `diag_ol_status_low_byte` | PID 0x0003 low byte (0) |
-| 0x00022144 | `candidate_fuel_open_loop_condition` | gates on fuel open-loop flag 0xffffb12c (renamed from `candidate_evap_open_loop_condition`: the "evap" came from the inherited caller name `ref_evapRelated` 0x21b8a, a ref_ hypothesis — unproven) |
-| 0x0003d010 | `o2_monitor_integrator` | O2/catalyst monitor integrator |
 
 #### Data and entry points (ROM)
 
 | Address | Contents |
 |---|---|
-| 0x00004998–0x00004ab7 | task table: 18 × 16-byte records {entry, mask, param, stack}; stacks 0xffff7410–0xffff7498 |
-| 0x00004ab8 | additional record {0x64e8, 0x02000000, 0x04ffffff, 0x00000001} + 0xffff76xx pairs; dispatch unresolved |
-| 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c` (99 × 12 bytes, all labeled); PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg`, PID 0x0003 → handler 0x568ca `diag22_pid0003_fuel_system_status_ol_cl` — [uds_mode22_dispatch_report.md](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) |
-| 0x0006c046 | calibration ID `N3ZHE` |
-| 0x0000d74c / 0x0000d750 | scheduler pointer table / timing records (used by 0x5f1c) |
-| 0x00009630 | `os_schedule_task_event` (upgrades inherited `ref_osTaskScheduler`; queue state base `queue_state_base` 0xffff9304) |
+| 0x00004998–0x00004ab7 | task table: 18 × 16-byte records {entry, mask, param, stack}; stacks 0xffff7410–0xffff7498 (OS structure — [os_scheduling_deep_dive_report.md](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)) |
+| 0x00005f10c | `tbl_diag22_dispatch_records_0005f10c`: PID 0x1746 → handler 0x5707a `diag22_pid1746_knock_retard_deg` (§2.10) — dispatch table itself: [uds_mode22_dispatch_report.md](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md) |
 
-Task-table entries: 0x65f6 `ref_task1_` (knock sensing), 0x661e `ref_task2_`
-(engine control; also calls 0xc3ce knock_voltage_sample), 0x64ba `knock_sensor_fault_task`, 0x64f6 (→ 0x390b8
-+ `ref_OLFueling__` 0x211fe), 0x6584 (→ `ref_getFuelingSlowtask_` 0x21246),
-0x65b2 (→ 0x1467c), 0x65cc (→ 0x41964, reads 0xffffae1f). Wrapper 0x64e8 →
+Task-table entries running knock code: 0x65f6 `ref_task1_` (knock sensing),
+0x661e `ref_task2_` (engine control; also calls 0xc3ce knock_voltage_sample),
+0x64ba `knock_sensor_fault_task`, 0x65b2 (→ 0x1467c). Wrapper 0x64e8 →
 0x11534 → 0x145c8.
 
 #### RAM (0xffff…)
@@ -383,22 +365,7 @@ Sensing, timing and shared state:
 | 0xffffa644 | `cranking_timing_multiplier_leading` | cranking blend multiplier (0x123da) |
 | 0xffffa66c / 0xffffa670 | (unnamed `DAT_`) | leading/trailing timing trims, subtracted in 0x125bc/0x125f6 |
 
-Loop mode:
-
-| Address | Name | Meaning |
-|---|---|---|
-| 0xffffb12a / 0xffffb12c | `open_loop_request` / `open_loop_active` | open-loop flag (polarity corrected) |
-| 0xffffae1e / 0xffffae1f | `closed_loop_allowed` / `closed_loop_active` | |
-| 0xffffb120 | `open_loop_fuel_target` | |
-| 0xffffb12d / 0xffffcd60 | `safe_mode` (fueling/base-timing cap) / `safe_mode` (knock threshold pair) | |
-| 0xffffaa80 | `lambda_in_target_band` | |
-| 0xffffb130 / b134 / b138 / b13c | `ol_fuel_target_main` / `ol_coolant_correction` / `ol_fuel_target_implausible` / `ol_temperature_correction_b` | OL target terms from 0x1ee4a (tables 0x69cac-0x69d10) |
-| 0xffffb170 / b174 / b190 / b194 / b198 / b19c | `ol_baro_base_correction` / `ol_rich_limit` / `ol_tip_in_target` / `ol_target_3d` / `ol_tip_in_implausible` / `ol_target_implausible_3d` | OL base/limit/target components (0x1ee4a; tables 0x69cac-0x69f44) |
-| 0xffffb15c / b160 / b164 / b168 / b16c | `cl_throttle_threshold` / `cl_load_threshold_a/b/c` / `cl_unknown_threshold_a` | CL entry thresholds from 0x1f0c4 (tables 0x69d24-0x69d74) |
-| 0xffffb1b6 / b1b7 / b1b8 | `cl_load_a/b/c_exceeded` | load-exceeded flags with hysteresis (0x1f0c4) |
-| 0xffffb1b1 | `coolant_above_78_flag` | coolant >= 80 (clear below 78) in 0x1f0c4 |
-
-Full list of all 84 named locations: [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv).
+Full list of all named locations: [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv).
 
 #### ROM tables and constants
 
@@ -417,9 +384,6 @@ Full list of all 84 named locations: [`accepted_ram_aliases.tsv`](../investigati
 | 0x0006b2a0 | (noise threshold min) | clamp floor for 0xffffa350[2] |
 | 0x0006b2ac | (noise floor) | lookup vs raw RPM → 0xffffa358 |
 | 0x0006b2b8 / 0x6b2d4 / 0x6b2f0 / 0x6b304 | `tbl_knock_level_3d_a..d` | 3D knock level vs load/RPM (20×12 scaled / 1×1 raw) |
-| 0x0006990c | `tbl_closed_loop_warmup_time_0006990c` | raw u16 ×15; axis 0x6f7e0, data 0x6f81c |
-| 0x00069d24–0x00069d74 | "Closed Loop Fuelling Threshold" tables | open-loop request conditions (0x1f0c4) |
-| 0x00069cac–0x00069f44 | open-loop fueling tables (normal + "Safe Mode") | 0x1ee4a |
 | 0x00069630–0x0006974c | RX8Defs "Ignition 4..17" descriptors | rough-knock targets (0x13034) |
 | 0x00006b83c | (cold-start reduction) | min(c9a8, lookup(RPM)) (0x12630) |
 | 0x00007a750 / 0x00007a752 | per-channel reference bytes | selected by the 10k flag; both `01 01` in this ROM |
@@ -439,8 +403,11 @@ Full list of all 84 named locations: [`accepted_ram_aliases.tsv`](../investigati
 - **84 RAM locations** named in [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv)
   (integrated as `<alias>_<address>`), e.g. `knock_retard_ffffa734` (pre-existing),
   `knock_detected_ffffa324`, `knock_attack_condition_ffffc05c`,
-  `knock_level_integrator_ffffa33c[2]`, `open_loop_active_ffffb12c`,
-  `closed_loop_active_ffffae1f`; 8 `snapshot_` locals renamed to match.
+  `knock_level_integrator_ffffa33c[2]`; 8 `snapshot_` locals renamed to match.
+  The open/closed-loop fueling aliases that the same labeling pass also named
+  (`open_loop_active_ffffb12c`, `closed_loop_active_ffffae1f`, the `ol_*`/
+  `cl_*` cells, …) are **fueling-control scope**, not knock — recorded in §4.6
+  with cross-links; this report's memory map above lists only knock-owned state.
 - **15 lookup-table rows** in [`accepted_lookup_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_lookup_aliases.tsv)
   (merged into `named/lookup_aliases.tsv`).
 - All renames applied to every synchronized view: per-function files,
@@ -550,6 +517,44 @@ Full list of all 84 named locations: [`accepted_ram_aliases.tsv`](../investigati
   dispatch table at 0x5f10c.
 
 ### 4.6 Limits
+
+Neighboring items mapped while tracing (out of scope here; one line each with
+key addresses — no body sections or memory-map rows above):
+
+- **Open/closed-loop fueling state and logic** — `open_loop_request`
+  `0xffffb12a` / `open_loop_active` `0xffffb12c` (polarity corrected, §4.3),
+  `closed_loop_allowed/active` `0xffffae1e/ae1f`, `open_loop_fuel_target`
+  `0xffffb120`, the `ol_*`/`cl_*` target/threshold cells `0xffffb130–b1b8`,
+  `safe_mode` `0xffffb12d`/`0xffffcd60`, `lambda_in_target_band`
+  `0xffffaa80`; functions `0x1f0c4` `open_loop_request_condition`,
+  `0x1ee30` `set_open_loop_flag`, `0x1c13c` `closed_loop_enable_condition`,
+  `0x1ee4a` `open_loop_fueling_targets`, `0x22144`
+  `candidate_fuel_open_loop_condition`; tables `0x69cac–0x69f44` (OL fueling)
+  and `0x69d24–0x69d74` (CL thresholds), `0x6990c` `tbl_closed_loop_warmup_time`.
+  Belongs to fueling control:
+  [`fueling_control_report.md`](../investigations/60E15120_N3J1E/fueling_control_report.md)
+  (ROADMAP C item 51).
+- **OBD PID 0x0003 "OL Status" diag** — handlers `0x568ca` / `0x5535e` /
+  `0x553d8`; fuel-system status reporting, not knock — UDS dispatch report
+  ([`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)).
+  (Cited in §4.3 only as polarity evidence.)
+- **O2/catalyst monitor integrator** `0x3d010` —
+  [`o2_sensor_monitor_report.md`](../investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)
+  (ROADMAP C item 58).
+- **Base ignition timing maps** `0x11f00` `leading_base_timing_calc`,
+  `0x1206c` `trailing_base_timing_calc`, task `0x142a4`
+  `ignition_timing_main_task` — the knock retard enters *after* these;
+  belongs to
+  [ignition timing](../investigations/60E15120_N3J1E/ignition_timing_report.md).
+- **OS task table / scheduler** — task table `0x4998–0x4ab7` + extra record
+  `0x4ab8`, scheduler `0x9630` `os_schedule_task_event` (queue base
+  `0xffff9304`), pointers `0xd74c`/`0xd750`; RPM/crank path attribution
+  (`0x803e` pre-VBR IVT slot 0x2c8 inactive once VBR=`0x7fc50` at `0xd206`;
+  live CMI10B chain `0x5b3c` → `0x75f4` → `0x77f0` → `0x7c68` →
+  `ref_getCrankAngle` `0x7fcc` → `crank_period_ring` `0xffff9fd0[6]`,
+  `crank_period_accumulator_ffff9f88`, `engine_speed_rpm_raw_ffff9f80`) —
+  [os_scheduling_deep_dive_report.md](../investigations/60E15120_N3J1E/os_scheduling_deep_dive_report.md)
+  §7/§9.
 
 Static analysis only for the control logic: no hardware execution, so
 scheduling order, interrupt load and real knock behavior are unmeasured (the
