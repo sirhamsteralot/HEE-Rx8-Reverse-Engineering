@@ -253,6 +253,25 @@ Write-up: [`immobilizer_report.md`](../../subsystem-logic/immobilizer_report.md)
 `data/labels/cross_rom/immobilizer_function_map.json`); checks:
 `tests/test_immobilizer_labels.py`, `tests/test_immobilizer_dynamic.py`.
 
+## Fuel pump control labeling
+
+The fuel pump relay drive is labeled end to end: request flag
+`fuel_pump_relay_request` 0xffffbdd8 computed by 0x2fc00 (key-on 0xffffaa68
+plus grace counters bdda/bddc/bde0, thresholds ROM 0x7bc58/0x7bc5c), forced by
+0x2fbf0 from main task 0x1102a via 0x2f948, driving PEDR_W bit 0x4 (PE2, pkg
+pin 9) through 0x2f890 (direct) and 0x2f8ce (diag-gated via 0x5c204). Pump
+speed control candidate: 0xffffbdbc from 0x2fb20 -> PEDR bit 0x2 (PE1, pin 8).
+Related relays mapped while tracing: PD7 (0x3a0ec, cranking-only via 0xffffd15c
+from 0x532d0) = starter relay candidate 5A; PE0 = DBW relay candidate 4C; PJ7
+(0x2e800/0x2e840, 0xffffbd68 from 0x2e89c) = A/C relay 5AA (corrects the
+earlier fuel-pump candidate note); the inertia switch is not a PCM
+input. 9 functions, 7 RAM cells; raw-bin re-verified 34/34
+(`reviews/fuel_pump_control/rawbin_reverify_log.txt`).
+Write-up: [`fuel_pump_control_report.md`](../../subsystem-logic/fuel_pump_control_report.md)
++ `reviews/fuel_pump_control/`; record:
+`data/labels/60E15120_N3J1E/fuel_pump_control_labels.json`; checks:
+`tests/test_fuel_pump_control.py`, `tests/test_fuel_pump_control_dynamic.py`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

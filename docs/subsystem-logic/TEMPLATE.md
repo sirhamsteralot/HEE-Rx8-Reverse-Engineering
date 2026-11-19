@@ -92,7 +92,15 @@ artifact covers.
 ### 4.6 Limits
 
 What this report does not cover, and what would disprove the shared-logic
-assumption for a given ROM.
+assumption for a given ROM. Scope discipline: while tracing a subsystem you
+will inevitably map neighboring items (other relays on the same port bank,
+switch inputs read by the same expander, …). Those do **not** get body
+sections, memory-map rows or label entries in this report — record them here
+as one line each with their key `0x` addresses, add a ROADMAP item for the
+subsystem they actually belong to (if none exists), and cross-link it. If a
+neighboring item turns out to correct an earlier claim in another document,
+that correction goes in §4.3 and is folded back into the source document in
+the same change.
 
 ### 4.7 Related reports
 

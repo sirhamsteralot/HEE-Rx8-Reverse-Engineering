@@ -101,7 +101,7 @@ audit snapshot: 3,355 functions in the 60E15120_N3J1E export, 939 named +
 Groups are in suggested pickup order. Each item lists scope, what it unblocks,
 and where artifacts live.
 
-### C. Static labeling & gap closure (P2 residual) — REOPENED (items 27–34, 36–37, 39, 42–90)
+### C. Static labeling & gap closure (P2 residual) — REOPENED (items 27, 29–34, 36–37, 39, 42–90)
 
 - **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
   DSC torque-request throttle via CAN 0x212 are labeled (see
@@ -109,9 +109,6 @@ and where artifacts live.
   but pedal→throttle-motor control (motor drive, limp/home mode, TP sensor
   plausibility) has no report; also settle the logger PID 0x1410 conflict
   (injector pulse time vs. throttle pedal, noted in design doc §5.8).
-- **C item 28 (open)** — **fuel pump control.** Zero coverage today (no report,
-  no labels): find the pump relay GPIO drive and its control conditions
-  (cranking, oil pressure, inertia switch input).
 - **C item 29 (open)** — **misfire detection / monitor.**
   `ref_misfireDetectInit_` `0xab8a` is named and the misfire DTCs sit in
   [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
@@ -291,6 +288,22 @@ and where artifacts live.
   - **C item 62 (open)** — fold back **immobilizer** (item 26's report + `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM records)
   - **C item 63 (open)** — fold back **throttle / DBW** (item 27)
   - **C item 64 (open)** — fold back **fuel pump control** (item 28)
+  - **C item 91 (open)** — **input expander (SCI0) subsystem report.** The
+    external input expander read over SCI0 (`sci0_gpio_expander_read` `0x70ac`,
+    channel select on PH13/PH14, results latched to `0xffff9ecc`/`0xffff9ecd`/
+    `0xffff9ede` by `0x6744`/`0x6796`) feeds several switch inputs. The
+    expander transport itself is already documented in
+    [`ignition_power_state_report.md`](docs/investigations/60E15120_N3J1E/ignition_power_state_report.md)
+    (§4 misnomer note + memory map). What is **not yet documented anywhere** and
+    was removed from the fuel pump report as out of scope: the oil pressure
+    switch consumers — light `ref_writeOilPressureLight__` `0x2bafc` reads
+    expander ch1 bit 0x80 (`tst 0x80` at `0x2bb12`), debounced over
+    `0xffffbc0e`/`0xffffbc10` vs threshold ROM `0x775b8`=0x10 → `0xffffbc0c`;
+    gauge `ref_writeOilPressureGauge__` `0x2bb74`/`0x2bb7c` reads ch2 bit 0 →
+    `0xffffbc14`, exported to CAN by `ref_setOilPressureGaugeStatus` `0x28c52`
+    (status word `0xffffbab0`); harness terminal 2E. Deliver a dedicated
+    subsystem report for the expander and its input consumers, with labels
+    and a review evidence folder.
   - **C item 65 (open)** — fold back **misfire detection / monitor** (item 29)
   - **C item 66 (open)** — fold back **emissions monitors beyond O2** (item 30)
   - **C item 67 (open)** — fold back **starting / cranking** (item 31)
