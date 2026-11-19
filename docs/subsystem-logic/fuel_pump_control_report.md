@@ -12,7 +12,7 @@ never re-derived here). List only ROMs actually investigated for this subsystem
 
 | ROM | ROM specifics | Short one-line description |
 |-----|---------------|----------------------------|
-| [`60E15120_N3J1E`](../investigations/60E15120_N3J1E/README.md) | reference ROM — all `0x` addresses in this report are from this bin; `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin` (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`), untouched | Fuel pump relay drive on PEDR bit 0x4 (PE2) from request flag `0xffffbdd8`, pump speed control candidate on PE1, oil-pressure switch read over the SCI0 expander |
+| [`60E15120_N3J1E`](../investigations/60E15120_N3J1E/README.md) | reference ROM — all `0x` addresses in this report are from this bin; `submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin` (512 KiB, SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`), untouched | Fuel pump relay drive on PEDR bit 0x4 (PE2) from request flag `0xffffbdd8`, pump speed control on PE1 |
 
 All content in this report is from static analysis of the canonical export
 ([`reverse-engineered/decompiled/`](../../reverse-engineered/decompiled/60E15120_N3J1E/)),
@@ -36,11 +36,11 @@ and it drives port bit **PE2 (PEDR_W `0xfffff754` bit 0x4, SH7055F package pin
 9)** through two output routines — one direct (`0x2f890`), one gated by the
 UDS actuator-override state machine (`0x2f8ce`). The companion bit **PE1
 (bit 0x2, pin 8)** is driven from `fuel_pump_speed_request` (`0xffffbdbc`),
-a fuel-demand-derived flag — the speed-control relay candidate.
+a fuel-demand-derived flag — the speed-control relay candidate. PE1 is a
+plain on/off GPIO output (single-bit set/clear in `0x2f8ce`), **not PWM**:
+the speed change is done by a relay that bypasses the pump series resistor,
+not by duty-cycling the supply.
 
-The oil pressure switch (PCM terminal **2E**, "closes on low pressure") is not
-a direct MCU pin: it is read through the external input expander over SCI0
-(channel 1 bit 0x80 for the warning light, channel 2 bit 0 for the gauge).
 The inertia (fuel-cut) switch is **not** wired to any PCM input in the pinout;
 on this car it sits in the fuel pump feed circuit on the hardware side, so it
 is not a firmware condition.
@@ -59,13 +59,8 @@ Main relay (PCM 4E, held by PD11 "relay hold" 0x251d0) --+--> +12 V feed
                                                           |
                                         PCM drives PE2 low-side (PEDR bit 0x4)
 
-Fuel pump speed control relay coil --+--> PCM 4M   (PCM drives PE1, PEDR bit 0x2)
-                                     +--> bypasses the pump series resistor
-
-Oil pressure switch (PCM 2E) --+--> input expander ch1 bit 0x80 (light, 0x2bafc)
-                               +--> input expander ch2 bit 0x00 (gauge, 0x2bb74)
-        expander read over SCI0 (sci0_gpio_expander_read 0x70ac, channel select
-        on PH13/PH14); results latched to 0xffff9ecc/9ecd/9ede by 0x6744/0x6796
+Fuel pump speed control relay coil --+--> PCM 4M   (PCM drives PE1, PEDR bit 0x2;
+                                     +--> bypasses the pump series resistor)  on/off, not PWM
 ```
 
 Firmware-level paths are distinguished from pin routing: the package-pin →
@@ -120,41 +115,33 @@ at key-on, during cranking and while running, and low at key-off
 |-----|---------|-------|------------|-------------------|
 | PE2 (PEDR 0x4) | 9 | `0x2f890` / `0x2f8ce` | `0xffffbdd8` ← `0x2fc00` (key-on + grace) | **fuel pump relay 5P/5L** |
 | PE1 (PEDR 0x2) | 8 | `0x2f8ce` | `0xffffbdbc` ← `0x2fb20` (fuel demand / injectors-off) | fuel pump speed control 4M |
-| PD7 (PDDR 0x80) | 256 | `0x3a0ec` | `0xffffcfb6` ← `0xffffcfbc` ← `0xffffd15c` (`0x532d0`: vspeed≈0 && cranking `0xffffaa62` && engine_running `0xffffa428` && E2-shadow `0xffff86e8` < 0xea) | starter relay 5A (high only while cranking — dynamic) |
-| PE0 (PEDR 0x1) | 7 | `0x3a0ec` (inverted) | `0xffffcfb7` ← `0x4ef86` (3D tables `0x6b3c8`/`0x6b3dc`) | DBW relay 4C |
-| PJ7 (PJDR 0x80) | 183 | `0x2e800` / `0x2e840` | `0xffffbd68` ← `ref_calculateACClutchOn__` `0x2e89c` (A/C switch `0xffffbd69`, rpm thresholds 600/7800) | **A/C relay 5AA — not the fuel pump** (corrects the earlier candidate note in [`reviews/intake_solenoids/README.md`](../investigations/60E15120_N3J1E/reviews/intake_solenoids/README.md)) |
 
-### 2.6 Oil pressure switch input path
-
-- Light: `ref_writeOilPressureLight__` `0x2bafc` reads expander channel 1
-  (`sci0_gpio_expander_read` `0x70ac` with r4=1) bit 0x80 (`tst 0x80` at
-  `0x2bb12`), debounced over counters `0xffffbc0e`/`0xffffbc10` against
-  threshold 16 (ROM `0x775b8`), result `0xffffbc0c`.
-- Gauge: `ref_writeOilPressureGauge__` `0x2bb74` reads channel 2 bit 0,
-  with engine-running fallback, result `0xffffbc14`, exported to CAN by
-  `ref_setOilPressureGaugeStatus` `0x28c52` (status word `0xffffbab0`).
-- Neither feeds the pump relay flag chain; the oil pressure switch is the
-  hardware backup in the pump feed circuit, not a PCM pump input.
+Neighboring relay outputs on the same port banks (PD7 starter relay via
+`0x3a0ec` from `0xffffcfb6`, PE0 DBW relay via `0x3a0ec` from `0xffffcfb7`,
+PJ7 via `0x2e800`/`0x2e840` from `0xffffbd68`) were traced while mapping the
+port writes but are not part of the fuel pump chain; the PJ7 entry corrects an
+earlier note that called it a fuel-pump candidate — it is the **A/C clutch
+relay** (see §4.3).
 
 ## 3. Technical pseudocode
 
 ```c
 // fueling task 0x117ac -> 0x2f95c -> 0x2fc00  (request flag)
 u8 fuel_pump_relay_request_calc(void) {
-    if (key_on_ffffaa68) bdda = sat_add16(bdda, 1); else bdda = 0;
-    if (injectors_off_ffffa42c) bdde = sat_add16(bdde, 1); else { bdde = 0; bde0 = 0; }
-    bddc = sat_add16(bddc, 1);
-    bdd8 = key_on_ffffaa68 && (bdda < 0x1f || (injectors_off_ffffa42c && bde0) || bddc < 0x3e);
-    return bdd8;
+    if (key_on_0xffffaa68) key_on_grace_counter_0xffffbdda = sat_add16(key_on_grace_counter_0xffffbdda, 1); else key_on_grace_counter_0xffffbdda = 0;
+    if (injectors_off_0xffffa42c) injectors_off_grace_counter_0xffffbdde = sat_add16(injectors_off_grace_counter_0xffffbdde, 1); else { injectors_off_grace_counter_0xffffbdde = 0; injectors_off_grace_seen_0xffffbde0 = 0; }
+    run_on_grace_counter_0xffffbddc = sat_add16(run_on_grace_counter_0xffffbddc, 1);
+    fuel_pump_relay_request_0xffffbdd8 = key_on_0xffffaa68 && (key_on_grace_counter_0xffffbdda < 0x1f || (injectors_off_0xffffa42c && injectors_off_grace_seen_0xffffbde0) || run_on_grace_counter_0xffffbddc < 0x3e);
+    return fuel_pump_relay_request_0xffffbdd8;
 }
-// main task 0x1102a -> 0x2f948: bdd8 = 1 (0x2fbf0); bddc = 0xffff (0x2fbf8); output (0x2f890)
+// main task 0x1102a -> 0x2f948: fuel_pump_relay_request_0xffffbdd8 = 1 (0x2fbf0); run_on_grace_counter_0xffffbddc = 0xffff (0x2fbf8); output (0x2f890)
 // fueling task: 0x2f8ce output
 void fuel_pump_outputs(void) {              // 0x2f8ce
-    set_bit(PEDR_W, 0x0004, diag_gate_0x5c204(fuel_pump_relay_request) == 1);  // PE2
-    set_bit(PEDR_W, 0x0002, fuel_pump_speed_request_ffffbdbc == 1);            // PE1
+    set_bit(PEDR_W, 0x0004, diag_gate_0x5c204(fuel_pump_relay_request_0xffffbdd8) == 1);  // PE2
+    set_bit(PEDR_W, 0x0002, fuel_pump_speed_request_0xffffbdbc == 1);                     // PE1
 }
 void fuel_pump_relay_drive(void) {          // 0x2f890
-    set_bit(PEDR_W, 0x0004, fuel_pump_relay_request == 1);                     // PE2
+    set_bit(PEDR_W, 0x0004, fuel_pump_relay_request_0xffffbdd8 == 1);                      // PE2
 }
 ```
 
@@ -176,9 +163,6 @@ Functions:
 | `0x0002e89c` | `ref_calculateACClutchOn__` | computes `0xffffbd68` from `0xffffbd69` + rpm |
 | `0x0003a0ec` | `relay_output_pair_pd7_pe0` | PD7 = `0xffffcfb6`; PE0 = (`0xffffcfb7` == 0) |
 | `0x000532d0` | `cranking_in_progress_calc` | computes `0xffffd15c` (feeds PD7 chain) |
-| `0x00070ac` | `sci0_gpio_expander_read` | expander channel read (switch inputs) |
-| `0x0002bafc` / `0x0002bb74` | `ref_writeOilPressureLight__` / `ref_writeOilPressureGauge__` | oil pressure switch reads (expander ch1 bit 0x80 / ch2 bit 0) |
-| `0x00028c52` | `ref_setOilPressureGaugeStatus` | exports gauge status to CAN `0xffffbab0` |
 
 RAM:
 
@@ -187,8 +171,6 @@ RAM:
 | `0xffffbdd8` | `fuel_pump_relay_request` | u8 | `0x2fc00`, `0x2fbf0` | `0x2f890`, `0x2f8ce` → PE2 |
 | `0xffffbdbc` | `fuel_pump_speed_request` | u8 | `0x2fb20` | `0x2f8ce` → PE1 |
 | `0xffffbd68` | `ac_clutch_relay_drive` | u8 | `0x2e89c` | `0x2e800`, `0x2e840` → PJ7 |
-| `0xffffbc0c` | `oil_pressure_switch_light_status` | u8 | `0x2bafc` | status packing |
-| `0xffffbc14` | `oil_pressure_gauge_status` | u8 | `0x2bb74` | `0x28c52` |
 | `0xffffd15c` | `cranking_in_progress` | u8 | `0x532d0` | `0x4ed3c` → `0xffffcfbc` |
 | `0xffffcfb6` | `pd7_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PD7 |
 | `0xffffcfb7` | `pe0_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PE0 (inverted) |

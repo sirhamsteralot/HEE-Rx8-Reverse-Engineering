@@ -31,7 +31,8 @@ relay candidate" in [`reviews/intake_solenoids/README.md`](../intake_solenoids/R
 It is the A/C clutch relay drive: `0xffffbd68` is computed by
 `ref_calculateACClutchOn__` `0x2e89c` from `ac_clutch_on` `0xffffbd69` and rpm
 (pools `0x2e968`/`0x2e96a`/`0x2e96c`, floats 600.0/7800.0 at ROM
-`0x774c0`/`0x774c4`); harness candidate terminal 5AA.
+`0x774c0`/`0x774c4`); harness candidate terminal 5AA. The correction has been
+folded back into [`reviews/intake_solenoids/README.md`](../intake_solenoids/README.md).
 
 ## Open items
 
@@ -41,3 +42,6 @@ It is the A/C clutch relay drive: `0xffffbd68` is computed by
   `0x2fbf8`) are traced to cells/thresholds but not to task periods.
 - Cross-ROM byte-matching of this chain not run yet.
 - Inertia switch: no PCM input in the pinout; hardware-side in the pump feed.
+- The SCI0 input expander and its consumers (oil pressure switch, etc.) are
+  not covered here; tracked as a dedicated subsystem report in
+  [`ROADMAP.md`](../../../../../../ROADMAP.md).
