@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-19",
+  "pass": "starting_cranking_subsystem_analysis",
+  "basis": "Neighbor of the fuel pump drive path mapped while tracing PDDR/PEDR port writes: PD7 (pkg pin 256, harness candidate starter relay 5A) = pd7_relay_flag 0xffffcfb6 via relay_output_pair_pd7_pe0 0x3a0ec; 0xffffcfb6 <- pd7_relay_condition 0xffffcfbc (0x4ed3c) <- cranking_in_progress 0xffffd15c (0x532d0). The same 0x3a0ec function also drives PE0 (DBW relay, see throttle_dbw_labels.json). Static analysis + raw ROM bytes; dynamic checks in tests/test_starting_cranking.py.",
+  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1); split out of fuel_pump_control_labels.json per the report scope-discipline rule: these rows were mapped while tracing the fuel pump port banks but belong to their own subsystems",
+  "function_aliases": {
+    "0003a0ec": {
+      "alias": "relay_output_pair_pd7_pe0",
+      "confidence": "medium",
+      "evidence": "Writes PDDR_W 0xfffff746 bit 0x80 (PD7, pkg pin 256) = (DAT_ffffcfb6 == 1) and PEDR_W 0xfffff754 bit 0x1 (PE0, pkg pin 7) = (DAT_ffffcfb7 == 0). Raw-bin verified pools: 0x3a1aa=0xcfb6, 0x3a1ac=0x0080, 0x3a1ae=0xf746 (PDDR), 0x3a1b0=0xcfb7, 0x3a1b2=0xf754 (PEDR), helper 0x3a1be=0x4bbc. Caller 0x38e12 (task 0x114d0 batch). PD7 dynamically high only while cranking (0xffffd15c path) - harness candidate: starter relay 5A; PE0 mostly high - harness candidate: DBW relay 4C."
+    },
+    "000532d0": {
+      "alias": "cranking_in_progress_calc",
+      "confidence": "high",
+      "evidence": "Computes DAT_ffffd15c = (vspeed 0xffffbbb4 within tolerance band of 0) && DAT_ffffaa62(cranking_active)==1 && DAT_ffffa428(engine_running)==1 && (E2-shadow u16 0xffff86e8 < 0xea); increments 0xffff86e8 while set. Feeds cfbc (0x4ed3c) -> cfb6 (0x4ef86) -> PD7 (0x3a0ec). Dynamically high only in cranking scenario."
+    }
+  },
+  "ram_aliases": {
+    "ffffd15c": {
+      "alias": "cranking_in_progress",
+      "type": "uint8",
+      "reader": "000532d0",
+      "evidence": "Written by 0x532d0: vspeed 0xffffbbb4 ~0 && cranking_active 0xffffaa62==1 && engine_running 0xffffa428==1 && E2-shadow 0xffff86e8 < 0xea. Pool-anchored at 0x532d0."
+    },
+    "ffffcfb6": {
+      "alias": "pd7_relay_flag",
+      "type": "uint8",
+      "reader": "0003a0ec",
+      "evidence": "= (0xffffcfbc == 1) computed by 0x4ef86; pool 0x3a1a8/0x3a1aa anchor 0xffffcfb6. Drives PD7 (pkg pin 256); harness candidate starter relay 5A (high only while cranking)."
+    },
+    "ffffcfbc": {
+      "alias": "pd7_relay_condition",
+      "type": "uint8",
+      "reader": "0004ef86",
+      "evidence": "Written by 0x4ed3c: = 1 if (cfbe==1 && cfaa>=cfa6) || 0xffffd15c(cranking_in_progress)==1, cleared if cfc1==1. Feeds PD7 via cfb6."
+    }
+  }
+}

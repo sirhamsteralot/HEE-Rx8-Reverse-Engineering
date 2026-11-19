@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-19",
+  "pass": "throttle_dbw_subsystem_analysis",
+  "basis": "Neighbor of the fuel pump drive path mapped while tracing PEDR port writes: PE0 (pkg pin 7, harness candidate DBW relay 4C) = (pe0_relay_flag 0xffffcfb7 == 0), driven by relay_output_pair_pd7_pe0 0x3a0ec (label record starting_cranking_labels.json); 0xffffcfb7 computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc. Static analysis + raw ROM bytes; dynamic check in tests/test_throttle_dbw.py.",
+  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1); split out of fuel_pump_control_labels.json per the report scope-discipline rule: these rows were mapped while tracing the fuel pump port banks but belong to their own subsystems",
+  "function_aliases": {},
+  "ram_aliases": {
+    "ffffcfb7": {
+      "alias": "pe0_relay_flag",
+      "type": "uint8",
+      "reader": "0003a0ec",
+      "evidence": "Computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc (RX8Defs 'Table 3D - 120/121') over counters cfad/cfac/cfaf/cfae; PE0 = (cfb7 == 0). Pool 0x3a1b0 anchors 0xffffcfb7. Harness candidate: DBW relay 4C."
+    }
+  }
+}
