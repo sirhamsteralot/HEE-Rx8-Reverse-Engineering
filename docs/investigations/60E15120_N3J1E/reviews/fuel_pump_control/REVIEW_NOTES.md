@@ -30,17 +30,12 @@ Method, in order:
      (4C candidate).
    - PJ7 follows `0xffffbd68` from `ref_calculateACClutchOn__` `0x2e89c` → A/C
      relay (5AA). Corrects the earlier "fuel-pump candidate" note.
-5. Oil pressure switch (terminal 2E candidate) is an expander input, not a
-   direct pin: `0x2bafc` reads SCI0 expander channel 1 bit 0x80 (light,
-   debounce vs ROM `0x775b8`=0x10 → `0xffffbc0c`); `0x2bb74` reads channel 2
-   bit 0 (gauge → `0xffffbc14` → CAN via `0x28c52`). Neither feeds the pump
-   relay chain — hardware backup only.
 6. Inertia switch: no PCM input pin exists for it in the pinout; it sits in the
    fuel pump feed circuit hardware-side. Not a firmware condition.
 
 Binary-level verification: [`rawbin_reverify_log.txt`](rawbin_reverify_log.txt)
-(38/38 pool/instruction/threshold checks against the raw ROM, SHA-256 pinned);
-label-level checks in `tests/test_fuel_pump_control.py` (9/9) and dynamic
+(34/34 pool/instruction/threshold checks against the raw ROM, SHA-256 pinned);
+label-level checks in `tests/test_fuel_pump_control.py` (8/8) and dynamic
 drive checks in `tests/test_fuel_pump_control_dynamic.py` (6/6).
 
 Limits: chip-pin → connector-terminal routing is board-level unresolved

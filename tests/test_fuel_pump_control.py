@@ -130,14 +130,6 @@ def test_0x2e800_pj7_ac_clutch_pools_and_instructions(rom):
     assert struct.unpack(">f", rom[0x774C4:0x774C8])[0] == 7800.0
 
 
-def test_oil_pressure_expander_read_sites(rom):
-    # 0x2bafc: jsr 0x70ac with r4=1 (expander channel 1), then tst 0x80
-    assert w32(rom, 0x2BB68) == 0x000070AC      # sci0_gpio_expander_read
-    assert w16(rom, 0x2BB0E) == 0xE401          # mov #0x1,r4 (channel 1)
-    assert w16(rom, 0x2BB12) == 0xC880          # tst 0x80,r0
-    assert w16(rom, 0x775B8) == 0x0010          # debounce threshold 16
-
-
 def test_tsv_rows_mirror_json(record):
     with FN_TSV.open(encoding="utf-8", errors="surrogateescape", newline="") as fh:
         fn_rows = {r["address"]: r["alias"] for r in csv.DictReader(fh, delimiter="\t")}

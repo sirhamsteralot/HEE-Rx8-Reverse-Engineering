@@ -15,14 +15,14 @@ and the label record
   `0x2f890` / `0x2f8ce` → PEDR_W bit 0x4 (PE2, pkg pin 9); speed-control
   candidate `0xffffbdbc` → PEDR_W bit 0x2 (PE1, pkg pin 8).
 - Raw-bin re-verification of every cited pool/instruction/threshold:
-  [`rawbin_reverify_log.txt`](rawbin_reverify_log.txt) — 38/38 PASS
+  [`rawbin_reverify_log.txt`](rawbin_reverify_log.txt) — 34/34 PASS
   (ROM SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`).
 - Dynamic (SH-2E emulator, harness calls): PE2 follows `0xffffbdd8` (high at
   key-on/cranking/running, low at key-off); PE1 follows `0xffffbdbc`;
   PD7/PE0 follow `0xffffcfb6`/`0xffffcfb7`; PD7 high only while cranking via
   `0xffffd15c` (`0x532d0`); PJ7 follows `0xffffbd68` (A/C clutch) —
   `tests/test_fuel_pump_control_dynamic.py` (6/6).
-- Static label tests: `tests/test_fuel_pump_control.py` (9/9).
+- Static label tests: `tests/test_fuel_pump_control.py` (8/8).
 
 ## Correction
 

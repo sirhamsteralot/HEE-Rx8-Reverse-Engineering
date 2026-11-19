@@ -264,10 +264,8 @@ speed control candidate: 0xffffbdbc from 0x2fb20 -> PEDR bit 0x2 (PE1, pin 8).
 Related relays mapped while tracing: PD7 (0x3a0ec, cranking-only via 0xffffd15c
 from 0x532d0) = starter relay candidate 5A; PE0 = DBW relay candidate 4C; PJ7
 (0x2e800/0x2e840, 0xffffbd68 from 0x2e89c) = A/C relay 5AA (corrects the
-earlier fuel-pump candidate note). Oil pressure switch (2E candidate) is read
-via the SCI0 expander (ch1 bit 0x80 at 0x2bafc -> 0xffffbc0c; ch2 bit 0 at
-0x2bb74 -> 0xffffbc14 -> CAN via 0x28c52); the inertia switch is not a PCM
-input. 9 functions, 9 RAM cells; raw-bin re-verified 38/38
+earlier fuel-pump candidate note); the inertia switch is not a PCM
+input. 9 functions, 7 RAM cells; raw-bin re-verified 34/34
 (`reviews/fuel_pump_control/rawbin_reverify_log.txt`).
 Write-up: [`fuel_pump_control_report.md`](../../subsystem-logic/fuel_pump_control_report.md)
 + `reviews/fuel_pump_control/`; record:
