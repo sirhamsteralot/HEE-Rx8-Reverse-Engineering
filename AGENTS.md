@@ -130,7 +130,13 @@ dumping it at the root.
    proof section's related-reports list instead of re-deriving their content.
    Validation proves what it lists — never write "verified working" beyond what a
    validation artifact covers. **Cross-reference everywhere**: link every mentioned
-   `.md` file, never leave it as a bare code span. **Placement**: a subsystem report
+   `.md` file, never leave it as a bare code span. **Scope discipline**: neighboring
+   items mapped while tracing (other outputs on the same port bank, inputs read by the
+   same expander, …) stay out of the report body, memory map and label record — record
+   them in §4.6 Limits with their key `0x` addresses, add a ROADMAP item for the
+   subsystem they belong to if none exists, and cross-link; corrections to other
+   documents go in §4.3 and are folded back into the source document in the same
+   change. **Placement**: a subsystem report
    whose logic is shared between ROM bins — assumed shared until proven otherwise —
    goes in [`docs/subsystem-logic/`](docs/subsystem-logic/README.md) (written against
    reference ROM `60E15120_N3J1E`) and links the per-ROM difference documents in
