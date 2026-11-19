@@ -288,6 +288,14 @@ and where artifacts live.
   - **C item 62 (open)** — fold back **immobilizer** (item 26's report + `data/labels/60E15120_N3J1E/immobilizer_labels.json` + per-ROM records)
   - **C item 63 (open)** — fold back **throttle / DBW** (item 27)
   - **C item 64 (open)** — fold back **fuel pump control** (item 28)
+  - **C item 91 (open)** — **input expander (SCI0) subsystem report.** The
+    external input expander read over SCI0 (`sci0_gpio_expander_read` `0x70ac`,
+    channel select on PH13/PH14, results latched to `0xffff9ecc`/`0xffff9ecd`/
+    `0xffff9ede` by `0x6744`/`0x6796`) feeds several switch inputs (oil
+    pressure switch light `0x2bafc` ch1 bit 0x80, gauge `0x2bb74` ch2 bit 0,
+    and others). These were noted while tracing the fuel pump report but do
+    not belong there; a dedicated subsystem report for the expander and its
+    input consumers is needed, with labels and a review evidence folder.
   - **C item 65 (open)** — fold back **misfire detection / monitor** (item 29)
   - **C item 66 (open)** — fold back **emissions monitors beyond O2** (item 30)
   - **C item 67 (open)** — fold back **starting / cranking** (item 31)
