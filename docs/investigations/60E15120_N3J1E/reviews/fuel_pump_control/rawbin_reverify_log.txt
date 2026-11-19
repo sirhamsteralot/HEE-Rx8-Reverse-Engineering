@@ -30,11 +30,7 @@ PASS 0x2e89c bd68 pool 0x2e96a = 0xbd68
 PASS 0x2e89c bd69 pool 0x2e96c = 0xbd69 
 PASS 0x2e89c rpm threshold ROM 0x774c0 = 600.0 
 PASS 0x2e89c rpm threshold ROM 0x774c4 = 7800.0 
-PASS 0x2bafc expander fn pool 0x2bb68 = 0x70ac 
-PASS 0x2bafc channel imm at 0x2bb0e = e401 (mov #1,r4) 
-PASS 0x2bafc tst 0x80 at 0x2bb12 = 0xc880 
-PASS 0x2bafc debounce threshold ROM 0x775b8 = 0x10 
 PASS asm 0x2f8a2 = cmp/eq 0x1,r0 
 PASS asm 0x2f8b0 = _mov #0x4,r5 
 PASS asm 0x3a0ec first word 0x2fe6 (mov.l r14,@-r15) 
-38/38 checks pass
+34/34 checks pass

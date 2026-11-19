@@ -179,7 +179,7 @@ RAM:
 ### 4.2 Labeling applied
 
 `data/labels/60E15120_N3J1E/fuel_pump_control_labels.json` (9 function +
-9 RAM aliases, each with raw-bin evidence); mirrored as rows in
+7 RAM aliases, each with raw-bin evidence); mirrored as rows in
 [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv)
 and
 [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv).
@@ -204,7 +204,7 @@ and
 - Rule-7 binary checks: every cited literal pool and instruction word was
   re-read from the raw ROM (SHA-256 pinned) — see
   [`reviews/fuel_pump_control/rawbin_reverify_log.txt`](../investigations/60E15120_N3J1E/reviews/fuel_pump_control/rawbin_reverify_log.txt)
-  and `tests/test_fuel_pump_control.py` (9/9 pass).
+  and `tests/test_fuel_pump_control.py` (8/8 pass).
 - Dynamic (SH-2E emulator, profile `60E15120_N3J1E`): PE2 follows
   `0xffffbdd8` (on at key-on/cranking/running, off at key-off), PE1 follows
   `0xffffbdbc`, PD7/PE0 follow `0xffffcfb6`/`0xffffcfb7`, PD7 high only while

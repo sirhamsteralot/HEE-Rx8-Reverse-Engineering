@@ -69,18 +69,6 @@
       "reader": "0002e800",
       "evidence": "Set by ref_calculateACClutchOn__ 0x2e89c from ac_clutch_on 0xffffbd69 with rpm 0xffffb548 thresholds (pools 0x2e968=0xb548, 0x2e96a=0xbd68, 0x2e96c=0xbd69; floats 600.0/7800.0 at ROM 0x774c0/0x774c4). Drives PJ7 (pkg pin 183); harness candidate A/C relay 5AA - not the fuel pump."
     },
-    "ffffbc0c": {
-      "alias": "oil_pressure_switch_light_status",
-      "type": "uint8",
-      "reader": "0002bafc",
-      "evidence": "Written by ref_writeOilPressureLight__ 0x2bafc: reads SCI0 expander channel 1 (sci0_gpio_expander_read 0x70ac, r4=1) bit 0x80 (tst 0x80 at 0x2bb12), debounce counters 0xffffbc0e/0xffffbc10 vs threshold ROM 0x775b8=0x10. Harness candidate: oil pressure switch 2E (closes on low pressure)."
-    },
-    "ffffbc14": {
-      "alias": "oil_pressure_gauge_status",
-      "type": "uint8",
-      "reader": "0002bb74",
-      "evidence": "Written by ref_writeOilPressureGauge__ 0x2bb74: SCI0 expander channel 2 (0x70ac, r4=2) bit 0, with engine-running fallback (engine_running 0xffffa428==0 -> 1) and debounce counters 0xffffbc16/0xffffbc18 (0x270 threshold). Harness candidate: oil pressure switch 2E gauge side."
-    },
     "ffffd15c": {
       "alias": "cranking_in_progress",
       "type": "uint8",
