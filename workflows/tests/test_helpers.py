@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "apps" / "worker" /
 from worker.workflows.upstream_submodule_sync import (
     SubmoduleChange,
     SyncInput,
+    _content_to_text,
     audit_prompt,
     branch_name_for,
     pr_body_for,
@@ -56,3 +57,19 @@ def test_audit_prompt_sections():
     assert "Our repository context" in prompt
     assert "RX8Defs" in prompt and "Recommended actions" in prompt
     assert "our context files" in prompt
+
+
+def test_content_to_text_skips_non_text_chunks():
+    from mistralai.client.models import TextChunk, ThinkChunk
+
+    think = ThinkChunk(
+        type="thinking",
+        thinking=[{"type": "text", "text": "internal reasoning"}],
+        signature="sig",
+        closed=True,
+    )
+    parts = [think, TextChunk(type="text", text="audit"), TextChunk(type="text", text=" report")]
+    assert _content_to_text(parts) == "audit report"
+    assert _content_to_text([think]) == ""
+    assert _content_to_text("plain string") == "plain string"
+    assert _content_to_text(None) == ""
