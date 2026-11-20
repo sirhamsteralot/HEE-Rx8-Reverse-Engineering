@@ -254,6 +254,14 @@ async def collect_our_context(check: UpstreamCheck) -> str:
     return "\n\n".join(parts)
 
 
+def _content_to_text(content) -> str:
+    from mistralai.client.models import TextChunk
+
+    if isinstance(content, list):
+        return "".join(part.text for part in content if isinstance(part, TextChunk))
+    return content or ""
+
+
 @workflows.activity()
 async def ai_audit(input: SyncInput, changes: List[SubmoduleChange], our_context: str) -> str:
     if not changes:
@@ -266,10 +274,7 @@ async def ai_audit(input: SyncInput, changes: List[SubmoduleChange], our_context
         model=input.audit_model,
         messages=[{"role": "user", "content": prompt}],
     )
-    content = response.choices[0].message.content
-    if isinstance(content, list):
-        content = "".join(part.text for part in content)
-    return content or ""
+    return _content_to_text(response.choices[0].message.content)
 
 
 @workflows.activity()
