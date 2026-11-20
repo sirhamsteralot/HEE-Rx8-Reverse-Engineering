@@ -60,12 +60,21 @@ cumulative).
 Run from the repo root:
   python utilities/scripts/defs-merge/splice_upstream_dtc_immo.py [--dry-run] [FILE ...]
 Writes stats to
-docs/investigations/60E15120_N3J1E/labeling/defs-merge/upstream_splice_39d98a0.json
+docs/investigations/60E15120_N3J1E/labeling/defs-merge/upstream_splice_<pin>.json
+where <pin> is the short SHA of the pinned submodule commit (e.g.
+upstream_splice_39d98a0.json at pin 39d98a0, upstream_splice_d4140dc.json at
+pin d4140dc), so each pin gets its own versioned splice record. At pins that
+are descendants of d95b0be/39d98a0 (e.g. d4140dc) the spliced content is
+already in the upstream blob, so a re-run is a normalization-only no-op on the
+targets; in that case the per-pin stats record is still emitted once (marked
+normalization_only) so every pin has a record, and later no-op re-runs leave
+it untouched.
 """
 from pathlib import Path
 import copy
 import json
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as E
 import xml.parsers.expat as expat
@@ -81,7 +90,17 @@ DEFAULT_TARGETS = [
     DEFS_RR / "upstream-rx8defs" / "rx8_defs.xml",
 ]
 UPSTREAM_RR = ROOT / "submodules" / "RX8Defs" / "RomRaider" / "rx8_defs.xml"
-STATS_OUT = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "defs-merge" / "upstream_splice_39d98a0.json"
+DEFS_MERGE_DOCS = ROOT / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "defs-merge"
+
+
+def _pinned_short():
+    return subprocess.check_output(
+        ["git", "-C", str(ROOT / "submodules" / "RX8Defs"), "rev-parse", "--short=7", "HEAD"]
+    ).decode("utf-8-sig").strip()
+
+
+PINNED_SHORT = _pinned_short()
+STATS_OUT = DEFS_MERGE_DOCS / f"upstream_splice_{PINNED_SHORT}.json"
 TARGET_XMLID = "60E15120"
 
 # upstream d95b0be form per enable/disable suffix
@@ -408,6 +427,7 @@ def main():
                 prev = None
         payload = {
             "pass": __doc__.splitlines()[0],
+            "pinned_commit_short": PINNED_SHORT,
             "immo_evidence": immo_evidence,
             "targets": all_stats,
         }
@@ -417,6 +437,21 @@ def main():
             payload["previous_runs"] = prev.get("previous_runs", []) + [prev]
         STATS_OUT.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"stats -> {STATS_OUT.relative_to(ROOT)}")
+    elif not STATS_OUT.exists():
+        # normalization-only run at a pin that has no splice record yet (the
+        # pin is a descendant of d95b0be/39d98a0, so the upstream blob already
+        # carries the spliced forms): emit the per-pin record once so every
+        # pin is covered; later no-op re-runs leave it untouched
+        payload = {
+            "pass": __doc__.splitlines()[0],
+            "pinned_commit_short": PINNED_SHORT,
+            "normalization_only": True,
+            "note": "no target needed edits at this pin (upstream blob already carries the d95b0be/39d98a0 forms); record emitted so the pin has a splice record",
+            "immo_evidence": immo_evidence,
+            "targets": all_stats,
+        }
+        STATS_OUT.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"stats (normalization-only record) -> {STATS_OUT.relative_to(ROOT)}")
     else:
         print(f"normalization-only run (nothing to change); stats file left untouched: {STATS_OUT.relative_to(ROOT)}")
 

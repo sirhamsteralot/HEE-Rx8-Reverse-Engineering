@@ -1,48 +1,48 @@
 {
-  "date": "2026-11-01",
-  "item": "ROADMAP D item 4 / D8 for 60E0G500_N3ZHEC dumps",
-  "checks": {
-    "manifest_sha256_all_dumps": true,
-    "fwid_at_0x2000_all_60E0G500": true,
-    "per_rom_xml": {
-      "60E0G500_N3ZHEC": {
-        "parses": true,
-        "rom_blocks": 2,
-        "block_xmlid": "60E0G500",
-        "top_tables": 814,
-        "bad_storageaddress": []
-      }
-    },
-    "ecuflash_60E0G500_tables": 1210,
-    "ecuflash_60E0G500_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
-    "pinned_commit": "39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
-    "dedupe_d8": [
-      {
-        "local": "data/definitions/ecuflash/60E0G500.xml",
-        "state": "removed (rule 4b); blob from git HEAD",
-        "blob_identical_to_pinned": true
-      },
-      {
-        "local": "data/definitions/ecuflash/RX8BASE.xml",
-        "state": "removed (rule 4b); blob from git HEAD",
-        "blob_identical_to_pinned": true
-      },
-      {
-        "local": "data/definitions/romraider/upstream-rx8defs/logger_rx8_defs.xml",
-        "state": "removed (rule 4b); blob from git HEAD",
-        "blob_identical_to_pinned": true
-      },
-      {
-        "local": "data/definitions/romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml",
-        "state": "removed (rule 4b); blob from git HEAD",
-        "blob_identical_to_pinned": true
-      },
-      {
-        "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
-        "state": "present",
-        "blob_identical_to_pinned": false
-      }
-    ]
+ "date": "2026-11-01",
+ "item": "ROADMAP D item 4 / D8 for 60E0G500_N3ZHEC dumps",
+ "checks": {
+  "manifest_sha256_all_dumps": true,
+  "fwid_at_0x2000_all_60E0G500": true,
+  "per_rom_xml": {
+   "60E0G500_N3ZHEC": {
+    "parses": true,
+    "rom_blocks": 2,
+    "block_xmlid": "60E0G500",
+    "top_tables": 814,
+    "bad_storageaddress": []
+   }
   },
-  "all_passed": true
+  "ecuflash_60E0G500_tables": 1210,
+  "ecuflash_60E0G500_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
+  "pinned_commit": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "dedupe_d8": [
+   {
+    "local": "data/definitions/ecuflash/60E0G500.xml",
+    "state": "removed (rule 4b); blob from git HEAD",
+    "blob_identical_to_pinned": true
+   },
+   {
+    "local": "data/definitions/ecuflash/RX8BASE.xml",
+    "state": "removed (rule 4b); blob from git HEAD",
+    "blob_identical_to_pinned": true
+   },
+   {
+    "local": "data/definitions/romraider/upstream-rx8defs/logger_rx8_defs.xml",
+    "state": "removed (rule 4b); blob from git HEAD",
+    "blob_identical_to_pinned": true
+   },
+   {
+    "local": "data/definitions/romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml",
+    "state": "removed (rule 4b); blob from git HEAD",
+    "blob_identical_to_pinned": true
+   },
+   {
+    "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+    "state": "present",
+    "blob_identical_to_pinned": false
+   }
+  ]
+ },
+ "all_passed": true
 }

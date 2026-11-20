@@ -2,9 +2,10 @@
 
 Editor metadata only: nothing here changes ROM bytes (AGENTS.md rule 2). All
 upstream originals live in the read-only submodule `submodules/RX8Defs`
-(equinox311/RX8Defs), pinned at **`39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f`**
-(2026-11-12; DTC switch rework in `d95b0be`, immobilizer patch-address fixes in
-`39d98a0`). We keep local copies only where they
+(equinox311/RX8Defs), pinned at **`d4140dc244e44841c1eb7e3fd114631b384f5886`**
+(duplicate-table cleanup + uncategorized-table clarification on top of the
+`d95b0be` DTC switch rework and the `39d98a0` immobilizer patch-address fixes).
+We keep local copies only where they
 differ from the pinned tree (see "D8 dedupe" below); everything else is
 referenced by submodule path + commit.
 
@@ -34,17 +35,18 @@ referenced by submodule path + commit.
   [`docs/investigations/60E15120_N3J1E/labeling/defs-merge/`](../../docs/investigations/60E15120_N3J1E/labeling/defs-merge/README.md).
   The per-ROM `per-rom/60E15120_N3J1E.xml` uses this reviewed block.
 - `romraider/upstream-rx8defs/rx8_defs.xml` — upstream RomRaider defs snapshot,
-  git blob `35ddcf316573a092006db5d33c60238ab9a43ea2` = upstream commit
-  **`ff5ab4f`** (2026-09-29). Kept (not deleted under rule 4b) because the pinned
-  HEAD carries a *newer* blob (`82e5724d…` @ `39d98a0`) and the 60E15120 merge
-  is built against `ff5ab4f`; do not mix the two blobs. The merged def carries
-  the `d95b0be`/`39d98a0` delta as a targeted splice (see above), not as a
-  rebase. Locally modified: flex-fuel content stripped (see "Stock-only defs"
-  below) and the same `d95b0be`/`39d98a0` DTC-switch + 60E15120
-  immobilizer-address splice applied by
+  re-pinned to the pinned submodule commit by
+  [`repin_upstream_snapshot.py`](../../utilities/scripts/defs-merge/repin_upstream_snapshot.py):
+  verbatim upstream blob `1d1d68d4…` @ **`d4140dc`** (git blob of the snapshot
+  `912f516e…`) minus the local stock-only modification — flex-fuel content
+  stripped (see "Stock-only defs" below); the `d95b0be`/`39d98a0` DTC-switch +
+  60E15120 immobilizer-address content is part of the `d4140dc` blob itself, so
   [`splice_upstream_dtc_immo.py`](../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py)
-  (which targets all three local def files listed here, so every XML in this
-  tree carries the same DTC categories).
+  is a verifier no-op on it at this pin (it still targets all three local def
+  files listed here, so every XML in this tree carries the same DTC categories;
+  the 60E15120 merge itself stays built against `ff5ab4f` — do not mix those
+  blobs). Re-pin record:
+  [`docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md`](../../docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md).
 - `romraider/reviewed-rx8defs-copy/rx8_defs.xml` — locally reviewed
   copy (base `944062e` + annotations; blob `0cd7ec8d…`, not an upstream blob),
   likewise carrying the `d95b0be`/`39d98a0` DTC/immo splice.
@@ -55,17 +57,20 @@ referenced by submodule path + commit.
 
 | Need | Reference |
 |------|-----------|
-| RomRaider defs, all ROM blocks (pinned) | `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ `39d98a0…` (last change `39d98a0` 2026-11-12, blob `82e5724d…`) |
-| RomRaider logger defs (pinned) | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `39d98a0…` (last change `607d1a3` 2025-11-30, blob `ba8edef8…`) |
-| ECUFlash def for 60E0G500 (1210 tables) | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…` (last change `aaac6f3` 2023-08-11, blob `c4a3c37e…`) |
-| ECUFlash base (1743 tables) | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `39d98a0…` (blob `05a7943e…`) |
+| RomRaider defs, all ROM blocks (pinned) | `submodules/RX8Defs/RomRaider/rx8_defs.xml` @ `d4140dc…` (last change `d4140dc`, blob `1d1d68d4…`) |
+| RomRaider logger defs (pinned) | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `d4140dc…` (last change `607d1a3` 2025-11-30, blob `ba8edef8…`) |
+| ECUFlash def for 60E0G500 (1210 tables) | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `d4140dc…` (last change `aaac6f3` 2023-08-11, blob `c4a3c37e…`) |
+| ECUFlash base (1743 tables) | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `d4140dc…` (blob `05a7943e…`) |
 
 ECUFlash defs exist upstream only for 60E0G500; no ECUFlash def exists for the
 other 13 ROMs (documented gap, not an omission here).
 
-Upstream sync record (RX8Defs `39d98a0`: DTC switch rework, `N3ZGEC` cal ID,
-immobilizer address fixes, per-ROM defs regenerated, validation results):
-[`docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md`](../../docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md).
+Upstream sync records (RX8Defs `39d98a0`: DTC switch rework, `N3ZGEC` cal ID,
+immobilizer address fixes; RX8Defs `d4140dc`: duplicate-table cleanup +
+uncategorized-table renames — per-ROM defs regenerated, validation results):
+[`docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md`](../../docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md)
+and
+[`upstream-sync-d4140dc.md`](../../docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md).
 
 ## Literal-pool scalars exposed as editable entries (ROADMAP D11)
 
@@ -156,11 +161,13 @@ Flex-fuel content is absent from:
   regenerated, and no pipeline re-introduces flex content.
 
 Provenance note for the upstream snapshot: `romraider/upstream-rx8defs/rx8_defs.xml`
-is a locally modified snapshot of upstream commit `ff5ab4f` (upstream blob
-`35ddcf3…`; flex-fuel content removed — AGENTS.md rule 4b provenance note),
-so the upstream blob does not match this file. The pinned submodule
+is a locally modified snapshot of the pinned upstream commit `d4140dc` (upstream
+blob `1d1d68d4…`; flex-fuel content removed — AGENTS.md rule 4b provenance
+note), so the upstream blob does not match this file. The pinned submodule
 `submodules/RX8Defs/RomRaider/rx8_defs.xml` is read-only and still carries the
-upstream flex-fuel content.
+upstream flex-fuel content. Re-pinning the snapshot to a new pin:
+`python utilities/scripts/defs-merge/repin_upstream_snapshot.py` (idempotent,
+`--check` supported).
 
 ## Editor-facing descriptions (AGENTS.md rule 6b)
 
@@ -217,9 +224,9 @@ The affected copies:
 
 | Local copy | Blob | Pinned submodule file |
 |--------------------|------|----------------------|
-| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `39d98a0…` |
-| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `39d98a0…` |
-| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `39d98a0…` |
+| `ecuflash/60E0G500.xml` | `c4a3c37e…` | `submodules/RX8Defs/ECUFlash/60E0G500.xml` @ `d4140dc…` |
+| `ecuflash/RX8BASE.xml` | `05a7943e…` | `submodules/RX8Defs/ECUFlash/RX8BASE.xml` @ `d4140dc…` |
+| `romraider/upstream-rx8defs/logger_rx8_defs.xml` | `ba8edef8…` | `submodules/RX8Defs/RomRaider/logger_rx8_defs.xml` @ `d4140dc…` |
 | `romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml` | `ba8edef8…` | same (the reviewed copy was unmodified) |
 
 The pinned submodule does not have a newer ECUFlash XML: both are 1,210 tables

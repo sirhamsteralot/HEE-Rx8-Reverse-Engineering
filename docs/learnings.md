@@ -528,3 +528,17 @@ Session gotchas worth keeping:
   immo patch addresses are re-verified against ROM bytes inside the pass
   (pattern offset, "off" blob == ROM bytes, with-RKE site = offset + 0x44c);
   re-run = byte-identical no-op.
+- **Upstream pin-move mechanics (RX8Defs `d4140dc`):** a pin move is gitlink bump
+  + submodule checkout, then `repin_upstream_snapshot.py` (upstream snapshot =
+  pinned blob minus the flex-fuel strip; updates `provenance_hashes.json`),
+  `splice_upstream_dtc_immo.py` (no-op verifier at descendant pins; per-pin
+  stats `upstream_splice_<pin>.json`), `extend_defs_all_roms.py` (per-ROM defs +
+  `coverage.json` regenerate at the new pin), and `upstream_pin_audit.py`
+  (delta + collision records, window/pin-tagged and idempotent — a re-run must
+  be a byte-identical no-op; guarded by `tests/test_defs_upstream_pin.py`).
+  Upstream table renames never touch our reviewed files' names (the relabel pass
+  keys on ROM data addresses); the rename alias pairs are recorded in
+  `defs-merge/inheritance_issues.json` instead. Removed upstream duplicate
+  overrides at `0x0706be`/`0x0707e2` (60E0FC00/60E0FB00/G-ROM_FLEX/N3ZBEH) are
+  not lookup descriptors in those ROMs' `data/maps` extraction, so no coverage
+  is lost.

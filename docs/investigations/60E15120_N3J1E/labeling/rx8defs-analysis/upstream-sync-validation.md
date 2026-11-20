@@ -208,3 +208,28 @@ This record is no longer the only place the sync findings live:
   [`utilities/scripts/defs-merge/splice_upstream_dtc_immo.py`](../../../../../utilities/scripts/defs-merge/splice_upstream_dtc_immo.py))
   and into the regenerated per-ROM defs, with the rename alias dropped from
   `tests/test_defs_relabel.py`.
+
+## 8. Fold-in of the `d4140dc` delta (next pin move)
+
+The RX8Defs pin moved `39d98a0` → `d4140dc244e4` ("Duplicate table cleanup -
+Clarification on uncatagorized tables", single commit on
+`RomRaider/rx8_defs.xml` only). The full enumeration, collision audit,
+re-pin/regeneration and validation record lives in
+[`upstream-sync-d4140dc.md`](upstream-sync-d4140dc.md); machine records:
+[`../defs-merge/upstream_pin_audit_d4140dc.json`](../defs-merge/upstream_pin_audit_d4140dc.json)
+(delta + collisions + aliases + coverage),
+window-tagged records appended to
+[`../defs-merge/upstream_changes.json`](../defs-merge/upstream_changes.json),
+per-pin splice record
+[`../defs-merge/upstream_splice_d4140dc.json`](../defs-merge/upstream_splice_d4140dc.json),
+pin-tagged findings in [`../defs-merge/axis_conflicts.json`](../defs-merge/axis_conflicts.json)
+and [`../defs-merge/inheritance_issues.json`](../defs-merge/inheritance_issues.json).
+Summary: 118 renames + 16 category moves + 10 duplicate removals, **no
+storageaddress changed**; per-ROM defs regenerated at the pin
+(`coverage.json` re-pinned), upstream snapshot re-pinned by
+`utilities/scripts/defs-merge/repin_upstream_snapshot.py` (flex-fuel strip
+re-applied, `provenance_hashes.json` updated), reviewed files keep their local
+names (alias records cross-reference the upstream names), label map needed no
+changes, full pytest + pipeline validators green. The sections above (§1–§7)
+remain the historical record of the `1b3aea2`/`492193b` → `39d98a0`/`b243b35`
+move and are not rewritten.
