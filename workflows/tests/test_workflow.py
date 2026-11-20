@@ -39,7 +39,7 @@ def fake_activities():
             up_to_date=["submodules/Rx8Man"],
         )
 
-    async def collect_our_context(check: UpstreamCheck) -> str:
+    async def collect_our_context(input: SyncInput, check: UpstreamCheck) -> str:
         calls.append("collect")
         return "context"
 
