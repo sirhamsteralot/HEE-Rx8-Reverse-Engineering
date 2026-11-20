@@ -5,8 +5,8 @@
   "roadmap_item": "D item 4",
   "upstream": {
     "repo": "submodules/RX8Defs (equinox311/RX8Defs)",
-    "pinned_commit": "39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
-    "romraider_rx8_defs_last_change": "39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f 2026-11-12 Updated immobilizer deletes for better memory consistency, as well as fixed some otherwise incorrect patch addresses",
+    "pinned_commit": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+    "romraider_rx8_defs_last_change": "d4140dc244e44841c1eb7e3fd114631b384f5886 2026-11-13 -Duplicate table cleanup -Clarification on uncatagorized tables",
     "ecuflash_60E0G500_last_change": "aaac6f3bdf0eb08a59f82e05cd12c1c7600ee183 2023-08-11 Tidy up, add ECUFlash Defs",
     "ecuflash_60E0G500_tables": 1210
   },
@@ -19,7 +19,7 @@
       "fwid": "60E0G500",
       "cal_strings": [],
       "romraider_block": "60E0G500",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -49,7 +49,7 @@
       },
       "block_tables_with_storageaddress": 949,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0G500_N3ZHEC.xml",
-      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "ecuflash_def": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "status": "OK"
     },
     {
@@ -71,7 +71,7 @@
       "fwid": "60E0E700",
       "cal_strings": [],
       "romraider_block": "60E0E700",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -112,12 +112,12 @@
       "fwid": "60E0FB00",
       "cal_strings": [],
       "romraider_block": "60E0FB00",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base",
         "60E0FC00"
       ],
-      "block_tables": 948,
+      "block_tables": 946,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 14,
       "dtc_repair": {
@@ -134,16 +134,16 @@
         "renamed": 67,
         "regrouped": 67,
         "annotated": 0,
-        "added": 72,
+        "added": 70,
         "already_relabeled": 0,
-        "no_label": 374,
+        "no_label": 376,
         "block_tables": 876,
-        "join_rate": 0.503,
+        "join_rate": 0.506,
         "preexisting_duplicate_names": [
           "Table 2D - 85 "
         ]
       },
-      "block_tables_with_storageaddress": 948,
+      "block_tables_with_storageaddress": 946,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FB00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -156,11 +156,11 @@
       "fwid": "60E0FC00",
       "cal_strings": [],
       "romraider_block": "60E0FC00",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
-      "block_tables": 924,
+      "block_tables": 922,
       "stock_only_flex_strip": "2026-11-03: G-ROM_FLEX-only 'Flex Fuel' base tables removed from the base chain (see data/definitions/README.md 'Stock-only defs')",
       "scalar_tables_injected": 14,
       "dtc_repair": {
@@ -180,11 +180,11 @@
         "added": 0,
         "already_relabeled": 0,
         "no_label": 0,
-        "block_tables": 924,
-        "join_rate": 0.497,
+        "block_tables": 922,
+        "join_rate": 0.498,
         "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
-      "block_tables_with_storageaddress": 924,
+      "block_tables_with_storageaddress": 922,
       "per_rom_def": "data/definitions/romraider/per-rom/60E0FC00.xml",
       "ecuflash_def": null,
       "status": "OK"
@@ -245,7 +245,7 @@
       "fwid": "60E1B900",
       "cal_strings": [],
       "romraider_block": "60E1B900",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -270,7 +270,7 @@
         "already_relabeled": 0,
         "no_label": 0,
         "block_tables": 851,
-        "join_rate": 0.497,
+        "join_rate": 0.499,
         "skipped": "block storageaddresses do not join this ROM's data/maps (upstream block layout mismatch); no relabel applied"
       },
       "block_tables_with_storageaddress": 851,
@@ -297,7 +297,7 @@
       "fwid": "60E1D400",
       "cal_strings": [],
       "romraider_block": "60E1D400",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -338,7 +338,7 @@
       "fwid": "60E32000",
       "cal_strings": [],
       "romraider_block": "60E32000",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -381,7 +381,7 @@
         "I#!f#/"
       ],
       "romraider_block": "60E32000",
-      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "block_origin": "upstream submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "base_chain": [
         "RX8Base"
       ],
@@ -420,7 +420,7 @@
       "local": "data/definitions/ecuflash/60E0G500.xml",
       "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
-      "pinned_submodule": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "pinned_submodule": "submodules/RX8Defs/ECUFlash/60E0G500.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "pinned_blob": "c4a3c37e41eddc1e92c29716b087bb9d9c2090fd",
       "blob_identical_to_pinned": true,
       "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
@@ -429,7 +429,7 @@
       "local": "data/definitions/ecuflash/RX8BASE.xml",
       "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
-      "pinned_submodule": "submodules/RX8Defs/ECUFlash/RX8BASE.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "pinned_submodule": "submodules/RX8Defs/ECUFlash/RX8BASE.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "pinned_blob": "05a7943ebb79cf99875df19108676af62162f8f0",
       "blob_identical_to_pinned": true,
       "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
@@ -438,7 +438,7 @@
       "local": "data/definitions/romraider/upstream-rx8defs/logger_rx8_defs.xml",
       "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
-      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
       "blob_identical_to_pinned": true,
       "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
@@ -447,7 +447,7 @@
       "local": "data/definitions/romraider/reviewed-rx8defs-copy/logger_rx8_defs.xml",
       "state": "removed (rule 4b); blob from commit 111561e5a324",
       "local_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
-      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/logger_rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
       "pinned_blob": "ba8edef89e466c67f78a73427113dbb05a8d85dc",
       "blob_identical_to_pinned": true,
       "action": "delete copy, reference submodule (AGENTS.md rule 4b)"
@@ -455,9 +455,9 @@
     {
       "local": "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
       "state": "present",
-      "local_blob": "fd0ffa39dcf0d550b5e2b972ccbee3807a22078d",
-      "pinned_submodule": "submodules/RX8Defs/RomRaider/rx8_defs.xml @ 39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f",
-      "pinned_blob": "82e5724d6d2e47b80ed2d48d23cb1558054aab5c",
+      "local_blob": "912f516e551c5f4854d4f0ef4d2ef3af2ee700be",
+      "pinned_submodule": "submodules/RX8Defs/RomRaider/rx8_defs.xml @ d4140dc244e44841c1eb7e3fd114631b384f5886",
+      "pinned_blob": "1d1d68d4230865db87ac7c0eb9d7d35671fd36d6",
       "blob_identical_to_pinned": false,
       "action": "keep, record provenance"
     }

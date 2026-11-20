@@ -1,0 +1,56 @@
+{
+ "pass": "Splice the upstream RX8Defs DTC switch rework (`d95b0be`) and the 60E15120",
+ "pinned_commit_short": "d4140dc",
+ "normalization_only": true,
+ "note": "no target needed edits at this pin (upstream blob already carries the d95b0be/39d98a0 forms); record emitted so the pin has a splice record",
+ "immo_evidence": {
+  "rom": "submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin",
+  "pattern_offset": "0x34B10",
+  "with_rke_offset": "0x34F5C",
+  "off_state_matches_rom_bytes": true
+ },
+ "targets": {
+  "data\\definitions\\romraider\\rx8defs-merged-60E15120.xml": {
+   "file": "data\\definitions\\romraider\\rx8defs-merged-60E15120.xml",
+   "dtc_converted": {
+    "#1": 0,
+    "#2": 0,
+    "#3": 0
+   },
+   "immo_replaced": 0,
+   "category_renamed": 0,
+   "details": [],
+   "edits": 0,
+   "bom": true,
+   "crlf": false
+  },
+  "data\\definitions\\romraider\\reviewed-rx8defs-copy\\rx8_defs.xml": {
+   "file": "data\\definitions\\romraider\\reviewed-rx8defs-copy\\rx8_defs.xml",
+   "dtc_converted": {
+    "#1": 0,
+    "#2": 0,
+    "#3": 0
+   },
+   "immo_replaced": 0,
+   "category_renamed": 0,
+   "details": [],
+   "edits": 0,
+   "bom": true,
+   "crlf": false
+  },
+  "data\\definitions\\romraider\\upstream-rx8defs\\rx8_defs.xml": {
+   "file": "data\\definitions\\romraider\\upstream-rx8defs\\rx8_defs.xml",
+   "dtc_converted": {
+    "#1": 0,
+    "#2": 0,
+    "#3": 0
+   },
+   "immo_replaced": 0,
+   "category_renamed": 0,
+   "details": [],
+   "edits": 0,
+   "bom": true,
+   "crlf": false
+  }
+ }
+}

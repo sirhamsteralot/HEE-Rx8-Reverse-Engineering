@@ -183,3 +183,23 @@ The generated `validation.json` pins their hashes and commits.
   cross-referenced in
   [`../../fueling_control_report.md`](../../fueling_control_report.md) §10.7
   instead).
+- **Upstream RX8Defs pin audit (`39d98a0` → `d4140dc`)**:
+  [`utilities/scripts/defs-merge/upstream_pin_audit.py`](../../../../../utilities/scripts/defs-merge/upstream_pin_audit.py)
+  enumerates the pin-window delta of `RomRaider/rx8_defs.xml` (118 renames +
+  16 category moves + 10 duplicate removals — no `storageaddress` changed),
+  appends window-tagged records to [`upstream_changes.json`](upstream_changes.json)
+  (the legacy untagged merge-review records stay untouched) and logs the
+  collision audit over our defs to [`axis_conflicts.json`](axis_conflicts.json)
+  + [`inheritance_issues.json`](inheritance_issues.json) (pin-tagged, replaced
+  deterministically on re-run; full record
+  [`upstream_pin_audit_d4140dc.json`](upstream_pin_audit_d4140dc.json)).
+  [`utilities/scripts/defs-merge/repin_upstream_snapshot.py`](../../../../../utilities/scripts/defs-merge/repin_upstream_snapshot.py)
+  re-pins `romraider/upstream-rx8defs/rx8_defs.xml` to the pinned submodule
+  commit (verbatim blob + flex-fuel strip) and updates `provenance_hashes.json`.
+  `splice_upstream_dtc_immo.py` now versions its pass log per pin
+  (`upstream_splice_<pin>.json`, e.g.
+  [`upstream_splice_d4140dc.json`](upstream_splice_d4140dc.json)) and is a
+  no-op verifier at pins descended from `d95b0be`/`39d98a0`.
+  Sync record:
+  [`../rx8defs-analysis/upstream-sync-d4140dc.md`](../rx8defs-analysis/upstream-sync-d4140dc.md);
+  tests `tests/test_defs_upstream_pin.py`.
