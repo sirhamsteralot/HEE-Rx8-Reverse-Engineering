@@ -1,1587 +1,3550 @@
 [
-  {
-    "rom": "RX8Base",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max Safe Mode",
-    "count": 2
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0G500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FC00",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max",
-    "count": 2
-  },
-  {
-    "rom": "60E0FC00",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max Safe Mode",
-    "count": 2
-  },
-  {
-    "rom": "60E0FC00",
-    "issue": "duplicate table name",
-    "name": "Max Load - Intake Temperature Compensation",
-    "count": 2
-  },
-  {
-    "rom": "60E0FC00",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "duplicate table name",
-    "name": "Normal Rev Limit",
-    "count": 2
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max",
-    "count": 2
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max Safe Mode",
-    "count": 2
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "duplicate table name",
-    "name": "Max Load - Intake Temperature Compensation",
-    "count": 2
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Ethanol Sensor CAN ID"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Cold Enrichment - Coolant Temperature Threshold"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Cold Enrichment - Intake Air Temperature Threshold"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Cold Enrichment - Cold Enrichment"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Cold Enrichment - Cold Enrichment Decay"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Table 3D - Timing Ethanol Adder - Leading"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Table 3D - Timing Ethanol Adder - Trailing"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Stoich Fuel Ratio"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Timing Multiplier"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Table 3D - Cranking Fuel Multiplier"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Ethanol Content Sample Threshold - Engine Speed"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "Ethanol Content Sample Threshold - Engine Load"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "G-ROM_FLEX",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #3"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1D400",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A500",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1A300",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E1B900",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "duplicate table name",
-    "name": "Table 2D - 85 ",
-    "count": 2
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Normal Rev Limit Normal"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control Enable Engine Speed"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control Enable Engine Load"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control Enable Coolant Temp"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Increment #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Increment #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Increment #3"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Decrement #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Decrement #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Knock Control - Retard Decrement #3"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Unknown_69158"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - LoadA"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - LoadB"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - LoadC"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - LoadD"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Uknown_69408"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Uknown_693f4"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Uknown_693cc"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Uknown_693b8"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Unknown_693e0"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Table 2D - Unknown_67824"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Ignition Timing Leading Intake Air Temperature Compensation - On Throttle"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Ignition Timing Leading Idle Load Compensation"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Ignition Timing Leading - Low Engine Load Adder"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Trans Requested Torque To Throttle Plate Position"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Cruise Control Max Speed - High Value"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "Cruise Control Max Speed - Low Value"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0FB00",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max",
-    "count": 2
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "duplicate table name",
-    "name": "Ignition Leading - Ignition Base Max Safe Mode",
-    "count": 2
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "duplicate table name",
-    "name": "Max Load - Intake Temperature Compensation",
-    "count": 2
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 2
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #1"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c073 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c121 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c155 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #2"
-  },
-  {
-    "rom": "60E09L0N",
-    "issue": "unresolved inherited table",
-    "name": "DTC c167 Enable/Disable #3"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 3
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E600",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #1",
-    "count": 2
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "duplicate table name",
-    "name": "DTC 0300 Enable/Disable #2",
-    "count": 3
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "Alternator Diagnostic Voltage Delta to DC"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "Manifold Pressure Based Oil Injection Amount Check DataType"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #1"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0128 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  },
-  {
-    "rom": "60E0E700",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2406 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0116 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0134 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0137 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0411 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 050A Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #1"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0116 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0134 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0137 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 0411 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 050A Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1574 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 1577 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2008 Enable/Disable #2"
-  },
-  {
-    "rom": "60E32000",
-    "issue": "unresolved inherited table",
-    "name": "DTC 2101 Enable/Disable #2"
-  }
+ {
+  "rom": "RX8Base",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max Safe Mode",
+  "count": 2
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0G500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FC00",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max",
+  "count": 2
+ },
+ {
+  "rom": "60E0FC00",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max Safe Mode",
+  "count": 2
+ },
+ {
+  "rom": "60E0FC00",
+  "issue": "duplicate table name",
+  "name": "Max Load - Intake Temperature Compensation",
+  "count": 2
+ },
+ {
+  "rom": "60E0FC00",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "duplicate table name",
+  "name": "Normal Rev Limit",
+  "count": 2
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max",
+  "count": 2
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max Safe Mode",
+  "count": 2
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "duplicate table name",
+  "name": "Max Load - Intake Temperature Compensation",
+  "count": 2
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Ethanol Sensor CAN ID"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Cold Enrichment - Coolant Temperature Threshold"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Cold Enrichment - Intake Air Temperature Threshold"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Cold Enrichment - Cold Enrichment"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Cold Enrichment - Cold Enrichment Decay"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Table 3D - Timing Ethanol Adder - Leading"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Table 3D - Timing Ethanol Adder - Trailing"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Stoich Fuel Ratio"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Timing Multiplier"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Table 3D - Cranking Fuel Multiplier"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Ethanol Content Sample Threshold - Engine Speed"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "Ethanol Content Sample Threshold - Engine Load"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "G-ROM_FLEX",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #3"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1D400",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A500",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1A300",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E1B900",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "duplicate table name",
+  "name": "Table 2D - 85 ",
+  "count": 2
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Normal Rev Limit Normal"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control Enable Engine Speed"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control Enable Engine Load"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control Enable Coolant Temp"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Increment #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Increment #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Increment #3"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Decrement #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Decrement #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Knock Control - Retard Decrement #3"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Unknown_69158"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - LoadA"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - LoadB"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - LoadC"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - LoadD"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Uknown_69408"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Uknown_693f4"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Uknown_693cc"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Uknown_693b8"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Unknown_693e0"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Table 2D - Unknown_67824"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Ignition Timing Leading Intake Air Temperature Compensation - On Throttle"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Ignition Timing Leading Idle Load Compensation"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Ignition Timing Leading - Low Engine Load Adder"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Trans Requested Torque To Throttle Plate Position"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Cruise Control Max Speed - High Value"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "Cruise Control Max Speed - Low Value"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0FB00",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max",
+  "count": 2
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "duplicate table name",
+  "name": "Ignition Leading - Ignition Base Max Safe Mode",
+  "count": 2
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "duplicate table name",
+  "name": "Max Load - Intake Temperature Compensation",
+  "count": 2
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 2
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #1"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c073 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c121 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c155 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #2"
+ },
+ {
+  "rom": "60E09L0N",
+  "issue": "unresolved inherited table",
+  "name": "DTC c167 Enable/Disable #3"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 3
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E600",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #1",
+  "count": 2
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "duplicate table name",
+  "name": "DTC 0300 Enable/Disable #2",
+  "count": 3
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "Alternator Diagnostic Voltage Delta to DC"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "Manifold Pressure Based Oil Injection Amount Check DataType"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #1"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0128 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "rom": "60E0E700",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2406 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0116 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0134 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0137 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0411 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 050A Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #1"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0116 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0134 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0137 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 0411 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 050A Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1574 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 1577 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2008 Enable/Disable #2"
+ },
+ {
+  "rom": "60E32000",
+  "issue": "unresolved inherited table",
+  "name": "DTC 2101 Enable/Disable #2"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x0006df54",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x0006e00c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0E600",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06cc1c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0E600",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06ccd4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0E700",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06cc1c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0E700",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06ccd4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d91c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d9d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d91c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d9d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0G500",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d41c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0G500",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d4d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E15120",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06c61c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E15120",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06c6d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A300",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06cc1c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A300",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06ccd4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06cc1c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06ccd4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06c61c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06c6d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d41c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d4d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "G-ROM_FLEX",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d91c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "G-ROM_FLEX",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d9d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "N3ZBEH",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 2 ",
+  "storageaddress": "0x06d91c",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "N3ZBEH",
+  "issue": "base_template_removed_at_pin",
+  "name": "Table 3D - 3 ",
+  "storageaddress": "0x06d9d4",
+  "note": "block override keeps this name but the RX8Base template was removed in this window; mirrors the upstream pin"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c314",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070044",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070118",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x0709c4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075620",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078b74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078b80",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x0006dc4c",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x00070cf6",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x00070e1a",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x00071344",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x00075904",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x00077fac",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x00077fb8",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x00079898",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x000798d0",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d614",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070d0c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x0752cc",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077974",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x077980",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x079260",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x079298",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d614",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070d0c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x0752cc",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077974",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x077980",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x079260",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x079298",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d114",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070b9c",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070c70",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07130c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075a78",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078c68",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078c74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a554",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a58c",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c314",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070044",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070118",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x0709c4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075620",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078b74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078b80",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a78c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a7c4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x07065e",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070764",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070fc4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075c20",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078a2c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078a38",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07ada0",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07add8",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c314",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070044",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070118",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x0709c4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075620",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078b74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078b80",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a78c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a7c4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d114",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070b9c",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070c70",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07130c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075a78",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078c68",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078c74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a554",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a58c",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x0006dc4c",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x00070cf6",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x00070e1a",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x00071344",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x00075904",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x00077fac",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x00077fb8",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x00079898",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E09L0N",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x000798d0",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E600",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0E700",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d614",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070d0c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x0752cc",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077974",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x077980",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x079260",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FB00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x079298",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d614",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070d0c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x0752cc",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077974",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x077980",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x079260",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0FC00",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x079298",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d114",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070b9c",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070c70",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07130c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075a78",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078c68",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078c74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a554",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E0G500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a58c",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c314",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070044",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070118",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x0709c4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075620",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078b74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E15120",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078b80",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x07065e",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070764",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x070fc4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075c20",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078a2c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078a38",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07ada0",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07add8",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c914",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x06fc26",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x06fd2c",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07037c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x074ae8",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x077590",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x07759c",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x078e7c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1A500",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x078eb4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06c314",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070044",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070118",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x0709c4",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075620",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078b74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078b80",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a78c",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D300",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a7c4",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 3 ",
+  "storageaddress": "0x06d114",
+  "upstream_name_at_address": "Off Throttle Fuel Cut - Fuel Cut Load Minimum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 26 ",
+  "storageaddress": "0x070b9c",
+  "upstream_name_at_address": "Table Fueling - In Neutral Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 27 ",
+  "storageaddress": "0x070c70",
+  "upstream_name_at_address": "Table Fueling - In Gear Off Throttle - Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 3D - 32 ",
+  "storageaddress": "0x07130c",
+  "upstream_name_at_address": "Rear O2 Correction Unknown"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 332 Check DataType",
+  "storageaddress": "0x075a78",
+  "upstream_name_at_address": "Table 2D - ESS Learn Related"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 194 ",
+  "storageaddress": "0x078c68",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 195 ",
+  "storageaddress": "0x078c74",
+  "upstream_name_at_address": "Air Pump Request Engine Load Maximum Barometric Pressure Compensation"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 228 ",
+  "storageaddress": "0x07a554",
+  "upstream_name_at_address": "Vehicle Speed Based Idle Gain - DEVEL ONLY"
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "file": "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+  "rom": "60E1D400",
+  "issue": "upstream_pin_rename_alias",
+  "name": "Table 2D - 229 ",
+  "storageaddress": "0x07a58c",
+  "upstream_name_at_address": "Vehicle Speed Based Gain Hysterisis - DEVEL ONLY"
+ }
 ]

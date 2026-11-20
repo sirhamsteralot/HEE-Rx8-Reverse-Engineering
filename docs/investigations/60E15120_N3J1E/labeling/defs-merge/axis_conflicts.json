@@ -1,1 +1,5877 @@
-[]
+[
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x0006e090",
+  "names": [
+   "Ignition Leading - Ignition Base Max"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x0006e094",
+  "names": [
+   "Ignition Leading - Ignition Base Max Safe Mode"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x00071df8",
+  "names": [
+   "Open Loop Fuelling Base Correction (Throttle)",
+   "Open Loop Target - Throttle Tip In - Barometric Pressure Correction (Safe Mode)"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x00073114",
+  "names": [
+   "Table 3D - UNKNOWN_687b0",
+   "Trans Requested Torque To Throttle Plate Position Position"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x00075da4",
+  "names": [
+   "Table 2D - 160 ",
+   "Table 2D - Unknown_68ca0 -Desired Torque Calculation 3b"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x00075dec",
+  "names": [
+   "Table 2D - 161 ",
+   "Table 2D - Unknown_68cb4 -Desired Torque Calculation 3a"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x000766f8",
+  "names": [
+   "Table 3D - 62 ",
+   "Table 3D - UNKNOWN_68d30"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E09L0N",
+  "storageaddress": "0x000793f8",
+  "names": [
+   "Max Load - Intake Temperature Compensation",
+   "Table 2D - 223 "
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x06e134",
+  "names": [
+   "Ignition Leading/Trailing - On Throttle Coolant Temp Compensation",
+   "Ignition Timing Leading - Low Engine Load Adder"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x071610",
+  "names": [
+   "Table 2D - 85 "
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x071900",
+  "names": [
+   "Closed Loop Fuelling Threshold (Engine Load A)",
+   "Table 2D - LoadC"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x0728f8",
+  "names": [
+   "Ignition Leading/Trailing - Intake Air Temperature Compensation - On Throttle",
+   "Ignition Timing Leading Intake Air Temperature Compensation - On Throttle"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x0785c4",
+  "names": [
+   "Table 2D - 207 ",
+   "Table 2D - Uknown_693b8"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x0785dc",
+  "names": [
+   "Table 2D - 208 ",
+   "Table 2D - Uknown_693cc"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x07862c",
+  "names": [
+   "Table 2D - 210 ",
+   "Table 2D - Uknown_693f4"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x078668",
+  "names": [
+   "Table 2D - 211 ",
+   "Table 2D - Uknown_69408"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FB00",
+  "storageaddress": "0x728f8",
+  "names": [
+   "IAT Compensation - On Throttle (deg)",
+   "IAT Compensation - On Throttle (deg) [0x68724]"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/per-rom/60E0FB00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x06d91c",
+  "names": [
+   "Off Throttle Fuel Cut - Actual Engine Speed Cut Hysteresis",
+   "Table 3D - 2 "
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x06d9d4",
+  "names": [
+   "Off Throttle Fuel Cut - Predicted Engine Speed Cut Hysteresis",
+   "Table 3D - 3 "
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x070b3c",
+  "names": [
+   "Table 3D - UNKNOWN_CL",
+   "Table 3D - Unknown CL2",
+   "Table Fueling - UNKNOWN_681bc"
+  ],
+  "count": 3,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x07576c",
+  "names": [
+   "Table 2D - 160 ",
+   "Table 2D - Unknown_68ca0 -Desired Torque Calculation 3b"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x0757b4",
+  "names": [
+   "Table 2D - 161 ",
+   "Table 2D - Unknown_68cb4 -Desired Torque Calculation 3a"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x078dc0",
+  "names": [
+   "Max Load - Intake Temperature Compensation",
+   "Table 2D - 223 "
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x6da58",
+  "names": [
+   "Ignition Leading - Ignition Base Max"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x6da5c",
+  "names": [
+   "Ignition Leading - Ignition Base Max Safe Mode"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml",
+   "data/definitions/romraider/per-rom/60E0FB00.xml",
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E0FC00",
+  "storageaddress": "0x77150",
+  "names": [
+   "Fuel Air Ratio",
+   "Scalar - Fuel Load Scale (literal pool)"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/per-rom/60E0FC00.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000000",
+  "names": [
+   "DTC P0300 Enable/Disable #1",
+   "DTC P0300 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000001",
+  "names": [
+   "DTC P0300 Enable/Disable #1 [additional site 0x1]",
+   "DTC P0300 Enable/Disable #2 [additional site 0x1]"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000002",
+  "names": [
+   "DTC P0030 Enable/Disable #1",
+   "DTC P0030 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000003",
+  "names": [
+   "DTC P0031 Enable/Disable #1",
+   "DTC P0031 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000004",
+  "names": [
+   "DTC P0032 Enable/Disable #1",
+   "DTC P0032 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000005",
+  "names": [
+   "DTC P0037 Enable/Disable #1",
+   "DTC P0037 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000006",
+  "names": [
+   "DTC P0038 Enable/Disable #1",
+   "DTC P0038 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000007",
+  "names": [
+   "DTC P0076 Enable/Disable #1",
+   "DTC P0076 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000008",
+  "names": [
+   "DTC P0077 Enable/Disable #1",
+   "DTC P0077 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000009",
+  "names": [
+   "DTC P0101 Enable/Disable #1",
+   "DTC P0101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000a",
+  "names": [
+   "DTC P0102 Enable/Disable #1",
+   "DTC P0102 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000b",
+  "names": [
+   "DTC P0103 Enable/Disable #1",
+   "DTC P0103 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000c",
+  "names": [
+   "DTC P0107 Enable/Disable #1",
+   "DTC P0107 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000d",
+  "names": [
+   "DTC P0108 Enable/Disable #1",
+   "DTC P0108 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000e",
+  "names": [
+   "DTC P0111 Enable/Disable #1",
+   "DTC P0111 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00000f",
+  "names": [
+   "DTC P0112 Enable/Disable #1",
+   "DTC P0112 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000010",
+  "names": [
+   "DTC P0113 Enable/Disable #1",
+   "DTC P0113 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000011",
+  "names": [
+   "DTC P0117 Enable/Disable #1",
+   "DTC P0117 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000012",
+  "names": [
+   "DTC P0118 Enable/Disable #1",
+   "DTC P0118 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000013",
+  "names": [
+   "DTC P0122 Enable/Disable #1",
+   "DTC P0122 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000014",
+  "names": [
+   "DTC P0123 Enable/Disable #1",
+   "DTC P0123 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000015",
+  "names": [
+   "DTC P0125 Enable/Disable #1",
+   "DTC P0125 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000016",
+  "names": [
+   "DTC P0126 Enable/Disable #1",
+   "DTC P0126 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000017",
+  "names": [
+   "DTC P0128 Enable/Disable #1",
+   "DTC P0128 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000018",
+  "names": [
+   "DTC P0130 Enable/Disable #1",
+   "DTC P0130 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000019",
+  "names": [
+   "DTC P0131 Enable/Disable #1",
+   "DTC P0131 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001a",
+  "names": [
+   "DTC P0132 Enable/Disable #1",
+   "DTC P0132 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001b",
+  "names": [
+   "DTC P0133 Enable/Disable #1",
+   "DTC P0133 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001c",
+  "names": [
+   "DTC P0138 Enable/Disable #1",
+   "DTC P0138 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001d",
+  "names": [
+   "DTC P0139 Enable/Disable #1",
+   "DTC P0139 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001e",
+  "names": [
+   "DTC P0171 Enable/Disable #1",
+   "DTC P0171 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00001f",
+  "names": [
+   "DTC P0172 Enable/Disable #1",
+   "DTC P0172 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000020",
+  "names": [
+   "DTC P0222 Enable/Disable #1",
+   "DTC P0222 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000021",
+  "names": [
+   "DTC P0223 Enable/Disable #1",
+   "DTC P0223 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000022",
+  "names": [
+   "DTC P0327 Enable/Disable #1",
+   "DTC P0327 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000023",
+  "names": [
+   "DTC P0328 Enable/Disable #1",
+   "DTC P0328 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000024",
+  "names": [
+   "DTC P0335 Enable/Disable #1",
+   "DTC P0335 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000025",
+  "names": [
+   "DTC P0336 Enable/Disable #1",
+   "DTC P0336 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000026",
+  "names": [
+   "DTC P0351 Enable/Disable #1",
+   "DTC P0351 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000027",
+  "names": [
+   "DTC P0352 Enable/Disable #1",
+   "DTC P0352 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000028",
+  "names": [
+   "DTC P0353 Enable/Disable #1",
+   "DTC P0353 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000029",
+  "names": [
+   "DTC P0354 Enable/Disable #1",
+   "DTC P0354 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002a",
+  "names": [
+   "DTC P0410 Enable/Disable #1",
+   "DTC P0410 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002b",
+  "names": [
+   "DTC P0420 Enable/Disable #1",
+   "DTC P0420 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002c",
+  "names": [
+   "DTC P0441 Enable/Disable #1",
+   "DTC P0441 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002d",
+  "names": [
+   "DTC P0442 Enable/Disable #1",
+   "DTC P0442 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002e",
+  "names": [
+   "DTC P0443 Enable/Disable #1",
+   "DTC P0443 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00002f",
+  "names": [
+   "DTC P0446 Enable/Disable #1",
+   "DTC P0446 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000030",
+  "names": [
+   "DTC P0455 Enable/Disable #1",
+   "DTC P0455 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000031",
+  "names": [
+   "DTC P0456 Enable/Disable #1",
+   "DTC P0456 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000032",
+  "names": [
+   "DTC P0461 Enable/Disable #1",
+   "DTC P0461 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000033",
+  "names": [
+   "DTC P0462 Enable/Disable #1",
+   "DTC P0462 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000034",
+  "names": [
+   "DTC P0463 Enable/Disable #1",
+   "DTC P0463 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000035",
+  "names": [
+   "DTC P0480 Enable/Disable #1",
+   "DTC P0480 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000036",
+  "names": [
+   "DTC P0481 Enable/Disable #1",
+   "DTC P0481 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000037",
+  "names": [
+   "DTC P0500 Enable/Disable #1",
+   "DTC P0500 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000038",
+  "names": [
+   "DTC P0505 Enable/Disable #1",
+   "DTC P0505 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000039",
+  "names": [
+   "DTC P0506 Enable/Disable #1",
+   "DTC P0506 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003a",
+  "names": [
+   "DTC P0507 Enable/Disable #1",
+   "DTC P0507 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003b",
+  "names": [
+   "DTC P0562 Enable/Disable #1",
+   "DTC P0562 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003c",
+  "names": [
+   "DTC P0564 Enable/Disable #1",
+   "DTC P0564 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003d",
+  "names": [
+   "DTC P0571 Enable/Disable #1",
+   "DTC P0571 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003e",
+  "names": [
+   "DTC P0601 Enable/Disable #1",
+   "DTC P0601 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00003f",
+  "names": [
+   "DTC P0602 Enable/Disable #1",
+   "DTC P0602 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000040",
+  "names": [
+   "DTC P0604 Enable/Disable #1",
+   "DTC P0604 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000041",
+  "names": [
+   "DTC P0610 Enable/Disable #1",
+   "DTC P0610 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000042",
+  "names": [
+   "DTC P0638 Enable/Disable #1",
+   "DTC P0638 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000043",
+  "names": [
+   "DTC P0661 Enable/Disable #1",
+   "DTC P0661 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000044",
+  "names": [
+   "DTC P0662 Enable/Disable #1",
+   "DTC P0662 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000045",
+  "names": [
+   "DTC P0703 Enable/Disable #1",
+   "DTC P0703 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000046",
+  "names": [
+   "DTC P0704 Enable/Disable #1",
+   "DTC P0704 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000047",
+  "names": [
+   "DTC P0850 Enable/Disable #1",
+   "DTC P0850 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000048",
+  "names": [
+   "DTC P1260 Enable/Disable #1",
+   "DTC P1260 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000049",
+  "names": [
+   "DTC P1574 Enable/Disable #1",
+   "DTC P1574 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004a",
+  "names": [
+   "DTC P1577 Enable/Disable #1",
+   "DTC P1577 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004b",
+  "names": [
+   "DTC P1686 Enable/Disable #1",
+   "DTC P1686 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004c",
+  "names": [
+   "DTC P1687 Enable/Disable #1",
+   "DTC P1687 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004d",
+  "names": [
+   "DTC P1688 Enable/Disable #1",
+   "DTC P1688 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004e",
+  "names": [
+   "DTC P2004 Enable/Disable #1",
+   "DTC P2004 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00004f",
+  "names": [
+   "DTC P2006 Enable/Disable #1",
+   "DTC P2006 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000050",
+  "names": [
+   "DTC P2008 Enable/Disable #1",
+   "DTC P2008 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000051",
+  "names": [
+   "DTC P2017 Enable/Disable #1",
+   "DTC P2017 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000052",
+  "names": [
+   "DTC P2070 Enable/Disable #1",
+   "DTC P2070 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000053",
+  "names": [
+   "DTC P2096 Enable/Disable #1",
+   "DTC P2096 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000054",
+  "names": [
+   "DTC P2097 Enable/Disable #1",
+   "DTC P2097 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000055",
+  "names": [
+   "DTC P2101 Enable/Disable #1",
+   "DTC P2101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000056",
+  "names": [
+   "DTC P2106 Enable/Disable #1",
+   "DTC P2106 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000057",
+  "names": [
+   "DTC P2107 Enable/Disable #1",
+   "DTC P2107 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000058",
+  "names": [
+   "DTC P2108 Enable/Disable #1",
+   "DTC P2108 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000059",
+  "names": [
+   "DTC P2109 Enable/Disable #1",
+   "DTC P2109 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005a",
+  "names": [
+   "DTC P2112 Enable/Disable #1",
+   "DTC P2112 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005b",
+  "names": [
+   "DTC P2119 Enable/Disable #1",
+   "DTC P2119 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005c",
+  "names": [
+   "DTC P2122 Enable/Disable #1",
+   "DTC P2122 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005d",
+  "names": [
+   "DTC P2123 Enable/Disable #1",
+   "DTC P2123 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005e",
+  "names": [
+   "DTC P2127 Enable/Disable #1",
+   "DTC P2127 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00005f",
+  "names": [
+   "DTC P2128 Enable/Disable #1",
+   "DTC P2128 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000060",
+  "names": [
+   "DTC P2135 Enable/Disable #1",
+   "DTC P2135 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000061",
+  "names": [
+   "DTC P2136 Enable/Disable #1",
+   "DTC P2136 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000062",
+  "names": [
+   "DTC P2138 Enable/Disable #1",
+   "DTC P2138 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000063",
+  "names": [
+   "DTC P2195 Enable/Disable #1",
+   "DTC P2195 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000064",
+  "names": [
+   "DTC P2196 Enable/Disable #1",
+   "DTC P2196 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000065",
+  "names": [
+   "DTC P2257 Enable/Disable #1",
+   "DTC P2257 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000066",
+  "names": [
+   "DTC P2258 Enable/Disable #1",
+   "DTC P2258 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000067",
+  "names": [
+   "DTC P2259 Enable/Disable #1",
+   "DTC P2259 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000068",
+  "names": [
+   "DTC P2260 Enable/Disable #1",
+   "DTC P2260 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000069",
+  "names": [
+   "DTC P2270 Enable/Disable #1",
+   "DTC P2270 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006a",
+  "names": [
+   "DTC P2271 Enable/Disable #1",
+   "DTC P2271 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006b",
+  "names": [
+   "DTC P2401 Enable/Disable #1",
+   "DTC P2401 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006c",
+  "names": [
+   "DTC P2402 Enable/Disable #1",
+   "DTC P2402 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006d",
+  "names": [
+   "DTC P2404 Enable/Disable #1",
+   "DTC P2404 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006e",
+  "names": [
+   "DTC P2405 Enable/Disable #1",
+   "DTC P2405 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x00006f",
+  "names": [
+   "DTC P2406 Enable/Disable #1",
+   "DTC P2406 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000070",
+  "names": [
+   "DTC P2407 Enable/Disable #1",
+   "DTC P2407 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000071",
+  "names": [
+   "DTC P2502 Enable/Disable #1",
+   "DTC P2502 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000072",
+  "names": [
+   "DTC P2503 Enable/Disable #1",
+   "DTC P2503 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000073",
+  "names": [
+   "DTC P2504 Enable/Disable #1",
+   "DTC P2504 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000074",
+  "names": [
+   "DTC U0073 Enable/Disable #1",
+   "DTC U0073 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000075",
+  "names": [
+   "DTC U0101 Enable/Disable #1",
+   "DTC U0101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000076",
+  "names": [
+   "DTC U0121 Enable/Disable #1",
+   "DTC U0121 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000077",
+  "names": [
+   "DTC U0155 Enable/Disable #1",
+   "DTC U0155 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1A500",
+  "storageaddress": "0x000078",
+  "names": [
+   "DTC U0167 Enable/Disable #1",
+   "DTC U0167 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": true,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml",
+   "data/definitions/romraider/upstream-rx8defs/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000000",
+  "names": [
+   "DTC 0300 Enable/Disable#1",
+   "DTC 0300 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000001",
+  "names": [
+   "DTC 0300 Enable/Disable#1",
+   "DTC 0300 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000002",
+  "names": [
+   "DTC 0030 Enable/Disable#1",
+   "DTC 0030 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000003",
+  "names": [
+   "DTC 0031 Enable/Disable#1",
+   "DTC 0031 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000004",
+  "names": [
+   "DTC 0032 Enable/Disable#1",
+   "DTC 0032 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000005",
+  "names": [
+   "DTC 0037 Enable/Disable#1",
+   "DTC 0037 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000006",
+  "names": [
+   "DTC 0038 Enable/Disable#1",
+   "DTC 0038 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000007",
+  "names": [
+   "DTC 0076 Enable/Disable#1",
+   "DTC 0076 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000008",
+  "names": [
+   "DTC 0077 Enable/Disable#1",
+   "DTC 0077 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000009",
+  "names": [
+   "DTC 0101 Enable/Disable#1",
+   "DTC 0101 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000a",
+  "names": [
+   "DTC 0102 Enable/Disable#1",
+   "DTC 0102 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000b",
+  "names": [
+   "DTC 0103 Enable/Disable#1",
+   "DTC 0103 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000c",
+  "names": [
+   "DTC 0107 Enable/Disable#1",
+   "DTC 0107 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000d",
+  "names": [
+   "DTC 0108 Enable/Disable#1",
+   "DTC 0108 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000e",
+  "names": [
+   "DTC 0111 Enable/Disable#1",
+   "DTC 0111 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00000f",
+  "names": [
+   "DTC 0112 Enable/Disable#1",
+   "DTC 0112 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000010",
+  "names": [
+   "DTC 0113 Enable/Disable#1",
+   "DTC 0113 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000011",
+  "names": [
+   "DTC 0117 Enable/Disable#1",
+   "DTC 0117 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000012",
+  "names": [
+   "DTC 0118 Enable/Disable#1",
+   "DTC 0118 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000013",
+  "names": [
+   "DTC 0122 Enable/Disable#1",
+   "DTC 0122 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000014",
+  "names": [
+   "DTC 0123 Enable/Disable#1",
+   "DTC 0123 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000015",
+  "names": [
+   "DTC 0125 Enable/Disable#1",
+   "DTC 0125 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000016",
+  "names": [
+   "DTC 0126 Enable/Disable#1",
+   "DTC 0126 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000017",
+  "names": [
+   "DTC 0128 Enable/Disable#1",
+   "DTC 0128 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000018",
+  "names": [
+   "DTC 0130 Enable/Disable#1",
+   "DTC 0130 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000019",
+  "names": [
+   "DTC 0131 Enable/Disable#1",
+   "DTC 0131 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001a",
+  "names": [
+   "DTC 0132 Enable/Disable#1",
+   "DTC 0132 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001b",
+  "names": [
+   "DTC 0133 Enable/Disable#1",
+   "DTC 0133 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001c",
+  "names": [
+   "DTC 0138 Enable/Disable#1",
+   "DTC 0138 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001d",
+  "names": [
+   "DTC 0139 Enable/Disable#1",
+   "DTC 0139 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001e",
+  "names": [
+   "DTC 0171 Enable/Disable#1",
+   "DTC 0171 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00001f",
+  "names": [
+   "DTC 0172 Enable/Disable#1",
+   "DTC 0172 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000020",
+  "names": [
+   "DTC 0222 Enable/Disable#1",
+   "DTC 0222 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000021",
+  "names": [
+   "DTC 0223 Enable/Disable#1",
+   "DTC 0223 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000022",
+  "names": [
+   "DTC 0327 Enable/Disable#1",
+   "DTC 0327 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000023",
+  "names": [
+   "DTC 0328 Enable/Disable#1",
+   "DTC 0328 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000024",
+  "names": [
+   "DTC 0335 Enable/Disable#1",
+   "DTC 0335 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000025",
+  "names": [
+   "DTC 0336 Enable/Disable#1",
+   "DTC 0336 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000026",
+  "names": [
+   "DTC 0351 Enable/Disable#1",
+   "DTC 0351 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000027",
+  "names": [
+   "DTC 0352 Enable/Disable#1",
+   "DTC 0352 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000028",
+  "names": [
+   "DTC 0353 Enable/Disable#1",
+   "DTC 0353 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000029",
+  "names": [
+   "DTC 0354 Enable/Disable#1",
+   "DTC 0354 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002a",
+  "names": [
+   "DTC 0410 Enable/Disable#1",
+   "DTC 0410 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002b",
+  "names": [
+   "DTC 0420 Enable/Disable#1",
+   "DTC 0420 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002c",
+  "names": [
+   "DTC 0441 Enable/Disable#1",
+   "DTC 0441 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002d",
+  "names": [
+   "DTC 0442 Enable/Disable#1",
+   "DTC 0442 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002e",
+  "names": [
+   "DTC 0443 Enable/Disable#1",
+   "DTC 0443 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00002f",
+  "names": [
+   "DTC 0446 Enable/Disable#1",
+   "DTC 0446 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000030",
+  "names": [
+   "DTC 0455 Enable/Disable#1",
+   "DTC 0455 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000031",
+  "names": [
+   "DTC 0456 Enable/Disable#1",
+   "DTC 0456 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000032",
+  "names": [
+   "DTC 0461 Enable/Disable#1",
+   "DTC 0461 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000033",
+  "names": [
+   "DTC 0462 Enable/Disable#1",
+   "DTC 0462 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000034",
+  "names": [
+   "DTC 0463 Enable/Disable#1",
+   "DTC 0463 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000035",
+  "names": [
+   "DTC 0480 Enable/Disable#1",
+   "DTC 0480 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000036",
+  "names": [
+   "DTC 0481 Enable/Disable#1",
+   "DTC 0481 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000037",
+  "names": [
+   "DTC 0500 Enable/Disable#1",
+   "DTC 0500 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000038",
+  "names": [
+   "DTC 0505 Enable/Disable#1",
+   "DTC 0505 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000039",
+  "names": [
+   "DTC 0506 Enable/Disable#1",
+   "DTC 0506 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003a",
+  "names": [
+   "DTC 0507 Enable/Disable#1",
+   "DTC 0507 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003b",
+  "names": [
+   "DTC 0562 Enable/Disable#1",
+   "DTC 0562 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003c",
+  "names": [
+   "DTC 0564 Enable/Disable#1",
+   "DTC 0564 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003d",
+  "names": [
+   "DTC 0571 Enable/Disable#1",
+   "DTC 0571 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003e",
+  "names": [
+   "DTC 0601 Enable/Disable#1",
+   "DTC 0601 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00003f",
+  "names": [
+   "DTC 0602 Enable/Disable#1",
+   "DTC 0602 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000040",
+  "names": [
+   "DTC 0604 Enable/Disable#1",
+   "DTC 0604 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000041",
+  "names": [
+   "DTC 0610 Enable/Disable#1",
+   "DTC 0610 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000042",
+  "names": [
+   "DTC 0638 Enable/Disable#1",
+   "DTC 0638 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000043",
+  "names": [
+   "DTC 0661 Enable/Disable#1",
+   "DTC 0661 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000044",
+  "names": [
+   "DTC 0662 Enable/Disable#1",
+   "DTC 0662 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000045",
+  "names": [
+   "DTC 0703 Enable/Disable#1",
+   "DTC 0703 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000046",
+  "names": [
+   "DTC 0704 Enable/Disable#1",
+   "DTC 0704 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000047",
+  "names": [
+   "DTC 0850 Enable/Disable#1",
+   "DTC 0850 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000048",
+  "names": [
+   "DTC 1260 Enable/Disable#1",
+   "DTC 1260 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000049",
+  "names": [
+   "DTC 1574 Enable/Disable#1",
+   "DTC 1574 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004a",
+  "names": [
+   "DTC 1577 Enable/Disable#1",
+   "DTC 1577 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004b",
+  "names": [
+   "DTC 1686 Enable/Disable#1",
+   "DTC 1686 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004c",
+  "names": [
+   "DTC 1687 Enable/Disable#1",
+   "DTC 1687 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004d",
+  "names": [
+   "DTC 1688 Enable/Disable#1",
+   "DTC 1688 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004e",
+  "names": [
+   "DTC 2004 Enable/Disable#1",
+   "DTC 2004 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00004f",
+  "names": [
+   "DTC 2006 Enable/Disable#1",
+   "DTC 2006 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000050",
+  "names": [
+   "DTC 2008 Enable/Disable#1",
+   "DTC 2008 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000051",
+  "names": [
+   "DTC 2017 Enable/Disable#1",
+   "DTC 2017 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000052",
+  "names": [
+   "DTC 2070 Enable/Disable#1",
+   "DTC 2070 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000053",
+  "names": [
+   "DTC 2096 Enable/Disable#1",
+   "DTC 2096 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000054",
+  "names": [
+   "DTC 2097 Enable/Disable#1",
+   "DTC 2097 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000055",
+  "names": [
+   "DTC 2101 Enable/Disable#1",
+   "DTC 2101 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000056",
+  "names": [
+   "DTC 2106 Enable/Disable#1",
+   "DTC 2106 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000057",
+  "names": [
+   "DTC 2107 Enable/Disable#1",
+   "DTC 2107 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000058",
+  "names": [
+   "DTC 2108 Enable/Disable#1",
+   "DTC 2108 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000059",
+  "names": [
+   "DTC 2109 Enable/Disable#1",
+   "DTC 2109 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005a",
+  "names": [
+   "DTC 2112 Enable/Disable#1",
+   "DTC 2112 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005b",
+  "names": [
+   "DTC 2119 Enable/Disable#1",
+   "DTC 2119 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005c",
+  "names": [
+   "DTC 2122 Enable/Disable#1",
+   "DTC 2122 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005d",
+  "names": [
+   "DTC 2123 Enable/Disable#1",
+   "DTC 2123 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005e",
+  "names": [
+   "DTC 2127 Enable/Disable#1",
+   "DTC 2127 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00005f",
+  "names": [
+   "DTC 2128 Enable/Disable#1",
+   "DTC 2128 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000060",
+  "names": [
+   "DTC 2135 Enable/Disable#1",
+   "DTC 2135 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000061",
+  "names": [
+   "DTC 2136 Enable/Disable#1",
+   "DTC 2136 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000062",
+  "names": [
+   "DTC 2138 Enable/Disable#1",
+   "DTC 2138 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000063",
+  "names": [
+   "DTC 2195 Enable/Disable#1",
+   "DTC 2195 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000064",
+  "names": [
+   "DTC 2196 Enable/Disable#1",
+   "DTC 2196 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000065",
+  "names": [
+   "DTC 2257 Enable/Disable#1",
+   "DTC 2257 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000066",
+  "names": [
+   "DTC 2258 Enable/Disable#1",
+   "DTC 2258 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000067",
+  "names": [
+   "DTC 2259 Enable/Disable#1",
+   "DTC 2259 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000068",
+  "names": [
+   "DTC 2260 Enable/Disable#1",
+   "DTC 2260 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000069",
+  "names": [
+   "DTC 2270 Enable/Disable#1",
+   "DTC 2270 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006a",
+  "names": [
+   "DTC 2271 Enable/Disable#1",
+   "DTC 2271 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006b",
+  "names": [
+   "DTC 2401 Enable/Disable#1",
+   "DTC 2401 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006c",
+  "names": [
+   "DTC 2402 Enable/Disable#1",
+   "DTC 2402 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006d",
+  "names": [
+   "DTC 2404 Enable/Disable#1",
+   "DTC 2404 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006e",
+  "names": [
+   "DTC 2405 Enable/Disable#1",
+   "DTC 2405 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x00006f",
+  "names": [
+   "DTC 2406 Enable/Disable#1",
+   "DTC 2406 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000070",
+  "names": [
+   "DTC 2407 Enable/Disable#1",
+   "DTC 2407 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000071",
+  "names": [
+   "DTC 2502 Enable/Disable#1",
+   "DTC 2502 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000072",
+  "names": [
+   "DTC 2503 Enable/Disable#1",
+   "DTC 2503 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000073",
+  "names": [
+   "DTC 2504 Enable/Disable#1",
+   "DTC 2504 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000074",
+  "names": [
+   "DTC c073 Enable/Disable#1",
+   "DTC c073 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000075",
+  "names": [
+   "DTC c101 Enable/Disable#1",
+   "DTC c101 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000076",
+  "names": [
+   "DTC c121 Enable/Disable#1",
+   "DTC c121 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000077",
+  "names": [
+   "DTC c155 Enable/Disable#1",
+   "DTC c155 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D300",
+  "storageaddress": "0x000078",
+  "names": [
+   "DTC c167 Enable/Disable#1",
+   "DTC c167 Enable/Disable#2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000000",
+  "names": [
+   "DTC P0300 Enable/Disable #1",
+   "DTC P0300 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000001",
+  "names": [
+   "DTC P0300 Enable/Disable #1 [additional site 0x1]",
+   "DTC P0300 Enable/Disable #2 [additional site 0x1]"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000002",
+  "names": [
+   "DTC P0030 Enable/Disable #1",
+   "DTC P0030 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000003",
+  "names": [
+   "DTC P0031 Enable/Disable #1",
+   "DTC P0031 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000004",
+  "names": [
+   "DTC P0032 Enable/Disable #1",
+   "DTC P0032 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000005",
+  "names": [
+   "DTC P0037 Enable/Disable #1",
+   "DTC P0037 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000006",
+  "names": [
+   "DTC P0038 Enable/Disable #1",
+   "DTC P0038 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000007",
+  "names": [
+   "DTC P0076 Enable/Disable #1",
+   "DTC P0076 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000008",
+  "names": [
+   "DTC P0077 Enable/Disable #1",
+   "DTC P0077 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000009",
+  "names": [
+   "DTC P0101 Enable/Disable #1",
+   "DTC P0101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000a",
+  "names": [
+   "DTC P0102 Enable/Disable #1",
+   "DTC P0102 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000b",
+  "names": [
+   "DTC P0103 Enable/Disable #1",
+   "DTC P0103 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000c",
+  "names": [
+   "DTC P0107 Enable/Disable #1",
+   "DTC P0107 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000d",
+  "names": [
+   "DTC P0108 Enable/Disable #1",
+   "DTC P0108 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000e",
+  "names": [
+   "DTC P0111 Enable/Disable #1",
+   "DTC P0111 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00000f",
+  "names": [
+   "DTC P0112 Enable/Disable #1",
+   "DTC P0112 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000010",
+  "names": [
+   "DTC P0113 Enable/Disable #1",
+   "DTC P0113 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000011",
+  "names": [
+   "DTC P0117 Enable/Disable #1",
+   "DTC P0117 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000012",
+  "names": [
+   "DTC P0118 Enable/Disable #1",
+   "DTC P0118 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000013",
+  "names": [
+   "DTC P0122 Enable/Disable #1",
+   "DTC P0122 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000014",
+  "names": [
+   "DTC P0123 Enable/Disable #1",
+   "DTC P0123 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000015",
+  "names": [
+   "DTC P0125 Enable/Disable #1",
+   "DTC P0125 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000016",
+  "names": [
+   "DTC P0126 Enable/Disable #1",
+   "DTC P0126 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000017",
+  "names": [
+   "DTC P0128 Enable/Disable #1",
+   "DTC P0128 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000018",
+  "names": [
+   "DTC P0130 Enable/Disable #1",
+   "DTC P0130 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000019",
+  "names": [
+   "DTC P0131 Enable/Disable #1",
+   "DTC P0131 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001a",
+  "names": [
+   "DTC P0132 Enable/Disable #1",
+   "DTC P0132 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001b",
+  "names": [
+   "DTC P0133 Enable/Disable #1",
+   "DTC P0133 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001c",
+  "names": [
+   "DTC P0138 Enable/Disable #1",
+   "DTC P0138 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001d",
+  "names": [
+   "DTC P0139 Enable/Disable #1",
+   "DTC P0139 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001e",
+  "names": [
+   "DTC P0171 Enable/Disable #1",
+   "DTC P0171 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00001f",
+  "names": [
+   "DTC P0172 Enable/Disable #1",
+   "DTC P0172 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000020",
+  "names": [
+   "DTC P0222 Enable/Disable #1",
+   "DTC P0222 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000021",
+  "names": [
+   "DTC P0223 Enable/Disable #1",
+   "DTC P0223 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000022",
+  "names": [
+   "DTC P0327 Enable/Disable #1",
+   "DTC P0327 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000023",
+  "names": [
+   "DTC P0328 Enable/Disable #1",
+   "DTC P0328 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000024",
+  "names": [
+   "DTC P0335 Enable/Disable #1",
+   "DTC P0335 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000025",
+  "names": [
+   "DTC P0336 Enable/Disable #1",
+   "DTC P0336 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000026",
+  "names": [
+   "DTC P0351 Enable/Disable #1",
+   "DTC P0351 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000027",
+  "names": [
+   "DTC P0352 Enable/Disable #1",
+   "DTC P0352 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000028",
+  "names": [
+   "DTC P0353 Enable/Disable #1",
+   "DTC P0353 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000029",
+  "names": [
+   "DTC P0354 Enable/Disable #1",
+   "DTC P0354 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002a",
+  "names": [
+   "DTC P0410 Enable/Disable #1",
+   "DTC P0410 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002b",
+  "names": [
+   "DTC P0420 Enable/Disable #1",
+   "DTC P0420 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002c",
+  "names": [
+   "DTC P0441 Enable/Disable #1",
+   "DTC P0441 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002d",
+  "names": [
+   "DTC P0442 Enable/Disable #1",
+   "DTC P0442 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002e",
+  "names": [
+   "DTC P0443 Enable/Disable #1",
+   "DTC P0443 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00002f",
+  "names": [
+   "DTC P0446 Enable/Disable #1",
+   "DTC P0446 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000030",
+  "names": [
+   "DTC P0455 Enable/Disable #1",
+   "DTC P0455 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000031",
+  "names": [
+   "DTC P0456 Enable/Disable #1",
+   "DTC P0456 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000032",
+  "names": [
+   "DTC P0461 Enable/Disable #1",
+   "DTC P0461 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000033",
+  "names": [
+   "DTC P0462 Enable/Disable #1",
+   "DTC P0462 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000034",
+  "names": [
+   "DTC P0463 Enable/Disable #1",
+   "DTC P0463 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000035",
+  "names": [
+   "DTC P0480 Enable/Disable #1",
+   "DTC P0480 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000036",
+  "names": [
+   "DTC P0481 Enable/Disable #1",
+   "DTC P0481 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000037",
+  "names": [
+   "DTC P0500 Enable/Disable #1",
+   "DTC P0500 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000038",
+  "names": [
+   "DTC P0505 Enable/Disable #1",
+   "DTC P0505 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000039",
+  "names": [
+   "DTC P0506 Enable/Disable #1",
+   "DTC P0506 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003a",
+  "names": [
+   "DTC P0507 Enable/Disable #1",
+   "DTC P0507 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003b",
+  "names": [
+   "DTC P0562 Enable/Disable #1",
+   "DTC P0562 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003c",
+  "names": [
+   "DTC P0564 Enable/Disable #1",
+   "DTC P0564 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003d",
+  "names": [
+   "DTC P0571 Enable/Disable #1",
+   "DTC P0571 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003e",
+  "names": [
+   "DTC P0601 Enable/Disable #1",
+   "DTC P0601 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00003f",
+  "names": [
+   "DTC P0602 Enable/Disable #1",
+   "DTC P0602 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000040",
+  "names": [
+   "DTC P0604 Enable/Disable #1",
+   "DTC P0604 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000041",
+  "names": [
+   "DTC P0610 Enable/Disable #1",
+   "DTC P0610 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000042",
+  "names": [
+   "DTC P0638 Enable/Disable #1",
+   "DTC P0638 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000043",
+  "names": [
+   "DTC P0661 Enable/Disable #1",
+   "DTC P0661 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000044",
+  "names": [
+   "DTC P0662 Enable/Disable #1",
+   "DTC P0662 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000045",
+  "names": [
+   "DTC P0703 Enable/Disable #1",
+   "DTC P0703 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000046",
+  "names": [
+   "DTC P0704 Enable/Disable #1",
+   "DTC P0704 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000047",
+  "names": [
+   "DTC P0850 Enable/Disable #1",
+   "DTC P0850 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000048",
+  "names": [
+   "DTC P1260 Enable/Disable #1",
+   "DTC P1260 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000049",
+  "names": [
+   "DTC P1574 Enable/Disable #1",
+   "DTC P1574 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004a",
+  "names": [
+   "DTC P1577 Enable/Disable #1",
+   "DTC P1577 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004b",
+  "names": [
+   "DTC P1686 Enable/Disable #1",
+   "DTC P1686 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004c",
+  "names": [
+   "DTC P1687 Enable/Disable #1",
+   "DTC P1687 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004d",
+  "names": [
+   "DTC P1688 Enable/Disable #1",
+   "DTC P1688 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004e",
+  "names": [
+   "DTC P2004 Enable/Disable #1",
+   "DTC P2004 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00004f",
+  "names": [
+   "DTC P2006 Enable/Disable #1",
+   "DTC P2006 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000050",
+  "names": [
+   "DTC P2008 Enable/Disable #1",
+   "DTC P2008 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000051",
+  "names": [
+   "DTC P2017 Enable/Disable #1",
+   "DTC P2017 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000052",
+  "names": [
+   "DTC P2070 Enable/Disable #1",
+   "DTC P2070 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000053",
+  "names": [
+   "DTC P2096 Enable/Disable #1",
+   "DTC P2096 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000054",
+  "names": [
+   "DTC P2097 Enable/Disable #1",
+   "DTC P2097 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000055",
+  "names": [
+   "DTC P2101 Enable/Disable #1",
+   "DTC P2101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000056",
+  "names": [
+   "DTC P2106 Enable/Disable #1",
+   "DTC P2106 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000057",
+  "names": [
+   "DTC P2107 Enable/Disable #1",
+   "DTC P2107 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000058",
+  "names": [
+   "DTC P2108 Enable/Disable #1",
+   "DTC P2108 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000059",
+  "names": [
+   "DTC P2109 Enable/Disable #1",
+   "DTC P2109 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005a",
+  "names": [
+   "DTC P2112 Enable/Disable #1",
+   "DTC P2112 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005b",
+  "names": [
+   "DTC P2119 Enable/Disable #1",
+   "DTC P2119 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005c",
+  "names": [
+   "DTC P2122 Enable/Disable #1",
+   "DTC P2122 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005d",
+  "names": [
+   "DTC P2123 Enable/Disable #1",
+   "DTC P2123 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005e",
+  "names": [
+   "DTC P2127 Enable/Disable #1",
+   "DTC P2127 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00005f",
+  "names": [
+   "DTC P2128 Enable/Disable #1",
+   "DTC P2128 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000060",
+  "names": [
+   "DTC P2135 Enable/Disable #1",
+   "DTC P2135 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000061",
+  "names": [
+   "DTC P2136 Enable/Disable #1",
+   "DTC P2136 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000062",
+  "names": [
+   "DTC P2138 Enable/Disable #1",
+   "DTC P2138 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000063",
+  "names": [
+   "DTC P2195 Enable/Disable #1",
+   "DTC P2195 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000064",
+  "names": [
+   "DTC P2196 Enable/Disable #1",
+   "DTC P2196 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000065",
+  "names": [
+   "DTC P2257 Enable/Disable #1",
+   "DTC P2257 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000066",
+  "names": [
+   "DTC P2258 Enable/Disable #1",
+   "DTC P2258 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000067",
+  "names": [
+   "DTC P2259 Enable/Disable #1",
+   "DTC P2259 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000068",
+  "names": [
+   "DTC P2260 Enable/Disable #1",
+   "DTC P2260 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000069",
+  "names": [
+   "DTC P2270 Enable/Disable #1",
+   "DTC P2270 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006a",
+  "names": [
+   "DTC P2271 Enable/Disable #1",
+   "DTC P2271 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006b",
+  "names": [
+   "DTC P2401 Enable/Disable #1",
+   "DTC P2401 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006c",
+  "names": [
+   "DTC P2402 Enable/Disable #1",
+   "DTC P2402 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006d",
+  "names": [
+   "DTC P2404 Enable/Disable #1",
+   "DTC P2404 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006e",
+  "names": [
+   "DTC P2405 Enable/Disable #1",
+   "DTC P2405 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x00006f",
+  "names": [
+   "DTC P2406 Enable/Disable #1",
+   "DTC P2406 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000070",
+  "names": [
+   "DTC P2407 Enable/Disable #1",
+   "DTC P2407 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000071",
+  "names": [
+   "DTC P2502 Enable/Disable #1",
+   "DTC P2502 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000072",
+  "names": [
+   "DTC P2503 Enable/Disable #1",
+   "DTC P2503 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000073",
+  "names": [
+   "DTC P2504 Enable/Disable #1",
+   "DTC P2504 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000074",
+  "names": [
+   "DTC U0073 Enable/Disable #1",
+   "DTC U0073 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000075",
+  "names": [
+   "DTC U0101 Enable/Disable #1",
+   "DTC U0101 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000076",
+  "names": [
+   "DTC U0121 Enable/Disable #1",
+   "DTC U0121 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000077",
+  "names": [
+   "DTC U0155 Enable/Disable #1",
+   "DTC U0155 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ },
+ {
+  "pin": "d4140dc244e44841c1eb7e3fd114631b384f5886",
+  "rom": "60E1D400",
+  "storageaddress": "0x000078",
+  "names": [
+   "DTC U0167 Enable/Disable #1",
+   "DTC U0167 Enable/Disable #2"
+  ],
+  "count": 2,
+  "duplicate_also_upstream_at_pin": false,
+  "files": [
+   "data/definitions/romraider/rx8defs-merged-60E15120.xml",
+   "data/definitions/romraider/reviewed-rx8defs-copy/rx8_defs.xml"
+  ]
+ }
+]
