@@ -199,9 +199,9 @@
    "evidence": "8 B 'writeImmoBitZero?' (inherited name), called from 0x1378. mov.l pool 0x1284 = 0xffffdfa0; stores byte 0 to it (clears the immo diag bit at boot). Pool word re-read from ROM."
   },
   "000169d4": {
-   "alias": "ref_ImmoRelatedFaultSomething_",
-   "confidence": "low",
-   "evidence": "Inherited ref_ name kept per label ladder; the body (72 B) actually copies the 16-byte calibration string 'N3J1E_1W.Z05' to 0xffffdf70..df7f and sets 0xffffdf90=0xc, returning 0x20 — called from boot task 0x1102a. Not an immobilizer fault handler; do not rely on the name."
+   "alias": "cal_id_string_copy",
+   "confidence": "high",
+   "evidence": "Body (72 B) copies the 16-byte calibration string 'N3J1E_1W.Z05' to 0xffffdf70..df7f and sets 0xffffdf90=0xc, returning 0x20 — called from boot task 0x1102a. Not an immobilizer fault handler; inherited ref_ alias ref_ImmoRelatedFaultSomething_ (misnomer) superseded by this body-evidenced name."
   },
   "0005674a": {
    "alias": "immo_counter_increment",
