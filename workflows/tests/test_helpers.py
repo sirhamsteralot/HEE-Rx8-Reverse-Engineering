@@ -1,9 +1,14 @@
+import os
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "apps" / "worker" / "src"))
 
+import worker.workflows.upstream_submodule_sync as us
 from worker.workflows.upstream_submodule_sync import (
     SubmoduleChange,
     SyncInput,
@@ -108,3 +113,46 @@ async def test_ai_audit_joins_only_text_chunks(monkeypatch):
 
     report = await ai_audit(SyncInput(), [_change()], "our context")
     assert report == "audit report"
+
+
+def test_ensure_repo_reuses_existing_clone(monkeypatch, tmp_path):
+    repo = tmp_path / "hee-sync-existing"
+    (repo / ".git").mkdir(parents=True)
+    commands = []
+    monkeypatch.setattr(us, "_run", lambda cmd, cwd=None: commands.append(cmd) or "")
+    assert us._ensure_repo(SyncInput(), str(repo)) == str(repo)
+    assert commands == []
+
+
+def test_ensure_repo_reclones_when_clone_is_gone(monkeypatch, tmp_path):
+    commands = []
+
+    def fake_run(cmd, cwd=None):
+        commands.append((cmd, cwd))
+        return ""
+
+    monkeypatch.setattr(us, "_run", fake_run)
+    repo = tmp_path / "hee-sync-gone"
+    input = SyncInput(repo_url="https://github.com/o/r.git", base_branch="dev")
+    out = us._ensure_repo(input, str(repo))
+    assert out == str(repo)
+    assert commands[0] == (
+        ["git", "clone", "--quiet", "--branch", "dev", "https://github.com/o/r.git", str(repo)],
+        None,
+    )
+    assert commands[1] == (["git", "submodule", "update", "--init", "--quiet"], str(repo))
+
+
+def test_ensure_repo_creates_fresh_dir_when_repo_dir_unset(monkeypatch, tmp_path):
+    commands = []
+    monkeypatch.setattr(us, "_run", lambda cmd, cwd=None: commands.append(cmd) or "")
+    monkeypatch.setattr(us.tempfile, "mkdtemp", lambda prefix: str(tmp_path / "hee-sync-fresh"))
+    out = us._ensure_repo(SyncInput(repo_url="https://github.com/o/r.git"), "")
+    assert out == str(tmp_path / "hee-sync-fresh")
+    assert commands[0][:4] == ["git", "clone", "--quiet", "--branch"]
+    shutil.rmtree(out, ignore_errors=True)
+
+
+def test_run_rejects_missing_cwd(tmp_path):
+    with pytest.raises(RuntimeError, match="does not exist"):
+        us._run(["git", "status"], cwd=str(tmp_path / "missing"))

@@ -75,6 +75,8 @@ class SyncResult(BaseModel):
 
 
 def _run(cmd: List[str], cwd: Optional[str] = None) -> str:
+    if cwd is not None and not os.path.isdir(cwd):
+        raise RuntimeError(f"working directory does not exist: {cwd}")
     env = dict(os.environ)
     env.setdefault("GIT_LFS_SKIP_SMUDGE", "1")
     proc = subprocess.run(
@@ -85,6 +87,20 @@ def _run(cmd: List[str], cwd: Optional[str] = None) -> str:
             f"command failed ({proc.returncode}): {' '.join(cmd)}\n{proc.stderr[-2000:]}"
         )
     return proc.stdout
+
+
+def _clone_repo(input: SyncInput, repo_dir: str) -> str:
+    shutil.rmtree(repo_dir, ignore_errors=True)
+    os.makedirs(repo_dir, exist_ok=True)
+    _run(["git", "clone", "--quiet", "--branch", input.base_branch, input.repo_url, repo_dir])
+    _run(["git", "submodule", "update", "--init", "--quiet"], repo_dir)
+    return repo_dir
+
+
+def _ensure_repo(input: SyncInput, repo_dir: str) -> str:
+    if repo_dir and os.path.isdir(os.path.join(repo_dir, ".git")):
+        return repo_dir
+    return _clone_repo(input, repo_dir or tempfile.mkdtemp(prefix="hee-sync-"))
 
 
 def _submodule_names(repo_dir: str) -> List[tuple[str, str]]:
@@ -191,9 +207,7 @@ def audit_prompt(changes: List[SubmoduleChange], our_context: str) -> str:
 
 @workflows.activity()
 async def check_upstream(input: SyncInput) -> UpstreamCheck:
-    repo_dir = tempfile.mkdtemp(prefix="hee-sync-")
-    _run(["git", "clone", "--quiet", "--branch", input.base_branch, input.repo_url, repo_dir])
-    _run(["git", "submodule", "update", "--init", "--quiet"], repo_dir)
+    repo_dir = _clone_repo(input, tempfile.mkdtemp(prefix="hee-sync-"))
     check = UpstreamCheck(repo_dir=repo_dir)
     for path, url in _submodule_names(repo_dir):
         sub_dir = os.path.join(repo_dir, path)
@@ -233,8 +247,8 @@ async def check_upstream(input: SyncInput) -> UpstreamCheck:
 
 
 @workflows.activity()
-async def collect_our_context(check: UpstreamCheck) -> str:
-    repo_dir = check.repo_dir
+async def collect_our_context(input: SyncInput, check: UpstreamCheck) -> str:
+    repo_dir = _ensure_repo(input, check.repo_dir)
     parts = []
     for rel in OUR_AUDIT_PATHS:
         target = os.path.join(repo_dir, rel)
@@ -288,7 +302,7 @@ async def push_branch_and_open_pr(input: SyncInput, check: UpstreamCheck, change
             f"Missing {GITHUB_TOKEN_ENV}: bind the workspace secret holding a "
             "GitHub PAT (repo contents + pull requests write) to the deployment."
         )
-    repo_dir = check.repo_dir
+    repo_dir = _ensure_repo(input, check.repo_dir)
     _run(["git", "submodule", "update", "--remote", "--quiet"], repo_dir)
     _run(["git", "config", "user.name", "hee-upstream-sync-bot"], repo_dir)
     _run(["git", "config", "user.email", "noreply@users.noreply.github.com"], repo_dir)
@@ -361,7 +375,7 @@ class UpstreamSubmoduleSyncWorkflow:
         if not check.changes:
             await cleanup_repo(check)
             return SyncResult(checked=check.up_to_date)
-        our_context = await collect_our_context(check)
+        our_context = await collect_our_context(input, check)
         audit_report = await ai_audit(input, check.changes, our_context)
         result = await push_branch_and_open_pr(input, check, check.changes, audit_report)
         result.checked = check.up_to_date
