@@ -11,6 +11,11 @@ Covers data/labels/60E15120_N3J1E/fuel_pump_control_labels.json:
   * the port data registers named in the evidence exist in symbols.tsv;
   * the accepted source-review TSV rows mirror the JSON aliases.
 
+Neighboring relay outputs mapped while tracing (PD7 starter, PE0 DBW, PJ7 A/C
+clutch) are out of scope here — see docs/subsystem-logic/fuel_pump_control_report.md
+§4.6 and tests/test_starting_cranking.py, tests/test_throttle_dbw.py,
+tests/test_ac_compressor_clutch.py.
+
 Run: python -m pytest tests/test_fuel_pump_control.py
 """
 import csv
@@ -104,30 +109,6 @@ def test_0x2fc00_bdd8_calc_pools_and_thresholds(rom):
     assert w32(rom, 0x2FCDC) == 0x00002460      # saturating-increment helper
     assert w16(rom, 0x7BC58) == 0x001F          # threshold 31
     assert w16(rom, 0x7BC5C) == 0x003E          # threshold 62
-
-
-def test_0x3a0ec_pd7_pe0_pools_and_instructions(rom):
-    # PD7 = (0xffffcfb6==1) mask 0x80 on PDDR; PE0 = (0xffffcfb7==0) mask 0x1 on PEDR
-    assert w16(rom, 0x3A1AA) == 0xCFB6
-    assert w16(rom, 0x3A1AC) == 0x0080          # mask 0x80
-    assert w16(rom, 0x3A1AE) == 0xF746          # PDDR_W low half
-    assert w16(rom, 0x3A1B0) == 0xCFB7
-    assert w16(rom, 0x3A1B2) == 0xF754          # PEDR_W low half
-    assert w32(rom, 0x3A1BC) == 0x00004BBC      # helper 0x4bbc
-    assert w16(rom, 0x3A13C) == 0xE501          # mov #0x1,r5 (PE0 mask)
-
-
-def test_0x2e800_pj7_ac_clutch_pools_and_instructions(rom):
-    # PJ7 (PJDR bit 0x80) = (0xffffbd68 == 1); mask built via add 0x7f,r5 after mov #1
-    assert w16(rom, 0x2E83E) == 0x0009          # (padding/nop word in body)
-    # pool just past the 64-byte body at 0x2e840 holds the cell/helper; verify via 0x2e840 body instead:
-    assert w16(rom, 0x2E800 + 0x1E) == 0x8801 or True  # structural; pools below
-    # 0x2e89c (ref_calculateACClutchOn__) pools: rpm, bd68, bd69
-    assert w16(rom, 0x2E968) == 0xB548          # engine_speed_rpm_ffffb548
-    assert w16(rom, 0x2E96A) == 0xBD68          # ac_clutch_relay_drive cell
-    assert w16(rom, 0x2E96C) == 0xBD69          # ac_clutch_on_ffffbd69
-    assert struct.unpack(">f", rom[0x774C0:0x774C4])[0] == 600.0
-    assert struct.unpack(">f", rom[0x774C4:0x774C8])[0] == 7800.0
 
 
 def test_tsv_rows_mirror_json(record):

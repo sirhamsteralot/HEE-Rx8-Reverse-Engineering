@@ -3,6 +3,7 @@
 | Date | What changed | Version |
 |------|--------------|---------|
 | 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; content unchanged) | 1 |
+| 2026-11-19 | Scope discipline: dropped the unrelated A/C-switch cross-link from §4.7 (no A/C content in this subsystem) | 2 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -398,6 +399,4 @@ electrical-load flag `high_load_flag` 0xffffb5b3 feeds idle control in
 DTC encoding in
 [`dtc_control_report.md`](../investigations/60E15120_N3J1E/dtc_control_report.md)
 (slots 0x7b/0x7c/0x7d → P2502/P2503/P2504); Mode 22 PIDs 0x0968/0x16e8/0x097c in
-[`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md);
-A/C switch input context in
-[`cooling_fan_control_report.md`](../investigations/60E15120_N3J1E/cooling_fan_control_report.md).
+[`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
