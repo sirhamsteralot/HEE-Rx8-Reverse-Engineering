@@ -304,6 +304,19 @@ and where artifacts live.
     (status word `0xffffbab0`); harness terminal 2E. Deliver a dedicated
     subsystem report for the expander and its input consumers, with labels
     and a review evidence folder.
+  - **C item 92 (open)** — **A/C compressor clutch control.** Mapped while
+    tracing the fuel pump port banks and split out of
+    [`docs/subsystem-logic/fuel_pump_control_report.md`](docs/subsystem-logic/fuel_pump_control_report.md)
+    §4.6: PJ7 (PJDR_W `0xfffff76c` bit 0x80, pkg pin 183, harness candidate
+    A/C relay 5AA) is driven by `ac_clutch_relay_drive_pj7[_diag]`
+    `0x2e800`/`0x2e840` from `ac_clutch_relay_drive` `0xffffbd68`, computed by
+    `ref_calculateACClutchOn__` `0x2e89c` from `ac_clutch_on` `0xffffbd69` with
+    rpm thresholds 600.0/7800.0 (ROM `0x774c0`/`0x774c4`); the on gate
+    `0x2e9a4` and the idle A/C clutch gate `0x165d6` are known. Label record
+    `data/labels/60E15120_N3J1E/ac_compressor_clutch_labels.json`; checks
+    `tests/test_ac_compressor_clutch.py`. Deliver a dedicated subsystem
+    report (clutch on/off logic, switch input, DTCs) with labels and a review
+    evidence folder.
   - **C item 65 (open)** — fold back **misfire detection / monitor** (item 29)
   - **C item 66 (open)** — fold back **emissions monitors beyond O2** (item 30)
   - **C item 67 (open)** — fold back **starting / cranking** (item 31)
@@ -427,6 +440,7 @@ flash before any read), not the test path.
 | D7 | open | 60E1B800 dual N3* strings |
 | D9 | open | BOOT CN400 pinout conflict — verify against Sh7055h.pdf before bench |
 | D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
+| D14 | open | `0xffffdfa0` is dual-labeled: `immo_diag_bit` in `accepted_ram_aliases.tsv` / the immobilizer report (cleared by `0x11c4`, tested by `ref_readImmoBit` `0x16b20`) vs `sbl_inactivity_counter` (u16) in [`docs/subsystem-logic/sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), where `0x11c4` zeroing it is dynamically proven in the emulator relock tests. `0x11c4` sits inside the SBL block (`0x1000–0x1fff`). Reconcile the alias (and the `0x11c4`/`0x16b20` rows) in one direction — likely SBL-side — and fold back into both reports |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.

@@ -35,8 +35,11 @@ Method, in order:
 
 Binary-level verification: [`rawbin_reverify_log.txt`](rawbin_reverify_log.txt)
 (34/34 pool/instruction/threshold checks against the raw ROM, SHA-256 pinned);
-label-level checks in `tests/test_fuel_pump_control.py` (8/8) and dynamic
-drive checks in `tests/test_fuel_pump_control_dynamic.py` (6/6).
+label-level checks in `tests/test_fuel_pump_control.py` (6/6) and dynamic
+drive checks in `tests/test_fuel_pump_control_dynamic.py` (3/3); the
+neighboring PD7/PE0/PJ7 items checked in
+`tests/test_starting_cranking.py`, `tests/test_throttle_dbw.py` and
+`tests/test_ac_compressor_clutch.py`.
 
 Limits: chip-pin → connector-terminal routing is board-level unresolved
 (candidates only); grace-counter periods not pinned to task periods; cross-ROM

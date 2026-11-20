@@ -3,6 +3,8 @@
 | Date | What changed | Version |
 |------|--------------|---------|
 | 2026-11-17 | Initial report | 1 |
+| 2026-11-19 | Scope discipline: non-immobilizer rows found while labeling (`0x169d4` cal-ID copy, `0x11c4`/`0xffffdfa0`) moved out of the memory map into §4.6; `0xffffdfa0` dual-label conflict with the SBL report recorded as ROADMAP D14 | 2 |
+| 2026-11-20 | `0x169d4` label fixed: inherited misnomer `ref_ImmoRelatedFaultSomething_` renamed to body-evidenced `cal_id_string_copy` in the label record and the accepted-alias TSV | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -311,9 +313,7 @@ Every address below can be checked directly in
 | 0x0000dbf6 | `can_rx_main_key_gated` | calls 0x3811c + 0x34ae2 |
 | 0x0000db58 | `can_tx_main_key_gated` | calls 0x380c8, clears c1d1 |
 | 0x0002556c | `ref_setImmoLight__` (immo_lamp_drive) | PEDR_W 0xfffff754 bits 0x40/0x20 |
-| 0x00016b20 | `ref_readImmoBit` (immo_diag_bit_check) | diag bit test → 0x16a1c(2) |
-| 0x000011c4 | `FUN_000011c4` (immo_diag_bit_clear) | writes 0 to 0xffffdfa0 (pool 0x1284) |
-| 0x000169d4 | `ref_ImmoRelatedFaultSomething_` | see §4.3 — actually copies the cal-ID string |
+| 0x00016b20 | `ref_readImmoBit` (immo_diag_bit_check) | diag bit test → 0x16a1c(2); the bit it tests is disputed — §4.6 |
 | 0x0005674a | `ref_runImmoRelatedCounter` (immo_counter_increment) | d1e2++ if d1e4==1, from 0x11534 |
 | 0x0000e2d4 | `FUN_0000e2d4` (fuel_cut_arbitration) | c1d0==0 → DAT_ffffa430 |= 3 |
 
@@ -351,7 +351,6 @@ Every address below can be checked directly in
 | 0xffffc4bf | `immo_rx_command_pending` | u8 | RX command pending flag |
 | 0xffffd1e2 | `immo_counter` / 0xffffd1e4 `immo_counter_enable` | u8 | immo counter (slow task) |
 | 0xffffd1ce | `security_unlocked_flag` | u8 | gates 0x375c0 |
-| 0xffffdfa0 | `immo_diag_bit` | u8 | diag bit (cleared by 0x11c4, tested by 0x16b20) |
 
 #### ROM tables / descriptors
 
@@ -379,11 +378,12 @@ and extended, not duplicated.
 
 ### 4.3 Corrections
 
-- `ref_ImmoRelatedFaultSomething_` (0x169d4) is an inherited misnomer: its body
-  copies the 16-byte calibration string `N3J1E_1W.Z05` to `0xffffdf70..df7f`
-  and sets `0xffffdf90 = 0xc` (called from boot task 0x1102a). It is not an
-  immobilizer fault handler; the `ref_` name is kept per the label ladder and
-  flagged in the label record.
+- `0x169d4` was inherited as `ref_ImmoRelatedFaultSomething_`, a misnomer: its
+  body copies the 16-byte calibration string `N3J1E_1W.Z05` to
+  `0xffffdf70..df7f` and sets `0xffffdf90 = 0xc` (called from boot task
+  `0x1102a`). It is not an immobilizer fault handler; the label record now
+  carries the body-evidenced alias `cal_id_string_copy` (the inherited `ref_`
+  name is kept in the evidence string).
 - The upstream def addresses for the immobilizer-disable tables were
   ROM-proven wrong for some ROMs before RX8Defs 39d98a0; the N3N5EB case
   remains open as discrepancy D13 (see
@@ -421,6 +421,23 @@ and extended, not duplicated.
   [`reviews/immobilizer/validation.json`](../investigations/60E15120_N3J1E/reviews/immobilizer/validation.json).
 
 ### 4.6 Limits
+
+Neighboring items mapped while tracing (out of scope here; one line each with
+key addresses — no body sections or memory-map rows above):
+
+- **`0x169d4` `cal_id_string_copy`** (inherited `ref_ImmoRelatedFaultSomething_`
+  was a misnomer, renamed per §4.3) — not an immobilizer fault handler: its body
+  copies the 16-byte calibration string
+  `N3J1E_1W.Z05` to `0xffffdf70..df7f` and sets `0xffffdf90 = 0xc` (called from
+  boot task `0x1102a`). Belongs to the calibration-ID / UDS surface — correction
+  recorded in §4.3, cross-link
+  [`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
+- **`0x11c4` / `0xffffdfa0`** — `0x11c4` sits inside the SBL block
+  (`0x1000–0x1fff`) and zeroes the u16 at `0xffffdfa0`; the SBL report
+  dynamically proves that cell as `sbl_inactivity_counter` (relock tests), so
+  the `immo_diag_bit` alias here conflicts — ROADMAP D14, cross-link
+  [`sbl_bootloader_report.md`](sbl_bootloader_report.md). `0x16b20`
+  `ref_readImmoBit` testing that bit remains immo-diag surface pending D14.
 
 - The keyless control module itself is external and not analyzed; the protocol
   is described from the PCM side only (which words are sent, compared,

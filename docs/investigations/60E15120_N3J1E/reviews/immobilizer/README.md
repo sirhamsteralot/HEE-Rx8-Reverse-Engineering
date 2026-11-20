@@ -61,9 +61,9 @@ the 0x041 buffer. Observed (asserted in the test):
 
 ## Notes / corrections
 
-- `ref_ImmoRelatedFaultSomething_` 0x169d4 is a misnomer (body copies the
-  cal-ID string `N3J1E_1W.Z05` to 0xffffdf70..df7f); flagged in the label
-  record, `ref_` name kept per the label ladder.
+- 0x169d4 was inherited as `ref_ImmoRelatedFaultSomething_`, a misnomer (body
+  copies the cal-ID string `N3J1E_1W.Z05` to 0xffffdf70..df7f); renamed to
+  `cal_id_string_copy` in the label record on that body evidence.
 - The per-ROM start-pattern addresses were already folded into the label
   records by the upstream-sync pass; this pass extends those records with the
   challenge/response analysis and does not duplicate them.

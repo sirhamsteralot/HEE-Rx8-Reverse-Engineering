@@ -165,15 +165,15 @@
       "rom_claims": 0
     },
     "subsystem-logic/immobilizer_report.md": {
-      "fn_checked": 37,
-      "ram_checked": 31,
-      "rom_refs": 73,
+      "fn_checked": 35,
+      "ram_checked": 30,
+      "rom_refs": 70,
       "rom_claims": 0
     },
     "subsystem-logic/knock_control_report.md": {
-      "fn_checked": 48,
-      "ram_checked": 63,
-      "rom_refs": 138,
+      "fn_checked": 37,
+      "ram_checked": 53,
+      "rom_refs": 110,
       "rom_claims": 0
     },
     "subsystem-logic/sbl_bootloader_report.md": {

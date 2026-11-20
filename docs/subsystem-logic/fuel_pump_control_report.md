@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-19 | Initial report | 1 |
 | 2026-11-19 | §2.4: spell out the fuel-demand threshold term (`0xffffbdd5`) and its inputs, cross-link the load/fueling derivation | 2 |
+| 2026-11-19 | Scope discipline: neighboring relay outputs (PD7 starter, PE0 DBW, PJ7 A/C clutch) moved out of the body and memory map into §4.6 with ROADMAP cross-links | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -124,19 +125,18 @@ at key-on, during cranking and while running, and low at key-off
   raw request through unless a diagnostic output test (modes 5/0xa on the
   `0xffffd3xx` state machine) is active.
 
-### 2.5 Related relay outputs found while tracing (and one correction)
+### 2.5 The two pump outputs
 
 | Bit | pkg pin | Drive | Flag chain | Harness candidate |
 |-----|---------|-------|------------|-------------------|
 | PE2 (PEDR 0x4) | 9 | `0x2f890` / `0x2f8ce` | `0xffffbdd8` ← `0x2fc00` (key-on + grace) | **fuel pump relay 5P/5L** |
 | PE1 (PEDR 0x2) | 8 | `0x2f8ce` | `0xffffbdbc` ← `0x2fb20` (fuel demand / injectors-off) | fuel pump speed control 4M |
 
-Neighboring relay outputs on the same port banks (PD7 starter relay via
-`0x3a0ec` from `0xffffcfb6`, PE0 DBW relay via `0x3a0ec` from `0xffffcfb7`,
-PJ7 via `0x2e800`/`0x2e840` from `0xffffbd68`) were traced while mapping the
-port writes but are not part of the fuel pump chain; the PJ7 entry corrects an
-earlier note that called it a fuel-pump candidate — it is the **A/C clutch
-relay** (see §4.3).
+Other relay outputs on the same port banks were mapped while tracing the port
+writes (PD7, PE0, PJ7); they are not part of the fuel pump chain and are
+recorded in §4.6 with their key addresses and ROADMAP items. The PJ7 entry
+also corrects an earlier note that called it a fuel-pump candidate — it is
+the **A/C clutch relay** (see §4.3).
 
 ## 3. Technical pseudocode
 
@@ -174,10 +174,6 @@ Functions:
 | `0x0002fbf0` | `fuel_pump_request_set` | `0xffffbdd8 = 1` |
 | `0x0002fc00` | `fuel_pump_request_calc` | computes `0xffffbdd8` from key-on + grace counters |
 | `0x0002fb20` | `ref_fuelingAddOBDControlMode_` | computes `0xffffbdbc` (speed request) |
-| `0x0002e800` / `0x0002e840` | `ac_clutch_relay_drive_pj7[_diag]` | PJDR bit 0x80 (PJ7) = `0xffffbd68` (A/C clutch) |
-| `0x0002e89c` | `ref_calculateACClutchOn__` | computes `0xffffbd68` from `0xffffbd69` + rpm |
-| `0x0003a0ec` | `relay_output_pair_pd7_pe0` | PD7 = `0xffffcfb6`; PE0 = (`0xffffcfb7` == 0) |
-| `0x000532d0` | `cranking_in_progress_calc` | computes `0xffffd15c` (feeds PD7 chain) |
 
 RAM:
 
@@ -185,16 +181,11 @@ RAM:
 |---------|-------|------|-----------|---------|
 | `0xffffbdd8` | `fuel_pump_relay_request` | u8 | `0x2fc00`, `0x2fbf0` | `0x2f890`, `0x2f8ce` → PE2 |
 | `0xffffbdbc` | `fuel_pump_speed_request` | u8 | `0x2fb20` | `0x2f8ce` → PE1 |
-| `0xffffbd68` | `ac_clutch_relay_drive` | u8 | `0x2e89c` | `0x2e800`, `0x2e840` → PJ7 |
-| `0xffffd15c` | `cranking_in_progress` | u8 | `0x532d0` | `0x4ed3c` → `0xffffcfbc` |
-| `0xffffcfb6` | `pd7_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PD7 |
-| `0xffffcfb7` | `pe0_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PE0 (inverted) |
-| `0xffffcfbc` | `pd7_relay_condition` | u8 | `0x4ed3c` | `0x4ef86` |
 
 ### 4.2 Labeling applied
 
-`data/labels/60E15120_N3J1E/fuel_pump_control_labels.json` (9 function +
-7 RAM aliases, each with raw-bin evidence); mirrored as rows in
+`data/labels/60E15120_N3J1E/fuel_pump_control_labels.json` (5 function +
+2 RAM aliases, each with raw-bin evidence); mirrored as rows in
 [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv)
 and
 [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv).
@@ -222,13 +213,34 @@ and
   and `tests/test_fuel_pump_control.py` (8/8 pass).
 - Dynamic (SH-2E emulator, profile `60E15120_N3J1E`): PE2 follows
   `0xffffbdd8` (on at key-on/cranking/running, off at key-off), PE1 follows
-  `0xffffbdbc`, PD7/PE0 follow `0xffffcfb6`/`0xffffcfb7`, PD7 high only while
-  cranking via `0xffffd15c`, PJ7 follows `0xffffbd68` —
-  `tests/test_fuel_pump_control_dynamic.py` (6/6 pass).
+  `0xffffbdbc` —
+  `tests/test_fuel_pump_control_dynamic.py` (3/3 pass). The neighboring
+  PD7/PE0/PJ7 drives were exercised in the same emulator runs and are covered
+  by their own subsystem tests (see §4.6).
 - Pipeline validators + full pytest suite run from the repo root (see
   [`reviews/fuel_pump_control/validation.json`](../investigations/60E15120_N3J1E/reviews/fuel_pump_control/validation.json)).
 
 ### 4.6 Limits
+
+Neighboring items mapped while tracing (out of scope here; one line each with
+key addresses — no body sections or memory-map rows above):
+
+- **A/C compressor clutch relay** — PJ7 (PJDR `0xfffff76c` bit 0x80) driven by
+  `0x2e800` / `0x2e840` from `ac_clutch_relay_drive` `0xffffbd68` (computed by
+  `0x2e89c` from `0xffffbd69` + rpm thresholds at ROM `0x774c0`/`0x774c4`);
+  harness candidate terminal 5AA. ROADMAP C item 92; label record
+  [`ac_compressor_clutch_labels.json`](../../data/labels/60E15120_N3J1E/ac_compressor_clutch_labels.json),
+  tests `tests/test_ac_compressor_clutch.py`.
+- **Starter relay (PD7)** and **cranking detection** — PD7 (PDDR `0xfffff746`
+  bit 0x80) = `0xffffcfb6` via `0x3a0ec`; `0xffffcfb6` ← `0xffffcfbc` (`0x4ed3c`)
+  ← `cranking_in_progress` `0xffffd15c` (`0x532d0`); harness candidate 5A.
+  ROADMAP C item 31; label record
+  [`starting_cranking_labels.json`](../../data/labels/60E15120_N3J1E/starting_cranking_labels.json),
+  tests `tests/test_starting_cranking.py`.
+- **DBW relay (PE0)** — PE0 (PEDR bit 0x1) = (`0xffffcfb7` == 0), same drive
+  function `0x3a0ec`; harness candidate 4C. ROADMAP C item 27; label record
+  [`throttle_dbw_labels.json`](../../data/labels/60E15120_N3J1E/throttle_dbw_labels.json),
+  tests `tests/test_throttle_dbw.py`.
 
 - Package-pin → connector-terminal routing is board-level unresolved in this
   repo; the 5P/5L/4M/5A/4C/5AA associations above are candidate associations
