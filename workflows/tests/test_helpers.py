@@ -8,6 +8,7 @@ from worker.workflows.upstream_submodule_sync import (
     SubmoduleChange,
     SyncInput,
     _content_to_text,
+    ai_audit,
     audit_prompt,
     branch_name_for,
     pr_body_for,
@@ -73,3 +74,37 @@ def test_content_to_text_skips_non_text_chunks():
     assert _content_to_text([think]) == ""
     assert _content_to_text("plain string") == "plain string"
     assert _content_to_text(None) == ""
+
+
+async def test_ai_audit_joins_only_text_chunks(monkeypatch):
+    import mistralai.client
+    from mistralai.client.models import TextChunk, ThinkChunk
+
+    think = ThinkChunk(
+        type="thinking",
+        thinking=[{"type": "text", "text": "internal reasoning"}],
+        signature="sig",
+        closed=True,
+    )
+
+    class _Message:
+        content = [think, TextChunk(type="text", text="audit"), TextChunk(type="text", text=" report")]
+
+    class _Choice:
+        message = _Message()
+
+    class _Response:
+        choices = [_Choice()]
+
+    class _Chat:
+        def complete(self, **kwargs):
+            return _Response()
+
+    class _FakeMistral:
+        def __init__(self, *args, **kwargs):
+            self.chat = _Chat()
+
+    monkeypatch.setattr(mistralai.client, "Mistral", _FakeMistral)
+
+    report = await ai_audit(SyncInput(), [_change()], "our context")
+    assert report == "audit report"
