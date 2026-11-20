@@ -31,3 +31,12 @@ Editor tables cannot represent arbitrary functions or RAM symbols. Those finding
 `definitions_before_review.zip` preserves both original XML files. The generation script is `reverse_engineered/60E15120_N3J1E/scripts/extend_definitions.py` in the original workspace. It refuses repeated application to an already-extended XML; restore a backup before regenerating. (The defs flow is owned by
 [`utilities/scripts/defs-merge/`](../../../../../utilities/scripts/defs-merge/);
 the outputs of the original generation are preserved here and in `data/definitions/`.)
+
+## Upstream sync records
+
+- [`upstream-sync-validation.md`](upstream-sync-validation.md) — RX8Defs
+  `1b3aea2` → `39d98a0` + MRP `b243b35` sync (DTC switch rework, immobilizer
+  patch addresses, fold-in into docs/labels; §8 points onward).
+- [`upstream-sync-d4140dc.md`](upstream-sync-d4140dc.md) — RX8Defs `39d98a0` →
+  `d4140dc` sync (duplicate-table cleanup + uncategorized-table renames,
+  collision audit, snapshot re-pin, per-ROM def regeneration, validation).

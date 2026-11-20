@@ -62,10 +62,11 @@ for their content; our repo references them rather than duplicating files:
   `Data_binaries/` (RAM/EEPROM/IC captures), `Ghidra_Archives/` (`.gar`),
   `Utilities/` (upstream patcher scripts)
 - `submodules/RX8Defs` — github.com/equinox311/RX8Defs, pinned at
-  `39d98a0a87faa1ea3225f7122a1ac2b9d620ff9f`: upstream RomRaider/ECUFlash ECU +
+  `d4140dc244e44841c1eb7e3fd114631b384f5886`: upstream RomRaider/ECUFlash ECU +
   logger XML definitions, referenced in place — no promoted copies (rule 4b);
   the one differing snapshot is `data/definitions/romraider/upstream-rx8defs/rx8_defs.xml`
-  @ upstream `ff5ab4f`, the 60E15120 merge base — see
+  @ upstream `d4140dc` (flex-fuel strip applied; the 60E15120 merge base
+  `ff5ab4f` lives in the merged def) — see
   [`../../data/definitions/README.md`](../../data/definitions/README.md);
   commit hashes are cited as merge provenance — never rewrite that history
 - `submodules/Rx8Man` — github.com/Rx8Man/Rx8Man, pinned at
