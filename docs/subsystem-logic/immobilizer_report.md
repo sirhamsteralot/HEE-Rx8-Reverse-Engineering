@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-17 | Initial report | 1 |
 | 2026-11-19 | Scope discipline: non-immobilizer rows found while labeling (`0x169d4` cal-ID copy, `0x11c4`/`0xffffdfa0`) moved out of the memory map into §4.6; `0xffffdfa0` dual-label conflict with the SBL report recorded as ROADMAP D14 | 2 |
+| 2026-11-20 | `0x169d4` label fixed: inherited misnomer `ref_ImmoRelatedFaultSomething_` renamed to body-evidenced `cal_id_string_copy` in the label record and the accepted-alias TSV | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -377,11 +378,12 @@ and extended, not duplicated.
 
 ### 4.3 Corrections
 
-- `ref_ImmoRelatedFaultSomething_` (0x169d4) is an inherited misnomer: its body
-  copies the 16-byte calibration string `N3J1E_1W.Z05` to `0xffffdf70..df7f`
-  and sets `0xffffdf90 = 0xc` (called from boot task 0x1102a). It is not an
-  immobilizer fault handler; the `ref_` name is kept per the label ladder and
-  flagged in the label record.
+- `0x169d4` was inherited as `ref_ImmoRelatedFaultSomething_`, a misnomer: its
+  body copies the 16-byte calibration string `N3J1E_1W.Z05` to
+  `0xffffdf70..df7f` and sets `0xffffdf90 = 0xc` (called from boot task
+  `0x1102a`). It is not an immobilizer fault handler; the label record now
+  carries the body-evidenced alias `cal_id_string_copy` (the inherited `ref_`
+  name is kept in the evidence string).
 - The upstream def addresses for the immobilizer-disable tables were
   ROM-proven wrong for some ROMs before RX8Defs 39d98a0; the N3N5EB case
   remains open as discrepancy D13 (see
@@ -423,8 +425,9 @@ and extended, not duplicated.
 Neighboring items mapped while tracing (out of scope here; one line each with
 key addresses — no body sections or memory-map rows above):
 
-- **`0x169d4` `ref_ImmoRelatedFaultSomething_`** — inherited misnomer, not an
-  immobilizer fault handler: its body copies the 16-byte calibration string
+- **`0x169d4` `cal_id_string_copy`** (inherited `ref_ImmoRelatedFaultSomething_`
+  was a misnomer, renamed per §4.3) — not an immobilizer fault handler: its body
+  copies the 16-byte calibration string
   `N3J1E_1W.Z05` to `0xffffdf70..df7f` and sets `0xffffdf90 = 0xc` (called from
   boot task `0x1102a`). Belongs to the calibration-ID / UDS surface — correction
   recorded in §4.3, cross-link
