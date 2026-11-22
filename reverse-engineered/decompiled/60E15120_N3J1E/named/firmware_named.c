@@ -12955,6 +12955,12 @@ uint ref_getIgnitionDwellTime_00009490(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_adc_raw_to_volts [high]: AN4/AN5 raw (0xffff9eec/0xffff9eee from the 0x6884 sweep) range-checked against pool words 0x6eeb0=0xf5c3 (upper) / 0x6eeb4=0x11ec (lower), faults 0xffffa110/a111; a108 = 0.0f (0x6eec0) + raw * 6.341f (0x6eeb8=0x40cae979) * 7.6294e-05f; a10c = 3.488f (0x6eec4=0x405f3b64) + raw * 6.341 * 7.6294e-05. Called from 0x60c8 ref_getSensorStuff__ (pool 0x6250).
+ * RAM 0xffff9eec adc_an4_pedal_raw (uint16): ADDR4H (0xfffff808) latched here by the 0x6884 ADC sweep (pool 0x6a1c=0xffff9ee4 base, +2n); read by 0x18f60 (pool 0x19058=0xffff9eec) into a9c4 (pool 0x1904a). Pedal APP1 raw. Harness: accelerator pedal sensor terminals 4X/5AE/5C/4Y/5AB/5F (B1-14 A-F); pin->terminal is board routing.
+ * RAM 0xffff9eee adc_an5_pedal_raw (uint16): ADDR5H latched at 0xffff9eee by the 0x6884 sweep; pedal APP2 raw; feeds a9c6 via 0x18fa4.
+ * RAM 0xffffa108 pedal_1_scaled_volts (float): a108 = 0.0f + AN4 raw * 6.341f (0x6eeb8) * 7.6294e-05f (0x94f0); range-checked [0x11ec, 0xf5c3) with faults a110/a111 -> DTC 0x66/0x67 (TP... pedal channel 1).
+ */
 /* ROM address: 0x000094f0; body bytes: 12; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000094f0 (12 bytes). Names prefixed ref_
@@ -15235,24 +15241,6 @@ void FUN_0000b1da(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [medium]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [medium]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [medium]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [medium]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [medium]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * ch7d_pwm_off_init [high]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
- */
-/* [ADDITIONAL SOURCE REVIEW]
  * ch7d_pwm_off_init [high]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
  */
 /* ROM address: 0x0000b23c; body bytes: 84; decompiled_with_warnings */
@@ -15306,6 +15294,7 @@ undefined4 FUN_0000b290(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_write [high]: 0xb2c0(ch, fr4): a210[ch] = (u32)(fr4 * 65536.0f) (pools 0xb37c=0xffffa210, 0xb390=0x47800000); if a214[ch]==1 and ch==0: BFR7D 0xfffff596 = rx8_mul_s32_shift16_saturate(a210[0], 0xffff9f50) via 0x231c (pools 0xb380=0xffffa214, 0xb374=0xf596, 0xb38c=0xffff9f50, 0xb394=0x231c). Sole caller 0x25198 (only ROM pointer word to 0xb2c0 is 0x251cc).
  * RAM 0xffffa210 ch7d_pwm_duty_q16 (uint32): Duty percent * 65536, written by 0xb2c0 (from 0x25198, clamp 0-100% of DAT_ffffb354); BFR7D = duty*32000>>16 (0xb308/0xb2c0).
  */
 /* ROM address: 0x0000b2c0; body bytes: 72; decompiled */
@@ -21370,6 +21359,9 @@ void FUN_000114d0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dbw_task9_batch [high]: Task-table rec[9] @ROM 0x4a20 entry 0x64ba tail-calls 0x1150e (pool 0x656c=0x0001150e at 0x64d4); batch pool 0x116b8=0x000199d4 (pedal/TP sensor batch), 0x116c8=0x00022f86 (DBW control batch), 0x116e4=0x00021b4c (throttle torque batch) — words read from ROM, jsr sites in disasm.
+ */
 /* ROM address: 0x0001150e; body bytes: 38; decompiled */
 
 void dbw_task9_batch(void)
@@ -27739,6 +27731,10 @@ void FUN_00018f44(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_volts_clamp_latch [high]: a9c4 = DAT_ffff9eec (pool 0x19058=0xffff9eec, 0x1904a=0x0000a9c4), a9c8 = 0xffffa112, a99c = rx8_min_float(25.0f @0x6eed0 via pool 0x19068, a108 @0xffffa108 pool 0x19064) via 0x23f4 (pool 0x1906c); called from 0x199d4.
+ * RAM 0xffffa99c pedal_1_volts_clamped25 (float): a99c = rx8_min_float(25.0f, a108) in 0x18f60 (pools 0x19064=0xffffa108, 0x19068=0x6eed0, 0x1906c=0x23f4, store 0x19042=0xa99c).
+ */
 /* ROM address: 0x00018f60; body bytes: 38; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00019b5c (38 bytes). Names prefixed ref_
@@ -27901,6 +27897,10 @@ uint FUN_00018fe8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_learned_zero_subtract [high]: a9ac = rx8_max_float(0.0, a99c - readValue_float(0xffff8068)) and a9b0 likewise with 0xffff8070 (pools 0x19386=0x8068, 0x19388=0x8070/0x8078, 0x1938c=0xa99c/0xa9a4, helpers 0x193bc=0x3dc22 ref_readValue_float, 0x19394=0x23e4 rx8_max_float, outputs 0x19390=0xa9ac/0xa9b0). Learned default 0x412db22d=10.856 written by 0x18fe8.
+ * RAM 0xffffa9ac pedal_1_volts_zeroed (float): a9ac = max(0, a99c - learned zero 0xffff8068) in 0x1933a (pools 0x19386=0x8068, 0x1938c=0xa99c, 0x19394=0x23e4, store 0x19390=0xa9ac).
+ */
 /* ROM address: 0x0001933a; body bytes: 76; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00019f36 (76 bytes). Names prefixed ref_
@@ -28247,6 +28247,9 @@ void FUN_00019950(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_tp_sensor_batch [high]: Sensor/percent batch called from 0x1150e (pool 0x116b8=0x000199d4): runs 0x18f60/0x18fa4/0x18fe8/0x1933a/0x193c4 (pedal AN4/AN5 -> volts -> percent -> demand), 0x1b08e/0x1b14c/0x1b940 (plate AN18/AN19 -> TP volts -> plate position), learning/plausibility 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x1bcae (callgraph.tsv rows for caller 000199d4).
+ */
 /* ROM address: 0x000199d4; body bytes: 204; decompiled */
 
 void pedal_tp_sensor_batch(void)
@@ -29495,6 +29498,10 @@ void FUN_0001b03e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_tp1_volts_latch [high]: ad5c = DAT_ffff9f08 (AN18 raw; pools 0x1b12c=0xffff9f08, 0x1b0e6=0xad5c), ad30/ad54 from 0xffffa218/0xffffa222 (pools 0x1b138=0xffffa218, 0x1b130=0xffffa222, 0x1b0f0=0xad30/0xad54); filter 0x23b0 via pool 0x1b148. Called from 0x199d4.
+ * RAM 0xffff9f08 adc_an18_plate_tp1_raw (uint16): ADDR18H latched here by the 0x6884 sweep; read by 0x1b08e (pool 0x1b12c=0xffff9f08) into ad5c (pool 0x1b0e6) — throttle PLATE TP1 volts (PID 0x0011 via 0x5553e, PID 0x1154 raw). Harness: throttle body TP signal 1J (B1-19 A).
+ */
 /* ROM address: 0x0001b08e; body bytes: 70; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001bb3e (70 bytes). Names prefixed ref_
@@ -29517,6 +29524,10 @@ void plate_tp1_volts_latch(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_tp2_volts_latch [high]: ad5e = DAT_ffff9f0a (AN19 raw; pools 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e/0xad34), ad34 from 0xffffa21c/0xffffa224 (pools 0x1b1dc=0xffffa21c, 0x1b1d4=0xffffa224). Called from 0x199d4.
+ * RAM 0xffff9f0a adc_an19_plate_tp2_raw (uint16): ADDR19H latched here by the 0x6884 sweep; read by 0x1b14c (pool 0x1b1d0=0xffff9f0a) into ad5e (pool 0x1b1c0) — throttle PLATE TP2 volts. Harness: TP signal 1M (B1-19 D).
+ */
 /* ROM address: 0x0001b14c; body bytes: 26; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001bbfc (26 bytes). Names prefixed ref_
@@ -34104,6 +34115,10 @@ uint ref_throttlePlateControl_Related(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_gear_mode_flags [high]: Sets b2cc/b2cd/b2ce from AT gear bytes 0xffffbc41/bc42/bc43 (and automatic_transmission_ffffb534); calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c.
+ * RAM 0xffffb2cc throttle_gear_mode_1_2 (uint8): Gear-mode flags b2cc/b2cd/b2ce set by 0x21970 from AT bytes bc41/bc42/bc43 + automatic_transmission b534; select the pedal-to-plate map (0x228dc) and the 0x21970 branch.
+ */
 /* ROM address: 0x00021970; body bytes: 202; decompiled */
 
 undefined4 * throttle_gear_mode_flags(void)
@@ -34232,6 +34247,9 @@ void FUN_00021b48(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_torque_request_batch [high]: Throttle torque batch from task rec[18] 0x64e8 -> 0x11534 -> 0x1150e (pool 0x116e4=0x00021b4c); mask 0x10; calls 0x21970 (gear mode flags), 0x218c4 ref_throttlePlateControl_Related (DSC torque-request limit), 0x21ae8 ref_getThrottleBasedTorque_Related (callgraph.tsv rows for caller 00021b4c).
+ */
 /* ROM address: 0x00021b4c; body bytes: 36; decompiled */
 
 void throttle_torque_request_batch(void)
@@ -34742,6 +34760,9 @@ void FUN_00022538(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_batch [high]: Batch called from 0x118d0 (task[13] 0x65b2 -> pool 0x66d8=0x000118d0 -> pool 0x11a88=0x0002253c): mask 0x10, calls 0x22574, 0x22630, 0x25198 (pools 0x22560=0x3920, 0x22564=0x22574, 0x22568=0x22630, 0x2256c=0x25198).
+ */
 /* ROM address: 0x0002253c; body bytes: 36; decompiled */
 
 void ch7d_pwm_duty_batch(void)
@@ -34764,6 +34785,11 @@ void ch7d_pwm_duty_batch(void)
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_enable_condition [high]: b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= tbl 0x6a340(coolant-model delta b35c, b386) && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c.
+ * RAM 0xffffb358 ch7d_pwm_enable (uint8): Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear.
+ * RAM 0xffffcd70 throttle_fault_latch (uint8): Stuck-duty latch set by 0x4a11c when monitors 0x4162e/0x416bc see b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0).
  */
 /* ROM address: 0x00022574; body bytes: 188; decompiled */
 
@@ -34816,6 +34842,10 @@ uint ch7d_pwm_enable_condition(void)
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_control_loop [high]: Closed-loop duty b354 (0-100%): PID-ish on 0xffffaa78 (filtered AN11/AN23 pair ratio) — P (aa78-30.0f @0x7355c)*4.5f (@0x73550), I b364 += (aa78-30)*0.1875f (@0x73554), D (b36c-aa78)*0.75f (@0x73558), hysteresis 39/44/40/45 -> b389/b38a (@0x7354c/0x73548); feedforward/limit tbls 0x6a2cc/0x6a2f4 (aa78), 0x6a324 (rpm, maf aa38), 0x6a2e0 (battery) -> b360 = b378*min(b370,b374); timer b368 -> tbl 0x6a308; b354=0 when b358==0. Called from 0x2253c.
+ * RAM 0xffffb354 ch7d_pwm_duty_percent (float): 0-100% PWM duty computed by 0x22630 (PID loop on 0xffffaa78, limit b360, enable b358 -> 0); read by 0x25198 (clamp/100 -> b570 -> 0xb2c0) and stall monitors 0x4162e/0x416bc.
  */
 /* ROM address: 0x00022630; body bytes: 442; decompiled */
 
@@ -34907,6 +34937,10 @@ void FUN_000228d4(void)
  * Descriptor 0x0006a490: Throttle Pedal to Throttle Plate Request - Gear 5/6 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a4ac: Throttle Pedal to Throttle Plate Request - Gear 3/4 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_pedal_to_plate_request_map [high]: 3D lookup lookup_3d_descriptor_scaled(rpm 0xffffb548, demand 0xffffa9bc, tbl) with gear flags b2cc/b2cd/b2ce selecting descriptors 0x6a458 (1/2), 0x6a474 (neutral), 0x6a490 (5/6), 0x6a4ac (3/4) (pools 0x229ca=0xa9bc, 0x229cc=0xb548/0xb2cc, 0x229d0=0xb2cd/0xb2ce, 0x229dc=0x6a458, 0x229e0=0x6a474, 0x229e4=0x6a490, 0x229e8=0x6a4ac); result clamped [0, 84.0f @0x7372c via pool 0x229f0] by 0x2404 (pool 0x229f4) into 0xffffb398 (pool 0x229ec) with 12-deep history shift (b3ec..b3c4, pool 0x229f8=0xffffb3ec). Called from batch 0x22f86.
+ * RAM 0xffffb398 throttle_plate_request (float): Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-deep history b3c4..b398. Written by 0x228dc.
+ */
 /* ROM address: 0x000228dc; body bytes: 236; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00022950) */
@@ -34986,6 +35020,9 @@ LAB_00022932:
  * Suggested interpretation: inferred_update_throttle_plate_request_filter.
  * Confidence: filter mechanics verified; throttle and gear meanings partly upstream.
  * Descriptors 6a354, 6a3cc, 6a3e0, 6a3f4, 6a408 are RPM-indexed in this function, including indirect puVar5 selection missed by the old direct-call inventory. 6a3cc/6a3e0 set ffffb3dc, compared to ffffb38c with 2.0 hysteresis. 6a3f4/6a408 supply ffffb3f0; ffffb3e0 sums it with coolant correction ffffb3d8. Final coefficient ffffb3d0 is clamped and used by rx8_first_order_filter(ffffb3cc, ffffb38c, coefficient, tolerance), then bounded by ffffb2c4. Exact gear-flag identities and increase/decrease naming are not independently established.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_demand_filter_coeffs [high]: b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86.
  */
 /* ROM address: 0x00022a14; body bytes: 646; decompiled */
 
@@ -35132,6 +35169,9 @@ LAB_00022c9a:
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_base_position_filter [high]: b390 = first_order_filter(b38c, b390, 0.25, 1e-5); b394 = (b38c <= 2.0). Called from batch 0x22f86.
+ */
 /* ROM address: 0x00022d26; body bytes: 58; decompiled */
 
 undefined4 throttle_base_position_filter(void)
@@ -35153,6 +35193,11 @@ undefined4 throttle_base_position_filter(void)
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_servo_override [high]: Servo/homing override in batch 0x22f86. dir b400 = (b4b0 >= readValue_float(0xffff807c, default 15.0f @0x6f438)+0.5f @0x747b8) with hysteresis; mode byte ccbc; duty b3f8: mode!=1 -> 0.0; mode==1 && b401==0 -> min(b410+learned, learned+0.5); else decay max(5.0f @0x747bc, b3f8-0.05f @0x747c0) when counters b3fc/b3fe > 1. Pools 0x22e9e-0x22f18 verified: 0x22ea0=0xb4b0, 0x22ea2=0xccbc, 0x22ea4=0xb3f8, 0x22ea6=0xb410, 0x22ebc=0xffffb400, 0x22ec0=0xffffb3fc, 0x22ec4=0xffffb3fe, 0x22ec8/0x22f18=0xffffb401.
+ * RAM 0xffffb3f8 throttle_servo_override_duty (float): Servo/homing override duty float written by 0x22db4 (pool 0x22ea4=0xb3f8); 0.0 when mode ccbc!=1; decay max(5.0, b3f8-0.05) with counters b3fc/b3fe; read by 0x231f0/0x233ec (mode ccbb/ccbc branches).
+ * RAM 0xffffb400 throttle_servo_direction (uint8): Direction byte written by 0x22db4 (pool 0x22ebc=0xffffb400): 1 when target b4b0 >= learned 0xffff807c + 0.5f. No other reader found in ROM (whole-ROM pool scan).
  */
 /* ROM address: 0x00022db4; body bytes: 274; decompiled */
 
@@ -35275,6 +35320,9 @@ void jump_to_FUN_000486a0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dbw_control_batch [high]: DBW control batch from 0x1150e (pool 0x116c8=0x00022f86), mask 0x10 around two call groups: 0x474fc (home offset cc88), 0x22f1c, 0x48558, then 0x22db4, 0x233ec, 0x231f0, 0x23558, 0x228dc, 0x22a14, 0x22d26, relay_hold_output_pd11 0x251d0 (callgraph.tsv rows for caller 00022f86).
+ */
 /* ROM address: 0x00022f86; body bytes: 240; decompiled */
 
 void dbw_control_batch(void)
@@ -35402,6 +35450,9 @@ undefined2 * FUN_00023190(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a518: Table 2D - 331 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * learned_pedal_value_calc [high]: b40c = clamp(arg0, 0, readValue_float(0xffff808c, default 110.0f=0x42de0000)); arg0 = b404+learned807c (ccbb), b3f8 (ccbc), cc88+learned (ccbd), else b410+learned807c; fault path b423==1 -> b40c = 99.0. rpm gates b435 (>=500/300 rpm), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86.
+ */
 /* ROM address: 0x000231f0; body bytes: 436; decompiled */
 
 undefined4 learned_pedal_value_calc(void)
@@ -35488,6 +35539,10 @@ undefined4 learned_pedal_value_calc(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_target_plate_position [high]: Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) (raw counts, PIDs 0x004c/0x091a). Called from batch 0x22f86.
+ * RAM 0xffffb424 throttle_target_plate_percent (float): Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); converted to raw counts b410 = 0x5ccb4(b424).
+ */
 /* ROM address: 0x000233ec; body bytes: 300; decompiled */
 
 void throttle_target_plate_position(void)
@@ -35545,6 +35600,9 @@ void throttle_target_plate_position(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_position_delta_calc [high]: b414 = b410 - b428 (0.0 when ccc9 set); b428 = b410. Called from batch 0x22f86.
+ */
 /* ROM address: 0x00023558; body bytes: 38; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00023dcc (38 bytes). Names prefixed ref_
@@ -36751,6 +36809,9 @@ void FUN_00025120(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_ratio [high]: b570 = clamp(b354, 0, 100.0f) / 100.0f (pools 0x251c0=0xb354, 0x251c2=0xb570, 0x251c4=0x42c80000, helper 0x251c8=0x2404), then tail jmp 0xb2c0 (pool 0x251cc) with r4=0. Called from 0x2253c.
+ */
 /* ROM address: 0x00025198; body bytes: 40; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00025a20 (40 bytes). Names prefixed ref_
@@ -50357,6 +50418,10 @@ void FUN_00033e88(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_range_high_fault [high]: c108 = 1 when ad48 (plate % of 84) >= 200.0f (ROM 0x79be0=0x43480000), clear hysteresis 196.48 = 200.0 - 3.52f (ROM 0x79be4=0x406147ae); pools 0x33f6a=0xad48, 0x33f6c=0xc108. Called from fueling_main_task 0x20e40; consumers 0x33dc8/0x34230 kill accel enrichment.
+ * RAM 0xffffc108 tp_range_high_fault (uint8): Set by 0x33e98 when plate percent ad48 >= 200.0 (hyst 196.48); consumers 0x33dc8/0x34230 zero the accel-enrichment accumulators c0c8/c104.
+ */
 /* ROM address: 0x00033e98; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000345c4 (44 bytes). Names prefixed ref_
@@ -65385,6 +65450,11 @@ undefined4 FUN_0004591a(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * tp_correlation_fault_check [high]: TP1/TP2 correlation: |a9ac - a9b0| < thr -> good counter cbf2, else bad counter cbee; thr = 3.5f (ROM 0x7c77c=0x40600000, via pool 0x45a00) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375, pool 0x45acc); cbf2 > 0x18 -> cbec=1; cbee > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
+ * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when TP1/TP2 bad-correlation counter cbee > 0x1c -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
+ * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when TP1/TP2 good-correlation counter cbf2 > 0x18 (pool 0x45ad0=0xffffcbee).
+ */
 /* ROM address: 0x0004595a; body bytes: 290; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000449e6 (118 bytes). Names prefixed ref_
