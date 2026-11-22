@@ -69,6 +69,15 @@ Everything that backs parts 1–3 lives in this section.
 ### 4.1 Memory map (mandatory)
 
 Function (ROM address), RAM (`0xffff…`) and ROM table / literal-pool tables.
+Every row is machine-checked by
+[`validate_reports.py`](../../utilities/scripts/rx8-pcm-pipeline/validate_reports.py),
+which classifies the address in the first cell by its own value and resolves the
+name in the second cell to a tracked alias. A row whose name resolves to nothing
+fails the run: commit the evidence with the label record, or declare the address
+in [`report_map_baseline.json`](../../utilities/scripts/rx8-pcm-pipeline/report_map_baseline.json)
+when no tracked alias exists yet. Row forms, the map-scope rule and the ledger
+semantics are documented with the checker:
+[pipeline README §Report map check](../../utilities/scripts/rx8-pcm-pipeline/README.md#report-map-check).
 
 ### 4.2 Labeling applied
 
