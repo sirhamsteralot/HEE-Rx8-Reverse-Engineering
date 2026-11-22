@@ -230,6 +230,37 @@ migrating.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests.
 
+- **C item 93 (open)** — **report accuracy audit (binary-level re-derivation).**
+  The pipeline validators keep report hashes, sections and prose shapes green,
+  but they do not re-derive numbers: a branch polarity, an access width, a
+  threshold or a caller attribution can be wrong in a report that passes every
+  check. Re-deriving one of them
+  ([`fuel_pump_control_report.md`](docs/subsystem-logic/fuel_pump_control_report.md))
+  against the disassembly turned up twelve wrong statements — the flag prime at
+  `0x2f948` attributed to a periodic task instead of the start-up sequence, an
+  off-by-one grace window (`bddc <= 0x3e`, `cmp/hi` at `0x2fc84`), `bde0`
+  attributed to `0x2fc00` instead of `0x2fcac`, a missing third request term in
+  `0x2fb20`, and all three 2D tables of `0x2f9fc` described as battery-voltage
+  lookups although 2D-166 is keyed on barometric pressure. Scope: every report
+  in [`docs/subsystem-logic/`](docs/subsystem-logic/README.md) — re-derive each
+  claim that names an address, constant, pool word, branch condition, access
+  width, caller or table, and fix the report plus its label record, TSV evidence
+  and tests in the same change. Where a report carries many numbers, add a
+  tracked `utilities/scripts/rx8-pcm-pipeline/verify_<subsystem>_chain.py` that
+  re-reads them and writes the `reviews/<subsystem>/` log with a regeneration
+  test (rule 6d; pattern: `verify_fuel_pump_chain.py`, which lands with the
+  fuel pump control corrections).
+  One branch + PR per report. Method, status and the findings already collected
+  live in
+  [`report_accuracy_audit.md`](docs/investigations/60E15120_N3J1E/report_accuracy_audit.md);
+  treat those findings as hypotheses and re-check the cited instruction and pool
+  before applying anything (rule 7). **Ordering:** the reports still at the
+  `docs/investigations/60E15120_N3J1E/` root are audited **after** their
+  migration items (C items 42–61) move them into the new format, so each
+  subsystem is re-derived once in its final shape; the four subsystem-logic
+  reports whose findings are pending (alternator, immobilizer, knock, SBL) are
+  the head of the queue.
+
 #### C.4 Docs reorganisation
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
