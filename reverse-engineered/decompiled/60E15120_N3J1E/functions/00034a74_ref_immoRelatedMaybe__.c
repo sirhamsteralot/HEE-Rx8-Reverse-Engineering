@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_key_defaults_init [medium]: ref_immoRelatedMaybe__ (unique_exact_bytes to 60E0FC00 0x35194). If c26c==c270==-1 (erased EEPROM) -> defaults 0x10001 / 0x55aa55aa; if c27a/c27c invalid -> 0x55aa / 0xb7e3; sets c20c=500, c210=0xfa, c222=1, c21e=5.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

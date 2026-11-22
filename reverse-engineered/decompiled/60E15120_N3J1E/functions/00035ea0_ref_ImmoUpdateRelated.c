@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_eeprom_flag_sequencer [high]: ref_ImmoUpdateRelated (unique_exact_bytes to 60E0FC00 0x365c0), first call in the dispatcher. Writes 'Z' magic to the e2ram param block cell 0xffffc268 via candidate_e2ram_param_write_dispatch(0xc)/(3) with FUN_00035d80 poll steps; manages c265/c266/c267/c261/c262/c288 handshake.
+ */
 /* ROM address: 0x00035ea0; body bytes: 170; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000365c0 (170 bytes). Names prefixed ref_

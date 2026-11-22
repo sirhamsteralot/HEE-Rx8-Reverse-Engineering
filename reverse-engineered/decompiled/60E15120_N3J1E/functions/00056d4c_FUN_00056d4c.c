@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid0917_ram_ad5c_scaled_s16 [high]: dispatch record 0x5f2f8 -> handler verified in ROM bytes + function_index; 0x54884(ad5c) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ * RAM 0xffffad5e inferred_throttle_sensor_2_volts_ffffad5e (uint16): CORRECTION (was 'inferred_pedal_volts_ffffad5e'): ad5e = DAT_ffff9f0a = AN19 raw, latched by 0x1b14c (pool 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e) — the throttle PLATE TP2 volts (pair with ad5c/AN18, PID 0x0011). The pedal volts are a9c4/a9c6 (AN4/AN5). PID 0x0047/0x0918 handlers read ad5e.
  */
 /* ROM address: 0x00056d4c; body bytes: 50; decompiled */
 

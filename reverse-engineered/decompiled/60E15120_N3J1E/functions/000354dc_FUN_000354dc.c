@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_seed_mix [medium]: 266 B. Mixes key halves c26c/c270 with the random seed c208 (adds mod 0x10000 per 16-bit lane, *0x0d, shifts, nibble swap) into the 32-bit expected response c200. Called by 0x353ce.
+ */
 /* ROM address: 0x000354dc; body bytes: 266; decompiled */
 
 int FUN_000354dc(uint param_1,uint param_2,uint param_3)

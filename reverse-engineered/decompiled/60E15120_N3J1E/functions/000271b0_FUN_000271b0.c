@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a6a0: Table 2D - 333 Check DataType (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * e2ram_learned_table_learn_gate [high]: rpm_cell = DAT_ffffb6c4 mod 17 (div FUN_00003fe8, pool 0x27258); DAT_ffffb8f0 = lookup_2d_descriptor_scaled(rpm_cell, tbl 0x6a6a0 [axis 0x75644 = 0..16, data 0x75688 = RPM breakpoints 750..9000]) = cell RPM breakpoint; reads flag_a + (cell-1)*2 / cell*2 / (cell+1)*2 + (DAT_ffffb660&1)*0x88 (pool 0x27270 = 0xffff8548) and sets DAT_ffffb6c6 = 1 only if the cell flag is set and a learned neighbour cell covers the current RPM (DAT_ffffb8f0). Called from 0x287aa.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a6a0: Table 2D - 333 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
+ * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x000692d0: Table 2D - 17 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000692e4: Table 2D - 18 (RX8Defs data pointer, axes and dimensions match).
@@ -6,10 +10,6 @@
  * Descriptor 0x00069320: Table 2D - 21 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069334: Table 2D - 22 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069348: Table 2D - 23 (RX8Defs data pointer, axes and dimensions match).
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
- * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

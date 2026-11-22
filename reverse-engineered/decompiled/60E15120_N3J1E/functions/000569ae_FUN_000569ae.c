@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * RX8Defs service 0x22 identifier 0x000e: Leading Ignition Timing. Dispatch identifier match; logger meaning is definition-derived.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid000e_leading_ignition_timing_deg [high]: dispatch record 0x5f178 -> handler verified in ROM bytes + function_index; 0x554ae: leading_ignition_timing_ffffa630*0.5-64 = OBD PID 0E
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * RX8Defs service 0x22 identifier 0x000e: Leading Ignition Timing. Dispatch identifier match; logger meaning is definition-derived.
  */
 /* ROM address: 0x000569ae; body bytes: 22; decompiled */
 

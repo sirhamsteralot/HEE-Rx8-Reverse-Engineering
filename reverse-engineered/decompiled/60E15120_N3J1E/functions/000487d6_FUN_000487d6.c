@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * engine_stop_conditions_eval [high]: Engine-stop/shutdown condition evaluator (called from the slow-task step 0x22f86): snapshots rpm 0xffffb548 (pool 0x48884), battery 0xffffb590 (0x48886), coolant 0xffffa98c (0x48888); rpm < 200/300 -> 0xffffccec, voltage < 5.8/6.0 -> 0xffffcced, coolant < 98/100 -> 0xffffccee/0xffffccef; reads E2-shadow flags 0xffff873c/0xffff809e/0xffff809c/0xffff8104/0xffff80a0/0xffff80a2/0xffff8764 via 0x3db54/0x3dc70; sets 0xffffccbc-bf/ccc0/ccc9 from engine flag 0xffffaa68 (pool 0x4888e), injectors-off 0xffffa42c, counters 0xffffccb4/ccb6/ccba and stored flag 0xffffb4ed.
+ * RAM 0xffffccbc throttle_servo_mode (uint8): Servo mode byte written by engine_stop_conditions_eval 0x487d6 (fault mode =1 with ccc0, engine-stopping =1, else 0); read by 0x22db4, 0x231f0, 0x1b166 and others.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
