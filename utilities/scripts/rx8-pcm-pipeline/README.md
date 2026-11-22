@@ -37,3 +37,52 @@ steps from the **repo root**.
   and machine-generated cross-ECU/math-units lines dropped when the function's
   `[ADDITIONAL SOURCE REVIEW]` block already states the same fact. Idempotent;
   stats in `docs/investigations/60E15120_N3J1E/labeling/comment_merge/validation.json`.
+
+## Report map check
+
+`validate_reports.py` reads the memory map (§4.1) of every `*_report.md` and
+checks it row by row; the same rules are in the script's module docstring.
+
+**Scope.** A row is in map scope when its heading, or any enclosing heading,
+mentions "memory map" (subsections inherit it), or when it sits under a bold
+`**Functions**` / `**RAM**` / `**ROM tables**` sub-label.
+
+**Classification.** The address in the first cell is read in any form and
+classified by its own value, never by the heading:
+
+| Address | Class | What is checked |
+|---|---|---|
+| `0xffffe000` and up | peripheral I/O window | counted, no alias check |
+| `0xffff0000`–`0xffffdfff` | RAM cell | the name must resolve (see below) |
+| below `0xffff0000`, a function entry | function | the name must match the index, an accepted function alias or a label record |
+| any other ROM address | table / descriptor / axis / pool | range check only (contents are covered by `extract_maps.py` and the defs passes) |
+
+Accepted row forms:
+
+| Form | Example |
+|------|---------|
+| plain address | `0x0002f890` |
+| wrapped in code/bold/italics | `` `0x0002f890` ``, `**0x0002f890**` |
+| any 0x width / leading zeros | `0x563de` |
+| symbol-led register cell | `` `PEDR_W` 0xfffff754 `` |
+| grouped cells in one row | `0xffffa6a0/a6a2`, `0xffffa700 … 0xffffa70f` |
+| cell with no alias yet | `DAT_ffff8038` (rule 6: `DAT_` = unnamed, address only) |
+
+**Name resolution.** `accepted_function_aliases.tsv`, `accepted_ram_aliases.tsv`,
+`metadata/integrated_names.json` (the `DAT_<addr>` id map) and the per-subsystem
+label records under `data/labels/<rom-id>/` (`function_aliases`, `functions`,
+`ram_aliases`), plus `function_index.tsv` for function entries.
+
+**Accounting.** Per report, `map_rows = fn_checked + ram_checked + data_rows +
+io_rows` is asserted, so a row the check cannot classify fails the run instead of
+being skipped. Grouped rows (`grouped_rows`) and unnamed `DAT_` cells
+(`unnamed_rows`) are counted, not failed.
+
+**Debt ledger.** `report_map_baseline.json` declares, per report, the addresses
+that have no backing yet — `ram` (no tracked alias exists) and `ram_conflict` (a
+tracked alias exists but disagrees; also listed in `label_conflicts`). Declaration
+counts into `declared_unbacked`. The ledger may only shrink: an entry whose
+address now resolves, whose conflict is gone, or that names a report that no
+longer exists fails the run as stale.
+
+Run it after any report edit, together with the other validators above.

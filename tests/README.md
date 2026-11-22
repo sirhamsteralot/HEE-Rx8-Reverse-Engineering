@@ -25,8 +25,12 @@ Verification that reimplemented/derived behavior matches the original binaries.
 - Pipeline validators run from the **repo root** (paths resolve via
   `utilities/scripts/rx8-pcm-pipeline/paths.py` to the repo layout):
   `utilities/scripts/rx8-pcm-pipeline/validate_export.py` (ROM hash, instruction
-  bytes, matches, linkage), `validate_reports.py` (report sections, ROM hash, every
-  address in report memory maps vs index/TSVs/ROM), `verify_readability.py`,
+  bytes, matches, linkage), `validate_reports.py` (report sections, ROM hash, and
+  every memory-map row enumerated and classified by its address — function vs RAM
+  vs ROM data vs peripheral I/O — with the name resolved against the accepted
+  TSVs, `integrated_names.json` and the per-subsystem label records; unbacked cells
+  are declared in `report_map_baseline.json`, which may only shrink),
+  `verify_readability.py`,
   `verify_math_units.py`. All four PASS. Ghidra-dependent steps
   in `rebuild.sh` additionally need `GHIDRA_HOME` + JDK.
 
@@ -54,10 +58,14 @@ Verification that reimplemented/derived behavior matches the original binaries.
   `tests/test_dtc_pcode_labels.py` (DTC P-code labels: SAE J2012
   decode round-trip, `data/dtc/pcodes.tsv` + `mazda_dtc_table.tsv` coverage and
   spot checks, per-ROM def DTC names == ROM code at the slot derived from each
-  storageaddress, rule-6b description sweep, generator idempotency).
-  92 tests: 91 passing, 1 pre-existing failure
-  (`test_extract_scalars.py` — a cp1252 byte in committed `scalars.tsv` crashes
-  `read_text()`; fails on main too, unrelated). The 4 tests touching
+  storageaddress, rule-6b description sweep, generator idempotency),
+  `tests/test_validate_reports_map_rows.py` (report memory-map rows: every row
+  form the validator accepts, the failure cases, the
+  `map_rows = fn_checked + ram_checked + data_rows + io_rows` accounting
+  invariant, and the shrink-only `report_map_baseline.json` ledger).
+  376 tests: 375 passing, 1 pre-existing failure
+  (`test_defs_upstream_pin.py::test_repin_check_noop_and_snapshot_is_blob_minus_flex`
+  — the upstream pin snapshot wants a flex re-strip; fails on main too, unrelated). The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
   (`git lfs pull`); without it they fail on the manifest hash check.
 - Host C tests need a machine with a working C toolchain. The Windows box has
