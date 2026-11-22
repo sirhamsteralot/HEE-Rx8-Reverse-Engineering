@@ -314,15 +314,15 @@
       "rom_claims": 0
     },
     "subsystem-logic/fuel_pump_control_report.md": {
-      "map_rows": 8,
-      "fn_checked": 6,
-      "ram_checked": 2,
+      "map_rows": 25,
+      "fn_checked": 12,
+      "ram_checked": 13,
       "data_rows": 0,
       "io_rows": 0,
       "grouped_rows": 0,
       "unnamed_rows": 0,
       "declared_unbacked": 0,
-      "rom_refs": 8,
+      "rom_refs": 25,
       "rom_claims": 0
     },
     "subsystem-logic/immobilizer_report.md": {

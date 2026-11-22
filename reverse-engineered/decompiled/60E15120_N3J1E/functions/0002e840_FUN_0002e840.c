@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * ac_clutch_relay_drive_pj7_diag [high]: Writes PJDR_W bit 0x80 (PJ7, pkg pin 183) = (FUN_0005c56c(DAT_ffffbd68) == 1) [diag actuator-override gate]. Caller 0x2f11c thunk.
+ */
 /* ROM address: 0x0002e840; body bytes: 66; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0002ecf8 (66 bytes). Names prefixed ref_

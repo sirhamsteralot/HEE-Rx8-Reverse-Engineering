@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffff8084 learned_plate_zero_2 (float): Learned plate TP2 zero (default 15.0f=0x41700000), adapted by 0x1b3f2 with 0xffff807c; subtracted in 0x1b940 (ad3c).
+ */
 /* ROM address: 0x0001b3f2; body bytes: 558; decompiled */
 
 void FUN_0001b3f2(void)

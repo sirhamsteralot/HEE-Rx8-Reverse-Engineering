@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_state2_challenge_verify [high]: Main state 2 handler; contains the with-RKE patch site 0x34f5c 'cmp/eq r2,r3' (c204 vs c200, pools 0x34fc4/0x34fc8). Match -> ImmoGoodStateSet 0x352c4, c224=0x7f, TX 0x81 (status OK); mismatch -> ImmoBadStateSet 0x35338, c224=0x81, TX 1, c22a=1. c21e==1 -> c20c=500, 0x34e68. Else c21e=5 with rpm>500 -> c228=1, c210/c216 countdowns; c216 timeout with battery>10V -> bad, c224=0x80. Dynamically verified both branches.
+ * RAM 0xffffc22a immo_reject_event_flag (u8): set 1 on every bad-state path (0x34c5c/0x34d12/0x34f42), cleared by immo_set_authorized 0x352c4; emulator: 1 after wrong challenge, 0 after good one
+ */
 /* ROM address: 0x00034f42; body bytes: 230; decompiled */
 
 undefined4 * FUN_00034f42(void)

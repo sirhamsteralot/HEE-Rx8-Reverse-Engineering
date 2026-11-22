@@ -1,3 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_state3_authorized [high]: Main state 3 handler. c21e==0 -> c274=1, c22b=1, c1d3|=0x40, c255=1, c226=1 (authorized latch); c21e==1 -> c214=500, c224=0x7f, TX 0x81; else timeouts. Engine-off detection: rpm<=0 edge -> c222=1, c212=15000; c212 expiry -> TX 0xc8 (200), c21d=5, c21c=1, c212=500.
+ * RAM 0xffffc212 immo_timer_engine_off (u16): 15000 after authorization, 500 in ready-engine-off state
+ * RAM 0xffffc21c immo_ready_engine_off_pending (u8): set with TX 0xc8 when c212 expires in state 3
+ * RAM 0xffffc226 immo_authorized_latch_flag (u8): set when state 3 sees c21e==0
+ */
 /* ROM address: 0x00035062; body bytes: 256; decompiled */
 
 uint FUN_00035062(void)

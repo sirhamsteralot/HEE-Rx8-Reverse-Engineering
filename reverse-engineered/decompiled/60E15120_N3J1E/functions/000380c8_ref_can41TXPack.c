@@ -1,3 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_can_tx_pack [high]: ref_can41TXPack (unique_exact_bytes to 60E0FC00 0x387e8), called from can_tx_main_key_gated 0xdb58. If c1d1==1: copies c1c8..c1cf -> c4a8..c4af (mailbox 9 buffer for CAN 0x041, descriptor ROM 0x4dfac) and calls ref_txCAN_EventBased. Dynamically verified: buffer = 09 01 77 b2 76 00 00 00 after cmd 9/c220=1.
+ * RAM 0xffffc1c8 immo_tx_frame (u8[8]): c1c8=cmd, c1c9..c1cc=payload, c1cd..c1cf=0, c1d1=valid flag; copied to 0xffffc4a8..c4af when c1d1==1
+ * RAM 0xffffc1d1 immo_tx_frame_valid (u8): set to 1 by every 0x35738 path; 0xdb58 clears it after packing
+ * RAM 0xffffc4a8 can041_tx_buffer (u8[8]): ROM descriptor bytes re-read: id 0x041, buf 0xffffc4a8
+ */
 /* ROM address: 0x000380c8; body bytes: 60; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000387e8 (60 bytes). Names prefixed ref_
