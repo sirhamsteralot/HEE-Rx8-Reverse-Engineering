@@ -302,15 +302,15 @@
       "rom_claims": 0
     },
     "subsystem-logic/alternator_control_report.md": {
-      "map_rows": 50,
-      "fn_checked": 28,
-      "ram_checked": 16,
+      "map_rows": 53,
+      "fn_checked": 29,
+      "ram_checked": 18,
       "data_rows": 5,
       "io_rows": 1,
       "grouped_rows": 0,
-      "unnamed_rows": 1,
+      "unnamed_rows": 3,
       "declared_unbacked": 0,
-      "rom_refs": 71,
+      "rom_refs": 74,
       "rom_claims": 0
     },
     "subsystem-logic/fuel_pump_control_report.md": {
