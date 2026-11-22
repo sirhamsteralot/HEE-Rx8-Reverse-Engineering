@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
+ * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 while 0xffffb654 >= 8.486699 (pool 0x74a1c; reload from pool 0x7496e at 0x263fe-0x26400, gated by b5e0 > 19.531, engine running, counters full, volts >= 10), else counts down (0x2645a onward); 0xffffb5b2 = 1 once b60e == 0 (0x264a0-0x264aa) and cleared again while b654 >= 8.486699 (0x264b0-0x264b6). Called from 0x2680e via pool 0x268c0.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

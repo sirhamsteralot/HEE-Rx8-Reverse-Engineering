@@ -33,8 +33,9 @@ All three are mask-0x10 batch wrappers (`sh_raise_interrupt_mask_return_previous
   66.25 when 0xffffc5db.
 - 0x2616e: error 0xffffb5c8 = clamp(b59c - b65c, ±2.5) (2.5 @0x2623c), delta
   0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(b598) when b613; ramp
-  (rpm-b600)/(b604-b600) clamp [0.1,1] with b600/b604 = 406.25/700.0
-  (0x749ec/0x749e4; AT-in-neutral 406.25 when b534==1 && b53a==0) → 0xffffb5d0;
+  (rpm-b600)/(b604-b600) clamp [0.1,1] with b600 = 406.25 / b604 = 562.5
+  (0x749ec/0x749f0) when b534==1 && b53a==0, else b600 = 700.0 / b604 = 750.0
+  (0x749e4/0x749e8) → 0xffffb5d0;
   integral 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), accumulator 0xffffb5d8.
 - 0x26624: duty 0xffffb5f0 = 3.75 (@0x26734) or 3-D 0x6a5c4(b598, b5e0);
   filter 0.1244 (0x74a40) → 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672
@@ -58,12 +59,17 @@ All three are mask-0x10 batch wrappers (`sh_raise_interrupt_mask_return_previous
 
 ## 4. Monitor path (0x2680e batch) and DTCs
 
-- Confirmation timers 0x257b4/0x2590a/0x2635c reload 0x138 under fault conditions
-  and count down otherwise; counters b638/b63a/b63c/b63e/b640/b642 saturate while
+- Confirmation timers: 0x257b4 reloads 0x138 while the rails are not high
+  (b654 <= 18.471 and b658 <= 15.938, 0x257f4-0x25816) and counts down otherwise;
+  0x2635c reloads while b654 >= 8.486699 (0x263fe) and counts down under low
+  voltage; 0x2590a is inverted relative to them, reloading while either rail is out
+  of range (b654 <= 16.973 or b658 >= 10.938, 0x25946-0x25956) and counting down
+  while both are in range. Counters b638/b63a/b63c/b63e/b640/b642 saturate while
   engine running and volts >= 10 (b645/b646/b647 from 9/10 V thresholds).
   Voltage thresholds from literal area 0x74978-0x74a44: 18.471, 15.938, 16.973,
   10.938, 8.486699 (0x74a1c). 0x25aa0: coolant 55/60 °C → b648, hot-engine timer
-  b60c = 100. 0x2635c sets 0xffffb5b2 when b60e == 0.
+  b60c = 100. 0x2635c sets 0xffffb5b2 once b60e == 0 (0x264a0-0x264aa) and clears
+  it while b654 >= 8.486699 (0x264b0-0x264b6).
 - 0x26760: 0xffffb5b4 = 1 when b613==0 || b5b0 || b5b1 || b5b2 || c5db. The flag is
   read only by 0x28c78 (packs into CAN status word 0xffffbab2 bit 0x40, pool 0x28d70
   at 0x28cfe) and the Mode 22 PID 0x0968 handler 0x57138 (pool 0x5717e) — no lamp
@@ -90,9 +96,40 @@ cells 0xffffd34f / 0xffffd347, steps 0x3a000000 / 0x3b480000) — same pattern a
 ## 6. Validation
 
 See `validation.json` in this folder: `validate_export.py` (ROM SHA-256, 168,592
-instruction bytes, 1,833 exact reference matches), `verify_claims.py`,
-`verify_readability.py`, `verify_math_units.py`, `validate_reports.py` — all PASS;
-`python -m pytest tests/` 134 passed. Labels applied by
+instructions / 337,184 instruction bytes, 1,833 exact reference matches),
+`verify_claims.py`, `verify_math_units.py`, `validate_reports.py` — all PASS
+(`verify_readability.py` still reports the pre-existing 0x28992 mismatch, unchanged
+by this subsystem). `python -m pytest tests/` 375 passed of 376, the one failure
+being the pre-existing upstream-pin snapshot test. Labels applied by
 `review_alternator_labels.py` + `annotate_source_review.py` +
-`integrate_reviewed_names.py` (25 function rows, 10 RAM rows; 36 export files
-renamed; 3,355 function bodies verified intact).
+`integrate_reviewed_names.py` (25 function rows, 10 RAM rows; 3,355 function bodies
+verified intact).
+
+## 7. Corrections (accuracy pass)
+
+Re-read against the ROM for this revision; each item cites the disassembly that
+settles it.
+
+1. Low-voltage latch polarity was inverted in the prose: 0xffffb5b2 is set when the
+   0xffffb60e window has run out (0x264a0 `tst r2,r2` / 0x264a2 `bf/s` / 0x264aa
+   `mov.b r1,@r4`) and cleared while 0xffffb654 >= 8.486699 (0x264b0 `fcmp/gt`
+   against 8.486699 @0x74a1c, 0x264b6 `mov.b r13,@r4`).
+2. DTC confirmation timers reload while the fault is absent, not present:
+   0x257f4/0x25804 branch to the reload at 0x2585a when neither rail is high.
+3. Timer-A reload condition was inverted in this record: reload requires
+   b654 <= 18.471 AND b658 <= 15.938 (pools 0x74978/0x7497c), plus the engine-stopped
+   and counter-fullness terms.
+4. Voltage-ramp endpoints: b600/b604 = 406.25/562.5 or 700.0/750.0, selected at
+   0x261d0-0x261fa (r4 = 0xffffb600 via pool 0x26230, r5 = 0xffffb604 via 0x2622e).
+5. Drag torque 0x2ce18 has one caller, 0x2cb80 inside
+   `ref_calculateTorqueRelatedParams` 0x2cb64 (pool 0x2cbe0) — not the alternator
+   chain.
+6. `validate_export.py` counts 168,592 instructions and 337,184 instruction bytes;
+   the review notes mixed the two.
+7. `high_load_flag` 0xffffb5b3 has no entry in this record: the alias lives in the
+   idle-control record (`accepted_ram_aliases.tsv` row 0xffffb5b3, reader 0x1506c).
+8. 0x2590a carries the `candidate_` prefix in the export
+   (`candidate_charging_dtc_timer_b`); the prose/table dropped it.
+9. Literal-selected gates 0xffffb617/0xffffb618 keep their descriptive wording but
+   remain unproven; 14.2 V additionally needs 0xffffb619 == 1 and 0xffffb61a == 1
+   (0x26092-0x260b2).
