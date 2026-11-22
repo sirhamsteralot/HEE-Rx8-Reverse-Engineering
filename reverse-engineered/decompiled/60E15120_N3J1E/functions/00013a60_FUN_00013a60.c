@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_retard_attack [high]: Knock retard target: disabled (a73d==0) -> 0; sensors unhealthy (a73e==0) -> tbl 0x6afa4(RPM); activation edge (a74c==0 && a73c==1) -> tbl 0x6afb8(learned retard); active && attack condition (c05c==1) -> -1.0 deg/cycle (retard is negative, clamped <= 0). Writes a744, then clamped a734 = 0x13bd2(result), mirror a738.
- * RAM 0xffffa744 knock_recovery_target (float): Attack/recovery target written by 0x13a60: 0 when disabled, tbl 0x6afa4 when sensors unhealthy, tbl 0x6afb8 on activation edge, else previous retard.
+ * RAM 0xffffa744 knock_recovery_target (float): Target written by 0x13a60 on only two paths (sensors unhealthy -> tbl 0x6afa4, activation edge -> tbl 0x6afb8), both storing at 0x13abc (r13 = 0xffffa744); the attack, recovery, disabled and hold paths branch to 0x13aec without touching it, and no code reads the cell.
  * RAM 0xffffa74c knock_active_previous (uint8): Previous a73c; activation-edge detection (a74c==0 && a73c==1).
  * RAM 0xffffc05c knock_attack_condition (uint8): Set by 0x33970: knock latched && running && timing not already deeply retarded; selects -1.0 deg/cycle attack in 0x13a60.
  */

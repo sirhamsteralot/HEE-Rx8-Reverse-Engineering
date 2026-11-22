@@ -15,14 +15,14 @@ ffffa73e	knock_sensors_healthy	uint8	0001388a	Set by 0x1388a = cd64 && cd66 (0x4
 ffffa73c	knock_active	uint8	00013b40	Set by 0x138b2 = a73d && a73e; gates attack (0x13a60) and slow recovery (0x13b40).
 ffffa73f	knock_seen_learn_trigger	uint8	000139c4	When set, 0x139c4 learns the current retard into EEPROM 0xffff8038.
 ffffa748	knock_seen_counter	uint16	0001391c	Incremented by 0x1391c on knock-seen events (called from 0x145c8).
-ffffa744	knock_recovery_target	float	00013a60	Attack/recovery target written by 0x13a60: 0 when disabled, tbl 0x6afa4 when sensors unhealthy, tbl 0x6afb8 on activation edge, else previous retard.
+ffffa744	knock_recovery_target	float	00013a60	Target written by 0x13a60 on only two paths (sensors unhealthy -> tbl 0x6afa4, activation edge -> tbl 0x6afb8), both storing at 0x13abc (r13 = 0xffffa744); the attack, recovery, disabled and hold paths branch to 0x13aec without touching it, and no code reads the cell.
 ffffa74a	knock_recovery_counter_a	uint8	00013b40	Slow-recovery pacing counter (c05d==0 path); +0.35 deg per 62 counts.
 ffffa74b	knock_recovery_counter_b	uint8	00013b40	Slow-recovery pacing counter (c05d==1 path).
 ffffa74c	knock_active_previous	uint8	00013a60	Previous a73c; activation-edge detection (a74c==0 && a73c==1).
 ffffa738	knock_retard_mirror	float	000125f6	Copy of clamped a734 written by 0x13a60/0x13b40; consumed by 0x125f6 trailing apply.
 ffffa324	knock_detected	uint8	000336c4	Set by 0xc486: a364 <= a330 (integrated knock level over threshold); latched into c078 by 0x336c4.
 ffffa384	knock_rotor_index	uint8	0000c8dc	Rotor/channel index 0xff (init) or 0/1; alternates per ATU window in 0xc8dc.
-ffffc078	knock_detected_latched	uint8	00033970	0x336c4 latches a324 here; 0x33970 requires it for the attack condition c05c.
+ffffc078	knock_detected_latched	uint8	00033970	0x336c4 rewrites this cell as (a324 != 0) on every call (0x3394a tst / 0x3394c bf/s / 0x33952 / 0x33954 both store), a copy rather than a latch; 0x33970 requires it for the attack condition c05c.
 ffffc05c	knock_attack_condition	uint8	00013a60	Set by 0x33970: knock latched && running && timing not already deeply retarded; selects -1.0 deg/cycle attack in 0x13a60.
 ffffc05d	knock_transient_flag	uint8	00013b40	Set by 0x336c4 stability check (0 = stable); selects recovery counter a74a vs a74b and filter constants.
 ffffc060	knock_filter_coeff_a	float	0000c486	Noise-step scale 0.0625 (calm) / 0.1875 (transient); used in the 0xc486 integrator step.
@@ -41,7 +41,7 @@ ffffa374	knock_adc_filtered	float	0000c3ce	First-order filtered knock ADC (coeff
 ffffa370	knock_voltage	float	0000c486	Knock voltage = (a378 - a326) * 5/65536 V.
 ffffa330	knock_magnitude	float	0000c486	Knock magnitude vs tbl 0x6b250 minus command-code term a381[a384]<<5, clamped >= 0.
 ffffa32c	knock_noise_filtered	float	0000c486	Filtered (a330 - a348) noise term; coefficient is the hardcoded literal 0.0625 in 0xc486 (not c060: equals calm c060, ignores the transient 0.1875).
-ffffa344	knock_integrator_step	float	0000c486	Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), floor 1.0.
+ffffa344	knock_integrator_step	float	0000c486	Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), bounded ABOVE by 1.0 (0xc572 fldi1 / 0xc574 fcmp/gt / 0xc57a fmov fr5,fr4); the clamp to zero is separate at 0xc4ba-0xc4c0.
 ffffa348	knock_baseline_slow	float	0000c486	Slow baseline of a330 (coeff c068); part of the combined level a34c.
 ffffa34c	knock_level_combined	float	0000c486	a33c[a384] + a348, clamped >= 0; stored to a334[a384].
 ffffa334	knock_level_running	float[2]	0000c486	Per-rotor running knock level a334[0..1].
