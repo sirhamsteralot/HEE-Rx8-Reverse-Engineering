@@ -37,7 +37,7 @@
     "0002616e": {
       "alias": "alternator_voltage_error_calc",
       "confidence": "medium",
-      "evidence": "Voltage error: 0xffffb5c8 = clamp(0xffffb59c - 0xffffb65c, -2.5, 2.5) (2.5 at pool 0x2623c), delta 0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(alt speed) when b613, else 0; ramp (rpm - b600)/(b604 - b600) clamp [0.1, 1.0] with b600/b604 = 406.25/700.0 (pools 0x749ec/0x749e4, AT-in-neutral selects 406.25 when b534==1 && b53a==0); integral terms 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), 0xffffb5d8 accumulates. Called from 0x267c6 via pool 0x268a0."
+      "evidence": "Voltage error: 0xffffb5c8 = clamp(0xffffb59c - 0xffffb65c, -2.5, 2.5) (2.5 at pool 0x2623c), delta 0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(alt speed) when b613, else 0; ramp (rpm - b600)/(b604 - b600) clamp [0.1, 1.0] with b600 = 406.25 / b604 = 562.5 when b534 == 1 && b53a == 0 (pools 0x749ec/0x749f0, stores 0x261e8-0x261f2), else b600 = 700.0 / b604 = 750.0 (pools 0x749e4/0x749e8, stores 0x261f4-0x261fa; r4 = 0xffffb600 via pool 0x26230, r5 = 0xffffb604 via 0x2622e); integral terms 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), 0xffffb5d8 accumulates. Called from 0x267c6 via pool 0x268a0."
     },
     "00026624": {
       "alias": "alternator_duty_calc",
@@ -72,7 +72,7 @@
     "000257b4": {
       "alias": "charging_dtc_timer_a",
       "confidence": "medium",
-      "evidence": "0xffffb608 = 0x138 when (b654 > 18.471 || b658 > 15.938 || engine stopped || b638 < 0x3f || b645==0 || (b645==1 && b63a < 0x3f)), else counts down; counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4."
+      "evidence": "0xffffb608 = 0x138 when the rails are not high (0xffffb654 <= 18.471 && 0xffffb658 <= 15.938, pools 0x74978/0x7497c, 0x257f4-0x25816) or the engine is stopped (0xffffa428 == 0) or b645 == 0 or (b645 == 1 && b63a < 0x3f) or b638 < 0x3f; otherwise counts down (0x2586c-0x25872); counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4."
     },
     "0002590a": {
       "alias": "charging_dtc_timer_b",
@@ -87,7 +87,7 @@
     "0002635c": {
       "alias": "low_voltage_dtc_timer",
       "confidence": "medium",
-      "evidence": "0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0."
+      "evidence": "0xffffb60e = 0x138 while 0xffffb654 >= 8.486699 (pool 0x74a1c; reload from pool 0x7496e at 0x263fe-0x26400, gated by b5e0 > 19.531, engine running, counters full, volts >= 10), else counts down (0x2645a onward); 0xffffb5b2 = 1 once b60e == 0 (0x264a0-0x264aa) and cleared again while b654 >= 8.486699 (0x264b0-0x264b6). Called from 0x2680e via pool 0x268c0."
     },
     "000545bc": {
       "alias": "charging_dtc_raise_p2502",
@@ -122,7 +122,7 @@
     "0002ce18": {
       "alias": "alternator_drag_torque_calc",
       "confidence": "medium",
-      "evidence": "0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Called from the 0x25xxx alternator chain."
+      "evidence": "0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Sole caller 0x2cb80 inside ref_calculateTorqueRelatedParams 0x2cb64 (pool 0x2cbe0); no alternator batch references it."
     },
     "000264f0": {
       "alias": "electrical_load_flag_calc",
@@ -153,7 +153,7 @@
       "alias": "low_voltage_latch",
       "type": "uint8",
       "reader": "00025c6c",
-      "evidence": "Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760."
+      "evidence": "Set by 0x2635c once the 0xffffb60e timer (reload 0x138 from pool 0x7496e) has run out under low voltage (0xffffb654 < 8.486699, pool 0x74a1c, tested at 0x264b0): set path 0x264a0-0x264aa, clear path 0x264b0-0x264b6. Gates P2503 raise in 0x54590 and the warning flag in 0x26760."
     },
     "ffffb5a0": {
       "alias": "alternator_target_field",
@@ -177,7 +177,7 @@
       "alias": "alternator_drag_torque",
       "type": "float",
       "reader": "0002ce18",
-      "evidence": "Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate for drivability compensation."
+      "evidence": "Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate consumed by ref_calculateTorqueRelatedParams 0x2cb64 (call at 0x2cb80, pool 0x2cbe0)."
     },
     "ffffb658": {
       "alias": "system_voltage_alt",
@@ -196,7 +196,9 @@
     "ffffb598": "0xffffb598 keeps its existing inferred_alternator_speed alias (already integrated); verified here as rpm*2.08 in 0x25a68 (pool 0x74990).",
     "ffffb5ac": "0xffffb5ac keeps inferred_ram_b5ac (PID 0x16e8 source, handler 0x56fc8); verified as field duty percent written by 0x26624 via 0x5c800.",
     "ffffb59c": "0xffffb59c keeps inferred_ram_b59c; verified as voltage target written by 0x25c6c via 0x5cba4 (PID 0x097c).",
-    "ffffb5b4": "0xffffb5b4 keeps inferred_ram_b5b4 (PID 0x0968); verified as warning flag set by 0x26760, exported via CAN word 0xffffbab2 bit 0x40 (0x28c78)."
+    "ffffb5b4": "0xffffb5b4 keeps inferred_ram_b5b4 (PID 0x0968); verified as warning flag set by 0x26760, exported via CAN word 0xffffbab2 bit 0x40 (0x28c78).",
+    "ffffb600": "0xffffb600 / 0xffffb604 (ramp endpoints, no alias) are 406.25/562.5 or 700.0/750.0, selected by b534/b53a in 0x2616e (0x261d0-0x261fa).",
+    "ffffb5b3": "high_load_flag 0xffffb5b3 is owned by the idle-control record (reader 0x1506c); 0x264f0 in this subsystem sets it from the filtered load."
   },
   "rom_unchanged": true,
   "ghidra_database_updated": false

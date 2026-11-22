@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; content unchanged) | 1 |
 | 2026-11-19 | Scope discipline: dropped the unrelated A/C-switch cross-link from §4.7 (no A/C content in this subsystem) | 2 |
+| 2026-11-22 | Accuracy pass: DTC-timer reload polarity, low-voltage latch polarity, ramp endpoints, drag-torque caller, validator counts | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -127,7 +128,10 @@ battery-temperature estimate 0xffffb5c4 = intake-air temp + max((coolant −
 0xffffb5c8 = clamp(target 0xffffb59c − battery_voltage_filtered 0xffffb65c,
 ±2.5) (2.5 at 0x2623c), looks up the target field drive from table 0x6a54c
 (alternator speed 0xffffb598) → `alternator_target_field` 0xffffb5a0, ramps
-it → 0xffffb5d0, and integrates (0xffffb5d4/0xffffb5d8).
+it → 0xffffb5d0, and integrates (0xffffb5d4/0xffffb5d8). The ramp endpoints
+`DAT_ffffb600` 0xffffb600 / `DAT_ffffb604` 0xffffb604 are 406.25 / 562.5 when
+0xffffb534 == 1 and 0xffffb53a == 0, and 700.0 / 750.0 otherwise (literals
+0x749ec / 0x749f0 and 0x749e4 / 0x749e8, selected at 0x261e6–0x261fe).
 `candidate_alternator_duty_calc` 0x26624 computes the duty base 3.75 (at
 0x26734) or 3-D table 0x6a5c4(alternator speed, electrical load 0xffffb5e0) →
 0xffffb5f0, filters → 0xffffb5f4, clamps → 0xffffb5f8, maps through table
@@ -147,10 +151,18 @@ literal area at 0x25780/0x25788) → `alternator_pwm_duty` 0xffff9f48, against
 
 The monitor batch runs confirmation timers with a 0x138-count window:
 `candidate_charging_dtc_timer_a` 0x257b4 (counters 0xffffb638/0xffffb63a,
-reload 0xffffb608), `charging_dtc_timer_b` 0x2590a (0xffffb60a),
+reload 0xffffb608), `candidate_charging_dtc_timer_b` 0x2590a (0xffffb60a),
 `candidate_hot_engine_dtc_timer` 0x25aa0 (coolant 55/60 → 0xffffb648,
-0xffffb60c = 100) and `candidate_low_voltage_dtc_timer` 0x2635c (0xffffb60e;
-sets `low_voltage_latch` 0xffffb5b2 when 0xffffb654 ≥ 8.486699).
+0xffffb60c = 100) and `candidate_low_voltage_dtc_timer` 0x2635c (0xffffb60e).
+Each timer reloads its full 0x138 window while its condition is absent and
+counts down while the condition holds. Timer A reloads while the rails are not
+high (0xffffb654 ≤ 18.471 and 0xffffb658 ≤ 15.938, 0x257f4–0x25816) and the
+low-voltage timer while 0xffffb654 ≥ 8.486699 (0x263fe); timer B is the other
+way round, reloading while either rail is out of range (0xffffb654 ≤ 16.973 or
+0xffffb658 ≥ 10.938, 0x25946–0x25956) and counting down while both stay in
+range. Once the low-voltage window has run out (0xffffb60e == 0)
+`candidate_low_voltage_dtc_timer` sets `low_voltage_latch` 0xffffb5b2, and
+clears it again while 0xffffb654 ≥ 8.486699 (0x264a0–0x264b6).
 `candidate_charging_ok_latch` 0x25a22 sets `charging_ok_latch` 0xffffb5b1 =
 (0xffffb60a == 0). The DTC raises go through 0x5fd38(slot, status) → code_id
 table 0x7df42 + slot×2 → code table 0x7e560 + code_id×2: slots 0x7b/0x7c/0x7d =
@@ -169,7 +181,9 @@ b5b1 || b5b2 || 0xffffc5db), which 0x28c78 packs into CAN word 0xffffbab2 bit
 and clears below 30. The flag feeds idle control. `candidate_alternator_drag_torque_calc`
 0x2ce18 estimates the alternator's drag torque from table 0x6a790(alternator
 speed) × load ratio (0xffffb5a4/0xffffb5a0) → `alternator_drag_torque`
-0xffffbcc4, for drivability compensation.
+0xffffbcc4. The only call site is 0x2cb80 inside
+`ref_calculateTorqueRelatedParams` 0x2cb64 (pool 0x2cbe0, mask-0x10 batch reached
+from 0x1153c); no alternator batch references it.
 
 ### 2.9 Key calibrated tables
 
@@ -195,17 +209,17 @@ Verified constants (shared literal area 0x74978–0x74a44): 18.471/15.938/16.973
 charging_ok_latch()                  # 0x25a22: b5b1 = (b60a == 0)
 overvoltage_flags()                  # 0x25a3c: b612 = b654 >= 18.471 || b658 >= 15.938
 alternator_speed_calc()              # 0x25a68: b598 = rpm * 2.08; b613 = b598 >= 859
-idle_charging_gates()                # 0x25b36: vspeed 16/20 km/h -> b649; b614 = cranking && ...
+FUN_00025b36()                       # 0x25b36: rail hysteresis flag -> b649; cranking/vspeed gates -> b614 (unlabeled)
 battery_temp_model()                 # 0x25ba4: b5c4 = IAT + max((coolant-93)*0.43,0) + filtered tbl 0x6a524(vspeed)
-alternator_voltage_error_calc()      # 0x2616e: b5c8 = clamp(b59c - b65c, +/-2.5); b5a0 = tbl 0x6a54c(b598); ramp -> b5d0; integral b5d4/b5d8
+alternator_voltage_error_calc()      # 0x2616e: b5c8 = clamp(b59c - b65c, +/-2.5); b5a0 = tbl 0x6a54c(b598); ramp -> b5d0 (endpoints b600/b604 = 406.25/562.5 or 700.0/750.0); integral b5d4/b5d8
 alternator_duty_calc()               # 0x26624: b5f0 = 3.75 | 3D 0x6a5c4(b598, b5e0); filter -> b5f4; b5f8 = clamp(...); b620 = clamp(tbl 0x6a560(b5f8),0,100); b5ac = 0x5c800(b620)
 alternator_field_pwm_output()        # 0x25710: 0xffff9f48 = (b5ac/100)*65536 * 0xffff9f44 >> 16
 charging_dtc_raise_p2502()           # 0x545bc: 0x5fd38(0x7b, b5b1==0 ? 2 : 1) -> P2502
 
 # alternator_monitor_batch 0x2680e (from task[10] 0x11744), mask 0x10
-charging_dtc_timer_a()               # 0x257b4: b608 = 0x138 reload / countdown, counters b638/b63a
-dtc timer b / hot-engine timer       # 0x2590a charging_dtc_timer_b (b60a), 0x25aa0 (b648 coolant 55/60, b60c=100)
-low_voltage_dtc_timer()              # 0x2635c: b60e countdown; b5b2 = (b60e==0) when b654 >= 8.486699
+charging_dtc_timer_a()               # 0x257b4: b608 = 0x138 reload while rails not high (else count down); counters b638/b63a
+dtc timer b / hot-engine timer       # 0x2590a candidate_charging_dtc_timer_b (b60a), 0x25aa0 (b648 coolant 55/60, b60c=100)
+low_voltage_dtc_timer()              # 0x2635c: b60e counts down while b654 < 8.486699; b5b2 = 1 once b60e == 0, cleared while b654 >= 8.486699
 electrical_load_flag_calc()          # 0x264f0: high_load_flag b5b3 = filtered b5e0 >= 40 (hyst 30)
 alternator_warning_light_flag()      # 0x26760: b5b4 = b613==0 || b5b0 || b5b1 || b5b2 || c5db
 charging_dtc_raise_p2503/p2504()     # 0x54590 (slot 0x7c -> P2503), 0x545a6 charging_dtc_raise_p2504 (slot 0x7d -> P2504)
@@ -250,7 +264,8 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0x00026760 | `candidate_alternator_warning_light_flag` | warning flag → 0xffffb5b4 |
 | 0x00025a22 | `candidate_charging_ok_latch` | OK latch 0xffffb5b1 |
 | 0x000257b4 | `candidate_charging_dtc_timer_a` | DTC timer A (0x138 window) |
-| 0x0002590a | `charging_dtc_timer_b` | DTC timer B 0xffffb60a |
+| 0x0002590a | `candidate_charging_dtc_timer_b` | DTC timer B 0xffffb60a |
+| 0x00025b36 | `FUN_00025b36` | rail hysteresis flag 0xffffb649 + cranking/vspeed gates 0xffffb614 (unlabeled) |
 | 0x00025aa0 | `candidate_hot_engine_dtc_timer` | hot-engine timer |
 | 0x0002635c | `candidate_low_voltage_dtc_timer` | low-voltage timer → 0xffffb5b2 |
 | 0x000545bc | `candidate_charging_dtc_raise_p2502` | P2502 raise (slot 0x7b) |
@@ -259,7 +274,7 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0x00025c6c | `candidate_alternator_voltage_target_select` | target volts → 0xffffb59c |
 | 0x0005cba4 | `candidate_alternator_target_encode_u16` | PID 0x097c encoder |
 | 0x0005c800 | `candidate_alternator_duty_encode_u16` | PID 0x16e8 encoder |
-| 0x0002ce18 | `candidate_alternator_drag_torque_calc` | drag torque → 0xffffbcc4 |
+| 0x0002ce18 | `candidate_alternator_drag_torque_calc` | drag torque → 0xffffbcc4 (only caller 0x2cb80 in 0x2cb64) |
 | 0x000264f0 | `candidate_electrical_load_flag_calc` | high_load_flag 0xffffb5b3 |
 | 0x000114d0 | `FUN_000114d0` | caller of 0x267c6 |
 | 0x00011adc | `charging_control_batch` | caller of 0x26868 (task[14]) |
@@ -288,7 +303,9 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0xffffb5b4 | `inferred_ram_b5b4_ffffb5b4` | warning-light flag (PID 0x0968; CAN 0xffffbab2 bit 0x40) |
 | 0xffffb5b1 | `charging_ok_latch` | P2502 gate latch |
 | 0xffffb5b2 | `low_voltage_latch` | P2503 gate latch |
-| 0xffffb5b3 | `high_load_flag` | electrical-load flag (feeds idle control) |
+| 0xffffb5b3 | `high_load_flag` | electrical-load flag; alias owned by the idle-control record, read here as an idle input |
+| 0xffffb649 | `DAT_ffffb649` | rail hysteresis flag written by 0x25b36 (no alias) |
+| 0xffffb614 | `DAT_ffffb614` | cranking/vspeed gate flag written by 0x25b36 (no alias) |
 | 0xffffb5a0 | `alternator_target_field` | target field drive |
 | 0xffffb5a4 | `electrical_load_filtered` | filtered load |
 | 0xffffb5e0 | `electrical_load_raw` | raw electrical load |
@@ -318,10 +335,11 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 
 RAM aliases: `alternator_pwm_period` 0xffff9f44, `alternator_pwm_duty`
 0xffff9f48, `charging_ok_latch` 0xffffb5b1, `low_voltage_latch` 0xffffb5b2,
-`high_load_flag` 0xffffb5b3, `alternator_target_field` 0xffffb5a0,
-`electrical_load_filtered` 0xffffb5a4, `electrical_load_raw` 0xffffb5e0,
-`alternator_drag_torque` 0xffffbcc4, `system_voltage_alt` 0xffffb658,
-`battery_voltage_filtered` 0xffffb65c.
+`alternator_target_field` 0xffffb5a0, `electrical_load_filtered` 0xffffb5a4,
+`electrical_load_raw` 0xffffb5e0, `alternator_drag_torque` 0xffffbcc4,
+`system_voltage_alt` 0xffffb658, `battery_voltage_filtered` 0xffffb65c.
+`high_load_flag` 0xffffb5b3 belongs to the idle-control record (0x1506c reads
+it); it appears in §4.1 because this subsystem writes and reports the flag.
 
 Evidence: [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_function_aliases.tsv) /
 [`accepted_ram_aliases.tsv`](../investigations/60E15120_N3J1E/labeling/source_review/accepted_ram_aliases.tsv),
@@ -341,6 +359,26 @@ Evidence: [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/lab
 - 0x5cba4/0x5c800 are diag-override-aware u16 encoders (DID 0x97c / 0x16e8), the
   same pattern as idle_target_encode_u16 0x5ca94 — they publish the target voltage
   and duty percent, they do not drive hardware.
+- Timer A 0x257b4 reloads its window while the fault is **absent**, not while
+  it holds: 0xffffb654 ≤ 18.471 and 0xffffb658 ≤ 15.938 (0x257f4–0x25816);
+  earlier wording stated the opposite. The low-voltage timer reloads on the same
+  convention (0xffffb654 ≥ 8.486699, 0x263fe). Timer B 0x2590a is different and
+  correctly described before: it reloads while either rail is out of range
+  (0xffffb654 ≤ 16.973 or 0xffffb658 ≥ 10.938, 0x25946–0x25956).
+- `low_voltage_latch` 0xffffb5b2 is set once the low-voltage window has expired
+  (0xffffb60e == 0, 0x264a0–0x264aa) and cleared while the rail is healthy
+  (0x264b0–0x264b6); a healthy rail reading does not set it.
+- The voltage-ramp endpoints are 406.25 / 562.5 (0xffffb534 == 1 and
+  0xffffb53a == 0) or 700.0 / 750.0 for 0xffffb600 / 0xffffb604
+  (0x261e6–0x261fe, literals 0x749e4–0x749f0) — not the single pair
+  406.25 / 700.0 given earlier.
+- 0x2ce18 (drag torque) is called only from 0x2cb80 inside
+  `ref_calculateTorqueRelatedParams` 0x2cb64 (pool 0x2cbe0); an earlier
+  attribution placed it inside the alternator chain.
+- `validate_export.py` reports 168,592 instructions and 337,184 instruction
+  bytes; the earlier "168,592 instruction bytes" mixed the two counters.
+- 0x00025b36 is carried as `FUN_00025b36` (rule 6, unnamed) rather than under a
+  descriptive alias.
 
 ### 4.4 Files
 
@@ -363,7 +401,8 @@ Evidence: [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/lab
   read from ROM (0x7df42, 0x7e560); constant literals 0x74978–0x74a44 read from
   ROM.
 - [`validate_export.py`](../../utilities/scripts/rx8-pcm-pipeline/validate_export.py)
-  (ROM SHA-256 + 168,592 instruction bytes + 1,833 exact reference matches),
+  (ROM SHA-256 + 168,592 instructions / 337,184 instruction bytes + 1,833 exact
+  reference matches),
   [`verify_claims.py`](../../utilities/scripts/rx8-pcm-pipeline/verify_claims.py),
   [`verify_readability.py`](../../utilities/scripts/rx8-pcm-pipeline/verify_readability.py),
   [`verify_math_units.py`](../../utilities/scripts/rx8-pcm-pipeline/verify_math_units.py),
@@ -371,8 +410,13 @@ Evidence: [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/lab
   — all PASS; records in
   [`data/labels/60E15120_N3J1E/{validation,claim_validation,report_validation}.json`](../../data/labels/60E15120_N3J1E/).
 - Labeling-pass record: [`reviews/alternator_control/validation.json`](../investigations/60E15120_N3J1E/reviews/alternator_control/validation.json)
-  (25 functions, 10 RAM cells, 36 export files renamed, 3,355 function bodies
-  verified intact).
+  (25 functions, 10 RAM cells, 3,355 function bodies verified intact).
+- Re-read for this revision: the two DTC-timer bodies 0x257b4 (0x257e8–0x25874)
+  and 0x2635c (0x2635c–0x264b6) with their literal pools (0x25888–0x258bc,
+  0x2639e–0x264ec, 0x74962–0x74a28), the ramp-endpoint selection in 0x2616e
+  (0x261d0–0x26200, pools 0x26220–0x2625c, literals 0x749e4–0x749f0), the
+  drag-torque caller (pool 0x2cbe0) and the warning-flag gate in 0x25b36
+  (pools 0x25be8–0x25bf4).
 
 ### 4.6 Limits
 
@@ -385,6 +429,16 @@ Evidence: [`accepted_function_aliases.tsv`](../investigations/60E15120_N3J1E/lab
   (unresolved, per the wiring review); the battery-voltage ADC channel pin is
   likewise untraced.
 - `candidate_` labels are hypotheses pending dynamic or cross-ROM proof.
+- 0xffffb5b0 participates in the warning-flag OR chain of 0x26760 but is written
+  outside the alternator batches and carries no alias; it is recorded here rather
+  than as a map row.
+- The literal-selected flags the report names "cold mode (0xffffb617)" and
+  "another mode (0xffffb618)" are real gates (0x260c8, 0x26068) whose meaning is
+  not established; the 14.2 V path additionally requires 0xffffb619 == 1 and
+  0xffffb61a == 1 (0x26092–0x260b2).
+- Table 0x6a524 carries type byte 0x04 while the other alternator 2-D tables are
+  0x08, and its cell encoding is not established, so the "vehicle speed decay
+  amount" reading is an inference.
 - What would disprove the shared-logic assumption for a given ROM: a byte-diff
   of the functions in §4.1 against that ROM (cross-ROM evidence:
   [`cross_rom_differential_labeling.md`](../investigations/60E15120_N3J1E/labeling/cross_ecu/cross_rom_differential_labeling.md)).
