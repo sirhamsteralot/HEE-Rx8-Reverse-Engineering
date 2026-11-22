@@ -12,7 +12,7 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   
   fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   fVar1 = DAT_ffffad30 - fVar1;
-  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
+  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
   arg0 = 0.0;
   fVar2 = DAT_ffffad34 - fVar2;
   DAT_ffffad38 = rx8_max_float(0.0,fVar1);

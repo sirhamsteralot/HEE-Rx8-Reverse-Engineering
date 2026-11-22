@@ -1,3 +1,7 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006ab70: Table 2D - 177 Might be Primary/Secondary Ratio (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006ab98: Table 2D - 347 Check DataType (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * primary_secondary_fuel_split [high]: Computes the primary/secondary split in the fuel task 0x20e40 (called between 0x30948 calculate_fuel_amount_per_rotation and 0x30f5c): rpm gates bf36/bf37 from coolant lookups tbl 0x6ac74 (flat 6250) / tbl 0x6ac60 (Secondary Injectors Allowed Threshold), fuel gates bf38/bf39 vs bec8/beb0 (WOT baro correction tbl 0x6ab84), then becd/becc flags and split volumes bef0/bef4/bef8/befc by ratio tbl 0x6ab70 when becc==1. becd is OR-ed into the SSV on-condition by 0x2178c; becc is read by open-loop logic 0x1f0c4/0x1fd48. Dynamically verified in the SH-2E emulator: docs/investigations/60E15120_N3J1E/reviews/intake_solenoids/ssv_secondary_injector_link.py.
  * RAM 0xffffbecc secondary_split_gate_flag (uint8): becc = bf36 || (bf37 && bf39), computed in 0x30b08: 0 => all fuel to primaries (bef0=beb0, bef4=0), 1 => split by ratio tbl 0x6ab70; also read by open-loop request logic 0x1f0c4/0x1fd48 (b1db/b1da latches). Emulator-verified: set above the rpm/coolant gate with fuel demand, clear below (ssv_secondary_injector_link_log.txt).
@@ -20,12 +24,6 @@
  * RAM 0xffffbef4 fuel_volume_secondary_split (float): Secondary-side fuel volume from the 0x30b08 split (0 when becc==0); converted to pulse time in 0x30f5c (x6e7 / 475.93).
  * RAM 0xffffbef8 primary_secondary_split_ratio (float): Ratio lookup_2d_descriptor_scaled(rpm, tbl 0x6ab70) clamped to [0,1] in 0x30b08; used to split beb0 into bef0/bef4 when becc==1.
  * RAM 0xffffbefc fuel_volume_secondary_amount (float): befc = bef8 * beb0, the uncapped secondary amount in 0x30b08 (capped against bec8/bedc when computing bef4).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ab70: Table 2D - 177 Might be Primary/Secondary Ratio (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ab84: Primary Injector Max Barometric Pressure Correction (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ac60: Secondary Injectors Allowed Threshold - Coolant Temperature Based (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ab98: Table 2D - 347 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

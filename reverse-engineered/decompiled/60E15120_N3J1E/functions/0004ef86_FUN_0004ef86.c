@@ -33,20 +33,20 @@ char FUN_0004ef86(void)
     puVar3 = &tbl_table_3d_121_0006b3dc;
   }
   cVar1 = rx8_lookup_3d_raw_u8(uVar6,uVar7,puVar3);
-  DAT_ffffcfb7 = 0;
+  pe0_relay_flag_ffffcfb7 = 0;
   if (cVar2 == '\x01') {
     cVar2 = '\x01';
     if (DAT_ffffcfba == '\0') {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
     else if (cVar1 == '\x01') {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
   }
   else {
     cVar2 = DAT_ffffcfbb;
     if ((DAT_ffffcfbb == '\x01') && (cVar1 == '\x01')) {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
   }
   return cVar2;

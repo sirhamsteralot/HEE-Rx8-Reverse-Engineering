@@ -6,8 +6,8 @@
 void FUN_00018f44(void)
 
 {
-  FUN_00018f60();
-  DAT_ffffa9a0 = DAT_ffffa99c;
+  pedal_volts_clamp_latch();
+  DAT_ffffa9a0 = pedal_1_volts_clamped25_ffffa99c;
   FUN_00018fa4();
   DAT_ffffa9a8 = DAT_ffffa9a4;
   return;

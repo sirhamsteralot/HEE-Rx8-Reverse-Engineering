@@ -1,7 +1,7 @@
 {
   "date": "2026-11-13",
-  "function_annotations": 619,
-  "ram_aliases": 546,
+  "function_annotations": 687,
+  "ram_aliases": 612,
   "ghidra_database_updated": false,
   "label_sweep_passes": [
     {
@@ -43,6 +43,7 @@
     "source_review_dtc_thunks",
     "source_review_thunk_audit",
     "eeprom_content_map",
-    "source_review_ignition_power_state"
+    "source_review_ignition_power_state",
+    "source_review_throttle_dbw"
   ]
 }

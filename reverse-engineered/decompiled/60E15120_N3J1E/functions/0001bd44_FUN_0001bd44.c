@@ -14,7 +14,7 @@ void FUN_0001bd44(void)
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff809e,0);
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff80a0,0);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&DAT_ffff8084);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&learned_plate_zero_2_ffff8084);
   uVar1 = 0;
   ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff80ac);
   ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff80b4);

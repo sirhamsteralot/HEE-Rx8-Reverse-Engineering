@@ -2,10 +2,6 @@
  * misfire_threshold_load_lookup [high]: DAT_ffffcb94 = lookup(rpm, tbl_load_limit_a_0006ba0c); DAT_ffffcb98 = lookup(rpm, tbl_load_limit_b_0006ba18) (both 12 cells, axes 0x7c4fc/0x7c55c). Called from 0x287aa.
  * RAM 0xffffcb94 misfire_threshold_load_a (float): Load Limit A lookup (tbl 0x6ba0c) -> DAT_ffffcb94, Load Limit B (0x6ba18) -> DAT_ffffcb98 (0x44a9e); used by 0x4489c as cb94*ba54 < ba58 || cb98*ba54 < ba50.
  */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ba0c: Load Limit A (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ba18: Load Limit B (RX8Defs data pointer, axes and dimensions match).
- */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

@@ -18,7 +18,7 @@ void fueling_main_task(void)
   FUN_00030228();
   FUN_0000eefa();
   FUN_00034364();
-  ref_getThrottlePositionFault__();
+  plate_range_high_fault();
   FUN_000341be();
   FUN_00034050();
   FUN_00034126();

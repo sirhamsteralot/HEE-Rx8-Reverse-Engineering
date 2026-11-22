@@ -10,7 +10,7 @@ uint FUN_00041818(void)
   
   uVar1 = ref_getFaultStatus__(2);
   uVar1 = uVar1 & 0xff;
-  if (((uVar1 == 0) && (uVar1 = (uint)DAT_ffffb358, uVar1 == 1)) && (DAT_ffffd1c5 == '\0')) {
+  if (((uVar1 == 0) && (uVar1 = (uint)ch7d_pwm_enable_ffffb358, uVar1 == 1)) && (DAT_ffffd1c5 == '\0')) {
     DAT_ffffc91e = 0x1905 < DAT_ffffc920;
     uVar1 = rx8_add_u16_saturate((int)(short)DAT_ffffc920,1);
     DAT_ffffc920 = (ushort)uVar1;

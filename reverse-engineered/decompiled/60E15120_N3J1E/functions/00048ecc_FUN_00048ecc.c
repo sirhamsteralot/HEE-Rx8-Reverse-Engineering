@@ -19,7 +19,7 @@ uint FUN_00048ecc(void)
   fVar6 = rx8_absolute_difference(DAT_ffffb4bc,0.0);
   fVar7 = rx8_absolute_difference(fVar7,DAT_ffffcce0);
   bVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a0,0);
-  uVar2 = (uint)DAT_ffffccbc;
+  uVar2 = (uint)throttle_servo_mode_ffffccbc;
   if (((uVar2 != 1) || (fVar6 < 80.0)) ||
      (((bVar3 != 0 || (100.0 <= fVar7)) && ((uVar2 = (uint)bVar3, uVar2 != 1 || (100.0 <= fVar7)))))
      ) {

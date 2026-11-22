@@ -8,7 +8,7 @@ void FUN_00049080(void)
 {
   undefined4 uVar1;
   
-  if ((((DAT_ffffb2cf == '\x01') || (DAT_ffffc030 == '\x01')) || (DAT_ffffccbc == '\x01')) ||
+  if ((((dsc_torque_limit_active_ffffb2cf == '\x01') || (DAT_ffffc030 == '\x01')) || (throttle_servo_mode_ffffccbc == '\x01')) ||
      (DAT_ffffccbb == '\x01')) {
     uVar1 = 1;
   }

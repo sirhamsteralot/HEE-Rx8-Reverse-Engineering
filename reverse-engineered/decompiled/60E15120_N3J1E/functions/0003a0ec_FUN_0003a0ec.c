@@ -13,7 +13,7 @@ void FUN_0003a0ec(void)
   ref_setRegister_REG_BIT_VAL(0xfffff746,0x80,DAT_ffffcfb6 == '\x01');
   FUN_00002064(auStack_c[0]);
   ref_setSR_PARAM(&local_10,0xe0);
-  ref_setRegister_REG_BIT_VAL(0xfffff754,1,DAT_ffffcfb7 == '\0');
+  ref_setRegister_REG_BIT_VAL(0xfffff754,1,pe0_relay_flag_ffffcfb7 == '\0');
   FUN_00002064(local_10);
   return;
 }

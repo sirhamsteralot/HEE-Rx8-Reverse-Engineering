@@ -143,7 +143,7 @@ LAB_0000ebd0:
   if ((((iVar8 == 2) &&
        (((cVar4 == '\x01' || (DAT_ffffa49d == '\0')) ||
         ((DAT_ffffa49e == '\x01' && ((snapshot_cranking_active_ffffaa62_ffffaa62 == 0 || (DAT_ffffa49b == '\x01')))))))) ||
-      (fuel_cut_allowed_ffffa964 == '\x01')) || ((DAT_ffffcc71 == '\x01' || (DAT_ffffb2cf == '\x01')))) {
+      (fuel_cut_allowed_ffffa964 == '\x01')) || ((DAT_ffffcc71 == '\x01' || (dsc_torque_limit_active_ffffb2cf == '\x01')))) {
     fuel_cut_request_b_ffffa465 = '\0';
   }
   else if (((iVar8 == 1) && (DAT_ffffa48e <= DAT_ffffa490)) ||

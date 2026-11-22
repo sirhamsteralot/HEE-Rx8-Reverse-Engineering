@@ -100,7 +100,7 @@ uint engine_stop_conditions_eval(void)
   }
   if ((((cVar2 == '\0') && (DAT_ffffccb6 < 0x271)) && (DAT_ffffccba == 1)) &&
      ((bVar5 == 0 && (bVar1)))) {
-    DAT_ffffccbc = 1;
+    throttle_servo_mode_ffffccbc = 1;
     DAT_ffffccbd = 0;
     DAT_ffffccbe = 0;
     DAT_ffffccbf = 0;
@@ -109,9 +109,9 @@ uint engine_stop_conditions_eval(void)
   else if ((((((cVar2 == '\x01') && (engine_injectors_off_ffffa42c == '\0')) &&
              ((DAT_ffffccee == '\0' || (DAT_ffffccef == '\x01')))) &&
             (((DAT_ffffccf0 == '\x01' && (cVar6 == '\0')) && (cVar7 == '\x01')))) || (cVar8 == '\0')
-           ) && ((((DAT_ffffad60 == '\x01' || (DAT_ffffad61 == '\x01')) || (cVar9 == '\x01')) &&
+           ) && ((((tp_plausibility_fault_a_ffffad60 == '\x01' || (tp_plausibility_fault_b_ffffad61 == '\x01')) || (cVar9 == '\x01')) &&
                  ((DAT_ffffccb4 < 0x271 && (bVar1)))))) {
-    DAT_ffffccbc = 1;
+    throttle_servo_mode_ffffccbc = 1;
     DAT_ffffccbd = 0;
     DAT_ffffccbe = 0;
     DAT_ffffccbf = 0;
@@ -131,7 +131,7 @@ uint engine_stop_conditions_eval(void)
         DAT_ffffccc9 = 1;
       }
       if (DAT_ffffcca2 != '\x01') {
-        DAT_ffffccbc = 0;
+        throttle_servo_mode_ffffccbc = 0;
         DAT_ffffccbd = 0;
         DAT_ffffccbe = 0;
         DAT_ffffccbf = 1;
@@ -140,7 +140,7 @@ uint engine_stop_conditions_eval(void)
       DAT_ffffccbd = 0;
       DAT_ffffccbe = 1;
     }
-    DAT_ffffccbc = 0;
+    throttle_servo_mode_ffffccbc = 0;
     DAT_ffffccbf = 0;
   }
 LAB_00048c3a:

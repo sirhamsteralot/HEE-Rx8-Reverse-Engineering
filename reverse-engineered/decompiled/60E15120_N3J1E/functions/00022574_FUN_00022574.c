@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_enable_condition [high]: b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= tbl 0x6a340(coolant-model delta b35c, b386) && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c.
+ * RAM 0xffffb358 ch7d_pwm_enable (uint8): Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear.
+ * RAM 0xffffcd70 throttle_fault_latch (uint8): Stuck-duty latch set by 0x4a11c when monitors 0x4162e/0x416bc see b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0).
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a340: Table 3D - 109 (RX8Defs data pointer, axes and dimensions match).
  */
@@ -10,7 +15,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00022ee0 (188 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00022574(void)
+uint ch7d_pwm_enable_condition(void)
 
 {
   uint uVar1;
@@ -36,11 +41,11 @@ uint FUN_00022574(void)
   uVar1 = (uint)engine_running_ffffa428;
   if ((((uVar1 != 1) || (uVar1 = (uint)engine_running_timer_ffffa424, uVar1 < (uint)(int)DAT_ffffb386)) ||
       (uVar1 = (uint)DAT_ffffb388, uVar1 != 1)) ||
-     (((snapshot_inferred_battery_voltage_ffffb590 < 9.0 || (16.0 <= snapshot_inferred_battery_voltage_ffffb590)) || (uVar1 = (uint)DAT_ffffcd70, uVar1 != 0)))) {
-    DAT_ffffb358 = 0;
+     (((snapshot_inferred_battery_voltage_ffffb590 < 9.0 || (16.0 <= snapshot_inferred_battery_voltage_ffffb590)) || (uVar1 = (uint)throttle_fault_latch_ffffcd70, uVar1 != 0)))) {
+    ch7d_pwm_enable_ffffb358 = 0;
   }
   else {
-    DAT_ffffb358 = 1;
+    ch7d_pwm_enable_ffffb358 = 1;
   }
   return uVar1;
 }

@@ -16,7 +16,7 @@ undefined2 * FUN_000416bc(void)
     if (puVar1 != (undefined2 *)((int)&vector_Poweron_Reset + 1)) {
       return puVar1;
     }
-    if (DAT_ffffb354 < 90.0) {
+    if (ch7d_pwm_duty_percent_ffffb354 < 90.0) {
       puVar1 = &DAT_ffffc916;
       if (DAT_ffffc916 < 0x80) {
         if (DAT_ffffc916 < 8) {
@@ -29,7 +29,7 @@ undefined2 * FUN_000416bc(void)
         DAT_ffffc911 = 0;
       }
     }
-    if (DAT_ffffb354 < 10.0) {
+    if (ch7d_pwm_duty_percent_ffffb354 < 10.0) {
       return puVar1;
     }
     puVar1 = &DAT_0007de10;

@@ -580,7 +580,7 @@ our binary-level bank semantics agree.
 | 0x00023844 / 0x000244bc | `e2ram_block_decode` / `e2ram_block_encode` | E2RAM block codec; fault bits 0xffffb48a–0xffffb490 ↔ 0xffffb459–0xffffb45d |
 | 0x0002376c / 0x0002377a | `e2ram_load_decode_entry` / `e2ram_save_encode_entry` | load / save wrappers |
 | 0x000235c8 / 0x000235f8 / 0x000236cc | `FUN_000235c8` / `FUN_000235f8` / `FUN_000236cc` | load / verify / save drivers (boot 0x1102a/0x114d0; save from 0x1150e) |
-| 0x0001150e | `FUN_0001150e` | periodic batch containing the E2RAM save; called from 0x64ba |
+| 0x0001150e | `dbw_task9_batch` | periodic batch containing the E2RAM save; called from 0x64ba |
 | 0x000064ba | `knock_sensor_fault_task` | task[9] entry → 0x1150e |
 
 ### RAM

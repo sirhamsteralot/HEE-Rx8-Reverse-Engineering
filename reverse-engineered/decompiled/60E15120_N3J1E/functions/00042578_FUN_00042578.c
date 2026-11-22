@@ -7,10 +7,10 @@
 uint FUN_00042578(void)
 
 {
-  byte snapshot_DAT_ffffb358;
+  byte snapshot_ch7d_pwm_enable_ffffb358;
   uint uVar2;
   
-  snapshot_DAT_ffffb358 = DAT_ffffb358;
+  snapshot_ch7d_pwm_enable_ffffb358 = ch7d_pwm_enable_ffffb358;
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc97f = 0;
     DAT_ffffc980 = 0;
@@ -19,7 +19,7 @@ uint FUN_00042578(void)
     DAT_ffffc992 = 0;
     return 1;
   }
-  if ((((DAT_ffffc978 != '\x01') || (DAT_ffffb358 != 1)) || (DAT_ffffc98e < 0x9d)) ||
+  if ((((DAT_ffffc978 != '\x01') || (ch7d_pwm_enable_ffffb358 != 1)) || (DAT_ffffc98e < 0x9d)) ||
      (DAT_ffffc974 < 17000.0)) {
     DAT_ffffc990 = 0;
   }
@@ -39,7 +39,7 @@ uint FUN_00042578(void)
   }
   DAT_ffffc992 = 0;
 LAB_0004266e:
-  uVar2 = (uint)snapshot_DAT_ffffb358;
+  uVar2 = (uint)snapshot_ch7d_pwm_enable_ffffb358;
   if (uVar2 == 1) {
     uVar2 = rx8_add_u16_saturate((int)(short)DAT_ffffc98e,1);
     DAT_ffffc98e = (ushort)uVar2;

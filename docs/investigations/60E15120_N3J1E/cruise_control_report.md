@@ -124,7 +124,7 @@ RAM aliases: `cruise_switch_code` (0xffffbaed), `cruise_output_percent`
 `cruise_control_law_output` (0xffffbd00), `cruise_filtered_speed_error`
 (0xffffcef4), `cruise_speed_error_mean12` (0xffffcee4), `current_gear_float`
 (0xffffcf1c), `current_gear` (0xffffbc3d), `candidate_gear` (0xffffbc3c),
-`throttle_position_1_percent` (0xffffa9b4), `throttle_position_2_percent`
+`accelerator_pedal_1_percent` (0xffffa9b4), `accelerator_pedal_2_percent`
 (0xffffa9b8), `cruise_set_speed_kmh` (0xffff866c),
 `cruise_target_speed_kmh` (0xffffbfa4), `cruise_enable_flag` (0xffffcf34).
 Evidence: `labeling/source_review/accepted_{function,ram}_aliases.tsv`,
