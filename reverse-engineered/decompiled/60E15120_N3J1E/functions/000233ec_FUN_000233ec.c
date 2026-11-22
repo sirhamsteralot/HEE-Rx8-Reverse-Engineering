@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * throttle_target_plate_position [high]: Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) (raw counts, PIDs 0x004c/0x091a). Called from batch 0x22f86.
- * RAM 0xffffb424 throttle_target_plate_percent (float): Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); converted to raw counts b410 = 0x5ccb4(b424).
+ * throttle_target_plate_position [high]: Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) stored with fmov.s at 0x2353e (float in b424 units, PIDs 0x004c/0x091a; 0x5ccb4 quantizes to 1/512 for the PID export and decodes back for descriptor codes 5/7). Called from batch 0x22f86.
+ * RAM 0xffffb424 throttle_target_plate_percent (float): Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); passed through the PID 0x091a export 0x5ccb4 into the float b410.
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a4c8: Table 2D - 144 (RX8Defs data pointer, axes and dimensions match).

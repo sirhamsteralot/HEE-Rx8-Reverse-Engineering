@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * throttle_pedal_to_plate_request_map [high]: 3D lookup lookup_3d_descriptor_scaled(rpm 0xffffb548, demand 0xffffa9bc, tbl) with gear flags b2cc/b2cd/b2ce selecting descriptors 0x6a458 (1/2), 0x6a474 (neutral), 0x6a490 (5/6), 0x6a4ac (3/4) (pools 0x229ca=0xa9bc, 0x229cc=0xb548/0xb2cc, 0x229d0=0xb2cd/0xb2ce, 0x229dc=0x6a458, 0x229e0=0x6a474, 0x229e4=0x6a490, 0x229e8=0x6a4ac); result clamped [0, 84.0f @0x7372c via pool 0x229f0] by 0x2404 (pool 0x229f4) into 0xffffb398 (pool 0x229ec) with 12-deep history shift (b3ec..b3c4, pool 0x229f8=0xffffb3ec). Called from batch 0x22f86.
- * RAM 0xffffb398 throttle_plate_request (float): Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-deep history b3c4..b398. Written by 0x228dc.
+ * RAM 0xffffb398 throttle_plate_request (float): Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-entry history at 0xffffb398+4i (write 0xffffb39c-0xffffb3c8) indexed by byte 0xffffb3ec; 0xffffb3cc = history[index]. Written by 0x228dc.
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a458: Throttle Pedal to Throttle Plate Request - Gear 1/2 (RX8Defs data pointer, axes and dimensions match).

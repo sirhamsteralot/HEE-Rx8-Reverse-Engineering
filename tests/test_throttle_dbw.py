@@ -30,6 +30,7 @@ import hashlib
 import json
 import os
 import struct
+import subprocess
 import sys
 from pathlib import Path
 
@@ -59,6 +60,7 @@ import harness  # noqa: E402
 PROFILE = os.path.join(EMU, "profiles", "60E15120_N3J1E.json")
 
 PEDR = 0xFFFFF754
+PDDR = 0xFFFFF746      # pd7 drive register (0x3a0ec)
 CFB6 = 0xFFFFCFB6      # pd7_relay_flag (PD7 half: starting_cranking_labels.json)
 CFB7 = 0xFFFFCFB7      # pe0_relay_flag (DBW relay request, inverted)
 
@@ -199,12 +201,15 @@ def test_plate_chain_pools(rom):
     assert w32(rom, 0x6F3E4) == 0x41C80000          # 25.0f TP1 scale
     assert w32(rom, 0x6F3E8) == 0x41FA0000          # 31.25f TP2 scale
     assert w32(rom, 0x6F3EC) == 0x00000000          # 0.0f TP1 base
+    assert w32(rom, 0x6F3F0) == 0xC1FA0000          # -31.25f TP2 base
     # 0x1b08e / 0x1b14c latch pools
     assert w32(rom, 0x1B12C) == 0xFFFF9F08         # AN18 raw cell
     assert w16(rom, 0x1B0E6) == 0xAD5C              # ad5c output
     assert w32(rom, 0x1B1D0) == 0xFFFF9F0A         # AN19 raw cell
     assert w16(rom, 0x1B1C0) == 0xAD5E              # ad5e output
-    # 0x1b940 plate position: 84.0f full-scale divisor is inline (0x42a80000)
+    # 0x1b940 plate position: 84.0f divisor is ROM 0x6f468, limp 20.0f is 0x6f464
+    assert w32(rom, 0x6F468) == 0x42A80000
+    assert w32(rom, 0x6F464) == 0x41A00000
 
 
 def test_pedal_to_plate_map_pools(rom):
@@ -225,7 +230,9 @@ def test_servo_override_pools(rom):
     assert w16(rom, 0x22EA4) == 0xB3F8              # override duty
     assert w16(rom, 0x22EA6) == 0xB410              # target counts
     assert w32(rom, 0x22EBC) == 0xFFFFB400         # direction
-    assert w32(rom, 0x747B8) == 0x3F000000         # 0.5f hysteresis
+    assert w32(rom, 0x747B8) == 0x3F000000         # 0.5f min limit
+    assert w32(rom, 0x747C4) == 0x3F000000         # 0.5f direction compare
+    assert w32(rom, 0x747C8) == 0x00000000         # 0.0f direction band
     assert w32(rom, 0x747BC) == 0x40A00000         # 5.0f decay floor
     assert w32(rom, 0x747C0) == 0x3D4CCCCD         # 0.05f step
     assert w32(rom, 0x6F438) == 0x41700000         # 15.0f learned default
@@ -276,6 +283,47 @@ def test_pid_1410_dispatch_record_and_pools(rom):
     assert w32(rom, 0x57048) == 0x41000000         # 8.0f
 
 
+def test_demand_and_learner_pools(rom):
+    # 0x193c4 demand branches: calibration byte 0 -> nominal path; 13.5/100/15 limits
+    assert rom[0x6EEC8] == 0x00                    # nominal demand branch selected
+    assert struct.unpack(">f", rom[0x6EF20:0x6EF24])[0] == pytest.approx(13.5)
+    assert struct.unpack(">f", rom[0x6EF24:0x6EF28])[0] == pytest.approx(100.0)
+    assert struct.unpack(">f", rom[0x6EF28:0x6EF2C])[0] == pytest.approx(15.0)
+    # pedal-zero learner: disarm/raise counters, floor/step/cap/agreement
+    assert w16(rom, 0x6EECA) == 0x177
+    assert w16(rom, 0x6EECC) == 0x177
+    for a, v in ((0x6EEF8, 9.626), (0x6EEFC, 0.005), (0x6EF00, 10.856),
+                 (0x6EF04, 0.01), (0x6EF08, 10.856), (0x6EF10, 0.032)):
+        assert struct.unpack(">f", rom[a:a + 4])[0] == pytest.approx(v), hex(a)
+    # plate learner gate + TP band/fault words
+    assert w16(rom, 0x6F3F8) == 10
+    assert rom[0x6C17A] == 3
+    assert w16(rom, 0x6F3E0) == 0x0FD2             # TP1 band lower
+    assert w16(rom, 0x6F3E2) == 0x2659             # TP2 band lower
+    assert w16(rom, 0x6C176) == 0x0A3D             # TP fault low
+    # correlation counter limits (>= 25 good, >= 29 bad)
+    assert w16(rom, 0x7C794) == 25
+    assert w16(rom, 0x7C796) == 29
+    # MT/AT calibration byte: 0x00 -> 0xffffb534 = 1 (range/state branch of 0x2c15a)
+    assert rom[0x74924] == 0x00
+
+
+def test_target_plate_is_float_store(rom):
+    # 0x233ec: b410 <- 0x5ccb4(b424) with fmov.s (4-byte float), not a u16 counter
+    assert rom[0x2353C:0x2353E].hex() == "9226"    # mov.w @(0x2358c,pc),r2 -> 0xb410
+    assert w16(rom, 0x2358C) == 0xB410
+    assert rom[0x2353E:0x23540].hex() == "f20a"    # fmov.s fr0,@r2
+
+
+def test_pd7_drive_dynamic(booted):
+    """0x3a0ec: PDDR bit 0x80 (PD7) = (0xffffcfb6 == 1) — not inverted."""
+    _, bus, cpu = booted
+    harness.call(bus, cpu, 0x3A0EC, ram={CFB6: (1, 1), CFB7: (1, 0)})
+    assert bus.read16(PDDR) & 0x80
+    harness.call(bus, cpu, 0x3A0EC, ram={CFB6: (1, 0), CFB7: (1, 0)})
+    assert not bus.read16(PDDR) & 0x80
+
+
 # --------------------------------------------------------------- dynamic
 
 
@@ -289,8 +337,9 @@ def test_pe0_drive_dynamic(booted):
 
 
 def test_pedal_task_dynamic(booted):
-    """Task 0x64ba -> 0x1150e -> 0x199d4 -> 0x193c4: AN4 raw 50000 ends up as
-    accelerator_pedal_1_percent 0xffffa9b4 = 100.0 (clamped from 105%)."""
+    """Task 0x64ba -> 0x94fc (pedal volts) -> 0x1150e -> 0x199d4 -> 0x193c4:
+    AN4 raw 50000 ends up as accelerator_pedal_1_percent 0xffffa9b4 = 100.0
+    (clamped from 105 %); AN5 stays 0, so pedal_range_fault_2 reads 2."""
     _, bus, cpu = booted
     harness.call(bus, cpu, 0x64BA, ram={AN4: (2, 50000)}, stop_at=(0x3DAC,))
     assert bus_f32(bus, A9B4) == pytest.approx(100.0)
@@ -360,3 +409,30 @@ def test_pid_1410_injector_pulse_time_dynamic(booted):
     80.0 -> u16 10, 16.0 -> u16 2. Not the throttle pedal."""
     assert 10 in _pid1410_encoded(booted, 80.0)
     assert 2 in _pid1410_encoded(booted, 16.0)
+
+
+PIPELINE = REPO / "utilities" / "scripts" / "rx8-pcm-pipeline"
+DECOMPILED = REPO / "reverse-engineered" / "decompiled" / "60E15120_N3J1E"
+
+
+def test_generators_idempotent_on_committed_artifacts():
+    """Rule 6d: re-running the label pass and its fold-back apply script must leave
+    the label record, the TSV rows and the exported names byte-identical."""
+    watched = [
+        LBL,
+        REPO / "data" / "labels" / "60E15120_N3J1E" / "integrated_names.json",
+        FN_TSV,
+        RAM_TSV,
+        LOOKUP_TSV,
+        FUNC_INDEX,
+        SYMBOLS,
+        DECOMPILED / "callgraph.tsv",
+        DECOMPILED / "firmware_decompiled.c",
+        DECOMPILED / "named" / "firmware_named.c",
+    ]
+    before = {p: p.read_bytes() for p in watched}
+    for script in ("review_throttle_dbw_labels.py", "review_throttle_dbw_labels_apply.py"):
+        subprocess.run([sys.executable, str(PIPELINE / script)], cwd=REPO, capture_output=True, check=True)
+    for path, data in before.items():
+        assert path.read_bytes() == data, f"{path.name}: generator not idempotent"
+
