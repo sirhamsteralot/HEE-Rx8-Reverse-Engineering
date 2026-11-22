@@ -101,7 +101,13 @@ validation JSONs).
   reference ROM `60E15120_N3J1E`); per-ROM differences are documented in
   `docs/investigations/<rom-id>/` and linked from the subsystem report.
 - `utilities/scripts/rx8-pcm-pipeline/validate_reports.py` checks every report (sections, ROM hash, all
-  memory-map addresses vs index/TSVs/ROM) — run it after any report edit.
+  memory-map addresses vs index/TSVs/ROM) — run it after any report edit. It
+  enumerates *every* row in map scope and classifies it by the address itself, then
+  asserts `map_rows = fn_checked + ram_checked + data_rows + io_rows`, so a row it
+  cannot resolve is a failure instead of a silent skip — a map check that skips
+  what it does not parse reads as green while checking nothing. A cell with no
+  tracked alias goes in `report_map_baseline.json` until the label record carries
+  it; the ledger may only shrink.
 
 Write-time citation rules (AGENTS.md rule 7) — lessons from a past self-review.
 One labeling pass shipped four hand-written evidence mistakes that a self-review
@@ -447,8 +453,9 @@ Session gotchas worth keeping:
   read back with struct.unpack('>f', struct.pack('>I', bus.read32(a))); compare
   floats with f32() (1.2 is not exact in f32 — assert against f32(1.2)).
 - Encoding gotcha (Windows): the root `*_report.md` files are UTF-8 but several contain
-  `→`, which fails under a cp1252 default-locale read — run `validate_reports.py` with
-  `PYTHONUTF8=1`. The decompiled `.c` files and two TSVs do contain cp1252 bytes, so
+  `→`, which fails under a cp1252 default-locale read — `validate_reports.py`
+  reads every report with `encoding='utf-8', errors='replace'` so no `PYTHONUTF8=1`
+  is needed for it. The decompiled `.c` files and two TSVs do contain cp1252 bytes, so
   `validate_export.py` and the TSV readers must keep default-locale/`errors='surrogateescape'`
   reads. When appending non-ASCII to docs, write with `encoding='utf-8'` — a bare
   `pathlib.write_text` on a cp1252 box truncates the file on UnicodeEncodeError.

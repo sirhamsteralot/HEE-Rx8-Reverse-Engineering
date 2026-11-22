@@ -71,8 +71,8 @@ def _report(*rows, heading='## 4. Proof'):
 
 
 def test_validator_passes_on_committed_tree():
-    r = subprocess.run([sys.executable, SCRIPT], capture_output=True, text=True, cwd=ROOT,
-                       env={**os.environ, 'PYTHONUTF8': '1'})
+    # no PYTHONUTF8 override: the validator decodes report text as UTF-8 itself
+    r = subprocess.run([sys.executable, SCRIPT], capture_output=True, text=True, cwd=ROOT)
     out = json.loads(r.stdout)
     assert out['result'] == 'PASS', out['failures']
     assert r.returncode == 0
