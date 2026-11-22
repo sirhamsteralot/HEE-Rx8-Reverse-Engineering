@@ -272,7 +272,8 @@
       "reviews/knock_control/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
-        "pool_claims": 0
+        "pool_claims": 0,
+        "word_assigns": 1
       },
       "reviews/limiter/README.md": {
         "reg_pairs": 0,

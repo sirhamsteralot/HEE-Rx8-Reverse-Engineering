@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-16 | Initial report in the human-first subsystem format (migrated from `docs/investigations/60E15120_N3J1E/`; content unchanged) | 1 |
 | 2026-11-19 | Scope discipline: open/closed-loop fueling state, OL/CL fueling functions and tables, O2-monitor and UDS-diag items moved out of the body and memory map into §4.6 with cross-links | 2 |
+| 2026-11-22 | Accuracy pass: gate-counter thresholds in counts, integrator-step bound, 0xffffc078 as a copy, 0xffff8038 role, live RPM ISR entry, final-clamp split | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -25,17 +26,19 @@ The PCM runs a **closed-loop knock control** on both rotors. It listens to each
 rotor through an external knock amplifier (per-rotor noise threshold commanded
 over SCI0, filtered level read back via ADC), integrates the knock magnitude
 against an adaptive noise threshold, and when knock is detected it **retards
-the ignition timing quickly (−1.0° per cycle)**. When knock stops it **recovers
-slowly (+0.35° per 62 cycles)**. The retard is a negative angle clamped to a
+the ignition timing quickly (−1.0° per invocation of the attack task)**. When
+knock stops it **recovers slowly (+0.35° per 62 invocations of the slow-recovery
+task)** — both rates are per task invocation, not per engine cycle. The retard is a negative angle clamped to a
 calibrated, RPM-dependent window of [−10°, 0°], fail-safes to a table (up to
-−10°) when the knock sensors are unhealthy, resets at very high RPM, and slowly
-learns a persistent offset into EEPROM.
+−10°) when the knock sensors are unhealthy, resets its detection state above 7000 rpm (the retard cell itself is not
+cleared), and slowly learns a persistent offset into EEPROM.
 
 In plain language:
 
 - If the knock sensors hear detonation, the PCM **immediately retards the
-  spark a little (−1.0° per cycle)**; when the knock stops it creeps back
-  slowly (+0.35° per 62 cycles), never past the calibrated window (−10…0°).
+  spark a little (−1.0° per attack-task invocation)**; when the knock stops it
+  creeps back slowly (+0.35° per 62 slow-recovery invocations), never past the
+  calibrated window (−10…0°).
 - Consequence: the **ignition timing reported on OBD includes any knock
   retard** — the base timing maps do not show it. If the knock sensors are
   unhealthy, a fail-safe table applies instead, and a persistent learned offset
@@ -99,19 +102,24 @@ above `5 − threshold_a × 0.15625`.
 ### 2.5 Enable gates — engine conditions only
 
 `0x13826` / `0x1388a` / `0x138b2` combine into `knock_active` (`0xffffa73c`):
-run time ≥ 3 s, coolant ≥ 10 °C, load ≥ 0.5 (table `0x6af54`), RPM < 5000,
+the engine-run counter `0xffffa424` at 375 counts or more (u16 `0x0177` at ROM
+`0x795a0`, compared at `0x13846`–`0x13850`), coolant ≥ 10 °C, load ≥ 0.5
+(table `0x6af54`), RPM < 5000,
 and both knock sensors healthy (`0xffffcd64`/`0xffffcd66`).
 
 ### 2.6 The retard state machine
 
 ```mermaid
 flowchart TD
-    A[knock_active?] -->|no| H[hold / target 0]
-    A -->|yes, sensors unhealthy| F[fail-safe table 0x6afa4 vs RPM]
-    A -->|yes, just activated| L[edge table 0x6afb8 vs learned EEPROM retard]
-    A -->|yes, attack condition 0xffffc05c| ATK[ATTACK: -1.0 deg/cycle]
-    A -->|yes, no attack condition| REC[RECOVER: +0.35 deg per 62 cycles]
-    H --> C[clamp to RPM window, tables 0x6af68/0x6af7c min, 0x6af90 max]
+    A[knock_enable 0xffffa73d?] -->|no| Z[target 0]
+    A -->|yes| B[knock_sensors_healthy 0xffffa73e?]
+    B -->|no| F[fail-safe: table 0x6afa4 vs RPM -> 0xffffa744]
+    B -->|yes| E[activation edge 0xffffa73c vs 0xffffa74c?]
+    E -->|edge| L[edge: table 0x6afb8 vs learned EEPROM retard -> 0xffffa744]
+    E -->|no edge| AT{attack condition<br/>0xffffc05c}
+    AT -->|yes| ATK[ATTACK: -1.0 deg per invocation]
+    AT -->|no| REC[RECOVER: +0.35 deg per 62 invocations]
+    Z --> C[clamp 0x13bd2 to the RPM window<br/>min 0x6af68/0x6af7c, max 0x6af90]
     F --> C
     L --> C
     ATK --> C
@@ -126,16 +134,19 @@ clamps it to the calibrated RPM-dependent window [−10°, 0°] and stores it in
 ### 2.7 Learning a persistent offset
 
 When the learn trigger fires (`0xffffa73f`, `0x139c4`), the current retard is
-low-pass filtered into the EEPROM learned-retard cell (EEPROM address held in
-RAM `0xffff8038`) and written — so a persistent knock adaptation survives
-restarts.
+low-pass filtered toward the learned value stored in `DAT_ffff8038` and written
+back through `0x3dcd0` — so a persistent knock adaptation survives restarts.
+`0xffff8038` is the record itself, not a pointer: a float at +0 with two u16
+checksums at +4 and +6, read and validated by `0x3dc22` (`u16@0 + u16@2 == ~u16@4`
+or `~u16@6`).
 
 ### 2.8 Applying the retard to ignition timing
 
 `0x125bc` / `0x125f6` subtract the retard (plus rough-knock, coolant-derate,
 cold-start and A/C terms) from the base leading/trailing timing
-(`0x123ba`/`0x123ca` → `0x12300`) and clamp into the final outputs
-`0xffffa630` / `0xffffa638`. The retard therefore enters the ignition timing
+(`0x123ba`/`0x123ca` → `0x12300`). `0x12300` clamps the trailing timing into
+`0xffffa638` (and mirrors it to `0xffffa664`); the leading timing `0xffffa630`
+is clamped separately by `0x121fc` from `0xffffa634`. The retard therefore enters the ignition timing
 *after* the base maps — see [ignition timing](../investigations/60E15120_N3J1E/ignition_timing_report.md).
 
 ### 2.9 Sensor health, fail-safe and DTCs
@@ -179,7 +190,7 @@ descriptor+16** (ROM bytes verified): raw 108 → −10°, 118 → −5°,
 
 ```python
 # --- sensing (per engine cycle; tasks 0x65f6 / 0x661e) ---
-rpm_raw       = 120_000_000 / crank_period_sum            # ISR 0x803e -> RAM 0xffff9f80
+rpm_raw       = 120_000_000 / crank_period_sum            # ISR chain 0x2ec0 (VBR slot 0x2c8) -> RAM 0xffff9f80
 knock_sample  = filter(read_adc(knock_sensor), 0.004)     # 0xc3ce; ADC 0xffff9ef8, only 200-2000 RPM; called from task[6] 0x661e
 knock_ref     = read_adc(knock_reference)                 # 0xc276 -> RAM 0xffffa326; called from 0xc8dc (task[5] chain) and 0x5a4c
 
@@ -194,12 +205,12 @@ knock_detected = (command_base <= magnitude)              # RAM 0xffffa324
 
 # --- decision inputs (0x336c4 / 0x33970) ---
 level_threshold = lookup_3d(load, rpm, knock_level_tables)   # RAM 0xffffa328; tables 0x6b2b8/0x6b2d4/0x6b2f0/0x6b304
-attack_condition = knock_detected_latched and engine_running and run_time >= 2.5s \   # RAM 0xffffc078 / 0xffffa428 / 0xffffa424
+attack_condition = knock_detected_copy and engine_running and run_time >= 250 counts \  # RAM 0xffffc078 / 0xffffa428 / 0xffffa424 (0x00fa at ROM 0x7a212)
                    and leading_timing  > 5 - threshold_a*0.15625 \                      # RAM 0xffffa630; threshold_a = knock_threshold_a_raw 0xffffc090 (= knock_ignition_threshold_a 0xffffa37e)
                    and trailing_timing > 5 - threshold_a*0.15625                          # RAM 0xffffa638
 
 # --- gates (0x13826/0x1388a/0x138b2): engine conditions only ---
-knock_enable = run_time >= 3s and coolant >= 10C and load >= 0.5 and rpm < 5000   # RAM 0xffffa73d
+knock_enable = run_time >= 375 counts and coolant >= 10C and load >= 0.5 and rpm < 5000   # RAM 0xffffa73d; 0x0177 at ROM 0x795a0
 knock_active = knock_enable and knock_sensors_healthy     # RAM 0xffffa73c = a73d && a73e (knock_sensor_healthy_a/b 0xffffcd64 / 0xffffcd66)
 
 # --- retard state machine (0x13a60 attack, 0x13b40 recovery, 0x13bd2 clamp) ---
@@ -208,9 +219,9 @@ if not knock_enable:            target = 0                        # control off
 elif not sensors_healthy:       target = lookup(tbl_0x6afa4, rpm) # fail-safe, up to -10 deg
 elif just_activated:            target = lookup(tbl_0x6afb8, learned_eeprom_retard)
 elif knock_active and attack_condition:
-                                target = knock_retard - 1.0          # ATTACK: -1 deg/cycle
+                                target = knock_retard - 1.0          # ATTACK: -1 deg per invocation
 elif knock_active and not attack_condition:
-                                target = knock_retard + 0.35         # RECOVER: per 62 cycles (knock_recovery_counter_a/b 0xffffa74a/a74b)
+                                target = knock_retard + 0.35         # RECOVER: per 62 invocations (knock_recovery_counter_a/b 0xffffa74a/a74b)
 else:                           target = knock_retard                # hold
 knock_retard = clamp(target, lookup_min(rpm), lookup_max(rpm))      # 0x13bd2; min tbl 0x6af68/0x6af7c, max tbl 0x6af90
 knock_retard_mirror = knock_retard
@@ -250,7 +261,7 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 
 | Address | Name | Role |
 |---|---|---|
-| 0x0000803e | `crank_isr_compute_rpm` (ISR; see §3) | crank period sum → raw RPM 0xffff9f80 |
+| 0x0000803e | `crank_isr_compute_rpm` (ISR; see §3) | crank period sum → raw RPM 0xffff9f80; reached through ROM vector slot 0x2c8 while VBR = 0, replaced by 0x2ec0 once 0xd206 sets VBR = 0x7fc50 (§4.6) |
 | 0x0000c276 | `knock_reference_adc_read` | reference-channel ADC → 0xffffa326; called from 0xc8dc and 0x5a4c |
 | 0x0000c290 | `ref_knockSensorADCFault` | knock ref ADC 0xffff9f0e vs u16 thresholds 51249/16121 at ROM 0x6c17e/0x6c17c → fault status |
 | 0x0000c3ce | `knock_voltage_sample` | knock ADC sample/filter (200–2000 RPM window), 10k flag; called from 0x661e (task[6]) |
@@ -269,8 +280,8 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0x00013826 | `knock_enable_gate` | sets 0xffffa73d |
 | 0x0001388a | `knock_sensor_health_gate` | sets 0xffffa73e |
 | 0x000138b2 | `knock_active_gate` | sets 0xffffa73c |
-| 0x00013a60 | `knock_retard_attack` | retard target; −1.0°/cycle attack |
-| 0x00013b40 | `knock_retard_slow_recovery` | +0.35° per 62 counts |
+| 0x00013a60 | `knock_retard_attack` | retard target; −1.0° per invocation attack |
+| 0x00013b40 | `knock_retard_slow_recovery` | +0.35° per 62 invocations |
 | 0x00013bd2 | `knock_retard_clamp` | clamp [min, max] (RPM); returns value (bug fixed) |
 | 0x000139c4 | `knock_retard_learn_to_eeprom` | persistent learned retard |
 | 0x0001391c | `ref_calcKnockRAMUpdate_` | knock-seen counter 0xffffa748 |
@@ -279,7 +290,7 @@ live in the descriptor / calibration area 0x0006c000–0x0007ffff.
 | 0x000125f6 | `knock_retard_apply_trailing` | writes 0xffffa658 |
 | 0x000123ba | `leading_timing_add_corrections` | 0xffffa634 = base + corrections |
 | 0x000123ca | `trailing_timing_add_corrections` | 0xffffa63c |
-| 0x00012300 | `trailing_final_timing_clamp_output` | clamps into 0xffffa630/a638 |
+| 0x00012300 | `trailing_final_timing_clamp_output` | clamps into 0xffffa638 (+ mirror 0xffffa664); 0xffffa630 is clamped by 0x121fc |
 | 0x00013034 | `knock_rough_correction_targets` | rough-knock targets (descriptors 0x69630–0x6974c) |
 | 0x00013210 | `ref_roughKnockCorrection` | leading/trailing rough corrections 0xffffa6ac/a6b0 (inherited name; semantic unproven) |
 | 0x0001467c | `knock_rough_correction_update` | rough-correction task chain |
@@ -312,12 +323,12 @@ Core knock state:
 | 0xffffa73d | `knock_enable` | engine-conditions gate |
 | 0xffffa73e | `knock_sensors_healthy` | = 0xffffcd64 && 0xffffcd66 |
 | 0xffffa73f | `knock_seen_learn_trigger` | learn-to-EEPROM trigger |
-| 0xffffa744 | `knock_recovery_target` | attack/recovery target |
+| 0xffffa744 | `knock_recovery_target` | target written only on the sensors-unhealthy (0x6afa4) and activation-edge (0x6afb8) paths at 0x13abc; no reader in this ROM |
 | 0xffffa748 | `knock_seen_counter` | u16 knock-seen counter |
 | 0xffffa74a / 0xffffa74b | `knock_recovery_counter_a/b` | recovery pacing counters (u8) |
 | 0xffffa74c | `knock_active_previous` | activation-edge detection |
 | 0xffffa324 | `knock_detected` | knock detected this cycle |
-| 0xffffc078 | `knock_detected_latched` | latched detection |
+| 0xffffc078 | `knock_detected_latched` | rewritten every call of 0x336c4 as (0xffffa324 != 0) — a copy, not a latch |
 | 0xffffc05c | `knock_attack_condition` | attack allowed |
 | 0xffffc05d | `knock_transient_flag` | stability (0 = stable) |
 | 0xffffc060 / 0xffffc064 / 0xffffc068 | `knock_filter_coeff_a/b/c` | filter constants |
@@ -328,7 +339,7 @@ Core knock state:
 | 0xffffa378 / 0xffffa326 | `knock_voltage_sample` / `knock_voltage_reference` | filtered sample / reference ADC |
 | 0xffffa37a / 0xffffa374 | `knock_adc_raw` / `knock_adc_filtered` | raw / filtered knock ADC |
 | 0xffffa370 / 0xffffa330 / 0xffffa32c | `knock_voltage` / `knock_magnitude` / `knock_noise_filtered` | |
-| 0xffffa344 / 0xffffa348 / 0xffffa34c | `knock_integrator_step` / `knock_baseline_slow` / `knock_level_combined` | |
+| 0xffffa344 / 0xffffa348 / 0xffffa34c | `knock_integrator_step` / `knock_baseline_slow` / `knock_level_combined` | step is bounded above by 1.0 (0xc574–0xc57a), not floored at it |
 | 0xffffa334[2] / 0xffffa33c[2] / 0xffffa350[2] | `knock_level_running` / `knock_level_integrator` / `knock_noise_threshold` | per rotor |
 | 0xffffa358 / 0xffffa360 | `knock_noise_floor` / `knock_noise_excess` | |
 | 0xffffa364 / 0xffffa368[2] | `knock_threshold_command_base` / `knock_threshold_command` | |
@@ -432,6 +443,29 @@ Full list of all named locations: [`accepted_ram_aliases.tsv`](../investigations
 5. **Export bug fixed**: 0x13bd2 `knock_retard_clamp` now returns the
    `rx8_clamp_float` result (SH fr0) instead of discarding it as `void`
    (disassembly 0x13c18–0x13c24 confirms the float return).
+6. **Gate counters**: `knock_enable` 0x13826 compares the engine-run counter
+   0xffffa424 against 375 counts (u16 0x0177 at ROM 0x795a0, `0x13848`–`0x13850`)
+   and the attack gate 0x33970 compares it against 250 (`0x00fa` at ROM
+   `0x7a212`); the earlier "3 s / 2.5 s" pair assumed a 100 Hz tick that is not
+   established, and 375/250 cannot both be those values under one rate.
+7. **Integrator step**: the 1.0 at `0xc572`–`0xc57a` bounds the step **above**
+   (`fr4 = min(fr4, 1.0)`), not below; the separate clamp-to-zero sits at
+   `0xc4ba`–`0xc4c0`.
+8. **0xffffc078 is a copy**: `0x336c4` stores `(0xffffa324 != 0)` on both branches
+   (`0x3394a`–`0x33954`), so the cell is rewritten every call rather than latched.
+9. **0xffffa744** is written only on the sensors-unhealthy and activation-edge
+   paths (`0x13a94`/`0x13ab8` → `0x13abc` `fmov.s fr0,@r13`, r13 = 0xffffa744);
+   the attack, recovery, disabled and hold paths branch straight to `0x13aec`, and
+   no code reads the cell.
+10. **0xffff8038** is the learned-retard record itself (float + two u16
+    checksums), read and validated by `0x3dc22` and written by `0x3dcd0`; earlier
+    wording called it an EEPROM-address holder.
+11. **RPM ISR entry**: ROM vector slot 0x2c8 holds 0x803e while VBR = 0, but
+    `0xd206` sets VBR = `0x7fc50`, whose slot 0x2c8 (`0x7ff18`) holds 0x2ec0 —
+    the live crank chain enters at 0x2ec0 (`0x2ec2`/`0x2ed4` `jsr 0x3238`), as §4.6
+    already stated.
+12. **Final clamp split**: `0x12300` clamps `0xffffa638` and mirrors
+    `0xffffa664`; `0xffffa630` is clamped by `0x121fc` from `0xffffa634`.
 
 ### 4.4 Files
 
@@ -559,7 +593,24 @@ key addresses — no body sections or memory-map rows above):
 Static analysis only for the control logic: no hardware execution, so
 scheduling order, interrupt load and real knock behavior are unmeasured (the
 decision logic itself was cross-checked in the emulator — §4.5).
-`candidate_` names are unproven hypotheses. Unresolved: the blend weights
+`candidate_` names are unproven hypotheses. The engine-run counter
+0xffffa424 tick rate is not established (its thresholds are stated in counts:
+375 at ROM 0x795a0, 250 at ROM 0x7a212); the SCI0 peer is a knock amplifier by
+association only (the firmware side is provable: 0xc8dc builds a byte in
+0xffff9f34 and stores the code in 0xffffa380/0xffffa381 before tail-jumping
+0x7188); `knock_recovery_target` 0xffffa744 names its two target tables rather
+than a recovery path and has no reader in this ROM; tables 0x6b2ac/0x6b2a0 are
+one-cell raw descriptors (count 1, data 0x4180), so "noise floor vs raw RPM" is
+a constant, not a curve. Unresolved:
+- The engine-run counter 0xffffa424 tick rate is not established; its thresholds
+  are stated in counts (375 at ROM 0x795a0, 250 at ROM 0x7a212).
+- The SCI0 peer is a knock amplifier by association: the firmware side is
+  provable (0xc8dc builds a byte in 0xffff9f34, stores the code in
+  0xffffa380/0xffffa381 and tail-jumps 0x7188), the peer identity is not.
+- `knock_recovery_target` 0xffffa744 names the two target tables rather than a
+  recovery path; the cell has no reader in this ROM.
+- Tables 0x6b2ac/0x6b2a0 are one-cell raw descriptors (count 1, data 0x4180), so
+  the "noise floor vs raw RPM" reading is a constant, not a curve. the blend weights
 b11c/b118, the variant/mode selectors (`automatic_transmission` 0xffffb534,
 bc3d, a415, cd5c, …), the task-record dispatch at ROM 0x4ab8 (entry 0x64e8),
 the exact semantics of the two "safe mode" flags (b12d/cd60), and the

@@ -16487,7 +16487,7 @@ undefined2 * knock_voltage_sample(void)
  * RAM 0xffffa370 knock_voltage (float): Knock voltage = (a378 - a326) * 5/65536 V.
  * RAM 0xffffa330 knock_magnitude (float): Knock magnitude vs tbl 0x6b250 minus command-code term a381[a384]<<5, clamped >= 0.
  * RAM 0xffffa32c knock_noise_filtered (float): Filtered (a330 - a348) noise term; coefficient is the hardcoded literal 0.0625 in 0xc486 (not c060: equals calm c060, ignores the transient 0.1875).
- * RAM 0xffffa344 knock_integrator_step (float): Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), floor 1.0.
+ * RAM 0xffffa344 knock_integrator_step (float): Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), bounded ABOVE by 1.0 (0xc572 fldi1 / 0xc574 fcmp/gt / 0xc57a fmov fr5,fr4); the clamp to zero is separate at 0xc4ba-0xc4c0.
  * RAM 0xffffa348 knock_baseline_slow (float): Slow baseline of a330 (coeff c068); part of the combined level a34c.
  * RAM 0xffffa34c knock_level_combined (float): a33c[a384] + a348, clamped >= 0; stored to a334[a384].
  * RAM 0xffffa334 knock_level_running (float[2]): Per-rotor running knock level a334[0..1].
@@ -23260,7 +23260,7 @@ uint knock_retard_learn_to_eeprom(void)
 
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_retard_attack [high]: Knock retard target: disabled (a73d==0) -> 0; sensors unhealthy (a73e==0) -> tbl 0x6afa4(RPM); activation edge (a74c==0 && a73c==1) -> tbl 0x6afb8(learned retard); active && attack condition (c05c==1) -> -1.0 deg/cycle (retard is negative, clamped <= 0). Writes a744, then clamped a734 = 0x13bd2(result), mirror a738.
- * RAM 0xffffa744 knock_recovery_target (float): Attack/recovery target written by 0x13a60: 0 when disabled, tbl 0x6afa4 when sensors unhealthy, tbl 0x6afb8 on activation edge, else previous retard.
+ * RAM 0xffffa744 knock_recovery_target (float): Target written by 0x13a60 on only two paths (sensors unhealthy -> tbl 0x6afa4, activation edge -> tbl 0x6afb8), both storing at 0x13abc (r13 = 0xffffa744); the attack, recovery, disabled and hold paths branch to 0x13aec without touching it, and no code reads the cell.
  * RAM 0xffffa74c knock_active_previous (uint8): Previous a73c; activation-edge detection (a74c==0 && a73c==1).
  * RAM 0xffffc05c knock_attack_condition (uint8): Set by 0x33970: knock latched && running && timing not already deeply retarded; selects -1.0 deg/cycle attack in 0x13a60.
  */
@@ -50165,7 +50165,7 @@ char knock_threshold_setup(void)
 
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_attack_condition [high]: Sets c05c: knock latched (c078) && engine running (a428) && run timer >= 0xfa && leading and trailing timing both > 5 deg - thresholdA*0.15625 where thresholdA = raw u16 c090 (timing not already deeply retarded).
- * RAM 0xffffc078 knock_detected_latched (uint8): 0x336c4 latches a324 here; 0x33970 requires it for the attack condition c05c.
+ * RAM 0xffffc078 knock_detected_latched (uint8): 0x336c4 rewrites this cell as (a324 != 0) on every call (0x3394a tst / 0x3394c bf/s / 0x33952 / 0x33954 both store), a copy rather than a latch; 0x33970 requires it for the attack condition c05c.
  * RAM 0xffffc090 knock_threshold_a_raw (uint16): Raw u16 threshold A from tbl 0x6b270 (or alt 0x6b27c when cd60 set); moved to a37e.
  */
 /* ROM address: 0x00033970; body bytes: 122; decompiled */

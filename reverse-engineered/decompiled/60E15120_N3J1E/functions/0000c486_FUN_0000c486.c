@@ -9,7 +9,7 @@
  * RAM 0xffffa370 knock_voltage (float): Knock voltage = (a378 - a326) * 5/65536 V.
  * RAM 0xffffa330 knock_magnitude (float): Knock magnitude vs tbl 0x6b250 minus command-code term a381[a384]<<5, clamped >= 0.
  * RAM 0xffffa32c knock_noise_filtered (float): Filtered (a330 - a348) noise term; coefficient is the hardcoded literal 0.0625 in 0xc486 (not c060: equals calm c060, ignores the transient 0.1875).
- * RAM 0xffffa344 knock_integrator_step (float): Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), floor 1.0.
+ * RAM 0xffffa344 knock_integrator_step (float): Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), bounded ABOVE by 1.0 (0xc572 fldi1 / 0xc574 fcmp/gt / 0xc57a fmov fr5,fr4); the clamp to zero is separate at 0xc4ba-0xc4c0.
  * RAM 0xffffa348 knock_baseline_slow (float): Slow baseline of a330 (coeff c068); part of the combined level a34c.
  * RAM 0xffffa34c knock_level_combined (float): a33c[a384] + a348, clamped >= 0; stored to a334[a384].
  * RAM 0xffffa334 knock_level_running (float[2]): Per-rotor running knock level a334[0..1].
