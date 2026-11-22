@@ -1,47 +1,128 @@
 {
-  "date": "2026-11-19",
-  "pass": "fuel_pump_control_subsystem_analysis",
-  "basis": "Static analysis of the canonical export + disassembly + raw ROM bytes (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1), plus SH-2E emulator dynamic checks of the output drive paths (tests/test_fuel_pump_control_dynamic.py). Harness-side identity of pkg pins to connector terminals remains board-level unresolved (docs/architecture/hardware/README.md evidence levels); terminals 5P/5L/4M/5A/4C/5AA from mazda-rx-8-pcm-pinout-series-1.md are candidate associations.",
-  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin); SH7055F pkg pins from docs/references/Sh7055h.pdf Table 1.3 (pins 7=PE0, 8=PE1, 9=PE2, 183=PJ7, 256=PD7)",
-  "function_aliases": {
-    "0002f890": {
-      "alias": "fuel_pump_relay_drive_pe2",
-      "confidence": "medium",
-      "evidence": "Writes PEDR_W 0xfffff754 bit 0x4 (PE2, SH7055F pkg pin 9) = (DAT_ffffbdd8 == 1) via ref_setRegister_REG_BIT_VAL 0x4bbc under SR mask 0xe0. Raw-bin verified: pool 0x2f930=0xbdd8 (cell), 0x2f932=0xf754 (PEDR low half), 0x2f93e=0x4bbc (helper), mask mov #0x4 at 0x2f8b0, cmp/eq 0x1 at 0x2f8a2. Caller 0x2f948 (main task 0x1102a). Harness candidate: fuel pump relay control 5P (with immobilizer) / 5L (without); chip-pin->terminal routing unresolved."
-    },
-    "0002f8ce": {
-      "alias": "fuel_pump_outputs_pe2_pe1",
-      "confidence": "medium",
-      "evidence": "Writes PEDR_W bit 0x4 (PE2, pkg pin 9) = (FUN_0005c204(DAT_ffffbdd8) == 1) [diag actuator-override gate] and bit 0x2 (PE1, pkg pin 8) = (DAT_ffffbdbc == 1). Raw-bin verified: jsr 0x5c204 (pool 0x2f944) with r4=pool 0x2f930=0xbdd8; mask mov #0x4 at 0x2f8ea; r13=pool 0x2f932=0xf754 (PEDR); then cell pool 0x2f934=0xbdbc, mask mov #0x2 at 0x2f912, helper pool 0x2f93e=0x4bbc. Caller 0x2f95c ref_getOBDFuelModificationRequest (fueling task 0x117ac). PE1 harness candidate: fuel pump speed control 4M."
-    },
-    "0002f948": {
-      "alias": "fuel_pump_request_force_step",
-      "confidence": "medium",
-      "evidence": "Calls 0x2fbf0 (DAT_ffffbdd8 = 1), 0x2fbf8 (DAT_ffffbddc = 0xffff), 0x2f890 (PE2 output). Called from main task 0x1102a (callgraph). Forces the PE2 request flag high once per main-task pass."
-    },
-    "0002fbf0": {
-      "alias": "fuel_pump_request_set",
-      "confidence": "medium",
-      "evidence": "8-byte body: DAT_ffffbdd8 = 1. Called from 0x2f948."
-    },
-    "0002fc00": {
-      "alias": "fuel_pump_request_calc",
-      "confidence": "medium",
-      "evidence": "Computes DAT_ffffbdd8 (drives PE2) = DAT_ffffaa68(key-on flag) && (DAT_ffffbdda < 0x1f || (DAT_ffffa42c(injectors_off)==1 && DAT_ffffbde0==1) || DAT_ffffbddc < 0x3e). Raw-bin verified pools: 0x2fcd0=0xaa68, 0x2fcd2=0xa42c, 0x2fce2=0xbdda, 0x2fce6=0xbdde, 0x2fcea=0xbde0, 0x2fcda=0xbddc, 0x2fcce=0xbdd8; thresholds ROM 0x7bc58=0x1f, 0x7bc5c=0x3e; increment helper pool 0x2fcde=0x2460. bdda counts up while key-on, bdde while injectors-off, bddc every call. Caller 0x2f95c (fueling task 0x117ac). Dynamically: PE2 high at key-on/cranking/running, low at key-off (tests/test_fuel_pump_control_dynamic.py)."
-    }
+ "date": "2026-11-19",
+ "pass": "fuel_pump_control_subsystem_analysis",
+ "basis": "Static analysis of the canonical export + disassembly + raw ROM bytes (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1), plus SH-2E emulator dynamic checks of the three drive/request functions (tests/test_fuel_pump_control_dynamic.py); every pool, instruction word and ROM threshold cited here is re-read by utilities/scripts/rx8-pcm-pipeline/verify_fuel_pump_chain.py (docs/investigations/60E15120_N3J1E/reviews/fuel_pump_control/rawbin_reverify_log.txt). Harness-side identity of pkg pins to connector terminals remains board-level unresolved (docs/architecture/hardware/README.md evidence levels); terminals 5P/5L/4M/5A/4C/5AA from mazda-rx-8-pcm-pinout-series-1.md are candidate associations.",
+ "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin); SH7055F pkg pins from docs/references/Sh7055h.pdf Table 1.3 (pins 7=PE0, 8=PE1, 9=PE2, 183=PJ7, 256=PD7)",
+ "function_aliases": {
+  "0002f890": {
+   "alias": "fuel_pump_relay_drive_pe2",
+   "confidence": "medium",
+   "evidence": "Writes PEDR_W 0xfffff754 bit 0x4 (PE2, SH7055F pkg pin 9) = (DAT_ffffbdd8 == 1) via ref_setRegister_REG_BIT_VAL 0x4bbc under SR mask 0xe0. Raw-bin verified: pool 0x2f930=0xbdd8 (cell), 0x2f932=0xf754 (PEDR low half), 0x2f93c=0x4bbc (helper), mask mov #0x4 at 0x2f8b0, cmp/eq 0x1 at 0x2f8a2. Caller 0x2f948, itself reached from the start-up sequence FUN_0001102a (pool 0x11308, jsr at 0x11136). Harness candidate: fuel pump relay control 5P (with immobilizer) / 5L (without); chip-pin->terminal routing unresolved."
   },
-  "ram_aliases": {
-    "ffffbdd8": {
-      "alias": "fuel_pump_relay_request",
-      "type": "uint8",
-      "reader": "0002f890",
-      "evidence": "Written by 0x2fc00: key_on 0xffffaa68 && (bdda<0x1f || (injectors_off a42c && bde0) || bddc<0x3e); forced 1 by 0x2fbf0. Drives PE2 (pkg pin 9); harness candidate fuel pump relay control 5P/5L. Pool-anchored: 0x2fcce=0xbdd8, 0x2f930=0xbdd8."
-    },
-    "ffffbdbc": {
-      "alias": "fuel_pump_speed_request",
-      "type": "uint8",
-      "reader": "0002f8ce",
-      "evidence": "Written by 0x2fb20 ref_fuelingAddOBDControlMode_ = diag-wrapped ((0xffffbdd5 && engine_stopped_latch 0xffffa41c==0) || (injectors_off 0xffffa42c==1 && key_on 0xffffaa68==1)); 0xffffbdd5 = fuel-demand threshold term (bdc0 >= bdc4-3.5). Drives PE1 (pkg pin 8); harness candidate fuel pump speed control 4M. Pool-anchored: 0x2f934=0xbdbc."
-    }
+  "0002f8ce": {
+   "alias": "fuel_pump_outputs_pe2_pe1",
+   "confidence": "medium",
+   "evidence": "Writes PEDR_W bit 0x4 (PE2, pkg pin 9) = (FUN_0005c204(DAT_ffffbdd8) == 1) [diag actuator-override gate] and bit 0x2 (PE1, pkg pin 8) = (DAT_ffffbdbc == 1). Raw-bin verified: jsr 0x5c204 (pool 0x2f944) with r4=pool 0x2f930=0xbdd8; mask mov #0x4 at 0x2f8ea; r13=pool 0x2f932=0xf754 (PEDR); then cell pool 0x2f934=0xbdbc, mask mov #0x2 at 0x2f912, helper pool 0x2f93e=0x4bbc. Caller 0x2f95c ref_getOBDFuelModificationRequest (fueling task 0x117ac). PE1 harness candidate: fuel pump speed control 4M."
+  },
+  "0002f948": {
+   "alias": "fuel_pump_request_force_step",
+   "confidence": "medium",
+   "evidence": "Calls 0x2fbf0 (DAT_ffffbdd8 = 1), 0x2fbf8 (DAT_ffffbddc = 0xffff), 0x2f890 (PE2 output) - pools 0x2f9a4/0x2f9a8/0x2f9ac. Called from FUN_0001102a (pool 0x11308, jsr at 0x11136), which is itself entered once from the init chain (pool 0x628c = 0x0001102a, jsr at 0x61e4): the prime is a start-up action, not a periodic pass."
+  },
+  "0002fbf0": {
+   "alias": "fuel_pump_request_set",
+   "confidence": "medium",
+   "evidence": "8-byte body: DAT_ffffbdd8 = 1. Called from 0x2f948."
+  },
+  "0002fc00": {
+   "alias": "fuel_pump_request_calc",
+   "confidence": "medium",
+   "evidence": "Computes DAT_ffffbdd8 (drives PE2) = DAT_ffffaa68(key-on flag) && (DAT_ffffbdda < 0x1f || (DAT_ffffa42c(injectors_off)==1 && DAT_ffffbde0==1) || DAT_ffffbddc <= 0x3e). Raw-bin verified pools: 0x2fcd0=0xaa68, 0x2fcd2=0xa42c, 0x2fce0=0xffffbdda, 0x2fce4=0xffffbdde, 0x2fce8=0xffffbde0, 0x2fcd8=0xffffbddc, 0x2fcce=0xbdd8; thresholds ROM 0x7bc58=0x1f (cmp/hs, keep while < 0x1f) and 0x7bc5c=0x3e (cmp/hi, keep while <= 0x3e); increment helper pool 0x2fcdc=0x2460, saturation word 0x2474=0xffff. bdda counts up while key-on, bdde while injectors-off, bddc every call; bde0 is only cleared here (0x2fc50) and produced by 0x2fcac. Caller 0x2f95c (fueling task worker 0x117ac)."
+  },
+  "0002fbf8": {
+   "alias": "fuel_pump_run_on_disable",
+   "confidence": "high",
+   "evidence": "8-byte body: DAT_ffffbddc = 0xffff (mov.w r1,@r0 at 0x2fbfe), which puts the run-on grace counter past its 0x3e keep-alive window. Pools 0x2fcd4=0x0000ffff, 0x2fcd8=0xffffbddc. Called from 0x2f948."
+  },
+  "0002f98c": {
+   "alias": "fuel_pump_grace_eval_locked",
+   "confidence": "high",
+   "evidence": "SR-masked wrapper: 0x3920 with mask 0x10 (pool 0x2f9b0), then 0x2fcac (pool 0x2f9cc), then tail-jump to the SR restore 0x3934 (pool 0x2f9c8). Entered from 0x11b80 (pool 0x11d20, jmp at 0x11ba0)."
+  },
+  "0002fcac": {
+   "alias": "fuel_pump_grace_eval",
+   "confidence": "high",
+   "evidence": "Resets the run-on grace counter (mov.w r4,@r3 with r4=0, pool 0x2fcd8=0xffffbddc) and sets DAT_ffffbde0 = (DAT_ffffbdde > ROM[0x7bc5a]); the threshold is 0x0000 in this bin (pools 0x2fcf4=0x0007bc5a, 0x2fce4=0xffffbdde, 0x2fce8=0xffffbde0; cmp/hi r0,r2 at 0x2fcbc). Reached through 0x2f98c from 0x11b80."
   }
+ },
+ "ram_aliases": {
+  "ffffbdd8": {
+   "alias": "fuel_pump_relay_request",
+   "type": "uint8",
+   "reader": "0002f890",
+   "evidence": "Written by 0x2fc00: key_on 0xffffaa68 && (bdda < 0x1f || (injectors_off a42c && bde0) || bddc <= 0x3e); primed 1 by 0x2fbf0. Drives PE2 (pkg pin 9); harness candidate fuel pump relay control 5P/5L. Pool-anchored: 0x2fcce=0xbdd8, 0x2f930=0xbdd8."
+  },
+  "ffffbdbc": {
+   "alias": "fuel_pump_speed_request",
+   "type": "uint8",
+   "reader": "0002f8ce",
+   "evidence": "Written by 0x2fb20 ref_fuelingAddOBDControlMode_ = diag-wrapped ((bdd5 && engine_stopped_latch 0xffffa41c==0) || (injectors_off 0xffffa42c==1 && key_on 0xffffaa68==1) || (ROM[0x775bd]==0 && 0xffffbdd4>0)); the gate 0x5c2e4 forces the request on diagnostic modes 5/7. bdd5 = 1 when bdc0 >= bdc4, 0 when bdc0 < bdc4-3.5, else latched. Read by 0x2f8ce (PE1, pkg pin 8; harness candidate fuel pump speed control 4M), 0x2aa46 and 0x49308. Pool-anchored: 0x2fbca=0xbdbc, 0x2f934=0xbdbc."
+  },
+  "ffffbdd5": {
+   "alias": "fuel_pump_demand_threshold",
+   "type": "uint8",
+   "reader": "0002fb20",
+   "evidence": "Hysteresis latch inside 0x2fb20: set 1 at 0x2fb44 when DAT_ffffbdc0 >= DAT_ffffbdc4, cleared at 0x2fb4c once DAT_ffffbdc0 < DAT_ffffbdc4 - 3.5 (ROM 0x775d8), unchanged inside the band. Pool 0x2fbdc=0xffffbdd5."
+  },
+  "ffffbdd4": {
+   "alias": "fuel_pump_speed_hold_counter",
+   "type": "uint8",
+   "reader": "0002fb20",
+   "evidence": "Hold counter in 0x2fb20: loaded from ROM[0x775be]=0x01 while injectors_off 0xffffa42c==1, else incremented by 255 with u8 saturation (add r3,r4 at 0x2fbba, pool 0x2fbcc=0x00ff). Feeds the third request term (gated by ROM[0x775bd], which is 0x01 here so the term is inert). Pool 0x2fbe4=0xffffbdd4."
+  },
+  "ffffbdc0": {
+   "alias": "fuel_pump_filtered_demand",
+   "type": "float32",
+   "reader": "0002fb20",
+   "evidence": "Filtered fuel-volume demand from 0x2f9d0 ref_filterFuelVolumeRequest = first_order_filter(rpm 0xffffb548 x fuel_volume_final 0xffffbeb0 x 0.12, coeff 0.75) via helper 0x23b0; also read back as the filter state by 0x2f9d0. Pools 0x2fae0=0xffffbdc0, 0x2fad4=0x3df5c28f (0.12), ROM 0x775c0=0.75. Compared against 0xffffbdc4 by 0x2fb20."
+  },
+  "ffffbdc4": {
+   "alias": "fuel_pump_max_demand",
+   "type": "float32",
+   "reader": "0002fb20",
+   "evidence": "Max fueling request from 0x2f9fc ref_calculateFuelingRequestMaxForOBDControl: 2D-167 (0x6a97c) or 2D-168 (0x6a990) looked up on battery voltage 0xffffb590 while intake air 0xffffaddc stays within the 200/190 margins of 2D-166 (0x6a968, axis baro 0xffffad14), else 0.0 with 0xffffbdcc=1. Pool 0x2fafc=0xffffbdc4; reader 0x2fb20 (pool 0x2fbd0)."
+  },
+  "ffffbdc8": {
+   "alias": "fuel_pump_demand_margin",
+   "type": "float32",
+   "reader": "0002f9fc",
+   "evidence": "Margin subtracted from the 200/190 x 2D-166 product inside 0x2f9fc, then zeroed at the end of the function through the first branch of ROM byte 0x775bc (=0x00 here). Pool 0x2fb04=0xffffbdc8."
+  },
+  "ffffbdd0": {
+   "alias": "fuel_pump_demand_reference",
+   "type": "float32",
+   "reader": "0002f9fc",
+   "evidence": "Result of the barometric-pressure lookup 2D-166 (descriptor 0x6a968, axis 0xffffad14) in 0x2f9fc; scaled by 200.0 (ROM 0x775c4) and 190.0 (0x775c8) to form the intake-air margins. Pool 0x2fae8=0xffffbdd0."
+  },
+  "ffffbdcc": {
+   "alias": "fuel_pump_margin_high_flag",
+   "type": "uint8",
+   "reader": "0002f9fc",
+   "evidence": "Set 1 by 0x2f9fc when intake air exceeds the 200 x reference margin (max demand forced to 0.0), cleared 0 on the lookup path. Pool 0x2fb00=0xffffbdcc."
+  },
+  "ffffbdda": {
+   "alias": "fuel_pump_key_on_grace_counter",
+   "type": "uint16",
+   "reader": "0002fc00",
+   "evidence": "Key-on grace counter in 0x2fc00: sat16 increment while key_on 0xffffaa68==1 via helper 0x2460, reset to 0 otherwise; the request survives while it is < ROM[0x7bc58]=0x1f (cmp/hs at 0x2fc64). Pool 0x2fce0=0xffffbdda."
+  },
+  "ffffbddc": {
+   "alias": "fuel_pump_run_on_grace_counter",
+   "type": "uint16",
+   "reader": "0002fc00",
+   "evidence": "Free-running run-on grace counter: sat16 increment on every 0x2fc00 call, kept <= ROM[0x7bc5c]=0x3e (cmp/hi at 0x2fc84); reset to 0 by 0x2fcac and loaded with 0xffff by 0x2fbf8, which disables the term. Pool 0x2fcd8=0xffffbddc."
+  },
+  "ffffbdde": {
+   "alias": "fuel_pump_injectors_off_counter",
+   "type": "uint16",
+   "reader": "0002fc00",
+   "evidence": "Injectors-off (fuel-cut) counter: sat16 increment while injectors_off 0xffffa42c==1, reset to 0 otherwise. Read by 0x2fcac, which compares it against ROM[0x7bc5a]=0x0000. Pool 0x2fce4=0xffffbdde."
+  },
+  "ffffbde0": {
+   "alias": "fuel_pump_injectors_off_seen",
+   "type": "uint8",
+   "reader": "0002fc00",
+   "evidence": "Injectors-off seen flag: cleared by 0x2fc00 when injection is enabled (0x2fc50) and set by 0x2fcac as (DAT_ffffbdde > ROM[0x7bc5a] = 0); it makes the second grace term hold while fuel is cut. Pool 0x2fce8=0xffffbde0."
+  }
+ }
 }

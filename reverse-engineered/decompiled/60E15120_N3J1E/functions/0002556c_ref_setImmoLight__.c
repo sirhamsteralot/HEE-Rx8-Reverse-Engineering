@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_lamp_drive [high]: ref_setImmoLight__ (unique_exact_bytes to 60E0FC00 0x25df4). Drives PEDR_W 0xfffff754 masks 0x40 and 0x20 (port E bits 6/5) with interrupt mask 0xe0; param 1 = on, 0 = off. GPIO register from symbols.tsv (PEDR_W 0xfffff754); package-pin to connector-terminal routing not traced.
+ */
 /* ROM address: 0x0002556c; body bytes: 130; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00025df4 (130 bytes). Names prefixed ref_

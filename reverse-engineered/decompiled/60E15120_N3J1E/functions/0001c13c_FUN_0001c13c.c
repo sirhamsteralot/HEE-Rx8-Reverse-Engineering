@@ -1,10 +1,10 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006990c: Table 2D - 304 Check DataType (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * closed_loop_enable_condition [high]: Computes ae1e (CL allowed: coolant >= 35 C, engine time >= tbl 0x6990c vs catalyst-temp model, open loop inactive b12c==0, O2 in tolerance, no DTC-ish conditions) and ae1f (CL active = ae1e && cd5c==0 && lambda feedback aa80/aa81).
  * RAM 0xffffb12c open_loop_active (uint8): OPEN-loop flag (polarity corrected): = (b12a != 0), set by 0x1ee30; blocks closed loop in 0x1c13c, selects open-loop targets in 0x1ee4a, gates evap 0x22144. Earlier sessions mislabeled this as the closed-loop flag.
  * RAM 0xffffaa80 lambda_in_target_band (uint8): 0x1ac00: 1 when no DTC, 0.99 <= lambda target 0xffffadfc < 1.01, ad0c==1, engine running; CL-active ingredient (ae1f).
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006990c: Table 2D - 304 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x0001c13c; body bytes: 320; decompiled */
 
