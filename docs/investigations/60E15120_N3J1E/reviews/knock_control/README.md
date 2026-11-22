@@ -3,7 +3,7 @@
 Scope: the knock sensing, knock control and closed/open-loop decision chain of
 60E15120_N3J1E (RX-8 PCM, SH7055 / SH-2E), read from the canonical export
 (`decompiled/`), the disassembly and the untouched ROM. This pass labels the
-chain in the export (39 functions, 84 RAM locations, 15 lookup tables), fixes
+chain in the export (39 functions, 271 RAM locations, 15 lookup tables), fixes
 one export bug, and corrects three earlier misreadings. No firmware changes
 were made; the ROM is untouched (SHA-256 verified by `scripts/validate_export.py`).
 
@@ -97,7 +97,8 @@ timing_retard_fast_task
   a change of the latched reference (`knock_reference_voltage_latched_ffffa389`)
   forces a32c = 40 (noise reset).
 - Integrator step `knock_integrator_step_ffffa344` =
-  min(|a32c|, c060 * |a330 - a334[a384]|), floor 1.0; per-rotor integrators
+  min(|a32c|, c060 * |a330 - a334[a384]|), bounded above by 1.0 (0xc574-0xc57a);
+  per-rotor integrators
   `knock_level_integrator_ffffa33c[i]` +/-= a344 and noise thresholds
   `knock_noise_threshold_ffffa350[i]` +/-= a344 * `knock_filter_coeff_b_ffffc064`
   (x2 on decay), clamped to [tbl 0x6b2a0 min, a358+8 max].
@@ -161,6 +162,8 @@ So the retard lives in [-10, 0] deg and 0 means "no knock retard".
   (`knock_recovery_target_ffffa744`):
   - knock disabled (a73d==0) -> **0**;
   - sensors unhealthy (a73e==0) -> `tbl_knock_recovery_target_0006afa4`(RPM)
+  (only the unhealthy and activation-edge paths reach the store at 0x13abc;
+  attack/recovery/hold/disabled branch to 0x13aec and leave the cell alone)
     (-10 x9, -8, -6, -4, -2, 0, 0 vs RPM 500-5500) — fail-safe retard;
   - activation edge (a74c==0 && a73c==1) -> `tbl_knock_learned_retard_scale_0006afb8`
     over the learned EEPROM retard axis (-8.4..+8.4 deg; all 0.0 in this ROM);
@@ -382,6 +385,40 @@ counts. An earlier session had these two swapped.
    logger parameter PIDTEST3 "Knock Retard" carries desc="Tire Size"
    (copy-paste) and gauge_max=500 despite the PID's degenerate [0, +89.7] deg
    encoding (see 1.8).
+
+## 7. Corrections (accuracy pass)
+
+Re-read against the ROM for this revision; each item cites what settles it.
+
+1. `knock_enable` 0x13826 compares the engine-run counter 0xffffa424 with 375
+   counts (u16 0x0177 at ROM 0x795a0, load 0x13848, compare 0x1384e, `bf/s`
+   0x13850) and 0x33970 uses 250 (0x00fa at ROM 0x7a212); "3 s / 2.5 s" assumed a
+   100 Hz tick that is not established and is arithmetically impossible for both.
+2. 0x12300 stores the clamped trailing timing into 0xffffa638 (pool 0x1240e) and
+   0xffffa664 (pool 0x12430); 0xffffa630 is clamped by 0x121fc (pool 0x122c8) from
+   0xffffa634 (pool 0x122c6). Earlier wording gave both outputs to 0x12300.
+3. 0xffffa744 is written from 0x13abc only (`fmov.s fr0,@r13`, r13 = 0xffffa744
+   via pool 0x13b18), reached from 0x13a94 (fail-safe table 0x6afa4) and 0x13ab8
+   (edge table 0x6afb8); the disabled (`bra` 0x13a7a), attack (0x13aea) and hold
+   (0x13ad2) paths go straight to 0x13aec, and no code reads the cell.
+4. 0xffffc078 is rewritten every call of 0x336c4 as (0xffffa324 != 0): 0x3394a
+   `tst r5,r5`, 0x3394c `bf/s` and both stores 0x33952/0x33954 write the cell — a
+   copy, not a latch.
+5. 0xffff8038 is the learned-retard record (float at +0, u16 checksums at +4/+6):
+   0x3dc22 reads and validates it, 0x3dcd0 writes it (0x139c4 reaches that write
+   through the `jmp` at 0x139f8, pool 0x13a0e = 0x8038).
+6. The live crank interrupt enters at 0x2ec0: ROM slot 0x2c8 holds 0x803e while
+   VBR = 0, and `0xd206` sets VBR = 0x7fc50, whose slot 0x2c8 (ROM 0x7ff18) holds
+   0x2ec0. §4.6 of the report already said this; §3 and the memory map did not.
+7. `knock_integrator_step` 0xffffa344 is bounded **above** by 1.0 (0xc572
+   `fldi1 fr5`, 0xc574 `fcmp/gt fr4,fr5`, 0xc57a `fmov fr5,fr4`); the clamp to
+   zero is the separate 0xc4ba-0xc4c0 pair.
+8. Confidence split: the record holds 38 high / 1 medium
+   (0x00022144 `candidate_fuel_open_loop_condition`), not 33 / 6.
+9. The record's `ram_aliases` block holds the 271 curated control-path cells, not
+   84. Its evidence strings are edited in place: re-running
+   `review_knock_loop_labels_apply.py` copies every row of the accepted RAM TSV
+   (632 today) into the record and re-scopes it, so the block is not regenerated.
 
 ## 6. Labeling applied in this pass
 

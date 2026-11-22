@@ -22,7 +22,7 @@ import harness  # noqa: E402
 
 PROFILE = os.path.join(EMU, "profiles", "60E15120_N3J1E.json")
 
-# RAM cells (see knock_control_report.md section 8 memory map)
+# RAM cells (see knock_control_report.md section 4.1 memory map)
 RETARD = 0xFFFFA734        # knock_retard_ffffa734 (float)
 RETARD_MIRROR = 0xFFFFA738
 RECOVERY_TARGET = 0xFFFFA744
