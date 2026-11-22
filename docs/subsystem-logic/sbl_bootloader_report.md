@@ -2,6 +2,7 @@
 
 | Date | What changed | Version |
 |------|--------------|---------|
+| 2026-11-22 | Accuracy pass: WDT-helper polarity and the counter it advances, ISO-TP helper mapping, 0x27 seed-flag polarity, entry-selector targets, referenced-peripheral list (no SYSC), test count | 5 |
 | 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
 | 2026-11-16 | External review corrections: 0xB1 arms one download (the SBL has no flash-write path), 0x1008 is the 0x7fb00/0x7fb02 hole pair check, the app-side 0xB1 00B2 boot request mapped, service-table details corrected, SBL loop validated dynamically in the emulator | 2 |
 | 2026-11-18 | On-car handshake feedback processed: 0x16dc(param) latch semantics mapped (the app→SBL handover arrives session-set/unlocked/download-armed; the fixed seed is a non-handover-entry behavior), the observed post-handover SBL replies reproduced frame-for-frame in the emulator; bench-confirmed handshake sequence recorded in §2.3 | 3 |
@@ -107,8 +108,9 @@ the boot-request state `0xffffd1dc` to 3) — it runs the BOOT-mode GPIO init
 `0x12a2` and jumps to the SBL CAN command loop `0x1378` via `0x1090`. The same
 loop is also the fallback when the app flash looks erased. The loop
 (`0x1378`) polls diagnostic mailbox 14 (CAN ID `0x7e0`, RX via `0x10fe` /
-`0x125c`, buffer `0xffffdfa2`), reassembles ISO-TP frames (`0x154c` first frame,
-`0x15a6` consecutive, `0x1624` single, `0x1654` flow control) into the request
+`0x125c`, buffer `0xffffdfa2`), reassembles ISO-TP frames (`0x154c` single frame,
+`0x15a6` first frame, `0x1624` flow-control transmit, `0x1654` consecutive frame,
+dispatch at `0x13a4`–`0x13f2`) into the request
 buffer at `0xffffd3f0`, and dispatches on the service byte:
 
 | Service | Handler | Action |
@@ -116,7 +118,7 @@ buffer at `0xffffd3f0`, and dispatches on the service byte:
 | `0x10` | `0x17f0` | diagnostic session: sub `0x85` sets the session latch `0xffffdfb0 = 1` and answers `50 85`; sub `0x81` runs `0x16dc(0)` — a full relock, clearing all six latches `0xffffdfb0–0xffffdfb5` — and answers `50 81` |
 | `0x11` | `0x19ce` | ECU reset: hard-reset sub `0x01` answers a bare `0x51`, then halts at `0x1a44` with the interrupt mask raised (SR |= 0xf0) — the unserviced WDT then overflows; gated by session + security latches |
 | `0x22` | `0x1a50` | read DID `0xd100`: answers `62 D1 00` plus the session latch value itself — `0x85` when `0xffffdfb0 == 1`, else `0x81` (`0x1aa4`–`0x1ab6`) |
-| `0x27` | `0x1858` | security access: needs the session latch (NRC `0x22` without it, `0x187c`–`0x1888`); seed request returns a **zero seed** `67 01 00 00 00` when the unlock latch `0xffffdfb1 == 1` (`0x18dc`–`0x18ec`), else the fixed seed `67 01 55 AA 55` (`0x1908`–`0x1914`); either seed reply clears the seed flag `0xffffdfb2` (`0x1968`); key send compares against the fixed key `4D AC CD` (`0x193a`–`0x1950`) and sets the unlock latch `0xffffdfb1` on match (`0x1958`), NRC `0x35` on mismatch, NRC `0x22` when no seed is outstanding — a key attempt always clears `0xffffdfb2`, so a failed key needs a new `27 01` |
+| `0x27` | `0x1858` | security access: needs the session latch (NRC `0x22` without it, `0x187c`–`0x1888`); seed request returns a **zero seed** `67 01 00 00 00` when the unlock latch `0xffffdfb1 == 1` (`0x18dc`–`0x18ec`), else the fixed seed `67 01 55 AA 55` (`0x1908`–`0x1914`); the fixed-seed reply **sets** the seed flag `0xffffdfb2 = 1` (`0x1914`/`0x1916`) while the zero-seed reply clears it (`0x18c2`/`0x18c4`); key send compares against the fixed key `4D AC CD` (`0x193a`–`0x1950`) and sets the unlock latch `0xffffdfb1` on match (`0x1958`), NRC `0x35` on mismatch, NRC `0x22` when no seed is outstanding — a key attempt always clears `0xffffdfb2`, so a failed key needs a new `27 01` |
 | `0x28` | `0x170a` | communication control (answers `0x68` when the session latch is clear, NRC `0x22` otherwise) |
 | `0x3b` | `0x1ac0` | write DID: always NRC `0x22` (not supported) |
 | `0x34` | `0x1ad6` | request download: request is `34 <addr u32> 00 <field u24>` (length 8; the byte after the address must be 0, else NRC `0x31`); byte count = field − `0x7e000` (pool `0x1bec` = `0xfff82000`), must be > 0 and a multiple of `0x400`, and the staged range `0xffff6000 + addr` must end below the request buffer `0xffffd3f0` — caps the count at `0x7000` from address 0; answers `74 04 01`, clears `0xffffdfb3`, sets `0xffffdfb4`, initializes marker index `0xffffdfc5 = 1`; needs `0xffffdfb3` set (else NRC `0x10`) |
@@ -145,10 +147,12 @@ the unlock latch set and one download already armed; every other entry
 relock) arrives fully locked.
 
 **The inactivity counter and the loop tail (`0x141a`–`0x1450`).** The u16 at
-`0xffffdfa0` counts loop passes: `0x11cc` (WDT service, called each pass at
-`0x1414`) services the WDT (TCSR `0xffffec10` = `0xa53c`, toggles PB15 at
-`0xfffff738`) and increments the counter unless OVF is set or it is `0xffff`,
-then returns it. `0x11c4` zeroes the counter once before the loop (`0x137a`;
+`0xffffdfa0` is advanced once per **WDT overflow period**, not per loop pass:
+`0x11cc` (called each pass at `0x1414`) reads TCSR `0xffffec10`, and only when
+the OVF bit is **set** (`0x11d4` `tst #0x80,r0`; `0x11d6` `bt 0x11f6` skips on a
+clear bit) does it re-key the WDT (`0xa53c`), toggle PB15 at `0xfffff738`
+(`xor 0x8000`) and increment the counter (unless it is already `0xffff`); it
+then returns the counter. `0x11c4` zeroes the counter once before the loop (`0x137a`;
 the loop head is `0x1388`) and again on every successfully reassembled frame —
 single frame (`0x13c8`), first frame (`0x13e4`), every consecutive frame
 (`0x140a`) — and after every service dispatch (`0x1544`). Received-but-invalid
@@ -163,9 +167,10 @@ zeroes the counter and clears `r12` (`0x1448`–`0x144e`) — an **inter-frame
 timeout that aborts only the in-progress multi-frame transfer**, latches
 survive. So the relock is an inactivity timeout, not a fixed lifetime:
 any well-formed, dispatched request — including `3E` tester present — resets
-the counter. Measured in the emulator: ~256 cycles per idle pass, relock at
-`0x5f6` = 1,526 passes ≈ 390,000 cycles after the last processed frame,
-transfer abort at `0x2e` = 46 passes ≈ 12,000 cycles. (Wall-clock conversion
+the counter. Measured in the emulator: relock at
+`0x5f6` counts and transfer abort at `0x2e` counts after the last processed
+frame. The cycle figures derived from a "~256 cycles per idle pass" rate do not
+apply, because the counter advances per WDT overflow rather than per pass. (Wall-clock conversion
 depends on the PCM clock, which this repo does not pin down: at 40 MHz that is
 ≈ 9.8 ms / ≈ 0.29 ms, at 20 MHz ≈ 19.5 ms / ≈ 0.59 ms.) A full `0x7000`-byte
 kernel upload (28 × `0x400` blocks) is therefore not bounded by one relock
@@ -182,8 +187,10 @@ the SBL itself — the app-side CVN is covered in §2.3 and in
 [the UDS dispatch report §12](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 
 **There is no flash-write path in the SBL.** A scan of every PC-relative
-literal-pool reference in `0x1000–0x1ffb` (committed disassembly) finds only
-HCAN0 (`0xffffe400`) and SYSC (`0xffffed00`) — no flash-control register
+literal-pool reference in `0x1000–0x1ffb` (committed disassembly) finds HCAN0
+(`0xffffe401`/`e404`/`e406`/`e40a`/`e40e`/`e414`/`e41a`/`e420`/`e490`/`e498`/
+`e520`/`e528`), the WDT pair `0xffffec10`/`0xffffec12` and the I/O ports
+`0xfffff720`/`0xfffff738`/`0xfffff756` — no SYSC reference and no flash-control register
 (`0xffffe800–0xffffe803`, FLMCR/EBR on the SH7055) is referenced anywhere in
 the block. The `0xb1`/`0x34`/`0x36` services only move bytes in RAM (staging at
 `0xffff6000 + addr`); the erase and programming are done by the staged image
@@ -205,7 +212,7 @@ which still passes the `< 100` gate.
 flowchart TD
     W["warm entry 0x1298<br/>(u32@0x1000, build A)"] --> D["0x1038 warm_reset_dispatcher(param)<br/>0x1364 WDT, 0x109c CAN, 0x16dc housekeeping"]
     D -->|"param != 0<br/>(0x564d4 <- 0x563de, boot-request 0xffffd1dc==3)"| GPIO["0x12a2 BOOT GPIO init"]
-    GPIO --> T["target 0x1378<br/>SBL CAN command loop"]
+    GPIO --> COLD["0x4e0: boot byte -> 0xffffdfa8,<br/>mailbox init 0x8f6 -> cold target 0x6c8"]
     D -->|"param == 0"| CHK{"flash intact?<br/>u32@0x7fffc != 0xffffffff<br/>and u32@0x2000 != 0xffffffff"}
     CHK -->|yes| APPT["target u32@0x7fff8 = 0xd204"]
     CHK -->|no — erased| T
@@ -223,7 +230,13 @@ loop `0x1378` (this path is taken via `0x564d4`, called from `0x563de` when a
 diagnostic request set the boot-request state `0xffffd1dc` to 3); with
 parameter 0 it checks that the IVT tail pointer `u32@0x7fffc` (= `0x2000`) and
 the app header `u32@0x2000` are not erased (`0xffffffff`) — if either is erased
-it falls back to the SBL loop — and otherwise targets `u32@0x7fff8` = `0xd204`.
+it falls back to the cold loop `0x6c8` — and otherwise targets `u32@0x7fff8` =
+`0xd204`. The entry selector `0x4e0` takes the non-zero-parameter branch
+unconditionally to that cold target: `0x4fe` `tst r3,r3`, `0x500` `bf 0x556`
+(stores the parameter byte to `0xffffdfa8`, calls the mailbox init `0x8f6`), then
+`0x560` loads `0x6c8` (pool `0x58c`); on the erased-flash path it repeats the WDT
+check (`0x532` `bsr 0x5b0` with r4 = 7) and a zero result also selects `0x6c8`
+(`0x538` `tst r4,r4`, `0x53a` `bt 0x560`).
 The jump itself is trampoline `0x1090` (SP = `0xffffdfa0`, `jmp @r4`). In the
 emulator boot trace the SBL->app transition is exactly `0x1094` -> `0xd204` at
 step 2856 of a 200,000-cycle boot.
@@ -544,7 +557,7 @@ RAM (only addresses with accepted aliases are listed):
 
 | Address | Alias | Role |
 |---------|-------|------|
-| `0xffffdfa0` (u16) | `sbl_inactivity_counter` | loop-pass counter: +1 per pass by `0x11cc`, zeroed by `0x11c4` on every reassembled frame and dispatch; `>= 0x5f6` while idle → relock, `>= 0x2e` mid-multi-frame → transfer abort |
+| `0xffffdfa0` (u16) | `sbl_inactivity_counter` | +1 per WDT overflow period by `0x11cc` (inside the `0x11d4` OVF-bit-set branch), zeroed by `0x11c4` on every reassembled frame and dispatch; `>= 0x5f6` while idle → relock, `>= 0x2e` mid-multi-frame → transfer abort |
 | `0xffffdfa8` | `reset_cause` | reset cause byte (written by 0x4e0 param!=0 path) |
 | `0xffffdffc` | `warm_boot_magic` | warm-boot magic 0x5aa5a55a |
 | `0xffffd3f0` | `sbl_request_buffer` | SBL CAN request buffer (r13; the 0x34 range check compares against it) |
@@ -596,6 +609,32 @@ code builds are byte-identical in `0x0–0xffa` and differ only at `0xffb–0xff
 
 ### 4.3 Corrections
 
+- `0x11cc` re-keys the WDT and increments `0xffffdfa0` only when the TCSR OVF bit
+  is **set** (`0x11d4` `tst #0x80,r0`, `0x11d6` `bt 0x11f6`); the sibling `0x31c`
+  has the same polarity (`0x322`/`0x324`). The counter therefore advances per WDT
+  overflow period, not per loop pass, and the cycle figures derived from a pass
+  rate do not follow; the thresholds stand as counts (`0x5f6`, `0x2e`).
+- The ISO-TP helpers were rotated: `0x154c` = single frame (`mov #0xf` length mask
+  at `0x154e`), `0x15a6` = first frame (`shll8` of the length high nibble),
+  `0x1624` = flow-control transmit (`mov #0x30` at `0x1626`), `0x1654` =
+  consecutive frame (sequence compare, `0x400` cap).
+- The `0x27` seed flag `0xffffdfb2` is **set** by the fixed-seed reply (`0x1916`
+  `mov.b r11,@r13`, r11 = 1) and cleared by the zero-seed reply (`0x18c4`
+  `mov.b r7,@r13`, r7 = 0) and by any key attempt (`0x1968`).
+- The `0x1000`-`0x1ffb` pool scan resolves to HCAN0 registers, the WDT pair
+  `0xffffec10`/`0xffffec12` and the I/O ports `0xfffff720`/`0xfffff738`/
+  `0xfffff756`; there is no SYSC (`0xffffed00`) reference. The conclusion, that
+  the SBL references no flash-control register, is unchanged.
+- The entry selector `0x4e0` sends a non-zero parameter to the cold target `0x6c8`
+  unconditionally after storing the boot byte and running the mailbox init
+  (`0x4fc`-`0x560`); the erased-flash path repeats the WDT check and also selects
+  `0x6c8` on a zero result.
+- The erased-flash check dereferences its pointer: pool `0x1088` = `0x7fffc` is
+  read and then dereferenced (`0x1054` `mov.l @r4,r0`, `0x105c` `mov.l @r0,r0`)
+  to reach the `0x2000` word, and pool `0x108c` = `0x7fff8` is the fallback
+  application-entry pointer.
+- `tests/test_sbl_bootloader.py` holds 11 test functions.
+
 The SBL service map extends [the UDS dispatch report §12.2](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md)
 (the 13 dispatched services and the seed/key magic were already recorded
 there); this report adds the full dispatch table, the response record layout,
@@ -642,7 +681,7 @@ is reproduced in the emulator (§4.5).
   never fires in the emulator. Trace excerpt in
   [`reviews/boot_handover/boot_trace_excerpt.txt`](../investigations/60E15120_N3J1E/reviews/boot_handover/boot_trace_excerpt.txt).
 - Emulator dynamic validation of the SBL loop (2026-11-16/2026-11-18; re-runnable as
-  `python -m pytest tests/test_sbl_bootloader.py`, 9 tests): the SBL command
+  `python -m pytest tests/test_sbl_bootloader.py`, 11 tests): the SBL command
   loop `0x1378` was entered the way trampoline `0x1090` does (SP =
   `0xffffdfa0`) and driven over the virtual CAN port — `10 85` -> `50 85`;
   `27 01` -> `67 01 55 aa 55` (seed flag `0xffffdfb2` set); `27 02 4d ac cd` ->

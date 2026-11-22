@@ -120,7 +120,7 @@
   "0x000004e0": {
    "alias": "reset_handler_warm_cold_select",
    "kind": "warm/cold entry select (already named): wdt_keyed_reset 0x572, 0x170, 0x41c, 0x3d4; param==0: warm if 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (pool 0x58e), with erased-flash fallback u32@0x7fff8 = 0xd204 (pools 0x5a4/0x5a8); cold = 0x6c8 (pool 0x58c); writes magic 0x5aa5a55a to 0xffffdffc, jsr 0x40 (pool 0x594) with r4 = entry, then halt loop",
-   "evidence": "disasm 0x4e0-0x572 + pools 0x586-0x594 byte-verified; ROM 0x1000 = 0x00001298 byte-verified"
+   "evidence": "boot entry 0x4e0: a non-zero parameter stores the byte to 0xffffdfa8, calls the mailbox init 0x8f6 and then goes to the cold target 0x6c8 unconditionally (0x4fc-0x560, pool 0x58c); the erased-flash path repeats the WDT check (0x532 bsr 0x5b0, r4 = 7) and a zero result also selects 0x6c8 (0x538/0x53a); the magic 0x5aa5a55a vs 0xffffdffc is checked at 0x502-0x50a before the trampoline at 0x40"
   },
   "0x00000572": {
    "alias": "wdt_keyed_reset",
@@ -215,7 +215,7 @@
   "0x00001038": {
    "alias": "warm_reset_dispatcher",
    "kind": "SBL/app handover dispatcher (already named): jsr 0x1364, 0x109c (ref_resetOBDCAN_), 0x16dc (ref_handleException_, param); param!=0 -> jsr 0x12a2 (GPIO init) and target 0x1378 (SBL CAN loop, pool 0x1082); param==0 -> erased-flash checks on u32@0x7fffc / u32@0x2000 (pools 0x1088/0x108c) with fallback target u32@0x7fff8 = 0xd204 (app entry); then jsr 0x1090 (pool 0x1084) with r4 = target, halt. The param==1 entry exists only via 0x564d4 (pool 0x564f2, delay-slot mov #1,r4 after jsr, SR |= 0xf0 first): 0x16dc(1) then presets session 0xffffdfb0=1, unlock 0xffffdfb1=1, download-armed 0xffffdfb3=1, so the app->SBL handover arrives open and armed (on-car 2026-11-18: 22 D1 00 -> 85 and 27 01 -> zero seed before any 10 85); param==0 entries (warm boot 0x1298, erased-flash fallback) run 0x16dc(0) and arrive locked",
-   "evidence": "disasm 0x1038-0x1076 + pools 0x107a-0x1084 byte-verified; ROM 0x7fff8 = 0xd204, 0x7fffc = 0x2000 byte-verified; emulator trace: hit once at step ~2800 with param 0, jumped to 0xd204"
+   "evidence": "erased-flash entry selector: pool 0x1088 = 0x7fffc is checked AND dereferenced (0x1054 mov.l @r4,r0; 0x105c mov.l @r0,r0) to reach the u32@0x2000 word; pool 0x108c = 0x7fff8 is the fallback application-entry pointer; callees 0x1364 / 0x109c / 0x16dc (pools 0x107a-0x107e)"
   },
   "0x00001090": {
    "alias": "sbl_handover_trampoline_set_sp_jmp",
@@ -249,7 +249,7 @@
   },
   "0x000011cc": {
    "alias": "service_wdt_overflow_toggle_pb15_and_count",
-   "kind": "WDT service + pass counter (already named): if TCSR 0xffffec10 OVF (0x80) clear, writes TCSR = 0xa53c, toggles 0xfffff738 bit 15, and increments u16@0xffffdfa0 (saturating at 0xffff), then returns it; called each loop pass (0x1414, pool 0x1440); the counter drives the loop-tail relock (>= 0x5f6 idle, 0x1428 -> 0x16dc(0)) and inter-frame abort (>= 0x2e mid-transfer, 0x1448); emulator: ~256 cycles/pass idle, relock ~390k cycles, abort ~12k cycles (tests/test_sbl_bootloader.py)",
+   "kind": "WDT service helper: reads TCSR 0xffffec10 and acts only when the OVF bit is SET (0x11d4 tst #0x80,r0; 0x11d6 bt 0x11f6) - re-keys the WDT (0xa53c), toggles PB15 (xor 0x8000 on 0xfffff738) and increments the u16 at 0xffffdfa0, then returns it. Same polarity in the sibling 0x31c (0x322/0x324); the counter advances per WDT overflow period, not per loop pass.",
    "evidence": "function_index.tsv name; 0x1378 pool 0x1440 = 0x11cc"
   },
   "0x000011fa": {
@@ -280,26 +280,26 @@
   "0x00001378": {
    "alias": "sbl_can_command_loop",
    "kind": "SBL CAN command loop (entered via 0x1090 from 0x1038 param!=0 or erased-flash fallback): per iteration jsr 0x11c4, 0x125c (CAN RX), 0x1272 -> dispatch on service byte with buffer 0xffffd3f0: 0x28->0x170a, 0x85->0x1774, 0x10->0x17f0, 0x27->0x1858, 0x3e->0x197a, 0x11->0x19ce, 0x22->0x1a50, 0x3b->0x1ac0, 0x34->0x1ad6, 0x36->0x1c04, 0x37->0x1d30, 0xb1->0x1d78, default->0x1e34 (NRC 0x11); loop head 0x1388 (back-edge 0x1548); multi-frame assembly via 0x154c/0x15a6/0x1624/0x1654; WDT via 0x11cc; tail 0x141a-0x1450 on the u16@0xffffdfa0 pass counter: r12==0 (no multi-frame in progress) and cnt >= 0x5f6 (pool 0x143a) -> jsr 0x16dc(0) at 0x1428 (inactivity relock, all six latches cleared); r12!=0 and cnt >= 0x2e (0x1382) -> jsr 0x11c4 + r12=0 at 0x1448 (inter-frame timeout: aborts only the in-progress transfer); 0x11c4 zeroes the counter on every reassembled frame (0x13c8/0x13e4/0x140a) and after every dispatch (0x1544), so any processed request (incl. 3E) resets it",
-   "evidence": "disasm 0x1378-0x154c + pools 0x1438-0x1610 byte-verified; UDS report \u00a712.2"
+   "evidence": "disasm 0x1378-0x154c + pools 0x1438-0x1610 byte-verified; UDS report §12.2"
   },
   "0x0000154c": {
    "alias": "sbl_isotp_first_frame",
-   "kind": "ISO-TP first-frame handler (0x10/0x1x PCI): total length = (b0 & 0xf)<<8 | b1",
+   "kind": "ISO-TP SINGLE-frame handler: length = b0 & 0xf (mov #0xf at 0x154e), rejects 0 and > 7, copies up to 7 bytes to 0xffffd3f0; reached from the dispatch at 0x13a4 via bsr 0x13b6",
    "evidence": "decompiled body 0x154c; bsr from 0x13b6"
   },
   "0x000015a6": {
    "alias": "sbl_isotp_consecutive_frame",
-   "kind": "ISO-TP consecutive-frame handler: sequence check, stores into 0xffffd3f4 buffer up to 0x400",
+   "kind": "ISO-TP FIRST-frame handler: total length = ((b0 & 0xf) << 8) | b1 (shll8 at 0x15b6), rejects < 8, copies 6 bytes and clears the sequence counters; the in-progress flag r12 is set on this path (0x13e2)",
    "evidence": "decompiled body 0x15a6; bsr from 0x13d0"
   },
   "0x00001624": {
    "alias": "sbl_isotp_single_frame",
-   "kind": "ISO-TP single-frame handler: builds 0x30-prefixed response buffer",
+   "kind": "ISO-TP flow-control TRANSMITTER: builds 30 00 ... (mov #0x30 at 0x1626) and sends it through 0x1150; called at 0x13e0 right after a first frame, never a dispatch target",
    "evidence": "decompiled body 0x1624; bsr from 0x13e0"
   },
   "0x00001654": {
    "alias": "sbl_isotp_flow_control",
-   "kind": "ISO-TP flow-control/continue handler: advances 0xffffdfac, copies payload bytes to 0xffffd3f4",
+   "kind": "ISO-TP CONSECUTIVE-frame handler: sequence compare (counter & 0xf) == (b0 & 0xf), 0x400 cap, returns 0 / -2 / -1; target of dispatch type 2 at 0x13f2",
    "evidence": "decompiled body 0x1654; bsr from 0x13f2"
   },
   "0x000016dc": {
@@ -325,7 +325,7 @@
   "0x00001858": {
    "alias": "sbl_svc_0x27_security_access",
    "kind": "UDS 0x27 handler (SBL): NRC 0x22 if session latch DAT_ffffdfb0 == 0 (0x187c-0x1888); seed request (sub 1): if unlock latch DAT_ffffdfb1 == 1 -> ZERO seed 67 01 00 00 00 (0x18dc-0x18ec, the on-car post-handover reply), else fixed seed 67 01 55 AA 55 (0x1908-0x1914, pools 0x19f0=0xaa); seed request clears DAT_ffffdfb2 (0x1968); key send (sub 2) -> literal compare against 4D AC CD (0x193a-0x1950) -> unlock latch DAT_ffffdfb1 = 1 + 67 02 (0x1958-0x1966), mismatch -> NRC 0x35, no outstanding seed -> NRC 0x22 (on-car: 7F 27 22)",
-   "evidence": "disasm 0x1858-0x1978 + pools 0x18f8/0x18fc/0x1900/0x1904/0x19f0/0x19f2/0x19f4/0x19fc byte-verified (0xffffdfc6, 0xffffdfb0, 0xffffdfb2, 0xffffdfb1, 0x00aa, 0x00ac, 0x00cd, 0xffffdfb1); per UDS report \u00a712.2; pool 0x14fe = 0x1858, cmp/eq 0x27 at 0x146a; dynamic: emulator over CAN reproduces the on-car trace 27 01 -> 67 01 00 00 00 and 27 02 4d ac cd -> 7f 27 22 after 0x16dc(1), and 67 01 55 aa 55 / 67 02 after 10 85 + 27 01 (tests/test_sbl_bootloader.py)"
+   "evidence": "service 0x27 handler: seed request returns the zero seed when the unlock latch 0xffffdfb1 == 1 and the fixed seed 55 AA 55 otherwise; the fixed-seed reply SETS 0xffffdfb2 (0x1916 mov.b r11,@r13, r11 = 1), the zero-seed reply clears it (0x18c4 mov.b r7,@r13, r7 = 0) and any key attempt clears it (0x1968); the key compare against 4D AC CD sets the unlock latch on match (0x1958)"
   },
   "0x0000197a": {
    "alias": "sbl_svc_0x3e_tester_present",
@@ -455,7 +455,7 @@
   ],
   "app_validity_check": {
    "at_handover": "none based on the CVN: the SBL handover (0x4e0/0x1038) only checks that the IVT tail pointer u32@0x7fffc and the app header u32@0x2000 are not erased (0xffffffff); no checksum is verified before jumping to 0xd204",
-   "cvn_engine": "0x5a3f4 FUN_0005a3f4 sums 0x2000-0x7ffff in 0x1000-byte sections skipping 0x7fb00-0x7fb7f into DAT_ffffd2b0/d2b2; finalize 0x5a714 stores (d2b0<<16)|d2b2 to 0xffff9104 + done flag 0xffff910c; reset 0x5a3d8; reader 0x5a5a6 (UDS report \u00a712.1)",
+   "cvn_engine": "0x5a3f4 FUN_0005a3f4 sums 0x2000-0x7ffff in 0x1000-byte sections skipping 0x7fb00-0x7fb7f into DAT_ffffd2b0/d2b2; finalize 0x5a714 stores (d2b0<<16)|d2b2 to 0xffff9104 + done flag 0xffff910c; reset 0x5a3d8; reader 0x5a5a6 (UDS report §12.1)",
    "cvn_callers": "0x5a3f4 is called only from 0x1122a, which is called only from task[0] entry 0x62a0 (callgraph.tsv; task table ROM 0x4990 rec[0] = {param 0x4000000, stack 0xffff7408, entry 0x62a0, mask 0x1000000} byte-verified) - i.e. the CVN is computed at runtime by the application background task, not at handover; 0x5a3d8 called from 0x113b8 (caller 0x6366 via thunk 0x9f52) and 0x3de70"
   },
   "main_init_entry": {
