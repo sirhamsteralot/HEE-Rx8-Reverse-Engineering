@@ -17,8 +17,9 @@ Each ROM folder is split into two kinds of material:
 - **Report accuracy audit** —
   [`60E15120_N3J1E/report_accuracy_audit.md`](60E15120_N3J1E/report_accuracy_audit.md)
   records the binary-level re-derivation of the subsystem reports: what was
-  re-checked, which corrections are still pending, and the instruction and pool
-  addresses that prove each one. Continuation is a work item in
+  re-checked, which corrections are applied or refuted, where each report and
+  its review notes carry the instruction and pool addresses that prove them,
+  and which reports are still to be audited. Continuation is a work item in
   [`ROADMAP.md`](../../ROADMAP.md).
 - **`labeling/`** — investigations whose purpose was *labeling things*: the
   alias/cross-ROM/defs passes that renamed functions, RAM cells, tables and
