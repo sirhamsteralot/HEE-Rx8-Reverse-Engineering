@@ -70,6 +70,39 @@ Everything that backs parts 1–3 lives in this section.
 
 Function (ROM address), RAM (`0xffff…`) and ROM table / literal-pool tables.
 
+Every row is machine-checked by
+[`validate_reports.py`](../../utilities/scripts/rx8-pcm-pipeline/validate_reports.py):
+the address is read from the row's first cell and classified by its own value —
+peripheral I/O window (`0xffffe000` and up), RAM cell (`0xffff0000`–`0xffffdfff`),
+function entry, or other ROM address (table/descriptor/axis/pool) — then the name
+in the second cell must resolve against the tracked sources
+(`accepted_function_aliases.tsv`, `accepted_ram_aliases.tsv`,
+`metadata/integrated_names.json`, the per-subsystem label records under
+`data/labels/<rom-id>/` or `function_index.tsv`). A row is in the map scope when
+its heading — or any enclosing heading — says "memory map", or when it sits under
+a bold `**Functions**` / `**RAM**` / `**ROM tables**` sub-label, so subsections
+inherit the scope. Accepted row forms:
+
+| Form | Example |
+|------|---------|
+| plain address | `0x0002f890` |
+| wrapped in code/bold/italics | `` `0x0002f890` ``, `**0x0002f890**` |
+| any 0x width / leading zeros | `0x563de` |
+| symbol-led register cell | `` `PEDR_W` 0xfffff754 `` |
+| grouped cells in one row | `0xffffa6a0/a6a2`, `0xffffa700 … 0xffffa70f` |
+| cell with no alias yet | `DAT_ffff8038` (rule 6 `DAT_` = unnamed, address only) |
+
+A row whose name does not match a tracked alias fails the run — instead of
+writing an untracked alias, either commit the evidence and the label record, or
+declare the address in
+[`report_map_baseline.json`](../../utilities/scripts/rx8-pcm-pipeline/report_map_baseline.json)
+(`ram` = no tracked alias exists yet, `ram_conflict` = the tracked alias
+disagrees and the discrepancy is being resolved). The ledger may only shrink: an
+entry that has been resolved, or that names a report that no longer exists, fails
+the run as stale. The per-report row counts are asserted to add up
+(`map_rows = fn_checked + ram_checked + data_rows + io_rows`), so no row can be
+skipped silently.
+
 ### 4.2 Labeling applied
 
 Which labels/aliases this report relies on, and where their evidence lives.
