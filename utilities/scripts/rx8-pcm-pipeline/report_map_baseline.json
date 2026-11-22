@@ -1,0 +1,26 @@
+{
+  "_comment": "Memory-map rows that are checked but cannot resolve to a tracked label yet. Declared debt for validate_reports.py: an address listed here is counted as declared (and any alias mismatch is reported as a label conflict) instead of failing the run. ram_conflict lists the cells whose report alias agrees with no tracked record (the dual-labeled ones); the ledger may only shrink - an entry whose address now resolves, or whose report is gone, fails the run as stale, so the debt cannot outlive its cause. Remove the entry in the same change that adds the label.",
+  "subsystem-logic/sbl_bootloader_report.md": {
+    "reason": "the SBL label record carries function aliases but no ram_aliases yet, so this report's RAM map is the only place these cells are named; folding them into data/labels/60E15120_N3J1E/sbl_bootloader_labels.json and accepted_ram_aliases.tsv closes the entries. 0xffffdfa0 is the dual-labeled cell (immo_diag_bit in the TSV) that makes the two records disagree.",
+    "ram": [
+      "ffffd1cf",
+      "ffffd1d0",
+      "ffffd1d5",
+      "ffffd1dc",
+      "ffffd3f0",
+      "ffffdfb0",
+      "ffffdfb1",
+      "ffffdfb2",
+      "ffffdfb3",
+      "ffffdfb4",
+      "ffffdfb8",
+      "ffffdfbc",
+      "ffffdfc0",
+      "ffffdfc5",
+      "ffffdfc6"
+    ],
+    "ram_conflict": [
+      "ffffdfa0"
+    ]
+  }
+}
