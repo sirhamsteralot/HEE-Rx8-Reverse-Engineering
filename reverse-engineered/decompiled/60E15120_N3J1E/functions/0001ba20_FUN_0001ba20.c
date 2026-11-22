@@ -47,8 +47,8 @@ LAB_0001bad4:
       DAT_ffffad8f = '\x01';
     }
   }
-  if ((((engine_running_flag_ffffaa68 != '\0') && (DAT_ffffcc98 != '\x01')) &&
-      ((DAT_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
+  if ((((engine_running_flag_ffffaa68 != '\0') && (plate_tp2_source_select_ffffcc98 != '\x01')) &&
+      ((limp_home_request_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
      (DAT_ffffb4fd != '\x01')) {
     cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0);
     if (cVar3 != '\x01') {

@@ -17,9 +17,9 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   fVar2 = DAT_ffffad34 - fVar2;
   DAT_ffffad38 = rx8_max_float(0.0,fVar1);
   DAT_ffffad3c = rx8_max_float(arg0,fVar2);
-  if (DAT_ffffcc98 == '\x01') {
+  if (plate_tp2_source_select_ffffcc98 == '\x01') {
     inferred_throttle_position_ffffad44 = DAT_ffffad3c;
-    if (DAT_ffffcc99 == '\x01') {
+    if (limp_home_request_ffffcc99 == '\x01') {
       inferred_throttle_position_ffffad44 = 20.0;
     }
   }

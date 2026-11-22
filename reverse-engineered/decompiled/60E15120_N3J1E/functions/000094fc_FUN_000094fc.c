@@ -17,7 +17,7 @@ undefined1 * FUN_000094fc(void)
   uint uVar9;
   ushort local_20 [2];
   
-  puVar4 = &DAT_ffffa110;
+  puVar4 = &pedal_range_fault_1_ffffa110;
   puVar5 = (undefined1 *)0x0;
   local_20[0] = adc_an4_pedal_raw_ffff9eec;
   local_20[1] = adc_an5_pedal_raw_ffff9eee;
@@ -45,8 +45,8 @@ undefined1 * FUN_000094fc(void)
          *(float *)(&DAT_0006eec0 + iVar8) +
          (float)(ushort)(&DAT_ffffa112)[uVar9] * *(float *)(&DAT_0006eeb8 + iVar8) * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006eeb0 + uVar9 * 2) < local_20[uVar9]) {
-      (&DAT_ffffa110)[bVar3] = 1;
-      puVar2 = &DAT_ffffa110;
+      (&pedal_range_fault_1_ffffa110)[bVar3] = 1;
+      puVar2 = &pedal_range_fault_1_ffffa110;
     }
     else {
       puVar2 = puVar5;

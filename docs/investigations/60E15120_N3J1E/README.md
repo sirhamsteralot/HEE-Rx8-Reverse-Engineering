@@ -288,7 +288,7 @@ once-only enable 0xb308), with the DBW power relay on PE0 (`PEDR_W 0xfffff754`
 bit 0x1 = (`0xffffcfb7`==0), 0x3a0ec, harness candidate 4C). TP plausibility
 (0x4595a, DTC 0x6c), plate range-high fault (0x33e98) and the learned E2RAM
 zeros are covered; logger PID 0x1410 is settled as injector pulse time
-(dispatch record 0x5f394 → handler 0x56f6c, step 8 µs). 25 functions, 41 RAM
+(dispatch record 0x5f394 → handler 0x56f6c, step 8 µs). 25 functions, 50 RAM
 cells, 7 lookup tables; raw-bin re-verified 87/87
 (`reviews/throttle_dbw/rawbin_reverify_log.txt`).
 Write-up: [`throttle_dbw_control_report.md`](../../subsystem-logic/throttle_dbw_control_report.md)

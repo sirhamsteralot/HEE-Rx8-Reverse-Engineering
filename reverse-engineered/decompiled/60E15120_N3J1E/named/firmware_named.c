@@ -12960,6 +12960,8 @@ uint ref_getIgnitionDwellTime_00009490(void)
  * RAM 0xffff9eec adc_an4_pedal_raw (uint16): ADDR4H (0xfffff808) latched here by the 0x6884 ADC sweep (pool 0x6a1c=0xffff9ee4 base, +2n); read by 0x18f60 (pool 0x19058=0xffff9eec) into a9c4 (pool 0x1904a). Pedal APP1 raw. Harness: accelerator pedal sensor terminals 4X/5AE/5C/4Y/5AB/5F (B1-14 A-F); pin->terminal is board routing.
  * RAM 0xffff9eee adc_an5_pedal_raw (uint16): ADDR5H latched at 0xffff9eee by the 0x6884 sweep; pedal APP2 raw; feeds a9c6 via 0x18fa4.
  * RAM 0xffffa108 pedal_1_scaled_volts (float): a108 = 0.0f + AN4 raw * 6.341f (0x6eeb8) * 7.6294e-05f (0x94f0); range-checked [0x11ec, 0xf5c3) with faults a110/a111 -> DTC 0x66/0x67 (TP... pedal channel 1).
+ * RAM 0xffffa110 pedal_range_fault_1 (uint8): APP1 raw range-fault flag: 0x94f0 stores fault flags via the indexed base &DAT_ffffa110 (+1 for ch2) with debounce counters 0xffffa116+ when raw is outside [0x11ec, 0xf5c3) (pools 0x6eeb0/0x6eeb4); read by the DTC paths 0x45b3c/0x45c42 (DTC 0x66 family).
+ * RAM 0xffffa111 pedal_range_fault_2 (uint8): APP2 raw range-fault flag (same indexed store in 0x94f0, +1); read by the DTC paths 0x45d90/0x45e96 (DTC 0x67-0x69 family).
  */
 /* ROM address: 0x000094f0; body bytes: 12; decompiled */
 
@@ -12982,7 +12984,7 @@ undefined1 * pedal_adc_raw_to_volts(void)
   
   DAT_ffffa112 = adc_an4_pedal_raw_ffff9eec;
   DAT_ffffa114 = adc_an5_pedal_raw_ffff9eee;
-  puVar4 = &DAT_ffffa110;
+  puVar4 = &pedal_range_fault_1_ffffa110;
   puVar5 = (undefined1 *)0x0;
   auStack_20[0] = adc_an4_pedal_raw_ffff9eec;
   auStack_20[1] = adc_an5_pedal_raw_ffff9eee;
@@ -13010,8 +13012,8 @@ undefined1 * pedal_adc_raw_to_volts(void)
          *(float *)(&DAT_0006eec0 + iVar8) +
          (float)(&DAT_ffffa112)[uVar9] * *(float *)(&DAT_0006eeb8 + iVar8) * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006eeb0 + uVar9 * 2) < auStack_20[uVar9]) {
-      (&DAT_ffffa110)[bVar3] = 1;
-      puVar2 = &DAT_ffffa110;
+      (&pedal_range_fault_1_ffffa110)[bVar3] = 1;
+      puVar2 = &pedal_range_fault_1_ffffa110;
     }
     else {
       puVar2 = puVar5;
@@ -13051,7 +13053,7 @@ undefined1 * FUN_000094fc(void)
   uint uVar9;
   ushort local_20 [2];
   
-  puVar4 = &DAT_ffffa110;
+  puVar4 = &pedal_range_fault_1_ffffa110;
   puVar5 = (undefined1 *)0x0;
   local_20[0] = adc_an4_pedal_raw_ffff9eec;
   local_20[1] = adc_an5_pedal_raw_ffff9eee;
@@ -13079,8 +13081,8 @@ undefined1 * FUN_000094fc(void)
          *(float *)(&DAT_0006eec0 + iVar8) +
          (float)(ushort)(&DAT_ffffa112)[uVar9] * *(float *)(&DAT_0006eeb8 + iVar8) * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006eeb0 + uVar9 * 2) < local_20[uVar9]) {
-      (&DAT_ffffa110)[bVar3] = 1;
-      puVar2 = &DAT_ffffa110;
+      (&pedal_range_fault_1_ffffa110)[bVar3] = 1;
+      puVar2 = &pedal_range_fault_1_ffffa110;
     }
     else {
       puVar2 = puVar5;
@@ -15398,7 +15400,7 @@ undefined1 * FUN_0000b398(void)
         (&DAT_ffffa222)[uVar8] = auStack_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < auStack_20[uVar8]) {
@@ -15467,7 +15469,7 @@ undefined1 * FUN_0000b3aa(void)
         (&DAT_ffffa222)[uVar8] = local_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(ushort)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < local_20[uVar8]) {
@@ -27845,7 +27847,7 @@ uint FUN_00018fe8(void)
   if ((cVar2 == '\x01') || (cVar3 == '\x01')) {
     ref_updateMemoryAtAddress_float_VAL_ADDR(&learned_pedal_zero_1_ffff8068);
     ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_2_ffff8070);
-    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,0);
+    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,0);
   }
   else {
     uVar4 = (uint)DAT_ffffa9ce;
@@ -27874,7 +27876,7 @@ uint FUN_00018fe8(void)
         }
         if ((((uVar4 == 1) && (fVar6 - fVar8 < 0.032)) && (fVar7 - snapshot_DAT_ffffa9a8 < 0.032)) &&
            ((fVar5 <= 0.3 && (uVar4 = 0x19, 0x18 < DAT_ffffa9dc)))) {
-          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,1);
+          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,1);
         }
       }
     }
@@ -28001,7 +28003,7 @@ void FUN_00019554(void)
 {
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_1_ffff8068);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_2_ffff8070);
-  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,0);
+  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,0);
   return;
 }
 
@@ -28013,7 +28015,7 @@ void FUN_00019574(void)
 {
   ref_validateAddressCopy_float_ADDRESS__(&learned_pedal_zero_1_ffff8068);
   ref_validateAddressCopy_float_ADDRESS__(&learned_pedal_zero_2_ffff8070);
-  ref_validateAddressCopy_8bit_ADDRESS__(&DAT_ffff8078);
+  ref_validateAddressCopy_8bit_ADDRESS__(&learned_pedal_zero_valid_ffff8078);
   return;
 }
 
@@ -29501,6 +29503,7 @@ void FUN_0001b03e(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * plate_tp1_volts_latch [high]: ad5c = DAT_ffff9f08 (AN18 raw; pools 0x1b12c=0xffff9f08, 0x1b0e6=0xad5c), ad30/ad54 from 0xffffa218/0xffffa222 (pools 0x1b138=0xffffa218, 0x1b130=0xffffa222, 0x1b0f0=0xad30/0xad54); filter 0x23b0 via pool 0x1b148. Called from 0x199d4.
  * RAM 0xffff9f08 adc_an18_plate_tp1_raw (uint16): ADDR18H latched here by the 0x6884 sweep; read by 0x1b08e (pool 0x1b12c=0xffff9f08) into ad5c (pool 0x1b0e6) — throttle PLATE TP1 volts (PID 0x0011 via 0x5553e, PID 0x1154 raw). Harness: throttle body TP signal 1J (B1-19 A).
+ * RAM 0xffffa218 plate_tp1_volts (float): TP1 volts: written by 0xb398 (indexed store at 0xffffa218+2n) = base (0x6f3ec) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940.
  */
 /* ROM address: 0x0001b08e; body bytes: 70; decompiled */
 
@@ -29512,13 +29515,13 @@ void plate_tp1_volts_latch(void)
 {
   inferred_throttle_sensor_volts_ffffad5c_ffffad5c = adc_an18_plate_tp1_raw_ffff9f08;
   DAT_ffffad84 = DAT_ffffa222;
-  DAT_ffffad30 = DAT_ffffa218;
+  DAT_ffffad30 = plate_tp1_volts_ffffa218;
   if (DAT_ffffadd2 == '\0') {
-    DAT_ffffad54 = DAT_ffffa218;
+    DAT_ffffad54 = plate_tp1_volts_ffffa218;
     DAT_ffffadd2 = '\x01';
   }
   else {
-    DAT_ffffad54 = rx8_first_order_filter(DAT_ffffa218,DAT_ffffad54,0.25,1e-05);
+    DAT_ffffad54 = rx8_first_order_filter(plate_tp1_volts_ffffa218,DAT_ffffad54,0.25,1e-05);
   }
   return;
 }
@@ -29527,6 +29530,7 @@ void plate_tp1_volts_latch(void)
 /* [ADDITIONAL SOURCE REVIEW]
  * plate_tp2_volts_latch [high]: ad5e = DAT_ffff9f0a (AN19 raw; pools 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e/0xad34), ad34 from 0xffffa21c/0xffffa224 (pools 0x1b1dc=0xffffa21c, 0x1b1d4=0xffffa224). Called from 0x199d4.
  * RAM 0xffff9f0a adc_an19_plate_tp2_raw (uint16): ADDR19H latched here by the 0x6884 sweep; read by 0x1b14c (pool 0x1b1d0=0xffff9f0a) into ad5e (pool 0x1b1c0) — throttle PLATE TP2 volts. Harness: TP signal 1M (B1-19 D).
+ * RAM 0xffffa21c plate_tp2_volts (float): TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940.
  */
 /* ROM address: 0x0001b14c; body bytes: 26; decompiled */
 
@@ -29538,7 +29542,7 @@ void plate_tp2_volts_latch(void)
 {
   inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e = adc_an19_plate_tp2_raw_ffff9f0a;
   DAT_ffffad86 = DAT_ffffa224;
-  DAT_ffffad34 = DAT_ffffa21c;
+  DAT_ffffad34 = plate_tp2_volts_ffffa21c;
   return;
 }
 
@@ -29567,8 +29571,8 @@ uint FUN_0001b166(void)
   undefined4 uVar12;
   
   snapshot_throttle_servo_mode_ffffccbc = throttle_servo_mode_ffffccbc;
-  cVar2 = DAT_ffffcc99;
-  cVar7 = DAT_ffffcc98;
+  cVar2 = limp_home_request_ffffcc99;
+  cVar7 = plate_tp2_source_select_ffffcc98;
   sVar1 = DAT_ffffad88;
   fVar11 = inferred_ram_b410_ffffb410_ffffb410;
   if (DAT_ffffadd1 == '\0') {
@@ -29578,7 +29582,7 @@ uint FUN_0001b166(void)
     DAT_ffffad9c = DAT_ffffb4b4;
     DAT_ffffadd1 = '\x01';
   }
-  else if (((DAT_ffffcc98 == '\0') && (DAT_ffffcc99 == '\0')) &&
+  else if (((plate_tp2_source_select_ffffcc98 == '\0') && (limp_home_request_ffffcc99 == '\0')) &&
           (cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar6 == '\0')) {
     fVar8 = 1e-05;
     DAT_ffffad70 = rx8_first_order_filter(DAT_ffffb4b0,DAT_ffffad70,0.5,1e-05);
@@ -29670,7 +29674,7 @@ void FUN_0001b3f2(void)
     uVar2 = 0;
   }
   DAT_ffffadd0 = DAT_ffffccba;
-  if (((DAT_ffffcc98 == '\x01') || (DAT_ffffcc99 == '\x01')) ||
+  if (((plate_tp2_source_select_ffffcc98 == '\x01') || (limp_home_request_ffffcc99 == '\x01')) ||
      (cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar3 == '\x01')) {
     uVar1 = 0;
     uVar2 = 0;
@@ -29740,7 +29744,7 @@ void FUN_0001b6fc(void)
   snapshot_DAT_ffffad70 = DAT_ffffad70;
   fVar5 = rx8_absolute_difference(DAT_ffffad70,DAT_ffffada0);
   fVar6 = rx8_absolute_difference(arg0,DAT_ffffada4);
-  if ((((((DAT_ffffb4bc < 80.0) || (DAT_ffffcc98 != '\0')) || (DAT_ffffcc99 != '\0')) ||
+  if ((((((DAT_ffffb4bc < 80.0) || (plate_tp2_source_select_ffffcc98 != '\0')) || (limp_home_request_ffffcc99 != '\0')) ||
        (((DAT_ffffb4f9 != '\0' || (0.244 <= fVar5)) ||
         ((0.244 <= fVar6 || ((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')))))))) ||
       (throttle_servo_mode_ffffccbc != '\0')) ||
@@ -29795,9 +29799,9 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   fVar2 = DAT_ffffad34 - fVar2;
   DAT_ffffad38 = rx8_max_float(0.0,fVar1);
   DAT_ffffad3c = rx8_max_float(arg0,fVar2);
-  if (DAT_ffffcc98 == '\x01') {
+  if (plate_tp2_source_select_ffffcc98 == '\x01') {
     inferred_throttle_position_ffffad44 = DAT_ffffad3c;
-    if (DAT_ffffcc99 == '\x01') {
+    if (limp_home_request_ffffcc99 == '\x01') {
       inferred_throttle_position_ffffad44 = 20.0;
     }
   }
@@ -29866,8 +29870,8 @@ LAB_0001bad4:
       DAT_ffffad8f = '\x01';
     }
   }
-  if ((((engine_running_flag_ffffaa68 != '\0') && (DAT_ffffcc98 != '\x01')) &&
-      ((DAT_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
+  if ((((engine_running_flag_ffffaa68 != '\0') && (plate_tp2_source_select_ffffcc98 != '\x01')) &&
+      ((limp_home_request_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
      (DAT_ffffb4fd != '\x01')) {
     cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0);
     if (cVar3 != '\x01') {
@@ -65454,6 +65458,8 @@ undefined4 FUN_0004591a(void)
  * tp_correlation_fault_check [high]: TP1/TP2 correlation: |a9ac - a9b0| < thr -> good counter cbf2, else bad counter cbee; thr = 3.5f (ROM 0x7c77c=0x40600000, via pool 0x45a00) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375, pool 0x45acc); cbf2 > 0x18 -> cbec=1; cbee > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
  * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when TP1/TP2 bad-correlation counter cbee > 0x1c -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
  * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when TP1/TP2 good-correlation counter cbf2 > 0x18 (pool 0x45ad0=0xffffcbee).
+ * RAM 0xffffcbf2 tp_correlation_good_counter (uint16): Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); > 0x18 -> 0xffffcbec=1.
+ * RAM 0xffffcbee tp_correlation_bad_counter (uint16): Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee).
  */
 /* ROM address: 0x0004595a; body bytes: 290; decompiled */
 
@@ -65472,10 +65478,10 @@ uint tp_correlation_fault_check(void)
   fVar5 = DAT_ffffa9b0;
   fVar4 = rx8_absolute_difference(pedal_1_volts_zeroed_ffffa9ac,DAT_ffffa9b0);
   if (DAT_ffffcbf0 != '\x01') {
-    DAT_ffffcbf2 = 0;
+    tp_correlation_good_counter_ffffcbf2 = 0;
     goto LAB_00045a72;
   }
-  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8078,0);
+  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&learned_pedal_zero_valid_ffff8078,0);
   if (cVar2 == '\x01') {
     if (fVar5 < 0.6) {
       pfVar3 = (float *)&DAT_0007c77c;
@@ -65504,16 +65510,16 @@ LAB_00045a24:
     fVar5 = *pfVar3;
   }
   if (fVar4 < fVar5) {
-    if (0x18 < DAT_ffffcbf2) {
-      DAT_ffffcbee = 0;
+    if (0x18 < tp_correlation_good_counter_ffffcbf2) {
+      tp_correlation_bad_counter_ffffcbee = 0;
       tp_correlation_ok_ffffcbec = 1;
     }
-    DAT_ffffcbf2 = rx8_add_u16_saturate((int)(short)DAT_ffffcbf2,1);
+    tp_correlation_good_counter_ffffcbf2 = rx8_add_u16_saturate((int)(short)tp_correlation_good_counter_ffffcbf2,1);
   }
   else {
-    DAT_ffffcbf2 = 0;
-    DAT_ffffcbee = rx8_add_u16_saturate((int)(short)DAT_ffffcbee,1);
-    if (0x1c < DAT_ffffcbee) {
+    tp_correlation_good_counter_ffffcbf2 = 0;
+    tp_correlation_bad_counter_ffffcbee = rx8_add_u16_saturate((int)(short)tp_correlation_bad_counter_ffffcbee,1);
+    if (0x1c < tp_correlation_bad_counter_ffffcbee) {
       ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,1);
     }
   }
@@ -65581,7 +65587,7 @@ uint FUN_00045b3c(void)
   cVar2 = ref_getFaultStatus__(0x67);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8730,0), cVar2 == '\0')) {
-    if (DAT_ffffa110 == '\x01') {
+    if (pedal_range_fault_1_ffffa110 == '\x01') {
       DAT_ffffcbf6 = rx8_add_u16_saturate((int)(short)DAT_ffffcbf6,1);
       DAT_ffffcbf8 = 0;
       if (0x18 < DAT_ffffcbf6) {
@@ -65623,7 +65629,7 @@ uint FUN_00045c42(void)
   cVar2 = ref_getFaultStatus__(0x66);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8732,0), cVar2 == '\0')) {
-    if (DAT_ffffa110 == '\x02') {
+    if (pedal_range_fault_1_ffffa110 == '\x02') {
       DAT_ffffcbfa = rx8_add_u16_saturate((int)(short)DAT_ffffcbfa,1);
       DAT_ffffcbfc = 0;
       if (0x18 < DAT_ffffcbfa) {
@@ -65704,7 +65710,7 @@ uint FUN_00045d90(void)
   cVar2 = ref_getFaultStatus__(0x69);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8734,0), cVar2 == '\0')) {
-    if (DAT_ffffa111 == '\x01') {
+    if (pedal_range_fault_2_ffffa111 == '\x01') {
       DAT_ffffcc02 = rx8_add_u16_saturate((int)(short)DAT_ffffcc02,1);
       DAT_ffffcc04 = 0;
       if (0x18 < DAT_ffffcc02) {
@@ -65749,7 +65755,7 @@ uint FUN_00045e96(void)
   cVar2 = ref_getFaultStatus__(0x68);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8736,0), cVar2 == '\0')) {
-    if (DAT_ffffa111 == '\x02') {
+    if (pedal_range_fault_2_ffffa111 == '\x02') {
       DAT_ffffcc06 = rx8_add_u16_saturate((int)(short)DAT_ffffcc06,1);
       DAT_ffffcc08 = 0;
       if (0x18 < DAT_ffffcc06) {
@@ -66878,8 +66884,8 @@ uint FUN_000470d0(void)
   float snapshot_engine_speed_rpm_ffffb548;
   
   cVar7 = DAT_ffffcc9f;
-  cVar6 = DAT_ffffcc99;
-  cVar5 = DAT_ffffcc98;
+  cVar6 = limp_home_request_ffffcc99;
+  cVar5 = plate_tp2_source_select_ffffcc98;
   snapshot_candidate_idle_learn_flag_ffffcc91 = candidate_idle_learn_flag_ffffcc91;
   cVar3 = DAT_ffffb53a;
   snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e;
@@ -67181,21 +67187,21 @@ char FUN_00047610(void)
     DAT_ffffcc95 = 0;
   }
   if ((bVar1) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc98 = 1;
+    plate_tp2_source_select_ffffcc98 = 1;
     bVar1 = true;
   }
   else {
-    DAT_ffffcc98 = 0;
+    plate_tp2_source_select_ffffcc98 = 0;
     bVar1 = false;
   }
   if ((bVar2) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc99 = '\x01';
+    limp_home_request_ffffcc99 = '\x01';
   }
   else {
-    DAT_ffffcc99 = '\0';
+    limp_home_request_ffffcc99 = '\0';
   }
   cVar3 = '\x01';
-  if ((bVar1) || (cVar3 = DAT_ffffcc99, DAT_ffffcc99 == '\x01')) {
+  if ((bVar1) || (cVar3 = limp_home_request_ffffcc99, limp_home_request_ffffcc99 == '\x01')) {
     DAT_ffffcc9a = 1;
   }
   else {
@@ -67998,8 +68004,8 @@ uint engine_stop_conditions_eval(void)
     DAT_ffffccf0 = '\x01';
   }
   if ((((((DAT_ffffccec == '\0') && (DAT_ffffcced == '\x01')) && (shutdown_allowed_ffffccc1 == '\x01')) &&
-       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (DAT_ffffcc98 == '\0')) &&
-     ((DAT_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
+       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (plate_tp2_source_select_ffffcc98 == '\0')) &&
+     ((limp_home_request_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
     bVar1 = true;
   }
   else {

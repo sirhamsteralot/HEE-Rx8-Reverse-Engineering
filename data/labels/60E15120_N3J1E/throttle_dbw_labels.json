@@ -299,6 +299,60 @@
       "reader": "0000b308",
       "evidence": "PWM period 32000 (0x7d00) written by atu_ch7d_pwm_enable 0xb308 (pool 0xb378=0x7d00); used by 0xb2c0 (pool 0xb38c=0xffff9f50) to scale duty q16 into BFR7D."
     },
+    "ffffa110": {
+      "alias": "pedal_range_fault_1",
+      "type": "uint8",
+      "reader": "000094f0",
+      "evidence": "APP1 raw range-fault flag: 0x94f0 stores fault flags via the indexed base &DAT_ffffa110 (+1 for ch2) with debounce counters 0xffffa116+ when raw is outside [0x11ec, 0xf5c3) (pools 0x6eeb0/0x6eeb4); read by the DTC paths 0x45b3c/0x45c42 (DTC 0x66 family)."
+    },
+    "ffffa111": {
+      "alias": "pedal_range_fault_2",
+      "type": "uint8",
+      "reader": "000094f0",
+      "evidence": "APP2 raw range-fault flag (same indexed store in 0x94f0, +1); read by the DTC paths 0x45d90/0x45e96 (DTC 0x67-0x69 family)."
+    },
+    "ffffa218": {
+      "alias": "plate_tp1_volts",
+      "type": "float",
+      "reader": "0001b08e",
+      "evidence": "TP1 volts: written by 0xb398 (indexed store at 0xffffa218+2n) = base (0x6f3ec) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940."
+    },
+    "ffffa21c": {
+      "alias": "plate_tp2_volts",
+      "type": "float",
+      "reader": "0001b14c",
+      "evidence": "TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940."
+    },
+    "ffffcbf2": {
+      "alias": "tp_correlation_good_counter",
+      "type": "uint16",
+      "reader": "0004595a",
+      "evidence": "Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); > 0x18 -> 0xffffcbec=1."
+    },
+    "ffffcbee": {
+      "alias": "tp_correlation_bad_counter",
+      "type": "uint16",
+      "reader": "0004595a",
+      "evidence": "Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee)."
+    },
+    "ffffcc98": {
+      "alias": "plate_tp2_source_select",
+      "type": "uint8",
+      "reader": "0001b940",
+      "evidence": "Read by 0x1b940: ==1 selects the TP2 branch (ad44 = ad3c instead of ad38); also referenced by 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x470d0/0x47704/0x487d6 (engine_stop_conditions_eval)."
+    },
+    "ffffcc99": {
+      "alias": "limp_home_request",
+      "type": "uint8",
+      "reader": "0001b940",
+      "evidence": "Read by 0x1b940: together with cc98==1 forces ad44 = 20.0 (limp plate position); also referenced by 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x487d6."
+    },
+    "ffff8078": {
+      "alias": "learned_pedal_zero_valid",
+      "type": "uint8",
+      "reader": "00018fe8",
+      "evidence": "Set to 1 by 0x18fe8 after the stable-pass counter a9d8 reaches 0x177 with both learned channels within 0.032 (else 0; also 0 on TP fault cc9b/cc9c together with the E2RAM write of 0xffff8068/0xffff8070); selects the 3.5f vs 9.536f correlation threshold in 0x4595a; read by 0x1933a/0x19574/0x68e3e."
+    },
     "ffffa9b4": {
       "alias": "accelerator_pedal_1_percent",
       "type": "float",

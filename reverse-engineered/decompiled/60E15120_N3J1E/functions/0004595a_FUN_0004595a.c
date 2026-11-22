@@ -2,6 +2,8 @@
  * tp_correlation_fault_check [high]: TP1/TP2 correlation: |a9ac - a9b0| < thr -> good counter cbf2, else bad counter cbee; thr = 3.5f (ROM 0x7c77c=0x40600000, via pool 0x45a00) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375, pool 0x45acc); cbf2 > 0x18 -> cbec=1; cbee > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
  * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when TP1/TP2 bad-correlation counter cbee > 0x1c -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
  * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when TP1/TP2 good-correlation counter cbf2 > 0x18 (pool 0x45ad0=0xffffcbee).
+ * RAM 0xffffcbf2 tp_correlation_good_counter (uint16): Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); > 0x18 -> 0xffffcbec=1.
+ * RAM 0xffffcbee tp_correlation_bad_counter (uint16): Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee).
  */
 /* ROM address: 0x0004595a; body bytes: 290; decompiled */
 
@@ -20,10 +22,10 @@ uint tp_correlation_fault_check(void)
   fVar5 = DAT_ffffa9b0;
   fVar4 = rx8_absolute_difference(pedal_1_volts_zeroed_ffffa9ac,DAT_ffffa9b0);
   if (DAT_ffffcbf0 != '\x01') {
-    DAT_ffffcbf2 = 0;
+    tp_correlation_good_counter_ffffcbf2 = 0;
     goto LAB_00045a72;
   }
-  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8078,0);
+  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&learned_pedal_zero_valid_ffff8078,0);
   if (cVar2 == '\x01') {
     if (fVar5 < 0.6) {
       pfVar3 = (float *)&DAT_0007c77c;
@@ -52,16 +54,16 @@ LAB_00045a24:
     fVar5 = *pfVar3;
   }
   if (fVar4 < fVar5) {
-    if (0x18 < DAT_ffffcbf2) {
-      DAT_ffffcbee = 0;
+    if (0x18 < tp_correlation_good_counter_ffffcbf2) {
+      tp_correlation_bad_counter_ffffcbee = 0;
       tp_correlation_ok_ffffcbec = 1;
     }
-    DAT_ffffcbf2 = rx8_add_u16_saturate((int)(short)DAT_ffffcbf2,1);
+    tp_correlation_good_counter_ffffcbf2 = rx8_add_u16_saturate((int)(short)tp_correlation_good_counter_ffffcbf2,1);
   }
   else {
-    DAT_ffffcbf2 = 0;
-    DAT_ffffcbee = rx8_add_u16_saturate((int)(short)DAT_ffffcbee,1);
-    if (0x1c < DAT_ffffcbee) {
+    tp_correlation_good_counter_ffffcbf2 = 0;
+    tp_correlation_bad_counter_ffffcbee = rx8_add_u16_saturate((int)(short)tp_correlation_bad_counter_ffffcbee,1);
+    if (0x1c < tp_correlation_bad_counter_ffffcbee) {
       ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,1);
     }
   }

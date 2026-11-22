@@ -43031,7 +43031,7 @@ ffff805e	DAT_ffff805e	Label	DEFAULT
 ffff8060	DAT_ffff8060	Label	DEFAULT
 ffff8068	learned_pedal_zero_1_ffff8068	Label	DEFAULT
 ffff8070	learned_pedal_zero_2_ffff8070	Label	DEFAULT
-ffff8078	DAT_ffff8078	Label	DEFAULT
+ffff8078	learned_pedal_zero_valid_ffff8078	Label	DEFAULT
 ffff807c	inferred_ram_807c_ffff807c_ffff807c	Label	DEFAULT
 ffff8084	learned_plate_zero_2_ffff8084	Label	DEFAULT
 ffff808c	DAT_ffff808c	Label	DEFAULT
@@ -43537,8 +43537,8 @@ ffffa100	DAT_ffffa100	Label	DEFAULT
 ffffa104	DAT_ffffa104	Label	DEFAULT
 ffffa108	pedal_1_scaled_volts_ffffa108	Label	DEFAULT
 ffffa10c	DAT_ffffa10c	Label	DEFAULT
-ffffa110	DAT_ffffa110	Label	DEFAULT
-ffffa111	DAT_ffffa111	Label	DEFAULT
+ffffa110	pedal_range_fault_1_ffffa110	Label	DEFAULT
+ffffa111	pedal_range_fault_2_ffffa111	Label	DEFAULT
 ffffa112	DAT_ffffa112	Label	DEFAULT
 ffffa114	DAT_ffffa114	Label	DEFAULT
 ffffa116	DAT_ffffa116	Label	DEFAULT
@@ -43600,8 +43600,8 @@ ffffa207	DAT_ffffa207	Label	DEFAULT
 ffffa208	DAT_ffffa208	Label	DEFAULT
 ffffa210	ch7d_pwm_duty_q16_ffffa210	Label	DEFAULT
 ffffa214	ch7d_pwm_enabled_ffffa214	Label	DEFAULT
-ffffa218	DAT_ffffa218	Label	DEFAULT
-ffffa21c	DAT_ffffa21c	Label	DEFAULT
+ffffa218	plate_tp1_volts_ffffa218	Label	DEFAULT
+ffffa21c	plate_tp2_volts_ffffa21c	Label	DEFAULT
 ffffa220	DAT_ffffa220	Label	DEFAULT
 ffffa222	DAT_ffffa222	Label	DEFAULT
 ffffa224	DAT_ffffa224	Label	DEFAULT
@@ -46902,9 +46902,9 @@ ffffcbe6	DAT_ffffcbe6	Label	DEFAULT
 ffffcbe8	DAT_ffffcbe8	Label	DEFAULT
 ffffcbea	DAT_ffffcbea	Label	DEFAULT
 ffffcbec	tp_correlation_ok_ffffcbec	Label	DEFAULT
-ffffcbee	DAT_ffffcbee	Label	DEFAULT
+ffffcbee	tp_correlation_bad_counter_ffffcbee	Label	DEFAULT
 ffffcbf0	DAT_ffffcbf0	Label	DEFAULT
-ffffcbf2	DAT_ffffcbf2	Label	DEFAULT
+ffffcbf2	tp_correlation_good_counter_ffffcbf2	Label	DEFAULT
 ffffcbf4	DAT_ffffcbf4	Label	DEFAULT
 ffffcbf5	DAT_ffffcbf5	Label	DEFAULT
 ffffcbf6	DAT_ffffcbf6	Label	DEFAULT
@@ -46991,8 +46991,8 @@ ffffcc94	DAT_ffffcc94	Label	DEFAULT
 ffffcc95	DAT_ffffcc95	Label	DEFAULT
 ffffcc96	DAT_ffffcc96	Label	DEFAULT
 ffffcc97	DAT_ffffcc97	Label	DEFAULT
-ffffcc98	DAT_ffffcc98	Label	DEFAULT
-ffffcc99	DAT_ffffcc99	Label	DEFAULT
+ffffcc98	plate_tp2_source_select_ffffcc98	Label	DEFAULT
+ffffcc99	limp_home_request_ffffcc99	Label	DEFAULT
 ffffcc9a	DAT_ffffcc9a	Label	DEFAULT
 ffffcc9b	DAT_ffffcc9b	Label	DEFAULT
 ffffcc9c	DAT_ffffcc9c	Label	DEFAULT

@@ -52,7 +52,7 @@ uint FUN_00018fe8(void)
   if ((cVar2 == '\x01') || (cVar3 == '\x01')) {
     ref_updateMemoryAtAddress_float_VAL_ADDR(&learned_pedal_zero_1_ffff8068);
     ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_2_ffff8070);
-    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,0);
+    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,0);
   }
   else {
     uVar4 = (uint)DAT_ffffa9ce;
@@ -81,7 +81,7 @@ uint FUN_00018fe8(void)
         }
         if ((((uVar4 == 1) && (fVar6 - fVar8 < 0.032)) && (fVar7 - snapshot_DAT_ffffa9a8 < 0.032)) &&
            ((fVar5 <= 0.3 && (uVar4 = 0x19, 0x18 < DAT_ffffa9dc)))) {
-          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,1);
+          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,1);
         }
       }
     }

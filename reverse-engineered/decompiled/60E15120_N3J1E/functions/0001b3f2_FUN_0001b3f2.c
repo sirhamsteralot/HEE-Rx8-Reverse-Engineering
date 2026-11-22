@@ -42,7 +42,7 @@ void FUN_0001b3f2(void)
     uVar2 = 0;
   }
   DAT_ffffadd0 = DAT_ffffccba;
-  if (((DAT_ffffcc98 == '\x01') || (DAT_ffffcc99 == '\x01')) ||
+  if (((plate_tp2_source_select_ffffcc98 == '\x01') || (limp_home_request_ffffcc99 == '\x01')) ||
      (cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar3 == '\x01')) {
     uVar1 = 0;
     uVar2 = 0;

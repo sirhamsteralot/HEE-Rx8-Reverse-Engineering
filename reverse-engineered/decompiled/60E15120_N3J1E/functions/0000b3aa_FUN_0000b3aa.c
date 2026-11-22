@@ -41,7 +41,7 @@ undefined1 * FUN_0000b3aa(void)
         (&DAT_ffffa222)[uVar8] = local_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(ushort)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < local_20[uVar8]) {
