@@ -204,3 +204,21 @@ latches for 1M cycles (counter stays `< 0x5f6`); idle afterwards relocks at
 again. `test_sbl_multiframe_interframe_timeout_aborts_transfer_only` — FF with
 no CF aborts at `>= 0x2e` (~12k cycles, latches intact); CFs every 5k cycles
 reset the counter and the block completes (`7F 36 72` for a `0x20` block).
+
+## Corrections (accuracy pass)
+
+1. `0x11cc` acts only when the TCSR OVF bit is set (`0x11d4`/`0x11d6`), so
+   `0xffffdfa0` advances per WDT overflow period; the thresholds (`0x5f6` relock,
+   `0x2e` abort) stand as counts and the cycle derivations do not.
+2. ISO-TP helpers: `0x154c` single, `0x15a6` first, `0x1624` flow-control
+   transmit, `0x1654` consecutive.
+3. `0xffffdfb2` is set by the fixed-seed reply (`0x1916`), cleared by the
+   zero-seed reply (`0x18c4`) and by any key attempt (`0x1968`).
+4. The `0x1000`-`0x1ffb` pool scan resolves to HCAN0 registers, the WDT pair
+   `0xffffec10`/`0xffffec12` and I/O ports `0xfffff720`/`0xfffff738`/
+   `0xfffff756`; no SYSC (`0xffffed00`) reference exists.
+5. `0x4e0` sends a non-zero parameter to the cold target `0x6c8` after storing the
+   boot byte and initialising the mailboxes; the erased-flash path repeats the WDT
+   check and also selects `0x6c8` on a zero result.
+6. The `0x1038` pools: `0x1088` = `0x7fffc` (checked and dereferenced), `0x108c` =
+   `0x7fff8` (fallback application entry).
