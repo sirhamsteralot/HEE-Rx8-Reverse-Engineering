@@ -1100,7 +1100,7 @@ void FUN_00001182(void)
 
 /* [ADDITIONAL SOURCE REVIEW]
  * immo_diag_bit_clear [medium]: 8 B 'writeImmoBitZero?' (inherited name), called from 0x1378. mov.l pool 0x1284 = 0xffffdfa0; stores byte 0 to it (clears the immo diag bit at boot). Pool word re-read from ROM.
- * RAM 0xffffdfa0 immo_diag_bit (u8 bit0): pool 0x1284=0xffffdfa0 in 0x11c4
+ * RAM 0xffffdfa0 immo_diag_bit (u16): pool 0x1284 = 0xffffdfa0 stored as a word in 0x11c4 (0x11ca mov.w); 0x11cc increments it as u16 when the WDT overflow bit is set; 0x16b20 tests the whole byte; 0x169d4 writes 1 while ROM[0x6e224] == 0xff (0x00 in this ROM). Dual-labeled with the SBL counter (ROADMAP D14).
  */
 /* ROM address: 0x000011c4; body bytes: 8; decompiled */
 
@@ -81319,7 +81319,7 @@ LAB_0005673c:
 
 /* [ADDITIONAL SOURCE REVIEW]
  * immo_counter_increment [high]: ref_runImmoRelatedCounter (unique_exact_bytes to 60E0FC00 0x54a66), called from slow_background_task 0x11534. Mask-0x10: if 0xffffd1e4==1 && 0xffffd1e2!=-1 -> d1e2++ (the immo-related counter exposed in the diag RAM area; PID 0xc116 thunk 0x576c2 reads the c239-c281 state block).
- * RAM 0xffffd1e2 immo_counter (u8/s16): ref_runImmoRelatedCounter body, 60 B
+ * RAM 0xffffd1e2 immo_counter (u16): Word accesses with extu.w and a 0xffff ceiling (0x56766-0x56776): u16, saturating; incremented when 0xffffd1e4 == 1 from the slow task 0x11534.
  * RAM 0xffffd1e4 immo_counter_enable (u8): diag RAM area cell
  */
 /* ROM address: 0x0005674a; body bytes: 60; decompiled */
