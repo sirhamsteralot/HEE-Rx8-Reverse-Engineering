@@ -204,9 +204,9 @@ E2RAM layer per the knock report; this pass documents the shared block codec.
 | 0x0000b99c / 0x0000b958 / 0x0000b886 | `FUN_0000b99c` / `FUN_0000b958` / `FUN_0000b886` | E2RAM read / readback / write primitives |
 | 0x00024b00 | `FUN_00024b00` | 20-byte bit-unpack helper |
 | 0x000064ba | `knock_sensor_fault_task` | task[9] body (rec[9].entry @ ROM 0x4a28); sole caller of 0x1150e (jsr pool 0x656c at 0x64d4) |
-| 0x0001150e | `FUN_0001150e` | task[9] sub-batch; tail-jmp 0x23766 (pool 0x116cc at 0x1152e) = the save |
+| 0x0001150e | `dbw_task9_batch` | task[9] sub-batch; tail-jmp 0x23766 (pool 0x116cc at 0x1152e) = the save |
 | 0x00009f96 / 0x0000a522 / 0x00005cee | `FUN_00009f96` / `FUN_0000a522` / `FUN_00005cee` | wake task 9 (`mov #0x9,r4` at 0x9f9c; dispatch entry 0xd890) ← rotating dispatcher 0xa522 (byte table 0xd8f0, ptr table 0xd888) ← CMCSR1 ISR 0x5cee (pool 0x5d64 at 0x5cf8) |
-| 0x00022f86 / 0x00022a14 / 0x000231f0 / 0x00023558 | `FUN_00022f86` / `FUN_00022a14` / `FUN_000231f0` / `FUN_00023558` | same 0x1150e pass updates learned values 0xffffb38c/0xffffb40c/0xffffb414 before the save |
+| 0x00022f86 / 0x00022a14 / 0x000231f0 / 0x00023558 | `dbw_control_batch` / `pedal_demand_filter_coeffs` / `learned_pedal_value_calc` / `throttle_position_delta_calc` | same 0x1150e pass updates learned values 0xffffb38c/0xffffb40c/0xffffb414 before the save |
 | 0x0002563c / 0x00025600 | `ref_filterBatteryVoltage` / `FUN_00025600` | writers of `filtered_battery_voltage` 0xffffb594 |
 
 ### 8.2 Data and entry points (ROM)

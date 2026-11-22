@@ -18,7 +18,7 @@ undefined2 * FUN_00048202(void)
           ((DAT_ffffb4fe == '\x01' && ((DAT_ffffb4fc == '\x01' && (DAT_ffffcc5d == '\x01')))))) &&
          (DAT_ffffcbf4 == '\x01')) &&
         (((DAT_ffffcbf5 == '\x01' && (DAT_ffffcc00 == '\x01')) && (DAT_ffffcc01 == '\x01')))) &&
-       (((DAT_ffffcbec == '\x01' && (DAT_ffffcbd4 == '\x01')) &&
+       (((tp_correlation_ok_ffffcbec == '\x01' && (DAT_ffffcbd4 == '\x01')) &&
         ((DAT_ffffb50d == '\x01' && ((DAT_ffffcc6d == '\x01' && (DAT_ffffcc14 == '\x01')))))))) &&
       (((DAT_ffffb4f1 == '\x01' &&
         (((DAT_ffffb519 == '\x01' && (DAT_ffffb501 == '\x01')) && (DAT_ffffb504 == '\x01')))) &&

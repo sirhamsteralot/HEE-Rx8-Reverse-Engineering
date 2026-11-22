@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * dbw_control_batch [high]: DBW control batch from 0x1150e (pool 0x116c8=0x00022f86), mask 0x10 around two call groups: 0x474fc (home offset cc88), 0x22f1c, 0x48558, then 0x22db4, 0x233ec, 0x231f0, 0x23558, 0x228dc, 0x22a14, 0x22d26, relay_hold_output_pd11 0x251d0 (callgraph.tsv rows for caller 00022f86).
+ */
 /* ROM address: 0x00022f86; body bytes: 240; decompiled */
 
-void FUN_00022f86(void)
+void dbw_control_batch(void)
 
 {
   undefined4 uVar1;
@@ -35,13 +38,13 @@ void FUN_00022f86(void)
   FUN_000474fc();
   FUN_00022f1c();
   FUN_00048558();
-  FUN_00022db4();
-  FUN_000233ec();
-  FUN_000231f0();
-  FUN_00023558();
-  ref_calculateThrottlePedalPositionMapBased();
-  FUN_00022a14();
-  FUN_00022d26();
+  throttle_servo_override();
+  throttle_target_plate_position();
+  learned_pedal_value_calc();
+  throttle_position_delta_calc();
+  throttle_pedal_to_plate_request_map();
+  pedal_demand_filter_coeffs();
+  throttle_base_position_filter();
   relay_hold_output_pd11();
   ref_setSR(uVar1);
   return;

@@ -30,21 +30,21 @@ char FUN_00047610(void)
     DAT_ffffcc95 = 0;
   }
   if ((bVar1) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc98 = 1;
+    plate_tp2_source_select_ffffcc98 = 1;
     bVar1 = true;
   }
   else {
-    DAT_ffffcc98 = 0;
+    plate_tp2_source_select_ffffcc98 = 0;
     bVar1 = false;
   }
   if ((bVar2) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc99 = '\x01';
+    limp_home_request_ffffcc99 = '\x01';
   }
   else {
-    DAT_ffffcc99 = '\0';
+    limp_home_request_ffffcc99 = '\0';
   }
   cVar3 = '\x01';
-  if ((bVar1) || (cVar3 = DAT_ffffcc99, DAT_ffffcc99 == '\x01')) {
+  if ((bVar1) || (cVar3 = limp_home_request_ffffcc99, limp_home_request_ffffcc99 == '\x01')) {
     DAT_ffffcc9a = 1;
   }
   else {

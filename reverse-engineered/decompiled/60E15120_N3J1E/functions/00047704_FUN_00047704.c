@@ -8,7 +8,7 @@ char FUN_00047704(void)
   char cVar3;
   char cVar4;
   
-  cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff872c,0);
+  cVar3 = ref_readValue_8bit_ADDRESS_VAL(&tp_correlation_fault_latch_ffff872c,0);
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8730,0);
   if ((cVar4 == '\x01') ||
      (cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8732,0), cVar4 == '\x01')) {

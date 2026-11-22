@@ -73,7 +73,7 @@ undefined2 * FUN_0000e560(void)
   if (DAT_ffffcca1 == '\x01') {
     DAT_ffffa458 = DAT_ffffa458 + 5000.0;
   }
-  if (DAT_ffffb2d0 == '\x01') {
+  if (dsc_mode_c_active_ffffb2d0 == '\x01') {
     DAT_ffffa458 = DAT_ffffa458 + 10000.0;
   }
   if (DAT_ffffa7b8 == '\x01') {

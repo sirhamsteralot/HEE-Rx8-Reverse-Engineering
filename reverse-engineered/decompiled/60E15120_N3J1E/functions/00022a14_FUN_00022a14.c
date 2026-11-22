@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_demand_filter_coeffs [high]: b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a354: Throttle Pedal Percent Decreasing Filter Factor (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a368: Table 2D - 132 (RX8Defs data pointer, axes and dimensions match).
@@ -24,7 +27,7 @@
  */
 /* ROM address: 0x00022a14; body bytes: 646; decompiled */
 
-undefined4 FUN_00022a14(void)
+undefined4 pedal_demand_filter_coeffs(void)
 
 {
   char cVar1;
@@ -41,7 +44,7 @@ undefined4 FUN_00022a14(void)
   
   cVar3 = DAT_ffffb2ce;
   cVar2 = DAT_ffffb2cd;
-  cVar1 = DAT_ffffb2cc;
+  cVar1 = throttle_gear_mode_1_2_ffffb2cc;
   arg3 = 1e-05;
   fVar7 = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   uVar4 = inferred_coolant_temperature_ffffa98c;

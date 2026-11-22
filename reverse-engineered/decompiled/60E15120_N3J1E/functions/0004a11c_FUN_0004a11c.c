@@ -13,10 +13,10 @@ char FUN_0004a11c(void)
       (cVar1 = '\x01', DAT_ffffc914 == '\x01')) ||
      (((cVar1 = '\x01', DAT_ffffc96d == '\x01' || (cVar1 = '\x01', DAT_ffffc96f == '\x01')) ||
       (cVar1 = DAT_ffffc971, DAT_ffffc971 == '\x01')))) {
-    DAT_ffffcd70 = 1;
+    throttle_fault_latch_ffffcd70 = 1;
   }
   else {
-    DAT_ffffcd70 = 0;
+    throttle_fault_latch_ffffcd70 = 0;
   }
   return cVar1;
 }

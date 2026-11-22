@@ -11,7 +11,7 @@ void dtc_fault_service_batch(void)
   FUN_00021bc6();
   FUN_00021434();
   knock_rough_correction_update();
-  FUN_0002253c();
+  ch7d_pwm_duty_batch();
   FUN_00028966();
   ref_setOBDCANTXVars();
   ref_someOBDFunctionCaller();

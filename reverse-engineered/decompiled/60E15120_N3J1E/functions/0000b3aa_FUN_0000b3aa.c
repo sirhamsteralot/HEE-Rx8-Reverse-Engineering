@@ -19,9 +19,9 @@ undefined1 * FUN_0000b3aa(void)
   
   puVar4 = &DAT_ffffa220;
   puVar5 = (undefined1 *)0x0;
-  local_20[0] = DAT_ffff9f08;
+  local_20[0] = adc_an18_plate_tp1_raw_ffff9f08;
   bVar3 = 0;
-  local_20[1] = DAT_ffff9f0a;
+  local_20[1] = adc_an19_plate_tp2_raw_ffff9f0a;
   puVar6 = puVar4;
   do {
     uVar8 = (uint)bVar3;
@@ -41,7 +41,7 @@ undefined1 * FUN_0000b3aa(void)
         (&DAT_ffffa222)[uVar8] = local_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(ushort)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < local_20[uVar8]) {

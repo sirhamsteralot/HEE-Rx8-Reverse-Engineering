@@ -9231,7 +9231,7 @@ void ref_getSensorStuff__(void)
   FUN_00006372();
   maf_sensor_scaling();
   FUN_00007290();
-  FUN_000094f0();
+  pedal_adc_raw_to_volts();
   FUN_00007398();
   FUN_0000d13c();
   FUN_0000b398();
@@ -9243,7 +9243,7 @@ void ref_getSensorStuff__(void)
   FUN_0000cf56();
   FUN_000081a8();
   ref_ignitionDwellOutputInit();
-  FUN_0000b23c();
+  ch7d_pwm_off_init();
   FUN_0000a8dc();
   external_wdt_heartbeat_pulse();
   eeprom_mirror_magic_init();
@@ -9272,7 +9272,7 @@ void ref_mainInit__(void)
   FUN_0000cf56();
   FUN_000081a8();
   ref_ignitionDwellOutputInit();
-  FUN_0000b23c();
+  ch7d_pwm_off_init();
   FUN_0000a8dc();
   (*unaff_r14)();
   eeprom_mirror_magic_init();
@@ -9463,7 +9463,7 @@ void knock_sensor_fault_task(void)
   FUN_00006842();
   FUN_000094fc();
   ref_knockSensorADCFault();
-  FUN_0001150e();
+  dbw_task9_batch();
   FUN_00009fb2(0);
   ref_taskEndRoutine_();
   return;
@@ -9861,8 +9861,8 @@ void adc_scan_sweep_all_channels(void)
   DAT_ffff9ee6 = ADDR1H_B;
   DAT_ffff9ee8 = ADDR2H_B;
   maf_adc_raw_ffff9eea = ADDR3H_B;
-  DAT_ffff9eec = ADDR4H_B;
-  DAT_ffff9eee = ADDR5H_B;
+  adc_an4_pedal_raw_ffff9eec = ADDR4H_B;
+  adc_an5_pedal_raw_ffff9eee = ADDR5H_B;
   adc6_raw_apv_position_ffff9ef0 = ADDR6H_B;
   DAT_ffff9ef2 = ADDR7H_B;
   DAT_ffff9ef4 = ADDR8H_B;
@@ -9875,8 +9875,8 @@ void adc_scan_sweep_all_channels(void)
   DAT_ffff9f02 = ADDR15H_B;
   DAT_ffff9f04 = ADDR16H_B;
   DAT_ffff9f06 = ADDR17H_B;
-  DAT_ffff9f08 = ADDR18H_B;
-  DAT_ffff9f0a = ADDR19H_B;
+  adc_an18_plate_tp1_raw_ffff9f08 = ADDR18H_B;
+  adc_an19_plate_tp2_raw_ffff9f0a = ADDR19H_B;
   DAT_ffff9f0c = ADDR20H_B;
   DAT_ffff9f0e = ADDR21H_B;
   DAT_ffff9f10 = ADDR22H_B;
@@ -10045,8 +10045,8 @@ uint FUN_00006b94(void)
 LAB_00006be0:
     DAT_ffff9ef2 = ADDR7H_B;
     adc6_raw_apv_position_ffff9ef0 = ADDR6H_B;
-    DAT_ffff9eee = ADDR5H_B;
-    DAT_ffff9eec = ADDR4H_B;
+    adc_an5_pedal_raw_ffff9eee = ADDR5H_B;
+    adc_an4_pedal_raw_ffff9eec = ADDR4H_B;
   }
   else {
     if (uVar1 == 8) goto LAB_00006be0;
@@ -10092,8 +10092,8 @@ uint FUN_00006c4c(void)
     DAT_ffff9f0e = ADDR21H_B;
     DAT_ffff9f0c = ADDR20H_B;
 LAB_00006ca0:
-    DAT_ffff9f0a = ADDR19H_B;
-    DAT_ffff9f08 = ADDR18H_B;
+    adc_an19_plate_tp2_raw_ffff9f0a = ADDR19H_B;
+    adc_an18_plate_tp1_raw_ffff9f08 = ADDR18H_B;
     DAT_ffff9f06 = ADDR17H_B;
     DAT_ffff9f04 = ADDR16H_B;
   }
@@ -10560,12 +10560,12 @@ void sci0_configure_sync_and_exchange_command(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * sci0_exchange_byte_blocking [assembly_verified]: SCI0 transmit/receive with GPIO select at 0xfffff764 bit0. At 0x721e..0x7226 waits for SCI_SSR0 bit0x40 with no software timeout or watchdog service inside the loop. Clock-synchronous configuration comes from caller 0x7188. Not proof of the reported reset; missing external response alone need not prevent internally clocked receive completion.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * sci0_exchange_byte_wait_rdrf [high]: Renesas SH7055 app note section 2.20 confirms SSR mask 0x40 is receive-data-full (RDRF), the condition polled here; no timeout inside the loop. This idiom also occurs in vendor sample code and is not itself evidence of a bug.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * sci0_exchange_byte_wait_rdrf [high]: Renesas SH7055 app note section 2.20 confirms SSR mask 0x40 is receive-data-full (RDRF), the condition polled here; no timeout inside the loop. This idiom also occurs in vendor sample code and is not itself evidence of a bug.
  */
 /* ROM address: 0x000071ea; body bytes: 98; decompiled */
 
@@ -10754,18 +10754,18 @@ undefined2 * clt_sensor_scaling_fault(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * maf_sensor_scaling [high]: 9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1.
+ * RAM 0xffff9eea maf_adc_raw (uint16): Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2.
+ * RAM 0xffff9f78 maf_scaled (float): 9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e).
+ * RAM 0xffff9f7c maf_fault_status (uint8): 9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high).
+ */
 /* [MATH AND UNITS REVIEW]
  * 7.6293945e-05 is binary32 5/65536. The MAF lookup input is raw*5/65536, consistent with a 5-V full-scale normalized ADC signal; volts is an inference until ADC representation/reference are verified, not proof of a 16-bit ADC.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * maf_sensor_scaling [high]: 9f78 = tbl 0x69788 'MAF Scaling'(raw 9eea * 5/65536); fault status 9f7c: 0 raw < 0xac0, 2 raw >= 0xfae2, else 1.
- * RAM 0xffff9eea maf_adc_raw (uint16): Raw MAF ADC value; scaled *5/65536 into tbl 0x69788 'MAF Scaling'; fault bands <0xac0 / >=0xfae2.
- * RAM 0xffff9f78 maf_scaled (float): 9f78 = lookup_2d tbl 0x69788(raw * 5/65536); latched into a9e8 by maf_voltage_and_fault_counters (0x19f4e).
- * RAM 0xffff9f7c maf_fault_status (uint8): 9f7c: 0 = raw < 0xac0 (low), 1 = normal, 2 = raw >= 0xfae2 (high).
  */
 /* ROM address: 0x00007438; body bytes: 82; decompiled */
 
@@ -12955,12 +12955,20 @@ uint ref_getIgnitionDwellTime_00009490(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_adc_raw_to_volts [high]: AN4/AN5 raw (0xffff9eec/0xffff9eee from the 0x6884 sweep) range-checked against pool words 0x6eeb0=0xf5c3 (upper) / 0x6eeb4=0x11ec (lower), faults 0xffffa110/a111; a108 = 0.0f (0x6eec0) + raw * 6.341f (0x6eeb8=0x40cae979) * 7.6294e-05f; a10c = 3.488f (0x6eec4=0x405f3b64) + raw * 6.341 * 7.6294e-05. Called from 0x60c8 ref_getSensorStuff__ (pool 0x6250).
+ * RAM 0xffff9eec adc_an4_pedal_raw (uint16): ADDR4H (0xfffff808) latched here by the 0x6884 ADC sweep (pool 0x6a1c=0xffff9ee4 base, +2n); read by 0x18f60 (pool 0x19058=0xffff9eec) into a9c4 (pool 0x1904a). Pedal APP1 raw. Harness: accelerator pedal sensor terminals 4X/5AE/5C/4Y/5AB/5F (B1-14 A-F); pin->terminal is board routing.
+ * RAM 0xffff9eee adc_an5_pedal_raw (uint16): ADDR5H latched at 0xffff9eee by the 0x6884 sweep; pedal APP2 raw; feeds a9c6 via 0x18fa4.
+ * RAM 0xffffa108 pedal_1_scaled_volts (float): a108 = 0.0f + AN4 raw * 6.341f (0x6eeb8) * 7.6294e-05f (0x94f0); range-checked [0x11ec, 0xf5c3) with faults a110/a111 -> DTC 0x66/0x67 (TP... pedal channel 1).
+ * RAM 0xffffa110 pedal_range_fault_1 (uint8): APP1 raw range-fault flag: 0x94f0 stores fault flags via the indexed base &DAT_ffffa110 (+1 for ch2) with debounce counters 0xffffa116+ when raw is outside [0x11ec, 0xf5c3) (pools 0x6eeb0/0x6eeb4); read by the DTC paths 0x45b3c/0x45c42 (DTC 0x66 family).
+ * RAM 0xffffa111 pedal_range_fault_2 (uint8): APP2 raw range-fault flag (same indexed store in 0x94f0, +1); read by the DTC paths 0x45d90/0x45e96 (DTC 0x67-0x69 family).
+ */
 /* ROM address: 0x000094f0; body bytes: 12; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000094f0 (12 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined1 * FUN_000094f0(void)
+undefined1 * pedal_adc_raw_to_volts(void)
 
 {
   ushort uVar1;
@@ -12974,12 +12982,12 @@ undefined1 * FUN_000094f0(void)
   uint uVar9;
   ushort auStack_20 [2];
   
-  DAT_ffffa112 = DAT_ffff9eec;
-  DAT_ffffa114 = DAT_ffff9eee;
-  puVar4 = &DAT_ffffa110;
+  DAT_ffffa112 = adc_an4_pedal_raw_ffff9eec;
+  DAT_ffffa114 = adc_an5_pedal_raw_ffff9eee;
+  puVar4 = &pedal_range_fault_1_ffffa110;
   puVar5 = (undefined1 *)0x0;
-  auStack_20[0] = DAT_ffff9eec;
-  auStack_20[1] = DAT_ffff9eee;
+  auStack_20[0] = adc_an4_pedal_raw_ffff9eec;
+  auStack_20[1] = adc_an5_pedal_raw_ffff9eee;
   bVar3 = 0;
   puVar6 = puVar4;
   do {
@@ -13000,12 +13008,12 @@ undefined1 * FUN_000094f0(void)
       }
     }
     iVar8 = (uint)bVar3 * 4;
-    (&DAT_ffffa108)[bVar3] =
+    (&pedal_1_scaled_volts_ffffa108)[bVar3] =
          *(float *)(&DAT_0006eec0 + iVar8) +
          (float)(&DAT_ffffa112)[uVar9] * *(float *)(&DAT_0006eeb8 + iVar8) * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006eeb0 + uVar9 * 2) < auStack_20[uVar9]) {
-      (&DAT_ffffa110)[bVar3] = 1;
-      puVar2 = &DAT_ffffa110;
+      (&pedal_range_fault_1_ffffa110)[bVar3] = 1;
+      puVar2 = &pedal_range_fault_1_ffffa110;
     }
     else {
       puVar2 = puVar5;
@@ -13045,10 +13053,10 @@ undefined1 * FUN_000094fc(void)
   uint uVar9;
   ushort local_20 [2];
   
-  puVar4 = &DAT_ffffa110;
+  puVar4 = &pedal_range_fault_1_ffffa110;
   puVar5 = (undefined1 *)0x0;
-  local_20[0] = DAT_ffff9eec;
-  local_20[1] = DAT_ffff9eee;
+  local_20[0] = adc_an4_pedal_raw_ffff9eec;
+  local_20[1] = adc_an5_pedal_raw_ffff9eee;
   bVar3 = 0;
   puVar6 = puVar4;
   do {
@@ -13069,12 +13077,12 @@ undefined1 * FUN_000094fc(void)
       }
     }
     iVar8 = (uint)bVar3 * 4;
-    (&DAT_ffffa108)[bVar3] =
+    (&pedal_1_scaled_volts_ffffa108)[bVar3] =
          *(float *)(&DAT_0006eec0 + iVar8) +
          (float)(ushort)(&DAT_ffffa112)[uVar9] * *(float *)(&DAT_0006eeb8 + iVar8) * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006eeb0 + uVar9 * 2) < local_20[uVar9]) {
-      (&DAT_ffffa110)[bVar3] = 1;
-      puVar2 = &DAT_ffffa110;
+      (&pedal_range_fault_1_ffffa110)[bVar3] = 1;
+      puVar2 = &pedal_range_fault_1_ffffa110;
     }
     else {
       puVar2 = puVar5;
@@ -13338,12 +13346,12 @@ undefined4 can_rx_copy_mailbox_to_buffer(int param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): CAN TX buffer; descriptor 0x4e00c (id 0x7e8, mb 15, DLC 8) holds buf=0xffffddd0 at ROM 0x4e014; mov.l pool 0x682b0 in 0x681ba and pool 0x688e8 in 0x68776-0x68868 (ISO-TP TX); written via ref_txCAN_EventBased 0x99b0.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffddd0 uds_tx_buffer (uint8[8]): CAN TX buffer; descriptor 0x4e00c (id 0x7e8, mb 15, DLC 8) holds buf=0xffffddd0 at ROM 0x4e014; mov.l pool 0x682b0 in 0x681ba and pool 0x688e8 in 0x68776-0x68868 (ISO-TP TX); written via ref_txCAN_EventBased 0x99b0.
  */
 /* ROM address: 0x000099b0; body bytes: 134; decompiled */
 
@@ -15234,13 +15242,16 @@ void FUN_0000b1da(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_off_init [high]: Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00).
+ */
 /* ROM address: 0x0000b23c; body bytes: 84; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x0000b25e) */
 /* Unique exact-byte match to related 60E0FC00 function at 0000b23c (84 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0000b23c(void)
+void ch7d_pwm_off_init(void)
 
 {
   byte bVar1;
@@ -15277,7 +15288,7 @@ undefined4 FUN_0000b290(void)
   ref_setSR_PARAM(local_8,0xe0);
   if (ch7d_pwm_enabled_ffffa214 == '\x01') {
     ATUII_CYLR7D_W = 32000;
-    DAT_ffff9f50 = 32000;
+    ch7d_pwm_period_ffff9f50 = 32000;
   }
   uVar1 = FUN_00002064(local_8[0]);
   return uVar1;
@@ -15285,6 +15296,7 @@ undefined4 FUN_0000b290(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_write [high]: 0xb2c0(ch, fr4): a210[ch] = (u32)(fr4 * 65536.0f) (pools 0xb37c=0xffffa210, 0xb390=0x47800000); if a214[ch]==1 and ch==0: BFR7D 0xfffff596 = rx8_mul_s32_shift16_saturate(a210[0], 0xffff9f50) via 0x231c (pools 0xb380=0xffffa214, 0xb374=0xf596, 0xb38c=0xffff9f50, 0xb394=0x231c). Sole caller 0x25198 (only ROM pointer word to 0xb2c0 is 0x251cc).
  * RAM 0xffffa210 ch7d_pwm_duty_q16 (uint32): Duty percent * 65536, written by 0xb2c0 (from 0x25198, clamp 0-100% of DAT_ffffb354); BFR7D = duty*32000>>16 (0xb308/0xb2c0).
  */
 /* ROM address: 0x0000b2c0; body bytes: 72; decompiled */
@@ -15292,7 +15304,7 @@ undefined4 FUN_0000b290(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0000b2c0 (72 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0000b2c0(float param_1,byte param_2)
+uint ch7d_pwm_duty_write(float param_1,byte param_2)
 
 {
   uint uVar1;
@@ -15300,7 +15312,7 @@ uint FUN_0000b2c0(float param_1,byte param_2)
   (&ch7d_pwm_duty_q16_ffffa210)[param_2] = (int)(param_1 * 65536.0);
   uVar1 = (uint)(byte)(&ch7d_pwm_enabled_ffffa214)[param_2];
   if ((uVar1 == 1) && (param_2 == 0)) {
-    uVar1 = rx8_mul_s32_shift16_saturate(ch7d_pwm_duty_q16_ffffa210,DAT_ffff9f50);
+    uVar1 = rx8_mul_s32_shift16_saturate(ch7d_pwm_duty_q16_ffffa210,ch7d_pwm_period_ffff9f50);
     ATUII_BFR7D_W = (short)uVar1;
   }
   return uVar1;
@@ -15326,7 +15338,7 @@ void atu_ch7d_pwm_enable(void)
   if (ch7d_pwm_enabled_ffffa214 == '\0') {
     uVar2 = rx8_mul_s32_shift16_saturate(ch7d_pwm_duty_q16_ffffa210,32000);
     ref_setSR_PARAM(local_10,0xe0);
-    DAT_ffff9f50 = 32000;
+    ch7d_pwm_period_ffff9f50 = 32000;
     bVar1 = ATUII_TSTR2_B;
     ATUII_TSTR2_B = bVar1 & 0x7f;
     ATUII_CYLR7D_W = 32000;
@@ -15362,13 +15374,13 @@ undefined1 * FUN_0000b398(void)
   int iVar9;
   ushort auStack_20 [2];
   
-  DAT_ffffa222 = DAT_ffff9f08;
-  DAT_ffffa224 = DAT_ffff9f0a;
+  DAT_ffffa222 = adc_an18_plate_tp1_raw_ffff9f08;
+  DAT_ffffa224 = adc_an19_plate_tp2_raw_ffff9f0a;
   puVar4 = &DAT_ffffa220;
   puVar5 = (undefined1 *)0x0;
-  auStack_20[0] = DAT_ffff9f08;
+  auStack_20[0] = adc_an18_plate_tp1_raw_ffff9f08;
   bVar3 = 0;
-  auStack_20[1] = DAT_ffff9f0a;
+  auStack_20[1] = adc_an19_plate_tp2_raw_ffff9f0a;
   puVar6 = puVar4;
   do {
     uVar8 = (uint)bVar3;
@@ -15388,7 +15400,7 @@ undefined1 * FUN_0000b398(void)
         (&DAT_ffffa222)[uVar8] = auStack_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < auStack_20[uVar8]) {
@@ -15435,9 +15447,9 @@ undefined1 * FUN_0000b3aa(void)
   
   puVar4 = &DAT_ffffa220;
   puVar5 = (undefined1 *)0x0;
-  local_20[0] = DAT_ffff9f08;
+  local_20[0] = adc_an18_plate_tp1_raw_ffff9f08;
   bVar3 = 0;
-  local_20[1] = DAT_ffff9f0a;
+  local_20[1] = adc_an19_plate_tp2_raw_ffff9f0a;
   puVar6 = puVar4;
   do {
     uVar8 = (uint)bVar3;
@@ -15457,7 +15469,7 @@ undefined1 * FUN_0000b3aa(void)
         (&DAT_ffffa222)[uVar8] = local_20[uVar8];
       }
     }
-    (&DAT_ffffa218)[bVar3] =
+    (&plate_tp1_volts_ffffa218)[bVar3] =
          (float)(&DAT_0006f3ec)[bVar3] +
          (float)(ushort)(&DAT_ffffa222)[uVar8] * (float)(&DAT_0006f3e4)[bVar3] * 7.6293945e-05;
     if (*(ushort *)(&DAT_0006c172 + iVar9) < local_20[uVar8]) {
@@ -16409,16 +16421,16 @@ void ref_functionDrivingTiming(byte param_1)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_voltage_sample [high]: Called from 0x661e (task[6], before ref_engineControlTASK): a37a = DAT_ffff9ef8 (knock ADC raw); in the 200-2000 RPM window filters into a378; sets a386 = (raw RPM >= 10000).
  * RAM 0xffffa37a knock_adc_raw (uint16): Raw knock sensor ADC 0xffff9ef8 read in 0xc3ce.
  * RAM 0xffffa374 knock_adc_filtered (float): First-order filtered knock ADC (coeff 0.004, snap 1.0) valid in the 200-2000 RPM window.
  * RAM 0xffff9f80 engine_speed_rpm_raw (float): Raw RPM = 120e6 / crank period sum (ISR 0x803e); window and 10k-flag checks in 0xc3ce.
  * RAM 0xffff9ef8 knock_sensor_adc_raw (uint16): Knock sensor ADC result read in 0xc3ce.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0000c3ce; body bytes: 114; decompiled */
 
@@ -16455,10 +16467,6 @@ undefined2 * knock_voltage_sample(void)
  * Descriptor 0x0006b2a0: Knock Related (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b2ac: Knock Related 3 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_magnitude_integrate [high]: Knock magnitude core: voltage = (a378 - a326)*5/65536; magnitude vs tbl 0x6b250 minus command-code term; noise filter, per-rotor integrators a33c/a350, baseline a348, combined level a34c; sets a324 = (a364 <= a330), knock detected.
  * RAM 0xffffc060 knock_filter_coeff_a (float): Noise-step scale 0.0625 (calm) / 0.1875 (transient); used in the 0xc486 integrator step.
@@ -16481,6 +16489,10 @@ undefined2 * knock_voltage_sample(void)
  * RAM 0xffffa364 knock_threshold_command_base (float): Base threshold command (a34c + a328*a360 clamped 64..255; a34c = combined knock level addend, 64 is the clamp floor).
  * RAM 0xffffa389 knock_reference_voltage_latched (uint8[2]): Latched a387 values; a change forces a32c = 40 (noise reset).
  * RAM 0xffffa381 knock_command_code (uint8[2]): Mapped command codes a381[0..1] from a368 (6/5/4/2/0 bands).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0000c486; body bytes: 674; decompiled_with_warnings */
 
@@ -18686,7 +18698,7 @@ undefined2 * FUN_0000e560(void)
   if (DAT_ffffcca1 == '\x01') {
     DAT_ffffa458 = DAT_ffffa458 + 5000.0;
   }
-  if (DAT_ffffb2d0 == '\x01') {
+  if (dsc_mode_c_active_ffffb2d0 == '\x01') {
     DAT_ffffa458 = DAT_ffffa458 + 10000.0;
   }
   if (DAT_ffffa7b8 == '\x01') {
@@ -18885,7 +18897,7 @@ LAB_0000ebd0:
   if ((((iVar8 == 2) &&
        (((cVar4 == '\x01' || (DAT_ffffa49d == '\0')) ||
         ((DAT_ffffa49e == '\x01' && ((snapshot_cranking_active_ffffaa62_ffffaa62 == 0 || (DAT_ffffa49b == '\x01')))))))) ||
-      (fuel_cut_allowed_ffffa964 == '\x01')) || ((DAT_ffffcc71 == '\x01' || (DAT_ffffb2cf == '\x01')))) {
+      (fuel_cut_allowed_ffffa964 == '\x01')) || ((DAT_ffffcc71 == '\x01' || (dsc_torque_limit_active_ffffb2cf == '\x01')))) {
     fuel_cut_request_b_ffffa465 = '\0';
   }
   else if (((iVar8 == 1) && (DAT_ffffa48e <= DAT_ffffa490)) ||
@@ -21349,16 +21361,19 @@ void FUN_000114d0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dbw_task9_batch [high]: Task-table rec[9] @ROM 0x4a20 entry 0x64ba tail-calls 0x1150e (pool 0x656c=0x0001150e at 0x64d4); batch pool 0x116b8=0x000199d4 (pedal/TP sensor batch), 0x116c8=0x00022f86 (DBW control batch), 0x116e4=0x00021b4c (throttle torque batch) — words read from ROM, jsr sites in disasm.
+ */
 /* ROM address: 0x0001150e; body bytes: 38; decompiled */
 
-void FUN_0001150e(void)
+void dbw_task9_batch(void)
 
 {
-  FUN_000199d4();
+  pedal_tp_sensor_batch();
   FUN_00038ee4();
   FUN_0002114a();
   FUN_0002e5a8();
-  FUN_00022f86();
+  dbw_control_batch();
   jump_to_FUN_000236cc();
   return;
 }
@@ -21377,7 +21392,7 @@ void slow_background_task(void)
   FUN_00038f3e();
   FUN_00021186();
   timing_retard_fast_task();
-  FUN_00021b4c();
+  throttle_torque_request_batch();
   key_off_state_machine_step();
   FUN_000288be();
   FUN_00025532();
@@ -21515,7 +21530,7 @@ void dtc_fault_service_batch(void)
   FUN_00021bc6();
   FUN_00021434();
   knock_rough_correction_update();
-  FUN_0002253c();
+  ch7d_pwm_duty_batch();
   FUN_00028966();
   ref_setOBDCANTXVars();
   ref_someOBDFunctionCaller();
@@ -21834,14 +21849,14 @@ bool ref_getKnownBooleanValue__(void)
  * Descriptor 0x00069078: Ignition Leading - Base Timing (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000690cc: Ignition Timing Leading Advance (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * leading_base_timing_calc [high]: RX8Defs 'Ignition Leading - Base Timing' plate; blends calibrated base with open-loop cap by weight b118; safe-mode cap via b12d.
  * RAM 0xffffb12d safe_mode (uint8): 0x1ee4a: 1 unless (b534==1 && 4<bc3d) or (b534==0 && 3<baed); selects Safe Mode CAL tables and the base-timing cap in 0x11f00/0x1206c.
  * RAM 0xffffa5f0 leading_coolant_scaled_advance_term (float): Written by 0x11f00 leading_base_timing_calc (fmov.s fr2,@r1 0x11f60 via mov.w pool 0x1200a=0xa5f0 @0x11f58); read by 0x123da (mov.w pool 0x12536 @0x124a0).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00011f00; body bytes: 254; decompiled */
 
@@ -21889,13 +21904,13 @@ void leading_base_timing_calc(void)
  * Descriptor 0x00069120: Ignition Timing Trailing Base (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069174: Ignition Timing Trailing Advance (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_base_timing_calc [high]: RX8Defs 'Ignition Timing Trailing Base' plate; same blend structure as 0x11f00.
  * RAM 0xffffa5f4 trailing_coolant_scaled_advance_term (float): Written by 0x1206c trailing_base_timing_calc (fmov.s fr2,@r1 0x120cc via mov.w pool 0x12176=0xa5f4 @0x120c4); read by 0x124d6 (mov.w pool 0x12684 @0x12588).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001206c; body bytes: 254; decompiled */
 
@@ -21961,13 +21976,13 @@ void FUN_000121ea(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * leading_final_timing_clamp_output [high]: a630 = rx8_clamp_float(a634, a64c, a660); a660 = lookup_2d(rpm, tbl 0x69190) = max advance. Emulator: load 100 clamped to a660=65.0 at 3000 rpm, -100 clamped to a64c (min bound). Output RAM leading_ignition_timing_ffffa630.
  * RAM 0xffffa660 leading_max_advance (float): Written by 0x121fc leading_final_timing_clamp_output (fmov.s fr0,@r2 0x1229c via mov.l pool 0x122f4=0xffffa660 @0x1229a).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000121fc; body bytes: 186; decompiled_with_warnings */
 
@@ -22005,15 +22020,15 @@ LAB_0001228e:
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * trailing_final_timing_clamp_output [high]: Trailing mirror: a638 = rx8_clamp_float(a63c, a65c, a664); a664 = lookup_2d(rpm, tbl 0x691cc). Output RAM trailing_ignition_timing_ffffa638.
  * RAM 0xffffa634 leading_timing_with_corrections (float): a640 + a648 clamped into leading_ignition_timing_ffffa630 (0x12300). Written by 0x123ba leading_timing_add_corrections (fmov.s fr2,@r3 0x123c8 via mov.w pool 0x12410=0xa634 @0x123c4); read by 0x121fc (pool 0x122c6 @0x1228a) and 0x2cc2c (pool 0x2cd54 @0x2ccc6); clamped into 0xffffa630 by 0x121fc.
  * RAM 0xffffa63c trailing_timing_with_corrections (float): a650 + a658 clamped into trailing_ignition_timing_ffffa638. Written by 0x123ca trailing_timing_add_corrections (fmov.s fr2,@r3 0x123d8 via mov.w pool 0x1240c=0xa63c @0x123d4); read by 0x12300 (pool 0x1240c @0x1238e); clamped into 0xffffa638 by 0x12300.
  * RAM 0xffffa664 trailing_max_advance (float): Written by 0x12300 trailing_final_timing_clamp_output (fmov.s fr0,@r2 0x123a0 via mov.l pool 0x12430=0xffffa664 @0x1239e).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00012300; body bytes: 186; decompiled_with_warnings */
 
@@ -22202,13 +22217,13 @@ void knock_retard_apply_trailing(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * min_advance_clamp_select [high]: Selects leading min-advance clamp a64c: cranking && a66c in band -> -25.0 (0xc1c80000, ROM-verified); !cranking && a750,c9a0 in band, or load-high -> -58.5 (0xc26a0000, ROM-verified); else lookup_2d(a98c, tbl 0x691b8); cranking with a66c out of band -> lookup_2d(a98c, tbl 0x691a4). Also sets load-high flag a66a (c0b4 > 0.5, hysteresis clears <= 0.45).
  * RAM 0xffffa64c leading_min_advance_clamp (float): Written by 0x12630 min_advance_clamp_select (fmov.s fr0/fr3,@r14 0x1270e/0x12738/0x12742 via mov.l pool 0x127b8=0xffffa64c @0x126e8); read by 0x121fc leading_final_timing_clamp_output.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00012630; body bytes: 206; decompiled */
 
@@ -22267,12 +22282,12 @@ uint min_advance_clamp_select(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa65c trailing_min_advance_clamp (float): Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffa65c trailing_min_advance_clamp (float): Written by 0x12754 (fmov.s fr0/fr3,@r14 0x1281a/0x12844/0x1284e via mov.l pool 0x12868=0xffffa65c @0x127f4); read by 0x12300 trailing_final_timing_clamp_output.
  */
 /* ROM address: 0x00012754; body bytes: 206; decompiled */
 
@@ -22689,12 +22704,12 @@ uint FUN_00012ed0(void)
  * Descriptor 0x00069730: Ignition 16 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006974c: Ignition 17 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_rough_correction_targets [high]: a6bc/a6c0 rough-knock correction targets from RX8Defs 'Ignition 4..17' descriptors 0x69630-0x6974c.
  */
 /* ROM address: 0x00013034; body bytes: 340; decompiled */
 
@@ -22770,12 +22785,12 @@ uint knock_rough_correction_targets(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffa428 engine_running (uint8): Engine running flag; zeroes rough knock corrections in 0x13210; ingredient of the attack condition.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * RAM 0xffffa428 engine_running (uint8): Engine running flag; zeroes rough knock corrections in 0x13210; ingredient of the attack condition.
  */
 /* ROM address: 0x00013210; body bytes: 370; decompiled */
 
@@ -22950,13 +22965,13 @@ void FUN_00013508(void)
  * Descriptor 0x0006a060: Ignition Leading - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a074: Ignition Leading - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_leading_timing_error_correction [high]: was ref_idleLeadingTimingCorrection_. a728 = rpm - b554 (idle speed error); a720 = lookup_2d(err or rpm, idle-error-bool table 0x6a060/0x6a074 by b534/b53c/b53a); a718 = clamp(a720, -2.8, 0.7) when load>=0.6, else 0; gates on cranking/rpm<1500/run-time. Feeds +a718 in 0x123da.
  * RAM 0xffffa718 idle_leading_timing_error_correction (float): Written by 0x135b4 idle_leading_timing_error_correction (fmov.s fr15,@r3 0x1368a via mov.w pool 0x136aa=0xa718 @0x13688); read by 0x123da (mov.w pool 0x12534 @0x1249e).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000135b4; body bytes: 228; decompiled */
 
@@ -23019,13 +23034,13 @@ uint idle_leading_timing_error_correction(void)
  * Descriptor 0x0006a088: Ignition Trailing - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a09c: Ignition Trailing - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
  * RAM 0xffffa71c idle_trailing_timing_error_correction (float): Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000136e4; body bytes: 228; decompiled */
 
@@ -23104,13 +23119,13 @@ void FUN_0001381e(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_enable_gate [high]: Sets DAT_ffffa73d: engine-running timer 0xffffa424 >= 0x177, coolant >= 10 C, load >= tbl 0x6af54 (0.5 flat, RPM axis 800-9600), RPM < 5000.
  * RAM 0xffffa424 engine_running_timer (uint16): Engine-running time counter (100 Hz); gates knock enable (>= 0x177) and the attack condition (>= 0xfa).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00013826; body bytes: 100; decompiled */
 
@@ -23321,12 +23336,12 @@ void knock_retard_slow_recovery(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * knock_retard_clamp [high]: Clamps param to [tbl 0x6af68 (alt 0x6af7c when DAT_ffffb534==1 && 4<DAT_ffffbc3d), tbl 0x6af90](RPM) via rx8_clamp_float and returns it (SH fr0). Export bug fixed by review_knock_loop_labels_apply.py: was void with discarded clamp result.
  */
 /* ROM address: 0x00013bd2; body bytes: 86; decompiled */
 
@@ -24126,12 +24141,12 @@ void candidate_idle_maf_airflow_term(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_drive_flags [medium]: Vehicle-speed thresholds 3/4 km/h -> 0xffffa827; 0xffffa9bc < 1.0/1.5 -> 0xffffa821; sets 0xffffa7b6 when a821==1 && a820>1; snapshots bd69/b53a/b534. Called from 0x167c0 via pool 0x168a4.
  */
 /* ROM address: 0x00014944; body bytes: 516; decompiled */
 
@@ -24285,13 +24300,13 @@ undefined2 * candidate_idle_mode_timers(void)
  * Descriptor 0x00069334: Table 2D - 22 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069348: Table 2D - 23 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_stall_flags [medium]: Vehicle speed 9/10 km/h -> 0xffffa82b; engine-stopped latch 0xffffa41c or (a7a8<0 && mode flags) forces 0xffffa7a8=0; selects among 2-D tables 0x692d0-0x69348. Called from 0x167c0 via pool 0x168b0.
  * RAM 0xffffa838 idle_air_calc_total (float): Written by 0x15a9a: a838 = min(a898 * a8c0 * a848, a83c) where a898 = baro comp (0x16358, tbl 0x6a814), a8c0 = IAT comp (0x16720, tbl 0x6a830), a83c from tbl 0x694b8(rpm - a7ac); then clamped into 0xffffb2a4 by 0x216f8 (reads a838 via pool 0x21740 at 0x21706).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00014d10; body bytes: 456; decompiled */
 
@@ -24436,15 +24451,15 @@ uint candidate_idle_trim_ramp(void)
  * Descriptor 0x000693fc: Idle Target H (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069410: Idle Target - Vehicle Moving - Automatic Transmission Related 1 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_target_rpm_calculate [high]: Idle target RPM calculation inside idle task body ref_updateIdleControl__ 0x167c0 (jsr via pool 0x168ac at 0x167fa; 0x167c0 called from task[10] body 0x11744). Battery-voltage filter 0xffffa7c8 (factor 0.03125, gates 13.016/12.0 V), engine-running timers 0xffffa804/a806/a808/a818/a81a, mode selects 0xffffb534/b53c/b5b3/bd69/bdb8 -> helpers 0x15818 (open-loop ramp, floor 500.0, tbl 0x69384) and 0x15934 (cranking vs running, tbl 0x693c0); target from 2-D tbl descriptors 0x69370 (Idle Target - Base), 0x693d4 (F), 0x693e8 (G), 0x693fc (H), 0x69410 (vehicle moving, AT) indexed by coolant 0xffffa990 / vehicle speed 0xffffbbb4 (descriptor bytes verified, type 8); hard floors 500.0 and 790-840 rpm; max() chain -> 0xffffa7b0; filter factor tbl 0x6935c (n=11 type 8); first-order filter -> output 0xffffa7f4; converted by 0x5ca94.
  * RAM 0xffffa7f4 idle_target_rpm (float): Filtered idle target RPM output of 0x1506c (first-order filter with factor from tbl 0x6935c); converted to output by 0x5ca94.
  * RAM 0xffffb5b3 high_load_flag (uint8): Set by 0x264f0 when filtered 0xffffb5e0 >= 40.0 (clears below 30.0); 0xffffb5a4 = first_order_filter(b5e0, b5a4, 0.035335) in 0x2633e; 0xffffb5a4/0xffffb5a0 ratio appears in the alternator domain (0x2ce18); selects an idle-target table path in 0x1506c.
  * RAM 0xffffb53c at_drive_range_engaged (uint8): Select flag in 0x1506c (MT 790 rpm floor path); producer FUN_00024b8c (=1 when 0xffffb540||0xffffb53e; pools 0x24c5a @0x24bdc / 0x24e54 @0x24e36; cleared when 0xffffb534==1); b540/b53e derive from CAN 0x231 gear byte 0xffffbaec (0xffffbae5>>4, ref_can231TxPack 0x290c6), vss 0xffffbbb4, rpm 0xffffb548.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001506c; body bytes: 1530; decompiled_with_warnings */
 
@@ -24848,12 +24863,12 @@ void FUN_00015a90(void)
  * Descriptor 0x000694a4: Table 2D - 39 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x000694b8: Table 2D - 40 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_air_feedback_calc [high]: Idle air feedback: compares engine_speed_rpm 0xffffb548 with quantized target 0xffffa7ac -> flag 0xffffa844 (312.0 rpm floor at pool 0x6df44), air-per-rev terms 0xffffa834*a7ac/rpm, filter 0x23b0, tables 0x6947c/0x69490/0x694a4 (rpm axis) and 0x69440/0x69454 (coolant axis) with descriptors parsed from ROM (n=9/5/6/9/9, type 4); pool floats 0x6df48=29.1969, 0x6df54=0.5, 0x6df58=0.892, 0x6df5c=0.15, 0x6df60=2.72, shared 0x7a088=0.6345; writes 0xffffa850/a854/a864/a868/a860/a84c/a848/a83c/a838. Called from 0x167c0 via pool 0x168ec (jsr at 0x1685a).
  */
 /* ROM address: 0x00015a9a; body bytes: 938; decompiled_with_warnings */
 
@@ -25057,12 +25072,12 @@ void candidate_idle_trim_load(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_learn_condition [medium]: 0xffffa890 learn flag from counters 0xffffa892/a894 (reload 0x138) and gates (a7b4, coolant >= 80, IAT >= 60, |a7ac - 0xffffb550| > 37, a8cc tolerance band, b2f0 > 35, a838 vs a840/a83c, a7b7, 0xffffcc91). Called from 0x167c0 via pool 0x168c4.
  */
 /* ROM address: 0x00015ffc; body bytes: 302; decompiled */
 
@@ -25281,12 +25296,12 @@ void FUN_00016428(void)
  * Descriptor 0x00069508: Table 2D - 44 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006951c: Table 2D - 45 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ac_request_calc [medium]: 0xffffa8bd/a8be set when 0xffffa7ac + 3.0 <= rpm; 0xffffa8b8 = tbl 0x694cc(coolant) if 0xffffce32 else 0; decay steps from ROM 0x6e0ac/0x6e0b0 (secondary-air-pump-dependent); 90 C coolant / 40 C IAT gates. Called from 0x167c0 via pool 0x168b8.
  */
 /* ROM address: 0x00016432; body bytes: 344; decompiled */
 
@@ -25382,12 +25397,12 @@ void candidate_idle_ac_clutch_gate(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_stall_detect [medium]: 0xffffa8a8 = 1 when a8bc==1 && 0xffffa7ac <= rpm && (a8bd || a8be) && engine running && a8a4 >= 0.01 && within tolerance band (0x3727c5ac); else 0. Called from 0x167c0 via pool 0x168c0.
  */
 /* ROM address: 0x00016672; body bytes: 120; decompiled */
 
@@ -26939,14 +26954,14 @@ void FUN_000180c8(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006957c: Igntion Leading Timing - DSC Mode A - Map 4 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_timing_derate_select [high]: DSC torque-request derate on leading timing: if DSC mode bc83==4 -> a91c = bc94 (DSC Mode A base, tbl 0x6a7a4; Map4 tbl 0x6957c also referenced); if bc90 in band -> -20.0; else blends by a930/a92c. Leading rotor only (no trailing reader found).
  * RAM 0xffffa91c dsc_timing_derate_leading (float): mov.w pool 0x18284 (sign-extends to 0xffffa91c) in 0x1815c dsc_timing_derate_select; DSC leading-timing derate value selected in 0x1815c.
  * RAM 0xffffbbd8 engine_max_torque_allowed (float): Max engine torque allowed for DSC, computed by 0x2b3b8 (clamp(..., 0, 512)); consumed by dsc_timing_derate_select 0x1815c (pool 0x1827c at 0x18188) and 0x17f20.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001815c; body bytes: 390; decompiled */
 
@@ -27710,25 +27725,29 @@ undefined2 * FUN_00018ee0(void)
 void FUN_00018f44(void)
 
 {
-  FUN_00018f60();
-  DAT_ffffa9a0 = DAT_ffffa99c;
+  pedal_volts_clamp_latch();
+  DAT_ffffa9a0 = pedal_1_volts_clamped25_ffffa99c;
   FUN_00018fa4();
   DAT_ffffa9a8 = DAT_ffffa9a4;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_volts_clamp_latch [high]: a9c4 = DAT_ffff9eec (pool 0x19058=0xffff9eec, 0x1904a=0x0000a9c4), a9c8 = 0xffffa112, a99c = rx8_min_float(25.0f @0x6eed0 via pool 0x19068, a108 @0xffffa108 pool 0x19064) via 0x23f4 (pool 0x1906c); called from 0x199d4.
+ * RAM 0xffffa99c pedal_1_volts_clamped25 (float): a99c = rx8_min_float(25.0f, a108) in 0x18f60 (pools 0x19064=0xffffa108, 0x19068=0x6eed0, 0x1906c=0x23f4, store 0x19042=0xa99c).
+ */
 /* ROM address: 0x00018f60; body bytes: 38; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00019b5c (38 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00018f60(void)
+void pedal_volts_clamp_latch(void)
 
 {
-  inferred_pedal_volts_ffffa9c4_ffffa9c4 = DAT_ffff9eec;
+  inferred_pedal_volts_ffffa9c4_ffffa9c4 = adc_an4_pedal_raw_ffff9eec;
   DAT_ffffa9c8 = DAT_ffffa112;
-  DAT_ffffa99c = rx8_min_float(25.0,DAT_ffffa108);
+  pedal_1_volts_clamped25_ffffa99c = rx8_min_float(25.0,pedal_1_scaled_volts_ffffa108);
   return;
 }
 
@@ -27741,7 +27760,7 @@ void FUN_00018f60(void)
 void ref_filterSomething(void)
 
 {
-  DAT_ffffa9a0 = rx8_first_order_filter(DAT_ffffa99c,DAT_ffffa9a0,0.25,1e-05);
+  DAT_ffffa9a0 = rx8_first_order_filter(pedal_1_volts_clamped25_ffffa99c,DAT_ffffa9a0,0.25,1e-05);
   return;
 }
 
@@ -27754,7 +27773,7 @@ void ref_filterSomething(void)
 void FUN_00018fa4(void)
 
 {
-  inferred_pedal_volts_ffffa9c6_ffffa9c6 = DAT_ffff9eee;
+  inferred_pedal_volts_ffffa9c6_ffffa9c6 = adc_an5_pedal_raw_ffff9eee;
   DAT_ffffa9ca = DAT_ffffa114;
   DAT_ffffa9a4 = rx8_min_float(25.0,DAT_ffffa10c);
   return;
@@ -27803,15 +27822,15 @@ uint FUN_00018fe8(void)
   else if ((-0.5 <= fVar8) && (fVar8 < -0.3)) {
     DAT_ffffa9cc = '\x01';
   }
-  if ((40.0 <= throttle_position_1_percent_ffffa9b4) || ((DAT_ffffa9ce == 0 && (DAT_ffffa9de == '\x01')))) {
+  if ((40.0 <= accelerator_pedal_1_percent_ffffa9b4) || ((DAT_ffffa9ce == 0 && (DAT_ffffa9de == '\x01')))) {
     DAT_ffffa9cd = '\0';
   }
-  else if (5.0 <= throttle_position_1_percent_ffffa9b4) {
+  else if (5.0 <= accelerator_pedal_1_percent_ffffa9b4) {
     DAT_ffffa9cd = '\x01';
   }
   DAT_ffffa9de = DAT_ffffa9ce;
-  if ((((DAT_ffffa9ce == 1) && (DAT_ffffa9d8 == 0x177)) || (throttle_position_1_percent_ffffa9b4 < 0.0)) ||
-     (((5.0 <= throttle_position_1_percent_ffffa9b4 || (DAT_ffffcc9b == '\x01')) || (DAT_ffffcc9c == '\x01')))) {
+  if ((((DAT_ffffa9ce == 1) && (DAT_ffffa9d8 == 0x177)) || (accelerator_pedal_1_percent_ffffa9b4 < 0.0)) ||
+     (((5.0 <= accelerator_pedal_1_percent_ffffa9b4 || (DAT_ffffcc9b == '\x01')) || (DAT_ffffcc9c == '\x01')))) {
     DAT_ffffa9ce = 0;
   }
   else if ((DAT_ffffa9cc == '\x01') && (DAT_ffffa9cd == '\x01')) {
@@ -27826,38 +27845,38 @@ uint FUN_00018fe8(void)
     DAT_ffffa9d8 = 0;
   }
   if ((cVar2 == '\x01') || (cVar3 == '\x01')) {
-    ref_updateMemoryAtAddress_float_VAL_ADDR(&DAT_ffff8068);
-    ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&DAT_ffff8070);
-    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,0);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(&learned_pedal_zero_1_ffff8068);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_2_ffff8070);
+    uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,0);
   }
   else {
     uVar4 = (uint)DAT_ffffa9ce;
     if (uVar4 == 1) {
-      fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8068);
-      fVar7 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8070);
+      fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_1_ffff8068);
+      fVar7 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_2_ffff8070);
       if ((DAT_ffffa9de == 0) && (0x176 < DAT_ffffa9da)) {
         fVar8 = rx8_min_float(10.856,fVar6 + 0.01);
-        ref_updateMemoryAtAddress_float_VAL_ADDR(fVar8,&DAT_ffff8068);
+        ref_updateMemoryAtAddress_float_VAL_ADDR(fVar8,&learned_pedal_zero_1_ffff8068);
         fVar8 = rx8_min_float(10.856,fVar7 + 0.01);
-        uVar4 = ref_updateMemoryAtAddress_float_VAL_ADDR(fVar8,&DAT_ffff8070);
+        uVar4 = ref_updateMemoryAtAddress_float_VAL_ADDR(fVar8,&learned_pedal_zero_2_ffff8070);
       }
       else {
         bVar1 = fVar8 <= fVar6;
         if (bVar1) {
           fVar6 = rx8_max_float(fVar8,fVar6 - 0.005);
           fVar6 = rx8_max_float(9.626,fVar6);
-          ref_updateMemoryAtAddress_float_VAL_ADDR(fVar6,&DAT_ffff8068);
+          ref_updateMemoryAtAddress_float_VAL_ADDR(fVar6,&learned_pedal_zero_1_ffff8068);
         }
         uVar4 = (uint)bVar1;
         if (snapshot_DAT_ffffa9a8 <= fVar7) {
           fVar7 = rx8_max_float(snapshot_DAT_ffffa9a8,fVar7 - 0.005);
           fVar7 = rx8_max_float(9.626,fVar7);
-          ref_updateMemoryAtAddress_float_VAL_ADDR(fVar7,&DAT_ffff8070);
+          ref_updateMemoryAtAddress_float_VAL_ADDR(fVar7,&learned_pedal_zero_2_ffff8070);
           uVar4 = 1;
         }
         if ((((uVar4 == 1) && (fVar6 - fVar8 < 0.032)) && (fVar7 - snapshot_DAT_ffffa9a8 < 0.032)) &&
            ((fVar5 <= 0.3 && (uVar4 = 0x19, 0x18 < DAT_ffffa9dc)))) {
-          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,1);
+          uVar4 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,1);
         }
       }
     }
@@ -27880,24 +27899,28 @@ uint FUN_00018fe8(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_learned_zero_subtract [high]: a9ac = rx8_max_float(0.0, a99c - readValue_float(0xffff8068)) and a9b0 likewise with 0xffff8070 (pools 0x19386=0x8068, 0x19388=0x8070/0x8078, 0x1938c=0xa99c/0xa9a4, helpers 0x193bc=0x3dc22 ref_readValue_float, 0x19394=0x23e4 rx8_max_float, outputs 0x19390=0xa9ac/0xa9b0). Learned default 0x412db22d=10.856 written by 0x18fe8.
+ * RAM 0xffffa9ac pedal_1_volts_zeroed (float): a9ac = max(0, a99c - learned zero 0xffff8068) in 0x1933a (pools 0x19386=0x8068, 0x1938c=0xa99c, 0x19394=0x23e4, store 0x19390=0xa9ac).
+ */
 /* ROM address: 0x0001933a; body bytes: 76; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00019f36 (76 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0001933a(void)
+void pedal_learned_zero_subtract(void)
 
 {
   float fVar1;
   float fVar2;
   float arg0;
   
-  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8068);
-  fVar1 = DAT_ffffa99c - fVar1;
-  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8070);
+  fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_1_ffff8068);
+  fVar1 = pedal_1_volts_clamped25_ffffa99c - fVar1;
+  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_2_ffff8070);
   arg0 = 0.0;
   fVar2 = DAT_ffffa9a4 - fVar2;
-  DAT_ffffa9ac = rx8_max_float(0.0,fVar1);
+  pedal_1_volts_zeroed_ffffa9ac = rx8_max_float(0.0,fVar1);
   DAT_ffffa9b0 = rx8_max_float(arg0,fVar2);
   return;
 }
@@ -27927,13 +27950,13 @@ undefined4 throttle_percent_and_demand_calc(void)
   float arg2;
   
   arg2 = 100.0;
-  fVar2 = (float)rx8_divide_with_zero_fallback(DAT_ffffa9ac,0x414b3333);
+  fVar2 = (float)rx8_divide_with_zero_fallback(pedal_1_volts_zeroed_ffffa9ac,0x414b3333);
   fVar3 = 0.0;
-  throttle_position_1_percent_ffffa9b4 = rx8_clamp_float(fVar2 * arg2 - 0.0,0.0,arg2);
+  accelerator_pedal_1_percent_ffffa9b4 = rx8_clamp_float(fVar2 * arg2 - 0.0,0.0,arg2);
   fVar2 = (float)rx8_divide_with_zero_fallback(DAT_ffffa9b0,0x414b3333);
-  throttle_position_2_percent_ffffa9b8 = rx8_clamp_float(fVar2 * arg2 - 0.0,fVar3,arg2);
-  if (throttle_position_1_percent_ffffa9b4 < 50.0) {
-    if (throttle_position_1_percent_ffffa9b4 < 45.0) {
+  accelerator_pedal_2_percent_ffffa9b8 = rx8_clamp_float(fVar2 * arg2 - 0.0,fVar3,arg2);
+  if (accelerator_pedal_1_percent_ffffa9b4 < 50.0) {
+    if (accelerator_pedal_1_percent_ffffa9b4 < 45.0) {
       DAT_ffffa9df = 0;
     }
   }
@@ -27946,16 +27969,16 @@ undefined4 throttle_percent_and_demand_calc(void)
       uVar1 = 1;
     }
     else {
-      inferred_ram_a9bc_ffffa9bc_ffffa9bc = rx8_min_float(13.5,throttle_position_2_percent_ffffa9b8);
+      inferred_ram_a9bc_ffffa9bc_ffffa9bc = rx8_min_float(13.5,accelerator_pedal_2_percent_ffffa9b8);
       uVar1 = extraout_r0;
     }
   }
   else if (DAT_ffffcc9c == '\x01') {
-    inferred_ram_a9bc_ffffa9bc_ffffa9bc = rx8_min_float(13.5,throttle_position_1_percent_ffffa9b4);
+    inferred_ram_a9bc_ffffa9bc_ffffa9bc = rx8_min_float(13.5,accelerator_pedal_1_percent_ffffa9b4);
     uVar1 = extraout_r0_00;
   }
   else {
-    fVar2 = rx8_max_float(throttle_position_1_percent_ffffa9b4,cruise_set_speed_ffffbcf8);
+    fVar2 = rx8_max_float(accelerator_pedal_1_percent_ffffa9b4,cruise_set_speed_ffffbcf8);
     fVar2 = rx8_min_float(fVar2,DAT_ffffc028);
     if (DAT_ffffa914 == '\x01') {
       fVar3 = 13.5;
@@ -27978,9 +28001,9 @@ undefined4 throttle_percent_and_demand_calc(void)
 void FUN_00019554(void)
 
 {
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&DAT_ffff8068);
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&DAT_ffff8070);
-  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff8078,0);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_1_ffff8068);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0x412db22d,&learned_pedal_zero_2_ffff8070);
+  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&learned_pedal_zero_valid_ffff8078,0);
   return;
 }
 
@@ -27990,9 +28013,9 @@ void FUN_00019554(void)
 void FUN_00019574(void)
 
 {
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8068);
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8070);
-  ref_validateAddressCopy_8bit_ADDRESS__(&DAT_ffff8078);
+  ref_validateAddressCopy_float_ADDRESS__(&learned_pedal_zero_1_ffff8068);
+  ref_validateAddressCopy_float_ADDRESS__(&learned_pedal_zero_2_ffff8070);
+  ref_validateAddressCopy_8bit_ADDRESS__(&learned_pedal_zero_valid_ffff8078);
   return;
 }
 
@@ -28226,9 +28249,12 @@ void FUN_00019950(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_tp_sensor_batch [high]: Sensor/percent batch called from 0x1150e (pool 0x116b8=0x000199d4): runs 0x18f60/0x18fa4/0x18fe8/0x1933a/0x193c4 (pedal AN4/AN5 -> volts -> percent -> demand), 0x1b08e/0x1b14c/0x1b940 (plate AN18/AN19 -> TP volts -> plate position), learning/plausibility 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x1bcae (callgraph.tsv rows for caller 000199d4).
+ */
 /* ROM address: 0x000199d4; body bytes: 204; decompiled */
 
-void FUN_000199d4(void)
+void pedal_tp_sensor_batch(void)
 
 {
   undefined4 uVar1;
@@ -28245,17 +28271,17 @@ void FUN_000199d4(void)
   ref_calculateEngineRunningTimer2();
   ref_calculateEngineRunningTimer();
   FUN_0001a394();
-  FUN_00018f60();
+  pedal_volts_clamp_latch();
   ref_filterSomething();
   FUN_00018fa4();
   ref_filterSomething2();
   FUN_00018fe8();
-  FUN_0001933a();
+  pedal_learned_zero_subtract();
   throttle_percent_and_demand_calc();
   ref_getDriverOffThrottleTimer__();
   ref_getDriverOffThrottleInstatanious();
-  FUN_0001b08e();
-  FUN_0001b14c();
+  plate_tp1_volts_latch();
+  plate_tp2_volts_latch();
   FUN_0001b166();
   FUN_0001b3f2();
   FUN_0001b6fc();
@@ -28532,10 +28558,6 @@ void maf_filtered_update(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * maf_voltage_and_fault_counters [high]: aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea) (MAF voltage); aa35/aa36 saturating fault counters (raw >= 0xf852 / < 0x7ae); when faulted: a9e4 = aa2c, a9e8 = 9f78 (MAF scaled latched). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa2c maf_voltage (float): aa2c = rx8_decode_u16_affine(0x38a00000, 0, raw 9eea): MAF voltage; latched into a9e4 on fault.
@@ -28543,6 +28565,10 @@ void maf_filtered_update(void)
  * RAM 0xffffaa36 maf_low_fault_counter (uint8): Saturating counter incremented while raw < 0x7ae; cleared otherwise.
  * RAM 0xffffa9e4 maf_voltage_latched (float): a9e4 = aa2c when MAF faulted (>2 on either counter or raw in 0x7ae..0xf852 window).
  * RAM 0xffffa9e8 maf_scaled_latched (float): a9e8 = 9f78 (maf_scaled) on fault; becomes mass_air_flow a9ec via 0x19f40.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00019f4e; body bytes: 164; decompiled */
 
@@ -28774,10 +28800,6 @@ undefined4 FUN_0001a394(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * maf_per_rotation_calc [high]: aa54 = tbl 0x697b4(rpm) filter coefficient; aa48 = filter(maf a9ec, aa48, aa54); aa3c = min(maf*60/rpm, 5.0) (air per rotation, 60 = 2 rotors x 30?); aa38 = filtered maf*60/rpm, 0.1560058 when rpm ~ 0. | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffaa54 maf_filter_coeff (float): aa54 = lookup_2d tbl 0x697b4(rpm); filter coefficient for MAF per-rotation calc.
@@ -28785,6 +28807,10 @@ undefined4 FUN_0001a394(void)
  * RAM 0xffffaa3c maf_per_rotation (float): aa3c = min(maf*60/rpm, 5.0) (maf*0x42700000/rpm).
  * RAM 0xffffaa38 maf_per_rotation_filtered (float): aa38 = filtered maf*60/rpm; 0.1560058 when rpm ~ 0.
  * RAM 0xffffaa4c maf_filter_mode (uint8): aa4c selects filtered vs instantaneous MAF for the per-rotation calc.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001a418; body bytes: 174; decompiled */
 
@@ -29443,10 +29469,10 @@ void FUN_0001afb0(void)
   DAT_ffffadcd = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   DAT_ffffadce = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   DAT_ffffad58 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-  DAT_ffffad78 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
-  DAT_ffffad60 = 0;
-  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = DAT_ffff9f08;
-  inferred_pedal_volts_ffffad5e_ffffad5e = DAT_ffff9f0a;
+  DAT_ffffad78 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
+  tp_plausibility_fault_a_ffffad60 = 0;
+  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = adc_an18_plate_tp1_raw_ffff9f08;
+  inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e = adc_an19_plate_tp2_raw_ffff9f0a;
   return;
 }
 
@@ -29460,7 +29486,7 @@ void FUN_0001b03e(void)
 
 {
   ref_validateAddressCopy_float_ADDRESS__(&inferred_ram_807c_ffff807c_ffff807c);
-  ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8084);
+  ref_validateAddressCopy_float_ADDRESS__(&learned_plate_zero_2_ffff8084);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff808c);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff8094);
   ref_validateAddressCopy_float_ADDRESS__(&DAT_ffff80a4);
@@ -29474,39 +29500,49 @@ void FUN_0001b03e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_tp1_volts_latch [high]: ad5c = DAT_ffff9f08 (AN18 raw; pools 0x1b12c=0xffff9f08, 0x1b0e6=0xad5c), ad30/ad54 from 0xffffa218/0xffffa222 (pools 0x1b138=0xffffa218, 0x1b130=0xffffa222, 0x1b0f0=0xad30/0xad54); filter 0x23b0 via pool 0x1b148. Called from 0x199d4.
+ * RAM 0xffff9f08 adc_an18_plate_tp1_raw (uint16): ADDR18H latched here by the 0x6884 sweep; read by 0x1b08e (pool 0x1b12c=0xffff9f08) into ad5c (pool 0x1b0e6) — throttle PLATE TP1 volts (PID 0x0011 via 0x5553e, PID 0x1154 raw). Harness: throttle body TP signal 1J (B1-19 A).
+ * RAM 0xffffa218 plate_tp1_volts (float): TP1 volts: written by 0xb398 (indexed float store at 0xffffa218+4i) = base (0x6f3ec, 0.0f) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940.
+ */
 /* ROM address: 0x0001b08e; body bytes: 70; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001bb3e (70 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0001b08e(void)
+void plate_tp1_volts_latch(void)
 
 {
-  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = DAT_ffff9f08;
+  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = adc_an18_plate_tp1_raw_ffff9f08;
   DAT_ffffad84 = DAT_ffffa222;
-  DAT_ffffad30 = DAT_ffffa218;
+  DAT_ffffad30 = plate_tp1_volts_ffffa218;
   if (DAT_ffffadd2 == '\0') {
-    DAT_ffffad54 = DAT_ffffa218;
+    DAT_ffffad54 = plate_tp1_volts_ffffa218;
     DAT_ffffadd2 = '\x01';
   }
   else {
-    DAT_ffffad54 = rx8_first_order_filter(DAT_ffffa218,DAT_ffffad54,0.25,1e-05);
+    DAT_ffffad54 = rx8_first_order_filter(plate_tp1_volts_ffffa218,DAT_ffffad54,0.25,1e-05);
   }
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_tp2_volts_latch [high]: ad5e = DAT_ffff9f0a (AN19 raw; pools 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e/0xad34), ad34 from 0xffffa21c/0xffffa224 (pools 0x1b1dc=0xffffa21c, 0x1b1d4=0xffffa224). Called from 0x199d4.
+ * RAM 0xffff9f0a adc_an19_plate_tp2_raw (uint16): ADDR19H latched here by the 0x6884 sweep; read by 0x1b14c (pool 0x1b1d0=0xffff9f0a) into ad5e (pool 0x1b1c0) — throttle PLATE TP2 volts. Harness: TP signal 1M (B1-19 D).
+ * RAM 0xffffa21c plate_tp2_volts (float): TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f, base 0x6f3f0=-31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940.
+ */
 /* ROM address: 0x0001b14c; body bytes: 26; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001bbfc (26 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0001b14c(void)
+void plate_tp2_volts_latch(void)
 
 {
-  inferred_pedal_volts_ffffad5e_ffffad5e = DAT_ffff9f0a;
+  inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e = adc_an19_plate_tp2_raw_ffff9f0a;
   DAT_ffffad86 = DAT_ffffa224;
-  DAT_ffffad34 = DAT_ffffa21c;
+  DAT_ffffad34 = plate_tp2_volts_ffffa21c;
   return;
 }
 
@@ -29522,7 +29558,7 @@ uint FUN_0001b166(void)
 {
   short sVar1;
   char cVar2;
-  byte snapshot_DAT_ffffccbc;
+  byte snapshot_throttle_servo_mode_ffffccbc;
   char cVar6;
   char cVar7;
   ushort uVar5;
@@ -29534,9 +29570,9 @@ uint FUN_0001b166(void)
   float fVar11;
   undefined4 uVar12;
   
-  snapshot_DAT_ffffccbc = DAT_ffffccbc;
-  cVar2 = DAT_ffffcc99;
-  cVar7 = DAT_ffffcc98;
+  snapshot_throttle_servo_mode_ffffccbc = throttle_servo_mode_ffffccbc;
+  cVar2 = limp_home_request_ffffcc99;
+  cVar7 = plate_tp2_source_select_ffffcc98;
   sVar1 = DAT_ffffad88;
   fVar11 = inferred_ram_b410_ffffb410_ffffb410;
   if (DAT_ffffadd1 == '\0') {
@@ -29546,7 +29582,7 @@ uint FUN_0001b166(void)
     DAT_ffffad9c = DAT_ffffb4b4;
     DAT_ffffadd1 = '\x01';
   }
-  else if (((DAT_ffffcc98 == '\0') && (DAT_ffffcc99 == '\0')) &&
+  else if (((plate_tp2_source_select_ffffcc98 == '\0') && (limp_home_request_ffffcc99 == '\0')) &&
           (cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar6 == '\0')) {
     fVar8 = 1e-05;
     DAT_ffffad70 = rx8_first_order_filter(DAT_ffffb4b0,DAT_ffffad70,0.5,1e-05);
@@ -29556,7 +29592,7 @@ uint FUN_0001b166(void)
   fVar9 = rx8_absolute_difference(DAT_ffffad74,DAT_ffffad9c);
   if (((((-80.0 < DAT_ffffb4bc) || (cVar7 != '\0')) ||
        ((cVar2 != '\0' || ((DAT_ffffb4f9 != '\0' || (0.244 <= fVar8)))))) || (0.244 <= fVar9)) ||
-     ((((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')) || (snapshot_DAT_ffffccbc != 0)) ||
+     ((((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')) || (snapshot_throttle_servo_mode_ffffccbc != 0)) ||
       ((cVar7 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0), cVar7 != '\0' || (5.0 <= fVar11))))
      )) {
     uVar5 = 0;
@@ -29564,7 +29600,7 @@ uint FUN_0001b166(void)
   else {
     uVar5 = rx8_add_u16_saturate((int)sVar1,1);
   }
-  uVar4 = (uint)snapshot_DAT_ffffccbc;
+  uVar4 = (uint)snapshot_throttle_servo_mode_ffffccbc;
   uVar12 = 0;
   if (uVar4 == 1) {
     ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff80ac);
@@ -29572,7 +29608,7 @@ uint FUN_0001b166(void)
   }
   else if (0xf < uVar5) {
     fVar9 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-    uVar4 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
+    uVar4 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
     fVar8 = extraout_fr0;
     if (fVar11 + fVar9 < DAT_ffffad70 + 0.061) {
       fVar10 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar12,&DAT_ffff80ac);
@@ -29638,7 +29674,7 @@ void FUN_0001b3f2(void)
     uVar2 = 0;
   }
   DAT_ffffadd0 = DAT_ffffccba;
-  if (((DAT_ffffcc98 == '\x01') || (DAT_ffffcc99 == '\x01')) ||
+  if (((plate_tp2_source_select_ffffcc98 == '\x01') || (limp_home_request_ffffcc99 == '\x01')) ||
      (cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar3 == '\x01')) {
     uVar1 = 0;
     uVar2 = 0;
@@ -29660,7 +29696,7 @@ void FUN_0001b3f2(void)
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a0,0);
   if (cVar4 == '\0') {
     ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-    ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&DAT_ffff8084);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&learned_plate_zero_2_ffff8084);
   }
   else if ((((uVar1 & 0xff) == 1) || ((uVar2 & 0xff) == 1)) && (DAT_ffffcc5e == '\x01')) {
     uVar7 = 0;
@@ -29669,7 +29705,7 @@ void FUN_0001b3f2(void)
     fVar6 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(uVar7,&DAT_ffff80b4);
     fVar6 = DAT_ffffad78 + fVar6;
     ref_updateMemoryAtAddress_float_VAL_ADDR(fVar5,&inferred_ram_807c_ffff807c_ffff807c);
-    ref_updateMemoryAtAddress_float_VAL_ADDR(fVar6,&DAT_ffff8084);
+    ref_updateMemoryAtAddress_float_VAL_ADDR(fVar6,&learned_plate_zero_2_ffff8084);
   }
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff809c,uVar1);
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff809e,uVar2);
@@ -29708,10 +29744,10 @@ void FUN_0001b6fc(void)
   snapshot_DAT_ffffad70 = DAT_ffffad70;
   fVar5 = rx8_absolute_difference(DAT_ffffad70,DAT_ffffada0);
   fVar6 = rx8_absolute_difference(arg0,DAT_ffffada4);
-  if ((((((DAT_ffffb4bc < 80.0) || (DAT_ffffcc98 != '\0')) || (DAT_ffffcc99 != '\0')) ||
+  if ((((((DAT_ffffb4bc < 80.0) || (plate_tp2_source_select_ffffcc98 != '\0')) || (limp_home_request_ffffcc99 != '\0')) ||
        (((DAT_ffffb4f9 != '\0' || (0.244 <= fVar5)) ||
         ((0.244 <= fVar6 || ((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')))))))) ||
-      (DAT_ffffccbc != '\0')) ||
+      (throttle_servo_mode_ffffccbc != '\0')) ||
      ((((cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0), cVar3 != '\0' ||
         (inferred_ram_b410_ffffb410_ffffb410 <= 90.0)) || (DAT_ffffad30 <= 5.0)) || (candidate_learned_pedal_value_ffffb40c <= fVar7)))) {
     uVar2 = 0;
@@ -29758,14 +29794,14 @@ void ref_calculateThrottlePedalPercentForSomethingElse_(void)
   
   fVar1 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   fVar1 = DAT_ffffad30 - fVar1;
-  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
+  fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
   arg0 = 0.0;
   fVar2 = DAT_ffffad34 - fVar2;
   DAT_ffffad38 = rx8_max_float(0.0,fVar1);
   DAT_ffffad3c = rx8_max_float(arg0,fVar2);
-  if (DAT_ffffcc98 == '\x01') {
+  if (plate_tp2_source_select_ffffcc98 == '\x01') {
     inferred_throttle_position_ffffad44 = DAT_ffffad3c;
-    if (DAT_ffffcc99 == '\x01') {
+    if (limp_home_request_ffffcc99 == '\x01') {
       inferred_throttle_position_ffffad44 = 20.0;
     }
   }
@@ -29834,20 +29870,20 @@ LAB_0001bad4:
       DAT_ffffad8f = '\x01';
     }
   }
-  if ((((engine_running_flag_ffffaa68 != '\0') && (DAT_ffffcc98 != '\x01')) &&
-      ((DAT_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
+  if ((((engine_running_flag_ffffaa68 != '\0') && (plate_tp2_source_select_ffffcc98 != '\x01')) &&
+      ((limp_home_request_ffffcc99 != '\x01' && ((DAT_ffffb4f7 != '\x01' && (DAT_ffffb4fb != '\x01')))))) &&
      (DAT_ffffb4fd != '\x01')) {
     cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0);
     if (cVar3 != '\x01') {
-      DAT_ffffad61 = '\0';
+      tp_plausibility_fault_b_ffffad61 = '\0';
       goto LAB_0001bc08;
     }
   }
-  DAT_ffffad61 = '\x01';
+  tp_plausibility_fault_b_ffffad61 = '\x01';
   uVar2 = 1;
 LAB_0001bc08:
-  if (((DAT_ffffad61 == '\0') && (7 < snapshot_DAT_ffffccb4)) && ((uVar2 & 0xff) == 0)) {
-    DAT_ffffad60 = 1;
+  if (((tp_plausibility_fault_b_ffffad61 == '\0') && (7 < snapshot_DAT_ffffccb4)) && ((uVar2 & 0xff) == 0)) {
+    tp_plausibility_fault_a_ffffad60 = 1;
     uVar2 = 1;
     if ((DAT_ffffad8f == '\0') && (3 < DAT_ffffad8c)) {
       DAT_ffffad63 = 1;
@@ -29901,7 +29937,7 @@ void FUN_0001bd44(void)
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff809e,0);
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff80a0,0);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-  ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&DAT_ffff8084);
+  ref_updateMemoryAtAddress_float_VAL_ADDR(0x41700000,&learned_plate_zero_2_ffff8084);
   uVar1 = 0;
   ref_updateMemoryAtAddress_float_VAL_ADDR(0,&DAT_ffff80ac);
   ref_updateMemoryAtAddress_float_VAL_ADDR(uVar1,&DAT_ffff80b4);
@@ -29927,7 +29963,7 @@ void FUN_0001bd94(void)
 void FUN_0001bd9e(void)
 
 {
-  DAT_ffffad61 = 1;
+  tp_plausibility_fault_b_ffffad61 = 1;
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff80a2,1);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41a00000,&DAT_ffff8094);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41a00000,&DAT_ffff80a4);
@@ -32021,10 +32057,6 @@ void set_open_loop_flag(void)
  * Descriptor 0x00069f28: Open Loop Target - Throttle Tip in - Coolant Temp Implausible A (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069f44: Open Loop Target - Coolant Temp Implausible - Gear 1-4 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_fueling_targets [high]: When b12c==1: open-loop base/tip-in/target/rich-limit lookups (0x69cac/0x69cc0, 0x69e80/0x69e9c, 0x69cd4/0x69d10, safe-mode variants via b12d) -> b120; zeroes b120 in closed loop.
  * RAM 0xffffcd60 safe_mode (uint8): 0 = safe mode active: selects the knock threshold table pair in 0x336c4 (0x6b270/0x6b288 vs alts) and is checked in 0x200c6.
@@ -32039,6 +32071,10 @@ void set_open_loop_flag(void)
  * RAM 0xffffb138 ol_fuel_target_implausible (float): b138 = max(b174*b198, b19c); coolant-implausible OL target product.
  * RAM 0xffffb13c ol_temperature_correction_b (float): b13c = tbl 0x69d10 'Open Loop Temperature Correction #B'(coolant).
  * RAM 0xffffb150 ol_target_select (uint8): b150 != 0 (with coolant plausible b1d9) selects b120 = b130*b134; else blended implausible branch weighted by b11c.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001ee4a; body bytes: 458; decompiled */
 
@@ -32131,10 +32167,6 @@ LAB_0001ef92:
  * Descriptor 0x00069e2c: Table 2D - 322 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069e38: Table 2D - 323 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * open_loop_request_condition [high]: Sets b12a=1 when load/throttle exceed 'Closed Loop Fuelling Threshold' tables 0x69d24/0x69d38/0x69d4c/0x69d60/0x69d74 with hysteresis flags b1b6/b1b7, throttle threshold b15c and timers b148/b14e.
  * RAM 0xffffb15c cl_throttle_threshold (float): b15c = tbl 0x69d74 'Closed Loop Fuelling Threshold (Throttle Position)'(rpm); compared against throttle ad44 in open_loop_request_condition.
@@ -32146,6 +32178,10 @@ LAB_0001ef92:
  * RAM 0xffffb1b7 cl_load_b_exceeded (uint8): b1b7 = load >= b164 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b8 cl_load_c_exceeded (uint8): b1b8 = load >= b168 (hysteresis) in 0x1f0c4.
  * RAM 0xffffb1b1 coolant_above_78_flag (uint8): b1b1 = coolant >= 80 (clear below 78) in open_loop_request_condition.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001f0c4; body bytes: 1166; decompiled */
 
@@ -32353,10 +32389,6 @@ uint open_loop_request_condition(void)
  * Descriptor 0x00069dd8: Table 2D - 101 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069dec: Table 2D - 102 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb180 cl_load_threshold_2d_c (float): b180 = tbl 0x69db0(rpm); throttle/load band compares -> b1be/b1c2 in 0x1f6ae.
  * RAM 0xffffb184 cl_load_threshold_2d_d (float): b184 = tbl 0x69dc4(rpm).
@@ -32366,6 +32398,10 @@ uint open_loop_request_condition(void)
  * RAM 0xffffb1ca load_above_thresh_d (uint8): b1ca = load > b18c (hysteresis) in 0x1f6ae.
  * RAM 0xffffb1c7 rpm_above_5300_flag_b (uint8): b1c7 = rpm > 5500 (clear below 5300); second copy in 0x1f6ae.
  * RAM 0xffffb1cb rpm_above_9800_flag (uint8): b1cb = rpm > 10000 (clear below 9800) in 0x1f6ae.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001f6ae; body bytes: 892; decompiled */
 
@@ -32732,10 +32768,6 @@ uint FUN_0001fd48(void)
  * Descriptor 0x00069d88: Table 2D - 97 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x00069d9c: Table 2D - 98 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb178 cl_load_threshold_2d_a (float): b178 = tbl 0x69d88(rpm); load compare with hysteresis -> b1b9.
  * RAM 0xffffb17c cl_load_threshold_2d_b (float): b17c = tbl 0x69d9c(rpm) -> b1bb.
@@ -32747,6 +32779,10 @@ uint FUN_0001fd48(void)
  * RAM 0xffffb144 ol_condition_timer (uint16): b144 decremented when band condition (b154) holds; set to 0x493e (18750) when coolant < 97; b159 = timer-expired flag.
  * RAM 0xffffb154 ol_band_condition (uint8): b154 = b1b9 && !b1bb && b1ba && !b1bc (load/RPM band); feeds b144 countdown and blend_weight_update (0x200c6).
  * RAM 0xffffb159 ol_timer_expired (uint8): b159 = (b144 == 0 && b1d8); checked in 0x200c6 decay condition.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0001ff38; body bytes: 334; decompiled */
 
@@ -33429,7 +33465,7 @@ void fueling_main_task(void)
   FUN_00030228();
   FUN_0000eefa();
   FUN_00034364();
-  ref_getThrottlePositionFault__();
+  plate_range_high_fault();
   FUN_000341be();
   FUN_00034050();
   FUN_00034126();
@@ -33906,13 +33942,13 @@ uint ref_acCompressorTrailingTimingRetard(void)
  * Descriptor 0x0006a22c: Table 2D - 122 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a240: Table 2D - 123 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_air_output_clamp [high]: Final idle air output: 0xffffb2a4 = clamp(tbl 0x6a218(0xffffa838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)) via 0x2404 rx8_clamp_float; pool 0x21740-0x2175c (classified mixed_pool) words: 0x21744=0x2068 (lookup helper), 0x21748=0x6a218, 0x2174c=0x6a240, 0x21750=0xffffb2a8, 0x21754=0x6a22c, 0x21758=0xffffb2ac, 0x2175c=0x2404 (clamp); descriptors parsed (0x6a218 n=21 type 4 axis 0x732dc data 0x73330; 0x6a22c n=13 axis 0x73348 data 0x7337c; 0x6a240 n=13 axis 0x7338c data 0x733c0). 0xffffb2a4 is read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88) - the electronic-throttle torque chain, plus 0x1b940/0x233ec/0x29d4c/0x48558.
  * RAM 0xffffb2a4 idle_air_required (float): Clamped idle air output of 0x216f8: clamp(tbl 0x6a218(a838), tbl 0x6a240(coolant), tbl 0x6a22c(coolant)). Read by 0x21a80 ref_throttlePlatePosToTorqueOutput_ (pool 0x21b10 at 0x21a88 -> electronic throttle torque chain, terminals 1B/1C), also 0x1b940/0x233ec/0x29d4c/0x48558.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000216f8; body bytes: 70; decompiled */
 
@@ -34054,21 +34090,21 @@ uint ref_throttlePlateControl_Related(void)
   snapshot_inferred_desired_torque_ffffbbd4 = inferred_desired_torque_ffffbbd4;
   DAT_ffffb2e4 = lookup_3d_descriptor_scaled(inferred_desired_torque_ffffbbd4,engine_speed_rpm_ffffb548,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
   if (((DAT_ffffbbcb == '\x01') && (snapshot_inferred_desired_torque_ffffbbd4 <= DAT_ffffb2c0)) || (DAT_ffffa966 == '\x01')) {
-    DAT_ffffb2cf = 1;
+    dsc_torque_limit_active_ffffb2cf = 1;
     DAT_ffffb2b8 = DAT_ffffb2e4;
   }
   else {
-    DAT_ffffb2cf = 0;
+    dsc_torque_limit_active_ffffb2cf = 0;
     DAT_ffffb2b8 = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   uVar1 = (uint)DAT_ffffbbcc;
   if ((uVar1 == 1) && (DAT_ffffbbca == '\0')) {
     uVar1 = lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&tbl_dsc_mode_c_max_throttle_plate_opening_allowed_0006a150);
-    DAT_ffffb2d0 = 1;
+    dsc_mode_c_active_ffffb2d0 = 1;
     DAT_ffffb2bc = extraout_fr0;
   }
   else {
-    DAT_ffffb2d0 = 0;
+    dsc_mode_c_active_ffffb2d0 = 0;
     DAT_ffffb2bc = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   return uVar1;
@@ -34083,9 +34119,13 @@ uint ref_throttlePlateControl_Related(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_gear_mode_flags [high]: Sets b2cc/b2cd/b2ce by priority from the gear bytes 0xffffbc41/bc42/bc43 (written by 0x2c15a; 0xffffb534 from 0x24b44 = 1 on this bin); the map select in 0x228dc is b2cc->0x6a458, b2cd->0x6a474, b2ce->0x6a490, else 0x6a4ac; calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c.
+ * RAM 0xffffb2cc throttle_gear_mode_1_2 (uint8): Gear-mode flags b2cc/b2cd/b2ce set by 0x21970 from AT bytes bc41/bc42/bc43 + automatic_transmission b534; select the pedal-to-plate map (0x228dc) and the 0x21970 branch.
+ */
 /* ROM address: 0x00021970; body bytes: 202; decompiled */
 
-undefined4 * FUN_00021970(void)
+undefined4 * throttle_gear_mode_flags(void)
 
 {
   undefined4 *puVar1;
@@ -34094,40 +34134,40 @@ undefined4 * FUN_00021970(void)
   
   if (automatic_transmission_ffffb534 == '\x01') {
     if (DAT_ffffbc41 == '\x01') {
-      DAT_ffffb2cc = 1;
+      throttle_gear_mode_1_2_ffffb2cc = 1;
       DAT_ffffb2cd = 0;
     }
     else {
       if (DAT_ffffbc42 != '\x01') {
         if (DAT_ffffbc43 != '\x01') {
-          DAT_ffffb2cc = 0;
+          throttle_gear_mode_1_2_ffffb2cc = 0;
           DAT_ffffb2cd = 0;
           DAT_ffffb2ce = 0;
           puVar1 = (undefined4 *)ref_throttlePlatePosToTorqueOutput_();
           return puVar1;
         }
-        DAT_ffffb2cc = 0;
+        throttle_gear_mode_1_2_ffffb2cc = 0;
         DAT_ffffb2cd = 0;
         DAT_ffffb2ce = 1;
         puVar1 = (undefined4 *)ref_throttlePlatePosToTorqueOutput_();
         return puVar1;
       }
-      DAT_ffffb2cc = 0;
+      throttle_gear_mode_1_2_ffffb2cc = 0;
       DAT_ffffb2cd = 1;
     }
   }
   else if (((DAT_ffffbc41 == '\0') && (DAT_ffffbc42 == '\0')) && (DAT_ffffbc43 == '\0')) {
-    DAT_ffffb2cc = 0;
+    throttle_gear_mode_1_2_ffffb2cc = 0;
     DAT_ffffb2cd = 0;
   }
   else if (DAT_ffffbc41 == '\x01') {
-    DAT_ffffb2cc = 1;
+    throttle_gear_mode_1_2_ffffb2cc = 1;
     DAT_ffffb2cd = 0;
   }
   else {
     if (DAT_ffffbc42 != '\x01') {
       if (DAT_ffffbc43 == '\x01') {
-        DAT_ffffb2cc = 0;
+        throttle_gear_mode_1_2_ffffb2cc = 0;
         DAT_ffffb2cd = 0;
         DAT_ffffb2ce = 1;
       }
@@ -34145,7 +34185,7 @@ undefined4 * FUN_00021970(void)
       }
       return puVar1;
     }
-    DAT_ffffb2cc = 0;
+    throttle_gear_mode_1_2_ffffb2cc = 0;
     DAT_ffffb2cd = 1;
   }
   DAT_ffffb2ce = 0;
@@ -34211,15 +34251,18 @@ void FUN_00021b48(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_torque_request_batch [high]: Throttle torque batch from task rec[18] 0x64e8 -> 0x11534 -> 0x1150e (pool 0x116e4=0x00021b4c); mask 0x10; calls 0x21970 (gear mode flags), 0x218c4 ref_throttlePlateControl_Related (DSC torque-request limit), 0x21ae8 ref_getThrottleBasedTorque_Related (callgraph.tsv rows for caller 00021b4c).
+ */
 /* ROM address: 0x00021b4c; body bytes: 36; decompiled */
 
-void FUN_00021b4c(void)
+void throttle_torque_request_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00021970();
+  throttle_gear_mode_flags();
   ref_throttlePlateControl_Related();
   ref_getThrottleBasedTorque_Related();
   ref_setSR(uVar1);
@@ -34721,17 +34764,20 @@ void FUN_00022538(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_batch [high]: Batch called from 0x118d0 (task[13] 0x65b2 -> pool 0x66d8=0x000118d0 -> pool 0x11a88=0x0002253c): mask 0x10, calls 0x22574, 0x22630, 0x25198 (pools 0x22560=0x3920, 0x22564=0x22574, 0x22568=0x22630, 0x2256c=0x25198).
+ */
 /* ROM address: 0x0002253c; body bytes: 36; decompiled */
 
-void FUN_0002253c(void)
+void ch7d_pwm_duty_batch(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_00022574();
-  FUN_00022630();
-  FUN_00025198();
+  ch7d_pwm_enable_condition();
+  ch7d_pwm_duty_control_loop();
+  ch7d_pwm_duty_ratio();
   ref_setSR(uVar1);
   return;
 }
@@ -34744,12 +34790,17 @@ void FUN_0002253c(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_enable_condition [high]: b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= the u16 3D-table result (tbl 0x6a340 on coolant-derived b35c and IAT ade0) in 0xffffb386 && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c.
+ * RAM 0xffffb358 ch7d_pwm_enable (uint8): Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear.
+ * RAM 0xffffcd70 throttle_fault_latch (uint8): Stuck-duty latch: 0x4a11c ORs six flags c91d/c912/c914/c96d/c96f/c971, written by the stall monitor 0x416bc from b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0).
+ */
 /* ROM address: 0x00022574; body bytes: 188; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00022ee0 (188 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00022574(void)
+uint ch7d_pwm_enable_condition(void)
 
 {
   uint uVar1;
@@ -34775,11 +34826,11 @@ uint FUN_00022574(void)
   uVar1 = (uint)engine_running_ffffa428;
   if ((((uVar1 != 1) || (uVar1 = (uint)engine_running_timer_ffffa424, uVar1 < (uint)(int)DAT_ffffb386)) ||
       (uVar1 = (uint)DAT_ffffb388, uVar1 != 1)) ||
-     (((snapshot_inferred_battery_voltage_ffffb590 < 9.0 || (16.0 <= snapshot_inferred_battery_voltage_ffffb590)) || (uVar1 = (uint)DAT_ffffcd70, uVar1 != 0)))) {
-    DAT_ffffb358 = 0;
+     (((snapshot_inferred_battery_voltage_ffffb590 < 9.0 || (16.0 <= snapshot_inferred_battery_voltage_ffffb590)) || (uVar1 = (uint)throttle_fault_latch_ffffcd70, uVar1 != 0)))) {
+    ch7d_pwm_enable_ffffb358 = 0;
   }
   else {
-    DAT_ffffb358 = 1;
+    ch7d_pwm_enable_ffffb358 = 1;
   }
   return uVar1;
 }
@@ -34796,9 +34847,13 @@ uint FUN_00022574(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_control_loop [high]: Closed-loop duty b354 (0-100%): PID-ish on 0xffffaa78 (filtered AN11/AN23 pair ratio) — P (aa78-30.0f @0x7355c)*4.5f (@0x73550), I b364 += (aa78-30)*0.1875f (@0x73554), D (b36c-aa78)*0.75f (@0x73558), hysteresis 39/44/40/45 -> b389/b38a (@0x7354c/0x73548); feedforward/limit tbls 0x6a2cc/0x6a2f4 (aa78), 0x6a324 (rpm, maf aa38), 0x6a2e0 (battery) -> b360 = b378*min(b370,b374); timer b368 -> tbl 0x6a308; b354=0 when b358==0. Called from 0x2253c.
+ * RAM 0xffffb354 ch7d_pwm_duty_percent (float): 0-100% PWM duty computed by 0x22630 (PID loop on 0xffffaa78, limit b360, enable b358 -> 0); read by 0x25198 (clamp/100 -> b570 -> 0xb2c0) and stall monitors 0x4162e/0x416bc.
+ */
 /* ROM address: 0x00022630; body bytes: 442; decompiled */
 
-undefined4 FUN_00022630(void)
+undefined4 ch7d_pwm_duty_control_loop(void)
 
 {
   float fVar1;
@@ -34828,12 +34883,12 @@ undefined4 FUN_00022630(void)
   fVar1 = rx8_min_float(DAT_ffffb370,DAT_ffffb374);
   DAT_ffffb360 = DAT_ffffb378 * fVar1;
   if (DAT_ffffb389 == '\x01') {
-    DAT_ffffb364 = DAT_ffffb354 - (snapshot_DAT_ffffaa78 - 30.0) * 4.5;
+    DAT_ffffb364 = ch7d_pwm_duty_percent_ffffb354 - (snapshot_DAT_ffffaa78 - 30.0) * 4.5;
   }
-  else if ((0.0 < DAT_ffffb354) && (DAT_ffffb354 < DAT_ffffb360)) {
+  else if ((0.0 < ch7d_pwm_duty_percent_ffffb354) && (ch7d_pwm_duty_percent_ffffb354 < DAT_ffffb360)) {
     DAT_ffffb364 = DAT_ffffb364 + (snapshot_DAT_ffffaa78 - 30.0) * 0.1875;
   }
-  if (DAT_ffffb358 == '\0') {
+  if (ch7d_pwm_enable_ffffb358 == '\0') {
     DAT_ffffb368 = 0;
   }
   else {
@@ -34843,7 +34898,7 @@ undefined4 FUN_00022630(void)
   uVar2 = rx8_decode_u16_affine(0x43000000,0,(int)DAT_ffffb368);
   DAT_ffffb37c = (float)lookup_3d_descriptor_scaled(uVar2,DAT_ffffade0,&LAB_0006a308);
   DAT_ffffb380 = (float)lookup_2d_descriptor_scaled(snapshot_DAT_ffffaa78,&tbl_table_2d_128_0006a2cc);
-  if (DAT_ffffb358 != '\0') {
+  if (ch7d_pwm_enable_ffffb358 != '\0') {
     fVar1 = DAT_ffffb37c;
     if ((DAT_ffffb38a == '\x01') || (fVar1 = DAT_ffffb380, DAT_ffffb389 == '\x01')) {
       fVar1 = DAT_ffffb378 * fVar1;
@@ -34856,7 +34911,7 @@ undefined4 FUN_00022630(void)
       fVar1 = rx8_min_float(fVar1 + DAT_ffffb364,DAT_ffffb360);
     }
   }
-  DAT_ffffb354 = fVar1;
+  ch7d_pwm_duty_percent_ffffb354 = fVar1;
   if (DAT_ffffb389 == '\x01') {
     DAT_ffffb384 = 0;
     uVar2 = 1;
@@ -34886,6 +34941,10 @@ void FUN_000228d4(void)
  * Descriptor 0x0006a490: Throttle Pedal to Throttle Plate Request - Gear 5/6 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a4ac: Throttle Pedal to Throttle Plate Request - Gear 3/4 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_pedal_to_plate_request_map [high]: 3D lookup lookup_3d_descriptor_scaled(rpm 0xffffb548, demand 0xffffa9bc, tbl) with gear flags b2cc/b2cd/b2ce selecting descriptors 0x6a458 (1/2), 0x6a474 (neutral), 0x6a490 (5/6), 0x6a4ac (3/4) (pools 0x229ca=0xa9bc, 0x229cc=0xb548/0xb2cc, 0x229d0=0xb2cd/0xb2ce, 0x229dc=0x6a458, 0x229e0=0x6a474, 0x229e4=0x6a490, 0x229e8=0x6a4ac); result clamped [0, 84.0f @0x7372c via pool 0x229f0] by 0x2404 (pool 0x229f4) into 0xffffb398 (pool 0x229ec) with 12-deep history shift (b3ec..b3c4, pool 0x229f8=0xffffb3ec). Called from batch 0x22f86.
+ * RAM 0xffffb398 throttle_plate_request (float): Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-entry history at 0xffffb398+4i (write 0xffffb39c-0xffffb3c8) indexed by byte 0xffffb3ec; 0xffffb3cc = history[index]. Written by 0x228dc.
+ */
 /* ROM address: 0x000228dc; body bytes: 236; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x00022950) */
@@ -34898,7 +34957,7 @@ void FUN_000228d4(void)
 /* Unique exact-byte match to related 60E0FC00 function at 0002326c (236 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateThrottlePedalPositionMapBased(void)
+void throttle_pedal_to_plate_request_map(void)
 
 {
   undefined *puVar1;
@@ -34907,7 +34966,7 @@ void ref_calculateThrottlePedalPositionMapBased(void)
   float *pfVar4;
   float fVar5;
   
-  if (DAT_ffffb2cc == '\x01') {
+  if (throttle_gear_mode_1_2_ffffb2cc == '\x01') {
     puVar1 = &tbl_throttle_pedal_to_throttle_plate_request_gear_1_2_0006a458;
   }
   else {
@@ -34929,13 +34988,13 @@ LAB_00022932:
   DAT_ffffb3ec = 0;
   cVar3 = '\f';
   uVar2 = 0xb;
-  DAT_ffffb3cc = DAT_ffffb398;
+  DAT_ffffb3cc = throttle_plate_request_ffffb398;
   pfVar4 = &DAT_ffffb3cc;
-  DAT_ffffb398 = fVar5;
+  throttle_plate_request_ffffb398 = fVar5;
   do {
     cVar3 = cVar3 + -1;
     pfVar4 = pfVar4 + -1;
-    *pfVar4 = (&DAT_ffffb398)[uVar2 & 0xff];
+    *pfVar4 = (&throttle_plate_request_ffffb398)[uVar2 & 0xff];
     uVar2 = uVar2 + 0xff;
   } while (cVar3 != '\0');
   return;
@@ -34966,9 +35025,12 @@ LAB_00022932:
  * Confidence: filter mechanics verified; throttle and gear meanings partly upstream.
  * Descriptors 6a354, 6a3cc, 6a3e0, 6a3f4, 6a408 are RPM-indexed in this function, including indirect puVar5 selection missed by the old direct-call inventory. 6a3cc/6a3e0 set ffffb3dc, compared to ffffb38c with 2.0 hysteresis. 6a3f4/6a408 supply ffffb3f0; ffffb3e0 sums it with coolant correction ffffb3d8. Final coefficient ffffb3d0 is clamped and used by rx8_first_order_filter(ffffb3cc, ffffb38c, coefficient, tolerance), then bounded by ffffb2c4. Exact gear-flag identities and increase/decrease naming are not independently established.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_demand_filter_coeffs [high]: b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86.
+ */
 /* ROM address: 0x00022a14; body bytes: 646; decompiled */
 
-undefined4 FUN_00022a14(void)
+undefined4 pedal_demand_filter_coeffs(void)
 
 {
   char cVar1;
@@ -34985,7 +35047,7 @@ undefined4 FUN_00022a14(void)
   
   cVar3 = DAT_ffffb2ce;
   cVar2 = DAT_ffffb2cd;
-  cVar1 = DAT_ffffb2cc;
+  cVar1 = throttle_gear_mode_1_2_ffffb2cc;
   arg3 = 1e-05;
   fVar7 = inferred_ram_a9bc_ffffa9bc_ffffa9bc;
   uVar4 = inferred_coolant_temperature_ffffa98c;
@@ -35111,9 +35173,12 @@ LAB_00022c9a:
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_base_position_filter [high]: b390 = first_order_filter(b38c, b390, 0.25, 1e-5); b394 = (b38c <= 2.0). Called from batch 0x22f86.
+ */
 /* ROM address: 0x00022d26; body bytes: 58; decompiled */
 
-undefined4 FUN_00022d26(void)
+undefined4 throttle_base_position_filter(void)
 
 {
   undefined4 extraout_r0;
@@ -35133,29 +35198,34 @@ undefined4 FUN_00022d26(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_servo_override [high]: Servo/homing override in batch 0x22f86. dir b400 = (b4b0 >= readValue_float(0xffff807c, default 15.0f @0x6f438)+0.5f @0x747c4, band 0x747c8=0.0f); mode byte ccbc; duty b3f8: mode!=1 -> 0.0; mode==1 && b401==0 -> min(b410+learned, learned+0.5f @0x747b8) while b401==0; else decay max(5.0f @0x747bc, b3f8-0.05f @0x747c0) while the word counters b3fc/b3fe exceed 2 (0x747b4/0x747b6). Pools 0x22e9e-0x22f18 verified: 0x22ea0=0xb4b0, 0x22ea2=0xccbc, 0x22ea4=0xb3f8, 0x22ea6=0xb410, 0x22ebc=0xffffb400, 0x22ec0=0xffffb3fc, 0x22ec4=0xffffb3fe, 0x22ec8/0x22f18=0xffffb401.
+ * RAM 0xffffb3f8 throttle_servo_override_duty (float): Servo/homing override duty float written by 0x22db4 (pool 0x22ea4=0xb3f8); 0.0 when mode ccbc!=1; decay max(5.0, b3f8-0.05) with counters b3fc/b3fe; read by 0x231f0 (ccbc branch) and by its own decay path.
+ * RAM 0xffffb400 throttle_servo_direction (uint8): Direction byte written by 0x22db4 (pool 0x22ebc=0xffffb400): 1 when target b4b0 >= learned 0xffff807c + 0.5f. No other reader found in ROM (whole-ROM pool scan).
+ */
 /* ROM address: 0x00022db4; body bytes: 274; decompiled */
 
-uint FUN_00022db4(void)
+uint throttle_servo_override(void)
 
 {
-  byte snapshot_DAT_ffffccbc;
+  byte snapshot_throttle_servo_mode_ffffccbc;
   uint uVar2;
   float fVar3;
   float fVar4;
   float arg0;
   
   fVar3 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-  snapshot_DAT_ffffccbc = DAT_ffffccbc;
+  snapshot_throttle_servo_mode_ffffccbc = throttle_servo_mode_ffffccbc;
   arg0 = (fVar3 + 0.5) - 0.0;
   if (DAT_ffffb4b0 < fVar3 + 0.5) {
     if (DAT_ffffb4b0 < arg0) {
-      DAT_ffffb400 = '\0';
+      throttle_servo_direction_ffffb400 = '\0';
     }
   }
   else {
-    DAT_ffffb400 = '\x01';
+    throttle_servo_direction_ffffb400 = '\x01';
   }
-  uVar2 = (uint)DAT_ffffccbc;
+  uVar2 = (uint)throttle_servo_mode_ffffccbc;
   if (uVar2 == 1) {
     if (DAT_ffffb401 == '\0') {
       fVar4 = fVar3 + 0.5;
@@ -35164,30 +35234,30 @@ uint FUN_00022db4(void)
       }
     }
     else {
-      fVar4 = DAT_ffffb3f8;
-      if (DAT_ffffb400 == '\x01') {
+      fVar4 = throttle_servo_override_duty_ffffb3f8;
+      if (throttle_servo_direction_ffffb400 == '\x01') {
         if (1 < DAT_ffffb3fc) {
-          fVar4 = rx8_max_float(5.0,DAT_ffffb3f8 - 0.05);
+          fVar4 = rx8_max_float(5.0,throttle_servo_override_duty_ffffb3f8 - 0.05);
           DAT_ffffb3fc = 0;
         }
       }
       else if (1 < DAT_ffffb3fe) {
-        fVar4 = rx8_max_float(5.0,DAT_ffffb3f8 - 0.05);
+        fVar4 = rx8_max_float(5.0,throttle_servo_override_duty_ffffb3f8 - 0.05);
         DAT_ffffb3fe = 0;
       }
     }
   }
   else {
-    DAT_ffffb3f8 = 0.0;
-    fVar4 = DAT_ffffb3f8;
+    throttle_servo_override_duty_ffffb3f8 = 0.0;
+    fVar4 = throttle_servo_override_duty_ffffb3f8;
   }
-  DAT_ffffb3f8 = fVar4;
+  throttle_servo_override_duty_ffffb3f8 = fVar4;
   if (uVar2 == 1) {
-    if (DAT_ffffb400 != '\x01') {
+    if (throttle_servo_direction_ffffb400 != '\x01') {
       DAT_ffffb3fc = 0;
       uVar2 = rx8_add_u16_saturate((int)(short)DAT_ffffb3fe,1);
       DAT_ffffb3fe = (short)uVar2;
-      DAT_ffffb401 = snapshot_DAT_ffffccbc;
+      DAT_ffffb401 = snapshot_throttle_servo_mode_ffffccbc;
       return uVar2;
     }
     uVar2 = rx8_add_u16_saturate((int)(short)DAT_ffffb3fc,1);
@@ -35197,7 +35267,7 @@ uint FUN_00022db4(void)
     DAT_ffffb3fc = 0;
   }
   DAT_ffffb3fe = 0;
-  DAT_ffffb401 = snapshot_DAT_ffffccbc;
+  DAT_ffffb401 = snapshot_throttle_servo_mode_ffffccbc;
   return uVar2;
 }
 
@@ -35254,9 +35324,12 @@ void jump_to_FUN_000486a0(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * dbw_control_batch [high]: DBW control batch from 0x1150e (pool 0x116c8=0x00022f86), mask 0x10 around two call groups: 0x474fc (home offset cc88), 0x22f1c, 0x48558, then 0x22db4, 0x233ec, 0x231f0, 0x23558, 0x228dc, 0x22a14, 0x22d26, relay_hold_output_pd11 0x251d0 (callgraph.tsv rows for caller 00022f86).
+ */
 /* ROM address: 0x00022f86; body bytes: 240; decompiled */
 
-void FUN_00022f86(void)
+void dbw_control_batch(void)
 
 {
   undefined4 uVar1;
@@ -35291,13 +35364,13 @@ void FUN_00022f86(void)
   FUN_000474fc();
   FUN_00022f1c();
   FUN_00048558();
-  FUN_00022db4();
-  FUN_000233ec();
-  FUN_000231f0();
-  FUN_00023558();
-  ref_calculateThrottlePedalPositionMapBased();
-  FUN_00022a14();
-  FUN_00022d26();
+  throttle_servo_override();
+  throttle_target_plate_position();
+  learned_pedal_value_calc();
+  throttle_position_delta_calc();
+  throttle_pedal_to_plate_request_map();
+  pedal_demand_filter_coeffs();
+  throttle_base_position_filter();
   relay_hold_output_pd11();
   ref_setSR(uVar1);
   return;
@@ -35381,9 +35454,12 @@ undefined2 * FUN_00023190(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a518: Table 2D - 331 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * learned_pedal_value_calc [high]: b40c = clamp(candidate, 0, H), H = readValue_float(0xffff808c, default 111.0f @0x6f45c=0x42de0000); candidates by byte: ccbb -> H+learned807c, ccbc -> servo duty b3f8, ccbd -> cc88+learned807c, ccac -> b410+learned807c capped at learned807c+5.0f (0x747e4), cca2 -> cca8, else b410+learned807c; high byte of 0xffff808c ==1 -> 99.0f (0x747e8). rpm gates b435 (500/300 rpm, 0x747ec), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86.
+ */
 /* ROM address: 0x000231f0; body bytes: 436; decompiled */
 
-undefined4 FUN_000231f0(void)
+undefined4 learned_pedal_value_calc(void)
 
 {
   char cVar1;
@@ -35421,9 +35497,9 @@ undefined4 FUN_000231f0(void)
     arg0 = DAT_ffffb404 + fVar2;
     fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
   }
-  else if (DAT_ffffccbc == '\x01') {
+  else if (throttle_servo_mode_ffffccbc == '\x01') {
     fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
-    arg0 = DAT_ffffb3f8;
+    arg0 = throttle_servo_override_duty_ffffb3f8;
   }
   else if (DAT_ffffccbd == '\x01') {
     arg0 = DAT_ffffcc88 + fVar2;
@@ -35467,9 +35543,13 @@ undefined4 FUN_000231f0(void)
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_target_plate_position [high]: Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) stored with fmov.s at 0x2353e (float in b424 units, PIDs 0x004c/0x091a; 0x5ccb4 quantizes to 1/512 for the PID export and decodes back for descriptor codes 5/7). Called from batch 0x22f86.
+ * RAM 0xffffb424 throttle_target_plate_percent (float): Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); passed through the PID 0x091a export 0x5ccb4 into the float b410.
+ */
 /* ROM address: 0x000233ec; body bytes: 300; decompiled */
 
-void FUN_000233ec(void)
+void throttle_target_plate_position(void)
 
 {
   float *pfVar1;
@@ -35483,7 +35563,7 @@ void FUN_000233ec(void)
   snapshot_intake_air_temperature_ffffaddc = intake_air_temperature_ffffaddc;
   DAT_ffffb418 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&tbl_table_2d_144_0006a4c8);
   uVar2 = 0;
-  if (DAT_ffffb2cf == '\x01') {
+  if (dsc_torque_limit_active_ffffb2cf == '\x01') {
     if (DAT_ffffa966 == '\0') {
       pfVar1 = (float *)&DAT_ffffb2b8;
       fVar3 = DAT_ffffb418;
@@ -35491,10 +35571,10 @@ void FUN_000233ec(void)
     else {
       pfVar1 = (float *)&DAT_000747d8;
     }
-    DAT_ffffb424 = rx8_clamp_float(*pfVar1,fVar3,arg0);
+    throttle_target_plate_percent_ffffb424 = rx8_clamp_float(*pfVar1,fVar3,arg0);
   }
-  else if (DAT_ffffb2d0 == '\x01') {
-    DAT_ffffb424 = rx8_max_float(arg0,DAT_ffffb2bc);
+  else if (dsc_mode_c_active_ffffb2d0 == '\x01') {
+    throttle_target_plate_percent_ffffb424 = rx8_max_float(arg0,DAT_ffffb2bc);
   }
   else {
     DAT_ffffb41c = rx8_clamp_float(arg0,0.0,84.0);
@@ -35511,25 +35591,28 @@ void FUN_000233ec(void)
     }
     if (((DAT_ffffb434 == '\0') && (DAT_ffffb53a == '\0')) &&
        ((fuel_cut_flag_a_ffffa444 == '\x01' || (fuel_cut_flag_b_ffffa445 == '\x01')))) {
-      DAT_ffffb424 = (fVar3 + 0.0) * DAT_ffffb430;
+      throttle_target_plate_percent_ffffb424 = (fVar3 + 0.0) * DAT_ffffb430;
       uVar2 = 1;
     }
     else {
-      DAT_ffffb424 = DAT_ffffb41c;
+      throttle_target_plate_percent_ffffb424 = DAT_ffffb41c;
     }
   }
-  inferred_ram_b410_ffffb410_ffffb410 = FUN_0005ccb4(DAT_ffffb424);
+  inferred_ram_b410_ffffb410_ffffb410 = FUN_0005ccb4(throttle_target_plate_percent_ffffb424);
   DAT_ffffb422 = uVar2;
   return;
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_position_delta_calc [high]: b414 = b410 - b428 (0.0 when ccc9 set); b428 = b410. Called from batch 0x22f86.
+ */
 /* ROM address: 0x00023558; body bytes: 38; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00023dcc (38 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-char FUN_00023558(void)
+char throttle_position_delta_calc(void)
 
 {
   if (DAT_ffffccc9 == '\x01') {
@@ -36074,15 +36157,6 @@ undefined1 * e2ram_fault_status_collect(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): candidate_learned_pedal_value_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): -throttle_pedal_position_delta_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): filtered_battery_voltage_ffffb594; decode = raw * 0.0003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): uVar3; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): candidate_throttle_base_position_ffffb38c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): uVar3; decode = raw * 0.00390625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.1953125 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * e2ram_block_encode [high]: Encodes working RAM into the E2RAM staging block (base 0xffffb440, payload from 0xffffb442): rx8_encode_u16_affine_saturate of 0xffffb40c (step 0.0305176) -> 0xffffb442/444, signed 0xffffb414 -> 0xffffb446, 0xffffb594 (step 0x39a00000 = 0.00030517578125) -> 0xffffb448, ref_readValue_float of 0xffff807c/0xffff8084 -> 0xffffb44a/44c, pedal volts 0xffffa9c4 -> 0xffffb44e, engine_speed_rpm 0xffffb548 (step 0.1953125) and fault bits packed into 0xffffb459+ from 0xffffaa68/0xffffccc1/0xffffbced/0xffffccc9/ref_readValue_8bit 0xffff80a0/0xffffad60/0xffffad62. Called from 0x2377a (jsr via pool 0x237c8 at 0x23796).
  * RAM 0xffffb40c candidate_learned_pedal_value (float): Payload u16[1]/[2] source: written by FUN_000231f0 (fmov.s at 0x233b0/0x233c2/0x233d2 via pool 0x232fa=0xb40c loaded at 0x232c2) as clamp(pedal-derived candidates, ..., 111.0), special 99.0; read back by monitors FUN_0001b6fc/0x46404 and encoded by e2ram_block_encode 0x244bc. Meaning inferred from producers -> candidate_.
@@ -36091,6 +36165,15 @@ undefined1 * e2ram_fault_status_collect(void)
  * RAM 0xffffb38c candidate_throttle_base_position (float): Payload u16[19] source: FUN_00022a14 sets DAT_ffffb38c = min(0xffffb2c4, ...) or 5.0; consumed as pedal base in ref_throttlePlatePosToTorqueOutput_ 0x21a80 / FUN_000233ec (0xffffb2d4 = idle_air_required 0xffffb2a4 + b38c). Meaning inferred -> candidate_.
  * RAM 0xffffcc91 candidate_idle_learn_flag (uint8): Payload byte at 0xffffb458: written by FUN_00018aea/0x470d0/0x47cce; read by candidate_idle_learn_condition 0x160ce (mov.b via pool at 0x160ce). Idle-learn-related flag, meaning inferred -> candidate_.
  * RAM 0xffffb51e e2ram_payload_reserved (uint16): Cells 0xffffb51e/0xffffb520/0xffffb522/0xffffb524 (payload u16[8..11] sources, pools 0x24690/0x24694/0x24698/0x2469c in 0x244bc): no writer references anywhere in ROM -> constant 0, reserved.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): candidate_learned_pedal_value_ffffb40c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): -throttle_pedal_position_delta_ffffb414; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): filtered_battery_voltage_ffffb594; decode = raw * 0.0003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): uVar3; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): candidate_throttle_base_position_ffffb38c; decode = raw * 0.03051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): uVar3; decode = raw * 0.00390625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
+ * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.1953125 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000244bc; body bytes: 1408; decompiled */
 
@@ -36113,7 +36196,7 @@ void e2ram_block_encode(void)
   DAT_ffffb448 = rx8_encode_u16_affine_saturate(filtered_battery_voltage_ffffb594,0x39a00000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffb44a = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
-  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
+  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
   DAT_ffffb44c = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   DAT_ffffb44e = inferred_pedal_volts_ffffa9c4_ffffa9c4;
   DAT_ffffb450 = e2ram_payload_reserved_ffffb51e;
@@ -36152,7 +36235,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb459 = DAT_ffffb459 & 0xef;
   }
-  if (DAT_ffffad60 == '\x01') {
+  if (tp_plausibility_fault_a_ffffad60 == '\x01') {
     DAT_ffffb459 = DAT_ffffb459 | 0x20;
   }
   else {
@@ -36267,13 +36350,13 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xfb;
   }
-  if (DAT_ffffb2cf == '\x01') {
+  if (dsc_torque_limit_active_ffffb2cf == '\x01') {
     DAT_ffffb45c = DAT_ffffb45c | 8;
   }
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xf7;
   }
-  if (DAT_ffffb2d0 == '\x01') {
+  if (dsc_mode_c_active_ffffb2d0 == '\x01') {
     DAT_ffffb45c = DAT_ffffb45c | 0x10;
   }
   else {
@@ -36291,7 +36374,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xbf;
   }
-  if (DAT_ffffad61 == '\x01') {
+  if (tp_plausibility_fault_b_ffffad61 == '\x01') {
     DAT_ffffb45d = DAT_ffffb45d | 1;
   }
   else {
@@ -36322,7 +36405,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45d = DAT_ffffb45d & 0xef;
   }
-  if (DAT_ffffccbc == '\x01') {
+  if (throttle_servo_mode_ffffccbc == '\x01') {
     DAT_ffffb45d = DAT_ffffb45d | 0x20;
   }
   else {
@@ -36343,7 +36426,7 @@ void e2ram_block_encode(void)
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41a00000,&DAT_ffff8094);
   DAT_ffffb45e = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   DAT_ffffb460 = rx8_encode_u16_affine_saturate(candidate_throttle_base_position_ffffb38c,0x3cfa0000,0);
-  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8068);
+  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_1_ffff8068);
   DAT_ffffb462 = rx8_encode_u16_affine_saturate(uVar3,0x3b800000,0);
   DAT_ffffb464 = rx8_encode_u16_affine_saturate(engine_speed_rpm_ffffb548,0x3e480000,0);
   return;
@@ -36730,21 +36813,24 @@ void FUN_00025120(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * ch7d_pwm_duty_ratio [high]: b570 = clamp(b354, 0, 100.0f) / 100.0f (pools 0x251c0=0xb354, 0x251c2=0xb570, 0x251c4=0x42c80000, helper 0x251c8=0x2404), then tail jmp 0xb2c0 (pool 0x251cc) with r4=0. Called from 0x2253c.
+ */
 /* ROM address: 0x00025198; body bytes: 40; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00025a20 (40 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00025198(void)
+void ch7d_pwm_duty_ratio(void)
 
 {
   float fVar1;
   float fVar2;
   
   fVar2 = 100.0;
-  fVar1 = rx8_clamp_float(DAT_ffffb354,0.0,100.0);
+  fVar1 = rx8_clamp_float(ch7d_pwm_duty_percent_ffffb354,0.0,100.0);
   inferred_ram_b570_ffffb570_ffffb570 = fVar1 / fVar2;
-  FUN_0000b2c0(0);
+  ch7d_pwm_duty_write(0);
   return;
 }
 
@@ -37525,14 +37611,14 @@ void candidate_battery_temp_model(void)
  * Descriptor 0x0006a59c: Table 2D - 154 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a5b0: Table 2D - 155 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_voltage_target_select [medium]: Target voltage 0xffffb61c: 14.2 (pool 0x749c8) when c6ac<=0 && b64c; tbl 0x6a5b0(battery temp b5c4) + clamp(b59c ± 0.2 hysteresis, b624) in cold mode (b617); tbl 0x6a59c + min(b59c+0.2, b624) in mode b618; then 0xffffb59c = ref_alternatorPIDsomething(0x5cba4)(b61c). Coolant/IAT 145/150 C flags b64a/b64b/b64c. Called from 0x26868 via pool 0x268d8 and from 0x25790.
  * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
  * RAM 0xffffb5a4 electrical_load_filtered (float): first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00025c6c; body bytes: 1008; decompiled */
 
@@ -37752,12 +37838,12 @@ void FUN_0002633e(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
  */
 /* ROM address: 0x0002635c; body bytes: 264; decompiled */
 
@@ -37859,12 +37945,12 @@ void candidate_electrical_load_flag_calc(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a5c4: Alternator Voltage Delta - Diagnostic Request (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * alternator_duty_calc [medium]: Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * alternator_duty_calc [medium]: Field duty: 0xffffb5f0 = 3.75 (pool 0x26734) when alt-speed flag b613 set and 0xffffb5e0 within band of b5a0, else 3-D lookup 0x6a5c4(alt speed, b5e0); filtered (factor 0.1244 pool 0x74a40) into 0xffffb5f4; 0xffffb5f8 = clamp((b5f4 - prev*0.9672)/0x3d065950, 0, 3.75); 0xffffb620 = clamp(tbl 0x6a560(b5f8), 0, 100) when b5e0 out of band and b612==0; 0xffffb5ac = ref_diagAlternatorSignalthing(0x5c800)(b620). Called from 0x267c6 via pool 0x268a4.
  */
 /* ROM address: 0x00026624; body bytes: 238; decompiled */
 
@@ -38624,13 +38710,13 @@ void FUN_000270aa(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a694: Table 2D - 332 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * e2ram_learned_table_cell_index [high]: DAT_ffffb6c4 = rx8_lookup_2d_raw_u16(engine_speed_rpm_ffffb548, tbl 0x6a694 [17 cells, RPM axis 0x755dc = 0,1125,1750,...,8750, identity u16 data 0x75620]) + 17*load_band; load bands from engine_load_ffffc0b4 vs 0.4/0.65/3.0 (float pools 0x755a4/0x755a8/0x755ac): <0.4 -> +0, <0.65 -> +0x11, <3.0 -> +0x22, else +0x33 (rx8_add_u16_saturate 0x2460, pool 0x2724c). Cell = rpm_cell(0..16) + 17*load_band(0..3). Called from 0x287aa.
  * RAM 0xffffb6c4 e2ram_learned_table_cell_index (uint16): Current learned-table cell = rpm_cell(0..16) + 17*load_band(0..3), computed by 0x2711a from engine_speed_rpm_ffffb548 (tbl 0x6a694) and engine_load_ffffc0b4 (bands 0.4/0.65/3.0). Consumed by 0x271b0/0x276ec/0x28198.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0002711a; body bytes: 94; decompiled */
 
@@ -38668,12 +38754,12 @@ void FUN_0002711a(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a6a0: Table 2D - 333 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * e2ram_learned_table_learn_gate [high]: rpm_cell = DAT_ffffb6c4 mod 17 (div FUN_00003fe8, pool 0x27258); DAT_ffffb8f0 = lookup_2d_descriptor_scaled(rpm_cell, tbl 0x6a6a0 [axis 0x75644 = 0..16, data 0x75688 = RPM breakpoints 750..9000]) = cell RPM breakpoint; reads flag_a + (cell-1)*2 / cell*2 / (cell+1)*2 + (DAT_ffffb660&1)*0x88 (pool 0x27270 = 0xffff8548) and sets DAT_ffffb6c6 = 1 only if the cell flag is set and a learned neighbour cell covers the current RPM (DAT_ffffb8f0). Called from 0x287aa.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * e2ram_learned_table_learn_gate [high]: rpm_cell = DAT_ffffb6c4 mod 17 (div FUN_00003fe8, pool 0x27258); DAT_ffffb8f0 = lookup_2d_descriptor_scaled(rpm_cell, tbl 0x6a6a0 [axis 0x75644 = 0..16, data 0x75688 = RPM breakpoints 750..9000]) = cell RPM breakpoint; reads flag_a + (cell-1)*2 / cell*2 / (cell+1)*2 + (DAT_ffffb660&1)*0x88 (pool 0x27270 = 0xffff8548) and sets DAT_ffffb6c6 = 1 only if the cell flag is set and a learned neighbour cell covers the current RPM (DAT_ffffb8f0). Called from 0x287aa.
  */
 /* ROM address: 0x000271b0; body bytes: 286; decompiled */
 
@@ -39438,16 +39524,16 @@ void FUN_00028118(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * e2ram_learned_table_apply [high]: Reads the learned value for cell DAT_ffffb6c4: 0xffff8108+cell*8 (pool 0x282b8) when DAT_ffffb660&1==0, else +0x220 (value_neg 0xffff8328) -> DAT_ffffba64+4*parity; interpolates between adjacent RPM cells via 0x28484 using the tbl 0x6a6a0 axis/data arrays; computes DAT_ffffba2c = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664 (sector-speed ring copies from 0x26940) and DAT_ffffba30 = DAT_ffffba2c - learned_value. Called from 0x287aa.
  * RAM 0xffffba2c e2ram_learned_correction_value (float): Learn value computed by 0x28198 = (DAT_ffffb668 - (DAT_ffffb680-DAT_ffffb668)/6.0) - DAT_ffffb664, a sector-speed-ring deviation term (ring 0xffffa390..0xffffa3ac copied by 0x26940); learned into the table cell by 0x276ec.
  * RAM 0xffffba30 misfire_residual (float): DAT_ffffba30 = DAT_ffffba2c - learned value (DAT_ffffba64+4*parity): excess sector-speed deviation above the learned baseline, per rotor bank.
  * RAM 0xffffba44 misfire_excess_deviation_delayed (float): DAT_ffffba48 = DAT_ffffba44; DAT_ffffba44 = DAT_ffffba40 (0x28198): one-tick delay of the excess deviation used by the 0x447e2 threshold check.
  * RAM 0xffffba64 e2ram_learned_table_value_bank0 (float): Learned value read for cell DAT_ffffb6c4, rotor bank 0 (0xffff8108+cell*8, parity 0). Bank 1 copy at 0xffffba68.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00028198; body bytes: 440; decompiled_with_warnings */
 
@@ -40608,12 +40694,12 @@ void ref_getCAN201Values(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): can201_prepared_engine_rpm_ffffbb04; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * can201_encode_rpm_u16 [high]: Reads 0xffffbb04, quantizes at 0.25 RPM/count into 0xffffbafc; fault produces 0xffff, normal output capped at 0xfffe. Conversion 0x2490 divides by scalar.
  * RAM 0xffffbafc can201_encoded_rpm (uint16): 0.25 RPM/count; 0xffff fault sentinel.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): can201_prepared_engine_rpm_ffffbb04; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00029236; body bytes: 62; decompiled */
 
@@ -40652,12 +40738,12 @@ void FUN_00029274(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): vehicle_speed_ffffbbb4; decode = raw * 0.009999999776 + (-100) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * can201_encode_vehicle_speed_u16 [high]: Reads diagnostic-correlated speed 0xffffbbb4; quantization is (speed+100)/0.01 rounded and bounded to 40000, or 0xffff on fault. Result 0xffffbb00 is packed at payload bytes 4 and 5.
  * RAM 0xffffbb00 can201_encoded_vehicle_speed (uint16): (speed+100)/0.01, normal cap 40000.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): vehicle_speed_ffffbbb4; decode = raw * 0.009999999776 + (-100) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0002927c; body bytes: 64; decompiled */
 
@@ -41410,7 +41496,7 @@ undefined4 FUN_00029d4c(void)
   if (DAT_ffffbaef == '\0') {
     DAT_ffffbb50 = engine_speed_rpm_ffffb548;
   }
-  if (DAT_ffffb2cc == '\x01') {
+  if (throttle_gear_mode_1_2_ffffb2cc == '\x01') {
     puVar3 = &tbl_throttle_pedal_to_throttle_plate_request_gear_1_2_0006a458;
   }
   else {
@@ -45050,14 +45136,14 @@ void FUN_0002d5e4(void)
  * Descriptor 0x0006a874: Table 2D - 339 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a8bc: Table 3D - 111 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_control_output_law [high]: bd00 = clamp(bd04*bd18*0.01, -100, 100): bd04 from band-selected 2-D tables 0x6a844-0x6a874 (0xffffcf1c gear bands 2.0-6.0) of speed error 0xffffbd14 = 0xffffbfa0-0xffffbfa4; bd18 from 3-D tbl 0x6a8bc on (bfa0, cf1c); zeroed when |error|>=100 and TP% 0xffffa9b4 <= 0xffffbcf8. Percent-domain output folded into 0xffffbcf8 by 0x2df62. Emulator: vss=100, target=90, band=3 -> bd00=-23.93. Called from batch 0x2e5c6 (jsr 0x2e638, pool 0x2e78c).
  * RAM 0xffffcf1c current_gear_float (float): Band selector = float(current gear 0xffffbc3d), produced by 0x4de1c (store pool 0x4dedc=0xcf1c at 0x4de24, jsr 0x2500 decode_u88_affine(1.0,0,bc3d)); config byte ROM[0x7d07f]=0x00 disables the compiled-in switch-code band map (cf47->0.0, cf48->2.0..cf4c->6.0). Bands 2.0-6.0 in 0x2d83c/0x2d638 tables = gears 2-6. Pool scan: only 3 sites (0x2d658, 0x2d86c readers, 0x4de24 writer). Emulator: gear 0-6 -> 0.0-6.0 regardless of switch flags.
  * RAM 0xffffbfa4 cruise_target_speed_kmh (float): Cruise target speed km/h written by 0x32614 clamp [27, 100/200]; error reference: 0xffffbd14 = 0xffffbfa0-0xffffbfa4 in 0x2d638, 8.0 delta gate on 0xffffbd1c in 0x2d83c.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0002d638; body bytes: 372; decompiled */
 
@@ -45125,7 +45211,7 @@ uint cruise_control_output_law(void)
 LAB_0002d77c:
   if ((100.0 <= fVar9) || (fVar9 < -100.0)) {
     fVar9 = cruise_control_law_output_ffffbd00;
-    if (throttle_position_1_percent_ffffa9b4 <= cruise_set_speed_ffffbcf8) {
+    if (accelerator_pedal_1_percent_ffffa9b4 <= cruise_set_speed_ffffbcf8) {
       if (DAT_ffffbbcb != 1) {
         cruise_control_law_output_ffffbd00 = (float)uVar8;
         return (uint)DAT_ffffbbcb;
@@ -45156,12 +45242,12 @@ LAB_0002d77c:
  * Descriptor 0x0006a90c: Table 3D - 115 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a920: Table 3D - 116 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * cruise_set_speed_adjust_integrator [high]: Integrates cruise set-speed adjustment 0xffffbd08 clamped [0,100]: +/- steps from 3-D tbl descriptors 0x6a8e4/0x6a8f8 (nx=2 ny=5) and 0x6a8d0/0x6a90c/0x6a920 (nx=10/9/5 ny=5; ax 0x77198-0x77410 ay 0x771c0-0x77424 data 0x771d4-0x77438 type 0; ROM bytes verified) on (0xffffbfa4/0xffffbfa0, 0xffffcf1c); band-selected 2-D ramps tbl 0x6a880-0x6a8b0 (n=31, data 0x76c50-0x77030) by 0xffffcf1c bands 2.0/3.0/4.0/5.0/6.0; gates on cruise flags 0xffffbfb0-0xffffbfba, delta 8.0 on 0xffffbd1c = 0xffffbfa0-0xffffbfa4, 0xffffbccc, 0xffffbbc8/bbc9 (0xfd/0xfe); sets accel/decel flags 0xffffbcfc/0xffffbcfd. Consumer 0x2df62: 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100). Called from 0x2e5c6 (jsr via pool 0x2e790 at 0x2e63c), itself called from slow task 0x11534 (task[18] entry 0x64e8).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * cruise_set_speed_adjust_integrator [high]: Integrates cruise set-speed adjustment 0xffffbd08 clamped [0,100]: +/- steps from 3-D tbl descriptors 0x6a8e4/0x6a8f8 (nx=2 ny=5) and 0x6a8d0/0x6a90c/0x6a920 (nx=10/9/5 ny=5; ax 0x77198-0x77410 ay 0x771c0-0x77424 data 0x771d4-0x77438 type 0; ROM bytes verified) on (0xffffbfa4/0xffffbfa0, 0xffffcf1c); band-selected 2-D ramps tbl 0x6a880-0x6a8b0 (n=31, data 0x76c50-0x77030) by 0xffffcf1c bands 2.0/3.0/4.0/5.0/6.0; gates on cruise flags 0xffffbfb0-0xffffbfba, delta 8.0 on 0xffffbd1c = 0xffffbfa0-0xffffbfa4, 0xffffbccc, 0xffffbbc8/bbc9 (0xfd/0xfe); sets accel/decel flags 0xffffbcfc/0xffffbcfd. Consumer 0x2df62: 0xffffbcf8 = clamp(0xffffbd00 + 0xffffbd08, 0, 100). Called from 0x2e5c6 (jsr via pool 0x2e790 at 0x2e63c), itself called from slow task 0x11534 (task[18] entry 0x64e8).
  */
 /* ROM address: 0x0002d83c; body bytes: 1444; decompiled_with_warnings */
 
@@ -45214,7 +45300,7 @@ void cruise_set_speed_adjust_integrator(void)
   snapshot_can212_torque_signal_ffffbbc8 = can212_torque_signal_ffffbbc8;
   DAT_ffffbd1c = DAT_ffffbfa0 - cruise_target_speed_kmh_ffffbfa4;
   fVar21 = cruise_target_speed_kmh_ffffbfa4 - DAT_ffffbfa0;
-  snapshot_throttle_position_1_percent_ffffa9b4 = throttle_position_1_percent_ffffa9b4;
+  snapshot_throttle_position_1_percent_ffffa9b4 = accelerator_pedal_1_percent_ffffa9b4;
   snapshot_DAT_ffffbfa0 = DAT_ffffbfa0;
   snapshot_cruise_output_percent_ffffbcf8 = cruise_set_speed_ffffbcf8;
   snapshot_current_gear_float_ffffcf1c = current_gear_float_ffffcf1c;
@@ -45227,7 +45313,7 @@ void cruise_set_speed_adjust_integrator(void)
        ((8.0 <= fVar21 && (-1.0 <= DAT_ffffbccc)))) {
       DAT_ffffbd10 = rx8_add_u16_saturate((int)DAT_ffffbd10,1);
     }
-    else if ((throttle_position_1_percent_ffffa9b4 <= cruise_set_speed_ffffbcf8) &&
+    else if ((accelerator_pedal_1_percent_ffffa9b4 <= cruise_set_speed_ffffbcf8) &&
             ((DAT_ffffbbcb == '\0' || ((0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))))) {
       DAT_ffffbd10 = 0;
     }
@@ -45626,7 +45712,7 @@ uint FUN_0002e3dc(void)
   snapshot_DAT_ffffbfa0 = DAT_ffffbfa0;
   fVar4 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0,&cruise_set_speed_kmh_ffff866c);
   fVar5 = DAT_ffffbfac - 0.5;
-  if ((((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < throttle_position_1_percent_ffffa9b4)) ||
+  if ((((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < accelerator_pedal_1_percent_ffffa9b4)) ||
       ((cVar2 == '\0' && (snapshot_DAT_ffffbfb5 == 0)))) ||
      ((snapshot_DAT_ffffbfb5 == 1 &&
       (((0.0 <= snapshot_DAT_ffffbfa0 - fVar4 && (snapshot_DAT_ffffbfa0 - fVar4 <= 1.6)) ||
@@ -45663,7 +45749,7 @@ uint FUN_0002e3dc(void)
 void FUN_0002e54e(void)
 
 {
-  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < throttle_position_1_percent_ffffa9b4)) {
+  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < accelerator_pedal_1_percent_ffffa9b4)) {
     DAT_ffffbd61 = 0;
   }
   else {
@@ -47426,10 +47512,6 @@ char closed_loop_fuel_trim(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ac4c: Table 2D - 182 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * calculate_fuel_amount_per_rotation [high]: Per-injector fuel amounts per rotation: bec8/beec/bed8/bedc/bee0 from injector temp multipliers (bde4/bde8/bdec) * flow rates (be0c/be10/be14) * 6e7/rpm * (tbl 0x6ac4c/360) * 369.472/475.93, minus latencies be40/be44; bee4/bee8 = divide-with-zero-fallback ratios.
  * RAM 0xffffbec8 fuel_amount_per_rotation_a (float): bec8 = fuel amount per rotation (bde4*be0c path) * tbl 0x6ac4c/360 * 369.472; per-injector amounts computed in calculate_fuel_amount_per_rotation.
@@ -47439,6 +47521,10 @@ char closed_loop_fuel_trim(void)
  * RAM 0xffffbee0 fuel_amount_per_rotation_e (float): bee0 = (6e7/rpm - 608 - be44) / fVar5 * 475.93.
  * RAM 0xffffbee4 fuel_ratio_a (float): bee4 = rx8_divide_with_zero_fallback(0x493e8ed3, fVar5); ratio derived from per-rotation amounts.
  * RAM 0xffffbee8 fuel_ratio_b (float): bee8 = rx8_divide_with_zero_fallback(0x48fafa8d, fVar4).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00030948; body bytes: 346; decompiled */
 
@@ -47496,13 +47582,7 @@ void calculate_fuel_amount_per_rotation(void)
 
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ab70: Table 2D - 177 Might be Primary/Secondary Ratio (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ab84: Primary Injector Max Barometric Pressure Correction (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ac60: Secondary Injectors Allowed Threshold - Coolant Temperature Based (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006ab98: Table 2D - 347 Check DataType (RX8Defs data pointer, axes and dimensions match).
- */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* [ADDITIONAL SOURCE REVIEW]
  * primary_secondary_fuel_split [high]: Computes the primary/secondary split in the fuel task 0x20e40 (called between 0x30948 calculate_fuel_amount_per_rotation and 0x30f5c): rpm gates bf36/bf37 from coolant lookups tbl 0x6ac74 (flat 6250) / tbl 0x6ac60 (Secondary Injectors Allowed Threshold), fuel gates bf38/bf39 vs bec8/beb0 (WOT baro correction tbl 0x6ab84), then becd/becc flags and split volumes bef0/bef4/bef8/befc by ratio tbl 0x6ab70 when becc==1. becd is OR-ed into the SSV on-condition by 0x2178c; becc is read by open-loop logic 0x1f0c4/0x1fd48. Dynamically verified in the SH-2E emulator: docs/investigations/60E15120_N3J1E/reviews/intake_solenoids/ssv_secondary_injector_link.py.
@@ -47526,6 +47606,10 @@ void calculate_fuel_amount_per_rotation(void)
  * RAM 0xffffbef4 fuel_volume_secondary_split (float): Secondary-side fuel volume from the 0x30b08 split (0 when becc==0); converted to pulse time in 0x30f5c (x6e7 / 475.93).
  * RAM 0xffffbef8 primary_secondary_split_ratio (float): Ratio lookup_2d_descriptor_scaled(rpm, tbl 0x6ab70) clamped to [0,1] in 0x30b08; used to split beb0 into bef0/bef4 when becc==1.
  * RAM 0xffffbefc fuel_volume_secondary_amount (float): befc = bef8 * beb0, the uncapped secondary amount in 0x30b08 (capped against bec8/bedc when computing bef4).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00030b08; body bytes: 880; decompiled_with_warnings */
 
@@ -47721,12 +47805,12 @@ uint primary_secondary_fuel_split(void)
  * Descriptor 0x0006ab98: Table 2D - 347 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006abc8: Table 2D - 350 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * split_pulse_time_output [high]: Split output stage called from fuel task 0x20e40 right after 0x30b08: converts the split volumes bef0/bef4 into pulse-time values (x6e7 / flow scalars 250.0 0x43b8bc6a primary, 475.93 0x43edf70a secondary) with first-order filtering (bebc) and on/off delay counters bf0c/bf0d, writing bf00/bec4/bec0; selects the all-primary path when bece==0.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * split_pulse_time_output [high]: Split output stage called from fuel task 0x20e40 right after 0x30b08: converts the split volumes bef0/bef4 into pulse-time values (x6e7 / flow scalars 250.0 0x43b8bc6a primary, 475.93 0x43edf70a secondary) with first-order filtering (bebc) and on/off delay counters bf0c/bf0d, writing bf00/bec4/bec0; selects the all-primary path when bece==0.
  */
 /* ROM address: 0x00030f5c; body bytes: 716; decompiled */
 
@@ -48369,16 +48453,16 @@ void apv_control_task(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * apv_target_condition [medium]: Computes APV target state bf8d from RPM >= 150/200 (bf99), counter bf92 > 0x32, aa68; uses MAF a9ec and coolant a98c snapshots.
  * RAM 0xffffbf8d apv_target_state (uint8): APV target condition from RPM/counter/aa68.
  * RAM 0xffffbf8e apv_target_state_prev (uint8): previous bf8d.
  * RAM 0xffffbf92 apv_counter_92 (uint8): > 0x32 term in APV target logic.
  * RAM 0xffffbf99 apv_rpm_low_flag (uint8): RPM >= 200 (clear below 150).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00031c6c; body bytes: 504; decompiled */
 
@@ -48871,13 +48955,13 @@ void FUN_0003242c(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_set_speed_latch [high]: Cruise set-speed state machine: latches set speed IN KM/H into learned readValue cell 0xffff866c (write site 0x32624, pool 0x32662), clamp [0, 200] (100 when 0xffffbd49==1) and floor 27.0 km/h; writes cruise target 0xffffbfa4 clamp [27, 100/200]. Emulator: vss 80 -> 866c=80.0, 250 -> 200.0, 10 -> 27.0. Called from batch 0x2e5c6 (jsr 0x2e620, pool 0x2e77c).
  * RAM 0xffff866c cruise_set_speed_kmh (float): Learned readValue cell with the cruise SET SPEED IN KM/H, written by 0x32614 (site 0x32624, pool 0x32662) clamped [27,200] (100 when 0xffffbd49==1); read by 0x32104/0x3290c/0x329fc/0x2e3dc/0x4ca7e (3.2 km/h tolerance vs 0xffffbfa0) and 0x2d83c. Emulator: vss 80 -> 80.0, 250 -> 200.0, 10 -> 27.0 km/h.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00032614; body bytes: 600; decompiled_with_warnings */
 
@@ -49436,16 +49520,16 @@ void FUN_00032da0(void)
  * Descriptor 0x0006ae58: Fuel Injection - Warmup Fueling - Engine Speed Based (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006ae74: Fuel Injection - Warmup Fueling - Engine Speed Based (Coolant Temp Fault) (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * warmup_fueling_compensation [high]: c014 = tbl 0x6ae28 'Warmup Fueling - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, catalyst-temp model); c018 = 3D tbl 0x6ae58 (or coolant-fault variant 0x6ae74)(rpm, coolant); c00c = c014 + c018; c010 = warmup-complete flag (catalyst-temp model >= 5 C, or >= 200 C when ce33).
  * RAM 0xffffc010 warmup_complete_flag (uint8): c010 = 1 when catalyst-temp model >= 5 C (or >= 200 C when ce33 set); selects warmup vs fault speed-based tables and tip-in table pair.
  * RAM 0xffffc014 warmup_load_multiplier (float): c014 = tbl 0x6ae28 'Warmup - Load Based Multiplier'(load) * 3D tbl 0x6ae3c 'Warmup Fueling'(coolant, cat model).
  * RAM 0xffffc018 warmup_rpm_multiplier (float): c018 = 3D tbl 0x6ae58 (or coolant-fault 0x6ae74)(rpm, coolant).
  * RAM 0xffffc00c warmup_enrichment_total (float): c00c = c014 + c018; feeds calc_fuel_volume_request (0x306e8: min(bf1c, c00c + b120)) and closed_loop_fuel_trim (0x307e0).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00032e08; body bytes: 166; decompiled */
 
@@ -49605,7 +49689,7 @@ LAB_000330a0:
     DAT_ffffc042 = '\x01';
   }
   if (((DAT_ffffc042 == '\0') || (cVar1 = '\x01', DAT_ffffb53a == '\x01')) ||
-     ((DAT_ffffc030 == '\x01' && (cVar1 = '\x01', throttle_position_1_percent_ffffa9b4 < DAT_ffffc028)))) {
+     ((DAT_ffffc030 == '\x01' && (cVar1 = '\x01', accelerator_pedal_1_percent_ffffa9b4 < DAT_ffffc028)))) {
     DAT_ffffc030 = '\0';
   }
   else {
@@ -49650,7 +49734,7 @@ void FUN_00033138(void)
   arg2 = 100.0;
   if (DAT_ffffc030 == '\x01') {
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
-      fVar5 = throttle_position_1_percent_ffffa9b4;
+      fVar5 = accelerator_pedal_1_percent_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
          ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
@@ -49676,7 +49760,7 @@ void FUN_00033138(void)
     }
   }
   else {
-    if (throttle_position_1_percent_ffffa9b4 <= DAT_ffffc028) {
+    if (accelerator_pedal_1_percent_ffffa9b4 <= DAT_ffffc028) {
       DAT_ffffc034 = 0.0;
       DAT_ffffc038 = 100.0;
       DAT_ffffc028 = 100.0;
@@ -49698,12 +49782,12 @@ void FUN_00033138(void)
  * Descriptor 0x0006af2c: Ignition Leading - Cranking Timing Advance (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006af40: Table 2D - 206 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_ratio_calcs [medium]: 0xffffc04c = 0xffffbacc / 0xffffa7ac when engine running; tables 0x6af18(coolant) and 0x6af40(c04c) selected by b534/b53c; 0xffffc050 zeroed when engine stopped. Called from 0x167c0 via pool 0x168dc.
  */
 /* ROM address: 0x0003337c; body bytes: 392; decompiled */
 
@@ -49883,15 +49967,15 @@ void FUN_0003365a(void)
  * Descriptor 0x0006b270: Ignition Timing Threshold A - Knock Retard Reset Off (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b288: Ignition Timing Threshold B - Knock Retard Reset Off (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_threshold_setup [high]: 3D load/RPM level tables 0x6b2b8/0x6b2f0/0x6b2d4/0x6b304 -> a328; raw u16 thresholds 0x6b270/0x6b27c and 0x6b288/0x6b294 -> c090/c092 -> a37e/a37c (defaults 94/193); stability check -> c05d and c0ac hold counter; latches c078 = a324.
  * RAM 0xffffa324 knock_detected (uint8): Set by 0xc486: a364 <= a330 (integrated knock level over threshold); latched into c078 by 0x336c4.
  * RAM 0xffffc092 knock_threshold_b_raw (uint16): Raw u16 threshold B from tbl 0x6b288 (or alt 0x6b294 when cd60 set); moved to a37c.
  * RAM 0xffffc0ac knock_transient_hold_counter (uint16): Counts down tbl 0x6b264 (raw u8 << 1 = 20 cycles) while conditions are stable; expiry sets c05d=1.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000336c4; body bytes: 510; decompiled */
 
@@ -50301,7 +50385,7 @@ undefined2 * FUN_00033dc8(void)
   DAT_ffffc0cc = DAT_ffffc0e0 * DAT_ffffc0ec + DAT_ffffc0d0 * DAT_ffffc0dc +
                  DAT_ffffc0f0 * DAT_ffffc0fc;
   if ((engine_on_time_counter_ffffa426 == 0) ||
-     ((DAT_ffffc108 == '\x01' && (puVar1 = (undefined2 *)0x1, engine_speed_rpm_ffffb548 < 812.5)))) {
+     ((tp_range_high_fault_ffffc108 == '\x01' && (puVar1 = (undefined2 *)0x1, engine_speed_rpm_ffffb548 < 812.5)))) {
     DAT_ffffc0c8 = 0.0;
   }
   else {
@@ -50338,21 +50422,25 @@ void FUN_00033e88(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * plate_range_high_fault [high]: c108 = 1 when ad48 (plate % of 84) >= 200.0f (ROM 0x79be0=0x43480000), clear hysteresis 196.48 = 200.0 - 3.52f (ROM 0x79be4=0x406147ae); pools 0x33f6a=0xad48, 0x33f6c=0xc108. Called from fueling_main_task 0x20e40; consumers 0x33dc8/0x34230 kill accel enrichment.
+ * RAM 0xffffc108 tp_range_high_fault (uint8): Set by 0x33e98 when plate percent ad48 >= 200.0 (hyst 196.48); consumers 0x33dc8/0x34230 zero the accel-enrichment accumulators c0c8/c104.
+ */
 /* ROM address: 0x00033e98; body bytes: 44; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000345c4 (44 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_getThrottlePositionFault__(void)
+void plate_range_high_fault(void)
 
 {
   if (196.48 <= inferred_ram_ad48_ffffad48_ffffad48) {
     if (200.0 <= inferred_ram_ad48_ffffad48_ffffad48) {
-      DAT_ffffc108 = 1;
+      tp_range_high_fault_ffffc108 = 1;
     }
   }
   else {
-    DAT_ffffc108 = 0;
+    tp_range_high_fault_ffffc108 = 0;
   }
   return;
 }
@@ -50364,10 +50452,6 @@ void ref_getThrottlePositionFault__(void)
  * Descriptor 0x0006b160: Table 3D - 79 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b17c: Table 3D - 80 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * load_delta_enrichment [high]: c138 = tbl 0x6b124(load delta c158); c13c = tbl 0x6b0c0(load); c134 = c138*1.0*c13c when c158 >= 0 else 0; c140 = 3D tip-in tbl 0x6b160 (or 0x6b17c when warmup c010) (rpm, coolant); injectors off (a42c) -> c140 = 0; c110 decays toward 1.0 at -0.0078125 when c14c set.
  * RAM 0xffffc158 load_delta_input (float): c158 = load delta input; c134 = tbl 0x6b124(c158) * tbl 0x6b0c0(load) when c158 >= 0.
@@ -50377,6 +50461,10 @@ void ref_getThrottlePositionFault__(void)
  * RAM 0xffffc110 tip_in_decay (float): c110 = max(c110 - 0.0078125, 1.0) when c14c set.
  * RAM 0xffffc140 tip_in_enrichment (float): c140 = 3D tbl 0x6b160 (or 0x6b17c when warmup c010)(rpm, coolant); 0 when injectors off.
  * RAM 0xffffc14c tip_in_mode_flag (uint8): c14c gates the c110 decay in load_delta_enrichment.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00033ec4; body bytes: 164; decompiled */
 
@@ -50581,7 +50669,7 @@ undefined4 FUN_00034230(void)
   DAT_ffffc144 = DAT_ffffc124 * DAT_ffffc130 + tip_in_decay_ffffc110 * load_delta_enrichment_ffffc134 * tip_in_enrichment_ffffc140 +
                  DAT_ffffc114 * DAT_ffffc120;
   DAT_ffffc148 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&DAT_0006b0ac);
-  if ((engine_on_time_counter_ffffa426 == 0) || ((DAT_ffffc108 == '\x01' && (DAT_ffffc148 <= DAT_ffffc01c)))) {
+  if ((engine_on_time_counter_ffffa426 == 0) || ((tp_range_high_fault_ffffc108 == '\x01' && (DAT_ffffc148 <= DAT_ffffc01c)))) {
     uVar1 = 1;
     DAT_ffffc104 = 0.0;
   }
@@ -50753,12 +50841,12 @@ undefined4 * FUN_00034364(void)
  * Descriptor 0x0006b318: Table 2D - 228 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b32c: Table 2D - 229 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * idle_vehicle_speed_flags [medium]: AT branch: 0xffffc1b4 = tbl 0x6b318(vspeed), 0xffffc1b8 = tbl 0x6b32c(rpm), 0xffffc1a0 = c1b4 * clamp((680.0 - rpm)/130.0, 0, 1), 0xffffc1a8 = max(c1a0, c1a8 - c1b8), 0xffffc1bc = rpm >= 680 (clears below 672.1875). Called from 0x167c0 via pool 0x168e4.
  */
 /* ROM address: 0x00034650; body bytes: 356; decompiled */
 
@@ -54719,7 +54807,7 @@ void FUN_00038e12(void)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   FUN_0003d7be();
   FUN_0004591a();
-  FUN_0004595a();
+  tp_correlation_fault_check();
   FUN_00045d90();
   FUN_00045e96();
   FUN_00045b3c();
@@ -55385,7 +55473,7 @@ void FUN_0003a0ec(void)
   ref_setRegister_REG_BIT_VAL(0xfffff746,0x80,DAT_ffffcfb6 == '\x01');
   FUN_00002064(auStack_c[0]);
   ref_setSR_PARAM(&local_10,0xe0);
-  ref_setRegister_REG_BIT_VAL(0xfffff754,1,DAT_ffffcfb7 == '\0');
+  ref_setRegister_REG_BIT_VAL(0xfffff754,1,pe0_relay_flag_ffffcfb7 == '\0');
   FUN_00002064(local_10);
   return;
 }
@@ -58108,13 +58196,13 @@ uint FUN_0003cf7e(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b61c: Table 2D - 256 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * o2_monitor_integrator [high]: c5ec integrator loaded from tbl 0x6b61c vs catalyst-temp model, decays by MAF*0.1; out-of-tolerance check in 0x3cd06 sets c5fc/c5fd; 0x3ccec calls it then sets c5f0=-40.0, c5f4=200.0. | promoted to high (binary-level re-verification (this pass))
  * RAM 0xffffa42c engine_injectors_off (uint8): Injectors-off flag checked by the 0x3d010 O2 monitor integrator.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0003d010; body bytes: 286; decompiled_with_warnings */
 
@@ -60589,13 +60677,13 @@ undefined2 * FUN_0003fa18(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b66c: Table 3D - 123 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * o2_response_monitor_accumulate [high]: 4-channel filtered-lambda/AFR delta accumulator: snapshots 0xffffc708/0c/10/14, shifts 10-entry rings 0xffffc7f4 (float) and 0xffffc870 (u16), reloads per-channel counters 0xffffc7ba-0xffffc7d8 from 3-D tbl descriptor 0x6b66c (nx=9 ny=9 ax=0x7ad48 ay=0x7ad6c data=0x7ad90 type=0, ROM bytes verified) on (engine_load 0xffffc0b4, engine_speed_rpm 0xffffb548); accumulates max/min deltas 0xffffc724-0xffffc77c, sign/deviation bits 0xffffc7de-0xffffc7e5, tolerance band float 1e-5 (0x3727c5ac) via mova pool 0x41220 (refs 0x41140/0x41156/0x4116a/0x4117e). Outputs ratios 0xffffc6f0/c6f4/c780/c784 and flag 0xffffc701, consumed by 0x4128e. Called from slow-task batch 0x38f3e (jsr at 0x38f74; pool word 0x390b0 = 0x3fb9e). Channel inputs filtered by 0x3f924 (called from 0x38dca).
  * RAM 0xffffc710 o2_channel_lambda_slow (float): First-order filtered actual lambda 0xffffadec, factor 0.1; one of the four channels delta-accumulated in 0x3fb9e.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0003fb9e; body bytes: 4884; decompiled */
 
@@ -61300,10 +61388,6 @@ void o2_response_monitor_accumulate(void)
  * Descriptor 0x0006b6b8: Table 3D - 89 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b6d4: Table 3D - 90 (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * o2_response_monitor_evaluate [high]: Evaluates the 0x3fb9e accumulators: thresholds from 3-D tbl descriptors 0x6b680/0x6b69c/0x6b6b8/0x6b6d4 (load,rpm; ROM bytes verified) -> 0xffffc6f8/c6fc/c798/c79c; ratio<=threshold sets pass flags 0xffffc7ea-0xffffc7e9, else fail flags 0xffffc7e6-0xffffc7e9; any-fail -> 0x5fd38(0x1c,1) pending, all-four-fail -> 0x5fd38(0x1c,2) confirmed. Fault id 0x1c -> id2slot u16 @0x7df7a = 0x1b -> code u16 @0x7e596 = 0x0133 = P0133 front HO2S slow response (data/dtc/60E15120_N3J1E.tsv slot 1b). Mode-06 test results written by 0x58262 (0xffffc6f0) and 0x5831c (0xffffc6f4) via 0x5904a. Called from 0x38f3e (jsr at 0x38f7a).
  * RAM 0xffffc6f0 o2_monitor_ratio_ch0 (float): Accumulated amplitude ratio channel 0 (0xffffc758/0xffffc728) from 0x3fb9e; compared vs threshold 0xffffc6f8 in 0x4128e; mode-06 result via 0x58262 (encode step 0.0039062).
@@ -61312,6 +61396,10 @@ void o2_response_monitor_accumulate(void)
  * RAM 0xffffc701 o2_monitor_fluctuation_detected (uint8): Set by 0x3fb9e when the counter window completes (0xffffc904==0); gates the ratio evaluation in 0x4128e.
  * RAM 0xffffc704 o2_monitor_accum_gate (uint8): Delta-accumulation gate set in o2_response_monitor_accumulate 0x3fb9e (every 2nd run, c908, when 0xffffc700==1 && 0xffffc7b0==0 && 0xffffc7b8 != 0x32; cleared when 0xffffd1c5 set; pool read at 0x413ae in 0x4128e). With 0xffffae21 it gates the threshold running averages 0xffffc6f8/c6fc/c798/c79c (asm 0x413ae-0x413c2).
  * RAM 0xffffae21 o2_monitor_enable (uint8): O2-monitor enable computed by FUN_0001d1ca: 1 when 0xffffc700==1 OR (closed_loop_active 0xffffae1f AND coolant 0xffffa98c >= 150.0 AND 0xffffad24==1 AND 0xffffae20==0); also gates the half-period timers 0xffffae1a/0xffffae1c (0x1d2e2). Read at 0x413ba in 0x4128e (pool 0x41480).
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0004128e; body bytes: 610; decompiled */
 
@@ -61450,7 +61538,7 @@ uint FUN_0004162e(void)
 
 {
   uint uVar1;
-  float snapshot_DAT_ffffb354;
+  float snapshot_ch7d_pwm_duty_percent_ffffb354;
   
   uVar1 = (uint)DAT_ffffd1c5;
   if (uVar1 == 1) {
@@ -61458,8 +61546,8 @@ uint FUN_0004162e(void)
     DAT_ffffc918 = 0;
   }
   else {
-    snapshot_DAT_ffffb354 = DAT_ffffb354;
-    if (DAT_ffffb354 < 90.0) {
+    snapshot_ch7d_pwm_duty_percent_ffffb354 = ch7d_pwm_duty_percent_ffffb354;
+    if (ch7d_pwm_duty_percent_ffffb354 < 90.0) {
       uVar1 = (uint)DAT_ffffc910;
       if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffcd09, uVar1 == 0)) {
         uVar1 = rx8_add_u16_saturate((int)DAT_ffffc916,1);
@@ -61469,7 +61557,7 @@ uint FUN_0004162e(void)
         DAT_ffffc916 = 0;
       }
     }
-    if (10.0 <= snapshot_DAT_ffffb354) {
+    if (10.0 <= snapshot_ch7d_pwm_duty_percent_ffffb354) {
       uVar1 = (uint)DAT_ffffc910;
       if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffcd08, uVar1 == 1)) {
         uVar1 = rx8_add_u16_saturate((int)DAT_ffffc918,1);
@@ -61502,7 +61590,7 @@ undefined2 * FUN_000416bc(void)
     if (puVar1 != (undefined2 *)((int)&vector_Poweron_Reset + 1)) {
       return puVar1;
     }
-    if (DAT_ffffb354 < 90.0) {
+    if (ch7d_pwm_duty_percent_ffffb354 < 90.0) {
       puVar1 = &DAT_ffffc916;
       if (DAT_ffffc916 < 0x80) {
         if (DAT_ffffc916 < 8) {
@@ -61515,7 +61603,7 @@ undefined2 * FUN_000416bc(void)
         DAT_ffffc911 = 0;
       }
     }
-    if (DAT_ffffb354 < 10.0) {
+    if (ch7d_pwm_duty_percent_ffffb354 < 10.0) {
       return puVar1;
     }
     puVar1 = &DAT_0007de10;
@@ -61575,7 +61663,7 @@ uint FUN_00041818(void)
   
   uVar1 = ref_getFaultStatus__(2);
   uVar1 = uVar1 & 0xff;
-  if (((uVar1 == 0) && (uVar1 = (uint)DAT_ffffb358, uVar1 == 1)) && (DAT_ffffd1c5 == '\0')) {
+  if (((uVar1 == 0) && (uVar1 = (uint)ch7d_pwm_enable_ffffb358, uVar1 == 1)) && (DAT_ffffd1c5 == '\0')) {
     DAT_ffffc91e = 0x1905 < DAT_ffffc920;
     uVar1 = rx8_add_u16_saturate((int)(short)DAT_ffffc920,1);
     DAT_ffffc920 = (ushort)uVar1;
@@ -62098,7 +62186,7 @@ undefined1 * FUN_00042354(void)
       uVar1 = ref_getFaultStatus__(0x19);
       puVar2 = (undefined1 *)(uVar1 & 0xff);
       if (((puVar2 == (undefined1 *)0x0) &&
-          (puVar2 = (undefined1 *)(uint)DAT_ffffb358,
+          (puVar2 = (undefined1 *)(uint)ch7d_pwm_enable_ffffb358,
           puVar2 == (undefined1 *)((int)&vector_Poweron_Reset + 1U))) && (DAT_ffffd1c5 == '\0')) {
         DAT_ffffc978 = 1;
         return &DAT_ffffc978;
@@ -62269,9 +62357,9 @@ uint FUN_00042548(void)
   uint uVar1;
   uint extraout_r0;
   
-  uVar1 = (uint)DAT_ffffb358;
+  uVar1 = (uint)ch7d_pwm_enable_ffffb358;
   if (uVar1 == 1) {
-    DAT_ffffc974 = rx8_min_float(1e+06,DAT_ffffb354 + DAT_ffffc974);
+    DAT_ffffc974 = rx8_min_float(1e+06,ch7d_pwm_duty_percent_ffffb354 + DAT_ffffc974);
     uVar1 = extraout_r0;
   }
   else {
@@ -62290,10 +62378,10 @@ uint FUN_00042548(void)
 uint FUN_00042578(void)
 
 {
-  byte snapshot_DAT_ffffb358;
+  byte snapshot_ch7d_pwm_enable_ffffb358;
   uint uVar2;
   
-  snapshot_DAT_ffffb358 = DAT_ffffb358;
+  snapshot_ch7d_pwm_enable_ffffb358 = ch7d_pwm_enable_ffffb358;
   if (DAT_ffffd1c5 == '\x01') {
     DAT_ffffc97f = 0;
     DAT_ffffc980 = 0;
@@ -62302,7 +62390,7 @@ uint FUN_00042578(void)
     DAT_ffffc992 = 0;
     return 1;
   }
-  if ((((DAT_ffffc978 != '\x01') || (DAT_ffffb358 != 1)) || (DAT_ffffc98e < 0x9d)) ||
+  if ((((DAT_ffffc978 != '\x01') || (ch7d_pwm_enable_ffffb358 != 1)) || (DAT_ffffc98e < 0x9d)) ||
      (DAT_ffffc974 < 17000.0)) {
     DAT_ffffc990 = 0;
   }
@@ -62322,7 +62410,7 @@ uint FUN_00042578(void)
   }
   DAT_ffffc992 = 0;
 LAB_0004266e:
-  uVar2 = (uint)snapshot_DAT_ffffb358;
+  uVar2 = (uint)snapshot_ch7d_pwm_enable_ffffb358;
   if (uVar2 == 1) {
     uVar2 = rx8_add_u16_saturate((int)(short)DAT_ffffc98e,1);
     DAT_ffffc98e = (ushort)uVar2;
@@ -63533,14 +63621,14 @@ void ref_throttleLiftInitStuff(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_leading_filter [high]: was ref_calculateCrankingTimingLeading. When cranking (aa62==1 && b53c==1): caa4 = lookup_2d(ECT, tbl 0x6b630 'Off Throttle Leading Timing Realted'); ca9c = first_order_filter(caa4, ca9c, 1.0, 1e-5) (or divide-with-fallback on first edge). Else 0. Feeds +ca9c in 0x123da.
  * RAM 0xffffca9c cranking_angle_timing_leading_filtered (float): mov.w pool 0x43a1c (sign-extends to 0xffffca9c) in 0x43934 cranking_timing_leading_filter and 0x4391c, pool 0x12538 in 0x123da; filtered = raw / period via rx8_divide_with_zero_fallback, stored by 0x43934.
  * RAM 0xffffcaa4 cranking_angle_timing_leading_raw (float): mov.l pool 0x43a28 in 0x4391c and 0x43934; raw leading = lookup_2d(ECT, tbl 0x6b630) stored by 0x43934 cranking_timing_leading_filter.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00043934; body bytes: 126; decompiled */
 
@@ -63579,14 +63667,14 @@ uint cranking_timing_leading_filter(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cranking_timing_trailing_filter [high]: Trailing mirror of 0x43934: caa8 = lookup_2d(ECT, tbl 0x6b644 'Ignition Trailing - Cranking Timing Advance'); caa0 filtered. Feeds +caa0 in 0x124d6.
  * RAM 0xffffcaa0 cranking_angle_timing_trailing_filtered (float): mov.w pool 0x43a1e (sign-extends to 0xffffcaa0) in 0x439b2 cranking_timing_trailing_filter and 0x43928, pool 0x12686 in 0x124d6; filtered trailing value stored by 0x439b2.
  * RAM 0xffffcaa8 cranking_angle_timing_trailing_raw (float): mov.l pool 0x43a2c in 0x43928 and 0x439b2; raw trailing = lookup_2d(ECT, tbl 0x6b644) stored by 0x439b2 cranking_timing_trailing_filter.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x000439b2; body bytes: 126; decompiled */
 
@@ -64510,13 +64598,13 @@ undefined4 * FUN_00044a1e(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * misfire_threshold_rpm_lookup [high]: DAT_ffffcb8c = lookup_2d_scaled(rpm, tbl 0x6b9f4 [12 cells, RPM axis 0x7c43c = 780..8500]); DAT_ffffcb90 = lookup(rpm, tbl 0x6ba00 [12 cells, axis 0x7c49c]). Called from 0x287aa.
  * RAM 0xffffcb8c misfire_threshold_rpm_a (float): RPM-dependent misfire threshold from tbl 0x6b9f4 (12 cells, axis 0x7c43c = 780..8500 rpm); used by 0x447e2 as cb8c*ba44 < ba48. Second threshold DAT_ffffcb90 from tbl 0x6ba00.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00044a78; body bytes: 38; decompiled */
 
@@ -64532,17 +64620,13 @@ void FUN_00044a78(void)
 }
 
 
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006ba0c: Load Limit A (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006ba18: Load Limit B (RX8Defs data pointer, axes and dimensions match).
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_threshold_load_lookup [high]: DAT_ffffcb94 = lookup(rpm, tbl_load_limit_a_0006ba0c); DAT_ffffcb98 = lookup(rpm, tbl_load_limit_b_0006ba18) (both 12 cells, axes 0x7c4fc/0x7c55c). Called from 0x287aa.
+ * RAM 0xffffcb94 misfire_threshold_load_a (float): Load Limit A lookup (tbl 0x6ba0c) -> DAT_ffffcb94, Load Limit B (0x6ba18) -> DAT_ffffcb98 (0x44a9e); used by 0x4489c as cb94*ba54 < ba58 || cb98*ba54 < ba50.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * misfire_threshold_load_lookup [high]: DAT_ffffcb94 = lookup(rpm, tbl_load_limit_a_0006ba0c); DAT_ffffcb98 = lookup(rpm, tbl_load_limit_b_0006ba18) (both 12 cells, axes 0x7c4fc/0x7c55c). Called from 0x287aa.
- * RAM 0xffffcb94 misfire_threshold_load_a (float): Load Limit A lookup (tbl 0x6ba0c) -> DAT_ffffcb94, Load Limit B (0x6ba18) -> DAT_ffffcb98 (0x44a9e); used by 0x4489c as cb94*ba54 < ba58 || cb98*ba54 < ba50.
  */
 /* ROM address: 0x00044a9e; body bytes: 38; decompiled */
 
@@ -65325,7 +65409,7 @@ uint FUN_000458e8(void)
   
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8760,1);
   if ((uVar1 & 0xff) == 1) {
-    uVar1 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff872c,0);
+    uVar1 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,0);
     return uVar1;
   }
   return uVar1 & 0xff;
@@ -65337,7 +65421,7 @@ uint FUN_000458e8(void)
 void FUN_0004590a(void)
 
 {
-  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff872c,0);
+  ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,0);
   return;
 }
 
@@ -65347,7 +65431,7 @@ void FUN_0004590a(void)
 void FUN_00045912(void)
 
 {
-  ref_validateAddressCopy_8bit_ADDRESS__(&DAT_ffff872c);
+  ref_validateAddressCopy_8bit_ADDRESS__(&tp_correlation_fault_latch_ffff872c);
   return;
 }
 
@@ -65361,7 +65445,7 @@ undefined4 FUN_0004591a(void)
   
   cVar1 = ref_getFaultStatus__(0x6c);
   if (((cVar1 == '\0') && (DAT_ffffccc2 == '\x01')) &&
-     (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff872c,0), cVar1 == '\0')) {
+     (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&tp_correlation_fault_latch_ffff872c,0), cVar1 == '\0')) {
     DAT_ffffcbf0 = 1;
     return 0;
   }
@@ -65370,12 +65454,19 @@ undefined4 FUN_0004591a(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * tp_correlation_fault_check [high]: APP1/APP2 (pedal) zeroed-volts correlation |a9ac - a9b0|: limit 3.5f on every rung of the pedal-2 ladder (breakpoints 0x7c76c/0x7c770/0x7c774/0x7c778 = 0.6/1.2/2.0/4.0, limits 0x7c77c-0x7c78c) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375); monitor gated by 0xffffcbf0==1; good counter cbf2 >= 25 (u16 0x7c794) -> cbec=1; bad counter cbee >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. The tp_ prefix in the alias names is a carry-over: the operands are the pedal channels. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
+ * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when the pedal bad-correlation counter cbee >= 29 (u16 0x7c796) -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
+ * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when the pedal good-correlation counter cbf2 >= 25 (u16 0x7c794).
+ * RAM 0xffffcbf2 tp_correlation_good_counter (uint16): Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); >= 25 (u16 0x7c794) -> 0xffffcbec=1.
+ * RAM 0xffffcbee tp_correlation_bad_counter (uint16): Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee).
+ */
 /* ROM address: 0x0004595a; body bytes: 290; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000449e6 (118 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0004595a(void)
+uint tp_correlation_fault_check(void)
 
 {
   char cVar2;
@@ -65385,12 +65476,12 @@ uint FUN_0004595a(void)
   float fVar5;
   
   fVar5 = DAT_ffffa9b0;
-  fVar4 = rx8_absolute_difference(DAT_ffffa9ac,DAT_ffffa9b0);
+  fVar4 = rx8_absolute_difference(pedal_1_volts_zeroed_ffffa9ac,DAT_ffffa9b0);
   if (DAT_ffffcbf0 != '\x01') {
-    DAT_ffffcbf2 = 0;
+    tp_correlation_good_counter_ffffcbf2 = 0;
     goto LAB_00045a72;
   }
-  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8078,0);
+  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&learned_pedal_zero_valid_ffff8078,0);
   if (cVar2 == '\x01') {
     if (fVar5 < 0.6) {
       pfVar3 = (float *)&DAT_0007c77c;
@@ -65419,30 +65510,30 @@ LAB_00045a24:
     fVar5 = *pfVar3;
   }
   if (fVar4 < fVar5) {
-    if (0x18 < DAT_ffffcbf2) {
-      DAT_ffffcbee = 0;
-      DAT_ffffcbec = 1;
+    if (0x18 < tp_correlation_good_counter_ffffcbf2) {
+      tp_correlation_bad_counter_ffffcbee = 0;
+      tp_correlation_ok_ffffcbec = 1;
     }
-    DAT_ffffcbf2 = rx8_add_u16_saturate((int)(short)DAT_ffffcbf2,1);
+    tp_correlation_good_counter_ffffcbf2 = rx8_add_u16_saturate((int)(short)tp_correlation_good_counter_ffffcbf2,1);
   }
   else {
-    DAT_ffffcbf2 = 0;
-    DAT_ffffcbee = rx8_add_u16_saturate((int)(short)DAT_ffffcbee,1);
-    if (0x1c < DAT_ffffcbee) {
-      ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff872c,1);
+    tp_correlation_good_counter_ffffcbf2 = 0;
+    tp_correlation_bad_counter_ffffcbee = rx8_add_u16_saturate((int)(short)tp_correlation_bad_counter_ffffcbee,1);
+    if (0x1c < tp_correlation_bad_counter_ffffcbee) {
+      ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,1);
     }
   }
 LAB_00045a72:
-  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff872c,0);
+  cVar2 = ref_readValue_8bit_ADDRESS_VAL(&tp_correlation_fault_latch_ffff872c,0);
   if (cVar2 == '\x01') {
     uVar1 = dtc_set_fault_x0(0x6c,1);
     return uVar1;
   }
-  if (DAT_ffffcbec == 1) {
+  if (tp_correlation_ok_ffffcbec == 1) {
     uVar1 = dtc_set_fault_x0(0x6c,2);
     return uVar1;
   }
-  return (uint)DAT_ffffcbec;
+  return (uint)tp_correlation_ok_ffffcbec;
 }
 
 
@@ -65496,7 +65587,7 @@ uint FUN_00045b3c(void)
   cVar2 = ref_getFaultStatus__(0x67);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8730,0), cVar2 == '\0')) {
-    if (DAT_ffffa110 == '\x01') {
+    if (pedal_range_fault_1_ffffa110 == '\x01') {
       DAT_ffffcbf6 = rx8_add_u16_saturate((int)(short)DAT_ffffcbf6,1);
       DAT_ffffcbf8 = 0;
       if (0x18 < DAT_ffffcbf6) {
@@ -65538,7 +65629,7 @@ uint FUN_00045c42(void)
   cVar2 = ref_getFaultStatus__(0x66);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8732,0), cVar2 == '\0')) {
-    if (DAT_ffffa110 == '\x02') {
+    if (pedal_range_fault_1_ffffa110 == '\x02') {
       DAT_ffffcbfa = rx8_add_u16_saturate((int)(short)DAT_ffffcbfa,1);
       DAT_ffffcbfc = 0;
       if (0x18 < DAT_ffffcbfa) {
@@ -65619,7 +65710,7 @@ uint FUN_00045d90(void)
   cVar2 = ref_getFaultStatus__(0x69);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8734,0), cVar2 == '\0')) {
-    if (DAT_ffffa111 == '\x01') {
+    if (pedal_range_fault_2_ffffa111 == '\x01') {
       DAT_ffffcc02 = rx8_add_u16_saturate((int)(short)DAT_ffffcc02,1);
       DAT_ffffcc04 = 0;
       if (0x18 < DAT_ffffcc02) {
@@ -65664,7 +65755,7 @@ uint FUN_00045e96(void)
   cVar2 = ref_getFaultStatus__(0x68);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8736,0), cVar2 == '\0')) {
-    if (DAT_ffffa111 == '\x02') {
+    if (pedal_range_fault_2_ffffa111 == '\x02') {
       DAT_ffffcc06 = rx8_add_u16_saturate((int)(short)DAT_ffffcc06,1);
       DAT_ffffcc08 = 0;
       if (0x18 < DAT_ffffcc06) {
@@ -65998,7 +66089,7 @@ undefined4 FUN_00046392(void)
   cVar1 = ref_getFaultStatus__(0x46);
   if ((((cVar1 == '\0') && (DAT_ffffccc3 == '\x01')) &&
       (cVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8740,0), cVar1 == '\0')) &&
-     ((DAT_ffffccbc == '\0' && (DAT_ffffccbd == '\0')))) {
+     ((throttle_servo_mode_ffffccbc == '\0' && (DAT_ffffccbd == '\0')))) {
     DAT_ffffcc28 = 1;
   }
   else {
@@ -66793,11 +66884,11 @@ uint FUN_000470d0(void)
   float snapshot_engine_speed_rpm_ffffb548;
   
   cVar7 = DAT_ffffcc9f;
-  cVar6 = DAT_ffffcc99;
-  cVar5 = DAT_ffffcc98;
+  cVar6 = limp_home_request_ffffcc99;
+  cVar5 = plate_tp2_source_select_ffffcc98;
   snapshot_candidate_idle_learn_flag_ffffcc91 = candidate_idle_learn_flag_ffffcc91;
   cVar3 = DAT_ffffb53a;
-  snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_pedal_volts_ffffad5e_ffffad5e;
+  snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e;
   snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;
@@ -67096,21 +67187,21 @@ char FUN_00047610(void)
     DAT_ffffcc95 = 0;
   }
   if ((bVar1) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc98 = 1;
+    plate_tp2_source_select_ffffcc98 = 1;
     bVar1 = true;
   }
   else {
-    DAT_ffffcc98 = 0;
+    plate_tp2_source_select_ffffcc98 = 0;
     bVar1 = false;
   }
   if ((bVar2) || (DAT_ffffb50a == '\x01')) {
-    DAT_ffffcc99 = '\x01';
+    limp_home_request_ffffcc99 = '\x01';
   }
   else {
-    DAT_ffffcc99 = '\0';
+    limp_home_request_ffffcc99 = '\0';
   }
   cVar3 = '\x01';
-  if ((bVar1) || (cVar3 = DAT_ffffcc99, DAT_ffffcc99 == '\x01')) {
+  if ((bVar1) || (cVar3 = limp_home_request_ffffcc99, limp_home_request_ffffcc99 == '\x01')) {
     DAT_ffffcc9a = 1;
   }
   else {
@@ -67130,7 +67221,7 @@ char FUN_00047704(void)
   char cVar3;
   char cVar4;
   
-  cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff872c,0);
+  cVar3 = ref_readValue_8bit_ADDRESS_VAL(&tp_correlation_fault_latch_ffff872c,0);
   cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8730,0);
   if ((cVar4 == '\x01') ||
      (cVar4 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8732,0), cVar4 == '\x01')) {
@@ -67559,7 +67650,7 @@ undefined2 * FUN_00048202(void)
           ((DAT_ffffb4fe == '\x01' && ((DAT_ffffb4fc == '\x01' && (DAT_ffffcc5d == '\x01')))))) &&
          (DAT_ffffcbf4 == '\x01')) &&
         (((DAT_ffffcbf5 == '\x01' && (DAT_ffffcc00 == '\x01')) && (DAT_ffffcc01 == '\x01')))) &&
-       (((DAT_ffffcbec == '\x01' && (DAT_ffffcbd4 == '\x01')) &&
+       (((tp_correlation_ok_ffffcbec == '\x01' && (DAT_ffffcbd4 == '\x01')) &&
         ((DAT_ffffb50d == '\x01' && ((DAT_ffffcc6d == '\x01' && (DAT_ffffcc14 == '\x01')))))))) &&
       (((DAT_ffffb4f1 == '\x01' &&
         (((DAT_ffffb519 == '\x01' && (DAT_ffffb501 == '\x01')) && (DAT_ffffb504 == '\x01')))) &&
@@ -67820,12 +67911,12 @@ undefined2 * FUN_0004876c(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * engine_stop_conditions_eval [high]: Engine-stop/shutdown condition evaluator (called from the slow-task step 0x22f86): snapshots rpm 0xffffb548 (pool 0x48884), battery 0xffffb590 (0x48886), coolant 0xffffa98c (0x48888); rpm < 200/300 -> 0xffffccec, voltage < 5.8/6.0 -> 0xffffcced, coolant < 98/100 -> 0xffffccee/0xffffccef; reads E2-shadow flags 0xffff873c/0xffff809e/0xffff809c/0xffff8104/0xffff80a0/0xffff80a2/0xffff8764 via 0x3db54/0x3dc70; sets 0xffffccbc-bf/ccc0/ccc9 from engine flag 0xffffaa68 (pool 0x4888e), injectors-off 0xffffa42c, counters 0xffffccb4/ccb6/ccba and stored flag 0xffffb4ed.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * engine_stop_conditions_eval [high]: Engine-stop/shutdown condition evaluator (called from the slow-task step 0x22f86): snapshots rpm 0xffffb548 (pool 0x48884), battery 0xffffb590 (0x48886), coolant 0xffffa98c (0x48888); rpm < 200/300 -> 0xffffccec, voltage < 5.8/6.0 -> 0xffffcced, coolant < 98/100 -> 0xffffccee/0xffffccef; reads E2-shadow flags 0xffff873c/0xffff809e/0xffff809c/0xffff8104/0xffff80a0/0xffff80a2/0xffff8764 via 0x3db54/0x3dc70; sets 0xffffccbc-bf/ccc0/ccc9 from engine flag 0xffffaa68 (pool 0x4888e), injectors-off 0xffffa42c, counters 0xffffccb4/ccb6/ccba and stored flag 0xffffb4ed.
  */
 /* ROM address: 0x000487d6; body bytes: 960; decompiled_with_warnings */
 
@@ -67913,8 +68004,8 @@ uint engine_stop_conditions_eval(void)
     DAT_ffffccf0 = '\x01';
   }
   if ((((((DAT_ffffccec == '\0') && (DAT_ffffcced == '\x01')) && (shutdown_allowed_ffffccc1 == '\x01')) &&
-       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (DAT_ffffcc98 == '\0')) &&
-     ((DAT_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
+       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (plate_tp2_source_select_ffffcc98 == '\0')) &&
+     ((limp_home_request_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
     bVar1 = true;
   }
   else {
@@ -67922,7 +68013,7 @@ uint engine_stop_conditions_eval(void)
   }
   if ((((cVar2 == '\0') && (DAT_ffffccb6 < 0x271)) && (DAT_ffffccba == 1)) &&
      ((bVar5 == 0 && (bVar1)))) {
-    DAT_ffffccbc = 1;
+    throttle_servo_mode_ffffccbc = 1;
     DAT_ffffccbd = 0;
     DAT_ffffccbe = 0;
     DAT_ffffccbf = 0;
@@ -67931,9 +68022,9 @@ uint engine_stop_conditions_eval(void)
   else if ((((((cVar2 == '\x01') && (engine_injectors_off_ffffa42c == '\0')) &&
              ((DAT_ffffccee == '\0' || (DAT_ffffccef == '\x01')))) &&
             (((DAT_ffffccf0 == '\x01' && (cVar6 == '\0')) && (cVar7 == '\x01')))) || (cVar8 == '\0')
-           ) && ((((DAT_ffffad60 == '\x01' || (DAT_ffffad61 == '\x01')) || (cVar9 == '\x01')) &&
+           ) && ((((tp_plausibility_fault_a_ffffad60 == '\x01' || (tp_plausibility_fault_b_ffffad61 == '\x01')) || (cVar9 == '\x01')) &&
                  ((DAT_ffffccb4 < 0x271 && (bVar1)))))) {
-    DAT_ffffccbc = 1;
+    throttle_servo_mode_ffffccbc = 1;
     DAT_ffffccbd = 0;
     DAT_ffffccbe = 0;
     DAT_ffffccbf = 0;
@@ -67953,7 +68044,7 @@ uint engine_stop_conditions_eval(void)
         DAT_ffffccc9 = 1;
       }
       if (DAT_ffffcca2 != '\x01') {
-        DAT_ffffccbc = 0;
+        throttle_servo_mode_ffffccbc = 0;
         DAT_ffffccbd = 0;
         DAT_ffffccbe = 0;
         DAT_ffffccbf = 1;
@@ -67962,7 +68053,7 @@ uint engine_stop_conditions_eval(void)
       DAT_ffffccbd = 0;
       DAT_ffffccbe = 1;
     }
-    DAT_ffffccbc = 0;
+    throttle_servo_mode_ffffccbc = 0;
     DAT_ffffccbf = 0;
   }
 LAB_00048c3a:
@@ -68019,7 +68110,7 @@ uint shutdown_allowed_flag(void)
   if (((engine_running_flag_ffffaa68 == '\x01') ||
       ((uVar1 = (uint)DAT_ffffb4ee, uVar1 == 1 && (uVar1 = (uint)DAT_ffffccb6, uVar1 < 0x271)))) &&
      (DAT_ffffcca0 == '\0')) {
-    if ((DAT_ffffad60 != '\x01') && (DAT_ffffad61 != '\x01')) {
+    if ((tp_plausibility_fault_a_ffffad60 != '\x01') && (tp_plausibility_fault_b_ffffad61 != '\x01')) {
       uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a2,1);
       if ((uVar1 & 0xff) != 1) {
         shutdown_allowed_ffffccc1 = 0;
@@ -68147,7 +68238,7 @@ uint FUN_00048ecc(void)
   fVar6 = rx8_absolute_difference(DAT_ffffb4bc,0.0);
   fVar7 = rx8_absolute_difference(fVar7,DAT_ffffcce0);
   bVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff80a0,0);
-  uVar2 = (uint)DAT_ffffccbc;
+  uVar2 = (uint)throttle_servo_mode_ffffccbc;
   if (((uVar2 != 1) || (fVar6 < 80.0)) ||
      (((bVar3 != 0 || (100.0 <= fVar7)) && ((uVar2 = (uint)bVar3, uVar2 != 1 || (100.0 <= fVar7)))))
      ) {
@@ -68241,7 +68332,7 @@ void FUN_00049080(void)
 {
   undefined4 uVar1;
   
-  if ((((DAT_ffffb2cf == '\x01') || (DAT_ffffc030 == '\x01')) || (DAT_ffffccbc == '\x01')) ||
+  if ((((dsc_torque_limit_active_ffffb2cf == '\x01') || (DAT_ffffc030 == '\x01')) || (throttle_servo_mode_ffffccbc == '\x01')) ||
      (DAT_ffffccbb == '\x01')) {
     uVar1 = 1;
   }
@@ -68253,12 +68344,12 @@ void FUN_00049080(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * jump_to_FUN_00049112 [high]: 4-byte body: word 0xa00b = `bra 0x49112` + delay-slot word 0x0009 (ROM-verified at 0x000490f8). Direct tail-jump to `FUN_00049112` 0x00049112; callers in callgraph: 0x00019640. Upstream name `thunk_FUN_00049112` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * jump_to_FUN_00049112 [high]: 4-byte body: word 0xa00b = `bra 0x49112` + delay-slot word 0x0009 (ROM-verified at 0x000490f8). Direct tail-jump to `FUN_00049112` 0x00049112; callers in callgraph: 0x00019640. Upstream name `thunk_FUN_00049112` is Ghidra's mechanical thunk auto-name (single-jump function), not a semantic label and not an uncertainty marker - the target is proven from the bra displacement resp. the PC-relative literal pool, so renamed per the label ladder (rule 6).
  */
 /* ROM address: 0x000490f8; body bytes: 4; decompiled */
 
@@ -69342,10 +69433,10 @@ char FUN_0004a11c(void)
       (cVar1 = '\x01', DAT_ffffc914 == '\x01')) ||
      (((cVar1 = '\x01', DAT_ffffc96d == '\x01' || (cVar1 = '\x01', DAT_ffffc96f == '\x01')) ||
       (cVar1 = DAT_ffffc971, DAT_ffffc971 == '\x01')))) {
-    DAT_ffffcd70 = 1;
+    throttle_fault_latch_ffffcd70 = 1;
   }
   else {
-    DAT_ffffcd70 = 0;
+    throttle_fault_latch_ffffcd70 = 0;
   }
   return cVar1;
 }
@@ -71700,7 +71791,7 @@ void cruise_enable_pedal_override(void)
 
 {
   DAT_ffffcf18 = cruise_set_speed_ffffbcf8;
-  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < throttle_position_1_percent_ffffa9b4)) {
+  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < accelerator_pedal_1_percent_ffffa9b4)) {
     cruise_enable_flag_ffffcf34 = 0;
   }
   else {
@@ -71769,13 +71860,13 @@ undefined1 * FUN_0004c9b2(void)
  * Descriptor 0x0006bc64: Table 2D - 402 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc70: Table 2D - 403 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_speed_error_filter_stage [high]: Cruise stage in batch 0x2e692 (jsr via pool 0x2e7dc at 0x2e6c6; batch called from task[10] body 0x11744). Debounces cruise switch flags 0xffffcf47-0xffffcf4c (0x3e=62 counts -> 0xffffcf5c-0xffffcf63), clamps the 12-sample mean 0xffffcee4 (ring 0xffffceb4-0xffffcedc shifted by 0x4dce8) to +/-15.0, first-order filter factor 0.1 -> 0xffffcef0/0xffffceec, adds per-switch vehicle-speed offsets from 2-D tbl descriptors 0x6bc40-0x6bc70 (n=10, ax 0x7d368-0x7d4a8, data 0x7d390-0x7d4d0, type 0; ROM bytes verified) -> output 0xffffcef4; 3.2f tolerance (0x404ccccd @ROM 0x7d0c8/0x7d0cc via ptr pools 0x4ce14/0x4ce1c) vs 0xffffbfa0/0xffffbfac and readValue float 0xffff866c. Switch source: 0x4c828 decodes 0xffffbaed (1-6) into cf47-4c.
  * RAM 0xffffcee4 cruise_speed_error_mean12 (float): Mean of the 12-sample ring 0xffffceb4-0xffffcedc computed by 0x4dce8 (sum/12.0); clamped to +/-15.0 and filtered by 0x4ca7e.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0004ca7e; body bytes: 2200; decompiled_with_warnings */
 
@@ -72164,14 +72255,14 @@ void FUN_0004d4a6(void)
  * Descriptor 0x0006bc1c: Table 2D - 396 Check DataType (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006bc34: Table 2D - 398 Check DataType (RX8Defs data pointer, axes and dimensions match).
  */
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * cruise_switch_plausibility_timers [high]: Per-switch countdown timers 0xffffcf51/52/54/55/57/58/5a/5b armed at 0x3e when filtered error 0xffffcef4 exceeds channel max + 1.5 or vss tables 0x6bbec/0x6bc04/0x6bc1c/0x6bc34, decremented while error high, cleared when 0xffffcf34==0; expiry clears latches 0xffffcf3a/3c/3e/40. Pool scan: cf51-cf5b referenced only inside the cruise cluster (0x4ca7e/0x4d4a6/0x4d700) - no external consumer. Called from batch 0x2e692 (jsr 0x2e6d4, pool 0x2e7e4).
  * RAM 0xffffcef4 cruise_filtered_speed_error (float): Filtered error + per-switch vehicle-speed offset computed by 0x4ca7e (from mean 0xffffcee4); min/max tracked per channel by 0x4d4a6, thresholds compared in 0x4d700.
  * RAM 0xffffcf34 cruise_enable_flag (uint8): Set by 0x4c896 = (0xffffbced && 0xffffbcf8 >= 0xffffa9b4): cruise enabled while cruise output percent >= TP1 percent (pedal override). Emulator: bcf8=50 < a9b4=80 -> 0; bcf8=90 -> 1.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x0004d700; body bytes: 896; decompiled */
 
@@ -73333,20 +73424,20 @@ char FUN_0004ef86(void)
     puVar3 = &tbl_table_3d_121_0006b3dc;
   }
   cVar1 = rx8_lookup_3d_raw_u8(uVar6,uVar7,puVar3);
-  DAT_ffffcfb7 = 0;
+  pe0_relay_flag_ffffcfb7 = 0;
   if (cVar2 == '\x01') {
     cVar2 = '\x01';
     if (DAT_ffffcfba == '\0') {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
     else if (cVar1 == '\x01') {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
   }
   else {
     cVar2 = DAT_ffffcfbb;
     if ((DAT_ffffcfbb == '\x01') && (cVar1 == '\x01')) {
-      DAT_ffffcfb7 = 1;
+      pe0_relay_flag_ffffcfb7 = 1;
     }
   }
   return cVar2;
@@ -79173,12 +79264,12 @@ undefined4 diag_ol_status_low_byte(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_read_calc_load_pct [high]: PID 0x04: load*100/max*0.392157, 0xff if max~0
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_read_calc_load_pct [high]: PID 0x04: load*100/max*0.392157, 0xff if max~0
  */
 /* ROM address: 0x000553dc; body bytes: 78; decompiled */
 
@@ -79207,11 +79298,11 @@ undefined4 diag_read_calc_load_pct(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f70 = coolant_temperature. Direct C dataflow to handler 0x00056940; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): coolant_temperature_ffff9f70; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ect_c [high]: PID 0x05: coolant_temperature_ffff9f70-40
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): coolant_temperature_ffff9f70; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005542a; body bytes: 22; decompiled */
 
@@ -79241,12 +79332,12 @@ undefined4 diag_encode_stft_lambda(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ltft [high]: PID 0x07: ffffb0d0*100*0.78125-100
  * RAM 0xffffb0d0 inferred_ltft_bank1_ffffb0d0 (float): PID 0x07: x*100*0.78125-100
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ltft_bank1_ffffb0d0_ffffb0d0 * 100.0; decode = raw * 0.78125 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055466; body bytes: 30; decompiled */
 
@@ -79263,11 +79354,11 @@ undefined4 diag_encode_ltft(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffb548 = engine_speed_rpm. Direct C dataflow to handler 0x00056982; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.25 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_rpm [high]: PID 0x0c: rpm*0.25
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): engine_speed_rpm_ffffb548; decode = raw * 0.25 + (0) [RPM]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055484; body bytes: 22; decompiled */
 
@@ -79284,11 +79375,11 @@ undefined4 diag_encode_rpm(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffbbb4 = vehicle_speed. Direct C dataflow to handler 0x00056998; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): vehicle_speed_ffffbbb4; decode = raw * 1 + (0) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_vss [high]: PID 0x0d: vss*1
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): vehicle_speed_ffffbbb4; decode = raw * 1 + (0) [km/h]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005549a; body bytes: 20; decompiled */
 
@@ -79305,11 +79396,11 @@ undefined4 diag_encode_vss(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffa630 = leading_ignition_timing. Direct C dataflow to handler 0x000569ae; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): leading_ignition_timing_ffffa630; decode = raw * 0.5 + (-64) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_leading_timing [high]: PID 0x0e: lead*0.5-64
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): leading_ignition_timing_ffffa630; decode = raw * 0.5 + (-64) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000554ae; body bytes: 24; decompiled */
 
@@ -79326,11 +79417,11 @@ undefined4 diag_encode_leading_timing(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffff9f60 = intake_air_temperature. Direct C dataflow to handler 0x000569c4; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): intake_air_temperature_ffff9f60; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_iat [high]: PID 0x0f: iat-40
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): intake_air_temperature_ffff9f60; decode = raw * 1 + (-40) [degC]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000554c6; body bytes: 22; decompiled */
 
@@ -79347,11 +79438,11 @@ undefined4 diag_encode_iat(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffa9ec = mass_air_flow. Direct C dataflow to handler 0x000569da; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): mass_air_flow_ffffa9ec; decode = raw * 0.009999999776 + (0) [g/s]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_maf [high]: PID 0x10: maf*0.01
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): mass_air_flow_ffffa9ec; decode = raw * 0.009999999776 + (0) [g/s]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055528; body bytes: 22; decompiled */
 
@@ -79435,12 +79526,12 @@ void diag_encode_o2s2(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_trim_b074_ffffb074_ffffb074 * 100.0; decode = raw * 0.7812999487 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_trim_b074 [high]: PID 0x15: ffffb074*100*0.7813-100 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb074 inferred_trim_b074_ffffb074 (float): PID 0x15/0x163e: x*100*0.7813-100
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_trim_b074_ffffb074_ffffb074 * 100.0; decode = raw * 0.7812999487 + (-100) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000555ac; body bytes: 30; decompiled */
 
@@ -79504,12 +79595,12 @@ void diag_read_distance_mil(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_b2f0_ffffb2f0_ffffb2f0; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_b2f0 [high]: PID 0x2e: ffffb2f0*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb2f0 inferred_ram_b2f0_ffffb2f0 (float): PID 0x2e
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_b2f0_ffffb2f0_ffffb2f0; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055616; body bytes: 22; decompiled */
 
@@ -79573,12 +79664,12 @@ void diag_read_90fc(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_ad10_ffffad10_ffffad10 * 25.325 + 0.0182; decode = raw * 1 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ad10 [high]: PID 0x33: ffffad10*25.325+0.0182 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad10 inferred_ram_ad10_ffffad10 (float): PID 0x33/0x16b3
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_ad10_ffffad10_ffffad10 * 25.325 + 0.0182; decode = raw * 1 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000556ce; body bytes: 30; decompiled */
 
@@ -79624,12 +79715,12 @@ undefined4 diag_read_afr_word_b(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): fuel_correction_sum_ffffc644_ffffc644; decode = raw * 0.09999999404 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_c644 [high]: PID 0x3c: ffffc644*0.1-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc644 fuel_correction_sum_ffffc644 (float): PID 0x3c: x*0.1-40; ROADMAP group C names this cell fuel_correction_sum
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): fuel_correction_sum_ffffc644_ffffc644; decode = raw * 0.09999999404 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005571a; body bytes: 24; decompiled */
 
@@ -79643,11 +79734,11 @@ undefined4 diag_encode_c644(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_battery_voltage_ffffb590; decode = raw * 0.0009999999311 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_battery_v [high]: PID 0x42: ffffb590*0.001
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_battery_voltage_ffffb590; decode = raw * 0.0009999999311 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055732; body bytes: 22; decompiled */
 
@@ -79664,11 +79755,11 @@ undefined4 diag_encode_battery_v(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffc0b4 = engine_load. Direct C dataflow to handler 0x00056b8a; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): engine_load_ffffc0b4; decode = raw * 0.003921568394 + (0) [logger-defined load units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_load_g_rev [high]: PID 0x43: engine_load_ffffc0b4*1/255
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): engine_load_ffffc0b4; decode = raw * 0.003921568394 + (0) [logger-defined load units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055748; body bytes: 22; decompiled */
 
@@ -79685,11 +79776,11 @@ undefined4 diag_encode_load_g_rev(void)
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * RX8Defs diagnostic chain suggests RAM 0xffffadfc = lambda_target. Direct C dataflow to handler 0x00056b9e; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): lambda_target_ffffadfc; decode = raw * 3.051757812e-05 + (0) [dimensionless lambda]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_lambda_target [high]: PID 0x44: lambda_target_ffffadfc*3.05e-05
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): lambda_target_ffffadfc; decode = raw * 3.051757812e-05 + (0) [dimensionless lambda]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005575e; body bytes: 22; decompiled */
 
@@ -79703,12 +79794,12 @@ undefined4 diag_encode_lambda_target(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_ad48_ffffad48_ffffad48; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag_encode_ad48 [high]: PID 0x45: ffffad48*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffad48 inferred_ram_ad48_ffffad48 (float): PID 0x45: *0.392157
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_ad48_ffffad48_ffffad48; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00055774; body bytes: 22; decompiled */
 
@@ -79735,7 +79826,7 @@ void diag_encode_ad5e(void)
   undefined4 uVar2;
   
   uVar2 = 0;
-  fVar1 = (float)rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffad5e_ffffad5e);
+  fVar1 = (float)rx8_decode_u16_affine(0x38a00000,0,(int)inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e);
   rx8_encode_u8_affine_saturate(fVar1 * 20.0,0x3ec8c8c8,uVar2);
   return;
 }
@@ -80831,12 +80922,12 @@ void FUN_000564d4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_3e_tester_present [high]: service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_3e_tester_present [high]: service table record 0x5ebc4 (service 0x3e) -> handler; ROM bytes verified; UDS 0x3E
  */
 /* ROM address: 0x00056508; body bytes: 166; decompiled */
 
@@ -80921,12 +81012,12 @@ undefined4 jump_to_FUN_00056786(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_b1_mazda_specific [high]: service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_b1_mazda_specific [high]: service table record 0x5ec84 (service 0xb1) -> handler; ROM bytes verified; record 0x5ec84 -> 0x565e8 (ref_UDSServiceB1Function) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x000565e8; body bytes: 234; decompiled */
 
@@ -81076,12 +81167,12 @@ void FUN_000567c2(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_22_read_data_by_identifier [high]: service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_22_read_data_by_identifier [high]: service table record 0x5ebe8 (service 0x22) -> handler; ROM bytes verified; record 0x5ebe8 -> 0x567e8 (Mode 22 PID request parser)
  */
 /* ROM address: 0x000567e8; body bytes: 110; decompiled */
 
@@ -81995,18 +82086,18 @@ void diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
   undefined4 uVar2;
   
   uVar2 = 0;
-  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffad5e_ffffad5e);
+  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e);
   uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b410_ffffb410_ffffb410; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid091a_ram_b410_raw_512 [high]: dispatch record 0x5f310 -> handler verified in ROM bytes + function_index; DAT_ffffb410*0.00195312 (1/512) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b410_ffffb410_ffffb410; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056de6; body bytes: 30; decompiled */
 
@@ -82024,11 +82115,11 @@ void diag22_pid091a_ram_b410_raw_512(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_throttle_position_ffffad44; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid093c_throttle_position_raw [high]: dispatch record 0x5f31c -> handler verified in ROM bytes + function_index; inferred_throttle_position_ffffad44*0.00195312 (1/512)
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_throttle_position_ffffad44; decode = raw * 0.001953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e04; body bytes: 30; decompiled */
 
@@ -82046,12 +82137,12 @@ void diag22_pid093c_throttle_position_raw(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a7ac_ffffa7ac_ffffa7ac; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid096e_ram_a7ac_quarter [high]: dispatch record 0x5f328 -> handler verified in ROM bytes + function_index; DAT_ffffa7ac*0.25 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa7ac inferred_ram_a7ac_ffffa7ac (float): PID 0x096e *0.25
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a7ac_ffffa7ac_ffffa7ac; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e22; body bytes: 30; decompiled */
 
@@ -82069,12 +82160,12 @@ void diag22_pid096e_ram_a7ac_quarter(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b59c_ffffb59c_ffffb59c; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid097c_ram_b59c_div2048 [high]: dispatch record 0x5f334 -> handler verified in ROM bytes + function_index; DAT_ffffb59c*0.000488281 (1/2048) | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb59c inferred_ram_b59c_ffffb59c (float): PID 0x097c /2048
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b59c_ffffb59c_ffffb59c; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e40; body bytes: 30; decompiled */
 
@@ -82092,12 +82183,12 @@ void diag22_pid097c_ram_b59c_div2048(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_add4_ffffadd4_ffffadd4; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid114a_ram_add4_raw [high]: dispatch record 0x5f340 -> handler verified in ROM bytes + function_index; DAT_ffffadd4*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffadd4 inferred_ram_add4_ffffadd4 (float): PID 0x114a *7.63e-05
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_add4_ffffadd4_ffffadd4; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e5e; body bytes: 30; decompiled */
 
@@ -82115,12 +82206,12 @@ void diag22_pid114a_ram_add4_raw(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a984_ffffa984_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid114d_ram_a984_raw [high]: dispatch record 0x5f34c -> handler verified in ROM bytes + function_index; DAT_ffffa984*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa984 inferred_ram_a984_ffffa984 (float): PID 0x114d
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a984_ffffa984_ffffa984; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e7c; body bytes: 30; decompiled */
 
@@ -82138,12 +82229,12 @@ void diag22_pid114d_ram_a984_raw(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_a834_ffffa834_ffffa834; decode = raw * 3.051757812e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1153_ram_a834_lambda [high]: dispatch record 0x5f358 -> handler verified in ROM bytes + function_index; DAT_ffffa834*3.05176e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa834 inferred_ram_a834_ffffa834 (float): PID 0x1153 *3.05e-05
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_a834_ffffa834_ffffa834; decode = raw * 3.051757812e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056e9a; body bytes: 30; decompiled */
 
@@ -82199,11 +82290,11 @@ void diag22_pid1169_ram_807c_scaled(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): maf_voltage_latched_ffffa9e4; decode = raw * 0.000244140625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1177_maf_voltage_latched_v [high]: dispatch record 0x5f37c -> handler verified in ROM bytes + function_index; maf_voltage_latched_ffffa9e4*0.000244141 (1/4096)
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): maf_voltage_latched_ffffa9e4; decode = raw * 0.000244140625 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056f30; body bytes: 30; decompiled */
 
@@ -82221,12 +82312,12 @@ void diag22_pid1177_maf_voltage_latched_v(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_ram_a9bc_ffffa9bc_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1340_ram_a9bc_pct [high]: dispatch record 0x5f388 -> handler verified in ROM bytes + function_index; DAT_ffffa9bc*0.392157 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffa9bc inferred_ram_a9bc_ffffa9bc (float): PID 0x1340 *0.392157
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_ram_a9bc_ffffa9bc_ffffa9bc; decode = raw * 0.3921568394 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056f4e; body bytes: 30; decompiled */
 
@@ -82286,11 +82377,11 @@ void diag22_pid163e_ram_b074_scaled_s16(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_ad10_ffffad10_ffffad10; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid16b3_ram_ad10_raw [high]: dispatch record 0x5f3ac -> handler verified in ROM bytes + function_index; DAT_ffffad10*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_ad10_ffffad10_ffffad10; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056faa; body bytes: 30; decompiled */
 
@@ -82308,12 +82399,12 @@ void diag22_pid16b3_ram_ad10_raw(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b5ac_ffffb5ac_ffffb5ac; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid16e8_ram_b5ac_raw [high]: dispatch record 0x5f3b8 -> handler verified in ROM bytes + function_index; DAT_ffffb5ac*0.00305176 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb5ac inferred_ram_b5ac_ffffb5ac (float): PID 0x16e8
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b5ac_ffffb5ac_ffffb5ac; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056fc8; body bytes: 30; decompiled */
 
@@ -82331,12 +82422,12 @@ void diag22_pid16e8_ram_b5ac_raw(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_b654_ffffb654_ffffb654; decode = raw * 0.125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid16e9_ram_b654_eighth [high]: dispatch record 0x5f3c4 -> handler verified in ROM bytes + function_index; DAT_ffffb654*0.125 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffb654 inferred_ram_b654_ffffb654 (float): PID 0x16e9 *0.125
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_b654_ffffb654_ffffb654; decode = raw * 0.125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00056fe6; body bytes: 30; decompiled */
 
@@ -82374,12 +82465,12 @@ void diag22_pid16f0_tire_revolutions_per_mile(undefined4 param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_bc30_ffffbc30_ffffbc30; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pida216_ram_bc30_raw [high]: dispatch record 0x5f3dc -> handler verified in ROM bytes + function_index; DAT_ffffbc30*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffbc30 inferred_ram_bc30_ffffbc30 (float): PID 0xa216
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_bc30_ffffbc30_ffffbc30; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005705c; body bytes: 30; decompiled */
 
@@ -82401,11 +82492,11 @@ void diag22_pida216_ram_bc30_raw(char param_1)
  * RX8Defs service 0x22 identifier 0x1746: Knock Retard. Dispatch identifier match; logger meaning is definition-derived.
  * RX8Defs diagnostic chain suggests RAM 0xffffa734 = knock_retard. Direct C dataflow to handler 0x0005707a; semantic candidate, not a recovered original symbol.
  */
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): knock_retard_ffffa734; decode = raw * 0.3515625 + (0) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1746_knock_retard_deg [high]: dispatch record 0x5f3e8 -> handler verified in ROM bytes + function_index; knock_retard_ffffa734*0.351562 (logger 0x221746; knock_control_report)
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): knock_retard_ffffa734; decode = raw * 0.3515625 + (0) [degrees]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005707a; body bytes: 30; decompiled */
 
@@ -82423,12 +82514,12 @@ void diag22_pid1746_knock_retard_deg(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): inferred_ram_c6ac_ffffc6ac_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1782_ram_c6ac_raw [high]: dispatch record 0x5f3f4 -> handler verified in ROM bytes + function_index; DAT_ffffc6ac*7.62939e-05 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc6ac inferred_ram_c6ac_ffffc6ac (float): PID 0x1782
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): inferred_ram_c6ac_ffffc6ac_ffffc6ac; decode = raw * 7.629394531e-05 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00057098; body bytes: 30; decompiled */
 
@@ -82469,12 +82560,12 @@ void diag22_pid17a6_ram_d1ac_scaled(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): inferred_temp_c4c8_ffffc4c8_ffffc4c8; decode = raw * 1 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid172a_ram_c4c8_temp_c [high]: dispatch record 0x5f40c -> handler verified in ROM bytes + function_index; DAT_ffffc4c8*1.0-40 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  * RAM 0xffffc4c8 inferred_temp_c4c8_ffffc4c8 (float): PID 0x172a: x-40
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): inferred_temp_c4c8_ffffc4c8_ffffc4c8; decode = raw * 1 + (-40) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x000570ee; body bytes: 30; decompiled */
 
@@ -82509,11 +82600,11 @@ void diag22_pid172d_ram_a8f4_raw(undefined4 param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): apv_position_voltage_ffffcab0; decode = raw * 0.01953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1634_apv_position_voltage [high]: dispatch record 0x5f424 -> handler verified in ROM bytes + function_index; apv_position_voltage_ffffcab0*0.0195312
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): apv_position_voltage_ffffcab0; decode = raw * 0.01953125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005711a; body bytes: 30; decompiled */
 
@@ -83022,12 +83113,12 @@ undefined4 diag22_pide611_sw_name_string(char param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (8-bit): uVar4; decode = raw * 0.1953125 + (-25) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid1710_sensor_snapshot_7byte [medium]: dispatch record 0x5f520 -> handler verified in ROM bytes + function_index; 7 appends from DAT_ffff9150/9158/9160/... (temps/voltages), encode u8 affine
  * RAM 0xffff9150 inferred_sensor_block_ffff9150 (float[7]): PID 0x1710 7-byte snapshot block 0xffff9150-0xffff917e + 0xffffd38a/d38b
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (8-bit): uVar4; decode = raw * 0.1953125 + (-25) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x00057594; body bytes: 288; decompiled */
 
@@ -83171,12 +83262,12 @@ void diag22_pidc124_diag_status_bits(char param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag22_find_and_dispatch_identifier [high]: Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag22_find_and_dispatch_identifier [high]: Searches 99 records of 12 bytes at 0x5f10c, compares identifier 0xffffd1ea, checks permission mask, calls handler with service 0x22. G-ROM PID struct corroborates layout. Raw return/ABI still imperfect.
  */
 /* ROM address: 0x0005774c; body bytes: 232; decompiled */
 
@@ -83219,13 +83310,13 @@ int diag22_find_and_dispatch_identifier(void)
 }
 
 
-/* [READABILITY RECONSTRUCTION]
- * Signatures, local names, observed fields and scoped constants refined.
- * See readability/changes.json for evidence and remaining ABI limitations.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_append_positive_response_header [high]: G-ROM 0x55d24 match plus explicit bytes 0x62 and current identifier RAM 0xffffd1ea.
  * RAM 0xffffd1ea diag22_current_identifier (uint16): Read from request by 0x567e8, matched by 0x5774c, echoed in 0x62 header.
+ */
+/* [READABILITY RECONSTRUCTION]
+ * Signatures, local names, observed fields and scoped constants refined.
+ * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00057858; body bytes: 44; decompiled */
 
@@ -83424,12 +83515,12 @@ uint diag22_subpid_supported_mask(uint param_1,char param_2)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_append_u16_be [high]: G-ROM 0x55ecc matches after masking PC-relative literal displacement; C explicitly emits high then low byte and appends length 2.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_append_u16_be [high]: G-ROM 0x55ecc matches after masking PC-relative literal displacement; C explicitly emits high then low byte and appends length 2.
  */
 /* ROM address: 0x00057a0c; body bytes: 34; decompiled */
 
@@ -83446,12 +83537,12 @@ void diag_append_u16_be(uint32_t service,uint32_t value)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * diag_append_u8 [high]: G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * diag_append_u8 [high]: G-ROM 0x55eee matches after masking PC-relative literal displacement; C appends one byte.
  */
 /* ROM address: 0x00057a2e; body bytes: 28; decompiled */
 
@@ -83710,12 +83801,12 @@ undefined4 ref_parseSubFunction(char param_1)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_18 [high]: service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_18 [high]: service table record 0x5ec0c (service 0x18) -> handler; ROM bytes verified; record 0x5ec0c -> 0x57db0 | promoted to high (data/labels/60E15120_N3J1E/uds_dispatch_labels.json/function_aliases)
  */
 /* ROM address: 0x00057db0; body bytes: 194; decompiled */
 
@@ -84056,11 +84147,11 @@ void FUN_000582e0(void)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): o2_monitor_ratio_ch1_ffffc6f4; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffc6f4 o2_monitor_ratio_ch1 (float): Ratio channel 1 (0xffffc764/0xffffc734); mode-06 result via 0x5831c.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): o2_monitor_ratio_ch1_ffffc6f4; decode = raw * 0.003906199941 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005831c; body bytes: 80; decompiled */
 
@@ -87337,12 +87428,12 @@ void FUN_0005b9e4(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_28_communication_control [high]: service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_28_communication_control [high]: service table record 0x5eb94 (service 0x28) -> handler; ROM bytes verified; UDS 0x28
  */
 /* ROM address: 0x0005b9f6; body bytes: 236; decompiled */
 
@@ -88147,11 +88238,11 @@ uint candidate_fan1_diag_override(uint param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): param_1; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_duty_encode_u16 [medium]: Diag-override-aware u16 encoder for the field duty %, DID 0x16e8 (mask 0x40, cell 0xffffd347): step f32 0x3b480000 via 0x2490; decode via 0x24c0. Sole caller 0x26624 stores result into 0xffffb5ac (also Mode 22 PID 0x16e8 source, handler 0x56fc8).
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): param_1; decode = raw * 0.003051757812 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005c800; body bytes: 226; decompiled_with_warnings */
 
@@ -88282,11 +88373,11 @@ uint candidate_ssv_diag_override(uint param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): param_1; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_target_encode_u16 [high]: Encodes idle_target_rpm (fr4) to u16 with step 0.25 (f32 0x3e800000 at ROM 0x5cb64, loaded by mova at 0x5cb1a) through 0x2490 rx8_encode_u16_affine_saturate when diag override state 0xffffd319==0 and the active DID 0xffffd314==0x96e (word at pool 0x5cb42) passes mask 0xc0 (word at 0x5cb3e) on 0xffffd36c; result stored to 0xffffd34d (base 0xffffd335 + 0x18); otherwise decodes override cell 0xffffd34d via 0x24c0. Pool words of the function (classified mixed_pool starting 0x5cb3e): 0x5cb44=0xffffd319, 0x5cb4c=0xffffd335, 0x5cb50=0x5f728, 0x5cb54=0xffffd314, 0x5cb58=0xffffd318, 0x5cb5c=0xffffd316, 0x5cb60=0x5f734, 0x5cb68=0x2490. Sole caller 0x1506c stores the u16 to 0xffffa7ac, the Mode 22 PID 0x096e source (handler 0x56e22, encode *0.25). Not an actuator register.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): param_1; decode = raw * 0.25 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005ca94; body bytes: 226; decompiled_with_warnings */
 
@@ -88330,11 +88421,11 @@ uint idle_target_encode_u16(undefined4 param_1)
 }
 
 
-/* [MATH AND UNITS REVIEW]
- * Affine encoding (16-bit): param_1; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_target_encode_u16 [medium]: Diag-override-aware u16 encoder for the voltage target, DID 0x97c (mask 0x60 on 0xffffd36c, state 0xffffd319/0xffffd328, cell 0xffffd34f): step f32 0x3a000000 via 0x2490 rx8_encode_u16_affine_saturate; decode via 0x24c0. Same pattern as 0x5ca94 (PID 0x096e). Sole caller 0x25c6c stores result into 0xffffb59c.
+ */
+/* [MATH AND UNITS REVIEW]
+ * Affine encoding (16-bit): param_1; decode = raw * 0.00048828125 + (0) [unassigned units]. Encode applies trunc((signal-offset)/step + 0.5), then saturation; units follow prior signal interpretation.
  */
 /* ROM address: 0x0005cba4; body bytes: 226; decompiled_with_warnings */
 
@@ -89267,12 +89358,12 @@ undefined4 FUN_0005dc40(void)
 }
 
 
+/* [ADDITIONAL SOURCE REVIEW]
+ * uds_service_85_control_dtc_setting [high]: service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
- */
-/* [ADDITIONAL SOURCE REVIEW]
- * uds_service_85_control_dtc_setting [high]: service table record 0x5eba0 (service 0x85) -> handler; ROM bytes verified; UDS 0x85 (ref_UDSMode85Func)
  */
 /* ROM address: 0x0005dc44; body bytes: 180; decompiled */
 

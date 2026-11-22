@@ -6,7 +6,7 @@
 void ref_filterSomething(void)
 
 {
-  DAT_ffffa9a0 = rx8_first_order_filter(DAT_ffffa99c,DAT_ffffa9a0,0.25,1e-05);
+  DAT_ffffa9a0 = rx8_first_order_filter(pedal_1_volts_clamped25_ffffa99c,DAT_ffffa9a0,0.25,1e-05);
   return;
 }
 

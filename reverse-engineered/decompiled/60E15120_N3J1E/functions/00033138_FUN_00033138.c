@@ -30,7 +30,7 @@ void FUN_00033138(void)
   arg2 = 100.0;
   if (DAT_ffffc030 == '\x01') {
     if ((DAT_ffffc040 == 0) || (DAT_ffffc043 == '\0')) {
-      fVar5 = throttle_position_1_percent_ffffa9b4;
+      fVar5 = accelerator_pedal_1_percent_ffffa9b4;
       if ((DAT_ffffbbcb != '\x01') ||
          ((arg0 = DAT_ffffc034, 0xfd < can212_torque_signal_ffffbbc8 && (0xfd < DAT_ffffbbc9)))) {
         arg0 = (float)lookup_2d_descriptor_scaled(fVar6,&tbl_table_2d_202_0006aef0);
@@ -56,7 +56,7 @@ void FUN_00033138(void)
     }
   }
   else {
-    if (throttle_position_1_percent_ffffa9b4 <= DAT_ffffc028) {
+    if (accelerator_pedal_1_percent_ffffa9b4 <= DAT_ffffc028) {
       DAT_ffffc034 = 0.0;
       DAT_ffffc038 = 100.0;
       DAT_ffffc028 = 100.0;

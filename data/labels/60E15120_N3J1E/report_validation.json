@@ -181,6 +181,12 @@
       "ram_checked": 0,
       "rom_refs": 0,
       "rom_claims": 0
+    },
+    "subsystem-logic/throttle_dbw_control_report.md": {
+      "fn_checked": 44,
+      "ram_checked": 62,
+      "rom_refs": 106,
+      "rom_claims": 0
     }
   },
   "failures": [],

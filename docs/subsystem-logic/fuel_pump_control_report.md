@@ -238,9 +238,10 @@ key addresses — no body sections or memory-map rows above):
   [`starting_cranking_labels.json`](../../data/labels/60E15120_N3J1E/starting_cranking_labels.json),
   tests `tests/test_starting_cranking.py`.
 - **DBW relay (PE0)** — PE0 (PEDR bit 0x1) = (`0xffffcfb7` == 0), same drive
-  function `0x3a0ec`; harness candidate 4C. ROADMAP C item 27; label record
+  function `0x3a0ec`; harness candidate 4C. Label record
   [`throttle_dbw_labels.json`](../../data/labels/60E15120_N3J1E/throttle_dbw_labels.json),
-  tests `tests/test_throttle_dbw.py`.
+  tests `tests/test_throttle_dbw.py`; analyzed in
+  [`throttle_dbw_control_report.md`](throttle_dbw_control_report.md).
 
 - Package-pin → connector-terminal routing is board-level unresolved in this
   repo; the 5P/5L/4M/5A/4C/5AA associations above are candidate associations

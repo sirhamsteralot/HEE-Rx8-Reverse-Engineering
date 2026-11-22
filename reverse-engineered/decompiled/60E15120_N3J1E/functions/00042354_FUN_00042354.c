@@ -15,7 +15,7 @@ undefined1 * FUN_00042354(void)
       uVar1 = ref_getFaultStatus__(0x19);
       puVar2 = (undefined1 *)(uVar1 & 0xff);
       if (((puVar2 == (undefined1 *)0x0) &&
-          (puVar2 = (undefined1 *)(uint)DAT_ffffb358,
+          (puVar2 = (undefined1 *)(uint)ch7d_pwm_enable_ffffb358,
           puVar2 == (undefined1 *)((int)&vector_Poweron_Reset + 1U))) && (DAT_ffffd1c5 == '\0')) {
         DAT_ffffc978 = 1;
         return &DAT_ffffc978;

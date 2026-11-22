@@ -13,7 +13,7 @@ void diag22_pid0918_ram_ad5e_scaled_s16(char param_1)
   undefined4 uVar2;
   
   uVar2 = 0;
-  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_pedal_volts_ffffad5e_ffffad5e);
+  uVar1 = rx8_decode_u16_affine(0x38a00000,0,(int)inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e);
   uVar1 = diag_encode_s16_div(uVar1,0x3a800000,uVar2);
   diag_append_u16_be((int)param_1,uVar1);
   return;

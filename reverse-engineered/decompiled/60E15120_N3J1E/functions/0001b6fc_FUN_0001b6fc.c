@@ -28,10 +28,10 @@ void FUN_0001b6fc(void)
   snapshot_DAT_ffffad70 = DAT_ffffad70;
   fVar5 = rx8_absolute_difference(DAT_ffffad70,DAT_ffffada0);
   fVar6 = rx8_absolute_difference(arg0,DAT_ffffada4);
-  if ((((((DAT_ffffb4bc < 80.0) || (DAT_ffffcc98 != '\0')) || (DAT_ffffcc99 != '\0')) ||
+  if ((((((DAT_ffffb4bc < 80.0) || (plate_tp2_source_select_ffffcc98 != '\0')) || (limp_home_request_ffffcc99 != '\0')) ||
        (((DAT_ffffb4f9 != '\0' || (0.244 <= fVar5)) ||
         ((0.244 <= fVar6 || ((shutdown_allowed_ffffccc1 != '\x01' || (DAT_ffffb4ed != '\x01')))))))) ||
-      (DAT_ffffccbc != '\0')) ||
+      (throttle_servo_mode_ffffccbc != '\0')) ||
      ((((cVar3 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873e,0), cVar3 != '\0' ||
         (inferred_ram_b410_ffffb410_ffffb410 <= 90.0)) || (DAT_ffffad30 <= 5.0)) || (candidate_learned_pedal_value_ffffb40c <= fVar7)))) {
     uVar2 = 0;
