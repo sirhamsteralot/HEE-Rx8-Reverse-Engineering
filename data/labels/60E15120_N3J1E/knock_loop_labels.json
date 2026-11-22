@@ -299,7 +299,7 @@
   "alias": "knock_recovery_target",
   "type": "float",
   "reader": "00013a60",
-  "evidence": "Attack/recovery target written by 0x13a60: 0 when disabled, tbl 0x6afa4 when sensors unhealthy, tbl 0x6afb8 on activation edge, else previous retard."
+  "evidence": "Target written by 0x13a60 on only two paths (sensors unhealthy -> tbl 0x6afa4, activation edge -> tbl 0x6afb8), both storing at 0x13abc (r13 = 0xffffa744); the attack, recovery, disabled and hold paths branch to 0x13aec without touching it, and no code reads the cell."
  },
  "ffffa74a": {
   "alias": "knock_recovery_counter_a",
@@ -341,7 +341,7 @@
   "alias": "knock_detected_latched",
   "type": "uint8",
   "reader": "00033970",
-  "evidence": "0x336c4 latches a324 here; 0x33970 requires it for the attack condition c05c."
+  "evidence": "0x336c4 rewrites this cell as (a324 != 0) on every call (0x3394a tst / 0x3394c bf/s / 0x33952 / 0x33954 both store), a copy rather than a latch; 0x33970 requires it for the attack condition c05c."
  },
  "ffffc05c": {
   "alias": "knock_attack_condition",
@@ -455,7 +455,7 @@
   "alias": "knock_integrator_step",
   "type": "float",
   "reader": "0000c486",
-  "evidence": "Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), floor 1.0."
+  "evidence": "Per-event integrator step min(|a32c|, c060*|a330 - a334[a384]|), bounded ABOVE by 1.0 (0xc572 fldi1 / 0xc574 fcmp/gt / 0xc57a fmov fr5,fr4); the clamp to zero is separate at 0xc4ba-0xc4c0."
  },
  "ffffa348": {
   "alias": "knock_baseline_slow",

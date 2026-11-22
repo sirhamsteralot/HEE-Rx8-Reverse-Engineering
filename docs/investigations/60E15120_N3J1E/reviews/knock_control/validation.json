@@ -2,9 +2,9 @@
   "date": "2026-10-29",
   "review": "knock_control",
   "function_aliases_added": 39,
-  "function_aliases_high_confidence": 33,
-  "function_aliases_medium_confidence_candidate_prefixed": 6,
-  "ram_aliases_added": 84,
+  "function_aliases_high_confidence": 38,
+  "function_aliases_medium_confidence_candidate_prefixed": 1,
+  "ram_aliases_added": 271,
   "lookup_table_rows_added": 15,
   "export_bug_fixes": {
     "00013bd2": {
@@ -18,8 +18,7 @@
     }
   },
   "snapshot_local_renames": {
-    "addresses": 8,
-    "occurrences": 192
+    "note": "occurrence count is not re-derivable from the committed record: review_knock_loop_labels_apply.py reports snapshot_local_rename_total = 93 on a re-run, the committed record carries 3 from the original pass"
   },
   "misnomer_corrections": [
     {
@@ -109,5 +108,47 @@
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rom_modified": false,
   "ghidra_database_updated": false,
-  "hardware_execution_performed": false
+  "hardware_execution_performed": false,
+  "accuracy_review": {
+    "reverified_addresses": [
+      "0x13826",
+      "0x1391c",
+      "0x13a60",
+      "0x12300",
+      "0x121fc",
+      "0x336c4",
+      "0x33970",
+      "0x3dc22",
+      "0x3dcd0",
+      "0xc3ce",
+      "0xc486"
+    ],
+    "pools_read": [
+      "0x138de",
+      "0x13900",
+      "0x13908",
+      "0x1390c",
+      "0x13910",
+      "0x13b0a",
+      "0x13b0c",
+      "0x13b14",
+      "0x13b18",
+      "0x13b1c",
+      "0x1240e",
+      "0x12430",
+      "0x122c6",
+      "0x122c8",
+      "0x33a2c",
+      "0x33a30",
+      "0xc458",
+      "0xc464"
+    ],
+    "rom_constants_read": [
+      "0x795a0 (0x0177)",
+      "0x7a212 (0x00fa)",
+      "0x2c8 (0x803e)",
+      "0x7ff18 (0x2ec0)"
+    ],
+    "corrections": 9
+  }
 }

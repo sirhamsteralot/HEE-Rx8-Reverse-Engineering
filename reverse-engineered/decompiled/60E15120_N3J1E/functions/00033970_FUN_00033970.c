@@ -1,6 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_attack_condition [high]: Sets c05c: knock latched (c078) && engine running (a428) && run timer >= 0xfa && leading and trailing timing both > 5 deg - thresholdA*0.15625 where thresholdA = raw u16 c090 (timing not already deeply retarded).
- * RAM 0xffffc078 knock_detected_latched (uint8): 0x336c4 latches a324 here; 0x33970 requires it for the attack condition c05c.
+ * RAM 0xffffc078 knock_detected_latched (uint8): 0x336c4 rewrites this cell as (a324 != 0) on every call (0x3394a tst / 0x3394c bf/s / 0x33952 / 0x33954 both store), a copy rather than a latch; 0x33970 requires it for the attack condition c05c.
  * RAM 0xffffc090 knock_threshold_a_raw (uint16): Raw u16 threshold A from tbl 0x6b270 (or alt 0x6b27c when cd60 set); moved to a37e.
  */
 /* ROM address: 0x00033970; body bytes: 122; decompiled */
