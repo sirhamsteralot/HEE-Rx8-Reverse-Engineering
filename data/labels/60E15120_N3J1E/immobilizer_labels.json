@@ -12,7 +12,7 @@
    "with_rke_address": "0x34f5c",
    "with_rke_derivation": "start + 0x44c (upstream G_ROM_ImmoDefWriter.py w_rke_offset = 0xf7 + 0x355); site sits in 0x34f42 FUN_00034f42",
    "def_tables": "data/definitions/romraider/per-rom/60E15120_N3J1E.xml: 'Immobilizer Disable - Without RKE Installed' @0x34b10, 'Immobilizer Disable - With RKE Installed' @0x34f5c (spliced from upstream RX8Defs 39d98a0; the pre-fix def addresses 0x34da8/0x351f4 are ROM-proven wrong)",
-   "evidence": "ROM bytes at 0x34b10 = B56E000960D0600C88008D1100098801 (re-read against the raw ROM 2026-11-17); bytes at 0x34f5c = 33208F080009B1AF0009E27F941A2E20 (re-read). Disassembly: 0x34b10 = 'bsr 0x355f0' (the immo CAN-command consumer call inside the dispatcher), 0x34f5c = 'cmp/eq r2,r3' comparing DAT_ffffc204 (received challenge, pool 0x34fc4) with DAT_ffffc200 (locally computed seed, pool 0x34fc8); mismatch branches to 0x34f72 (bad state), match falls through to 'bsr 0x352c4' (authorized). Upstream G_ROM_ImmoDefWriter.py @ b243b35 NOPs the 0xf8-byte dispatch block at the start pattern and patches the compare at +0x44c. Boot-side immo path nearby: ref_ImmoSomethingOrOther__ 0x349e4, FUN_00034a04 calls e2ram_immo_key_read 0x375c0; UDS immo handlers ref_afterImmo_1..8 at 0x36acc-0x37bde."
+   "evidence": "ROM bytes at 0x34b10 = B56E000960D0600C88008D1100098801; bytes at 0x34f5c = 33208F080009B1AF0009E27F941A2E20. Disassembly: 0x34b10 = 'bsr 0x355f0' (the immo CAN-command consumer call inside the dispatcher), 0x34f5c = 'cmp/eq r2,r3' comparing r2 = DAT_ffffc200 (locally computed seed, loaded from pool 0x34fc4 at 0x34f54) with r3 = DAT_ffffc204 (received challenge, pool 0x34fc8 at 0x34f58); mismatch branches to 0x34f72 (bad state), match falls through to 'bsr 0x352c4' (authorized). Upstream G_ROM_ImmoDefWriter.py @ b243b35 NOPs the 0xf8-byte dispatch block at the start pattern and patches the compare at +0x44c. Boot-side immo path nearby: ref_ImmoSomethingOrOther__ 0x349e4, FUN_00034a04 calls e2ram_immo_key_read 0x375c0; UDS immo handlers ref_afterImmo_1..8 at 0x36acc-0x37bde."
   }
  },
  "can_ids": {
@@ -41,7 +41,7 @@
   "00034ae2": {
    "alias": "immobilizer_main_state_dispatch",
    "confidence": "high",
-   "evidence": "Called from can_rx_main_key_gated 0xdbf6 (callgraph). Body (298 B) verified in disassembly: gates on engine_running_flag 0xffffaa68==1 && engine_stopped_latch 0xffffb578!=1 (else clears c21d/c1d0/c1d1, lamp off); calls 0x35ea0 then 0x355f0 (the bsr at 0x34b10 is the immo-disable patch site); dispatches on main state DAT_ffffc21d: 0->0x34c5c, 1->0x34d12, 2->0x34f42, 3->0x35062, 4->0x351ae, 5->0x35258, else reset to 0; fail counter c21f increments when c21e in {5,6} && c226==0 && c229==0, 3 strikes set c1d1=1; tail calls afterImmoMain 0x36908 and 7 EEPROM-write sequencer steps."
+   "evidence": "Called from can_rx_main_key_gated 0xdbf6 (callgraph). Body (298 B) verified in disassembly: gates on engine_running_flag 0xffffaa68==1 && engine_stopped_latch 0xffffb578!=1 (else clears c21d/c1d0/c1d1, lamp off); calls 0x35ea0 then 0x355f0 (the bsr at 0x34b10 is the immo-disable patch site); dispatches on main state DAT_ffffc21d: 0->0x34c5c, 1->0x34d12, 2->0x34f42, 3->0x35062, 4->0x351ae, 5->0x35258, else reset to 0; fail counter c21f increments when c21e in {5,6} && c226==0 && c229==0, 3 strikes set c1d1=1; tail calls afterImmoMain 0x36908 and eight sequencer calls: seven jsr (0x3625e, 0x36700, 0x3665a, 0x36830, 0x3677a, 0x360c8, 0x36142 at 0x34c2a-0x34c4e) plus the tail jmp 0x361e4 (0x34c54-0x34c58)."
   },
   "000355f0": {
    "alias": "immo_can_command_decode",
@@ -126,7 +126,7 @@
   "000360a8": {
    "alias": "immo_key_regs_mix_timer",
    "confidence": "medium",
-   "evidence": "32 B, unique_exact_bytes to 60E0FC00 0x367c8. c26c ^= ATUII_TCNT0H_W; c270 ^= (TCNT0>>16) + TCNT0*0x10000. Called in the dispatcher tail chain."
+   "evidence": "32 B, unique_exact_bytes to 60E0FC00 0x367c8. c26c ^= ATUII_TCNT0H_W; c270 ^= (TCNT0>>16) + TCNT0*0x10000. Sole reference is the indirect call inside 0x371b6 (0x371fa cmp/eq 0x20,r0; 0x37202 jsr via pool 0x37278), not the dispatcher tail."
   },
   "000349e4": {
    "alias": "immo_boot_init",
@@ -151,7 +151,7 @@
   "00035f64": {
    "alias": "immo_status_housekeeping",
    "confidence": "high",
-   "evidence": "ref_checkImmoStatus_ (unique_exact_bytes to 60E0FC00 0x36684), called from boot init. Maintains the c268 'Z' flag, clears c275 fault bits, c1d2 handshake 0x55->0x33, c1d3 bits (0x40 = authorized), clamps c282<=2 and c276<=5, c1d4 window 8..0x3f."
+   "evidence": "ref_checkImmoStatus_ (unique_exact_bytes to 60E0FC00 0x36684), called from boot init. Maintains the c268 'Z' flag, clears c275 fault bits, c1d2 handshake 0x55->0x33, c1d3 bits (0x40 = authorized), clamps c282 <= 2 (0x35ff6/0x35ffe) and SETS c276 to 0 when it exceeds 5 (0x35fbe-0x35fca), c1d4 window 8..0x3f."
   },
   "00036908": {
    "alias": "immo_eeprom_write_dispatch",
@@ -191,12 +191,12 @@
   "00016b20": {
    "alias": "immo_diag_bit_check",
    "confidence": "medium",
-   "evidence": "ref_readImmoBit (unique_exact_bytes to 60E0FC00 0x16924), called from task 0x114d0. If 0xffffdfa0 bit0==0 && 0xffffdf98==0xa5 && (0xffffdf93 & 0x70)==0 -> FUN_00016a1c(2)."
+   "evidence": "ref_readImmoBit (unique_exact_bytes to 60E0FC00 0x16924), called from task 0x114d0. If the whole byte at 0xffffdfa0 == 0 (0x16b20 mov.w pool 0x16c18 = 0xdfa0; 0x16b22 mov.b @r2,r3; 0x16b24 tst r3,r3) && 0xffffdf98==0xa5 && (0xffffdf93 & 0x70)==0 -> FUN_00016a1c(2)."
   },
   "000011c4": {
    "alias": "immo_diag_bit_clear",
    "confidence": "medium",
-   "evidence": "8 B 'writeImmoBitZero?' (inherited name), called from 0x1378. mov.l pool 0x1284 = 0xffffdfa0; stores byte 0 to it (clears the immo diag bit at boot). Pool word re-read from ROM."
+   "evidence": "8 B 'writeImmoBitZero?' (inherited name), called from 0x1378. mov.l pool 0x1284 = 0xffffdfa0; stores the WORD 0 to it at 0x11ca (mov.w r3,@r2), so the cell is u16. Pool word re-read from ROM."
   },
   "000169d4": {
    "alias": "cal_id_string_copy",
@@ -246,10 +246,10 @@
   "ffffc4b9": {"alias": "immo_rx_command", "type": "u8", "reader": "0x38150 unpack (c4b9=c4b0), 0x355f0 decodes", "evidence": "commands 0/6/8/0x90/0xc9 verified in emulator"},
   "ffffc4ba": {"alias": "immo_rx_data", "type": "u8[4] c4ba-c4bd", "reader": "0x38150 unpack; 0x355f0 BE32 into c204/c1ec", "evidence": "c4bb is the cmd-6 sub-status (0xff check, pool 0x356c2=0x00ff)"},
   "ffffc4bf": {"alias": "immo_rx_command_pending", "type": "u8", "reader": "0x3811c sets 1, 0x355f0 requires ==1 and clears", "evidence": "pool word 0x356b6=0xc4bf at 0x355f2"},
-  "ffffd1e2": {"alias": "immo_counter", "type": "u8/s16", "reader": "0x5674a increments when d1e4==1 (slow task 0x11534)", "evidence": "ref_runImmoRelatedCounter body, 60 B"},
+  "ffffd1e2": {"alias": "immo_counter", "type": "u16", "reader": "0x5674a increments when d1e4==1 (slow task 0x11534)", "evidence": "ref_runImmoRelatedCounter body, 60 B"},
   "ffffd1e4": {"alias": "immo_counter_enable", "type": "u8", "reader": "0x5674a gate", "evidence": "diag RAM area cell"},
   "ffffd1ce": {"alias": "security_unlocked_flag", "type": "u8", "reader": "0x375c0 gates e2ram_immo_key_read on d1ce==1", "evidence": "UDS security-access area"},
-  "ffffdfa0": {"alias": "immo_diag_bit", "type": "u8 bit0", "reader": "0x11c4 clears, 0x16b20 tests", "evidence": "pool 0x1284=0xffffdfa0 in 0x11c4"}
+  "ffffdfa0": {"alias": "immo_diag_bit", "type": "u16 (read as bytes)", "reader": "0x11c4 clears (word), 0x16b20 tests the byte, 0x169d4 writes the calibration flag", "evidence": "pool 0x1284=0xffffdfa0 in 0x11c4 (mov.w store of 0); 0x11cc increments it as u16 when the WDT overflow bit is set; 0x16b20 tests the whole byte; 0x169d4 writes 1 when ROM[0x6e224]==0xff (0x00 here)"}
  },
  "protocol": {
   "frame_rx": "CAN 0x047, 8 B: [cmd][d0][d1][d2][d3][d4][chkH][chkL]; cmd decoded by 0x355f0: 0x00 idle, 0x06 keyless request (d0: 0x00/0xff reject-start, 0x01/0xff, 0x7f seed request), 0x08 challenge/response word (BE32 d0..d3 -> c204), 0x90 key word (d0 = tag 1..4 = expected-word index, BE32 d0..d3 -> c1ec), 0xc9 begin key exchange",
