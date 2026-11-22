@@ -1,13 +1,13 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x00068ef8: Fuel Injector - Unknown - Max Injection Angle1??? (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00068f0c: Fuel Injector - Unknown - Max Injection Angle2??? (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x00068f20: Fuel Injector - Unknown - Max Injection Angle3??? (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * injection_angle_limit_lookup [high]: a434/a438/a43c = max injection angle 1/2/3 vs RPM (defs 0x68ef8/0x68f0c/0x68f20 'Fuel Injector - Unknown - Max Injection Angle', x2 deg MAYBE). | promoted to high (data/labels/60E15120_N3J1E/fueling_labels.json/function_aliases)
  * RAM 0xffffa434 max_injection_angle_1 (float): a434 = tbl 0x68ef8(rpm) 'Max Injection Angle1???'.
  * RAM 0xffffa438 max_injection_angle_2 (float): a438 = tbl 0x68f0c(rpm) 'Max Injection Angle2???'.
  * RAM 0xffffa43c max_injection_angle_3 (float): a43c = tbl 0x68f20(rpm) 'Max Injection Angle3???'.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x00068ef8: Fuel Injector - Unknown - Max Injection Angle1??? (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00068f0c: Fuel Injector - Unknown - Max Injection Angle2??? (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x00068f20: Fuel Injector - Unknown - Max Injection Angle3??? (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x0000e48e; body bytes: 48; decompiled */
 

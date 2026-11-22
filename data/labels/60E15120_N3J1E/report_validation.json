@@ -160,8 +160,8 @@
     },
     "subsystem-logic/fuel_pump_control_report.md": {
       "fn_checked": 0,
-      "ram_checked": 0,
-      "rom_refs": 0,
+      "ram_checked": 13,
+      "rom_refs": 25,
       "rom_claims": 0
     },
     "subsystem-logic/immobilizer_report.md": {

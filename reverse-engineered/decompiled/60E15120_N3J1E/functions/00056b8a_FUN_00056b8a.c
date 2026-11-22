@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * RX8Defs service 0x22 identifier 0x0043: Engine Load. Dispatch identifier match; logger meaning is definition-derived.
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * diag22_pid0043_engine_load_g_rev [high]: dispatch record 0x5f268 -> handler verified in ROM bytes + function_index; 0x55748: engine_load_ffffc0b4*0.00392157 (=1/255) = g/rev; RX8Club thread + logger 0x220043; dynamically verified (test_mode22_dispatch_pid_0043)
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * RX8Defs service 0x22 identifier 0x0043: Engine Load. Dispatch identifier match; logger meaning is definition-derived.
  */
 /* ROM address: 0x00056b8a; body bytes: 20; decompiled */
 

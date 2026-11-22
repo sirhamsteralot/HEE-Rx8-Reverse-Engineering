@@ -1,3 +1,8 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffff8068 learned_pedal_zero_1 (float): Learned APP1 zero (default 0x412db22d=10.856f), adapted by 0x18fe8 under stability gates, reset when TP fault cc9b/cc9c; subtracted in 0x1933a (pool 0x19386=0x8068). E2RAM-backed via 0x244bc/0x23844.
+ * RAM 0xffff8070 learned_pedal_zero_2 (float): Learned APP2 zero; subtracted in 0x1933a (pool 0x19388=0x8070).
+ * RAM 0xffff8078 learned_pedal_zero_valid (uint8): Set to 1 by 0x18fe8 after the stable-pass counter a9d8 reaches 0x177 with both learned channels within 0.032 (else 0; also 0 on TP fault cc9b/cc9c together with the E2RAM write of 0xffff8068/0xffff8070); selects the 3.5f vs 9.536f correlation threshold in 0x4595a; read by 0x1933a/0x19574/0x68e3e.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

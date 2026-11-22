@@ -1,10 +1,10 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a088: Ignition Trailing - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006a09c: Ignition Trailing - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_trailing_timing_error_correction [high]: was ref_idleTrailingTimingCorrection_. Trailing mirror -> a71c; feeds +a71c in 0x124d6.
  * RAM 0xffffa71c idle_trailing_timing_error_correction (float): Written by 0x136e4 idle_trailing_timing_error_correction (fmov.s fr15,@r3 0x137ba via mov.w pool 0x137da=0xa71c @0x137b8); read by 0x124d6 (mov.w pool 0x12682 @0x12584).
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a088: Ignition Trailing - Idle Error Timing Correction - Unknown Bool False (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006a09c: Ignition Trailing - Idle Error Timing Correction - Unknown Bool True (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
