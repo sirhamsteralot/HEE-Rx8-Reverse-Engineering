@@ -37,7 +37,7 @@ void e2ram_block_encode(void)
   DAT_ffffb448 = rx8_encode_u16_affine_saturate(filtered_battery_voltage_ffffb594,0x39a00000,0);
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
   DAT_ffffb44a = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
-  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
+  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
   DAT_ffffb44c = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   DAT_ffffb44e = inferred_pedal_volts_ffffa9c4_ffffa9c4;
   DAT_ffffb450 = e2ram_payload_reserved_ffffb51e;
@@ -76,7 +76,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb459 = DAT_ffffb459 & 0xef;
   }
-  if (DAT_ffffad60 == '\x01') {
+  if (tp_plausibility_fault_a_ffffad60 == '\x01') {
     DAT_ffffb459 = DAT_ffffb459 | 0x20;
   }
   else {
@@ -191,13 +191,13 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xfb;
   }
-  if (DAT_ffffb2cf == '\x01') {
+  if (dsc_torque_limit_active_ffffb2cf == '\x01') {
     DAT_ffffb45c = DAT_ffffb45c | 8;
   }
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xf7;
   }
-  if (DAT_ffffb2d0 == '\x01') {
+  if (dsc_mode_c_active_ffffb2d0 == '\x01') {
     DAT_ffffb45c = DAT_ffffb45c | 0x10;
   }
   else {
@@ -215,7 +215,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45c = DAT_ffffb45c & 0xbf;
   }
-  if (DAT_ffffad61 == '\x01') {
+  if (tp_plausibility_fault_b_ffffad61 == '\x01') {
     DAT_ffffb45d = DAT_ffffb45d | 1;
   }
   else {
@@ -246,7 +246,7 @@ void e2ram_block_encode(void)
   else {
     DAT_ffffb45d = DAT_ffffb45d & 0xef;
   }
-  if (DAT_ffffccbc == '\x01') {
+  if (throttle_servo_mode_ffffccbc == '\x01') {
     DAT_ffffb45d = DAT_ffffb45d | 0x20;
   }
   else {
@@ -267,7 +267,7 @@ void e2ram_block_encode(void)
   uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41a00000,&DAT_ffff8094);
   DAT_ffffb45e = rx8_encode_u16_affine_saturate(uVar3,0x3cfa0000,0);
   DAT_ffffb460 = rx8_encode_u16_affine_saturate(candidate_throttle_base_position_ffffb38c,0x3cfa0000,0);
-  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&DAT_ffff8068);
+  uVar3 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x412db22d,&learned_pedal_zero_1_ffff8068);
   DAT_ffffb462 = rx8_encode_u16_affine_saturate(uVar3,0x3b800000,0);
   DAT_ffffb464 = rx8_encode_u16_affine_saturate(engine_speed_rpm_ffffb548,0x3e480000,0);
   return;

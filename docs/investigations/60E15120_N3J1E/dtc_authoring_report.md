@@ -273,7 +273,7 @@ renamed or upgraded, and no decompiled artifact was modified.
 | 0x00023844 / 0x000244bc | `e2ram_block_decode` / `e2ram_block_encode` | E2RAM block codec; fault bits 0xffffb48a–0xffffb490 ↔ 0xffffb459–0xffffb45d |
 | 0x0002376c / 0x0002377a | `e2ram_load_decode_entry` / `e2ram_save_encode_entry` | load / save wrappers |
 | 0x000235c8 / 0x000235f8 / 0x000236cc | `FUN_000235c8` / `FUN_000235f8` / `FUN_000236cc` | load / verify / save drivers |
-| 0x0001150e | `FUN_0001150e` | periodic batch containing the save; called from 0x64ba |
+| 0x0001150e | `dbw_task9_batch` | periodic batch containing the save; called from 0x64ba |
 | 0x000064ba | `knock_sensor_fault_task` | task[9] entry → 0x1150e |
 | 0x00057db0 / 0x00058168 | `uds_service_18` / `FUN_00058168` | Mazda UDS 0x18 readout (record 0x5ec0c); 0x58168 sets 0xffffd228 |
 | 0x00065ff8 / 0x000661ec / 0x00065c88 / 0x0006725c | `obd_mode03_stored_dtc` / `obd_mode07_pending_dtc` / `obd_mode02_freeze_frame` / `obd_mode06_test_results` | scanner readout |

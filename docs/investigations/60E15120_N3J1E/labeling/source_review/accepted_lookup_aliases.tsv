@@ -47,3 +47,10 @@ DAT_0000d76c	tbl_crank_next_sector_0000d76c	source_review_os_scheduling	Byte at 
 DAT_0000d76d	tbl_crank_sector_ocr10b_0000d76d	source_review_os_scheduling	Byte at +2*sector & 0x7f = OCR10B compare reload in ch10b_compare_rearm 0x7b58 (per-sector tick interval); bit 0x80 marks reference sectors used by 0x77f0.
 PTR_LAB_00004b34	tbl_os_resume_jumptable_00004b34	source_review_os_scheduling	{0x37c4, 0x3818, 0x37c8, 0x381c} context-restore variants; indexed by ctx[0] - rec.param.b0 in os_switch_to_task 0x375c (pool word 0x37c0 = 0x4b34).
 DAT_00003d48	tbl_os_class_bit_00003d48	source_review_os_scheduling	Bytes 01 02 04 08 10 20 40 80; os_mark_task_ready 0x39ba uses [class&7] as the ready-bitmap bit for 0xffff7668[class>>3].
+0006a458	tbl_throttle_pedal_to_throttle_plate_request_gear_1_2	source_review_throttle_dbw	RX8Defs 'Throttle Pedal to Throttle Plate Request - Gear 1/2' (3D 21x18 uint16); used by 0x228dc (pool 0x229dc=0x6a458).
+0006a474	tbl_throttle_pedal_to_throttle_plate_request_gear_neutral	source_review_throttle_dbw	RX8Defs '... - Gear Neutral'; pool 0x229e0=0x6a474 in 0x228dc.
+0006a490	tbl_throttle_pedal_to_throttle_plate_request_gear_5_6	source_review_throttle_dbw	RX8Defs '... - Gear 5/6'; pool 0x229e4=0x6a490 in 0x228dc.
+0006a4ac	tbl_throttle_pedal_to_throttle_plate_request_gear_3_4	source_review_throttle_dbw	RX8Defs '... - Gear 3/4'; pool 0x229e8=0x6a4ac in 0x228dc.
+0006a150	tbl_dsc_mode_c_max_throttle_plate_opening_allowed	source_review_throttle_dbw	RX8Defs 'DSC Mode C - Max Throttle Plate Opening Allowed'; 2D lookup in 0x218c4 -> b2bc -> clamp in 0x233ec.
+0006a164	tbl_trans_requested_torque_to_throttle_plate_position	source_review_throttle_dbw	RX8Defs 'Trans Requested Torque To Throttle Plate Position'; 3D lookup in 0x218c4/0x21a80 -> b2e4/b2b8/b2c4.
+0006a180	tbl_throttle_position_to_torque	source_review_throttle_dbw	RX8Defs 'Throttle Position To Torque'; 3D lookups in 0x21a80/0x21ae8/0x21970 -> b2c0/b2e8/b2c8.

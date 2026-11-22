@@ -9,7 +9,7 @@ uint FUN_00045d90(void)
   cVar2 = ref_getFaultStatus__(0x69);
   if (((cVar2 == '\0') && (DAT_ffffccc2 == '\x01')) &&
      (cVar2 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8734,0), cVar2 == '\0')) {
-    if (DAT_ffffa111 == '\x01') {
+    if (pedal_range_fault_2_ffffa111 == '\x01') {
       DAT_ffffcc02 = rx8_add_u16_saturate((int)(short)DAT_ffffcc02,1);
       DAT_ffffcc04 = 0;
       if (0x18 < DAT_ffffcc02) {

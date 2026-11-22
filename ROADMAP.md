@@ -16,10 +16,10 @@ fidelity), C = P2 residual (static labeling & gap closure), D = P2/P5
 (cross-ROM propagation), E = P4 (reimplementation), F = P6 (toward hardware).
 
 **Status.** Groups A, B and D are complete. Group C is reopened — open items
-27, 29–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
+29–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
 items 62–63 and 65–90 were folded into their source items — fold map in this
 file's git history). Groups E and F remain open as listed below. Pick up
-**C item 27** next.
+**C item 29** next.
 
 ## Open work — pick up here
 
@@ -59,15 +59,6 @@ in the same change.
 
 #### C.1 New subsystem coverage — analyze, report, label
 
-- **C item 27 (open)** — **throttle / DBW.** Pedal PIDs 0x0011/0x093c and the
-  DSC torque-request throttle via CAN 0x212 are labeled (see
-  [dsc_can_arbitration_report.md](docs/investigations/60E15120_N3J1E/dsc_can_arbitration_report.md)),
-  but pedal→throttle-motor control (motor drive, limp/home mode, TP sensor
-  plausibility) has no report; also settle the logger PID 0x1410 conflict
-  (injector pulse time vs. throttle pedal, noted in design doc §5.8). Label
-  record `data/labels/60E15120_N3J1E/throttle_dbw_labels.json` and checks
-  `tests/test_throttle_dbw.py` already exist — the report is the missing
-  deliverable.
 - **C item 29 (open)** — **misfire detection / monitor.**
   `ref_misfireDetectInit_` `0xab8a` is named and the misfire DTCs sit in
   [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
@@ -359,6 +350,7 @@ flash before any read), not the test path.
 | D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 | D14 | open | `0xffffdfa0` is dual-labeled: `immo_diag_bit` in `accepted_ram_aliases.tsv` / the immobilizer report (cleared by `0x11c4`, tested by `ref_readImmoBit` `0x16b20`) vs `sbl_inactivity_counter` (u16) in [`docs/subsystem-logic/sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), where `0x11c4` zeroing it is dynamically proven in the emulator relock tests. `0x11c4` sits inside the SBL block (`0x1000–0x1fff`). Reconcile the alias (and the `0x11c4`/`0x16b20` rows) in one direction — likely SBL-side — and fold back into both reports |
 | D15 | documented | upstream RX8Defs `d4140dc` delta absorbed: 118 renames + 16 category moves + 10 duplicate removals on `RomRaider/rx8_defs.xml`, no `storageaddress` changed; per-ROM defs + `coverage.json` regenerated at the pin, upstream snapshot re-pinned (`repin_upstream_snapshot.py`), splice pass normalization-only (`upstream_splice_d4140dc.json`), collision/alias findings logged pin-tagged in `defs-merge/axis_conflicts.json` + `inheritance_issues.json`; label map needed no changes; record [upstream-sync-d4140dc.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md), machine record `defs-merge/upstream_pin_audit_d4140dc.json`; open follow-up: 26 `Table 3D - 2 `/`3D - 3 ` block overrides lost their RX8Base template upstream (`base_template_removed_at_pin`) |
+| D16 | open | `validate_reports.py` only parses memory-map rows whose first cell starts with `0x`, so a backtick-wrapped address cell is skipped without a warning: the `sbl_bootloader_report.md` map (16 RAM rows, including the D14 alias conflict) and `fuel_pump_control_report.md` (2 rows) are unchecked today, and `throttle_dbw_control_report.md` validated with 0 rows checked until its cells were made bare. Closure plan: strip an optional backtick wrapper in the row parser, then reconcile the rows it starts checking (the SBL report needs aliases or documented grouped rows for `0xffffd3f0`/`0xffffd1xx`/`0xffffdfb0-b8`) |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.

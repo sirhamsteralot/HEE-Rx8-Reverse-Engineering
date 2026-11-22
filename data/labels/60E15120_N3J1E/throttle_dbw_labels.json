@@ -1,15 +1,488 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-22",
   "pass": "throttle_dbw_subsystem_analysis",
-  "basis": "Neighbor of the fuel pump drive path mapped while tracing PEDR port writes: PE0 (pkg pin 7, harness candidate DBW relay 4C) = (pe0_relay_flag 0xffffcfb7 == 0), driven by relay_output_pair_pd7_pe0 0x3a0ec (label record starting_cranking_labels.json); 0xffffcfb7 computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc. Static analysis + raw ROM bytes; dynamic check in tests/test_throttle_dbw.py.",
-  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1); split out of fuel_pump_control_labels.json per the report scope-discipline rule: these rows were mapped while tracing the fuel pump port banks but belong to their own subsystems",
-  "function_aliases": {},
+  "basis": "source_review_throttle_dbw",
+  "source": "Static analysis of reverse-engineered/decompiled/60E15120_N3J1E + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + raw ROM bytes (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1), plus SH-2E emulator harness runs (tests/test_throttle_dbw.py). Report: docs/subsystem-logic/throttle_dbw_control_report.md.",
+  "function_aliases": {
+    "0001150e": {
+      "alias": "dbw_task9_batch",
+      "confidence": "high",
+      "evidence": "Task-table rec[9] @ROM 0x4a20 entry 0x64ba tail-calls 0x1150e (pool 0x656c=0x0001150e at 0x64d4); batch pool 0x116b8=0x000199d4 (pedal/TP sensor batch), 0x116c8=0x00022f86 (DBW control batch), 0x116e4=0x00021b4c (throttle torque batch) \u2014 words read from ROM, jsr sites in disasm."
+    },
+    "000199d4": {
+      "alias": "pedal_tp_sensor_batch",
+      "confidence": "high",
+      "evidence": "Sensor/percent batch called from 0x1150e (pool 0x116b8=0x000199d4): runs 0x18f60/0x18fa4/0x18fe8/0x1933a/0x193c4 (pedal AN4/AN5 -> volts -> percent -> demand), 0x1b08e/0x1b14c/0x1b940 (plate AN18/AN19 -> TP volts -> plate position), learning/plausibility 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x1bcae (callgraph.tsv rows for caller 000199d4)."
+    },
+    "000094f0": {
+      "alias": "pedal_adc_raw_to_volts",
+      "confidence": "high",
+      "evidence": "AN4/AN5 raw (0xffff9eec/0xffff9eee from the 0x6884 sweep) range-checked against pool words 0x6eeb0=0xf5c3 (upper) / 0x6eeb4=0x11ec (lower), faults 0xffffa110/a111; a108 = 0.0f (0x6eec0) + raw * 6.341f (0x6eeb8=0x40cae979) * 7.6294e-05f; a10c = 3.488f (0x6eec4=0x405f3b64) + raw * 6.341 * 7.6294e-05. Called from 0x60c8 ref_getSensorStuff__ (pool 0x6250)."
+    },
+    "00018f60": {
+      "alias": "pedal_volts_clamp_latch",
+      "confidence": "high",
+      "evidence": "a9c4 = DAT_ffff9eec (pool 0x19058=0xffff9eec, 0x1904a=0x0000a9c4), a9c8 = 0xffffa112, a99c = rx8_min_float(25.0f @0x6eed0 via pool 0x19068, a108 @0xffffa108 pool 0x19064) via 0x23f4 (pool 0x1906c); called from 0x199d4."
+    },
+    "0001933a": {
+      "alias": "pedal_learned_zero_subtract",
+      "confidence": "high",
+      "evidence": "a9ac = rx8_max_float(0.0, a99c - readValue_float(0xffff8068)) and a9b0 likewise with 0xffff8070 (pools 0x19386=0x8068, 0x19388=0x8070/0x8078, 0x1938c=0xa99c/0xa9a4, helpers 0x193bc=0x3dc22 ref_readValue_float, 0x19394=0x23e4 rx8_max_float, outputs 0x19390=0xa9ac/0xa9b0). Learned default 0x412db22d=10.856 written by 0x18fe8."
+    },
+    "0001b08e": {
+      "alias": "plate_tp1_volts_latch",
+      "confidence": "high",
+      "evidence": "ad5c = DAT_ffff9f08 (AN18 raw; pools 0x1b12c=0xffff9f08, 0x1b0e6=0xad5c), ad30/ad54 from 0xffffa218/0xffffa222 (pools 0x1b138=0xffffa218, 0x1b130=0xffffa222, 0x1b0f0=0xad30/0xad54); filter 0x23b0 via pool 0x1b148. Called from 0x199d4."
+    },
+    "0001b14c": {
+      "alias": "plate_tp2_volts_latch",
+      "confidence": "high",
+      "evidence": "ad5e = DAT_ffff9f0a (AN19 raw; pools 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e/0xad34), ad34 from 0xffffa21c/0xffffa224 (pools 0x1b1dc=0xffffa21c, 0x1b1d4=0xffffa224). Called from 0x199d4."
+    },
+    "000228dc": {
+      "alias": "throttle_pedal_to_plate_request_map",
+      "confidence": "high",
+      "evidence": "3D lookup lookup_3d_descriptor_scaled(rpm 0xffffb548, demand 0xffffa9bc, tbl) with gear flags b2cc/b2cd/b2ce selecting descriptors 0x6a458 (1/2), 0x6a474 (neutral), 0x6a490 (5/6), 0x6a4ac (3/4) (pools 0x229ca=0xa9bc, 0x229cc=0xb548/0xb2cc, 0x229d0=0xb2cd/0xb2ce, 0x229dc=0x6a458, 0x229e0=0x6a474, 0x229e4=0x6a490, 0x229e8=0x6a4ac); result clamped [0, 84.0f @0x7372c via pool 0x229f0] by 0x2404 (pool 0x229f4) into 0xffffb398 (pool 0x229ec) with 12-deep history shift (b3ec..b3c4, pool 0x229f8=0xffffb3ec). Called from batch 0x22f86."
+    },
+    "00022a14": {
+      "alias": "pedal_demand_filter_coeffs",
+      "confidence": "high",
+      "evidence": "b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86."
+    },
+    "00022d26": {
+      "alias": "throttle_base_position_filter",
+      "confidence": "high",
+      "evidence": "b390 = first_order_filter(b38c, b390, 0.25, 1e-5); b394 = (b38c <= 2.0). Called from batch 0x22f86."
+    },
+    "00022db4": {
+      "alias": "throttle_servo_override",
+      "confidence": "high",
+      "evidence": "Servo/homing override in batch 0x22f86. dir b400 = (b4b0 >= readValue_float(0xffff807c, default 15.0f @0x6f438)+0.5f @0x747c4, band 0x747c8=0.0f); mode byte ccbc; duty b3f8: mode!=1 -> 0.0; mode==1 && b401==0 -> min(b410+learned, learned+0.5f @0x747b8) while b401==0; else decay max(5.0f @0x747bc, b3f8-0.05f @0x747c0) while the word counters b3fc/b3fe exceed 2 (0x747b4/0x747b6). Pools 0x22e9e-0x22f18 verified: 0x22ea0=0xb4b0, 0x22ea2=0xccbc, 0x22ea4=0xb3f8, 0x22ea6=0xb410, 0x22ebc=0xffffb400, 0x22ec0=0xffffb3fc, 0x22ec4=0xffffb3fe, 0x22ec8/0x22f18=0xffffb401."
+    },
+    "000233ec": {
+      "alias": "throttle_target_plate_position",
+      "confidence": "high",
+      "evidence": "Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) stored with fmov.s at 0x2353e (float in b424 units, PIDs 0x004c/0x091a; 0x5ccb4 quantizes to 1/512 for the PID export and decodes back for descriptor codes 5/7). Called from batch 0x22f86."
+    },
+    "000231f0": {
+      "alias": "learned_pedal_value_calc",
+      "confidence": "high",
+      "evidence": "b40c = clamp(candidate, 0, H), H = readValue_float(0xffff808c, default 111.0f @0x6f45c=0x42de0000); candidates by byte: ccbb -> H+learned807c, ccbc -> servo duty b3f8, ccbd -> cc88+learned807c, ccac -> b410+learned807c capped at learned807c+5.0f (0x747e4), cca2 -> cca8, else b410+learned807c; high byte of 0xffff808c ==1 -> 99.0f (0x747e8). rpm gates b435 (500/300 rpm, 0x747ec), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86."
+    },
+    "00023558": {
+      "alias": "throttle_position_delta_calc",
+      "confidence": "high",
+      "evidence": "b414 = b410 - b428 (0.0 when ccc9 set); b428 = b410. Called from batch 0x22f86."
+    },
+    "00022f86": {
+      "alias": "dbw_control_batch",
+      "confidence": "high",
+      "evidence": "DBW control batch from 0x1150e (pool 0x116c8=0x00022f86), mask 0x10 around two call groups: 0x474fc (home offset cc88), 0x22f1c, 0x48558, then 0x22db4, 0x233ec, 0x231f0, 0x23558, 0x228dc, 0x22a14, 0x22d26, relay_hold_output_pd11 0x251d0 (callgraph.tsv rows for caller 00022f86)."
+    },
+    "00021b4c": {
+      "alias": "throttle_torque_request_batch",
+      "confidence": "high",
+      "evidence": "Throttle torque batch from task rec[18] 0x64e8 -> 0x11534 -> 0x1150e (pool 0x116e4=0x00021b4c); mask 0x10; calls 0x21970 (gear mode flags), 0x218c4 ref_throttlePlateControl_Related (DSC torque-request limit), 0x21ae8 ref_getThrottleBasedTorque_Related (callgraph.tsv rows for caller 00021b4c)."
+    },
+    "00021970": {
+      "alias": "throttle_gear_mode_flags",
+      "confidence": "high",
+      "evidence": "Sets b2cc/b2cd/b2ce by priority from the gear bytes 0xffffbc41/bc42/bc43 (written by 0x2c15a; 0xffffb534 from 0x24b44 = 1 on this bin); the map select in 0x228dc is b2cc->0x6a458, b2cd->0x6a474, b2ce->0x6a490, else 0x6a4ac; calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c."
+    },
+    "00033e98": {
+      "alias": "plate_range_high_fault",
+      "confidence": "high",
+      "evidence": "c108 = 1 when ad48 (plate % of 84) >= 200.0f (ROM 0x79be0=0x43480000), clear hysteresis 196.48 = 200.0 - 3.52f (ROM 0x79be4=0x406147ae); pools 0x33f6a=0xad48, 0x33f6c=0xc108. Called from fueling_main_task 0x20e40; consumers 0x33dc8/0x34230 kill accel enrichment."
+    },
+    "0004595a": {
+      "alias": "tp_correlation_fault_check",
+      "confidence": "high",
+      "evidence": "APP1/APP2 (pedal) zeroed-volts correlation |a9ac - a9b0|: limit 3.5f on every rung of the pedal-2 ladder (breakpoints 0x7c76c/0x7c770/0x7c774/0x7c778 = 0.6/1.2/2.0/4.0, limits 0x7c77c-0x7c78c) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375); monitor gated by 0xffffcbf0==1; good counter cbf2 >= 25 (u16 0x7c794) -> cbec=1; bad counter cbee >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. The tp_ prefix in the alias names is a carry-over: the operands are the pedal channels. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12."
+    },
+    "00025198": {
+      "alias": "ch7d_pwm_duty_ratio",
+      "confidence": "high",
+      "evidence": "b570 = clamp(b354, 0, 100.0f) / 100.0f (pools 0x251c0=0xb354, 0x251c2=0xb570, 0x251c4=0x42c80000, helper 0x251c8=0x2404), then tail jmp 0xb2c0 (pool 0x251cc) with r4=0. Called from 0x2253c."
+    },
+    "0000b2c0": {
+      "alias": "ch7d_pwm_duty_write",
+      "confidence": "high",
+      "evidence": "0xb2c0(ch, fr4): a210[ch] = (u32)(fr4 * 65536.0f) (pools 0xb37c=0xffffa210, 0xb390=0x47800000); if a214[ch]==1 and ch==0: BFR7D 0xfffff596 = rx8_mul_s32_shift16_saturate(a210[0], 0xffff9f50) via 0x231c (pools 0xb380=0xffffa214, 0xb374=0xf596, 0xb38c=0xffff9f50, 0xb394=0x231c). Sole caller 0x25198 (only ROM pointer word to 0xb2c0 is 0x251cc)."
+    },
+    "0002253c": {
+      "alias": "ch7d_pwm_duty_batch",
+      "confidence": "high",
+      "evidence": "Batch called from 0x118d0 (task[13] 0x65b2 -> pool 0x66d8=0x000118d0 -> pool 0x11a88=0x0002253c): mask 0x10, calls 0x22574, 0x22630, 0x25198 (pools 0x22560=0x3920, 0x22564=0x22574, 0x22568=0x22630, 0x2256c=0x25198)."
+    },
+    "00022574": {
+      "alias": "ch7d_pwm_enable_condition",
+      "confidence": "high",
+      "evidence": "b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= the u16 3D-table result (tbl 0x6a340 on coolant-derived b35c and IAT ade0) in 0xffffb386 && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c."
+    },
+    "00022630": {
+      "alias": "ch7d_pwm_duty_control_loop",
+      "confidence": "high",
+      "evidence": "Closed-loop duty b354 (0-100%): PID-ish on 0xffffaa78 (filtered AN11/AN23 pair ratio) \u2014 P (aa78-30.0f @0x7355c)*4.5f (@0x73550), I b364 += (aa78-30)*0.1875f (@0x73554), D (b36c-aa78)*0.75f (@0x73558), hysteresis 39/44/40/45 -> b389/b38a (@0x7354c/0x73548); feedforward/limit tbls 0x6a2cc/0x6a2f4 (aa78), 0x6a324 (rpm, maf aa38), 0x6a2e0 (battery) -> b360 = b378*min(b370,b374); timer b368 -> tbl 0x6a308; b354=0 when b358==0. Called from 0x2253c."
+    },
+    "0000b23c": {
+      "alias": "ch7d_pwm_off_init",
+      "confidence": "high",
+      "evidence": "Init (from mainInit 0x61a8 chain): a214=0, a210=0, TSTR2 0xfffff400 bit7 clear, CYLR7D/TCNT7D/BFR7D/DTR7D=1 then BFR7D=0, TSTR2 bit7 set (pools 0xb36c=0xe0/0xf400, 0xb36e=0xf400, 0xb370=0xf58e/0xf586, 0xb374=0xf596/0xf59e, 0xb37c=0xffffa210, 0xb380=0xffffa214, 0xb378=0x7d00)."
+    }
+  },
   "ram_aliases": {
+    "ffff9eec": {
+      "alias": "adc_an4_pedal_raw",
+      "type": "uint16",
+      "reader": "000094f0",
+      "evidence": "ADDR4H (0xfffff808) latched here by the 0x6884 ADC sweep (pool 0x6a1c=0xffff9ee4 base, +2n); read by 0x18f60 (pool 0x19058=0xffff9eec) into a9c4 (pool 0x1904a). Pedal APP1 raw. Harness: accelerator pedal sensor terminals 4X/5AE/5C/4Y/5AB/5F (B1-14 A-F); pin->terminal is board routing."
+    },
+    "ffff9eee": {
+      "alias": "adc_an5_pedal_raw",
+      "type": "uint16",
+      "reader": "000094f0",
+      "evidence": "ADDR5H latched at 0xffff9eee by the 0x6884 sweep; pedal APP2 raw; feeds a9c6 via 0x18fa4."
+    },
+    "ffff9f08": {
+      "alias": "adc_an18_plate_tp1_raw",
+      "type": "uint16",
+      "reader": "0001b08e",
+      "evidence": "ADDR18H latched here by the 0x6884 sweep; read by 0x1b08e (pool 0x1b12c=0xffff9f08) into ad5c (pool 0x1b0e6) \u2014 throttle PLATE TP1 volts (PID 0x0011 via 0x5553e, PID 0x1154 raw). Harness: throttle body TP signal 1J (B1-19 A)."
+    },
+    "ffff9f0a": {
+      "alias": "adc_an19_plate_tp2_raw",
+      "type": "uint16",
+      "reader": "0001b14c",
+      "evidence": "ADDR19H latched here by the 0x6884 sweep; read by 0x1b14c (pool 0x1b1d0=0xffff9f0a) into ad5e (pool 0x1b1c0) \u2014 throttle PLATE TP2 volts. Harness: TP signal 1M (B1-19 D)."
+    },
+    "ffffa108": {
+      "alias": "pedal_1_scaled_volts",
+      "type": "float",
+      "reader": "000094f0",
+      "evidence": "a108 = 0.0f + AN4 raw * 6.341f (0x6eeb8) * 7.6294e-05f (0x94f0); range-checked [0x11ec, 0xf5c3) with faults a110/a111 -> DTC 0x66/0x67 (TP... pedal channel 1)."
+    },
+    "ffffa99c": {
+      "alias": "pedal_1_volts_clamped25",
+      "type": "float",
+      "reader": "00018f60",
+      "evidence": "a99c = rx8_min_float(25.0f, a108) in 0x18f60 (pools 0x19064=0xffffa108, 0x19068=0x6eed0, 0x1906c=0x23f4, store 0x19042=0xa99c)."
+    },
+    "ffffa9ac": {
+      "alias": "pedal_1_volts_zeroed",
+      "type": "float",
+      "reader": "0001933a",
+      "evidence": "a9ac = max(0, a99c - learned zero 0xffff8068) in 0x1933a (pools 0x19386=0x8068, 0x1938c=0xa99c, 0x19394=0x23e4, store 0x19390=0xa9ac)."
+    },
+    "ffffad44": {
+      "alias": "inferred_throttle_position",
+      "type": "float",
+      "reader": "0001b940",
+      "evidence": "Plate position 0-84 (deg-ish): ad44 = ad38/ad3c (from AN18/AN19 via 0x1b08e/0x1b14c -> a218/a21c -> ad30/ad34, learned zeros 0xffff807c/0xffff8084) in 0x1b940; limp value 20.0 when cc99==1; ad48 = ad44/84.0f (0x42a80000)*100. Read by PID 0x093c handler 0x56e04, tbl 0x6a180 lookups 0x21a80/0x21ae8, fault 0x33e98."
+    },
+    "ffffb398": {
+      "alias": "throttle_plate_request",
+      "type": "float",
+      "reader": "000228dc",
+      "evidence": "Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-entry history at 0xffffb398+4i (write 0xffffb39c-0xffffb3c8) indexed by byte 0xffffb3ec; 0xffffb3cc = history[index]. Written by 0x228dc."
+    },
+    "ffffb424": {
+      "alias": "throttle_target_plate_percent",
+      "type": "float",
+      "reader": "000233ec",
+      "evidence": "Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); passed through the PID 0x091a export 0x5ccb4 into the float b410."
+    },
+    "ffffb3f8": {
+      "alias": "throttle_servo_override_duty",
+      "type": "float",
+      "reader": "00022db4",
+      "evidence": "Servo/homing override duty float written by 0x22db4 (pool 0x22ea4=0xb3f8); 0.0 when mode ccbc!=1; decay max(5.0, b3f8-0.05) with counters b3fc/b3fe; read by 0x231f0 (ccbc branch) and by its own decay path."
+    },
+    "ffffb400": {
+      "alias": "throttle_servo_direction",
+      "type": "uint8",
+      "reader": "00022db4",
+      "evidence": "Direction byte written by 0x22db4 (pool 0x22ebc=0xffffb400): 1 when target b4b0 >= learned 0xffff807c + 0.5f. No other reader found in ROM (whole-ROM pool scan)."
+    },
+    "ffffccbc": {
+      "alias": "throttle_servo_mode",
+      "type": "uint8",
+      "reader": "000487d6",
+      "evidence": "Servo mode byte written by engine_stop_conditions_eval 0x487d6 (fault mode =1 with ccc0, engine-stopping =1, else 0); read by 0x22db4, 0x231f0, 0x1b166 and others."
+    },
+    "ffffb2cc": {
+      "alias": "throttle_gear_mode_1_2",
+      "type": "uint8",
+      "reader": "00021970",
+      "evidence": "Gear-mode flags b2cc/b2cd/b2ce set by 0x21970 from AT bytes bc41/bc42/bc43 + automatic_transmission b534; select the pedal-to-plate map (0x228dc) and the 0x21970 branch."
+    },
+    "ffffb2cf": {
+      "alias": "dsc_torque_limit_active",
+      "type": "uint8",
+      "reader": "000218c4",
+      "evidence": "Set by ref_throttlePlateControl_Related 0x218c4 when DSC mode bit bbcc==1 && desired torque bbd4 <= b2c0 (or a966==1); gates the b424 clamp in 0x233ec (b2b8 = tbl 0x6a164 trans requested-torque-to-plate)."
+    },
+    "ffffb2d0": {
+      "alias": "dsc_mode_c_active",
+      "type": "uint8",
+      "reader": "000218c4",
+      "evidence": "Set by 0x218c4 when bbcc==1 && bbca==0; b2bc = tbl 0x6a150 'DSC Mode C - Max Throttle Plate Opening Allowed'(rpm) -> max clamp of b424 in 0x233ec."
+    },
+    "ffffb354": {
+      "alias": "ch7d_pwm_duty_percent",
+      "type": "float",
+      "reader": "00022630",
+      "evidence": "0-100% PWM duty computed by 0x22630 (PID loop on 0xffffaa78, limit b360, enable b358 -> 0); read by 0x25198 (clamp/100 -> b570 -> 0xb2c0) and stall monitors 0x4162e/0x416bc."
+    },
+    "ffffb358": {
+      "alias": "ch7d_pwm_enable",
+      "type": "uint8",
+      "reader": "00022574",
+      "evidence": "Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear."
+    },
+    "ffffcd70": {
+      "alias": "throttle_fault_latch",
+      "type": "uint8",
+      "reader": "00022574",
+      "evidence": "Stuck-duty latch: 0x4a11c ORs six flags c91d/c912/c914/c96d/c96f/c971, written by the stall monitor 0x416bc from b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0)."
+    },
+    "ffffad60": {
+      "alias": "tp_plausibility_fault_a",
+      "type": "uint8",
+      "reader": "0001ba20",
+      "evidence": "Set by 0x1ba20 when engine off/idle conditions with stable plate history (ad61==0, ccb4>7, 80a2==0) -> ad60=1; read by shutdown_allowed_flag 0x48cc0, where a 1 (like ad61 or 0xffff80a2) permits the shutdown path and sets 0xffffccc1, releasing the PD11 relay hold via 0x251d0."
+    },
+    "ffffad61": {
+      "alias": "tp_plausibility_fault_b",
+      "type": "uint8",
+      "reader": "0001bd9e",
+      "evidence": "Set by 0x1bd9e; NOT(engine running && no cc98/cc99/b4f7/b4fb/b4fd && !873c) in 0x1ba20; read by 0x48cc0/0x487d6."
+    },
+    "ffff872c": {
+      "alias": "tp_correlation_fault_latch",
+      "type": "uint8",
+      "reader": "0004595a",
+      "evidence": "Set by 0x4595a when the pedal bad-correlation counter cbee >= 29 (u16 0x7c796) -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c))."
+    },
+    "ffffc108": {
+      "alias": "tp_range_high_fault",
+      "type": "uint8",
+      "reader": "00033e98",
+      "evidence": "Set by 0x33e98 when plate percent ad48 >= 200.0 (hyst 196.48); consumers 0x33dc8/0x34230 zero the accel-enrichment accumulators c0c8/c104."
+    },
+    "ffffcbec": {
+      "alias": "tp_correlation_ok",
+      "type": "uint8",
+      "reader": "0004595a",
+      "evidence": "Set by 0x4595a when the pedal good-correlation counter cbf2 >= 25 (u16 0x7c794)."
+    },
+    "ffff8068": {
+      "alias": "learned_pedal_zero_1",
+      "type": "float",
+      "reader": "00018fe8",
+      "evidence": "Learned APP1 zero (default 0x412db22d=10.856f), adapted by 0x18fe8 under stability gates, reset when TP fault cc9b/cc9c; subtracted in 0x1933a (pool 0x19386=0x8068). E2RAM-backed via 0x244bc/0x23844."
+    },
+    "ffff8070": {
+      "alias": "learned_pedal_zero_2",
+      "type": "float",
+      "reader": "00018fe8",
+      "evidence": "Learned APP2 zero; subtracted in 0x1933a (pool 0x19388=0x8070)."
+    },
+    "ffff8084": {
+      "alias": "learned_plate_zero_2",
+      "type": "float",
+      "reader": "0001b3f2",
+      "evidence": "Learned plate TP2 zero (default 15.0f=0x41700000), adapted by 0x1b3f2 with 0xffff807c; subtracted in 0x1b940 (ad3c)."
+    },
+    "ffff9f50": {
+      "alias": "ch7d_pwm_period",
+      "type": "uint16",
+      "reader": "0000b308",
+      "evidence": "PWM period 32000 (0x7d00) written by atu_ch7d_pwm_enable 0xb308 (pool 0xb378=0x7d00); used by 0xb2c0 (pool 0xb38c=0xffff9f50) to scale duty q16 into BFR7D."
+    },
+    "ffffa110": {
+      "alias": "pedal_range_fault_1",
+      "type": "uint8",
+      "reader": "000094f0",
+      "evidence": "APP1 raw range-fault flag: 0x94f0 stores fault flags via the indexed base &DAT_ffffa110 (+1 for ch2) with debounce counters 0xffffa116+ when raw is outside [0x11ec, 0xf5c3) (pools 0x6eeb0/0x6eeb4); read by the DTC paths 0x45b3c/0x45c42 (DTC 0x66 family)."
+    },
+    "ffffa111": {
+      "alias": "pedal_range_fault_2",
+      "type": "uint8",
+      "reader": "000094f0",
+      "evidence": "APP2 raw range-fault flag (same indexed store in 0x94f0, +1); read by the DTC paths 0x45d90/0x45e96 (DTC 0x67-0x69 family)."
+    },
+    "ffffa218": {
+      "alias": "plate_tp1_volts",
+      "type": "float",
+      "reader": "0001b08e",
+      "evidence": "TP1 volts: written by 0xb398 (indexed float store at 0xffffa218+4i) = base (0x6f3ec, 0.0f) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940."
+    },
+    "ffffa21c": {
+      "alias": "plate_tp2_volts",
+      "type": "float",
+      "reader": "0001b14c",
+      "evidence": "TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f, base 0x6f3f0=-31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940."
+    },
+    "ffffcbf2": {
+      "alias": "tp_correlation_good_counter",
+      "type": "uint16",
+      "reader": "0004595a",
+      "evidence": "Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); >= 25 (u16 0x7c794) -> 0xffffcbec=1."
+    },
+    "ffffcbee": {
+      "alias": "tp_correlation_bad_counter",
+      "type": "uint16",
+      "reader": "0004595a",
+      "evidence": "Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee)."
+    },
+    "ffffcc98": {
+      "alias": "plate_tp2_source_select",
+      "type": "uint8",
+      "reader": "0001b940",
+      "evidence": "Read by 0x1b940: ==1 selects the TP2 branch (ad44 = ad3c instead of ad38); also referenced by 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x470d0/0x47704/0x487d6 (engine_stop_conditions_eval)."
+    },
+    "ffffcc99": {
+      "alias": "limp_home_request",
+      "type": "uint8",
+      "reader": "0001b940",
+      "evidence": "Read by 0x1b940: together with cc98==1 forces ad44 = 20.0 (limp plate position); also referenced by 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x487d6."
+    },
+    "ffff8078": {
+      "alias": "learned_pedal_zero_valid",
+      "type": "uint8",
+      "reader": "00018fe8",
+      "evidence": "Set to 1 by 0x18fe8 after the stable-pass counter a9d8 reaches 0x177 with both learned channels within 0.032 (else 0; also 0 on TP fault cc9b/cc9c together with the E2RAM write of 0xffff8068/0xffff8070); selects the 3.5f vs 9.536f correlation threshold in 0x4595a; read by 0x1933a/0x19574/0x68e3e."
+    },
+    "ffffa9b4": {
+      "alias": "accelerator_pedal_1_percent",
+      "type": "float",
+      "reader": "000193c4",
+      "evidence": "CORRECTION (was 'throttle_position_1_percent'): a9b4 = clamp(a9ac/12.7f*100, 0, 100) where a9ac comes from AN4 (0xffff9eec) via 0x94f0/0x18f60/0x1933a \u2014 the PEDAL (APP1) percent; it feeds demand a9bc (0x193c4), the pedal-zero learner 0x18fe8 and the cruise pedal-override compare inside 0x4c896 (against cruise output bcf8); the pedal-to-plate maps 0x228dc read the demand a9bc, not a9b4. The throttle PLATE position is ad44 (AN18/AN19 chain). Pool 0x194d4=0x6ef18 (12.7f), 0x194d0=0x42c80000 (100.0f), 0x194e0=0x2404 (clamp)."
+    },
+    "ffffa9b8": {
+      "alias": "accelerator_pedal_2_percent",
+      "type": "float",
+      "reader": "000193c4",
+      "evidence": "CORRECTION (was 'throttle_position_2_percent'): a9b8 = same chain from AN5 (0xffff9eee) \u2014 the PEDAL (APP2) percent; see a9b4. Pool 0x194bc=0xa9b4/0xa9b0, 0x194be=0xa9b0."
+    },
+    "ffffad5e": {
+      "alias": "inferred_throttle_sensor_2_volts_ffffad5e",
+      "type": "uint16",
+      "reader": "00056d4c",
+      "evidence": "CORRECTION (was 'inferred_pedal_volts_ffffad5e'): ad5e = DAT_ffff9f0a = AN19 raw, latched by 0x1b14c (pool 0x1b1d0=0xffff9f0a, 0x1b1c0=0xad5e) \u2014 the throttle PLATE TP2 volts (pair with ad5c/AN18, PID 0x0011). The pedal volts are a9c4/a9c6 (AN4/AN5). PID 0x0047/0x0918 handlers read ad5e."
+    },
     "ffffcfb7": {
       "alias": "pe0_relay_flag",
       "type": "uint8",
       "reader": "0003a0ec",
       "evidence": "Computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc (RX8Defs 'Table 3D - 120/121') over counters cfad/cfac/cfaf/cfae; PE0 = (cfb7 == 0). Pool 0x3a1b0 anchors 0xffffcfb7. Harness candidate: DBW relay 4C."
+    },
+    "ffffa9bc": {
+      "alias": "inferred_ram_a9bc_ffffa9bc",
+      "type": "float",
+      "reader": "00056f4e",
+      "evidence": "PID 0x1340 *0.392157"
+    },
+    "ffffb410": {
+      "alias": "inferred_ram_b410_ffffb410",
+      "type": "float",
+      "reader": "00055864",
+      "evidence": "PID 0x4c/0x091a"
+    },
+    "ffffa210": {
+      "alias": "ch7d_pwm_duty_q16",
+      "type": "uint32",
+      "reader": "0000b2c0",
+      "evidence": "Duty percent * 65536, written by 0xb2c0 (from 0x25198, clamp 0-100% of DAT_ffffb354); BFR7D = duty*32000>>16 (0xb308/0xb2c0)."
+    },
+    "ffffa214": {
+      "alias": "ch7d_pwm_enabled",
+      "type": "uint8",
+      "reader": "0000b308",
+      "evidence": "Once-only enable flag for the ch7D (TO7D/PB7) PWM setup in 0xb308."
+    },
+    "ffffb570": {
+      "alias": "inferred_ram_b570_ffffb570",
+      "type": "float",
+      "reader": "0005730e",
+      "evidence": "PID 0x1631 tolerance-band check"
+    },
+    "ffff807c": {
+      "alias": "inferred_ram_807c_ffff807c",
+      "type": "float",
+      "reader": "00056efc",
+      "evidence": "PID 0x1169, default 15.0"
+    },
+    "ffffb40c": {
+      "alias": "candidate_learned_pedal_value",
+      "type": "float",
+      "reader": "000244bc",
+      "evidence": "Payload u16[1]/[2] source: written by FUN_000231f0 (fmov.s at 0x233b0/0x233c2/0x233d2 via pool 0x232fa=0xb40c loaded at 0x232c2) as clamp(pedal-derived candidates, ..., 111.0), special 99.0; read back by monitors FUN_0001b6fc/0x46404 and encoded by e2ram_block_encode 0x244bc. Meaning inferred from producers -> candidate_."
+    },
+    "ffffb414": {
+      "alias": "throttle_pedal_position_delta",
+      "type": "float",
+      "reader": "000244bc",
+      "evidence": "Payload u16[3] source (signed encode): FUN_00023558 sets DAT_ffffb414 = 0xffffb410 - 0xffffb428 (0.0 when 0xffffccc9 set; pool 0x23590 at 0x2355c); b410 = raw pedal/throttle position counts (PIDs 0x004c/0x091a)."
+    },
+    "ffffa1d4": {
+      "alias": "adc_pair_ratio_filtered",
+      "type": "float",
+      "reader": "0000aee8",
+      "evidence": "first_order_filter(a1d8, a1d4, 0.25); copied to 0xffffaa78 by 0x1ac00."
     }
-  }
+  },
+  "ram_carried_note": "entries pre-existing from other passes (starting_cranking pe0_relay_flag, uds_dispatch, fueling); repeated here so this record is self-contained",
+  "corrections": {
+    "ffffa9b4": {
+      "old_alias": "throttle_position_1_percent",
+      "new_alias": "accelerator_pedal_1_percent"
+    },
+    "ffffa9b8": {
+      "old_alias": "throttle_position_2_percent",
+      "new_alias": "accelerator_pedal_2_percent"
+    },
+    "ffffad5e": {
+      "old_alias": "inferred_pedal_volts_ffffad5e",
+      "new_alias": "inferred_throttle_sensor_2_volts_ffffad5e"
+    }
+  },
+  "lookup_aliases": {
+    "0006a458": {
+      "alias": "tbl_throttle_pedal_to_throttle_plate_request_gear_1_2",
+      "evidence": "RX8Defs 'Throttle Pedal to Throttle Plate Request - Gear 1/2' (3D 21x18 uint16); used by 0x228dc (pool 0x229dc=0x6a458)."
+    },
+    "0006a474": {
+      "alias": "tbl_throttle_pedal_to_throttle_plate_request_gear_neutral",
+      "evidence": "RX8Defs '... - Gear Neutral'; pool 0x229e0=0x6a474 in 0x228dc."
+    },
+    "0006a490": {
+      "alias": "tbl_throttle_pedal_to_throttle_plate_request_gear_5_6",
+      "evidence": "RX8Defs '... - Gear 5/6'; pool 0x229e4=0x6a490 in 0x228dc."
+    },
+    "0006a4ac": {
+      "alias": "tbl_throttle_pedal_to_throttle_plate_request_gear_3_4",
+      "evidence": "RX8Defs '... - Gear 3/4'; pool 0x229e8=0x6a4ac in 0x228dc."
+    },
+    "0006a150": {
+      "alias": "tbl_dsc_mode_c_max_throttle_plate_opening_allowed",
+      "evidence": "RX8Defs 'DSC Mode C - Max Throttle Plate Opening Allowed'; 2D lookup in 0x218c4 -> b2bc -> clamp in 0x233ec."
+    },
+    "0006a164": {
+      "alias": "tbl_trans_requested_torque_to_throttle_plate_position",
+      "evidence": "RX8Defs 'Trans Requested Torque To Throttle Plate Position'; 3D lookup in 0x218c4/0x21a80 -> b2e4/b2b8/b2c4."
+    },
+    "0006a180": {
+      "alias": "tbl_throttle_position_to_torque",
+      "evidence": "RX8Defs 'Throttle Position To Torque'; 3D lookups in 0x21a80/0x21ae8/0x21970 -> b2c0/b2e8/b2c8."
+    }
+  },
+  "pid_1410_settlement": {
+    "dispatch_record": "0x5f394 (pid 0x1410, len 2, handler 0x56f6c)",
+    "handler": "0x56f6c reads float 0xffffbe24 (pool 0x57018=0xbe24), encodes u16 via 0x2490 with step 8.0f (pool 0x57048=0x41000000)",
+    "meaning": "injector pulse time (0xffffbe24 written by injector_pulse_time_arbitrate 0x2fea8); step 8 us. The upstream logger alias \"Throttle Pedal Position\" at 0x221410 does not match this ROM; throttle plate = PID 0x0011/0x093c, pedal = PID 0x0049/0x004a."
+  },
+  "rom_unchanged": true,
+  "ghidra_database_updated": false,
+  "pin_sources": "Sh7055h.pdf (SH7055F HW manual ADE 602-155B): PB7/TO7D = pkg pin 154, PBCRL=0x4000 selects TO7D PWM (written at 0x51de, pool 0x52d8=0x4000/0x52da=0xf734); PE0 = pkg pin 7; PEDR_W 0xfffff754 from symbols.tsv; harness terminals from docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md (throttle body 1B/1C/2F/1M/1Q/1J, pedal 4X/5AE/5C/4Y/5AB/5F, DBW relay 4C); chip-pin->terminal routing unresolved (board)"
 }

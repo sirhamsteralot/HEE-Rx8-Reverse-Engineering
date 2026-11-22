@@ -25,8 +25,8 @@ uint FUN_00006b94(void)
 LAB_00006be0:
     DAT_ffff9ef2 = ADDR7H_B;
     adc6_raw_apv_position_ffff9ef0 = ADDR6H_B;
-    DAT_ffff9eee = ADDR5H_B;
-    DAT_ffff9eec = ADDR4H_B;
+    adc_an5_pedal_raw_ffff9eee = ADDR5H_B;
+    adc_an4_pedal_raw_ffff9eec = ADDR4H_B;
   }
   else {
     if (uVar1 == 8) goto LAB_00006be0;

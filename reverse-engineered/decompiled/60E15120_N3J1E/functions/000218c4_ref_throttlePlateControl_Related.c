@@ -26,21 +26,21 @@ uint ref_throttlePlateControl_Related(void)
   snapshot_inferred_desired_torque_ffffbbd4 = inferred_desired_torque_ffffbbd4;
   DAT_ffffb2e4 = lookup_3d_descriptor_scaled(inferred_desired_torque_ffffbbd4,engine_speed_rpm_ffffb548,&tbl_trans_requested_torque_to_throttle_plate_position_position_0006a164);
   if (((DAT_ffffbbcb == '\x01') && (snapshot_inferred_desired_torque_ffffbbd4 <= DAT_ffffb2c0)) || (DAT_ffffa966 == '\x01')) {
-    DAT_ffffb2cf = 1;
+    dsc_torque_limit_active_ffffb2cf = 1;
     DAT_ffffb2b8 = DAT_ffffb2e4;
   }
   else {
-    DAT_ffffb2cf = 0;
+    dsc_torque_limit_active_ffffb2cf = 0;
     DAT_ffffb2b8 = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   uVar1 = (uint)DAT_ffffbbcc;
   if ((uVar1 == 1) && (DAT_ffffbbca == '\0')) {
     uVar1 = lookup_2d_descriptor_scaled(snapshot_engine_speed_rpm_ffffb548,&tbl_dsc_mode_c_max_throttle_plate_opening_allowed_0006a150);
-    DAT_ffffb2d0 = 1;
+    dsc_mode_c_active_ffffb2d0 = 1;
     DAT_ffffb2bc = extraout_fr0;
   }
   else {
-    DAT_ffffb2d0 = 0;
+    dsc_mode_c_active_ffffb2d0 = 0;
     DAT_ffffb2bc = snapshot_candidate_throttle_base_position_ffffb38c;
   }
   return uVar1;

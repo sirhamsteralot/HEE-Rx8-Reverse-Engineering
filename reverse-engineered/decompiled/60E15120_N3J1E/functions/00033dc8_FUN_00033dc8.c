@@ -10,7 +10,7 @@ undefined2 * FUN_00033dc8(void)
   DAT_ffffc0cc = DAT_ffffc0e0 * DAT_ffffc0ec + DAT_ffffc0d0 * DAT_ffffc0dc +
                  DAT_ffffc0f0 * DAT_ffffc0fc;
   if ((engine_on_time_counter_ffffa426 == 0) ||
-     ((DAT_ffffc108 == '\x01' && (puVar1 = (undefined2 *)0x1, engine_speed_rpm_ffffb548 < 812.5)))) {
+     ((tp_range_high_fault_ffffc108 == '\x01' && (puVar1 = (undefined2 *)0x1, engine_speed_rpm_ffffb548 < 812.5)))) {
     DAT_ffffc0c8 = 0.0;
   }
   else {

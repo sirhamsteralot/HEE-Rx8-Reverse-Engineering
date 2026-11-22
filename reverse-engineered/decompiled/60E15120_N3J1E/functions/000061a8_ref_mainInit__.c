@@ -14,7 +14,7 @@ void ref_mainInit__(void)
   FUN_0000cf56();
   FUN_000081a8();
   ref_ignitionDwellOutputInit();
-  FUN_0000b23c();
+  ch7d_pwm_off_init();
   FUN_0000a8dc();
   (*unaff_r14)();
   eeprom_mirror_magic_init();
