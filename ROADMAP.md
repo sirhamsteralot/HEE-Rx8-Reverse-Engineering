@@ -56,8 +56,7 @@ defs-merge passes (rule 6d: edit the generators, never the generated files).
 `utilities/scripts/rx8-pcm-pipeline/`), the link + non-empty-size check over
 every touched `.md` under `docs/`, and `python -m pytest tests/` — all green
 in the same change. `validate_reports.py` classifies and resolves **every**
-memory-map row by its address (row forms and sources in
-[`docs/subsystem-logic/TEMPLATE.md`](docs/subsystem-logic/TEMPLATE.md) §4.1) and
+memory-map row by its address (row forms and sources: [`utilities/scripts/rx8-pcm-pipeline/README.md`](utilities/scripts/rx8-pcm-pipeline/README.md#report-map-check)) and
 asserts `map_rows = fn_checked + ram_checked + data_rows + io_rows`, so an
 unresolvable row fails instead of being skipped; debt for a cell with no tracked
 alias is declared in `report_map_baseline.json` and may only shrink (a resolved
