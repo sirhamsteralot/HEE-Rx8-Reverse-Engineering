@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_key_word_scramble [medium]: 164 B, unique_exact_bytes to 60E0FC00 0x35b58. Bit-permutation/negate transform producing one 24-bit key-word half from (32-bit key half, seed byte); called 4x by 0x35356. Exact algebra not re-derived beyond the decompiled bit ops.
+ */
 /* ROM address: 0x00035438; body bytes: 164; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00035b58 (164 bytes). Names prefixed ref_

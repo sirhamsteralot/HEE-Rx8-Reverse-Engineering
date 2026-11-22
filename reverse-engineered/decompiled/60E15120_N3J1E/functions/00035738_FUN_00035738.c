@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_tx_frame_build [high]: 220 B. Builds the 8-byte TX frame at 0xffffc1c8..c1cf and sets c1d1=1, c21f=0, c226=0, c229=1. param 7 -> [07][c208 BE]; param 9 -> [09][c220][key word c1dc/c1e0/c1e4/c1e8 BE per c220 1..4; c220=0xff -> zeros]; param 1 or 0x81 -> [cmd][c224 (0x7f OK / 0x80 / 0x81 NG)][0...]; param 0xc6/0xc8 -> zeros; other -> zero tail. Byte order verified dynamically: TX buffer c4a8..c4af = 09 01 77 b2 76 00 00 00 after cmd 9 with c220=1.
+ * RAM 0xffffc224 immo_status_code (u8): 0x7f authorized, 0x80 battery/timeout reject, 0x81 challenge/key reject
+ */
 /* ROM address: 0x00035738; body bytes: 220; decompiled */
 
 void FUN_00035738(char param_1)

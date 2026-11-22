@@ -236,6 +236,37 @@ migrating.
   Deliverables: a re-runnable pass under `utilities/scripts/defs-merge/`, updated
   merged + per-ROM defs + label-map evidence, tests.
 
+- **C item 93 (open)** — **report accuracy audit (binary-level re-derivation).**
+  The pipeline validators keep report hashes, sections and prose shapes green,
+  but they do not re-derive numbers: a branch polarity, an access width, a
+  threshold or a caller attribution can be wrong in a report that passes every
+  check. Re-deriving one of them
+  ([`fuel_pump_control_report.md`](docs/subsystem-logic/fuel_pump_control_report.md))
+  against the disassembly turned up twelve wrong statements — the flag prime at
+  `0x2f948` attributed to a periodic task instead of the start-up sequence, an
+  off-by-one grace window (`bddc <= 0x3e`, `cmp/hi` at `0x2fc84`), `bde0`
+  attributed to `0x2fc00` instead of `0x2fcac`, a missing third request term in
+  `0x2fb20`, and all three 2D tables of `0x2f9fc` described as battery-voltage
+  lookups although 2D-166 is keyed on barometric pressure. Scope: every report
+  in [`docs/subsystem-logic/`](docs/subsystem-logic/README.md) — re-derive each
+  claim that names an address, constant, pool word, branch condition, access
+  width, caller or table, and fix the report plus its label record, TSV evidence
+  and tests in the same change. Where a report carries many numbers, add a
+  tracked `utilities/scripts/rx8-pcm-pipeline/verify_<subsystem>_chain.py` that
+  re-reads them and writes the `reviews/<subsystem>/` log with a regeneration
+  test (rule 6d; pattern: `verify_fuel_pump_chain.py`, which lands with the
+  fuel pump control corrections).
+  One branch + PR per report. Method, status and the findings already collected
+  live in
+  [`report_accuracy_audit.md`](docs/investigations/60E15120_N3J1E/report_accuracy_audit.md);
+  treat those findings as hypotheses and re-check the cited instruction and pool
+  before applying anything (rule 7). **Ordering:** the reports still at the
+  `docs/investigations/60E15120_N3J1E/` root are audited **after** their
+  migration items (C items 42–61) move them into the new format, so each
+  subsystem is re-derived once in its final shape; the four subsystem-logic
+  reports whose findings are pending (alternator, immobilizer, knock, SBL) are
+  the head of the queue.
+
 #### C.4 Docs reorganisation
 
 - **C item 39 (open)** — **reader-focused reorganisation of the investigation
@@ -356,7 +387,7 @@ flash before any read), not the test path.
 | D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 | D14 | open | `0xffffdfa0` is dual-labeled: `immo_diag_bit` in `accepted_ram_aliases.tsv` / the immobilizer report (cleared by `0x11c4`, tested by `ref_readImmoBit` `0x16b20`) vs `sbl_inactivity_counter` (u16) in [`docs/subsystem-logic/sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), where `0x11c4` zeroing it is dynamically proven in the emulator relock tests. `0x11c4` sits inside the SBL block (`0x1000–0x1fff`). Reconcile the alias (and the `0x11c4`/`0x16b20` rows) in one direction — likely SBL-side — and fold back into both reports |
 | D15 | documented | upstream RX8Defs `d4140dc` delta absorbed: 118 renames + 16 category moves + 10 duplicate removals on `RomRaider/rx8_defs.xml`, no `storageaddress` changed; per-ROM defs + `coverage.json` regenerated at the pin, upstream snapshot re-pinned (`repin_upstream_snapshot.py`), splice pass normalization-only (`upstream_splice_d4140dc.json`), collision/alias findings logged pin-tagged in `defs-merge/axis_conflicts.json` + `inheritance_issues.json`; label map needed no changes; record [upstream-sync-d4140dc.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md), machine record `defs-merge/upstream_pin_audit_d4140dc.json`; open follow-up: 26 `Table 3D - 2 `/`3D - 3 ` block overrides lost their RX8Base template upstream (`base_template_removed_at_pin`) |
-| D16 | open | `validate_reports.py` only parses memory-map rows whose first cell starts with `0x`, so a backtick-wrapped address cell is skipped without a warning: the `sbl_bootloader_report.md` map (16 RAM rows, including the D14 alias conflict) and `fuel_pump_control_report.md` (2 rows) are unchecked today, and `throttle_dbw_control_report.md` validated with 0 rows checked until its cells were made bare. Closure plan: strip an optional backtick wrapper in the row parser, then reconcile the rows it starts checking (the SBL report needs aliases or documented grouped rows for `0xffffd3f0`/`0xffffd1xx`/`0xffffdfb0-b8`) |
+| D16 | open | `validate_reports.py` only parses memory-map rows whose first cell starts with `0x`, so a backtick-wrapped address cell is skipped without a warning: the `sbl_bootloader_report.md` map (16 RAM rows, including the D14 alias conflict) and `fuel_pump_control_report.md` (2 rows) are unchecked today, and `throttle_dbw_control_report.md` validated with 0 rows checked until its cells were made bare. Closure plan: strip an optional backtick wrapper in the row parser, then reconcile the rows it starts checking (the SBL report needs aliases or documented grouped rows for `0xffffd3f0`/`0xffffd1xx`/`0xffffdfb0-b8`). Function rows are only checked when the row sits under a heading containing "function" AND the label equals the `function_index.tsv` name, so subsystem aliases that were never folded into the export (`fuel_pump_control`: 8 of 12 rows) pass unlooked |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.

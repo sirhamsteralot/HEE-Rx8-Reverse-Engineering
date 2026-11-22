@@ -14,6 +14,12 @@ Each ROM folder is split into two kinds of material:
   maps); ROM-specific ones (differences vs the shared logic: address shifts,
   calibration-specific findings) sit at the folder root. Per-subsystem
   evidence folders live in `reviews/`. These are the documents to read first.
+- **Report accuracy audit** —
+  [`60E15120_N3J1E/report_accuracy_audit.md`](60E15120_N3J1E/report_accuracy_audit.md)
+  records the binary-level re-derivation of the subsystem reports: what was
+  re-checked, which corrections are still pending, and the instruction and pool
+  addresses that prove each one. Continuation is a work item in
+  [`ROADMAP.md`](../../ROADMAP.md).
 - **`labeling/`** — investigations whose purpose was *labeling things*: the
   alias/cross-ROM/defs passes that renamed functions, RAM cells, tables and
   editor definitions (`cross_ecu/`, `source_review/`, `math_units/`,

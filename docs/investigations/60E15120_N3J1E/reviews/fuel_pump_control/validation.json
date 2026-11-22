@@ -3,31 +3,47 @@
   "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
   "rawbin_reverify": {
     "log": "rawbin_reverify_log.txt",
-    "checks": 38,
-    "passed": 38
+    "generator": "utilities/scripts/rx8-pcm-pipeline/verify_fuel_pump_chain.py",
+    "checks": 134,
+    "passed": 134
   },
   "static_tests": {
     "file": "tests/test_fuel_pump_control.py",
-    "passed": 9,
-    "total": 9
+    "passed": 11,
+    "total": 11,
+    "covers": [
+      "function-index membership",
+      "literal-pool and instruction words per function",
+      "ROM thresholds 0x7bc58/0x7bc5c/0x7bc5a and u16 saturation limit",
+      "2D-166 baro axis vs 2D-167/168 battery axis, 200/190/61.5 margins",
+      "third request term and hold counter (calibration-gated)",
+      "run-on disable and SR-masked grace evaluation wiring",
+      "TSV mirroring of every alias",
+      "regeneration test: re-runs the verifier and compares the committed log"
+    ]
   },
   "dynamic_tests": {
     "file": "tests/test_fuel_pump_control_dynamic.py",
-    "passed": 6,
-    "total": 6
+    "passed": 3,
+    "total": 3,
+    "scope": "harness calls of 0x2f890, 0x2f8ce and 0x2fc00 with RAM cells stubbed; PEDR bits checked"
   },
   "label_record": "data/labels/60E15120_N3J1E/fuel_pump_control_labels.json",
   "tsv_rows_added": {
-    "accepted_function_aliases.tsv": 9,
-    "accepted_ram_aliases.tsv": 9
+    "accepted_function_aliases.tsv": 8,
+    "accepted_ram_aliases.tsv": 13
   },
   "report": "docs/subsystem-logic/fuel_pump_control_report.md",
+  "memory_map_rows": {
+    "functions": 12,
+    "ram_cells": 13
+  },
   "validators": {
     "validate_export.py": "PASS",
+    "validate_reports.py": "PASS",
     "verify_claims.py": "PASS",
     "verify_math_units.py": "PASS",
-    "validate_reports.py": "pre-existing crash on main (UnicodeDecodeError reading e2ram_device_layer_report.md under cp1252 locale), unchanged by this work",
-    "verify_readability.py": "pre-existing AssertionError on main, unchanged by this work",
-    "pytest tests/": "327 passed"
+    "verify_readability.py": "pre-existing failure on main (function 0x28992 mismatch), unchanged by this work",
+    "pytest tests/": "364 passed, 1 failed (tests/test_defs_upstream_pin.py, reproduces on main)"
   }
 }

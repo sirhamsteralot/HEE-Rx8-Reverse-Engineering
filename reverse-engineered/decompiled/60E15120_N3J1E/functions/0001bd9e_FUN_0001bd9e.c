@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffad61 tp_plausibility_fault_b (uint8): Set by 0x1bd9e; NOT(engine running && no cc98/cc99/b4f7/b4fb/b4fd && !873c) in 0x1ba20; read by 0x48cc0/0x487d6.
+ */
 /* ROM address: 0x0001bd9e; body bytes: 40; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0001c84e (40 bytes). Names prefixed ref_

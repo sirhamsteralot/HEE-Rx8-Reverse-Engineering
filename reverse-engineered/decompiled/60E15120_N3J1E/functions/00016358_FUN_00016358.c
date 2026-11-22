@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a814: Table 3D - 63 (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * idle_baro_comp [medium]: 0xffffa898 = 3-D tbl 0x6a814(baro 0xffffad14, 0xffffa834). Called from 0x167c0 via pool 0x16894.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a814: Table 3D - 63 (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x00016358; body bytes: 24; decompiled */
 

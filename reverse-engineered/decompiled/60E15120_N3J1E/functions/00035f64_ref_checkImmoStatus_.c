@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_status_housekeeping [high]: ref_checkImmoStatus_ (unique_exact_bytes to 60E0FC00 0x36684), called from boot init. Maintains the c268 'Z' flag, clears c275 fault bits, c1d2 handshake 0x55->0x33, c1d3 bits (0x40 = authorized), clamps c282<=2 and c276<=5, c1d4 window 8..0x3f.
+ */
 /* ROM address: 0x00035f64; body bytes: 262; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 00036684 (262 bytes). Names prefixed ref_

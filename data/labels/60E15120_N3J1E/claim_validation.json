@@ -304,11 +304,11 @@
         "reg_pairs": 52,
         "call_claims": 7,
         "pool_claims": 16,
-        "word_assigns": 365,
+        "word_assigns": 373,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 687,
+    "tsv_rows": 690,
     "labels_json_checked": 28
   },
   "notes": [],

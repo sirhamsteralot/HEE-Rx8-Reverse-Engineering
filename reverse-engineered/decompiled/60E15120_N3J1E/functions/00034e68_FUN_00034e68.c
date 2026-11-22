@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_wait_for_key_step [high]: c21e==1 dispatch on c221: 1 -> bad state (c224=0, TX 1, c22a=1); 3 -> c21d=0; 2 (seed request) -> key-count check (c282: 0 or >2 -> lamp off, c1d0=0; else c282-=1, c22f=1, lamp on, c1d0=1, c228=0), c216=0x2ee, immo_compute_seed 0x353ce, TX cmd 7 with raw seed c208, c21d=2. Dynamically verified.
+ */
 /* ROM address: 0x00034e68; body bytes: 178; decompiled */
 
 uint FUN_00034e68(void)

@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_random_seed_gen [high]: ref_Immo_Keygen_related_ADC (unique_exact_bytes to 60E0FC00 0x35f9c). Builds 32-bit seed DAT_ffffc208 from ADC read (ref_readValue_32bit_ADDRESS_VAL(&DAT_ffff8674,0)), timer cells 0xffff9f00/9f1c/9f1e and running counters c218/c21a/c223; if result 0 falls back to c26c|c270.
+ * RAM 0xffffc208 immo_random_seed (u32): built from ADC 0xffff8674 + timers 0xffff9f00/9f1c/9f1e + counters c218/c21a/c223
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
