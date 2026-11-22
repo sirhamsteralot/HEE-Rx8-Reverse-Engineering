@@ -338,7 +338,7 @@ Core knock state:
 | 0xffffa325 | `knock_sensor_fault_status` | 0 OK, 1/2 per-channel fault |
 | 0xffffcd64 / 0xffffcd66 / 0xffffcd65 / 0xffffcd67 | `knock_sensor_healthy_a/b` / `knock_sensor_fault_a/b` | |
 | 0xffffcd68 / 0xffffcd6a / 0xffffcd6c | `knock_sensor_healthy/fault counters` | u16 |
-| 0xffff8038 | (EEPROM address holder) | EEPROM address of the learned retard, used by 0x139c4 |
+| 0xffff8038 | `DAT_ffff8038` (learned-retard cell) | persistent adaptation value: float at +0 plus two u16 check-sum words at +4/+6; written by the store helper `0x3dcd0` (`fmov.s fr15,@r13` at `0x3dcfc`, checksums at `0x3dcfa`/`0x3dd00`) and read by `0x3dc22`; `0x139c4` learns into it (jmp at `0x139f8`, cell from pool `0x13a0e` = `0x8038`) |
 
 Sensing, timing and shared state:
 
