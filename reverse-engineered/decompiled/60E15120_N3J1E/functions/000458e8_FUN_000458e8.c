@@ -10,7 +10,7 @@ uint FUN_000458e8(void)
   
   uVar1 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff8760,1);
   if ((uVar1 & 0xff) == 1) {
-    uVar1 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff872c,0);
+    uVar1 = ref_updateMemoryAtAddress_8bit_ADDR_VAL(&tp_correlation_fault_latch_ffff872c,0);
     return uVar1;
   }
   return uVar1 & 0xff;

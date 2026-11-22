@@ -8,7 +8,7 @@ void FUN_00038e12(void)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   FUN_0003d7be();
   FUN_0004591a();
-  FUN_0004595a();
+  tp_correlation_fault_check();
   FUN_00045d90();
   FUN_00045e96();
   FUN_00045b3c();

@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * learned_pedal_value_calc [high]: b40c = clamp(arg0, 0, readValue_float(0xffff808c, default 110.0f=0x42de0000)); arg0 = b404+learned807c (ccbb), b3f8 (ccbc), cc88+learned (ccbd), else b410+learned807c; fault path b423==1 -> b40c = 99.0. rpm gates b435 (>=500/300 rpm), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a518: Table 2D - 331 (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x000231f0; body bytes: 436; decompiled */
 
-undefined4 FUN_000231f0(void)
+undefined4 learned_pedal_value_calc(void)
 
 {
   char cVar1;
@@ -41,9 +44,9 @@ undefined4 FUN_000231f0(void)
     arg0 = DAT_ffffb404 + fVar2;
     fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
   }
-  else if (DAT_ffffccbc == '\x01') {
+  else if (throttle_servo_mode_ffffccbc == '\x01') {
     fVar2 = (float)ref_readValue_float_DEFAULTVAL_ADDRESS(0x42de0000,&DAT_ffff808c);
-    arg0 = DAT_ffffb3f8;
+    arg0 = throttle_servo_override_duty_ffffb3f8;
   }
   else if (DAT_ffffccbd == '\x01') {
     arg0 = DAT_ffffcc88 + fVar2;

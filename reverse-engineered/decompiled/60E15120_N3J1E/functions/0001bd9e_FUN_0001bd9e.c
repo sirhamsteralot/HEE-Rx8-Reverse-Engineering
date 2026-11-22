@@ -6,7 +6,7 @@
 void FUN_0001bd9e(void)
 
 {
-  DAT_ffffad61 = 1;
+  tp_plausibility_fault_b_ffffad61 = 1;
   ref_updateMemoryAtAddress_8bit_ADDR_VAL(&DAT_ffff80a2,1);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41a00000,&DAT_ffff8094);
   ref_updateMemoryAtAddress_float_VAL_ADDR(0x41a00000,&DAT_ffff80a4);

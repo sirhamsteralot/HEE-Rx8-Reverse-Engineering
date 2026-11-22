@@ -90,10 +90,11 @@
                         <conversion storagetype="uint16" units="V" expr="x*0.001" format="0.000" />
                     </conversions>
                 </parameter>
-                <parameter id="RX8_60E15120_1410_RAW" name="Identifier 1410 - raw (meaning unresolved)" desc="60E15120 only. Handler 0x56f6c emits uint16 from RAM 0xffffbe24 using step 8. Existing injector/throttle interpretations conflict; no physical unit assigned here.">
+                <parameter id="RX8_60E15120_1410" name="Injector Pulse Time" desc="Injector pulse time in us; Mode 22 PID 0x1410 handler 0x56f6c reads RAM 0xffffbe24 (written by 0x2fea8) with step 8. Settled against the upstream duplicate 'Throttle Pedal Position' at the same address, which does not match this ROM (throttle plate is PID 0x0011/0x093c, pedal 0x0049/0x004a).">
                     <address>0x221410</address>
                     <conversions>
-                        <conversion storagetype="uint16" units="raw" expr="x" format="0.000" />
+                        <conversion storagetype="uint16" units="us" expr="x*8" format="0" gauge_min="0" gauge_max="500" />
+                        <conversion storagetype="uint16" units="ms" expr="(x*8)*0.001" format="0.000" gauge_min="0" gauge_max="500" />
                     </conversions>
                 </parameter>
             </parameters>

@@ -8,7 +8,7 @@ void cruise_enable_pedal_override(void)
 
 {
   DAT_ffffcf18 = cruise_set_speed_ffffbcf8;
-  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < throttle_position_1_percent_ffffa9b4)) {
+  if ((DAT_ffffbced == '\0') || (cruise_set_speed_ffffbcf8 < accelerator_pedal_1_percent_ffffa9b4)) {
     cruise_enable_flag_ffffcf34 = 0;
   }
   else {

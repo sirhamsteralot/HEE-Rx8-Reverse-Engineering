@@ -2864,10 +2864,10 @@
   "evidence": "PID 0x45: *0.392157"
  },
  "ffffad5e": {
-  "alias": "inferred_pedal_volts_ffffad5e",
+  "alias": "inferred_throttle_sensor_2_volts_ffffad5e",
   "type": "uint16",
   "reader": "0005578a",
-  "evidence": "PID 0x47/0x0918; producer chain proven dynamically: ADC AN19 (ADDR19H) -> 0x6884 -> ffff9f0a -> 0x1afb0 -> ffffad5e; PID 0x47 wire 0x40 = 25.1% at raw 16384"
+  "evidence": "PID 0x47/0x0918. AN19 (ADDR19H) -> 0x6884 -> ffff9f0a -> ffffad5e; AN19 is the throttle PLATE TP2 (with AN18/TP1), proven by the pedal/plate dataflow (ad44 plate position chain) and emulator — the generic PID 0x47 'APP' slot name does not match this ROM"
  },
  "ffffa9c4": {
   "alias": "inferred_pedal_volts_ffffa9c4",

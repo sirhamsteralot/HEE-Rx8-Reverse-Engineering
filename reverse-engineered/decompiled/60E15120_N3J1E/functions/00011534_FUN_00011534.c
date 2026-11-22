@@ -11,7 +11,7 @@ void slow_background_task(void)
   FUN_00038f3e();
   FUN_00021186();
   timing_retard_fast_task();
-  FUN_00021b4c();
+  throttle_torque_request_batch();
   key_off_state_machine_step();
   FUN_000288be();
   FUN_00025532();

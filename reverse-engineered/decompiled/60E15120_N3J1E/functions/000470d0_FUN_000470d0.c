@@ -27,7 +27,7 @@ uint FUN_000470d0(void)
   cVar5 = DAT_ffffcc98;
   snapshot_candidate_idle_learn_flag_ffffcc91 = candidate_idle_learn_flag_ffffcc91;
   cVar3 = DAT_ffffb53a;
-  snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_pedal_volts_ffffad5e_ffffad5e;
+  snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e;
   snapshot_inferred_throttle_sensor_volts_ffffad5c_ffffad5c = inferred_throttle_sensor_volts_ffffad5c_ffffad5c;
   snapshot_engine_load_ffffc0b4 = engine_load_ffffc0b4;
   snapshot_vehicle_speed_ffffbbb4 = vehicle_speed_ffffbbb4;

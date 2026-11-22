@@ -13,7 +13,7 @@ void knock_sensor_fault_task(void)
   FUN_00006842();
   FUN_000094fc();
   ref_knockSensorADCFault();
-  FUN_0001150e();
+  dbw_task9_batch();
   FUN_00009fb2(0);
   ref_taskEndRoutine_();
   return;

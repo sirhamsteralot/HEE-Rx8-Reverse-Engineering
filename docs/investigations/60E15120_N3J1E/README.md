@@ -272,6 +272,30 @@ Write-up: [`fuel_pump_control_report.md`](../../subsystem-logic/fuel_pump_contro
 `data/labels/60E15120_N3J1E/fuel_pump_control_labels.json`; checks:
 `tests/test_fuel_pump_control.py`, `tests/test_fuel_pump_control_dynamic.py`.
 
+## Throttle / DBW control labeling
+
+The electronic throttle chain is labeled end to end: APP pedal channels
+AN4/AN5 (`0xffff9eec`/`0xffff9eee`) → volts/clamp/learned-zero → pedal percent
+`0xffffa9b4`/`0xffffa9b8` and demand `0xffffa9bc` (0x94f0 → 0x18f60 → 0x1933a →
+0x193c4); plate TP channels AN18/AN19 (`0xffff9f08`/`0xffff9f0a`) → volts
+`0xffffa218`/`0xffffa21c` (0xb398) → plate position `0xffffad44`/percent
+`0xffffad48` (0x1b08e/0x1b14c/0x1b940, limp 20.0); gear-dependent pedal→plate
+maps (0x228dc, tables 0x6a458/0x6a474/0x6a490/0x6a4ac) → filtered base `0xffffb38c`
+→ arbitrated target `0xffffb424`/`0xffffb410` (0x233ec, DSC clamps from 0x218c4)
+→ servo override (0x22db4) → motor PWM on TO7D/PB7 (task 0x65b2 → 0x118d0 →
+0x2253c → 0x22574/0x22630/0x25198 → 0xb2c0 → `ATUII_BFR7D_W 0xfffff596`,
+once-only enable 0xb308), with the DBW power relay on PE0 (`PEDR_W 0xfffff754`
+bit 0x1 = (`0xffffcfb7`==0), 0x3a0ec, harness candidate 4C). TP plausibility
+(0x4595a, DTC 0x6c), plate range-high fault (0x33e98) and the learned E2RAM
+zeros are covered; logger PID 0x1410 is settled as injector pulse time
+(dispatch record 0x5f394 → handler 0x56f6c, step 8 µs). 25 functions, 41 RAM
+cells, 7 lookup tables; raw-bin re-verified 87/87
+(`reviews/throttle_dbw/rawbin_reverify_log.txt`).
+Write-up: [`throttle_dbw_control_report.md`](../../subsystem-logic/throttle_dbw_control_report.md)
++ `reviews/throttle_dbw/`; record:
+`data/labels/60E15120_N3J1E/throttle_dbw_labels.json`; checks:
+`tests/test_throttle_dbw.py`.
+
 ## Hardware pinout cross-checks
 
 `hardware/pcm_connections.tsv` gained a `wire_colour` column and FSM terminal names

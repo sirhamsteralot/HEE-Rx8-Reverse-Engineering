@@ -9,9 +9,9 @@ uint FUN_00042548(void)
   uint uVar1;
   uint extraout_r0;
   
-  uVar1 = (uint)DAT_ffffb358;
+  uVar1 = (uint)ch7d_pwm_enable_ffffb358;
   if (uVar1 == 1) {
-    DAT_ffffc974 = rx8_min_float(1e+06,DAT_ffffb354 + DAT_ffffc974);
+    DAT_ffffc974 = rx8_min_float(1e+06,ch7d_pwm_duty_percent_ffffb354 + DAT_ffffc974);
     uVar1 = extraout_r0;
   }
   else {

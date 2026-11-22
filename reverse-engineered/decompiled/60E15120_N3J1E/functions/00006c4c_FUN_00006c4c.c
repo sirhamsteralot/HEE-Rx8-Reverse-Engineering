@@ -18,8 +18,8 @@ uint FUN_00006c4c(void)
     DAT_ffff9f0e = ADDR21H_B;
     DAT_ffff9f0c = ADDR20H_B;
 LAB_00006ca0:
-    DAT_ffff9f0a = ADDR19H_B;
-    DAT_ffff9f08 = ADDR18H_B;
+    adc_an19_plate_tp2_raw_ffff9f0a = ADDR19H_B;
+    adc_an18_plate_tp1_raw_ffff9f08 = ADDR18H_B;
     DAT_ffff9f06 = ADDR17H_B;
     DAT_ffff9f04 = ADDR16H_B;
   }

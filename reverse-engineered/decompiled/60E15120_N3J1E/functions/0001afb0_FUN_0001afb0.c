@@ -21,10 +21,10 @@ void FUN_0001afb0(void)
   DAT_ffffadcd = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809c,0);
   DAT_ffffadce = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff809e,0);
   DAT_ffffad58 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&inferred_ram_807c_ffff807c_ffff807c);
-  DAT_ffffad78 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&DAT_ffff8084);
-  DAT_ffffad60 = 0;
-  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = DAT_ffff9f08;
-  inferred_pedal_volts_ffffad5e_ffffad5e = DAT_ffff9f0a;
+  DAT_ffffad78 = ref_readValue_float_DEFAULTVAL_ADDRESS(0x41700000,&learned_plate_zero_2_ffff8084);
+  tp_plausibility_fault_a_ffffad60 = 0;
+  inferred_throttle_sensor_volts_ffffad5c_ffffad5c = adc_an18_plate_tp1_raw_ffff9f08;
+  inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e = adc_an19_plate_tp2_raw_ffff9f0a;
   return;
 }
 

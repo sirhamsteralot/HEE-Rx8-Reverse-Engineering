@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_base_position_filter [high]: b390 = first_order_filter(b38c, b390, 0.25, 1e-5); b394 = (b38c <= 2.0). Called from batch 0x22f86.
+ */
 /* ROM address: 0x00022d26; body bytes: 58; decompiled */
 
-undefined4 FUN_00022d26(void)
+undefined4 throttle_base_position_filter(void)
 
 {
   undefined4 extraout_r0;

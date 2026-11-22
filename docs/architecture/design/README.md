@@ -379,8 +379,10 @@ fuel cut / rev limit: fuel_cut_arbitration 0xedc4 (a444/a445 <- a464/a465),
 
 diag: PID 0x0034 AFR 0x56b22 (aa6c/aa7c), 0x0043 load 0x56b8a (c0b4),
   0x0044 lambda target 0x56b9e (adfc), 0x1410 pulse time 0x56f6c (be24, step 8 us;
-  logger def 0x221410 conflicts with 'Throttle Pedal Position' — 0x1410 is
-  injector pulse time in this ROM, throttle is PID 0x0011/0x093c; ROADMAP D10)
+  settled: handler 0x56f6c reads 0xffffbe24 with step 8.0f, so 0x1410 is injector
+  pulse time in this ROM — the upstream logger alias 'Throttle Pedal Position' at
+  0x221410 does not match; throttle plate is PID 0x0011/0x093c, pedal is 0x0049/0x004a;
+  see docs/subsystem-logic/throttle_dbw_control_report.md)
 ```
 
 ### 5.9 Intake solenoid actuators (SSV / VDI / VFAD / APV / secondary air)

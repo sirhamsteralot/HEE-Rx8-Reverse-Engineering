@@ -49,8 +49,8 @@ void adc_scan_sweep_all_channels(void)
   DAT_ffff9ee6 = ADDR1H_B;
   DAT_ffff9ee8 = ADDR2H_B;
   maf_adc_raw_ffff9eea = ADDR3H_B;
-  DAT_ffff9eec = ADDR4H_B;
-  DAT_ffff9eee = ADDR5H_B;
+  adc_an4_pedal_raw_ffff9eec = ADDR4H_B;
+  adc_an5_pedal_raw_ffff9eee = ADDR5H_B;
   adc6_raw_apv_position_ffff9ef0 = ADDR6H_B;
   DAT_ffff9ef2 = ADDR7H_B;
   DAT_ffff9ef4 = ADDR8H_B;
@@ -63,8 +63,8 @@ void adc_scan_sweep_all_channels(void)
   DAT_ffff9f02 = ADDR15H_B;
   DAT_ffff9f04 = ADDR16H_B;
   DAT_ffff9f06 = ADDR17H_B;
-  DAT_ffff9f08 = ADDR18H_B;
-  DAT_ffff9f0a = ADDR19H_B;
+  adc_an18_plate_tp1_raw_ffff9f08 = ADDR18H_B;
+  adc_an19_plate_tp2_raw_ffff9f0a = ADDR19H_B;
   DAT_ffff9f0c = ADDR20H_B;
   DAT_ffff9f0e = ADDR21H_B;
   DAT_ffff9f10 = ADDR22H_B;

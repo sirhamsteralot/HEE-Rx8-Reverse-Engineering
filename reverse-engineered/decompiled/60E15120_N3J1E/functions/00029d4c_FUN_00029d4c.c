@@ -18,7 +18,7 @@ undefined4 FUN_00029d4c(void)
   if (DAT_ffffbaef == '\0') {
     DAT_ffffbb50 = engine_speed_rpm_ffffb548;
   }
-  if (DAT_ffffb2cc == '\x01') {
+  if (throttle_gear_mode_1_2_ffffb2cc == '\x01') {
     puVar3 = &tbl_throttle_pedal_to_throttle_plate_request_gear_1_2_0006a458;
   }
   else {

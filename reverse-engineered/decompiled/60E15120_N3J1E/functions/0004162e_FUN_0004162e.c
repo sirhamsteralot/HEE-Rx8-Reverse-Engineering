@@ -11,7 +11,7 @@ uint FUN_0004162e(void)
 
 {
   uint uVar1;
-  float snapshot_DAT_ffffb354;
+  float snapshot_ch7d_pwm_duty_percent_ffffb354;
   
   uVar1 = (uint)DAT_ffffd1c5;
   if (uVar1 == 1) {
@@ -19,8 +19,8 @@ uint FUN_0004162e(void)
     DAT_ffffc918 = 0;
   }
   else {
-    snapshot_DAT_ffffb354 = DAT_ffffb354;
-    if (DAT_ffffb354 < 90.0) {
+    snapshot_ch7d_pwm_duty_percent_ffffb354 = ch7d_pwm_duty_percent_ffffb354;
+    if (ch7d_pwm_duty_percent_ffffb354 < 90.0) {
       uVar1 = (uint)DAT_ffffc910;
       if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffcd09, uVar1 == 0)) {
         uVar1 = rx8_add_u16_saturate((int)DAT_ffffc916,1);
@@ -30,7 +30,7 @@ uint FUN_0004162e(void)
         DAT_ffffc916 = 0;
       }
     }
-    if (10.0 <= snapshot_DAT_ffffb354) {
+    if (10.0 <= snapshot_ch7d_pwm_duty_percent_ffffb354) {
       uVar1 = (uint)DAT_ffffc910;
       if ((uVar1 == 1) && (uVar1 = (uint)DAT_ffffcd08, uVar1 == 1)) {
         uVar1 = rx8_add_u16_saturate((int)DAT_ffffc918,1);

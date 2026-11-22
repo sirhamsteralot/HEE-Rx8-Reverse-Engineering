@@ -42,7 +42,7 @@ void ref_getSensorStuff__(void)
   FUN_00006372();
   maf_sensor_scaling();
   FUN_00007290();
-  FUN_000094f0();
+  pedal_adc_raw_to_volts();
   FUN_00007398();
   FUN_0000d13c();
   FUN_0000b398();
@@ -54,7 +54,7 @@ void ref_getSensorStuff__(void)
   FUN_0000cf56();
   FUN_000081a8();
   ref_ignitionDwellOutputInit();
-  FUN_0000b23c();
+  ch7d_pwm_off_init();
   FUN_0000a8dc();
   external_wdt_heartbeat_pulse();
   eeprom_mirror_magic_init();

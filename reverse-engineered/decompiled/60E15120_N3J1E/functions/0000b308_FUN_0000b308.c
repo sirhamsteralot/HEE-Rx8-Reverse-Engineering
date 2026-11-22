@@ -17,7 +17,7 @@ void atu_ch7d_pwm_enable(void)
   if (ch7d_pwm_enabled_ffffa214 == '\0') {
     uVar2 = rx8_mul_s32_shift16_saturate(ch7d_pwm_duty_q16_ffffa210,32000);
     ref_setSR_PARAM(local_10,0xe0);
-    DAT_ffff9f50 = 32000;
+    ch7d_pwm_period_ffff9f50 = 32000;
     bVar1 = ATUII_TSTR2_B;
     ATUII_TSTR2_B = bVar1 & 0x7f;
     ATUII_CYLR7D_W = 32000;

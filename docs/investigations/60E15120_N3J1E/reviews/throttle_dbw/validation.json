@@ -1,0 +1,33 @@
+{
+  "rom": "60E15120_N3J1E",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rawbin_reverify": {
+    "log": "rawbin_reverify_log.txt",
+    "checks": 87,
+    "passed": 87
+  },
+  "static_tests": {
+    "file": "tests/test_throttle_dbw.py",
+    "passed": 17,
+    "total": 17
+  },
+  "label_record": "data/labels/60E15120_N3J1E/throttle_dbw_labels.json",
+  "tsv_rows": {
+    "accepted_function_aliases.tsv": 687,
+    "accepted_ram_aliases.tsv": 612,
+    "accepted_lookup_aliases.tsv": "7 added by this record (throttle map / DSC tables)"
+  },
+  "report": "docs/subsystem-logic/throttle_dbw_control_report.md",
+  "review_scripts": [
+    "utilities/scripts/rx8-pcm-pipeline/review_throttle_dbw_labels.py (idempotent: re-run adds/updates 0 rows)",
+    "utilities/scripts/rx8-pcm-pipeline/review_throttle_dbw_labels_apply.py (idempotent: re-run views_changed=0)"
+  ],
+  "validators": {
+    "validate_export.py": "PASS (rc=0)",
+    "validate_reports.py": "PASS (rc=0, failures=[])",
+    "verify_claims.py": "PASS (rc=0, failures=[])",
+    "verify_math_units.py": "PASS (rc=0)",
+    "verify_readability.py": "rc=1 AssertionError — pre-existing on main (verified identical failure on a clean main worktree), unchanged by this work",
+    "pytest tests/": "354 passed, 2 failed — both failures (test_defs_upstream_pin.py::test_repin_check_noop_and_snapshot_is_blob_minus_flex, test_extract_scalars.py::test_generated_outputs_exist_and_are_consistent) reproduce identically on a clean main worktree, i.e. pre-existing and unchanged by this work"
+  }
+}

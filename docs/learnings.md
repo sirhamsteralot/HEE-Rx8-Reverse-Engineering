@@ -201,7 +201,7 @@ Hardware facts the emulator must get right:
   ADCSR2/ADCR2 0x58/0x59 (offsets overlap — check ADCSR/ADCR first). Firmware
   starts a scan (ADCRn |= 0x20), busy-waits ADCSRn bit7 (ADF), then reads ADDRn
   as a 16-bit word (0x6884 sweep → RAM 0xffff9ee4+). Channels: AN3=MAF,
-  AN4/AN5=TP, AN6=APV, AN10=knock, AN28=ECT, AN29=IAT.
+  AN4/AN5=accelerator pedal (APP), AN18/AN19=throttle plate TP, AN6=APV, AN10=knock, AN28=ECT, AN29=IAT (APP/TP assignment proven by the pedal->demand vs plate-position dataflow: 0x193c4/0x228dc vs 0x1b940, emulator-verified).
 - **ATU-II at 0xfffff400**: TSTR3 (0xfffff402) **bit0** starts ch10; ch10B compare
   (TCNT10B 0x2c4 vs OCR10B 0x2d8, TIER10 bit2) → CMI10B interrupt → vector 0x2c8;
   OS tick setup ref_setInterruptTimer 0x7778. Crank input capture: ICR0AH

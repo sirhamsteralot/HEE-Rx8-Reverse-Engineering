@@ -61,10 +61,11 @@ and the downstream consumer of the plausibility timers `0xffffcf51`–`0xffffcf5
   The set speed in km/h is `0xffff866c` (`cruise_set_speed_kmh`); the cruise
   target is `0xffffbfa4` (`cruise_target_speed_kmh`); the integrator
   `0xffffbd08` is `cruise_output_integrator`.
-- `0xffffa9b4`/`0xffffa9b8` are TP1/TP2 percents (`throttle_position_1_percent` /
-  `throttle_position_2_percent`), previously described in cruise evidence as
-  "vehicle speed" — corrected here and in
-  `data/labels/60E15120_N3J1E/cruise_control_labels.json`.
+- `0xffffa9b4`/`0xffffa9b8` are the accelerator-PEDAL percents (`accelerator_pedal_1_percent` /
+  `accelerator_pedal_2_percent`, AN4/AN5), previously described in cruise evidence as
+  "vehicle speed" and later as TP1/TP2 — both corrected here, in
+  `data/labels/60E15120_N3J1E/cruise_control_labels.json` and in the throttle/DBW label record
+  (`data/labels/60E15120_N3J1E/throttle_dbw_labels.json`, AN4/AN5 = APP, AN18/AN19 = plate TP).
 - `0xffffcf1c` = `current_gear_float` (bands 2.0–6.0 in the 0x2d83c/0x2d638
   tables are gears 2–6); producer 0x4de1c (`gear_float_band_producer`).
 - `0xffffcf51`–`0xffffcf5b` are per-switch countdown timers inside 0x4d700

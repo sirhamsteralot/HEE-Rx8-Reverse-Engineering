@@ -127,16 +127,16 @@
    "evidence": "Candidate gear from rpm/vss ratio thresholds (vss*110.741/71.887/52.001/40.158/33.841) written by 0x2c324 (pool 0x2c3d8), gated on 0xffffb534==1 (AT) and 0xffffb53a==0 (not neutral). Emulator: vss=80, rpm=5752 -> 2."
   },
   "ffffa9b4": {
-   "alias": "throttle_position_1_percent",
+   "alias": "accelerator_pedal_1_percent",
    "type": "float",
    "reader": "0004c896",
-   "evidence": "CORRECTED (cruise evidence previously called this 'vehicle speed'): TP1 percent 0-100 from AN4 raw 0xffff9eec (ADDR4H via adc sweep 0x6884) -> 0x94f0 a108[0] = raw*6.341*7.6294e-5 (ROM 0x6eeb8/0x6eec0) -> 0x18f60 a99c = min(25, a108) -> 0x1933a a9ac = max(0, a99c - learned 10.856) -> 0x193c4 a9b4 = clamp(a9ac/12.7*100, 0, 100). Emulator: AN4 50% -> 39.27, 75% -> 100 (learned zero default). Vehicle speed is 0xffffbbb4 (PID 0x0D km/h) / 0xffffbfa0."
+   "evidence": "CORRECTED twice: cruise evidence previously called this 'vehicle speed'; the throttle/DBW pass showed AN4 is the PEDAL (APP1), not TP — pedal percent 0-100 from AN4 raw 0xffff9eec (ADDR4H via adc sweep 0x6884) -> 0x94f0 a108[0] = raw*6.341*7.6294e-5 (ROM 0x6eeb8/0x6eec0) -> 0x18f60 a99c = min(25, a108) -> 0x1933a a9ac = max(0, a99c - learned 10.856) -> 0x193c4 a9b4 = clamp(a9ac/12.7*100, 0, 100). Emulator: AN4 50% -> 39.27, 75% -> 100 (learned zero default). Vehicle speed is 0xffffbbb4 (PID 0x0D km/h) / 0xffffbfa0."
   },
   "ffffa9b8": {
-   "alias": "throttle_position_2_percent",
+   "alias": "accelerator_pedal_2_percent",
    "type": "float",
    "reader": "000193c4",
-   "evidence": "TP2 percent, same chain via AN5 raw 0xffff9eee (base 3.488 at ROM 0x6eec4): a9b8 = clamp(a9b0/12.7*100, 0, 100) in 0x193c4."
+   "evidence": "APP2 (pedal) percent, same chain via AN5 raw 0xffff9eee (base 3.488 at ROM 0x6eec4): a9b8 = clamp(a9b0/12.7*100, 0, 100) in 0x193c4."
   },
   "ffff866c": {
    "alias": "cruise_set_speed_kmh",

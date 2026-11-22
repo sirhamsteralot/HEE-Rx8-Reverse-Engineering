@@ -173,8 +173,14 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "subsystem-logic/throttle_dbw_control_report.md": {
+        "reg_pairs": 19,
+        "call_claims": 0,
+        "pool_claims": 0,
+        "word_assigns": 1
+      },
       "README.md": {
-        "reg_pairs": 2,
+        "reg_pairs": 4,
         "call_claims": 0,
         "pool_claims": 0
       },
@@ -283,6 +289,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "reviews/throttle_dbw/README.md": {
+        "reg_pairs": 2,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "reviews/thunk_audit/README.md": {
         "reg_pairs": 0,
         "call_claims": 0,
@@ -290,14 +301,14 @@
         "word_assigns": 1
       },
       "accepted_function_aliases.tsv": {
-        "reg_pairs": 50,
+        "reg_pairs": 52,
         "call_claims": 7,
         "pool_claims": 16,
-        "word_assigns": 296,
+        "word_assigns": 365,
         "desc_claims": 1
       }
     },
-    "tsv_rows": 662,
+    "tsv_rows": 687,
     "labels_json_checked": 28
   },
   "notes": [],

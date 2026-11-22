@@ -1,3 +1,7 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * throttle_pedal_to_plate_request_map [high]: 3D lookup lookup_3d_descriptor_scaled(rpm 0xffffb548, demand 0xffffa9bc, tbl) with gear flags b2cc/b2cd/b2ce selecting descriptors 0x6a458 (1/2), 0x6a474 (neutral), 0x6a490 (5/6), 0x6a4ac (3/4) (pools 0x229ca=0xa9bc, 0x229cc=0xb548/0xb2cc, 0x229d0=0xb2cd/0xb2ce, 0x229dc=0x6a458, 0x229e0=0x6a474, 0x229e4=0x6a490, 0x229e8=0x6a4ac); result clamped [0, 84.0f @0x7372c via pool 0x229f0] by 0x2404 (pool 0x229f4) into 0xffffb398 (pool 0x229ec) with 12-deep history shift (b3ec..b3c4, pool 0x229f8=0xffffb3ec). Called from batch 0x22f86.
+ * RAM 0xffffb398 throttle_plate_request (float): Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-deep history b3c4..b398. Written by 0x228dc.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a458: Throttle Pedal to Throttle Plate Request - Gear 1/2 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a474: Throttle Pedal to Throttle Plate Request - Gear Neutral (RX8Defs data pointer, axes and dimensions match).
@@ -16,7 +20,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002326c (236 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_calculateThrottlePedalPositionMapBased(void)
+void throttle_pedal_to_plate_request_map(void)
 
 {
   undefined *puVar1;
@@ -25,7 +29,7 @@ void ref_calculateThrottlePedalPositionMapBased(void)
   float *pfVar4;
   float fVar5;
   
-  if (DAT_ffffb2cc == '\x01') {
+  if (throttle_gear_mode_1_2_ffffb2cc == '\x01') {
     puVar1 = &tbl_throttle_pedal_to_throttle_plate_request_gear_1_2_0006a458;
   }
   else {
@@ -47,13 +51,13 @@ LAB_00022932:
   DAT_ffffb3ec = 0;
   cVar3 = '\f';
   uVar2 = 0xb;
-  DAT_ffffb3cc = DAT_ffffb398;
+  DAT_ffffb3cc = throttle_plate_request_ffffb398;
   pfVar4 = &DAT_ffffb3cc;
-  DAT_ffffb398 = fVar5;
+  throttle_plate_request_ffffb398 = fVar5;
   do {
     cVar3 = cVar3 + -1;
     pfVar4 = pfVar4 + -1;
-    *pfVar4 = (&DAT_ffffb398)[uVar2 & 0xff];
+    *pfVar4 = (&throttle_plate_request_ffffb398)[uVar2 & 0xff];
     uVar2 = uVar2 + 0xff;
   } while (cVar3 != '\0');
   return;
