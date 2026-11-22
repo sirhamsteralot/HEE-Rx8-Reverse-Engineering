@@ -23,8 +23,8 @@ uint FUN_000470d0(void)
   float snapshot_engine_speed_rpm_ffffb548;
   
   cVar7 = DAT_ffffcc9f;
-  cVar6 = DAT_ffffcc99;
-  cVar5 = DAT_ffffcc98;
+  cVar6 = limp_home_request_ffffcc99;
+  cVar5 = plate_tp2_source_select_ffffcc98;
   snapshot_candidate_idle_learn_flag_ffffcc91 = candidate_idle_learn_flag_ffffcc91;
   cVar3 = DAT_ffffb53a;
   snapshot_inferred_pedal_volts_ffffad5e_ffffad5e = inferred_throttle_sensor_2_volts_ffffad5e_ffffad5e;

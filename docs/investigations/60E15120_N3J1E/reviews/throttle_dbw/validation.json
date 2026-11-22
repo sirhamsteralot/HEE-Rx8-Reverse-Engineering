@@ -14,7 +14,7 @@
   "label_record": "data/labels/60E15120_N3J1E/throttle_dbw_labels.json",
   "tsv_rows": {
     "accepted_function_aliases.tsv": 687,
-    "accepted_ram_aliases.tsv": 612,
+    "accepted_ram_aliases.tsv": 621,
     "accepted_lookup_aliases.tsv": "7 added by this record (throttle map / DSC tables)"
   },
   "report": "docs/subsystem-logic/throttle_dbw_control_report.md",

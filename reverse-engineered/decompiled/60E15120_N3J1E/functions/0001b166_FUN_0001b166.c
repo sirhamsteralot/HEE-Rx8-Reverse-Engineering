@@ -22,8 +22,8 @@ uint FUN_0001b166(void)
   undefined4 uVar12;
   
   snapshot_throttle_servo_mode_ffffccbc = throttle_servo_mode_ffffccbc;
-  cVar2 = DAT_ffffcc99;
-  cVar7 = DAT_ffffcc98;
+  cVar2 = limp_home_request_ffffcc99;
+  cVar7 = plate_tp2_source_select_ffffcc98;
   sVar1 = DAT_ffffad88;
   fVar11 = inferred_ram_b410_ffffb410_ffffb410;
   if (DAT_ffffadd1 == '\0') {
@@ -33,7 +33,7 @@ uint FUN_0001b166(void)
     DAT_ffffad9c = DAT_ffffb4b4;
     DAT_ffffadd1 = '\x01';
   }
-  else if (((DAT_ffffcc98 == '\0') && (DAT_ffffcc99 == '\0')) &&
+  else if (((plate_tp2_source_select_ffffcc98 == '\0') && (limp_home_request_ffffcc99 == '\0')) &&
           (cVar6 = ref_readValue_8bit_ADDRESS_VAL(&DAT_ffff873c,0), cVar6 == '\0')) {
     fVar8 = 1e-05;
     DAT_ffffad70 = rx8_first_order_filter(DAT_ffffb4b0,DAT_ffffad70,0.5,1e-05);

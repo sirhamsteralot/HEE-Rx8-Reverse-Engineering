@@ -30,7 +30,10 @@ and the label record
   `14100200 fffc0000 00056f6c`) → handler `0x56f6c` reads float `0xffffbe24`
   (injector pulse time, `0x2fea8`) with step 8.0f (pool `0x57048`) via encoder
   `0x2490`. Dynamic: 80.0 → u16 10, 16.0 → u16 2. The upstream logger def's
-  "Throttle Pedal Position" alias at 0x221410 does not match this ROM; the
+  "Throttle Pedal Position" alias at 0x221410 does not match this ROM — upstream
+  lists two parameters at that one address (PIDTEST4 "Injector Pulse Time",
+  conversion x*8 µs, which matches the ROM's step 8.0f, and PIDTEST5 "Throttle
+  Pedal Position", x*0.392 %); PIDTEST5 is the wrong duplicate. The
   reviewed def keeps only "Injector Pulse Time"
   (`data/definitions/romraider/reviewed-rx8defs-copy/logger_60E15120_reviewed.xml`),
   and the design doc §5.8 note is settled. Plate = PIDs 0x0011/0x093c, pedal =
@@ -63,8 +66,14 @@ and the label record
 - Throttle-motor phase pins (terminals 1B/1C): not firmware-identified (see
   above); the H-bridge drive side is board routing. Package-pin ↔
   connector-terminal routing in general is unresolved in this repo.
-- The duty-loop feedback `0xffffaa78` (filtered AN11/AN23 pair ratio) has an
-  ambiguous in-repo identity (labeled lambda-band consumer `0x1ac00`).
+- The duty-loop feedback `0xffffaa78` is the labeled AN11/AN23 differential
+  pair ratio: `0xaee8` `adc_pair_correlation_fault_compute` computes
+  |ΔAN23|·7.6294e-5 / |Δ(AN23−AN11)/200| − 16.25 → `0xffffa1d8`
+  (`adc_pair_ratio_raw`), filtered → `0xffffa1d4` (`adc_pair_ratio_filtered`),
+  copied to `0xffffaa78` by `0x1ac00`, which also uses it for the lambda band
+  flag `0xffffaa80`. Firmware-level identity is thus settled (a filtered pair,
+  as suspected); only the pin-level identity of AN11/AN23 (which physical
+  sensors) is unresolved — board routing.
 - `0xffffb4b0`/`0xffffb4b4` are written only at boot by the E2RAM decode
   `0x23844`, not per cycle.
 - Cross-ROM byte-matching of this chain not run yet (shared-logic assumption

@@ -91,8 +91,8 @@ uint engine_stop_conditions_eval(void)
     DAT_ffffccf0 = '\x01';
   }
   if ((((((DAT_ffffccec == '\0') && (DAT_ffffcced == '\x01')) && (shutdown_allowed_ffffccc1 == '\x01')) &&
-       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (DAT_ffffcc98 == '\0')) &&
-     ((DAT_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
+       ((cVar10 == '\x01' && (cVar4 == '\0')))) && (plate_tp2_source_select_ffffcc98 == '\0')) &&
+     ((limp_home_request_ffffcc99 == '\0' && (DAT_ffffc63c == '\0')))) {
     bVar1 = true;
   }
   else {
