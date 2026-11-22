@@ -3,7 +3,8 @@
 | Date | What changed | Version |
 |------|--------------|---------|
 | 2026-11-22 | Initial report | 1 |
-| 2026-11-22 | PR review follow-ups: gear-source chain for the pedal→plate maps, learning mechanics of the E2RAM zeros, AN11/AN23 pair clarification, 9 more RAM labels (`pedal_range_fault_{1,2}`, `plate_tp{1,2}_volts`, correlation counters, `plate_tp2_source_select`/`limp_home_request`, `learned_pedal_zero_valid`), upstream-duplicate note for PID 0x1410 | 2 |
+| 2026-11-22 | Gear-source chain for the pedal→plate maps, learning mechanics of the E2RAM zeros, AN11/AN23 pair clarification, 9 more RAM labels (`pedal_range_fault_{1,2}`, `plate_tp{1,2}_volts`, correlation counters, `plate_tp2_source_select`/`limp_home_request`, `learned_pedal_zero_valid`), upstream-duplicate note for PID 0x1410 | 2 |
+| 2026-11-22 | Re-verified against the disassembly: pedal conversion entry (`0x94fc`) and task rec[17] ownership of the ADC sweep, per-channel TP scale/base and the band/fault word pairs, gear-flag→table priority, float type of `0xffffb410` and what `0x5ccb4` does, the full demand branch set, zero-learner arming/raise counters, PBCRL ownership (`0x51c8`), `0xb23c` state, the relay's PD7 half, duty-loop structure; memory map aligned with the export index and the TSVs | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
 all ROM bins until proven otherwise**; a row documents any per-ROM difference
@@ -32,29 +33,34 @@ and the pedal sensor on B1-14 (two supplies, two signals, two grounds), plus a
 drive-by-wire relay on terminal 4C
 ([`docs/architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)).
 
-In firmware the chain is: the ADC sweep latches the four raw channels
-(APP1/APP2 = AN4/AN5, TP1/TP2 = AN18/AN19) into RAM; a sensor batch converts
-them to volts, applies range checks, clamps, learned-zero subtraction and
+In firmware the chain is: one task (rec[17], entry `0x60c8`) sweeps the ADC and
+latches the four raw channels (APP1/APP2 = AN4/AN5, TP1/TP2 = AN18/AN19) into
+RAM and converts them to volts; the sensor batch of task rec[9] (entry `0x64ba`
+→ `0x1150e` → `0x199d4`) range-checks, clamps, subtracts the learned zeros and
 produces pedal percent (`0xffffa9b4`/`0xffffa9b8`, 0–100 %) and demand
-(`0xffffa9bc`); a gear-dependent set of 3D maps turns demand into a plate
+(`0xffffa9bc`); a gear-selected set of 3D maps turns demand into a plate
 request (`0xffffb398`, clamped to 0–84.0); filters smooth it into a base plate
 position (`0xffffb38c`); an arbitration step adds idle air and applies DSC /
-fuel-cut clamps to produce the target plate position (`0xffffb424`, raw counts
-`0xffffb410`); a servo override (limp/home) can replace the target; a duty
-loop computes the motor PWM duty (`0xffffb354`) which is written to the ATU
-channel 7D compare register; and a power relay (PE0) switches the motor
-supply. Plausibility monitors cross-check the two TP channels and the pedal
-channels, latch DTCs, and force a limp plate position of 20.0 when the plate
+fuel-cut clamps to produce the target plate position (`0xffffb424`, copied to
+`0xffffb410` through the PID export); a servo override (limp/home) can replace
+the target; a duty loop computes the motor PWM duty (`0xffffb354`) which is
+written to the ATU channel 7D compare register; and a power relay (PE0) switches
+the motor supply. Plausibility monitors cross-check the two TP channels and the
+pedal channels, latch DTCs, and force a limp plate position of 20.0 when the plate
 is implausible.
 
 Key numbers: pedal raw ADC counts scale to volts as
-`raw × 6.341 × 7.6294e-5` (plus a 3.488 V base term on one channel), are
-clamped at 25.0, have a learned zero subtracted (default 10.856), and convert
-to percent as `zeroed / 12.7 × 100` clamped to [0, 100]. The plate full scale
-is 84.0 (`0xffffad44` units; percent `0xffffad48` = `ad44 / 84 × 100`); limp
-position is 20.0; demand is capped at 13.5/15.0 depending on fault flags. The
-motor PWM runs on ATU channel 7D (TO7D = port PB7) with a 32000-count period;
-duty is 0–100 %.
+`raw × 6.341 × 7.6294e-5` on a per-channel base (0.0 V for AN4, 3.488 V for
+AN5), are clamped at 25.0, have a learned zero subtracted (default 10.856), and
+convert to percent as `zeroed / 12.7 × 100` clamped to [0, 100]. The plate
+channels scale as `base + raw × scale × 7.6294e-5` with scale 25.0/base 0.0 V
+(AN18) and scale 31.25/base −31.25 V (AN19). The plate full scale is 84.0
+(`0xffffad44` units; percent `0xffffad48` = `ad44 / 84 × 100`); limp position is
+20.0. Demand is `15.0` when both pedal fault flags are set, `min(13.5, …)` of the
+corresponding pedal percent when exactly one is set, and otherwise
+`min(max(pedal_1_percent, cruise output), limiter)` further capped at 13.5 while
+`0xffffa914` is set. The motor PWM runs on ATU channel 7D (TO7D = port PB7) with
+a 32000-count period; duty is 0–100 %.
 
 ## 2. How it works, step by step
 
@@ -99,70 +105,106 @@ connector-terminal hop (PE0 pin 7 → 4C, PB7 pin 154 → throttle body, AN4/AN5
 
 ```mermaid
 flowchart TD
-    T9["task rec[9] @ROM 0x4a20, entry 0x64ba"] --> B1["0x1150e dbw_task9_batch"]
+    T17["task rec[17] @ROM 0x4aa0, entry 0x60c8"] --> SW["0x6884 ADC sweep"] --> CV["0x94f0 / 0xb398 raw → volts"]
+    T9["task rec[9] @ROM 0x4a20, entry 0x64ba"] --> PE["0x94fc pedal raw → volts"]
+    T9 --> B1["0x1150e dbw_task9_batch"]
     T18["task rec[18] @ROM 0x4ab0, entry 0x64e8"] --> SB["0x11534 slow_background_task"] --> B3["0x21b4c throttle_torque_request_batch"]
     T13["task rec[13] @ROM 0x4a60, entry 0x65b2"] --> DTC["0x118d0"] --> B2["0x2253c ch7d_pwm_duty_batch"]
     T12["task rec[12] @ROM 0x4a50, entry 0x6592"] --> EN["0xb308 atu_ch7d_pwm_enable (once-only)"]
-    B1 --> S["0x199d4 pedal_tp_sensor_batch (pedal+plate inputs, §2.3/§2.4)"]
+    CV --> A108["0xffffa108 / 0xffffa10c, 0xffffa218 / 0xffffa21c"]
+    PE --> A108
+    B1 --> S["0x199d4 pedal_tp_sensor_batch (percent, demand, plate position, §2.3/§2.4)"]
     B1 --> C["0x22f86 dbw_control_batch (map, arbitrate, servo, §2.5–§2.7)"]
     B3 --> G["0x21970 gear flags + torque tables"] --> DSC["0x218c4 DSC torque limit (§2.6)"]
     C --> M["0x228dc pedal→plate map"] --> F["0x22a14/0x22d26 filters"] --> A["0x233ec target arbitration → 0xffffb410"]
     C --> SV["0x22db4 servo override / limp"]
     B2 --> E["0x22574 enable condition"] --> L["0x22630 duty loop → 0xffffb354"] --> W["0x25198 → 0xb2c0 → ATUII_BFR7D_W (§2.9)"]
-    R["0x3a0ec relay drive"] --> PE0["PE0 PEDR_W bit 0x1 (§2.9)"]
+    R["0x3a0ec relay drive"] --> PE0["PD7 + PE0 PEDR_W bits (§2.9)"]
 ```
 
 ### 2.3 Pedal input chain — AN4/AN5 to pedal percent and demand
 
-The ADC sweep (`0x6884`) latches each `ADDRnH` result into RAM at
-`0xffff9ee4 + 2n` (pool `0x6a1c`=0xffff9ee4), so AN4/AN5 land at
-`0xffff9eec`/`0xffff9eee` (`adc_an4_pedal_raw`/`adc_an5_pedal_raw`). The sensor
-batch `0x199d4` (called from `0x1150e`, pool `0x116b8`=0x000199d4) then runs:
+The conversion runs in two tasks: task rec[17] (entry `0x60c8`
+`ref_getSensorStuff__`, record at ROM `0x4aa0`) sweeps the ADC and converts
+both sensor pairs to volts, task rec[9] (`0x64ba`) enters the same pedal
+conversion body at `0x94fc` (pool `0x6564`=0x000094fc) and later runs the
+percent/demand batch `0x199d4`.
 
-1. `0x94f0` `pedal_adc_raw_to_volts` — range-checks the raw counts against ROM
-   words `0x6eeb0`=0xf5c3 (upper) and `0x6eeb4`=0x11ec (lower), raising fault
-   flags `pedal_range_fault_1`/`pedal_range_fault_2` (`0xffffa110`/`0xffffa111`,
-   DTC 0x66–0x69 family), and computes
-   `0xffffa108` = `0.0f + raw × 6.341f (0x6eeb8=0x40cae979) × 7.6294e-5`, plus
-   a second term with base `3.488f (0x6eec4=0x405f3b64)`. Also called from
-   `0x60c8` `ref_getSensorStuff__`.
-2. `0x18f60` `pedal_volts_clamp_latch` — latches the raw cell
-   (pool `0x19058`=0xffff9eec) into `0xffffa9c4` (pool `0x1904a`=0xa9c4) and
-   clamps: `0xffffa99c` = min(25.0f (`0x6eed0`=0x41c80000), `0xffffa108`).
-3. `0x1933a` `pedal_learned_zero_subtract` — `0xffffa9ac` = max(0,
-   `0xffffa99c` − learned zero `0xffff8068`) (pool `0x19386`=0x8068; the
-   learned default is 10.856f = 0x412db22d, adapted by `0x18fe8`; the second
-   channel uses `0xffff8070`).
-4. `0x193c4` `throttle_percent_and_demand_calc` — pedal percent
-   `0xffffa9b4` = clamp(`0xffffa9ac` / 12.7f × 100) with `0x194d4`=0x6ef18
-   (12.7f) and `0x194d0`=0x42c80000 (100.0f); the same chain gives
-   `0xffffa9b8` from AN5. Demand `0xffffa9bc` = min(max(`0xffffa9b4`, cruise
-   output `0xffffbcf8`), limiter `0xffffc028`), capped at 13.5 / 15.0
-   depending on fault flags.
+- **ADC sweep `0x6884`** latches each `ADDRnH` result into RAM at
+  `0xffff9ee4 + 2n` (pool `0x6a1c`=0xffff9ee4), so AN4/AN5 land at
+  `0xffff9eec`/`0xffff9eee` (`adc_an4_pedal_raw`/`adc_an5_pedal_raw`).
+- **`0x94f0` `pedal_adc_raw_to_volts`** (called from `0x60c8`, pool
+  `0x6250`) range-checks the raw counts against the ROM words
+  `0x6eeb0`=0xf5c3 (upper) and `0x6eeb4`=0x11ec (lower) and sets the
+  direction-coded bytes `pedal_range_fault_1`/`pedal_range_fault_2`
+  (`0xffffa110`/`0xffffa111`: 1 = above 0xf5c3, 2 = below 0x11ec, 0 = in band;
+  AN4 → `a110`, AN5 → `a111`; the DTC paths 0x66–0x69 read the code). It then
+  computes `0xffffa108` = `0.0f (0x6eec0) + raw4 × 6.341f (0x6eeb8=0x40cae979)
+  × 7.6294e-5` and `0xffffa10c` = `3.488f (0x6eec4=0x405f3b64) + raw5 × 6.341f
+  (0x6eebc) × 7.6294e-5`. Entry `0x94fc`, used by task rec[9], skips only the
+  prologue that re-latches the debounced raw cells `0xffffa112`/`0xffffa114`
+  (debounce counters `0xffffa116`/`0xffffa117` against ROM byte `0x6c144`=3).
+- **`0x18f60` `pedal_volts_clamp_latch`** latches the raw cell (pool
+  `0x19058`=0xffff9eec) into `0xffffa9c4` (pool `0x1904a`=0xa9c4), copies
+  `0xffffa112` into `0xffffa9c8`, and clamps
+  `0xffffa99c` = min(25.0f (`0x6eed0`=0x41c80000), `0xffffa108`). The second
+  channel is the sibling `0x18fa4`: `0xffffa9a4` = min(25.0f (`0x6eed8`),
+  `0xffffa10c`); `0x18f86`/`0x18fca` low-pass both channels (coefficient 0.25 at
+  `0x6eed4`/`0x6eedc`, 1e-5 deadband) into `0xffffa9a0`/`0xffffa9a8`.
+- **`0x1933a` `pedal_learned_zero_subtract`** — `0xffffa9ac` = max(0,
+  `0xffffa99c` − learned zero `0xffff8068`) (pool `0x19386`=0x8068; the
+  learned default is 10.856f = 0x412db22d, adapted by `0x18fe8`) and
+  `0xffffa9b0` = max(0, `0xffffa9a4` − `0xffff8070`) (pool `0x19388`).
+- **`0x193c4` `throttle_percent_and_demand_calc`** — pedal percent
+  `0xffffa9b4` = clamp(`0xffffa9ac` / 12.7f × 100) with `0x194d4`=0x6ef18
+  (12.7f) and `0x194d0`=0x42c80000 (100.0f); the same chain gives
+  `0xffffa9b8` from `0xffffa9b0`. Demand `0xffffa9bc`:
+
+  | Condition | `0xffffa9bc` |
+  |-----------|--------------|
+  | `0xffffcc9b`==1 and `0xffffcc9c`==1 | 15.0 (`0x6ef28`), constant |
+  | `0xffffcc9b`==1, `0xffffcc9c`!=1 | min(13.5 (`0x6ef20`), `accelerator_pedal_2_percent` `0xffffa9b8`) |
+  | `0xffffcc9b`!=1, `0xffffcc9c`==1 | min(13.5, `accelerator_pedal_1_percent` `0xffffa9b4`) |
+  | neither set | min(max(`accelerator_pedal_1_percent`, cruise `0xffffbcf8`), `0xffffc028`), then min(…, 13.5) while `0xffffa914`==1, else min(…, 100.0 (`0x6ef24`)) |
+
+  Calibration byte `0x6eec8` = 0x00 on this ROM, so the alternative ±0.01 ramped
+  branch (`0x19508`–`0x1952e`) is never taken. The tail stores the demand
+  history `0xffffa9c0`/`0xffffa9d0`/`0xffffa9d4` that the pedal learner uses.
 
 Dynamic check (SH-2E emulator, `tests/test_throttle_dbw.py`): running task
 `0x64ba` with AN4 raw = 50000 produces `0xffffa9b4` = 100.0 (the unclamped
-value is 105 %).
+value is 105 %); AN5 stays at 0, so `pedal_range_fault_2` reads 2 (below band).
 
 ### 2.4 Throttle plate feedback — AN18/AN19 to plate position
 
-The same sensor batch converts the plate channels: `0xb398` (also called from
-`0x60c8`) computes TP volts `plate_tp1_volts`/`plate_tp2_volts`
-(`0xffffa218`/`0xffffa21c`) =
-`base (0x6f3ec) + raw × scale (0x6f3e4 = 25.0f, 0x6f3e8 = 31.25f) × 7.6294e-5`
-with range/fault flags from ROM words at `0x6f3dc`/`0x6f3e0` and `0x6c172`/
-`0x6c176`; `0x1b08e` `plate_tp1_volts_latch` and `0x1b14c`
-`plate_tp2_volts_latch` latch AN18/AN19 (pools `0x1b12c`=0xffff9f08,
-`0x1b1d0`=0xffff9f0a) into `0xffffad5c`/`0xffffad5e` (pools `0x1b0e6`=0xad5c,
-`0x1b1c0`=0xad5e — the TP1/TP2 volt cells also exported on PIDs 0x0011 /
-0x1154) and copy the computed volts into `0xffffad30`/`0xffffad34`. Then
-`0x1b940` computes the plate position: `0xffffad38` = max(0,
-`0xffffad30` − learned `0xffff807c`), `0xffffad3c` = max(0, `0xffffad34` −
-learned `0xffff8084`) (defaults 15.0f = 0x41700000 at `0x6f438`, adapted by
-`0x1b3f2`); `0xffffad44` = `0xffffad38`, or `0xffffad3c` when
-`plate_tp2_source_select` (`0xffffcc98`)==1, or **20.0** (limp) when
-additionally `limp_home_request` (`0xffffcc99`)==1; percent
-`0xffffad48` = `0xffffad44` / 84.0 × 100 (inline 0x42a80000).
+Task rec[17] converts the plate channels: `0xb398` (called from `0x60c8`,
+pool `0x625c`) computes the TP volts `plate_tp1_volts`/`plate_tp2_volts`
+(`0xffffa218`/`0xffffa21c`) as `base + raw × scale × 7.6294e-5` with
+per-channel constants — scale 25.0f (`0x6f3e4`) and base 0.0f (`0x6f3ec`) for
+AN18, scale 31.25f (`0x6f3e8`) and base −31.25f (`0x6f3f0`) for AN19 — from the
+ranges AN18 `0xffff9f08` / AN19 `0xffff9f0a`. Two word pairs do different jobs:
+
+- band check `0x6f3dc`/`0x6f3de` = 0xf5c2 (upper) and `0x6f3e0` = 0x0fd2 (AN18
+  lower) / `0x6f3e2` = 0x2659 (AN19 lower): in band the debounce counter
+  `0xffffa226`/`0xffffa227` is cleared and the raw cell `0xffffa222`/`0xffffa224`
+  latched immediately, out of band the counter saturates at 0xff and the cell is
+  held until the counter reaches ROM byte `0x6c17a` = 3; the volts are computed
+  from this debounced cell;
+- fault check `0x6c172`/`0x6c174` = 0xf5c2 (high) and `0x6c176`/`0x6c178` =
+  0x0a3d (low) sets the fault bytes `0xffffa220`/`0xffffa221` (1 = high,
+  2 = low, 0 = in range).
+
+`0x1b08e` `plate_tp1_volts_latch` and `0x1b14c` `plate_tp2_volts_latch` latch
+AN18/AN19 raw counts (pools `0x1b12c`=0xffff9f08, `0x1b1d0`=0xffff9f0a) into
+`0xffffad5c`/`0xffffad5e` (pools `0x1b0e6`=0xad5c, `0x1b1c0`=0xad5e — the raw
+TP cells, exported on PIDs 0x0011 / 0x1154) and copy the computed volts into
+`0xffffad30`/`0xffffad34`. Then `0x1b940` computes the plate position:
+`0xffffad38` = max(0, `0xffffad30` − learned `0xffff807c`), `0xffffad3c` =
+max(0, `0xffffad34` − learned `0xffff8084`) (defaults 15.0f = 0x41700000 at
+`0x6f438`, adapted by `0x1b3f2`); `0xffffad44` = `0xffffad38`, or `0xffffad3c`
+when `plate_tp2_source_select` (`0xffffcc98`)==1, or **20.0** (ROM `0x6f464`,
+limp) when additionally `limp_home_request` (`0xffffcc99`)==1; percent
+`0xffffad48` = `0xffffad44` / 84.0 (ROM `0x6f468`) × 100.0 (mova `0x1bab4`).
 
 Dynamic check: AN18/AN19 raw = 50000 → `plate_tp1_volts` = 95.367,
 `0xffffad44` = 80.367, `0xffffad48` = 95.676; with `plate_tp2_source_select`=1
@@ -173,33 +215,42 @@ and `limp_home_request`=1, `0xffffad44` = 20.0 (`tests/test_throttle_dbw.py`).
 In the DBW control batch `0x22f86` (from `0x1150e`, pool `0x116c8`=0x00022f86):
 
 - `0x228dc` `throttle_pedal_to_plate_request_map` — 3D lookup of (rpm
-  `0xffffb548`, demand `0xffffa9bc`) in one of four tables selected by the gear
-  flags `0xffffb2cc`/`0xffffb2cd`/`0xffffb2ce` (set by `0x21970` from the AT
-  gear bytes): `0x6a458` (gears 1/2), `0x6a474` (neutral), `0x6a490` (5/6),
-  `0x6a4ac` (3/4) (pools `0x229dc`=0x6a458, `0x229e0`=0x6a474,
-  `0x229e4`=0x6a490, `0x229e8`=0x6a4ac). The result is clamped to [0, 84.0f]
-  (pool `0x229f0`=0x7372c) by helper `0x2404` into `0xffffb398` (pool
-  `0x229ec`), with a 12-deep history shift (`0xffffb3ec`…, pool `0x229f8`).
+  `0xffffb548`, demand `0xffffa9bc`) in one of four tables picked by a priority
+  chain over the gear flags `0xffffb2cc`/`0xffffb2cd`/`0xffffb2ce` (set by
+  `0x21970`): `0xffffb2cc`==1 → `0x6a458` (gears 1/2), else
+  `0xffffb2cd`==1 → `0x6a474` (neutral), else `0xffffb2ce`==1 → `0x6a490`
+  (5/6), else `0x6a4ac` (3/4) (pools `0x229dc`=0x6a458, `0x229e0`=0x6a474,
+  `0x229e4`=0x6a490, `0x229e8`=0x6a4ac — all-zero flags therefore select
+  `0x6a4ac`). The result is clamped to [0, 84.0f] (pool `0x229f0`=0x7372c) by
+  helper `0x2404` into `0xffffb398` (pool `0x229ec`), with a 12-entry history of
+  the request at `0xffffb398+4i` (write `0xffffb39c`–`0xffffb3c8`) indexed by
+  the byte `0xffffb3ec` (0–12, pool `0x229f8`), which also selects
+  `0xffffb3cc` = `history[index]`.
 
-  Where the "gear" comes from: the flags `0xffffb2cc`/`b2cd`/`b2ce` are computed
-  by `0x21970` from the bytes `0xffffbc41`/`bc42`/`bc43`, which `0x2c15a`
-  derives from the transmission state — on an AT (calibration byte at ROM
-  `0x74924` = 1, read by `0x24b44` into `automatic_transmission`
-  `0xffffb534`) from the AT range/state bytes `0xffffbc3e`/`bc3f`/`bc40` with
-  debounce counters `0xffffbc44`/`bc46`/`bc48`; on an MT (this ROM:
-  `0x74924`=0x00 → `0xffffb534`=0) from the switch-code cell `0xffffbaed`
-  (code 1 or 7 → `bc41`, 2/3 → `bc42`, 4 → `bc43`). The gear number itself is
-  computed from the rpm/vss ratio (`candidate_gear` `0xffffbc3c` by `0x2c324`,
-  latched into `current_gear` `0xffffbc3d` by `0x2c3b2` after >0xb
-  confirmations — see
+  Where the "gear" comes from: the flags are computed by `0x21970` from the
+  bytes `0xffffbc41`/`bc42`/`bc43`, which `0x2c15a` derives from the
+  transmission state. `0x24b44` stores `0xffffb534` = 1 whenever ROM `0x74924`
+  reads 0x00 and 0 otherwise; this bin reads **0x00**, so `0xffffb534` = 1 and
+  `0x2c15a` takes the range/state branch (`0x2c180`…) driven by
+  `0xffffbc3e`/`bc3f`/`bc40` with debounce counters `0xffffbc44`/`bc46`/`bc48`.
+  The alternative switch-code decode (`0x2c294`–`0x2c312`: code 1 or 7 →
+  `bc41`, 2/3 → `bc42`, 4 → `bc43`, fed by `0xffffbaed`) is not reached with
+  `0xffffb534` = 1. The gear number itself is computed from the rpm/vss ratio
+  (`candidate_gear` `0xffffbc3c` by `0x2c324`, latched into `current_gear`
+  `0xffffbc3d` by `0x2c3b2` once the per-candidate counter reaches 12, ROM
+  `0x758a2`–`0x758ac` — see
   [`cruise_control_report.md`](../investigations/60E15120_N3J1E/cruise_control_report.md)).
-  All-zero flags select the neutral map `0x6a474`.
-- `0x22a14` `pedal_demand_filter_coeffs` — first-order filter of the demand
-  with coefficient tables (rpm `0x6a354`/`0x6a368`/`0x6a37c`/`0x6a390`,
-  coolant `0x6a3a4`/`0x6a3b8`, base `0x6a3cc`…`0x6a430`), rate-decay flag and
-  2.0 hysteresis → base position `0xffffb38c`.
-- `0x22d26` `throttle_base_position_filter` — `0xffffb390` = filter(`0xffffb38c`,
-  0.25), `0xffffb394` = (`0xffffb38c` <= 2.0).
+- `0x22a14` `pedal_demand_filter_coeffs` — filters the demand into
+  `0xffffb3d4` with a fixed 0.1 coefficient (ROM `0x73730`), sets the rate
+  flag `0xffffb3ed` on a ±2.0 step and uses the coefficient tables
+  (rpm `0x6a354`/`0x6a368`/`0x6a37c`/`0x6a390`, coolant
+  `0x6a3a4`/`0x6a3b8`, base `0x6a3cc`…`0x6a444`) for the base-position
+  equation: `0xffffb38c` = min(`0xffffb2c4`, filter(x=`0xffffb38c`,
+  y=`0xffffb3cc`, c=`0xffffb3d0`)), overridden to 5.0 (ROM `0x7373c`) while
+  `0xffffcc9c`==1 and `0xffffb2c4`==1.
+- `0x22d26` `throttle_base_position_filter` — `0xffffb390` = filter(
+  x=`0xffffb38c`, y=`0xffffb394`, 0.25 (ROM `0x73740`)), then
+  `0xffffb394` = (`0xffffb394` <= 2.0f, ROM `0x73744`).
 
 ### 2.6 Torque / DSC arbitration — the target plate position
 
@@ -219,113 +270,177 @@ Back in `0x22f86`, `0x233ec` `throttle_target_plate_position` arbitrates the
 target `0xffffb424`: clamp(`0xffffb2b8`, coolant table `0x6a4c8`,
 `0xffffb38c` + idle air `0xffffb2a4`) when `0xffffb2cf`==1; max(`0xffffb38c` +
 `0xffffb2a4`, `0xffffb2bc`) when `0xffffb2d0`==1; otherwise clamp(`0xffffb38c` +
-`0xffffb2a4`, 0, 84.0) with fuel-cut decel reduction (tables
-`0x6a4dc`/`0x6a4f0`/`0x6a504`). The target is converted to raw counts
-`0xffffb410` = `0x5ccb4`(`0xffffb424`) — exported on PIDs 0x004c/0x091a.
+`0xffffb2a4`, 0, 84.0 from ROM `0x747d4`) with fuel-cut decel reduction (tables
+`0x6a4dc`/`0x6a4f0`/`0x6a504`). The target is then passed through `0x5ccb4`,
+whose result is stored as a **float** in `0xffffb410` (4 bytes, `fmov.s`): that
+routine writes the value out as a Mode-22 quantity for PID 0x091a, quantized to
+1/512 steps (constant `0x3b000000`, encoder `0x2490`) and decodes it back
+(`0x24c0`) for the descriptor entries that hold the codes 5 or 7 — `0xffffb410`
+therefore keeps the units of `0xffffb424` and is exported on PIDs
+0x004c/0x091a.
 
 ### 2.7 Servo override, limp/home and learned values
 
 Also in `0x22f86`:
 
 - `0x22db4` `throttle_servo_override` — direction `0xffffb400` = (`0xffffb4b0`
-  >= learned `0xffff807c` + 0.5f (`0x747b8`=0x3f000000)); mode byte
-  `0xffffccbc` (from `0x487d6` `engine_stop_conditions_eval`); override duty
-  `0xffffb3f8`: 0.0 when mode != 1, else min(`0xffffb410` + learned, learned +
-  0.5), decaying max(5.0f (`0x747bc`), `b3f8` − 0.05f (`0x747c0`)) while
-  counters `0xffffb3fc`/`0xffffb3fe` exceed 1 (pools `0x22ea0`=0xb4b0,
-  `0x22ea2`=0xccbc, `0x22ea4`=0xb3f8, `0x22ea6`=0xb410, `0x22ebc`=0xffffb400).
-- `0x231f0` `learned_pedal_value_calc` — `0xffffb40c` = clamp(`0xffffb410` +
-  learned `0xffff807c`, 0, learned `0xffff808c` default 110.0f = 0x42de0000);
-  99.0 on the fault path.
+  >= learned `0xffff807c` + 0.5f (`0x747c4`=0x3f000000) with a 0.0f band
+  (`0x747c8`); mode byte `0xffffccbc` (from `0x487d6`
+  `engine_stop_conditions_eval`); override duty `0xffffb3f8`: 0.0 when mode
+  != 1, else min(`0xffffb410` + learned, learned + 0.5f (`0x747b8`)) while
+  byte `0xffffb401`==0, decaying max(5.0f (`0x747bc`), `b3f8` − 0.05f
+  (`0x747c0`)) while the word counters `0xffffb3fc`/`0xffffb3fe` exceed 2
+  (`0x747b4`/`0x747b6`) (pools `0x22ea0`=0xb4b0, `0x22ea2`=0xccbc,
+  `0x22ea4`=0xb3f8, `0x22ea6`=0xb410, `0x22ebc`=0xffffb400).
+- `0x231f0` `learned_pedal_value_calc` — writes `0xffffb40c` as one of six
+  mutually exclusive candidates selected by the bytes
+  `0xffffccbb`/`ccbc`/`ccbd`/`ccac`/`cca2` (first match wins): the learned
+  limit `H` + learned zero, the servo override duty `0xffffb3f8`,
+  `0xffffcc88` + learned zero, `0xffffb410` + learned zero (capped at learned +
+  5.0f, `0x747e4`), `0xffffcca8`, otherwise `0xffffb410` + learned zero; the
+  clamp is `clamp(value, 0, H)` where `H` = readValue(`0xffff808c`, default
+  111.0f = 0x42de0000 at ROM `0x6f45c`), except the `0x747e8` = 99.0 branch
+  taken when the high byte of `0xffff808c` reads 1. The function also copies
+  byte `0xffffa41c` into `0xffffb436`. Every operand is plate-/servo-side; the
+  alias name is a carry-over from the earlier pass (§4.3).
 - `0x23558` `throttle_position_delta_calc` — `0xffffb414` = `0xffffb410` −
-  `0xffffb428` (0.0 when `0xffffccc9` set); both exported via the E2RAM block
-  encode `0x244bc`.
+  `0xffffb428` (0.0 when `0xffffccc9` set), then `0xffffb428` = `0xffffb410`;
+  both exported via the E2RAM block encode `0x244bc`.
 
 ### 2.8 Plausibility monitors, learning and DTCs
 
 - `0x4595a` `tp_correlation_fault_check` (called from `0x38e12`) — compares the
-  two pedal zeroed channels: threshold 3.5f (`0x7c77c`=0x40600000) when the
+  two pedal zeroed-volt channels `0xffffa9ac`/`0xffffa9b0`; the monitor runs only
+  while `0xffffcbf0`==1. The |difference| limit is a five-rung ladder keyed on
+  pedal-2 volts `0xffffa9b0` (breakpoints 0.6/1.2/2.0/4.0 at
+  `0x7c76c`–`0x7c778`; every rung limit is 3.5f, `0x7c77c`–`0x7c78c`) while the
   learned value is valid (`learned_pedal_zero_valid` `0xffff8078`==1), else
   9.536f (`0x7c790`=0x41189375). Good counter `tp_correlation_good_counter`
-  (`0xffffcbf2`) > 0x18 → `0xffffcbec`=1; bad counter
-  `tp_correlation_bad_counter` (`0xffffcbee`) > 0x1c → `0xffff872c`=1 and DTC
-  0x6c via `0x5fd38`.
+  (`0xffffcbf2`) >= 25 (ROM u16 `0x7c794`) → `0xffffcbec`=1; bad counter
+  `tp_correlation_bad_counter` (`0xffffcbee`) >= 29 (`0x7c796`) → `0xffff872c`=1
+  and DTC 0x6c via `0x5fd38`. The operands are the APP channels; the `tp_` prefix
+  on these three aliases is a carry-over (§4.3).
 - `0x33e98` `plate_range_high_fault` (called from the fueling main task
   `0x20e40`) — `0xffffc108` = 1 while plate percent `0xffffad48` >= 200.0f
   (`0x79be0`=0x43480000), cleared below 196.48 (hysteresis 3.52f,
   `0x79be4`=0x406147ae); consumers `0x33dc8`/`0x34230` zero the
   accel-enrichment accumulators.
 - Range faults on the pedal raw channels (`pedal_range_fault_1`/`_2` =
-  `0xffffa110`/`0xffffa111` from `0x94f0`) feed DTCs 0x66–0x69.
+  `0xffffa110`/`0xffffa111` from `0x94f0`, value 1 = above band, 2 = below
+  band, 0 = in band) feed DTCs 0x66–0x69; the four DTC paths read the code with
+  `==1` / `!=1` tests, so 0x67/0x69 report the high side and 0x66/0x68 the
+  "not high" case.
 - Learning, pedal zeros (`0xffff8068`/`0xffff8070`, adapted by `0x18fe8`):
-  the learner arms (`0xffffa9ce`=1) only while the raw zero-term sits in a
-  narrow window and the pedal percent is in 5–40 %; a stable-pass counter
-  (`0xffffa9d8`) must reach 0x177 (375 passes) before the learned value is
-  raised by 0.01 (capped at the 10.856 default), otherwise it is stepped
-  0.005 toward the observed value (floored at 9.626); when both channels
-  agree within 0.032 the valid flag `learned_pedal_zero_valid` (`0xffff8078`)
-  is set to 1. On a TP fault (`0xffffcc9b`/`cc9c`) the learned values are
-  written to E2RAM and the valid flag cleared.
+  arming (`0xffffa9ce`=1) requires the learner to be idle, the previous-cycle
+  demand-rate flag `0xffffa9cc`=1 (demand-history cell `0xffffa9c0` in
+  [−0.5, −0.3), `0x6eee0`/`0x6eee4`), the sticky "pedal was in [5, 40) %" flag
+  `0xffffa9cd`, pedal percent < 5.0 (`0x6eef0`/`0x6eef4`) and no pedal range
+  fault. While armed, counter `0xffffa9d8` counts up and disarms the learner at
+  0x177 (ROM `0x6eeca`); the +0.01 raise (`0x6ef04`) is gated by the second
+  counter `0xffffa9da` against the same 0x177 (`0x6eecc`) and applies once after
+  arming. The learned value is stepped down by 0.005 (`0x6eefc`) toward the
+  filtered clamped volts `0xffffa9a0`/`0xffffa9a8` (only when those are at or
+  below the learned value), floored at 9.626f (`0x6eef8`) and capped at 10.856f
+  (`0x6ef00`); when both channels agree within 0.032f (`0x6ef10`) the valid flag
+  `learned_pedal_zero_valid` (`0xffff8078`) is set to 1. On a pedal range fault
+  (`0xffffcc9b`/`cc9c`) both learned zeros are reset to the 10.856f default
+  (`0x6ef08`/`0x6ef0c`) and the valid flag cleared.
 - Learning, plate zeros (`0xffff807c`/`0xffff8084`, adapted by `0x1b3f2`):
   the boot-time home reference (`0xffffb4b0`/`0xffffb4b4`, E2RAM-decoded by
-  `0x23844`) is filtered (0.5) into `0xffffad68`/`0xffffad6c` and clamped to
-  [10, 20] into `0xffffad58`/`0xffffad78`; after >9 stable passes
-  (`0xffffadc8`) with the engine running and the enable flag `0xffff80a0` set,
-  the learned zeros are updated from those values plus E2RAM offsets
-  (`0xffff80ac`/`0xffff80b4`); if the enable flag is clear they are reset to
-  the 15.0f default, and limp/fault flags (`0xffffcc98`/`cc99`, `0xffff873c`)
-  force the same reset.
-- Plausibility flags `0xffffad60`/`0xffffad61` (set by `0x1ba20`/`0x1bd9e`)
-  feed `shutdown_allowed` `0x48cc0`, which blocks the main-relay hold. All
-  learned cells are E2RAM-backed and persisted by `0x244bc`/`0x23844`.
+  `0x23844`) is filtered (0.5, ROM `0x6f434`) into `0xffffad68`/`0xffffad6c`
+  and clamped to [10 (`0x6f440`), 20 (`0x6f43c`)] into
+  `0xffffad58`/`0xffffad78`. Once the stable-pass counter `0xffffadc8` reaches
+  the ROM u16 `0x6f3f8` = 10 the flag `0xffffad8e` is set; with
+  `0xffff873e`==0, the engine-running cells `0xffff809c`/`0xffff809e` (derived
+  from `0xffffaa68`) and byte `0xffffcc5e`==1, the learned zeros are updated
+  from `0xffffad58`/`0xffffad78` plus the E2RAM offsets `0xffff80ac`/
+  `0xffff80b4`. The enable flag `0xffff80a0` (written by `0x1b3f2` itself)
+  cleared resets both to the 15.0f default (`0x6f438`), and limp/fault flags
+  (`0xffffcc98`/`cc99`, bit of `0xffff873c`) force the same reset.
+- Plausibility flags `0xffffad60`/`0xffffad61` (written by `0x1ba20` and
+  `0x1bd9e`, the latter also setting `0xffff80a2`): in `0x48cc0` a 1 on either
+  flag, or on `0xffff80a2`, permits the shutdown path and sets
+  `shutdown_allowed` `0xffffccc1`; `0x251d0` then derives `0xffffb574` and
+  drops the main-relay hold PD11. All learned cells are E2RAM-backed and
+  persisted by `0x244bc`/`0x23844`.
 
 ### 2.9 Motor drive — DBW power relay and the TO7D PWM
 
-**Power relay.** PE0 (`PEDR_W 0xfffff754` bit 0x1, SH7055F package pin 7) =
-(`0xffffcfb7` == 0), driven by `0x3a0ec` `relay_output_pair_pd7_pe0` (flag
-computed by `0x4ef86`); harness candidate terminal 4C (W/B, the ETV relay coil
-per circuit diagram B1-02). Dynamic check: `0x3a0ec` sets PE0 with
+**Power relay.** `0x3a0ec` `relay_output_pair_pd7_pe0` drives two outputs, both
+gated by the pad-control helper `0x4bbc`: PD7 (`PDDR_W 0xfffff746` bit 0x80) =
+(`0xffffcfb6` == 1) and PE0 (`PEDR_W 0xfffff754` bit 0x1, SH7055F package pin 7)
+= (`0xffffcfb7` == 0), i.e. the PE0 side is inverted and the PD7 side is not.
+The flag producer is `0x4ef86` (writes `0xffffcfb6`/`0xffffcfb7`). The PE0 half
+is the drive-by-wire relay, harness candidate terminal 4C (W/B, the ETV relay
+coil per circuit diagram B1-02). Dynamic check: `0x3a0ec` sets PE0 with
 `0xffffcfb7`=0, clears it with `0xffffcfb7`=1 (`tests/test_throttle_dbw.py`).
 
-**PWM output.** Channel 7D of the ATU (TO7D = PB7, package pin 154) is the only
-ATU PWM output enabled in the running configuration: `0xb308`
-`atu_ch7d_pwm_enable` (called once from task rec[12] `0x6592`) sets
-`PBCRL_W 0xfffff734` = 0x4000 at init (`0x51de`, pools `0x52d8`/`0x52da`),
-starts the timer (`ATUII_TSTR2_B 0xfffff400` bit 7) and loads
+**PWM output.** Channel 7D of the ATU (TO7D = PB7, package pin 154) carries the
+motor duty. Boot initialises the ATU block in the init chain reached from
+`0x4c92`: `ATUII_TSTR2_B` (`0xfffff400`) and `ATUII_TSTR1_B` (`0xfffff401`) are
+loaded with 0xff and `ATUII_TSTR3_B` (`0xfffff402`) with 0x01
+(`0x4ef6`–`0x4efe`), so the timer block runs independently of the throttle
+channel. The pin-function select `PBCRL_W 0xfffff734` = 0x4000
+(TO7D on PB7; pools `0x52d8`/`0x52da`) is written at `0x51de` inside the init
+function entered at `0x51c8`, together with `PBCRH_W` = 0x1450 and
+`PBIOR_W` = 0xf484. What is unique to the throttle motor is the compare
+register: `ATUII_BFR7D_W 0xfffff596` has exactly three writers (`0xb270`,
+`0xb300`, `0xb346`), all inside `0xb2c0`/`0xb308`. `0xb308`
+`atu_ch7d_pwm_enable` (called once from task rec[12] `0x6592`, single pool
+reference `0x66cc`) starts channel 7D (`ATUII_TSTR2_B` bit 7) and loads
 `ATUII_CYLR7D_W 0xfffff58e` = `ATUII_TCNT7D_W 0xfffff586` =
 `ATUII_BFR7D_W 0xfffff596` = `ATUII_DTR7D_W 0xfffff59e` = 32000 (0x7d00, also
-kept in `0xffff9f50`); `0xb23c` is the motor-off init. The running duty loop
-runs in task rec[13] (`0x65b2` → `0x118d0`, pool `0x66d8`=0x000118d0 →
-`0x2253c` `ch7d_pwm_duty_batch`, pools `0x22560`–`0x2256c`):
+kept in `0xffff9f50`); it does not touch `PBCRL_W`. `0xb23c`
+`ch7d_pwm_off_init` clears `0xffffa214[0]` and the 32-bit `0xffffa210`, clears
+and then re-sets the channel-7D start bit with `CYLR7D`/`TCNT7D`/`DTR7D` = 1 and
+`BFR7D` = 0, i.e. it leaves the channel running at 0 % duty on a 1-count period.
+The running duty loop is task rec[13] (`0x65b2` → `0x118d0`, pool
+`0x66d8`=0x000118d0 → `0x2253c` `ch7d_pwm_duty_batch`, pools
+`0x22560`–`0x2256c`):
 
 - `0x22574` `ch7d_pwm_enable_condition` — enable `0xffffb358` = engine running
-  (`0xffffa428`) && running timer `0xffffa424` >= table `0x6a340`(coolant
-  model) && coolant >= −50.0f (`0x7353c`) && 9.0f <= battery `0xffffb590` <
-  16.0f (`0x73540`/`0x73544`) && !`0xffffcd70` (stuck-duty latch from the stall
-  monitors `0x4162e`/`0x416bc` via `0x4a11c`).
+  (`0xffffa428`) && running timer `0xffffa424` >= the u16 result of a 3D
+  coolant/IAT lookup (table `0x6a340`, held in `0xffffb386`; inputs the
+  coolant-derived `0xffffb35c` and `0xffffade0`), compared unsigned
+  (`cmp/hs`) — && coolant gate `0xffffb388` (coolant `0xffffa98c` >= −50.0f
+  `0x7353c`, released at −52.5f) && 9.0f <= battery `0xffffb590` < 16.0f
+  (`0x73540`/`0x73544`) && !`0xffffcd70` (stuck-duty latch, OR of the six flags
+  `0xffffc91d`/`c912`/`c914`/`c96d`/`c96f`/`c971` in `0x4a11c`, written by the
+  stall monitor `0x416bc`). The ROM byte `0x73538`==0xff bypass is inert on this
+  bin (0x00).
 - `0x22630` `ch7d_pwm_duty_control_loop` — closed-loop duty `0xffffb354`
-  (0–100 %): PID-style terms on the filtered feedback `0xffffaa78`: P
-  (`aa78`−30.0f (`0x7355c`))×4.5f (`0x73550`), I
-  `0xffffb364` += (`aa78`−30)×0.1875f (`0x73554`), D (`0xffffb36c`−`aa78`)×0.75f
-  (`0x73558`), hysteresis 39/44/40/45 (`0x7354c`/`0x73548`), feedforward/limit
-  tables `0x6a2cc`/`0x6a2f4`/`0x6a324`/`0x6a2e0`. The feedback `0xffffaa78` is
-  the labeled differential ADC pair: `0xaee8`
-  `adc_pair_correlation_fault_compute` samples AN23 (`ADDR23H_B 0xfffff836`)
-  twice and AN11 (`ADDR11H_B 0xfffff816`) twice per cycle and computes
+  (0–100 %): the loop tracks the filtered feedback `0xffffaa78` around 30.0f
+  (`0x7355c`) with P (×4.5f, `0x73550`), I (`0xffffb364` += Δ×0.1875f,
+  `0x73554`) and D ((`0xffffb36c`−`aa78`)×0.75f, `0x73558`) terms; the P term is
+  applied only while neither hysteresis latch `0xffffb389`/`0xffffb38a` is set,
+  the D term only while byte `0xffffb384` < 0xea (ROM `0x7353a`), and two
+  alternative branches write the duty outright from the feedforward tables
+  (`0x6a2cc`/`0x6a2f4`/`0x6a324`/`0x6a2e0`, scaled by `b378`, byte `0x7353a`
+  ramp scale 128.0f at `0x22894`). The latches are 44.0f/39.0f
+  (`0x7354c`, 39 = 44 − 5.0f at `0x226b0`) and 45.0f/40.0f (`0x73548`); the
+  final duty is min(P+I+D, `0xffffb360`) and is forced to 0 when
+  `0xffffb358`==0.
+
+  The loop feedback `0xffffaa78` is the labeled differential ADC pair: `0xaee8`
+  `adc_pair_correlation_fault_compute` (entered from task rec[12] through the
+  `0xad2a` thunk) samples AN23 (`ADDR23H_B 0xfffff836`) twice and AN11
+  (`ADDR11H_B 0xfffff816`) twice per cycle and computes
   |ΔAN23|·7.6294e-5 / |Δ(AN23−AN11)/200| − 16.25 → `adc_pair_ratio_raw`
   `0xffffa1d8`, filtered (0.25) → `adc_pair_ratio_filtered` `0xffffa1d4`,
   copied to `0xffffaa78` by `0x1ac00` (which also uses it for the lambda band
   flag `lambda_in_target_band` `0xffffaa80`); the pair also has range
   (`0xffffa1dc`) and correlation (`0xffffa1dd`, ±0.005 V) fault cells. Only
   the pin-level identity of AN11/AN23 is unresolved (§4.6).
-- `0x25198` `ch7d_pwm_duty_ratio` — `0xffffb570` = clamp(`0xffffb354`, 0,
-  100.0f (`0x251c4`=0x42c80000)) / 100 by `0x2404` (pool `0x251c8`), then
-  tail-jumps to `0xb2c0`.
-- `0xb2c0` `ch7d_pwm_duty_write` — `0xffffa210`[0] = (u32)(duty × 65536.0f)
+- `0x25198` `ch7d_pwm_duty_ratio` — `0xffffb570` = clamp(`0xffffb354`, 0, 100.0f
+  (`0x251c4`=0x42c80000)) via `0x2404` (pool `0x251c8`), divided by 100 with an
+  inline `fdiv` (`0x251ae`), then tail-jumps to `0xb2c0` with r4 = 0 (channel
+  index).
+- `0xb2c0` `ch7d_pwm_duty_write` — `0xffffa210`[ch] = (u32)(duty × 65536.0f)
   (`0xb390`=0x47800000, pool `0xb37c`=0xffffa210); when enabled
-  (`0xffffa214`, pool `0xb380`), `ATUII_BFR7D_W 0xfffff596` =
+  (`0xffffa214`[ch], pool `0xb380`) and ch == 0, `ATUII_BFR7D_W 0xfffff596` =
   saturating_mul_shift16(`0xffffa210`[0], `0xffff9f50`) via `0x231c` (pools
-  `0xb374`=0xf596, `0xb38c`=0xffff9f50, `0xb394`=0x231c).
+  `0xb374`=0xf596, `0xb38c`=0xffff9f50, `0xb394`=0x231c). `0xffff9f50` is also
+  written by `0xb290`.
 
 ### 2.10 Logger PID 0x1410 — settled as injector pulse time
 
@@ -353,48 +468,69 @@ accordingly
 ## 3. Technical pseudocode
 
 ```c
-// ---- task rec[9] 0x64ba -> 0x1150e -> 0x199d4 (sensor batch) ----
-void pedal_tp_sensor_batch(void) {                    // 0x199d4
-    pedal_adc_raw_to_volts();                          // 0x94f0: a108 = raw*6.341f*7.6294e-5 (+3.488f), range 0x11ec..0xf5c3 -> faults a110/a111
-    pedal_volts_clamp_latch();                         // 0x18f60: a9c4 = 9eec; a99c = min(25.0f, a108)
-    pedal_learned_zero_subtract();                     // 0x1933a: a9ac = max(0, a99c - learned 0xffff8068)
-    throttle_percent_and_demand_calc();                // 0x193c4: a9b4 = clamp(a9ac/12.7f*100, 0, 100); a9bc = min(max(a9b4, bcf8), c028)
-    FUN_0000b398();                                    // plate raw -> volts a218/a21c (base 0x6f3ec + raw*scale 0x6f3e4*7.6294e-5)
-    plate_tp1_volts_latch();                           // 0x1b08e: ad5c = 9f08; ad30 = a218
-    plate_tp2_volts_latch();                           // 0x1b14c: ad5e = 9f0a; ad34 = a21c
-    ref_calculateThrottlePedalPercentForSomethingElse_(); // 0x1b940: ad44 = ad38|ad3c, limp 20.0 if cc98&&cc99; ad48 = ad44/84*100
+// ---- task rec[17] 0x60c8 (ADC sweep + both raw->volts conversions) ----
+void ref_getSensorStuff__(void) {                     // 0x60c8, task record 0x4aa0
+    adc_sweep();                                       // 0x6884: ADDRnH -> 0xffff9ee4 + 2n (AN4/AN5 = 9eec/9eee, AN18/AN19 = 9f08/9f0a)
+    pedal_adc_raw_to_volts();                          // 0x94f0: a108 = 0.0f + raw4*6.341f*7.6294e-5; a10c = 3.488f + raw5*6.341f*7.6294e-5; band 0x11ec..0xf5c3 -> a110/a111 (1 = high, 2 = low)
+    FUN_0000b398();                                    // plate raw -> volts a218/a21c: AN18 25.0f/0.0f, AN19 31.25f/-31.25f (0x6f3e4..0x6f3f0); band 0x6f3dc..0x6f3e2 (debounce 0x6c17a=3), fault bytes a220/a221 vs 0x6c172..0x6c178
 }
 
-// ---- task rec[9] 0x64ba -> 0x1150e -> 0x22f86 (DBW control batch) ----
+// ---- task rec[9] 0x64ba: pedal conversion entry + batch dispatcher ----
+void knock_sensor_fault_task(void) {                  // 0x64ba, task record 0x4a20
+    candidate_main_task_software_reset_check();        // 0xd21e
+    FUN_00006842();                                    // 0x6842
+    pedal_adc_raw_to_volts_entry();                    // 0x94fc: body of 0x94f0 after the raw-relatch prologue
+    ref_knockSensorADCFault();                         // 0xc290
+    dbw_task9_batch();                                 // 0x1150e (pool 0x656c)
+}
+
+// ---- task rec[9] -> 0x1150e -> 0x199d4 (sensor/percent batch) ----
+void pedal_tp_sensor_batch(void) {                    // 0x199d4
+    pedal_volts_clamp_latch();                         // 0x18f60: a9c4 = 9eec, a9c8 = a112, a99c = min(25.0f, a108)
+    ref_filterSomething();                             // 0x18f86: a9a0 = filter(a99c)
+    FUN_00018fa4();                                    // 0x18fa4: a9a4 = min(25.0f (0x6eed8), a10c)
+    ref_filterSomething2();                            // 0x18fca: a9a8 = filter(a9a4)
+    FUN_00018fe8();                                    // pedal-zero learner (a9ce/a9d8/a9da, 10.856f default)
+    pedal_learned_zero_subtract();                     // 0x1933a: a9ac = max(0, a99c - 0xffff8068); a9b0 = max(0, a9a4 - 0xffff8070)
+    throttle_percent_and_demand_calc();                // 0x193c4: a9b4/a9b8 = clamp(zeroed/12.7f*100, 0, 100); a9bc per the §2.3 branch table
+    plate_tp1_volts_latch();                           // 0x1b08e: ad5c = 9f08 (raw); ad30 = a218 (volts)
+    plate_tp2_volts_latch();                           // 0x1b14c: ad5e = 9f0a (raw); ad34 = a21c (volts)
+    FUN_0001b3f2();                                    // plate-zero learner (ad68/ad6c -> ad58/ad78, 15.0f default)
+    ref_calculateThrottlePedalPercentForSomethingElse_(); // 0x1b940: ad44 = ad38 | ad3c (cc98) | 20.0 (cc98&&cc99); ad48 = ad44/84*100
+}
+
+// ---- task rec[9] -> 0x1150e -> 0x22f86 (DBW control batch) ----
 void dbw_control_batch(void) {                        // 0x22f86
     throttle_servo_override();                         // 0x22db4: dir b400, duty b3f8 (mode ccbc)
-    throttle_target_plate_position();                  // 0x233ec: b424 = arbitrate(b38c+b2a4, DSC b2cf/b2d0, fuel-cut); b410 = 0x5ccb4(b424)
-    learned_pedal_value_calc();                        // 0x231f0: b40c = clamp(b410+learned807c, 0, learned808c)
-    throttle_position_delta_calc();                    // 0x23558: b414 = b410 - b428
-    throttle_pedal_to_plate_request_map();             // 0x228dc: b398 = clamp(tbl_gear(rpm, a9bc), 0, 84.0f)
-    pedal_demand_filter_coeffs();                      // 0x22a14: b38c = filtered demand (rpm/coolant coeff tables)
-    throttle_base_position_filter();                   // 0x22d26: b390 = filter(b38c, 0.25); b394 = (b38c <= 2.0)
+    throttle_target_plate_position();                  // 0x233ec: b424 = arbitrate(b38c+b2a4, DSC b2cf/b2d0, fuel-cut); b410 = 0x5ccb4(b424) as float
+    learned_pedal_value_calc();                        // 0x231f0: b40c = clamp(candidate, 0, H) with H = readValue(0xffff808c, 111.0f)
+    throttle_position_delta_calc();                    // 0x23558: b414 = b410 - b428; b428 = b410
+    throttle_pedal_to_plate_request_map();             // 0x228dc: b398 = clamp(tbl_gear(rpm, a9bc), 0, 84.0f); history index b3ec
+    pedal_demand_filter_coeffs();                      // 0x22a14: b3d4 = filter(a9bc, 0.1); b38c = min(b2c4, filter(b38c, b3cc, b3d0))
+    throttle_base_position_filter();                   // 0x22d26: b390 = filter(b38c, b394, 0.25); b394 = (b394 <= 2.0)
 }
 
 // ---- task rec[18] 0x64e8 -> 0x11534 -> 0x21b4c (torque batch) ----
 void throttle_torque_request_batch(void) {            // 0x21b4c
-    throttle_gear_mode_flags();                        // 0x21970: b2cc/b2cd/b2ce from AT bytes; tbl 0x6a180 / 0x6a164
+    throttle_gear_mode_flags();                        // 0x21970: b2cc/b2cd/b2ce priority chain from bc41/bc42/bc43; tbl 0x6a180 / 0x6a164
     ref_throttlePlateControl_Related();                // 0x218c4: b2cf/b2d0 DSC gates; b2b8 = tbl 0x6a164, b2bc = tbl 0x6a150
 }
 
 // ---- task rec[13] 0x65b2 -> 0x118d0 -> 0x2253c (motor PWM) ----
 void ch7d_pwm_duty_batch(void) {                      // 0x2253c
-    ch7d_pwm_enable_condition();                       // 0x22574: b358 = running && timer && coolant>=-50 && 9<=batt<16 && !cd70
-    ch7d_pwm_duty_control_loop();                      // 0x22630: b354 = PID-ish loop on aa78 (P 4.5 / I 0.1875 / D 0.75), limits tbl 0x6a2cc..
-    ch7d_pwm_duty_ratio();                             // 0x25198: b570 = clamp(b354,0,100)/100 -> 0xb2c0
+    ch7d_pwm_enable_condition();                       // 0x22574: b358 = running && timer >= 0xffffb386 && coolant>=-50 (b388) && 9<=batt<16 && !cd70
+    ch7d_pwm_duty_control_loop();                      // 0x22630: b354 = min(P+I+D, b360) on aa78 (P 4.5 / I 0.1875 / D 0.75), latches b389/b38a
+    ch7d_pwm_duty_ratio();                             // 0x25198: b570 = clamp(b354,0,100)/100 -> 0xb2c0(ch 0)
 }
-void ch7d_pwm_duty_write(void) {                      // 0xb2c0: a210[0] = (u32)(fr4*65536.0f); if (a214[0]) ATUII_BFR7D_W = sat_mul16(a210[0], 0xffff9f50)
+void ch7d_pwm_duty_write(int ch, float duty) {        // 0xb2c0: a210[ch] = (u32)(duty*65536.0f); if (a214[ch] && ch==0) ATUII_BFR7D_W = sat_mul16(a210[0], 0xffff9f50)
 }
 
 // ---- relay + once-only PWM setup ----
-void relay_output_pair_pd7_pe0(void) {                // 0x3a0ec: PEDR_W bit 0x1 = (0xffffcfb7 == 0)
+void relay_output_pair_pd7_pe0(void) {                // 0x3a0ec: PDDR_W bit 0x80 = (0xffffcfb6 == 1); PEDR_W bit 0x1 = (0xffffcfb7 == 0)
 }
 void atu_ch7d_pwm_enable(void) {                      // 0xb308 (once): TSTR2 bit7, CYLR7D=TCNT7D=BFR7D=DTR7D=32000; BFR7D=duty*32000>>16
+}
+void ch7d_pwm_off_init(void) {                        // 0xb23c: a214[0]=0, a210=0, start bit clear + CYLR7D/TCNT7D/DTR7D=1, BFR7D=0, start bit set
 }
 
 // ---- logger PID 0x1410 (dispatch record 0x5f394) ----
@@ -407,131 +543,312 @@ u16 diag22_pid1410_injector_pulse_time(void) {        // 0x56f6c
 
 ### 4.1 Memory map (mandatory)
 
-Functions:
+
+
+#### Functions (labels as in `function_index.tsv`)
+
+
 
 | Address | Label | Role |
-|---------|-------|------|
-| `0x000064ba` | task rec[9] entry | tail-calls `0x1150e` (pool `0x656c`=0x0001150e) |
-| `0x000064e8` | task rec[18] entry | runs `0x11534` slow/background task |
-| `0x00006592` | task rec[12] entry | calls `0xb308` (once-only PWM enable) |
-| `0x000065b2` | task rec[13] entry | calls `0x118d0` (pool `0x66d8`=0x000118d0) |
-| `0x0001150e` | `dbw_task9_batch` | batch dispatcher: pools `0x116b8`=0x199d4, `0x116c8`=0x22f86, `0x116e4`=0x21b4c |
-| `0x000199d4` | `pedal_tp_sensor_batch` | pedal + plate sensor conversion batch |
-| `0x000094f0` | `pedal_adc_raw_to_volts` | AN4/AN5 range check + volts scaling |
-| `0x00018f60` | `pedal_volts_clamp_latch` | raw latch + min(25.0f) clamp |
-| `0x0001933a` | `pedal_learned_zero_subtract` | learned-zero subtraction |
-| `0x000193c4` | `throttle_percent_and_demand_calc` | pedal % and demand (a9b4/a9b8/a9bc) |
-| `0x0000b398` | (plate raw→volts) | TP volts a218/a21c + range flags |
-| `0x0001b08e` | `plate_tp1_volts_latch` | AN18 → ad5c/ad30 |
-| `0x0001b14c` | `plate_tp2_volts_latch` | AN19 → ad5e/ad34 |
-| `0x0001b940` | plate position calc | ad44/ad48, limp 20.0 |
-| `0x00022f86` | `dbw_control_batch` | DBW control batch |
-| `0x000228dc` | `throttle_pedal_to_plate_request_map` | gear-selected 3D maps → b398 |
-| `0x00022a14` | `pedal_demand_filter_coeffs` | demand filter → b38c |
-| `0x00022d26` | `throttle_base_position_filter` | b390/b394 |
-| `0x00022db4` | `throttle_servo_override` | servo dir/duty/mode (b400/b3f8/ccbc) |
-| `0x000233ec` | `throttle_target_plate_position` | arbitration → b424 → b410 |
-| `0x000231f0` | `learned_pedal_value_calc` | b40c learned pedal clamp |
-| `0x00023558` | `throttle_position_delta_calc` | b414 = b410 − b428 |
-| `0x00021b4c` | `throttle_torque_request_batch` | torque batch from `0x11534` |
-| `0x00021970` | `throttle_gear_mode_flags` | b2cc/b2cd/b2ce + torque tables |
-| `0x000218c4` | `ref_throttlePlateControl_Related` | DSC torque limit (b2cf/b2d0, tbl 0x6a150/0x6a164) |
-| `0x0004595a` | `tp_correlation_fault_check` | TP correlation monitor → DTC 0x6c |
-| `0x00033e98` | `plate_range_high_fault` | ad48 >= 200.0 → c108 |
-| `0x0002253c` | `ch7d_pwm_duty_batch` | PWM batch from `0x118d0` |
-| `0x00022574` | `ch7d_pwm_enable_condition` | b358 enable gates |
-| `0x00022630` | `ch7d_pwm_duty_control_loop` | duty loop → b354 |
-| `0x00025198` | `ch7d_pwm_duty_ratio` | b570 = clamp(b354)/100 → `0xb2c0` |
-| `0x0000b2c0` | `ch7d_pwm_duty_write` | a210 q16 → ATUII_BFR7D_W |
-| `0x0000b308` | `atu_ch7d_pwm_enable` | once-only TO7D setup |
-| `0x0000b23c` | `ch7d_pwm_off_init` | motor-off init |
-| `0x0003a0ec` | `relay_output_pair_pd7_pe0` | PE0 (PEDR_W bit 0x1) = (cfb7==0) |
-| `0x00056f6c` | `diag22_pid1410_injector_pulse_time` | PID 0x1410 handler (dispatch record `0x5f394`) |
 
-RAM:
+|---------|-------|------|
+
+| 0x000060c8 | `ref_getSensorStuff__` (task rec[17] entry) | ADC sweep `0x6884` → `0x94f0` (pedal volts) → `0xb398` (plate volts) |
+
+| 0x00006884 | `adc_scan_sweep_all_channels` | `ADDRnH` → `0xffff9ee4 + 2n` |
+
+| 0x000064ba | `knock_sensor_fault_task` (task rec[9] entry) | pedal-volts entry `0x94fc`, tail-calls `0x1150e` (pool `0x656c`=0x0001150e) |
+
+| 0x000064e8 | `slow_task_entry` (task rec[18] entry) | runs the `0x11534` background task |
+
+| 0x00006592 | `task12_adc_feedback_pwm_entry` (task rec[12] entry) | calls `0xb308` (once-only PWM enable) and `0xaee8` via the `0xad2a` thunk |
+
+| 0x000065b2 | `task13_temp_sensor_dtc_entry` (task rec[13] entry) | calls `0x118d0` (pool `0x66d8`=0x000118d0) |
+
+| 0x0001150e | `dbw_task9_batch` | batch dispatcher: pools `0x116b8`=0x199d4, `0x116c8`=0x22f86, `0x116e4`=0x21b4c |
+
+| 0x000199d4 | `pedal_tp_sensor_batch` | pedal percent/demand + plate position batch |
+
+| 0x000094f0 | `pedal_adc_raw_to_volts` | AN4/AN5 range check + volts scaling |
+
+| 0x000094fc | `FUN_000094fc` | task-rec[9] entry into the `0x94f0` body (pool `0x6564`) |
+
+| 0x00018f60 | `pedal_volts_clamp_latch` | AN4 raw latch + min(25.0f) clamp |
+
+| 0x0001933a | `pedal_learned_zero_subtract` | learned-zero subtraction, both pedal channels |
+
+| 0x000193c4 | `throttle_percent_and_demand_calc` | pedal % (a9b4/a9b8) and demand (a9bc) |
+
+| 0x0000b398 | `FUN_0000b398` (plate raw→volts) | TP volts a218/a21c, band + fault bytes |
+
+| 0x0001b08e | `plate_tp1_volts_latch` | AN18 → ad5c (raw) / ad30 (volts) |
+
+| 0x0001b14c | `plate_tp2_volts_latch` | AN19 → ad5e (raw) / ad34 (volts) |
+
+| 0x0001b940 | `ref_calculateThrottlePedalPercentForSomethingElse_` (`ref_` hypothesis name; computes the plate position) | ad44/ad48, limp 20.0 |
+
+| 0x00022f86 | `dbw_control_batch` | DBW control batch |
+
+| 0x000228dc | `throttle_pedal_to_plate_request_map` | gear-selected 3D maps → b398 |
+
+| 0x00022a14 | `pedal_demand_filter_coeffs` | demand filter → b3d4/b38c |
+
+| 0x00022d26 | `throttle_base_position_filter` | b390/b394 |
+
+| 0x00022db4 | `throttle_servo_override` | servo dir/duty/mode (b400/b3f8/ccbc) |
+
+| 0x000233ec | `throttle_target_plate_position` | arbitration → b424 → b410 |
+
+| 0x000231f0 | `learned_pedal_value_calc` (carry-over name; plate-/servo-side operands) | b40c learned-value clamp |
+
+| 0x00023558 | `throttle_position_delta_calc` | b414 = b410 − b428 |
+
+| 0x00021b4c | `throttle_torque_request_batch` | torque batch from `0x11534` |
+
+| 0x00021970 | `throttle_gear_mode_flags` | b2cc/b2cd/b2ce + torque tables |
+
+| 0x000218c4 | `ref_throttlePlateControl_Related` | DSC torque limit (b2cf/b2d0, tbl 0x6a150/0x6a164) |
+
+| 0x0004595a | `tp_correlation_fault_check` (carry-over name; compares the two pedal channels) | pedal correlation monitor → DTC 0x6c |
+
+| 0x00033e98 | `plate_range_high_fault` | ad48 >= 200.0 → c108 |
+
+| 0x0002253c | `ch7d_pwm_duty_batch` | PWM batch from `0x118d0` |
+
+| 0x00022574 | `ch7d_pwm_enable_condition` | b358 enable gates |
+
+| 0x00022630 | `ch7d_pwm_duty_control_loop` | duty loop → b354 |
+
+| 0x00025198 | `ch7d_pwm_duty_ratio` | b570 = clamp(b354)/100 → `0xb2c0` |
+
+| 0x0000b2c0 | `ch7d_pwm_duty_write` | a210 q16 → ATUII_BFR7D_W |
+
+| 0x0000b308 | `atu_ch7d_pwm_enable` | once-only TO7D setup + start |
+
+| 0x0000b23c | `ch7d_pwm_off_init` | 0 % duty, 1-count period |
+
+| 0x000051c8 | `FUN_000051c8` (init) | `PBCRL_W`=0x4000 at `0x51de`, `PBCRH_W`=0x1450, `PBIOR_W`=0xf484 |
+
+| 0x0003a0ec | `FUN_0003a0ec` (medium-confidence alias `relay_output_pair_pd7_pe0`) | PD7 = (cfb6==1), PE0 = (cfb7==0) |
+
+| 0x0000aee8 | `adc_pair_correlation_fault_compute` | AN11/AN23 pair ratio → a1d8/a1d4 |
+
+| 0x00002490 | `rx8_encode_u16_affine_saturate` | PID encoder helper (round(v/step), clamped u16) |
+
+| 0x000024c0 | `rx8_decode_u16_affine` | PID decoder helper |
+
+| 0x0005ccb4 | `FUN_0005ccb4` | Mode-22 export/requantize (1/512) for PID 0x091a |
+
+| 0x00056f6c | `diag22_pid1410_injector_pulse_time` | PID 0x1410 handler (dispatch record `0x5f394`) |
+
+
+
+#### RAM (0xffff…)
+
+
 
 | Address | Label | Type | Written by | Read by |
+
 |---------|-------|------|-----------|---------|
-| `0xffff9eec` | `adc_an4_pedal_raw` | u16 | ADC sweep `0x6884` | `0x18f60` (pool `0x19058`) |
-| `0xffff9eee` | `adc_an5_pedal_raw` | u16 | ADC sweep `0x6884` | `0x18fa4` |
-| `0xffff9f08` | `adc_an18_plate_tp1_raw` | u16 | ADC sweep `0x6884` | `0x1b08e`, `0xb398` |
-| `0xffff9f0a` | `adc_an19_plate_tp2_raw` | u16 | ADC sweep `0x6884` | `0x1b14c`, `0xb398` |
-| `0xffffa108` | `pedal_1_scaled_volts` | float | `0x94f0` | `0x18f60` |
-| `0xffffa99c` | `pedal_1_volts_clamped25` | float | `0x18f60` | `0x1933a` |
-| `0xffffa9ac` | `pedal_1_volts_zeroed` | float | `0x1933a` | `0x193c4`, `0x4595a` |
-| `0xffffa9b4` | `accelerator_pedal_1_percent` | float | `0x193c4` | `0x193c4` demand, `0x228dc`, cruise `0x4c896` |
-| `0xffffa9b8` | `accelerator_pedal_2_percent` | float | `0x193c4` | demand chain |
-| `0xffffa9bc` | demand percent | float | `0x193c4` | `0x228dc` maps |
-| `0xffffad5c` | TP1 volts cell | u16 | `0x1b08e` | PIDs 0x0011/0x1154 |
-| `0xffffad5e` | `inferred_throttle_sensor_2_volts_ffffad5e` | u16 | `0x1b14c` | PID 0x1154 |
-| `0xffffad44` | `inferred_throttle_position` | float | `0x1b940` | `0x33e98`, PID 0x093c, consumers |
-| `0xffffad48` | plate percent | float | `0x1b940` | `0x33e98` (pool `0x33f6a`) |
-| `0xffffb398` | `throttle_plate_request` | float | `0x228dc` | `0x22a14`, `0x233ec` |
-| `0xffffb38c` | base plate position | float | `0x22a14` | `0x22d26`, `0x233ec` |
-| `0xffffb424` | `throttle_target_plate_percent` | float | `0x233ec` | `0x5ccb4` → `0xffffb410` |
-| `0xffffb410` | target plate raw counts | u16 | `0x233ec` via `0x5ccb4` | PIDs 0x004c/0x091a, servo `0x22db4`/`0x231f0` |
-| `0xffffb3f8` | `throttle_servo_override_duty` | float | `0x22db4` | `0x231f0`/`0x233ec` |
-| `0xffffb400` | `throttle_servo_direction` | u8 | `0x22db4` | — |
-| `0xffffccbc` | `throttle_servo_mode` | u8 | `0x487d6` | `0x22db4`, `0x231f0` |
-| `0xffffb2cc` | `throttle_gear_mode_1_2` | u8 | `0x21970` | `0x228dc` map select |
-| `0xffffb2cf` | `dsc_torque_limit_active` | u8 | `0x218c4` | `0x233ec` |
-| `0xffffb2d0` | `dsc_mode_c_active` | u8 | `0x218c4` | `0x233ec` |
-| `0xffffb354` | `ch7d_pwm_duty_percent` | float | `0x22630` | `0x25198`, stall monitors |
-| `0xffffb358` | `ch7d_pwm_enable` | u8 | `0x22574` | `0x22630` |
-| `0xffffb570` | duty ratio | float | `0x25198` | PID 0x1631 |
-| `0xffffa210` | `ch7d_pwm_duty_q16` | u32 | `0xb2c0` | `0xb2c0` → BFR7D |
-| `0xffffa214` | `ch7d_pwm_enabled` | u8 | `0xb308`/`0xb23c` | `0xb2c0` |
-| `0xffff9f50` | `ch7d_pwm_period` | u16 | `0xb308` (0x7d00) | `0xb2c0` |
-| `0xffffcd70` | `throttle_fault_latch` | u8 | `0x4a11c` | `0x22574` |
-| `0xffff8068` | `learned_pedal_zero_1` | float | `0x18fe8` (default 10.856f) | `0x1933a` |
-| `0xffff8070` | `learned_pedal_zero_2` | float | `0x18fe8` | `0x1933a` |
-| `0xffff807c` | learned plate zero 1 | float | `0x1b3f2` (default 15.0f) | `0x1b940`, `0x22db4`, `0x231f0` |
-| `0xffff8084` | `learned_plate_zero_2` | float | `0x1b3f2` | `0x1b940` |
-| `0xffffad60` | `tp_plausibility_fault_a` | u8 | `0x1ba20` | `0x48cc0` |
-| `0xffffad61` | `tp_plausibility_fault_b` | u8 | `0x1bd9e` | `0x48cc0`/`0x487d6` |
-| `0xffff872c` | `tp_correlation_fault_latch` | u8 | `0x4595a` | DTC 0x6c via `0x5fd38` |
-| `0xffffc108` | `tp_range_high_fault` | u8 | `0x33e98` | `0x33dc8`/`0x34230` |
-| `0xffffcbec` | `tp_correlation_ok` | u8 | `0x4595a` | — |
-| `0xffffa110` | `pedal_range_fault_1` | u8 | `0x94f0` | DTC paths `0x45b3c`/`0x45c42` |
-| `0xffffa111` | `pedal_range_fault_2` | u8 | `0x94f0` | DTC paths `0x45d90`/`0x45e96` |
-| `0xffffa218` | `plate_tp1_volts` | float | `0xb398` | `0x1b08e` → `0xffffad30` |
-| `0xffffa21c` | `plate_tp2_volts` | float | `0xb398` | `0x1b14c` → `0xffffad34` |
-| `0xffffcbf2` | `tp_correlation_good_counter` | u16 | `0x4595a` | → `0xffffcbec` |
-| `0xffffcbee` | `tp_correlation_bad_counter` | u16 | `0x4595a` | → `0xffff872c` + DTC 0x6c |
-| `0xffffcc98` | `plate_tp2_source_select` | u8 | — | `0x1b940`, `0x487d6`, … |
-| `0xffffcc99` | `limp_home_request` | u8 | — | `0x1b940` (ad44=20.0), `0x487d6` |
-| `0xffff8078` | `learned_pedal_zero_valid` | u8 | `0x18fe8` | `0x4595a` threshold select |
-| `0xffffcfb7` | `pe0_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PE0 |
-| `0xffffbe24` | `injector_pulse_time` | float | `0x2fea8` | PID 0x1410 handler `0x56f6c` |
-| `0xffffaa78` | filtered feedback (AN11/AN23 pair ratio, `0xffffa1d4`) | float | `0x1ac00` | `0x22630` duty loop |
-| `0xffffb40c` | `candidate_learned_pedal_value` | float | `0x231f0` | E2RAM `0x244bc` |
-| `0xffffb414` | `throttle_pedal_position_delta` | float | `0x23558` | E2RAM `0x244bc` |
+
+| 0xffff9eec | `adc_an4_pedal_raw` | u16 | `0x6884` | `0x94f0`, `0x18f60` |
+
+| 0xffff9eee | `adc_an5_pedal_raw` | u16 | `0x6884` | `0x94f0`, `0x18fa4` |
+
+| 0xffff9f08 | `adc_an18_plate_tp1_raw` | u16 | `0x6884` | `0xb398`, `0x1b08e` |
+
+| 0xffff9f0a | `adc_an19_plate_tp2_raw` | u16 | `0x6884` | `0xb398`, `0x1b14c` |
+
+| 0xffffa108 | `pedal_1_scaled_volts` | float | `0x94f0` | `0x18f60` |
+
+| 0xffffa99c | `pedal_1_volts_clamped25` | float | `0x18f60` | `0x1933a` |
+
+| 0xffffa9ac | `pedal_1_volts_zeroed` | float | `0x1933a` | `0x193c4`, `0x4595a` |
+
+| 0xffffa9b4 | `accelerator_pedal_1_percent` | float | `0x193c4` | `0x193c4` (demand), `0x18fe8`, cruise `0x4c896`, torque batch |
+
+| 0xffffa9b8 | `accelerator_pedal_2_percent` | float | `0x193c4` | demand branch `0x193c4` |
+
+| 0xffffa9bc | `inferred_ram_a9bc_ffffa9bc` (pedal demand, 0–100 %) | float | `0x193c4` | `0x228dc`, `0x22a14` |
+
+| 0xffffad5c | `inferred_throttle_sensor_volts_ffffad5c` (AN18 raw counts) | u16 | `0x1b08e` | PIDs 0x0011/0x0917/0x1154 |
+
+| 0xffffad5e | `inferred_throttle_sensor_2_volts_ffffad5e` (AN19 raw counts) | u16 | `0x1b14c` | PID 0x1154 |
+
+| 0xffffad44 | `inferred_throttle_position` | float | `0x1b940` | `0x33e98`, PID 0x093c |
+
+| 0xffffad48 | `inferred_ram_ad48_ffffad48` (plate percent) | float | `0x1b940` | `0x33e98` (pool `0x33f6a`) |
+
+| 0xffffa110 | `pedal_range_fault_1` | u8 | `0x94f0` | DTC paths `0x45b3c`/`0x45c42` |
+
+| 0xffffa111 | `pedal_range_fault_2` | u8 | `0x94f0` | DTC paths `0x45d90`/`0x45e96` |
+
+| 0xffffa218 | `plate_tp1_volts` | float | `0xb398` | `0x1b08e` → `0xffffad30` |
+
+| 0xffffa21c | `plate_tp2_volts` | float | `0xb398` | `0x1b14c` → `0xffffad34` |
+
+| 0xffffb398 | `throttle_plate_request` | float | `0x228dc` | `0x228dc` history (`0xffffb398+4i`) |
+
+| 0xffffb38c | `candidate_throttle_base_position` | float | `0x22a14` | `0x22d26`, `0x233ec`, `0x231f0`, `0x218c4` |
+
+| 0xffffb424 | `throttle_target_plate_percent` | float | `0x233ec` | `0x5ccb4` |
+
+| 0xffffb410 | `inferred_ram_b410_ffffb410` (target plate position) | float | `0x233ec` via `0x5ccb4` | PIDs 0x004c/0x091a, `0x22db4`, `0x231f0`, `0x23558` |
+
+| 0xffffb3f8 | `throttle_servo_override_duty` | float | `0x22db4` | `0x22db4` (decay), `0x231f0` |
+
+| 0xffffb400 | `throttle_servo_direction` | u8 | `0x22db4` | — |
+
+| 0xffffccbc | `throttle_servo_mode` | u8 | `0x487d6` | `0x22db4` |
+
+| 0xffffb2cc | `throttle_gear_mode_1_2` | u8 | `0x21970` | `0x228dc` map select |
+
+| 0xffffb2cf | `dsc_torque_limit_active` | u8 | `0x218c4` | `0x233ec` |
+
+| 0xffffb2d0 | `dsc_mode_c_active` | u8 | `0x218c4` | `0x233ec` |
+
+| 0xffffb354 | `ch7d_pwm_duty_percent` | float | `0x22630` | `0x25198`, `0x416bc` |
+
+| 0xffffb358 | `ch7d_pwm_enable` | u8 | `0x22574` | `0x22630` |
+
+| 0xffffb570 | `inferred_ram_b570_ffffb570` (duty ratio 0–1) | float | `0x25198` | PID 0x1631 |
+
+| 0xffffa210 | `ch7d_pwm_duty_q16` | u32 array | `0xb2c0`, `0xb23c`, `0xb308` | `0xb2c0` → BFR7D |
+
+| 0xffffa214 | `ch7d_pwm_enabled` | u8 array | `0xb308`, `0xb23c` | `0xb2c0` |
+
+| 0xffff9f50 | `ch7d_pwm_period` | u16 | `0xb308`, `0xb290` | `0xb2c0` |
+
+| 0xffffcd70 | `throttle_fault_latch` | u8 | `0x4a11c` | `0x22574` |
+
+| 0xffffa428 | `engine_running` | u8 | `0xe274` | `0x22574` |
+
+| 0xffffa424 | `engine_running_timer` | u16 | `0xe21c` | `0x22574` |
+
+| 0xffffaa68 | `engine_running_flag` | u8 | — | `0x1b3f2` → `0xffff809c`/`0xffff809e` |
+
+| 0xffffa41c | `engine_stopped_latch` | u8 | — | `0x231f0` → `0xffffb436` |
+
+| 0xffff8068 | `learned_pedal_zero_1` | float | `0x18fe8` | `0x1933a` |
+
+| 0xffff8070 | `learned_pedal_zero_2` | float | `0x18fe8` | `0x1933a` |
+
+| 0xffff8078 | `learned_pedal_zero_valid` | u8 | `0x18fe8` | `0x4595a` threshold select |
+
+| 0xffff807c | `inferred_ram_807c_ffff807c` (learned plate zero 1) | float | `0x1b3f2` | `0x1b940`, `0x22db4`, `0x231f0` |
+
+| 0xffff8084 | `learned_plate_zero_2` | float | `0x1b3f2` | `0x1b940` |
+
+| 0xffffa1d4 | `adc_pair_ratio_filtered` | float | `0xaee8` | `0x1ac00` (lambda band), duty loop |
+
+| 0xffffad60 | `tp_plausibility_fault_a` (carry-over name; 1 permits shutdown) | u8 | `0x1ba20` | `0x48cc0` |
+
+| 0xffffad61 | `tp_plausibility_fault_b` (carry-over name; 1 permits shutdown) | u8 | `0x1ba20`, `0x1bd9e` | `0x48cc0` |
+
+| 0xffffccc1 | `shutdown_allowed` | u8 | `0x48cc0` | `0x251d0` |
+
+| 0xffffb574 | `relay_hold_flag` | u8 | `0x251d0` | PD11 hold |
+
+| 0xffff872c | `tp_correlation_fault_latch` | u8 | `0x4595a` | DTC 0x6c via `0x5fd38` |
+
+| 0xffffc108 | `tp_range_high_fault` | u8 | `0x33e98` | `0x33dc8`/`0x34230` |
+
+| 0xffffcbec | `tp_correlation_ok` | u8 | `0x4595a` | — |
+
+| 0xffffcbf2 | `tp_correlation_good_counter` | u16 | `0x4595a` | → `0xffffcbec` |
+
+| 0xffffcbee | `tp_correlation_bad_counter` | u16 | `0x4595a` | → `0xffff872c` + DTC 0x6c |
+
+| 0xffffcc98 | `plate_tp2_source_select` | u8 | — | `0x1b940`, `0x487d6` |
+
+| 0xffffcc99 | `limp_home_request` | u8 | — | `0x1b940`, `0x1b3f2` |
+
+| 0xffffcfb6 | `pd7_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PD7 |
+
+| 0xffffcfb7 | `pe0_relay_flag` | u8 | `0x4ef86` | `0x3a0ec` → PE0 |
+
+| 0xffffbe24 | `injector_pulse_time` | float | `0x2fea8` | PID 0x1410 handler `0x56f6c` |
+
+| 0xffffaa78 | AN11/AN23 pair ratio copy (no accepted alias) | float | `0x1ac00` | `0x22630` duty loop |
+
+| 0xffffb40c | `candidate_learned_pedal_value` | float | `0x231f0` | E2RAM `0x244bc` |
+
+| 0xffffb414 | `throttle_pedal_position_delta` | float | `0x23558` | E2RAM `0x244bc` |
+
+
+
+Cells referenced in §2 that carry no accepted RAM alias yet (kept as bare
+
+addresses there and in `reviews/throttle_dbw/README.md`): pedal conversion
+
+second channel and filters `0xffffa10c`, `0xffffa9a0`, `0xffffa9a4`,
+
+`0xffffa9a8`; pedal learner state `0xffffa9c0`, `0xffffa9c8`, `0xffffa9cc`,
+
+`0xffffa9cd`, `0xffffa9ce`, `0xffffa9d0`, `0xffffa9d4`, `0xffffa9d8`,
+
+`0xffffa9da`, `0xffff808c`; demand branches `0xffffa914`, `0xffffcc9b`,
+
+`0xffffcc9c`; TP band and fault words `0xffffa220`, `0xffffa221`,
+
+`0xffffa222`, `0xffffa224`, `0xffffa226`, `0xffffa227`, `0xffffad30`,
+
+`0xffffad34`; plate learner `0xffffad58`, `0xffffad68`, `0xffffad6c`,
+
+`0xffffad78`, `0xffffad8e`, `0xffffadc8`, `0xffff80a0`, `0xffff80ac`,
+
+`0xffffb4b0`, `0xffffb4b4`, `0xffff873e`; plausibility `0xffff80a2`;
+
+map and filter state `0xffffb2b8`, `0xffffb2bc`, `0xffffb2c4`, `0xffffb3cc`,
+
+`0xffffb3d0`, `0xffffb3d4`, `0xffffb3ec`, `0xffffb41c`; duty loop
+
+`0xffffb360`, `0xffffb364`, `0xffffb36c`, `0xffffb384`, `0xffffb386`,
+
+`0xffffb388`, `0xffffb389`, `0xffffb38a`, `0xffffb436`; correlation gate
+
+`0xffffcbf0`; coolant `0xffffa98c`, battery `0xffffb590`.
+
+
 
 ROM tables and literal pools (all words re-read from the raw ROM —
 [`reviews/throttle_dbw/rawbin_reverify_log.txt`](../investigations/60E15120_N3J1E/reviews/throttle_dbw/rawbin_reverify_log.txt)):
 
 | Address | Contents |
 |---------|----------|
-| `0x6a458` / `0x6a474` / `0x6a490` / `0x6a4ac` | pedal→plate request 3D tables (gears 1/2, neutral, 5/6, 3/4), pools `0x229dc`–`0x229e8` |
+| `0x6a458` / `0x6a474` / `0x6a490` / `0x6a4ac` | pedal→plate request 3D tables (gears 1/2, neutral, 5/6, 3/4), pools `0x229dc`–`0x229e8` (21×18, axes 0–9000 rpm `0x73974` and 0–100 `0x739c8`) |
 | `0x6a150` | DSC mode C max plate opening 2D table (used by `0x218c4` → `0xffffb2bc`) |
 | `0x6a164` | trans requested torque → plate position (→ `0xffffb2e4`/`0xffffb2b8`) |
 | `0x6a180` | throttle position → torque (used by `0x21970`/`0x21a80`) |
+| `0x6a340` | coolant/IAT → minimum engine-running timer for the channel-7D enable (3D, result u16 in `0xffffb386`) |
 | `0x7372c` | 84.0f plate-request clamp (pool `0x229f0`) |
 | `0x6eeb0`/`0x6eeb4` | pedal raw range 0xf5c3 / 0x11ec |
-| `0x6eeb8`/`0x6eec4` | pedal scale 6.341f (0x40cae979) / base 3.488f (0x405f3b64) |
-| `0x6eed0` | 25.0f pedal volts clamp |
+| `0x6eeb8`/`0x6eebc`/`0x6eec0`/`0x6eec4` | pedal scale 6.341f (0x40cae979, two entries) / bases 0.0f and 3.488f (0x405f3b64) |
+| `0x6eec8` | 0x00 — selects the nominal demand branch of `0x193c4` on this bin |
+| `0x6eed0` | 25.0f pedal volts clamp (channel 2 `0x6eed8`) |
+| `0x6eeca`/`0x6eecc` | u16 0x177 — pedal-learner disarm and raise counters |
+| `0x6eee0`/`0x6eee4`/`0x6eee8`/`0x6eeec`/`0x6eef0`/`0x6eef4` | pedal-learner windows: −0.5/−0.3 (demand rate), 5.0/40.0 (pedal %), 0.0/5.0 (arm) |
+| `0x6eef8`/`0x6eefc`/`0x6ef00`/`0x6ef04`/`0x6ef08`/`0x6ef10` | pedal-learner floor 9.626f, step 0.005f, cap/default 10.856f, raise 0.01f, agreement 0.032f |
 | `0x6ef18` | 12.7f pedal→percent scale (pool `0x194d4`) |
-| `0x194d0` | 100.0f (0x42c80000) |
-| `0x6f3e4`/`0x6f3e8`/`0x6f3ec` | TP scales 25.0f/31.25f, base 0.0f (plate raw→volts in `0xb398`) |
-| `0x6f438` | 15.0f learned-plate default |
+| `0x6ef20`/`0x6ef24`/`0x6ef28` | demand limits 13.5f / 100.0f / 15.0f (`0x194d0` holds 100.0f for the percent clamp) |
+| `0x6f3e4`/`0x6f3e8`/`0x6f3ec`/`0x6f3f0` | TP scales 25.0f/31.25f and bases 0.0f/−31.25f (plate raw→volts in `0xb398`) |
+| `0x6f3dc`…`0x6f3e2` | TP band words 0xf5c2/0xf5c2 (upper) and 0x0fd2/0x2659 (per-channel lower) |
+| `0x6c172`…`0x6c178` | TP fault words 0xf5c2 (high) / 0x0a3d (low); debounce limit byte `0x6c17a`=3 |
+| `0x6f434`/`0x6f438`/`0x6f43c`/`0x6f440`/`0x6f3f8` | plate learner: filter 0.5f, 15.0f default, clamp 20.0f/10.0f, stable-pass limit u16 10 |
+| `0x6f45c`/`0x6f464`/`0x6f468` | 111.0f `0xffff808c` default (→`0xffffb40c` clamp), 20.0f limp plate, 84.0f plate full scale |
 | `0x79be0`/`0x79be4` | 200.0f / 3.52f plate range-high threshold + hysteresis |
-| `0x7c77c`/`0x7c790` | 3.5f / 9.536f TP correlation thresholds |
-| `0x7353c`/`0x73540`/`0x73544` | −50.0f coolant, 9.0f/16.0f battery gates |
-| `0x73548`–`0x7355c` | duty-loop constants 45.0/44.0/4.5/0.1875/0.75/30.0 |
-| `0x747b8`/`0x747bc`/`0x747c0` | servo 0.5f / 5.0f / 0.05f |
+| `0x7c76c`–`0x7c78c` | 0.6/1.2/2.0/4.0 pedal-2 breakpoints with 3.5f limits (ladder) |
+| `0x7c790`/`0x7c794`/`0x7c796` | 9.536f invalid-default threshold, counter limits u16 25 / 29 |
+| `0x73534`–`0x7355c` | duty-loop constants: −50.0f coolant gate `0x7353c`, 9.0f/16.0f battery `0x73540`/`0x73544`, 45.0/44.0/4.5/0.1875/0.75/30.0 `0x73548`–`0x7355c`, D-term byte limit 0xea `0x7353a`, bypass byte `0x73538`=0x00 |
+| `0x73730`/`0x7373c`/`0x73740`/`0x73744` | demand/position filters 0.1f, 5.0f override, 0.25f, 2.0f |
+| `0x226b0`/`0x22894` | 5.0f latch offset, 128.0f ramp scale |
+| `0x747b4`/`0x747b6`/`0x747b8`/`0x747bc`/`0x747c0` | servo: decay counter limit u16 2, min limit 0.5f, 5.0f floor, 0.05f step |
+| `0x747c4`/`0x747c8`/`0x747e4`/`0x747e8`/`0x747ec` | servo direction 0.5f + 0.0f band; `0xffffb40c` limits 5.0f / 99.0f; 500.0f rpm gate |
+| `0x51c8`/`0x51de` | ATU pin-function init: `PBCRL_W`=0x4000, `PBCRH_W`=0x1450, `PBIOR_W`=0xf484 (pools `0x52d8`/`0x52da`) |
 | `0x5f394` | UDS dispatch record for PID 0x1410 (`14100200 fffc0000 00056f6c`) |
 | `0x57018`/`0x57038`/`0x57048` | PID 0x1410 handler pools: `0xffffbe24`, encoder `0x2490`, step 8.0f |
-| `0x4a20`/`0x4a50`/`0x4a60`/`0x4ab0` | task-table records 9/12/13/18 (entries `0x64ba`/`0x6592`/`0x65b2`/`0x64e8`) |
+| `0x57018`…`0x5ce00` family | plate/pedal PIDs 0x0011/0x093c/0x0049/0x004a/0x0914/0x0915/0x004c/0x091a/0x1154 (handlers `0x569f0`/`0x56e04`/`0x56bda`/`0x56c78`/`0x56ce8`/`0x56d1a`/`0x56c8c`/`0x56de6`/`0x56eb8`) |
+| `0x4a20`/`0x4a50`/`0x4a60`/`0x4aa0`/`0x4ab0` | task-table records 9/12/13/17/18 (entries `0x64ba`/`0x6592`/`0x65b2`/`0x60c8`/`0x64e8`) |
 
 ### 4.2 Labeling applied
 
@@ -573,6 +890,29 @@ the names were folded back into the decompiled export (`functions/*.c`,
   [`logger_60E15120_reviewed.xml`](../../data/definitions/romraider/reviewed-rx8defs-copy/logger_60E15120_reviewed.xml)
   keeps only that entry, and the design doc §5.8 note is settled
   ([`docs/architecture/design/README.md`](../architecture/design/README.md)).
+- Earlier versions of this report attributed the ADC sweep and both raw→volts
+  conversions (`0x94f0`, `0xb398`) to the `0x199d4` sensor batch. They run in
+  task rec[17] (entry `0x60c8`); `0x199d4` only consumes their output cells, and
+  task rec[9] enters the pedal conversion body directly at `0x94fc`.
+- Earlier versions stated `0xffffb410` as `u16` raw counts produced by a
+  percent→counts conversion. `0x233ec` stores a **float** (`fmov.s`), and
+  `0x5ccb4` is the PID 0x091a export with a 1/512 requantization round-trip; the
+  cell keeps the units of `0xffffb424`.
+- Earlier versions stated that all-zero gear flags select the neutral map and
+  that `0xffffb534` reads 0 on this bin (MT branch). The map select is a priority
+  chain whose fall-through is `0x6a4ac`, and `0x24b44` stores
+  `0xffffb534` = 1 when ROM `0x74924` is 0x00 — which this bin is — so the
+  range/state branch of `0x2c15a` is the one taken.
+- Earlier versions attributed `PBCRL_W` = 0x4000 to `0xb308` and called `0xb23c`
+  a motor-off init. `PBCRL_W` is written by the init function at `0x51c8`
+  (`0x51de`), and `0xb23c` leaves channel 7D running at 0 % duty on a 1-count
+  period.
+- Alias names that do not match the traced operands are kept unchanged to avoid
+  churn across passes and are marked as carry-overs where they are used:
+  `tp_correlation_fault_check` and the `tp_correlation_*` / `tp_plausibility_*`
+  cells (the monitor compares the two pedal channels and a 1 on the plausibility
+  flags permits shutdown), and `learned_pedal_value_calc` /
+  `candidate_learned_pedal_value` (plate- and servo-side operands).
 
 ### 4.4 Files
 
@@ -594,14 +934,15 @@ the names were folded back into the decompiled export (`functions/*.c`,
 
 - ROM SHA-256 `a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1`
   (pinned in the tests; re-checked on every run).
-- Raw-bin re-verification of every cited pool word / dispatch record /
-  constant: [`reviews/throttle_dbw/rawbin_reverify_log.txt`](../investigations/60E15120_N3J1E/reviews/throttle_dbw/rawbin_reverify_log.txt)
-  (all PASS).
-- `tests/test_throttle_dbw.py`: 17 passed — static (TSV mirrors, function-index
-  membership, symbols.tsv register names, ROM pool-byte assertions) and dynamic
-  in the SH-2E emulator (task `0x64ba` pedal → `0xffffa9b4`=100.0; plate chain
-  → `0xffffad44`=80.367 / limp 20.0; PID 0x1410 handler 80.0→10, 16.0→2; PE0
-  relay drive `0x3a0ec`).
+- Raw-bin re-verification of every cited pool word, dispatch record, task
+  record, float constant and byte limit: 154/154 PASS in
+  [`reviews/throttle_dbw/rawbin_reverify_log.txt`](../investigations/60E15120_N3J1E/reviews/throttle_dbw/rawbin_reverify_log.txt).
+- `tests/test_throttle_dbw.py`: 20 passed — static (TSV mirrors, function-index
+  membership, symbols.tsv register names, ROM pool/constant/byte assertions
+  incl. the `fmov.s` store into `0xffffb410` and the per-channel TP constants)
+  and dynamic in the SH-2E emulator (task `0x64ba` pedal → `0xffffa9b4`=100.0;
+  plate chain → `0xffffad44`=80.367 / limp 20.0; PID 0x1410 handler 80.0→10,
+  16.0→2; PD7/PE0 relay drive `0x3a0ec`).
 - Pipeline validators run from the repo root: results recorded in
   [`reviews/throttle_dbw/validation.json`](../investigations/60E15120_N3J1E/reviews/throttle_dbw/validation.json)
   (`validate_export.py`, `validate_reports.py`, `verify_claims.py`,
@@ -610,9 +951,9 @@ the names were folded back into the decompiled export (`functions/*.c`,
 ### 4.6 Limits
 
 - The throttle-motor **phase pins** (terminals 1B/1C) are not firmware-identified:
-  whole-ROM scans find only the TO7D/PB7 PWM output in the running configuration
-  and no second motor leg or direction GPIO; the H-bridge drive side is board
-  routing. Package-pin ↔ connector-terminal routing in general is unresolved
+  whole-ROM scans find no second motor leg and no direction GPIO, and the only
+  firmware-driven ATU compare register is channel 7D; the H-bridge drive side is
+  board routing. Package-pin ↔ connector-terminal routing in general is unresolved
   in this repo (the 4C/1B/1C/1J/1M/1Q/2F/4X/5AE/5C/4Y/5AB/5F associations are
   candidates from
   [`mazda-rx-8-pcm-pinout-series-1.md`](../architecture/hardware/mazda-rx-8-pcm-pinout-series-1.md)).
@@ -629,6 +970,16 @@ the names were folded back into the decompiled export (`functions/*.c`,
 - Only the reference ROM `60E15120_N3J1E` was investigated; no cross-ROM
   byte-match was run for this chain (the shared-logic assumption stands until
   proven otherwise).
+- Roughly 60 cells used in §2 have no accepted RAM alias yet; they are listed by
+  address at the end of §4.1.
+- The relay driver `0x3a0ec` also drives PD11-adjacent relay outputs through
+  `0x251d0` (`relay_hold_output_pd11`, main-relay hold `0xffffb574`); the
+  fuel-pump relay outputs on PE1/PE2 (`0x2f890`/`0x2f8ce`) are recorded in
+  [`fuel_pump_control_report.md`](fuel_pump_control_report.md) §4.6 — neither is
+  analyzed here.
+- Alias names that no longer match the traced operands (`tp_correlation_*`,
+  `tp_plausibility_*`, `learned_pedal_value_calc`, `candidate_learned_pedal_value`)
+  are flagged in §4.3 instead of being renamed, to avoid cross-pass churn.
 
 ### 4.7 Related reports
 

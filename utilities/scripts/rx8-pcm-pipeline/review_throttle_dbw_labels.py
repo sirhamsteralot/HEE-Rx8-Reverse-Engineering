@@ -38,11 +38,11 @@ FUNCTIONS = [
     ("00022d26", "throttle_base_position_filter", "high",
      "b390 = first_order_filter(b38c, b390, 0.25, 1e-5); b394 = (b38c <= 2.0). Called from batch 0x22f86."),
     ("00022db4", "throttle_servo_override", "high",
-     "Servo/homing override in batch 0x22f86. dir b400 = (b4b0 >= readValue_float(0xffff807c, default 15.0f @0x6f438)+0.5f @0x747b8) with hysteresis; mode byte ccbc; duty b3f8: mode!=1 -> 0.0; mode==1 && b401==0 -> min(b410+learned, learned+0.5); else decay max(5.0f @0x747bc, b3f8-0.05f @0x747c0) when counters b3fc/b3fe > 1. Pools 0x22e9e-0x22f18 verified: 0x22ea0=0xb4b0, 0x22ea2=0xccbc, 0x22ea4=0xb3f8, 0x22ea6=0xb410, 0x22ebc=0xffffb400, 0x22ec0=0xffffb3fc, 0x22ec4=0xffffb3fe, 0x22ec8/0x22f18=0xffffb401."),
+     "Servo/homing override in batch 0x22f86. dir b400 = (b4b0 >= readValue_float(0xffff807c, default 15.0f @0x6f438)+0.5f @0x747c4, band 0x747c8=0.0f); mode byte ccbc; duty b3f8: mode!=1 -> 0.0; mode==1 && b401==0 -> min(b410+learned, learned+0.5f @0x747b8) while b401==0; else decay max(5.0f @0x747bc, b3f8-0.05f @0x747c0) while the word counters b3fc/b3fe exceed 2 (0x747b4/0x747b6). Pools 0x22e9e-0x22f18 verified: 0x22ea0=0xb4b0, 0x22ea2=0xccbc, 0x22ea4=0xb3f8, 0x22ea6=0xb410, 0x22ebc=0xffffb400, 0x22ec0=0xffffb3fc, 0x22ec4=0xffffb3fe, 0x22ec8/0x22f18=0xffffb401."),
     ("000233ec", "throttle_target_plate_position", "high",
-     "Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) (raw counts, PIDs 0x004c/0x091a). Called from batch 0x22f86."),
+     "Arbitrated plate target: b424 = clamp(b2b8, b418=tbl 0x6a4c8(coolant), b38c+b2a4) when b2cf==1 (DSC torque limit), = max(b38c+b2a4, b2bc) when b2d0==1 (DSC mode C max opening), else clamp(b38c+b2a4, 0, 84.0) with fuel-cut decel reduction via tbls 0x6a4dc/0x6a4f0/0x6a504 (descriptors 0x6a4c8/0x6a4dc/0x6a4f0/0x6a504) -> b434/b422; b410 = FUN_0005ccb4(b424) stored with fmov.s at 0x2353e (float in b424 units, PIDs 0x004c/0x091a; 0x5ccb4 quantizes to 1/512 for the PID export and decodes back for descriptor codes 5/7). Called from batch 0x22f86."),
     ("000231f0", "learned_pedal_value_calc", "high",
-     "b40c = clamp(arg0, 0, readValue_float(0xffff808c, default 110.0f=0x42de0000)); arg0 = b404+learned807c (ccbb), b3f8 (ccbc), cc88+learned (ccbd), else b410+learned807c; fault path b423==1 -> b40c = 99.0. rpm gates b435 (>=500/300 rpm), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86."),
+     "b40c = clamp(candidate, 0, H), H = readValue_float(0xffff808c, default 111.0f @0x6f45c=0x42de0000); candidates by byte: ccbb -> H+learned807c, ccbc -> servo duty b3f8, ccbd -> cc88+learned807c, ccac -> b410+learned807c capped at learned807c+5.0f (0x747e4), cca2 -> cca8, else b410+learned807c; high byte of 0xffff808c ==1 -> 99.0f (0x747e8). rpm gates b435 (500/300 rpm, 0x747ec), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86."),
     ("00023558", "throttle_position_delta_calc", "high",
      "b414 = b410 - b428 (0.0 when ccc9 set); b428 = b410. Called from batch 0x22f86."),
     ("00022f86", "dbw_control_batch", "high",
@@ -50,11 +50,11 @@ FUNCTIONS = [
     ("00021b4c", "throttle_torque_request_batch", "high",
      "Throttle torque batch from task rec[18] 0x64e8 -> 0x11534 -> 0x1150e (pool 0x116e4=0x00021b4c); mask 0x10; calls 0x21970 (gear mode flags), 0x218c4 ref_throttlePlateControl_Related (DSC torque-request limit), 0x21ae8 ref_getThrottleBasedTorque_Related (callgraph.tsv rows for caller 00021b4c)."),
     ("00021970", "throttle_gear_mode_flags", "high",
-     "Sets b2cc/b2cd/b2ce from AT gear bytes 0xffffbc41/bc42/bc43 (and automatic_transmission_ffffb534); calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c."),
+     "Sets b2cc/b2cd/b2ce by priority from the gear bytes 0xffffbc41/bc42/bc43 (written by 0x2c15a; 0xffffb534 from 0x24b44 = 1 on this bin); the map select in 0x228dc is b2cc->0x6a458, b2cd->0x6a474, b2ce->0x6a490, else 0x6a4ac; calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c."),
     ("00033e98", "plate_range_high_fault", "high",
      "c108 = 1 when ad48 (plate % of 84) >= 200.0f (ROM 0x79be0=0x43480000), clear hysteresis 196.48 = 200.0 - 3.52f (ROM 0x79be4=0x406147ae); pools 0x33f6a=0xad48, 0x33f6c=0xc108. Called from fueling_main_task 0x20e40; consumers 0x33dc8/0x34230 kill accel enrichment."),
     ("0004595a", "tp_correlation_fault_check", "high",
-     "TP1/TP2 correlation: |a9ac - a9b0| < thr -> good counter cbf2, else bad counter cbee; thr = 3.5f (ROM 0x7c77c=0x40600000, via pool 0x45a00) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375, pool 0x45acc); cbf2 > 0x18 -> cbec=1; cbee > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12."),
+     "APP1/APP2 (pedal) zeroed-volts correlation |a9ac - a9b0|: limit 3.5f on every rung of the pedal-2 ladder (breakpoints 0x7c76c/0x7c770/0x7c774/0x7c778 = 0.6/1.2/2.0/4.0, limits 0x7c77c-0x7c78c) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375); monitor gated by 0xffffcbf0==1; good counter cbf2 >= 25 (u16 0x7c794) -> cbec=1; bad counter cbee >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. The tp_ prefix in the alias names is a carry-over: the operands are the pedal channels. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12."),
     ("00025198", "ch7d_pwm_duty_ratio", "high",
      "b570 = clamp(b354, 0, 100.0f) / 100.0f (pools 0x251c0=0xb354, 0x251c2=0xb570, 0x251c4=0x42c80000, helper 0x251c8=0x2404), then tail jmp 0xb2c0 (pool 0x251cc) with r4=0. Called from 0x2253c."),
     ("0000b2c0", "ch7d_pwm_duty_write", "high",
@@ -62,7 +62,7 @@ FUNCTIONS = [
     ("0002253c", "ch7d_pwm_duty_batch", "high",
      "Batch called from 0x118d0 (task[13] 0x65b2 -> pool 0x66d8=0x000118d0 -> pool 0x11a88=0x0002253c): mask 0x10, calls 0x22574, 0x22630, 0x25198 (pools 0x22560=0x3920, 0x22564=0x22574, 0x22568=0x22630, 0x2256c=0x25198)."),
     ("00022574", "ch7d_pwm_enable_condition", "high",
-     "b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= tbl 0x6a340(coolant-model delta b35c, b386) && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c."),
+     "b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= the u16 3D-table result (tbl 0x6a340 on coolant-derived b35c and IAT ade0) in 0xffffb386 && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c."),
     ("00022630", "ch7d_pwm_duty_control_loop", "high",
      "Closed-loop duty b354 (0-100%): PID-ish on 0xffffaa78 (filtered AN11/AN23 pair ratio) — P (aa78-30.0f @0x7355c)*4.5f (@0x73550), I b364 += (aa78-30)*0.1875f (@0x73554), D (b36c-aa78)*0.75f (@0x73558), hysteresis 39/44/40/45 -> b389/b38a (@0x7354c/0x73548); feedforward/limit tbls 0x6a2cc/0x6a2f4 (aa78), 0x6a324 (rpm, maf aa38), 0x6a2e0 (battery) -> b360 = b378*min(b370,b374); timer b368 -> tbl 0x6a308; b354=0 when b358==0. Called from 0x2253c."),
     ("0000b23c", "ch7d_pwm_off_init", "high",
@@ -72,7 +72,7 @@ FUNCTIONS = [
 # RAM corrections: address -> (old_alias, new_alias, type, reader, evidence)
 RAM_REPLACES = [
     ("ffffa9b4", "throttle_position_1_percent", "accelerator_pedal_1_percent", "float", "000193c4",
-     "CORRECTION (was 'throttle_position_1_percent'): a9b4 = clamp(a9ac/12.7f*100, 0, 100) where a9ac comes from AN4 (0xffff9eec) via 0x94f0/0x18f60/0x1933a — the PEDAL (APP1) percent; it feeds demand a9bc (0x193c4) and the pedal-to-plate maps 0x228dc, and the cruise pedal-override 0x4c896 compares it against cruise output bcf8. The throttle PLATE position is ad44 (AN18/AN19 chain). Pool 0x194d4=0x6ef18 (12.7f), 0x194d0=0x42c80000 (100.0f), 0x194e0=0x2404 (clamp)."),
+     "CORRECTION (was 'throttle_position_1_percent'): a9b4 = clamp(a9ac/12.7f*100, 0, 100) where a9ac comes from AN4 (0xffff9eec) via 0x94f0/0x18f60/0x1933a — the PEDAL (APP1) percent; it feeds demand a9bc (0x193c4), the pedal-zero learner 0x18fe8 and the cruise pedal-override compare inside 0x4c896 (against cruise output bcf8); the pedal-to-plate maps 0x228dc read the demand a9bc, not a9b4. The throttle PLATE position is ad44 (AN18/AN19 chain). Pool 0x194d4=0x6ef18 (12.7f), 0x194d0=0x42c80000 (100.0f), 0x194e0=0x2404 (clamp)."),
     ("ffffa9b8", "throttle_position_2_percent", "accelerator_pedal_2_percent", "float", "000193c4",
      "CORRECTION (was 'throttle_position_2_percent'): a9b8 = same chain from AN5 (0xffff9eee) — the PEDAL (APP2) percent; see a9b4. Pool 0x194bc=0xa9b4/0xa9b0, 0x194be=0xa9b0."),
     ("ffffad5e", "inferred_pedal_volts_ffffad5e", "inferred_throttle_sensor_2_volts_ffffad5e", "uint16", "00056d4c",
@@ -98,11 +98,11 @@ RAM = [
     ("ffffad44", "inferred_throttle_position", "float", "0001b940",
      "Plate position 0-84 (deg-ish): ad44 = ad38/ad3c (from AN18/AN19 via 0x1b08e/0x1b14c -> a218/a21c -> ad30/ad34, learned zeros 0xffff807c/0xffff8084) in 0x1b940; limp value 20.0 when cc99==1; ad48 = ad44/84.0f (0x42a80000)*100. Read by PID 0x093c handler 0x56e04, tbl 0x6a180 lookups 0x21a80/0x21ae8, fault 0x33e98."),
     ("ffffb398", "throttle_plate_request", "float", "000228dc",
-     "Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-deep history b3c4..b398. Written by 0x228dc."),
+     "Pedal-to-plate request: lookup_3d(rpm, a9bc, gear tbl 0x6a458/0x6a474/0x6a490/0x6a4ac) clamp [0, 84.0f @0x7372c] -> b398 (pools 0x229ec=0xffffb398, 0x229f0=0x7372c, 0x229f4=0x2404), 12-entry history at 0xffffb398+4i (write 0xffffb39c-0xffffb3c8) indexed by byte 0xffffb3ec; 0xffffb3cc = history[index]. Written by 0x228dc."),
     ("ffffb424", "throttle_target_plate_percent", "float", "000233ec",
-     "Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); converted to raw counts b410 = 0x5ccb4(b424)."),
+     "Arbitrated plate target percent from 0x233ec (DSC limit b2cf/b2b8, DSC mode C b2d0/b2bc, idle air + base b2a4+b38c, fuel-cut decel, clamp 84.0); passed through the PID 0x091a export 0x5ccb4 into the float b410."),
     ("ffffb3f8", "throttle_servo_override_duty", "float", "00022db4",
-     "Servo/homing override duty float written by 0x22db4 (pool 0x22ea4=0xb3f8); 0.0 when mode ccbc!=1; decay max(5.0, b3f8-0.05) with counters b3fc/b3fe; read by 0x231f0/0x233ec (mode ccbb/ccbc branches)."),
+     "Servo/homing override duty float written by 0x22db4 (pool 0x22ea4=0xb3f8); 0.0 when mode ccbc!=1; decay max(5.0, b3f8-0.05) with counters b3fc/b3fe; read by 0x231f0 (ccbc branch) and by its own decay path."),
     ("ffffb400", "throttle_servo_direction", "uint8", "00022db4",
      "Direction byte written by 0x22db4 (pool 0x22ebc=0xffffb400): 1 when target b4b0 >= learned 0xffff807c + 0.5f. No other reader found in ROM (whole-ROM pool scan)."),
     ("ffffccbc", "throttle_servo_mode", "uint8", "000487d6",
@@ -118,17 +118,17 @@ RAM = [
     ("ffffb358", "ch7d_pwm_enable", "uint8", "00022574",
      "Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear."),
     ("ffffcd70", "throttle_fault_latch", "uint8", "00022574",
-     "Stuck-duty latch set by 0x4a11c when monitors 0x4162e/0x416bc see b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0)."),
+     "Stuck-duty latch: 0x4a11c ORs six flags c91d/c912/c914/c96d/c96f/c971, written by the stall monitor 0x416bc from b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0)."),
     ("ffffad60", "tp_plausibility_fault_a", "uint8", "0001ba20",
-     "Set by 0x1ba20 when engine off/idle conditions with stable plate history (ad61==0, ccb4>7, 80a2==0) -> ad60=1; read by shutdown_allowed_flag 0x48cc0 (blocks PD11 relay hold) and 0x487d6."),
+     "Set by 0x1ba20 when engine off/idle conditions with stable plate history (ad61==0, ccb4>7, 80a2==0) -> ad60=1; read by shutdown_allowed_flag 0x48cc0, where a 1 (like ad61 or 0xffff80a2) permits the shutdown path and sets 0xffffccc1, releasing the PD11 relay hold via 0x251d0."),
     ("ffffad61", "tp_plausibility_fault_b", "uint8", "0001bd9e",
      "Set by 0x1bd9e; NOT(engine running && no cc98/cc99/b4f7/b4fb/b4fd && !873c) in 0x1ba20; read by 0x48cc0/0x487d6."),
     ("ffff872c", "tp_correlation_fault_latch", "uint8", "0004595a",
-     "Set by 0x4595a when TP1/TP2 bad-correlation counter cbee > 0x1c -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c))."),
+     "Set by 0x4595a when the pedal bad-correlation counter cbee >= 29 (u16 0x7c796) -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c))."),
     ("ffffc108", "tp_range_high_fault", "uint8", "00033e98",
      "Set by 0x33e98 when plate percent ad48 >= 200.0 (hyst 196.48); consumers 0x33dc8/0x34230 zero the accel-enrichment accumulators c0c8/c104."),
     ("ffffcbec", "tp_correlation_ok", "uint8", "0004595a",
-     "Set by 0x4595a when TP1/TP2 good-correlation counter cbf2 > 0x18 (pool 0x45ad0=0xffffcbee)."),
+     "Set by 0x4595a when the pedal good-correlation counter cbf2 >= 25 (u16 0x7c794)."),
     ("ffff8068", "learned_pedal_zero_1", "float", "00018fe8",
      "Learned APP1 zero (default 0x412db22d=10.856f), adapted by 0x18fe8 under stability gates, reset when TP fault cc9b/cc9c; subtracted in 0x1933a (pool 0x19386=0x8068). E2RAM-backed via 0x244bc/0x23844."),
     ("ffff8070", "learned_pedal_zero_2", "float", "00018fe8",
@@ -142,13 +142,13 @@ RAM = [
     ("ffffa111", "pedal_range_fault_2", "uint8", "000094f0",
      "APP2 raw range-fault flag (same indexed store in 0x94f0, +1); read by the DTC paths 0x45d90/0x45e96 (DTC 0x67-0x69 family)."),
     ("ffffa218", "plate_tp1_volts", "float", "0001b08e",
-     "TP1 volts: written by 0xb398 (indexed store at 0xffffa218+2n) = base (0x6f3ec) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940."),
+     "TP1 volts: written by 0xb398 (indexed float store at 0xffffa218+4i) = base (0x6f3ec, 0.0f) + AN18 raw * scale 0x6f3e4 (25.0f) * 7.6294e-5; read by 0x1b08e (pool 0x1b138=0xffffa218) into ad30/ad54, then 0x1b940."),
     ("ffffa21c", "plate_tp2_volts", "float", "0001b14c",
-     "TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940."),
+     "TP2 volts: written by 0xb398 (AN19 raw, scale 0x6f3e8=31.25f, base 0x6f3f0=-31.25f); read by 0x1b14c (pool 0x1b1dc=0xffffa21c) into ad34/ad86, then 0x1b940."),
     ("ffffcbf2", "tp_correlation_good_counter", "uint16", "0004595a",
-     "Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); > 0x18 -> 0xffffcbec=1."),
+     "Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); >= 25 (u16 0x7c794) -> 0xffffcbec=1."),
     ("ffffcbee", "tp_correlation_bad_counter", "uint16", "0004595a",
-     "Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee)."),
+     "Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee)."),
     ("ffffcc98", "plate_tp2_source_select", "uint8", "0001b940",
      "Read by 0x1b940: ==1 selects the TP2 branch (ad44 = ad3c instead of ad38); also referenced by 0x1b166/0x1b3f2/0x1b6fc/0x1ba20/0x470d0/0x47704/0x487d6 (engine_stop_conditions_eval)."),
     ("ffffcc99", "limp_home_request", "uint8", "0001b940",
@@ -163,8 +163,8 @@ RAM_CARRIED = {
                  "DBW relay flag: PE0 (PEDR_W 0xfffff754 bit 0x1, pkg pin 7) = (0xffffcfb7 == 0) driven by relay_output_pair_pd7_pe0 0x3a0ec; 0xffffcfb7 computed by 0x4ef86 from 3D tables 0x6b3c8/0x6b3dc. Pool 0x3a1b0=0xffffcfb7 anchors it. Harness candidate: DBW relay control 4C."),
     "ffffa9bc": ("inferred_ram_a9bc_ffffa9bc", "float", "000193c4",
                  "Throttle demand percent: a9bc = min(max(a9b4, cruise output 0xffffbcf8), limiter 0xffffc028), capped 13.5 (a914) / 15.0 (cc9b&&cc9c); input to the pedal-to-plate maps 0x228dc."),
-    "ffffb410": ("inferred_ram_b410_ffffb410", "uint16", "000233ec",
-                 "Target plate position raw counts: b410 = FUN_0005ccb4(b424) in 0x233ec; read by PIDs 0x004c/0x091a (diag_encode_b410 0x55864), servo 0x22db4/0x231f0/0x1b166."),
+    "ffffb410": ("inferred_ram_b410_ffffb410", "float", "000233ec",
+                 "Target plate position: b410 = FUN_0005ccb4(b424), stored with fmov.s at 0x2353e (4-byte float, b424 units); 0x5ccb4 exports it for PID 0x091a quantized to 1/512 (0x3b000000) and decodes it back for descriptor codes 5/7. Read by PIDs 0x004c/0x091a (diag_encode_b410 0x55864), servo 0x22db4, 0x231f0, 0x23558."),
     "ffffa210": ("ch7d_pwm_duty_q16", "uint32", "0000b2c0",
                  "Duty percent * 65536 written by 0xb2c0 (pool 0xb37c=0xffffa210, scale 0xb390=0x47800000) from 0x25198; BFR7D = duty*32000>>16 (0xb308/0xb2c0)."),
     "ffffa214": ("ch7d_pwm_enabled", "uint8", "0000b308",
@@ -228,6 +228,16 @@ def write_rows(path, fields, rows):
                 f.write('\t'.join(r.get(k, '') for k in fields) + '\n')
 
 
+def carried_from_tsv(addr, expected_alias):
+    """Mirror a row owned by another pass (alias/type/reader/evidence) from the TSV."""
+    fields = ['address', 'alias', 'type', 'reader', 'evidence']
+    for r in read_rows(b / 'source_review/accepted_ram_aliases.tsv', fields):
+        if r['address'] == addr:
+            assert r['alias'] == expected_alias, 'carried row %s: TSV alias %s != %s' % (addr, r['alias'], expected_alias)
+            return {'alias': r['alias'], 'type': r['type'], 'reader': r['reader'], 'evidence': r['evidence']}
+    raise AssertionError('carried row %s missing from accepted_ram_aliases.tsv' % addr)
+
+
 def main():
     index = {r['address'] for r in read_rows(b / 'decompiled/function_index.tsv',
                                              ['address', 'name', 'body_bytes', 'status', 'file'])}
@@ -266,6 +276,9 @@ def main():
     for a, old, new, typ, reader, ev in RAM_REPLACES:
         if a in existing:
             if existing[a]['alias'] == new:
+                if (existing[a]['type'], existing[a]['reader'], existing[a]['evidence']) != (typ, reader, ev):
+                    existing[a].update({'type': typ, 'reader': reader, 'evidence': ev, '_raw': None})
+                    replaced += 1
                 continue
             if existing[a]['alias'] != old:
                 conflicts.append('ram %s: have %s, expected old %s' % (a, existing[a]['alias'], old))
@@ -279,6 +292,10 @@ def main():
         if a in existing:
             if existing[a]['alias'] != alias:
                 conflicts.append('ram %s: have %s, want %s' % (a, existing[a]['alias'], alias))
+                continue
+            if (existing[a]['type'], existing[a]['reader'], existing[a]['evidence']) != (typ, reader, ev):
+                existing[a].update({'type': typ, 'reader': reader, 'evidence': ev, '_raw': None})
+                replaced += 1
             continue
         rows.append({'address': a, 'alias': alias, 'type': typ, 'reader': reader, 'evidence': ev, '_raw': None})
         added_ram += 1
@@ -322,7 +339,7 @@ def main():
         'function_aliases': {a: {'alias': al, 'confidence': c, 'evidence': ev} for a, al, c, ev in FUNCTIONS},
         'ram_aliases': {a: {'alias': al, 'type': t, 'reader': r, 'evidence': ev} for a, al, t, r, ev in RAM} | {
             a: {'alias': new, 'type': t, 'reader': r, 'evidence': ev} for a, old, new, t, r, ev in RAM_REPLACES} | {
-            a: {'alias': al, 'type': t, 'reader': r, 'evidence': ev} for a, (al, t, r, ev) in RAM_CARRIED.items()},
+            a: carried_from_tsv(a, al) for a, (al, t, r, ev) in RAM_CARRIED.items()},
         'ram_carried_note': 'entries pre-existing from other passes (starting_cranking pe0_relay_flag, uds_dispatch, fueling); repeated here so this record is self-contained',
         'corrections': {a: {'old_alias': old, 'new_alias': new} for a, old, new, t, r, ev in RAM_REPLACES},
         'lookup_aliases': {o: {'alias': al, 'evidence': ev} for o, al, ev in LOOKUP},

@@ -174,7 +174,7 @@
         "pool_claims": 0
       },
       "subsystem-logic/throttle_dbw_control_report.md": {
-        "reg_pairs": 21,
+        "reg_pairs": 22,
         "call_claims": 0,
         "pool_claims": 0,
         "word_assigns": 1
@@ -290,7 +290,7 @@
         "pool_claims": 0
       },
       "reviews/throttle_dbw/README.md": {
-        "reg_pairs": 2,
+        "reg_pairs": 4,
         "call_claims": 0,
         "pool_claims": 0
       },

@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * learned_pedal_value_calc [high]: b40c = clamp(arg0, 0, readValue_float(0xffff808c, default 110.0f=0x42de0000)); arg0 = b404+learned807c (ccbb), b3f8 (ccbc), cc88+learned (ccbd), else b410+learned807c; fault path b423==1 -> b40c = 99.0. rpm gates b435 (>=500/300 rpm), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86.
+ * learned_pedal_value_calc [high]: b40c = clamp(candidate, 0, H), H = readValue_float(0xffff808c, default 111.0f @0x6f45c=0x42de0000); candidates by byte: ccbb -> H+learned807c, ccbc -> servo duty b3f8, ccbd -> cc88+learned807c, ccac -> b410+learned807c capped at learned807c+5.0f (0x747e4), cca2 -> cca8, else b410+learned807c; high byte of 0xffff808c ==1 -> 99.0f (0x747e8). rpm gates b435 (500/300 rpm, 0x747ec), b420 countdown (tbl PTR 0x6a518), b436 = engine_stopped_latch a41c. Called from batch 0x22f86.
  */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a518: Table 2D - 331 (RX8Defs data pointer, axes and dimensions match).

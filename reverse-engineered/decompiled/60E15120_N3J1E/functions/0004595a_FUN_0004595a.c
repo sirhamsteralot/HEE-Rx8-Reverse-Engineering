@@ -1,9 +1,9 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * tp_correlation_fault_check [high]: TP1/TP2 correlation: |a9ac - a9b0| < thr -> good counter cbf2, else bad counter cbee; thr = 3.5f (ROM 0x7c77c=0x40600000, via pool 0x45a00) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375, pool 0x45acc); cbf2 > 0x18 -> cbec=1; cbee > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
- * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when TP1/TP2 bad-correlation counter cbee > 0x1c -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
- * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when TP1/TP2 good-correlation counter cbf2 > 0x18 (pool 0x45ad0=0xffffcbee).
- * RAM 0xffffcbf2 tp_correlation_good_counter (uint16): Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); > 0x18 -> 0xffffcbec=1.
- * RAM 0xffffcbee tp_correlation_bad_counter (uint16): Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); > 0x1c -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee).
+ * tp_correlation_fault_check [high]: APP1/APP2 (pedal) zeroed-volts correlation |a9ac - a9b0|: limit 3.5f on every rung of the pedal-2 ladder (breakpoints 0x7c76c/0x7c770/0x7c774/0x7c778 = 0.6/1.2/2.0/4.0, limits 0x7c77c-0x7c78c) when learned-valid 0xffff8078==1, else 9.536f (ROM 0x7c790=0x41189375); monitor gated by 0xffffcbf0==1; good counter cbf2 >= 25 (u16 0x7c794) -> cbec=1; bad counter cbee >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38. The tp_ prefix in the alias names is a carry-over: the operands are the pedal channels. Pools 0x459f8=0xffffcbf2, 0x459f0=0xffffcbf0, 0x45ad0=0xffffcbee, 0x45ac4=0x872c/0xcbec, 0x459dc=0xa9ac/0x8078. Called from 0x38e12.
+ * RAM 0xffff872c tp_correlation_fault_latch (uint8): Set by 0x4595a when the pedal bad-correlation counter cbee >= 29 (u16 0x7c796) -> DTC 0x6c (P0122/23-family TP correlation; dtc_set_fault 0x5fd38(0x6c)).
+ * RAM 0xffffcbec tp_correlation_ok (uint8): Set by 0x4595a when the pedal good-correlation counter cbf2 >= 25 (u16 0x7c794).
+ * RAM 0xffffcbf2 tp_correlation_good_counter (uint16): Good-correlation counter in tp_correlation_fault_check 0x4595a (pool 0x459f8=0xffffcbf2); >= 25 (u16 0x7c794) -> 0xffffcbec=1.
+ * RAM 0xffffcbee tp_correlation_bad_counter (uint16): Bad-correlation counter in 0x4595a (pool 0x45ad0=0xffffcbee); >= 29 (u16 0x7c796) -> 0xffff872c=1 and DTC 0x6c via 0x5fd38 (pools 0x45ac4=0x872c/0xcbee).
  */
 /* ROM address: 0x0004595a; body bytes: 290; decompiled */
 
