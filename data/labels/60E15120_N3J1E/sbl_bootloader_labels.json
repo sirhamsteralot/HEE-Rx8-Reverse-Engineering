@@ -1,479 +1,479 @@
 {
- "date": "2026-11-16",
- "pass": "sbl_bootloader_static_labeling_and_handover",
- "basis": "static labeling of the SBL block 0x00000-0x001fff of the reference ROM, binary-verified against the raw ROM bytes, the committed SH-2E disassembly and the decompiled export; emulator boot trace from vector 0 (rule 7); includes the SBL->application handover mapping (dispatcher 0x1038, trampoline 0x1090, app entry 0xd204, CVN caller analysis, ref_mainInit__ 0x61a8 entry mechanism, reset-at-10000-RPM fold-in)",
- "source": "Raw ROM bytes submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1, verified unchanged) + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + reverse-engineered/decompiled/60E15120_N3J1E/. Cross-ROM SBL hashes/diffs: data/labels/cross_rom/sbl_first_8k.json. Dynamic trace: docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/.",
- "rom_unchanged": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
- "region": {
-  "range": "0x00000-0x001fff",
-  "vector_table": "0x0-0x3ff active while VBR=0 at reset: u32@0x0 = 0x000008b8 (reset PC), u32@0x4 = 0xffffdfa0 (initial SP), u32@0x8 = 0x000008b8 (manual-reset PC), all exception slots 0x10-0x37 = 0x000008b4 (Illegal_instr), 0x38/0x3c = 0xffffffff (erased) - byte-verified",
-  "erased_gap": "0xb0e-0xfdf all 0xff (1,234 B, CVN-free since the app checksum starts at 0x2000) - byte-verified in this ROM and all 11 corpus ROMs (data/labels/cross_rom/sbl_first_8k.json)",
-  "block_0xfe0_0xfff": "32-B non-erased block: constant 26-B prefix 7affffff507977301141ffff + 12x00 + 2797 across all 11 ROMs, 4-B stamp at 0xffa-0xffd (8 distinct values (5 in build A over 6 ROMs, 3 in build B over 5 ROMs); reference 0x2022936d), trailing 0000; the full block is byte-identical only between ROMs sharing an SBL hash (e.g. 60E15120_N3J1E and 60E0G500_N3ZHEC); role unknown - candidate SBL build stamp/checksum",
-  "sbl_end_marker": "ASCII '*SBL_END' at 0x1ff4-0x1ffb, byte-verified; scanned for by the 0x36 transfer handler 0x1c04"
- },
- "functions": {
-  "0x00000040": {
-   "alias": "sbl_entry_trampoline_set_sp_jmp",
-   "kind": "code - sets r15 = u32 pool 0x48 = 0xffffdfa0, then jmp @r4 (indirect entry jump); used by 0x4e0 (pool 0x594) with the chosen warm/cold entry and by ring handler 0x7c",
-   "evidence": "disasm 0x40-0x44; pool 0x48 = 0xffffdfa0 byte-verified"
-  },
-  "0x0000004c": {
-   "alias": "sbl_ring_handler_0x88",
-   "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0x88, 6, 0xfec)",
-   "evidence": "decompiled body 0x4c"
-  },
-  "0x00000064": {
-   "alias": "sbl_ring_handler_0x90",
-   "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0x90, 6, 0xff8)",
-   "evidence": "decompiled body 0x64"
-  },
-  "0x0000007c": {
-   "alias": "sbl_ring_handler_jump_target",
-   "kind": "cold-entry ring record handler: stores param+2 at 0xffffdfa4, then sbl_entry_trampoline_set_sp_jmp(u32@0xffffdfa0) - indirect jump through the ring-supplied target",
-   "evidence": "decompiled body 0x7c; pool 0x48 = 0xffffdfa0"
-  },
-  "0x0000008a": {
-   "alias": "sbl_ring_handler_0xb0_checksum",
-   "kind": "cold-entry ring record handler: second byte & ~7 == 4 -> reads BE u32 via 0xf4, sums range via 0x11a, posts FUN_00000338(0xb0, 1, sum)",
-   "evidence": "decompiled body 0x8a"
-  },
-  "0x000000c0": {
-   "alias": "sbl_ring_handler_0xc0",
-   "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0xc0, 6, 0xfe4)",
-   "evidence": "decompiled body 0xc0"
-  },
-  "0x000000d8": {
-   "alias": "sbl_ring_handler_halt",
-   "kind": "cold-entry ring record handler for 0xff/0xc8 records: second byte & 7 == 0 -> terminal halt loop (bra self), else returns second byte",
-   "evidence": "decompiled body 0xd8"
-  },
-  "0x000000f4": {
-   "alias": "sbl_read_be_u32",
-   "kind": "reads big-endian u32 from @r4 (shll16/shll8 assembly of 4 bytes)",
-   "evidence": "disasm 0xf4-0x116"
-  },
-  "0x0000011a": {
-   "alias": "sbl_range_byte_sum",
-   "kind": "incremental byte-sum over [r4, r5) with service_wdt_overflow_and_toggle_pb15 (0x31c) per byte - checksum-style accumulator",
-   "evidence": "disasm 0x11a-0x150; jsr pool = 0x31c"
-  },
-  "0x00000170": {
-   "alias": "sbl_can_init",
-   "kind": "HCAN0 init: can_enter_reset_mode (0x9c0), clears TXPR/TXCR/TXACK/ABACK/RXPR/RFPR/UMSR, BCR = 0x803e (pool), configures mailboxes 0 (0xffffe) and 1 (0x21) via 0x9fc, can_exit_reset_mode (0x9de), IMR = 0xfeff",
-   "evidence": "decompiled body 0x170; called from 0x4e0 pool 0x586"
-  },
-  "0x00000210": {
-   "alias": "sbl_can_rx_poll_mb8",
-   "kind": "polls HCAN0 RXPR bit 0x100 (mailbox 8), UMSR check, clears RXPR 0x100, copies MD0 via 0xace; returns 1/0/-1",
-   "evidence": "decompiled body 0x210; called from 0x364 when reset cause == 0"
-  },
-  "0x00000256": {
-   "alias": "sbl_can_rx_buffer_append",
-   "kind": "appends param_2 bytes to RX buffer at 0xffffdfae, sets length 0xffffdfad; dispatches on first byte 0xe0/0xd8",
-   "evidence": "decompiled body 0x256; called from 0x338"
-  },
-  "0x0000031c": {
-   "alias": "service_wdt_overflow_and_toggle_pb15",
-   "kind": "external-WDT keyed service (write 0xa53c) + PB15 heartbeat toggle; called throughout boot/cold loop (already named)",
-   "evidence": "function_index.tsv name; learnings.md WDT section"
-  },
-  "0x00000338": {
-   "alias": "sbl_ring_post_or_buffer",
-   "kind": "posts a ring record: if reset_cause_ffffdfa8 == 0 -> sbl_can_rx_buffer_append (0x256), else 0x47c",
-   "evidence": "decompiled body 0x338"
-  },
-  "0x00000364": {
-   "alias": "sbl_ring_rx_poll",
-   "kind": "cold loop step: if reset cause == 0 poll CAN mb8 (0x210), else scan ring record DAT_ffffd4e0 + DAT_ffffdfb4*8 via 0x450; advances ring index mod 100",
-   "evidence": "decompiled body 0x364; called from 0x6c8 pool 0x7a4"
-  },
-  "0x000003b0": {
-   "alias": "sbl_ring_record_ptr",
-   "kind": "returns &DAT_ffffd4e0 + DAT_ffffdfb6*8 (100 x 8-byte ring records at 0xffffd4e0), advances index mod 100",
-   "evidence": "decompiled body 0x3b0; called from 0x6c8 pool 0x7a6"
-  },
-  "0x000003d4": {
-   "alias": "sbl_ring_index_reset",
-   "kind": "zeroes DAT_ffffdfb6 and DAT_ffffdfb4 (ring indices); called from 0x4e0 pool 0x58a",
-   "evidence": "decompiled body 0x3d4"
-  },
-  "0x000003e0": {
-   "alias": "sbl_ring_pending_count",
-   "kind": "returns (DAT_ffffdfb4 - DAT_ffffdfb6) mod 100 - pending ring record count; called from 0x6c8 pool 0x79e",
-   "evidence": "decompiled body 0x3e0"
-  },
-  "0x0000041c": {
-   "alias": "sbl_early_ram_init",
-   "kind": "early RAM clear loop over 0xffffdfe4..0xffffdff0 region; called from 0x4e0 pool 0x588",
-   "evidence": "decompiled body 0x41c"
-  },
-  "0x00000450": {
-   "alias": "sbl_ring_record_scan",
-   "kind": "scans a ring record at param: requires 0xffffdfec == 'U' (0x55), then byte-compares against 0xffffdfe4; called from 0x364",
-   "evidence": "decompiled body 0x450"
-  },
-  "0x0000047c": {
-   "alias": "sbl_ring_post_wait",
-   "kind": "waits for 0xffffdff8 == 0xaa (-0x56), then builds ring record at 0xffffdff0 ('z' = 0x7a unless first byte 0xe0/0xd8)",
-   "evidence": "decompiled body 0x47c"
-  },
-  "0x000004e0": {
-   "alias": "reset_handler_warm_cold_select",
-   "kind": "warm/cold entry select (already named): wdt_keyed_reset 0x572, 0x170, 0x41c, 0x3d4; param==0: warm if 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (pool 0x58e), with erased-flash fallback u32@0x7fff8 = 0xd204 (pools 0x5a4/0x5a8); cold = 0x6c8 (pool 0x58c); writes magic 0x5aa5a55a to 0xffffdffc, jsr 0x40 (pool 0x594) with r4 = entry, then halt loop",
-   "evidence": "disasm 0x4e0-0x572 + pools 0x586-0x594 byte-verified; ROM 0x1000 = 0x00001298 byte-verified"
-  },
-  "0x00000572": {
-   "alias": "wdt_keyed_reset",
-   "kind": "keyed WDT reset write (already named)",
-   "evidence": "function_index.tsv name"
-  },
-  "0x000005b0": {
-   "alias": "wdt_overflow_reset_check",
-   "kind": "WDT overflow/reset-cause check with param 7 (already named)",
-   "evidence": "function_index.tsv name"
-  },
-  "0x00000624": {
-   "alias": "sbl_flag_U_check",
-   "kind": "returns DAT_ffffdfec == 'U' (0x55)",
-   "evidence": "decompiled body 0x624"
-  },
-  "0x00000636": {
-   "alias": "sbl_ring_erase_check",
-   "kind": "checks an 8-byte record == ff 86 00 00 00 00 00 00 (erased marker pattern)",
-   "evidence": "decompiled body 0x636"
-  },
-  "0x000006c8": {
-   "alias": "cold_entry_ring_dispatch_loop",
-   "kind": "cold boot entry monitor loop (already named): zeroes 0xffffdfb8; loops 0x364 (rx/ring poll), 0x3e0 (pending count), 0x3b0 (record ptr), dispatches on first byte 'z' with second byte & 0xf8 -> handlers 0x806/0x4c/0x64/0x7c0/0x7c/0x8a/0xc0 (pools 0x7a8-0x7b6), 0xff/0xc8 -> 0xd8; services WDT via 0x31c each iteration",
-   "evidence": "decompiled body 0x6c8 + pools 0x79e-0x7be; selected by 0x4e0 pool 0x58c"
-  },
-  "0x000007c0": {
-   "alias": "sbl_ring_handler_0x98",
-   "kind": "cold-entry ring record handler: second byte & ~7 == 4 -> u32@0xffffdfa0 = 0xf4(), clears 0xffffdfb8, posts 0x338(0x98, 4, param+2)",
-   "evidence": "decompiled body 0x7c0"
-  },
-  "0x00000806": {
-   "alias": "sbl_ring_handler_0xa8_download_start",
-   "kind": "cold-entry ring record handler: if 0xffffdfb8 == 0 sets it to 1 and DAT_ffffdfbc = DAT_ffffdfa0 (download address capture)",
-   "evidence": "decompiled body 0x806"
-  },
-  "0x0000087c": {
-   "alias": "sbl_ram_copy_range_checked",
-   "kind": "range-checked RAM copy: rejects if dest < 0xffff6000 or dest+len-1 > 0xffffdfff (warm_boot_magic cell)",
-   "evidence": "decompiled body 0x87c"
-  },
-  "0x000008b4": {
-   "alias": "Illegal_instr",
-   "kind": "terminal halt loop for all exception vectors (already named); sets SR mask 0xf0 and spins (0xd8 handler pattern)",
-   "evidence": "function_index.tsv name; vector slots 0x10-0x37 = 0x8b4 byte-verified"
-  },
-  "0x000008b8": {
-   "alias": "ref_Manual_Reset",
-   "kind": "reset entry (already named): boot_wait_nmi_pin_high 0x8cc -> 0x8f6 -> reset_handler_warm_cold_select(0) -> halt; vector 0/8 target",
-   "evidence": "decompiled body 0x8b8; ROM 0x0/0x8 = 0x8b8 byte-verified; emulator trace step 0"
-  },
-  "0x000008cc": {
-   "alias": "boot_wait_nmi_pin_high",
-   "kind": "NMI pin poll: writes ICR_W 0xffffed18 = 0xf000, loops reading bit15 until set (already named; learnings: NMI pin level)",
-   "evidence": "disasm 0x8cc-0x8f2; pool 0x9b4 = ICR_W 0xffffed18"
-  },
-  "0x000008f6": {
-   "alias": "sbl_boot_mailbox_init",
-   "kind": "writes CAN/mailbox control structures in RAM (0x8f6-0x998 region of stores to pooled addresses); called from 0x8b8 and from 0x4e0 param!=0 path (pool 0x592)",
-   "evidence": "disasm 0x8f6-0x998"
-  },
-  "0x000009c0": {
-   "alias": "can_enter_reset_mode",
-   "kind": "HCAN0 MCR reset-mode enter (already named)",
-   "evidence": "function_index.tsv name"
-  },
-  "0x000009de": {
-   "alias": "can_exit_reset_mode",
-   "kind": "HCAN0 MCR reset-mode exit (already named)",
-   "evidence": "function_index.tsv name"
-  },
-  "0x000009fc": {
-   "alias": "INT_ATU102_IMI10AG",
-   "kind": "ATU-II/mailbox config helper used as mailbox-setup call (already named; called as mailbox config from 0x170 with (mb, dir, dlc, ide, id, ...) args)",
-   "evidence": "function_index.tsv name; 0x170 call sites"
-  },
-  "0x00000ace": {
-   "alias": "sbl_memcpy",
-   "kind": "byte copy loop (dest, src, n) - decompiler body is a loop artifact; used by 0x210 CAN RX copy",
-   "evidence": "decompiled body 0xace"
-  },
-  "0x00000ae8": {
-   "alias": "sbl_memcmp_loop",
-   "kind": "byte compare loop variant (decompiler artifact body)",
-   "evidence": "decompiled body 0xae8"
-  },
-  "0x00001008": {
-   "alias": "cvn_hole_pair_check",
-   "kind": "returns u16@0x7fb00 when it equals ~u16@0x7fb02 and != 0xffff, else 0 (NOT an erase guard - no erase exists in the SBL); callers 0x1d78 (0xb1 arm) and 0x56428 (app 0xB1 conditions), result < 100 required; emulator: returns 2 with the stock hole 0002/fffd",
-   "evidence": "disasm 0x1008-0x102a: mov.w @r3,r4; r5 = extu.w r4; r6 = ~mov.w @r2 (extu.w); cmp/eq r6,r5; if equal and r5 != u16 pool 0x1034 (0xffff) return r4 else 0; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified; hole bytes 0x7fb00 = 00 02 ff fd 5f 57 44 53 ('_UDS') ROM-verified; dynamic: harness.call(0x1008) -> r0 = 2 (tests/test_sbl_bootloader.py)"
-  },
-  "0x00001038": {
-   "alias": "warm_reset_dispatcher",
-   "kind": "SBL/app handover dispatcher (already named): jsr 0x1364, 0x109c (ref_resetOBDCAN_), 0x16dc (ref_handleException_, param); param!=0 -> jsr 0x12a2 (GPIO init) and target 0x1378 (SBL CAN loop, pool 0x1082); param==0 -> erased-flash checks on u32@0x7fffc / u32@0x2000 (pools 0x1088/0x108c) with fallback target u32@0x7fff8 = 0xd204 (app entry); then jsr 0x1090 (pool 0x1084) with r4 = target, halt. The param==1 entry exists only via 0x564d4 (pool 0x564f2, delay-slot mov #1,r4 after jsr, SR |= 0xf0 first): 0x16dc(1) then presets session 0xffffdfb0=1, unlock 0xffffdfb1=1, download-armed 0xffffdfb3=1, so the app->SBL handover arrives open and armed (on-car 2026-11-18: 22 D1 00 -> 85 and 27 01 -> zero seed before any 10 85); param==0 entries (warm boot 0x1298, erased-flash fallback) run 0x16dc(0) and arrive locked",
-   "evidence": "disasm 0x1038-0x1076 + pools 0x107a-0x1084 byte-verified; ROM 0x7fff8 = 0xd204, 0x7fffc = 0x2000 byte-verified; emulator trace: hit once at step ~2800 with param 0, jumped to 0xd204"
-  },
-  "0x00001090": {
-   "alias": "sbl_handover_trampoline_set_sp_jmp",
-   "kind": "handover trampoline: r15 = u32 pool 0x1098 = 0xffffdfa0, jmp @r4 - the SBL->app (0xd204) / SBL-loop (0x1378) jump point",
-   "evidence": "disasm 0x1090-0x1094; pool 0x1098 = 0xffffdfa0 byte-verified; emulator trace: SBL->app transition 0x1092 -> 0xd204"
-  },
-  "0x0000109c": {
-   "alias": "ref_resetOBDCAN_",
-   "kind": "CAN reset + diag mailbox config: mb14 = 0x7e0 RX, mb15 = 0x7e8 TX via 0x1ed0 (already named; learnings: diag mailboxes)",
-   "evidence": "decompiled body 0x109c"
-  },
-  "0x000010fe": {
-   "alias": "sbl_can_rx_poll_mb14",
-   "kind": "diag CAN RX poll: RXPR bit 0x40 (mb14), UMSR 0x40 check, clears, copies MD14 to buffer via 0x1fa2; returns 1/0/-1 (learnings: FUN_000010fe)",
-   "evidence": "decompiled body 0x10fe; called from 0x125c"
-  },
-  "0x00001150": {
-   "alias": "sbl_can_tx_mb15",
-   "kind": "diag CAN TX: waits TXPR bit 0x80 free, TXACK 0x80, copies payload to MD15 via 0x1fbc, TXPR 0x80",
-   "evidence": "decompiled body 0x1150"
-  },
-  "0x00001182": {
-   "alias": "sbl_can_clear_rx_flags",
-   "kind": "clears HCAN0 RXPR/UMSR bit 0x40",
-   "evidence": "decompiled body 0x1182"
-  },
-  "0x000011c4": {
-   "alias": "sbl_rx_buffer_head_clear",
-   "kind": "zeroes u16@0xffffdfa0 (inactivity counter / RX head): once before the loop (0x137a, pool 0x1438), on every successfully reassembled frame (0x13c8 single, 0x13e4 first, 0x140a every consecutive), and after every service dispatch (0x1544) - received-but-invalid frames do not reset it",
-   "evidence": "decompiled body 0x11c4; 0x1378 pool 0x1438 = 0x11c4"
-  },
-  "0x000011cc": {
-   "alias": "service_wdt_overflow_toggle_pb15_and_count",
-   "kind": "WDT service + pass counter (already named): if TCSR 0xffffec10 OVF (0x80) clear, writes TCSR = 0xa53c, toggles 0xfffff738 bit 15, and increments u16@0xffffdfa0 (saturating at 0xffff), then returns it; called each loop pass (0x1414, pool 0x1440); the counter drives the loop-tail relock (>= 0x5f6 idle, 0x1428 -> 0x16dc(0)) and inter-frame abort (>= 0x2e mid-transfer, 0x1448); emulator: ~256 cycles/pass idle, relock ~390k cycles, abort ~12k cycles (tests/test_sbl_bootloader.py)",
-   "evidence": "function_index.tsv name; 0x1378 pool 0x1440 = 0x11cc"
-  },
-  "0x000011fa": {
-   "alias": "sbl_uds_response_send",
-   "kind": "builds and sends the SBL response frame from the 0xffffdfc6 record via 0x1150 (ISO-TP single-frame: length = payload+1)",
-   "evidence": "decompiled body 0x11fa; called by all service handlers"
-  },
-  "0x0000125c": {
-   "alias": "sbl_can_rx_poll",
-   "kind": "polls 0x10fe into buffer 0xffffdfa2, returns (result == 1)",
-   "evidence": "decompiled body 0x125c; 0x1378 pool 0x143c = 0x125c"
-  },
-  "0x00001272": {
-   "alias": "sbl_rx_buffer_ptr",
-   "kind": "returns 0xffffdfa2 (SBL RX buffer pointer); called from 0x1378 pool 0x143e",
-   "evidence": "decompiled body 0x1272"
-  },
-  "0x000012a2": {
-   "alias": "sbl_boot_gpio_init",
-   "kind": "GPIO port init for BOOT mode (PADR/PACRH/PACRL/PAIOR/PBDR 0xefff/PBIOR 0x9000/PCDR 0x1f/PDDR 0x3eff/PDIOR 0x2000/PEDR 0xffff...); called from 0x1038 param!=0 path (pool 0x1080) before entering the SBL CAN loop",
-   "evidence": "decompiled body 0x12a2"
-  },
-  "0x00001364": {
-   "alias": "ref_resetWatchdog_00001364",
-   "kind": "keyed WDT reset (already named); first jsr of 0x1038 (pool 0x107a)",
-   "evidence": "function_index.tsv name"
-  },
-  "0x00001378": {
-   "alias": "sbl_can_command_loop",
-   "kind": "SBL CAN command loop (entered via 0x1090 from 0x1038 param!=0 or erased-flash fallback): per iteration jsr 0x11c4, 0x125c (CAN RX), 0x1272 -> dispatch on service byte with buffer 0xffffd3f0: 0x28->0x170a, 0x85->0x1774, 0x10->0x17f0, 0x27->0x1858, 0x3e->0x197a, 0x11->0x19ce, 0x22->0x1a50, 0x3b->0x1ac0, 0x34->0x1ad6, 0x36->0x1c04, 0x37->0x1d30, 0xb1->0x1d78, default->0x1e34 (NRC 0x11); loop head 0x1388 (back-edge 0x1548); multi-frame assembly via 0x154c/0x15a6/0x1624/0x1654; WDT via 0x11cc; tail 0x141a-0x1450 on the u16@0xffffdfa0 pass counter: r12==0 (no multi-frame in progress) and cnt >= 0x5f6 (pool 0x143a) -> jsr 0x16dc(0) at 0x1428 (inactivity relock, all six latches cleared); r12!=0 and cnt >= 0x2e (0x1382) -> jsr 0x11c4 + r12=0 at 0x1448 (inter-frame timeout: aborts only the in-progress transfer); 0x11c4 zeroes the counter on every reassembled frame (0x13c8/0x13e4/0x140a) and after every dispatch (0x1544), so any processed request (incl. 3E) resets it",
-   "evidence": "disasm 0x1378-0x154c + pools 0x1438-0x1610 byte-verified; UDS report \u00a712.2"
-  },
-  "0x0000154c": {
-   "alias": "sbl_isotp_first_frame",
-   "kind": "ISO-TP first-frame handler (0x10/0x1x PCI): total length = (b0 & 0xf)<<8 | b1",
-   "evidence": "decompiled body 0x154c; bsr from 0x13b6"
-  },
-  "0x000015a6": {
-   "alias": "sbl_isotp_consecutive_frame",
-   "kind": "ISO-TP consecutive-frame handler: sequence check, stores into 0xffffd3f4 buffer up to 0x400",
-   "evidence": "decompiled body 0x15a6; bsr from 0x13d0"
-  },
-  "0x00001624": {
-   "alias": "sbl_isotp_single_frame",
-   "kind": "ISO-TP single-frame handler: builds 0x30-prefixed response buffer",
-   "evidence": "decompiled body 0x1624; bsr from 0x13e0"
-  },
-  "0x00001654": {
-   "alias": "sbl_isotp_flow_control",
-   "kind": "ISO-TP flow-control/continue handler: advances 0xffffdfac, copies payload bytes to 0xffffd3f4",
-   "evidence": "decompiled body 0x1654; bsr from 0x13f2"
-  },
-  "0x000016dc": {
-   "alias": "ref_handleException_",
-   "kind": "SBL latch housekeeping (already named): clears bytes 0xffffdfb0 (session), 0xffffdfb1 (unlock), 0xffffdfb2 (seed flag), 0xffffdfb3 (download armed), 0xffffdfb4 (transfer active), 0xffffdfb5; if param == 1 then sets 0xffffdfb0 = 1, 0xffffdfb1 = 1, 0xffffdfb3 = 1 - so the app->SBL handover (0x1038(1)) arrives session-set, unlocked and download-armed, while every other entry arrives locked. Callers: 0x1038 (pool 0x107e, passes its own param: 0 from warm entry 0x1298, 1 only from 0x564d4 pool 0x564f2 delay-slot mov #1,r4), 0x17f0 sub 0x81 (0x182c bsr, r4=0: 10 81 relock), 0x1378 loop (0x1428 jsr, r4=0, when the 0x11cc WDT-service counter >= 0x5f6 pool 0x143a: periodic relock)",
-   "evidence": "disasm 0x16dc-0x1706 + pools 0x17d4-0x17e8 byte-verified (0xffffdfb0/b1/b2/b3/b4/b5, cmp/eq 0x1 on the param, mov #1 stores at 0x1700-0x1704); SBL block byte-identical in 60E0E700_N3YLEE (0x16dc/0x1858/0x1a50 bytes compared); dynamic: harness.call(0x16dc, r4=0/1) latch assertions + full on-car trace replay over CAN pass (tests/test_sbl_bootloader.py, 9 tests)"
-  },
-  "0x0000170a": {
-   "alias": "sbl_svc_0x28_communication_control",
-   "kind": "UDS 0x28 handler: NRC 0x22 if session latch DAT_ffffdfb0 == 1, else positive 0x68 (or 0x68/0x31 variants); response via 0x11fa at 0xffffdfc6",
-   "evidence": "decompiled body 0x170a; dispatch 0x145c cmp/eq 0x28 -> pool 0x14f8 = 0x170a"
-  },
-  "0x00001774": {
-   "alias": "sbl_svc_0x85_control_dtc_setting",
-   "kind": "UDS 0x85 handler: NRC 0x22 if locked; sub 1/2 -> positive 0xc5",
-   "evidence": "decompiled body 0x1774; pool 0x14fa = 0x1774, compare value 0x85 at pool 0x14f4"
-  },
-  "0x000017f0": {
-   "alias": "sbl_svc_0x10_diagnostic_session",
-   "kind": "UDS 0x10 handler: sub 0x81 -> ref_handleException_(0) at 0x182c (relock: clears all six latches 0xffffdfb0-b5), response 0x50 0x81; sub 0x85 -> sets session latch DAT_ffffdfb0 = 1 (programming/boot session, 0x1838-0x183e), response 0x50 0x85; else NRC 0x12",
-   "evidence": "decompiled body 0x17f0; pool 0x14fc = 0x17f0, cmp/eq 0x10 at 0x1466"
-  },
-  "0x00001858": {
-   "alias": "sbl_svc_0x27_security_access",
-   "kind": "UDS 0x27 handler (SBL): NRC 0x22 if session latch DAT_ffffdfb0 == 0 (0x187c-0x1888); seed request (sub 1): if unlock latch DAT_ffffdfb1 == 1 -> ZERO seed 67 01 00 00 00 (0x18dc-0x18ec, the on-car post-handover reply), else fixed seed 67 01 55 AA 55 (0x1908-0x1914, pools 0x19f0=0xaa); seed request clears DAT_ffffdfb2 (0x1968); key send (sub 2) -> literal compare against 4D AC CD (0x193a-0x1950) -> unlock latch DAT_ffffdfb1 = 1 + 67 02 (0x1958-0x1966), mismatch -> NRC 0x35, no outstanding seed -> NRC 0x22 (on-car: 7F 27 22)",
-   "evidence": "disasm 0x1858-0x1978 + pools 0x18f8/0x18fc/0x1900/0x1904/0x19f0/0x19f2/0x19f4/0x19fc byte-verified (0xffffdfc6, 0xffffdfb0, 0xffffdfb2, 0xffffdfb1, 0x00aa, 0x00ac, 0x00cd, 0xffffdfb1); per UDS report \u00a712.2; pool 0x14fe = 0x1858, cmp/eq 0x27 at 0x146a; dynamic: emulator over CAN reproduces the on-car trace 27 01 -> 67 01 00 00 00 and 27 02 4d ac cd -> 7f 27 22 after 0x16dc(1), and 67 01 55 aa 55 / 67 02 after 10 85 + 27 01 (tests/test_sbl_bootloader.py)"
-  },
-  "0x0000197a": {
-   "alias": "sbl_svc_0x3e_tester_present",
-   "kind": "UDS 0x3e handler: sub 1 -> positive 0x7e, else NRC 0x12/length 2",
-   "evidence": "decompiled body 0x197a; pool 0x1500 = 0x197a, cmp/eq 0x3e at 0x146e"
-  },
-  "0x000019ce": {
-   "alias": "sbl_svc_0x11_ecu_reset",
-   "kind": "UDS 0x11 handler: NRC 0x22 if session locked, NRC 0x33 if unlock latch DAT_ffffdfb1 == 0; hard reset sub 1 -> positive 0x51 then terminal loop",
-   "evidence": "decompiled body 0x19ce; pool 0x1502 = 0x19ce, cmp/eq 0x11 at 0x1472"
-  },
-  "0x00001a50": {
-   "alias": "sbl_svc_0x22_read_did",
-   "kind": "UDS 0x22 handler: DID 0xd100 -> positive 0x62 d1 00 + the session latch value itself: 0x85 if DAT_ffffdfb0 == 1 else 0x81 (0x1aa4-0x1ab6) - on-car post-handover 22 D1 00 -> 62 D1 00 85 before any 10 85; else NRC 0x31/0x12",
-   "evidence": "disasm 0x1a50-0x1abe + pools 0x1b04/0x1b06/0x1b08/0x1b14 byte-verified (0x00d1, 0x0085, 0x0081, 0xffffdfb0); pool 0x1504 = 0x1a50, cmp/eq 0x22 at 0x1476; dynamic: 62 d1 00 85 after 0x16dc(1), 62 d1 00 81 after 10 81 (tests/test_sbl_bootloader.py)"
-  },
-  "0x00001ac0": {
-   "alias": "sbl_svc_0x3b_write_did",
-   "kind": "UDS 0x3b handler: always negative 0x7f 0x3b 0x22 (write not supported in SBL)",
-   "evidence": "decompiled body 0x1ac0; pool 0x1506 = 0x1ac0, cmp/eq 0x3b at 0x147a"
-  },
-  "0x00001ad6": {
-   "alias": "sbl_svc_0x34_request_download",
-   "kind": "UDS 0x34 handler: NRC 0x22 if session locked, 0x33 if not unlocked, 0x10 if transfer already active; parses BE address via 0x1e4c -> staging target 0xffff6000 + addr (DAT_ffffdfb8), BE size via 0x1e72, range-checked against 0x7e000; positive 0x74 with 0x400 max block",
-   "evidence": "decompiled body 0x1ad6; pool 0x1608 = 0x1ad6, cmp/eq 0x34 at 0x147e"
-  },
-  "0x00001c04": {
-   "alias": "sbl_svc_0x36_transfer_data",
-   "kind": "UDS 0x36 handler: NRC 0x22 unless download active; copies 0x400-byte blocks from the CAN message to staging DAT_ffffdfc0 while scanning for the '*SBL_END' magic at ROM 0x1ff4 (DAT_00001ff4); on complete marker + exhausted size responds 0x78 and jumps via 0x1090 to the staging base; else NRC 0x72 at size end",
-   "evidence": "decompiled body 0x1c04; pool 0x160a = 0x1c04, cmp/eq 0x36 at 0x1482; ROM 0x1ff4 = '*SBL_END' byte-verified"
-  },
-  "0x00001d30": {
-   "alias": "sbl_svc_0x37_transfer_exit",
-   "kind": "UDS 0x37 handler: NRC 0x22 unless download active; empty payload -> closes transfer, positive 0x79; else NRC 0x12",
-   "evidence": "decompiled body 0x1d30; pool 0x160c = 0x1d30, cmp/eq 0x37 at 0x1486"
-  },
-  "0x00001d78": {
-   "alias": "sbl_svc_0xb1_arm_download",
-   "kind": "UDS 0xb1 boot-mode arm (NO erase - only callees are 0x1008 and response sender 0x11fa): NRC 0x22/0x33 gates; payload 00 b2 00 with length 3 -> 0x1008() < 100 required (else NRC 0x10): clears DAT_ffffdfb4, sets download-armed latch DAT_ffffdfb3 = 1 (required by 0x1ad6/0x34, else NRC 0x10 there), answers 0xf1 00 b2; else NRC 0x31/0x12; emulator over CAN: b1 00 b2 00 -> f1 00 b2, dfb3=1, dfb4=0 (tests/test_sbl_bootloader.py)",
-   "evidence": "decompiled body 0x1d78; callgraph 0x1d78 -> {0x1008, 0x11fa} only; pool 0x160e = 0x1d78, compare value 0xb1 at pool 0x14f6; no flash-control register (0xffffe800+) referenced anywhere in 0x1000-0x1ffb (pool scan of committed disassembly)"
-  },
-  "0x000565e8": {
-   "alias": "app_uds_service_b1",
-   "kind": "app service 0xB1 (uds_service_b1_mazda_specific): scans the sub-table of {id u16, len u16, handler u32, mask u16} records; record 0x5f0f4 (00 b2 00 01 00 05 63 50 ff fc) = id 0x00B2, 1 data byte, handler 0x56350, mask 0xfffc",
-   "evidence": "decompiled body 0x565e8; dispatch record 0x5ec84 = b1 00 00 00 00 05 65 e8 ROM byte-verified; sub-record 0x5f0f4 ROM byte-verified"
-  },
-  "0x00056350": {
-   "alias": "app_b1_00b2_boot_request",
-   "kind": "app 0xB1 sub 0x00B2 handler: needs session index 1 (0xffffd1cf, table 0x5f040 index 1 = 0x85) else NRC 0x22; app unlock level 1 (0xffffd1d0) else 0x33; conditions 0x56428 (battery 8.0-16.5 V, coolant -40..120 C unless 0xffffc5e6, 0x1008() < 100) else 0x22/0x10; data byte 0 else 0x31; then queues F1 00 B2 (0x564ac) and sets boot-request state 0xffffd1dc = 3 (0x563de(3)); no engine-speed check on this path",
-   "evidence": "decompiled body 0x56350; 0x56428 gates ROM-verified (emulator: r0=0 with 12.5 V on AN14); 0x564ac = setupForUdsResponse(0xb1, {f1,00,b2}, 3); post-response 0x680de -> 0x6892a -> 0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) SBL loop (callgraph-verified)"
-  },
-  "0x00056428": {
-   "alias": "app_b1_conditions_check",
-   "kind": "app 0xB1 conditions: returns 0 (OK) when 0x1008() < 100 and battery 8.0-16.5 V (0xffffb590) and (coolant in -40..120 C or 0xffffc5e6 set), else NRC 0x22 / 0x10",
-   "evidence": "decompiled body 0x56428; emulator: 12.5 V via AN14 -> r0 = 0 (tests/test_sbl_bootloader.py)"
-  },
-  "0x000564ac": {
-   "alias": "app_queue_f1_00b2",
-   "kind": "queues the F1 00 B2 positive response for app 0xB1 sub 0x00B2",
-   "evidence": "decompiled body 0x564ac: ref_setupForUdsResponse_(0xb1, {0xf1, 0x00, 0xb2}, 3)"
-  },
-  "0x00054a36": {
-   "alias": "app_post_response_service_hook",
-   "kind": "post-response hook: for last service 0xb1 calls 0x563de(1) which (with 0xffffd1dc == 3) runs 0x564d4 -> 0x1038(1) -> SBL loop 0x1378",
-   "evidence": "decompiled body 0x54a36; callgraph 0x6892a -> thunk 0x68d70 -> 0x54a36; 0x680de -> 0x6892a"
-  },
-  "0x0006892a": {
-   "alias": "app_uds_session_tail",
-   "kind": "UDS-session tail (called from 0x680de): passes last service byte DAT_ffffdde0 to 0x54a36",
-   "evidence": "decompiled body 0x6892a; callgraph 0x680de -> 0x6892a"
-  },
-  "0x00001e34": {
-   "alias": "sbl_svc_default_nrc11",
-   "kind": "default service handler: negative response 0x7f <svc> 0x11 (serviceNotSupported)",
-   "evidence": "decompiled body 0x1e34; pool 0x1610 = 0x1e34 (default bra 0x153c)"
-  },
-  "0x00001e4c": {
-   "alias": "sbl_parse_be_u32",
-   "kind": "parses big-endian u32 address from 4 bytes (same shape as 0xf4)",
-   "evidence": "decompiled body 0x1e4c; called from 0x1ad6"
-  },
-  "0x00001e72": {
-   "alias": "sbl_parse_be_u24",
-   "kind": "parses big-endian u24 size from 3 bytes",
-   "evidence": "decompiled body 0x1e72; called from 0x1ad6"
-  },
-  "0x00001e94": {
-   "alias": "sbl_flash_status_wait_set",
-   "kind": "polls a status register bit 3 up to 4000 iterations (flash-controller busy wait, set variant); called from 0x109c with HCAN0 MCR - generic MMIO status wait",
-   "evidence": "decompiled body 0x1e94"
-  },
-  "0x00001eb2": {
-   "alias": "sbl_mmio_status_wait_clear",
-   "kind": "polls a status register bit 3 up to 4000 iterations (clear variant)",
-   "evidence": "decompiled body 0x1eb2; called from 0x109c"
-  },
-  "0x00001ed0": {
-   "alias": "sbl_can_mailbox_config",
-   "kind": "builds an HCAN0 mailbox config: mask bits from (mb&0xff)+8&0xf, standard-ID stored low byte first into MC[4..5] (id<<5), DLC in MC[0]; used for mb0/1 (0x170) and mb14/15 (0x109c)",
-   "evidence": "decompiled body 0x1ed0; learnings.md RCAN section"
-  },
-  "0x00001fa2": {
-   "alias": "sbl_memcpy8",
-   "kind": "copies 8 bytes (decompiler loop artifact); used by 0x10fe CAN RX copy",
-   "evidence": "decompiled body 0x1fa2"
-  },
-  "0x00001fbc": {
-   "alias": "sbl_memcpy8_alt",
-   "kind": "copies 8 bytes to MD15 (decompiler loop artifact); used by 0x1150 CAN TX",
-   "evidence": "decompiled body 0x1fbc"
-  },
-  "0x00001fe2": {
-   "alias": "sbl_can_mb_ctrl_read",
-   "kind": "returns HCAN0 mailbox control byte MC[(id&0xf)*8] & 0xf",
-   "evidence": "decompiled body 0x1fe2; called from 0x10fe"
+  "date": "2026-11-16",
+  "pass": "sbl_bootloader_static_labeling_and_handover",
+  "basis": "static labeling of the SBL block 0x00000-0x001fff of the reference ROM, binary-verified against the raw ROM bytes, the committed SH-2E disassembly and the decompiled export; emulator boot trace from vector 0 (rule 7); includes the SBL->application handover mapping (dispatcher 0x1038, trampoline 0x1090, app entry 0xd204, CVN caller analysis, ref_mainInit__ 0x61a8 entry mechanism, reset-at-10000-RPM fold-in)",
+  "source": "Raw ROM bytes submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin (SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1, verified unchanged) + reverse-engineered/disassembly/60E15120_N3J1E/firmware_disassembly.asm + reverse-engineered/decompiled/60E15120_N3J1E/. Cross-ROM SBL hashes/diffs: data/labels/cross_rom/sbl_first_8k.json. Dynamic trace: docs/investigations/60E15120_N3J1E/reviews/sbl_bootloader/.",
+  "rom_unchanged": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "region": {
+    "range": "0x00000-0x001fff",
+    "vector_table": "0x0-0x3ff active while VBR=0 at reset: u32@0x0 = 0x000008b8 (reset PC), u32@0x4 = 0xffffdfa0 (initial SP), u32@0x8 = 0x000008b8 (manual-reset PC), all exception slots 0x10-0x37 = 0x000008b4 (Illegal_instr), 0x38/0x3c = 0xffffffff (erased) - byte-verified",
+    "erased_gap": "0xb0e-0xfdf all 0xff (1,234 B, CVN-free since the app checksum starts at 0x2000) - byte-verified in this ROM and all 11 corpus ROMs (data/labels/cross_rom/sbl_first_8k.json)",
+    "block_0xfe0_0xfff": "32-B non-erased block: constant 26-B prefix 7affffff507977301141ffff + 12x00 + 2797 across all 11 ROMs, 4-B stamp at 0xffa-0xffd (8 distinct values (5 in build A over 6 ROMs, 3 in build B over 5 ROMs); reference 0x2022936d), trailing 0000; the full block is byte-identical only between ROMs sharing an SBL hash (e.g. 60E15120_N3J1E and 60E0G500_N3ZHEC); role unknown - candidate SBL build stamp/checksum",
+    "sbl_end_marker": "ASCII '*SBL_END' at 0x1ff4-0x1ffb, byte-verified; scanned for by the 0x36 transfer handler 0x1c04"
+  },
+  "functions": {
+    "0x00000040": {
+      "alias": "sbl_entry_trampoline_set_sp_jmp",
+      "kind": "code - sets r15 = u32 pool 0x48 = 0xffffdfa0, then jmp @r4 (indirect entry jump); used by 0x4e0 (pool 0x594) with the chosen warm/cold entry and by ring handler 0x7c",
+      "evidence": "disasm 0x40-0x44; pool 0x48 = 0xffffdfa0 byte-verified"
+    },
+    "0x0000004c": {
+      "alias": "sbl_ring_handler_0x88",
+      "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0x88, 6, 0xfec)",
+      "evidence": "decompiled body 0x4c"
+    },
+    "0x00000064": {
+      "alias": "sbl_ring_handler_0x90",
+      "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0x90, 6, 0xff8)",
+      "evidence": "decompiled body 0x64"
+    },
+    "0x0000007c": {
+      "alias": "sbl_ring_handler_jump_target",
+      "kind": "cold-entry ring record handler: stores param+2 at 0xffffdfa4, then sbl_entry_trampoline_set_sp_jmp(u32@0xffffdfa0) - indirect jump through the ring-supplied target",
+      "evidence": "decompiled body 0x7c; pool 0x48 = 0xffffdfa0"
+    },
+    "0x0000008a": {
+      "alias": "sbl_ring_handler_0xb0_checksum",
+      "kind": "cold-entry ring record handler: second byte & ~7 == 4 -> reads BE u32 via 0xf4, sums range via 0x11a, posts FUN_00000338(0xb0, 1, sum)",
+      "evidence": "decompiled body 0x8a"
+    },
+    "0x000000c0": {
+      "alias": "sbl_ring_handler_0xc0",
+      "kind": "cold-entry ring record handler: second byte & 7 == 0 -> FUN_00000338(0xc0, 6, 0xfe4)",
+      "evidence": "decompiled body 0xc0"
+    },
+    "0x000000d8": {
+      "alias": "sbl_ring_handler_halt",
+      "kind": "cold-entry ring record handler for 0xff/0xc8 records: second byte & 7 == 0 -> terminal halt loop (bra self), else returns second byte",
+      "evidence": "decompiled body 0xd8"
+    },
+    "0x000000f4": {
+      "alias": "sbl_read_be_u32",
+      "kind": "reads big-endian u32 from @r4 (shll16/shll8 assembly of 4 bytes)",
+      "evidence": "disasm 0xf4-0x116"
+    },
+    "0x0000011a": {
+      "alias": "sbl_range_byte_sum",
+      "kind": "incremental byte-sum over [r4, r5) with service_wdt_overflow_and_toggle_pb15 (0x31c) per byte - checksum-style accumulator",
+      "evidence": "disasm 0x11a-0x150; jsr pool = 0x31c"
+    },
+    "0x00000170": {
+      "alias": "sbl_can_init",
+      "kind": "HCAN0 init: can_enter_reset_mode (0x9c0), clears TXPR/TXCR/TXACK/ABACK/RXPR/RFPR/UMSR, BCR = 0x803e (pool), configures mailboxes 0 (0xffffe) and 1 (0x21) via 0x9fc, can_exit_reset_mode (0x9de), IMR = 0xfeff",
+      "evidence": "decompiled body 0x170; called from 0x4e0 pool 0x586"
+    },
+    "0x00000210": {
+      "alias": "sbl_can_rx_poll_mb8",
+      "kind": "polls HCAN0 RXPR bit 0x100 (mailbox 8), UMSR check, clears RXPR 0x100, copies MD0 via 0xace; returns 1/0/-1",
+      "evidence": "decompiled body 0x210; called from 0x364 when reset cause == 0"
+    },
+    "0x00000256": {
+      "alias": "sbl_can_rx_buffer_append",
+      "kind": "appends param_2 bytes to RX buffer at 0xffffdfae, sets length 0xffffdfad; dispatches on first byte 0xe0/0xd8",
+      "evidence": "decompiled body 0x256; called from 0x338"
+    },
+    "0x0000031c": {
+      "alias": "service_wdt_overflow_and_toggle_pb15",
+      "kind": "external-WDT keyed service (write 0xa53c) + PB15 heartbeat toggle; called throughout boot/cold loop (already named)",
+      "evidence": "function_index.tsv name; learnings.md WDT section"
+    },
+    "0x00000338": {
+      "alias": "sbl_ring_post_or_buffer",
+      "kind": "posts a ring record: if reset_cause_ffffdfa8 == 0 -> sbl_can_rx_buffer_append (0x256), else 0x47c",
+      "evidence": "decompiled body 0x338"
+    },
+    "0x00000364": {
+      "alias": "sbl_ring_rx_poll",
+      "kind": "cold loop step: if reset cause == 0 poll CAN mb8 (0x210), else scan ring record DAT_ffffd4e0 + DAT_ffffdfb4*8 via 0x450; advances ring index mod 100",
+      "evidence": "decompiled body 0x364; called from 0x6c8 pool 0x7a4"
+    },
+    "0x000003b0": {
+      "alias": "sbl_ring_record_ptr",
+      "kind": "returns &DAT_ffffd4e0 + DAT_ffffdfb6*8 (100 x 8-byte ring records at 0xffffd4e0), advances index mod 100",
+      "evidence": "decompiled body 0x3b0; called from 0x6c8 pool 0x7a6"
+    },
+    "0x000003d4": {
+      "alias": "sbl_ring_index_reset",
+      "kind": "zeroes DAT_ffffdfb6 and DAT_ffffdfb4 (ring indices); called from 0x4e0 pool 0x58a",
+      "evidence": "decompiled body 0x3d4"
+    },
+    "0x000003e0": {
+      "alias": "sbl_ring_pending_count",
+      "kind": "returns (DAT_ffffdfb4 - DAT_ffffdfb6) mod 100 - pending ring record count; called from 0x6c8 pool 0x79e",
+      "evidence": "decompiled body 0x3e0"
+    },
+    "0x0000041c": {
+      "alias": "sbl_early_ram_init",
+      "kind": "early RAM clear loop over 0xffffdfe4..0xffffdff0 region; called from 0x4e0 pool 0x588",
+      "evidence": "decompiled body 0x41c"
+    },
+    "0x00000450": {
+      "alias": "sbl_ring_record_scan",
+      "kind": "scans a ring record at param: requires 0xffffdfec == 'U' (0x55), then byte-compares against 0xffffdfe4; called from 0x364",
+      "evidence": "decompiled body 0x450"
+    },
+    "0x0000047c": {
+      "alias": "sbl_ring_post_wait",
+      "kind": "waits for 0xffffdff8 == 0xaa (-0x56), then builds ring record at 0xffffdff0 ('z' = 0x7a unless first byte 0xe0/0xd8)",
+      "evidence": "decompiled body 0x47c"
+    },
+    "0x000004e0": {
+      "alias": "reset_handler_warm_cold_select",
+      "kind": "warm/cold entry select (already named): wdt_keyed_reset 0x572, 0x170, 0x41c, 0x3d4; param==0: warm if 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (pool 0x58e), with erased-flash fallback u32@0x7fff8 = 0xd204 (pools 0x5a4/0x5a8); cold = 0x6c8 (pool 0x58c); writes magic 0x5aa5a55a to 0xffffdffc, jsr 0x40 (pool 0x594) with r4 = entry, then halt loop",
+      "evidence": "boot entry 0x4e0: a non-zero parameter stores the byte to 0xffffdfa8, calls the mailbox init 0x8f6 and then goes to the cold target 0x6c8 unconditionally (0x4fc-0x560, pool 0x58c); the erased-flash path repeats the WDT check (0x532 bsr 0x5b0, r4 = 7) and a zero result also selects 0x6c8 (0x538/0x53a); the magic 0x5aa5a55a vs 0xffffdffc is checked at 0x502-0x50a before the trampoline at 0x40"
+    },
+    "0x00000572": {
+      "alias": "wdt_keyed_reset",
+      "kind": "keyed WDT reset write (already named)",
+      "evidence": "function_index.tsv name"
+    },
+    "0x000005b0": {
+      "alias": "wdt_overflow_reset_check",
+      "kind": "WDT overflow/reset-cause check with param 7 (already named)",
+      "evidence": "function_index.tsv name"
+    },
+    "0x00000624": {
+      "alias": "sbl_flag_U_check",
+      "kind": "returns DAT_ffffdfec == 'U' (0x55)",
+      "evidence": "decompiled body 0x624"
+    },
+    "0x00000636": {
+      "alias": "sbl_ring_erase_check",
+      "kind": "checks an 8-byte record == ff 86 00 00 00 00 00 00 (erased marker pattern)",
+      "evidence": "decompiled body 0x636"
+    },
+    "0x000006c8": {
+      "alias": "cold_entry_ring_dispatch_loop",
+      "kind": "cold boot entry monitor loop (already named): zeroes 0xffffdfb8; loops 0x364 (rx/ring poll), 0x3e0 (pending count), 0x3b0 (record ptr), dispatches on first byte 'z' with second byte & 0xf8 -> handlers 0x806/0x4c/0x64/0x7c0/0x7c/0x8a/0xc0 (pools 0x7a8-0x7b6), 0xff/0xc8 -> 0xd8; services WDT via 0x31c each iteration",
+      "evidence": "decompiled body 0x6c8 + pools 0x79e-0x7be; selected by 0x4e0 pool 0x58c"
+    },
+    "0x000007c0": {
+      "alias": "sbl_ring_handler_0x98",
+      "kind": "cold-entry ring record handler: second byte & ~7 == 4 -> u32@0xffffdfa0 = 0xf4(), clears 0xffffdfb8, posts 0x338(0x98, 4, param+2)",
+      "evidence": "decompiled body 0x7c0"
+    },
+    "0x00000806": {
+      "alias": "sbl_ring_handler_0xa8_download_start",
+      "kind": "cold-entry ring record handler: if 0xffffdfb8 == 0 sets it to 1 and DAT_ffffdfbc = DAT_ffffdfa0 (download address capture)",
+      "evidence": "decompiled body 0x806"
+    },
+    "0x0000087c": {
+      "alias": "sbl_ram_copy_range_checked",
+      "kind": "range-checked RAM copy: rejects if dest < 0xffff6000 or dest+len-1 > 0xffffdfff (warm_boot_magic cell)",
+      "evidence": "decompiled body 0x87c"
+    },
+    "0x000008b4": {
+      "alias": "Illegal_instr",
+      "kind": "terminal halt loop for all exception vectors (already named); sets SR mask 0xf0 and spins (0xd8 handler pattern)",
+      "evidence": "function_index.tsv name; vector slots 0x10-0x37 = 0x8b4 byte-verified"
+    },
+    "0x000008b8": {
+      "alias": "ref_Manual_Reset",
+      "kind": "reset entry (already named): boot_wait_nmi_pin_high 0x8cc -> 0x8f6 -> reset_handler_warm_cold_select(0) -> halt; vector 0/8 target",
+      "evidence": "decompiled body 0x8b8; ROM 0x0/0x8 = 0x8b8 byte-verified; emulator trace step 0"
+    },
+    "0x000008cc": {
+      "alias": "boot_wait_nmi_pin_high",
+      "kind": "NMI pin poll: writes ICR_W 0xffffed18 = 0xf000, loops reading bit15 until set (already named; learnings: NMI pin level)",
+      "evidence": "disasm 0x8cc-0x8f2; pool 0x9b4 = ICR_W 0xffffed18"
+    },
+    "0x000008f6": {
+      "alias": "sbl_boot_mailbox_init",
+      "kind": "writes CAN/mailbox control structures in RAM (0x8f6-0x998 region of stores to pooled addresses); called from 0x8b8 and from 0x4e0 param!=0 path (pool 0x592)",
+      "evidence": "disasm 0x8f6-0x998"
+    },
+    "0x000009c0": {
+      "alias": "can_enter_reset_mode",
+      "kind": "HCAN0 MCR reset-mode enter (already named)",
+      "evidence": "function_index.tsv name"
+    },
+    "0x000009de": {
+      "alias": "can_exit_reset_mode",
+      "kind": "HCAN0 MCR reset-mode exit (already named)",
+      "evidence": "function_index.tsv name"
+    },
+    "0x000009fc": {
+      "alias": "INT_ATU102_IMI10AG",
+      "kind": "ATU-II/mailbox config helper used as mailbox-setup call (already named; called as mailbox config from 0x170 with (mb, dir, dlc, ide, id, ...) args)",
+      "evidence": "function_index.tsv name; 0x170 call sites"
+    },
+    "0x00000ace": {
+      "alias": "sbl_memcpy",
+      "kind": "byte copy loop (dest, src, n) - decompiler body is a loop artifact; used by 0x210 CAN RX copy",
+      "evidence": "decompiled body 0xace"
+    },
+    "0x00000ae8": {
+      "alias": "sbl_memcmp_loop",
+      "kind": "byte compare loop variant (decompiler artifact body)",
+      "evidence": "decompiled body 0xae8"
+    },
+    "0x00001008": {
+      "alias": "cvn_hole_pair_check",
+      "kind": "returns u16@0x7fb00 when it equals ~u16@0x7fb02 and != 0xffff, else 0 (NOT an erase guard - no erase exists in the SBL); callers 0x1d78 (0xb1 arm) and 0x56428 (app 0xB1 conditions), result < 100 required; emulator: returns 2 with the stock hole 0002/fffd",
+      "evidence": "disasm 0x1008-0x102a: mov.w @r3,r4; r5 = extu.w r4; r6 = ~mov.w @r2 (extu.w); cmp/eq r6,r5; if equal and r5 != u16 pool 0x1034 (0xffff) return r4 else 0; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified; hole bytes 0x7fb00 = 00 02 ff fd 5f 57 44 53 ('_UDS') ROM-verified; dynamic: harness.call(0x1008) -> r0 = 2 (tests/test_sbl_bootloader.py)"
+    },
+    "0x00001038": {
+      "alias": "warm_reset_dispatcher",
+      "kind": "SBL/app handover dispatcher (already named): jsr 0x1364, 0x109c (ref_resetOBDCAN_), 0x16dc (ref_handleException_, param); param!=0 -> jsr 0x12a2 (GPIO init) and target 0x1378 (SBL CAN loop, pool 0x1082); param==0 -> erased-flash checks on u32@0x7fffc / u32@0x2000 (pools 0x1088/0x108c) with fallback target u32@0x7fff8 = 0xd204 (app entry); then jsr 0x1090 (pool 0x1084) with r4 = target, halt. The param==1 entry exists only via 0x564d4 (pool 0x564f2, delay-slot mov #1,r4 after jsr, SR |= 0xf0 first): 0x16dc(1) then presets session 0xffffdfb0=1, unlock 0xffffdfb1=1, download-armed 0xffffdfb3=1, so the app->SBL handover arrives open and armed (on-car 2026-11-18: 22 D1 00 -> 85 and 27 01 -> zero seed before any 10 85); param==0 entries (warm boot 0x1298, erased-flash fallback) run 0x16dc(0) and arrive locked",
+      "evidence": "erased-flash entry selector: pool 0x1088 = 0x7fffc is checked AND dereferenced (0x1054 mov.l @r4,r0; 0x105c mov.l @r0,r0) to reach the u32@0x2000 word; pool 0x108c = 0x7fff8 is the fallback application-entry pointer; callees 0x1364 / 0x109c / 0x16dc (pools 0x107a-0x107e)"
+    },
+    "0x00001090": {
+      "alias": "sbl_handover_trampoline_set_sp_jmp",
+      "kind": "handover trampoline: r15 = u32 pool 0x1098 = 0xffffdfa0, jmp @r4 - the SBL->app (0xd204) / SBL-loop (0x1378) jump point",
+      "evidence": "disasm 0x1090-0x1094; pool 0x1098 = 0xffffdfa0 byte-verified; emulator trace: SBL->app transition 0x1092 -> 0xd204"
+    },
+    "0x0000109c": {
+      "alias": "ref_resetOBDCAN_",
+      "kind": "CAN reset + diag mailbox config: mb14 = 0x7e0 RX, mb15 = 0x7e8 TX via 0x1ed0 (already named; learnings: diag mailboxes)",
+      "evidence": "decompiled body 0x109c"
+    },
+    "0x000010fe": {
+      "alias": "sbl_can_rx_poll_mb14",
+      "kind": "diag CAN RX poll: RXPR bit 0x40 (mb14), UMSR 0x40 check, clears, copies MD14 to buffer via 0x1fa2; returns 1/0/-1 (learnings: FUN_000010fe)",
+      "evidence": "decompiled body 0x10fe; called from 0x125c"
+    },
+    "0x00001150": {
+      "alias": "sbl_can_tx_mb15",
+      "kind": "diag CAN TX: waits TXPR bit 0x80 free, TXACK 0x80, copies payload to MD15 via 0x1fbc, TXPR 0x80",
+      "evidence": "decompiled body 0x1150"
+    },
+    "0x00001182": {
+      "alias": "sbl_can_clear_rx_flags",
+      "kind": "clears HCAN0 RXPR/UMSR bit 0x40",
+      "evidence": "decompiled body 0x1182"
+    },
+    "0x000011c4": {
+      "alias": "sbl_rx_buffer_head_clear",
+      "kind": "zeroes u16@0xffffdfa0 (inactivity counter / RX head): once before the loop (0x137a, pool 0x1438), on every successfully reassembled frame (0x13c8 single, 0x13e4 first, 0x140a every consecutive), and after every service dispatch (0x1544) - received-but-invalid frames do not reset it",
+      "evidence": "decompiled body 0x11c4; 0x1378 pool 0x1438 = 0x11c4"
+    },
+    "0x000011cc": {
+      "alias": "service_wdt_overflow_toggle_pb15_and_count",
+      "kind": "WDT service helper: reads TCSR 0xffffec10 and acts only when the OVF bit is SET (0x11d4 tst #0x80,r0; 0x11d6 bt 0x11f6) - re-keys the WDT (0xa53c), toggles PB15 (xor 0x8000 on 0xfffff738) and increments the u16 at 0xffffdfa0, then returns it. Same polarity in the sibling 0x31c (0x322/0x324); the counter advances per WDT overflow period, not per loop pass.",
+      "evidence": "function_index.tsv name; 0x1378 pool 0x1440 = 0x11cc"
+    },
+    "0x000011fa": {
+      "alias": "sbl_uds_response_send",
+      "kind": "builds and sends the SBL response frame from the 0xffffdfc6 record via 0x1150 (ISO-TP single-frame: length = payload+1)",
+      "evidence": "decompiled body 0x11fa; called by all service handlers"
+    },
+    "0x0000125c": {
+      "alias": "sbl_can_rx_poll",
+      "kind": "polls 0x10fe into buffer 0xffffdfa2, returns (result == 1)",
+      "evidence": "decompiled body 0x125c; 0x1378 pool 0x143c = 0x125c"
+    },
+    "0x00001272": {
+      "alias": "sbl_rx_buffer_ptr",
+      "kind": "returns 0xffffdfa2 (SBL RX buffer pointer); called from 0x1378 pool 0x143e",
+      "evidence": "decompiled body 0x1272"
+    },
+    "0x000012a2": {
+      "alias": "sbl_boot_gpio_init",
+      "kind": "GPIO port init for BOOT mode (PADR/PACRH/PACRL/PAIOR/PBDR 0xefff/PBIOR 0x9000/PCDR 0x1f/PDDR 0x3eff/PDIOR 0x2000/PEDR 0xffff...); called from 0x1038 param!=0 path (pool 0x1080) before entering the SBL CAN loop",
+      "evidence": "decompiled body 0x12a2"
+    },
+    "0x00001364": {
+      "alias": "ref_resetWatchdog_00001364",
+      "kind": "keyed WDT reset (already named); first jsr of 0x1038 (pool 0x107a)",
+      "evidence": "function_index.tsv name"
+    },
+    "0x00001378": {
+      "alias": "sbl_can_command_loop",
+      "kind": "SBL CAN command loop (entered via 0x1090 from 0x1038 param!=0 or erased-flash fallback): per iteration jsr 0x11c4, 0x125c (CAN RX), 0x1272 -> dispatch on service byte with buffer 0xffffd3f0: 0x28->0x170a, 0x85->0x1774, 0x10->0x17f0, 0x27->0x1858, 0x3e->0x197a, 0x11->0x19ce, 0x22->0x1a50, 0x3b->0x1ac0, 0x34->0x1ad6, 0x36->0x1c04, 0x37->0x1d30, 0xb1->0x1d78, default->0x1e34 (NRC 0x11); loop head 0x1388 (back-edge 0x1548); multi-frame assembly via 0x154c/0x15a6/0x1624/0x1654; WDT via 0x11cc; tail 0x141a-0x1450 on the u16@0xffffdfa0 pass counter: r12==0 (no multi-frame in progress) and cnt >= 0x5f6 (pool 0x143a) -> jsr 0x16dc(0) at 0x1428 (inactivity relock, all six latches cleared); r12!=0 and cnt >= 0x2e (0x1382) -> jsr 0x11c4 + r12=0 at 0x1448 (inter-frame timeout: aborts only the in-progress transfer); 0x11c4 zeroes the counter on every reassembled frame (0x13c8/0x13e4/0x140a) and after every dispatch (0x1544), so any processed request (incl. 3E) resets it",
+      "evidence": "disasm 0x1378-0x154c + pools 0x1438-0x1610 byte-verified; UDS report §12.2"
+    },
+    "0x0000154c": {
+      "alias": "sbl_isotp_first_frame",
+      "kind": "ISO-TP SINGLE-frame handler: length = b0 & 0xf (mov #0xf at 0x154e), rejects 0 and > 7, copies up to 7 bytes to 0xffffd3f0; reached from the dispatch at 0x13a4 via bsr 0x13b6",
+      "evidence": "decompiled body 0x154c; bsr from 0x13b6"
+    },
+    "0x000015a6": {
+      "alias": "sbl_isotp_consecutive_frame",
+      "kind": "ISO-TP FIRST-frame handler: total length = ((b0 & 0xf) << 8) | b1 (shll8 at 0x15b6), rejects < 8, copies 6 bytes and clears the sequence counters; the in-progress flag r12 is set on this path (0x13e2)",
+      "evidence": "decompiled body 0x15a6; bsr from 0x13d0"
+    },
+    "0x00001624": {
+      "alias": "sbl_isotp_single_frame",
+      "kind": "ISO-TP flow-control TRANSMITTER: builds 30 00 ... (mov #0x30 at 0x1626) and sends it through 0x1150; called at 0x13e0 right after a first frame, never a dispatch target",
+      "evidence": "decompiled body 0x1624; bsr from 0x13e0"
+    },
+    "0x00001654": {
+      "alias": "sbl_isotp_flow_control",
+      "kind": "ISO-TP CONSECUTIVE-frame handler: sequence compare (counter & 0xf) == (b0 & 0xf), 0x400 cap, returns 0 / -2 / -1; target of dispatch type 2 at 0x13f2",
+      "evidence": "decompiled body 0x1654; bsr from 0x13f2"
+    },
+    "0x000016dc": {
+      "alias": "ref_handleException_",
+      "kind": "SBL latch housekeeping (already named): clears bytes 0xffffdfb0 (session), 0xffffdfb1 (unlock), 0xffffdfb2 (seed flag), 0xffffdfb3 (download armed), 0xffffdfb4 (transfer active), 0xffffdfb5; if param == 1 then sets 0xffffdfb0 = 1, 0xffffdfb1 = 1, 0xffffdfb3 = 1 - so the app->SBL handover (0x1038(1)) arrives session-set, unlocked and download-armed, while every other entry arrives locked. Callers: 0x1038 (pool 0x107e, passes its own param: 0 from warm entry 0x1298, 1 only from 0x564d4 pool 0x564f2 delay-slot mov #1,r4), 0x17f0 sub 0x81 (0x182c bsr, r4=0: 10 81 relock), 0x1378 loop (0x1428 jsr, r4=0, when the 0x11cc WDT-service counter >= 0x5f6 pool 0x143a: periodic relock)",
+      "evidence": "disasm 0x16dc-0x1706 + pools 0x17d4-0x17e8 byte-verified (0xffffdfb0/b1/b2/b3/b4/b5, cmp/eq 0x1 on the param, mov #1 stores at 0x1700-0x1704); SBL block byte-identical in 60E0E700_N3YLEE (0x16dc/0x1858/0x1a50 bytes compared); dynamic: harness.call(0x16dc, r4=0/1) latch assertions + full on-car trace replay over CAN pass (tests/test_sbl_bootloader.py, 9 tests)"
+    },
+    "0x0000170a": {
+      "alias": "sbl_svc_0x28_communication_control",
+      "kind": "UDS 0x28 handler: NRC 0x22 if session latch DAT_ffffdfb0 == 1, else positive 0x68 (or 0x68/0x31 variants); response via 0x11fa at 0xffffdfc6",
+      "evidence": "decompiled body 0x170a; dispatch 0x145c cmp/eq 0x28 -> pool 0x14f8 = 0x170a"
+    },
+    "0x00001774": {
+      "alias": "sbl_svc_0x85_control_dtc_setting",
+      "kind": "UDS 0x85 handler: NRC 0x22 if locked; sub 1/2 -> positive 0xc5",
+      "evidence": "decompiled body 0x1774; pool 0x14fa = 0x1774, compare value 0x85 at pool 0x14f4"
+    },
+    "0x000017f0": {
+      "alias": "sbl_svc_0x10_diagnostic_session",
+      "kind": "UDS 0x10 handler: sub 0x81 -> ref_handleException_(0) at 0x182c (relock: clears all six latches 0xffffdfb0-b5), response 0x50 0x81; sub 0x85 -> sets session latch DAT_ffffdfb0 = 1 (programming/boot session, 0x1838-0x183e), response 0x50 0x85; else NRC 0x12",
+      "evidence": "decompiled body 0x17f0; pool 0x14fc = 0x17f0, cmp/eq 0x10 at 0x1466"
+    },
+    "0x00001858": {
+      "alias": "sbl_svc_0x27_security_access",
+      "kind": "UDS 0x27 handler (SBL): NRC 0x22 if session latch DAT_ffffdfb0 == 0 (0x187c-0x1888); seed request (sub 1): if unlock latch DAT_ffffdfb1 == 1 -> ZERO seed 67 01 00 00 00 (0x18dc-0x18ec, the on-car post-handover reply), else fixed seed 67 01 55 AA 55 (0x1908-0x1914, pools 0x19f0=0xaa); seed request clears DAT_ffffdfb2 (0x1968); key send (sub 2) -> literal compare against 4D AC CD (0x193a-0x1950) -> unlock latch DAT_ffffdfb1 = 1 + 67 02 (0x1958-0x1966), mismatch -> NRC 0x35, no outstanding seed -> NRC 0x22 (on-car: 7F 27 22)",
+      "evidence": "service 0x27 handler: seed request returns the zero seed when the unlock latch 0xffffdfb1 == 1 and the fixed seed 55 AA 55 otherwise; the fixed-seed reply SETS 0xffffdfb2 (0x1916 mov.b r11,@r13, r11 = 1), the zero-seed reply clears it (0x18c4 mov.b r7,@r13, r7 = 0) and any key attempt clears it (0x1968); the key compare against 4D AC CD sets the unlock latch on match (0x1958)"
+    },
+    "0x0000197a": {
+      "alias": "sbl_svc_0x3e_tester_present",
+      "kind": "UDS 0x3e handler: sub 1 -> positive 0x7e, else NRC 0x12/length 2",
+      "evidence": "decompiled body 0x197a; pool 0x1500 = 0x197a, cmp/eq 0x3e at 0x146e"
+    },
+    "0x000019ce": {
+      "alias": "sbl_svc_0x11_ecu_reset",
+      "kind": "UDS 0x11 handler: NRC 0x22 if session locked, NRC 0x33 if unlock latch DAT_ffffdfb1 == 0; hard reset sub 1 -> positive 0x51 then terminal loop",
+      "evidence": "decompiled body 0x19ce; pool 0x1502 = 0x19ce, cmp/eq 0x11 at 0x1472"
+    },
+    "0x00001a50": {
+      "alias": "sbl_svc_0x22_read_did",
+      "kind": "UDS 0x22 handler: DID 0xd100 -> positive 0x62 d1 00 + the session latch value itself: 0x85 if DAT_ffffdfb0 == 1 else 0x81 (0x1aa4-0x1ab6) - on-car post-handover 22 D1 00 -> 62 D1 00 85 before any 10 85; else NRC 0x31/0x12",
+      "evidence": "disasm 0x1a50-0x1abe + pools 0x1b04/0x1b06/0x1b08/0x1b14 byte-verified (0x00d1, 0x0085, 0x0081, 0xffffdfb0); pool 0x1504 = 0x1a50, cmp/eq 0x22 at 0x1476; dynamic: 62 d1 00 85 after 0x16dc(1), 62 d1 00 81 after 10 81 (tests/test_sbl_bootloader.py)"
+    },
+    "0x00001ac0": {
+      "alias": "sbl_svc_0x3b_write_did",
+      "kind": "UDS 0x3b handler: always negative 0x7f 0x3b 0x22 (write not supported in SBL)",
+      "evidence": "decompiled body 0x1ac0; pool 0x1506 = 0x1ac0, cmp/eq 0x3b at 0x147a"
+    },
+    "0x00001ad6": {
+      "alias": "sbl_svc_0x34_request_download",
+      "kind": "UDS 0x34 handler: NRC 0x22 if session locked, 0x33 if not unlocked, 0x10 if transfer already active; parses BE address via 0x1e4c -> staging target 0xffff6000 + addr (DAT_ffffdfb8), BE size via 0x1e72, range-checked against 0x7e000; positive 0x74 with 0x400 max block",
+      "evidence": "decompiled body 0x1ad6; pool 0x1608 = 0x1ad6, cmp/eq 0x34 at 0x147e"
+    },
+    "0x00001c04": {
+      "alias": "sbl_svc_0x36_transfer_data",
+      "kind": "UDS 0x36 handler: NRC 0x22 unless download active; copies 0x400-byte blocks from the CAN message to staging DAT_ffffdfc0 while scanning for the '*SBL_END' magic at ROM 0x1ff4 (DAT_00001ff4); on complete marker + exhausted size responds 0x78 and jumps via 0x1090 to the staging base; else NRC 0x72 at size end",
+      "evidence": "decompiled body 0x1c04; pool 0x160a = 0x1c04, cmp/eq 0x36 at 0x1482; ROM 0x1ff4 = '*SBL_END' byte-verified"
+    },
+    "0x00001d30": {
+      "alias": "sbl_svc_0x37_transfer_exit",
+      "kind": "UDS 0x37 handler: NRC 0x22 unless download active; empty payload -> closes transfer, positive 0x79; else NRC 0x12",
+      "evidence": "decompiled body 0x1d30; pool 0x160c = 0x1d30, cmp/eq 0x37 at 0x1486"
+    },
+    "0x00001d78": {
+      "alias": "sbl_svc_0xb1_arm_download",
+      "kind": "UDS 0xb1 boot-mode arm (NO erase - only callees are 0x1008 and response sender 0x11fa): NRC 0x22/0x33 gates; payload 00 b2 00 with length 3 -> 0x1008() < 100 required (else NRC 0x10): clears DAT_ffffdfb4, sets download-armed latch DAT_ffffdfb3 = 1 (required by 0x1ad6/0x34, else NRC 0x10 there), answers 0xf1 00 b2; else NRC 0x31/0x12; emulator over CAN: b1 00 b2 00 -> f1 00 b2, dfb3=1, dfb4=0 (tests/test_sbl_bootloader.py)",
+      "evidence": "decompiled body 0x1d78; callgraph 0x1d78 -> {0x1008, 0x11fa} only; pool 0x160e = 0x1d78, compare value 0xb1 at pool 0x14f6; no flash-control register (0xffffe800+) referenced anywhere in 0x1000-0x1ffb (pool scan of committed disassembly)"
+    },
+    "0x000565e8": {
+      "alias": "app_uds_service_b1",
+      "kind": "app service 0xB1 (uds_service_b1_mazda_specific): scans the sub-table of {id u16, len u16, handler u32, mask u16} records; record 0x5f0f4 (00 b2 00 01 00 05 63 50 ff fc) = id 0x00B2, 1 data byte, handler 0x56350, mask 0xfffc",
+      "evidence": "decompiled body 0x565e8; dispatch record 0x5ec84 = b1 00 00 00 00 05 65 e8 ROM byte-verified; sub-record 0x5f0f4 ROM byte-verified"
+    },
+    "0x00056350": {
+      "alias": "app_b1_00b2_boot_request",
+      "kind": "app 0xB1 sub 0x00B2 handler: needs session index 1 (0xffffd1cf, table 0x5f040 index 1 = 0x85) else NRC 0x22; app unlock level 1 (0xffffd1d0) else 0x33; conditions 0x56428 (battery 8.0-16.5 V, coolant -40..120 C unless 0xffffc5e6, 0x1008() < 100) else 0x22/0x10; data byte 0 else 0x31; then queues F1 00 B2 (0x564ac) and sets boot-request state 0xffffd1dc = 3 (0x563de(3)); no engine-speed check on this path",
+      "evidence": "decompiled body 0x56350; 0x56428 gates ROM-verified (emulator: r0=0 with 12.5 V on AN14); 0x564ac = setupForUdsResponse(0xb1, {f1,00,b2}, 3); post-response 0x680de -> 0x6892a -> 0x54a36(0xb1) -> 0x563de(1) -> 0x564d4 -> 0x1038(1) SBL loop (callgraph-verified)"
+    },
+    "0x00056428": {
+      "alias": "app_b1_conditions_check",
+      "kind": "app 0xB1 conditions: returns 0 (OK) when 0x1008() < 100 and battery 8.0-16.5 V (0xffffb590) and (coolant in -40..120 C or 0xffffc5e6 set), else NRC 0x22 / 0x10",
+      "evidence": "decompiled body 0x56428; emulator: 12.5 V via AN14 -> r0 = 0 (tests/test_sbl_bootloader.py)"
+    },
+    "0x000564ac": {
+      "alias": "app_queue_f1_00b2",
+      "kind": "queues the F1 00 B2 positive response for app 0xB1 sub 0x00B2",
+      "evidence": "decompiled body 0x564ac: ref_setupForUdsResponse_(0xb1, {0xf1, 0x00, 0xb2}, 3)"
+    },
+    "0x00054a36": {
+      "alias": "app_post_response_service_hook",
+      "kind": "post-response hook: for last service 0xb1 calls 0x563de(1) which (with 0xffffd1dc == 3) runs 0x564d4 -> 0x1038(1) -> SBL loop 0x1378",
+      "evidence": "decompiled body 0x54a36; callgraph 0x6892a -> thunk 0x68d70 -> 0x54a36; 0x680de -> 0x6892a"
+    },
+    "0x0006892a": {
+      "alias": "app_uds_session_tail",
+      "kind": "UDS-session tail (called from 0x680de): passes last service byte DAT_ffffdde0 to 0x54a36",
+      "evidence": "decompiled body 0x6892a; callgraph 0x680de -> 0x6892a"
+    },
+    "0x00001e34": {
+      "alias": "sbl_svc_default_nrc11",
+      "kind": "default service handler: negative response 0x7f <svc> 0x11 (serviceNotSupported)",
+      "evidence": "decompiled body 0x1e34; pool 0x1610 = 0x1e34 (default bra 0x153c)"
+    },
+    "0x00001e4c": {
+      "alias": "sbl_parse_be_u32",
+      "kind": "parses big-endian u32 address from 4 bytes (same shape as 0xf4)",
+      "evidence": "decompiled body 0x1e4c; called from 0x1ad6"
+    },
+    "0x00001e72": {
+      "alias": "sbl_parse_be_u24",
+      "kind": "parses big-endian u24 size from 3 bytes",
+      "evidence": "decompiled body 0x1e72; called from 0x1ad6"
+    },
+    "0x00001e94": {
+      "alias": "sbl_flash_status_wait_set",
+      "kind": "polls a status register bit 3 up to 4000 iterations (flash-controller busy wait, set variant); called from 0x109c with HCAN0 MCR - generic MMIO status wait",
+      "evidence": "decompiled body 0x1e94"
+    },
+    "0x00001eb2": {
+      "alias": "sbl_mmio_status_wait_clear",
+      "kind": "polls a status register bit 3 up to 4000 iterations (clear variant)",
+      "evidence": "decompiled body 0x1eb2; called from 0x109c"
+    },
+    "0x00001ed0": {
+      "alias": "sbl_can_mailbox_config",
+      "kind": "builds an HCAN0 mailbox config: mask bits from (mb&0xff)+8&0xf, standard-ID stored low byte first into MC[4..5] (id<<5), DLC in MC[0]; used for mb0/1 (0x170) and mb14/15 (0x109c)",
+      "evidence": "decompiled body 0x1ed0; learnings.md RCAN section"
+    },
+    "0x00001fa2": {
+      "alias": "sbl_memcpy8",
+      "kind": "copies 8 bytes (decompiler loop artifact); used by 0x10fe CAN RX copy",
+      "evidence": "decompiled body 0x1fa2"
+    },
+    "0x00001fbc": {
+      "alias": "sbl_memcpy8_alt",
+      "kind": "copies 8 bytes to MD15 (decompiler loop artifact); used by 0x1150 CAN TX",
+      "evidence": "decompiled body 0x1fbc"
+    },
+    "0x00001fe2": {
+      "alias": "sbl_can_mb_ctrl_read",
+      "kind": "returns HCAN0 mailbox control byte MC[(id&0xf)*8] & 0xf",
+      "evidence": "decompiled body 0x1fe2; called from 0x10fe"
+    }
+  },
+  "handover": {
+    "handover_chain": [
+      "vector 0 (ROM 0x0): SP = u32@0x4 = 0xffffdfa0, PC = u32@0x0 = 0x8b8 - byte-verified",
+      "0x8b8 ref_Manual_Reset -> 0x8cc boot_wait_nmi_pin_high -> 0x8f6 sbl_boot_mailbox_init -> 0x4e0 reset_handler_warm_cold_select(0) -> halt loop",
+      "0x4e0: wdt_keyed_reset 0x572, sbl_can_init 0x170, sbl_early_ram_init 0x41c, sbl_ring_index_reset 0x3d4; warm iff 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (erased-flash fallback u32@0x7fff8 = 0xd204); cold = 0x6c8; writes magic to 0xffffdffc, jsr 0x40 (pool 0x594) = set SP 0xffffdfa0 + jmp @entry",
+      "warm: 0x1298 (mov.w pool 0x1348 = 0x1038; jsr; mov #0,r4) -> 0x1038 warm_reset_dispatcher(0) -> 0x1364, 0x109c, 0x16dc; param==0 -> flash-validity checks on u32@0x7fffc (=0x2000) and u32@0x2000 (erased 0xffffffff checks) -> target u32@0x7fff8 = 0xd204; jsr 0x1090 = set SP 0xffffdfa0 + jmp @r4",
+      "SBL: 0x1038 param!=0 (via 0x564d4 warm_reset_dispatcher(1), called from 0x563de when param==1 && DAT_ffffd1dc==3) -> 0x12a2 sbl_boot_gpio_init -> target 0x1378 sbl_can_command_loop -> 0x1090 -> jmp 0x1378. Also erased-flash fallback in the param==0 path selects 0x1378 when u32@0x7fffc or u32@0x2000 is 0xffffffff",
+      "latch preset on handover: 0x1038 calls 0x16dc with its param (0x1046, pool 0x107e); param==1 (only from 0x564d4) -> 0x16dc sets 0xffffdfb0=1, 0xffffdfb1=1, 0xffffdfb3=1, so the SBL loop arrives session-set/unlocked/download-armed; param==0 -> all six latches cleared (locked). Confirmed on car 2026-11-18 and reproduced in the emulator (see on_car_handover_feedback_2026-11-18)",
+      "app: 0xd204 (u32@0x7fff8): ldc VBR = 0x7fc50 (pool 0xd2c0), lds FPSCR = 0x40001 (pool 0xd2c4), jsr 0x4c7a (nop, pool 0xd2cc), r4 = u32@0xd730 = 0xffff768c (pool 0xd2c8), jsr 0x9e68 (pool 0xd2d0) -> 0x4c80, shutdown_ram_swap_semaphore_mark 0xd518, 0x9f0c(0), ref_setSR_PARAM 0xe0, PFDR_W 0xfffff74e bit3 = 1, 0x2064, 0x4cf0, 0x3ad8(0) -> os_init 0x3e10 -> scheduler/idle 0x3dac; emulator trace: SBL->app transition at 0x1092 -> 0xd204 (step 2856 of a 200k-cycle boot)"
+    ],
+    "app_validity_check": {
+      "at_handover": "none based on the CVN: the SBL handover (0x4e0/0x1038) only checks that the IVT tail pointer u32@0x7fffc and the app header u32@0x2000 are not erased (0xffffffff); no checksum is verified before jumping to 0xd204",
+      "cvn_engine": "0x5a3f4 FUN_0005a3f4 sums 0x2000-0x7ffff in 0x1000-byte sections skipping 0x7fb00-0x7fb7f into DAT_ffffd2b0/d2b2; finalize 0x5a714 stores (d2b0<<16)|d2b2 to 0xffff9104 + done flag 0xffff910c; reset 0x5a3d8; reader 0x5a5a6 (UDS report §12.1)",
+      "cvn_callers": "0x5a3f4 is called only from 0x1122a, which is called only from task[0] entry 0x62a0 (callgraph.tsv; task table ROM 0x4990 rec[0] = {param 0x4000000, stack 0xffff7408, entry 0x62a0, mask 0x1000000} byte-verified) - i.e. the CVN is computed at runtime by the application background task, not at handover; 0x5a3d8 called from 0x113b8 (caller 0x6366 via thunk 0x9f52) and 0x3de70"
+    },
+    "main_init_entry": {
+      "0x000061a8": {
+        "alias": "ref_mainInit__",
+        "direct_callers": "none - no jsr/bsr target, no u32 ROM32 pointer (raw scan: zero u32 occurrences of 0x000061a8), not a task-table entry (19 records at 0x4990 byte-verified)",
+        "sole_reference": "pool word 0x25164 = 0x61a8 (u16, byte-verified), loaded by mov.w at 0x25094 and 0x250b0 inside 0x2508c FUN_0002508c: posts a record {handler = 0x61a8 @0xffff9f38, len, enable byte @+9 = 1, 0x5a @+0xb} and arms ATU-II ch4 compare (GR4B = TCNT4+1, TIOR4A |= 0x20, TSR3 = 0xffbf, TIER3 |= 0x40), then waits TSR3 bit 0x40 / re-arms GR4B +0x9c6",
+        "registration_chain": "0x2508c <- 0x21b84 thunk (u32 ref 0x21be4 = 0x2508c) <- 0x1102a FUN_0001102a (85-callee init fan-out); 0x1102a's only callgraph caller is 0x61a8 itself (circular), so the first entry of 0x61a8 is not a direct call",
+        "record_consumers": "0xffff9f38 is read by 0x567a (IVT offset 0x204 -> trampoline 0x2b00, handler pool 0x2b10 = 0x567a, byte-verified) and 0x57c6 alternator_pwm_service (IVT offset 0x224 -> trampoline 0x2b78, pool 0x2b88 = 0x57c6); these check record byte +9 == 1 and manage the record fields",
+        "dynamic": "emulator boot 2,000,000 cycles (idle, and with ATU2 crank input 900 rpm): 0x61a8, 0x1102a, 0x2508c, task[0] 0x62a0 and CVN 0x5a3f4 all hit 0 times - the crank-synchronous OS tick never fires in the emulator, so no task ever dispatches (consistent with os_scheduling_deep_dive_report.md)"
+      }
+    },
+    "reset_at_10000_rpm_review": "docs/investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md: no confirmed reset-causing bug found in that targeted pass (10,000-RPM thresholds at 0xc3ce/0x1f6ae/0x49c5a/0x123da/0x124d6 are control-mode transitions or blends, not reset requests); unresolved mechanisms remain watchdog starvation / supply or crank-signal disturbance; this handover pass adds that the SBL handover performs no CVN validity check, so an app image with a bad CVN is still booted - the CVN is only computed and exposed diagnostically afterwards",
+    "on_car_handover_feedback_2026-11-18": {
+      "source": "uncommitted intake input/feedback-for-hee-handshake-on-car.md (rx8tune/Fullburn Studio on-car session 2026-11-18, RX-8 S1 Japanese market, PCM calibration N3YLEE00013SN0A0; chassis number redacted per repo rule 3); N3YLEE-family SBL block byte-identical to the reference ROM at 0x16dc/0x1858/0x1a50 (bytes compared this session)",
+      "observed": "10 81 -> 50 81; B1 00 B2 00 -> 7F B1 22 in default session, 7F B1 33 in session 85 without unlock; 27 01/27 02 (app algorithm) then B1 00 B2 00 -> F1 00 B2; after the handover the SBL answered 22 D1 00 -> 62 D1 00 85 (session latch already set, before any 10 85), 10 85 -> 50 85, 27 01 -> 67 01 00 00 00 (zero seed - already unlocked), 27 02 4D AC CD -> 7F 27 22; 11 01 -> 51 then the application answered again ~1.05 s later",
+      "explanation": "the handover runs 0x1038(1) -> 0x16dc(1), which presets 0xffffdfb0=1 (session), 0xffffdfb1=1 (unlock), 0xffffdfb3=1 (download armed); the DID 0xd100 reply (0x1a50) and the zero-seed branch of 0x27 (0x1858 0x18dc-0x18ec) read exactly those latches. Authorization is inherited via the param==1 convention, not by sharing the app cells 0xffffd1cf/0xffffd1d0; the app 0xB1 00B2 handler only sets boot-request state 3 after its own session/unlock/conditions gates. The fixed seed 55 AA 55 / key 4D AC CD path is reached on every SBL entry EXCEPT the handover (warm/erased-flash param==0, 10 81 relock, loop relock at 0x1428) - not only on cold start; the erased checks on 0x2000/0x7fffc only select SBL-loop vs app target",
+      "dynamic": "emulator reproduces the on-car sequence frame-for-frame after harness.call(0x16dc, r4=1): 22 D1 00 -> 62 D1 00 85, 10 85 -> 50 85, 27 01 -> 67 01 00 00 00, 27 02 4D AC CD -> 7F 27 22, 10 81 -> 50 81 (relock) then 22 D1 00 -> 62 D1 00 81 and 27 01 -> 67 01 55 AA 55 (tests/test_sbl_bootloader.py::test_sbl_loop_after_app_handover_matches_on_car_trace, test_handleException_param_sets_sbl_latches)"
+    }
   }
- },
- "handover": {
-  "handover_chain": [
-   "vector 0 (ROM 0x0): SP = u32@0x4 = 0xffffdfa0, PC = u32@0x0 = 0x8b8 - byte-verified",
-   "0x8b8 ref_Manual_Reset -> 0x8cc boot_wait_nmi_pin_high -> 0x8f6 sbl_boot_mailbox_init -> 0x4e0 reset_handler_warm_cold_select(0) -> halt loop",
-   "0x4e0: wdt_keyed_reset 0x572, sbl_can_init 0x170, sbl_early_ram_init 0x41c, sbl_ring_index_reset 0x3d4; warm iff 0xffffdffc == 0x5aa5a55a or wdt_overflow_reset_check(7) != 0; warm entry = u32@ROM 0x1000 = 0x1298 (erased-flash fallback u32@0x7fff8 = 0xd204); cold = 0x6c8; writes magic to 0xffffdffc, jsr 0x40 (pool 0x594) = set SP 0xffffdfa0 + jmp @entry",
-   "warm: 0x1298 (mov.w pool 0x1348 = 0x1038; jsr; mov #0,r4) -> 0x1038 warm_reset_dispatcher(0) -> 0x1364, 0x109c, 0x16dc; param==0 -> flash-validity checks on u32@0x7fffc (=0x2000) and u32@0x2000 (erased 0xffffffff checks) -> target u32@0x7fff8 = 0xd204; jsr 0x1090 = set SP 0xffffdfa0 + jmp @r4",
-   "SBL: 0x1038 param!=0 (via 0x564d4 warm_reset_dispatcher(1), called from 0x563de when param==1 && DAT_ffffd1dc==3) -> 0x12a2 sbl_boot_gpio_init -> target 0x1378 sbl_can_command_loop -> 0x1090 -> jmp 0x1378. Also erased-flash fallback in the param==0 path selects 0x1378 when u32@0x7fffc or u32@0x2000 is 0xffffffff",
-   "latch preset on handover: 0x1038 calls 0x16dc with its param (0x1046, pool 0x107e); param==1 (only from 0x564d4) -> 0x16dc sets 0xffffdfb0=1, 0xffffdfb1=1, 0xffffdfb3=1, so the SBL loop arrives session-set/unlocked/download-armed; param==0 -> all six latches cleared (locked). Confirmed on car 2026-11-18 and reproduced in the emulator (see on_car_handover_feedback_2026-11-18)",
-   "app: 0xd204 (u32@0x7fff8): ldc VBR = 0x7fc50 (pool 0xd2c0), lds FPSCR = 0x40001 (pool 0xd2c4), jsr 0x4c7a (nop, pool 0xd2cc), r4 = u32@0xd730 = 0xffff768c (pool 0xd2c8), jsr 0x9e68 (pool 0xd2d0) -> 0x4c80, shutdown_ram_swap_semaphore_mark 0xd518, 0x9f0c(0), ref_setSR_PARAM 0xe0, PFDR_W 0xfffff74e bit3 = 1, 0x2064, 0x4cf0, 0x3ad8(0) -> os_init 0x3e10 -> scheduler/idle 0x3dac; emulator trace: SBL->app transition at 0x1092 -> 0xd204 (step 2856 of a 200k-cycle boot)"
-  ],
-  "app_validity_check": {
-   "at_handover": "none based on the CVN: the SBL handover (0x4e0/0x1038) only checks that the IVT tail pointer u32@0x7fffc and the app header u32@0x2000 are not erased (0xffffffff); no checksum is verified before jumping to 0xd204",
-   "cvn_engine": "0x5a3f4 FUN_0005a3f4 sums 0x2000-0x7ffff in 0x1000-byte sections skipping 0x7fb00-0x7fb7f into DAT_ffffd2b0/d2b2; finalize 0x5a714 stores (d2b0<<16)|d2b2 to 0xffff9104 + done flag 0xffff910c; reset 0x5a3d8; reader 0x5a5a6 (UDS report \u00a712.1)",
-   "cvn_callers": "0x5a3f4 is called only from 0x1122a, which is called only from task[0] entry 0x62a0 (callgraph.tsv; task table ROM 0x4990 rec[0] = {param 0x4000000, stack 0xffff7408, entry 0x62a0, mask 0x1000000} byte-verified) - i.e. the CVN is computed at runtime by the application background task, not at handover; 0x5a3d8 called from 0x113b8 (caller 0x6366 via thunk 0x9f52) and 0x3de70"
-  },
-  "main_init_entry": {
-   "0x000061a8": {
-    "alias": "ref_mainInit__",
-    "direct_callers": "none - no jsr/bsr target, no u32 ROM32 pointer (raw scan: zero u32 occurrences of 0x000061a8), not a task-table entry (19 records at 0x4990 byte-verified)",
-    "sole_reference": "pool word 0x25164 = 0x61a8 (u16, byte-verified), loaded by mov.w at 0x25094 and 0x250b0 inside 0x2508c FUN_0002508c: posts a record {handler = 0x61a8 @0xffff9f38, len, enable byte @+9 = 1, 0x5a @+0xb} and arms ATU-II ch4 compare (GR4B = TCNT4+1, TIOR4A |= 0x20, TSR3 = 0xffbf, TIER3 |= 0x40), then waits TSR3 bit 0x40 / re-arms GR4B +0x9c6",
-    "registration_chain": "0x2508c <- 0x21b84 thunk (u32 ref 0x21be4 = 0x2508c) <- 0x1102a FUN_0001102a (85-callee init fan-out); 0x1102a's only callgraph caller is 0x61a8 itself (circular), so the first entry of 0x61a8 is not a direct call",
-    "record_consumers": "0xffff9f38 is read by 0x567a (IVT offset 0x204 -> trampoline 0x2b00, handler pool 0x2b10 = 0x567a, byte-verified) and 0x57c6 alternator_pwm_service (IVT offset 0x224 -> trampoline 0x2b78, pool 0x2b88 = 0x57c6); these check record byte +9 == 1 and manage the record fields",
-    "dynamic": "emulator boot 2,000,000 cycles (idle, and with ATU2 crank input 900 rpm): 0x61a8, 0x1102a, 0x2508c, task[0] 0x62a0 and CVN 0x5a3f4 all hit 0 times - the crank-synchronous OS tick never fires in the emulator, so no task ever dispatches (consistent with os_scheduling_deep_dive_report.md)"
-   }
-  },
-  "reset_at_10000_rpm_review": "docs/investigations/60E15120_N3J1E/reviews/reset_at_10000_rpm.md: no confirmed reset-causing bug found in that targeted pass (10,000-RPM thresholds at 0xc3ce/0x1f6ae/0x49c5a/0x123da/0x124d6 are control-mode transitions or blends, not reset requests); unresolved mechanisms remain watchdog starvation / supply or crank-signal disturbance; this handover pass adds that the SBL handover performs no CVN validity check, so an app image with a bad CVN is still booted - the CVN is only computed and exposed diagnostically afterwards",
-  "on_car_handover_feedback_2026-11-18": {
-   "source": "uncommitted intake input/feedback-for-hee-handshake-on-car.md (rx8tune/Fullburn Studio on-car session 2026-11-18, RX-8 S1 Japanese market, PCM calibration N3YLEE00013SN0A0; chassis number redacted per repo rule 3); N3YLEE-family SBL block byte-identical to the reference ROM at 0x16dc/0x1858/0x1a50 (bytes compared this session)",
-   "observed": "10 81 -> 50 81; B1 00 B2 00 -> 7F B1 22 in default session, 7F B1 33 in session 85 without unlock; 27 01/27 02 (app algorithm) then B1 00 B2 00 -> F1 00 B2; after the handover the SBL answered 22 D1 00 -> 62 D1 00 85 (session latch already set, before any 10 85), 10 85 -> 50 85, 27 01 -> 67 01 00 00 00 (zero seed - already unlocked), 27 02 4D AC CD -> 7F 27 22; 11 01 -> 51 then the application answered again ~1.05 s later",
-   "explanation": "the handover runs 0x1038(1) -> 0x16dc(1), which presets 0xffffdfb0=1 (session), 0xffffdfb1=1 (unlock), 0xffffdfb3=1 (download armed); the DID 0xd100 reply (0x1a50) and the zero-seed branch of 0x27 (0x1858 0x18dc-0x18ec) read exactly those latches. Authorization is inherited via the param==1 convention, not by sharing the app cells 0xffffd1cf/0xffffd1d0; the app 0xB1 00B2 handler only sets boot-request state 3 after its own session/unlock/conditions gates. The fixed seed 55 AA 55 / key 4D AC CD path is reached on every SBL entry EXCEPT the handover (warm/erased-flash param==0, 10 81 relock, loop relock at 0x1428) - not only on cold start; the erased checks on 0x2000/0x7fffc only select SBL-loop vs app target",
-   "dynamic": "emulator reproduces the on-car sequence frame-for-frame after harness.call(0x16dc, r4=1): 22 D1 00 -> 62 D1 00 85, 10 85 -> 50 85, 27 01 -> 67 01 00 00 00, 27 02 4D AC CD -> 7F 27 22, 10 81 -> 50 81 (relock) then 22 D1 00 -> 62 D1 00 81 and 27 01 -> 67 01 55 AA 55 (tests/test_sbl_bootloader.py::test_sbl_loop_after_app_handover_matches_on_car_trace, test_handleException_param_sets_sbl_latches)"
-  }
- }
 }
