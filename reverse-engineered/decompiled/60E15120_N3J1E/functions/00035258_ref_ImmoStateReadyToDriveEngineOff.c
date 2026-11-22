@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_state5_ready_engine_off [medium]: ref_ImmoStateReadyToDriveEngineOff (inherited name, unique_exact_bytes match to 60E0FC00 0x35978). c21e!=1 -> c21e=5, c212 countdown, on 0 -> ImmoBadStateSet, c21d=5, TX 200, c212=500; c21e==1 -> spin on 0x3587c until c208 changes, then c20c=500, 0x34e68.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.

@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffcfbc pd7_relay_condition (uint8): Written by 0x4ed3c: = 1 if (cfbe==1 && cfaa>=cfa6) || 0xffffd15c(cranking_in_progress)==1, cleared if cfc1==1. Feeds PD7 via cfb6.
+ */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b3c8: Table 3D - 120 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006b3dc: Table 3D - 121 (RX8Defs data pointer, axes and dimensions match).

@@ -1,8 +1,8 @@
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006adb4: Engine Torque Max - Barometric Pressure Compensation (RX8Defs data pointer, axes and dimensions match).
- */
 /* [ADDITIONAL SOURCE REVIEW]
  * dsc_desired_torque_calc [medium]: 0xffffbbe0 = 0xffffbca0 - ((bb20 * decode(bbc9))/100 - bcb8 - bcbc); filter 0xffffbbf8 = first_order_filter(decode(bbc9), bbf8, 0.25, 0.19685039) -> 0xffffbbf7 = encode_u8_affine_saturate(bbf8); 0xffffbbc9 = -2 when engine stopped, 0xfe = 0xfe when validity/fault flags. Called from 0x2a2ae via pool 0x2a470.
+ */
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006adb4: Engine Torque Max - Barometric Pressure Compensation (RX8Defs data pointer, axes and dimensions match).
  */
 /* ROM address: 0x0002b496; body bytes: 440; decompiled */
 

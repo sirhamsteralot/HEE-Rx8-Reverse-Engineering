@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * cal_id_string_copy [high]: Renamed from inherited ref_ alias ref_ImmoRelatedFaultSomething_ (misnomer) on body evidence: the 72 B body copies the 16-byte calibration string 'N3J1E_1W.Z05' to 0xffffdf70..df7f and sets 0xffffdf90=0xc, returning 0x20 — called from boot task 0x1102a. Not an immobilizer fault handler.
+ */
 /* ROM address: 0x000169d4; body bytes: 72; decompiled_with_warnings */
 
 /* WARNING: Removing unreachable block (ram,0x000169e4) */

@@ -4,12 +4,19 @@ from pathlib import Path
 import csv,re
 from paths import b, base, rom_file, ROOT  # legacy-layout shim (paths.py): maps input/Tuning-merged keys to this repo
 d=b/'source_review'
-def rows(n):return list(csv.DictReader((d/n).open(),delimiter='\t'))
+def rows(n):return list(csv.DictReader((d/n).open(newline=''),delimiter='\t'))
+def addr_key(v):
+    """Normalize a table cell to the 8-digit function address it names, or None."""
+    m=re.match(r'(?:0x)?([0-9a-fA-F]{4,8})\b',(v or '').strip())
+    return m.group(1).lower().zfill(8) if m else None
 notes={}
 # Keep every accepted row per address (an address may carry a medium and a high hypothesis);
 # evidence may be missing on legacy 4-field RAM rows (ROADMAP discrepancy D12) - render as empty.
-for r in rows('accepted_function_aliases.tsv'):notes.setdefault(r['address'],[]).append(r['alias']+' ['+r['confidence']+']: '+(r['evidence'] or ''))
-for r in rows('accepted_ram_aliases.tsv'):notes.setdefault(r['reader'],[]).append('RAM 0x'+r['address']+' '+r['alias']+' ('+r['type']+'): '+(r['evidence'] or ''))
+for r in rows('accepted_function_aliases.tsv'):notes.setdefault(addr_key(r['address']) or r['address'],[]).append(r['alias']+' ['+r['confidence']+']: '+(r['evidence'] or ''))
+# A RAM row belongs to the function named in its `reader` cell; that cell is written with abbreviated
+# addresses ('380c8') and, when a cell has several accessors, as a phrase - the first address wins.
+for r in rows('accepted_ram_aliases.tsv'):notes.setdefault(addr_key(r['reader']),[]).append('RAM 0x'+r['address']+' '+r['alias']+' ('+r['type']+'): '+(r['evidence'] or ''))
+notes.pop(None,None)
 patt=r'/\* \[ADDITIONAL SOURCE REVIEW\].*?\*/\n';combined=b/'decompiled/firmware_decompiled.c';s=re.sub(patt,'',combined.read_text(),flags=re.S)
 for a,lines in notes.items():
  p=next((b/'decompiled/functions').glob(a+'_*'));raw=re.sub(patt,'',p.read_text(),flags=re.S);note='/* [ADDITIONAL SOURCE REVIEW]\n * '+'\n * '.join(lines)+'\n */\n';p.write_text(note+raw);marker='/* ROM address: 0x'+a+';';assert s.count(marker)==1;s=s.replace(marker,note+marker)

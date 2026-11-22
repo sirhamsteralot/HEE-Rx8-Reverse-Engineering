@@ -1,3 +1,6 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * immo_eeprom_write_step_1 [medium]: ref_afterImmo_1 (unique_exact_bytes to 60E0FC00 0x371ec). One step of the immo EEPROM-param write progress machine: on request flags (c24d/c24e/c227/c261) starts candidate_e2ram_param_write_dispatch(6), polls c288 via 0x35d80, and on completion answers UDS service 0xb1 with payload f1 01 01 (ref_setupForUdsResponse_(0xb1,...) + ref_udsResponseRelated__(0xb1,3)). afterImmo_2..8 are the same pattern with param ids 8/9/0xd/0xc/... — see e2ram_device_labels.json id map (id 2 -> (2, 0xffffc26c, 8) is the 8-byte immo key cell).
+ */
 /* ROM address: 0x00036acc; body bytes: 160; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 000371ec (160 bytes). Names prefixed ref_
