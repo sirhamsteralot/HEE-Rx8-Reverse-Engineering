@@ -109,17 +109,29 @@ def main():
                 lines.append('RAM 0x' + rr['address'] + ' ' + rr['alias'] + ' (' + rr['type'] + '): ' + rr['evidence'])
         notes[a] = lines
     patt = r'/\* \[ADDITIONAL SOURCE REVIEW\].*?\*/\n'
-    for a, lines in notes.items():
-        note = '/* [ADDITIONAL SOURCE REVIEW]\n * ' + '\n * '.join(lines) + '\n */\n'
+    notes = {a: '/* [ADDITIONAL SOURCE REVIEW]\n * ' + '\n * '.join(ls) + '\n */\n'
+             for a, ls in notes.items()}
+    for a, note in notes.items():
         # per-function file: merge into an existing block (comment_merge re-canonicalizes)
         p = next((b / 'decompiled/functions').glob(a + '_*'))
         raw = patt and re.sub(patt, '', p.read_text(encoding='utf-8', errors='surrogateescape'), flags=re.S)
         p.write_text(note + raw, encoding='utf-8', errors='surrogateescape')
-        for mp, old, new in monoliths:
+    # monoliths: insert every note in ONE pass per file (rebinding `new` per
+    # function would discard the previous insertion), stripping any review
+    # block run already sitting directly above each function's marker first, so
+    # re-runs replace the block instead of duplicating it. (?:(?!\*/)[\s\S])*
+    # keeps each block match inside a single comment.
+    tail_blocks = re.compile(r'(?:/\* \[ADDITIONAL SOURCE REVIEW\](?:(?!\*/)[\s\S])*\*/\n)+$')
+    for mp, old, new in monoliths:
+        cur = new
+        for a, note in notes.items():
             marker = '/* ROM address: 0x' + a + ';'
-            assert new.count(marker) == 1, a
-            new = new.replace(marker, note + marker)
-            mp.write_text(new, encoding='utf-8', errors='surrogateescape')
+            assert cur.count(marker) == 1, a
+            mi = cur.index(marker)
+            cur = tail_blocks.sub('', cur[:mi]) + note + cur[mi:]
+        if cur != new:
+            mp.write_text(cur, encoding='utf-8', errors='surrogateescape')
+            changed += 1
 
     for r in index:
         if r['address'] in my_fn:
