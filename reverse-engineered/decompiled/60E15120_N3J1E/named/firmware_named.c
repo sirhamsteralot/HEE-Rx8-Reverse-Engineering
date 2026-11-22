@@ -37404,7 +37404,7 @@ void FUN_00025790(void)
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * charging_dtc_timer_a [medium]: 0xffffb608 = 0x138 when (b654 > 18.471 || b658 > 15.938 || engine stopped || b638 < 0x3f || b645==0 || (b645==1 && b63a < 0x3f)), else counts down; counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4.
+ * charging_dtc_timer_a [medium]: 0xffffb608 = 0x138 when the rails are not high (0xffffb654 <= 18.471 && 0xffffb658 <= 15.938, pools 0x74978/0x7497c, 0x257f4-0x25816) or the engine is stopped (0xffffa428 == 0) or b645 == 0 or (b645 == 1 && b63a < 0x3f) or b638 < 0x3f; otherwise counts down (0x2586c-0x25872); counters b638/b63a saturate while running/voltage >= 10 (b645 from battery volts 9/10 thresholds). Called from 0x2680e via pool 0x268b4.
  * RAM 0xffffb658 system_voltage_alt (float): Second voltage rail used in the charging DTC timers (thresholds 15.938/10.938 pools 0x7497c/0x7498c/0x74984) by 0x257b4/0x2590a; distinct from filtered battery volts 0xffffb590.
  */
 /* ROM address: 0x000257b4; body bytes: 280; decompiled */
@@ -37657,7 +37657,7 @@ void candidate_battery_temp_model(void)
  */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_voltage_target_select [medium]: Target voltage 0xffffb61c: 14.2 (pool 0x749c8) when c6ac<=0 && b64c; tbl 0x6a5b0(battery temp b5c4) + clamp(b59c ± 0.2 hysteresis, b624) in cold mode (b617); tbl 0x6a59c + min(b59c+0.2, b624) in mode b618; then 0xffffb59c = ref_alternatorPIDsomething(0x5cba4)(b61c). Coolant/IAT 145/150 C flags b64a/b64b/b64c. Called from 0x26868 via pool 0x268d8 and from 0x25790.
- * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c when the 0xffffb60e timer (0x138) reaches 0 under low-voltage conditions (0xffffb654 >= 8.486699 pool 0x74a1c); gates P2503 raise in 0x54590 and the warning flag in 0x26760.
+ * RAM 0xffffb5b2 low_voltage_latch (uint8): Set by 0x2635c once the 0xffffb60e timer (reload 0x138 from pool 0x7496e) has run out under low voltage (0xffffb654 < 8.486699, pool 0x74a1c, tested at 0x264b0): set path 0x264a0-0x264aa, clear path 0x264b0-0x264b6. Gates P2503 raise in 0x54590 and the warning flag in 0x26760.
  * RAM 0xffffb5a4 electrical_load_filtered (float): first_order_filter(0xffffb5e0, b5a4, 0.035335) maintained by 0x2633e; numerator of the drag ratio in 0x2ce18 (b5a4/b5a0).
  */
 /* ROM address: 0x00025c6c; body bytes: 1008; decompiled */
@@ -37796,7 +37796,7 @@ LAB_00025f94:
 
 
 /* [ADDITIONAL SOURCE REVIEW]
- * alternator_voltage_error_calc [medium]: Voltage error: 0xffffb5c8 = clamp(0xffffb59c - 0xffffb65c, -2.5, 2.5) (2.5 at pool 0x2623c), delta 0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(alt speed) when b613, else 0; ramp (rpm - b600)/(b604 - b600) clamp [0.1, 1.0] with b600/b604 = 406.25/700.0 (pools 0x749ec/0x749e4, AT-in-neutral selects 406.25 when b534==1 && b53a==0); integral terms 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), 0xffffb5d8 accumulates. Called from 0x267c6 via pool 0x268a0.
+ * alternator_voltage_error_calc [medium]: Voltage error: 0xffffb5c8 = clamp(0xffffb59c - 0xffffb65c, -2.5, 2.5) (2.5 at pool 0x2623c), delta 0xffffb5cc; target field 0xffffb5a0 = tbl 0x6a54c(alt speed) when b613, else 0; ramp (rpm - b600)/(b604 - b600) clamp [0.1, 1.0] with b600 = 406.25 / b604 = 562.5 when b534 == 1 && b53a == 0 (pools 0x749ec/0x749f0, stores 0x261e8-0x261f2), else b600 = 700.0 / b604 = 750.0 (pools 0x749e4/0x749e8, stores 0x261f4-0x261fa; r4 = 0xffffb600 via pool 0x26230, r5 = 0xffffb604 via 0x2622e); integral terms 0xffffb5d4 = clamp(b5c8*10, -125, 4.8828), 0xffffb5d8 accumulates. Called from 0x267c6 via pool 0x268a0.
  * RAM 0xffffb5a0 alternator_target_field (float): Target field drive from tbl 0x6a54c(alt speed 0xffffb598) when b613, else 0; written by 0x2616e; used as band reference in 0x26624/0x2ce18.
  * RAM 0xffffb5e0 electrical_load_raw (float): Raw electrical-load quantity filtered into 0xffffb5a4 (0x2633e) and thresholded at 40/30 in 0x264f0 -> 0xffffb5b3; compared against b5a0 band in 0x26624.
  * RAM 0xffffb65c battery_voltage_filtered (float): Filtered battery voltage subtracted from the target 0xffffb59c in 0x2616e to form the charging error 0xffffb5c8 (clamp ±2.5).
@@ -37883,7 +37883,7 @@ void FUN_0002633e(void)
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* [ADDITIONAL SOURCE REVIEW]
- * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 unless (b654 >= 8.486699 (pool 0x74a1c) && b5e0 > 19.531 && engine running && counters full && volts >= 10); 0xffffb5b2 = 1 when b60e==0, else 0 when b654 >= 8.486699. Called from 0x2680e via pool 0x268c0.
+ * low_voltage_dtc_timer [medium]: 0xffffb60e = 0x138 while 0xffffb654 >= 8.486699 (pool 0x74a1c; reload from pool 0x7496e at 0x263fe-0x26400, gated by b5e0 > 19.531, engine running, counters full, volts >= 10), else counts down (0x2645a onward); 0xffffb5b2 = 1 once b60e == 0 (0x264a0-0x264aa) and cleared again while b654 >= 8.486699 (0x264b0-0x264b6). Called from 0x2680e via pool 0x268c0.
  */
 /* ROM address: 0x0002635c; body bytes: 264; decompiled */
 
@@ -44669,8 +44669,8 @@ void ref_getDesiredTorqueCalcVar3(void)
  * Descriptor 6a790 (data 75cc8, five uint16 values) is indexed by inferred alternator speed ffffb598. Near-zero ffffb5a0 forces ffffbcc4 to zero; otherwise lookup result is multiplied by ffffb5a4/ffffb5a0 and assigned to ffffbcc4. This supports a speed-dependent maximum modulated by a ratio, but does not establish Nm or the ratio's physical meanings.
  */
 /* [ADDITIONAL SOURCE REVIEW]
- * alternator_drag_torque_calc [medium]: 0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Called from the 0x25xxx alternator chain.
- * RAM 0xffffbcc4 alternator_drag_torque (float): Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate for drivability compensation.
+ * alternator_drag_torque_calc [medium]: 0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Sole caller 0x2cb80 inside ref_calculateTorqueRelatedParams 0x2cb64 (pool 0x2cbe0); no alternator batch references it.
+ * RAM 0xffffbcc4 alternator_drag_torque (float): Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate consumed by ref_calculateTorqueRelatedParams 0x2cb64 (call at 0x2cb80, pool 0x2cbe0).
  */
 /* ROM address: 0x0002ce18; body bytes: 76; decompiled */
 

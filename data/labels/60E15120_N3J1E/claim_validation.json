@@ -150,7 +150,7 @@
       "subsystem-logic/alternator_control_report.md": {
         "reg_pairs": 2,
         "call_claims": 0,
-        "pool_claims": 0,
+        "pool_claims": 2,
         "word_assigns": 1
       },
       "subsystem-logic/fuel_pump_control_report.md": {

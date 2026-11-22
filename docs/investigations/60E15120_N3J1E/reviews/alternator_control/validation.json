@@ -12,10 +12,10 @@
     "semantic_equivalence_verified": false
   },
   "verify_claims": "PASS",
-  "verify_readability": "PASS (3355 function bodies consistent)",
+  "verify_readability": "PASS on 3355 function bodies except the pre-existing 0x28992 mismatch",
   "verify_math_units": "PASS",
   "validate_reports": "PASS",
-  "pytest": "134 passed",
+  "pytest": "375 passed of 376 (pre-existing test_defs_upstream_pin failure)",
   "labels_applied": {
     "functions": 25,
     "ram": 10,
@@ -28,18 +28,67 @@
       "decompiled/symbols.tsv",
       "metadata/integrated_names.json"
     ],
-    "export_files_renamed": 36,
     "function_bodies_verified_intact": 3355
   },
   "pipeline_scripts": "review_alternator_labels.py (idempotent; wired into rebuild.sh after review_intake_labels.py) + annotate_source_review.py + integrate_reviewed_names.py",
   "record": "metadata/alternator_labels.json",
   "ghidra_database_updated": false,
   "binary_level_verification": {
-    "batch_pools_resolved": {"0x267c6": "0x26888-0x268b0", "0x2680e": "0x268b4-0x268d0", "0x26868": "0x268d8"},
-    "pwm_output_pool": {"0x2578c": "0xffff9f44 (period cell)", "0x25780": "0x42c80000 (100.0f)", "0x25788": "0x47800000 (65536.0f)"},
-    "atu_registers_from_symbols_tsv": {"ATUII_TCNT5_W": "0xfffff4e0", "ATUII_GR5B_W": "0xfffff4e4", "ATUII_TIOR5A_B": "0xfffff4eb", "ATUII_TSR3_W": "0xfffff480"},
-    "dtc_slot_chain": {"0x7b": "code_id 0x71 -> 0x2502 P2502", "0x7c": "code_id 0x72 -> 0x2503 P2503", "0x7d": "code_id 0x73 -> 0x2504 P2504", "tables": ["0x7df42 (slot->code_id)", "0x7e560 (code_id->code)"]},
+    "batch_pools_resolved": {
+      "0x267c6": "0x26888-0x268b0",
+      "0x2680e": "0x268b4-0x268d0",
+      "0x26868": "0x268d8"
+    },
+    "pwm_output_pool": {
+      "0x2578c": "0xffff9f44 (period cell)",
+      "0x25780": "0x42c80000 (100.0f)",
+      "0x25788": "0x47800000 (65536.0f)"
+    },
+    "atu_registers_from_symbols_tsv": {
+      "ATUII_TCNT5_W": "0xfffff4e0",
+      "ATUII_GR5B_W": "0xfffff4e4",
+      "ATUII_TIOR5A_B": "0xfffff4eb",
+      "ATUII_TSR3_W": "0xfffff480"
+    },
+    "dtc_slot_chain": {
+      "0x7b": "code_id 0x71 -> 0x2502 P2502",
+      "0x7c": "code_id 0x72 -> 0x2503 P2503",
+      "0x7d": "code_id 0x73 -> 0x2504 P2504",
+      "tables": [
+        "0x7df42 (slot->code_id)",
+        "0x7e560 (code_id->code)"
+      ]
+    },
     "float_literals": "area 0x74978-0x74a44 (thresholds 18.471/15.938/16.973/10.938/8.486699, 2.08 @0x74990, 859.0 @0x74994, 93.0/0.43, 14.2 @0x749c8, 0.1244/0.9672, 406.25/700.0)"
   },
-  "limits": "Static analysis only. candidate_ names are hypotheses. Warning lamp not traced to a GPIO. TIO5B package-pin -> terminal hop not verified (board routing)."
+  "limits": "Static analysis only. candidate_ names are hypotheses. Warning lamp not traced to a GPIO. TIO5B package-pin -> terminal hop not verified (board routing).",
+  "accuracy_review": {
+    "scope": "DTC-timer reload polarity, low-voltage latch polarity, ramp endpoints, drag-torque caller, counter wording",
+    "reverified_addresses": [
+      "0x257b4",
+      "0x2635c",
+      "0x2616e",
+      "0x2ce18",
+      "0x25b36",
+      "0x25a3c"
+    ],
+    "pools_read": [
+      "0x25888-0x258bc",
+      "0x2639e-0x264ec",
+      "0x26220-0x2625c",
+      "0x25be8-0x25bf4",
+      "0x2cbe0"
+    ],
+    "literals_read": [
+      "0x74978",
+      "0x7497c",
+      "0x749e4",
+      "0x749e8",
+      "0x749ec",
+      "0x749f0",
+      "0x74a1c",
+      "0x7496e"
+    ],
+    "corrections": 9
+  }
 }
