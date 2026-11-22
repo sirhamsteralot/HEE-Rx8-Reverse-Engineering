@@ -253,18 +253,17 @@ migrating.
   and tests in the same change. Where a report carries many numbers, add a
   tracked `utilities/scripts/rx8-pcm-pipeline/verify_<subsystem>_chain.py` that
   re-reads them and writes the `reviews/<subsystem>/` log with a regeneration
-  test (rule 6d; pattern: `verify_fuel_pump_chain.py`, which lands with the
-  fuel pump control corrections).
-  One branch + PR per report. Method, status and the findings already collected
+  test (rule 6d; pattern: `verify_fuel_pump_chain.py`).
+  One branch + PR per report. Method, status and the corrections already applied
   live in
   [`report_accuracy_audit.md`](docs/investigations/60E15120_N3J1E/report_accuracy_audit.md);
-  treat those findings as hypotheses and re-check the cited instruction and pool
-  before applying anything (rule 7). **Ordering:** the reports still at the
-  `docs/investigations/60E15120_N3J1E/` root are audited **after** their
-  migration items (C items 42–61) move them into the new format, so each
-  subsystem is re-derived once in its final shape; the four subsystem-logic
-  reports whose findings are pending (alternator, immobilizer, knock, SBL) are
-  the head of the queue.
+  a claim named there is re-derived from the disassembly and its literal pool, and
+  no statement is corrected before that re-check (rule 7). **Ordering:** the
+  reports still at the `docs/investigations/60E15120_N3J1E/` root are audited
+  **after** their migration items (C items 42–61) move them into the new format,
+  so each subsystem is re-derived once in its final shape. All six reports in
+  [`docs/subsystem-logic/`](docs/subsystem-logic/README.md) are audited and carry
+  their corrections; the root reports are the remaining queue.
 
 #### C.4 Docs reorganisation
 
