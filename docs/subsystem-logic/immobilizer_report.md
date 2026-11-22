@@ -4,6 +4,7 @@
 |------|--------------|---------|
 | 2026-11-17 | Initial report | 1 |
 | 2026-11-19 | Scope discipline: non-immobilizer rows found while labeling (`0x169d4` cal-ID copy, `0x11c4`/`0xffffdfa0`) moved out of the memory map into §4.6; `0xffffdfa0` dual-label conflict with the SBL report recorded as ROADMAP D14 | 2 |
+| 2026-11-22 | Accuracy pass: challenge-comparison pool mapping, `0xffffdfa0` typing and accessor inventory, timer constants and expiry routing, `0x360a8` call site, pool range, dispatcher tail count | 3 |
 | 2026-11-20 | `0x169d4` label fixed: inherited misnomer `ref_ImmoRelatedFaultSomething_` renamed to body-evidenced `cal_id_string_copy` in the label record and the accepted-alias TSV | 3 |
 
 **Applicable ROMs** — the behavior described here is **assumed identical across
@@ -110,8 +111,9 @@ is not traced here.
 ### 2.3 The command channel (CAN 0x047 → PCM)
 
 Each received 0x047 frame is `[cmd][d0][d1][d2][d3][d4][chkH][chkL]`; the
-unpack (`0x38150`) copies it to `0xffffc4b9..c4c4` and sets the pending flag
-`0xffffc4bf = 1`. The decoder `0x355f0` (called at `0x34b10` inside the
+unpack (`0x38150`) only de-interleaves it into `0xffffc4b9..c4c4`; the pending
+flag `0xffffc4bf = 1` and `0xffffc4c0 = 1` are set by `0x3811c` itself
+(`0x38140`/`0x38146` and `0x38148`). The decoder `0x355f0` (called at `0x34b10` inside the
 dispatcher) consumes it in the same cycle and sets the command sub-state
 `0xffffc21e`:
 
@@ -144,7 +146,8 @@ stateDiagram-v2
     S2 --> S4 : mismatch -> TX 0x01/0x81, c1d0=0
     S3 --> S5 : engine-off timer (c212) expires -> TX 0xc8
     S4 --> S5 : c21c==1 after timeout
-    S5 --> S1 : c21e==1 (re-auth)
+    S5 --> S2 : c21e==1 & c221==2 (seed sent again)
+    S5 --> S0 : c221==3 (new authorization)
 ```
 
 Step by step:
@@ -175,8 +178,13 @@ Step by step:
    (`0xffffc274`=1, c226=1) when no command is pending, watches for engine
    stop (RPM ≤ 0 → 15000-count timer, then TX 0xc8 "ready, engine off" and
    state 5).
-5. **Timeouts** — every exchange step has a ~500-count timer
-   (`0xffffc20c/c20e/c210/c214/c216`); expiry routes to the rejected state.
+5. **Timeouts** — the exchange steps carry different windows
+   (`0xffffc20c/c20e` = 500, `0xffffc214` = 500 and 250 after authorization,
+   `0xffffc210` = 250, `0xffffc216` = 750, `0xffffc212` = 15000 then 500).
+   Expiry does not always route to the rejected state: a `0xffffc210` expiry only
+   turns the lamp off and clears `0xffffc1d0` (`0x35014` `jsr 0x2556c` with r4=0,
+   `0x3501c`/`0x3501e`; state unchanged), while a `0xffffc214` expiry in state 3
+   sets `0xffffc226` (`0x3515c`).
    The dispatcher also counts consecutive error sub-states (c21e ∈ {5,6}):
    three strikes set `0xffffc1d1`.
 
@@ -213,8 +221,11 @@ the key, code and status from the 93C56 via the E2RAM device (device words
 0x6050000 = 0x0a–0x0b), setting erased flags `0xffffc1d5..c1d8` on all-00/all-ff.
 It is gated by `0xffffd1ce` (security) and `ref_securityNotUnlocked(1)`.
 Defaults when erased (`0x34a74`): key regs 0x10001 / 0x55aa55aa, code cells
-0x55aa / 0xb7e3. The key regs are additionally mixed with the free-running
-timer `ATUII_TCNT0H_W` (`0xfffff430`) by `0x360a8` each dispatcher pass.
+0x55aa / 0xb7e3. The key regs are additionally mixed with the free-running timer
+`ATUII_TCNT0H_W` (`0xfffff430`) by `0x360a8`, which is reached only through an
+indirect call inside `0x371b6` when a captured parameter byte equals `0x20`
+(`0x371fa` `cmp/eq 0x20,r0`, `0x37202` `jsr` via pool `0x37278`) — not from the
+dispatcher tail.
 
 The `ref_afterImmo_1..8` handlers (`0x36acc`–`0x37bde`, dispatched by
 `0x36908` at the end of every dispatcher pass) form the EEPROM parameter-write
@@ -349,7 +360,7 @@ Every address below can be checked directly in
 | 0xffffc4b0 | `can047_rx_raw_buffer` (c4b0–c4b7) | u8[8] | CAN 0x047 RX mailbox buffer |
 | 0xffffc4b9 | `immo_rx_command` / 0xffffc4ba `immo_rx_data` (c4b9–c4be) | u8[6] | unpacked RX frame |
 | 0xffffc4bf | `immo_rx_command_pending` | u8 | RX command pending flag |
-| 0xffffd1e2 | `immo_counter` / 0xffffd1e4 `immo_counter_enable` | u8 | immo counter (slow task) |
+| 0xffffd1e2 | `immo_counter` / 0xffffd1e4 `immo_counter_enable` | u16 | immo counter (slow task); word accesses, saturating at 0xffff |
 | 0xffffd1ce | `security_unlocked_flag` | u8 | gates 0x375c0 |
 
 #### ROM tables / descriptors
@@ -360,7 +371,7 @@ Every address below can be checked directly in
 | 0x004e26c | CAN 0x047 RX mailbox descriptor (mb 39, DLC 8, buffer 0xffffc4b0); last record of the HCAN1 table at 0x4e21c |
 | 0x0034b10 | without-RKE immo-off patch pattern (16 B, in 0x34ae2) |
 | 0x0034f5c | with-RKE immo-off patch site (`cmp/eq` in 0x34f42) |
-| 0x00356b6–0x00356d2 | literal pool of 0x355f0 (c4bf/c4b9/c4ba/c4bb/c4bc/c4bd, consts 0x90/0xc9/0xff, c21e/c221/c204) |
+| 0x00356b6–0x00356d3 | literal pool of 0x355f0 (c4bf/c4b9/c4ba/c4bb/c4bc/c4bd, consts 0x90/0xc9/0xff, c21e/c221/c204); code resumes at 0x356d4 |
 
 ### 4.2 Labeling applied
 
@@ -377,6 +388,32 @@ chain functions per ROM across all 11 dumped ROMs, from
 and extended, not duplicated.
 
 ### 4.3 Corrections
+
+- The challenge comparison at `0x34f54`–`0x34f5c` reads `0xffffc200` from pool
+  `0x34fc4` and `0xffffc204` from pool `0x34fc8` (`r2` = locally computed seed,
+  `r3` = received challenge); earlier notes had the two pools swapped. The
+  equality result is unchanged.
+- `0xffffdfa0` is a u16 cell read as bytes with a whole-byte zero test, not a
+  u8 bit0 flag; `0x11c4` stores a word, not a byte, and `0x169d4` is a third
+  accessor alongside `0x11cc` and `0x16b20`.
+- `0xffffd1e2` is u16 (word accesses with `extu.w` and a `0xffff` ceiling at
+  `0x5676a`), not u8/s16.
+- `0x360a8` is not called from the dispatcher tail: its only reference is the
+  indirect call inside `0x371b6` (`0x371fa`–`0x37202`) when the captured
+  parameter byte is `0x20`.
+- The pending flags `0xffffc4bf`/`0xffffc4c0` are set by `0x3811c`, not by the
+  unpack helper `0x38150`.
+- State 5 with `c21e == 1` dispatches on `c221` (`0x34e68`): `2` returns to the
+  seed state 2, `3` returns to state 0; it never re-enters state 1.
+- The exchange timers have different windows and two of them do not route to the
+  rejected state (see §2.4 step 5).
+- `0x35f64` sets `0xffffc276` to 0 when it exceeds 5 (it does not clamp to 5);
+  `0xffffc282` is clamped to 2 (`0x35ff6`/`0x35ffe`).
+- The `0x355f0` literal pool spans `0x356b6`–`0x356d3` (the last item is the u32
+  at `0x356d0`); code resumes at `0x356d4`.
+- The dispatcher tail after `0x36908` holds eight calls — seven `jsr`
+  (`0x3625e`, `0x36700`, `0x3665a`, `0x36830`, `0x3677a`, `0x360c8`, `0x36142`)
+  plus the tail `jmp 0x361e4` (`0x34c54`–`0x34c58`).
 
 - `0x169d4` was inherited as `ref_ImmoRelatedFaultSomething_`, a misnomer: its
   body copies the 16-byte calibration string `N3J1E_1W.Z05` to
@@ -433,11 +470,15 @@ key addresses — no body sections or memory-map rows above):
   recorded in §4.3, cross-link
   [`uds_mode22_dispatch_report.md`](../investigations/60E15120_N3J1E/uds_mode22_dispatch_report.md).
 - **`0x11c4` / `0xffffdfa0`** — `0x11c4` sits inside the SBL block
-  (`0x1000–0x1fff`) and zeroes the u16 at `0xffffdfa0`; the SBL report
-  dynamically proves that cell as `sbl_inactivity_counter` (relock tests), so
-  the `immo_diag_bit` alias here conflicts — ROADMAP D14, cross-link
-  [`sbl_bootloader_report.md`](sbl_bootloader_report.md). `0x16b20`
-  `ref_readImmoBit` testing that bit remains immo-diag surface pending D14.
+  (`0x1000–0x1fff`) and stores the **word** 0 (`0x11ca` `mov.w r3,@r2`, pool
+  `0x1284`); `0xffffdfa0` is therefore a u16 cell, and the whole byte at that
+  address is what the three accessors test — a whole-byte zero test in `0x16b20`
+  (`0x16b22` `mov.b @r2,r3`, `0x16b24` `tst r3,r3`), a byte store of `1` when
+  `ROM[0x6e224] == 0xff` (this ROM: `0x00`) in `0x169d4`, and the saturating
+  `u16` increment in `0x11cc`. The SBL report dynamically proves the same cell as
+  `sbl_inactivity_counter` (relock tests), so the `immo_diag_bit` alias here
+  conflicts — ROADMAP D14, cross-link
+  [`sbl_bootloader_report.md`](sbl_bootloader_report.md).
 
 - The keyless control module itself is external and not analyzed; the protocol
   is described from the PCM side only (which words are sent, compared,
