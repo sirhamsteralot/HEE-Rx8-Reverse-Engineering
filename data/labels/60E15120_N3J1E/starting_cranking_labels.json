@@ -1,38 +1,376 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-23",
   "pass": "starting_cranking_subsystem_analysis",
-  "basis": "Neighbor of the fuel pump drive path mapped while tracing PDDR/PEDR port writes: PD7 (pkg pin 256, harness candidate starter relay 5A) = pd7_relay_flag 0xffffcfb6 via relay_output_pair_pd7_pe0 0x3a0ec; 0xffffcfb6 <- pd7_relay_condition 0xffffcfbc (0x4ed3c) <- cranking_in_progress 0xffffd15c (0x532d0). The same 0x3a0ec function also drives PE0 (DBW relay, see throttle_dbw_labels.json). Static analysis + raw ROM bytes; dynamic checks in tests/test_starting_cranking.py.",
-  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1); split out of fuel_pump_control_labels.json per the report scope-discipline rule: these rows were mapped while tracing the fuel pump port banks but belong to their own subsystems",
+  "basis": "Engine start / cranking subsystem: crank-state determination (rpm hysteresis + post-start blanking), closed-throttle dwell flag, cranking fuel pulse chain, closed-throttle timing fade, flood cut and the starter-relay output. Every row below was re-derived from the disassembly and its literal pool against the raw ROM bytes (see utilities/scripts/rx8-pcm-pipeline/verify_starting_cranking_chain.py, log docs/investigations/60E15120_N3J1E/reviews/starting_cranking/rawbin_reverify_log.txt); the PD7 starter-relay chain was mapped while tracing the fuel pump port banks and is carried forward from the earlier split of fuel_pump_control_labels.json.",
+  "source": "reference ROM 60E15120_N3J1E (submodules/Mazda_RX8_PCM_ReverseEngineering/Stock_ROMs/60E15120_N3J1E.bin, SHA-256 a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1); report docs/subsystem-logic/starting_cranking_report.md",
   "function_aliases": {
-    "0003a0ec": {
-      "alias": "relay_output_pair_pd7_pe0",
-      "confidence": "medium",
-      "evidence": "Writes PDDR_W 0xfffff746 bit 0x80 (PD7, pkg pin 256) = (DAT_ffffcfb6 == 1) and PEDR_W 0xfffff754 bit 0x1 (PE0, pkg pin 7) = (DAT_ffffcfb7 == 0). Raw-bin verified pools: 0x3a1aa=0xcfb6, 0x3a1ac=0x0080, 0x3a1ae=0xf746 (PDDR), 0x3a1b0=0xcfb7, 0x3a1b2=0xf754 (PEDR), helper 0x3a1be=0x4bbc. Caller 0x38e12 (task 0x114d0 batch). PD7 dynamically high only while cranking (0xffffd15c path) - harness candidate: starter relay 5A; PE0 mostly high - harness candidate: DBW relay 4C."
-    },
     "000532d0": {
       "alias": "cranking_in_progress_calc",
       "confidence": "high",
-      "evidence": "Computes DAT_ffffd15c = (vspeed 0xffffbbb4 within tolerance band of 0) && DAT_ffffaa62(cranking_active)==1 && DAT_ffffa428(engine_running)==1 && (E2-shadow u16 0xffff86e8 < 0xea); increments 0xffff86e8 while set. Feeds cfbc (0x4ed3c) -> cfb6 (0x4ef86) -> PD7 (0x3a0ec). Dynamically high only in cranking scenario."
+      "evidence": "Writes 0xffffd15c: reads u16 0xffff86e8 (0x532d8 jsr pool 0x53378 = 0x3db94) and vehicle speed 0xffffbbb4 (pool 0x53366), tests it against a 1.884-wide tolerance band around zero (f32 pool slot 0x5337c, bits 0x3ff126e9; band test 0x2440 via pool 0x53380), requires 0xffffaa62 == 1 (pool 0x5336a, cmp/eq at 0x532fe) and 0xffffa428 == 1 (pool 0x5336c, cmp/eq at 0x5330a), then compares the u16 against ROM 0x7dc9e = 234 (0x53310, cmp/ge at 0x5331a); sets the flag at 0x53328-0x5332c and saturating-adds 1 (pool 0x5338c = 0x2460) while set."
+    },
+    "0004ed3c": {
+      "alias": "candidate_pd7_condition_calc",
+      "confidence": "medium",
+      "evidence": "Writes byte 0xffffcfbc (pool 0x4edd0): 0 when 0xffffcfc1 == 1 (pool 0x4edd2); otherwise 1 when 0xffffcfbe == 1 (pool 0x4edce) and u16 0xffffcfaa >= u16 0xffffcfa6 (pools 0x4edd4/0x4edd6, cmp/hs at 0x4ed62); otherwise 1 when 0xffffd15c == 1 (pool 0x4edd8, cmp/eq at 0x4ed6e). The two non-cranking terms belong to the neighbouring relay logic, not to this subsystem."
+    },
+    "0004ef86": {
+      "alias": "relay_flag_pair_pd7_pe0_calc",
+      "confidence": "high",
+      "evidence": "First block copies 0xffffcfbc (pool 0x4efb8, cmp/eq at 0x4efa4) into 0xffffcfb6 (pool 0x4efb6) at 0x4efaa/0x4efce; the rest of the body computes the PE0 half 0xffffcfb7 from 3D tables 0x6b3c8/0x6b3dc for the throttle/DBW relay."
+    },
+    "0003a0ec": {
+      "alias": "relay_output_pair_pd7_pe0",
+      "confidence": "high",
+      "evidence": "Drives PDDR_W 0xfffff746 bit 0x80 (pool 0x3a1ac mask, pool 0x3a1ae register) = (0xffffcfb6 == 1) (pool 0x3a1aa) and PEDR_W 0xfffff754 bit 0x1 = (0xffffcfb7 == 0) (pools 0x3a1b0/0x3a1b2); port-bit helper pool 0x3a1bc = 0x4bbc. Caller 0x38e12. PD7 is high only while the cranking flag is set."
+    },
+    "0001481c": {
+      "alias": "ref_getEngineCrankingState__",
+      "confidence": "high",
+      "evidence": "State machine: decrements byte 0xffffa79d by one (add of pool 0x14886 = 0x00ff at 0x14832) while it is non-zero (cmp/pl at 0x1482a); state 0xffffa79e (pool 0x1488c) = 1 when rpm 0xffffb548 (pool 0x14884) >= f32 0x757a0 = 500.0 (pool 0x14894), 0 when rpm < f32 0x7579c = 300.0 (pool 0x148a0); on the 0->1 edge the counter is primed from lookup_2d_u8(coolant 0xffffa98c, descriptor 0x6a6cc) via 0x20ac (pools 0x14898/0x1489c, jsr at 0x14852). Output 0xffffa79c (pool 0x14882) = state while the counter is zero, else 0 (0x14874/0x14878)."
+    },
+    "0001480c": {
+      "alias": "ref_engineCrankingConditionsInit__",
+      "confidence": "high",
+      "evidence": "Clears the three cranking-state cells 0xffffa79c (pool 0x14882), 0xffffa79e (pool 0x1488c) and 0xffffa79d (pool 0x14890) at 0x14812/0x14814/0x1481a."
+    },
+    "0000e274": {
+      "alias": "engine_running_from_rpm",
+      "confidence": "high",
+      "evidence": "Sets byte 0xffffa428 (pool 0xe29e) from rpm 0xffffb548 (pool 0xe29c): 0 below f32 0x6c190 = 250.0 (pool 0xe2a0), 1 at f32 0x6c194 = 500.0 and above (pool 0xe2a4), held in between."
+    },
+    "0001a51c": {
+      "alias": "ref_getDriverOffThrottleTimer__",
+      "confidence": "high",
+      "evidence": "Latches 0xffffaa64 from the throttle demand 0xffffa9bc against f32 0x6f184 = 2.5 and f32 0x6f188 = 0.5 (0.5-wide hysteresis), then increments the u16 0xffffaa60 (saturating, 0x2460) while the latch is clear and resets it to 0 otherwise."
+    },
+    "0001a564": {
+      "alias": "ref_getDriverOffThrottleInstatanious",
+      "confidence": "high",
+      "evidence": "Same 2.5/0.5 % hysteresis on 0xffffa9bc (pools 0x1a5be/0x1a5c4/0x1a5c8) producing latch 0xffffaa65 (pool 0x1a5d4); with the latch clear it sets 0xffffaa63 = 1 and 0xffffaa62 = (u16 0xffffaa60 >= ROM 0x6f180 = 0x13) (pools 0x1a5b8/0x1a5ba/0x1a5bc, cmp/hs at 0x1a59e), with the latch set it clears both."
+    },
+    "0001a508": {
+      "alias": "candidate_start_flags_prime",
+      "confidence": "medium",
+      "evidence": "Writes u16 0xffffaa60 = 0x13 and sets bytes 0xffffaa63 and 0xffffaa62 = 1, i.e. primes the closed-throttle dwell gate to its satisfied state; called from 0x19640 inside the 0x1102a init fan-out."
+    },
+    "00010e8e": {
+      "alias": "candidate_cranking_status_selector",
+      "confidence": "medium",
+      "evidence": "Returns 1 when byte 0xffffa79c (pool 0x10f7c) is 0 and 2 when it is set; the value is consumed by the CAN status builder 0x10390."
+    },
+    "00020e40": {
+      "alias": "fueling_main_task",
+      "confidence": "high",
+      "evidence": "Task body behind ref_engineControlTASK 0x11ba4. Cranking-relevant order: 0x30274 at 0x20e5c, 0x302a2 at 0x20e62, 0x303f2 at 0x20e68, cranking_pulse_adder 0x30678 at 0x20e6e, 0x30228 at 0x20e74, then 0x306e8/0x30948/0x30b08 and injector_pulse_time_arbitrate 0x2fea8 at 0x20f08."
+    },
+    "00030678": {
+      "alias": "cranking_pulse_adder",
+      "confidence": "high",
+      "evidence": "Adds the cranking pulse into an accumulator only while the engine is not running: byte 0xffffa428 == 0 (pool 0x306b2, tst at 0x3067c), byte 0xffffa42c == 1 (pool 0x306b4, cmp/eq at 0x30688) and byte 0xffffce32 == 1 (pool 0x306b6, cmp/eq at 0x30694); then float 0xffffbe94 (pool 0x306ac) = 0xffffbe94 + 0xffffbe58 (pool 0x306b8) at 0x3069e-0x306a4. The accumulated value is read only by the 1e7 threshold test in 0x30468 (pool 0x306d8 = f32 0x77f70, fcmp/gt at 0x305fe)."
+    },
+    "0002fea8": {
+      "alias": "injector_pulse_time_arbitrate",
+      "confidence": "high",
+      "evidence": "Loads the decay counter from lookup_u8(coolant 0xffffa98c, descriptor 0x6bab0) while 0xffffa428 == 0 (pools 0x2ff4c/0x2ff4e/0x2ff50, jsr 0x20ac at 0x2fec2) and decrements it by one (pool 0x2ff52 = 0x00ff, add at 0x2fed8) while running and non-zero. Cranking path (0x2fefa-0x2ff1a): be24 = be28 = be58 + be40, be2c = be30 = be34 = be38 = be5c + be44. Running path (0x2ff1c-0x2ff42): be24 = be28 = be4c + be40, be2c = be30 = be50 + be44, be34 = be38 = be54 + be44."
+    },
+    "00030274": {
+      "alias": "candidate_cranking_pulse_width_lookup",
+      "confidence": "high",
+      "evidence": "While 0xffffa428 == 0: 0xffffbe88 = scaled lookup of coolant against descriptor 0x6ab48 (pool 0x30330, scale f32 0x6ab54 = 5.0, data 0x780fc) and 0xffffbe8c from descriptor 0x6ab5c (pool 0x30338, data 0x7814c, all zero bytes)."
+    },
+    "00030228": {
+      "alias": "candidate_cranking_pulse_product",
+      "confidence": "high",
+      "evidence": "While 0xffffa428 == 0 or the decay counter 0xffffbe3c > 0 (cmp/pl at 0x30238): 0xffffbe58 = be68*be7c*be80*be84*be88 and 0xffffbe5c = be68*be7c*be80*be84*be8c (factor pools 0x30312/0x30314/0x30316/0x30318/0x3031a; unity seeds via pool 0x3032c = f32 0x77f58 = 1.0)."
+    },
+    "000303a8": {
+      "alias": "candidate_cranking_throttle_factor",
+      "confidence": "high",
+      "evidence": "Returns immediately while 0xffffa428 != 0 (pool 0x3042c). With coolant 0xffffa98c (pool 0x3042e) below f32 0x77f6c = 150.0 (pool 0x30458, fcmp/gt at 0x303bc) the factor 0xffffbe68 (pool 0x30434) is the scaled lookup of throttle position 0xffffad44 (pool 0x30436) against descriptor 0x6ab00 (pool 0x3045c, scale f32 0x6ab0c = 1/128: 128 -> 1.0, 0 -> 0.0); at 150 degC and above it is 1.0 unless the neighbour flags 0xffffc5e6 (pool 0x30430) or 0xffffb423 (pool 0x30432) are set."
+    },
+    "000142a4": {
+      "alias": "ignition_timing_main_task",
+      "confidence": "high",
+      "evidence": "Task body called from ref_engineControlTASK 0x11ba4 at 0x11bbe. Cranking-relevant order: cranking state 0x1481c at 0x142b0, base timing 0x11f00 at 0x142b6, timing filters 0x43934/0x439b2 at 0x14328/0x1432e, blends 0x123da at 0x143d6 and 0x124d6 at 0x143f4. It contains no call to idle_base_timing_select 0x14100."
+    },
+    "00043934": {
+      "alias": "cranking_timing_leading_filter",
+      "confidence": "high",
+      "evidence": "Gated by 0xffffaa62 == 1 (cmp/eq at 0x43948) and 0xffffb53c == 1 (cmp/eq at 0x43950); then 0xffffcaa4 = scaled lookup of coolant 0xffffa98c against descriptor 0x6b630 (pool 0x43a30; data 0x7ac30, scale 0.5, offset -50) and 0xffffca9c = first-order filter of that value (coefficient pool 0x43a4c = f32 0x7ac00 = 1.0, snap pool 0x43a48 = 1e-5, latch 0xffffcaac). Both cells are zeroed when either gate is clear (0x4399e-0x439a2)."
+    },
+    "000439b2": {
+      "alias": "cranking_timing_trailing_filter",
+      "confidence": "high",
+      "evidence": "Trailing mirror of 0x43934: same two gates, descriptor 0x6b644 (pool 0x43a54; data 0x7ac60), raw 0xffffcaa8, filtered 0xffffcaa0, latch 0xffffcaad, coefficients f32 0x7ac04/0x7ac08 = 1.0."
+    },
+    "000123da": {
+      "alias": "leading_timing_cranking_blend",
+      "confidence": "high",
+      "evidence": "Latch 0xffffa668 (pool 0x12450) from rpm 0xffffb548 (pool 0x123fc) against f32 0xffffa7ac (pool 0x12412) + f32 0x6d778 = 10000.0 (fcmp/gt at 0x123f0), cleared below that sum minus f32 0x6d77c = 100.0 (0x12544, fcmp/gt at 0x1245a), untouched in between. Multiplier 0xffffa644 (pool 0x12548) = max(a644 - f32 0x6d764 = 0.05, 0) when 0xffffaa62 == 1 (cmp/eq at 0x1246e) and the latch is clear, else min(a644 + f32 0x6d768 = 1.0, 1.0). Output 0xffffa640 (pool 0x12560) = a5e8*m + (1-m)*(a5f0 + a718 + ca9c) + a780 - a778."
+    },
+    "000124d6": {
+      "alias": "trailing_timing_cranking_blend",
+      "confidence": "high",
+      "evidence": "Trailing mirror: latch 0xffffa669, multiplier 0xffffa654, terms a5f4 + a71c + caa0, output 0xffffa650, same 0.05 step and 1.0 ceiling."
+    },
+    "00014100": {
+      "alias": "idle_base_timing_select",
+      "confidence": "high",
+      "evidence": "With 0xffffaa62 == 1 (cmp/eq at 0x14112) 0xffffa780 (pool 0x14158) = scaled lookup of coolant against descriptor 0x69208 (pool 0x14164; data 0x6d8e4 = 80 in every cell, scale 0.5 offset -40 -> constant 0.0 deg); otherwise 0x6921c when coolant < f32 0x6d8bc = 90.0 or load < f32 0x6d8b8 = 0.5, else 0x69230. Mirrors into 0xffffa784. Called from 0x1465e at 0x1466a (task[11] body 0x6584), not from 0x142a4."
+    },
+    "00011f00": {
+      "alias": "leading_base_timing_calc",
+      "confidence": "high",
+      "evidence": "First table step of 0x142a4 (jsr at 0x142b6): builds a5f0 = a608 - a60c*a618 from 3D tables 0x69040/0x6905c and 2D table 0x69018, then a5e8 = w*a5fc + (1-w)*min(a614, a5f8) with weight 0xffffb118. Consumed by the timing fade in 0x123da."
     }
   },
   "ram_aliases": {
+    "ffffa428": {
+      "alias": "engine_running",
+      "type": "uint8",
+      "reader": "0000e274",
+      "evidence": "= 1 at rpm >= 500.0, 0 below 250.0 (0xe274, f32 0x6c190/0x6c194). The cranking fuel and timing chains gate on this byte being 0, so it is the firmware's own 'engine is not running' definition."
+    },
+    "ffffa79c": {
+      "alias": "candidate_engine_running_stable",
+      "type": "uint8",
+      "reader": "0001481c",
+      "evidence": "Written at 0x14878 (pool 0x14882): the rpm state 0xffffa79e while the post-start blanking counter 0xffffa79d is zero, cleared otherwise. Read by 0x10e8e (status 1/2) and the CAN builder 0x10390."
+    },
+    "ffffa79d": {
+      "alias": "candidate_post_start_blanking_counter",
+      "type": "uint8",
+      "reader": "0001481c",
+      "evidence": "Decremented by one per call while non-zero (add pool 0x14886 = 0x00ff at 0x14832) and primed from lookup_2d_u8(coolant, descriptor 0x6a6cc) on the rpm 0->1 edge (jsr 0x20ac at 0x14852, store at 0x14858). ROM data 0x757e0 = 4 counts for every coolant cell."
+    },
+    "ffffa79e": {
+      "alias": "candidate_engine_running_state",
+      "type": "uint8",
+      "reader": "0001481c",
+      "evidence": "Rpm-derived state: 1 when rpm >= 500.0 (f32 0x757a0), 0 when rpm < 300.0 (f32 0x7579c), held in between (0x14840-0x14864)."
+    },
+    "ffffaa60": {
+      "alias": "candidate_closed_throttle_dwell",
+      "type": "uint16",
+      "reader": "0001a51c",
+      "evidence": "Saturating u16 counter: incremented by 0x1a51c while the throttle demand 0xffffa9bc stays below 2.0 %, reset to 0 above 2.5 %; primed to 0x13 by 0x1a508."
+    },
+    "ffffaa62": {
+      "alias": "cranking_active",
+      "type": "uint8",
+      "reader": "0001a564",
+      "evidence": "Written by 0x1a564 at 0x1a5a8/0x1a5ae: 1 when the throttle demand is below 2.0 % and the closed-throttle dwell u16 0xffffaa60 >= ROM 0x6f180 = 19, 0 otherwise; primed to 1 by 0x1a508. It therefore states 'throttle closed and has been for 19 task passes', and the cranking fuel chains do not use it (they gate on 0xffffa428 == 0). The name is inherited; its use as a cranking term is open (ROADMAP discrepancy register)."
+    },
+    "ffffaa63": {
+      "alias": "candidate_closed_throttle_flag",
+      "type": "uint8",
+      "reader": "0001a564",
+      "evidence": "Set to 1 whenever the throttle latch 0xffffaa65 is clear (0x1a5a4/0x1a5aa), 0 when it is set (0x1a5b0); primed to 1 by 0x1a508."
+    },
+    "ffffaa65": {
+      "alias": "candidate_throttle_open_latch",
+      "type": "uint8",
+      "reader": "0001a564",
+      "evidence": "Hysteresis latch on 0xffffa9bc: set to 1 at >= 2.5 % (f32 0x6f184, 0x1a57e/0x1a580), cleared below 2.0 % (= 2.5 - 0.5 from f32 0x6f188, 0x1a588), unchanged in between."
+    },
     "ffffd15c": {
       "alias": "cranking_in_progress",
       "type": "uint8",
       "reader": "000532d0",
-      "evidence": "Written by 0x532d0: vspeed 0xffffbbb4 ~0 && cranking_active 0xffffaa62==1 && engine_running 0xffffa428==1 && E2-shadow 0xffff86e8 < 0xea. Pool-anchored at 0x532d0."
+      "evidence": "Written by 0x532d0 at 0x53328-0x53330: vehicle speed 0xffffbbb4 inside a 1.884-wide tolerance band around zero (f32 pool slot 0x5337c, bits 0x3ff126e9), 0xffffaa62 == 1, 0xffffa428 == 1 and u16 0xffff86e8 < 234 (ROM 0x7dc9e)."
     },
-    "ffffcfb6": {
-      "alias": "pd7_relay_flag",
-      "type": "uint8",
-      "reader": "0003a0ec",
-      "evidence": "= (0xffffcfbc == 1) computed by 0x4ef86; pool 0x3a1a8/0x3a1aa anchor 0xffffcfb6. Drives PD7 (pkg pin 256); harness candidate starter relay 5A (high only while cranking)."
+    "ffff86e8": {
+      "alias": "candidate_cranking_dwell_accumulator",
+      "type": "uint16",
+      "reader": "000532d0",
+      "evidence": "u16 read through 0x3db94 at 0x532d8 and saturating-incremented through 0x2460 at 0x5334e while the cranking flag is set and the count has not reached 234 (ROM 0x7dc9e, cmp/ge at 0x5331a). Stored as a validated pair: value at 0xffff86e8 plus its one's complement at 0xffff86ea, written by 0x3dc80 (0x3dc82-0x3dc8a) and validated by 0x3db94 (cmp/eq at 0x3dbb2), which returns 0 when the halves disagree."
     },
     "ffffcfbc": {
       "alias": "pd7_relay_condition",
       "type": "uint8",
+      "reader": "0004ed3c",
+      "evidence": "Written by 0x4ed3c (store at 0x4ed4c/0x4ed76/0x4ed7a); the cranking term is 0xffffd15c == 1 at 0x4ed68-0x4ed74."
+    },
+    "ffffcfb6": {
+      "alias": "pd7_relay_flag",
+      "type": "uint8",
       "reader": "0004ef86",
-      "evidence": "Written by 0x4ed3c: = 1 if (cfbe==1 && cfaa>=cfa6) || 0xffffd15c(cranking_in_progress)==1, cleared if cfc1==1. Feeds PD7 via cfb6."
+      "evidence": "= (0xffffcfbc == 1) copied by 0x4ef86 at 0x4efaa/0x4efce; read by the port driver 0x3a0ec (pool 0x3a1aa) for PD7, package pin 256."
+    },
+    "ffffbe94": {
+      "alias": "cranking_pulse_adder",
+      "type": "float",
+      "reader": "00030468",
+      "evidence": "Accumulated by 0x30678 (0xffffbe94 += 0xffffbe58) only while 0xffffa428 == 0; its single reader is the 1e7 threshold test in 0x30468 (pool 0x306d8 = f32 0x77f70, fcmp/gt at 0x305fe). It is not added into any injector pulse slot."
+    },
+    "ffffbe58": {
+      "alias": "injector_pulse_crank",
+      "type": "float",
+      "reader": "00030678",
+      "evidence": "Cranking pulse = be68*be7c*be80*be84*be88, written by 0x30228 at 0x30264 while 0xffffa428 == 0 or the decay counter is non-zero; selected into be24/be28 by 0x2fea8 at 0x2ff06-0x2ff08."
+    },
+    "ffffbe5c": {
+      "alias": "injector_pulse_crank_base",
+      "type": "float",
+      "reader": "00030228",
+      "evidence": "Second cranking pulse = be68*be7c*be80*be84*be8c (0x30228, store at 0x3026e); selected into be2c/be30/be34/be38 by 0x2fea8 at 0x2ff10-0x2ff1a."
+    },
+    "ffffbe3c": {
+      "alias": "cranking_decay_counter",
+      "type": "uint8",
+      "reader": "0002fea8",
+      "evidence": "Reloaded from lookup_u8(coolant, descriptor 0x6bab0) on every pass in which 0xffffa428 == 0 (0x2febc-0x2fec8), decremented by one per pass while running and non-zero (0x2fed2-0x2feda); the arbitration switches from the cranking slots to the running slots when it reaches 0 (0x2feea-0x2ff1c)."
+    },
+    "ffffbe24": {
+      "alias": "injector_pulse_time",
+      "type": "float",
+      "reader": "0002fea8",
+      "evidence": "Primary pulse slot: be58 + latency 0xffffbe40 while cranking (0x2ff06), be4c + 0xffffbe40 while running (0x2ff26); mirrored to be28. Exported as diagnostic PID 0x1410."
+    },
+    "ffffbe68": {
+      "alias": "candidate_cranking_throttle_factor",
+      "type": "float",
+      "reader": "000303a8",
+      "evidence": "Throttle-position factor of the cranking pulse: 1.0 below 21.02 % and 0.0 above 22.52 % (descriptor 0x6ab00, data 128/0 with scale 1/128), 1.0 for hot coolant unless the neighbour flags are set (0x303a8)."
+    },
+    "ffffbe7c": {
+      "alias": "candidate_cranking_coolant_factor",
+      "type": "float",
+      "reader": "000300e4",
+      "evidence": "Cranking enrichment factor keyed on coolant (descriptor 0x6aab0) by 0x300e4; one of the five factors multiplied in 0x30228."
+    },
+    "ffffbe80": {
+      "alias": "candidate_cranking_baro_factor",
+      "type": "float",
+      "reader": "000303f2",
+      "evidence": "Altitude factor keyed on barometric pressure 0xffffad14 (descriptor 0x6ab14) by 0x303f2, 1.0 when the lookup is skipped; one of the five factors multiplied in 0x30228."
+    },
+    "ffffbe84": {
+      "alias": "candidate_cranking_running_factor",
+      "type": "float",
+      "reader": "00030468",
+      "evidence": "Running-state factor maintained by 0x30468 (1.0, or a saturated value; the branch at 0x3061a sets the flag tested at 0x30644); one of the five factors multiplied in 0x30228."
+    },
+    "ffffb548": {
+      "alias": "engine_speed_rpm",
+      "type": "float",
+      "reader": "0000e274",
+      "evidence": "Engine speed in rpm. The start thresholds 250/300/500 rpm and the timing-fade thresholds (0xffffa7ac + 10000.0, minus 100.0) all compare against this cell (pools 0x14884, 0xe29c, 0x123fc)."
+    },
+    "ffffb53c": {
+      "alias": "at_drive_range_engaged",
+      "type": "uint8",
+      "reader": "00043934",
+      "evidence": "Second gate of the timing filters 0x43934/0x439b2 (cmp/eq at 0x43950/0x439ce) and the value latched into 0xffffcaac/0xffffcaad."
+    },
+    "ffffa644": {
+      "alias": "cranking_timing_multiplier_leading",
+      "type": "float",
+      "reader": "000123da",
+      "evidence": "Timing fade weight: max(x - 0.05, 0) per pass while 0xffffaa62 == 1 and the 0xffffa668 latch is clear, else min(x + 1.0, 1.0) (0x123da, single writer 0x1249c, single reader 0x124ac)."
+    },
+    "ffffa654": {
+      "alias": "cranking_timing_multiplier_trailing",
+      "type": "float",
+      "reader": "000124d6",
+      "evidence": "Trailing mirror of 0xffffa644 (0x124d6, written at 0x12582)."
+    },
+    "ffffa668": {
+      "alias": "candidate_timing_fade_latch_leading",
+      "type": "uint8",
+      "reader": "000123da",
+      "evidence": "Rpm latch: set at 0x123fa when rpm >= 0xffffa7ac + 10000.0, cleared at 0x12462 when rpm < that sum - 100.0, held in between; the fade-down is suppressed while it is set (tst at 0x12478)."
+    },
+    "ffffa669": {
+      "alias": "candidate_timing_fade_latch_trailing",
+      "type": "uint8",
+      "reader": "000124d6",
+      "evidence": "Trailing mirror of 0xffffa668 (0x124f4/0x12506)."
+    },
+    "ffffca9c": {
+      "alias": "cranking_angle_timing_leading_filtered",
+      "type": "float",
+      "reader": "00043934",
+      "evidence": "Filtered leading term of the fade: lookup of coolant against descriptor 0x6b630 with coefficient 1.0 and a 1e-5 snap, zeroed when either gate is clear (0x43934)."
+    },
+    "ffffcaa0": {
+      "alias": "cranking_angle_timing_trailing_filtered",
+      "type": "float",
+      "reader": "000439b2",
+      "evidence": "Filtered trailing term, same structure with descriptor 0x6b644 (0x439b2)."
+    },
+    "ffffcaa4": {
+      "alias": "cranking_angle_timing_leading_raw",
+      "type": "float",
+      "reader": "00043934",
+      "evidence": "Unfiltered table value, stored before the filter at 0x43960."
+    },
+    "ffffcaa8": {
+      "alias": "cranking_angle_timing_trailing_raw",
+      "type": "float",
+      "reader": "000439b2",
+      "evidence": "Unfiltered trailing table value, stored at 0x439de."
+    },
+    "ffffcaac": {
+      "alias": "candidate_off_throttle_timing_latch_leading",
+      "type": "uint8",
+      "reader": "00043934",
+      "evidence": "Byte latch distinguishing the first activation from the filter path (tst at 0x43966); written from 0xffffb53c at 0x439a6."
+    },
+    "ffffcaad": {
+      "alias": "candidate_off_throttle_timing_latch_trailing",
+      "type": "uint8",
+      "reader": "000439b2",
+      "evidence": "Trailing mirror of 0xffffcaac (tst at 0x439e4, write at 0x43a6c)."
+    },
+    "ffffa640": {
+      "alias": "leading_timing_after_cranking_blend",
+      "type": "float",
+      "reader": "000123da",
+      "evidence": "Output of the fade: a5e8*m + (1-m)*(a5f0 + a718 + ca9c) + a780 - a778 (store at 0x124cc)."
+    },
+    "ffffa650": {
+      "alias": "trailing_timing_after_cranking_blend",
+      "type": "float",
+      "reader": "000124d6",
+      "evidence": "Trailing output of the fade (0x124d6)."
+    },
+    "ffffa780": {
+      "alias": "idle_base_timing_leading",
+      "type": "float",
+      "reader": "00014100",
+      "evidence": "Idle base timing, selected by 0x14100; constant 0.0 deg through descriptor 0x69208 while 0xffffaa62 == 1. Added outside the fade in 0x123da."
+    },
+    "ffffa784": {
+      "alias": "idle_base_timing_trailing",
+      "type": "float",
+      "reader": "00014100",
+      "evidence": "Copy of 0xffffa780 made by 0x14100 at 0x14148; used by 0x124d6."
+    },
+    "ffffa5e8": {
+      "alias": "leading_base_timing_final",
+      "type": "float",
+      "reader": "000123da",
+      "evidence": "Base leading timing from 0x11f00; the only term the fade weight 0xffffa644 scales (fmul at 0x124ba)."
+    },
+    "ffffa5ec": {
+      "alias": "trailing_base_timing_final",
+      "type": "float",
+      "reader": "000124d6",
+      "evidence": "Trailing mirror, scaled by 0xffffa654."
+    },
+    "ffffa5f0": {
+      "alias": "leading_coolant_scaled_advance_term",
+      "type": "float",
+      "reader": "000123da",
+      "evidence": "Coolant advance term produced by 0x11f00; part of the (1-m) group in the fade."
+    },
+    "ffffa718": {
+      "alias": "idle_leading_timing_error_correction",
+      "type": "float",
+      "reader": "000123da",
+      "evidence": "Idle speed-error correction; part of the (1-m) group in the fade."
     }
   }
 }

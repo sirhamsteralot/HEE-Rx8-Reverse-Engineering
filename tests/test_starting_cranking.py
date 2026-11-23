@@ -145,12 +145,68 @@ def test_cranking_in_progress_flag(booted):
     assert bus.read8(D15C) == 0
 
 
+def test_cranking_state_and_gate_words(rom):
+    """0x1481c / 0x1a564: thresholds and cells behind the start states."""
+    # 0x1481c: rpm on/off thresholds 500 / 300, blanking table 0x6a6cc, cells
+    assert w16(rom, 0x14886) == 0x00FF              # byte -1 addend
+    assert w32(rom, 0x1488C) == 0xFFFFA79E          # rpm state
+    assert w32(rom, 0x14890) == 0xFFFFA79D          # blanking counter
+    assert w32(rom, 0x14894) == 0x000757A0 and w32(rom, 0x148A0) == 0x0007579C
+    assert struct.unpack('>f', rom[0x757A0:0x757A4])[0] == 500.0
+    assert struct.unpack('>f', rom[0x7579C:0x757A0])[0] == 300.0
+    assert w32(rom, 0x14898) == 0x0006A6CC          # post-start blanking table
+    assert rom[0x757E0:0x757E6] == b'\x04' * 6       # 4 passes at every coolant cell
+    # 0x1a564: closed-throttle gate
+    assert w16(rom, 0x1A5B8) == 0xAA60 and w16(rom, 0x1A5BC) == 0xAA62
+    assert w32(rom, 0x1A5C4) == 0x0006F184 and w32(rom, 0x1A5C8) == 0x0006F188
+    assert struct.unpack('>f', rom[0x6F184:0x6F188])[0] == 2.5
+    assert struct.unpack('>f', rom[0x6F188:0x6F18C])[0] == 0.5
+    assert w16(rom, 0x6F180) == 0x0013               # 19 counts of dwell
+    assert w16(rom, 0x1A59E) == 0x3122               # cmp/hs on the u16 counter
+
+
+def test_cranking_fuel_and_flood_words(rom):
+    """0x30678 / 0x2fea8 / 0x303a8 / 0x30228: gates, decay table, flood cut."""
+    assert w16(rom, 0x306AC) == 0xBE94 and w16(rom, 0x306B8) == 0xBE58
+    assert w16(rom, 0x306B2) == 0xA428               # engine_running gate
+    assert w16(rom, 0x306B4) == 0xA42C and w16(rom, 0x306B6) == 0xCE32
+    assert w32(rom, 0x2FF70) == 0x0006BAB0           # decay table
+    assert rom[0x7C98C:0x7C995] == bytes([3, 3, 0, 0, 0, 0, 0, 0, 0])
+    # the accumulator's only reader is the 1e7 compare in 0x30468
+    assert w32(rom, 0x306D8) == 0x00077F70
+    assert struct.unpack('>f', rom[0x77F70:0x77F74])[0] == 1e7
+    # flood-clear table 0x6ab00: 1.0 below 21.02 %, 0.0 above 22.52 %
+    assert w32(rom, 0x3045C) == 0x0006AB00
+    assert struct.unpack('>f', rom[0x6AB0C:0x6AB10])[0] == 0.0078125
+    assert rom[0x78020:0x78026] == bytes([128, 0, 0, 0, 0, 0])
+    assert w16(rom, 0x6AB48) == 0x000D               # 13 cranking pulse cells
+    assert struct.unpack('>f', rom[0x6AB54:0x6AB58])[0] == 5.0
+    assert w16(rom, 0x780FC) == 0x60AD               # 24749 counts at -30 degC
+
+
+def test_start_task_and_timing_words(rom):
+    """Task record 6 and the 0x123da fade constants."""
+    assert w32(rom, 0x49F8) == 0x0000661E            # record 6 entry
+    assert w32(rom, 0x49FC) == 0x02000000            # reload credit 2
+    assert w16(rom, 0x493C) == 0x0013                # 19 records
+    assert w32(rom, 0x1244C) == 0x0006D778 and w32(rom, 0x12544) == 0x0006D77C
+    assert struct.unpack('>f', rom[0x6D778:0x6D77C])[0] == 10000.0
+    assert struct.unpack('>f', rom[0x6D77C:0x6D780])[0] == 100.0
+    assert abs(struct.unpack('>f', rom[0x6D764:0x6D768])[0] - 0.05) < 1e-9
+    assert w32(rom, 0x12548) == 0xFFFFA644 and w32(rom, 0x12560) == 0xFFFFA640
+    assert w32(rom, 0x43A30) == 0x0006B630           # leading filter table
+    assert w32(rom, 0x43A54) == 0x0006B644           # trailing filter table
+
+
 def test_tsv_rows_mirror_json(record):
     with FN_TSV.open(encoding="utf-8", errors="surrogateescape", newline="") as fh:
         fn_rows = {r["address"]: r["alias"] for r in csv.DictReader(fh, delimiter="\t")}
     with RAM_TSV.open(encoding="utf-8", errors="surrogateescape", newline="") as fh:
         ram_rows = {r["address"]: r["alias"] for r in csv.DictReader(fh, delimiter="\t")}
     for addr, e in record["function_aliases"].items():
-        assert fn_rows.get("%08x" % int(addr, 16)) == e["alias"]
+        alias = e["alias"]
+        # integrate_reviewed_names.py prefixes candidate_ for medium-confidence rows
+        base = alias[len("candidate_"):] if alias.startswith("candidate_") else alias
+        assert fn_rows.get("%08x" % int(addr, 16)) in {alias, base}
     for addr, e in record["ram_aliases"].items():
         assert ram_rows.get(addr) == e["alias"]

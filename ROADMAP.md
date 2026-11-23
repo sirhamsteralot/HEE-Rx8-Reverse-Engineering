@@ -16,7 +16,7 @@ fidelity), C = P2 residual (static labeling & gap closure), D = P2/P5
 (cross-ROM propagation), E = P4 (reimplementation), F = P6 (toward hardware).
 
 **Status.** Groups A, B and D are complete. Group C is reopened — open items
-29–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
+29, 30, 32–34, 36–37, 39, 42–61, 64, 91, 92, 94 (the former per-subsystem fold-back
 items 62–63 and 65–90 were folded into their source items — fold map in this
 file's git history). Groups E and F remain open as listed below. Pick up
 **C item 29** next.
@@ -62,6 +62,24 @@ unresolvable row fails instead of being skipped; debt for a cell with no tracked
 alias is declared in `report_map_baseline.json` and may only shrink (a resolved
 or orphaned entry fails as stale).
 
+- **C item 94 (open)** — **make the reviewed-name fold-back pass run again.**
+  `integrate_reviewed_names.py` aborts before it can carry any subsystem's
+  accepted names into the decompiled export, so the fold-back part of the
+  definition of done (and C item 64) cannot be delivered:
+  (a) its assert "each function body still names itself" fails on 14 bodies in
+  the eeprom/misfire area that keep their Ghidra name while `function_index.tsv`
+  already carries the alias (`0x26a42`, `0x26b34`, `0x270aa`, `0x271b0`,
+  `0x276ec`, `0x27eec`, `0x27fb4`, `0x2837c`, `0x2842c`, `0x445ba`, …);
+  (b) mapping `FUN_<address>` in the generator clears that assert but then
+  fails on the thunk bodies, whose names embed a target name
+  (`jump_to_FUN_000270aa` in `00028992_thunk_FUN_000270aa.c` vs the index name
+  `jump_to_e2ram_learned_table_validate`). Scope: rename every identifier form
+  (`FUN_xxxxxxxx`, `jump_to_*`, `thunk_*`, `DAT_xxxxxxxx`) from the address-based
+  identity, keep the passes idempotent, and add a regeneration test that re-runs
+  annotation + integration + `refine_comment_merge.py` and asserts the committed
+  export comes back unchanged (rule 6d). Blocks the fold-back step of every C
+  item, including C item 64.
+
 #### C.1 New subsystem coverage — analyze, report, label
 
 - **C item 29 (open)** — **misfire detection / monitor.**
@@ -73,12 +91,6 @@ or orphaned entry fails as stale).
   have no reports (EVAP appears only as `candidate_evap_open_loop_condition`
   `0x22144`); readiness / monitor-completion logic is not covered even for the
   O2 monitor ([o2_sensor_monitor_report.md](docs/investigations/60E15120_N3J1E/o2_sensor_monitor_report.md)).
-- **C item 31 (open)** — **starting / cranking.** Only `cranking_pulse_adder`
-  `0x30678` inside the fueling chain is known; starter control, crank-signal
-  handling and flood-clear are unmapped. Label record
-  `data/labels/60E15120_N3J1E/starting_cranking_labels.json` and checks
-  `tests/test_starting_cranking.py` already exist — the report is the missing
-  deliverable.
 - **C item 32 (open)** — **power management / watchdog / main relay.** The PB15
   external-WDT heartbeat (`0x31c` / `0x11cc`, routing unverified per design doc
   §5.6) and the WDT ITI vector `0x7ffa8` are noted, but there is no
@@ -385,6 +397,7 @@ flash before any read), not the test path.
 | D13 | open | upstream RX8Defs `39d98a0` set the shared 60E32000 block's immobilizer addresses to `0x37278`/`0x376c4`, which match only the N3M5E variant — the N3N5EB ROM's immo start pattern sits at `0x371d8` (`0x37624` with RKE), so `per-rom/60E32000_N3N5EB.xml` inherits an address wrong for that ROM (ROM-verified; see [upstream-sync-validation.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-validation.md) §3). Closure plan: per-ROM immo-address repair derived from the ROM pattern in `extend_defs_all_roms.py` (same approach as `repair_dtc_tables`), or an explicit N3N5EB override |
 | D14 | open | `0xffffdfa0` is dual-labeled: `immo_diag_bit` in `accepted_ram_aliases.tsv` / the immobilizer report (cleared by `0x11c4`, tested by `ref_readImmoBit` `0x16b20`) vs `sbl_inactivity_counter` (u16) in [`docs/subsystem-logic/sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md), where `0x11c4` zeroing it is dynamically proven in the emulator relock tests. `0x11c4` sits inside the SBL block (`0x1000–0x1fff`). Reconcile the alias (and the `0x11c4`/`0x16b20` rows) in one direction — likely SBL-side — and fold back into both reports |
 | D15 | documented | upstream RX8Defs `d4140dc` delta absorbed: 118 renames + 16 category moves + 10 duplicate removals on `RomRaider/rx8_defs.xml`, no `storageaddress` changed; per-ROM defs + `coverage.json` regenerated at the pin, upstream snapshot re-pinned (`repin_upstream_snapshot.py`), splice pass normalization-only (`upstream_splice_d4140dc.json`), collision/alias findings logged pin-tagged in `defs-merge/axis_conflicts.json` + `inheritance_issues.json`; label map needed no changes; record [upstream-sync-d4140dc.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md), machine record `defs-merge/upstream_pin_audit_d4140dc.json`; open follow-up: 26 `Table 3D - 2 `/`3D - 3 ` block overrides lost their RX8Base template upstream (`base_template_removed_at_pin`) |
+| D17 | open | `0xffffaa62` is labeled `cranking_active` but is computed from closed-throttle dwell only: `0x1a51c`/`0x1a564` set it when throttle demand `0xffffa9bc` stays below 2.0 % (hysteresis 2.5 %, floats `0x6f184`/`0x6f188`) for 19 passes of the u16 counter `0xffffaa60` (ROM `0x6f180`), and `0x1a508` primes it satisfied at init. So it is also true at idle and on a closed-throttle coast, while the cranking fuel chain gates on `0xffffa428 == 0` (rpm 250/500, `0xe274`) instead. Its consumers ([`starting_cranking_report.md`](docs/subsystem-logic/starting_cranking_report.md) §2.5/§2.9) read it as the closed-throttle timing term, and the two advance tables it selects carry different upstream names (off-throttle leading `0x7ac30` vs cranking trailing `0x7ac60`). Closure plan: a scenario run (idle, closed-throttle coast, crank) showing which term each consumer needs, or an upstream definition that settles the name; then rename the alias and fold it into the report, the label record and the affected reports |
 | D16 | open | `validate_reports.py` only parses memory-map rows whose first cell starts with `0x`, so a backtick-wrapped address cell is skipped without a warning: the `sbl_bootloader_report.md` map (16 RAM rows, including the D14 alias conflict) and `fuel_pump_control_report.md` (2 rows) are unchecked today, and `throttle_dbw_control_report.md` validated with 0 rows checked until its cells were made bare. Closure plan: strip an optional backtick wrapper in the row parser, then reconcile the rows it starts checking (the SBL report needs aliases or documented grouped rows for `0xffffd3f0`/`0xffffd1xx`/`0xffffdfb0-b8`). Function rows are only checked when the row sits under a heading containing "function" AND the label equals the `function_index.tsv` name, so subsystem aliases that were never folded into the export (`fuel_pump_control`: 8 of 12 rows) pass unlooked |
 
 The tables above are summaries; the full per-item records (locations, impact,

@@ -343,7 +343,7 @@ ffffce1c	inferred_ram_ce1c_ffffce1c	uint8	0005734a	PID 0x1681 -> 0x40
 ffffce32	inferred_ram_ce32_ffffce32	uint8	000574b6	PID 0x17de
 ffffce30	inferred_ram_ce30_ffffce30	uint16	00057974	PID 0xff44 raw
 ffffb53b	inferred_ram_b53b_ffffb53b	uint8	0005738e	PID 0xa211 -> bit 4
-ffffaa62	cranking_active_ffffaa62	uint8	0005738e	PID 0xa211 -> bit 0x10 when 0; named by ignition report (cranking multiplier decay)
+ffffaa62	cranking_active	uint8	0005738e	"Written by 0x1a564 (0x1a5a8/0x1a5ae): 1 when throttle demand < 2.0 % and the closed-throttle dwell u16 0xffffaa60 >= ROM 0x6f180 = 19, else 0; primed to 1 by 0x1a508. States ""throttle closed and has been for 19 task passes""; the cranking fuel chains gate on 0xffffa428 == 0 instead. Consumed as a timing term by 0x43934/0x439b2/0x123da/0x124d6/0x14100."
 ffffbf9c	inferred_ram_bf9c_ffffbf9c	uint8	0005738e	PID 0xa211 sub2
 ffffbdb8	inferred_ram_bdb8_ffffbdb8	uint8	00057226	PID 0x1102
 ffffbf3c	inferred_ram_bf3c_ffffbf3c	uint8	000571e4	PID 0x1101 -> bit 1
@@ -631,3 +631,21 @@ ffffbdda	fuel_pump_key_on_grace_counter	uint16	0002fc00	Key-on grace counter in 
 ffffbddc	fuel_pump_run_on_grace_counter	uint16	0002fc00	Free-running run-on grace counter: sat16 increment on every 0x2fc00 call, kept <= ROM[0x7bc5c]=0x3e (cmp/hi at 0x2fc84); reset to 0 by 0x2fcac and loaded with 0xffff by 0x2fbf8, which disables the term. Pool 0x2fcd8=0xffffbddc.
 ffffbdde	fuel_pump_injectors_off_counter	uint16	0002fc00	Injectors-off (fuel-cut) counter: sat16 increment while injectors_off 0xffffa42c==1, reset to 0 otherwise. Read by 0x2fcac, which compares it against ROM[0x7bc5a]=0x0000. Pool 0x2fce4=0xffffbdde.
 ffffbde0	fuel_pump_injectors_off_seen	uint8	0002fc00	Injectors-off seen flag: cleared by 0x2fc00 when injection is enabled (0x2fc50) and set by 0x2fcac as (DAT_ffffbdde > ROM[0x7bc5a] = 0); it makes the second grace term hold while fuel is cut. Pool 0x2fce8=0xffffbde0.
+ffff86e8	candidate_cranking_dwell_accumulator	uint16	000532d0	u16 read through 0x3db94 at 0x532d8 and saturating-incremented through 0x2460 at 0x5334e while the cranking flag is set and the count has not reached 234 (ROM 0x7dc9e, cmp/ge at 0x5331a). Stored as a validated pair: value at 0xffff86e8 plus its one's complement at 0xffff86ea, written by 0x3dc80 (0x3dc82-0x3dc8a) and validated by 0x3db94 (cmp/eq at 0x3dbb2), which returns 0 when the halves disagree.
+ffffa640	leading_timing_after_cranking_blend	float	000123da	Output of the fade: a5e8*m + (1-m)*(a5f0 + a718 + ca9c) + a780 - a778 (store at 0x124cc).
+ffffa650	trailing_timing_after_cranking_blend	float	000124d6	Trailing output of the fade (0x124d6).
+ffffa668	candidate_timing_fade_latch_leading	uint8	000123da	Rpm latch: set at 0x123fa when rpm >= 0xffffa7ac + 10000.0, cleared at 0x12462 when rpm < that sum - 100.0, held in between; the fade-down is suppressed while it is set (tst at 0x12478).
+ffffa669	candidate_timing_fade_latch_trailing	uint8	000124d6	Trailing mirror of 0xffffa668 (0x124f4/0x12506).
+ffffa79c	candidate_engine_running_stable	uint8	0001481c	Written at 0x14878 (pool 0x14882): the rpm state 0xffffa79e while the post-start blanking counter 0xffffa79d is zero, cleared otherwise. Read by 0x10e8e (status 1/2) and the CAN builder 0x10390.
+ffffa79d	candidate_post_start_blanking_counter	uint8	0001481c	Decremented by one per call while non-zero (add pool 0x14886 = 0x00ff at 0x14832) and primed from lookup_2d_u8(coolant, descriptor 0x6a6cc) on the rpm 0->1 edge (jsr 0x20ac at 0x14852, store at 0x14858). ROM data 0x757e0 = 4 counts for every coolant cell.
+ffffa79e	candidate_engine_running_state	uint8	0001481c	Rpm-derived state: 1 when rpm >= 500.0 (f32 0x757a0), 0 when rpm < 300.0 (f32 0x7579c), held in between (0x14840-0x14864).
+ffffaa60	candidate_closed_throttle_dwell	uint16	0001a51c	Saturating u16 counter: incremented by 0x1a51c while the throttle demand 0xffffa9bc stays below 2.0 %, reset to 0 above 2.5 %; primed to 0x13 by 0x1a508.
+ffffaa63	candidate_closed_throttle_flag	uint8	0001a564	Set to 1 whenever the throttle latch 0xffffaa65 is clear (0x1a5a4/0x1a5aa), 0 when it is set (0x1a5b0); primed to 1 by 0x1a508.
+ffffaa65	candidate_throttle_open_latch	uint8	0001a564	Hysteresis latch on 0xffffa9bc: set to 1 at >= 2.5 % (f32 0x6f184, 0x1a57e/0x1a580), cleared below 2.0 % (= 2.5 - 0.5 from f32 0x6f188, 0x1a588), unchanged in between.
+ffffb548	engine_speed_rpm	float	0000e274	Engine speed in rpm. The start thresholds 250/300/500 rpm and the timing-fade thresholds (0xffffa7ac + 10000.0, minus 100.0) all compare against this cell (pools 0x14884, 0xe29c, 0x123fc).
+ffffbe68	candidate_cranking_throttle_factor	float	000303a8	Throttle-position factor of the cranking pulse: 1.0 below 21.02 % and 0.0 above 22.52 % (descriptor 0x6ab00, data 128/0 with scale 1/128), 1.0 for hot coolant unless the neighbour flags are set (0x303a8).
+ffffbe7c	candidate_cranking_coolant_factor	float	000300e4	Cranking enrichment factor keyed on coolant (descriptor 0x6aab0) by 0x300e4; one of the five factors multiplied in 0x30228.
+ffffbe80	candidate_cranking_baro_factor	float	000303f2	Altitude factor keyed on barometric pressure 0xffffad14 (descriptor 0x6ab14) by 0x303f2, 1.0 when the lookup is skipped; one of the five factors multiplied in 0x30228.
+ffffbe84	candidate_cranking_running_factor	float	00030468	Running-state factor maintained by 0x30468 (1.0, or a saturated value; the branch at 0x3061a sets the flag tested at 0x30644); one of the five factors multiplied in 0x30228.
+ffffcaac	candidate_off_throttle_timing_latch_leading	uint8	00043934	Byte latch distinguishing the first activation from the filter path (tst at 0x43966); written from 0xffffb53c at 0x439a6.
+ffffcaad	candidate_off_throttle_timing_latch_trailing	uint8	000439b2	Trailing mirror of 0xffffcaac (tst at 0x439e4, write at 0x43a6c).

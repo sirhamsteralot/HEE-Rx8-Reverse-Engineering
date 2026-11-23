@@ -1,0 +1,14 @@
+Dynamic validation — engine start / cranking chain (SH-2E emulator)
+ROM 60E15120_N3J1E, profile utilities/scripts/emu/profiles/60E15120_N3J1E.json
+Every value below is read back from RAM after a harness.call() into the real ROM function.
+
+0x1481c rpm=600 coolant=20  -> a79e=1 a79d=4 a79c=0
+0x1a564 thr=1.0 dwell=19   -> aa62=1 aa63=1
+0x1a564 thr=50.0 dwell=19  -> aa62=0 aa63=0
+0x532d0 vspeed=0 running    -> d15c=1 counter=1
+0x2fea8 cranking -30 degC   -> be3c=3 be24=11
+0x303a8 throttle 10/50 %    -> be68=1 / 0
+0x43934 throttle closed -40 -> ca9c=5 caa4=5
+0x123da one fade step       -> a644=0.95
+0x3a0ec flag=1              -> PD7=1
+0x3a0ec flag=0              -> PD7=0

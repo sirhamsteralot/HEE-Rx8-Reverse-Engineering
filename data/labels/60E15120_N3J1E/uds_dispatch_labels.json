@@ -3008,7 +3008,7 @@
   "evidence": "PID 0xa211 -> bit 4"
  },
  "ffffaa62": {
-  "alias": "cranking_active_ffffaa62",
+  "alias": "cranking_active",
   "type": "uint8",
   "reader": "0005738e",
   "evidence": "PID 0xa211 -> bit 0x10 when 0; named by ignition report (cranking multiplier decay)"

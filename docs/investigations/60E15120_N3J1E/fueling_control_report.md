@@ -177,6 +177,13 @@ def-matched).
 
 ## 5. Corrections made in this pass
 
+- `cranking_pulse_adder` gate and consumer, after the re-derivation in
+  [`starting_cranking_report.md`](../../subsystem-logic/starting_cranking_report.md): the add is gated by
+  `0xffffa428 == 0` (`tst` at `0x3067c`), `0xffffa42c == 1` (`cmp/eq` at `0x30688`) and `0xffffce32 == 1`
+  (`cmp/eq` at `0x30694`) — not by the cranking flag — and `0xffffbe94` is read only by the 1e7 compare at
+  `0x305fe`; the cranking amount reaches the injectors through `0xffffbe58` / `0x2fea8` instead.
+  Also `0x2fea8` writes `be24` **and** `be28` from the same sum (`0x2ff06`/`0x2ff08`).
+
 1. `injector_pulse_set_channel` (0x8a68): pulse = (latency + fuel_request) >> 4 —
    the four `shar` at 0x8a96-0x8a9e apply to the sum (see [`reviews/fueling/REVIEW_NOTES.md`](reviews/fueling/REVIEW_NOTES.md) §10).
 2. Pipeline hygiene: TSV append scripts consume the header (DictReader without
@@ -247,7 +254,7 @@ entries below.
 | 0x00019f4e / 0x00019f40 / 0x0001a418 | `maf_voltage_and_fault_counters` / `…_filtered_update` / `maf_per_rotation_calc` | MAF voltage, latching, per-rotation |
 | 0x0001e842 | `maf_operating_range` | b0fe range 0-3 from a9ec |
 | 0x0000e48e | `injection_angle_limit_lookup` | a434..a43c max injection angle (tbls 0x68ef8/f0c/f20) |
-| 0x00030678 | `cranking_pulse_adder` | be94 += be58 when cranking |
+| 0x00030678 | `cranking_pulse_adder` | be94 += be58 while `!engine_running` && injectors off (a42c) && ce32; be94 feeds only the 1e7 test in 0x30468 |
 | 0x0000e2a8 / 0x0000ee64 | `update_injectors_off_flag` / `rev_limit_fuel_cut_init` | a42c; clears a4a4/a4a5/a4a8 |
 | 0x0000edc4 / 0x00018cfe / 0x0000ee82 | `fuel_cut_arbitration` / `…_rpm_condition` / `…_rev_limit_conditionals` | a444/a445, a964, a4a6-a4ae |
 | 0x0001ddfc | `cold_start_enrichment` | b0c4 (0.0 in this ROM) |
