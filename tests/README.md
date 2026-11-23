@@ -67,7 +67,7 @@ Verification that reimplemented/derived behavior matches the original binaries.
   `data/labels/<rom-id>/report_validation.json` matches a fresh
   `validate_reports.py` run, so report map rows cannot change without the
   regenerated stats).
-  382 tests: 381 passing, 1 pre-existing failure
+  395 tests: 394 passing, 1 pre-existing failure
   (`test_defs_upstream_pin.py::test_repin_check_noop_and_snapshot_is_blob_minus_flex`
   — the upstream pin snapshot wants a flex re-strip; fails on main too, unrelated). The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled

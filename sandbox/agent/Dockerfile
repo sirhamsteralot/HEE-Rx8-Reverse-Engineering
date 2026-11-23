@@ -22,7 +22,12 @@ RUN apt-get update \
 COPY tinyproxy.conf /etc/tinyproxy/tinyproxy.conf
 COPY allowlist.txt /etc/tinyproxy/allowlist.txt
 # tinyproxy runs unprivileged, so both files must be world-readable.
-RUN chmod 0644 /etc/tinyproxy/tinyproxy.conf /etc/tinyproxy/allowlist.txt
+# A Windows checkout with core.autocrlf hands the build context CRLF files, and
+# tinyproxy refuses a config with CR at the end of a directive ("Syntax error on
+# line 3"), so normalize the copies instead of depending on how the tree was
+# checked out.
+RUN sed -i 's/\r$//' /etc/tinyproxy/tinyproxy.conf /etc/tinyproxy/allowlist.txt \
+ && chmod 0644 /etc/tinyproxy/tinyproxy.conf /etc/tinyproxy/allowlist.txt
 
 USER tinyproxy
 EXPOSE 8888
@@ -66,13 +71,15 @@ RUN groupadd --gid 1000 agent \
  && chown -R agent:agent /work /home/agent
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod 0755 /usr/local/bin/entrypoint.sh
-
 # There is no browser in the box; this stub prints the URL for the human to open
 # on the host instead of failing the opener, which is what makes the CLI's
 # browser sign-in work here (see xdg-open.sh and README.md).
 COPY xdg-open.sh /usr/local/bin/xdg-open
-RUN chmod 0755 /usr/local/bin/xdg-open
+# Both scripts run from their shebang, so a CRLF checkout (Windows host with
+# core.autocrlf) fails here with "env: 'bash\r': No such file or directory":
+# normalize the copies instead of depending on the checkout's line endings.
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh /usr/local/bin/xdg-open \
+ && chmod 0755 /usr/local/bin/entrypoint.sh /usr/local/bin/xdg-open
 
 ENV HOME=/home/agent \
     PYTHONUNBUFFERED=1 \

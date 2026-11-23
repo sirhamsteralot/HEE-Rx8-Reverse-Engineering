@@ -44,6 +44,24 @@ docker compose run --rm agent             # or a plain shell in the box
 ./verify.sh                               # boundary checks
 ```
 
+The same on Windows, from PowerShell:
+
+```powershell
+Copy-Item .env.example .env   # fill in MISTRAL_API_KEY; .env is gitignored
+docker compose build
+.\vibe.ps1                    # starts the egress proxy, then an agent session
+docker compose run --rm agent # or a plain shell in the box
+```
+
+[`vibe.ps1`](vibe.ps1) is the PowerShell port of [`vibe.sh`](vibe.sh): it takes
+the same arguments, starts the same proxy and returns the container's exit code.
+Each host uses its own wrapper — `./vibe.sh` wherever bash is available (Linux,
+Git Bash), `.\vibe.ps1` from PowerShell (PowerShell 7 on Linux, or Windows
+PowerShell 5.1 / PowerShell 7 on Windows) — and both drive the same compose file
+and the same containers, so a session started one way is visible to the other.
+The boundary checks stay in `verify.sh`, which has no PowerShell port — run it
+from Git Bash.
+
 The working tree is mounted read-only at `/src`; the first start copies it into
 the `agent-work` volume (`/work/repo`) once, and the agent works there. Nothing
 it writes reaches the host tree.
@@ -105,8 +123,8 @@ and the box has none: see [Signing in](#signing-in).
 
 ## Running your Vibe inside the box
 
-`./vibe.sh` wraps the three moving parts (start the egress proxy, run the agent
-container, pass your arguments through):
+`./vibe.sh` — `.\vibe.ps1` from PowerShell — wraps the three moving parts (start
+the egress proxy, run the agent container, pass your arguments through):
 
 ```sh
 ./vibe.sh                        # interactive session in /work/repo
@@ -114,6 +132,21 @@ container, pass your arguments through):
 ./vibe.sh -p "list the ROM profiles"               # headless: one answer, then exit
 ./vibe.sh --resume                                # continue a session from the box
 ```
+
+```powershell
+.\vibe.ps1                       # interactive session in /work/repo
+.\vibe.ps1 "add a test for the O2 monitor labels"  # session with a first prompt
+.\vibe.ps1 -p "list the ROM profiles"              # headless: one answer, then exit
+.\vibe.ps1 --resume                                # continue a session from the box
+```
+
+Both wrappers forward every argument verbatim — a quoted prompt stays one
+argument, `--` and `--resume` reach `vibe` as written — and exit with the code
+`docker compose run` returned. The PowerShell wrapper resolves the compose file
+from its own location, so it works from any directory and still picks up
+`sandbox/agent/.env`; it needs nothing on the host beyond `docker` (Windows
+PowerShell 5.1 and PowerShell 7 run it, PowerShell 7 also on Linux, and a
+missing `docker` exits `127`).
 
 Equivalently, without the wrapper:
 
@@ -260,6 +293,7 @@ that has been built or run here.
 | direct egress without the proxy | no response — the sandbox network has no route out |
 | `docker compose config` | `read_only: true`, `cap_drop: [ALL]`, `no-new-privileges:true`, `pids_limit: 2048`, `/src` bind `read_only: true`, no host binds beyond `/src` |
 | `./vibe.sh --version` | `vibe 3.1.4` — the wrapper starts the proxy and runs the CLI inside the box |
+| `.\vibe.ps1 --version` | `vibe 3.1.4`, exit `0` — the PowerShell wrapper starts the same proxy and runs the same command inside the box; an unknown flag returns the CLI's exit code `1` (checked from Windows PowerShell 5.1; the same script under PowerShell 7.4 on Linux, with a stub `docker`, makes the same two compose calls and returns the same exit code) |
 | `python -m pytest --version` | `pytest 9.2.0` |
 | `python -m pytest tests/` in `/work/repo` | 1 failed, 374 passed, 7 errors — identical to the host run on the same tree (`test_extract_scalars.py`, `test_defs_upstream_pin.py`, from uncommitted `data/definitions/` and a drifted `submodules/RX8Defs` gitlink) |
 
@@ -267,6 +301,11 @@ Not run here: a live Vibe session against the model API, and a browser sign-in
 end to end — both need your key and your account. The proxy's allow paths are the
 rows in [Network policy](#network-policy); the sign-in poll and exchange use the
 first of them.
+
+The `vibe.ps1` `--version` row ran from Windows PowerShell 5.1 against a
+`core.autocrlf` checkout, i.e. a CRLF working tree; the image normalizes the
+scripts and the proxy config it copies, so that checkout builds and runs the
+same box, and an LF checkout (Linux) builds it unchanged.
 
 ## Limits
 
@@ -280,6 +319,10 @@ first of them.
   read-only. `apt-get install` needs a rebuilt image.
 - The repo copy is seeded once per volume. `docker compose down -v` or
   `rm -rf /work/repo` re-seeds from the current working tree.
+- The image strips CR from the scripts and the proxy config it copies, so a
+  Windows checkout (`core.autocrlf`) builds the same box. Scripts executed from
+  the checked-out tree keep the checkout's line endings, so a CRLF tree breaks
+  them inside any Linux container.
 - There is no browser in the box: anything that wants one — the CLI's sign-in,
   a connector's OAuth page — reaches the `xdg-open` stub, which only prints the
   URL. Copy it to the host, and keep the box's process alive (the sign-in poll
