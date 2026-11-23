@@ -280,6 +280,10 @@ first of them.
   read-only. `apt-get install` needs a rebuilt image.
 - The repo copy is seeded once per volume. `docker compose down -v` or
   `rm -rf /work/repo` re-seeds from the current working tree.
+- The image strips CR from the scripts and the proxy config it copies, so a
+  Windows checkout (`core.autocrlf`) builds the same box. Scripts executed from
+  the checked-out tree keep the checkout's line endings, so a CRLF tree breaks
+  them inside any Linux container.
 - There is no browser in the box: anything that wants one — the CLI's sign-in,
   a connector's OAuth page — reaches the `xdg-open` stub, which only prints the
   URL. Copy it to the host, and keep the box's process alive (the sign-in poll
