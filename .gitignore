@@ -25,3 +25,7 @@ scratch/
 input/*
 !input/README.md
 .venv/
+
+# Ghidra distribution staged for the sandbox image (sandbox/fetch-ghidra.sh)
+sandbox/ghidra-dist/*
+!sandbox/ghidra-dist/.gitkeep

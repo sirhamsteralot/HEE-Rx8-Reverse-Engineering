@@ -20,6 +20,7 @@ reverse-engineering effort. Read [`README.md`](README.md) first, plus
 - `data/maps/<rom-id>/` — extracted calibration: tables (`extract_maps.py`) **and** literal-pool scalars (`extract_scalars.py`); cross-ROM reports `cross_rom_diff.json` / `cross_rom_scalars.json`. See [`data/maps/README.md`](data/maps/README.md).
 - `utilities/scripts/` — `emu/` (SH-2E emulator, one JSON profile per ROM/market/model in `emu/profiles/`), `rx8-pcm-pipeline/` (Ghidra pipeline; paths resolve via its `paths.py`; project DBs go to `${GHIDRA_WORK:-input/ghidra-work}`, not committed), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `extract_maps.py` + `diff_maps.py` + `extract_scalars.py`, `hash_binaries.py`.
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
+- `sandbox/` — Docker toolchain sandbox (`Dockerfile` + `compose.yaml`; the repo is bind-mounted, never baked in) for the pytest suite, emulator, validators and host tests, with an optional Ghidra 12.1.3 layer staged by `fetch-ghidra.sh`. See [`sandbox/README.md`](sandbox/README.md).
 - `tests/` — repo-level pytest harnesses; host tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
 
 If an artifact doesn't fit, propose a new folder in the commit message rather than
@@ -293,3 +294,8 @@ its own branch and is delivered as a pull request for the user to review and mer
   coverage), `verify_readability.py`,
   `verify_math_units.py`. The Ghidra-dependent steps in `rebuild.sh` need `GHIDRA_HOME`
   (Ghidra 12.1.3) and a JDK; project DBs are not committed.
+- Any of the above can run in the repo's Docker toolchain instead of the host —
+  `cd sandbox && SANDBOX_UID=$(id -u) SANDBOX_GID=$(id -g) docker compose build`,
+  then `docker compose run --rm sandbox <command>` — see
+  [`sandbox/README.md`](sandbox/README.md) for what is preinstalled and what was
+  verified there.
