@@ -62,7 +62,9 @@ in the emulator matched to <1e-4 deg (E1 double-precision limit).
 leading_base_timing_calc()    # 0x11f00: 0xffffa5e8 = blend of base(0x69078) and advance cap, weight 0xffffb118 timing_blend_weight
 trailing_base_timing_calc()   # 0x1206c: 0xffffa5ec mirror (0x69120/0x69174)
 # ... knock state machine (0x13826..0x13bd2), idle corrections, coolant derate ...
-idle_base_timing_select()     # 0x14100: 0xffffa780 = tbl 0x69208 (cranking) / 0x6921c / 0x69230
+# idle_base_timing_select()   # 0x14100: 0xffffa780 = tbl 0x69208 (closed throttle) / 0x6921c / 0x69230
+#   NOT called from 0x142a4: its only reference is pool 0x14730, read at 0x1466a inside 0x1465e,
+#   reached from 0x117ac (the 0x6584 task chain). It feeds the +a780 term used below.
 iat_timing_compensation_on_throttle()  # 0x14090: 0xffffa778 = 0xffffa77c = IAT tbl 0x6a0d8 (load>=0.5) else 0
 cranking_timing_leading_filter()       # 0x43934: 0xffffca9c = filter(lookup(ECT, 0x6b630))
 cranking_timing_trailing_filter()      # 0x439b2: 0xffffcaa0 = filter(lookup(ECT, 0x6b644))
@@ -73,7 +75,10 @@ knock_retard_apply_leading()     # 0x125bc: 0xffffa648 = (knock_retard_ffffa734 
 leading_timing_add_corrections() # 0x123ba: 0xffffa634 = 0xffffa640 + 0xffffa648
 leading_final_timing_clamp_output()  # 0x121fc: 0xffffa630 = clamp(0xffffa634, 0xffffa64c, lookup(rpm, 0x69190))
 # trailing mirrors: 0x124d6, 0x125f6, 0x123ca, 0x12300 (0xffffa638 = clamp(0xffffa63c, 0xffffa65c, lookup(rpm, 0x691cc)))
-# cranking_timing_multiplier_leading 0xffffa644: -0.05/call while cranking (cranking_active_ffffaa62 0xffffaa62==1) and rpm < 0xffffa7ac+9900, else +1.0 -> 1.0
+# cranking_timing_multiplier_leading 0xffffa644: max(x-0.05,0) while 0xffffaa62==1 (cmp/eq 0x1246e) and the rpm latch
+#   0xffffa668 is clear (tst 0x12478); else min(x+1.0,1.0). The latch is set at rpm >= 0xffffa7ac + 10000.0
+#   (f32 0x6d778, fcmp/gt 0x123f0) and cleared below that sum - 100.0 (f32 0x6d77c, 0x1245a), held in between.
+#   Floor 0.0 via 0x23e4 at 0x12486; ceiling 1.0 via 0x23f4 at 0x12498.
 ```
 
 ## 3. Key calibrated tables (descriptor addresses; >HBBII parsed from ROM bytes)
@@ -89,7 +94,8 @@ leading_final_timing_clamp_output()  # 0x121fc: 0xffffa630 = clamp(0xffffa634, 0
 | 0x69190 / 0x691cc | Max advance vs rpm, leading/trailing (candidate_) | 0x121fc / 0x12300 |
 | 0x6a060 / 0x6a074 / 0x6a088 / 0x6a09c | Idle Error Timing Correction bool false/true, leading/trailing (deg) | 0x135b4 / 0x136e4 |
 | 0x6a0d8 / 0x6a0ec | IAT Compensation - On Throttle / Table 2D - 113 (cranking) | 0x14090 |
-| 0x6af2c / 0x6b644 | Ignition Leading/Trailing - Cranking Timing Advance (deg, vs ECT) | 0x43934/0x439b2 via 0x6b630 |
+| 0x6b630 / 0x6b644 | off-throttle leading vs ECT / Ignition Trailing - Cranking Timing Advance (deg, vs ECT) | 0x43934 / 0x439b2 |
+| 0x6af2c | Ignition Leading - Cranking Timing Advance (deg, vs ECT) | 0x3337c only (not the cranking filters) |
 | 0x6b630 | Off Throttle Leading Timing Realted (deg, vs ECT) | 0x43934 |
 | 0x6a7a4 / 0x6957c | Ignition Timing Leading - DSC Mode A - Base / Map 4 | 0x2cc2c / 0x1815c |
 
@@ -127,6 +133,14 @@ Descriptors not present in `romraider_descriptor_matches.json` are labeled
 - **17 lookup descriptors** named (table above; candidate_ where no RX8Defs match).
 
 ## 5. Corrections made in this pass
+
+- Corrections applied after the binary-level re-derivation in
+  [`starting_cranking_report.md`](../../subsystem-logic/starting_cranking_report.md): `idle_base_timing_select`
+  `0x14100` is **not** called from the `0x142a4` task (only reference: pool `0x14730` read at `0x1466a` in
+  `0x1465e`, `0x6584` task chain); the fade gate compares rpm against `0xffffa7ac` + **10000.0**
+  (f32 `0x6d778`) with a 100.0 rpm hysteresis (f32 `0x6d77c`) stored in `0xffffa668`, and clamps the weight at
+  0.0 via `0x23e4`; the leading filter reads descriptor `0x6b630` (pool `0x43a30`), while `0x6af2c` has a single
+  longword reference (pool `0x33498`, function `0x3337c`).
 
 - Thread §9 equation: CLTcomp is inside the `(1−CrankingMult)` group (0xffffa5f0), and
   IdleBaseFinal (a780) is added outside it — corrected mapping documented above and
