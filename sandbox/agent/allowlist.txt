@@ -2,5 +2,14 @@
 # Add a destination only when the agent genuinely needs it, and keep it as
 # narrow as possible: FilterDefaultDeny in tinyproxy.conf blocks the rest.
 #
-# The agent CLI's model API.
+# The agent CLI's model API, and everything its sign-in flow talks to
+# (auth./chat./console./admin.mistral.ai, incl. the regional api.us./api.eu.
+# hosts): the console sign-in start, poll and key-exchange requests all land on
+# this pattern, so no extra line is needed for signing in from inside the box.
 ^(.+\.)?mistral\.ai$
+
+# Feature-flag evaluation for the CLI (first-party Mistral, fetched at startup).
+# Refusing it costs a "GrowthBook eval request failed" warning per session and
+# never blocks a session or a sign-in; delete this line if you would rather the
+# box not report flag evaluations.
+^experiments\.mistral\.services$

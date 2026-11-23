@@ -29,6 +29,14 @@ check "host docker socket" "absent" \
 check "sandbox network internal" "true" \
   "$(docker network inspect hee-agent-box_sandbox --format '{{.Internal}}' 2>/dev/null)"
 
+# The box has no browser, so /usr/local/bin/xdg-open is the stub that prints the
+# sign-in URL for the host instead of failing (xdg-open.sh). Checked statically:
+# executing an opener is exactly what this box is not for.
+check "opener stub (xdg-open)" "installed" \
+  "$(docker compose run --rm -T agent sh -c 'test -x /usr/local/bin/xdg-open && grep -q "open this URL on your host" /usr/local/bin/xdg-open && echo installed || echo missing' 2>/dev/null | tr -d '\r')"
+check "opener from BROWSER" "xdg-open" \
+  "$(docker compose run --rm -T agent printenv BROWSER 2>/dev/null | tr -d '\r')"
+
 if docker compose ps --status running --format '{{.Service}}' 2>/dev/null | grep -qx egress; then
   echo "== egress (through the proxy) =="
   code_allow=$(docker compose run --rm -T agent curl -x http://egress:8888 -s -o /dev/null \
@@ -48,6 +56,17 @@ if docker compose ps --status running --format '{{.Service}}' 2>/dev/null | grep
   else
     printf 'FAIL  %-28s expected a 403 refusal, got %s\n' "github.com blocked" "$deny_out"
     fail=1
+  fi
+
+  # The CLI's feature-flag host (first-party Mistral); refusing it only costs a
+  # warning per session, so it stays a separate, deletable allowlist line.
+  code_flags=$(docker compose run --rm -T agent curl -x http://egress:8888 -s -o /dev/null \
+      -w '%{http_code}' --max-time 20 https://experiments.mistral.services/ 2>/dev/null | tr -d '\r')
+  if [ -z "$code_flags" ] || [ "$code_flags" = "000" ]; then
+    printf 'FAIL  %-28s no response (allowlisted feature-flag host unreachable)\n' "mistral.services reachable"
+    fail=1
+  else
+    printf 'ok    %-28s HTTP %s (reached the proxy, then the host)\n' "mistral.services reachable" "$code_flags"
   fi
 
   code_direct=$(docker compose run --rm -T agent curl -s -o /dev/null -w '%{http_code}' \

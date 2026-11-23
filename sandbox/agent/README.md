@@ -87,6 +87,16 @@ printf '^(.+\\.)?example\\.com$\n' >> allowlist.txt
 docker compose build egress && docker compose up -d egress
 ```
 
+The list itself is two lines:
+
+| pattern | what it covers |
+|---|---|
+| `^(.+\.)?mistral\.ai$` | the model API (`api.`, plus the regional `api.us.`/`api.eu.` hosts) and the whole sign-in flow: the console's sign-in start, poll and key-exchange calls (`console.mistral.ai/api/vibe/sign-in…`), the tenant/whoami lookups (`chat.mistral.ai`) and the OIDC issuer (`auth.mistral.ai`) all match this pattern |
+| `^experiments\.mistral\.services$` | the CLI's first-party feature-flag evaluation (GrowthBook). Refusing it costs a `GrowthBook eval request failed` warning per session in `~/.vibe/logs/vibe.log` and blocks nothing — delete the line if you would rather the box did not report flag evaluations |
+
+Signing in needs **no** additional allowlist entry. What it needs is a browser,
+and the box has none: see [Signing in](#signing-in).
+
 ## Running your Vibe inside the box
 
 `./vibe.sh` wraps the three moving parts (start the egress proxy, run the agent
@@ -106,12 +116,33 @@ docker compose up -d egress
 docker compose run --rm agent vibe
 ```
 
+### Signing in
+
+`vibe --setup` offers browser sign-in. The box has no browser, so `xdg-open` is a
+stub ([`xdg-open.sh`](xdg-open.sh), installed as `/usr/local/bin/xdg-open` and
+selected via `BROWSER=xdg-open`). It prints what the CLI wanted to open instead
+of failing the opener — a failed opener aborts the sign-in *before* the poll
+starts, which is why signing in on the host on its own never completes:
+
+```
+  no browser in this box — open this URL on your host:
+
+  https://console.mistral.ai/…
+```
+
+Open that URL in your host browser and sign in there. The box keeps polling
+`console.mistral.ai` (allowlisted) while you do, so the setup finishes the moment
+you are done; every URL the stub printed is appended to `~/.vibe/opened-urls` in
+the `agent-home` volume, because the TUI redraws over it while it waits. The
+resulting key is written to `~/.vibe/.env`, also in the home volume.
+
 ### Where the API key goes
 
 Two options, both keeping the credential out of your host shell and image:
 
 ```sh
-# 1. store it in the box's own home volume, never touching the host filesystem
+# 1. the setup screen, at the box's own prompt: sign in as above, or use its
+#    "Paste it manually instead" entry — the key lands in the home volume
 docker compose run --rm agent vibe --setup
 
 # 2. or hand it to the container through an untracked env file
@@ -128,6 +159,7 @@ host-side credential proxy here (that is what `sbx` adds, see below).
 | working directory | `/work/repo` — the private copy seeded from the read-only `/src` mount |
 | `~/.vibe` (config, sessions, skills caches) | the `agent-home` volume, so `--continue`/`--resume` work across runs and are wiped by `docker compose down -v` |
 | repo tooling | `.vibe/plugins/hee-re/` is part of the copied tree, so the hee-re plugin and its MCP server run **inside** the box with the box's python |
+| browser | none: `xdg-open` is the stub that prints the URL for you to open on the host (see [Signing in](#signing-in)) |
 | your host | nothing: no `~/.vibe` settings, no model aliases or custom agents, no SSH agent, no docker socket, no connectors host-side |
 
 Vibe prompts once for trust in an unfamiliar directory; `./vibe.sh --trust`
@@ -209,14 +241,18 @@ that has been built or run here.
 | `hee-agent-box_sandbox` network | `internal=true` — no gateway, only the proxy is reachable |
 | allowlisted destination (`api.mistral.ai`) via the proxy | `HTTP 401` — the proxy let it out, the API rejected the unauthenticated call |
 | non-allowlisted destination (`github.com`) via the proxy | proxy refuses the `CONNECT` (`403`) |
+| allowlisted feature-flag host (`experiments.mistral.services`) via the proxy | `HTTP 404` — the proxy let it out, the host answered for `/` (before the entry: `Proxying refused on filtered domain`) |
+| browser opener in the box | `/usr/local/bin/xdg-open` is the stub and `BROWSER=xdg-open` — every opener call reports the URL for the host instead of failing |
 | direct egress without the proxy | no response — the sandbox network has no route out |
 | `docker compose config` | `read_only: true`, `cap_drop: [ALL]`, `no-new-privileges:true`, `pids_limit: 2048`, `/src` bind `read_only: true`, no host binds beyond `/src` |
 | `./vibe.sh --version` | `vibe 3.1.4` — the wrapper starts the proxy and runs the CLI inside the box |
 | `python -m pytest --version` | `pytest 9.2.0` |
 | `python -m pytest tests/` in `/work/repo` | 1 failed, 374 passed, 7 errors — identical to the host run on the same tree (`test_extract_scalars.py`, `test_defs_upstream_pin.py`, from uncommitted `data/definitions/` and a drifted `submodules/RX8Defs` gitlink) |
 
-Not run here: a live Vibe session against the model API — that needs your key.
-The proxy's allow path to `api.mistral.ai` is the `HTTP 401` row above.
+Not run here: a live Vibe session against the model API, and a browser sign-in
+end to end — both need your key and your account. The proxy's allow paths are the
+`mistral.ai` and `mistral.services` rows above; the sign-in poll and exchange use
+the first of them.
 
 ## Limits
 
@@ -230,6 +266,10 @@ The proxy's allow path to `api.mistral.ai` is the `HTTP 401` row above.
   read-only. `apt-get install` needs a rebuilt image.
 - The repo copy is seeded once per volume. `docker compose down -v` or
   `rm -rf /work/repo` re-seeds from the current working tree.
+- There is no browser in the box: anything that wants one — the CLI's sign-in,
+  a connector's OAuth page — reaches the `xdg-open` stub, which only prints the
+  URL. Copy it to the host, and keep the box's process alive (the sign-in poll
+  gives up after the CLI's own timeout, so finish in the browser promptly).
 - For hypervisor-grade isolation — a separate kernel per sandbox, and credential
   injection that keeps the model API key on the host — Docker Sandboxes (`sbx`)
   is the tool. It supports Ubuntu 24.04+, macOS and Windows only, which is why
