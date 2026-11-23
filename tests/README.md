@@ -50,8 +50,9 @@ Verification that reimplemented/derived behavior matches the original binaries.
   (`hee.py` CLI), `tests/test_agent_box_wrappers.py` (the two agent-box launch
   wrappers, `sandbox/agent/vibe.sh` and `vibe.ps1`: same compose service, and
   the PowerShell one forwards arguments verbatim and returns the container's
-  exit code — the forwarding test runs only where a PowerShell host is on
-  `PATH`, via a stub `docker`), `tests/test_extract_maps.py` (calibration
+  exit code — the forwarding test runs wherever a PowerShell host is on `PATH`
+  (Windows PowerShell 5.1 or PowerShell 7, the latter also on Linux), via a
+  platform-appropriate stub `docker`), `tests/test_extract_maps.py` (calibration
   descriptor scanner),
   `tests/test_extract_scalars.py` (literal-pool scalar extractor: seed values,
   reference-ROM addresses, strict layout assertion, generated-output consistency),

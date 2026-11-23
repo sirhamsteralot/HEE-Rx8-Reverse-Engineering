@@ -2,13 +2,16 @@
 
 Both wrappers drive the same compose file: start the allowlisting egress proxy,
 then run the `agent` service with the `vibe` CLI, forwarding the caller's
-arguments and returning the container's exit code. The forwarding test runs only
-where a PowerShell host is on PATH (Windows PowerShell 5.1 or PowerShell 7);
-it uses a stub `docker` so it needs no Docker daemon and no built image.
+arguments and returning the container's exit code. The forwarding test runs
+wherever a PowerShell host is on PATH — Windows PowerShell 5.1 or PowerShell 7
+(the latter also on Linux, where vibe.ps1 is the only wrapper that needs it) —
+and uses a platform-appropriate stub `docker`, so it needs no Docker daemon and
+no built image.
 """
 import os
 import shutil
 import subprocess
+import sys
 
 import pytest
 
@@ -40,6 +43,12 @@ if "%STUB_EXIT%"=="" exit /b 0
 exit /b %STUB_EXIT%
 """
 
+STUB_DOCKER_SH = """#!/bin/sh
+{ echo "=== call"; for a in "$@"; do echo "$a"; done; } >> "$STUB_LOG"
+case " $* " in *" up "*) exit 0 ;; esac
+exit "${STUB_EXIT:-0}"
+"""
+
 
 def read_text(path):
     with open(path, encoding="utf-8") as fh:
@@ -61,7 +70,13 @@ def test_wrappers_drive_the_same_compose_service():
 def test_vibe_ps1_forwards_arguments_and_exit_code(tmp_path):
     stub_dir = tmp_path / "bin"
     stub_dir.mkdir()
-    (stub_dir / "docker.cmd").write_text(STUB_DOCKER_CMD, encoding="ascii", newline="\r\n")
+    if sys.platform == "win32":
+        stub = stub_dir / "docker.cmd"
+        stub.write_text(STUB_DOCKER_CMD, encoding="ascii", newline="\r\n")
+    else:
+        stub = stub_dir / "docker"
+        stub.write_text(STUB_DOCKER_SH, encoding="ascii", newline="\n")
+        stub.chmod(0o755)
 
     log = tmp_path / "docker-calls.log"
     env = dict(os.environ)
@@ -69,11 +84,14 @@ def test_vibe_ps1_forwards_arguments_and_exit_code(tmp_path):
     env["STUB_LOG"] = str(log)
     env["STUB_EXIT"] = "3"
 
-    r = subprocess.run(
-        [POWERSHELL, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", VIBE_PS1,
-         "-p", "two words"],
-        capture_output=True, text=True, timeout=120, env=env,
-    )
+    # -ExecutionPolicy exists on Windows PowerShell; PowerShell 7 on Linux takes
+    # the same script without it.
+    cmd = [POWERSHELL, "-NoProfile"]
+    if sys.platform == "win32":
+        cmd += ["-ExecutionPolicy", "Bypass"]
+    cmd += ["-File", VIBE_PS1, "-p", "two words"]
+
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=120, env=env)
     assert r.returncode == 3, r.stderr
 
     # One logged block per compose invocation: proxy start, then the run.
