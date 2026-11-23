@@ -1,0 +1,2 @@
+Ghidra distribution staged by `fetch-ghidra.sh`; unpacked into `/opt/ghidra` by
+`sandbox/Dockerfile`. Uncommitted — see `.gitignore`.

@@ -1,0 +1,43 @@
+# Dev sandbox for this repo: the image from ./Dockerfile with the repo
+# bind-mounted at /work/repo. Run the commands from this directory:
+#
+#   SANDBOX_UID=$(id -u) SANDBOX_GID=$(id -g) docker compose build
+#   docker compose run --rm sandbox python -m pytest tests/
+#   docker compose run --rm sandbox          # interactive shell
+#
+name: hee-rx8-sandbox
+
+services:
+  sandbox:
+    build:
+      context: .
+      args:
+        # Keep the host UID/GID so git, pytest and the generators write files
+        # the host account still owns.
+        USER_UID: ${SANDBOX_UID:-1000}
+        USER_GID: ${SANDBOX_GID:-1000}
+    image: hee-rx8-sandbox:latest
+    init: true
+    working_dir: /work/repo
+    environment:
+      # Ghidra project DBs are never committed (AGENTS.md): keep them in the
+      # repo's gitignored input/ tree, as on the host.
+      GHIDRA_WORK: /work/repo/input/ghidra-work
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      # The repo itself; ".." is the parent of this compose file.
+      - ..:/work/repo
+      # Caches survive `docker compose run --rm`.
+      - pip-cache:/home/dev/.cache/pip
+      - ghidra-settings:/home/dev/.config/ghidra
+    # utilities/scripts/emu/ui.py binds loopback only (make_server(), ui.py:231),
+    # so publishing 8080 would reach nothing. Run the UI on the host; publish
+    # this port once the UI grows a bind-address option.
+    # ports:
+    #   - "127.0.0.1:8080:8080"
+    stdin_open: true
+    tty: true
+
+volumes:
+  pip-cache:
+  ghidra-settings:

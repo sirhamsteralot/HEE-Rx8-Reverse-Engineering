@@ -55,6 +55,10 @@ python utilities/scripts/emu/ui.py --profile 60E15120_N3J1E   # UI on http://127
 python utilities/scripts/hash_binaries.py --check             # verify binaries/manifest.csv
 ```
 
+The same checks run in the repo's Docker toolchain (python + pytest + git-lfs +
+gcc + JDK, optional Ghidra 12.1.3) if you would rather not install them:
+[`sandbox/README.md`](sandbox/README.md).
+
 Emulator profiles are per-ROM/market/model in
 `utilities/scripts/emu/profiles/` (ROM path + SHA-256 verified at load, memory
 map, peripheral set, sensor map); to run a different `.bin`, add a profile —
