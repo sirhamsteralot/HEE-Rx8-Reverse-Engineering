@@ -1,0 +1,95 @@
+# Agent box for this repo: an AI coding agent runs inside the `agent` container,
+# which has no host Docker socket, no host home directory, no route off the
+# machine except the `egress` proxy, and only a read-only view of the repo.
+#
+#   docker compose up -d egress            # allowlisting proxy (default deny)
+#   docker compose run --rm agent          # shell in the box
+#   docker compose run --rm agent vibe     # the agent CLI
+#
+# The host tree is mounted read-only at /src; entrypoint.sh copies it into the
+# disposable /work volume once, and the agent works on that copy only.
+name: hee-agent-box
+
+services:
+  egress:
+    build:
+      context: .
+      target: egress
+    image: hee-agent-box-egress:latest
+    restart: unless-stopped
+    user: tinyproxy
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:mode=1777
+    networks:
+      - sandbox
+      - upstream
+
+  agent:
+    build:
+      context: .
+      target: agent
+      args:
+        # Switch the agent CLI without touching the boundary: AGENT=none gives
+        # the same hardened box with no agent installed.
+        AGENT: ${AGENT:-vibe}
+        VIBE_VERSION: ${VIBE_VERSION:-3.1.4}
+    image: hee-agent-box:latest
+    depends_on:
+      - egress
+    init: true
+    networks:
+      - sandbox
+    environment:
+      # The only egress path; tinyproxy denies anything outside allowlist.txt.
+      HTTP_PROXY: http://egress:8888
+      HTTPS_PROXY: http://egress:8888
+      http_proxy: http://egress:8888
+      https_proxy: http://egress:8888
+      no_proxy: localhost,127.0.0.1
+      REPO_SRC: /src
+    # Model credentials: put MISTRAL_API_KEY in an untracked sandbox/agent/.env
+    # (`.env` is already gitignored) instead of exporting it in your shell.
+    env_file:
+      - path: .env
+        required: false
+    read_only: true
+    tmpfs:
+      - /tmp:size=4g,mode=1777
+      - /run:size=64m
+    volumes:
+      # Read-only view of the working tree: clone-mode semantics. Override with
+      # REPO_PATH for another checkout.
+      - ${REPO_PATH:-../..}:/src:ro
+      # Disposable state: the private repo copy and the agent's home/config.
+      - agent-work:/work
+      - agent-home:/home/agent
+    # The privileged caps exist only for the root bootstrap (chown + gosu);
+    # nothing else in the box runs with capabilities.
+    cap_drop: [ALL]
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 2048
+    mem_limit: ${AGENT_MEMORY:-8g}
+    cpus: ${AGENT_CPUS:-8}
+    stdin_open: true
+    tty: true
+
+networks:
+  # No gateway: only the egress proxy is reachable from here.
+  sandbox:
+    internal: true
+  upstream:
+
+volumes:
+  agent-work:
+  agent-home:

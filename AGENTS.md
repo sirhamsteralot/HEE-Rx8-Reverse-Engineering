@@ -22,6 +22,7 @@ reverse-engineering effort. Read [`README.md`](README.md) first, plus
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
 - `sandbox/` — Docker toolchain sandbox (`Dockerfile` + `compose.yaml`; the repo is bind-mounted, never baked in) for the pytest suite, emulator, validators and host tests, with an optional Ghidra 12.1.3 layer staged by `fetch-ghidra.sh`. See [`sandbox/README.md`](sandbox/README.md).
 - `tests/` — repo-level pytest harnesses; host tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
+- `sandbox/agent/` — least-privilege container boundary for running an agent against this repo: read-only working-tree mount plus a disposable private copy, no host Docker socket or home directory, no capabilities, default-deny egress proxy. See [`sandbox/agent/README.md`](sandbox/agent/README.md) for the threat model and its limits.
 
 If an artifact doesn't fit, propose a new folder in the commit message rather than
 dumping it at the root.
