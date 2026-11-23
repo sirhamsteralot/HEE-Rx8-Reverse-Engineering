@@ -1,0 +1,6 @@
+# Default-deny egress allowlist for the agent box (tinyproxy, ERE per line).
+# Add a destination only when the agent genuinely needs it, and keep it as
+# narrow as possible: FilterDefaultDeny in tinyproxy.conf blocks the rest.
+#
+# The agent CLI's model API.
+^(.+\.)?mistral\.ai$

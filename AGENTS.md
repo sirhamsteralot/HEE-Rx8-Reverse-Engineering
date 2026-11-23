@@ -21,6 +21,7 @@ reverse-engineering effort. Read [`README.md`](README.md) first, plus
 - `utilities/scripts/` — `emu/` (SH-2E emulator, one JSON profile per ROM/market/model in `emu/profiles/`), `rx8-pcm-pipeline/` (Ghidra pipeline; paths resolve via its `paths.py`; project DBs go to `${GHIDRA_WORK:-input/ghidra-work}`, not committed), `patchers/` (ROM patchers — write NEW output files only), `defs-merge/`, `extract_maps.py` + `diff_maps.py` + `extract_scalars.py`, `hash_binaries.py`.
 - `utilities/tools/ghidra/` — headless Java scripts (`scripts/`) and the SH-2E processor config (`processor/`).
 - `tests/` — repo-level pytest harnesses; host tests for reimplemented code live next to the code in `reverse-engineered/reimplementation/`.
+- `sandbox/agent/` — least-privilege container boundary for running an agent against this repo: read-only working-tree mount plus a disposable private copy, no host Docker socket or home directory, no capabilities, default-deny egress proxy. See [`sandbox/agent/README.md`](sandbox/agent/README.md) for the threat model and its limits.
 
 If an artifact doesn't fit, propose a new folder in the commit message rather than
 dumping it at the root.
