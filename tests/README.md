@@ -47,7 +47,12 @@ Verification that reimplemented/derived behavior matches the original binaries.
   (dynamic reproduction of static findings via `emu/harness.py`: math helpers vs
   the reimplementation, knock clamp 0x13bd2, injector map 0xd7d4→ATU-II 8A-8F,
   ADC read path, RCAN RX/TX, Mode 22 dispatch), `tests/test_agent_tools.py`
-  (`hee.py` CLI), `tests/test_extract_maps.py` (calibration descriptor scanner),
+  (`hee.py` CLI), `tests/test_agent_box_wrappers.py` (the two agent-box launch
+  wrappers, `sandbox/agent/vibe.sh` and `vibe.ps1`: same compose service, and
+  the PowerShell one forwards arguments verbatim and returns the container's
+  exit code — the forwarding test runs only where a PowerShell host is on
+  `PATH`, via a stub `docker`), `tests/test_extract_maps.py` (calibration
+  descriptor scanner),
   `tests/test_extract_scalars.py` (literal-pool scalar extractor: seed values,
   reference-ROM addresses, strict layout assertion, generated-output consistency),
   `tests/test_emu_fidelity.py` (E1 f32 rounding, E7 div1/rotcr, interrupt
@@ -67,7 +72,7 @@ Verification that reimplemented/derived behavior matches the original binaries.
   `data/labels/<rom-id>/report_validation.json` matches a fresh
   `validate_reports.py` run, so report map rows cannot change without the
   regenerated stats).
-  382 tests: 381 passing, 1 pre-existing failure
+  397 tests: 396 passing, 1 pre-existing failure
   (`test_defs_upstream_pin.py::test_repin_check_noop_and_snapshot_is_blob_minus_flex`
   — the upstream pin snapshot wants a flex re-strip; fails on main too, unrelated). The 4 tests touching
   `binaries/dumps/60E0G500_N3ZHEC.bin` require the Git LFS object to be pulled
