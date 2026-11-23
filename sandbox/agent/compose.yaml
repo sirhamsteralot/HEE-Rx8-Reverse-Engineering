@@ -51,6 +51,10 @@ services:
       https_proxy: http://egress:8888
       no_proxy: localhost,127.0.0.1
       REPO_SRC: /src
+      # No browser in the box: point every opener at the stub that prints the
+      # URL for the host instead (see xdg-open.sh). Without it, the CLI's
+      # browser sign-in fails on the box side before it starts polling.
+      BROWSER: xdg-open
     # Model credentials: put MISTRAL_API_KEY in an untracked sandbox/agent/.env
     # (`.env` is already gitignored) instead of exporting it in your shell.
     env_file:

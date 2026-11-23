@@ -68,6 +68,12 @@ RUN groupadd --gid 1000 agent \
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
+# There is no browser in the box; this stub prints the URL for the human to open
+# on the host instead of failing the opener, which is what makes the CLI's
+# browser sign-in work here (see xdg-open.sh and README.md).
+COPY xdg-open.sh /usr/local/bin/xdg-open
+RUN chmod 0755 /usr/local/bin/xdg-open
+
 ENV HOME=/home/agent \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
