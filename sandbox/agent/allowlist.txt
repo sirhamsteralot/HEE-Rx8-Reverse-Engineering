@@ -13,3 +13,16 @@
 # never blocks a session or a sign-in; delete this line if you would rather the
 # box not report flag evaluations.
 ^experiments\.mistral\.services$
+
+# GitHub over HTTPS: git clone/fetch and push, the REST/GraphQL API (gh, the
+# GitHub connector), archive downloads, raw files, release assets and git-lfs
+# object downloads. Only 443 is permitted and the box carries no GitHub
+# credentials of its own, so this is read egress for public repositories unless
+# you inject a token; delete the block to keep the box off GitHub entirely.
+^github\.com$
+^api\.github\.com$
+^codeload\.github\.com$
+^raw\.githubusercontent\.com$
+^objects\.githubusercontent\.com$
+^media\.githubusercontent\.com$
+^github-cloud\.s3\.amazonaws\.com$

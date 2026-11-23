@@ -64,6 +64,11 @@ docker compose exec agent rm -rf /work/repo && docker compose run --rm agent tru
 Treat what comes out the same way you would treat a pull request from a stranger:
 `.git/hooks/`, CI configuration and build scripts are writable inside the box.
 
+GitHub is allowlisted (see [Network policy](#network-policy)), but the box holds
+no GitHub credentials, so work still leaves the way above unless you deliberately
+put a token inside it — a `gh` login or a token in `.env` makes `git push` from
+the box possible, and that is then a push path you opened.
+
 ### Choosing the agent CLI
 
 `AGENT` is a build argument, not an architectural choice:
@@ -87,12 +92,13 @@ printf '^(.+\\.)?example\\.com$\n' >> allowlist.txt
 docker compose build egress && docker compose up -d egress
 ```
 
-The list itself is two lines:
+The list itself is three groups:
 
 | pattern | what it covers |
 |---|---|
 | `^(.+\.)?mistral\.ai$` | the model API (`api.`, plus the regional `api.us.`/`api.eu.` hosts) and the whole sign-in flow: the console's sign-in start, poll and key-exchange calls (`console.mistral.ai/api/vibe/sign-in…`), the tenant/whoami lookups (`chat.mistral.ai`) and the OIDC issuer (`auth.mistral.ai`) all match this pattern |
 | `^experiments\.mistral\.services$` | the CLI's first-party feature-flag evaluation (GrowthBook). Refusing it costs a `GrowthBook eval request failed` warning per session in `~/.vibe/logs/vibe.log` and blocks nothing — delete the line if you would rather the box did not report flag evaluations |
+| `^github\.com$`, `^api\.github\.com$`, `^codeload\.github\.com$`, `^raw\.githubusercontent\.com$`, `^objects\.githubusercontent\.com$`, `^media\.githubusercontent\.com$`, `^github-cloud\.s3\.amazonaws\.com$` | GitHub: `git clone`/`fetch`/`push` over HTTPS, the REST/GraphQL API (the `gh` CLI and the GitHub connector), archive downloads, raw files, release assets and git-lfs objects. Delete the block to keep the box off GitHub |
 
 Signing in needs **no** additional allowlist entry. What it needs is a browser,
 and the box has none: see [Signing in](#signing-in).
@@ -220,6 +226,12 @@ that has been built or run here.
 - **The model credential is inside the box.** There is no host-side credential
   proxy here, so `MISTRAL_API_KEY` is visible to every process in the container.
   Pass it through `.env`, never bake it into an image.
+- **GitHub egress is content, not trust.** With the GitHub block allowlisted the
+  box can read any public repository (and whatever that repository's build
+  scripts do), and any GitHub credential you give it — a token in `.env`, a
+  helper in `~/.git-credentials` — turns that line into a push path. The box
+  ships with no GitHub credentials of its own, so nothing pushes unless you put
+  one there.
 - **The `egress` proxy is trusted.** It runs on the same machine, with a
   read-only root filesystem, no capabilities and its own unprivileged user, but
   it is the only container with a route out — treat a proxy compromise as an
@@ -240,7 +252,9 @@ that has been built or run here.
 | `/var/run/docker.sock` in the box | absent |
 | `hee-agent-box_sandbox` network | `internal=true` — no gateway, only the proxy is reachable |
 | allowlisted destination (`api.mistral.ai`) via the proxy | `HTTP 401` — the proxy let it out, the API rejected the unauthenticated call |
-| non-allowlisted destination (`github.com`) via the proxy | proxy refuses the `CONNECT` (`403`) |
+| allowlisted destination (`github.com`) via the proxy | `HTTP 200` — the proxy let it out and the host answered |
+| `git ls-remote https://github.com/git/git HEAD` in the box | resolves `f7de8145…` — git over HTTPS works end to end through the proxy |
+| non-allowlisted destination (`example.com`) via the proxy | proxy refuses the `CONNECT` (`403`) |
 | allowlisted feature-flag host (`experiments.mistral.services`) via the proxy | `HTTP 404` — the proxy let it out, the host answered for `/` (before the entry: `Proxying refused on filtered domain`) |
 | browser opener in the box | `/usr/local/bin/xdg-open` is the stub and `BROWSER=xdg-open` — every opener call reports the URL for the host instead of failing |
 | direct egress without the proxy | no response — the sandbox network has no route out |
@@ -251,8 +265,8 @@ that has been built or run here.
 
 Not run here: a live Vibe session against the model API, and a browser sign-in
 end to end — both need your key and your account. The proxy's allow paths are the
-`mistral.ai` and `mistral.services` rows above; the sign-in poll and exchange use
-the first of them.
+rows in [Network policy](#network-policy); the sign-in poll and exchange use the
+first of them.
 
 ## Limits
 

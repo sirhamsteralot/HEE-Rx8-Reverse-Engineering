@@ -47,14 +47,24 @@ if docker compose ps --status running --format '{{.Service}}' 2>/dev/null | grep
     printf 'ok    %-28s HTTP %s (reached the proxy, then the API)\n' "mistral.ai reachable" "$code_allow"
   fi
 
+  # GitHub is allowlisted for git and API access; the proxy must let it out.
+  code_github=$(docker compose run --rm -T agent curl -x http://egress:8888 -s -o /dev/null \
+      -w '%{http_code}' --max-time 20 https://github.com/ 2>/dev/null | tr -d '\r')
+  if [ -z "$code_github" ] || [ "$code_github" = "000" ]; then
+    printf 'FAIL  %-28s no response (allowlisted destination unreachable)\n' "github.com reachable"
+    fail=1
+  else
+    printf 'ok    %-28s HTTP %s (reached the proxy, then the host)\n' "github.com reachable" "$code_github"
+  fi
+
   # For HTTPS the proxy refuses the CONNECT first, so curl reports no HTTP code
   # (000) plus "Received HTTP code 403 from proxy after CONNECT".
   deny_out=$(docker compose run --rm -T agent curl -x http://egress:8888 -sS -o /dev/null \
-      -w '%{http_code}' --max-time 20 https://github.com 2>&1 | tr -d '\r')
+      -w '%{http_code}' --max-time 20 https://example.com 2>&1 | tr -d '\r')
   if printf '%s' "$deny_out" | grep -q '403'; then
-    printf 'ok    %-28s %s\n' "github.com blocked" "proxy refused the CONNECT (403)"
+    printf 'ok    %-28s %s\n' "example.com blocked" "proxy refused the CONNECT (403)"
   else
-    printf 'FAIL  %-28s expected a 403 refusal, got %s\n' "github.com blocked" "$deny_out"
+    printf 'FAIL  %-28s expected a 403 refusal, got %s\n' "example.com blocked" "$deny_out"
     fail=1
   fi
 
