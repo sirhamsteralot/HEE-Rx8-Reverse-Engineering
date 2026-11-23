@@ -173,6 +173,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "subsystem-logic/starting_cranking_report.md": {
+        "reg_pairs": 2,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "subsystem-logic/throttle_dbw_control_report.md": {
         "reg_pairs": 22,
         "call_claims": 0,
@@ -290,6 +295,11 @@
         "call_claims": 0,
         "pool_claims": 0
       },
+      "reviews/starting_cranking/README.md": {
+        "reg_pairs": 0,
+        "call_claims": 0,
+        "pool_claims": 0
+      },
       "reviews/throttle_dbw/README.md": {
         "reg_pairs": 4,
         "call_claims": 0,
@@ -309,7 +319,7 @@
         "desc_claims": 1
       }
     },
-    "tsv_rows": 690,
+    "tsv_rows": 701,
     "labels_json_checked": 28
   },
   "notes": [],

@@ -166,7 +166,7 @@
       "grouped_rows": 0,
       "unnamed_rows": 0,
       "declared_unbacked": 0,
-      "rom_refs": 12,
+      "rom_refs": 13,
       "rom_claims": 0
     },
     "intake_solenoids_report.md": {
@@ -359,6 +359,18 @@
       "unnamed_rows": 0,
       "declared_unbacked": 15,
       "rom_refs": 119,
+      "rom_claims": 0
+    },
+    "subsystem-logic/starting_cranking_report.md": {
+      "map_rows": 108,
+      "fn_checked": 24,
+      "ram_checked": 41,
+      "data_rows": 41,
+      "io_rows": 2,
+      "grouped_rows": 0,
+      "unnamed_rows": 0,
+      "declared_unbacked": 0,
+      "rom_refs": 120,
       "rom_claims": 0
     },
     "subsystem-logic/throttle_dbw_control_report.md": {
