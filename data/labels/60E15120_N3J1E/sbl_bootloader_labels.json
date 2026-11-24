@@ -210,7 +210,7 @@
   "0x00001008": {
    "alias": "cvn_hole_pair_check",
    "kind": "returns u16@0x7fb00 when it equals ~u16@0x7fb02 and != 0xffff, else 0 (NOT an erase guard - no erase exists in the SBL); callers 0x1d78 (0xb1 arm) and 0x56428 (app 0xB1 conditions), result < 100 required; emulator: returns 2 with the stock hole 0002/fffd",
-   "evidence": "disasm 0x1008-0x102a: mov.w @r3,r4; r5 = extu.w r4; r6 = ~mov.w @r2 (extu.w); cmp/eq r6,r5; if equal and r5 != u16 pool 0x1034 (0xffff) return r4 else 0; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified; hole bytes 0x7fb00 = 00 02 ff fd 5f 57 44 53 ('_UDS') ROM-verified; dynamic: harness.call(0x1008) -> r0 = 2 (tests/test_sbl_bootloader.py)"
+   "evidence": "disasm 0x1008-0x102a: mov.w @r3,r4; r5 = extu.w r4; r6 = ~mov.w @r2 (extu.w); cmp/eq r6,r5; if equal and r5 != u16 pool 0x1034 (0xffff) return r4 else 0; pools 0x102c = 0x7fb00, 0x1030 = 0x7fb02, 0x1034 = 0xffff byte-verified; hole bytes 0x7fb00 = 00 02 ff fd 5f 57 44 53 ('_UDS') ROM-verified; dynamic: harness.call(0x1008) -> r0 = 2 (tests/test_sbl_bootloader.py); on-car sample (N3YLEE-family PCM, calibration N3YLEE00013SN0A0, read-only session): the pair reads 0003/fffc, while the 60E0E700_N3YLEE image of the same calibration holds 0004/fffb - the pair varies between two copies of one calibration, writer still unidentified"
   },
   "0x00001038": {
    "alias": "warm_reset_dispatcher",

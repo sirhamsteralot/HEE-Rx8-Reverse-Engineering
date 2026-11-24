@@ -144,6 +144,13 @@ Observed on the car, and the binary mechanism for each:
   loop's own periodic relock (`0x1428` jsr `0x16dc(0)` when the `0x11cc`
   counter reaches `0x5f6`, pool `0x143a`). The erased boot words only choose
   SBL-loop vs app target; they do not gate the seed.
+- Flash counter: the same session reported the `0x7fb00`/`0x7fb02` pair as
+  `0003/fffc` (valid complement). The `60E0E700_N3YLEE` image of the same
+  calibration in the corpus holds `0004/fffb` (re-read from the ROM bytes at
+  `0x7fb00`), so the pair varies between two copies of one calibration rather
+  than being a family constant. The writer is still unidentified: `0x1008` only
+  validates and returns the pair, and no flash-control register is referenced by
+  the SBL block (`0x1000`–`0x1ffb`).
 
 Dynamic reproduction (re-runnable: `python -m pytest tests/test_sbl_bootloader.py`,
 9 tests; log [`dynamic_handover_oncar_log.txt`](dynamic_handover_oncar_log.txt)):
