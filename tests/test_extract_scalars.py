@@ -86,6 +86,10 @@ def test_generated_outputs_exist_and_are_consistent(tmp_path):
     tsv = (MAPS / es.REFERENCE_ROM / "scalars.tsv").read_text().splitlines()
     assert tsv[0].split("\t")[0] == "name"
     assert len(tsv) == 1 + len(es.SEEDS)
+    # rule 6d: the committed TSV must be byte-identical to a fresh run, so a stale
+    # or non-UTF-8 (locale-encoded) write fails here instead of shipping
+    assert ((MAPS / es.REFERENCE_ROM / "scalars.tsv").read_bytes()
+            == (tmp_path / "scalars.tsv").read_bytes())
 
     cross = json.loads((MAPS / "cross_rom_scalars.json").read_text())
     assert cross["reference"] == es.REFERENCE_ROM
