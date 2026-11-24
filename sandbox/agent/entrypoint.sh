@@ -16,6 +16,18 @@ if [ "$(id -u)" = 0 ]; then
       cp -a "$REPO_SRC/." /work/repo/
       chown -R agent:agent /work/repo
     fi
+
+    # Refresh the untracked intake folder on every start. The host tree is the
+    # source of truth for new input; the copy keeps whatever the agent wrote
+    # there. Update-only (-u, newest file wins) and additive — nothing is
+    # deleted, and nothing outside input/ is touched, so the agent's git state
+    # is never disturbed.
+    if [ -d "$REPO_SRC/input" ]; then
+      mkdir -p /work/repo/input
+      cp -a -u "$REPO_SRC/input/." /work/repo/input/ \
+        || echo "entrypoint: WARNING - input sync from $REPO_SRC/input was incomplete" >&2
+      chown -R agent:agent /work/repo/input 2>/dev/null || true
+    fi
   fi
 
   exec gosu agent /usr/local/bin/entrypoint.sh "$@"

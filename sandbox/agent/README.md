@@ -66,6 +66,32 @@ The working tree is mounted read-only at `/src`; the first start copies it into
 the `agent-work` volume (`/work/repo`) once, and the agent works there. Nothing
 it writes reaches the host tree.
 
+### Getting input in
+
+Put the files in the repo's untracked [`input/`](../../input/README.md) folder on
+the host. Every container start refreshes the copy's `input/` from `/src/input`
+before the agent runs, so `docker compose run --rm agent vibe` — or `./vibe.sh` /
+`.\vibe.ps1` — is enough; there is no flag to remember. The refresh is additive
+and update-only: a host file overwrites the copy's copy of itself when it is
+newer, files the agent wrote into `input/` (replies, notes) are left alone,
+nothing is deleted, and nothing outside `input/` is touched, so the agent's git
+state is never disturbed. `input/` is gitignored, so intake cannot reach the
+repository through this path.
+
+[`entrypoint.sh`](entrypoint.sh) is baked into the image, so after this file
+changes rebuild once: `docker compose build agent`. To refresh the copy on a
+running box, or with an older image, copy into the volume straight from the host
+(the volume name is `<compose project>_agent-work`, i.e. `hee-agent-box_agent-work`):
+
+```sh
+docker run --rm -v "$PWD/input:/host-input:ro" -v hee-agent-box_agent-work:/work \
+  alpine sh -c 'cp -a -u /host-input/. /work/repo/input/'
+```
+
+```powershell
+docker run --rm -v "${PWD}\input:/host-input:ro" -v hee-agent-box_agent-work:/work alpine sh -c "cp -a -u /host-input/. /work/repo/input/"
+```
+
 ### Getting work out
 
 The box cannot write to your repo by design. Review and pull changes explicitly:
@@ -77,6 +103,13 @@ docker compose cp agent:/work/repo/my-file.c ./scratch/      # one path
 docker compose exec agent git -C /work/repo bundle create /tmp/work.bundle main
 docker compose cp agent:/tmp/work.bundle ./scratch/work.bundle
 docker compose exec agent rm -rf /work/repo && docker compose run --rm agent true   # re-seed from /src
+```
+
+`docker compose cp` needs a live container. After a `run --rm` session is gone,
+read a file out of the volume instead — same one-shot pattern as the input sync:
+
+```sh
+docker run --rm -v hee-agent-box_agent-work:/work:ro alpine cat /work/repo/input/reply.md > input/reply.md
 ```
 
 Treat what comes out the same way you would treat a pull request from a stranger:
@@ -195,7 +228,7 @@ host-side credential proxy here (that is what `sbx` adds, see below).
 
 | | |
 |---|---|
-| working directory | `/work/repo` — the private copy seeded from the read-only `/src` mount |
+| working directory | `/work/repo` — the private copy seeded from the read-only `/src` mount, with `input/` refreshed from `/src/input` on every start |
 | `~/.vibe` (config, sessions, skills caches) | the `agent-home` volume, so `--continue`/`--resume` work across runs and are wiped by `docker compose down -v` |
 | repo tooling | `.vibe/plugins/hee-re/` is part of the copied tree, so the hee-re plugin and its MCP server run **inside** the box with the box's python |
 | browser | none: `xdg-open` is the stub that prints the URL for you to open on the host (see [Signing in](#signing-in)) |
