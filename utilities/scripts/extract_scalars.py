@@ -217,12 +217,18 @@ def extract_rom(rom: bytes, rom_id: str, rom_path: Path, rom_sha: str, out_dir: 
         "total_scalars": len(scalars),
         "scalars": [{k: v for k, v in s.items() if k != "addresses_int"} for s in scalars],
     }
-    (out_dir / "scalars.json").write_text(json.dumps(record, indent=2, default=str) + "\n")
+    (out_dir / "scalars.json").write_text(json.dumps(record, indent=2, default=str) + "\n",
+                                          encoding="utf-8")
 
     fields = ["name", "value", "bits_hex", "type", "addresses", "ref_addrs",
               "ref_addrs_confirmed", "subsystem", "ram_alias", "evidence"]
-    with (out_dir / "scalars.tsv").open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=fields, delimiter="\t", extrasaction="ignore")
+    # utf-8 explicitly: the evidence strings carry non-ASCII characters (§), and the
+    # locale default is cp1252 on Windows, which silently wrote a file no UTF-8 reader
+    # (including the tests) can decode. lineterminator="\n": csv's default CRLF would
+    # rewrite every line of the committed artifact on a checkout without autocrlf.
+    with (out_dir / "scalars.tsv").open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fields, delimiter="\t", extrasaction="ignore",
+                           lineterminator="\n")
         w.writeheader()
         for s in scalars:
             row = dict(s)
@@ -277,7 +283,8 @@ def main():
                 }
                 if rom_id == REFERENCE_ROM:
                     entry["ref_addrs"] = s["ref_addrs"]
-        (maps / "cross_rom_scalars.json").write_text(json.dumps(cross, indent=2, default=str) + "\n")
+        (maps / "cross_rom_scalars.json").write_text(json.dumps(cross, indent=2, default=str) + "\n",
+                                                      encoding="utf-8")
         print(f"\nCross-ROM report: {maps / 'cross_rom_scalars.json'}")
         return
 
