@@ -2,6 +2,7 @@
 
 | Date | What changed | Version |
 |------|--------------|---------|
+| 2026-11-24 | On-car counter sample recorded: the `0x7fb00`/`0x7fb02` pair read `0003/fffc` on a car whose matching calibration image in the corpus holds `0004/fffb`, so the pair varies between two copies of one calibration (§2.2, §4.6) | 6 |
 | 2026-11-22 | Accuracy pass: WDT-helper polarity and the counter it advances, ISO-TP helper mapping, 0x27 seed-flag polarity, entry-selector targets, referenced-peripheral list (no SYSC), test count | 5 |
 | 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
 | 2026-11-16 | External review corrections: 0xB1 arms one download (the SBL has no flash-write path), 0x1008 is the 0x7fb00/0x7fb02 hole pair check, the app-side 0xB1 00B2 boot request mapped, service-table details corrected, SBL loop validated dynamically in the emulator | 2 |
@@ -202,9 +203,13 @@ that `0x36` jumps to after the marker.
 inside the app-CVN hole `0x7fb00–0x7fb7f` (ASCII `_UDS` sits at `0x7fb04`). Across
 the corpus the pair reads `0001/fffe`, `0002/fffd`, `0004/fffb`, `0005/fffa`,
 `0007/fff8` in the build-A ROMs and `ffff/ffff` (erased) in the build-B ROMs —
-consistent with a per-flash counter (candidate-level: no artifact in our
-corpus shows it changing after a flash). On an erased hole `0x1008` returns 0,
-which still passes the `< 100` gate.
+consistent with a per-flash counter. A read-only session on a car (N3YLEE-family
+PCM, calibration `N3YLEE00013SN0A0`) returned `0003/fffc` from the same address,
+while the `60E0E700_N3YLEE` image of that calibration in the corpus holds
+`0004/fffb`: two copies of one calibration differ in the pair, which a constant
+could not. No artifact in the corpus captures the write itself, so the code that
+sets it after a flash is unidentified (candidate-level). On an erased hole
+`0x1008` returns 0, which still passes the `< 100` gate.
 
 ### 2.3 The handover to the application
 
@@ -593,7 +598,7 @@ ROM data / fixed locations (reference ROM, byte-verified):
 | `0x00005ec84` | `b1 00 00 00 00 05 65 e8 …` | app service-table record for `0xb1` -> handler `0x565e8` |
 | `0x00005f040` | `81 00 ff fd 85 01 ff fc …` | app session table: index 0 = `0x81`, index 1 = `0x85` |
 | `0x00005f0f4` | `00 b2 00 01 00 05 63 50 ff fc` | app 0xB1 sub-table record: id `0x00B2`, 1 data byte, handler `0x56350`, mask `0xfffc` |
-| `0x00007fb00`–`0x00007fb7f` | u16 counter + u16 complement at `0x7fb00`/`0x7fb02`, then ASCII `_UDS` at `0x7fb04`; rest `0xff` | app-CVN hole; pair validated by `0x1008` (counter candidate: `0001`–`0007` in build-A ROMs, erased in build-B) |
+| `0x00007fb00`–`0x00007fb7f` | u16 counter + u16 complement at `0x7fb00`/`0x7fb02`, then ASCII `_UDS` at `0x7fb04`; rest `0xff` | app-CVN hole; pair validated by `0x1008` (counter candidate: `0001`–`0007` in build-A ROMs, erased in build-B; an on-car N3YLEE-family PCM read `0003` where the corpus `60E0E700_N3YLEE` image holds `0004`) |
 
 ### 4.2 Labeling applied
 
@@ -673,6 +678,10 @@ is reproduced in the emulator (§4.5).
 - Every pool word, vector slot, marker and stamp cited above was re-read from
   the raw ROM bytes this session (rule 7); the dispatch targets were resolved
   from the `0x1378` literal pool words at addresses `0x14f4` through `0x1610`.
+  The `0x7fb00`/`0x7fb02` pair was re-read from the `60E0E700_N3YLEE` image
+  (`00 04 ff fb`; ROM SHA-256
+  `bba52346a076c35ded281c14b7ff81fcfa6c6e8119b6ec544048e269b0c53dc0`) for the
+  comparison with the on-car `0003/fffc`.
 - Emulator boot trace (vector 0, 200,000 cycles, profile `60E15120_N3J1E`):
   `0x8b8` -> `0x4e0` -> warm `0x1298` -> `0x1038(param 0)` -> `0x1090` -> app
   `0xd204` at step 2856; `0x1378` not entered on a normal boot. A second run of
@@ -733,8 +742,14 @@ is reproduced in the emulator (§4.5).
   consumer in the SBL code; role is candidate-level.
 - The `0x7fb00`/`0x7fb02` counter+complement pair looks like a reflash counter
   (values `0001`–`0007` across the build-A ROMs, erased `ffff/ffff` in the
-  build-B ROMs), but no artifact in our corpus shows it changing after a
-  flash — candidate-level.
+  build-B ROMs). An on-car read of a Japanese-market N3YLEE-family PCM
+  (`N3YLEE00013SN0A0`, read-only session) gives `0003/fffc`, one less than the
+  `60E0E700_N3YLEE` image of the same calibration (`0004/fffb`), so the pair
+  varies between two copies of one calibration rather than being a family
+  constant. What writes it is still unidentified — the SBL has no flash-write
+  path (see the staged-kernel limit below) — so the meaning stays
+  candidate-level, and the earlier statement that no artifact in the corpus
+  shows it changing after a flash no longer holds.
 - The CN400 BOOT-mode pin routing is not traced (D9 pinout conflict open in the
   ROADMAP discrepancy register); only the firmware side of the entry (the
   `0x1038` parameter and the `0xffffd1dc` boot-request state) is mapped here.
