@@ -15,11 +15,19 @@ Group ↔ phase map: A = P3 (calibration extraction), B = P1 residual (emulator
 fidelity), C = P2 residual (static labeling & gap closure), D = P2/P5
 (cross-ROM propagation), E = P4 (reimplementation), F = P6 (toward hardware).
 
-**Status.** Groups A, B and D are complete. Group C is reopened — open items
+**Status.** Groups A and B are complete. Group D is complete apart from register
+item **D18** (fitted MCU variant). Group C is reopened — open items
 29, 30, 32–34, 36–37, 39, 42–61, 64, 91, 92, 94 (the former per-subsystem fold-back
 items 62–63 and 65–90 were folded into their source items — fold map in this
 file's git history). Groups E and F remain open as listed below. Pick up
 **C item 29** next.
+
+**Repository baseline.** `.gitattributes` pins `* text=auto`: a clone that does not
+set `core.autocrlf` keeps a clean tree instead of reporting every text file as
+modified, and `python -m pytest tests/` passes. `verify_readability.py` is the one
+pipeline validator that still fails, on C item 94's second symptom (`0x28992`, a thunk
+body that kept its Ghidra name while `function_index.tsv` carries the alias); the other
+four pass.
 
 ## Open work — pick up here
 
@@ -399,6 +407,7 @@ flash before any read), not the test path.
 | D15 | documented | upstream RX8Defs `d4140dc` delta absorbed: 118 renames + 16 category moves + 10 duplicate removals on `RomRaider/rx8_defs.xml`, no `storageaddress` changed; per-ROM defs + `coverage.json` regenerated at the pin, upstream snapshot re-pinned (`repin_upstream_snapshot.py`), splice pass normalization-only (`upstream_splice_d4140dc.json`), collision/alias findings logged pin-tagged in `defs-merge/axis_conflicts.json` + `inheritance_issues.json`; label map needed no changes; record [upstream-sync-d4140dc.md](docs/investigations/60E15120_N3J1E/labeling/rx8defs-analysis/upstream-sync-d4140dc.md), machine record `defs-merge/upstream_pin_audit_d4140dc.json`; open follow-up: 26 `Table 3D - 2 `/`3D - 3 ` block overrides lost their RX8Base template upstream (`base_template_removed_at_pin`) |
 | D17 | open | `0xffffaa62` is labeled `cranking_active` but is computed from closed-throttle dwell only: `0x1a51c`/`0x1a564` set it when throttle demand `0xffffa9bc` stays below 2.0 % (hysteresis 2.5 %, floats `0x6f184`/`0x6f188`) for 19 passes of the u16 counter `0xffffaa60` (ROM `0x6f180`), and `0x1a508` primes it satisfied at init. So it is also true at idle and on a closed-throttle coast, while the cranking fuel chain gates on `0xffffa428 == 0` (rpm 250/500, `0xe274`) instead. Its consumers ([`starting_cranking_report.md`](docs/subsystem-logic/starting_cranking_report.md) §2.5/§2.9) read it as the closed-throttle timing term, and the two advance tables it selects carry different upstream names (off-throttle leading `0x7ac30` vs cranking trailing `0x7ac60`). Closure plan: a scenario run (idle, closed-throttle coast, crank) showing which term each consumer needs, or an upstream definition that settles the name; then rename the alias and fold it into the report, the label record and the affected reports |
 | D16 | open | `validate_reports.py` only parses memory-map rows whose first cell starts with `0x`, so a backtick-wrapped address cell is skipped without a warning: the `sbl_bootloader_report.md` map (16 RAM rows, including the D14 alias conflict) and `fuel_pump_control_report.md` (2 rows) are unchecked today, and `throttle_dbw_control_report.md` validated with 0 rows checked until its cells were made bare. Closure plan: strip an optional backtick wrapper in the row parser, then reconcile the rows it starts checking (the SBL report needs aliases or documented grouped rows for `0xffffd3f0`/`0xffffd1xx`/`0xffffdfb0-b8`). Function rows are only checked when the row sits under a heading containing "function" AND the label equals the `function_index.tsv` name, so subsystem aliases that were never folded into the export (`fuel_pump_control`: 8 of 12 rows) pass unlooked |
+| D18 | open | Fitted MCU variant unknown, so the flash register block `0xffffe800`–`0xffffe806` is labeled by address (`DAT_…`) rather than with either variant's names. Two register maps for it exist and disagree: the reference project ships `script_stuff/regs_7055_180.csv` (`FCCS`/`FPCS`/`FECS`/`FKEY`/`FMATS`/`FTDAR`) beside `script_stuff/regs_7055_350.csv` (`FLMCR1`/`FLMCR2`/`EBR1`/`EBR2`), and the only flash manual in the tree ([`Sh7055h.pdf`](docs/references/Sh7055h.pdf), `ADE-602-155B`) documents the 0.35 µm part alone — Table C.1 lists one product, and Appendix A.1 leaves `0xffffe804`–`0xffffebff` reserved. No image decides it: six corpus ROMs clear `0xffffe800`/`0xffffe801` (plus `RAMER`) in one 16-byte routine at `0x527e`, entry `0x528e`; the five build-B ROMs touch no flash register at all. Gates the group F flash work, whose erase/program sequences differ between the two flash modules. Closure plan: the chip marking on the bench PCM (the 0.35 µm part is marked `64F7055F40`; `FWE` is chip pin 56), the FDT BOOT-mode device report, and a read-only fingerprint of `0xffffe800`–`0xffffe807` (`FLMCR1` bit 7 mirrors `FWE` and reads `0x80` when it is high) taken on a marking-verified board and on the board in question; then obtain `REJ09B0045` (SH7055S) for [`docs/references/`](docs/references/README.md) and re-label the block per the fitted part — the open question recorded in [`sbl_bootloader_report.md`](docs/subsystem-logic/sbl_bootloader_report.md) §4.6 |
 
 The tables above are summaries; the full per-item records (locations, impact,
 closure plans) live in this file's git history.
