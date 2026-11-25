@@ -219,21 +219,24 @@ allowlist:
   `fix/` (bugfix). Always branch from the current `main`; one branch per work unit —
   don't bundle unrelated units.
 - **Commits:** one logical change per commit, imperative subject ≤72 chars, body
-  with why + doc links + key addresses (see "Commit style"). The message travels in
-  the `push_files` call, so group one commit's files into one call and push commits
-  in order: three logical changes mean three calls.
-- **Compose the change in the working tree, not in local commits.** Git objects
-  created inside the box have no way out, so a local branch would only diverge from
-  the delivered one. Write the files, verify them, then push their contents; a local
-  commit is fine for your own inspection but stays scratch — delete the branch after
-  the merge, since the PR head is the remote branch.
+  with why + doc links + key addresses (see "Commit style"). The same message goes
+  into the matching `push_files` call, so group one commit's files into one call and
+  push the commits in order: three logical changes mean three calls.
+- **Work the branch locally as usual.** The mounted repo is an ordinary checkout:
+  `git switch -c <branch>` off `main` and commit one logical change at a time. That
+  history is where the work gets inspected, reverted and bisected, and it keeps
+  `main`'s tree clean for the post-merge re-sync. Those commits cannot leave the box,
+  so delivery re-creates the same trees through `push_files`: the local and remote
+  branches end up with matching content and different commit ids, which is expected —
+  the remote branch is what the PR shows. Delete the local branch after the merge.
 - **`push_files` carries text files only** (path + content), so deletions, renames,
   submodule gitlink bumps, Git LFS objects and binary blobs cannot go out that way.
   Leave them out of the API push, state it in the PR body, and ask the user to run
   the host-side `git push` for those.
-- **Verify the push before opening the PR:** `git fetch origin <branch>` works
-  unauthenticated for this public repo, so `git diff --stat FETCH_HEAD` must be empty
-  — the remote branch then holds exactly the tree the checks ran against.
+- **Verify the push before opening the PR:** from the work branch,
+  `git fetch origin <branch>` works unauthenticated for this public repo, so
+  `git diff --stat FETCH_HEAD` must be empty — the remote branch then holds exactly
+  the tree that was committed and checked.
 - **PR title & body when the unit is done and verified** (rule 7 + the Verification
   section): title follows the commit-subject style; body: plain-language summary
   first (2–5 sentences a non-specialist can read: what changes, why, and what it
