@@ -354,6 +354,11 @@ def _write_json(path, data, nl):
     path.write_bytes(text.encode("utf-8"))
 
 
+def _existing_eol(path):
+    """Keep a record's line endings, defaulting to the repository's LF."""
+    return "\r\n" if path.exists() and b"\r\n" in path.read_bytes() else "\n"
+
+
 def main():
     args = sys.argv[1:]
     check = "--check" in args
@@ -422,7 +427,7 @@ def main():
     if ii_new != ii:
         _write_json(INHERITANCE_ISSUES, ii_new, ii_nl)
         print(f"inheritance_issues.json: {len(ii)} -> {len(ii_new)}")
-    _write_json(audit_out, audit, "\r\n")
+    _write_json(audit_out, audit, _existing_eol(audit_out))
     print(f"audit record -> {audit_out.relative_to(ROOT)}")
     return 0
 

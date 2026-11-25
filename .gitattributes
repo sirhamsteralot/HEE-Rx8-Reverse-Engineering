@@ -1,3 +1,11 @@
+# Line endings: text files are stored with LF and a checkout converts them to the
+# host's convention (core.autocrlf=true on Windows). Without this, a clone that has
+# neither attribute nor `core.autocrlf` set materialises every text file with CRLF,
+# `git status` then reports the whole tree as modified, and every regeneration test
+# that compares bytes fails on line endings alone. The LFS patterns below override
+# `text` for binary blobs.
+* text=auto
+
 # Route binary blobs through Git LFS (git-lfs required to clone/checkout these)
 *.bin linguist-generated=true filter=lfs diff=lfs merge=lfs -text
 *.ori linguist-generated=true filter=lfs diff=lfs merge=lfs -text

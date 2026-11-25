@@ -73,6 +73,16 @@ validation JSONs).
   table rows (plus the older call-count/reg-pair/pool-range/labels-TSV checks).
   `tests/test_verify_claims.py` carries negative tests embedding the exact
   errors each class caught.
+- **Line endings are negotiated by `.gitattributes`, not by the checkout.** The
+  repository stores text with LF (`* text=auto`); a clone with neither the
+  attribute nor `core.autocrlf` set materialises CRLF and then reports the whole
+  tree as modified, while the byte-comparing regeneration tests (the
+  `test_generator_idempotent_*` family, `verify_readability.py`) fail on line
+  endings alone. Fix the clone (`git config core.autocrlf true` on Windows) or
+  the bytes (`git add --renormalize .` + `git restore .`), never the artifacts.
+  Four generated TSVs are stored with CRLF by their Java exporter
+  (`symbols.tsv`, `function_index.tsv`, `callgraph.tsv`, `named/lookup_aliases.tsv`)
+  and are the only blobs a renormalisation touches.
 
 ## Reports, citation rules and verify_claims.py
 
