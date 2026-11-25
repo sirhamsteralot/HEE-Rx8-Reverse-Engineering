@@ -103,9 +103,16 @@ git diff
 git add -p
 ```
 
-Nothing leaves the box by itself: no push happens unless you put a GitHub
-credential inside it (see [Network policy](#network-policy) and [What this does
-not protect](#what-this-does-not-protect)).
+Nothing leaves the box by itself: `git push` has no credential to authenticate
+with, and none is put in the box (see [Network policy](#network-policy) and [What
+this does not protect](#what-this-does-not-protect)). What does leave it is the
+**GitHub connector** — `api.github.com` is on the allowlist, so a session delivers
+a work unit by creating a branch, pushing the file contents over the API and
+opening a pull request; the flow is in
+[`AGENTS.md`](../../AGENTS.md#branch--pr-workflow-how-work-is-delivered). That is
+a real remote write, so files handed to the connector are published: keep secrets,
+VINs and `input/` material out of them, and review the working tree before a push
+happens — not after.
 
 ### Choosing the agent CLI
 

@@ -114,9 +114,12 @@ Details: repo map in [AGENTS.md](AGENTS.md) and the per-folder READMEs.
 ## Workflow & conventions
 
 Work is delivered **branch + pull request** — never direct commits to `main`.
-Every unit gets binary-level verification plus the pipeline validators before
-review. Branch naming, commit style, the full task workflow, and the exact
-verification commands are in [AGENTS.md](AGENTS.md).
+Sessions run in the agent box ([`sandbox/agent/`](sandbox/agent/README.md)), which
+has no git credentials, so delivery goes through the GitHub connector: create the
+branch, push its file contents, open the PR. Every unit gets binary-level
+verification plus the pipeline validators before review. Branch naming, commit
+style, the full task workflow, and the exact verification commands are in
+[AGENTS.md](AGENTS.md).
 
 Subsystem documentation for logic shared across the ROM bins (assumed shared
 until proven otherwise) lives in

@@ -148,9 +148,11 @@ dumping it at the root.
 9. **No drive-by changes.** Match existing style (kebab-case filenames, ISO dates,
    `0x` addresses; upstream binary names excepted). Don't reformat untouched files.
 10. **Safety.** Nothing here flashes a vehicle without an explicit bench-validation
-    note; flag risky steps in your summary. Pushing a work-unit branch and opening a
-    PR is the standard authorized delivery flow; any other push (to `main`, tags,
-    shared branches, force-push) needs explicit approval first.
+    note; flag risky steps in your summary. Delivering a work-unit branch through the
+    GitHub connector — create the branch, push its file contents, open the PR (see
+    "Branch & PR workflow") — is the standard authorized delivery flow; any other
+    push or remote write (to `main`, tags, shared branches, force-push) needs explicit
+    approval first.
 11. **Deliverables in reader-facing form, not backlog form.** Big labeling/analysis
     blocks are delivered as per-subsystem pieces, and user-facing text never carries
     backlog bookkeeping:
@@ -200,24 +202,52 @@ dumping it at the root.
 `main` is review-gated: **never commit directly to `main`**. Every work unit gets
 its own branch and is delivered as a pull request for the user to review and merge.
 
+Sessions usually run inside the agent box ([`sandbox/agent/`](sandbox/agent/README.md)),
+which holds no git credentials — `git push` cannot authenticate there, and no
+credential is put in the box to make it work. Delivery therefore goes through the
+**GitHub connector** (`connector_github_app`), whose API host is on the box's egress
+allowlist:
+
+| step | call | notes |
+|---|---|---|
+| 1 | `connector_github_app.create_branch` | branch name per the naming rule below, `from_branch: main` |
+| 2 | `connector_github_app.push_files` | one call per commit, in order; each call carries its own message |
+| 3 | `connector_github_app.create_pull_request` | head = the work-unit branch, base = `main` |
+
 - **Branch naming:** `<type>/<kebab-case-slug>` with types `feat/` (code/tooling),
   `research/` (investigation, labeling, reports), `docs/` (documentation only),
   `fix/` (bugfix). Always branch from the current `main`; one branch per work unit —
   don't bundle unrelated units.
 - **Commits:** one logical change per commit, imperative subject ≤72 chars, body
-  with why + doc links + key addresses (see "Commit style").
-- **Push + open a PR when the unit is done and verified** (rule 7 + the Verification
-  section): `git push -u origin <branch>`, then open a PR against `main` (`gh pr
-  create`, the GitHub web UI, or `connector_github_app.create_pull_request`). PR
-  title follows the commit-subject style; body: plain-language summary first (2–5
-  sentences a non-specialist can read: what changes, why, and what it deliberately
-  does *not* do), then what + why, doc links, key `0x` addresses, validation
-  artifacts, and open questions. Describe the change itself — no ROADMAP item IDs,
-  PR numbers or pass dates in the body (rule 11; that bookkeeping lives in
+  with why + doc links + key addresses (see "Commit style"). The message travels in
+  the `push_files` call, so group one commit's files into one call and push commits
+  in order: three logical changes mean three calls.
+- **Compose the change in the working tree, not in local commits.** Git objects
+  created inside the box have no way out, so a local branch would only diverge from
+  the delivered one. Write the files, verify them, then push their contents; a local
+  commit is fine for your own inspection but stays scratch — delete the branch after
+  the merge, since the PR head is the remote branch.
+- **`push_files` carries text files only** (path + content), so deletions, renames,
+  submodule gitlink bumps, Git LFS objects and binary blobs cannot go out that way.
+  Leave them out of the API push, state it in the PR body, and ask the user to run
+  the host-side `git push` for those.
+- **Verify the push before opening the PR:** `git fetch origin <branch>` works
+  unauthenticated for this public repo, so `git diff --stat FETCH_HEAD` must be empty
+  — the remote branch then holds exactly the tree the checks ran against.
+- **PR title & body when the unit is done and verified** (rule 7 + the Verification
+  section): title follows the commit-subject style; body: plain-language summary
+  first (2–5 sentences a non-specialist can read: what changes, why, and what it
+  deliberately does *not* do), then what + why, doc links, key `0x` addresses,
+  validation artifacts, and open questions. Describe the change itself — no ROADMAP
+  item IDs, PR numbers or pass dates in the body (rule 11; that bookkeeping lives in
   ROADMAP.md and the commit messages).
 - **Review & merge:** the user reviews and merges (merge commit or squash — the
   reviewer's choice). Agents never merge, never push to `main`, never force-push.
-  After a merge, delete the branch and re-sync: `git checkout main && git pull`.
+  After a merge, delete the branch and re-sync: `git checkout main && git pull`
+  (fetch needs no credentials, so the box re-syncs itself).
+- A session on the host with working git credentials may use `git push -u origin
+  <branch>` instead of steps 1–2 and open the PR as before; the connector path above
+  is what the agent box has.
 - Anything not intended for the repo stays on a scratch branch and is never pushed.
 
 ## Workflow for a typical task
@@ -234,8 +264,9 @@ its own branch and is delivered as a pull request for the user to review and mer
 5. Verify at the binary level (rule 7) and add/update tests.
 6. Update the investigation doc with findings, evidence (hashes, addresses), and
    open questions.
-7. Commit on the work-unit branch; once verified, push and open a PR (see
-   "Branch & PR workflow").
+7. Deliver the unit once it is verified (see "Branch & PR workflow"): create the
+   branch, push the changed files as commits through the GitHub connector, open the
+   PR.
 
 ## Commit style
 
@@ -254,7 +285,9 @@ its own branch and is delivered as a pull request for the user to review and mer
   you are on first (`uname` in bash, `os.name`/`sys.platform` in Python) and
   prefer repo-relative paths from the repo root (or `Path(__file__).resolve()` /
   `Path.cwd()` inside scripts), which work under both.
-- **In-session agents do NOT need MCP** — you have local repo access. For
+- **In-session agents do NOT need MCP for repo access** — you have local repo access.
+  The exception is delivery: the GitHub connector is how a branch and its PR reach the
+  remote (see "Branch & PR workflow"). For
   simulator-based validation follow
   [`docs/architecture/emulator-re-guide.md`](docs/architecture/emulator-re-guide.md)
   first (working commands, sensor/replay wiring, watch addresses, golden-log loop),
