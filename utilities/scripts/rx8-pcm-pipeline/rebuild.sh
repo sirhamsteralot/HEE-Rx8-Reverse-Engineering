@@ -28,6 +28,7 @@ cp "$gproc/sh-2e.slaspec" "$gproc/sh-2e.ldefs" "$languages/"
 "$headless" "$gwork/ghidra_project" "$project" -import "$roms/60E15120_N3J1E.bin" -processor SuperH:BE:32:SH-2E -cspec default -scriptPath "$gscripts" -preScript SetupTarget.java "$root" -analysisTimeoutPerFile 600
 "$headless" "$gwork/ghidra_project" "$project" -process 60E15120_N3J1E.bin -scriptPath "$gscripts" -preScript RefineTarget.java "$meta" -analysisTimeoutPerFile 600
 "$headless" "$gwork/ghidra_project" "$project" -process 60E15120_N3J1E.bin -scriptPath "$gscripts" -preScript RecoverDispatch.java "$meta" -postScript AnnotateHardware.java "$root/docs/architecture/hardware" -postScript ExportTarget.java "$dec" "$disasm" -analysisTimeoutPerFile 600
+(cd "$root" && python3 "$base/neutralize_flash_register_names.py")
 (cd "$root" && python3 "$base/scripts/annotate_cross_ecu.py")
 (cd "$root" && python3 "$base/scripts/review_knock_loop_labels.py")
 (cd "$root" && python3 "$base/scripts/review_fueling_labels.py")

@@ -6,8 +6,8 @@
 void ref_callsFlash_0000527e(void)
 
 {
-  FLASH_FCCS_B = 0;
-  FLASH_FPCS_B = 0;
+  DAT_ffffe800 = 0;
+  DAT_ffffe801 = 0;
   BSC_RAMER_W = 0;
   return;
 }

@@ -13,8 +13,17 @@ public class SetupTarget extends GhidraScript {
   MemoryBlock io=mem.createUninitializedBlock("IO",toAddr(0xffffe000L),0x2000,false);io.setRead(true);io.setWrite(true);io.setVolatile(true);
   Path regs=gwork.resolve("reference_project/RX8_6.rep/script_stuff/regs_7055_180.csv");
   for(String line:Files.readAllLines(regs).subList(1,Files.readAllLines(regs).size())) {
-   String[] r=line.split(","); long a=Long.decode(r[1]);createLabel(toAddr(a),r[0],true);
+   String[] r=line.split(","); long a=Long.decode(r[1]);
+   if(a>=0xFFFFE800L && a<=0xFFFFE806L) continue; // flash block: named neutrally below
+   createLabel(toAddr(a),r[0],true);
   }
+  // The reference project ships two register maps that differ only in this block
+  // (regs_7055_180.csv carries FCCS/FPCS/FECS/FKEY/FMATS/FTDAR at these addresses,
+  // regs_7055_350.csv carries FLMCR1/FLMCR2/EBR1/EBR2), and our only flash manual
+  // (docs/references/Sh7055h.pdf, ADE-602-155B) documents the 0.35 um part alone, so
+  // neither map is verified for the part fitted to a PCM. Export the addresses
+  // neutrally, in step with neutralize_flash_register_names.py.
+  for(long a=0xFFFFE800L;a<=0xFFFFE806L;a++) createLabel(toAddr(a),"DAT_"+Long.toHexString(a),true);
   for(String line:Files.readAllLines(base.resolve("data/labels/60E15120_N3J1E/calibration_labels.tsv"))) {
    String[] r=line.split("\t");if(r[0].equals("address"))continue;
    createLabel(toAddr(Long.parseLong(r[0],16)),r[1],true);setEOLComment(toAddr(Long.parseLong(r[0],16)),"Local RX8Defs 60E15120 definition: "+r[2]+"; semantic annotation, not independently validated.");

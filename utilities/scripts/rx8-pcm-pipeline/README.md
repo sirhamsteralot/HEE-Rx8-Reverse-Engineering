@@ -31,6 +31,13 @@ steps from the **repo root**.
   + append to `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_*.tsv`;
   `annotate_source_review.py` / `integrate_reviewed_names.py` apply them to the
   synchronized views (with backups under `docs/investigations/60E15120_N3J1E/backups/`).
+- `neutralize_flash_register_names.py` (runs right after a fresh export, before the
+  label passes) renames the flash-module registers at `0xFFFFE800`–`0xFFFFE806` to
+  address-anchored `DAT_` names: `SetupTarget.java` imports the reference project's
+  register map, and its two variants (`regs_7055_180.csv` = `FCCS`/`FPCS`/`FECS`/
+  `FKEY`/`FMATS`/`FTDAR`, `regs_7055_350.csv` = `FLMCR1`/`FLMCR2`/`EBR1`/`EBR2`)
+  disagree there, while the only flash manual in the tree covers the 0.35 µm part.
+  Idempotent; covered by `tests/test_neutralize_flash_register_names.py`.
 - `refine_comment_merge.py` (runs last, before the validators) canonicalizes the
   stacked review comment blocks across `functions/`, `firmware_decompiled.c` and
   `named/firmware_named.c`: one block order in all three views, no duplicate lines,
