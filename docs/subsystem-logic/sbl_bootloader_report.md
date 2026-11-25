@@ -2,6 +2,7 @@
 
 | Date | What changed | Version |
 |------|--------------|---------|
+| 2026-11-25 | Flash-register paragraph qualified: the flash names it cites are the 0.35 µm part's (`ADE-602-155B` §22.5), and the variant fitted to a PCM is not established (§2.2) | 7 |
 | 2026-11-24 | On-car counter sample recorded: the `0x7fb00`/`0x7fb02` pair read `0003/fffc` on a car whose matching calibration image in the corpus holds `0004/fffb`, so the pair varies between two copies of one calibration (§2.2, §4.6) | 6 |
 | 2026-11-22 | Accuracy pass: WDT-helper polarity and the counter it advances, ISO-TP helper mapping, 0x27 seed-flag polarity, entry-selector targets, referenced-peripheral list (no SYSC), test count | 5 |
 | 2026-11-16 | Initial report (SBL labeling + handover consolidated into one report) | 1 |
@@ -192,8 +193,9 @@ literal-pool reference in `0x1000–0x1ffb` (committed disassembly) finds HCAN0
 (`0xffffe401`/`e404`/`e406`/`e40a`/`e40e`/`e414`/`e41a`/`e420`/`e490`/`e498`/
 `e520`/`e528`), the WDT pair `0xffffec10`/`0xffffec12` and the I/O ports
 `0xfffff720`/`0xfffff738`/`0xfffff756` — no SYSC reference and no flash-control register
-(`0xffffe800–0xffffe803`, FLMCR/EBR on the SH7055) is referenced anywhere in
-the block. The `0xb1`/`0x34`/`0x36` services only move bytes in RAM (staging at
+(`0xffffe800`–`0xffffe803`; `FLMCR1`/`FLMCR2`/`EBR1`/`EBR2` in the 0.35 µm part's
+manual — [`Sh7055h.pdf`](../references/Sh7055h.pdf) §22.5 — the variant fitted to a
+PCM is not established) is referenced anywhere in the block. The `0xb1`/`0x34`/`0x36` services only move bytes in RAM (staging at
 `0xffff6000 + addr`); the erase and programming are done by the staged image
 that `0x36` jumps to after the marker.
 
@@ -740,6 +742,16 @@ is reproduced in the emulator (§4.5).
 
 - The 32-B block at `0xfe0–0xfff` and its `0xffa–0xffd` stamp have no identified
   consumer in the SBL code; role is candidate-level.
+- The part fitted to a PCM is not established, and no image distinguishes the two
+  variants. The flash-register names cited in §2.2 are the 0.35 µm part's
+  (`FLMCR1`/`FLMCR2`/`EBR1`/`EBR2`, `ADE-602-155B` §22.5,
+  [`Sh7055h.pdf`](../references/Sh7055h.pdf)), the manual in this tree; a 0.18 µm
+  variant (`SH7055S`, `REJ09B0045`) exists with its own flash chapter, which is not
+  held here. Because a second register map for the same addresses exists in the
+  reference project (`regs_7055_180.csv`: `FCCS`/`FPCS`/`FECS`/`FKEY`/`FMATS`/`FTDAR`,
+  against `regs_7055_350.csv`: `FLMCR1`/`FLMCR2`/`EBR1`/`EBR2`), the exported labels at
+  `0xffffe800`–`0xffffe806` are address-anchored (`DAT_`) rather than either
+  variant's.
 - The `0x7fb00`/`0x7fb02` counter+complement pair looks like a reflash counter
   (values `0001`–`0007` across the build-A ROMs, erased `ffff/ffff` in the
   build-B ROMs). An on-car read of a Japanese-market N3YLEE-family PCM
