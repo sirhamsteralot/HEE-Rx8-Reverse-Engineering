@@ -2,7 +2,9 @@
 # Boundary checks for the agent box. Run from this directory:
 #   ./verify.sh
 #
-# Posture checks run inside the agent container. The egress checks need the
+# Posture checks run inside the agent container; one of them writes a probe file
+# into the mounted working tree and removes it again to prove the mount is the
+# host checkout. The egress checks need the
 # `egress` proxy running (`docker compose up -d egress`) and make outbound
 # requests to the model API and to a destination outside the allowlist — run
 # them only when you are happy for the box to reach the network at all.
@@ -22,8 +24,24 @@ echo "== posture (inside the agent container) =="
 check "uid"            "1000" "$(docker compose run --rm -T agent id -u 2>/dev/null | tr -d '\r')"
 check "effective caps" "0000000000000000" \
   "$(docker compose run --rm -T agent grep CapEff /proc/self/status 2>/dev/null | awk '{print $2}' | tr -d '\r')"
-check "host /src writable" "denied" \
-  "$(if docker compose run --rm -T agent touch /src/.verify >/dev/null 2>&1; then echo writable; else echo denied; fi)"
+# The repo is a mount, not a copy: a file written in the box has to show up in
+# the host checkout. The probe is removed from the host side afterwards, so a
+# failed write leaves nothing behind in the tree. REPO_PATH is resolved the way
+# compose resolves it — relative to this directory.
+repo_path="${REPO_PATH:-../..}"
+case "$repo_path" in
+  /*) host_root="$repo_path" ;;
+  *)  host_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/$repo_path" && pwd) ;;
+esac
+probe="$host_root/.agent-box-probe"
+rm -f "$probe"
+docker compose run --rm -T agent touch /work/repo/.agent-box-probe >/dev/null 2>&1
+if [ -e "$probe" ]; then mounted=yes; else mounted=no; fi
+rm -f "$probe"
+check "worktree is a mount" "yes" "$mounted"
+# The mount keeps the host's uid/gid; git must still accept the checkout.
+check "git works on the mount" "true" \
+  "$(docker compose run --rm -T agent git -C /work/repo rev-parse --is-inside-work-tree 2>/dev/null | tr -d '\r')"
 check "host docker socket" "absent" \
   "$(docker compose run --rm -T agent test -e /var/run/docker.sock && echo present || echo absent)"
 check "sandbox network internal" "true" \

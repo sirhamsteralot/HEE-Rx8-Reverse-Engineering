@@ -5,7 +5,9 @@ Runs an AI coding agent against this repo inside a container that has:
 - **no host Docker socket** (nothing in the box can drive your daemon),
 - **no host home directory** — no `~/.vibe`, no SSH keys, no `~/.gitconfig`,
 - **no route off the machine except a default-deny egress proxy**,
-- **only a read-only view of the repo**, with a disposable private copy to work in,
+- **exactly one host path: the repo working tree, mounted read-write** — the
+  agent edits this checkout in place (see [The mounted working
+  tree](#the-mounted-working-tree)),
 - **no capabilities, read-only root filesystem, non-root user**, capped PIDs,
   memory and CPUs.
 
@@ -19,8 +21,8 @@ protect](#what-this-does-not-protect) before trusting it.
 host                                  agent box (container)
 ┌──────────────────────────────┐      ┌────────────────────────────────────┐
 │ docker daemon  ──── no path ─┼──✕───┤ agent user (uid 1000), cap_add=[], │
-│ ~/.vibe, ~/.ssh ─ no path ───┼──✕───┤ read_only rootfs, private copy in  │
-│ $REPO (working tree) ────────┼──────┤ /work, read-only mount at /src     │
+│ ~/.vibe, ~/.ssh ─ no path ───┼──✕───┤ read_only rootfs                   │
+│ $REPO (working tree) ────────┼──────┤ /work/repo = that tree, read-write │
 │                              │      └───────────────┬────────────────────┘
 │                              │      ┌───────────────▼────────────────────┐
 │                              │      │ sandbox network (internal: true)   │
@@ -39,7 +41,7 @@ From this directory:
 cp .env.example .env          # fill in MISTRAL_API_KEY; .env is gitignored
 docker compose build
 docker compose up -d egress   # allowlisting proxy
-docker compose run --rm agent vibe        # agent session on the private copy
+docker compose run --rm agent vibe        # agent session in the working tree
 docker compose run --rm agent             # or a plain shell in the box
 ./verify.sh                               # boundary checks
 ```
@@ -62,30 +64,48 @@ and the same containers, so a session started one way is visible to the other.
 The boundary checks stay in `verify.sh`, which has no PowerShell port — run it
 from Git Bash.
 
-The working tree is mounted read-only at `/src`; the first start copies it into
-the `agent-work` volume (`/work/repo`) once, and the agent works there. Nothing
-it writes reaches the host tree.
+## The mounted working tree
 
-### Getting work out
+The working tree is bind-mounted read-write at `/work/repo` (compose resolves it
+from `REPO_PATH`, default `../..` — this repository), and that is the directory
+the session starts in. There is **no copy**: a file the box writes is the same
+file your editor and `git` see on the host, immediately, with no export step.
 
-The box cannot write to your repo by design. Review and pull changes explicitly:
+That is the whole point — and the whole trade-off:
+
+| | |
+|---|---|
+| commits, uncommitted work | visible on both sides at once; no bundle/copy step |
+| untracked and `.gitignore`d files | the box can read **and** delete them, like any file in the tree |
+| `.git/` | writable from inside — history and hooks are not a safety net |
+| host uid/gid | files the box creates carry the box's ids (`1000:1000`), not necessarily yours |
+| a second checkout | keep the primary tree out of reach by pointing `REPO_PATH` elsewhere |
+
+To mount something other than this checkout — typically a throwaway clone, which
+restores the old read-only-remote feel:
 
 ```sh
-docker compose exec agent git -C /work/repo status
-docker compose exec agent git -C /work/repo diff
-docker compose cp agent:/work/repo/my-file.c ./scratch/      # one path
-docker compose exec agent git -C /work/repo bundle create /tmp/work.bundle main
-docker compose cp agent:/tmp/work.bundle ./scratch/work.bundle
-docker compose exec agent rm -rf /work/repo && docker compose run --rm agent true   # re-seed from /src
+git clone --shared . /tmp/agent-scratch        # or: git worktree add /tmp/agent-scratch main
+REPO_PATH=/tmp/agent-scratch docker compose run --rm agent vibe
 ```
 
-Treat what comes out the same way you would treat a pull request from a stranger:
-`.git/hooks/`, CI configuration and build scripts are writable inside the box.
+The mount is the only host path the box sees, and `entrypoint.sh` never chowns
+it: ownership on the host is left alone. Because the mount keeps host ids, git
+needs the box's `safe.directory` entry, which the entrypoint sets.
 
-GitHub is allowlisted (see [Network policy](#network-policy)), but the box holds
-no GitHub credentials, so work still leaves the way above unless you deliberately
-put a token inside it — a `gh` login or a token in `.env` makes `git push` from
-the box possible, and that is then a push path you opened.
+### Reviewing what a session changed
+
+The box wrote straight into your checkout, so review it as ordinary local work:
+
+```sh
+git status                    # on the host
+git diff
+git add -p
+```
+
+Nothing leaves the box by itself: no push happens unless you put a GitHub
+credential inside it (see [Network policy](#network-policy) and [What this does
+not protect](#what-this-does-not-protect)).
 
 ### Choosing the agent CLI
 
@@ -195,11 +215,11 @@ host-side credential proxy here (that is what `sbx` adds, see below).
 
 | | |
 |---|---|
-| working directory | `/work/repo` — the private copy seeded from the read-only `/src` mount |
+| working directory | `/work/repo` — the host working tree, bind-mounted read-write (unless `REPO_PATH` points at another checkout) |
 | `~/.vibe` (config, sessions, skills caches) | the `agent-home` volume, so `--continue`/`--resume` work across runs and are wiped by `docker compose down -v` |
-| repo tooling | `.vibe/plugins/hee-re/` is part of the copied tree, so the hee-re plugin and its MCP server run **inside** the box with the box's python |
+| repo tooling | `.vibe/plugins/hee-re/` is part of the mounted tree, so the hee-re plugin and its MCP server run **inside** the box with the box's python |
 | browser | none: `xdg-open` is the stub that prints the URL for you to open on the host (see [Signing in](#signing-in)) |
-| your host | nothing: no `~/.vibe` settings, no model aliases or custom agents, no SSH agent, no docker socket, no connectors host-side |
+| your host | nothing but the mounted working tree: no `~/.vibe` settings, no model aliases or custom agents, no SSH agent, no docker socket, no connectors host-side |
 
 Vibe prompts once for trust in an unfamiliar directory; `./vibe.sh --trust`
 skips it for that invocation. For unattended runs, bound the damage with
@@ -253,9 +273,16 @@ that has been built or run here.
   filesystem, `no-new-privileges` and resource limits shrink the attack surface;
   they do not make a kernel exploit survivable. Docker's default seccomp profile
   applies; no custom profile is shipped.
-- **The mounted repo is readable in full.** Read-only stops writes, not reads:
-  untracked files, `.gitignore`d files and anything else in the working tree are
-  visible inside the box. Keep secrets out of the working tree.
+- **The working tree is writable from inside the box.** The mount is the one host
+  path the box can change: it can rewrite, add and delete any file in the
+  checkout, `.git/` included, so history and hooks are not a safety net and
+  uncommitted work can be lost. Commit or push before a session and review
+  `git status` after; for a boundary that does not include your primary checkout,
+  point `REPO_PATH` at a scratch clone (see [The mounted working
+  tree](#the-mounted-working-tree)).
+- **The mounted repo is readable in full.** Untracked files, `.gitignore`d files
+  and anything else in the working tree are visible inside the box. Keep secrets
+  out of the working tree.
 - **The model credential is inside the box.** There is no host-side credential
   proxy here, so `MISTRAL_API_KEY` is visible to every process in the container.
   Pass it through `.env`, never bake it into an image.
@@ -281,7 +308,8 @@ that has been built or run here.
 |---|---|
 | `id` inside the box | `uid=1000(agent) gid=1000(agent)` |
 | effective capabilities | `CapEff: 0000000000000000` |
-| write to the `/src` mount | refused — `Read-only file system` |
+| write to `/work/repo` in the box | lands in the host working tree — probe file created in the box, seen on the host, removed again |
+| `git -C /work/repo rev-parse --is-inside-work-tree` in the box | `true` — the mount keeps host ids, and the entrypoint's `safe.directory` entry makes git accept it |
 | `/var/run/docker.sock` in the box | absent |
 | `hee-agent-box_sandbox` network | `internal=true` — no gateway, only the proxy is reachable |
 | allowlisted destination (`api.mistral.ai`) via the proxy | `HTTP 401` — the proxy let it out, the API rejected the unauthenticated call |
@@ -291,11 +319,11 @@ that has been built or run here.
 | allowlisted feature-flag host (`experiments.mistral.services`) via the proxy | `HTTP 404` — the proxy let it out, the host answered for `/` (before the entry: `Proxying refused on filtered domain`) |
 | browser opener in the box | `/usr/local/bin/xdg-open` is the stub and `BROWSER=xdg-open` — every opener call reports the URL for the host instead of failing |
 | direct egress without the proxy | no response — the sandbox network has no route out |
-| `docker compose config` | `read_only: true`, `cap_drop: [ALL]`, `no-new-privileges:true`, `pids_limit: 2048`, `/src` bind `read_only: true`, no host binds beyond `/src` |
+| `docker compose config` | `read_only: true`, `cap_drop: [ALL]`, `no-new-privileges:true`, `pids_limit: 2048`, exactly one host bind — the working tree at `/work/repo` (read-write) — plus the `agent-home` volume |
 | `./vibe.sh --version` | `vibe 3.1.4` — the wrapper starts the proxy and runs the CLI inside the box |
 | `.\vibe.ps1 --version` | `vibe 3.1.4`, exit `0` — the PowerShell wrapper starts the same proxy and runs the same command inside the box; an unknown flag returns the CLI's exit code `1` (checked from Windows PowerShell 5.1; the same script under PowerShell 7.4 on Linux, with a stub `docker`, makes the same two compose calls and returns the same exit code) |
 | `python -m pytest --version` | `pytest 9.2.0` |
-| `python -m pytest tests/` in `/work/repo` | 1 failed, 374 passed, 7 errors — identical to the host run on the same tree (`test_extract_scalars.py`, `test_defs_upstream_pin.py`, from uncommitted `data/definitions/` and a drifted `submodules/RX8Defs` gitlink) |
+| `python -m pytest tests/` in `/work/repo` | 388 passed, 7 errors in 2m41s — the box runs the suite on the host tree itself; the 7 errors are `tests/test_defs_upstream_pin.py` refusing the drifted `submodules/RX8Defs` gitlink (`39d98a0a…` checked out vs `d4140dc2…` committed), which is host state and fails the same way on the host |
 
 Not run here: a live Vibe session against the model API, and a browser sign-in
 end to end — both need your key and your account. The proxy's allow paths are the
@@ -309,16 +337,20 @@ same box, and an LF checkout (Linux) builds it unchanged.
 
 ## Limits
 
-- The box persists in named volumes (`agent-work`, `agent-home`) until you
-  `docker compose down -v`; the agent CLI's own state and config live there.
+- The box persists in the `agent-home` named volume until you
+  `docker compose down -v`; the agent CLI's own state and config live there. The
+  repo is not in a volume: it is the mount, so `down -v` never touches it.
 - The emulator UI binds loopback inside the container
   (`make_server()` in [`ui.py`](../../utilities/scripts/emu/ui.py)), so it is not
   reachable from the host from inside the box.
 - Package installs inside the box must target the writable volumes —
   `pip install --user …`, `uv tool install …` — because the root filesystem is
   read-only. `apt-get install` needs a rebuilt image.
-- The repo copy is seeded once per volume. `docker compose down -v` or
-  `rm -rf /work/repo` re-seeds from the current working tree.
+- The box runs as `1000:1000`, so files it creates in the mount carry those ids
+  on the host even when your user is a different one. Mount a clone you own (see
+  [The mounted working tree](#the-mounted-working-tree)) if that matters.
+- An `agent-work` volume from an older copy-based version of this box is no
+  longer used and can be dropped: `docker volume rm hee-agent-box_agent-work`.
 - The image strips CR from the scripts and the proxy config it copies, so a
   Windows checkout (`core.autocrlf`) builds the same box. Scripts executed from
   the checked-out tree keep the checkout's line endings, so a CRLF tree breaks

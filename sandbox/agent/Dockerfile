@@ -8,8 +8,8 @@
 #   target `egress` - tinyproxy with a default-deny domain allowlist; the only
 #                     container with a route off the machine.
 #
-# The repo is mounted read-only at /src; entrypoint.sh seeds a private copy in
-# the writable /work volume, so nothing the agent writes reaches the host tree.
+# The repo's working tree is bind-mounted read-write at /work/repo, so the agent
+# works in the checkout itself; nothing of the repo is baked into the image.
 # See README.md for the threat model and what this does not protect.
 
 # ---------------------------------------------------------------- egress proxy
