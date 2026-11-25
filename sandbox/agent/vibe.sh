@@ -8,7 +8,7 @@
 #
 # The box has no host home, no SSH keys, no docker socket and no network route
 # except the allowlisting proxy (see README.md), so a session started this way
-# cannot touch the host beyond the read-only /src mount.
+# cannot touch the host beyond the working tree it mounts at /work/repo.
 set -euo pipefail
 
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)

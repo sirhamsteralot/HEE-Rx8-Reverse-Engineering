@@ -1,13 +1,15 @@
 # Agent box for this repo: an AI coding agent runs inside the `agent` container,
 # which has no host Docker socket, no host home directory, no route off the
-# machine except the `egress` proxy, and only a read-only view of the repo.
+# machine except the `egress` proxy, and works directly in a mount of this repo.
 #
 #   docker compose up -d egress            # allowlisting proxy (default deny)
 #   docker compose run --rm agent          # shell in the box
 #   docker compose run --rm agent vibe     # the agent CLI
 #
-# The host tree is mounted read-only at /src; entrypoint.sh copies it into the
-# disposable /work volume once, and the agent works on that copy only.
+# The working tree is bind-mounted at /work/repo, i.e. the box edits this
+# checkout in place and there is no copy to extract afterwards. Point REPO_PATH
+# at a scratch clone if the primary checkout should not be writable from the
+# box; see README.md for what that costs and what it does not protect.
 name: hee-agent-box
 
 services:
@@ -50,7 +52,6 @@ services:
       http_proxy: http://egress:8888
       https_proxy: http://egress:8888
       no_proxy: localhost,127.0.0.1
-      REPO_SRC: /src
       # No browser in the box: point every opener at the stub that prints the
       # URL for the host instead (see xdg-open.sh). Without it, the CLI's
       # browser sign-in fails on the box side before it starts polling.
@@ -65,14 +66,15 @@ services:
       - /tmp:size=4g,mode=1777
       - /run:size=64m
     volumes:
-      # Read-only view of the working tree: clone-mode semantics. Override with
-      # REPO_PATH for another checkout.
-      - ${REPO_PATH:-../..}:/src:ro
-      # Disposable state: the private repo copy and the agent's home/config.
-      - agent-work:/work
+      # The repo's working tree itself, mounted read-write: writes inside the box
+      # land in this checkout. Override with REPO_PATH for another checkout (for
+      # example a scratch clone) — the only host path the box sees either way.
+      - ${REPO_PATH:-../..}:/work/repo
+      # Agent state: config, sessions, skills caches. The repo is not copied here.
       - agent-home:/home/agent
-    # The privileged caps exist only for the root bootstrap (chown + gosu);
-    # nothing else in the box runs with capabilities.
+    # The privileged caps exist only for the root bootstrap (chown of the home
+    # volume + gosu); nothing else in the box runs with capabilities. The repo
+    # mount keeps the host's user and group ids and is never chowned here.
     cap_drop: [ALL]
     cap_add:
       - CHOWN
@@ -95,5 +97,4 @@ networks:
   upstream:
 
 volumes:
-  agent-work:
   agent-home:

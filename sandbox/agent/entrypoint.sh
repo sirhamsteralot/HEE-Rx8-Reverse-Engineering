@@ -1,28 +1,20 @@
 #!/usr/bin/env bash
 # Entrypoint for the agent box.
 #
-# Starts as root once, makes the state volumes writable for the non-root agent
-# user, seeds the private copy of the repo from the read-only /src mount, then
-# drops privileges for everything else. Nothing here writes to the host tree.
+# Starts as root once, makes the agent's home volume writable for the non-root
+# agent user, then drops privileges for everything else. /work/repo is a bind
+# mount of the host working tree, so it is deliberately left alone: chowning it
+# would rewrite ownership on the host.
 set -euo pipefail
 
 if [ "$(id -u)" = 0 ]; then
-  chown -R agent:agent /work /home/agent 2>/dev/null || true
-
-  if [ -n "${REPO_SRC:-}" ] && [ -d "$REPO_SRC" ]; then
-    if [ ! -e /work/repo/.git ]; then
-      echo "entrypoint: seeding a private copy of $REPO_SRC in /work/repo" >&2
-      mkdir -p /work/repo
-      cp -a "$REPO_SRC/." /work/repo/
-      chown -R agent:agent /work/repo
-    fi
-  fi
-
+  chown -R agent:agent /home/agent 2>/dev/null || true
   exec gosu agent /usr/local/bin/entrypoint.sh "$@"
 fi
 
-# The private copy belongs to the agent user, so git's ownership check is moot,
-# but the mount keeps host timestamps and ids; allow it explicitly.
+# The mounted tree keeps the host's user and group ids, which need not be the
+# box's (1000:1000); git would otherwise refuse the checkout as "dubious
+# ownership". Safe here because the only writable repository is the mount.
 git config --global --add safe.directory '*' 2>/dev/null || true
 
 exec "$@"
