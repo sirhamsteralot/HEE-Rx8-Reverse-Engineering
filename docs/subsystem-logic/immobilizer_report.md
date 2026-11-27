@@ -72,7 +72,7 @@ flowchart TB
     subgraph slow["Slow background"]
         S1["slow_background_task 0x11534"] --> S2["0x5674a immo_counter_increment (0xffffd1e2)"]
     end
-    M --> F["fuel_cut_arbitration 0xe2d4 reads immo_authorized 0xffffc1d0"]
+    M --> F["fuel_cut_bitmask_build 0xe2d4 reads immo_authorized 0xffffc1d0"]
 ```
 
 The state machine runs inside the CAN-RX main `0xdbf6`, which first services
@@ -93,7 +93,7 @@ flowchart LR
         HCAN0["HCAN0 (MCR 0xffffe400)<br/>mb 9 TX, ID 0x041, DLC 8<br/>buffer 0xffffc4a8 (ROM desc 0x4dfac)"]
         E2["E2RAM device layer (SCI4)<br/>93C56 EEPROM: key 0x02-0x09,<br/>code 0x16-0x19, status 0x0a-0x0b"]
         GPIO["PEDR_W 0xfffff754<br/>bits 0x40/0x20 = security lamp drive"]
-        FUEL["fuel_cut_arbitration 0xe2d4<br/>-> DAT_ffffa430 -> injectors"]
+        FUEL["fuel_cut_bitmask_build 0xe2d4<br/>-> DAT_ffffa430 -> injectors"]
     end
     KEY -- "CAN 0x047" --> HCAN1
     HCAN0 -- "CAN 0x041" --> KEY
@@ -290,43 +290,43 @@ Every address below can be checked directly in
 
 #### Functions (ROM addresses)
 
-| Address | Name (index name; alias) | Role |
+| Address | Name | Role |
 |---|---|---|
-| 0x00034ae2 | `FUN_00034ae2` (immobilizer_main_state_dispatch) | immo main: engine gate, command call at 0x34b10, dispatch on c21d, fail counter |
-| 0x000355f0 | `FUN_000355f0` (immo_can_command_decode) | consumes c4bf; cmd 0/6/8/0x90/0xc9 → c21e, c204/c1ec |
-| 0x00034c5c | `FUN_00034c5c` (immo_state0_idle) | main state 0 |
-| 0x00034d12 | `FUN_00034d12` (immo_state1_key_exchange) | main state 1; 4-word compare vs c1f0..c1fc |
-| 0x00034f42 | `FUN_00034f42` (immo_state2_challenge_verify) | main state 2; compare at 0x34f5c (with-RKE patch site) |
-| 0x00035062 | `FUN_00035062` (immo_state3_authorized) | main state 3; authorized latch, engine-off timer |
-| 0x000351ae | `FUN_000351ae` (immo_state4_transition) | main state 4 |
-| 0x00035258 | `ref_ImmoStateReadyToDriveEngineOff` (immo_state5_ready_engine_off) | main state 5 |
-| 0x000352c4 | `ref_ImmoGoodStateSet_` (immo_set_authorized) | c1d0=1, lamp on, c21d=3 |
-| 0x00035338 | `ref_ImmoBadStateSet_` (immo_set_rejected) | c1d0=0, lamp off, c21d=4 |
-| 0x00034e68 | `FUN_00034e68` (immo_wait_for_key_step) | c221 dispatch; c221==2 → seed TX, c21d=2 |
-| 0x00035356 | `ref_immo_related__` (immo_compute_expected_key_words) | c1f0..c1fc = tagged scrambled words |
-| 0x000353ce | `ref_ImmoGetSeed` (immo_compute_seed) | c200 = 0x354dc(c26c,c270,c208) |
-| 0x00035438 | `FUN_00035438` (immo_key_word_scramble) | 24-bit scramble half |
-| 0x000354dc | `FUN_000354dc` (immo_seed_mix) | seed/response mix |
-| 0x00035738 | `FUN_00035738` (immo_tx_frame_build) | builds c1c8..c1d1 TX frame |
-| 0x0003587c | `ref_Immo_Keygen_related_ADC` (immo_random_seed_gen) | c208 from ADC + timers + counters |
-| 0x000360a8 | `FUN_000360a8` (immo_key_regs_mix_timer) | c26c/c270 ^= ATUII_TCNT0H_W 0xfffff430 |
-| 0x000349e4 | `ref_ImmoSomethingOrOther__` (immo_boot_init) | boot init from 0x1102a |
-| 0x00034a04 | `FUN_00034a04` (immo_eeprom_key_read_kick) | masked 0x375c0 + 0xe2d4(1), from task 0x114d0 |
-| 0x00034a74 | `ref_immoRelatedMaybe__` (immo_key_defaults_init) | erased-key defaults |
-| 0x00035ea0 | `ref_ImmoUpdateRelated` (immo_eeprom_flag_sequencer) | 'Z' flag write sequencer (c268) |
-| 0x00035f64 | `ref_checkImmoStatus_` (immo_status_housekeeping) | status/fault housekeeping |
-| 0x00036908 | `ref_afterImmoMain` (immo_eeprom_write_dispatch) | calls afterImmo_1..8 |
-| 0x00036acc | `ref_afterImmo_1` (immo_eeprom_write_step_1) | write step; UDS 0xb1 completion f1 01 01 |
+| 0x00034ae2 | `immobilizer_main_state_dispatch` | immo main: engine gate, command call at 0x34b10, dispatch on c21d, fail counter |
+| 0x000355f0 | `immo_can_command_decode` | consumes c4bf; cmd 0/6/8/0x90/0xc9 → c21e, c204/c1ec |
+| 0x00034c5c | `immo_state0_idle` | main state 0 |
+| 0x00034d12 | `immo_state1_key_exchange` | main state 1; 4-word compare vs c1f0..c1fc |
+| 0x00034f42 | `immo_state2_challenge_verify` | main state 2; compare at 0x34f5c (with-RKE patch site) |
+| 0x00035062 | `immo_state3_authorized` | main state 3; authorized latch, engine-off timer |
+| 0x000351ae | `candidate_immo_state4_transition` | main state 4 |
+| 0x00035258 | `candidate_immo_state5_ready_engine_off` (inherited `ref_ImmoStateReadyToDriveEngineOff`) | main state 5 |
+| 0x000352c4 | `immo_set_authorized` (inherited `ref_ImmoGoodStateSet_`) | c1d0=1, lamp on, c21d=3 |
+| 0x00035338 | `immo_set_rejected` (inherited `ref_ImmoBadStateSet_`) | c1d0=0, lamp off, c21d=4 |
+| 0x00034e68 | `immo_wait_for_key_step` | c221 dispatch; c221==2 → seed TX, c21d=2 |
+| 0x00035356 | `immo_compute_expected_key_words` (inherited `ref_immo_related__`) | c1f0..c1fc = tagged scrambled words |
+| 0x000353ce | `immo_compute_seed` (inherited `ref_ImmoGetSeed`) | c200 = 0x354dc(c26c,c270,c208) |
+| 0x00035438 | `candidate_immo_key_word_scramble` | 24-bit scramble half |
+| 0x000354dc | `candidate_immo_seed_mix` | seed/response mix |
+| 0x00035738 | `immo_tx_frame_build` | builds c1c8..c1d1 TX frame |
+| 0x0003587c | `immo_random_seed_gen` (inherited `ref_Immo_Keygen_related_ADC`) | c208 from ADC + timers + counters |
+| 0x000360a8 | `candidate_immo_key_regs_mix_timer` | c26c/c270 ^= ATUII_TCNT0H_W 0xfffff430 |
+| 0x000349e4 | `immo_boot_init` (inherited `ref_ImmoSomethingOrOther__`) | boot init from 0x1102a |
+| 0x00034a04 | `immo_eeprom_key_read_kick` | masked 0x375c0 + 0xe2d4(1), from task 0x114d0 |
+| 0x00034a74 | `candidate_immo_key_defaults_init` (inherited `ref_immoRelatedMaybe__`) | erased-key defaults |
+| 0x00035ea0 | `immo_eeprom_flag_sequencer` (inherited `ref_ImmoUpdateRelated`) | 'Z' flag write sequencer (c268) |
+| 0x00035f64 | `immo_status_housekeeping` (inherited `ref_checkImmoStatus_`) | status/fault housekeeping |
+| 0x00036908 | `immo_eeprom_write_dispatch` (inherited `ref_afterImmoMain`) | calls afterImmo_1..8 |
+| 0x00036acc | `candidate_immo_eeprom_write_step_1` (inherited `ref_afterImmo_1`) | write step; UDS 0xb1 completion f1 01 01 |
 | 0x000375c0 | `e2ram_immo_key_read` | EEPROM key/code/status read → c1d5-c1d8 |
-| 0x0003811c | `ref_CAN47RX_Main` (immo_can_rx_main) | CAN 0x047 mb39 → c4b0, c4bf/c4c0=1 |
-| 0x00038150 | `ref_can47RXunpack` (immo_can_rx_unpack) | c4b9..c4c4 unpack |
-| 0x000380c8 | `ref_can41TXPack` (immo_can_tx_pack) | c1c8..c1cf → c4a8..c4af, CAN 0x041 mb9 |
+| 0x0003811c | `immo_can_rx_main` (inherited `ref_CAN47RX_Main`) | CAN 0x047 mb39 → c4b0, c4bf/c4c0=1 |
+| 0x00038150 | `immo_can_rx_unpack` (inherited `ref_can47RXunpack`) | c4b9..c4c4 unpack |
+| 0x000380c8 | `immo_can_tx_pack` (inherited `ref_can41TXPack`) | c1c8..c1cf → c4a8..c4af, CAN 0x041 mb9 |
 | 0x0000dbf6 | `can_rx_main_key_gated` | calls 0x3811c + 0x34ae2 |
 | 0x0000db58 | `can_tx_main_key_gated` | calls 0x380c8, clears c1d1 |
-| 0x0002556c | `ref_setImmoLight__` (immo_lamp_drive) | PEDR_W 0xfffff754 bits 0x40/0x20 |
-| 0x00016b20 | `ref_readImmoBit` (immo_diag_bit_check) | diag bit test → 0x16a1c(2); the bit it tests is disputed — §4.6 |
-| 0x0005674a | `ref_runImmoRelatedCounter` (immo_counter_increment) | d1e2++ if d1e4==1, from 0x11534 |
-| 0x0000e2d4 | `FUN_0000e2d4` (fuel_cut_arbitration) | c1d0==0 → DAT_ffffa430 |= 3 |
+| 0x0002556c | `immo_lamp_drive` (inherited `ref_setImmoLight__`) | PEDR_W 0xfffff754 bits 0x40/0x20 |
+| 0x00016b20 | `candidate_immo_diag_bit_check` (inherited `ref_readImmoBit`) | diag bit test → 0x16a1c(2); the bit it tests is disputed — §4.6 |
+| 0x0005674a | `immo_counter_increment` (inherited `ref_runImmoRelatedCounter`) | d1e2++ if d1e4==1, from 0x11534 |
+| 0x0000e2d4 | `fuel_cut_bitmask_build` | c1d0==0 → DAT_ffffa430 |= 3 |
 
 #### RAM (0xffff…)
 

@@ -9,8 +9,9 @@ the curated alias TSV:
 - 0x22144 was renamed to `candidate_fuel_open_loop_condition` (gate uses the
   fuel open-loop flag; the old "evap" attribution came from an inherited ref_
   caller name) and stays medium;
-- the 69 remaining `candidate_*` labels are unchanged (kept as hypotheses per
-  the label ladder, evidence recorded);
+- the `candidate_*` names the export carries are exactly the ones the curation
+  still marks as hypotheses: medium-confidence `accepted_function_aliases.tsv`
+  rows and the cross-ECU RomRaider candidates (never a stale snapshot count);
 - accepted_function_aliases.tsv carries confidence=high for the promoted rows;
 - the raw ROM is untouched (SHA-256 asserted).
 
@@ -56,8 +57,18 @@ def test_record_counts_match_export():
         "renamed": len(renamed),
         "kept_candidate": len(kept),
     }
-    # export still carries exactly the kept + renamed candidates
-    assert len(cand_rows) == len(kept) + len(renamed)
+    # the candidate set is derived from the curation, not from this record's snapshot:
+    # medium-confidence accepted rows keep the prefix, and so do the cross-ECU
+    # RomRaider candidates the pass always marks candidate_ (accepted rows win)
+    expected = {}
+    for r in read_tsv(INV / "labeling/cross_ecu/symbol_aliases.tsv"):
+        expected[r["address"]] = r["proposed_alias"]
+    for r in read_tsv(INV / "labeling/cross_ecu/romraider_function_aliases.tsv"):
+        expected[r["address"]] = "candidate_" + r["proposed_alias"]
+    for r in read_tsv(INV / "labeling/source_review/accepted_function_aliases.tsv"):
+        expected[r["address"]] = ("candidate_" if r["confidence"] == "medium" else "") + r["alias"]
+    assert {r["address"]: r["name"] for r in cand_rows} == {
+        a: n for a, n in expected.items() if n.startswith("candidate_")}
     by_addr = {r["address"]: r["name"] for r in idx}
     for a, name in kept.items():
         assert by_addr[a] == name, a

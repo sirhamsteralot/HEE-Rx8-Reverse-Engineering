@@ -31,6 +31,11 @@ steps from the **repo root**.
   + append to `docs/investigations/60E15120_N3J1E/labeling/source_review/accepted_*.tsv`;
   `annotate_source_review.py` / `integrate_reviewed_names.py` apply them to the
   synchronized views (with backups under `docs/investigations/60E15120_N3J1E/backups/`).
+  `integrate_reviewed_names.py` keys its identifier map on each function's address
+  identity (`FUN_<addr>` both hex cases, the export-time file stem, the current index
+  name) and derives thunk forms (`jump_to_<target>`) from the thunk's own stem, so it is
+  re-runnable; it fails rather than leave an accepted alias as an address-based
+  identifier or let one alias name two functions.
 - `neutralize_flash_register_names.py` (runs right after a fresh export, before the
   label passes) renames the flash-module registers at `0xFFFFE800`–`0xFFFFE806` to
   address-anchored `DAT_` names: `SetupTarget.java` imports the reference project's

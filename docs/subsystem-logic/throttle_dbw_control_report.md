@@ -629,7 +629,7 @@ u16 diag22_pid1410_injector_pulse_time(void) {        // 0x56f6c
 
 | 0x000051c8 | `FUN_000051c8` (init) | `PBCRL_W`=0x4000 at `0x51de`, `PBCRH_W`=0x1450, `PBIOR_W`=0xf484 |
 
-| 0x0003a0ec | `FUN_0003a0ec` (medium-confidence alias `relay_output_pair_pd7_pe0`) | PD7 = (cfb6==1), PE0 = (cfb7==0) |
+| 0x0003a0ec | `relay_output_pair_pd7_pe0` | PD7 = (cfb6==1), PE0 = (cfb7==0) |
 
 | 0x0000aee8 | `adc_pair_correlation_fault_compute` | AN11/AN23 pair ratio → a1d8/a1d4 |
 

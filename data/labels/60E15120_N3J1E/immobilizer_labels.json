@@ -209,14 +209,14 @@
    "evidence": "ref_runImmoRelatedCounter (unique_exact_bytes to 60E0FC00 0x54a66), called from slow_background_task 0x11534. Mask-0x10: if 0xffffd1e4==1 && 0xffffd1e2!=-1 -> d1e2++ (the immo-related counter exposed in the diag RAM area; PID 0xc116 thunk 0x576c2 reads the c239-c281 state block)."
   },
   "0000e2d4": {
-   "alias": "fuel_cut_arbitration",
+   "alias": "fuel_cut_bitmask_build",
    "confidence": "high",
    "evidence": "324 B. Computes DAT_ffffa430 (u16) fuel-cut bitmask for both rotor banks from rev-limit/fuel-cut flags and the immobilizer: pool words 0xe406/0xe43c = 0xc1d0 read with 'tst r0,r0' — c1d0==0 sets the cut bits. Disasm at 0xe364-0xe36c (bank A) and 0xe426-0xe42c (bank B); store 'mov.w r4,@r3' at 0xe438 with pool 0xe43e=0xa430. Dynamically verified in the emulator: a430=0x0003 with c1d0=0, 0x0000 with c1d0=1 (all other flags 0). Callers: 0x34a04, 0xedc4, 0x1de6c, 0x2ca10, 0x4737a."
   }
  },
  "ram_aliases": {
   "ffffc1c8": {"alias": "immo_tx_frame", "type": "u8[8]", "reader": "0x380c8 immo_can_tx_pack", "evidence": "c1c8=cmd, c1c9..c1cc=payload, c1cd..c1cf=0, c1d1=valid flag; copied to 0xffffc4a8..c4af when c1d1==1"},
-  "ffffc1d0": {"alias": "inferred_ram_c1d0_ffffc1d0", "type": "u8", "reader": "0xe2d4 fuel_cut_arbitration (tst==0 -> fuel cut both banks), set by 0x352c4 / cleared by 0x35338", "evidence": "immo authorized flag; pool words 0xe406/0xe43c in 0xe2d4; emulator: a430 0x0003 vs 0x0000"},
+  "ffffc1d0": {"alias": "inferred_ram_c1d0_ffffc1d0", "type": "u8", "reader": "0xe2d4 fuel_cut_bitmask_build (tst==0 -> fuel cut both banks), set by 0x352c4 / cleared by 0x35338", "evidence": "immo authorized flag; pool words 0xe406/0xe43c in 0xe2d4; emulator: a430 0x0003 vs 0x0000"},
   "ffffc1d1": {"alias": "immo_tx_frame_valid", "type": "u8", "reader": "0x380c8 (pack gate), cleared by 0xdb58 after TX", "evidence": "set to 1 by every 0x35738 path; 0xdb58 clears it after packing"},
   "ffffc1d5": {"alias": "inferred_ram_c1d5_ffffc1d5", "type": "u8[4] c1d5-c1d8", "reader": "0x375c0 e2ram_immo_key_read", "evidence": "immo EEPROM key/code/status erased flags; set 0/1 per word all-00 or all-ff"},
   "ffffc1dc": {"alias": "immo_computed_key_words", "type": "u32[4] c1dc-c1e8", "reader": "0x35356 -> c1f0..c1fc tagged copies", "evidence": "raw scrambled words before the 0x01..0x04<<24 tag"},
@@ -255,7 +255,7 @@
   "frame_rx": "CAN 0x047, 8 B: [cmd][d0][d1][d2][d3][d4][chkH][chkL]; cmd decoded by 0x355f0: 0x00 idle, 0x06 keyless request (d0: 0x00/0xff reject-start, 0x01/0xff, 0x7f seed request), 0x08 challenge/response word (BE32 d0..d3 -> c204), 0x90 key word (d0 = tag 1..4 = expected-word index, BE32 d0..d3 -> c1ec), 0xc9 begin key exchange",
   "frame_tx": "CAN 0x041, 8 B built at 0xffffc1c8 by 0x35738: [cmd][sub/status][4 data bytes][0][0][0]; cmd 0x07 = raw seed c208 BE; 0x09 = computed key word #c220 BE; 0x01/0x81 = verdict with status c224 (0x7f OK / 0x80 / 0x81 NG); 0xc6 = key exchange complete; 0xc8 = engine-off/ready notice",
   "sequence": "keyless sends 0x06/0x7f -> PCM answers 0x07 with seed c208 and computes expected response c200 -> keyless answers 0x08 with its computed word -> PCM compares c204==c200 (0x34f5c) -> verdict 0x81/0x01 with 0x7f/0x81 -> on OK: immo_authorized c1d0=1, state 3; separate 0xc9 + 0x90x4 exchange verifies/loads the 4 tagged key words c1f0..c1fc -> 0xc6 complete. All steps dynamically reproduced in the emulator (tests/test_immobilizer_dynamic.py).",
-  "immobilization_effect": "c1d0==0 makes fuel_cut_arbitration 0xe2d4 set DAT_ffffa430 = 0x0003 (both rotor banks cut) - emulator-verified; also gates the key-gated CAN mains (0xdb58/0xdbf6 names) and lamp 0x2556c"
+  "immobilization_effect": "c1d0==0 makes fuel_cut_bitmask_build 0xe2d4 set DAT_ffffa430 = 0x0003 (both rotor banks cut) - emulator-verified; also gates the key-gated CAN mains (0xdb58/0xdbf6 names) and lamp 0x2556c"
  },
  "dynamic_validation": {
   "method": "SH-2E emulator, profile 60E15120_N3J1E, boot 1e6 cycles; harness.call() on 0x38150/0x34ae2/0x380c8/0xe2d4 with RAM primed (engine_running 0xffffaa68=1, rpm 0)",
