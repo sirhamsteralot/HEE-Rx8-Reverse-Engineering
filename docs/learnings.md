@@ -63,6 +63,16 @@ validation JSONs).
   stats in `docs/investigations/60E15120_N3J1E/labeling/comment_merge/validation.json`).
 - Report tables: grouped rows (`a/b`), unnamed `DAT_` rows and base-pointer rows
   are legitimate — `validate_reports.py` knows them.
+- `integrate_reviewed_names.py` anchors its identifier map on each function's
+  **address identity** — `FUN_<addr>` in both hex cases, the export-time file stem
+  (`functions/00026a42_FUN_00026a42.c`) and the name the index already carries — so a
+  re-run over a half-renamed export finishes the fold-back instead of no-oping on keys
+  an earlier run consumed. Thunk forms (`thunk_FUN_<target>`, `jump_to_FUN_<target>`)
+  name the **target**, so they are derived from the thunk's own stem; a form two rows
+  claim is left alone (the substitution cannot tell their bodies apart). The pass fails
+  if an accepted alias stays an address-based identifier or if one alias names two
+  functions; `tests/test_reviewed_name_foldback.py` re-runs annotation + integration +
+  comment-merge and requires the committed export back unchanged.
 - Evidence strings in `review_*.py` are hand-written prose that fan out into the
   TSVs, labels JSONs and export comments — one transcription slip lands in ~9
   artifacts. Write them from the ROM/disassembly artifacts, and let
