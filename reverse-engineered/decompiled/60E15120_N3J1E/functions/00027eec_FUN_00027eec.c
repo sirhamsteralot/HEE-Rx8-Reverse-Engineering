@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00028834 (170 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined2 * FUN_00027eec(byte param_1)
+undefined2 * candidate_e2ram_learned_table_flag_mirror(byte param_1)
 
 {
   undefined2 *puVar1;

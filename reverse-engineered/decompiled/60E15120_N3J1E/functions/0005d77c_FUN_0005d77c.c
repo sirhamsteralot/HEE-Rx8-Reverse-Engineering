@@ -13,8 +13,8 @@ char FUN_0005d77c(void)
     cVar1 = '\x01';
   }
   else {
-    cVar1 = DAT_ffffaa63;
-    if ((DAT_ffffaa63 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a == '\x01')) {
+    cVar1 = candidate_closed_throttle_flag_ffffaa63;
+    if ((candidate_closed_throttle_flag_ffffaa63 == '\x01') && (cVar1 = DAT_ffffb53a, DAT_ffffb53a == '\x01')) {
       DAT_ffffd36c = 0x40;
     }
     else {

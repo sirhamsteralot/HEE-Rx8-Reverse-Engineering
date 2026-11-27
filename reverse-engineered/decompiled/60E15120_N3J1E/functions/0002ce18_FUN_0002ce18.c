@@ -1,9 +1,9 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a790: Table 2D - 162 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * alternator_drag_torque_calc [medium]: 0xffffbcc4 = tbl 0x6a790(alt speed 0xffffb598) * (0xffffb5a4 / 0xffffb5a0) when b5a0 is outside the 0x3727c5ac tolerance band, else 0. Speed-dependent alternator drag estimate. Sole caller 0x2cb80 inside ref_calculateTorqueRelatedParams 0x2cb64 (pool 0x2cbe0); no alternator batch references it.
  * RAM 0xffffbcc4 alternator_drag_torque (float): Written by 0x2ce18 = tbl 0x6a790(alt speed) * (0xffffb5a4/0xffffb5a0), 0 when b5a0 within tolerance; alternator drag estimate consumed by ref_calculateTorqueRelatedParams 0x2cb64 (call at 0x2cb80, pool 0x2cbe0).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a790: Table 2D - 162 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [RX8DEFS 2026-09-30 0002ce18]
  * Suggested interpretation: inferred_update_alternator_torque_estimate.

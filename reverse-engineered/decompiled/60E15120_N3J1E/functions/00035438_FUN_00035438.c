@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035b58 (164 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_00035438(uint param_1,byte param_2)
+uint candidate_immo_key_word_scramble(uint param_1,byte param_2)
 
 {
   uint uVar1;

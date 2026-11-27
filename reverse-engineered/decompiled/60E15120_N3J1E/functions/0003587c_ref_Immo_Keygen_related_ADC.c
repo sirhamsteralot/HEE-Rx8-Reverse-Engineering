@@ -11,7 +11,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035f9c (218 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * ref_Immo_Keygen_related_ADC(void)
+undefined4 * immo_random_seed_gen(void)
 
 {
   short sVar1;
@@ -41,10 +41,10 @@ undefined4 * ref_Immo_Keygen_related_ADC(void)
   DAT_ffffc21a = ~(snapshot_DAT_ffff9f1c * 0x100 + (snapshot_DAT_ffff9f1e & 0xff) ^
                   (short)((uVar4 & 0xffff00) >> 8) + DAT_ffffc21a + sVar1);
   DAT_ffffc223 = (byte)snapshot_DAT_ffff9f1e ^ DAT_ffffc223;
-  DAT_ffffc208 = (uint)DAT_ffffc218 * 0x10000 + (uint)DAT_ffffc21a;
-  if (DAT_ffffc208 == 0) {
-    puVar5 = &DAT_ffffc26c;
-    DAT_ffffc208 = DAT_ffffc26c | DAT_ffffc270;
+  immo_random_seed_ffffc208 = (uint)DAT_ffffc218 * 0x10000 + (uint)DAT_ffffc21a;
+  if (immo_random_seed_ffffc208 == 0) {
+    puVar5 = &immo_key_reg_a_ffffc26c;
+    immo_random_seed_ffffc208 = immo_key_reg_a_ffffc26c | immo_key_reg_b_ffffc270;
   }
   return puVar5;
 }

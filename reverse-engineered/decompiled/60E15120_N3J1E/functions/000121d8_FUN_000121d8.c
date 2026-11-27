@@ -3,8 +3,8 @@
 void FUN_000121d8(void)
 
 {
-  DAT_ffffa640 = 0xc0a00000;
-  DAT_ffffa650 = 0x41200000;
+  leading_timing_after_cranking_blend_ffffa640 = 0xc0a00000;
+  trailing_timing_after_cranking_blend_ffffa650 = 0x41200000;
   return;
 }
 

@@ -25,7 +25,7 @@ undefined4 FUN_0003e020(void)
     FUN_00016fdc();
     jump_to_FUN_0003e300();
     FUN_000230ae();
-    jump_to_FUN_000270aa();
+    jump_to_e2ram_learned_table_validate();
     jump_to_FUN_00034a6c();
     FUN_0005a2b6();
     FUN_0005a3c6();

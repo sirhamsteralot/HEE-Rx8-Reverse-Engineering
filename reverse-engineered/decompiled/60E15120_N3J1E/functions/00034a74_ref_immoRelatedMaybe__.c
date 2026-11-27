@@ -10,21 +10,21 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035194 (110 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-int ref_immoRelatedMaybe__(void)
+int candidate_immo_key_defaults_init(void)
 
 {
   int snapshot_DAT_ffffc270;
   int iVar2;
   
-  snapshot_DAT_ffffc270 = DAT_ffffc270;
-  DAT_ffffc20c = 500;
+  snapshot_DAT_ffffc270 = immo_key_reg_b_ffffc270;
+  immo_timer_a_ffffc20c = 500;
   DAT_ffffc210 = 0xfa;
   DAT_ffffc222 = 1;
-  DAT_ffffc21e = 5;
-  iVar2 = DAT_ffffc26c;
-  if ((DAT_ffffc26c == -1) && (iVar2 = snapshot_DAT_ffffc270, DAT_ffffc270 == -1)) {
-    DAT_ffffc26c = 0x10001;
-    DAT_ffffc270 = 0x55aa55aa;
+  immo_command_substate_ffffc21e = 5;
+  iVar2 = immo_key_reg_a_ffffc26c;
+  if ((immo_key_reg_a_ffffc26c == -1) && (iVar2 = snapshot_DAT_ffffc270, immo_key_reg_b_ffffc270 == -1)) {
+    immo_key_reg_a_ffffc26c = 0x10001;
+    immo_key_reg_b_ffffc270 = 0x55aa55aa;
   }
   if (((DAT_ffffc27a == -1) && (DAT_ffffc27c == -1)) || ((DAT_ffffc27a == 0 && (DAT_ffffc27c == 0)))
      ) {

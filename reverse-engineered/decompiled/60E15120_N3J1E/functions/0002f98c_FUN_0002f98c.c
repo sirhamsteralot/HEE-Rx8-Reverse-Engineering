@@ -6,13 +6,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002fe44 (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002f98c(void)
+void fuel_pump_grace_eval_locked(void)
 
 {
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_0002fcac();
+  fuel_pump_grace_eval();
   ref_setSR(uVar1);
   return;
 }

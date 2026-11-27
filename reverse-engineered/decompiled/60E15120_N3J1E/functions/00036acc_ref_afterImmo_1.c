@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000371ec (160 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_afterImmo_1(void)
+uint candidate_immo_eeprom_write_step_1(void)
 
 {
   uint uVar1;

@@ -7,18 +7,18 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000359e4 (56 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_ImmoGoodStateSet_(void)
+void immo_set_authorized(void)
 
 {
-  ref_setImmoLight__(1);
+  immo_lamp_drive(1);
   inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 1;
-  DAT_ffffc282 = 2;
+  immo_registered_key_count_ffffc282 = 2;
   DAT_ffffc22f = 1;
-  DAT_ffffc212 = 15000;
+  immo_timer_engine_off_ffffc212 = 15000;
   DAT_ffffc214 = 0xfa;
-  DAT_ffffc21c = 0;
-  DAT_ffffc21d = 3;
-  DAT_ffffc22a = 0;
+  immo_ready_engine_off_pending_ffffc21c = 0;
+  immo_main_state_ffffc21d = 3;
+  immo_reject_event_flag_ffffc22a = 0;
   return;
 }
 

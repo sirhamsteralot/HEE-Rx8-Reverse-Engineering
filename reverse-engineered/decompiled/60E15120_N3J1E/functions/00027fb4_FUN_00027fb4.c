@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00027fb4; body bytes: 110; decompiled */
 
-char FUN_00027fb4(void)
+char misfire_event_arm(void)
 
 {
   ushort uVar1;

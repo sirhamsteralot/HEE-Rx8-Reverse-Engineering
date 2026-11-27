@@ -13,7 +13,7 @@ void FUN_00021186(void)
   FUN_0000e444();
   FUN_00030104();
   FUN_00030126();
-  FUN_000303a8();
+  candidate_cranking_throttle_factor();
   FUN_0001d1ca();
   FUN_00033e36();
   FUN_00033d3c();

@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00036684 (262 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_checkImmoStatus_(void)
+uint immo_status_housekeeping(void)
 
 {
   uint uVar1;
@@ -29,8 +29,8 @@ uint ref_checkImmoStatus_(void)
       inferred_ram_c1d2_ffffc1d2_ffffc1d2 = 0x33;
       DAT_ffffc234 = 0;
     }
-    if (2 < DAT_ffffc282) {
-      DAT_ffffc282 = 2;
+    if (2 < immo_registered_key_count_ffffc282) {
+      immo_registered_key_count_ffffc282 = 2;
     }
   }
   else {
@@ -50,7 +50,7 @@ uint ref_checkImmoStatus_(void)
     DAT_ffffc27f = 0;
     DAT_ffffc280 = 0;
     DAT_ffffc281 = 0;
-    DAT_ffffc282 = 2;
+    immo_registered_key_count_ffffc282 = 2;
   }
   if ((inferred_ram_c1d4_ffffc1d4_ffffc1d4 < 8) || (0x3f < inferred_ram_c1d4_ffffc1d4_ffffc1d4)) {
     inferred_ram_c1d4_ffffc1d4_ffffc1d4 = 8;

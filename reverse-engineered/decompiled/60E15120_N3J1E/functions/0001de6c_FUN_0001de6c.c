@@ -61,7 +61,7 @@ LAB_0001dfa6:
   else {
     DAT_ffffb0cf = 0;
   }
-  FUN_0000e2d4(1);
+  fuel_cut_bitmask_build(1);
   return;
 }
 

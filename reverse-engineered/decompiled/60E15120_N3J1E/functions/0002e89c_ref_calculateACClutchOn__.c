@@ -25,14 +25,14 @@ void ref_calculateACClutchOn__(void)
   if (ac_clutch_on_ffffbd69 == '\0') {
     if ((((4 < DAT_ffffbd86) || (DAT_ffffbd94 == '\0')) || (DAT_ffffbd95 == '\x01')) ||
        ((DAT_ffffbd72 == '\x01' || (DAT_ffffbd73 == '\x01')))) {
-      DAT_ffffbd68 = 0;
+      ac_clutch_relay_drive_ffffbd68 = 0;
     }
     DAT_ffffbd84 = 0;
     DAT_ffffbd86 = rx8_add_u16_saturate((int)(short)DAT_ffffbd86,1);
   }
   else {
     if (0xd < DAT_ffffbd84) {
-      DAT_ffffbd68 = 1;
+      ac_clutch_relay_drive_ffffbd68 = 1;
     }
     DAT_ffffbd84 = rx8_add_u16_saturate((int)(short)DAT_ffffbd84,1);
     DAT_ffffbd86 = 0;

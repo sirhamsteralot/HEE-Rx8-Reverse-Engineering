@@ -1,10 +1,9 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a164: Trans Requested Torque To Throttle Plate Position Position (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * RAM 0xffffb2cf dsc_torque_limit_active (uint8): Set by ref_throttlePlateControl_Related 0x218c4 when DSC mode bit bbcc==1 && desired torque bbd4 <= b2c0 (or a966==1); gates the b424 clamp in 0x233ec (b2b8 = tbl 0x6a164 trans requested-torque-to-plate).
  * RAM 0xffffb2d0 dsc_mode_c_active (uint8): Set by 0x218c4 when bbcc==1 && bbca==0; b2bc = tbl 0x6a150 'DSC Mode C - Max Throttle Plate Opening Allowed'(rpm) -> max clamp of b424 in 0x233ec.
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a150: DSC Mode C - Max Throttle Plate Opening Allowed (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006a164: Trans Requested Torque To Throttle Plate Position Position (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

@@ -23,7 +23,7 @@ void slow_background_task(void)
   FUN_0005e232();
   FUN_0005dd78();
   ref_setDiagMode85Bool_();
-  ref_runImmoRelatedCounter();
+  immo_counter_increment();
   FUN_0005b7ec();
   FUN_00056856();
   FUN_0005b492();

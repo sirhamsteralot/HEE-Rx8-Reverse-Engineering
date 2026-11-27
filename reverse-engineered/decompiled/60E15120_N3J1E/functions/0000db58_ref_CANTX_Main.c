@@ -17,7 +17,7 @@ undefined1 * can_tx_main_key_gated(void)
        (puVar1 = (undefined1 *)(uint)engine_running_flag_ffffaa68,
        puVar1 == (undefined1 *)((int)&vector_Poweron_Reset + 1))) &&
       (puVar1 = (undefined1 *)((int)&vector_Poweron_Reset + 1), engine_stopped_latch_ffffb578 != '\x01')))) {
-    ref_can41TXPack();
+    immo_can_tx_pack();
     ref_can201TX_getAndPack();
     FUN_0002941a();
     ref_can251TX_getAndPack();
@@ -31,7 +31,7 @@ undefined1 * can_tx_main_key_gated(void)
     ref_can630TX_getAndPack();
     puVar1 = (undefined1 *)ref_can650TX_getAndPack();
   }
-  DAT_ffffc1d1 = 0;
+  immo_tx_frame_valid_ffffc1d1 = 0;
   return puVar1;
 }
 

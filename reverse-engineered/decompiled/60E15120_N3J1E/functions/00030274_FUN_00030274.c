@@ -1,13 +1,16 @@
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006ab48: Primary Fuel Injector Cranking Pulse Width (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * candidate_cranking_pulse_width_lookup [high]: While 0xffffa428 == 0: 0xffffbe88 = scaled lookup of coolant against descriptor 0x6ab48 (pool 0x30330, scale f32 0x6ab54 = 5.0, data 0x780fc) and 0xffffbe8c from descriptor 0x6ab5c (pool 0x30338, data 0x7814c, all zero bytes).
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
  */
 /* ROM address: 0x00030274; body bytes: 46; decompiled */
 
-void FUN_00030274(void)
+void candidate_cranking_pulse_width_lookup(void)
 
 {
   undefined4 snapshot_inferred_coolant_temperature_ffffa98c;

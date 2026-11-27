@@ -35,7 +35,7 @@ undefined4 * FUN_000302a2(void)
       DAT_ffffbe6c = DAT_ffffbe70;
     }
     DAT_ffffbe78 = 0x3e4c0003;
-    DAT_ffffbe7c = rx8_first_order_filter(DAT_ffffbe6c,DAT_ffffbe7c,0.1992188,1e-05);
+    candidate_cranking_coolant_factor_ffffbe7c = rx8_first_order_filter(DAT_ffffbe6c,candidate_cranking_coolant_factor_ffffbe7c,0.1992188,1e-05);
     puVar1 = extraout_r0;
   }
   return puVar1;

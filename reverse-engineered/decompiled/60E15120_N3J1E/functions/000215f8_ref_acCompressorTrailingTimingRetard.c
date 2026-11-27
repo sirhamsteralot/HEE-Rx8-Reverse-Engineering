@@ -10,8 +10,8 @@ uint ref_acCompressorTrailingTimingRetard(void)
   uint uVar2;
   byte *pbVar3;
   
-  cVar1 = DAT_ffffbd68;
-  if ((DAT_ffffb2a3 == '\x01') && (DAT_ffffbd68 == '\0')) {
+  cVar1 = ac_clutch_relay_drive_ffffbd68;
+  if ((DAT_ffffb2a3 == '\x01') && (ac_clutch_relay_drive_ffffbd68 == '\0')) {
     DAT_ffffb2a1 = 1;
     if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
       DAT_ffffb294 = 0xc0a00000;

@@ -45,7 +45,7 @@ void fuel_cut_arbitration(char param_1)
 LAB_0000ee36:
   fuel_cut_request_a_prev_ffffa4a2 = fuel_cut_request_a_ffffa464;
   fuel_cut_request_b_prev_ffffa4a3 = fuel_cut_request_b_ffffa465;
-  FUN_0000e2d4();
+  fuel_cut_bitmask_build();
   return;
 }
 

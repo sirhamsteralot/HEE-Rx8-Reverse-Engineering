@@ -45,9 +45,9 @@ void FUN_0001102a(void)
   FUN_000267b8();
   FUN_000167ac();
   FUN_00022f54();
-  jump_to_FUN_0002e800();
+  jump_to_ac_clutch_relay_drive_pj7();
   candidate_fan_init_thunk();
-  FUN_0002f948();
+  candidate_fuel_pump_request_force_step();
   FUN_00031c1c();
   FUN_0003173c();
   FUN_00016f30();
@@ -60,7 +60,7 @@ void FUN_0001102a(void)
   FUN_00022538();
   FUN_00023740();
   FUN_0002874c();
-  ref_ImmoSomethingOrOther__();
+  immo_boot_init();
   FUN_0005fc40();
   ref_getCoolantTempConditional();
   FUN_0005fd6c();
@@ -68,7 +68,7 @@ void FUN_0001102a(void)
   ref_canInitVals();
   FUN_0003ead8();
   FUN_00025524();
-  ref_ImmoRelatedFaultSomething_();
+  cal_id_string_copy();
   FUN_0005a2e2();
   ref_faultSomething0x1();
   ref_getBrakingOrInNeutral();

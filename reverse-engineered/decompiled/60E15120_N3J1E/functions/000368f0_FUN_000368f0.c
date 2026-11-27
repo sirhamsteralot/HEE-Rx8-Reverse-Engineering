@@ -6,7 +6,7 @@
 void FUN_000368f0(void)
 
 {
-  DAT_ffffc232 = FUN_00035438((int)DAT_ffffc27c,(int)DAT_ffffc277);
+  DAT_ffffc232 = candidate_immo_key_word_scramble((int)DAT_ffffc27c,(int)DAT_ffffc277);
   return;
 }
 

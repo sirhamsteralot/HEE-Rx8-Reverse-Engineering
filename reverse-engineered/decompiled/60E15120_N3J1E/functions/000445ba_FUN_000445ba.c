@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x000445ba; body bytes: 296; decompiled */
 
-undefined4 FUN_000445ba(void)
+undefined4 misfire_dtc_evaluate(void)
 
 {
   undefined4 uVar1;

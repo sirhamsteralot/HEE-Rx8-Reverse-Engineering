@@ -61,7 +61,7 @@ LAB_00047406:
 LAB_0004748c:
   ref_setPerRotorLevel1FuelCut((int)DAT_ffffcc74);
 LAB_000474a0:
-  FUN_0000e2d4(1);
+  fuel_cut_bitmask_build(1);
   return;
 }
 

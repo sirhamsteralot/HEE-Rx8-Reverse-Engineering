@@ -9,11 +9,11 @@ void ref_getOBDFuelModificationRequest(void)
   undefined4 uVar1;
   
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
-  FUN_0002fc00();
+  candidate_fuel_pump_request_calc();
   ref_filterFuelVolumeRequest();
   ref_calculateFuelingRequestMaxForOBDControl();
   ref_fuelingAddOBDControlMode_();
-  FUN_0002f8ce();
+  candidate_fuel_pump_outputs_pe2_pe1();
   ref_setSR(uVar1);
   return;
 }

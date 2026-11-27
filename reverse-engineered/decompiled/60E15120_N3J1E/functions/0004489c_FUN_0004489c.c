@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000440b8 (158 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_0004489c(void)
+uint misfire_threshold_check_load(void)
 
 {
   uint in_r7;

@@ -3,7 +3,7 @@
  */
 /* ROM address: 0x000354dc; body bytes: 266; decompiled */
 
-int FUN_000354dc(uint param_1,uint param_2,uint param_3)
+int candidate_immo_seed_mix(uint param_1,uint param_2,uint param_3)
 
 {
   byte bVar1;

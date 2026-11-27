@@ -21,7 +21,7 @@ undefined1 * FUN_0004b3a8(void)
       cVar2 = DAT_ffffce14 + -1;
     }
     puVar1 = (undefined1 *)0x1;
-    if (((DAT_ffffd15c == '\x01') || (puVar1 = (undefined1 *)0x1, DAT_ffffcf78 == '\x01')) ||
+    if (((cranking_in_progress_ffffd15c == '\x01') || (puVar1 = (undefined1 *)0x1, DAT_ffffcf78 == '\x01')) ||
        ((puVar1 = (undefined1 *)(uint)DAT_ffffcf85, puVar1 != (undefined1 *)0x0 ||
         (DAT_ffffcfaa < 0x3e)))) {
       DAT_ffffce10 = 0.0;

@@ -6,7 +6,7 @@
 bool FUN_000567aa(ushort param_1)
 
 {
-  return DAT_ffffd1e2 < param_1;
+  return immo_counter_ffffd1e2 < param_1;
 }
 
 

@@ -10,7 +10,7 @@ void FUN_00011b7e(undefined4 param_1)
   FUN_00038d3c(param_1);
   FUN_00020df0(param_1);
   FUN_000141e2(param_1);
-  FUN_0002f98c(param_1);
+  fuel_pump_grace_eval_locked(param_1);
   return;
 }
 

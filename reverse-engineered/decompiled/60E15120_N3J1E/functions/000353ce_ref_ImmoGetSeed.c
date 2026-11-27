@@ -9,10 +9,10 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035aee (24 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_ImmoGetSeed(void)
+void immo_compute_seed(void)
 
 {
-  DAT_ffffc200 = FUN_000354dc(DAT_ffffc26c,DAT_ffffc270,DAT_ffffc208);
+  immo_seed_expected_ffffc200 = candidate_immo_seed_mix(immo_key_reg_a_ffffc26c,immo_key_reg_b_ffffc270,immo_random_seed_ffffc208);
   return;
 }
 

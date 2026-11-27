@@ -8,11 +8,11 @@ void ref_setPrevLoops__(void)
 {
   ref_UnknownFueling1_0000e440();
   FUN_000300e4();
-  FUN_00030274();
-  FUN_000303a8();
+  candidate_cranking_pulse_width_lookup();
+  candidate_cranking_throttle_factor();
   FUN_000303f2();
   FUN_00030468();
-  FUN_00030228();
+  candidate_cranking_pulse_product();
   ref_setEngineLoadsPrevLoop();
   FUN_00033e88();
   ref_calculateEngineTemperatures();

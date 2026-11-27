@@ -1,9 +1,9 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a164: Trans Requested Torque To Throttle Plate Position Position (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * throttle_gear_mode_flags [high]: Sets b2cc/b2cd/b2ce by priority from the gear bytes 0xffffbc41/bc42/bc43 (written by 0x2c15a; 0xffffb534 from 0x24b44 = 1 on this bin); the map select in 0x228dc is b2cc->0x6a458, b2cd->0x6a474, b2ce->0x6a490, else 0x6a4ac; calls ref_throttlePlatePosToTorqueOutput_ 0x21a80; computes b2d4 = idle_air b2a4 + b38c, b2c0 = tbl 0x6a180 (Throttle Position To Torque), b2c4/b2e0 = tbl 0x6a164 (Trans Requested Torque To Throttle Plate Position). Called from 0x21b4c.
  * RAM 0xffffb2cc throttle_gear_mode_1_2 (uint8): Gear-mode flags b2cc/b2cd/b2ce set by 0x21970 from AT bytes bc41/bc42/bc43 + automatic_transmission b534; select the pedal-to-plate map (0x228dc) and the 0x21970 branch.
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a164: Trans Requested Torque To Throttle Plate Position Position (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

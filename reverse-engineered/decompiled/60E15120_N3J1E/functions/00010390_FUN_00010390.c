@@ -65,7 +65,7 @@ uint FUN_00010390(byte param_1)
   else if (iVar7 != 1) {
     FUN_0001065c();
   }
-  bVar2 = FUN_00010e8e();
+  bVar2 = candidate_cranking_status_selector();
   if (bVar2 != DAT_ffffa5d0) {
     FUN_00010816(iVar11,(int)(char)(&DAT_0004e2f4)[bVar2]);
     DAT_ffffa5d0 = bVar2;

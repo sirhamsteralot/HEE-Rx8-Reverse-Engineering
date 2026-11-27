@@ -9,15 +9,15 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000387e8 (60 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_can41TXPack(void)
+uint immo_can_tx_pack(void)
 
 {
   uint uVar1;
   
-  if (DAT_ffffc1d1 != 1) {
-    return (uint)DAT_ffffc1d1;
+  if (immo_tx_frame_valid_ffffc1d1 != 1) {
+    return (uint)immo_tx_frame_valid_ffffc1d1;
   }
-  DAT_ffffc4a8 = DAT_ffffc1c8;
+  can041_tx_buffer_ffffc4a8 = immo_tx_frame_ffffc1c8;
   DAT_ffffc4a9 = DAT_ffffc1c9;
   DAT_ffffc4aa = DAT_ffffc1ca;
   DAT_ffffc4ab = DAT_ffffc1cb;

@@ -4,10 +4,10 @@
  */
 /* ROM address: 0x000011c4; body bytes: 8; decompiled */
 
-void FUN_000011c4(void)
+void candidate_immo_diag_bit_clear(void)
 
 {
-  DAT_ffffdfa0._0_2_ = 0;
+  immo_diag_bit_ffffdfa0._0_2_ = 0;
   return;
 }
 

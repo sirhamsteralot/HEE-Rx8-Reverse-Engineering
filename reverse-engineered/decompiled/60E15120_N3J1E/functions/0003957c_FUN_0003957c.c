@@ -20,7 +20,7 @@ void FUN_0003957c(void)
   FUN_0004e622();
   FUN_0004e692();
   FUN_00053620();
-  FUN_000532d0();
+  cranking_in_progress_calc();
   FUN_0004f28a();
   FUN_0004eb10();
   FUN_0004f1f8();

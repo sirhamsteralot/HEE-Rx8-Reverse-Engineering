@@ -13,10 +13,10 @@ undefined4 FUN_0005629e(void)
   }
   cVar1 = FUN_00055e3e(4);
   if ((cVar1 == '\0') && (cVar1 = ref_securityNotUnlocked(1), cVar1 == '\0')) {
-    DAT_ffffd1ce = 1;
+    security_unlocked_flag_ffffd1ce = 1;
   }
   else {
-    DAT_ffffd1ce = 0;
+    security_unlocked_flag_ffffd1ce = 0;
   }
   return 0;
 }

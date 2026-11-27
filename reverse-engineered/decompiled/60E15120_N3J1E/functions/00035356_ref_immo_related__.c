@@ -7,14 +7,14 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035a76 (120 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_immo_related__(void)
+void immo_compute_expected_key_words(void)
 
 {
-  DAT_ffffc1dc = FUN_00035438(DAT_ffffc270,DAT_ffffc208);
-  DAT_ffffc1e0 = FUN_00035438(DAT_ffffc270 >> 0x10,DAT_ffffc208 >> 8);
-  DAT_ffffc1e4 = FUN_00035438(DAT_ffffc26c,DAT_ffffc208 >> 0x10);
-  DAT_ffffc1e8 = FUN_00035438(DAT_ffffc26c >> 0x10,DAT_ffffc208 >> 0x18);
-  DAT_ffffc1f0 = DAT_ffffc1dc | 0x1000000;
+  immo_computed_key_words_ffffc1dc = candidate_immo_key_word_scramble(immo_key_reg_b_ffffc270,immo_random_seed_ffffc208);
+  DAT_ffffc1e0 = candidate_immo_key_word_scramble(immo_key_reg_b_ffffc270 >> 0x10,immo_random_seed_ffffc208 >> 8);
+  DAT_ffffc1e4 = candidate_immo_key_word_scramble(immo_key_reg_a_ffffc26c,immo_random_seed_ffffc208 >> 0x10);
+  DAT_ffffc1e8 = candidate_immo_key_word_scramble(immo_key_reg_a_ffffc26c >> 0x10,immo_random_seed_ffffc208 >> 0x18);
+  immo_expected_key_words_ffffc1f0 = immo_computed_key_words_ffffc1dc | 0x1000000;
   DAT_ffffc1f4 = DAT_ffffc1e0 | 0x2000000;
   DAT_ffffc1f8 = DAT_ffffc1e4 | 0x3000000;
   DAT_ffffc1fc = DAT_ffffc1e8 | 0x4000000;

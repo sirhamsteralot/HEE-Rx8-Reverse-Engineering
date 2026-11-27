@@ -12,7 +12,7 @@ uint FUN_0000008a(int param_1)
   if (uVar1 == 4) {
     iStack_8 = param_1;
     uVar2 = FUN_000000f4(param_1 + 2);
-    local_c[0] = FUN_0000011a(DAT_ffffdfa0,uVar2);
+    local_c[0] = FUN_0000011a(immo_diag_bit_ffffdfa0,uVar2);
     uVar1 = FUN_00000338(0xb0,1,local_c);
   }
   return uVar1;

@@ -5,68 +5,68 @@
  */
 /* ROM address: 0x00034d12; body bytes: 282; decompiled */
 
-uint FUN_00034d12(void)
+uint immo_state1_key_exchange(void)
 
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffc21e;
+  uVar1 = (uint)immo_command_substate_ffffc21e;
   if (uVar1 == 3) {
     if (inferred_ram_c274_ffffc274_ffffc274 == '\x01') {
-      DAT_ffffc220 = 0xff;
-      uVar1 = FUN_00035738(9);
-      DAT_ffffc21d = 0;
+      immo_key_word_index_ffffc220 = 0xff;
+      uVar1 = immo_tx_frame_build(9);
+      immo_main_state_ffffc21d = 0;
     }
     else {
-      ref_immo_related__();
-      DAT_ffffc220 = 1;
-      uVar1 = FUN_00035738(9);
+      immo_compute_expected_key_words();
+      immo_key_word_index_ffffc220 = 1;
+      uVar1 = immo_tx_frame_build(9);
       DAT_ffffc20e = 500;
     }
   }
   else if (uVar1 == 4) {
-    uVar1 = (uint)DAT_ffffc220;
+    uVar1 = (uint)immo_key_word_index_ffffc220;
     if (uVar1 == 1) {
-      if (DAT_ffffc1ec == DAT_ffffc1f0) {
-        DAT_ffffc220 = 2;
+      if (immo_received_key_word_ffffc1ec == immo_expected_key_words_ffffc1f0) {
+        immo_key_word_index_ffffc220 = 2;
       }
-      uVar1 = FUN_00035738(9);
+      uVar1 = immo_tx_frame_build(9);
       return uVar1;
     }
     if (uVar1 == 2) {
-      if (DAT_ffffc1ec == DAT_ffffc1f4) {
-        DAT_ffffc220 = 3;
+      if (immo_received_key_word_ffffc1ec == DAT_ffffc1f4) {
+        immo_key_word_index_ffffc220 = 3;
       }
-      uVar1 = FUN_00035738(9);
+      uVar1 = immo_tx_frame_build(9);
       return uVar1;
     }
     if (uVar1 == 3) {
-      if (DAT_ffffc1ec == DAT_ffffc1f8) {
-        DAT_ffffc220 = 4;
+      if (immo_received_key_word_ffffc1ec == DAT_ffffc1f8) {
+        immo_key_word_index_ffffc220 = 4;
       }
-      uVar1 = FUN_00035738(9);
+      uVar1 = immo_tx_frame_build(9);
       return uVar1;
     }
     if (uVar1 == 4) {
-      if (DAT_ffffc1ec != DAT_ffffc1fc) {
-        uVar1 = FUN_00035738(9);
+      if (immo_received_key_word_ffffc1ec != DAT_ffffc1fc) {
+        uVar1 = immo_tx_frame_build(9);
         return uVar1;
       }
-      DAT_ffffc20c = 500;
-      uVar1 = FUN_00035738(0xc6);
-      DAT_ffffc21d = 0;
+      immo_timer_a_ffffc20c = 500;
+      uVar1 = immo_tx_frame_build(0xc6);
+      immo_main_state_ffffc21d = 0;
     }
   }
   else {
-    DAT_ffffc21e = 5;
+    immo_command_substate_ffffc21e = 5;
     if (DAT_ffffc20e != 0) {
       DAT_ffffc20e = DAT_ffffc20e + -1;
     }
     if (DAT_ffffc20e == 0) {
-      ref_ImmoBadStateSet_();
-      DAT_ffffc224 = 0;
-      uVar1 = FUN_00035738(1);
-      DAT_ffffc22a = 1;
+      immo_set_rejected();
+      immo_status_code_ffffc224 = 0;
+      uVar1 = immo_tx_frame_build(1);
+      immo_reject_event_flag_ffffc22a = 1;
     }
   }
   return uVar1;

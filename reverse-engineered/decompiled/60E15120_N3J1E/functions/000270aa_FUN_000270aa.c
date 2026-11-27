@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00027a26 (112 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_000270aa(void)
+void e2ram_learned_table_validate(void)
 
 {
   byte bVar1;

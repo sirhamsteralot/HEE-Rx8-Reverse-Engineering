@@ -17,7 +17,7 @@ undefined4 FUN_000371b6(void)
   if ((inferred_ram_c1d2_ffffc1d2_ffffc1d2 == -0x56) &&
      ((cVar1 = FUN_00055e3e(0), cVar1 == '\0' || (cVar1 = FUN_00055e3e(2), cVar1 == '\0')))) {
     if (local_10[0] == ' ') {
-      FUN_000360a8();
+      candidate_immo_key_regs_mix_timer();
       inferred_ram_c274_ffffc274_ffffc274 = 0xff;
       DAT_ffffc248 = 1;
       DAT_ffffc259 = 1;
