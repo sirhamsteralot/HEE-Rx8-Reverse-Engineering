@@ -6,10 +6,10 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00016924 (48 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_readImmoBit(void)
+void candidate_immo_diag_bit_check(void)
 
 {
-  if (((DAT_ffffdfa0._0_1_ == '\0') && (DAT_ffffdf98 == -0x5b)) && ((DAT_ffffdf93 & 0x70) == 0)) {
+  if (((immo_diag_bit_ffffdfa0._0_1_ == '\0') && (DAT_ffffdf98 == -0x5b)) && ((DAT_ffffdf93 & 0x70) == 0)) {
     FUN_00016a1c(2);
     return;
   }

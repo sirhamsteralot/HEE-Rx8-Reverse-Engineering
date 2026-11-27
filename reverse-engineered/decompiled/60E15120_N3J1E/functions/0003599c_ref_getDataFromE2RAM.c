@@ -11,8 +11,8 @@ void e2ram_boot_param_read(void)
 
 {
   e2ram_cached_byte_read(0,&e2ram_param_block_ffffc268,1);
-  e2ram_cached_byte_read(2,&DAT_ffffc26c,4);
-  e2ram_cached_byte_read(6,&DAT_ffffc270,4);
+  e2ram_cached_byte_read(2,&immo_key_reg_a_ffffc26c,4);
+  e2ram_cached_byte_read(6,&immo_key_reg_b_ffffc270,4);
   e2ram_cached_byte_read(10,&inferred_ram_c274_ffffc274_ffffc274,1);
   e2ram_cached_byte_read(0xc,&DAT_ffffc275,1);
   e2ram_cached_byte_read(0xd,&DAT_ffffc276,1);
@@ -28,7 +28,7 @@ void e2ram_boot_param_read(void)
   e2ram_cached_byte_read(0x1b,&DAT_ffffc27f,1);
   e2ram_cached_byte_read(0x1c,&DAT_ffffc280,1);
   e2ram_cached_byte_read(0x1d,&DAT_ffffc281,1);
-  e2ram_cached_byte_read(0x1e,&DAT_ffffc282,1);
+  e2ram_cached_byte_read(0x1e,&immo_registered_key_count_ffffc282,1);
   return;
 }
 

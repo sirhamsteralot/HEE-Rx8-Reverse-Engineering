@@ -7,7 +7,7 @@
 void trailing_timing_add_corrections(void)
 
 {
-  trailing_timing_with_corrections_ffffa63c = DAT_ffffa650 + trailing_timing_correction_total_ffffa658;
+  trailing_timing_with_corrections_ffffa63c = trailing_timing_after_cranking_blend_ffffa650 + trailing_timing_correction_total_ffffa658;
   return;
 }
 

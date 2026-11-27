@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00028d74 (88 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002842c(void)
+void misfire_deviation_delay_line(void)
 
 {
   DAT_ffffba58 = DAT_ffffba54;

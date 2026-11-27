@@ -5,53 +5,53 @@
  */
 /* ROM address: 0x00034ae2; body bytes: 298; decompiled */
 
-void FUN_00034ae2(void)
+void immobilizer_main_state_dispatch(void)
 
 {
   if ((engine_running_flag_ffffaa68 == '\x01') && (engine_stopped_latch_ffffb578 != '\x01')) {
-    ref_ImmoUpdateRelated();
-    FUN_000355f0();
-    if (DAT_ffffc21d == '\0') {
-      FUN_00034c5c();
+    immo_eeprom_flag_sequencer();
+    immo_can_command_decode();
+    if (immo_main_state_ffffc21d == '\0') {
+      immo_state0_idle();
     }
-    else if (DAT_ffffc21d == '\x01') {
-      FUN_00034d12();
+    else if (immo_main_state_ffffc21d == '\x01') {
+      immo_state1_key_exchange();
     }
-    else if (DAT_ffffc21d == '\x02') {
-      FUN_00034f42();
+    else if (immo_main_state_ffffc21d == '\x02') {
+      immo_state2_challenge_verify();
     }
-    else if (DAT_ffffc21d == '\x03') {
-      FUN_00035062();
+    else if (immo_main_state_ffffc21d == '\x03') {
+      immo_state3_authorized();
     }
-    else if (DAT_ffffc21d == '\x04') {
-      FUN_000351ae();
+    else if (immo_main_state_ffffc21d == '\x04') {
+      candidate_immo_state4_transition();
     }
-    else if (DAT_ffffc21d == '\x05') {
-      ref_ImmoStateReadyToDriveEngineOff();
+    else if (immo_main_state_ffffc21d == '\x05') {
+      candidate_immo_state5_ready_engine_off();
     }
     else {
-      DAT_ffffc21d = '\0';
+      immo_main_state_ffffc21d = '\0';
     }
-    if ((((DAT_ffffc21e == '\x05') || (DAT_ffffc21e == '\x06')) && (DAT_ffffc226 == '\0')) &&
+    if ((((immo_command_substate_ffffc21e == '\x05') || (immo_command_substate_ffffc21e == '\x06')) && (immo_authorized_latch_flag_ffffc226 == '\0')) &&
        (DAT_ffffc229 == '\0')) {
-      DAT_ffffc21f = rx8_add_u8_saturate((int)(char)DAT_ffffc21f,1);
+      immo_fail_counter_ffffc21f = rx8_add_u8_saturate((int)(char)immo_fail_counter_ffffc21f,1);
     }
     else {
-      DAT_ffffc21f = 0;
+      immo_fail_counter_ffffc21f = 0;
     }
-    if (2 < DAT_ffffc21f) {
-      DAT_ffffc21f = 0;
-      DAT_ffffc1d1 = 1;
+    if (2 < immo_fail_counter_ffffc21f) {
+      immo_fail_counter_ffffc21f = 0;
+      immo_tx_frame_valid_ffffc1d1 = 1;
     }
   }
   else {
-    DAT_ffffc21d = '\0';
-    ref_setImmoLight__(0);
+    immo_main_state_ffffc21d = '\0';
+    immo_lamp_drive(0);
     inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
-    DAT_ffffc1d1 = 0;
+    immo_tx_frame_valid_ffffc1d1 = 0;
   }
   DAT_ffffc229 = 0;
-  ref_afterImmoMain();
+  immo_eeprom_write_dispatch();
   FUN_0003625e();
   FUN_00036700();
   FUN_0003665a();

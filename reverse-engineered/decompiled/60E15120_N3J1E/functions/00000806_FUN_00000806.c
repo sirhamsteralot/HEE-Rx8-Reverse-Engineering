@@ -15,7 +15,7 @@ void FUN_00000806(int param_1)
   bStack_10 = *(byte *)(param_1 + 1) & 7;
   if (DAT_ffffdfb8 == '\0') {
     DAT_ffffdfb8 = '\x01';
-    DAT_ffffdfbc = DAT_ffffdfa0;
+    DAT_ffffdfbc = immo_diag_bit_ffffdfa0;
   }
   uStack_c = (uint)bStack_10;
   iStack_14 = param_1;

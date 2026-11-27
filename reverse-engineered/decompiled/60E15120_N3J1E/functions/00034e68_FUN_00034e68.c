@@ -3,47 +3,47 @@
  */
 /* ROM address: 0x00034e68; body bytes: 178; decompiled */
 
-uint FUN_00034e68(void)
+uint immo_wait_for_key_step(void)
 
 {
   uint uVar1;
   
-  uVar1 = (uint)DAT_ffffc21e;
+  uVar1 = (uint)immo_command_substate_ffffc21e;
   if (uVar1 == 1) {
-    uVar1 = (uint)DAT_ffffc221;
+    uVar1 = (uint)immo_request_subtype_ffffc221;
     if (uVar1 == 1) {
-      ref_ImmoBadStateSet_();
-      DAT_ffffc224 = 0;
-      uVar1 = FUN_00035738(1);
-      DAT_ffffc22a = 1;
+      immo_set_rejected();
+      immo_status_code_ffffc224 = 0;
+      uVar1 = immo_tx_frame_build(1);
+      immo_reject_event_flag_ffffc22a = 1;
     }
     else if (uVar1 == 3) {
-      DAT_ffffc21d = 0;
+      immo_main_state_ffffc21d = 0;
     }
     else if (uVar1 == 2) {
-      if ((DAT_ffffc282 == 0) || (2 < DAT_ffffc282)) {
-        ref_setImmoLight__(0);
+      if ((immo_registered_key_count_ffffc282 == 0) || (2 < immo_registered_key_count_ffffc282)) {
+        immo_lamp_drive(0);
         inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
       }
       else {
-        DAT_ffffc282 = DAT_ffffc282 - 1;
+        immo_registered_key_count_ffffc282 = immo_registered_key_count_ffffc282 - 1;
         DAT_ffffc22f = 1;
-        ref_setImmoLight__(1);
+        immo_lamp_drive(1);
         inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 1;
         DAT_ffffc228 = 0;
       }
       DAT_ffffc216 = 0x2ee;
-      ref_ImmoGetSeed();
-      uVar1 = FUN_00035738(7);
-      DAT_ffffc21d = 2;
+      immo_compute_seed();
+      uVar1 = immo_tx_frame_build(7);
+      immo_main_state_ffffc21d = 2;
     }
   }
   else {
     if (uVar1 == 3) {
-      uVar1 = FUN_00034d12();
+      uVar1 = immo_state1_key_exchange();
       return uVar1;
     }
-    DAT_ffffc21e = 5;
+    immo_command_substate_ffffc21e = 5;
   }
   return uVar1;
 }

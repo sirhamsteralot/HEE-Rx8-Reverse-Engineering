@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00043ffe (152 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint FUN_000447e2(void)
+uint misfire_threshold_check_rpm(void)
 
 {
   uint uVar1;

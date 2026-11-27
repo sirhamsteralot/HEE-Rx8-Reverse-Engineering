@@ -1,5 +1,6 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * engine_running_from_rpm [high]: Was ref_calculateEngineRunning: engine_running 0xffffa428 = 1 when rpm 0xffffb548 >= 500.0 (pools 0xe29c=0xb548, 0xe29e=0xa428, float consts via pools 0xe2a0/0xe2a4 -> 0x6c190/0x6c194), cleared below 250.0; distinct from the key-on flag 0xffffaa68 (PFDR bit0 via 0xffff9ec8).
+ * engine_running_from_rpm [high]: Sets byte 0xffffa428 (pool 0xe29e) from rpm 0xffffb548 (pool 0xe29c): 0 below f32 0x6c190 = 250.0 (pool 0xe2a0), 1 at f32 0x6c194 = 500.0 and above (pool 0xe2a4), held in between.
+ * RAM 0xffffb548 engine_speed_rpm (float): Engine speed in rpm. The start thresholds 250/300/500 rpm and the timing-fade thresholds (0xffffa7ac + 10000.0, minus 100.0) all compare against this cell (pools 0x14884, 0xe29c, 0x123fc).
  */
 /* ROM address: 0x0000e274; body bytes: 40; decompiled */
 

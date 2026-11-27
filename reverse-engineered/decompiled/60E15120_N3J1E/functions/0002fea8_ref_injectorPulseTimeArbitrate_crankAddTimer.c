@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * injector_pulse_time_arbitrate [high]: Cranking (!engine_running): be30 = be38 = be5c + latency be44; running: be30 = be50+be44, be38 = be54+be44; be28 = be24 = (cranking? be58 : be4c) + latency be40; be2c = be30, be34 = be38; cranking decay counter be3c from tbl 0x6bab0 'Primary Fuel Injector Cranking Pulse Decay Time'(coolant), decrementing while running.
+ * injector_pulse_time_arbitrate [high]: Loads the decay counter from lookup_u8(coolant 0xffffa98c, descriptor 0x6bab0) while 0xffffa428 == 0 (pools 0x2ff4c/0x2ff4e/0x2ff50, jsr 0x20ac at 0x2fec2) and decrements it by one (pool 0x2ff52 = 0x00ff, add at 0x2fed8) while running and non-zero. Cranking path (0x2fefa-0x2ff1a): be24 = be28 = be58 + be40, be2c = be30 = be34 = be38 = be5c + be44. Running path (0x2ff1c-0x2ff42): be24 = be28 = be4c + be40, be2c = be30 = be50 + be44, be34 = be38 = be54 + be44.
  * RAM 0xffffbe24 injector_pulse_time (float): Final arbitrated pulse time be24 = be28; encoded by diag PID 0x1410 handler 0x56f6c (step 8; logger x*8*0.001 ms).
  * RAM 0xffffbe28 injector_pulse_time_base (float): be28 = (cranking? be58 : be4c) + injector_latency_primary be40; copied to be24.
  * RAM 0xffffbe2c injector_pulse_time_ch1 (float): be2c = be30 (running: be50 + be44; cranking: be5c + be44).

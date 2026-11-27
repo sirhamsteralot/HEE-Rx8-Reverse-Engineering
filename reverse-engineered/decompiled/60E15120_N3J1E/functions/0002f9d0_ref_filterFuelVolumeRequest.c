@@ -6,7 +6,7 @@
 void ref_filterFuelVolumeRequest(void)
 
 {
-  DAT_ffffbdc0 = rx8_first_order_filter(engine_speed_rpm_ffffb548 * fuel_volume_final_ffffbeb0 * 0.12,DAT_ffffbdc0,0.75,1e-05);
+  fuel_pump_filtered_demand_ffffbdc0 = rx8_first_order_filter(engine_speed_rpm_ffffb548 * fuel_volume_final_ffffbeb0 * 0.12,fuel_pump_filtered_demand_ffffbdc0,0.75,1e-05);
   return;
 }
 

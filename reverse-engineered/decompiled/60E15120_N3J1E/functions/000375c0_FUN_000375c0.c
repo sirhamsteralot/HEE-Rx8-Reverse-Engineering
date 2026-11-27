@@ -28,7 +28,7 @@ undefined1 * e2ram_immo_key_read(void)
   char cStack_25;
   char cStack_24;
   
-  if ((DAT_ffffd1ce == '\x01') && (cVar4 = ref_securityNotUnlocked(1), cVar4 == '\0')) {
+  if ((security_unlocked_flag_ffffd1ce == '\x01') && (cVar4 = ref_securityNotUnlocked(1), cVar4 == '\0')) {
     if (DAT_ffffc283 == '\0') {
       DAT_ffffc284 = '\0';
       inferred_ram_c1d5_ffffc1d5_ffffc1d5 = 0;
@@ -121,13 +121,13 @@ undefined1 * e2ram_immo_key_read(void)
       }
     }
   }
-  if (DAT_ffffd1ce != '\x01') {
+  if (security_unlocked_flag_ffffd1ce != '\x01') {
     puVar2 = &DAT_ffffc283;
   }
   else {
     puVar2 = (undefined1 *)((int)&vector_Poweron_Reset + 1);
   }
-  DAT_ffffc283 = DAT_ffffd1ce == '\x01';
+  DAT_ffffc283 = security_unlocked_flag_ffffd1ce == '\x01';
   return puVar2;
 }
 

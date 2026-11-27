@@ -9,7 +9,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00028cc4 (124 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002837c(void)
+void candidate_e2ram_learned_table_correction_filter(void)
 
 {
   float *pfVar1;

@@ -14,7 +14,7 @@ void FUN_00001378(void)
   ushort uVar5;
   char unaff_r10;
   
-  FUN_000011c4();
+  candidate_immo_diag_bit_clear();
   bVar2 = false;
   do {
     cVar6 = FUN_0000125c();
@@ -27,7 +27,7 @@ void FUN_00001378(void)
         if (iVar4 == 0) {
           unaff_r10 = '\x01';
           bVar2 = false;
-          FUN_000011c4();
+          candidate_immo_diag_bit_clear();
         }
       }
       else if (bVar1 == 1) {
@@ -35,7 +35,7 @@ void FUN_00001378(void)
         if (iVar4 == 0) {
           bVar2 = true;
           FUN_00001624();
-          FUN_000011c4();
+          candidate_immo_diag_bit_clear();
         }
       }
       else if ((bVar1 == 2) && (bVar2)) {
@@ -50,7 +50,7 @@ void FUN_00001378(void)
           }
           goto LAB_00001414;
         }
-        FUN_000011c4();
+        candidate_immo_diag_bit_clear();
       }
     }
 LAB_00001414:
@@ -58,7 +58,7 @@ LAB_00001414:
     if (bVar2) {
       if (0x2d < uVar5) {
         bVar2 = false;
-        FUN_000011c4();
+        candidate_immo_diag_bit_clear();
       }
     }
     else if (0x5f5 < uVar5) {
@@ -104,7 +104,7 @@ LAB_00001414:
       else {
         FUN_00001e34(&DAT_ffffd3f0);
       }
-      FUN_000011c4();
+      candidate_immo_diag_bit_clear();
       unaff_r10 = '\0';
     }
   } while( true );

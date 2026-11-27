@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * idle_base_timing_select [high]: a780 = lookup_2d(tbl 0x69208) when cranking (aa62==1); else tbl 0x6921c if ECT<90 or load<0.5, else tbl 0x69230; mirrors to a784. Feeds the +a780/a784 term of the 0x123da/0x124d6 blend.
+ * idle_base_timing_select [high]: With 0xffffaa62 == 1 (cmp/eq at 0x14112) 0xffffa780 (pool 0x14158) = scaled lookup of coolant against descriptor 0x69208 (pool 0x14164; data 0x6d8e4 = 80 in every cell, scale 0.5 offset -40 -> constant 0.0 deg); otherwise 0x6921c when coolant < f32 0x6d8bc = 90.0 or load < f32 0x6d8b8 = 0.5, else 0x69230. Mirrors into 0xffffa784. Called from 0x1465e at 0x1466a (task[11] body 0x6584), not from 0x142a4.
  * RAM 0xffffa780 idle_base_timing_leading (float): Written by 0x14100 idle_base_timing_select (fmov.s fr0,@r14 0x14120 and 0x14146 via mov.w pool 0x14158=0xa780 @0x1410a); read by 0x123da (pool 0x1253c @0x124b4) and 0x121fc (pool 0x122b8 @0x12200).
  * RAM 0xffffa784 idle_base_timing_trailing (float): Written by 0x14100 idle_base_timing_select (fmov.s fr3,@r3 0x1414c via mov.w pool 0x1415e=0xa784 @0x1414a); read by 0x124d6 (pool 0x1268a @0x12598) and 0x12300 (pool 0x123fe @0x12304).
  */

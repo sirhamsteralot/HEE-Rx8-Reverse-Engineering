@@ -27,8 +27,8 @@ void FUN_00038e12(void)
   FUN_0004e828();
   FUN_0004ede2();
   FUN_0004ee4a();
-  FUN_0004ef86();
-  FUN_0003a0ec();
+  relay_flag_pair_pd7_pe0_calc();
+  relay_output_pair_pd7_pe0();
   FUN_0003ae70();
   FUN_0003aeae();
   FUN_0003af10();

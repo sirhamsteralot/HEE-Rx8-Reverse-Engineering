@@ -6,7 +6,7 @@
 void jump_to_e2ram_learned_table_validate(void)
 
 {
-  FUN_000270aa();
+  e2ram_learned_table_validate();
   return;
 }
 

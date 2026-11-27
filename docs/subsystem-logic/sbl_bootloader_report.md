@@ -504,7 +504,7 @@ Functions (ROM addresses are reference-ROM addresses; index names from
 | `0x0000109c` | `ref_resetOBDCAN_` | CAN reset + diag mailboxes 14/15 (0x7e0/0x7e8) |
 | `0x000010fe` | `FUN_000010fe` | diag CAN RX poll (mb14) |
 | `0x00001150` | `FUN_00001150` | diag CAN TX (mb15) |
-| `0x000011c4` | `FUN_000011c4` | zeroes u16@`0xffffdfa0` (inactivity counter / RX head); once before the loop (`0x137a`, pool `0x1438`), on every reassembled frame (`0x13c8`/`0x13e4`/`0x140a`) and after every dispatch (`0x1544`) |
+| `0x000011c4` | `candidate_immo_diag_bit_clear` | zeroes u16@`0xffffdfa0` (inactivity counter / RX head); once before the loop (`0x137a`, pool `0x1438`), on every reassembled frame (`0x13c8`/`0x13e4`/`0x140a`) and after every dispatch (`0x1544`) |
 | `0x000011cc` | `service_wdt_overflow_toggle_pb15_and_count` | WDT service (TCSR `0xffffec10` = `0xa53c`, toggles `0xfffff738` bit 15) + increments u16@`0xffffdfa0` each pass unless OVF set or `0xffff`, returns it; called each loop pass (`0x1414`, pool `0x1440`); drives the loop-tail relock (`>= 0x5f6` idle) and inter-frame abort (`>= 0x2e` mid-transfer) |
 | `0x000011fa` | `FUN_000011fa` | response frame send (from 0xffffdfc6) |
 | `0x0000125c` | `FUN_0000125c` | CAN RX poll wrapper |

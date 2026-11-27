@@ -6,13 +6,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035a58 (30 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_ImmoBadStateSet_(void)
+void immo_set_rejected(void)
 
 {
-  ref_setImmoLight__(0);
+  immo_lamp_drive(0);
   inferred_ram_c1d0_ffffc1d0_ffffc1d0 = 0;
   DAT_ffffc214 = 500;
-  DAT_ffffc21d = 4;
+  immo_main_state_ffffc21d = 4;
   return;
 }
 

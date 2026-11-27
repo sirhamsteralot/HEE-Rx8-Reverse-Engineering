@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00026a42; body bytes: 94; decompiled */
 
-undefined4 FUN_00026a42(void)
+undefined4 misfire_event_count(void)
 
 {
   short sVar1;
@@ -33,7 +33,7 @@ undefined4 FUN_00026a42(void)
     cVar3 = DAT_ffffba25;
     cVar4 = DAT_ffffba27;
   }
-  uVar5 = FUN_00026b34((int)cVar3,(int)cVar4,(int)sVar2,(int)sVar1);
+  uVar5 = misfire_counter_bump((int)cVar3,(int)cVar4,(int)sVar2,(int)sVar1);
   return uVar5;
 }
 

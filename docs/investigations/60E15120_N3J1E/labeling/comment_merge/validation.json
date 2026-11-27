@@ -1,23 +1,23 @@
 {
-  "duplicate_lines_dropped": 3,
+  "duplicate_lines_dropped": 0,
   "cross_ecu_lines_dropped": 0,
-  "math_units_lines_dropped": 12,
-  "headers_reordered": 253,
-  "empty_blocks_removed": 12,
+  "math_units_lines_dropped": 0,
+  "headers_reordered": 343,
+  "empty_blocks_removed": 0,
   "monoliths_changed": [
     "firmware_decompiled.c",
     "named/firmware_named.c"
   ],
-  "function_files_changed": 94,
+  "function_files_changed": 89,
   "function_bodies_verified_in_both_monoliths": 3355,
-  "asr_blocks": 525,
+  "asr_blocks": 741,
   "applied_total": {
     "duplicate_lines_dropped": 6,
-    "cross_ecu_lines_dropped": 69,
+    "cross_ecu_lines_dropped": 74,
     "math_units_lines_dropped": 33,
-    "headers_reordered": 582,
+    "headers_reordered": 4698,
     "empty_blocks_removed": 63,
-    "function_files_changed": 200
+    "function_files_changed": 1268
   },
   "monoliths_changed_total": [
     "firmware_decompiled.c",

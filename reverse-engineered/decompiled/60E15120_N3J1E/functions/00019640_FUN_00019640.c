@@ -27,7 +27,7 @@ void FUN_00019640(void)
   ref_fuelingRealtedInitalVals__();
   FUN_0001ae5c();
   FUN_0001ae40();
-  FUN_0001a508();
+  candidate_start_flags_prime();
   FUN_00024b64();
   FUN_00024b8c();
   FUN_0002bb74();

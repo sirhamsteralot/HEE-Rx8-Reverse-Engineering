@@ -39,7 +39,7 @@ void FUN_000129c0(void)
   else if ((((DAT_ffffa6a1 == '\x01') && (fuel_cut_flag_a_ffffa444 == '\0')) ||
            ((DAT_ffffa6a2 == '\x01' && (fuel_cut_flag_b_ffffa445 == '\0')))) && (cranking_active_ffffaa62_ffffaa62 == '\x01')) {
     uVar6 = inferred_coolant_temperature_ffffa98c;
-    if (DAT_ffffbd68 == '\0') {
+    if (ac_clutch_relay_drive_ffffbd68 == '\0') {
       arg0 = (float)lookup_2d_descriptor_scaled(inferred_coolant_temperature_ffffa98c,&DAT_00069fac);
       puVar5 = &DAT_00069fc0;
     }
@@ -52,7 +52,7 @@ void FUN_000129c0(void)
   else if ((DAT_ffffa687 == '\0') || (cranking_active_ffffaa62_ffffaa62 != '\0')) {
     if (DAT_ffffa686 == '\0') {
       if (cranking_active_ffffaa62_ffffaa62 == '\x01') {
-        if (DAT_ffffbd68 == '\0') {
+        if (ac_clutch_relay_drive_ffffbd68 == '\0') {
           pfVar4 = (float *)&DAT_00072328;
         }
         else {

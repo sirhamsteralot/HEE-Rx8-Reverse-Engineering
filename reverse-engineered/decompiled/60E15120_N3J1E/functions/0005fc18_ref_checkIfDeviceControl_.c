@@ -7,10 +7,10 @@ char ref_checkIfDeviceControl_(void)
 
 {
   diag_permission_mask_ffffd3b4_ffffd3b4 = 0x40;
-  if (DAT_ffffd1ce == '\x01') {
+  if (security_unlocked_flag_ffffd1ce == '\x01') {
     diag_permission_mask_ffffd3b4_ffffd3b4 = 0xfffd;
   }
-  return DAT_ffffd1ce;
+  return security_unlocked_flag_ffffd1ce;
 }
 
 

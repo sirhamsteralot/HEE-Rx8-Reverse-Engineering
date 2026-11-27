@@ -12,7 +12,7 @@ functions directly via harness.py after boot:
   (DAT_ffffc21d main state / DAT_ffffc21e command sub-state);
 - 0x35738 immo_tx_frame_build fills 0xffffc1c8..c1d1, packed by 0x380c8 into
   the CAN 0x041 TX buffer 0xffffc4a8..c4af;
-- 0xe2d4 fuel_cut_arbitration shows the immobilization effect: with the
+- 0xe2d4 fuel_cut_bitmask_build shows the immobilization effect: with the
   immo_authorized flag 0xffffc1d0 == 0 it sets DAT_ffffa430 = 0x0003 (both
   rotor banks fuel-cut).
 

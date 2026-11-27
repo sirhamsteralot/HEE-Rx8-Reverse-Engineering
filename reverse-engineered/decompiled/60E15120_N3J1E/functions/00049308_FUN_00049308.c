@@ -19,7 +19,7 @@ char FUN_00049308(void)
   else {
     bVar2 = false;
     bVar3 = false;
-    if (DAT_ffffbdbc == '\x01') {
+    if (fuel_pump_speed_request_ffffbdbc == '\x01') {
       uVar4 = sci0_gpio_expander_read(2);
       if ((uVar4 & 2) == 0) {
         DAT_ffffcd00 = 0;

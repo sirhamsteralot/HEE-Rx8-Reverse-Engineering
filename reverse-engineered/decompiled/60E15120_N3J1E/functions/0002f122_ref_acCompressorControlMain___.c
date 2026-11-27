@@ -15,7 +15,7 @@ void ref_acCompressorControlMain___(void)
   FUN_0002f0c6();
   FUN_0002e9a4();
   ref_calculateACClutchOn__();
-  FUN_0002e840();
+  ac_clutch_relay_drive_pj7_diag();
   ref_setSR(uVar1);
   return;
 }

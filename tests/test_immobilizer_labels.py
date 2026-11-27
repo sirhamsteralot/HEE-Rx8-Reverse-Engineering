@@ -104,7 +104,7 @@ def test_reference_cited_pool_words_match_rom(record_ref, rom_ref):
         assert struct.unpack(">H", rom_ref[addr:addr + 2])[0] == expect, hex(addr)
     for addr, expect in ((0x356C8, 0xFFFFC21E), (0x356CC, 0xFFFFC221), (0x356D0, 0xFFFFC204)):
         assert struct.unpack(">I", rom_ref[addr:addr + 4])[0] == expect, hex(addr)
-    # 0xe2d4 fuel-cut arbitration: c1d0 / a430 pool words
+    # 0xe2d4 fuel-cut bitmask build: c1d0 / a430 pool words
     for addr, expect in ((0xE406, 0xC1D0), (0xE43C, 0xC1D0), (0xE43E, 0xA430)):
         assert struct.unpack(">H", rom_ref[addr:addr + 2])[0] == expect, hex(addr)
     # 0x11c4 immo diag-bit clear: pool long = 0xffffdfa0

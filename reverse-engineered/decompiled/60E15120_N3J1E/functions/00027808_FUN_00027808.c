@@ -90,7 +90,7 @@ uint e2ram_learned_table_ram_persist(void)
     uVar1 = FUN_000043c8();
     uVar1 = uVar1 & 1;
     if (uVar1 == 1) {
-      uVar1 = FUN_00027eec(uVar14);
+      uVar1 = candidate_e2ram_learned_table_flag_mirror(uVar14);
     }
     uVar14 = uVar14 + 1;
   } while ((uVar14 & 0xff) < 8);

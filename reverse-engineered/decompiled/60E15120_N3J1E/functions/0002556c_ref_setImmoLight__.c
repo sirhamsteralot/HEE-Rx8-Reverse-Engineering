@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00025df4 (130 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_setImmoLight__(char param_1)
+void immo_lamp_drive(char param_1)
 
 {
   undefined4 uStack_28;

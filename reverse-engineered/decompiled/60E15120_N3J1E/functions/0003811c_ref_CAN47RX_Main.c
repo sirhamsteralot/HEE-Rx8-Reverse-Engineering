@@ -8,7 +8,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0003883c (52 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-uint ref_CAN47RX_Main(void)
+uint immo_can_rx_main(void)
 
 {
   uint uVar1;
@@ -17,10 +17,10 @@ uint ref_CAN47RX_Main(void)
   uVar1 = uVar1 & 0xff;
   if (uVar1 == 0) {
     FUN_0000e050();
-    ref_can47RXunpack();
+    immo_can_rx_unpack();
     FUN_0003818a();
     uVar1 = FUN_00038194();
-    DAT_ffffc4bf = 1;
+    immo_rx_command_pending_ffffc4bf = 1;
     DAT_ffffc4c0 = 1;
   }
   return uVar1;

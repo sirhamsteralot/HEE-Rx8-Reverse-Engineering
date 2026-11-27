@@ -56,7 +56,7 @@ the 0x041 buffer. Observed (asserted in the test):
 - cmd 0x08 with a wrong word → c224=0x81, c21d=4, c1d0=0, c22a=1, TX `[01][81]`
 - cmd 0xc9 → c21d=1, c220=1, c1f0..c1fc = tagged words (01..04 << 24);
   cmd 0x90 tags 1-4 with those words → c220 2,3,4, then c21d=0, TX 0xc6
-- fuel_cut_arbitration 0xe2d4: DAT_ffffa430 = 0x0003 with c1d0=0, 0x0000 with
+- fuel_cut_bitmask_build 0xe2d4: DAT_ffffa430 = 0x0003 with c1d0=0, 0x0000 with
   c1d0=1 (other cut flags zeroed)
 
 ## Notes / corrections

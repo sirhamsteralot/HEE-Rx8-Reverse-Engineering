@@ -1,9 +1,9 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * fuel_cut_arbitration [high]: 324 B. Computes DAT_ffffa430 (u16) fuel-cut bitmask for both rotor banks from rev-limit/fuel-cut flags and the immobilizer: pool words 0xe406/0xe43c = 0xc1d0 read with 'tst r0,r0' — c1d0==0 sets the cut bits. Disasm at 0xe364-0xe36c (bank A) and 0xe426-0xe42c (bank B); store 'mov.w r4,@r3' at 0xe438 with pool 0xe43e=0xa430. Dynamically verified in the emulator: a430=0x0003 with c1d0=0, 0x0000 with c1d0=1 (all other flags 0). Callers: 0x34a04, 0xedc4, 0x1de6c, 0x2ca10, 0x4737a.
+ * fuel_cut_bitmask_build [high]: 324 B. Computes DAT_ffffa430 (u16) fuel-cut bitmask for both rotor banks from rev-limit/fuel-cut flags and the immobilizer: pool words 0xe406/0xe43c = 0xc1d0 read with 'tst r0,r0' — c1d0==0 sets the cut bits. Disasm at 0xe364-0xe36c (bank A) and 0xe426-0xe42c (bank B); store 'mov.w r4,@r3' at 0xe438 with pool 0xe43e=0xa430. Dynamically verified in the emulator: a430=0x0003 with c1d0=0, 0x0000 with c1d0=1 (all other flags 0). Callers: 0x34a04, 0xedc4, 0x1de6c, 0x2ca10, 0x4737a. Formerly carried the `fuel_cut_arbitration` alias of the controller 0xedc4 that calls it; renamed so one alias does not name two addresses.
  */
 /* ROM address: 0x0000e2d4; body bytes: 324; decompiled */
 
-int FUN_0000e2d4(void)
+int fuel_cut_bitmask_build(void)
 
 {
   int iVar1;

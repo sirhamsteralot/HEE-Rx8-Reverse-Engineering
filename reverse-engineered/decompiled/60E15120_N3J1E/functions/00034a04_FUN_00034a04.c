@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00035124 (36 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_00034a04(void)
+void immo_eeprom_key_read_kick(void)
 
 {
   undefined4 uVar1;
@@ -14,7 +14,7 @@ void FUN_00034a04(void)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   e2ram_immo_key_read();
   FUN_0003583c();
-  FUN_0000e2d4(1);
+  fuel_cut_bitmask_build(1);
   ref_setSR(uVar1);
   return;
 }

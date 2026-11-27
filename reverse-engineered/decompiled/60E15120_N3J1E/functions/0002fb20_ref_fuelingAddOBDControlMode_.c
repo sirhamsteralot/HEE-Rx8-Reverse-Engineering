@@ -17,27 +17,27 @@ char ref_fuelingAddOBDControlMode_(void)
   undefined4 uVar2;
   
   cVar1 = engine_injectors_off_ffffa42c;
-  if (DAT_ffffbdc0 < DAT_ffffbdc4) {
-    if (DAT_ffffbdc0 < DAT_ffffbdc4 - 3.5) {
-      DAT_ffffbdd5 = '\0';
+  if (fuel_pump_filtered_demand_ffffbdc0 < fuel_pump_max_demand_ffffbdc4) {
+    if (fuel_pump_filtered_demand_ffffbdc0 < fuel_pump_max_demand_ffffbdc4 - 3.5) {
+      fuel_pump_demand_threshold_ffffbdd5 = '\0';
     }
   }
   else {
-    DAT_ffffbdd5 = '\x01';
+    fuel_pump_demand_threshold_ffffbdd5 = '\x01';
   }
-  if (((DAT_ffffbdd5 == '\x01') && (engine_stopped_latch_ffffa41c == '\0')) ||
+  if (((fuel_pump_demand_threshold_ffffbdd5 == '\x01') && (engine_stopped_latch_ffffa41c == '\0')) ||
      ((engine_injectors_off_ffffa42c == '\x01' && (engine_running_flag_ffffaa68 == '\x01')))) {
     uVar2 = 1;
   }
   else {
     uVar2 = 0;
   }
-  DAT_ffffbdbc = ref_obdFuelingAddRequst_(uVar2);
+  fuel_pump_speed_request_ffffbdbc = ref_obdFuelingAddRequst_(uVar2);
   if (cVar1 == '\x01') {
-    DAT_ffffbdd4 = '\x01';
+    fuel_pump_speed_hold_counter_ffffbdd4 = '\x01';
   }
-  else if (DAT_ffffbdd4 != '\0') {
-    DAT_ffffbdd4 = DAT_ffffbdd4 + -1;
+  else if (fuel_pump_speed_hold_counter_ffffbdd4 != '\0') {
+    fuel_pump_speed_hold_counter_ffffbdd4 = fuel_pump_speed_hold_counter_ffffbdd4 + -1;
   }
   return cVar1;
 }

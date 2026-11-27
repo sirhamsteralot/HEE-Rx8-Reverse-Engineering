@@ -10,7 +10,7 @@ uint FUN_000007c0(int param_1)
   
   uVar1 = *(byte *)(param_1 + 1) & 0xffffff07;
   if (uVar1 == 4) {
-    DAT_ffffdfa0 = FUN_000000f4();
+    immo_diag_bit_ffffdfa0 = FUN_000000f4();
     if (DAT_ffffdfb8 == '\x01') {
       DAT_ffffdfb8 = '\0';
     }

@@ -17,11 +17,11 @@ int service_wdt_overflow_toggle_pb15_and_count(void)
     Ramffffec10 = 0xa53c;
     uVar2 = PBDR_W;
     PBDR_W = uVar2 ^ 0x8000;
-    if (DAT_ffffdfa0._0_2_ != -1) {
-      DAT_ffffdfa0._0_2_ = DAT_ffffdfa0._0_2_ + 1;
+    if (immo_diag_bit_ffffdfa0._0_2_ != -1) {
+      immo_diag_bit_ffffdfa0._0_2_ = immo_diag_bit_ffffdfa0._0_2_ + 1;
     }
   }
-  return (int)DAT_ffffdfa0._0_2_;
+  return (int)immo_diag_bit_ffffdfa0._0_2_;
 }
 
 

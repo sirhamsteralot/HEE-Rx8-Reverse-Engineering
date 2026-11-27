@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * ignition_timing_main_task [high]: Task[6] worker chain: runs the knock state machine (0x13826/0x1388a/0x138b2/0x13a60/0x139c4; 0x13b40 and 0x13bd2 are NOT called here — 0x13b40 only from 0x145c8, 0x13bd2 from 0x13a60/0x13b40/0x139c4), correction apply (0x125bc/0x125f6/0x123ba/0x123ca) and base timing (0x11f00/0x1206c) -> leading/trailing_ignition_timing 0xffffa630/a638.
+ * ignition_timing_main_task [high]: Task body called from ref_engineControlTASK 0x11ba4 at 0x11bbe. Cranking-relevant order: cranking state 0x1481c at 0x142b0, base timing 0x11f00 at 0x142b6, timing filters 0x43934/0x439b2 at 0x14328/0x1432e, blends 0x123da at 0x143d6 and 0x124d6 at 0x143f4. It contains no call to idle_base_timing_select 0x14100.
  */
 /* ROM address: 0x000142a4; body bytes: 414; decompiled */
 

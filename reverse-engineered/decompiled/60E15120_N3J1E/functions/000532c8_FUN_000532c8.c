@@ -3,7 +3,7 @@
 void FUN_000532c8(void)
 
 {
-  ref_updateMemoryAtAddress_16bit_ADDR_VAL(&DAT_ffff86e8,0);
+  ref_updateMemoryAtAddress_16bit_ADDR_VAL(&candidate_cranking_dwell_accumulator_ffff86e8,0);
   return;
 }
 

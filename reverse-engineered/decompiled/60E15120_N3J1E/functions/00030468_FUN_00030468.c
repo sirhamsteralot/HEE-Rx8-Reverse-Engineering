@@ -1,6 +1,9 @@
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a518: Table 2D - 331 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * RAM 0xffffbe84 candidate_cranking_running_factor (float): Running-state factor maintained by 0x30468 (1.0, or a saturated value; the branch at 0x3061a sets the flag tested at 0x30644); one of the five factors multiplied in 0x30228.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
@@ -85,17 +88,17 @@ uint FUN_00030468(void)
       DAT_ffffbea2 = 0;
     }
     if (DAT_ffffbe9b != '\0') {
-      fVar6 = rx8_max_float(DAT_ffffbe84 + -0.046899997,DAT_ffffbe90);
+      fVar6 = rx8_max_float(candidate_cranking_running_factor_ffffbe84 + -0.046899997,DAT_ffffbe90);
       uVar4 = extraout_r0;
     }
   }
   else {
-    DAT_ffffbe84 = 1.0;
+    candidate_cranking_running_factor_ffffbe84 = 1.0;
     DAT_ffffbe9b = '\0';
     DAT_ffffbea2 = 0;
-    fVar6 = DAT_ffffbe84;
+    fVar6 = candidate_cranking_running_factor_ffffbe84;
   }
-  DAT_ffffbe84 = fVar6;
+  candidate_cranking_running_factor_ffffbe84 = fVar6;
   DAT_ffffbea9 = snapshot_engine_injectors_off_ffffa42c;
   return uVar4;
 }

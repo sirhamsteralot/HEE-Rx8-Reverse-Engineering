@@ -7,13 +7,13 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000167d8 (72 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 ref_ImmoRelatedFaultSomething_(void)
+undefined4 cal_id_string_copy(void)
 
 {
   byte bVar1;
   byte bVar2;
   
-  DAT_ffffdfa0._0_1_ = 0;
+  immo_diag_bit_ffffdfa0._0_1_ = 0;
   bVar1 = 0;
   do {
     bVar2 = bVar1 + 1;

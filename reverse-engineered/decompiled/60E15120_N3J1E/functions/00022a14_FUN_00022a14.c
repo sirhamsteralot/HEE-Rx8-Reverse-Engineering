@@ -1,6 +1,3 @@
-/* [ADDITIONAL SOURCE REVIEW]
- * pedal_demand_filter_coeffs [high]: b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86.
- */
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006a354: Throttle Pedal Percent Decreasing Filter Factor (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a368: Table 2D - 132 (RX8Defs data pointer, axes and dimensions match).
@@ -15,6 +12,9 @@
  * Descriptor 0x0006a41c: Table 2D - 141 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a430: Table 2D - 142 (RX8Defs data pointer, axes and dimensions match).
  * Descriptor 0x0006a444: Table 2D - 143 (RX8Defs data pointer, axes and dimensions match).
+ */
+/* [ADDITIONAL SOURCE REVIEW]
+ * pedal_demand_filter_coeffs [high]: b3d4 = first_order_filter(a9bc, b3d4, 0.1, 1e-5); rate-decay flag b3ed at +/-2.0; filter coefficients from 2D tables 0x6a354/0x6a368/0x6a37c/0x6a390 (rpm) selected by gear flags/auto trans 0xffffb534, coolant tables 0x6a3a4/0x6a3b8, base thresholds 0x6a3cc/0x6a3e0/0x6a3f4-0x6a430; base position b38c compared against b3dc with 2.0 hysteresis -> b3ee. Called from batch 0x22f86.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

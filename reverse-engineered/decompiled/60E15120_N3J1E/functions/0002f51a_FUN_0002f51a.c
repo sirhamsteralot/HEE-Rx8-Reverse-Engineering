@@ -27,7 +27,7 @@ char fan_low_speed_decision(void)
   if (((((((DAT_ffffbdaa == '\x01') || ((DAT_ffffbdab == '\x01' && (DAT_ffffb0cd == '\x01')))) ||
          ((engine_running_flag_ffffaa68 == '\0' &&
           ((((DAT_ffffbda0 == '\x01' && (DAT_ffffccc6 == '\0')) && (DAT_ffffa8ea == '\0')) &&
-           (apv_target_state_ffffbf8d == '\0')))))) || ((DAT_ffffbd68 == '\x01' || (DAT_ffffbd6a == '\x01')))) &&
+           (apv_target_state_ffffbf8d == '\0')))))) || ((ac_clutch_relay_drive_ffffbd68 == '\x01' || (DAT_ffffbd6a == '\x01')))) &&
        ((DAT_ffffd040 == '\0' && (cVar1 = '\0', DAT_ffffd0a8 == '\0')))) ||
       ((cVar1 = '\x01', DAT_ffffd264 == '\x01' || (cVar1 = DAT_ffffd269, DAT_ffffd269 == '\x01'))))
      && (DAT_ffffd263 == '\0')) {

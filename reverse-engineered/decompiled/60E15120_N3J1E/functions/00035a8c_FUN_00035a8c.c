@@ -11,11 +11,11 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
   param_1 = param_1 & 0xff;
   if (param_1 != 1) {
     if (param_1 == 2) {
-      uVar1 = e2ram_shadow_byte_write_trampoline(2,&DAT_ffffc26c,8);
+      uVar1 = e2ram_shadow_byte_write_trampoline(2,&immo_key_reg_a_ffffc26c,8);
       return uVar1;
     }
     if (param_1 == 0xd) {
-      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&DAT_ffffc282,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&immo_registered_key_count_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 3) {
@@ -59,7 +59,7 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
       e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
       e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
       e2ram_shadow_byte_write(0x1d,&DAT_ffffc281,1);
-      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&DAT_ffffc282,1);
+      uVar1 = e2ram_shadow_byte_write_trampoline(0x1e,&immo_registered_key_count_ffffc282,1);
       return uVar1;
     }
     if (param_1 == 9) {
@@ -85,7 +85,7 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
       if (param_1 != 0xf) {
         if (param_1 == 0xff) {
           e2ram_shadow_byte_write(0,&e2ram_param_block_ffffc268,1);
-          e2ram_shadow_byte_write(2,&DAT_ffffc26c,8);
+          e2ram_shadow_byte_write(2,&immo_key_reg_a_ffffc26c,8);
           e2ram_shadow_byte_write(10,&inferred_ram_c274_ffffc274_ffffc274,1);
           e2ram_shadow_byte_write(0xc,&DAT_ffffc275,1);
           e2ram_shadow_byte_write(0xd,&DAT_ffffc276,1);
@@ -101,14 +101,14 @@ uint candidate_e2ram_param_write_dispatch(uint param_1)
           e2ram_shadow_byte_write(0x1b,&DAT_ffffc27f,1);
           e2ram_shadow_byte_write(0x1c,&DAT_ffffc280,1);
           e2ram_shadow_byte_write(0x1d,&DAT_ffffc281,1);
-          param_1 = e2ram_shadow_byte_write(0x1e,&DAT_ffffc282,1);
+          param_1 = e2ram_shadow_byte_write(0x1e,&immo_registered_key_count_ffffc282,1);
         }
         return param_1;
       }
       uVar1 = e2ram_shadow_byte_write_trampoline(0xf,&DAT_ffffc277,1);
       return uVar1;
     }
-    e2ram_shadow_byte_write(2,&DAT_ffffc26c,8);
+    e2ram_shadow_byte_write(2,&immo_key_reg_a_ffffc26c,8);
   }
   uVar1 = e2ram_shadow_byte_write_trampoline(10,&inferred_ram_c274_ffffc274_ffffc274,1);
   return uVar1;

@@ -7,7 +7,7 @@
 void leading_timing_add_corrections(void)
 
 {
-  leading_timing_with_corrections_ffffa634 = DAT_ffffa640 + leading_timing_correction_total_ffffa648;
+  leading_timing_with_corrections_ffffa634 = leading_timing_after_cranking_blend_ffffa640 + leading_timing_correction_total_ffffa648;
   return;
 }
 

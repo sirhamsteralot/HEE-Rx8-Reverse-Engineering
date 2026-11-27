@@ -1,10 +1,10 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006a340: Table 3D - 109 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * ch7d_pwm_enable_condition [high]: b358 = engine_running 0xffffa428==1 && engine_running_timer 0xffffa424 >= the u16 3D-table result (tbl 0x6a340 on coolant-derived b35c and IAT ade0) in 0xffffb386 && coolant valid (>= -50.0f @0x7353c) && 9.0f <= battery 0xffffb590 < 16.0f (@0x73540/0x73544) && 0xffffcd70==0; else b358=0. Called from 0x2253c.
  * RAM 0xffffb358 ch7d_pwm_enable (uint8): Enable flag from 0x22574 (engine running, timer, coolant valid, battery 9-16V, !cd70); gates b368 counter and forces b354=0 in 0x22630 when clear.
  * RAM 0xffffcd70 throttle_fault_latch (uint8): Stuck-duty latch: 0x4a11c ORs six flags c91d/c912/c914/c96d/c96f/c971, written by the stall monitor 0x416bc from b354 stuck <10% or >=90% (counters c911-c918); read by 0x22574 -> disables the PWM duty loop (b358=0 -> b354=0).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006a340: Table 3D - 109 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

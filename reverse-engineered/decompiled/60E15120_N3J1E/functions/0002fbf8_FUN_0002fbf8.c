@@ -3,10 +3,10 @@
  */
 /* ROM address: 0x0002fbf8; body bytes: 8; decompiled */
 
-void FUN_0002fbf8(void)
+void fuel_pump_run_on_disable(void)
 
 {
-  DAT_ffffbddc = 0xffff;
+  fuel_pump_run_on_grace_counter_ffffbddc = 0xffff;
   return;
 }
 

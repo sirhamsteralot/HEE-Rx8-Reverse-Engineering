@@ -8,7 +8,7 @@
  */
 /* ROM address: 0x00044a9e; body bytes: 38; decompiled */
 
-void FUN_00044a9e(void)
+void misfire_threshold_load_lookup(void)
 
 {
   undefined4 snapshot_engine_speed_rpm_ffffb548;

@@ -6,9 +6,9 @@ void FUN_00037568(void)
   undefined4 uVar1;
   
   if (DAT_ffffd1c5 == '\x01') {
-    DAT_ffffc22a = '\0';
+    immo_reject_event_flag_ffffc22a = '\0';
   }
-  if (DAT_ffffc22a == '\0') {
+  if (immo_reject_event_flag_ffffc22a == '\0') {
     uVar1 = 2;
   }
   else {

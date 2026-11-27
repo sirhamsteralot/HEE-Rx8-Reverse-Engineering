@@ -6,7 +6,7 @@
 void FUN_00016c88(void)
 
 {
-  if (((DAT_ffffdfa0._0_1_ == '\0') && (DAT_ffffdf98 == -0x5b)) && ((DAT_ffffdf93 & 0x70) == 0x70))
+  if (((immo_diag_bit_ffffdfa0._0_1_ == '\0') && (DAT_ffffdf98 == -0x5b)) && ((DAT_ffffdf93 & 0x70) == 0x70))
   {
     FUN_00016a1c(2);
     return;

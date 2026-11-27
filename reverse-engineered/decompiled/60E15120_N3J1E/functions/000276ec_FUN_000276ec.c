@@ -9,7 +9,7 @@
    are inherited hypotheses. */
 
 undefined2 *
-FUN_000276ec(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+e2ram_learned_table_cell_learn(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   ushort uVar2;

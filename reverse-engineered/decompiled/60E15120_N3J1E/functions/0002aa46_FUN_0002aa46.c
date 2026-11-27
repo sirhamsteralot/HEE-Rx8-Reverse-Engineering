@@ -6,8 +6,8 @@
 bool FUN_0002aa46(void)
 
 {
-  DAT_ffffbb64 = DAT_ffffbdbc == '\x01';
-  return DAT_ffffbdbc == '\x01';
+  DAT_ffffbb64 = fuel_pump_speed_request_ffffbdbc == '\x01';
+  return fuel_pump_speed_request_ffffbdbc == '\x01';
 }
 
 

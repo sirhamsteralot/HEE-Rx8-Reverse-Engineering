@@ -7,14 +7,14 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002fd48 (62 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_0002f890(void)
+undefined4 candidate_fuel_pump_relay_drive_pe2(void)
 
 {
   undefined4 uVar1;
   undefined4 local_8 [2];
   
   ref_setSR_PARAM(local_8,0xe0);
-  if (DAT_ffffbdd8 == '\x01') {
+  if (fuel_pump_relay_request_ffffbdd8 == '\x01') {
     ref_setRegister_REG_BIT_VAL(0xfffff754,4,1);
   }
   else {

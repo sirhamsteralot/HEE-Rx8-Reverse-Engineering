@@ -9,9 +9,9 @@ void FUN_000114d0(void)
   alternator_control_main_batch();
   FUN_0002374e();
   ref_CANHandler();
-  FUN_00034a04();
+  immo_eeprom_key_read_kick();
   FUN_0005e5f4();
-  ref_readImmoBit();
+  candidate_immo_diag_bit_check();
   FUN_00038082();
   return;
 }

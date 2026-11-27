@@ -6,12 +6,12 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00030164 (34 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-bool FUN_0002fcac(void)
+bool fuel_pump_grace_eval(void)
 
 {
-  DAT_ffffbddc = 0;
-  DAT_ffffbde0 = DAT_ffffbdde != 0;
-  return DAT_ffffbdde != 0;
+  fuel_pump_run_on_grace_counter_ffffbddc = 0;
+  fuel_pump_injectors_off_seen_ffffbde0 = fuel_pump_injectors_off_counter_ffffbdde != 0;
+  return fuel_pump_injectors_off_counter_ffffbdde != 0;
 }
 
 

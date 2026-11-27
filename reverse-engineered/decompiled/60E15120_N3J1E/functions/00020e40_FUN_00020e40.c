@@ -1,5 +1,5 @@
 /* [ADDITIONAL SOURCE REVIEW]
- * fueling_main_task [high]: Called from ref_engineControlTASK 0x11ba4; three masked blocks: enrichments + injection_angle_limit_lookup (0xe48e) + load_delta_enrichment (0x33ec4) + cranking_pulse_adder (0x30678); fuel core: calc_fuel_volume_request (0x306e8), calculate_fuel_amount_per_rotation (0x30948), injector_pulse_time_arbitrate (0x2fea8), cold_start_enrichment (0x1ddfc); closed-loop conditions (0x1c13c chain).
+ * fueling_main_task [high]: Task body behind ref_engineControlTASK 0x11ba4. Cranking-relevant order: 0x30274 at 0x20e5c, 0x302a2 at 0x20e62, 0x303f2 at 0x20e68, cranking_pulse_adder 0x30678 at 0x20e6e, 0x30228 at 0x20e74, then 0x306e8/0x30948/0x30b08 and injector_pulse_time_arbitrate 0x2fea8 at 0x20f08.
  */
 /* ROM address: 0x00020e40; body bytes: 328; decompiled */
 
@@ -11,11 +11,11 @@ void fueling_main_task(void)
   uVar1 = sh_raise_interrupt_mask_return_previous(0x10);
   ref_UnknownFueling1_0000e454();
   injection_angle_limit_lookup();
-  FUN_00030274();
+  candidate_cranking_pulse_width_lookup();
   FUN_000302a2();
   FUN_000303f2();
   cranking_pulse_adder();
-  FUN_00030228();
+  candidate_cranking_pulse_product();
   FUN_0000eefa();
   FUN_00034364();
   plate_range_high_fault();

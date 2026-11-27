@@ -4,7 +4,7 @@
  */
 /* ROM address: 0x00026b34; body bytes: 90; decompiled */
 
-undefined4 FUN_00026b34(char param_1,char param_2,ushort *param_3,ushort *param_4)
+undefined4 misfire_counter_bump(char param_1,char param_2,ushort *param_3,ushort *param_4)
 
 {
   undefined4 uVar1;

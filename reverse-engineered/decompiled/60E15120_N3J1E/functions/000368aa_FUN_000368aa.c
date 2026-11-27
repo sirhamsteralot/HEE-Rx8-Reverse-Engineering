@@ -15,7 +15,7 @@ void FUN_000368aa(void)
     DAT_ffffc277 = 0x5a;
   }
   DAT_ffffc244 = 1;
-  uVar2 = FUN_00035438((int)DAT_ffffc27a);
+  uVar2 = candidate_immo_key_word_scramble((int)DAT_ffffc27a);
   DAT_ffffc27f = (char)((uint)uVar2 >> 0x10);
   DAT_ffffc280 = (char)((uint)uVar2 >> 8);
   DAT_ffffc281 = (char)uVar2;

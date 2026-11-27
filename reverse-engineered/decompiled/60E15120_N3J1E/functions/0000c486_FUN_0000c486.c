@@ -1,3 +1,8 @@
+/* [CROSS-ECU / RX8DEFS REVIEW]
+ * Descriptor 0x0006b250: Knock Voltage To Magnitude (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006b2a0: Knock Related (RX8Defs data pointer, axes and dimensions match).
+ * Descriptor 0x0006b2ac: Knock Related 3 (RX8Defs data pointer, axes and dimensions match).
+ */
 /* [ADDITIONAL SOURCE REVIEW]
  * knock_magnitude_integrate [high]: Knock magnitude core: voltage = (a378 - a326)*5/65536; magnitude vs tbl 0x6b250 minus command-code term; noise filter, per-rotor integrators a33c/a350, baseline a348, combined level a34c; sets a324 = (a364 <= a330), knock detected.
  * RAM 0xffffc060 knock_filter_coeff_a (float): Noise-step scale 0.0625 (calm) / 0.1875 (transient); used in the 0xc486 integrator step.
@@ -20,11 +25,6 @@
  * RAM 0xffffa364 knock_threshold_command_base (float): Base threshold command (a34c + a328*a360 clamped 64..255; a34c = combined knock level addend, 64 is the clamp floor).
  * RAM 0xffffa389 knock_reference_voltage_latched (uint8[2]): Latched a387 values; a change forces a32c = 40 (noise reset).
  * RAM 0xffffa381 knock_command_code (uint8[2]): Mapped command codes a381[0..1] from a368 (6/5/4/2/0 bands).
- */
-/* [CROSS-ECU / RX8DEFS REVIEW]
- * Descriptor 0x0006b250: Knock Voltage To Magnitude (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006b2a0: Knock Related (RX8Defs data pointer, axes and dimensions match).
- * Descriptor 0x0006b2ac: Knock Related 3 (RX8Defs data pointer, axes and dimensions match).
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.

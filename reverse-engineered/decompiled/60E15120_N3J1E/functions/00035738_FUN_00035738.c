@@ -4,67 +4,67 @@
  */
 /* ROM address: 0x00035738; body bytes: 220; decompiled */
 
-void FUN_00035738(char param_1)
+void immo_tx_frame_build(char param_1)
 
 {
   undefined4 *puVar1;
   
-  DAT_ffffc1c8 = param_1;
+  immo_tx_frame_ffffc1c8 = param_1;
   if (param_1 == '\t') {
-    if (DAT_ffffc220 == '\x01') {
-      DAT_ffffc1c9 = DAT_ffffc220;
-      puVar1 = &DAT_ffffc1dc;
+    if (immo_key_word_index_ffffc220 == '\x01') {
+      DAT_ffffc1c9 = immo_key_word_index_ffffc220;
+      puVar1 = &immo_computed_key_words_ffffc1dc;
     }
-    else if (DAT_ffffc220 == '\x02') {
-      DAT_ffffc1c9 = DAT_ffffc220;
+    else if (immo_key_word_index_ffffc220 == '\x02') {
+      DAT_ffffc1c9 = immo_key_word_index_ffffc220;
       puVar1 = &DAT_ffffc1e0;
     }
-    else if (DAT_ffffc220 == '\x03') {
-      DAT_ffffc1c9 = DAT_ffffc220;
+    else if (immo_key_word_index_ffffc220 == '\x03') {
+      DAT_ffffc1c9 = immo_key_word_index_ffffc220;
       puVar1 = &DAT_ffffc1e4;
     }
     else {
-      if (DAT_ffffc220 != '\x04') {
-        if (DAT_ffffc220 != -1) {
+      if (immo_key_word_index_ffffc220 != '\x04') {
+        if (immo_key_word_index_ffffc220 != -1) {
           DAT_ffffc1cd = 0;
           DAT_ffffc1ce = 0;
           DAT_ffffc1cf = 0;
-          DAT_ffffc1d1 = 1;
-          DAT_ffffc21f = 0;
-          DAT_ffffc226 = 0;
+          immo_tx_frame_valid_ffffc1d1 = 1;
+          immo_fail_counter_ffffc21f = 0;
+          immo_authorized_latch_flag_ffffc226 = 0;
           DAT_ffffc229 = 1;
           return;
         }
-        DAT_ffffc1c9 = DAT_ffffc220;
+        DAT_ffffc1c9 = immo_key_word_index_ffffc220;
         DAT_ffffc1ca = 0;
         DAT_ffffc1cb = 0;
         DAT_ffffc1cc = 0;
         DAT_ffffc1cd = 0;
         DAT_ffffc1ce = 0;
         DAT_ffffc1cf = 0;
-        DAT_ffffc1d1 = 1;
-        DAT_ffffc21f = 0;
-        DAT_ffffc226 = 0;
+        immo_tx_frame_valid_ffffc1d1 = 1;
+        immo_fail_counter_ffffc21f = 0;
+        immo_authorized_latch_flag_ffffc226 = 0;
         DAT_ffffc229 = 1;
         return;
       }
-      DAT_ffffc1c9 = DAT_ffffc220;
+      DAT_ffffc1c9 = immo_key_word_index_ffffc220;
       puVar1 = &DAT_ffffc1e8;
     }
   }
   else {
     if (param_1 != '\a') {
       if ((param_1 == '\x01') || (param_1 == -0x7f)) {
-        DAT_ffffc1c9 = DAT_ffffc224;
+        DAT_ffffc1c9 = immo_status_code_ffffc224;
         DAT_ffffc1ca = 0;
         DAT_ffffc1cb = 0;
         DAT_ffffc1cc = 0;
         DAT_ffffc1cd = 0;
         DAT_ffffc1ce = 0;
         DAT_ffffc1cf = 0;
-        DAT_ffffc1d1 = 1;
-        DAT_ffffc21f = 0;
-        DAT_ffffc226 = 0;
+        immo_tx_frame_valid_ffffc1d1 = 1;
+        immo_fail_counter_ffffc21f = 0;
+        immo_authorized_latch_flag_ffffc226 = 0;
         DAT_ffffc229 = 1;
         return;
       }
@@ -72,9 +72,9 @@ void FUN_00035738(char param_1)
         DAT_ffffc1cd = 0;
         DAT_ffffc1ce = 0;
         DAT_ffffc1cf = 0;
-        DAT_ffffc1d1 = 1;
-        DAT_ffffc21f = 0;
-        DAT_ffffc226 = 0;
+        immo_tx_frame_valid_ffffc1d1 = 1;
+        immo_fail_counter_ffffc21f = 0;
+        immo_authorized_latch_flag_ffffc226 = 0;
         DAT_ffffc229 = 1;
         return;
       }
@@ -85,14 +85,14 @@ void FUN_00035738(char param_1)
       DAT_ffffc1cd = 0;
       DAT_ffffc1ce = 0;
       DAT_ffffc1cf = 0;
-      DAT_ffffc1d1 = 1;
-      DAT_ffffc21f = 0;
-      DAT_ffffc226 = 0;
+      immo_tx_frame_valid_ffffc1d1 = 1;
+      immo_fail_counter_ffffc21f = 0;
+      immo_authorized_latch_flag_ffffc226 = 0;
       DAT_ffffc229 = 1;
       return;
     }
-    puVar1 = &DAT_ffffc208;
-    DAT_ffffc1c9 = (char)((uint)DAT_ffffc208 >> 0x18);
+    puVar1 = &immo_random_seed_ffffc208;
+    DAT_ffffc1c9 = (char)((uint)immo_random_seed_ffffc208 >> 0x18);
   }
   DAT_ffffc1cc = *(undefined1 *)((int)puVar1 + 3);
   DAT_ffffc1cb = (char)((uint)*puVar1 >> 8);
@@ -100,9 +100,9 @@ void FUN_00035738(char param_1)
   DAT_ffffc1cd = 0;
   DAT_ffffc1ce = 0;
   DAT_ffffc1cf = 0;
-  DAT_ffffc1d1 = 1;
-  DAT_ffffc226 = 0;
-  DAT_ffffc21f = 0;
+  immo_tx_frame_valid_ffffc1d1 = 1;
+  immo_authorized_latch_flag_ffffc226 = 0;
+  immo_fail_counter_ffffc21f = 0;
   DAT_ffffc229 = 1;
   return;
 }

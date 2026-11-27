@@ -17,17 +17,18 @@ fidelity), C = P2 residual (static labeling & gap closure), D = P2/P5
 
 **Status.** Groups A and B are complete. Group D is complete apart from register
 item **D18** (fitted MCU variant). Group C is reopened — open items
-29, 30, 32–34, 36–37, 39, 42–61, 64, 91, 92, 94 (the former per-subsystem fold-back
+29, 30, 32–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
 items 62–63 and 65–90 were folded into their source items — fold map in this
 file's git history). Groups E and F remain open as listed below. Pick up
 **C item 29** next.
 
 **Repository baseline.** `.gitattributes` pins `* text=auto`: a clone that does not
 set `core.autocrlf` keeps a clean tree instead of reporting every text file as
-modified, and `python -m pytest tests/` passes. `verify_readability.py` is the one
-pipeline validator that still fails, on C item 94's second symptom (`0x28992`, a thunk
-body that kept its Ghidra name while `function_index.tsv` carries the alias); the other
-four pass.
+modified, and `python -m pytest tests/` passes. The five pipeline validators
+(`validate_export.py`, `validate_reports.py`, `verify_claims.py`, `verify_readability.py`,
+`verify_math_units.py`) pass; `integrate_reviewed_names.py` carries every accepted alias
+into the export, and `tests/test_reviewed_name_foldback.py` re-runs the annotation +
+integration + comment-merge chain and requires the committed export back unchanged.
 
 ## Open work — pick up here
 
@@ -69,24 +70,6 @@ asserts `map_rows = fn_checked + ram_checked + data_rows + io_rows`, so an
 unresolvable row fails instead of being skipped; debt for a cell with no tracked
 alias is declared in `report_map_baseline.json` and may only shrink (a resolved
 or orphaned entry fails as stale).
-
-- **C item 94 (open)** — **make the reviewed-name fold-back pass run again.**
-  `integrate_reviewed_names.py` aborts before it can carry any subsystem's
-  accepted names into the decompiled export, so the fold-back part of the
-  definition of done (and C item 64) cannot be delivered:
-  (a) its assert "each function body still names itself" fails on 14 bodies in
-  the eeprom/misfire area that keep their Ghidra name while `function_index.tsv`
-  already carries the alias (`0x26a42`, `0x26b34`, `0x270aa`, `0x271b0`,
-  `0x276ec`, `0x27eec`, `0x27fb4`, `0x2837c`, `0x2842c`, `0x445ba`, …);
-  (b) mapping `FUN_<address>` in the generator clears that assert but then
-  fails on the thunk bodies, whose names embed a target name
-  (`jump_to_FUN_000270aa` in `00028992_thunk_FUN_000270aa.c` vs the index name
-  `jump_to_e2ram_learned_table_validate`). Scope: rename every identifier form
-  (`FUN_xxxxxxxx`, `jump_to_*`, `thunk_*`, `DAT_xxxxxxxx`) from the address-based
-  identity, keep the passes idempotent, and add a regeneration test that re-runs
-  annotation + integration + `refine_comment_merge.py` and asserts the committed
-  export comes back unchanged (rule 6d). Blocks the fold-back step of every C
-  item, including C item 64.
 
 #### C.1 New subsystem coverage — analyze, report, label
 

@@ -30,7 +30,7 @@ void FUN_000390fc(void)
   FUN_0004e96c();
   FUN_0004e9d0();
   FUN_0004eb2e();
-  FUN_0004ed3c();
+  candidate_pd7_condition_calc();
   FUN_0004ed80();
   FUN_0004f09c();
   FUN_0004f31a();

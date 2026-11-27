@@ -6,7 +6,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 000365c0 (170 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void ref_ImmoUpdateRelated(void)
+void immo_eeprom_flag_sequencer(void)
 
 {
   if (DAT_ffffc265 == '\0') {

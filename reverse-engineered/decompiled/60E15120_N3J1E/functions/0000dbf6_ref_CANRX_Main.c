@@ -19,9 +19,9 @@ void can_rx_main_key_gated(void)
     ref_CAN4B0RX_Main();
     ref_CAN4B1RX_Main();
     ref_CAN4C0RX_Main();
-    ref_CAN47RX_Main();
+    immo_can_rx_main();
   }
-  FUN_00034ae2();
+  immobilizer_main_state_dispatch();
   return;
 }
 

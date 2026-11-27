@@ -34,7 +34,7 @@ LAB_0002ca74:
   if (param_1 == '\f') {
     FUN_0002cb08((int)DAT_ffffbc85);
   }
-  FUN_0000e2d4(1);
+  fuel_cut_bitmask_build(1);
   return;
 }
 

@@ -6,12 +6,12 @@
 /* Unique exact-byte match to related 60E0FC00 function at 0002fe00 (20 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-void FUN_0002f948(void)
+void candidate_fuel_pump_request_force_step(void)
 
 {
-  FUN_0002fbf0();
-  FUN_0002fbf8();
-  FUN_0002f890();
+  candidate_fuel_pump_request_set();
+  fuel_pump_run_on_disable();
+  candidate_fuel_pump_relay_drive_pe2();
   return;
 }
 
