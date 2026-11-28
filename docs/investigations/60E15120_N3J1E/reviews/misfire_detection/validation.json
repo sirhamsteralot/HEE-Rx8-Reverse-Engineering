@@ -1,0 +1,28 @@
+{
+  "rom": "60E15120_N3J1E",
+  "rom_sha256": "a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1",
+  "rawbin_reverify": {
+    "log": "rawbin_reverify_log.txt",
+    "generator": "utilities/scripts/rx8-pcm-pipeline/verify_misfire_chain.py",
+    "checks": 214,
+    "passed": 214
+  },
+  "static_tests": {
+    "file": "tests/test_misfire_detection.py",
+    "covers": [
+      "function-index membership of every label-record alias",
+      "TSV <-> labels-JSON mirroring",
+      "ROM-byte verification of the cited pool words, floats and descriptors",
+      "the 0x27fb4 arm polarity (neutral OR load floor) at instruction level",
+      "regeneration tests: re-runs review_misfire_detection_labels.py and verify_misfire_chain.py"
+    ]
+  },
+  "foldback": {
+    "chain": ["annotate_source_review.py", "integrate_reviewed_names.py", "refine_comment_merge.py"],
+    "test": "tests/test_reviewed_name_foldback.py",
+    "state": "fixed point; re-run is a no-op"
+  },
+  "dynamic_tests": {
+    "scope": "none - static analysis only; no emulator run for this subsystem"
+  }
+}

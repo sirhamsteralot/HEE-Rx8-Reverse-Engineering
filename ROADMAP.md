@@ -17,10 +17,10 @@ fidelity), C = P2 residual (static labeling & gap closure), D = P2/P5
 
 **Status.** Groups A and B are complete. Group D is complete apart from register
 item **D18** (fitted MCU variant). Group C is reopened — open items
-29, 30, 32–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
+30, 32–34, 36–37, 39, 42–61, 64, 91, 92 (the former per-subsystem fold-back
 items 62–63 and 65–90 were folded into their source items — fold map in this
 file's git history). Groups E and F remain open as listed below. Pick up
-**C item 29** next.
+**C item 30** next.
 
 **Repository baseline.** `.gitattributes` pins `* text=auto`: a clone that does not
 set `core.autocrlf` keeps a clean tree instead of reporting every text file as
@@ -73,11 +73,6 @@ or orphaned entry fails as stale).
 
 #### C.1 New subsystem coverage — analyze, report, label
 
-- **C item 29 (open)** — **misfire detection / monitor.**
-  `ref_misfireDetectInit_` `0xab8a` is named and the misfire DTCs sit in
-  [dtc_control_report.md](docs/investigations/60E15120_N3J1E/dtc_control_report.md),
-  but the detection logic (crank-fluctuation path, per-rotor counting, monitor
-  enable conditions) is unanalyzed.
 - **C item 30 (open)** — **emissions monitors beyond O2.** Catalyst and EVAP
   have no reports (EVAP appears only as `candidate_evap_open_loop_condition`
   `0x22144`); readiness / monitor-completion logic is not covered even for the

@@ -349,6 +349,18 @@
       "rom_refs": 110,
       "rom_claims": 0
     },
+    "subsystem-logic/misfire_detection_report.md": {
+      "map_rows": 124,
+      "fn_checked": 54,
+      "ram_checked": 45,
+      "data_rows": 25,
+      "io_rows": 0,
+      "grouped_rows": 0,
+      "unnamed_rows": 0,
+      "declared_unbacked": 0,
+      "rom_refs": 124,
+      "rom_claims": 0
+    },
     "subsystem-logic/sbl_bootloader_report.md": {
       "map_rows": 119,
       "fn_checked": 87,
