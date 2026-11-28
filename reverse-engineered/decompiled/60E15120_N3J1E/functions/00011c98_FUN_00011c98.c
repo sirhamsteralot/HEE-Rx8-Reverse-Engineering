@@ -9,7 +9,7 @@
 void crank_tick_message_handler(void)
 
 {
-  FUN_000287aa();
+  misfire_monitor_tick();
   FUN_0003a0bc();
   return;
 }

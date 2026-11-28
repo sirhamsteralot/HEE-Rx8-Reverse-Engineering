@@ -6,7 +6,7 @@
 void FUN_00028080(void)
 
 {
-  DAT_ffffba60 = 0;
+  misfire_high_rpm_active_ffffba60 = 0;
   DAT_ffffba5e = 9;
   DAT_ffffba5f = 0xc;
   return;

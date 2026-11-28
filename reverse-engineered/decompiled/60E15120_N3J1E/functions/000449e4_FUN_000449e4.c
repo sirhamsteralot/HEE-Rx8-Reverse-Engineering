@@ -1,6 +1,9 @@
 /* [CROSS-ECU / RX8DEFS REVIEW]
  * Descriptor 0x0006b9cc: Table 2D - 277 (RX8Defs data pointer, axes and dimensions match).
  */
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_load_ceiling_lookup [medium]: DAT_ffffcb88 = lookup_2d_scaled(rpm, tbl 0x6b9cc [13 cells, 700..6500 rpm, raw 58..96]); DAT_ffffcb86 = 0 when cb88 < load 0xffffc0b4 || rpm > 3910.0, else 1. Called from 0x287aa.
+ */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
  * See readability/changes.json for evidence and remaining ABI limitations.
@@ -10,7 +13,7 @@
 /* Unique exact-byte match to related 60E0FC00 function at 00044200 (58 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 FUN_000449e4(void)
+undefined4 candidate_misfire_load_ceiling_lookup(void)
 
 {
   undefined4 uVar1;

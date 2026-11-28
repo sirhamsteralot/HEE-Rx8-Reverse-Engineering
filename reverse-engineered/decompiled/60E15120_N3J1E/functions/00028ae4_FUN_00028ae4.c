@@ -9,8 +9,8 @@ undefined1 * FUN_00028ae4(void)
   if ((puVar1 == (undefined1 *)0x1) &&
      (puVar1 = (undefined1 *)(uint)engine_stopped_latch_ffffa41c, puVar1 == (undefined1 *)0x1)) {
     puVar1 = &DAT_ffffbaa0;
-    DAT_ffffba9c = 0;
-    DAT_ffffba9e = 0;
+    misfire_window_400_ffffba9c = 0;
+    misfire_window_2000_ffffba9e = 0;
     DAT_ffffbaa0 = 1;
   }
   return puVar1;

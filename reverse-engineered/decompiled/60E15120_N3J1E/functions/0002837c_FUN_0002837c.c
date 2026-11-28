@@ -18,7 +18,7 @@ void candidate_e2ram_learned_table_correction_filter(void)
   arg0 = 0.0;
   if ((sector_parity_bank_ffffb660 & 1) == 0) {
     pfVar1 = &misfire_residual_filtered_bank0_ffffba34;
-    if (DAT_ffffb6c6 == '\x01') {
+    if (misfire_cell_learned_ffffb6c6 == '\x01') {
       misfire_residual_filtered_bank0_ffffba34 = rx8_first_order_filter(misfire_residual_ffffba30,misfire_residual_filtered_bank0_ffffba34,0.125,1e-05);
     }
     else {
@@ -27,7 +27,7 @@ void candidate_e2ram_learned_table_correction_filter(void)
   }
   else {
     pfVar1 = &misfire_residual_filtered_bank1_ffffba38;
-    if (DAT_ffffb6c6 == '\x01') {
+    if (misfire_cell_learned_ffffb6c6 == '\x01') {
       misfire_residual_filtered_bank1_ffffba38 = rx8_first_order_filter(misfire_residual_ffffba30,misfire_residual_filtered_bank1_ffffba38,0.125,1e-05);
     }
     else {

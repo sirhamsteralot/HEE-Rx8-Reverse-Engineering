@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_persistence_count [medium]: If DAT_ffffb6ad==1: clears b6ab/b6a8/b6ad; else b6a8 = saturate(b6a8+1, 0xff) (0x2460) and b6ab = (b6a8 != 0). Called from 0x287aa.
+ */
 /* ROM address: 0x00026d04; body bytes: 88; decompiled */
 
-uint FUN_00026d04(void)
+uint candidate_misfire_persistence_count(void)
 
 {
   uint uVar1;

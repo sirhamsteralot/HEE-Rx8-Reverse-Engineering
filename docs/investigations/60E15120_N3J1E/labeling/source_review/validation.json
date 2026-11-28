@@ -1,7 +1,7 @@
 {
   "date": "2026-11-13",
-  "function_annotations": 701,
-  "ram_aliases": 650,
+  "function_annotations": 731,
+  "ram_aliases": 682,
   "ghidra_database_updated": false,
   "label_sweep_passes": [
     {
@@ -44,6 +44,7 @@
     "source_review_thunk_audit",
     "eeprom_content_map",
     "source_review_ignition_power_state",
-    "source_review_throttle_dbw"
+    "source_review_throttle_dbw",
+    "misfire_detection"
   ]
 }

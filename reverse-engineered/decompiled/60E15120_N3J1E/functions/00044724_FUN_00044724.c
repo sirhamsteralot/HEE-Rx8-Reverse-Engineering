@@ -15,7 +15,7 @@ uint misfire_dtc_set(void)
   byte bVar4;
   
   DAT_ffffbaa1 = DAT_ffffbaa0;
-  if (DAT_ffffcb6d == '\x01') {
+  if (misfire_dtc_pending_ffffcb6d == '\x01') {
     cVar2 = ref_driveCycleDetectMAYBE_(1);
     if (cVar2 == '\0') {
       uVar3 = 4;
@@ -26,10 +26,10 @@ uint misfire_dtc_set(void)
     uVar1 = dtc_set_fault_xdefault(1,uVar3,0);
   }
   else {
-    uVar1 = (uint)DAT_ffffcb6e;
+    uVar1 = (uint)misfire_dtc_confirmed_ffffcb6e;
     if (uVar1 == 1) {
-      bVar4 = (DAT_ffffcb6c & 1) != 0;
-      if ((DAT_ffffcb6c & 2) != 0) {
+      bVar4 = (misfire_dtc_rotor_bits_ffffcb6c & 1) != 0;
+      if ((misfire_dtc_rotor_bits_ffffcb6c & 2) != 0) {
         bVar4 = bVar4 | 2;
       }
       uVar1 = dtc_set_fault_xdefault(1,1,bVar4);

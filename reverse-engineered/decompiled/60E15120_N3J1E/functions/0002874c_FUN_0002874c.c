@@ -4,7 +4,7 @@ void FUN_0002874c(void)
 
 {
   FUN_00028080();
-  FUN_00026934();
+  candidate_misfire_aux_pool_update();
   FUN_00028510();
   FUN_00026b98();
   FUN_0004496c();
