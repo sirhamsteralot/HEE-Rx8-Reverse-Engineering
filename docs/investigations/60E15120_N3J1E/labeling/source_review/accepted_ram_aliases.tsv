@@ -649,3 +649,35 @@ ffffbe80	candidate_cranking_baro_factor	float	000303f2	Altitude factor keyed on 
 ffffbe84	candidate_cranking_running_factor	float	00030468	Running-state factor maintained by 0x30468 (1.0, or a saturated value; the branch at 0x3061a sets the flag tested at 0x30644); one of the five factors multiplied in 0x30228.
 ffffcaac	candidate_off_throttle_timing_latch_leading	uint8	00043934	Byte latch distinguishing the first activation from the filter path (tst at 0x43966); written from 0xffffb53c at 0x439a6.
 ffffcaad	candidate_off_throttle_timing_latch_trailing	uint8	000439b2	Trailing mirror of 0xffffcaac (tst at 0x439e4, write at 0x43a6c).
+ffffa390	sector_period_ring	float[8]	0000cf96	8-entry ring of crank sector periods: crank_edge_period_update 0xcf96 shifts DAT_ffffa3ac..0xffffa398 down and writes DAT_ffffa390 = (DAT_ffffa3d7 * 6666666.0) / period_ticks, period = ICR0AH 0xfffff434 (pool 0xd00a=0xf434) difference stored at 0xffffa3cc; 6666666.0 float at ROM 0xd124 (pool 0xd124). Copied to 0xffffb664-0xffffb680 by 0x26940.
+ffffa3b0	crank_sector_slot	uint8	0000cf96	Sector slot index iVar5 (0..5) of the matched edge, written by 0xcf96 (pool 0xd11c=0xffffa390 ring base); latched to sector_parity_bank 0xffffb660 by 0x26982.
+ffffb68a	misfire_counter_bank0_a	uint16	00026a42	Bank0 counterpart of 0xffffb688 (parity 0 pair 0xffffb68a/0xffffb68e); rotor-bit source for P0301/P0302 in 0x44b46 (cba0) and reset there.
+ffffb68c	misfire_counter_bank1_b	uint16	00026a42	Bank1 second counter; rotor-bit source in 0x445ba (cb6f) and reset there.
+ffffb68e	misfire_counter_bank0_b	uint16	00026a42	Bank0 second counter; rotor-bit source in 0x445ba (cb70) and reset there.
+ffffb69c	misfire_supply_enable	uint8	00026fc0	0 when battery 0xffffb590 < 11.0 (pool 0x75474) or fault persistence b6a4/b6a6 set, else 1 (0x26fc0). Gates the 400/2000-tick counters 0x28b10/0x28b50, both event arms 0x27fb4/0x28022 and the count-floor lookup 0x4499c.
+ffffb6c6	misfire_cell_learned	uint8	000271b0	Set by e2ram_learned_table_learn_gate 0x271b0 only when the current cell flag (0xffff8548+cell*2+bank*0x88, pool 0x27270) is set and a learned neighbour cell covers the current RPM; gates the residual filter 0x2837c and the event arm 0x27fb4.
+ffffba04	misfire_learn_hold	uint8	00027306	Learn-hold counter: decremented by 0x27306 once per odd sector (b660==1); gates the learn 0x276ec (ba04!=0 && ba06==0) and the sustained gate 0x273d4.
+ffffba28	misfire_load_floor	float	00027fb4	DAT_ffffba28 = lookup_2d_scaled(rpm, tbl 0x6a6b8 [17 cells, 700..8500 rpm]); load floor for the primary event arm 0x27fb4 (bypassed in neutral b53a==1). Pool 0x28074=0xffffba28.
+ffffba50	misfire_deviation_now	float	0002842c	DAT_ffffba50 = max(0, DAT_ffffba4c): current sector-speed deviation (0x2842c); secondary arm threshold vs ba80 (0x28022) and sustained window bound (0x44436).
+ffffba54	misfire_deviation_d1	float	0002842c	One-tick-delayed copy of DAT_ffffba50 (0x2842c: ba54 = ba50, ba58 = ba54); load-threshold check operand in 0x4489c.
+ffffba58	misfire_deviation_d2	float	0002842c	Two-tick-delayed copy of DAT_ffffba50 (0x2842c); load-threshold check operand in 0x4489c (cb94*ba54 < ba58).
+ffffba60	misfire_high_rpm_active	uint8	000280be	Set by 0x280be when rpm >= 5000.0 (ba70); selects the coolant-corrected x 3D-threshold form in 0x2853c/0x28648.
+ffffba78	misfire_threshold_a	float	0002853c	Primary per-tick misfire threshold (one-tick delayed ba74): 3D tbl 0x6a630 (load x rpm) times a coolant correction (tbl 0x6a5e0/0x6a5f4) when ba60, else +40.0/ba94 form; computed by 0x2853c. Arm comparison ba40 > ba78 in 0x27fb4.
+ffffba80	misfire_threshold_b	float	00028648	Secondary threshold (delayed ba7c): 3D tbl 0x6a644 x coolant tbl 0x6a608/0x6a61c when ba60, computed by 0x28648; compared against ba50 in 0x28022.
+ffffba9c	misfire_window_400	uint16	00028b10	400-tick window counter (wraps at 400 = 0x190) counted while b69c==1, zeroed on d1c5; the 400-tick evaluation fires at ==400 (0x26aa0/0x44b16/0x44b46).
+ffffba9e	misfire_window_2000	uint16	00028b50	2000-tick window counter (wraps at 2000 = 0x7d0) counted while b69c==1; the 2000-tick evaluation fires at ==2000 (0x26aa0/0x4458a/0x445ba).
+ffffb690	misfire_event_count_400	uint16	00026aa0	Snapshot at ba9c==400: max(cb78, cb7c) (0x26aa0); compared in the 400-tick DTC evaluation 0x44b46.
+ffffb692	misfire_event_count_2000	uint16	00026aa0	Snapshot at ba9e==2000: max(cb7a, cb7e) (0x26aa0); compared in the 2000-tick DTC evaluation 0x445ba against cb72 and the rpm-lookup product.
+ffffcb62	misfire_sustained_counter_b	uint16	00044436	Second sustained counter (0x44436); compared in the 2000-tick evaluation 0x445ba (uVar2 < cb62).
+ffffcb68	misfire_sustained_decay	uint8	00044436	Set to 0x28 by 0x44436 when any event fired this tick (b694), decays otherwise; part of the sustained-window gate.
+ffffcb6c	misfire_dtc_rotor_bits	uint8	000445ba	Rotor bits assembled in 0x445ba from cb70<<1 | cb6f (bank0/bank1) for the 2000-tick DTC set 0x44724 (code 1 -> P0301/P0302 selection via prefix table 0x7e55a).
+ffffcb6d	misfire_dtc_pending	uint8	000445ba	Set by 0x445ba when the 2000-tick count (b692) or the rpm-scaled product falls below the window thresholds (cb72/cb62); 0x44724 then sets slot 1 with code 4 (or 2 on drive cycle).
+ffffcb6e	misfire_dtc_confirmed	uint8	000445ba	Set by 0x445ba when the 2000-tick evaluation passes; 0x44724 then sets slot 1 with code 1 and the rotor bits cb6c.
+ffffcb72	misfire_threshold_2000	uint16	0004458a	2000-tick window threshold: 0xff when DAT_ffffcf90 < 0.0 else 100, written by 0x4458a at ba9e==2000; compared against b692 in 0x445ba.
+ffffcb78	misfire_rpm_counter_a	uint16	000447e2	Primary rpm-threshold counter bumped by 0x447e2 while the event flag survives the cb8c/cb90 threshold products; delayed to cb80 by 0x4493a, snapshotted to b690 by 0x26aa0.
+ffffcb7a	misfire_rpm_counter_b	uint16	000447e2	Second rpm-threshold counter (0x447e2); snapshotted to b692 by 0x26aa0 at ba9e==2000.
+ffffcb7c	misfire_load_counter_a	uint16	0004489c	Load-threshold counter bumped by 0x4489c; delayed to cb82 by 0x4493a, snapshotted to b690 by 0x26aa0.
+ffffcb7e	misfire_load_counter_b	uint16	0004489c	Second load-threshold counter (0x4489c); snapshotted to b692 by 0x26aa0 at ba9e==2000.
+ffffcb90	misfire_threshold_rpm_b	float	00044a78	Second RPM threshold from tbl 0x6ba00 (12 cells, axis 0x7c49c); used by 0x447e2 as cb90*ba44 < ba40.
+ffffcb98	misfire_threshold_load_b	float	00044a9e	Load-limit B lookup (tbl 0x6ba18) -> DAT_ffffcb98; used by 0x4489c as cb98*ba54 < ba50.
+ffffb664	misfire_sector_ring_copy	float[8]	00026940	Copy of the crank sector-period ring 0xffffa390..0xffffa3ac made by misfire_sector_ring_copy 0x26940; read by the deviation math 0x28198/0x2842c/0x28118 (cells 0xffffb664..0xffffb680).

@@ -1,9 +1,12 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_high_rpm_latch [medium]: DAT_ffffcb87 = 1 when 5000.0 <= rpm 0xffffb548; 0 when d1c5==1. Called from 0x287aa; gates the 400-tick fault branch 0x44b46.
+ */
 /* ROM address: 0x00044a1e; body bytes: 42; decompiled */
 
 /* Unique exact-byte match to related 60E0FC00 function at 0004423a (42 bytes). Names prefixed ref_
    are inherited hypotheses. */
 
-undefined4 * FUN_00044a1e(void)
+undefined4 * candidate_misfire_high_rpm_latch(void)
 
 {
   undefined4 *puVar1;

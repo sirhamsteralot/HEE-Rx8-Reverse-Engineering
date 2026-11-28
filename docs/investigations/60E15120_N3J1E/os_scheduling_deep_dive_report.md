@@ -522,7 +522,7 @@ in §14 (ROADMAP C item 7, 2026-11-05)** — the task-level map is now complete.
 | 0x0011d88 | `can_rx_poll_move_to_uds_buffer` |
 | 0x0011534 | `slow_background_task` (slow task, 29 calls) |
 | 0x0011c98 | `crank_tick_message_handler` (grp1[9] handler) |
-| 0x000287aa | `FUN_000287aa` (per-tick fuel/load update) |
+| 0x000287aa | `misfire_monitor_tick` (per-tick misfire/fuel-load pass) |
 | 0x0003a0bc | `FUN_0003a0bc` |
 | 0x0000cf96 | `crank_edge_period_update` (crank edge/sector track) |
 | 0x0000d716 | `crank_tick_flag_set` (tick flag) |

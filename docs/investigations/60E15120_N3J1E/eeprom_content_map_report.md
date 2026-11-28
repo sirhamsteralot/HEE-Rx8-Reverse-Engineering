@@ -359,7 +359,7 @@ New labels in `data/labels/60E15120_N3J1E/eeprom_content_labels.json`
 | 0x00027eec | `e2ram_learned_table_flag_mirror` | flag[cell] → flag[cell+0x11/+0x22/+0x33], cells 0..2 |
 | 0x00028198 / 0x00028484 | `e2ram_learned_table_apply` / `e2ram_learned_table_cell_read` | read + RPM-interpolate learned value per rotor bank; DAT_ffffba2c |
 | 0x0002837c | `e2ram_learned_table_correction_filter` | filter DAT_ffffba30 → 0xffffba34/0x38, max(0,·) → 0xffffba40 |
-| 0x000287aa | `FUN_000287aa` | per-tick fuel/load update; calls the whole 0x27xxx cluster |
+| 0x000287aa | `misfire_monitor_tick` | per-tick misfire pass; calls the whole 0x27xxx cluster |
 | 0x002842c | `misfire_deviation_delay_line` | deviation delay line 0xffffba58/54/50 from 0xffffba4c |
 | 0x0027fb4 / 0x00028022 | `misfire_event_arm` / `misfire_event_arm_secondary` | set per-rotor event flags 0xffffba24/25, 0xffffba26/27 |
 | 0x00026a42 / 0x00026b34 | `misfire_event_count` / `misfire_counter_bump` | bump per-rotor counters 0xffffb688–0xffffb68e, tick flag 0xffffb694 |

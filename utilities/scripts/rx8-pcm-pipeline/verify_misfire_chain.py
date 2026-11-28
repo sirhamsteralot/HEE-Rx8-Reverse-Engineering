@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""Verify the misfire detection chain against the raw ROM bytes (rule-7 checks).
+
+Re-reads every literal-pool word, instruction word, ROM threshold/float, table
+descriptor and peripheral symbol cited by
+
+  * docs/subsystem-logic/misfire_detection_report.md
+  * data/labels/60E15120_N3J1E/misfire_detection_labels.json
+
+and writes the evidence log
+
+  docs/investigations/60E15120_N3J1E/reviews/misfire_detection/rawbin_reverify_log.txt
+
+Usage (from the repo root):
+  python utilities/scripts/rx8-pcm-pipeline/verify_misfire_chain.py           # check only
+  python utilities/scripts/rx8-pcm-pipeline/verify_misfire_chain.py --write   # refresh the log
+
+Pool operands are the absolute pool addresses the disassembler prints for
+``mov.l @(0xPOOL,pc),rN`` / ``mov.w @(0xPOOL,pc),rN``; a 16-bit pool holds the
+sign-extended low half of a RAM address (0xbdd8 -> 0xffffbdd8).
+"""
+from __future__ import annotations
+
+import csv
+import hashlib
+import struct
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+ROM = (ROOT / 'submodules' / 'Mazda_RX8_PCM_ReverseEngineering' / 'Stock_ROMs'
+       / '60E15120_N3J1E.bin')
+SYMBOLS = ROOT / 'reverse-engineered' / 'decompiled' / '60E15120_N3J1E' / 'symbols.tsv'
+LOG = (ROOT / 'docs' / 'investigations' / '60E15120_N3J1E' / 'reviews'
+       / 'misfire_detection' / 'rawbin_reverify_log.txt')
+
+ROM_SHA256 = 'a7cd953c2a87af12ee2814a95c958dc23959d352ef9c5e7f82b8ab8952f264f1'
+
+# (kind, address-or-symbol, expected, description)
+# kinds: w16 instruction/pool word, w32 pool dword, f32 float bits, desc2/desc3 table descriptor, sym symbols.tsv name->address
+CHECKS: list[tuple[str, object, int | str, str]] = [
+    # --- 0x287aa misfire_monitor_tick: SR mask + first/tail calls ------------
+    ('w32', 0x289CC, 0x00003920, '0x287aa SR-mask helper pool 0x289cc = 0x3920'),
+    ('w16', 0x287B0, 0x430B, '0x287aa jsr @r3 at 0x287b0'),
+    ('w16', 0x28994, 0x432B, '0x287aa tail jmp @r3 (SR restore) at 0x28994'),
+    # --- 0x27fb4 misfire_event_arm -------------------------------------------
+    ('w16', 0x28058, 0xB660, '0x27fb4 pool 0x28058 = 0xb660 (sector_parity_bank)'),
+    ('w16', 0x2805A, 0xB548, '0x27fb4 pool 0x2805a = 0xb548 (rpm)'),
+    ('w16', 0x2805C, 0xB53A, '0x27fb4 pool 0x2805c = 0xb53a (neutral flag)'),
+    ('w16', 0x2805E, 0xC0B4, '0x27fb4 pool 0x2805e = 0xc0b4 (load)'),
+    ('w16', 0x28060, 0xB69C, '0x27fb4 pool 0x28060 = 0xb69c (supply gate)'),
+    ('w16', 0x28062, 0xB6C6, '0x27fb4 pool 0x28062 = 0xb6c6 (cell learned)'),
+    ('w16', 0x28064, 0xBA78, '0x27fb4 pool 0x28064 = 0xba78 (threshold a)'),
+    ('w16', 0x28066, 0xBA40, '0x27fb4 pool 0x28066 = 0xba40 (excess deviation)'),
+    ('w32', 0x2806C, 0x0006A6B8, '0x27fb4 tbl pool 0x2806c = 0x6a6b8 (load floor)'),
+    ('w32', 0x28070, 0x00002068, '0x27fb4 lookup pool 0x28070 = 0x2068'),
+    ('w32', 0x28074, 0xFFFFBA28, '0x27fb4 result pool 0x28074 = 0xffffba28'),
+    ('w32', 0x28078, 0xFFFFBA24, '0x27fb4 flag base pool 0x28078 = 0xffffba24'),
+    ('w16', 0x27FDA, 0x8801, '0x27fb4 cmp/eq 0x1,r0 (b53a) at 0x27fda'),
+    ('w16', 0x27FDC, 0x8D05, '0x27fb4 bt/s 0x27fea at 0x27fdc (neutral skips load check)'),
+    ('w16', 0x27FE4, 0xF035, '0x27fb4 fcmp/gt (load vs ba28) at 0x27fe4'),
+    ('w16', 0x2800A, 0xF235, '0x27fb4 fcmp/gt (ba40 > ba78) at 0x2800a'),
+    ('w16', 0x2800C, 0x8F03, '0x27fb4 bf/s clear at 0x2800c'),
+    # --- 0x28022 misfire_event_arm_secondary ---------------------------------
+    ('w32', 0x2807C, 0xFFFFBA26, '0x28022 flag base pool 0x2807c = 0xffffba26'),
+    ('w16', 0x28068, 0xBA80, '0x28022 pool 0x28068 = 0xba80 (threshold b)'),
+    ('w16', 0x2806A, 0xBA50, '0x28022 pool 0x2806a = 0xba50 (deviation now)'),
+    # --- 0x26a42 / 0x26b34 counters -------------------------------------------
+    ('w16', 0x26B04, 0xD1C5, '0x26a42 pool 0x26b04 = 0xd1c5 (engine-stop latch)'),
+    ('w16', 0x26B08, 0xB688, '0x26a42 pool 0x26b08 = 0xb688'),
+    ('w16', 0x26B0A, 0xB68A, '0x26a42 pool 0x26b0a = 0xb68a'),
+    ('w16', 0x26B0C, 0xB68C, '0x26a42 pool 0x26b0c = 0xb68c'),
+    ('w16', 0x26B0E, 0xB68E, '0x26a42 pool 0x26b0e = 0xb68e'),
+    ('w16', 0x26B10, 0xB694, '0x26a42 pool 0x26b10 = 0xb694'),
+    ('w32', 0x26B28, 0xFFFFBA26, '0x26a42 pool 0x26b28 = 0xffffba26'),
+    ('w32', 0x26B2C, 0xFFFFBA24, '0x26a42 pool 0x26b2c = 0xffffba24'),
+    ('w16', 0x26B8E, 0x00FF, '0x26b34 saturation word 0x26b8e = 0x00ff'),
+    ('w32', 0x26B94, 0x00002460, '0x26b34 helper pool 0x26b94 = 0x2460 (add_u16_saturate)'),
+    ('w16', 0x26B90, 0xB694, '0x26b34 pool 0x26b90 = 0xb694'),
+    # --- 0x447e2 / 0x4489c threshold checks -----------------------------------
+    ('w16', 0x4487A, 0xD1C5, '0x447e2 pool 0x4487a = 0xd1c5'),
+    ('w16', 0x4487E, 0xCB78, '0x447e2 pool 0x4487e = 0xcb78'),
+    ('w16', 0x44880, 0xCB7A, '0x447e2 pool 0x44880 = 0xcb7a'),
+    ('w16', 0x44886, 0xBA44, '0x447e2 pool 0x44886 = 0xba44'),
+    ('w16', 0x44888, 0xCB8C, '0x447e2 pool 0x44888 = 0xcb8c'),
+    ('w16', 0x4488A, 0xCB90, '0x447e2 pool 0x4488a = 0xcb90'),
+    ('w16', 0x4488C, 0xB660, '0x447e2 pool 0x4488c = 0xb660'),
+    ('w16', 0x4488E, 0xBA48, '0x447e2 pool 0x4488e = 0xba48'),
+    ('w16', 0x44890, 0xBA40, '0x447e2 pool 0x44890 = 0xba40'),
+    ('w32', 0x44894, 0xFFFFBA24, '0x447e2 flag base pool 0x44894 = 0xffffba24'),
+    ('w32', 0x44898, 0x00002460, '0x447e2 helper pool 0x44898 = 0x2460'),
+    ('w16', 0x4494C, 0xD1C5, '0x4489c pool 0x4494c = 0xd1c5'),
+    ('w16', 0x4494E, 0xBA54, '0x4489c pool 0x4494e = 0xba54'),
+    ('w16', 0x44950, 0xCB94, '0x4489c pool 0x44950 = 0xcb94'),
+    ('w16', 0x44952, 0xCB98, '0x4489c pool 0x44952 = 0xcb98'),
+    ('w16', 0x44954, 0xCB7E, '0x4489c pool 0x44954 = 0xcb7e'),
+    ('w16', 0x44956, 0xCB7C, '0x4489c pool 0x44956 = 0xcb7c'),
+    ('w16', 0x44958, 0xB660, '0x4489c pool 0x44958 = 0xb660'),
+    ('w32', 0x44964, 0xFFFFBA26, '0x4489c flag base pool 0x44964 = 0xffffba26'),
+    ('w16', 0x4495A, 0xBA58, '0x4489c pool 0x4495a = 0xba58'),
+    ('w16', 0x4495C, 0xBA50, '0x4489c pool 0x4495c = 0xba50'),
+    ('w32', 0x44968, 0x00002460, '0x4489c helper pool 0x44968 = 0x2460'),
+    # --- 0x44a78 / 0x44a9e lookups, 0x4493a delay ------------------------------
+    ('w16', 0x44AC4, 0xB548, '0x44a78 pool 0x44ac4 = 0xb548 (rpm)'),
+    ('w32', 0x44AD0, 0x0006B9F4, '0x44a78 tbl pool 0x44ad0 = 0x6b9f4'),
+    ('w32', 0x44AD4, 0x00002068, '0x44a78 lookup pool 0x44ad4 = 0x2068'),
+    ('w16', 0x44AC6, 0xCB8C, '0x44a78 pool 0x44ac6 = 0xcb8c'),
+    ('w32', 0x44AD8, 0x0006BA00, '0x44a78 tbl pool 0x44ad8 = 0x6ba00'),
+    ('w16', 0x44AC8, 0xCB90, '0x44a78 pool 0x44ac8 = 0xcb90'),
+    ('w16', 0x4495E, 0xCB78, '0x4493a pool 0x4495e = 0xcb78'),
+    ('w16', 0x44960, 0xCB80, '0x4493a pool 0x44960 = 0xcb80'),
+    ('w16', 0x44962, 0xCB82, '0x4493a pool 0x44962 = 0xcb82'),
+    # --- 0x2853c / 0x28648 threshold calcs ------------------------------------
+    ('w16', 0x285FE, 0xBA74, '0x2853c pool 0x285fe = 0xba74'),
+    ('w16', 0x28600, 0xBA78, '0x2853c pool 0x28600 = 0xba78'),
+    ('w32', 0x2861C, 0x0006A630, '0x2853c 3D tbl pool 0x2861c = 0x6a630'),
+    ('w32', 0x28620, 0x000020DC, '0x2853c lookup_3d pool 0x28620 = 0x20dc'),
+    ('w32', 0x28624, 0x00002068, '0x2853c lookup_2d pool 0x28624 = 0x2068'),
+    ('w16', 0x2860A, 0xB53A, '0x2853c pool 0x2860a = 0xb53a'),
+    ('w16', 0x2860C, 0xA98C, '0x2853c pool 0x2860c = 0xa98c (coolant)'),
+    ('w16', 0x2860E, 0xBA60, '0x2853c pool 0x2860e = 0xba60'),
+    ('w32', 0x2862C, 0x0006A5E0, '0x2853c coolant tbl pool 0x2862c = 0x6a5e0'),
+    ('w32', 0x28630, 0x0006A5F4, '0x2853c coolant tbl pool 0x28630 = 0x6a5f4'),
+    ('w32', 0x28638, 0x00074D38, '0x2853c const pool 0x28638 = 0x74d38 (40.0)'),
+    ('w32', 0x2863C, 0x00074D3C, '0x2853c const pool 0x2863c = 0x74d3c (40.0)'),
+    ('w32', 0x28640, 0x00074D40, '0x2853c const pool 0x28640 = 0x74d40 (0.0)'),
+    ('w16', 0x2870C, 0xBA80, '0x28648 pool 0x2870c = 0xba80'),
+    ('w32', 0x28720, 0x0006A644, '0x28648 3D tbl pool 0x28720 = 0x6a644'),
+    ('w32', 0x28730, 0x0006A608, '0x28648 coolant tbl pool 0x28730 = 0x6a608'),
+    ('w32', 0x28734, 0x0006A61C, '0x28648 coolant tbl pool 0x28734 = 0x6a61c'),
+    ('w32', 0x2873C, 0x00074D44, '0x28648 const pool 0x2873c = 0x74d44 (40.0)'),
+    ('w32', 0x28740, 0x00074D48, '0x28648 const pool 0x28740 = 0x74d48 (40.0)'),
+    # --- 0x2842c delay line ----------------------------------------------------
+    ('w16', 0x284E4, 0xBA54, '0x2842c pool 0x284e4 = 0xba54'),
+    ('w16', 0x284E6, 0xBA58, '0x2842c pool 0x284e6 = 0xba58'),
+    ('w16', 0x284E8, 0xBA50, '0x2842c pool 0x284e8 = 0xba50'),
+    ('w16', 0x284EA, 0xBA4C, '0x2842c pool 0x284ea = 0xba4c'),
+    ('w16', 0x284EC, 0xB664, '0x2842c pool 0x284ec = 0xb664'),
+    ('w16', 0x284EE, 0xB668, '0x2842c pool 0x284ee = 0xb668'),
+    ('w16', 0x284F0, 0xBA5C, '0x2842c pool 0x284f0 = 0xba5c'),
+    ('w32', 0x284FC, 0x00075758, '0x2842c const pool 0x284fc = 0x75758 (13.133)'),
+    ('w32', 0x28500, 0xFFFFBA6C, '0x2842c pool 0x28500 = 0xffffba6c'),
+    ('w16', 0x284F2, 0xB67C, '0x2842c pool 0x284f2 = 0xb67c'),
+    ('w16', 0x284F4, 0xB680, '0x2842c pool 0x284f4 = 0xb680'),
+    ('w32', 0x28504, 0x000023E4, '0x2842c helper pool 0x28504 = 0x23e4 (max_float)'),
+    # --- 0x26fc0 supply gate, 0x28b10/0x28b50 windows, 0x26aa0 snapshot -------
+    ('w16', 0x26FF6, 0xB69C, '0x26fc0 pool 0x26ff6 = 0xb69c'),
+    ('w32', 0x27020, 0x00075474, '0x26fc0 const pool 0x27020 = 0x75474 (11.0 V)'),
+    ('w16', 0x26FF8, 0xB590, '0x26fc0 pool 0x26ff8 = 0xb590 (battery)'),
+    ('w32', 0x2700C, 0xFFFFB6A4, '0x26fc0 pool 0x2700c = 0xffffb6a4'),
+    ('w32', 0x27008, 0xFFFFB6A6, '0x26fc0 pool 0x27008 = 0xffffb6a6'),
+    ('w16', 0x28B98, 0xBA9C, '0x28b10 pool 0x28b98 = 0xba9c'),
+    ('w16', 0x28B9C, 0xD1C5, '0x28b10 pool 0x28b9c = 0xd1c5'),
+    ('w16', 0x28BA0, 0x0190, '0x28b10 window 0x28ba0 = 0x0190 (400)'),
+    ('w16', 0x28BA2, 0xB69C, '0x28b10 pool 0x28ba2 = 0xb69c'),
+    ('w32', 0x28BA8, 0x00002460, '0x28b10 helper pool 0x28ba8 = 0x2460'),
+    ('w16', 0x26B14, 0xBA9C, '0x26aa0 pool 0x26b14 = 0xba9c'),
+    ('w16', 0x26B16, 0x0190, '0x26aa0 window 0x26b16 = 0x0190 (400)'),
+    ('w16', 0x26B18, 0xCB7C, '0x26aa0 pool 0x26b18 = 0xcb7c'),
+    ('w16', 0x26B1A, 0xCB78, '0x26aa0 pool 0x26b1a = 0xcb78'),
+    ('w32', 0x26B30, 0x000023E4, '0x26aa0 helper pool 0x26b30 = 0x23e4'),
+    ('w16', 0x26B1C, 0xB690, '0x26aa0 pool 0x26b1c = 0xb690'),
+    ('w16', 0x26B1E, 0xBA9E, '0x26aa0 pool 0x26b1e = 0xba9e'),
+    # --- 0x44436 sustained window ---------------------------------------------
+    ('w16', 0x444EC, 0xCB60, '0x44436 pool 0x444ec = 0xcb60'),
+    ('w16', 0x444EE, 0xCB62, '0x44436 pool 0x444ee = 0xcb62'),
+    ('w32', 0x44504, 0xFFFFCB68, '0x44436 pool 0x44504 = 0xffffcb68'),
+    ('w16', 0x444E8, 0xD1C5, '0x44436 pool 0x444e8 = 0xd1c5'),
+    ('w16', 0x444F4, 0xBA50, '0x44436 pool 0x444f4 = 0xba50'),
+    ('w16', 0x444F6, 0xB694, '0x44436 pool 0x444f6 = 0xb694'),
+    ('w32', 0x44510, 0xFFFFCB64, '0x44436 pool 0x44510 = 0xffffcb64'),
+    ('w16', 0x444F8, 0xBA80, '0x44436 pool 0x444f8 = 0xba80'),
+    ('w16', 0x444FA, 0xB69C, '0x44436 pool 0x444fa = 0xb69c'),
+    ('w16', 0x444FC, 0xB53A, '0x44436 pool 0x444fc = 0xb53a'),
+    ('w32', 0x44514, 0x0007BF58, '0x44436 const pool 0x44514 = 0x7bf58 (4000.0)'),
+    ('w32', 0x44518, 0x0007BF5C, '0x44436 const pool 0x44518 = 0x7bf5c (0.0)'),
+    ('w16', 0x444FE, 0xBBB4, '0x44436 pool 0x444fe = 0xbbb4 (vehicle speed)'),
+    ('w16', 0x44500, 0x03E8, '0x44436 saturate pool 0x44500 = 0x03e8 (1000, loaded at 0x444bc)'),
+    ('w32', 0x4451C, 0x00002460, '0x44436 helper pool 0x4451c = 0x2460'),
+    # --- 0x445ba 2000-tick evaluation ------------------------------------------
+    ('w16', 0x4466A, 0xCB6D, '0x445ba pool 0x4466a = 0xcb6d'),
+    ('w16', 0x4466E, 0xCB6C, '0x445ba pool 0x4466e = 0xcb6c'),
+    ('w16', 0x44670, 0xCB6F, '0x445ba pool 0x44670 = 0xcb6f'),
+    ('w16', 0x44672, 0xCB70, '0x445ba pool 0x44672 = 0xcb70'),
+    ('w16', 0x44666, 0xD1C5, '0x445ba pool 0x44666 = 0xd1c5'),
+    ('w16', 0x4466C, 0xCB6E, '0x445ba pool 0x4466c = 0xcb6e'),
+    ('w16', 0x44674, 0xBA9E, '0x445ba pool 0x44674 = 0xba9e'),
+    ('w16', 0x44676, 0x07D0, '0x445ba window 0x44676 = 0x07d0 (2000)'),
+    ('w16', 0x4467A, 0xB692, '0x445ba pool 0x4467a = 0xb692'),
+    ('w32', 0x44690, 0x000024C0, '0x445ba helper pool 0x44690 = 0x24c0 (decode_u16_affine)'),
+    ('w16', 0x4467C, 0xB548, '0x445ba pool 0x4467c = 0xb548'),
+    ('w32', 0x44694, 0x0006B9C0, '0x445ba tbl pool 0x44694 = 0x6b9c0'),
+    ('w32', 0x44698, 0x000020C4, '0x445ba lookup pool 0x44698 = 0x20c4 (raw_u16)'),
+    ('w32', 0x4469C, 0xFFFFCB74, '0x445ba pool 0x4469c = 0xffffcb74'),
+    ('w32', 0x446A4, 0x00002490, '0x445ba helper pool 0x446a4 = 0x2490 (encode_u16_affine)'),
+    ('w32', 0x44680, 0xFFFFCB72, '0x445ba pool 0x44680 = 0xffffcb72'),
+    ('w16', 0x4467E, 0xCB62, '0x445ba pool 0x4467e = 0xcb62'),
+    ('w16', 0x44790, 0xB68C, '0x445ba pool 0x44790 = 0xb68c'),
+    # --- 0x44724 / 0x44cec DTC setters -----------------------------------------
+    ('w32', 0x447AC, 0x0005FD3C, '0x44724 dtc setter pool 0x447ac = 0x5fd3c'),
+    ('w16', 0x4479C, 0xCB6C, '0x44724 pool 0x4479c = 0xcb6c'),
+    ('w16', 0x447A0, 0xCB6D, '0x44724 pool 0x447a0 = 0xcb6d'),
+    ('w32', 0x447B0, 0x00065690, '0x44724 drive-cycle pool 0x447b0 = 0x65690'),
+    ('w16', 0x4478E, 0xCB6E, '0x44724 pool 0x4478e = 0xcb6e'),
+    ('w32', 0x44D54, 0x0005FD3C, '0x44cec dtc setter pool 0x44d54 = 0x5fd3c (slot 0)'),
+    ('w16', 0x44D50, 0xCB9D, '0x44cec pool 0x44d50 = 0xcb9d'),
+    ('w32', 0x44D58, 0x00065690, '0x44cec drive-cycle pool 0x44d58 = 0x65690'),
+    ('w16', 0x44D52, 0xCB9E, '0x44cec pool 0x44d52 = 0xcb9e'),
+    # --- 0xcf96 crank edge capture ----------------------------------------------
+    ('w16', 0xD00A, 0xF434, '0xcf96 ICR0AH pool 0xd00a = 0xf434 (-> 0xfffff434)'),
+    ('w32', 0xD024, 0xFFFF9F96, '0xcf96 pool 0xd024 = 0xffff9f96'),
+    ('w32', 0xD028, 0xFFFF9F95, '0xcf96 sector pool 0xd028 = 0xffff9f95'),
+    ('w32', 0xD01C, 0xFFFFA3D0, '0xcf96 pool 0xd01c = 0xffffa3d0'),
+    ('w32', 0xD02C, 0xFFFFA3B4, '0xcf96 pool 0xd02c = 0xffffa3b4'),
+    ('w32', 0xD010, 0xFFFFA3D6, '0xcf96 pool 0xd010 = 0xffffa3d6'),
+    ('w32', 0xD11C, 0xFFFFA390, '0xcf96 ring base pool 0xd11c = 0xffffa390'),
+    ('w32', 0xD114, 0xFFFFA3D7, '0xcf96 edge-count pool 0xd114 = 0xffffa3d7'),
+    ('w32', 0xD120, 0x0000D8D0, '0xcf96 edge table pool 0xd120 = 0xd8d0'),
+    ('w32', 0xD128, 0xFFFFA3CC, '0xcf96 period pool 0xd128 = 0xffffa3cc'),
+    ('w32', 0xD130, 0xFFFFA3B4, '0xcf96 pool 0xd130 = 0xffffa3b4'),
+    ('f32', 0xD124, 6666666.0, '0xcf96 sector-period scale 6666666.0 at ROM 0xd124'),
+    # --- 0x5f98a lookupCodeTypeMisfire, DTC prefixes/slots ----------------------
+    ('w32', 0x5F9E4, 0x0007E55A, '0x5f98a prefix table pool 0x5f9e4 = 0x7e55a'),
+    ('w16', 0x7E55A, 0x0300, 'prefix table 0x7e55a = 0x0300 (P0300)'),
+    ('w16', 0x7E55C, 0x0301, 'prefix table 0x7e55c = 0x0301 (P0301)'),
+    ('w16', 0x7E55E, 0x0302, 'prefix table 0x7e55e = 0x0302 (P0302)'),
+    ('w16', 0x7E560, 0x0300, 'DTC slot 0 @ 0x7e560 = 0x0300'),
+    ('w16', 0x7E562, 0x0300, 'DTC slot 1 @ 0x7e562 = 0x0300'),
+    # --- 0xab8a ref_misfireDetectInit_ (ADC-pair block, see report 4.3) --------
+    ('w32', 0xAC9C, 0xFFFFA208, '0xab8a pool 0xac9c = 0xffffa208'),
+    ('w32', 0xACD4, 0xFFFFA1F4, '0xab8a pool 0xacd4 = 0xffffa1f4'),
+    ('w32', 0xACB0, 0xFFFFA1D4, '0xab8a pool 0xacb0 = 0xffffa1d4 (adc_pair_ratio_filtered)'),
+    ('w32', 0xAC94, 0xFFFF8030, '0xab8a pool 0xac94 = 0xffff8030 (learned default cell)'),
+    ('w32', 0xACA4, 0xFFFFA1CC, '0xab8a pool 0xaca4 = 0xffffa1cc'),
+    ('w32', 0xACB4, 0xFFFFA1D8, '0xab8a pool 0xacb4 = 0xffffa1d8 (adc_pair_ratio_raw)'),
+    ('w32', 0xACB8, 0xFFFFA1DC, '0xab8a pool 0xacb8 = 0xffffa1dc (range fault)'),
+    ('w32', 0xACD8, 0x0003DC22, '0xab8a read helper pool 0xacd8 = 0x3dc22'),
+    ('w32', 0xACE4, 0x0003DCD0, '0xab8a write helper pool 0xace4 = 0x3dcd0'),
+    ('w16', 0xAC80, 0x00FF, '0xab8a init word 0xac80 = 0x00ff'),
+    # --- float constants ---------------------------------------------------------
+    ('f32', 0x75474, 11.0, '0x26fc0 supply gate 11.0 V at pool 0x75474'),
+    ('f32', 0x75450, 3000.0, '0x26d70 window speed 3000.0 at pool 0x75450'),
+    ('f32', 0x7BF58, 4000.0, '0x44436 rpm bound 4000.0 at pool 0x7bf58'),
+    ('f32', 0x75758, 13.133, '0x2842c deviation bound 13.133 at pool 0x75758'),
+    ('f32', 0x74D38, 40.0, '0x2853c threshold add term 40.0 at pool 0x74d38'),
+    ('f32', 0x74D3C, 40.0, '0x2853c threshold add term 40.0 at pool 0x74d3c'),
+    ('f32', 0x74D44, 40.0, '0x28648 threshold add term 40.0 at pool 0x74d44'),
+    ('f32', 0x74D48, 40.0, '0x28648 threshold add term 40.0 at pool 0x74d48'),
+    # --- table descriptors --------------------------------------------------------
+    ('desc3', 0x6A630, (10, 17, 0x74E10, 0x74E38, 0x74E7C, 0), 'tbl 0x6a630 3D 10x17 threshold base'),
+    ('desc3', 0x6A644, (10, 17, 0x75124, 0x7514C, 0x75190, 0), 'tbl 0x6a644 3D 10x17 secondary threshold'),
+    ('desc2', 0x6A6B8, (17, 4, 0x756F4, 0x75738), 'tbl 0x6a6b8 2D arm load floor'),
+    ('desc2', 0x6A5E0, (9, 4, 0x74D50, 0x74D74), 'tbl 0x6a5e0 2D coolant corr (neutral)'),
+    ('desc2', 0x6A5F4, (9, 4, 0x74D80, 0x74DA4), 'tbl 0x6a5f4 2D coolant corr (in gear)'),
+    ('desc2', 0x6A608, (9, 4, 0x74DB0, 0x74DD4), 'tbl 0x6a608 2D coolant corr B'),
+    ('desc2', 0x6A61C, (9, 4, 0x74DE0, 0x74E04), 'tbl 0x6a61c 2D coolant corr B alt'),
+    ('desc2', 0x6A658, (18, 4, 0x75478, 0x754C0), 'tbl 0x6a658 2D load-delta limit low'),
+    ('desc2', 0x6A66C, (18, 4, 0x754D4, 0x7551C), 'tbl 0x6a66c 2D load-delta limit high'),
+    ('desc2', 0x6A680, (18, 4, 0x75530, 0x75578), 'tbl 0x6a680 2D load floor'),
+    ('desc2', 0x6A694, (17, 0, 0x755DC, 0x75620), 'tbl 0x6a694 2D rpm cell index'),
+    ('desc2', 0x6A6A0, (17, 0, 0x75644, 0x75688), 'tbl 0x6a6a0 2D rpm breakpoints 750..9000'),
+    ('desc2', 0x6A6AC, (5, 0, 0x756CC, 0x756E0), 'tbl 0x6a6ac 2D OL-fuel scale'),
+    ('desc3', 0x6B9AC, (10, 17, 0x7BF60, 0x7BF88, 0x7BFCC, 0), 'tbl 0x6b9ac 3D 10x17 sustained count scale'),
+    ('desc2', 0x6B9C0, (23, 0, 0x7C278, 0x7C2D4), 'tbl 0x6b9c0 2D 23-cell rpm product (2000-tick)'),
+    ('desc2', 0x6B9CC, (13, 4, 0x7C310, 0x7C344), 'tbl 0x6b9cc 2D load ceiling'),
+    ('desc3', 0x6B9E0, (10, 8, 0x7C354, 0x7C37C, 0x7C39C, 0), 'tbl 0x6b9e0 3D 10x8 count floor'),
+    ('desc2', 0x6B9F4, (12, 0, 0x7C43C, 0x7C46C), 'tbl 0x6b9f4 2D rpm threshold A'),
+    ('desc2', 0x6BA00, (12, 0, 0x7C49C, 0x7C4CC), 'tbl 0x6ba00 2D rpm threshold B'),
+    ('desc2', 0x6BA0C, (12, 0, 0x7C4FC, 0x7C52C), 'tbl 0x6ba0c 2D load limit A'),
+    ('desc2', 0x6BA18, (12, 0, 0x7C55C, 0x7C58C), 'tbl 0x6ba18 2D load limit B'),
+    ('desc2', 0x6BA24, (23, 0, 0x7C5C4, 0x7C620), 'tbl 0x6ba24 2D 23-cell rpm product (400-tick)'),
+    # --- peripheral symbols --------------------------------------------------------
+    ('sym', 'ATUII_ICR0AH_W', 0xFFFFF434, 'symbols.tsv ATUII_ICR0AH_W = 0xfffff434'),
+]
+
+
+def main(argv: list[str]) -> int:
+    data = ROM.read_bytes()
+    sha = hashlib.sha256(data).hexdigest()
+    assert sha == ROM_SHA256, 'ROM hash changed: %s' % sha
+
+    syms = {}
+    with SYMBOLS.open(newline='', encoding='utf-8', errors='surrogateescape') as fh:
+        for row in csv.DictReader(fh, delimiter='\t'):
+            syms[row['name']] = int(row['address'], 16)
+
+    lines = ['misfire chain raw-bin re-verification',
+             'rom 60E15120_N3J1E sha256 %s' % sha,
+             '']
+    passed = failed = 0
+    for kind, addr, exp, desc in CHECKS:
+        if kind == 'w16':
+            got = struct.unpack('>H', data[addr:addr + 2])[0]
+        elif kind == 'w32':
+            got = struct.unpack('>I', data[addr:addr + 4])[0]
+        elif kind == 'f32':
+            got = struct.unpack('>f', data[addr:addr + 4])[0]
+            ok = abs(got - float(exp)) <= 1e-4 * max(1.0, abs(float(exp)))
+            lines.append('%s %-40s 0x%08x = %r (want %r)' % ('PASS' if ok else 'FAIL', desc, addr, got, exp))
+            passed, failed = (passed + 1, failed) if ok else (passed, failed + 1)
+            continue
+        elif kind == 'desc2':
+            n, typ, _res, ax, da = struct.unpack('>HBBII', data[addr:addr + 12])
+            got = (n, typ, ax, da)
+        elif kind == 'desc3':
+            nx, ny, ax, ay, da, typ = struct.unpack('>HHIIIB', data[addr:addr + 17])
+            got = (nx, ny, ax, ay, da, typ)
+        elif kind == 'sym':
+            got = syms.get(str(addr))
+        else:
+            raise ValueError(kind)
+        ok = got == exp
+        addr_s = addr if isinstance(addr, int) else 0
+        lines.append('%s %-40s 0x%08x = %s (want %s)' % ('PASS' if ok else 'FAIL', desc, addr_s, got, exp))
+        passed, failed = (passed + 1, failed) if ok else (passed, failed + 1)
+
+    lines += ['', 'checks %d passed %d failed %d' % (len(CHECKS), passed, failed)]
+    text = '\n'.join(lines) + '\n'
+    if '--write' in argv:
+        LOG.parent.mkdir(parents=True, exist_ok=True)
+        LOG.write_text(text, encoding='utf-8', newline='\r\n')
+    print(text)
+    return 1 if failed else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))

@@ -1,6 +1,9 @@
+/* [ADDITIONAL SOURCE REVIEW]
+ * misfire_fault_persistence [medium]: If rpm >= 660.0: b6be = 0. If engine not stopped (a41c==0) && b6be==1: b6a4 = 4, b6a6 = 0xf; else if b6ac==0: b6a4 = 0xff, b6a6 = 0xf; else if b6a4!=0: b6a4--. b6a4/b6a6 feed the supply gate 0x26fc0. Called from 0x287aa.
+ */
 /* ROM address: 0x00026f38; body bytes: 102; decompiled */
 
-void FUN_00026f38(void)
+void candidate_misfire_fault_persistence(void)
 
 {
   if (660.0 <= engine_speed_rpm_ffffb548) {

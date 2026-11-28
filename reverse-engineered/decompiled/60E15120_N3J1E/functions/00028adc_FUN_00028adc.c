@@ -3,7 +3,7 @@
 void FUN_00028adc(void)
 
 {
-  DAT_ffffba9e = 0;
+  misfire_window_2000_ffffba9e = 0;
   return;
 }
 

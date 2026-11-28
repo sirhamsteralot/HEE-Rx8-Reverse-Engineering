@@ -28,6 +28,10 @@ DEC = os.path.join(ROOT, "reverse-engineered", "decompiled", "60E15120_N3J1E")
 DIS = os.path.join(ROOT, "reverse-engineered", "disassembly", "60E15120_N3J1E")
 LAB = os.path.join(ROOT, "data", "labels", "60E15120_N3J1E",
                    "eeprom_content_labels.json")
+# the misfire_* detection aliases live in the misfire record
+# (one label record per subsystem)
+MIS_LAB = os.path.join(ROOT, "data", "labels", "60E15120_N3J1E",
+                       "misfire_detection_labels.json")
 
 ROM = open(ROM_PATH, "rb").read()
 RX8 = open(RX8_PATH, "rb").read()
@@ -326,7 +330,9 @@ def test_labels_json_learned_pairs():
         assert fa[addr]["alias"] == alias, addr
     ra = d["ram_aliases"]
     assert ra["ffffb6c4"]["alias"] == "e2ram_learned_table_cell_index"
-    assert ra["ffffb660"]["alias"] == "sector_parity_bank"
+    # sector_parity_bank lives in the misfire detection record
+    mis = json.load(open(MIS_LAB, encoding="utf-8"))
+    assert mis["ram_aliases"]["ffffb660"]["alias"] == "sector_parity_bank"
     assert ra["ffffb6cc"]["alias"] == "e2ram_learned_table_live_value"
     assert ra["ffffb8f4"]["alias"] == "e2ram_learned_table_live_counter"
     assert ra["ffffba2c"]["alias"] == "e2ram_learned_correction_value"
@@ -355,8 +361,8 @@ def test_learned_table_hooks_to_misfire_dtc():
     for d in (0x6B9F4, 0x6BA00, 0x6BA0C, 0x6BA18):
         assert u16(d) == 12 and ROM[d + 2] == 0
     assert f32(0x7C43C) == 780.0 and f32(0x7C43C + 4 * 11) == 8500.0
-    # labels JSON carries the misfire hook-up aliases
-    d = json.load(open(LAB, encoding="utf-8"))
+    # the misfire hook-up aliases live in the misfire detection record
+    d = json.load(open(MIS_LAB, encoding="utf-8"))
     fa = d["function_aliases"]
     assert fa["00044724"]["alias"] == "misfire_dtc_set"
     assert fa["000445ba"]["alias"] == "misfire_dtc_evaluate"
@@ -364,4 +370,6 @@ def test_learned_table_hooks_to_misfire_dtc():
     ra = d["ram_aliases"]
     assert ra["ffffba40"]["alias"] == "misfire_excess_deviation"
     assert ra["ffffba24"]["alias"] == "misfire_event_flag_a"
-    assert "P0300" in ra["ffffba2c"]["evidence"]
+    # the learned-correction cell stays in the eeprom record and cites P0300
+    ee = json.load(open(LAB, encoding="utf-8"))
+    assert "P0300" in ee["ram_aliases"]["ffffba2c"]["evidence"]

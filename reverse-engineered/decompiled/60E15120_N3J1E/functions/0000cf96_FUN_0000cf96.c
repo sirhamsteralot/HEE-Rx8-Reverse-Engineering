@@ -1,5 +1,7 @@
 /* [ADDITIONAL SOURCE REVIEW]
  * crank_edge_period_update [high]: CMI10B sub-handler: matches sector 0xffff9f95 against edge table, reads ICR0AH, computes period 0xffffa3cc into ring 0xffffa390 (x 6666666.0), posts via 0xa156 on match.
+ * RAM 0xffffa390 sector_period_ring (float[8]): 8-entry ring of crank sector periods: crank_edge_period_update 0xcf96 shifts DAT_ffffa3ac..0xffffa398 down and writes DAT_ffffa390 = (DAT_ffffa3d7 * 6666666.0) / period_ticks, period = ICR0AH 0xfffff434 (pool 0xd00a=0xf434) difference stored at 0xffffa3cc; 6666666.0 float at ROM 0xd124 (pool 0xd124). Copied to 0xffffb664-0xffffb680 by 0x26940.
+ * RAM 0xffffa3b0 crank_sector_slot (uint8): Sector slot index iVar5 (0..5) of the matched edge, written by 0xcf96 (pool 0xd11c=0xffffa390 ring base); latched to sector_parity_bank 0xffffb660 by 0x26982.
  */
 /* ROM address: 0x0000cf96; body bytes: 342; decompiled */
 
@@ -50,13 +52,13 @@ undefined4 * crank_edge_period_update(void)
       DAT_ffffa3a0 = DAT_ffffa39c;
       DAT_ffffa39c = DAT_ffffa398;
       DAT_ffffa398 = DAT_ffffa394;
-      DAT_ffffa394 = DAT_ffffa390;
+      DAT_ffffa394 = sector_period_ring_ffffa390;
       fVar8 = (float)DAT_ffffa3cc;
       if (DAT_ffffa3cc < 0) {
         fVar8 = fVar8 + 4.2949673e+09;
       }
-      DAT_ffffa390 = ((float)DAT_ffffa3d7 * 6666666.0) / fVar8;
-      DAT_ffffa3b0 = (undefined1)iVar5;
+      sector_period_ring_ffffa390 = ((float)DAT_ffffa3d7 * 6666666.0) / fVar8;
+      crank_sector_slot_ffffa3b0 = (undefined1)iVar5;
       puVar4 = (undefined4 *)post_crank_tick_message();
       return puVar4;
     }

@@ -3,6 +3,7 @@
  */
 /* [ADDITIONAL SOURCE REVIEW]
  * e2ram_learned_table_learn_gate [high]: rpm_cell = DAT_ffffb6c4 mod 17 (div FUN_00003fe8, pool 0x27258); DAT_ffffb8f0 = lookup_2d_descriptor_scaled(rpm_cell, tbl 0x6a6a0 [axis 0x75644 = 0..16, data 0x75688 = RPM breakpoints 750..9000]) = cell RPM breakpoint; reads flag_a + (cell-1)*2 / cell*2 / (cell+1)*2 + (DAT_ffffb660&1)*0x88 (pool 0x27270 = 0xffff8548) and sets DAT_ffffb6c6 = 1 only if the cell flag is set and a learned neighbour cell covers the current RPM (DAT_ffffb8f0). Called from 0x287aa.
+ * RAM 0xffffb6c6 misfire_cell_learned (uint8): Set by e2ram_learned_table_learn_gate 0x271b0 only when the current cell flag (0xffff8548+cell*2+bank*0x88, pool 0x27270) is set and a learned neighbour cell covers the current RPM; gates the residual filter 0x2837c and the event arm 0x27fb4.
  */
 /* [READABILITY RECONSTRUCTION]
  * Signatures, local names, observed fields and scoped constants refined.
@@ -50,10 +51,10 @@ char e2ram_learned_table_learn_gate(void)
   if ((cVar6 != '\x01') ||
      (((DAT_ffffb8f0 <= snapshot_engine_speed_rpm_ffffb548 || (cVar6 = cVar4, cVar4 != '\x01')) &&
       ((snapshot_engine_speed_rpm_ffffb548 < DAT_ffffb8f0 || (cVar6 = cVar5, cVar5 != '\x01')))))) {
-    DAT_ffffb6c6 = 0;
+    misfire_cell_learned_ffffb6c6 = 0;
   }
   else {
-    DAT_ffffb6c6 = 1;
+    misfire_cell_learned_ffffb6c6 = 1;
   }
   return cVar6;
 }

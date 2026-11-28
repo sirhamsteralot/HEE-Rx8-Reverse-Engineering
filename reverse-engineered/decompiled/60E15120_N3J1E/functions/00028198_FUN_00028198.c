@@ -87,7 +87,7 @@ LAB_000282a0:
   }
   DAT_ffffba48 = misfire_excess_deviation_delayed_ffffba44;
   misfire_excess_deviation_delayed_ffffba44 = misfire_excess_deviation_ffffba40;
-  e2ram_learned_correction_value_ffffba2c = (snapshot_DAT_ffffb668 - (DAT_ffffb680 - snapshot_DAT_ffffb668) / 6.0) - DAT_ffffb664;
+  e2ram_learned_correction_value_ffffba2c = (snapshot_DAT_ffffb668 - (DAT_ffffb680 - snapshot_DAT_ffffb668) / 6.0) - misfire_sector_ring_copy_ffffb664;
   misfire_residual_ffffba30 = e2ram_learned_correction_value_ffffba2c - *(float *)(&e2ram_learned_table_value_bank0_ffffba64 + iVar6);
   return;
 }

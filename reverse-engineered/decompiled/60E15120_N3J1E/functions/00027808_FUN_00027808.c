@@ -24,8 +24,8 @@ uint e2ram_learned_table_ram_persist(void)
   float arg3;
   float fVar16;
   
-  if (DAT_ffffba04 == 0) {
-    DAT_ffffba04 = 0xb;
+  if (misfire_learn_hold_ffffba04 == 0) {
+    misfire_learn_hold_ffffba04 = 0xb;
     fVar16 = 0.0;
     if (DAT_ffffba09 == '\x01') {
       bVar12 = 0;

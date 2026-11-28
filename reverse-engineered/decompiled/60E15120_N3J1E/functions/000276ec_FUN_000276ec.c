@@ -22,8 +22,8 @@ e2ram_learned_table_cell_learn(undefined4 param_1,undefined4 param_2,undefined4 
   float fVar7;
   
   uVar2 = sector_parity_bank_ffffb660 & 1;
-  puVar1 = &DAT_ffffba04;
-  if ((((DAT_ffffba04 != 0) && (DAT_ffffba06 == 0)) && (DAT_ffffb8f0 - 100.0 <= engine_speed_rpm_ffffb548)) &&
+  puVar1 = &misfire_learn_hold_ffffba04;
+  if ((((misfire_learn_hold_ffffba04 != 0) && (DAT_ffffba06 == 0)) && (DAT_ffffb8f0 - 100.0 <= engine_speed_rpm_ffffb548)) &&
      (engine_speed_rpm_ffffb548 < DAT_ffffb8f0 + 100.0)) {
     uVar5 = (uint)e2ram_learned_table_cell_index_ffffb6c4;
     uVar4 = (uint)e2ram_learned_table_cell_index_ffffb6c4;
