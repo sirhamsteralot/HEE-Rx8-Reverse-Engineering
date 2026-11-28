@@ -5,7 +5,8 @@ Covers data/labels/60E15120_N3J1E/misfire_detection_labels.json:
 
   * every function alias address exists in the decompiled function index and
     carries the folded-back name;
-  * every RAM alias address is covered by symbols.tsv;
+  * every RAM alias address carries its folded name in symbols.tsv, and both
+    monoliths carry the folded function/RAM names;
   * the accepted source-review TSV rows mirror the JSON aliases;
   * the cited literal-pool words, instruction words, float constants and table
     descriptors match the raw ROM bytes (SHA-256 pinned) — rule-7 binary-level
@@ -35,6 +36,9 @@ ROM = (
 )
 FUNC_INDEX = REPO / "reverse-engineered" / "decompiled" / "60E15120_N3J1E" / "function_index.tsv"
 SYMBOLS = REPO / "reverse-engineered" / "decompiled" / "60E15120_N3J1E" / "symbols.tsv"
+MONOLITH = REPO / "reverse-engineered" / "decompiled" / "60E15120_N3J1E" / "firmware_decompiled.c"
+NAMED_MONOLITH = (REPO / "reverse-engineered" / "decompiled" / "60E15120_N3J1E"
+                  / "named" / "firmware_named.c")
 FN_TSV = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "source_review" / "accepted_function_aliases.tsv"
 RAM_TSV = REPO / "docs" / "investigations" / "60E15120_N3J1E" / "labeling" / "source_review" / "accepted_ram_aliases.tsv"
 PIPELINE = REPO / "utilities" / "scripts" / "rx8-pcm-pipeline"
@@ -68,9 +72,26 @@ def test_function_aliases_in_index_with_folded_name(record):
 
 
 def test_ram_aliases_in_symbols(record):
-    syms = {r["address"] for r in _read_tsv(SYMBOLS)}
-    for addr in record["ram_aliases"]:
+    # symbols.tsv keeps the address suffix on RAM names (name or name_<addr>)
+    syms = {r["address"]: r["name"] for r in _read_tsv(SYMBOLS)}
+    for addr, entry in record["ram_aliases"].items():
         assert addr in syms, "RAM 0x%s not in symbols.tsv" % addr
+        accepted = {entry["alias"], entry["alias"] + "_" + addr}
+        assert syms[addr] in accepted, "0x%s: symbols.tsv has %s, want %s" % (
+            addr, syms[addr], entry["alias"])
+
+
+def test_monoliths_carry_folded_names(record):
+    """The fold-back must reach both monoliths, not only the per-function files."""
+    needles = ["crank_edge_period_update", "misfire_monitor_tick"]
+    needles += [
+        record["ram_aliases"][a]["alias"]
+        for a in ("ffffa390", "ffffcb60", "ffffba04")
+    ]
+    for path in (MONOLITH, NAMED_MONOLITH):
+        text = path.read_text(encoding="utf-8", errors="surrogateescape")
+        missing = [n for n in needles if n not in text]
+        assert not missing, "%s lacks %s" % (path.name, missing)
 
 
 def test_tsv_mirrors_json(record):
