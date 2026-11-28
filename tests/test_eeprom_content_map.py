@@ -28,8 +28,8 @@ DEC = os.path.join(ROOT, "reverse-engineered", "decompiled", "60E15120_N3J1E")
 DIS = os.path.join(ROOT, "reverse-engineered", "disassembly", "60E15120_N3J1E")
 LAB = os.path.join(ROOT, "data", "labels", "60E15120_N3J1E",
                    "eeprom_content_labels.json")
-# the misfire_* detection aliases live in the misfire record since the
-# misfire-detection pass (one label record per subsystem)
+# the misfire_* detection aliases live in the misfire record
+# (one label record per subsystem)
 MIS_LAB = os.path.join(ROOT, "data", "labels", "60E15120_N3J1E",
                        "misfire_detection_labels.json")
 
@@ -330,7 +330,7 @@ def test_labels_json_learned_pairs():
         assert fa[addr]["alias"] == alias, addr
     ra = d["ram_aliases"]
     assert ra["ffffb6c4"]["alias"] == "e2ram_learned_table_cell_index"
-    # sector_parity_bank moved to the misfire detection record
+    # sector_parity_bank lives in the misfire detection record
     mis = json.load(open(MIS_LAB, encoding="utf-8"))
     assert mis["ram_aliases"]["ffffb660"]["alias"] == "sector_parity_bank"
     assert ra["ffffb6cc"]["alias"] == "e2ram_learned_table_live_value"

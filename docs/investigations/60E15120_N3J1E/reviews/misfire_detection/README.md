@@ -29,10 +29,10 @@ and the label record
 - Static label tests: `tests/test_misfire_detection.py` — function-index
   membership, TSV/JSON mirroring, ROM-byte verification of the cited anchors,
   and a regeneration test re-running the label generator and the verifier.
-- One factual correction: the previous evidence for `0x27fb4` read the neutral
-  flag and the load floor as AND-ed; the asm (`cmp/eq 0x1` at `0x27fda`,
-  `bt/s 0x27fea`, `fcmp/gt` at `0x27fe4`) shows they are OR-ed. Corrected in the
-  moved label record (report §4.3).
+- One factual correction: `0x27fb4` arms on the neutral flag **or** the load
+  floor, not both (`cmp/eq 0x1` at `0x27fda`, `bt/s 0x27fea`, `fcmp/gt` at
+  `0x27fe4`); the misfire detection label record carries that condition
+  (report §4.3).
 - `ref_misfireDetectInit_` `0xab8a` kept as inherited `ref_` name; its body
   initializes the ADC-pair block `0xffffa1cc..0xffffa207`, not misfire state
   (report §4.3).

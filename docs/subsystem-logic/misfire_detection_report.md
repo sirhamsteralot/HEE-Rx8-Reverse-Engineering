@@ -393,7 +393,7 @@ All names above are accepted aliases in
 (`function_index.tsv`, `symbols.tsv`, the per-function files and both
 monoliths). The label record is
 [`misfire_detection_labels.json`](../../data/labels/60E15120_N3J1E/misfire_detection_labels.json);
-the `misfire_*` entries moved out of the EEPROM-content record, which keeps the
+the `misfire_*` entries live there, and the EEPROM-content record keeps the
 learned-table storage layer (`e2ram_learned_table_*`). Evidence strings cite
 pool words re-read from the raw ROM (e.g. `0x28058=0xb660`, `0x447ac=0x5fd3c`,
 `0x44d54=0x5fd3c`, `0x75474=11.0f`); `tests/test_misfire_detection.py`
@@ -401,11 +401,11 @@ re-verifies them against the pinned ROM bytes.
 
 ### 4.3 Corrections
 
-- The earlier evidence string for `misfire_event_arm` (`0x27fb4`, in the EEPROM
-  record) read "when `0xffffb53a==1` && load ≥ `0xffffba28`". The disassembly
-  shows `cmp/eq 0x1` on `0xffffb53a` at `0x27fda` with `bt/s 0x27fea` skipping
-  the load compare (`fcmp/gt` at `0x27fe4`) — the neutral flag and the load
-  floor are OR-ed, not AND-ed. Corrected in the moved label record.
+- `misfire_event_arm` (`0x27fb4`) arms when the neutral flag `0xffffb53a==1`
+  **or** engine load ≥ `0xffffba28`: `cmp/eq 0x1` on `0xffffb53a` at `0x27fda`
+  takes `bt/s 0x27fea`, which skips the load compare (`fcmp/gt` at `0x27fe4`),
+  so the two conditions are OR-ed, not AND-ed. The misfire detection label
+  record carries this condition.
 - `ref_misfireDetectInit_` (`0xab8a`) is an inherited `ref_` name whose body
   does not initialize crank/misfire state: it initializes an ADC-pair monitor
   block (`0xffffa1cc`=1.0f, `0xffffa1d4/a1d8`=512.0f,

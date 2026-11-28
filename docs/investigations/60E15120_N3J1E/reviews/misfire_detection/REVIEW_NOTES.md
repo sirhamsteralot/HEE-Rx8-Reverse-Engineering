@@ -27,8 +27,8 @@ Method, in order:
    `verify_misfire_chain.py` (214 checks) and generated
    `rawbin_reverify_log.txt`.
 7. Labels: new generator `review_misfire_detection_labels.py` owns the
-   `misfire_*` function/RAM aliases (moved out of the eeprom-content record,
-   which keeps the `e2ram_learned_table_*` storage layer); fold-back chain
+   `misfire_*` function/RAM aliases (the EEPROM-content record keeps the
+   `e2ram_learned_table_*` storage layer); fold-back chain
    `annotate_source_review.py` → `integrate_reviewed_names.py` →
    `refine_comment_merge.py` re-run to the fixed point;
    `tests/test_reviewed_name_foldback.py` green.
